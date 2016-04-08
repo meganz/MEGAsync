@@ -11,11 +11,12 @@
 
 #define TOBYTES 1024 * 1024 * 1024
 
-PlanWidget::PlanWidget(PlanInfo data, QWidget *parent) :
+PlanWidget::PlanWidget(PlanInfo data, QString userAgent, QWidget *parent) :
     QWidget(parent),
     ui(new Ui::PlanWidget)
 {
     details = data;
+    this->userAgent = userAgent;
 
     ui->setupUi(this);
     ui->lTip->setText(QString::fromUtf8(""));
@@ -40,22 +41,23 @@ PlanWidget::PlanWidget(PlanInfo data, QWidget *parent) :
 
 void PlanWidget::onOverlayClicked()
 {
+    QString escapedUserAgent = QString::fromUtf8(QUrl::toPercentEncoding(userAgent));
     switch (details.level)
     {
         case PRO_LITE:
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro_lite")));
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro_lite/uao=%1").arg(escapedUserAgent)));
             break;
         case PRO_I:
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro_1")));
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro_1/uao=%1").arg(escapedUserAgent)));
             break;
         case PRO_II:
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro_2")));
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro_2/uao=%1").arg(escapedUserAgent)));
             break;
         case PRO_III:
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro_3")));
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro_3/uao=%1").arg(escapedUserAgent)));
             break;
         default:
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro")));
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro/uao=%1").arg(escapedUserAgent)));
             break;
     }
 }

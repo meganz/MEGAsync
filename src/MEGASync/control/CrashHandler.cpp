@@ -95,7 +95,7 @@ using namespace std;
                 pnt = (void*) uc->uc_mcontext.gregs[REG_EIP];
             #elif defined(__arm__)
                 ucontext_t* uc = (ucontext_t*) secret;
-                pnt = (void*) uc->uc_mcontext.arm_pc
+                pnt = (void*) uc->uc_mcontext.arm_pc;
             #else
                 pnt = NULL;
             #endif

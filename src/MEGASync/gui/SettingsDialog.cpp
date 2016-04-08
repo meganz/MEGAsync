@@ -674,12 +674,16 @@ void SettingsDialog::on_rNoProxy_clicked()
 
 void SettingsDialog::on_bUpgrade_clicked()
 {
-    megaApi->getSessionTransferURL("pro");
+    QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
+    QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
+    megaApi->getSessionTransferURL(url.toUtf8().constData());
 }
 
 void SettingsDialog::on_bUpgradeBandwidth_clicked()
 {
-    megaApi->getSessionTransferURL("pro");
+    QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
+    QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
+    megaApi->getSessionTransferURL(url.toUtf8().constData());
 }
 
 void SettingsDialog::on_rNoLimit_clicked()

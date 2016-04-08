@@ -383,9 +383,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     trayOverQuotaMenu = NULL;
     trayGuestMenu = NULL;
     megaApi = NULL;
-    megaApiGuest = NULL;
     delegateListener = NULL;
-    delegateGuestListener = NULL;
     httpServer = NULL;
     totalDownloadSize = totalUploadSize = 0;
     totalDownloadedSize = totalUploadedSize = 0;
@@ -448,7 +446,7 @@ MegaApplication::~MegaApplication()
 
 void MegaApplication::initialize()
 {
-    if (megaApi || megaApiGuest)
+    if (megaApi)
     {
         return;
     }
@@ -504,30 +502,19 @@ void MegaApplication::initialize()
 #else
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT, MacXPlatform::fd);
 #endif
-    megaApiGuest = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
-
     megaApi->setDownloadMethod(preferences->transferDownloadMethod());
-    megaApiGuest->setDownloadMethod(preferences->transferDownloadMethod());
     megaApi->setUploadMethod(preferences->transferUploadMethod());
-    megaApiGuest->setUploadMethod(preferences->transferUploadMethod());
     setUseHttpsOnly(preferences->usingHttpsOnly());
 
     megaApi->setDefaultFilePermissions(preferences->filePermissionsValue());
-    megaApiGuest->setDefaultFilePermissions(preferences->filePermissionsValue());
     megaApi->setDefaultFolderPermissions(preferences->folderPermissionsValue());
-    megaApiGuest->setDefaultFolderPermissions(preferences->folderPermissionsValue());
-
     megaApi->retrySSLerrors(true);
-    megaApiGuest->retrySSLerrors(true);
     megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
-    megaApiGuest->setPublicKeyPinning(!preferences->SSLcertificateException());
 
     delegateListener = new MEGASyncDelegateListener(megaApi, this);
     megaApi->addListener(delegateListener);
-    delegateGuestListener = new MEGASyncDelegateListener(megaApiGuest, this);
-    megaApiGuest->addListener(delegateGuestListener);
     uploader = new MegaUploader(megaApi);
-    downloader = new MegaDownloader(megaApi, megaApiGuest);
+    downloader = new MegaDownloader(megaApi);
     scanningTimer = new QTimer();
     scanningTimer->setSingleShot(false);
     scanningTimer->setInterval(500);
@@ -535,7 +522,7 @@ void MegaApplication::initialize()
     connect(scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
 
     //Start the HTTP server
-    httpServer = new HTTPServer(megaApiGuest, Preferences::HTTPS_PORT, true);
+    httpServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
     connect(httpServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
     connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
     connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
@@ -787,9 +774,7 @@ void MegaApplication::updateTrayIcon()
     }
     else if (indexing || waiting
              || megaApi->getNumPendingUploads()
-             || megaApi->getNumPendingDownloads()
-             || megaApiGuest->getNumPendingUploads()
-             || megaApiGuest->getNumPendingDownloads())
+             || megaApi->getNumPendingDownloads())
     {
         if (indexing)
         {
@@ -1111,6 +1096,14 @@ void MegaApplication::loggedIn()
     //Set the upload limit
     setUploadLimit(preferences->uploadLimitKB());
     Platform::startShellDispatcher(this);
+
+    // Process any pending download queued during GuestMode
+    processDownloads();
+    for (QMap<QString, QString>::iterator it = pendingLinks.begin(); it != pendingLinks.end(); it++)
+    {
+        QString link = it.key();
+        megaApi->getPublicNode(link.toUtf8().constData());
+    }
 }
 
 void MegaApplication::startSyncs()
@@ -1325,8 +1318,7 @@ void MegaApplication::rebootApplication(bool update)
     }
 
     reboot = true;
-    if (update && (megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads() || megaApi->isWaiting()
-                   || megaApiGuest->getNumPendingDownloads() || megaApiGuest->isWaiting()))
+    if (update && (megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads() || megaApi->isWaiting()))
     {
         if (!updateBlocked)
         {
@@ -1413,7 +1405,6 @@ void MegaApplication::pauseTransfers(bool pause)
     }
 
     megaApi->pauseTransfers(pause);
-    megaApiGuest->pauseTransfers(pause);
 }
 
 void MegaApplication::checkNetworkInterfaces()
@@ -1584,7 +1575,6 @@ void MegaApplication::checkNetworkInterfaces()
     {
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Reconnecting due to local network changes");
         megaApi->retryPendingConnections(true, true);
-        megaApiGuest->retryPendingConnections(true, true);
         activeNetworkInterfaces = newNetworkInterfaces;
         lastActiveTime = QDateTime::currentMSecsSinceEpoch();
     }
@@ -1610,11 +1600,9 @@ void MegaApplication::periodicTasks()
         {
             networkConfigurationManager.updateConfigurations();
             megaApi->update();
-            megaApiGuest->update();
         }
 
         megaApi->updateStats();
-        megaApiGuest->updateStats();
         onGlobalSyncStateChanged(megaApi);
 
         if (isLinux)
@@ -1662,16 +1650,13 @@ void MegaApplication::cleanAll()
     uploader = NULL;
     delete delegateListener;
     delegateListener = NULL;
-    delete delegateGuestListener;
-    delegateGuestListener = NULL;
 
     // Ensure that there aren't objects deleted with deleteLater()
-    // that may try to access megaApi or megaApiGuest after
+    // that may try to access megaApi after
     // their deletion
     QApplication::processEvents();
 
     delete megaApi;
-    delete megaApiGuest;
 
     preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
     trayIcon->deleteLater();
@@ -1753,7 +1738,6 @@ void MegaApplication::showInfoDialog()
     if (isLinux && showStatusAction && megaApi)
     {
         megaApi->retryPendingConnections();
-        megaApiGuest->retryPendingConnections();
     }
 
     if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
@@ -2134,6 +2118,7 @@ void MegaApplication::unlink()
 
     //Reset fields that will be initialized again upon login
     Platform::stopShellDispatcher();
+    downloadQueue.clear();
     megaApi->logout();
 }
 
@@ -2245,12 +2230,10 @@ void MegaApplication::setUploadLimit(int limit)
     if (limit < 0)
     {
         megaApi->setUploadLimit(-1);
-        megaApiGuest->setUploadLimit(-1);
     }
     else
     {
         megaApi->setUploadLimit(limit * 1024);
-        megaApiGuest->setUploadLimit(limit * 1024);
     }
 }
 
@@ -2262,7 +2245,6 @@ void MegaApplication::setUseHttpsOnly(bool httpsOnly)
     }
 
     megaApi->useHttpsOnly(httpsOnly);
-    megaApiGuest->useHttpsOnly(httpsOnly);
 }
 
 void MegaApplication::startUpdateTask()
@@ -2370,11 +2352,9 @@ void MegaApplication::applyProxySettings()
     }
 
     megaApi->setProxySettings(proxySettings);
-    megaApiGuest->setProxySettings(proxySettings);
     delete proxySettings;
     QNetworkProxy::setApplicationProxy(proxy);
     megaApi->retryPendingConnections(true, true);
-    megaApiGuest->retryPendingConnections(true, true);
 }
 
 void MegaApplication::showUpdatedMessage()
@@ -2556,6 +2536,12 @@ void MegaApplication::importLinks()
         return;
     }
 
+    if (!megaApi->isLoggedIn())
+    {
+        userAction(SetupWizard::PAGE_INITIAL);
+        return;
+    }
+
     if (pasteMegaLinksDialog)
     {
         pasteMegaLinksDialog->setVisible(true);
@@ -2596,7 +2582,7 @@ void MegaApplication::importLinks()
     pasteMegaLinksDialog = NULL;
 
     //Send links to the link processor
-    LinkProcessor *linkProcessor = new LinkProcessor(megaApi, megaApiGuest, linkList);
+    LinkProcessor *linkProcessor = new LinkProcessor(linkList, megaApi);
 
     //Open the import dialog
     importDialog = new ImportMegaLinksDialog(megaApi, preferences, linkProcessor);
@@ -2825,6 +2811,7 @@ void MegaApplication::userAction(int action)
     {
         if (setupWizard)
         {
+            setupWizard->goToStep(action);
             setupWizard->setVisible(true);
             setupWizard->raise();
             setupWizard->activateWindow();
@@ -2914,7 +2901,7 @@ void MegaApplication::processDownloads()
         return;
     }
 
-    if (!downloadQueue.size())
+    if (!downloadQueue.size() || !megaApi->isLoggedIn())
     {
         return;
     }
@@ -3143,11 +3130,16 @@ void MegaApplication::externalDownload(QString megaLink, QString auth)
         return;
     }
 
-    if (!pendingLinks.contains(megaLink))
-    {
-        megaApiGuest->getPublicNode(megaLink.toUtf8().constData());
-    }
     pendingLinks.insert(megaLink, auth);
+
+    if (megaApi->isLoggedIn())
+    {
+        megaApi->getPublicNode(megaLink.toUtf8().constData());
+    }
+    else
+    {
+        userAction(SetupWizard::PAGE_INITIAL);
+    }
 }
 
 void MegaApplication::internalDownload(long long handle)
@@ -3347,7 +3339,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
     }
 
     megaApi->retryPendingConnections();
-    megaApiGuest->retryPendingConnections();
 
     if (reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::Context)
     {
@@ -3538,7 +3529,7 @@ void MegaApplication::openBwOverquotaDialog()
 {
     if (!bwOverquotaDialog)
     {
-       bwOverquotaDialog = new UpgradeDialog(pricing);
+       bwOverquotaDialog = new UpgradeDialog(megaApi, pricing);
        connect(bwOverquotaDialog, SIGNAL(finished(int)), this, SLOT(overquotaDialogFinished(int)));
     }
 
@@ -3561,7 +3552,6 @@ void MegaApplication::changeProxy()
     {
         proxyOnly = !megaApi->isFilesystemAvailable() || !preferences->logged();
         megaApi->retryPendingConnections();
-        megaApiGuest->retryPendingConnections();
     }
 
     if (settingsDialog)
@@ -4106,7 +4096,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     {
                         // Retry
                         megaApi->retryPendingConnections();
-                        megaApiGuest->retryPendingConnections();
                         delete sslKeyPinningError;
                         sslKeyPinningError = NULL;
                         return;
@@ -4118,7 +4107,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     if (!ex || !result)
                     {
                         megaApi->retryPendingConnections();
-                        megaApiGuest->retryPendingConnections();
                         delete sslKeyPinningError;
                         sslKeyPinningError = NULL;
                         return;
@@ -4130,9 +4118,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     }
 
                     megaApi->setPublicKeyPinning(false);
-                    megaApiGuest->setPublicKeyPinning(false);
                     megaApi->retryPendingConnections(true);
-                    megaApiGuest->retryPendingConnections(true);
                     delete sslKeyPinningError;
                     sslKeyPinningError = NULL;
                 }
@@ -4737,8 +4723,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     }
 
     //If there are no pending transfers, reset the statics and update the state of the tray icon
-    if (!megaApi->getNumPendingDownloads() && !megaApi->getNumPendingUploads()
-            && !megaApiGuest->getNumPendingDownloads())
+    if (!megaApi->getNumPendingDownloads() && !megaApi->getNumPendingUploads())
     {
         if (totalUploadSize || totalDownloadSize)
         {
@@ -5020,10 +5005,10 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
         return;
     }
 
-    if (megaApi && megaApiGuest)
+    if (megaApi)
     {
         indexing = megaApi->isScanning();
-        waiting = megaApi->isWaiting() || megaApiGuest->isWaiting();
+        waiting = megaApi->isWaiting();
     }
 
     if (infoDialog)
@@ -5040,7 +5025,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
                  .arg(paused).arg(indexing).arg(waiting).toUtf8().constData());
 
     int pendingUploads = megaApi->getNumPendingUploads();
-    int pendingDownloads = megaApi->getNumPendingDownloads() + megaApiGuest->getNumPendingDownloads();
+    int pendingDownloads = megaApi->getNumPendingDownloads();
     if (pendingUploads)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending uploads: %1").arg(pendingUploads).toUtf8().constData());
