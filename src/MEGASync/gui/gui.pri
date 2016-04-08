@@ -30,7 +30,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/StreamingFromMegaDialog.cpp \
     $$PWD/ConfirmSSLexception.cpp \
     $$PWD/UpgradeDialog.cpp \
-    $$PWD/PlanWidget.cpp
+    $$PWD/PlanWidget.cpp \
+    $$PWD/InfoWizard.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -62,7 +63,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/StreamingFromMegaDialog.h \
     $$PWD/ConfirmSSLexception.h \
     $$PWD/UpgradeDialog.h \
-    $$PWD/PlanWidget.h
+    $$PWD/PlanWidget.h \
+    $$PWD/InfoWizard.h
 
 INCLUDEPATH += $$PWD
 
@@ -98,7 +100,8 @@ win32 {
                 $$PWD/win/StreamingFromMegaDialog.ui \
                 $$PWD/win/ConfirmSSLexception.ui \
                 $$PWD/win/PlanWidget.ui \
-                $$PWD/win/UpgradeDialog.ui
+                $$PWD/win/UpgradeDialog.ui \
+                $$PWD/win/InfoWizard.ui
 }
 
 macx {
@@ -131,7 +134,8 @@ macx {
                 $$PWD/macx/PermissionsWidget.ui \
                 $$PWD/macx/ConfirmSSLexception.ui \
                 $$PWD/macx/PlanWidget.ui \
-                $$PWD/macx/UpgradeDialog.ui
+                $$PWD/macx/UpgradeDialog.ui \
+                $$PWD/macx/InfoWizard.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -173,11 +177,11 @@ unix:!macx {
                 $$PWD/linux/PermissionsWidget.ui \
                 $$PWD/linux/ConfirmSSLexception.ui \
                 $$PWD/linux/PlanWidget.ui \
-                $$PWD/linux/UpgradeDialog.ui
+                $$PWD/linux/UpgradeDialog.ui \
+                $$PWD/linux/InfoWizard.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
 }
-
