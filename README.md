@@ -14,7 +14,7 @@ https://mega.nz/#sync
 
 #### Get the source
 ```
-git clone https://github.com/meganz/desktop.git
+git clone https://github.com/meganz/MEGAsync.git
 git submodule update --init --recursive
 ```
 
