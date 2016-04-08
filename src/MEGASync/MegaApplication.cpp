@@ -523,7 +523,7 @@ void MegaApplication::initialize()
 
     //Start the HTTP server
     httpServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
-    connect(httpServer, SIGNAL(onLinkReceived(QString)), this, SLOT(externalDownload(QString)), Qt::QueuedConnection);
+    connect(httpServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
     connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
     connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
     connect(httpServer, SIGNAL(onSyncRequested(long long)), this, SLOT(syncFolder(long long)), Qt::QueuedConnection);
@@ -1099,9 +1099,10 @@ void MegaApplication::loggedIn()
 
     // Process any pending download queued during GuestMode
     processDownloads();
-    for (int it = 0; it < pendingLinks.size(); it++)
+    for (QMap<QString, QString>::iterator it = pendingLinks.begin(); it != pendingLinks.end(); it++)
     {
-        megaApi->getPublicNode(pendingLinks.at(it).toUtf8().constData());
+        QString link = it.key();
+        megaApi->getPublicNode(link.toUtf8().constData());
     }
 }
 
@@ -3122,17 +3123,14 @@ void MegaApplication::externalDownload(QQueue<MegaNode *> newDownloadQueue)
     downloadQueue.append(newDownloadQueue);
 }
 
-void MegaApplication::externalDownload(QString megaLink)
+void MegaApplication::externalDownload(QString megaLink, QString auth)
 {
     if (appfinished)
     {
         return;
     }
 
-    if (!pendingLinks.contains(megaLink))
-    {
-        pendingLinks.append(megaLink);
-    }
+    pendingLinks.insert(megaLink, auth);
 
     if (megaApi->isLoggedIn())
     {
@@ -4461,12 +4459,20 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     case MegaRequest::TYPE_GET_PUBLIC_NODE:
     {
         QString link = QString::fromUtf8(request->getLink());
-        if (pendingLinks.contains(link))
+        QMap<QString, QString>::iterator it = pendingLinks.find(link);
+        if (it != pendingLinks.end())
         {
-            pendingLinks.removeOne(link);
+            QString auth = it.value();
+            pendingLinks.erase(it);
             if (e->getErrorCode() == MegaError::API_OK)
             {
-                downloadQueue.append(request->getPublicMegaNode());
+                MegaNode *node = request->getPublicMegaNode();
+                if (auth.size())
+                {
+                    node->setPrivateAuth(auth.toUtf8().constData());
+                }
+
+                downloadQueue.append(node);
                 processDownloads();
             }
             else

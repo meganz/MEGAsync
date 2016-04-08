@@ -123,7 +123,7 @@ public slots:
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
     void externalDownload(QQueue<mega::MegaNode *> newDownloadQueue);
-    void externalDownload(QString megaLink);
+    void externalDownload(QString megaLink, QString auth);
     void internalDownload(long long handle);
     void syncFolder(long long handle);
     void onLinkImportFinished();
@@ -264,7 +264,7 @@ protected:
     long long lastActiveTime;
     QNetworkConfigurationManager networkConfigurationManager;
     QList<QNetworkInterface> activeNetworkInterfaces;
-    QList<QString> pendingLinks;
+    QMap<QString, QString> pendingLinks;
     MegaSyncLogger *logger;
 
     bool reboot;
