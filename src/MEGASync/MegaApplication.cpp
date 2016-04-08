@@ -4799,6 +4799,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         int t = e->getValue();
         megaApi->getPricing();
         bwOverquotaTimestamp = QDateTime::currentMSecsSinceEpoch() / 1000 + t;
+        closeDialogs();
         openBwOverquotaDialog();
         return;
     }
