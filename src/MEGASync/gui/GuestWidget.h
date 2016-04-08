@@ -16,8 +16,8 @@ class GuestWidget : public QWidget
 
 public:
     enum {
-        LOGIN_CLICKED = 0,
-        CREATE_ACCOUNT_CLICKED = 1
+        CREATE_ACCOUNT_CLICKED = 1,
+        LOGIN_CLICKED
     };
 
     explicit GuestWidget(QWidget *parent = 0);
