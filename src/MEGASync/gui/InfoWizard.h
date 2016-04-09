@@ -18,6 +18,11 @@ public:
         THIRD_PAGE = 2
     };
 
+    enum {
+        CREATE_ACCOUNT_CLICKED = 1,
+        LOGIN_CLICKED
+    };
+
     explicit InfoWizard(QWidget *parent = 0);
     ~InfoWizard();
 
@@ -31,6 +36,9 @@ private slots:
 
     void on_bLogin_clicked();
     void on_bCreateAccount_clicked();
+
+signals:
+    void actionButtonClicked(int button);
 
 protected:
     void goToPage(int page);

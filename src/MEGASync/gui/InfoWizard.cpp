@@ -74,12 +74,14 @@ void InfoWizard::on_bThirdBullet_clicked()
 
 void InfoWizard::on_bLogin_clicked()
 {
-
+    emit actionButtonClicked(LOGIN_CLICKED);
+    accept();
 }
 
 void InfoWizard::on_bCreateAccount_clicked()
 {
-
+    emit actionButtonClicked(CREATE_ACCOUNT_CLICKED);
+    accept();
 }
 
 void InfoWizard::goToPage(int page)
