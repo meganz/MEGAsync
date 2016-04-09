@@ -4781,12 +4781,15 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 //Called when there is a temporal problem in a transfer
 void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError* e)
 {
-    if (appfinished || transfer->isStreamingTransfer())
+    if (appfinished)
     {
         return;
     }
 
-    onTransferUpdate(api, transfer);
+    if (!transfer->isStreamingTransfer())
+    {
+        onTransferUpdate(api, transfer);
+    }
 
     preferences->setTransferDownloadMethod(api->getDownloadMethod());
     preferences->setTransferUploadMethod(api->getUploadMethod());
@@ -4796,6 +4799,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         int t = e->getValue();
         megaApi->getPricing();
         bwOverquotaTimestamp = QDateTime::currentMSecsSinceEpoch() / 1000 + t;
+        closeDialogs();
         openBwOverquotaDialog();
         return;
     }
@@ -4809,7 +4813,12 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         }
         else
         {
-            showWarningMessage(tr("Temporary transmission error: ")
+            QString message = tr("Temporary transmission error: ");
+            if (!message.endsWith(QString::fromUtf8(" ")))
+            {
+                message.append(QString::fromUtf8(" "));
+            }
+            showWarningMessage(message
                            + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
         }
     }
