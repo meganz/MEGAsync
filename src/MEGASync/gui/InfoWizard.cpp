@@ -13,16 +13,7 @@ InfoWizard::InfoWizard(QWidget *parent) :
     QPalette pal;
     pal.setBrush(this->backgroundRole(), QBrush(QImage( QString::fromUtf8("://images/bg_info_wizard.png" ))));
     this->setPalette(pal);
-
-
-    ui->lFlexibleDesc->setText(ui->lFlexibleDesc->text().replace(QString::fromUtf8("[S]"), QString::fromUtf8("<font color=\"#d90007\"> "))
-                               .replace(QString::fromUtf8("[/S]"), QString::fromUtf8(" </font>"))
-                               + QString::fromUtf8("</span></p>"));
-
-
-    ui->lAdvantagesDesc->setText(ui->lAdvantagesDesc->text().replace(QString::fromUtf8("[A]"), QString::fromUtf8("<font color=\"#d90007\"> "))
-                                 .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</font>"))
-                                 + QString::fromUtf8("</span></p>"));
+    tweakStrings();
     goToPage(FIRST_PAGE);
 }
 
@@ -84,6 +75,39 @@ void InfoWizard::on_bCreateAccount_clicked()
     accept();
 }
 
+void InfoWizard::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+        tweakStrings();
+    }
+    QDialog::changeEvent(event);
+}
+
+void InfoWizard::tweakStrings()
+{
+    ui->lFlexibleDesc->setText(ui->lFlexibleDesc->text()
+                               .replace(QString::fromUtf8("[S]"),
+                                        QString::fromUtf8("<font color=\"#d90007\"> "))
+                               .replace(QString::fromUtf8("[/S]"),
+                                        QString::fromUtf8(" </font>"))
+                               + QString::fromUtf8("</span></p>"));
+
+    ui->lAdvantagesDesc->setText(ui->lAdvantagesDesc->text()
+                                 .replace(QString::fromUtf8("[A]"),
+                                          QString::fromUtf8("<font color=\"#d90007\"> "))
+                                 .replace(QString::fromUtf8("[/A]"),
+                                          QString::fromUtf8("</font>"))
+                                 + QString::fromUtf8("</span></p>"));
+
+    ui->lMegasyncDesc->setText(ui->lMegasyncDesc->text()
+                               .replace(QString::fromUtf8("[S]"),
+                                        QString::fromUtf8("<font color=\"#d90007\">"))
+                               .replace(QString::fromUtf8("[/S]"),
+                                        QString::fromUtf8("</font>")));
+}
+
 void InfoWizard::goToPage(int page)
 {
     switch (page)
@@ -112,7 +136,6 @@ void InfoWizard::goToPage(int page)
         default:
             return;
     }
-
 }
 
 void InfoWizard::selectedBullet(QPushButton *b)
@@ -126,5 +149,4 @@ void InfoWizard::selectedBullet(QPushButton *b)
 
     b->setIcon(QIcon(QString::fromAscii("://images/filled_dot.png")));
     b->setIconSize(QSize(16,16));
-
 }

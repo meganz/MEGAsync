@@ -41,6 +41,8 @@ signals:
     void actionButtonClicked(int button);
 
 protected:
+    void changeEvent(QEvent* event);
+    void tweakStrings();
     void goToPage(int page);
     void selectedBullet(QPushButton *b);
 
