@@ -629,6 +629,57 @@ Are you sure?</source>
     </message>
 </context>
 <context>
+    <name>InfoWizard</name>
+    <message>
+        <source>You are not logged in</source>
+        <translation type="unfinished">Giriş yapmadınız</translation>
+    </message>
+    <message>
+        <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
+        <translation type="unfinished">[S]MEGAsync:[/S] Bilgisayarlarınız ve MEGA bulut sürücü arasında kolay otomatik senkronizasyon</translation>
+    </message>
+    <message>
+        <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
+        <translation type="unfinished">[S]Esnek:[/S] PC&#039;deki herhangi bir klasörü buluttaki herhangi bir klaösre eşitleyin. Aynı anda dilediğiniz sayıda klasörü eşitleyin.</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
+        <translation type="unfinished">Ücretsiz bir hesap ile 50GB bulut depolama avantajından yararlanın ve cömert [A]PRO planlarımız[/A] ile tüm dosyalarınızı şifreleme imkanına kavuşun.</translation>
+    </message>
+    <message>
+        <source>Faster transfer speeds</source>
+        <translation type="unfinished">Daha hızlı aktarma hızları</translation>
+    </message>
+    <message>
+        <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
+        <translation type="unfinished">MEGAsync, MEGA&#039;nın yüksek güçlü altyapısı ve çoklu bağlantı aktarmalarından sonuna kadar faydalanır.</translation>
+    </message>
+    <message>
+        <source>Lean &amp; mean resource usage</source>
+        <translation type="unfinished">Yalın ve ortalama kaynak kullanımı</translation>
+    </message>
+    <message>
+        <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
+        <translation type="unfinished">Yavaş tarayıcılara bağlı kalmadan, makinenizde MEGA&#039;nın uçtan uca şifreleme algoritmalarını çalıştırın.</translation>
+    </message>
+    <message>
+        <source>Unlimited file size</source>
+        <translation type="unfinished">Sınırsız dosya boyutu</translation>
+    </message>
+    <message>
+        <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
+        <translation type="unfinished">Tarayıcı teknolojisi dosya aktarma boyutunu sınırlayabilir, oysa MEGAsync ile dilediğin boyuttaki bir dosyayı yükleyebilir veya indirebilirsin.</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation type="unfinished">Oturum Aç</translation>
+    </message>
+    <message>
+        <source>Create Account</source>
+        <translation type="unfinished">Hesap oluştur</translation>
+    </message>
+</context>
+<context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
@@ -1059,26 +1110,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGA&#039;dan yayınla</translation>
     </message>
     <message>
-        <source>seconds</source>
-        <translation type="unfinished">saniye</translation>
-    </message>
-    <message>
-        <source>minutes</source>
-        <translation type="unfinished">dakika</translation>
-    </message>
-    <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Hemen devam etmek için lütfen Pro&#039;ya yükseltin veya ücretsizdevam etmek için %1 bekleyin.</translation>
-    </message>
-    <message>
-        <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">Ücretsiz bant genişliği kotası aşıldı</translation>
-    </message>
-    <message>
-        <source>Pro bandwidth quota exceeded.</source>
-        <translation type="unfinished">ücretli üyelik bant genişliği kotası aşıldı.</translation>
-    </message>
-    <message>
         <source>I don&#039;t care</source>
         <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
         <translation type="unfinished">Umurumda değil</translation>
@@ -1087,6 +1118,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Retry</source>
         <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
         <translation type="unfinished">Yeniden Dene</translation>
+    </message>
+    <message>
+        <source>Transfer canceled</source>
+        <translation type="unfinished">Aktarma iptal edildi!</translation>
     </message>
 </context>
 <context>
@@ -1477,6 +1512,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Bandwidth</source>
         <translation type="unfinished">Bant genişliği</translation>
+    </message>
+    <message>
+        <source>popular!</source>
+        <translatorcomment>Label above the most popular PRO plan</translatorcomment>
+        <translation type="unfinished">popüler!</translation>
     </message>
 </context>
 <context>
@@ -2155,7 +2195,7 @@ when the application starts again</source>
     <message>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">Bu seçeneği sadece aktarmalarınız başlamazsa etkinleştirin. Normal koşullarda, tüm aktarımlar zaten şifreli olduğu için HTTP tatmin edicidir.</translation>
+        <translation type="unfinished">Bu seçeneği sadece aktarmalarınız başlamazsa etkinleştirin. Normal koşullarda, tüm aktarmalar zaten şifreli olduğu için HTTP tatmin edicidir.</translation>
     </message>
 </context>
 <context>

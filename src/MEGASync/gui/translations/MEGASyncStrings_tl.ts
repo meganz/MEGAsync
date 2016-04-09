@@ -184,7 +184,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">You are about to enable an option that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
+        <translation type="unfinished">Papaganahin mo ang option na maaaring ma-intercept ng iba ang communication. Dahil naman sa end-to-end encryption, hindi pa rin ma-aaccess ng attackers ang inyong data pero, maaari pa rin nilang magalaw ang files at folders sa MEGA, burahin ito o tanggalan ka ng access sa account mo.</translation>
     </message>
 </context>
 <context>
@@ -629,6 +629,57 @@ Are you sure?</source>
     </message>
 </context>
 <context>
+    <name>InfoWizard</name>
+    <message>
+        <source>You are not logged in</source>
+        <translation type="unfinished">Hindi ka naka-log-in</translation>
+    </message>
+    <message>
+        <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
+        <translation type="unfinished">[S]MEGAsync:[/S] Madaling automated syncing sa pagitan ng iyong computer at ng iyong MEGA cloud drive</translation>
+    </message>
+    <message>
+        <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
+        <translation type="unfinished">[S]Flexible:[/S] Mag-sync ng kahit anong folder sa inyong PC sa kahit saang folder sa inyong cloud. Mag-sync ng kahit na ilang folders ng sabayan.</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
+        <translation type="unfinished">Pakinabangan ang 50GB ng cloud storage na may kasamang libreng account at kaya pang i-encrypt ang inyong mga files gamit ang aming [A]PRO plans[/A].</translation>
+    </message>
+    <message>
+        <source>Faster transfer speeds</source>
+        <translation type="unfinished">Mabilisang paglilipat</translation>
+    </message>
+    <message>
+        <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
+        <translation type="unfinished">Gamit ng buong-buo ng MEGAsync ang malakasang imprastraktura at multi-connection transfers.</translation>
+    </message>
+    <message>
+        <source>Lean &amp; mean resource usage</source>
+        <translation type="unfinished">Handa at mainam na paggamit ng resource</translation>
+    </message>
+    <message>
+        <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
+        <translation type="unfinished">Patakbuhin ang end-to-end encryption algorithms sa inyong machine ng hindi umaasa sa mababagal na mga browser.</translation>
+    </message>
+    <message>
+        <source>Unlimited file size</source>
+        <translation type="unfinished">Unlimited na laki ng file</translation>
+    </message>
+    <message>
+        <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
+        <translation type="unfinished">Habang ang browser technology ay naglilimit ng file size ng inyong paglilipat, makakasiguro ka naman sa bawat download o upload ng kahit anong file sa pamamagitan ng MEGAsync.</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation type="unfinished">Mag-login</translation>
+    </message>
+    <message>
+        <source>Create Account</source>
+        <translation type="unfinished">Gumawa ng account</translation>
+    </message>
+</context>
+<context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
@@ -1059,26 +1110,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Mag-stream galing MEGA</translation>
     </message>
     <message>
-        <source>seconds</source>
-        <translation type="unfinished">mga segundo</translation>
-    </message>
-    <message>
-        <source>minutes</source>
-        <translation type="unfinished">mga minuto</translation>
-    </message>
-    <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Mag-upgrade sa Pro para magpatuloy kaagad o maghintay ng %1 para magpatuloy ng libre.</translation>
-    </message>
-    <message>
-        <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">Nalagpasan na ang libreng bandwidth quota</translation>
-    </message>
-    <message>
-        <source>Pro bandwidth quota exceeded.</source>
-        <translation type="unfinished">ang bandwidth quota ay nalagpasan na</translation>
-    </message>
-    <message>
         <source>I don&#039;t care</source>
         <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
         <translation type="unfinished">Wala akong pakialam</translation>
@@ -1087,6 +1118,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Retry</source>
         <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
         <translation type="unfinished">Subukang muli</translation>
+    </message>
+    <message>
+        <source>Transfer canceled</source>
+        <translation type="unfinished">Itinigil ang paglilipat!</translation>
     </message>
 </context>
 <context>
@@ -1477,6 +1512,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Bandwidth</source>
         <translation type="unfinished">Bandwidth</translation>
+    </message>
+    <message>
+        <source>popular!</source>
+        <translatorcomment>Label above the most popular PRO plan</translatorcomment>
+        <translation type="unfinished">sikat!</translation>
     </message>
 </context>
 <context>

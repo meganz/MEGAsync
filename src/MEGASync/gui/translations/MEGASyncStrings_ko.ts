@@ -184,7 +184,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">You are about to enable an option that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
+        <translation type="unfinished">당신의 통신이 가로챔을 당할 수 있는 옵션을 활성화하려고 합니다. 당신의 데이터는 우리의 단대단 암호화 덕분에 공격자들이 접근할 수 없지만, 그들이 보이지 않게 당신의 파일과 폴더를 MEGA 안에서 움직이고, 삭제하거나 당신이 계정에 접근하지 못하게 할 수 있습니다.</translation>
     </message>
 </context>
 <context>
@@ -629,6 +629,57 @@ Are you sure?</source>
     </message>
 </context>
 <context>
+    <name>InfoWizard</name>
+    <message>
+        <source>You are not logged in</source>
+        <translation type="unfinished">로그인하지 않은 상태입니다.</translation>
+    </message>
+    <message>
+        <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
+        <translation type="unfinished">[S]MEGAsync:[/S]당신의 컴퓨터들과 MEGA 클라우드 드라이브 사이의 쉬운 자동 동기화</translation>
+    </message>
+    <message>
+        <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
+        <translation type="unfinished">[S]유연성:[/S]PC의 아무 폴더를 클라우드의 아무 폴더에 동기화하세요. 어떠한 수의 폴더를 병렬로 동기화하세요.</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
+        <translation type="unfinished">무료 계정으로 50GB의 클라우드 저장소의 이득을 얻고 우리의 저렴한 [A]PRO 요금제[/A]로 모든 파일을 암호화하세요.</translation>
+    </message>
+    <message>
+        <source>Faster transfer speeds</source>
+        <translation type="unfinished">더 빠른 전송 속도</translation>
+    </message>
+    <message>
+        <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
+        <translation type="unfinished">MEGAsync는 MEGA의 강력한 인프라와 다중연결 전송의 장점을 모두 이용할 수 있습니다.</translation>
+    </message>
+    <message>
+        <source>Lean &amp; mean resource usage</source>
+        <translation type="unfinished">효율적인 자원 사용</translation>
+    </message>
+    <message>
+        <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
+        <translation type="unfinished">MEGA의 단대단 알고리즘을 느린 브라우저에 의존하지 않고 기기에서 직접 실행하세요.</translation>
+    </message>
+    <message>
+        <source>Unlimited file size</source>
+        <translation type="unfinished">파일 크기 무제한</translation>
+    </message>
+    <message>
+        <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
+        <translation type="unfinished">브라우저 기술이 전송하는 파일의 크기를 제한할 때, MEGAsync는 어떠한 파일도 다운로드하거나 업로드할 수 있습니다.</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation type="unfinished">로그인</translation>
+    </message>
+    <message>
+        <source>Create Account</source>
+        <translation type="unfinished">계정 만들기</translation>
+    </message>
+</context>
+<context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
@@ -1059,26 +1110,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGA에서 스트림</translation>
     </message>
     <message>
-        <source>seconds</source>
-        <translation type="unfinished">초</translation>
-    </message>
-    <message>
-        <source>minutes</source>
-        <translation type="unfinished">분</translation>
-    </message>
-    <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">즉시 계속하려면 Pro로 업그레이드 하거나 무료로 계속하려면 %1 동안 기다리세요.</translation>
-    </message>
-    <message>
-        <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">무료 대역폭 할당량 초과</translation>
-    </message>
-    <message>
-        <source>Pro bandwidth quota exceeded.</source>
-        <translation type="unfinished">프로 대역폭 할당량을 초과하였습니다.</translation>
-    </message>
-    <message>
         <source>I don&#039;t care</source>
         <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
         <translation type="unfinished">무시</translation>
@@ -1087,6 +1118,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Retry</source>
         <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
         <translation type="unfinished">재시도</translation>
+    </message>
+    <message>
+        <source>Transfer canceled</source>
+        <translation type="unfinished">전송 취소됨!</translation>
     </message>
 </context>
 <context>
@@ -1443,7 +1478,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them on the default permissions for security reasons.</translation>
+        <translation type="unfinished">파일과 폴더는 소유자와 한 그룹의 이용자에게 있습니다. 이 대화창을 이용하면 MEGAsync를 통해 생성된 새 파일과 폴더에 대하여 같은 그룹의 이용자와 이 컴퓨터의 다른 이용자들에게 다른 접근 권한을 부여할 수 있습니다. 만약 그것을 바꿀 필요가 없다면, 보안 상의 이유로 기본 권한으로 두시기 바랍니다.</translation>
     </message>
 </context>
 <context>
@@ -1477,6 +1512,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Bandwidth</source>
         <translation type="unfinished">대역폭</translation>
+    </message>
+    <message>
+        <source>popular!</source>
+        <translatorcomment>Label above the most popular PRO plan</translatorcomment>
+        <translation type="unfinished">인기!</translation>
     </message>
 </context>
 <context>
@@ -2155,7 +2195,7 @@ when the application starts again</source>
     <message>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</translation>
+        <translation type="unfinished">이 옵션은 전송이 시작되지 않을때만 활성화하세요. 일반적은 환경에서는 모든 전송이 이미 암호화되었기 때문에 HTTP면 충분합니다.</translation>
     </message>
 </context>
 <context>

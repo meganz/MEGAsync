@@ -629,6 +629,57 @@ Are you sure?</source>
     </message>
 </context>
 <context>
+    <name>InfoWizard</name>
+    <message>
+        <source>You are not logged in</source>
+        <translation type="unfinished">הינך לא מחובר</translation>
+    </message>
+    <message>
+        <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
+        <translation type="unfinished">[S]MEGASync:[/S] סנכרון קל ואוטומטי בין המחשב שלך ולכונן בענן שלך ב-MEGA</translation>
+    </message>
+    <message>
+        <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
+        <translation type="unfinished">[S]גמיש:[/S] סנכרן כל תיקייה מהמחשב שלך אל כל תיקייה בענן. סנכרן כל מספר של תיקיות במקביל.</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
+        <translation type="unfinished">נצל 50GB של אחסון בענן עם החשבון הינמי שלנו ותנצל את ההצפנה של כל הקבצים שלך עם תכניות ה-[A]PRO[/A] הנדיבות שלנו.</translation>
+    </message>
+    <message>
+        <source>Faster transfer speeds</source>
+        <translation type="unfinished">העברת מידע מהירה יותר</translation>
+    </message>
+    <message>
+        <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
+        <translation type="unfinished">MEGASync לוקחת את מלוא היתרונות של התשתיות העוצמתיות של MEGA והעברות מקבילות אליה.</translation>
+    </message>
+    <message>
+        <source>Lean &amp; mean resource usage</source>
+        <translation type="unfinished">שימוש במשאבים קטן ונוח</translation>
+    </message>
+    <message>
+        <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
+        <translation type="unfinished">הפעל את אלגוריתם ההצפנה קצה-אל-קצה של MEGA ישירות מהמחשב שלך בלי לדאוג מדפדפן איטי.</translation>
+    </message>
+    <message>
+        <source>Unlimited file size</source>
+        <translation type="unfinished">בלי הגבלת גודל הקבצים</translation>
+    </message>
+    <message>
+        <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
+        <translation type="unfinished">בעוד שטכנולוגיית הדפדפן יכולה להגביל את גודל הקובץ להעברה, אתה יכול להיות בטוח בהורדה או העלאה של כל קובץ עם MEGAsync.</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation type="unfinished">היכנס</translation>
+    </message>
+    <message>
+        <source>Create Account</source>
+        <translation type="unfinished">צור חשבון</translation>
+    </message>
+</context>
+<context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
@@ -1059,26 +1110,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">הזרם מ-MEGA </translation>
     </message>
     <message>
-        <source>seconds</source>
-        <translation type="unfinished">שניות</translation>
-    </message>
-    <message>
-        <source>minutes</source>
-        <translation type="unfinished">דקות</translation>
-    </message>
-    <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">אנא שדרג לחשבון PRO להמשך מידי, או המתן %1 להמשך בחינם.</translation>
-    </message>
-    <message>
-        <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">עברת את מכסת רוחב הפס שלך</translation>
-    </message>
-    <message>
-        <source>Pro bandwidth quota exceeded.</source>
-        <translation type="unfinished">רוחב פס של משתמש PRO </translation>
-    </message>
-    <message>
         <source>I don&#039;t care</source>
         <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
         <translation type="unfinished">התעלם</translation>
@@ -1087,6 +1118,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Retry</source>
         <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
         <translation type="unfinished">נסה שנית</translation>
+    </message>
+    <message>
+        <source>Transfer canceled</source>
+        <translation type="unfinished">ההעברה בוטלה!</translation>
     </message>
 </context>
 <context>
@@ -1477,6 +1512,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Bandwidth</source>
         <translation type="unfinished">רוחב פס</translation>
+    </message>
+    <message>
+        <source>popular!</source>
+        <translatorcomment>Label above the most popular PRO plan</translatorcomment>
+        <translation type="unfinished">פופולרי!</translation>
     </message>
 </context>
 <context>
