@@ -6,6 +6,9 @@ InfoWizard::InfoWizard(QWidget *parent) :
     ui(new Ui::InfoWizard)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_QuitOnClose, false);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    setWindowModality(Qt::WindowModal);
 
     QPalette pal;
     pal.setBrush(this->backgroundRole(), QBrush(QImage( QString::fromUtf8("://images/bg_info_wizard.png" ))));
