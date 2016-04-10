@@ -2066,7 +2066,7 @@ void MegaApplication::setupWizardFinished(int result)
 
     if (result == QDialog::Rejected)
     {
-        if (downloadQueue.size() || pendingLinks.size())
+        if (!infoWizard && (downloadQueue.size() || pendingLinks.size()))
         {
             qDeleteAll(downloadQueue);
             downloadQueue.clear();
@@ -2135,7 +2135,7 @@ void MegaApplication::infoWizardDialogFinished(int result)
 
     if (result != QDialog::Accepted)
     {
-        if (downloadQueue.size() || pendingLinks.size())
+        if (!setupWizard && (downloadQueue.size() || pendingLinks.size()))
         {
             qDeleteAll(downloadQueue);
             downloadQueue.clear();
