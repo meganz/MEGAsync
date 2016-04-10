@@ -431,7 +431,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     pricing = NULL;
     bwOverquotaTimestamp = 0;
     bwOverquotaDialog = NULL;
+    bwOverquotaEvent = false;
     infoWizard = NULL;
+    infoWizardEvent = false;
     externalNodesTimestamp = 0;
     enableDebug = false;
     overquotaCheck = false;
@@ -3582,9 +3584,15 @@ void MegaApplication::openInfoWizard()
 
     if (!infoWizard)
     {
-       infoWizard = new InfoWizard();
-       connect(infoWizard, SIGNAL(actionButtonClicked(int)), this, SLOT(userAction(int)));
-       connect(infoWizard, SIGNAL(finished(int)), this, SLOT(infoWizardDialogFinished(int)));
+        infoWizard = new InfoWizard();
+        connect(infoWizard, SIGNAL(actionButtonClicked(int)), this, SLOT(userAction(int)));
+        connect(infoWizard, SIGNAL(finished(int)), this, SLOT(infoWizardDialogFinished(int)));
+
+        if (!infoWizardEvent)
+        {
+            megaApi->sendEvent(99507, "Not logged in");
+            infoWizardEvent = true;
+        }
     }
 
     infoWizard->show();
@@ -3601,8 +3609,14 @@ void MegaApplication::openBwOverquotaDialog()
 
     if (!bwOverquotaDialog)
     {
-       bwOverquotaDialog = new UpgradeDialog(megaApi, pricing);
-       connect(bwOverquotaDialog, SIGNAL(finished(int)), this, SLOT(overquotaDialogFinished(int)));
+        bwOverquotaDialog = new UpgradeDialog(megaApi, pricing);
+        connect(bwOverquotaDialog, SIGNAL(finished(int)), this, SLOT(overquotaDialogFinished(int)));
+
+        if (!bwOverquotaEvent)
+        {
+            megaApi->sendEvent(99506, "Bandwidth overquota");
+            bwOverquotaEvent = true;
+        }
     }
 
     bwOverquotaDialog->setTimestamp(bwOverquotaTimestamp);
@@ -4525,6 +4539,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_GET_SESSION_TRANSFER_URL:
     {
+        const char *url = request->getText();
+        if (url && !memcmp(url, "pro", 3))
+        {
+            megaApi->sendEvent(99508, "Redirection to PRO");
+        }
+
         QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8(request->getLink())));
         break;
     }
