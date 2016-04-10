@@ -151,8 +151,12 @@ void HTTPServer::readClient()
         request->data = tokens[1];
         processRequest(socket, *request);
 
-        requests.remove(socket);
-        delete request;
+        HTTPRequest *req = requests.value(socket, NULL);
+        if (request == req)
+        {
+            requests.remove(socket);
+            delete request;
+        }
     }
 }
 void HTTPServer::discardClient()
