@@ -1034,6 +1034,12 @@ void MegaApplication::loggedIn()
         return;
     }
 
+    if (infoWizard)
+    {
+        infoWizard->deleteLater();
+        infoWizard = NULL;
+    }
+
     pauseTransfers(paused);
     megaApi->getAccountDetails();
 
