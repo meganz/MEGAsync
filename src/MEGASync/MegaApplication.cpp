@@ -637,8 +637,6 @@ void MegaApplication::initialize()
     {
         pauseTransfers(true);
     }
-
-    megaApi->getPricing();
 }
 
 QString MegaApplication::applicationFilePath()
@@ -1044,6 +1042,7 @@ void MegaApplication::loggedIn()
 
     pauseTransfers(paused);
     megaApi->getAccountDetails();
+    megaApi->getPricing();
 
     if (settingsDialog)
     {
