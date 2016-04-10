@@ -668,7 +668,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
-        <translation type="unfinished">Mientras la tecnología del navegador puede limitar el tamaño de archivo de tus transferencias, el cliente MEGAsync te garantiza la descarga o subida de cualquier archivo.</translation>
+        <translation type="unfinished">Los navegadores pueden limitar el tamaño de tus transferencias, MEGAsync te garantiza la descarga o subida de cualquier archivo.</translation>
     </message>
     <message>
         <source>Login</source>

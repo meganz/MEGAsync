@@ -9,10 +9,6 @@ InfoWizard::InfoWizard(QWidget *parent) :
     setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowModality(Qt::WindowModal);
-
-    QPalette pal;
-    pal.setBrush(this->backgroundRole(), QBrush(QImage( QString::fromUtf8("://images/bg_info_wizard.png" ))));
-    this->setPalette(pal);
     tweakStrings();
     goToPage(FIRST_PAGE);
 }
@@ -91,15 +87,13 @@ void InfoWizard::tweakStrings()
                                .replace(QString::fromUtf8("[S]"),
                                         QString::fromUtf8("<font color=\"#d90007\"> "))
                                .replace(QString::fromUtf8("[/S]"),
-                                        QString::fromUtf8(" </font>"))
-                               + QString::fromUtf8("</span></p>"));
+                                        QString::fromUtf8(" </font>")));
 
     ui->lAdvantagesDesc->setText(ui->lAdvantagesDesc->text()
                                  .replace(QString::fromUtf8("[A]"),
                                           QString::fromUtf8("<font color=\"#d90007\"> "))
                                  .replace(QString::fromUtf8("[/A]"),
-                                          QString::fromUtf8("</font>"))
-                                 + QString::fromUtf8("</span></p>"));
+                                          QString::fromUtf8("</font>")));
 
     ui->lMegasyncDesc->setText(ui->lMegasyncDesc->text()
                                .replace(QString::fromUtf8("[S]"),
@@ -117,6 +111,7 @@ void InfoWizard::goToPage(int page)
             ui->bRightArrow->setVisible(true);
             selectedBullet(ui->bFirstBullet);
             ui->sPages->setCurrentWidget(ui->page_1);
+            ui->sHeaders->setCurrentWidget(ui->pHeader1);
             break;
 
         case SECOND_PAGE:
@@ -124,6 +119,7 @@ void InfoWizard::goToPage(int page)
             ui->bRightArrow->setVisible(true);
             selectedBullet(ui->bSecondBullet);
             ui->sPages->setCurrentWidget(ui->page_2);
+            ui->sHeaders->setCurrentWidget(ui->pHeader2);
             break;
 
         case THIRD_PAGE:
@@ -131,6 +127,7 @@ void InfoWizard::goToPage(int page)
             ui->bRightArrow->setVisible(false);
             selectedBullet(ui->bThirdBullet);
             ui->sPages->setCurrentWidget(ui->page_3);
+            ui->sHeaders->setCurrentWidget(ui->pHeader3);
             break;
 
         default:

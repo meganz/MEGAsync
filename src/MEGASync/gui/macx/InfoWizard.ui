@@ -10,6 +10,12 @@
     <height>524</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="minimumSize">
    <size>
     <width>720</width>
@@ -29,7 +35,13 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPushButton
+   <string notr="true">#InfoWizard
+{
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0.0954 #FFFFFF, stop: 0.5725 #EEEEEE);
+}
+
+QPushButton
 {
 	border: none;
 	background: transparent;
@@ -38,15 +50,22 @@
 #bLogin, #bCreateAccount
 {
   font-family: HelveticaNeue;
-  font-size: 13px;
+  font-size: 14px;
+  font-weight: bold;
   padding-left: 24px;
   padding-right: 24px;
-  color: #777777;
-  border-radius: 3px;
+  color: #AAAAAA;
+  border-radius: 5px;
   border: 1px solid;
-  border-color: rgba(0, 0, 0, 0.1);
-  background-color: #f2f2f2;
+  border-color: #BBBBBB;
 }
+
+#bLogin:hover, #bCreateAccount:hover
+{
+  color: #999999;
+}
+
+
 
 #lResUsage, #lTransferSpeed, #lUnlimitedSize
 {
@@ -62,6 +81,30 @@
   color: #777777;
 }
 
+#lAdvantagesDesc
+{
+  font-family: HelveticaNeue;
+  font-size: 13px;
+  color: #777777;
+}
+
+#lMegasyncDesc
+{
+margin-top: 54px;
+margin-left: 40px;
+margin-right: 40px;
+font-size: 14px;
+color: #777777;
+}
+
+#lFlexibleDesc
+{
+margin-top: 54px;
+margin-left: 60px;
+margin-right: 60px;
+font-size: 14px;
+color: #777777;
+}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -78,16 +121,197 @@
     <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>12</number>
+    <number>0</number>
    </property>
    <item>
+    <widget class="QStackedWidget" name="sHeaders">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>103</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>720</width>
+       <height>103</height>
+      </size>
+     </property>
+     <property name="currentIndex">
+      <number>2</number>
+     </property>
+     <widget class="QWidget" name="pHeader1">
+      <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="lMegasyncDesc">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>720</width>
+           <height>103</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>640</width>
+           <height>103</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignHCenter|Qt::AlignTop</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="pHeader2">
+      <layout class="QHBoxLayout" name="horizontalLayout_13">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="lFlexibleDesc">
+         <property name="text">
+          <string>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignHCenter|Qt::AlignTop</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+         <property name="margin">
+          <number>0</number>
+         </property>
+         <property name="indent">
+          <number>-1</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="pHeader3">
+      <layout class="QVBoxLayout" name="verticalLayout_9">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>7</number>
+       </property>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QPushButton" name="bMegaLogo">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>66</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>66</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border: none;
+background: transparent;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../Resources_linux.qrc">
+           <normaloff>:/images/mega_logo_wizard.png</normaloff>:/images/mega_logo_wizard.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>256</width>
+           <height>66</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
     <widget class="QWidget" name="wInfo" native="true">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>312</height>
+      </size>
+     </property>
      <property name="styleSheet">
       <string notr="true">background: transparent;</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
-       <number>35</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
        <number>0</number>
@@ -97,15 +321,21 @@
       </property>
       <item>
        <widget class="QWidget" name="wLeftArrow" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>78</width>
+          <height>0</height>
+         </size>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_11">
          <property name="spacing">
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>20</number>
+          <number>30</number>
          </property>
          <property name="topMargin">
-          <number>85</number>
+          <number>8</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -135,7 +365,7 @@ background: transparent;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/left_arrow.png</normaloff>:/images/left_arrow.png</iconset>
            </property>
            <property name="iconSize">
@@ -151,11 +381,17 @@ background: transparent;</string>
       </item>
       <item>
        <widget class="QStackedWidget" name="sPages">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">background: transparent;</string>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="page_1">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -175,58 +411,6 @@ background: transparent;</string>
            <number>0</number>
           </property>
           <item>
-           <widget class="QWidget" name="wHeader" native="true">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>0</width>
-              <height>50</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>50</height>
-             </size>
-            </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_3">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QLabel" name="lMegasyncDesc">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</string>
-               </property>
-               <property name="wordWrap">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
            <widget class="QWidget" name="wBody" native="true">
             <property name="styleSheet">
              <string notr="true"/>
@@ -239,7 +423,7 @@ background: transparent;</string>
               <number>0</number>
              </property>
              <property name="topMargin">
-              <number>49</number>
+              <number>8</number>
              </property>
              <property name="rightMargin">
               <number>0</number>
@@ -252,14 +436,17 @@ background: transparent;</string>
                <property name="minimumSize">
                 <size>
                  <width>410</width>
-                 <height>322</height>
+                 <height>270</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>410</width>
-                 <height>322</height>
+                 <height>270</height>
                 </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
                </property>
                <property name="styleSheet">
                 <string notr="true">border: none;
@@ -269,7 +456,7 @@ background: transparent;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
+                <iconset resource="../Resources_linux.qrc">
                  <normaloff>:/images/megasync_info_dialog.png</normaloff>:/images/megasync_info_dialog.png</iconset>
                </property>
                <property name="iconSize">
@@ -286,171 +473,126 @@ background: transparent;</string>
          </layout>
         </widget>
         <widget class="QWidget" name="page_2">
-         <widget class="QWidget" name="wHeader_2" native="true">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
-            <y>10</y>
-            <width>541</width>
-            <height>91</height>
-           </rect>
-          </property>
-          <widget class="QLabel" name="lFlexibleDesc">
-           <property name="geometry">
-            <rect>
-             <x>30</x>
-             <y>20</y>
-             <width>481</width>
-             <height>31</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</string>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </widget>
-         <widget class="QWidget" name="wBody_2" native="true">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
-            <y>100</y>
-            <width>541</width>
-            <height>341</height>
-           </rect>
-          </property>
-          <widget class="QLabel" name="lAdvantagesDesc">
-           <property name="geometry">
-            <rect>
-             <x>290</x>
-             <y>140</y>
-             <width>191</width>
-             <height>121</height>
-            </rect>
-           </property>
-           <property name="text">
-            <string>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</string>
-           </property>
-           <property name="wordWrap">
-            <bool>true</bool>
-           </property>
-          </widget>
-          <widget class="QWidget" name="widget_2" native="true">
-           <property name="geometry">
-            <rect>
-             <x>10</x>
-             <y>0</y>
-             <width>233</width>
-             <height>271</height>
-            </rect>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>233</width>
-             <height>271</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>233</width>
-             <height>271</height>
-            </size>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_10">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <widget class="QPushButton" name="bMacSync">
-              <property name="minimumSize">
-               <size>
-                <width>233</width>
-                <height>271</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>233</width>
-                <height>271</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">border: none;
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <item>
+           <widget class="QWidget" name="wBody_2" native="true">
+            <widget class="QLabel" name="lAdvantagesDesc">
+             <property name="geometry">
+              <rect>
+               <x>330</x>
+               <y>4</y>
+               <width>191</width>
+               <height>121</height>
+              </rect>
+             </property>
+             <property name="text">
+              <string>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="bArrowMac">
+             <property name="geometry">
+              <rect>
+               <x>296</x>
+               <y>130</y>
+               <width>48</width>
+               <height>48</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>48</width>
+               <height>48</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>48</width>
+               <height>48</height>
+              </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: none;
 background: transparent;</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="../Resources_macx.qrc">
-                <normaloff>:/images/mac_sync.png</normaloff>:/images/mac_sync.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>233</width>
-                <height>271</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-          <widget class="QPushButton" name="bArrowMac">
-           <property name="geometry">
-            <rect>
-             <x>250</x>
-             <y>110</y>
-             <width>48</width>
-             <height>48</height>
-            </rect>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>48</width>
-             <height>48</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>48</width>
-             <height>48</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">border: none;
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../Resources_linux.qrc">
+               <normaloff>:/images/arrow_pc_sync.png</normaloff>:/images/arrow_pc_sync.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>48</width>
+               <height>48</height>
+              </size>
+             </property>
+            </widget>
+            <widget class="QPushButton" name="bSync">
+             <property name="geometry">
+              <rect>
+               <x>-34</x>
+               <y>20</y>
+               <width>400</width>
+               <height>257</height>
+              </rect>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>400</width>
+               <height>257</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>400</width>
+               <height>257</height>
+              </size>
+             </property>
+             <property name="focusPolicy">
+              <enum>Qt::NoFocus</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: none;
 background: transparent;</string>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
-             <normaloff>:/images/arrow_mac_sync.png</normaloff>:/images/arrow_mac_sync.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>48</width>
-             <height>48</height>
-            </size>
-           </property>
-          </widget>
-         </widget>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset resource="../Resources_linux.qrc">
+               <normaloff>:/images/pc_sync.png</normaloff>:/images/pc_sync.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>400</width>
+               <height>257</height>
+              </size>
+             </property>
+            </widget>
+            <zorder>bSync</zorder>
+            <zorder>bArrowMac</zorder>
+            <zorder>lAdvantagesDesc</zorder>
+           </widget>
+          </item>
+         </layout>
         </widget>
         <widget class="QWidget" name="page_3">
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>310</height>
+          </size>
+         </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <property name="spacing">
            <number>0</number>
@@ -468,107 +610,34 @@ background: transparent;</string>
            <number>0</number>
           </property>
           <item>
-           <widget class="QWidget" name="wHeader_3" native="true">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+           <widget class="QWidget" name="wBody_3" native="true">
             <property name="minimumSize">
              <size>
-              <width>0</width>
-              <height>100</height>
+              <width>546</width>
+              <height>310</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>16777215</width>
-              <height>100</height>
+              <width>546</width>
+              <height>310</height>
              </size>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_8">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>75</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QPushButton" name="bMegaLogo">
-               <property name="minimumSize">
-                <size>
-                 <width>256</width>
-                 <height>66</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>256</width>
-                 <height>66</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">border: none;
-background: transparent;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
-                 <normaloff>:/images/mega_logo_wizard.png</normaloff>:/images/mega_logo_wizard.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>256</width>
-                 <height>66</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_3">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>180</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QWidget" name="wBody_3" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_6">
              <property name="spacing">
               <number>0</number>
              </property>
              <property name="leftMargin">
-              <number>0</number>
+              <number>58</number>
              </property>
              <property name="topMargin">
-              <number>10</number>
+              <number>30</number>
              </property>
              <property name="rightMargin">
               <number>0</number>
              </property>
              <property name="bottomMargin">
-              <number>10</number>
+              <number>22</number>
              </property>
              <item>
               <widget class="QWidget" name="wSpeedMeter" native="true">
@@ -608,6 +677,9 @@ background: transparent;</string>
                     <height>64</height>
                    </size>
                   </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">border: none;
 background: transparent;</string>
@@ -616,7 +688,7 @@ background: transparent;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Resources_macx.qrc">
+                   <iconset resource="../Resources_linux.qrc">
                     <normaloff>:/images/speed_meter.png</normaloff>:/images/speed_meter.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -631,6 +703,9 @@ background: transparent;</string>
                  <widget class="QWidget" name="wSpeedMeterLabels" native="true">
                   <layout class="QVBoxLayout" name="verticalLayout_3">
                    <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
                     <number>0</number>
                    </property>
                    <property name="bottomMargin">
@@ -715,6 +790,9 @@ background: transparent;</string>
                     <height>64</height>
                    </size>
                   </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">border: none;
 background: transparent;</string>
@@ -723,7 +801,7 @@ background: transparent;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Resources_macx.qrc">
+                   <iconset resource="../Resources_linux.qrc">
                     <normaloff>:/images/resource_thunder.png</normaloff>:/images/resource_thunder.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -741,7 +819,7 @@ background: transparent;</string>
                     <number>0</number>
                    </property>
                    <property name="rightMargin">
-                    <number>12</number>
+                    <number>0</number>
                    </property>
                    <property name="bottomMargin">
                     <number>0</number>
@@ -819,6 +897,9 @@ background: transparent;</string>
                     <height>64</height>
                    </size>
                   </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::NoFocus</enum>
+                  </property>
                   <property name="styleSheet">
                    <string notr="true">border: none;
 background: transparent;</string>
@@ -827,7 +908,7 @@ background: transparent;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Resources_macx.qrc">
+                   <iconset resource="../Resources_linux.qrc">
                     <normaloff>:/images/unlimited_file_size.png</normaloff>:/images/unlimited_file_size.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -842,6 +923,9 @@ background: transparent;</string>
                  <widget class="QWidget" name="wUnlimitedSizeLabels" native="true">
                   <layout class="QVBoxLayout" name="verticalLayout_5">
                    <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
                     <number>0</number>
                    </property>
                    <property name="bottomMargin">
@@ -897,6 +981,12 @@ background: transparent;</string>
       </item>
       <item>
        <widget class="QWidget" name="wRightArrow" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>78</width>
+          <height>0</height>
+         </size>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout_12">
          <property name="spacing">
           <number>0</number>
@@ -905,10 +995,10 @@ background: transparent;</string>
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>85</number>
+          <number>8</number>
          </property>
          <property name="rightMargin">
-          <number>20</number>
+          <number>30</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -935,7 +1025,7 @@ background: transparent;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/right_arrow.png</normaloff>:/images/right_arrow.png</iconset>
            </property>
            <property name="iconSize">
@@ -1020,7 +1110,7 @@ background: transparent;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/empty_dot.png</normaloff>:/images/empty_dot.png</iconset>
         </property>
        </widget>
@@ -1047,7 +1137,7 @@ background: transparent;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/empty_dot.png</normaloff>:/images/empty_dot.png</iconset>
         </property>
        </widget>
@@ -1074,7 +1164,7 @@ background: transparent;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/empty_dot.png</normaloff>:/images/empty_dot.png</iconset>
         </property>
        </widget>
@@ -1102,7 +1192,7 @@ background: transparent;</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
-       <number>23</number>
+       <number>12</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -1114,7 +1204,7 @@ background: transparent;</string>
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>30</number>
+       <number>10</number>
       </property>
       <item>
        <spacer name="leftSpacer">
@@ -1144,7 +1234,7 @@ background: transparent;</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">background: white;</string>
         </property>
         <property name="text">
          <string>Login</string>
@@ -1172,7 +1262,7 @@ background: transparent;</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true"/>
+         <string notr="true">background: white;</string>
         </property>
         <property name="text">
          <string>Create Account</string>
@@ -1197,8 +1287,17 @@ background: transparent;</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>bLeftArrow</tabstop>
+  <tabstop>bRightArrow</tabstop>
+  <tabstop>bFirstBullet</tabstop>
+  <tabstop>bSecondBullet</tabstop>
+  <tabstop>bThirdBullet</tabstop>
+  <tabstop>bLogin</tabstop>
+  <tabstop>bCreateAccount</tabstop>
+ </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

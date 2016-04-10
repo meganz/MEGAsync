@@ -231,6 +231,5 @@
         <file>images/right_arrow.png</file>
         <file>images/speed_meter.png</file>
         <file>images/unlimited_file_size.png</file>
-        <file>images/bg_info_wizard.png</file>
     </qresource>
 </RCC>

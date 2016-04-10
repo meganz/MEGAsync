@@ -454,7 +454,5 @@
         <file>images/speed_meter@2x.png</file>
         <file>images/unlimited_file_size.png</file>
         <file>images/unlimited_file_size@2x.png</file>
-        <file>images/bg_info_wizard.png</file>
-        <file>images/bg_info_wizard@2x.png</file>
     </qresource>
 </RCC>
