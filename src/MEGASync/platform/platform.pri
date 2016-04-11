@@ -18,6 +18,17 @@ win32 {
 }
 
 unix:!macx {
+    distro.target = .distro
+    distro.path = /usr/share/doc/megasync
+    distro.commands = lsb_release -ds > $$distro.path/$$distro.target
+    version.target = .version
+	version.path = /usr/share/doc/megasync
+    version.commands = lsb_release -rs > $$version.path/$$version.target
+    
+    #TODO: uninstall??
+    
+    INSTALLS += distro version
+
     QT += dbus
     SOURCES += $$PWD/linux/LinuxPlatform.cpp \
         $$PWD/linux/ExtServer.cpp \
