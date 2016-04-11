@@ -137,8 +137,11 @@ color: #777777;
        <height>103</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background: transparent;</string>
+     </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pHeader1">
       <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -391,7 +394,7 @@ background: transparent;</string>
          <string notr="true">background: transparent;</string>
         </property>
         <property name="currentIndex">
-         <number>2</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="page_1">
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -480,7 +483,7 @@ background: transparent;</string>
              <property name="geometry">
               <rect>
                <x>330</x>
-               <y>4</y>
+               <y>130</y>
                <width>191</width>
                <height>121</height>
               </rect>
@@ -498,8 +501,8 @@ background: transparent;</string>
             <widget class="QPushButton" name="bArrowMac">
              <property name="geometry">
               <rect>
-               <x>296</x>
-               <y>130</y>
+               <x>286</x>
+               <y>120</y>
                <width>48</width>
                <height>48</height>
               </rect>
@@ -527,8 +530,8 @@ background: transparent;</string>
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
-               <normaloff>:/images/arrow_pc_sync.png</normaloff>:/images/arrow_pc_sync.png</iconset>
+              <iconset resource="../Resources_macx.qrc">
+               <normaloff>:/images/arrow_mac_sync.png</normaloff>:/images/arrow_mac_sync.png</iconset>
              </property>
              <property name="iconSize">
               <size>
@@ -540,22 +543,22 @@ background: transparent;</string>
             <widget class="QPushButton" name="bSync">
              <property name="geometry">
               <rect>
-               <x>-34</x>
-               <y>20</y>
-               <width>400</width>
-               <height>257</height>
+               <x>46</x>
+               <y>12</y>
+               <width>233</width>
+               <height>271</height>
               </rect>
              </property>
              <property name="minimumSize">
               <size>
-               <width>400</width>
-               <height>257</height>
+               <width>233</width>
+               <height>271</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>400</width>
-               <height>257</height>
+               <width>233</width>
+               <height>271</height>
               </size>
              </property>
              <property name="focusPolicy">
@@ -569,13 +572,13 @@ background: transparent;</string>
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
-               <normaloff>:/images/pc_sync.png</normaloff>:/images/pc_sync.png</iconset>
+              <iconset resource="../Resources_macx.qrc">
+               <normaloff>:/images/mac_sync.png</normaloff>:/images/mac_sync.png</iconset>
              </property>
              <property name="iconSize">
               <size>
-               <width>400</width>
-               <height>257</height>
+               <width>233</width>
+               <height>271</height>
               </size>
              </property>
             </widget>
@@ -649,7 +652,7 @@ background: transparent;</string>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_5">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>7</number>
                 </property>
                 <property name="leftMargin">
                  <number>0</number>
@@ -762,7 +765,7 @@ background: transparent;</string>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_6">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>7</number>
                 </property>
                 <property name="leftMargin">
                  <number>0</number>
@@ -869,7 +872,7 @@ background: transparent;</string>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_7">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>7</number>
                 </property>
                 <property name="leftMargin">
                  <number>0</number>
@@ -1298,6 +1301,7 @@ background: transparent;</string>
  </tabstops>
  <resources>
   <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
