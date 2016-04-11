@@ -14,7 +14,7 @@ https://mega.nz/#sync
 
 #### Get the source
 ```
-git clone https://github.com/meganz/desktop.git
+git clone https://github.com/meganz/MEGAsync.git
 git submodule update --init --recursive
 ```
 
@@ -33,7 +33,7 @@ git submodule update --init --recursive
 3.- Create a folder `Release_x32` inside the root of the code that you have just downloaded
 
 4.- Download the required third party libraries from this link:
-https://mega.nz/#!YkdC1QDB!V45YubgxVQq9aGF3oKLeCFYWcNdjVn3CzAUy-1ch-ps
+https://mega.nz/#!YwEQzBCK!10kFLaIU8_yEL87Md_GowLdQLE1sxvM3yOngOrQy_Wk
 
 5.- Uncompress that file into `src\MEGASync\mega\bindings\qt`
 
