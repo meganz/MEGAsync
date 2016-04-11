@@ -8,7 +8,6 @@ InfoWizard::InfoWizard(QWidget *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    setWindowModality(Qt::WindowModal);
     tweakStrings();
     goToPage(FIRST_PAGE);
 }
