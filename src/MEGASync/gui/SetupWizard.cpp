@@ -235,6 +235,14 @@ void SetupWizard::onRequestUpdate(MegaApi *, MegaRequest *request)
 
 void SetupWizard::goToStep(int page)
 {
+    QWidget *wPage = ui->sPages->currentWidget();
+    if (wPage != ui->pLogin
+            && wPage != ui->pNewAccount
+            && wPage != ui->pSetup)
+    {
+        return;
+    }
+
     switch (page)
     {
         case PAGE_INITIAL:
