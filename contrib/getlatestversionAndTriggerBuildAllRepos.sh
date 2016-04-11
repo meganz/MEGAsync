@@ -27,6 +27,26 @@
 ##
 
 
+
+while getopts ":t:" opt; do
+  case $opt in
+    t)
+		tagtodl="--branch $OPTARG"
+      ;;
+    #~ \?)
+		#~ echo "Invalid option: -$OPTARG" >&2
+		#~ display_help $0
+		#~ exit
+	#~ ;;
+	#~ *)
+		#~ display_help $0
+		#~ exit
+	#~ ;;
+  esac
+done
+
+shift $(($OPTIND-1))
+
 THEDATE=`date +%Y%m%d%H%M%S`
 PROJECT_PATH=$1
 NEWOSCFOLDER_PATH=$2
@@ -36,7 +56,8 @@ if [ -z "$PROJECT_PATH" ]; then
 fi
 
 #checkout master project and submodules
-if ! git clone https://github.com/meganz/desktop $PROJECT_PATH; then exit 1;fi
+echo git clone $tagtodl https://github.com/meganz/desktop $PROJECT_PATH
+if ! git clone $tagtodl https://github.com/meganz/desktop $PROJECT_PATH; then exit 1;fi
 pushd $PROJECT_PATH
 git submodule init
 git submodule update
