@@ -219,6 +219,11 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
         QString key = Utilities::extractJSONString(request.data, QString::fromUtf8("k"));
         QString auth = Utilities::extractJSONString(request.data, QString::fromUtf8("esid"));
 
+        if (key.size() > 43)
+        {
+            key.resize(43);
+        }
+
         if (handle.size() == 8 && key.size() == 43)
         {
             QString link = QString::fromUtf8("https://mega.nz/#!%1!%2").arg(handle).arg(key);
