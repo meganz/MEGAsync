@@ -286,7 +286,7 @@ background: transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_macx.qrc">
            <normaloff>:/images/mega_logo_wizard.png</normaloff>:/images/mega_logo_wizard.png</iconset>
          </property>
          <property name="iconSize">
@@ -368,7 +368,7 @@ background: transparent;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/left_arrow.png</normaloff>:/images/left_arrow.png</iconset>
            </property>
            <property name="iconSize">
@@ -459,13 +459,13 @@ background: transparent;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_linux.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/megasync_info_dialog.png</normaloff>:/images/megasync_info_dialog.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
                  <width>410</width>
-                 <height>322</height>
+                 <height>270</height>
                 </size>
                </property>
               </widget>
@@ -691,7 +691,7 @@ background: transparent;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Resources_linux.qrc">
+                   <iconset resource="../Resources_macx.qrc">
                     <normaloff>:/images/speed_meter.png</normaloff>:/images/speed_meter.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -804,7 +804,7 @@ background: transparent;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Resources_linux.qrc">
+                   <iconset resource="../Resources_macx.qrc">
                     <normaloff>:/images/resource_thunder.png</normaloff>:/images/resource_thunder.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -911,7 +911,7 @@ background: transparent;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Resources_linux.qrc">
+                   <iconset resource="../Resources_macx.qrc">
                     <normaloff>:/images/unlimited_file_size.png</normaloff>:/images/unlimited_file_size.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -1028,7 +1028,7 @@ background: transparent;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/right_arrow.png</normaloff>:/images/right_arrow.png</iconset>
            </property>
            <property name="iconSize">
@@ -1113,7 +1113,7 @@ background: transparent;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/empty_dot.png</normaloff>:/images/empty_dot.png</iconset>
         </property>
        </widget>
@@ -1140,7 +1140,7 @@ background: transparent;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/empty_dot.png</normaloff>:/images/empty_dot.png</iconset>
         </property>
        </widget>
@@ -1167,7 +1167,7 @@ background: transparent;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/empty_dot.png</normaloff>:/images/empty_dot.png</iconset>
         </property>
        </widget>
@@ -1300,7 +1300,6 @@ background: transparent;</string>
   <tabstop>bCreateAccount</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
   <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
