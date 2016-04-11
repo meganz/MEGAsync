@@ -2854,6 +2854,7 @@ void MegaApplication::userAction(int action)
     {
         if (setupWizard)
         {
+            setupWizard->goToStep(action);
             setupWizard->setVisible(true);
             setupWizard->raise();
             setupWizard->activateWindow();
