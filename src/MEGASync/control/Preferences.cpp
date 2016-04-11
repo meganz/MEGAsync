@@ -16,10 +16,11 @@ const int Preferences::VERSION_CODE = 2900;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.0");
-const QString Preferences::SDK_ID = QString::fromAscii("4ed58");
+const QString Preferences::SDK_ID = QString::fromAscii("ae910");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- Management of bandwidth quota for PRO users\n"
             "- New information dialog\n"
+            "- Updated dependencies (OpenSSL, cURL...)\n"
             "- ARM support (Raspberry Pi)\n"
             "- Bug fixes");
 
