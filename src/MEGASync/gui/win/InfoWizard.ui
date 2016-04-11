@@ -137,6 +137,9 @@ color: #777777;
        <height>103</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background: transparent;</string>
+     </property>
      <property name="currentIndex">
       <number>2</number>
      </property>
@@ -283,7 +286,7 @@ background: transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_win.qrc">
            <normaloff>:/images/mega_logo_wizard.png</normaloff>:/images/mega_logo_wizard.png</iconset>
          </property>
          <property name="iconSize">
@@ -365,7 +368,7 @@ background: transparent;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/left_arrow.png</normaloff>:/images/left_arrow.png</iconset>
            </property>
            <property name="iconSize">
@@ -456,7 +459,7 @@ background: transparent;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_linux.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/megasync_info_dialog.png</normaloff>:/images/megasync_info_dialog.png</iconset>
                </property>
                <property name="iconSize">
@@ -527,7 +530,7 @@ background: transparent;</string>
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_win.qrc">
                <normaloff>:/images/arrow_pc_sync.png</normaloff>:/images/arrow_pc_sync.png</iconset>
              </property>
              <property name="iconSize">
@@ -569,7 +572,7 @@ background: transparent;</string>
               <string/>
              </property>
              <property name="icon">
-              <iconset resource="../Resources_linux.qrc">
+              <iconset resource="../Resources_win.qrc">
                <normaloff>:/images/pc_sync.png</normaloff>:/images/pc_sync.png</iconset>
              </property>
              <property name="iconSize">
@@ -649,7 +652,7 @@ background: transparent;</string>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_5">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>14</number>
                 </property>
                 <property name="leftMargin">
                  <number>0</number>
@@ -688,7 +691,7 @@ background: transparent;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Resources_linux.qrc">
+                   <iconset resource="../Resources_win.qrc">
                     <normaloff>:/images/speed_meter.png</normaloff>:/images/speed_meter.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -762,7 +765,7 @@ background: transparent;</string>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_6">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>14</number>
                 </property>
                 <property name="leftMargin">
                  <number>0</number>
@@ -801,7 +804,7 @@ background: transparent;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Resources_linux.qrc">
+                   <iconset resource="../Resources_win.qrc">
                     <normaloff>:/images/resource_thunder.png</normaloff>:/images/resource_thunder.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -869,7 +872,7 @@ background: transparent;</string>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_7">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>14</number>
                 </property>
                 <property name="leftMargin">
                  <number>0</number>
@@ -908,7 +911,7 @@ background: transparent;</string>
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Resources_linux.qrc">
+                   <iconset resource="../Resources_win.qrc">
                     <normaloff>:/images/unlimited_file_size.png</normaloff>:/images/unlimited_file_size.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -1025,7 +1028,7 @@ background: transparent;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/right_arrow.png</normaloff>:/images/right_arrow.png</iconset>
            </property>
            <property name="iconSize">
@@ -1110,7 +1113,7 @@ background: transparent;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/empty_dot.png</normaloff>:/images/empty_dot.png</iconset>
         </property>
        </widget>
@@ -1137,7 +1140,7 @@ background: transparent;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/empty_dot.png</normaloff>:/images/empty_dot.png</iconset>
         </property>
        </widget>
@@ -1164,7 +1167,7 @@ background: transparent;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/empty_dot.png</normaloff>:/images/empty_dot.png</iconset>
         </property>
        </widget>
@@ -1297,7 +1300,7 @@ background: transparent;</string>
   <tabstop>bCreateAccount</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -137,6 +137,9 @@ color: #777777;
        <height>103</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background: transparent;</string>
+     </property>
      <property name="currentIndex">
       <number>2</number>
      </property>
@@ -649,7 +652,7 @@ background: transparent;</string>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_5">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>14</number>
                 </property>
                 <property name="leftMargin">
                  <number>0</number>
@@ -762,7 +765,7 @@ background: transparent;</string>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_6">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>14</number>
                 </property>
                 <property name="leftMargin">
                  <number>0</number>
@@ -869,7 +872,7 @@ background: transparent;</string>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_7">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>14</number>
                 </property>
                 <property name="leftMargin">
                  <number>0</number>
