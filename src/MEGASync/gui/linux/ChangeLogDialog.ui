@@ -26,7 +26,17 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#ChangeLogDialog
+   <string notr="true">QPushButton
+{
+	border: none;
+	background: transparent;
+}
+QPushButton:focus {
+	border: none;
+	outline: none;
+	background: transparent;
+}
+#ChangeLogDialog
 {
 border-radius: 5px;
 }
