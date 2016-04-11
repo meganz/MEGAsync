@@ -184,7 +184,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">You are about to enable an option that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
+        <translation type="unfinished">Vous êtes sur le point d&#039;activer une option qui peut permettre à vos communications d&#039;être interceptées. Vos données resteront toujours inaccessibles aux personnes malintentionnées grâce à notre chiffrement de bout-en-bout, mais ils peuvent aveuglement déplacer vos fichiers dans MEGA, les supprimer ou vous empêcher d&#039;accéder à votre compte. </translation>
     </message>
 </context>
 <context>
@@ -629,6 +629,57 @@ Are you sure?</source>
     </message>
 </context>
 <context>
+    <name>InfoWizard</name>
+    <message>
+        <source>You are not logged in</source>
+        <translation type="unfinished">Vous n&#039;êtes pas authentifié</translation>
+    </message>
+    <message>
+        <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
+        <translation type="unfinished">[S]MEGAsync:[/S] Synchronisation automatique et simplifiée entre vos ordinateurs et votre espace de stockage MEGA</translation>
+    </message>
+    <message>
+        <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
+        <translation type="unfinished">[S]Fléxible:[/S] Synchroniser n&#039;importe quel dossier depuis votre PC vers n&#039;importe quel dossier dans le cloud. Synchroniser n&#039;importe quel nombre de dossiers en parallèle.</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
+        <translation type="unfinished">Prenez l&#039;avantage des 50Go gratuit d&#039;espace de stockage dans le cloud et chiffrez tous vos fichiers avec nos [A]Plans PRO[/A] généreux.</translation>
+    </message>
+    <message>
+        <source>Faster transfer speeds</source>
+        <translation type="unfinished">Vitesses de transfert plus rapide</translation>
+    </message>
+    <message>
+        <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
+        <translation type="unfinished">MEGAsync dispose de tous les avantages des infrastructures hautes-performances de MEGA et des transferts en multi-connexion.</translation>
+    </message>
+    <message>
+        <source>Lean &amp; mean resource usage</source>
+        <translation type="unfinished">Utilisation des ressources maîtrisée et robuste</translation>
+    </message>
+    <message>
+        <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
+        <translation type="unfinished">Exécutez les algorithmes de chiffrement de bout-à-bout de MEGA à même votre machine sans avoir à utiliser des navigateurs lents. </translation>
+    </message>
+    <message>
+        <source>Unlimited file size</source>
+        <translation type="unfinished">Taille de fichier non limitée</translation>
+    </message>
+    <message>
+        <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
+        <translation type="unfinished">Tandis que les technologies des navigateurs peuvent limiter la taille des fichiers de vos transferts, vous pouvez être certains(es) de télécharger ou uploader n&#039;importe quel fichier avec MEGAsync.</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation type="unfinished">Se connecter</translation>
+    </message>
+    <message>
+        <source>Create Account</source>
+        <translation type="unfinished">Créer un Compte</translation>
+    </message>
+</context>
+<context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
@@ -1059,26 +1110,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Streamer depuis MEGA</translation>
     </message>
     <message>
-        <source>seconds</source>
-        <translation type="unfinished">secondes</translation>
-    </message>
-    <message>
-        <source>minutes</source>
-        <translation type="unfinished">minutes</translation>
-    </message>
-    <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Veuillez passer à compte Pro pour continuer immédiatement ou attendez %1 pour continuer gratuitement.</translation>
-    </message>
-    <message>
-        <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">Quota de bande-passante gratuite dépassée</translation>
-    </message>
-    <message>
-        <source>Pro bandwidth quota exceeded.</source>
-        <translation type="unfinished">Quota de bande passante pro dépassé.</translation>
-    </message>
-    <message>
         <source>I don&#039;t care</source>
         <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
         <translation type="unfinished">Peu m&#039;importe</translation>
@@ -1087,6 +1118,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Retry</source>
         <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
         <translation type="unfinished">Réessayer</translation>
+    </message>
+    <message>
+        <source>Transfer canceled</source>
+        <translation type="unfinished">Transfert annulé !</translation>
     </message>
 </context>
 <context>
@@ -1443,7 +1478,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them on the default permissions for security reasons.</translation>
+        <translation type="unfinished">Les fichiers et les dossiers ont un propriétaire et appartiennent à un groupe d&#039;utilisateurs. En utilisant cette fenêtre de dialogue vous pouvez octroyer aux utilisateurs qui appartiennent au même groupe et aux autres utilisateurs de cet ordinateur divers permissions d&#039;accès pour les nouveaux fichiers et dossiers créés par MEGAsync. Si vous ne voulez pas les changer, veuillez laisser les permissions par défaut pour des raisons de sécurité.</translation>
     </message>
 </context>
 <context>
@@ -1477,6 +1512,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Bandwidth</source>
         <translation type="unfinished">Bande passante</translation>
+    </message>
+    <message>
+        <source>popular!</source>
+        <translatorcomment>Label above the most popular PRO plan</translatorcomment>
+        <translation type="unfinished">Populaire !</translation>
     </message>
 </context>
 <context>
@@ -2155,7 +2195,7 @@ when the application starts again</source>
     <message>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</translation>
+        <translation type="unfinished">Activez cette option seulement si vos transferts ne démarrent pas. Dans des conditions normales, le protocole HTTP est suffisant et tous les transferts sont déjà chiffrés.</translation>
     </message>
 </context>
 <context>

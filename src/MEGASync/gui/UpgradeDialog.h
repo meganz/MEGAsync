@@ -36,6 +36,8 @@ private slots:
     void unitTimeElapsed();
 
 protected:
+    void changeEvent(QEvent* event);
+
     mega::MegaPricing *pricing;
     mega::MegaApi *megaApi;
 };

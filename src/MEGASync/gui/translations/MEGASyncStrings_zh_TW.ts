@@ -629,6 +629,57 @@ Are you sure?</source>
     </message>
 </context>
 <context>
+    <name>InfoWizard</name>
+    <message>
+        <source>You are not logged in</source>
+        <translation type="unfinished">您未登入</translation>
+    </message>
+    <message>
+        <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
+        <translation type="unfinished">[S]MEGAsync：[/S] 輕鬆自動同步你的電腦和MEGA雲端檔案</translation>
+    </message>
+    <message>
+        <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
+        <translation type="unfinished">[S]充滿彈性的：[/ S] 同步您電腦中的資料夾至雲端硬碟。亦可同時同步無限多個資料夾。</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
+        <translation type="unfinished">免費註冊帳號並享有50GB雲端空間，還可加密所有雲端檔案，都在優渥的[A]PRO計劃[/ A]中</translation>
+    </message>
+    <message>
+        <source>Faster transfer speeds</source>
+        <translation type="unfinished">更快的傳輸速度</translation>
+    </message>
+    <message>
+        <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
+        <translation type="unfinished">MEGAsync充分展現MEGA的高效能架構與多點連接傳輸功能。</translation>
+    </message>
+    <message>
+        <source>Lean &amp; mean resource usage</source>
+        <translation type="unfinished">資源運用最佳化</translation>
+    </message>
+    <message>
+        <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
+        <translation type="unfinished">直接於您的電腦上執行MEGA點對點加密，不使用速度較慢之瀏覽器。</translation>
+    </message>
+    <message>
+        <source>Unlimited file size</source>
+        <translation type="unfinished">檔案大小無限制</translation>
+    </message>
+    <message>
+        <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
+        <translation type="unfinished">雖然瀏覽器技術可能會限制傳輸檔案大小，但使用MEGAsync，您可以下載或上傳任何檔案。</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation type="unfinished">登錄</translation>
+    </message>
+    <message>
+        <source>Create Account</source>
+        <translation type="unfinished">建立帳號</translation>
+    </message>
+</context>
+<context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
@@ -1059,26 +1110,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGA串流</translation>
     </message>
     <message>
-        <source>seconds</source>
-        <translation type="unfinished">秒</translation>
-    </message>
-    <message>
-        <source>minutes</source>
-        <translation type="unfinished">分鐘</translation>
-    </message>
-    <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">請立即升級到專業版繼續，或等待%1后繼續</translation>
-    </message>
-    <message>
-        <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">免費頻寬配額已用完</translation>
-    </message>
-    <message>
-        <source>Pro bandwidth quota exceeded.</source>
-        <translation type="unfinished">專業版頻寬額度已達。</translation>
-    </message>
-    <message>
         <source>I don&#039;t care</source>
         <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
         <translation type="unfinished">忽略</translation>
@@ -1087,6 +1118,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Retry</source>
         <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
         <translation type="unfinished">重試</translation>
+    </message>
+    <message>
+        <source>Transfer canceled</source>
+        <translation type="unfinished">傳輸已取消！</translation>
     </message>
 </context>
 <context>
@@ -1477,6 +1512,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Bandwidth</source>
         <translation type="unfinished">頻寬</translation>
+    </message>
+    <message>
+        <source>popular!</source>
+        <translatorcomment>Label above the most popular PRO plan</translatorcomment>
+        <translation type="unfinished">最受歡迎！</translation>
     </message>
 </context>
 <context>

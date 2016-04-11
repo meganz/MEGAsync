@@ -629,6 +629,57 @@ Are you sure?</source>
     </message>
 </context>
 <context>
+    <name>InfoWizard</name>
+    <message>
+        <source>You are not logged in</source>
+        <translation type="unfinished">Anda belum login</translation>
+    </message>
+    <message>
+        <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
+        <translation type="unfinished">[S]MEGAsync:[/S] syncing mudah dan otomatis antara komputer anda dan MEGA cloud drive anda</translation>
+    </message>
+    <message>
+        <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
+        <translation type="unfinished">[S]Flexible:[/S] Sync folder apapun dari PC ke folder apapun di cloud. Sync berapa banyak pun folder secara paralel.</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
+        <translation type="unfinished">Manfaatkan 50GB cloud storage dengan akun gratis dan encrypt seluruh file anda dengan [A]PRO plans[/A] kami yang sangat murah hati.</translation>
+    </message>
+    <message>
+        <source>Faster transfer speeds</source>
+        <translation type="unfinished">Transfer yang lebih cepat</translation>
+    </message>
+    <message>
+        <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
+        <translation type="unfinished">MEGAsync memanfaatkan infrastrukter canggih MEGA dan transfer multi-koneksi.</translation>
+    </message>
+    <message>
+        <source>Lean &amp; mean resource usage</source>
+        <translation type="unfinished">Pengunaan resource sedikit &amp; sendiri</translation>
+    </message>
+    <message>
+        <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
+        <translation type="unfinished">Jalankan algoritma enkripsi MEGA pada mesin anda tanpa mengandalkan browser yang lebih lambat.</translation>
+    </message>
+    <message>
+        <source>Unlimited file size</source>
+        <translation type="unfinished">Ukuran file tak terbatas</translation>
+    </message>
+    <message>
+        <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
+        <translation type="unfinished">Walaupun teknologi browser dapat membatasi ukuran file dari transferan anda, anda dapat tetap mendownload atau upload file apapun dengan MEGAsync.</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation type="unfinished">Masuk</translation>
+    </message>
+    <message>
+        <source>Create Account</source>
+        <translation type="unfinished">Buat Akun</translation>
+    </message>
+</context>
+<context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
@@ -1059,26 +1110,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Stream dari MEGA</translation>
     </message>
     <message>
-        <source>seconds</source>
-        <translation type="unfinished">detik</translation>
-    </message>
-    <message>
-        <source>minutes</source>
-        <translation type="unfinished">menit</translation>
-    </message>
-    <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Harap upgrade ke Pro untuk melanjutkan, atau tunggu %1 untuk melanjutkan dengan gratis.</translation>
-    </message>
-    <message>
-        <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">Bandwidth quota gratis terlampaui</translation>
-    </message>
-    <message>
-        <source>Pro bandwidth quota exceeded.</source>
-        <translation type="unfinished">kuota bandwith pro terlampaui</translation>
-    </message>
-    <message>
         <source>I don&#039;t care</source>
         <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
         <translation type="unfinished">Abaikan</translation>
@@ -1087,6 +1118,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Retry</source>
         <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
         <translation type="unfinished">Ulangi</translation>
+    </message>
+    <message>
+        <source>Transfer canceled</source>
+        <translation type="unfinished">Transfer dibatalkan!</translation>
     </message>
 </context>
 <context>
@@ -1477,6 +1512,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Bandwidth</source>
         <translation type="unfinished">Bandwidth</translation>
+    </message>
+    <message>
+        <source>popular!</source>
+        <translatorcomment>Label above the most popular PRO plan</translatorcomment>
+        <translation type="unfinished">popular!</translation>
     </message>
 </context>
 <context>

@@ -629,6 +629,57 @@ Are you sure?</source>
     </message>
 </context>
 <context>
+    <name>InfoWizard</name>
+    <message>
+        <source>You are not logged in</source>
+        <translation type="unfinished">Du är inte inloggad</translation>
+    </message>
+    <message>
+        <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
+        <translation type="unfinished">[S] MEGAsync: [/ S] Enkel automatisk synkronisering mellan dina datorer och din MEGA Cloud Drive</translation>
+    </message>
+    <message>
+        <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
+        <translation type="unfinished">[S] Flexibel: [/ S] Synkronisera en mapp från din dator till någon mapp i molnet. Synkronisera valfritt antal mappar parallellt.</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
+        <translation type="unfinished">Utnyttja 50GB moln lagring med ett gratis konto, kryptera alla dina filer med vår generösa [A] PRO planer [/ A].</translation>
+    </message>
+    <message>
+        <source>Faster transfer speeds</source>
+        <translation type="unfinished">Snabbare överföring</translation>
+    </message>
+    <message>
+        <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
+        <translation type="unfinished">MEGAsync drar full nytta av MEGA: s kraftfulla infrastruktur och multi-anslutnings överföringar.</translation>
+    </message>
+    <message>
+        <source>Lean &amp; mean resource usage</source>
+        <translation type="unfinished">Lean &amp; mean resursanvändning</translation>
+    </message>
+    <message>
+        <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
+        <translation type="unfinished">Kör MEGA end-to-end-krypteringsalgoritmer hela vägen till din dator utan att behöva förlita sig på långsamma webbläsare.</translation>
+    </message>
+    <message>
+        <source>Unlimited file size</source>
+        <translation type="unfinished">obegränsad filstorlek</translation>
+    </message>
+    <message>
+        <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
+        <translation type="unfinished">Medan webb-läsare kan begränsa storleken på din filöverföring så kan du vara säker på att alla filer kan överföras i MEGAsync.</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation type="unfinished">Logga in</translation>
+    </message>
+    <message>
+        <source>Create Account</source>
+        <translation type="unfinished">Skapa konto</translation>
+    </message>
+</context>
+<context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
@@ -1059,26 +1110,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Stream från MEGA</translation>
     </message>
     <message>
-        <source>seconds</source>
-        <translation type="unfinished">sekunder</translation>
-    </message>
-    <message>
-        <source>minutes</source>
-        <translation type="unfinished">minuter</translation>
-    </message>
-    <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Uppgradera till Pro för att fortsätta omedelbart, eller vänta %1 för att fortsätta gratis.</translation>
-    </message>
-    <message>
-        <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">Fri tilldelade bandbredd överskrids</translation>
-    </message>
-    <message>
-        <source>Pro bandwidth quota exceeded.</source>
-        <translation type="unfinished">Pro-bandbreddskvoten överskriden.</translation>
-    </message>
-    <message>
         <source>I don&#039;t care</source>
         <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
         <translation type="unfinished">Jag bryr mig inte</translation>
@@ -1087,6 +1118,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Retry</source>
         <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
         <translation type="unfinished">Försök igen</translation>
+    </message>
+    <message>
+        <source>Transfer canceled</source>
+        <translation type="unfinished">Överföring avbryten!</translation>
     </message>
 </context>
 <context>
@@ -1477,6 +1512,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Bandwidth</source>
         <translation type="unfinished">Bandbredd</translation>
+    </message>
+    <message>
+        <source>popular!</source>
+        <translatorcomment>Label above the most popular PRO plan</translatorcomment>
+        <translation type="unfinished">populär!</translation>
     </message>
 </context>
 <context>

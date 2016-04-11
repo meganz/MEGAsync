@@ -218,5 +218,16 @@
         <file>images/storage.png</file>
         <file>images/account_type_over.png</file>
         <file>images/account_type_press.png</file>
+        <file>images/arrow_pc_sync.png</file>
+        <file>images/empty_dot.png</file>
+        <file>images/filled_dot.png</file>
+        <file>images/left_arrow.png</file>
+        <file>images/mega_logo_wizard.png</file>
+        <file>images/megasync_info_dialog.png</file>
+        <file>images/pc_sync.png</file>
+        <file>images/resource_thunder.png</file>
+        <file>images/right_arrow.png</file>
+        <file>images/speed_meter.png</file>
+        <file>images/unlimited_file_size.png</file>
     </qresource>
 </RCC>

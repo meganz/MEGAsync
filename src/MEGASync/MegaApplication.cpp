@@ -431,6 +431,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     pricing = NULL;
     bwOverquotaTimestamp = 0;
     bwOverquotaDialog = NULL;
+    bwOverquotaEvent = false;
+    infoWizard = NULL;
+    infoWizardEvent = false;
     externalNodesTimestamp = 0;
     enableDebug = false;
     overquotaCheck = false;
@@ -634,8 +637,6 @@ void MegaApplication::initialize()
     {
         pauseTransfers(true);
     }
-
-    megaApi->getPricing();
 }
 
 QString MegaApplication::applicationFilePath()
@@ -1033,8 +1034,15 @@ void MegaApplication::loggedIn()
         return;
     }
 
+    if (infoWizard)
+    {
+        infoWizard->deleteLater();
+        infoWizard = NULL;
+    }
+
     pauseTransfers(paused);
     megaApi->getAccountDetails();
+    megaApi->getPricing();
 
     if (settingsDialog)
     {
@@ -1642,6 +1650,8 @@ void MegaApplication::cleanAll()
 
     delete bwOverquotaDialog;
     bwOverquotaDialog = NULL;
+    delete infoWizard;
+    infoWizard = NULL;
     delete infoDialog;
     infoDialog = NULL;
     delete httpServer;
@@ -2057,6 +2067,13 @@ void MegaApplication::setupWizardFinished(int result)
 
     if (result == QDialog::Rejected)
     {
+        if (!infoWizard && (downloadQueue.size() || pendingLinks.size()))
+        {
+            qDeleteAll(downloadQueue);
+            downloadQueue.clear();
+            pendingLinks.clear();
+            showInfoMessage(tr("Transfer canceled"));
+        }
         return;
     }
 
@@ -2104,6 +2121,31 @@ void MegaApplication::overquotaDialogFinished(int result)
     }
 }
 
+void MegaApplication::infoWizardDialogFinished(int result)
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    if (infoWizard)
+    {
+        infoWizard->deleteLater();
+        infoWizard = NULL;
+    }
+
+    if (result != QDialog::Accepted)
+    {
+        if (!setupWizard && (downloadQueue.size() || pendingLinks.size()))
+        {
+            qDeleteAll(downloadQueue);
+            downloadQueue.clear();
+            pendingLinks.clear();
+            showInfoMessage(tr("Transfer canceled"));
+        }
+    }
+}
+
 void MegaApplication::unlink()
 {
     if (appfinished)
@@ -2118,6 +2160,7 @@ void MegaApplication::unlink()
 
     //Reset fields that will be initialized again upon login
     Platform::stopShellDispatcher();
+    qDeleteAll(downloadQueue);
     downloadQueue.clear();
     megaApi->logout();
 }
@@ -2536,9 +2579,9 @@ void MegaApplication::importLinks()
         return;
     }
 
-    if (!megaApi->isLoggedIn())
+    if (!preferences->logged())
     {
-        userAction(SetupWizard::PAGE_INITIAL);
+        openInfoWizard();
         return;
     }
 
@@ -2811,7 +2854,6 @@ void MegaApplication::userAction(int action)
     {
         if (setupWizard)
         {
-            setupWizard->goToStep(action);
             setupWizard->setVisible(true);
             setupWizard->raise();
             setupWizard->activateWindow();
@@ -2901,8 +2943,14 @@ void MegaApplication::processDownloads()
         return;
     }
 
-    if (!downloadQueue.size() || !megaApi->isLoggedIn())
+    if (!downloadQueue.size())
     {
+        return;
+    }
+
+    if(!preferences->logged())
+    {
+        openInfoWizard();
         return;
     }
 
@@ -2967,6 +3015,7 @@ void MegaApplication::processDownloads()
     else
     {
         //If the dialog is rejected, cancel uploads
+        qDeleteAll(downloadQueue);
         downloadQueue.clear();
     }
 
@@ -3132,13 +3181,13 @@ void MegaApplication::externalDownload(QString megaLink, QString auth)
 
     pendingLinks.insert(megaLink, auth);
 
-    if (megaApi->isLoggedIn())
+    if (preferences->logged())
     {
         megaApi->getPublicNode(megaLink.toUtf8().constData());
     }
     else
     {
-        userAction(SetupWizard::PAGE_INITIAL);
+        openInfoWizard();
     }
 }
 
@@ -3525,12 +3574,48 @@ void MegaApplication::openSettings(int tab)
     settingsDialog->activateWindow();
 }
 
+void MegaApplication::openInfoWizard()
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    if (!infoWizard)
+    {
+        infoWizard = new InfoWizard();
+        connect(infoWizard, SIGNAL(actionButtonClicked(int)), this, SLOT(userAction(int)));
+        connect(infoWizard, SIGNAL(finished(int)), this, SLOT(infoWizardDialogFinished(int)));
+
+        if (!infoWizardEvent)
+        {
+            megaApi->sendEvent(99507, "Not logged in");
+            infoWizardEvent = true;
+        }
+    }
+
+    infoWizard->show();
+    infoWizard->raise();
+    infoWizard->activateWindow();
+}
+
 void MegaApplication::openBwOverquotaDialog()
 {
+    if (appfinished)
+    {
+        return;
+    }
+
     if (!bwOverquotaDialog)
     {
-       bwOverquotaDialog = new UpgradeDialog(megaApi, pricing);
-       connect(bwOverquotaDialog, SIGNAL(finished(int)), this, SLOT(overquotaDialogFinished(int)));
+        bwOverquotaDialog = new UpgradeDialog(megaApi, pricing);
+        connect(bwOverquotaDialog, SIGNAL(finished(int)), this, SLOT(overquotaDialogFinished(int)));
+
+        if (!bwOverquotaEvent)
+        {
+            megaApi->sendEvent(99506, "Bandwidth overquota");
+            bwOverquotaEvent = true;
+        }
     }
 
     bwOverquotaDialog->setTimestamp(bwOverquotaTimestamp);
@@ -4453,6 +4538,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_GET_SESSION_TRANSFER_URL:
     {
+        const char *url = request->getText();
+        if (url && !memcmp(url, "pro", 3))
+        {
+            megaApi->sendEvent(99508, "Redirection to PRO");
+        }
+
         QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8(request->getLink())));
         break;
     }

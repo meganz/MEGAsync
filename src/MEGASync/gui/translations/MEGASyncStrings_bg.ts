@@ -629,6 +629,57 @@ Are you sure?</source>
     </message>
 </context>
 <context>
+    <name>InfoWizard</name>
+    <message>
+        <source>You are not logged in</source>
+        <translation type="unfinished">Не сте влезли в системата</translation>
+    </message>
+    <message>
+        <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
+        <translation type="unfinished">[S]MEGAsync:[/S] Лесно автоматизирано синхронизиране между вашия компютър и вашия MEGA cloud диск</translation>
+    </message>
+    <message>
+        <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
+        <translation type="unfinished">[S]Гъвкав:[/S] Синхронизиране на всяка папка от вашия компютър с всяка папка в cloud диска. Паралелно синхронизиране на произволен брой папки.</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
+        <translation type="unfinished">Възползвайте се от 50GB cloud съхранение с безплатен профил и имайте възможност да криптирате всичките си файлове с нашите щедри [A]PRO планове[/A].</translation>
+    </message>
+    <message>
+        <source>Faster transfer speeds</source>
+        <translation type="unfinished">По-бързи трансферни скорости</translation>
+    </message>
+    <message>
+        <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
+        <translation type="unfinished">MEGAsync се възползва напълно от мощните инфраструктурни и многоканални трансфери на MEGA.</translation>
+    </message>
+    <message>
+        <source>Lean &amp; mean resource usage</source>
+        <translation type="unfinished">Ефикасно използване на ресурсите</translation>
+    </message>
+    <message>
+        <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
+        <translation type="unfinished">Стартирайте алгоритмите за криптиране от край до край на MEGA директно от вашата машина, без да разчитате на по-бавни браузъри.</translation>
+    </message>
+    <message>
+        <source>Unlimited file size</source>
+        <translation type="unfinished">Неограничен файлов размер</translation>
+    </message>
+    <message>
+        <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
+        <translation type="unfinished">Докато браузърната технология може да ограничи файловите размери на вашите трансфери, можете да бъдете сигурни, че можете да изтеглите или да качите всеки файл с MEGAsync.</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translation type="unfinished">Вход</translation>
+    </message>
+    <message>
+        <source>Create Account</source>
+        <translation type="unfinished">Създаване на профил</translation>
+    </message>
+</context>
+<context>
     <name>Installer</name>
     <message>
         <source>Choose Users</source>
@@ -1059,26 +1110,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Стрийм от MEGA</translation>
     </message>
     <message>
-        <source>seconds</source>
-        <translation type="unfinished">секунди</translation>
-    </message>
-    <message>
-        <source>minutes</source>
-        <translation type="unfinished">минути</translation>
-    </message>
-    <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Моля, преминете към Pro за да продължите веднага, или изчакайте %1 за да продължите безплатно.</translation>
-    </message>
-    <message>
-        <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">Превишена квота за безплатен трафик</translation>
-    </message>
-    <message>
-        <source>Pro bandwidth quota exceeded.</source>
-        <translation type="unfinished">pro квотата за трафик е превишена.</translation>
-    </message>
-    <message>
         <source>I don&#039;t care</source>
         <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
         <translation type="unfinished">I don&#039;t care</translation>
@@ -1087,6 +1118,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Retry</source>
         <translatorcomment>Text for a button that will cause a retry of a failed operation. The translation should be as short as possible.</translatorcomment>
         <translation type="unfinished">Опитай отново</translation>
+    </message>
+    <message>
+        <source>Transfer canceled</source>
+        <translation type="unfinished">Трансферът беше прекратен</translation>
     </message>
 </context>
 <context>
@@ -1477,6 +1512,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Bandwidth</source>
         <translation type="unfinished">Трафик</translation>
+    </message>
+    <message>
+        <source>popular!</source>
+        <translatorcomment>Label above the most popular PRO plan</translatorcomment>
+        <translation type="unfinished">popular!</translation>
     </message>
 </context>
 <context>

@@ -26,6 +26,7 @@
 #include "gui/PasteMegaLinksDialog.h"
 #include "gui/ChangeLogDialog.h"
 #include "gui/UpgradeDialog.h"
+#include "gui/InfoWizard.h"
 #include "control/Preferences.h"
 #include "control/HTTPServer.h"
 #include "control/MegaUploader.h"
@@ -109,6 +110,7 @@ public slots:
     void onMessageClicked();
     void start();
     void openSettings(int tab = SettingsDialog::ACCOUNT_TAB);
+    void openInfoWizard();
     void openBwOverquotaDialog();
     void changeProxy();
     void importLinks();
@@ -148,6 +150,7 @@ public slots:
     void scanningAnimationStep();
     void setupWizardFinished(int result);
     void overquotaDialogFinished(int result);
+    void infoWizardDialogFinished(int result);
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();
@@ -239,6 +242,9 @@ protected:
     mega::MegaPricing *pricing;
     long long bwOverquotaTimestamp;
     UpgradeDialog *bwOverquotaDialog;
+    bool bwOverquotaEvent;
+    InfoWizard *infoWizard;
+    bool infoWizardEvent;
     mega::QTMegaListener *delegateListener;
     QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;
