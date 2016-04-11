@@ -1311,9 +1311,6 @@ void MegaApplication::closeDialogs()
     delete downloadNodeSelector;
     downloadNodeSelector = NULL;
 
-    delete infoOverQuota;
-    infoOverQuota = NULL;
-
     delete sslKeyPinningError;
     sslKeyPinningError = NULL;
 }
@@ -1654,6 +1651,8 @@ void MegaApplication::cleanAll()
     infoWizard = NULL;
     delete infoDialog;
     infoDialog = NULL;
+    delete infoOverQuota;
+    infoOverQuota = NULL;
     delete httpServer;
     httpServer = NULL;
     delete uploader;
@@ -4234,6 +4233,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             preferences->unlink();
             closeDialogs();
+            delete infoOverQuota;
+            infoOverQuota = NULL;
+
             periodicTasks();
             preferences->setFirstStartDone();
             start();
