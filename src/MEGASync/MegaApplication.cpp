@@ -4235,6 +4235,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             closeDialogs();
             delete infoOverQuota;
             infoOverQuota = NULL;
+            paused = false;
 
             periodicTasks();
             preferences->setFirstStartDone();
