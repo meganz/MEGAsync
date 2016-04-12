@@ -533,6 +533,7 @@ void SetupWizard::on_bCancel_clicked()
             }
             else
             {
+                megaApi->localLogout();
                 done(QDialog::Rejected);
             }
         }
@@ -754,6 +755,7 @@ void SetupWizard::closeEvent(QCloseEvent *event)
         }
         else
         {
+            megaApi->localLogout();
             done(QDialog::Rejected);
         }
     }
