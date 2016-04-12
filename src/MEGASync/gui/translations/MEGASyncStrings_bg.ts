@@ -1123,6 +1123,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Transfer canceled</source>
         <translation type="unfinished">Трансферът беше прекратен</translation>
     </message>
+    <message>
+        <source>You are not logged in</source>
+        <translation type="unfinished">Не сте влезли в системата</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>

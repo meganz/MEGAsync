@@ -1123,6 +1123,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Transfer canceled</source>
         <translation type="unfinished">Överföring avbryten!</translation>
     </message>
+    <message>
+        <source>You are not logged in</source>
+        <translation type="unfinished">Du är inte inloggad</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>

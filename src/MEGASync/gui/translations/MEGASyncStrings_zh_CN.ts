@@ -465,7 +465,7 @@ Are you sure?</source>
     <message>
         <source>Usage: Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data of the account is temporarily unavailable (String as short as possible)</translatorcomment>
-        <translation>用法：数据暂时不可用</translation>
+        <translation>用量：数据暂时不可用</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -485,7 +485,7 @@ Are you sure?</source>
     <message>
         <source>Usage: %1</source>
         <translatorcomment>Label to indicate the actual usage of the current account. Preserve %1 code beacuse is used to include the amount of space utilized.</translatorcomment>
-        <translation>用法：%1</translation>
+        <translation>用量：%1</translation>
     </message>
     <message>
         <source>%1 of %2 (%3/s)</source>
@@ -606,7 +606,7 @@ Are you sure?</source>
     <message>
         <source>Usage: Data temporarily unavailable</source>
         <translatorcomment>Labe to indicate that the account usage is temporaryly unavailable.</translatorcomment>
-        <translation type="unfinished">用法：数据暂时不可用</translation>
+        <translation type="unfinished">用量：数据暂时不可用</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -621,7 +621,7 @@ Are you sure?</source>
     <message>
         <source>Usage: %1</source>
         <translatorcomment>Label to indicate the amount of account usage. Keep %1 code.</translatorcomment>
-        <translation type="unfinished">用法：%1</translation>
+        <translation type="unfinished">用量：%1</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1122,6 +1122,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transfer canceled</source>
         <translation type="unfinished">传输已取消!</translation>
+    </message>
+    <message>
+        <source>You are not logged in</source>
+        <translation type="unfinished">您未登录</translation>
     </message>
 </context>
 <context>

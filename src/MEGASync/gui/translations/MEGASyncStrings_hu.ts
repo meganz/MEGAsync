@@ -1123,6 +1123,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Transfer canceled</source>
         <translation type="unfinished">Átvitelek megszakítva!</translation>
     </message>
+    <message>
+        <source>You are not logged in</source>
+        <translation type="unfinished">Nincs bejelentkezve</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
