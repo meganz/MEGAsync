@@ -18,15 +18,17 @@ win32 {
 }
 
 unix:!macx {
-    distro.target = .distro
+    distro.target = $$PWD/linux/data/distro
     distro.path = /usr/share/doc/megasync
-    distro.commands = lsb_release -ds > $$distro.path/$$distro.target
-    version.target = .version
+    distro.commands = lsb_release -ds > $$distro.target
+    distro.files = $$distro.target
+    
+    version.target = $$PWD/linux/data/version
 	version.path = /usr/share/doc/megasync
-    version.commands = lsb_release -rs > $$version.path/$$version.target
-    
+    version.commands = lsb_release -rs > $$version.target
+	version.files = $$version.target
+
     #TODO: uninstall??
-    
     INSTALLS += distro version
 
     QT += dbus
