@@ -18,18 +18,23 @@ win32 {
 }
 
 unix:!macx {
-    distro.target = $$PWD/linux/data/distro
-    distro.path = /usr/share/doc/megasync
+	#VARIABLES
+	isEmpty(PREFIX) {
+	PREFIX = $$THE_RPM_BUILD_ROOT/usr
+	}
+	DATADIR =$$PREFIX/share
+	
+	distro.target = $$PWD/linux/data/distro
+    distro.path = $$DATADIR/doc/megasync
     distro.commands = lsb_release -ds > $$distro.target
     distro.files = $$distro.target
     
     version.target = $$PWD/linux/data/version
-	version.path = /usr/share/doc/megasync
+	version.path = $$DATADIR/doc/megasync
     version.commands = lsb_release -rs > $$version.target
 	version.files = $$version.target
 
-    #TODO: uninstall??
-    INSTALLS += distro version
+	system(command -v lsb_release):INSTALLS += distro version
 
     QT += dbus
     SOURCES += $$PWD/linux/LinuxPlatform.cpp \

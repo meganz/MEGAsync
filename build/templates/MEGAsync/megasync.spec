@@ -75,10 +75,10 @@ rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
 %if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
-qmake-qt4 DESTDIR=%{buildroot}%{_bindir}
+qmake-qt4 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot}
 lrelease-qt4  MEGASync/MEGASync.pro
 %else
-qmake DESTDIR=%{buildroot}%{_bindir}
+qmake DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot}
 lrelease MEGASync/MEGASync.pro
 %endif
 
@@ -325,8 +325,9 @@ killall megasync 2> /dev/null || true
 %defattr(-,root,root)
 %{_bindir}/%{name}
 %{_datadir}/applications/megasync.desktop
-%{_datadir}/icons/hicolor/*/apps/mega.png
+#%{_datadir}/icons/hicolor/*/apps/mega.png
 %{_datadir}/icons/hicolor/*/*/mega.png
+%{_datadir}/doc/megasync/*
 
 %changelog
 
