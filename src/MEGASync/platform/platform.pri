@@ -26,15 +26,15 @@ unix:!macx {
 	
 	distro.target = $$PWD/linux/data/distro
     distro.path = $$DATADIR/doc/megasync
-    distro.commands = lsb_release -ds > $$distro.target
+    system(command -v lsb_release): distro.commands = lsb_release -ds > $$distro.target
     distro.files = $$distro.target
     
     version.target = $$PWD/linux/data/version
 	version.path = $$DATADIR/doc/megasync
-    version.commands = lsb_release -rs > $$version.target
+    system(command -v lsb_release): version.commands = lsb_release -rs > $$version.target
 	version.files = $$version.target
 
-	system(command -v lsb_release):INSTALLS += distro version
+	INSTALLS += distro version
 
     QT += dbus
     SOURCES += $$PWD/linux/LinuxPlatform.cpp \
