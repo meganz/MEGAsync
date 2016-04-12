@@ -3028,7 +3028,7 @@ void MegaApplication::processDownloads()
         return;
     }
 
-    if(!preferences->logged())
+    if (!preferences->logged())
     {
         openInfoWizard();
         return;
@@ -3145,8 +3145,14 @@ void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
 //Called when the user wants to upload a list of files and/or folders from the shell
 void MegaApplication::shellUpload(QQueue<QString> newUploadQueue)
 {
-    if (appfinished || !megaApi->isLoggedIn())
+    if (appfinished)
     {
+        return;
+    }
+
+    if (!preferences->logged())
+    {
+        openInfoWizard();
         return;
     }
 
