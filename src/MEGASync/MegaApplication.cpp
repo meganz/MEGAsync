@@ -5194,6 +5194,18 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
     {
         indexing = megaApi->isScanning();
         waiting = megaApi->isWaiting();
+
+        int pendingUploads = megaApi->getNumPendingUploads();
+        int pendingDownloads = megaApi->getNumPendingDownloads();
+        if (pendingUploads)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending uploads: %1").arg(pendingUploads).toUtf8().constData());
+        }
+
+        if (pendingDownloads)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending downloads: %1").arg(pendingDownloads).toUtf8().constData());
+        }
     }
 
     if (infoDialog)
@@ -5208,18 +5220,6 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Current state. Paused = %1   Indexing = %2   Waiting = %3")
                  .arg(paused).arg(indexing).arg(waiting).toUtf8().constData());
-
-    int pendingUploads = megaApi->getNumPendingUploads();
-    int pendingDownloads = megaApi->getNumPendingDownloads();
-    if (pendingUploads)
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending uploads: %1").arg(pendingUploads).toUtf8().constData());
-    }
-
-    if (pendingDownloads)
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending downloads: %1").arg(pendingDownloads).toUtf8().constData());
-    }
 
     if (!isLinux)
     {
