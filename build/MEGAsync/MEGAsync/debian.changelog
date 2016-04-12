@@ -1,3 +1,12 @@
+megasync (2.9.0) stable; urgency=low
+
+  * Management of bandwidth quota for PRO users
+  * New information dialog
+  * ARM support (Raspberry Pi)
+  * Bug fixes
+
+ -- MEGA Team <linux@mega.co.nz>  Mon, 11 Apr 2016 20:11:50 +0200
+
 megasync (2.8.0) stable; urgency=low
 
   * Check if public links have been already downloaded
