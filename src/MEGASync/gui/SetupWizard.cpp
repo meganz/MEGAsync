@@ -355,7 +355,8 @@ void SetupWizard::on_bNext_clicked()
 
         megaApi->createAccount(email.toUtf8().constData(),
                                password.toUtf8().constData(),
-                               name.toUtf8().constData(), delegateListener);
+                               name.toUtf8().constData(), NULL,
+                               delegateListener);
 
         ui->lProgress->setText(tr("Creating account..."));
         page_progress();
