@@ -1,3 +1,11 @@
+lun abr 11 20:11:50 CEST 2016 - linux@mega.co.nz
+
+- Management of bandwidth quota for PRO users
+- New information dialog
+- ARM support (Raspberry Pi)
+- Bug fixes
+
+-------------------------------------------------------------------
 mié abr 6 17:32:34 CEST 2016 - linux@mega.co.nz
 
 - Check if public links have been already downloaded

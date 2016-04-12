@@ -18,6 +18,24 @@ win32 {
 }
 
 unix:!macx {
+	#VARIABLES
+	isEmpty(PREFIX) {
+	PREFIX = $$THE_RPM_BUILD_ROOT/usr
+	}
+	DATADIR =$$PREFIX/share
+	
+	distro.target = $$PWD/linux/data/distro
+    distro.path = $$DATADIR/doc/megasync
+    system(command -v lsb_release): distro.commands = lsb_release -ds > $$distro.target
+    distro.files = $$distro.target
+    
+    version.target = $$PWD/linux/data/version
+	version.path = $$DATADIR/doc/megasync
+    system(command -v lsb_release): version.commands = lsb_release -rs > $$version.target
+	version.files = $$version.target
+
+	INSTALLS += distro version
+
     QT += dbus
     SOURCES += $$PWD/linux/LinuxPlatform.cpp \
         $$PWD/linux/ExtServer.cpp \
