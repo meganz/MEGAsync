@@ -749,6 +749,83 @@ void MegaApplication::updateTrayIcon()
         }
 #endif
     }
+    else if (!megaApi->isLoggedIn())
+    {
+        if (!infoDialog)
+        {
+            tooltip = QCoreApplication::applicationName()
+                    + QString::fromAscii(" ")
+                    + Preferences::VERSION_STRING
+                    + QString::fromAscii("\n")
+                    + tr("Logging in");
+
+    #ifndef __APPLE__
+        #ifdef _WIN32
+            icon = QString::fromUtf8("://images/tray_sync.ico");
+        #else
+            icon = QString::fromUtf8("://images/22_synching.png");
+        #endif
+    #else
+            icon = QString::fromUtf8("://images/icon_syncing_mac.png");
+            icon_white = QString::fromUtf8("://images/icon_syncing_mac_white.png");
+
+            if (!scanningTimer->isActive())
+            {
+                scanningAnimationIndex = 1;
+                scanningTimer->start();
+            }
+    #endif
+        }
+        else
+        {
+            tooltip = QCoreApplication::applicationName()
+                    + QString::fromAscii(" ")
+                    + Preferences::VERSION_STRING
+                    + QString::fromAscii("\n")
+                    + tr("You are not logged in");
+
+    #ifndef __APPLE__
+        #ifdef _WIN32
+            icon = QString::fromUtf8("://images/app_ico.ico");
+        #else
+            icon = QString::fromUtf8("://images/22_uptodate.png");
+        #endif
+    #else
+            icon = QString::fromUtf8("://images/icon_synced_mac.png");
+            icon_white = QString::fromUtf8("://images/icon_synced_mac_white.png");
+
+            if (scanningTimer->isActive())
+            {
+                scanningTimer->stop();
+            }
+    #endif
+        }
+    }
+    else if (!megaApi->isFilesystemAvailable())
+    {
+        tooltip = QCoreApplication::applicationName()
+                + QString::fromAscii(" ")
+                + Preferences::VERSION_STRING
+                + QString::fromAscii("\n")
+                + tr("Fetching file list...");
+
+#ifndef __APPLE__
+    #ifdef _WIN32
+        icon = QString::fromUtf8("://images/tray_sync.ico");
+    #else
+        icon = QString::fromUtf8("://images/22_synching.png");
+    #endif
+#else
+        icon = QString::fromUtf8("://images/icon_syncing_mac.png");
+        icon_white = QString::fromUtf8("://images/icon_syncing_mac_white.png");
+
+        if (!scanningTimer->isActive())
+        {
+            scanningAnimationIndex = 1;
+            scanningTimer->start();
+        }
+#endif
+    }
     else if (paused)
     {
         tooltip = QCoreApplication::applicationName()
@@ -983,6 +1060,7 @@ void MegaApplication::start()
             userAction(SetupWizard::PAGE_INITIAL);
         }
 
+        onGlobalSyncStateChanged(megaApi);
         return;
     }
     else
@@ -1112,6 +1190,8 @@ void MegaApplication::loggedIn()
         QString link = it.key();
         megaApi->getPublicNode(link.toUtf8().constData());
     }
+
+    onGlobalSyncStateChanged(megaApi);
 }
 
 void MegaApplication::startSyncs()
@@ -2106,7 +2186,7 @@ void MegaApplication::setupWizardFinished(int result)
     startSyncs();
 }
 
-void MegaApplication::overquotaDialogFinished(int result)
+void MegaApplication::overquotaDialogFinished(int)
 {
     if (appfinished)
     {
@@ -4144,6 +4224,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             //Wrong login -> logout
             unlink();
         }
+        onGlobalSyncStateChanged(megaApi);
         break;
     }
     case MegaRequest::TYPE_LOGOUT:
