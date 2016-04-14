@@ -5,8 +5,10 @@ distro=$(cat /usr/share/doc/megasync/distro)
 #ver=$(lsb_release -rs)
 ver=$(cat /usr/share/doc/megasync/version)
 
+if [[ $distro = "Raspbian GNU/Linux 8.0 (jessie)" ]]; then
+    str="Raspbian_8.0"
 # Ubuntu
-if [[ $ver = "16.04" ]]; then
+elif [[ $ver = "16.04" ]]; then
     str="xUbuntu_16.04"
 elif [[ $ver = "15.10" ]]; then
     str="xUbuntu_15.10"
