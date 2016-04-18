@@ -346,6 +346,11 @@ else
 	#cat result_$VMNAME.log
 	touch ${VMNAME}_FAIL
 fi
+
+echo " check repo set ok ..."
+$sshpasscommand ssh root@$IP_GUEST  "cat /usr/share/doc/megasync/{distro,version}" 
+$sshpasscommand ssh root@$IP_GUEST  "cat /etc/apt/sources.list.d/megasync.list" 
+
 	
 if [ $quit_machine -eq 1 ]; then
 	$sshpasscommand ssh root@$IP_GUEST shutdown -h now & #unfurtonately this might (though rarely) hang if vm destroyed
