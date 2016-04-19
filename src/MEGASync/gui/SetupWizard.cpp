@@ -193,7 +193,6 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 bool proxyAuth = preferences->proxyRequiresAuth();
                 QString proxyUsername = preferences->getProxyUsername();
                 QString proxyPassword = preferences->getProxyPassword();
-                QString downloadFolder = preferences->downloadFolder();
 
                 preferences->setEmail(email);
                 preferences->setSession(sessionKey);
@@ -204,7 +203,6 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 preferences->setProxyRequiresAuth(proxyAuth);
                 preferences->setProxyUsername(proxyUsername);
                 preferences->setProxyPassword(proxyPassword);
-                preferences->setDownloadFolder(downloadFolder);
 
                 done(QDialog::Accepted);
                 break;
