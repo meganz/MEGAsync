@@ -30,6 +30,7 @@ PlanWidget::PlanWidget(PlanInfo data, QString userAgent, QWidget *parent) :
                                "QPushButton#bOverlay {border-radius: 3px; border: 1px solid; border-color: rgba(0, 0, 0, 0.1); border: none;} "
                                "QPushButton#bOverlay:pressed {border-image: url(://images/account_type_press.png);}"));
 
+    overlay->setCursor(Qt::PointingHandCursor);
     overlay->resize(this->size());
     ui->lBandWidth->setText(ui->lBandWidth->text().toUpper());
     ui->lStorage->setText(ui->lStorage->text().toUpper());
