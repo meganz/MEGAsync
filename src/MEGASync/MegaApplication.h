@@ -122,6 +122,7 @@ public slots:
     void streamActionClicked();
     void logoutActionClicked();
     void processDownloads();
+    void processUploads();
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
     void externalDownload(QQueue<mega::MegaNode *> newDownloadQueue);
