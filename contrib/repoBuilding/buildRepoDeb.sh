@@ -85,6 +85,7 @@ for file in  Sources* ; do
 	echo " ${SUM} ${SIZE} ${file}" >> Release
 done
 
+cp  /srv/obs/projects/DEB.pkg/_pubkey ./Release.key
 
 sudo sign -P /srv/obs/projects/DEB.pkg/_signkey -d Release
 mv Release.asc Release.gpg
