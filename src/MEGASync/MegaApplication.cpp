@@ -181,21 +181,7 @@ int main(int argc, char *argv[])
             }
         }
 
-        QDirIterator di(MegaApplication::applicationDataPath(), QDir::Files | QDir::NoDotAndDotDot);
-        while (di.hasNext())
-        {
-            di.next();
-            const QFileInfo& fi = di.fileInfo();
-            if (fi.fileName().endsWith(QString::fromAscii(".db"))
-                    || !fi.fileName().compare(QString::fromUtf8("MEGAsync.cfg"))
-                    || !fi.fileName().compare(QString::fromUtf8("MEGAsync.cfg.bak")))
-            {
-                QFile::remove(di.filePath());
-            }
-        }
-
-        //QDir dataDir(dataPath);
-        //Utilities::removeRecursively(dataDir);
+        Utilities::removeRecursively(MegaApplication::applicationDataPath());
 
 #ifdef WIN32
         if (preferences->installationTime() != -1)
