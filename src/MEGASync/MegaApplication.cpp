@@ -1036,6 +1036,7 @@ void MegaApplication::start()
     }
 
     applyProxySettings();
+    Platform::startShellDispatcher(this);
 
     //Start the initial setup wizard if needed
     if (!preferences->logged())
@@ -1181,7 +1182,6 @@ void MegaApplication::loggedIn()
 
     //Set the upload limit
     setUploadLimit(preferences->uploadLimitKB());
-    Platform::startShellDispatcher(this);
 
     // Process any pending download/upload queued during GuestMode
     processDownloads();
@@ -2239,7 +2239,6 @@ void MegaApplication::unlink()
     }
 
     //Reset fields that will be initialized again upon login
-    Platform::stopShellDispatcher();
     qDeleteAll(downloadQueue);
     downloadQueue.clear();
     megaApi->logout();
@@ -3697,8 +3696,16 @@ void MegaApplication::openInfoWizard()
     }
 
     infoWizard->show();
+
+#ifdef WIN32
+    infoWizard->showMinimized();
+    infoWizard->setWindowState(Qt::WindowActive);
+    infoWizard->showNormal();
+#endif
+
     infoWizard->raise();
     infoWizard->activateWindow();
+    infoWizard->setFocus();
 }
 
 void MegaApplication::openBwOverquotaDialog()
