@@ -216,7 +216,10 @@ protected:
     QAction *updateActionGuest;
     QAction *loginActionGuest;
 
+#ifdef __APPLE__
     QTimer *scanningTimer;
+#endif
+
     QTimer *connectivityTimer;
     int scanningAnimationIndex;
     SetupWizard *setupWizard;
@@ -285,7 +288,6 @@ protected:
     bool updateAvailable;
     bool isLinux;
     long long externalNodesTimestamp;
-    bool enableDebug;
     bool overquotaCheck;
     int noKeyDetected;
     bool isFirstSyncDone;

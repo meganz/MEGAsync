@@ -181,21 +181,7 @@ int main(int argc, char *argv[])
             }
         }
 
-        QDirIterator di(MegaApplication::applicationDataPath(), QDir::Files | QDir::NoDotAndDotDot);
-        while (di.hasNext())
-        {
-            di.next();
-            const QFileInfo& fi = di.fileInfo();
-            if (fi.fileName().endsWith(QString::fromAscii(".db"))
-                    || !fi.fileName().compare(QString::fromUtf8("MEGAsync.cfg"))
-                    || !fi.fileName().compare(QString::fromUtf8("MEGAsync.cfg.bak")))
-            {
-                QFile::remove(di.filePath());
-            }
-        }
-
-        //QDir dataDir(dataPath);
-        //Utilities::removeRecursively(dataDir);
+        Utilities::removeRecursively(MegaApplication::applicationDataPath());
 
 #ifdef WIN32
         if (preferences->installationTime() != -1)
@@ -255,18 +241,6 @@ int main(int argc, char *argv[])
     app.setFont(font);
 #endif
 #endif
-
-    //QDate betaLimit(2014, 1, 21);
-    //long long now = QDateTime::currentDateTime().toMSecsSinceEpoch();
-    //long long betaLimitTime = QDateTime(betaLimit).toMSecsSinceEpoch();
-    //if (now > betaLimitTime)
-    //{
-    //    QMessageBox::information(NULL, QCoreApplication::translate("MegaApplication", "MEGAsync BETA"),
-    //           QCoreApplication::translate("MegaApplication", "Thank you for testing MEGAsync.<br>"
-    //       "This beta version is no longer current and has expired.<br>"
-    //       "Please follow <a href=\"https://twitter.com/MEGAprivacy\">@MEGAprivacy</a> on Twitter for updates."));
-    //    return 0;
-    //}
 
     app.initialize();
     app.start();
@@ -404,6 +378,13 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     settingsActionGuest = NULL;
     importLinksAction = NULL;
     importLinksActionGuest = NULL;
+    initialMenu = NULL;
+#ifdef _WIN32
+    windowsMenu = NULL;
+    windowsExitAction = NULL;
+#endif
+    changeProxyAction = NULL;
+    initialExitAction = NULL;
     uploadAction = NULL;
     downloadAction = NULL;
     streamAction = NULL;
@@ -435,11 +416,14 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     infoWizard = NULL;
     infoWizardEvent = false;
     externalNodesTimestamp = 0;
-    enableDebug = false;
     overquotaCheck = false;
     noKeyDetected = 0;
     isFirstSyncDone = false;
     isFirstFileSynced = false;
+
+#ifdef __APPLE__
+    scanningTimer = NULL;
+#endif
 }
 
 MegaApplication::~MegaApplication()
@@ -500,11 +484,32 @@ void MegaApplication::initialize()
     }
 #endif
 
+    QString language = preferences->language();
+    changeLanguage(language);
+    trayIcon->show();
+
+#ifdef __APPLE__
+    notificator = new Notificator(applicationName(), NULL, NULL);
+#else
+    notificator = new Notificator(applicationName(), trayIcon, NULL);
+#endif
+
+    Qt::KeyboardModifiers modifiers = queryKeyboardModifiers();
+    if (modifiers.testFlag(Qt::ControlModifier)
+            && modifiers.testFlag(Qt::ShiftModifier))
+    {
+        toggleLogging();
+    }
+
 #ifndef __APPLE__
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
 #else
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT, MacXPlatform::fd);
 #endif
+
+    megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGAsync is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
+             .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
+
     megaApi->setDownloadMethod(preferences->transferDownloadMethod());
     megaApi->setUploadMethod(preferences->transferUploadMethod());
     setUseHttpsOnly(preferences->usingHttpsOnly());
@@ -518,11 +523,6 @@ void MegaApplication::initialize()
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi);
     downloader = new MegaDownloader(megaApi);
-    scanningTimer = new QTimer();
-    scanningTimer->setSingleShot(false);
-    scanningTimer->setInterval(500);
-    scanningAnimationIndex = 1;
-    connect(scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
 
     //Start the HTTP server
     httpServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
@@ -570,52 +570,6 @@ void MegaApplication::initialize()
         }
     }
 
-    //Create GUI elements
-#ifdef __APPLE__
-    trayIcon = new MegaSystemTrayIcon();
-#else
-    trayIcon = new QSystemTrayIcon();
-#endif
-
-    connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(onMessageClicked()));
-    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
-            this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
-
-    initialMenu = new QMenu();
-
-#if (QT_VERSION == 0x050500) && defined(_WIN32)
-    initialMenu->installEventFilter(this);
-#endif
-
-#ifdef _WIN32
-    windowsMenu = new QMenu();
-
-    #if (QT_VERSION == 0x050500)
-    windowsMenu->installEventFilter(this);
-    #endif
-#endif
-    QString language = preferences->language();
-    changeLanguage(language);
-
-#ifdef __APPLE__
-    notificator = new Notificator(applicationName(), NULL, NULL);
-#else
-    notificator = new Notificator(applicationName(), trayIcon, NULL);
-#endif
-
-    changeProxyAction = new QAction(tr("Settings"), this);
-    connect(changeProxyAction, SIGNAL(triggered()), this, SLOT(changeProxy()));
-    initialExitAction = new QAction(tr("Exit"), this);
-    connect(initialExitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
-    initialMenu->addAction(changeProxyAction);
-    initialMenu->addAction(initialExitAction);
-
-#ifdef _WIN32
-    windowsExitAction = new QAction(tr("Exit"), this);
-    connect(windowsExitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
-    windowsMenu->addAction(windowsExitAction);
-#endif
-
     periodicTasksTimer = new QTimer();
     periodicTasksTimer->start(Preferences::STATE_REFRESH_INTERVAL_MS);
     connect(periodicTasksTimer, SIGNAL(timeout()), this, SLOT(periodicTasks()));
@@ -625,13 +579,6 @@ void MegaApplication::initialize()
     connect(infoDialogTimer, SIGNAL(timeout()), this, SLOT(showInfoDialog()));
 
     connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
-
-    Qt::KeyboardModifiers modifiers = queryKeyboardModifiers();
-    if (modifiers.testFlag(Qt::ControlModifier)
-            && modifiers.testFlag(Qt::ShiftModifier))
-    {
-        enableDebug = true;
-    }
 
     if (preferences->logged() && preferences->wasPaused())
     {
@@ -684,13 +631,7 @@ void MegaApplication::changeLanguage(QString languageCode)
         delete newTranslator;
     }
 
-    if (notificator)
-    {
-        createTrayMenu();
-        createTrayIcon();
-        createOverQuotaMenu();
-        createGuestMenu();
-    }
+    createTrayIcon();
 }
 
 void MegaApplication::updateTrayIcon()
@@ -1027,12 +968,6 @@ void MegaApplication::start()
         {
             preferences->setInstallationTime(-1);
         }
-    }
-
-    if (enableDebug)
-    {
-        toggleLogging();
-        enableDebug = false;
     }
 
     applyProxySettings();
@@ -2617,8 +2552,11 @@ void MegaApplication::toggleLogging()
         logger->sendLogsToFile(true);
         MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
         showInfoMessage(tr("DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)"));
-        megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
+        if (megaApi)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
                      .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
+        }
     }
 }
 
@@ -2966,6 +2904,31 @@ void MegaApplication::createTrayIcon()
     if (appfinished)
     {
         return;
+    }
+
+    createTrayMenu();
+    createOverQuotaMenu();
+    createGuestMenu();
+
+    if (!trayIcon)
+    {
+    #ifdef __APPLE__
+        trayIcon = new MegaSystemTrayIcon();
+    #else
+        trayIcon = new QSystemTrayIcon();
+    #endif
+
+        connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(onMessageClicked()));
+        connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
+                this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
+
+    #ifdef __APPLE__
+        scanningTimer = new QTimer();
+        scanningTimer->setSingleShot(false);
+        scanningTimer->setInterval(500);
+        scanningAnimationIndex = 1;
+        connect(scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
+    #endif
     }
 
     if (isLinux)
@@ -3780,6 +3743,70 @@ void MegaApplication::createTrayMenu()
     {
         return;
     }
+
+    if (!initialMenu)
+    {
+        initialMenu = new QMenu();
+        #if (QT_VERSION == 0x050500) && defined(_WIN32)
+            initialMenu->installEventFilter(this);
+        #endif
+    }
+    else
+    {
+        QList<QAction *> actions = initialMenu->actions();
+        for (int i = 0; i < actions.size(); i++)
+        {
+            initialMenu->removeAction(actions[i]);
+        }
+    }
+
+    if (changeProxyAction)
+    {
+        changeProxyAction->deleteLater();
+        changeProxyAction = NULL;
+    }
+    changeProxyAction = new QAction(tr("Settings"), this);
+    connect(changeProxyAction, SIGNAL(triggered()), this, SLOT(changeProxy()));
+
+    if (initialExitAction)
+    {
+        initialExitAction->deleteLater();
+        initialExitAction = NULL;
+    }
+    initialExitAction = new QAction(tr("Exit"), this);
+    connect(initialExitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
+
+    initialMenu->addAction(changeProxyAction);
+    initialMenu->addAction(initialExitAction);
+
+#ifdef _WIN32
+    if (!windowsMenu)
+    {
+        windowsMenu = new QMenu();
+
+        #if (QT_VERSION == 0x050500)
+            windowsMenu->installEventFilter(this);
+        #endif
+    }
+    else
+    {
+        QList<QAction *> actions = windowsMenu->actions();
+        for (int i = 0; i < actions.size(); i++)
+        {
+            windowsMenu->removeAction(actions[i]);
+        }
+    }
+
+    if (windowsExitAction)
+    {
+        windowsExitAction->deleteLater();
+        windowsExitAction = NULL;
+    }
+
+    windowsExitAction = new QAction(tr("Exit"), this);
+    connect(windowsExitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
+    windowsMenu->addAction(windowsExitAction);
+#endif
 
     if (!trayMenu)
     {
