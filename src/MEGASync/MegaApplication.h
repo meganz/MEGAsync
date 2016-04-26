@@ -285,7 +285,6 @@ protected:
     bool updateAvailable;
     bool isLinux;
     long long externalNodesTimestamp;
-    bool enableDebug;
     bool overquotaCheck;
     int noKeyDetected;
     bool isFirstSyncDone;
