@@ -519,11 +519,6 @@ void MegaApplication::initialize()
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi);
     downloader = new MegaDownloader(megaApi);
-    scanningTimer = new QTimer();
-    scanningTimer->setSingleShot(false);
-    scanningTimer->setInterval(500);
-    scanningAnimationIndex = 1;
-    connect(scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
 
     //Start the HTTP server
     httpServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
@@ -2922,6 +2917,14 @@ void MegaApplication::createTrayIcon()
         connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(onMessageClicked()));
         connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
                 this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
+
+    #ifdef __APPLE__
+        scanningTimer = new QTimer();
+        scanningTimer->setSingleShot(false);
+        scanningTimer->setInterval(500);
+        scanningAnimationIndex = 1;
+        connect(scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
+    #endif
     }
 
     if (isLinux)
