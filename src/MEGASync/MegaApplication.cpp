@@ -379,10 +379,12 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     importLinksAction = NULL;
     importLinksActionGuest = NULL;
     initialMenu = NULL;
+#ifdef _WIN32
     windowsMenu = NULL;
+    windowsExitAction = NULL;
+#endif
     changeProxyAction = NULL;
     initialExitAction = NULL;
-    windowsExitAction = NULL;
     uploadAction = NULL;
     downloadAction = NULL;
     streamAction = NULL;
