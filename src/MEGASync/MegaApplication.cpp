@@ -3690,10 +3690,18 @@ void MegaApplication::openBwOverquotaDialog()
         }
     }
 
-    bwOverquotaDialog->setTimestamp(bwOverquotaTimestamp);
+    bwOverquotaDialog->setTimestamp(bwOverquotaTimestamp);   
     bwOverquotaDialog->show();
+
+#ifdef WIN32
+    bwOverquotaDialog->showMinimized();
+    bwOverquotaDialog->setWindowState(Qt::WindowActive);
+    bwOverquotaDialog->showNormal();
+#endif
+
     bwOverquotaDialog->raise();
     bwOverquotaDialog->activateWindow();
+    bwOverquotaDialog->setFocus();
 }
 
 void MegaApplication::changeProxy()
