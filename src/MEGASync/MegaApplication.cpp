@@ -420,6 +420,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     noKeyDetected = 0;
     isFirstSyncDone = false;
     isFirstFileSynced = false;
+
+#ifdef __APPLE__
+    scanningTimer = NULL;
+#endif
 }
 
 MegaApplication::~MegaApplication()

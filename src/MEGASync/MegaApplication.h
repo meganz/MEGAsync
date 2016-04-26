@@ -216,7 +216,10 @@ protected:
     QAction *updateActionGuest;
     QAction *loginActionGuest;
 
+#ifdef __APPLE__
     QTimer *scanningTimer;
+#endif
+
     QTimer *connectivityTimer;
     int scanningAnimationIndex;
     SetupWizard *setupWizard;
