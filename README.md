@@ -61,7 +61,7 @@ It's recommended to go to `Project -> Run` in QTCreator and disable the option `
 2.- Clone or download this repo
 
 3.- Download the required third party libraries and configuration file (`config.h`) from this link:
-https://mega.nz/#!64pzmDbY!YyUVht40rKVWnqo5eUDZdBCrdGe7rXkUeBuI6V18524
+https://mega.nz/#!G5xmTLZY!jB2LyuXRSNGmBo1djUNhRbvy_pa42aDZyhgaTK1PAlI
 
 4.- Uncompress that file and move the folder `3rdparty` into `src/MEGASync/mega/bindings/qt`/ and the file `config.h` into `src/MEGASync/mega/include/mega/`
 
