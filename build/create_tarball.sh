@@ -59,8 +59,7 @@ rm -fr MEGAsync/MEGAsync/megasync_*.dsc
 # fix version number in template files and copy to appropriate directories
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.spec > MEGAsync/MEGAsync/megasync.spec
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.dsc > MEGAsync/MEGAsync/megasync_$MEGASYNC_VERSION.dsc
-sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/PKGBUILD \
-sed "s/MD5SUM/$MD5SUM/g" > MEGAsync/MEGAsync/PKGBUILD
+sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/PKGBUILD | sed "s/MD5SUM/$MD5SUM/g" > MEGAsync/MEGAsync/PKGBUILD
 
 
 
