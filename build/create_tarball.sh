@@ -50,13 +50,18 @@ rm -rf $MEGASYNC_NAME
 
 echo "MEGAsync version: $MEGASYNC_VERSION"
 
+#get md5sum
+MD5SUM=`md5sum ./MEGAsync/MEGAsync/megasync_2.9.1.tar.gz | awk '{print $1}'`
+
 # delete previously generated files
 rm -fr MEGAsync/MEGAsync/megasync_*.dsc
 
 # fix version number in template files and copy to appropriate directories
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.spec > MEGAsync/MEGAsync/megasync.spec
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.dsc > MEGAsync/MEGAsync/megasync_$MEGASYNC_VERSION.dsc
-sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/PKGBUILD > MEGAsync/MEGAsync/PKGBUILD
+sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/PKGBUILD \
+sed "s/MD5SUM/$MD5SUM/g" > MEGAsync/MEGAsync/PKGBUILD
+
 
 
 # read the last generated ChangeLog version

@@ -43,7 +43,7 @@ changelog= #TODO
 source=("./${pkgname}_$pkgver.tar.gz"
 )
 noextract=()
-md5sums=('451414f790676bed86edd1e4a61b1432') # generated with makepkg -g
+md5sums=('MD5SUM') # generated with makepkg -g
 validpgpkeys=()
 
 prepare() {
