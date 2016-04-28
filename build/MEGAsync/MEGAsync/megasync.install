@@ -1,0 +1,15 @@
+post_install() {
+sed -n '1h;1!H;${g;s/###REPO for MEGA###\n.*###END REPO for MEGA###//;p;}' -i /etc/pacman.conf 
+
+cat >> /etc/pacman.conf <<-EOF
+###REPO for MEGA###
+[DEB_Arch_Extra]
+SigLevel = Optional TrustAll
+Server = http://mega.nz/linux/MEGAsync/Arch_Extra/\$arch
+###END REPO for MEGA###
+EOF
+}
+
+post_remove() {
+sed -n '1h;1!H;${g;s/###REPO for MEGA###\n.*###END REPO for MEGA###//;p;}' -i /etc/pacman.conf 
+}

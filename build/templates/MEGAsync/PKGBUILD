@@ -38,7 +38,7 @@ conflicts=('megatools')
 replaces=()
 backup=()
 options=()
-install= 
+install=megasync.install
 changelog= #TODO
 source=("./${pkgname}_$pkgver.tar.gz"
 )
@@ -71,4 +71,3 @@ package() {
 	cd "$pkgname-$pkgver"
 	make install TARGET=$_bindir/megasync INSTALL_ROOT=$pkgdir
 }
-
