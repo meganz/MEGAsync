@@ -59,6 +59,7 @@ sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.dsc 
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/PKGBUILD > MEGAsync/MEGAsync/PKGBUILD
 
 
+
 # read the last generated ChangeLog version
 version_file="version"
 
@@ -113,6 +114,10 @@ rm -rf $MEGASYNC_NAME
 rm -fr MEGAsync/MEGAsync/megasync_*.tar.gz
 # transform arch name, to satisfy Debian requirements
 mv $MEGASYNC_NAME.tar.gz MEGAsync/MEGAsync/megasync_$MEGASYNC_VERSION.tar.gz
+
+#get md5sum and replace in PKGBUILD
+MD5SUM=`md5sum MEGAsync/MEGAsync/megasync_$MEGASYNC_VERSION.tar.gz | awk '{print $1}'`
+sed "s/MD5SUM/$MD5SUM/g"  -i MEGAsync/MEGAsync/PKGBUILD
 
 
 # create archive for debug

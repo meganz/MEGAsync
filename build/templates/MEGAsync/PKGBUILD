@@ -1,19 +1,73 @@
+##
+ # @file build/MEGAsync/MEGAsync/PKGBUILD
+ # @brief script to generate package megasync for ArchLinux
+ #
+ # (c) 2013-2016 by Mega Limited, Auckland, New Zealand
+ #
+ # This file is part of the MEGA SDK - Client Access Engine.
+ #
+ # Applications using the MEGA API must present a valid application key
+ # and comply with the the rules set forth in the Terms of Service.
+ #
+ # The MEGA SDK is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ #
+ # @copyright Simplified (2-clause) BSD License.
+ #
+ # You should have received a copy of the license along with this
+ # program.
+##
+
+# Maintainer: Pablo Martin <pm@mega.nz>
 pkgname=megasync
 pkgver=MEGASYNC_VERSION
 pkgrel=1
-arch=('i686' 'x86_64')
-conflicts=('megatools')
-url="https://mega.nz/#sync"
-license=('Freeware')
+epoch=
 pkgdesc="Easy automated syncing between your computers and your MEGA cloud drive"
-depends=(
-'qt4'
-'openssl'
-'sqlite'
-'c-ares'
-'crypto++'
-'ca-certificates'
-'libpng'
-'qtchooser'
+arch=('i686' 'x86_64')
+url=""
+license=() #TODO
+groups=()
+depends=('glibc' 'crypto++' 'gcc-libs' 'qt4' 'sqlite' 'openssl' 'zlib' )
+makedepends=('unzip' 'wget' 'crypto++' 'ca-certificates' 'qt4')
+checkdepends=()
+optdepends=('sni-qt: fix systray issue on KDE and LXQt', 'nautilus-megasync: for integration with nautilus')
+provides=("megasync=${pkgver}")
+conflicts=('megatools')
+replaces=()
+backup=()
+options=()
+install=megasync.install
+changelog= #TODO
+source=("./${pkgname}_$pkgver.tar.gz"
 )
-options=(!strip)
+noextract=()
+md5sums=('MD5SUM') # generated with makepkg -g
+validpgpkeys=()
+
+prepare() {
+	cd "$pkgname-$pkgver"
+}
+
+build() {
+	_bindir=$pkgdir/usr/bin
+	cd "$pkgname-$pkgver"
+	./configure
+	qmake MEGA.pro || qmake-qt4 MEGA.pro #qmake would fail when qt4 installed (due to some path missconfigurations)
+	lrelease MEGASync/MEGASync.pro || lrelease-qt4 MEGASync/MEGASync.pro 
+	make
+}
+
+check() {
+	cd "$pkgname-$pkgver"
+#	make -k check  DESTDIR=$_bindir THE_RPM_BUILD_ROOT=$pkgdir
+}
+
+package() {
+	_bindir=$pkgdir/usr/bin
+	mkdir -p $_bindir
+
+	cd "$pkgname-$pkgver"
+	make install TARGET=$_bindir/megasync INSTALL_ROOT=$pkgdir
+}

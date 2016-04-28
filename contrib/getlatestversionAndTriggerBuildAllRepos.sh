@@ -72,4 +72,6 @@ if [ -z "$NEWOSCFOLDER_PATH" ]; then
 	echo "using default NEWOSCFOLDER_PATH: $NEWOSCFOLDER_PATH"
 fi
 
-/mnt/DATA/datos/assets/triggerBuild.sh $PROJECT_PATH $NEWOSCFOLDER_PATH
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+$DIR/triggerBuild.sh $PROJECT_PATH $NEWOSCFOLDER_PATH

@@ -44,7 +44,7 @@ unix:!macx {
         $$PWD/linux/ExtServer.h \
         $$PWD/linux/NotifyServer.h
 
-    LIBS += -lssl -lcrypto
+    LIBS += -lssl -lcrypto -ldl
     DEFINES += USE_DBUS
 
     # do not install desktop files if no_desktop is defined,
