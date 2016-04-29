@@ -1,0 +1,47 @@
+post_install() {
+/bin/touch --no-create $datadir/icons/hicolor &>/dev/null || :
+
+# restart Nautilus
+UPDATENOTIFIERDIR=/var/lib/update-notifier/user.d
+echo "Please restart all running instances of Nautilus."
+
+if [ -d $UPDATENOTIFIERDIR ] ; then
+cat > $UPDATENOTIFIERDIR/megasync-install-notify <<DATA
+Name: Nautilus Restart Required
+Priority: High
+Terminal: False
+Command: nautilus -q
+DontShowAfterReboot: True
+ButtonText: _Restart Nautilus
+DisplayIf: pgrep -x nautilus -U \$(id -u) > /dev/null
+OnlyAdminUsers: False
+Description:
+ MEGAsync requires Nautilus to be restarted to function properly.
+DATA
+fi
+}
+
+post_remove() {
+/bin/touch --no-create $datadir/icons/hicolor &>/dev/null
+/usr/bin/gtk-update-icon-cache $datadir/icons/hicolor &>/dev/null || :
+
+# restart Nautilus
+UPDATENOTIFIERDIR=/var/lib/update-notifier/user.d
+echo "Please restart all running instances of Nautilus."
+
+if [ -d $UPDATENOTIFIERDIR ] ; then
+cat > $UPDATENOTIFIERDIR/megasync-install-notify <<DATA
+Name: Nautilus Restart Required
+Priority: High
+Terminal: False
+Command: nautilus -q
+DontShowAfterReboot: True
+ButtonText: _Restart Nautilus
+DisplayIf: pgrep -x nautilus -U \$(id -u) > /dev/null
+OnlyAdminUsers: False
+Description:
+ MEGAsync requires Nautilus to be restarted to function properly.
+DATA
+fi
+
+}

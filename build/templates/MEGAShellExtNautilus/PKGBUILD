@@ -38,7 +38,7 @@ conflicts=()
 replaces=()
 backup=()
 options=()
-install=
+install=megasync.install
 changelog= #TODO
 source=("./${pkgname}_$pkgver.tar.gz"
 )
