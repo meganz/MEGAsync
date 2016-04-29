@@ -53,7 +53,7 @@ prepare() {
 build() {
 	#export DESKTOP_DESTDIR=$pkgdir/usr
 	cd "$pkgname-$pkgver"
-	sed -i "s#update_cache.path = \$\${PWD}#update_cache.path = \$\${HICOLOR}#g" MEGAShellExtNautilus.pro
+	sed -i "s#update_cache.path = \$\$PWD#update_cache.path = \$\${HICOLOR}#g" MEGAShellExtNautilus.pro
 	qmake || qmake-qt4 #qmake would fail when qt4 installed (due to some path missconfigurations)	
 	make
 }
@@ -66,6 +66,6 @@ check() {
 package() {
 	cd "$pkgname-$pkgver"
 #	make install
-	sed -i "s#gtk-update-icon-cache -f -t /#gtk-update-icon-cache -f -t \$(INSTALL_ROOT)/#g" Makefile
+	#sed -i "s#gtk-update-icon-cache -f -t /#gtk-update-icon-cache -f -t \$(INSTALL_ROOT)/#g" Makefile
 	make install INSTALL_ROOT=$pkgdir
 }
