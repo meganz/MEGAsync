@@ -94,6 +94,25 @@ void msgHandler(QtMsgType type, const char *msg)
 
 int main(int argc, char *argv[])
 {
+#ifdef _WIN32
+    HINSTANCE shcore = LoadLibrary(L"Shcore.dll");
+    if (shcore)
+    {
+        enum MEGA_PROCESS_DPI_AWARENESS
+        {
+            MEGA_PROCESS_DPI_UNAWARE            = 0,
+            MEGA_PROCESS_SYSTEM_DPI_AWARE       = 1,
+            MEGA_PROCESS_PER_MONITOR_DPI_AWARE  = 2
+        };
+        typedef HRESULT (WINAPI* MEGA_SetProcessDpiAwarenessType)(MEGA_PROCESS_DPI_AWARENESS);
+        MEGA_SetProcessDpiAwarenessType MEGA_SetProcessDpiAwareness = reinterpret_cast<MEGA_SetProcessDpiAwarenessType>(GetProcAddress(shcore, "SetProcessDpiAwareness"));
+        if (MEGA_SetProcessDpiAwareness)
+        {
+            MEGA_SetProcessDpiAwareness(MEGA_PROCESS_DPI_UNAWARE);
+        }
+        FreeLibrary(shcore);
+    }
+#endif
 
 #ifdef Q_OS_MACX
     if (!qputenv("QT_HARFBUZZ","old"))
