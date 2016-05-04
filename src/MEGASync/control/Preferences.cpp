@@ -11,17 +11,15 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/2.9.1.0";
-const int Preferences::VERSION_CODE = 2901;
-const int Preferences::BUILD_ID = 0;
+const char Preferences::USER_AGENT[] = "MEGAsync/2.9.2.1";
+const int Preferences::VERSION_CODE = 2902;
+const int Preferences::BUILD_ID = 1;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.1");
+const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.2_BETA");
 const QString Preferences::SDK_ID = QString::fromAscii("0436c");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- Management of bandwidth quota for PRO users\n"
-            "- New information dialog\n"
-            "- Updated dependencies (OpenSSL, cURL...)\n"
-            "- ARM support (Raspberry Pi)\n"
+            "- Save the state and resume transfers\n"
+            "- Compatibility with HDPI displays\n"
             "- Bug fixes");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
