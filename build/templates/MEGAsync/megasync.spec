@@ -9,7 +9,7 @@ Source0:	megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
-BuildRequires: qt-devel, libqt4-devel, openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libtool, gcc-c++
+BuildRequires: qt-devel, openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libtool, gcc-c++
 BuildRequires: hicolor-icon-theme, unzip, wget
 
 %if 0%{?suse_version}
