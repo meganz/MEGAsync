@@ -3710,14 +3710,16 @@ void MegaApplication::openBwOverquotaDialog()
     }
 
     bwOverquotaDialog->setTimestamp(bwOverquotaTimestamp);   
-    bwOverquotaDialog->show();
+    if (!bwOverquotaDialog->isVisible())
+    {
+        bwOverquotaDialog->show();
 
-#ifdef WIN32
-    bwOverquotaDialog->showMinimized();
-    bwOverquotaDialog->setWindowState(Qt::WindowActive);
-    bwOverquotaDialog->showNormal();
-#endif
-
+    #ifdef WIN32
+        bwOverquotaDialog->showMinimized();
+        bwOverquotaDialog->setWindowState(Qt::WindowActive);
+        bwOverquotaDialog->showNormal();
+    #endif
+    }
     bwOverquotaDialog->raise();
     bwOverquotaDialog->activateWindow();
     bwOverquotaDialog->setFocus();
