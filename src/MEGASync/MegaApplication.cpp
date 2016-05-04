@@ -4424,7 +4424,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     //If we have got the filesystem, start the app
                     loggedIn();
                     restoreSyncs();
-                    megaApi->enableTransferResumption();
                 }
                 else
                 {
@@ -5348,6 +5347,7 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
         return;
     }
 
+    megaApi->enableTransferResumption();
     Preferences *preferences = Preferences::instance();
     if (preferences->logged() && !api->getNumActiveSyncs())
     {
