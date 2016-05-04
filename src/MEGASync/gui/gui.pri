@@ -31,7 +31,12 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/ConfirmSSLexception.cpp \
     $$PWD/UpgradeDialog.cpp \
     $$PWD/PlanWidget.cpp \
-    $$PWD/InfoWizard.cpp
+    $$PWD/InfoWizard.cpp \
+    $$PWD/TransferItem.cpp \
+    $$PWD/TransferManager.cpp \
+    $$PWD/TransfersWidget.cpp \
+    $$PWD/QTransfersModel.cpp \
+    $$PWD/MegaTransferDelegate.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -64,7 +69,12 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ConfirmSSLexception.h \
     $$PWD/UpgradeDialog.h \
     $$PWD/PlanWidget.h \
-    $$PWD/InfoWizard.h
+    $$PWD/InfoWizard.h \
+    $$PWD/TransferItem.h \
+    $$PWD/TransferManager.h \
+    $$PWD/TransfersWidget.h \
+    $$PWD/QTransfersModel.h \
+    $$PWD/MegaTransferDelegate.h
 
 INCLUDEPATH += $$PWD
 
@@ -101,7 +111,10 @@ win32 {
                 $$PWD/win/ConfirmSSLexception.ui \
                 $$PWD/win/PlanWidget.ui \
                 $$PWD/win/UpgradeDialog.ui \
-                $$PWD/win/InfoWizard.ui
+                $$PWD/win/InfoWizard.ui \
+                $$PWD/win/TransferItem.ui \
+                $$PWD/win/TransferManager.ui \
+                $$PWD/win/TransfersWidget.ui \
 }
 
 macx {
@@ -135,7 +148,10 @@ macx {
                 $$PWD/macx/ConfirmSSLexception.ui \
                 $$PWD/macx/PlanWidget.ui \
                 $$PWD/macx/UpgradeDialog.ui \
-                $$PWD/macx/InfoWizard.ui
+                $$PWD/macx/InfoWizard.ui \
+                $$PWD/macx/TransferItem.ui \
+                $$PWD/macx/TransferManager.ui \
+                $$PWD/macx/TransfersWidget.ui \
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -178,7 +194,10 @@ unix:!macx {
                 $$PWD/linux/ConfirmSSLexception.ui \
                 $$PWD/linux/PlanWidget.ui \
                 $$PWD/linux/UpgradeDialog.ui \
-                $$PWD/linux/InfoWizard.ui
+                $$PWD/linux/InfoWizard.ui \
+                $$PWD/linux/TransferItem.ui \
+                $$PWD/linux/TransferManager.ui \
+                $$PWD/linux/TransfersWidget.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
