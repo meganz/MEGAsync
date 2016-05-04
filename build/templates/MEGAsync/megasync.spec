@@ -132,6 +132,19 @@ enabled=1
 DATA
 %endif
 
+# Fedora 24
+%if 0%{?fedora_version} == 24
+YUM_FILE="/etc/yum.repos.d/megasync.repo"
+cat > "$YUM_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+baseurl=http://mega.nz/linux/MEGAsync/Fedora_24/
+gpgkey=https://mega.nz/linux/MEGAsync/Fedora_24/repodata/repomd.xml.key
+gpgcheck=1
+enabled=1
+DATA
+%endif
+
 # Fedora 23
 %if 0%{?fedora_version} == 23
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
