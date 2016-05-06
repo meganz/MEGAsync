@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##
- # @file contrib/repoBuilding/buildRepoDeb.sh
+ # @file contrib/repoBuilding/buildRepoRpm.sh
  # @brief
  #
  # (c) 2013-2016 by Mega Limited, Auckland, New Zealand
