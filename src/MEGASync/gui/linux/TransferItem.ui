@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>450</width>
+    <width>460</width>
     <height>40</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>450</width>
+    <width>460</width>
     <height>40</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>450</width>
+    <width>460</width>
     <height>40</height>
    </size>
   </property>
@@ -86,10 +86,6 @@ QProgressBar#pbTransfer::chunk {
           <property name="text">
            <string/>
           </property>
-          <property name="icon">
-           <iconset resource="Resources_linux.qrc">
-            <normaloff>:/images/tray_download_ico.png</normaloff>:/images/tray_download_ico.png</iconset>
-          </property>
          </widget>
         </item>
         <item>
@@ -97,16 +93,24 @@ QProgressBar#pbTransfer::chunk {
           <property name="text">
            <string/>
           </property>
-          <property name="icon">
-           <iconset resource="Resources_linux.qrc">
-            <normaloff>:/images/drag_3D.png</normaloff>:/images/drag_3D.png</iconset>
+          <property name="iconSize">
+           <size>
+            <width>20</width>
+            <height>22</height>
+           </size>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="lTransferName">
+          <property name="minimumSize">
+           <size>
+            <width>100</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Image1.jpeg</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -125,15 +129,27 @@ QProgressBar#pbTransfer::chunk {
         </item>
         <item>
          <widget class="QLabel" name="lTotal">
+          <property name="minimumSize">
+           <size>
+            <width>150</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
-           <string>0 MB of 100MB</string>
+           <string/>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="lSpeed">
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="text">
-           <string>(completed)</string>
+           <string/>
           </property>
          </widget>
         </item>
@@ -154,6 +170,9 @@ QProgressBar#pbTransfer::chunk {
          <height>2</height>
         </size>
        </property>
+       <property name="maximum">
+        <number>1000</number>
+       </property>
        <property name="value">
         <number>0</number>
        </property>
@@ -170,14 +189,12 @@ QProgressBar#pbTransfer::chunk {
    <item>
     <widget class="QLabel" name="lRemainingTime">
      <property name="text">
-      <string>00:00:00</string>
+      <string/>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="Resources_linux.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
