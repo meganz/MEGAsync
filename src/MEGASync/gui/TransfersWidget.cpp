@@ -9,12 +9,16 @@ TransfersWidget::TransfersWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    model = new QTransfersModel();
     tDelegate = new MegaTransferDelegate(this);
     ui->tvTransfers->setItemDelegate((QAbstractItemDelegate *)tDelegate);
-    ui->tvTransfers->setModel(model);
     ui->tvTransfers->header()->close();
 
+}
+
+void TransfersWidget::setupTransfers(mega::MegaTransferList *tList, int type)
+{
+    model = new QTransfersModel(tList, type);
+    ui->tvTransfers->setModel(model);
 }
 
 TransfersWidget::~TransfersWidget()
