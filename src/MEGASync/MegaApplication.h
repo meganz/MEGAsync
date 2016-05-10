@@ -13,6 +13,7 @@
 #include <QNetworkConfigurationManager>
 #include <QNetworkInterface>
 
+#include "gui/TransferManager.h"
 #include "gui/NodeSelector.h"
 #include "gui/InfoDialog.h"
 #include "gui/InfoOverQuotaDialog.h"
@@ -276,6 +277,7 @@ protected:
     QList<QNetworkInterface> activeNetworkInterfaces;
     QMap<QString, QString> pendingLinks;
     MegaSyncLogger *logger;
+    TransferManager *transferManager;
 
     bool reboot;
     bool syncActive;

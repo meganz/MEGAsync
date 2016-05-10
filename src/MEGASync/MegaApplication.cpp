@@ -439,6 +439,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     noKeyDetected = 0;
     isFirstSyncDone = false;
     isFirstFileSynced = false;
+    transferManager = NULL;
 
 #ifdef __APPLE__
     scanningTimer = NULL;
@@ -1147,6 +1148,31 @@ void MegaApplication::loggedIn()
     }
 
     onGlobalSyncStateChanged(megaApi);
+
+    if (transferManager)
+    {
+        transferManager->setVisible(true);
+        #ifdef WIN32
+            transferManager->showMinimized();
+            transferManager->setWindowState(Qt::WindowActive);
+            transferManager->showNormal();
+        #endif
+        transferManager->raise();
+        transferManager->activateWindow();
+        transferManager->setFocus();
+        return;
+    }
+
+    transferManager = new TransferManager(megaApi);
+#ifdef WIN32
+    transferManager->showMinimized();
+    transferManager->setWindowState(Qt::WindowActive);
+    transferManager->showNormal();
+#endif
+    transferManager->raise();
+    transferManager->activateWindow();
+    transferManager->setFocus();
+    transferManager->show();
 }
 
 void MegaApplication::startSyncs()
@@ -1316,6 +1342,9 @@ void MegaApplication::restoreSyncs()
 
 void MegaApplication::closeDialogs()
 {
+    delete transferManager;
+    transferManager = NULL;
+
     delete setupWizard;
     setupWizard = NULL;
 
