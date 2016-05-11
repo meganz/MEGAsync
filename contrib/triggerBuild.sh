@@ -58,8 +58,8 @@ for package in MEGAShellExtNautilus MEGAsync; do
 done
 
 echo "modifying files included/excluded in projects (to respond to e.g. tar.gz version changes)"
-osc addremove $NEWOSCFOLDER_PATH/DEB/*
-osc addremove $NEWOSCFOLDER_PATH/RPM/* 
+osc addremove -r $NEWOSCFOLDER_PATH/DEB
+osc addremove -r $NEWOSCFOLDER_PATH/RPM 
 
 echo "updating changed files and hence triggering rebuild in the OBS platform ...."
 osc ci $NEWOSCFOLDER_PATH/DEB
