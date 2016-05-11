@@ -287,6 +287,8 @@ else
 	EOF
 	$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit clean all 2> tmp$VMNAME
 	resultMODREPO=$?
+	#fix inconclusive problem in Fedora24:
+	cat tmp$VMNAME | grep -v "FutureWarning: split() requires a non-empty pattern match\|return _compile(pattern, flags).split(stri" > tmp$VMNAME
 	if [ -s tmp$VMNAME ]; then resultMODREPO=$((1000 + $resultMODREPO)); cat tmp$VMNAME; fi; rm tmp$VMNAME; 
 	logOperationResult "modifying repos ..." $resultMODREPO
 	
