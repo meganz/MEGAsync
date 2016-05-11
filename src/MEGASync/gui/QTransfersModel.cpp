@@ -113,8 +113,9 @@ void QTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
             item->finishTransfer();
             removeTransfer(transfer, QModelIndex());
 
-            //Update the view
-            emit dataChanged(QModelIndex(), QModelIndex());
+            //Update modified item
+            int row = transfersOrder.indexOf(transfer->getTag());
+            emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
 
         }
     }
@@ -156,6 +157,7 @@ void QTransfersModel::updateTransferInfo(MegaTransfer *transfer)
     item->setTransferredBytes(transfer->getTransferredBytes());
     item->updateTransfer();
 
-    //Update the view
-    emit dataChanged(QModelIndex(), QModelIndex());
+    //Update modified item
+    int row = transfersOrder.indexOf(transfer->getTag());
+    emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
 }
