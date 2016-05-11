@@ -16,7 +16,7 @@ public:
     explicit TransferItem(QWidget *parent = 0);
 
     void setFileName(QString fileName);
-    void setTransferredBytes(long long totalTransferredBytes);
+    void setTransferredBytes(long long totalTransferredBytes, bool cancellable);
     void setTransferType(int type);
     void setSpeed(long long transferSpeed);
     void setTotalSize(long long size);
@@ -36,6 +36,7 @@ protected:
     long long transferSpeed;
     long long totalSize, totalTransferredBytes;
     unsigned long long effectiveSpeed, effectiveTransferSpeed, lastUpdate, elapsedTransferTime;
+    bool regular;
 };
 
 Q_DECLARE_METATYPE(TransferItem*)

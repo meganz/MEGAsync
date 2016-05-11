@@ -154,7 +154,7 @@ void QTransfersModel::updateTransferInfo(MegaTransfer *transfer)
     item->setType(transfer->getType());
     item->setSpeed(transfer->getSpeed());
     item->setTotalSize(transfer->getTotalBytes());
-    item->setTransferredBytes(transfer->getTransferredBytes());
+    item->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
     item->updateTransfer();
 
     //Update modified item

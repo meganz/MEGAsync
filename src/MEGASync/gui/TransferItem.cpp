@@ -10,6 +10,7 @@ TransferItem::TransferItem(QWidget *parent) :
     totalSize = totalTransferredBytes = elapsedTransferTime = 0;
     transferSpeed = 0;
     effectiveTransferSpeed = 200000;
+    regular = false;
     lastUpdate = QDateTime::currentMSecsSinceEpoch();
 }
 
@@ -27,9 +28,10 @@ void TransferItem::setFileName(QString fileName)
     ui->lFileType->setIconSize(QSize(20, 22));
 }
 
-void TransferItem::setTransferredBytes(long long totalTransferredBytes)
+void TransferItem::setTransferredBytes(long long totalTransferredBytes, bool cancellable)
 {
     this->totalTransferredBytes = totalTransferredBytes;
+    regular = cancellable;
 }
 
 void TransferItem::setSpeed(long long transferSpeed)
