@@ -236,7 +236,7 @@ elif [[ $1 == *"DEBIAN"* ]] || [[ $1 == *"UBUNTU"* ]] || [[ $1 == *"LINUXMINT"* 
 	 #~ resultMODREPO=0 #we discard any other failure
 	fi; rm tmp$VMNAME;	
 	logOperationResult "modifying repos ..." $resultMODREPO
-	cat /etc/apt/sources.list.d/megasync.list
+	$sshpasscommand ssh root@$IP_GUEST cat /etc/apt/sources.list.d/megasync.list
 
 	
 	
@@ -245,6 +245,56 @@ elif [[ $1 == *"DEBIAN"* ]] || [[ $1 == *"UBUNTU"* ]] || [[ $1 == *"LINUXMINT"* 
 	$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y install megasync
 	resultINSTALL=$?
 	AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST dpkg -l megasync`
+	resultINSTALL=$(($? + 0$resultINSTALL))
+	echo "BEFOREINSTALL = $BEFOREINSTALL"
+	echo "AFTERINSTALL = $AFTERINSTALL"
+	if [ $require_change -eq 1 ]; then
+		if [ "$BEFOREINSTALL" == "$AFTERINSTALL" ]; then resultINSTALL=$((1000 + 0$resultINSTALL)); fi
+	fi
+	logOperationResult "reinstalling/updating megasync ..." $resultINSTALL	
+	VERSIONINSTALLEDAFTER=`echo $AFTERINSTALL	| grep megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
+	logSth "installed megasync ..." "$VERSIONINSTALLEDAFTER"
+
+elif [[ $1 == *"ARCHLINUX"* ]]; then
+
+	if [ $remove_megasync -eq 1 ]; then
+		echo " removing megasync ..."
+		$sshpasscommand ssh root@$IP_GUEST pacman -Rc --noconfirm megasync
+		logLastComandResult "removing megasync ..."
+	fi
+	sleep 1
+
+	echo " modifying repos ..."
+	
+	#remove repo if existing
+	$sshpasscommand ssh root@$IP_GUEST sed -n "'1h;1!H;\${g;s/###REPO for MEGA###\n.*###END REPO for MEGA###//;p;}'" -i /etc/pacman.conf 
+
+	#include repo
+	$sshpasscommand ssh root@$IP_GUEST "cat >> /etc/pacman.conf" <<-EOF
+###REPO for MEGA###
+[DEB_Arch_Extra]
+SigLevel = Optional TrustAll
+Server = $REPO/\$arch
+###END REPO for MEGA###
+EOF
+	
+	$sshpasscommand ssh root@$IP_GUEST pacman -Sy --noconfirm 2> tmp$VMNAME
+	resultMODREPO=$?
+	#notice: in case pacman reports 0 as status even though it "failed", we do stderr checking
+	if cat tmp$VMNAME | grep $REPO; then
+	 resultMODREPO=$((1000 + 0$resultMODREPO)); cat tmp$VMNAME; 
+	#~ else
+	 #~ resultMODREPO=0 #we discard any other failure
+	fi; rm tmp$VMNAME;	
+	logOperationResult "modifying repos ..." $resultMODREPO
+	$sshpasscommand ssh root@$IP_GUEST "cat /etc/pacman.conf | grep 'REPO for MEGA' -A 5"
+	
+	
+	echo " reinstalling/updating megasync ..."
+	BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST pacman -Q megasync`
+	$sshpasscommand ssh root@$IP_GUEST pacman -S --noconfirm megasync
+	resultINSTALL=$?
+	AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST pacman -Q megasync`
 	resultINSTALL=$(($? + 0$resultINSTALL))
 	echo "BEFOREINSTALL = $BEFOREINSTALL"
 	echo "AFTERINSTALL = $AFTERINSTALL"
@@ -318,11 +368,13 @@ else
 fi
 #END OF DEPENDENT OF SYSTEM
 
+theDisplay="DISPLAY=:0.0"
 
 echo " relaunching megasync as user ..."
-VERSIONMEGASYNCREMOTERUNNING=`$sshpasscommand ssh -oStrictHostKeyChecking=no  mega@$IP_GUEST DISPLAY=:0.0 megasync --version | grep -i megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
+VERSIONMEGASYNCREMOTERUNNING=`$sshpasscommand ssh -oStrictHostKeyChecking=no  mega@$IP_GUEST $theDisplay megasync --version | grep -i megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
 logSth "running megasync ..." "$VERSIONMEGASYNCREMOTERUNNING"
-$sshpasscommand ssh -oStrictHostKeyChecking=no  mega@$IP_GUEST DISPLAY=:0.0 megasync &
+
+$sshpasscommand ssh -oStrictHostKeyChecking=no  mega@$IP_GUEST $theDisplay megasync &
 sleep 5 #TODO: sleep longer?
 
 echo " checking new megasync running ..."
