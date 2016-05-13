@@ -9,7 +9,7 @@ Source0:	megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
-BuildRequires: qt-devel, libqt4-devel, openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libtool, gcc-c++
+BuildRequires: qt-devel, openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libtool, gcc-c++
 BuildRequires: hicolor-icon-theme, unzip, wget
 
 %if 0%{?suse_version}
@@ -127,6 +127,19 @@ cat > "$YUM_FILE" << DATA
 name=MEGAsync
 baseurl=http://mega.nz/linux/MEGAsync/CentOS_7/
 gpgkey=https://mega.nz/linux/MEGAsync/CentOS_7/repodata/repomd.xml.key
+gpgcheck=1
+enabled=1
+DATA
+%endif
+
+# Fedora 24
+%if 0%{?fedora_version} == 24
+YUM_FILE="/etc/yum.repos.d/megasync.repo"
+cat > "$YUM_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+baseurl=http://mega.nz/linux/MEGAsync/Fedora_24/
+gpgkey=https://mega.nz/linux/MEGAsync/Fedora_24/repodata/repomd.xml.key
 gpgcheck=1
 enabled=1
 DATA
