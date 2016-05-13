@@ -54,12 +54,12 @@ for package in MEGAShellExtNautilus MEGAsync; do
 	echo "replacing files with newly generated  (traball, specs, dsc and so for) for package $package ..."
 	ln -sf $PROJECT_PATH/build/MEGAsync/$package/*.spec $NEWOSCFOLDER_PATH/RPM/$package/
 	ln -sf $PROJECT_PATH/build/MEGAsync/$package/*tar.gz $NEWOSCFOLDER_PATH/RPM/$package/
-	for i in $PROJECT_PATH/build/MEGAsync/$package/{PKGBUILD,megasync.install,*.dsc,*.tar.gz,debian.changelog,debian.control,debian.postinst,debian.postrm,debian.rules} ; do ln -sf $i $NEWOSCFOLDER_PATH/DEB/$package/; done
+	for i in $PROJECT_PATH/build/MEGAsync/$package/{PKGBUILD,megasync.install,*.dsc,*.tar.gz,debian.changelog,debian.control,debian.postinst,debian.postrm,debian.rules,debian.compat} ; do ln -sf $i $NEWOSCFOLDER_PATH/DEB/$package/; done
 done
 
 echo "modifying files included/excluded in projects (to respond to e.g. tar.gz version changes)"
-osc addremove $NEWOSCFOLDER_PATH/DEB/*
-osc addremove $NEWOSCFOLDER_PATH/RPM/* 
+osc addremove -r $NEWOSCFOLDER_PATH/DEB
+osc addremove -r $NEWOSCFOLDER_PATH/RPM 
 
 echo "updating changed files and hence triggering rebuild in the OBS platform ...."
 osc ci $NEWOSCFOLDER_PATH/DEB
