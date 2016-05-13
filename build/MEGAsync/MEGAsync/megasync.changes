@@ -1,23 +1,8 @@
+-------------------------------------------------------------------
 Fri May 6 14:30:50 CEST 2016 - linux@mega.co.nz
 
 - Save the state and resume transfers
 - Compatibility with HDPI displays
-- Bug fixes
-
--------------------------------------------------------------------
-Fri May 6 12:39:01 CEST 2016 - linux@mega.co.nz
-
-- Save the state and resume transfers
-- Compatibility with HDPI displays
-- Bug fixes
-
--------------------------------------------------------------------
-Wed Apr 21 12:48:12 CEST 2016 - linux@mega.co.nz
-
-- Management of bandwidth quota for PRO users
-- New information dialog
-- Updated dependencies (OpenSSL, cURL...)
-- ARM support (Raspberry Pi)
 - Bug fixes
 
 -------------------------------------------------------------------
