@@ -168,6 +168,9 @@ rm -fr MEGAsync/MEGAShellExtNautilus/nautilus-megasync_*.tar.gz
 # transform arch name, to satisfy Debian requirements
 mv $EXT_NAME.tar.gz MEGAsync/MEGAShellExtNautilus/nautilus-megasync_$EXT_VERSION.tar.gz
 
+#get md5sum and replace in PKGBUILD
+MD5SUM=`md5sum MEGAsync/MEGAShellExtNautilus/nautilus-megasync_$EXT_VERSION.tar.gz | awk '{print $1}'`
+sed "s/MD5SUM/$MD5SUM/g"  -i MEGAsync/MEGAShellExtNautilus/PKGBUILD
 
 #
 # Thunar
