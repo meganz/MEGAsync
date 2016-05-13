@@ -54,6 +54,7 @@ for package in MEGAShellExtNautilus MEGAsync; do
 	echo "replacing files with newly generated  (traball, specs, dsc and so for) for package $package ..."
 	ln -sf $PROJECT_PATH/build/MEGAsync/$package/*.spec $NEWOSCFOLDER_PATH/RPM/$package/
 	ln -sf $PROJECT_PATH/build/MEGAsync/$package/*tar.gz $NEWOSCFOLDER_PATH/RPM/$package/
+	if ls $PROJECT_PATH/build/MEGAsync/$package/*changes 2>&1 > /dev/null ; then ln -sf $PROJECT_PATH/build/MEGAsync/$package/*changes $NEWOSCFOLDER_PATH/RPM/$package/; fi
 	for i in $PROJECT_PATH/build/MEGAsync/$package/{PKGBUILD,megasync.install,*.dsc,*.tar.gz,debian.changelog,debian.control,debian.postinst,debian.postrm,debian.rules} ; do ln -sf $i $NEWOSCFOLDER_PATH/DEB/$package/; done
 done
 
