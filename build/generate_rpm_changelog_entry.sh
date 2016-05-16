@@ -36,7 +36,7 @@ out3=$(awk '{ gsub(/^[ \t"]+|[ \t"\\n]+$/, ""); print }' <<< "$out2")
 out4=$(awk '!/New in this version/' <<< "$out3")
 
 # print ChangeLog entry
-NOW=$(date)
+NOW=$(LANG=en_us_8859_1;date)
 echo $NOW - linux@mega.co.nz
 echo ""
 echo "$out4"

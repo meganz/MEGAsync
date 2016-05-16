@@ -1,4 +1,12 @@
-lun abr 11 20:11:50 CEST 2016 - linux@mega.co.nz
+-------------------------------------------------------------------
+Fri May 6 14:30:50 CEST 2016 - linux@mega.co.nz
+
+- Save the state and resume transfers
+- Compatibility with HDPI displays
+- Bug fixes
+
+-------------------------------------------------------------------
+Mon Apr 11 20:11:50 CEST 2016 - linux@mega.co.nz
 
 - Management of bandwidth quota for PRO users
 - New information dialog
@@ -6,7 +14,7 @@ lun abr 11 20:11:50 CEST 2016 - linux@mega.co.nz
 - Bug fixes
 
 -------------------------------------------------------------------
-mié abr 6 17:32:34 CEST 2016 - linux@mega.co.nz
+Wed Apr 6 17:32:34 CEST 2016 - linux@mega.co.nz
 
 - Check if public links have been already downloaded
 - Better management of communications with the webclient
@@ -14,7 +22,7 @@ mié abr 6 17:32:34 CEST 2016 - linux@mega.co.nz
 - Bug fixes
 
 -------------------------------------------------------------------
-mar mar 1 13:10:21 CET 2016 - linux@mega.co.nz
+Tue Mar 1 13:10:21 CET 2016 - linux@mega.co.nz
 
 - Fixed the compilation. The previous version failed with some CPUs
 
