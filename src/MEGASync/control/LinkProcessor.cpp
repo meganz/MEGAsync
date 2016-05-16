@@ -227,9 +227,9 @@ void LinkProcessor::downloadLinks(QString localPath)
                 const char *fpRemote = megaApi->getFingerprint(linkNode[i]);
                 const char *key = linkNode[i]->getBase64Key();
 
-                if (key && (fpLocal && fpRemote && !strcmp(fpLocal,fpRemote))
+                if (key && ((fpLocal && fpRemote && !strcmp(fpLocal,fpRemote))
                         || (!fpRemote && linkNode[i]->getSize() == info.size()
-                            && linkNode[i]->getModificationTime() == (info.lastModified().toMSecsSinceEpoch()/1000)))
+                            && linkNode[i]->getModificationTime() == (info.lastModified().toMSecsSinceEpoch()/1000))))
                 {
                     delete [] fpLocal;
                     delete [] fpRemote;
