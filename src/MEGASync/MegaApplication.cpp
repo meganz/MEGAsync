@@ -3739,14 +3739,16 @@ void MegaApplication::openBwOverquotaDialog()
     }
 
     bwOverquotaDialog->setTimestamp(bwOverquotaTimestamp);   
-    bwOverquotaDialog->show();
+    if (!bwOverquotaDialog->isVisible())
+    {
+        bwOverquotaDialog->show();
 
-#ifdef WIN32
-    bwOverquotaDialog->showMinimized();
-    bwOverquotaDialog->setWindowState(Qt::WindowActive);
-    bwOverquotaDialog->showNormal();
-#endif
-
+    #ifdef WIN32
+        bwOverquotaDialog->showMinimized();
+        bwOverquotaDialog->setWindowState(Qt::WindowActive);
+        bwOverquotaDialog->showNormal();
+    #endif
+    }
     bwOverquotaDialog->raise();
     bwOverquotaDialog->activateWindow();
     bwOverquotaDialog->setFocus();
@@ -5374,6 +5376,7 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
         return;
     }
 
+    megaApi->enableTransferResumption();
     Preferences *preferences = Preferences::instance();
     if (preferences->logged() && !api->getNumActiveSyncs())
     {

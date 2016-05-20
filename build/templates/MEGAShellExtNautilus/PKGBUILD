@@ -1,14 +1,71 @@
+##
+ # @file build/MEGAsync/MEGAsync/PKGBUILD
+ # @brief script to generate package megasync for ArchLinux
+ #
+ # (c) 2013-2016 by Mega Limited, Auckland, New Zealand
+ #
+ # This file is part of the MEGA SDK - Client Access Engine.
+ #
+ # Applications using the MEGA API must present a valid application key
+ # and comply with the the rules set forth in the Terms of Service.
+ #
+ # The MEGA SDK is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ #
+ # @copyright Simplified (2-clause) BSD License.
+ #
+ # You should have received a copy of the license along with this
+ # program.
+##
+
+# Maintainer: Pablo Martin <pm@mega.nz>
 pkgname=nautilus-megasync
 pkgver=EXT_VERSION
 pkgrel=1
-arch=('any')
-url="https://mega.nz/#sync"
-license=('Freeware')
+epoch=
 pkgdesc="Easy automated syncing between your computers and your MEGA cloud drive"
-depends=(
-'qt4'
-'nautilus'
-'libnautilus-extension'
-'hicolor-icon-theme'
-'ca-certificates'
+arch=('i686' 'x86_64')
+url=""
+license=() #TODO
+groups=()
+depends=('ca-certificates' 'megasync' 'nautilus')
+makedepends=( 'ca-certificates' 'qt4' 'nautilus' 'libnautilus-extension')
+checkdepends=()
+optdepends=()
+provides=("nautilus-megasync=${pkgver}")
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=megasync.install
+changelog= #TODO
+source=("./${pkgname}_$pkgver.tar.gz"
 )
+noextract=()
+md5sums=('MD5SUM') # generated with makepkg -g
+validpgpkeys=()
+
+prepare() {
+	cd "$pkgname-$pkgver"
+}
+
+build() {
+	#export DESKTOP_DESTDIR=$pkgdir/usr
+	cd "$pkgname-$pkgver"
+	sed -i "s#update_cache.path = \$\$PWD#update_cache.path = \$\${HICOLOR}#g" MEGAShellExtNautilus.pro
+	qmake || qmake-qt4 #qmake would fail when qt4 installed (due to some path missconfigurations)	
+	make
+}
+
+check() {
+	cd "$pkgname-$pkgver"
+#	make -k check  DESTDIR=$_bindir THE_RPM_BUILD_ROOT=$pkgdir
+}
+
+package() {
+	cd "$pkgname-$pkgver"
+#	make install
+	#sed -i "s#gtk-update-icon-cache -f -t /#gtk-update-icon-cache -f -t \$(INSTALL_ROOT)/#g" Makefile
+	make install INSTALL_ROOT=$pkgdir
+}

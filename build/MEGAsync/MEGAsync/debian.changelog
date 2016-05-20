@@ -1,3 +1,11 @@
+megasync (2.9.2) stable; urgency=low
+
+  * Save the state and resume transfers
+  * Compatibility with HDPI displays
+  * Bug fixes
+
+ -- MEGA Team <linux@mega.co.nz>  Fri, 13 May 2016 12:48:33 +0200
+
 megasync (2.9.0) stable; urgency=low
 
   * Management of bandwidth quota for PRO users
