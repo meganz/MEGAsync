@@ -151,7 +151,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Credits</source>
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
-        <translation type="unfinished">Подяка</translation>
+        <translation type="unfinished">Подяки</translation>
     </message>
 </context>
 <context>
@@ -184,7 +184,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">You are about to enable an option that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
+        <translation type="unfinished">Ви збираєтесь включити опцію, яка може дозволити перехоплення ваших повідомлень. Ваші дані, як і раніше, будуть недоступні для зловмисників через наше крізне шифрування, але вони зможуть сліпо переміщати файли і теки в MEGA, видаляти їх та заборонити вам доступ до вашого облікового запису.</translation>
     </message>
 </context>
 <context>
@@ -636,15 +636,15 @@ Are you sure?</source>
     </message>
     <message>
         <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
-        <translation type="unfinished">[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</translation>
+        <translation type="unfinished">[S]MEGAsync:[/S] Легка автоматична синхронізація між вашим комп&#039;ютером та хмарним диском MEGA</translation>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
-        <translation type="unfinished">[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</translation>
+        <translation type="unfinished">[S]Гнучкість:[/S] Синхронізація будь-якої теки вашого ПК з будь якою текою у хмарі. Паралельна синхронізація декількох тек.</translation>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</translation>
+        <translation type="unfinished">Скористайтесь перевагами 50 ГБ хмарного сховища безкоштовного акаунту і можливістю шифрування усіх файлів нашого [A]PRO плану[/A].</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
@@ -660,7 +660,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
-        <translation type="unfinished">Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</translation>
+        <translation type="unfinished">Запуск алгоритму шифрування крізного шифрування MEGA без прокладок на повільних браузерах.</translation>
     </message>
     <message>
         <source>Unlimited file size</source>
@@ -1074,7 +1074,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation type="unfinished">DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log).</translation>
+        <translation type="unfinished">Увімкнено режим НАЛАГОДЖЕННЯ. Журнал буде створено на вашому робочому столі (MEGAsync.log).</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
@@ -1084,7 +1084,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please temporarily disable your antivirus software and try again.</translation>
+        <translation type="unfinished">Наш ключ SSL не можливо перевірити. Ви можете бути уражені атакою людина-по-середині або антивірусне програмне забезпечення могло б перехопити ваше повідомлення, що і стало причиною цієї проблеми. Будь ласка, тимчасово відключіть антивірусне програмне забезпечення і спробуйте ще раз.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -1482,7 +1482,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them on the default permissions for security reasons.</translation>
+        <translation type="unfinished">Файли і теки мають власника і належать групі користувачів. За допомогою цього діалогу ви можете надати різні види доступу для нових файлів і тек, створених MEGAsync для користувачів, що належать до тієї групи а також для решти користувачів комп&#039;ютеру. Якщо вам не потрібно їх змінювати, будь ласка, з міркувань безпеки, залиште їх права доступу як усталено.</translation>
     </message>
 </context>
 <context>
@@ -2160,7 +2160,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</translation>
+        <translation type="unfinished">Резервні копії ваших даних попередньої версії синхронізації на вашому комп&#039;ютері будуть видалені назавжди. Будь ласка, перевірте ваші резервні теки, щоб впевнитися, чи потрібно щось врятувати, перед тим як продовжити:</translation>
     </message>
     <message>
         <source>Do you want to delete your local cache now?</source>
@@ -2175,7 +2175,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">Резервні копії ваших файлів попередньої версії синхронізації на MEGA будуть видалені назавжди. Будь ласка, перевірте [A] теку Кошику для сміття на вашому обліковому запису MEGA, щоб впевнитися, чи потрібно щось врятувати, перед тим як продовжити.</translation>
     </message>
     <message>
         <source>Do you want to delete your remote cache now?</source>
@@ -2199,7 +2199,7 @@ when the application starts again</source>
     <message>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</translation>
+        <translation type="unfinished">Увімкніть цю опцію, тільки якщо ваші передачі не розпочинаються. В звичайних обставинах HTTP достатньо для передач, так як усі ваші дані уже зашифровано.</translation>
     </message>
 </context>
 <context>

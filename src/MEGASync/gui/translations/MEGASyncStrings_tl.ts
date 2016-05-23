@@ -1482,7 +1482,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them on the default permissions for security reasons.</translation>
+        <translation type="unfinished">Ang files at folders ay nasa pagmamay-ari ng isang grupo ng users. Gamit ang dialogong ito, pupwedeng mong pahintulotan ng access para sa mga bagong files at folders na mabubo ng MEGAsync users na nasa iisang grupo at para sa iba pang users sa iyong computer. Kung hindi mo kailangan itong baguhin, iwan mo ito sa default permissions para sa rasong pangseguridad.</translation>
     </message>
 </context>
 <context>

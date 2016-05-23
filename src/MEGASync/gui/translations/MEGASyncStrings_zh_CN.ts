@@ -648,7 +648,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Faster transfer speeds</source>
-        <translation type="unfinished">Faster transfer speeds</translation>
+        <translation type="unfinished">传输速度更快</translation>
     </message>
     <message>
         <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
@@ -664,7 +664,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Unlimited file size</source>
-        <translation type="unfinished">Unlimited file size</translation>
+        <translation type="unfinished">文件大小无限制</translation>
     </message>
     <message>
         <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
@@ -1467,7 +1467,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Group permissions:</source>
         <translatorcomment>Label just before the new group permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Group permissions:</translation>
+        <translation type="unfinished">群权限:</translation>
     </message>
     <message>
         <source>Public permissions:</source>
@@ -2693,7 +2693,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Default application</source>
         <translatorcomment>Text of the button to open a streaming link with the default application in the system</translatorcomment>
-        <translation type="unfinished">Default application</translation>
+        <translation type="unfinished">默认程序</translation>
     </message>
     <message>
         <source>Choose application</source>
@@ -2728,7 +2728,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enter a MEGA file link:</source>
         <translatorcomment>Text of the dialog to enter a MEGA file link for streaming</translatorcomment>
-        <translation type="unfinished">Enter a MEGA file link:</translation>
+        <translation type="unfinished">输入 MEGA 文件链接:</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
