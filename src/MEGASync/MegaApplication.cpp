@@ -1074,6 +1074,31 @@ void MegaApplication::loggedIn()
         infoWizard = NULL;
     }
 
+    if (transferManager)
+    {
+        transferManager->setVisible(true);
+        #ifdef WIN32
+            transferManager->showMinimized();
+            transferManager->setWindowState(Qt::WindowActive);
+            transferManager->showNormal();
+        #endif
+        transferManager->raise();
+        transferManager->activateWindow();
+        transferManager->setFocus();
+        return;
+    }
+
+    transferManager = new TransferManager(megaApi);
+#ifdef WIN32
+    transferManager->showMinimized();
+    transferManager->setWindowState(Qt::WindowActive);
+    transferManager->showNormal();
+#endif
+    transferManager->raise();
+    transferManager->activateWindow();
+    transferManager->setFocus();
+    transferManager->show();
+
     pauseTransfers(paused);
     megaApi->getAccountDetails();
     megaApi->getPricing();
@@ -1148,31 +1173,6 @@ void MegaApplication::loggedIn()
     }
 
     onGlobalSyncStateChanged(megaApi);
-
-    if (transferManager)
-    {
-        transferManager->setVisible(true);
-        #ifdef WIN32
-            transferManager->showMinimized();
-            transferManager->setWindowState(Qt::WindowActive);
-            transferManager->showNormal();
-        #endif
-        transferManager->raise();
-        transferManager->activateWindow();
-        transferManager->setFocus();
-        return;
-    }
-
-    transferManager = new TransferManager(megaApi);
-#ifdef WIN32
-    transferManager->showMinimized();
-    transferManager->setWindowState(Qt::WindowActive);
-    transferManager->showNormal();
-#endif
-    transferManager->raise();
-    transferManager->activateWindow();
-    transferManager->setFocus();
-    transferManager->show();
 }
 
 void MegaApplication::startSyncs()
