@@ -1,6 +1,8 @@
 #include "TransferItem.h"
 #include "ui_TransferItem.h"
 #include "control/Utilities.h"
+#include <QMouseEvent>
+#include <QDebug>
 
 TransferItem::TransferItem(QWidget *parent) :
     QWidget(parent),
@@ -166,6 +168,10 @@ void TransferItem::updateTransfer()
 
     // Update transferred bytes
     ui->lTotal->setText(QString::fromUtf8("%1 of %2").arg(Utilities::getSizeString(totalTransferredBytes))
-                                                     .arg(Utilities::getSizeString(totalSize)));
+                        .arg(Utilities::getSizeString(totalSize)));
+}
+
+void TransferItem::mouseEventClicked(QPoint pos, bool rightClick)
+{
 }
 

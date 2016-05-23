@@ -25,6 +25,8 @@ public:
     void finishTransfer();
     void updateTransfer();
 
+    void mouseEventClicked(QPoint pos, bool rightClick = false);
+
     ~TransferItem();
 
 private:
