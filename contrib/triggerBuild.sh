@@ -63,5 +63,5 @@ osc addremove -r $NEWOSCFOLDER_PATH/DEB
 osc addremove -r $NEWOSCFOLDER_PATH/RPM 
 
 echo "updating changed files and hence triggering rebuild in the OBS platform ...."
-osc ci $NEWOSCFOLDER_PATH/DEB
-osc ci $NEWOSCFOLDER_PATH/RPM
+osc ci -n $NEWOSCFOLDER_PATH/DEB
+osc ci -n $NEWOSCFOLDER_PATH/RPM
