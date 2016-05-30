@@ -2759,7 +2759,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">Latauksesi ei voi jatkua, koska se ylittäisi nykyisen ilmaisen liikennekiintiön IP-osoitteellesi. Rajoite on dynaaminen ja riippuvainen tarjolla olevasta vapaasta tietoliikennekaistasta.</translation>
+        <translation type="unfinished">Latauksesi ei voi jatkua, koska se ylittäisi nykyisen ilmaisen liikennöintikiintiön IP-osoitteellesi. Rajoite on dynaaminen ja riippuvainen tarjolla olevasta vapaasta tietoliikennekaistasta.</translation>
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
