@@ -11,6 +11,7 @@
 
 #ifndef WIN32
 #include "megaapi.h"
+#include <utime.h>
 #endif
 
 using namespace std;
@@ -351,6 +352,12 @@ void Utilities::copyRecursively(QString srcPath, QString dstPath)
     {
         QFile src(srcPath);
         src.copy(dstPath);
+#ifndef _WIN32
+       QFileInfo info(src);
+       time_t t = info.lastModified().toTime_t();
+       struct utimbuf times = { t, t };
+       utime(dstPath.toUtf8().constData(), &times);
+#endif
     }
     else if (source.isDir())
     {
