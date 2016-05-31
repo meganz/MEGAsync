@@ -1,5 +1,5 @@
-Tue May 24 18:57:44 CEST 2016 - linux@mega.co.nz
-- Update to version 2.9.4:
+Tue May 31 12:05:33 CEST 2016 - linux@mega.co.nz
+- Update to version 2.9.5:
   * Save the state and resume transfers
   * Better management of errors during transfers
   * Compatibility with HDPI displays
