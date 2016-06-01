@@ -3211,12 +3211,39 @@ void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
         return;
     }
 
-    //Launch the creation of the import link, it will be handled in the "onRequestFinish" callback
-    if (infoDialog)
+    MegaNode *node = megaApi->getNodeByHandle(fileHandle);
+    if (!node)
     {
-        infoDialog->disableGetLink(true);
+        showErrorMessage(tr("Error getting link: ") + QString::fromUtf8("File not found"));
+        return;
     }
-    megaApi->exportNode(megaApi->getNodeByHandle(fileHandle));
+
+    const char *fp = megaApi->getFingerprint(node);
+    if (!fp)
+    {
+        showErrorMessage(tr("Error getting link: ") + QString::fromUtf8("File not found"));
+        delete node;
+        return;
+    }
+    MegaNode *exportableNode = megaApi->getExportableNodeByFingerprint(fp);
+    if (exportableNode)
+    {
+
+        //Launch the creation of the import link, it will be handled in the "onRequestFinish" callback
+        if (infoDialog)
+        {
+            infoDialog->disableGetLink(true);
+        }
+        megaApi->exportNode(exportableNode);
+
+        delete node;
+        delete [] fp;
+        delete exportableNode;
+        return;
+    }
+    delete node;
+    delete [] fp;
+    showErrorMessage(tr("Error getting link: ") + QString::fromUtf8("Not exportable node"));
 }
 
 //Called when the user wants to upload a list of files and/or folders from the shell
