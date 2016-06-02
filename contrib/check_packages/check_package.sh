@@ -384,11 +384,17 @@ logOperationResult "checking new megasync running ..." $resultRunning
 
 echo " forcing POST to dl test file ..."
 $sshpasscommand ssh root@$IP_GUEST "curl 'https://127.0.0.1:6342/' -H 'Origin: https://mega.nz' --data-binary '{\"a\":\"l\",\"h\":\"FQ5miCCB\",\"k\":\"WkMOvzgPWhBtvE7tYQQv8urhwuYmuS74C3HnhboDE-I\"}' --compressed --insecure"
-sleep 20 #TODO: sleep longer?
 
-echo " check file dl correctly ..."
-$sshpasscommand ssh root@$IP_GUEST cat /home/mega/testFile.txt >/dev/null  #TODO: do hash file comparation
-resultDL=$?
+resultDL=27
+attempts=10
+while [[ $attempts -ge 0 && $resultDL -ne 0 ]]; do
+	sleep $((5*(10-$attempts)))
+	echo " check file dl correctly ..."
+	$sshpasscommand ssh root@$IP_GUEST cat /home/mega/testFile.txt >/dev/null  #TODO: do hash file comparation
+	resultDL=$?
+	attempts=$(($attempts - 1))
+done
+
 logOperationResult "check file dl correctly ..." $resultDL
 
 if [ $resultDL -eq 0 ] && [ $resultRunning -eq 0 ] \
