@@ -195,7 +195,7 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	attempts=3
 	$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive install -f megasync 
 	resultINSTALL=$?
-	while [ attempts -ge 0 ] || $resultINSTALL ; do
+	while [ $attempts -ge 0 ] || $resultINSTALL ; do
 		$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive install -f megasync 
 		resultINSTALL=$?
 		$attempts=$(($attempts - 1))
