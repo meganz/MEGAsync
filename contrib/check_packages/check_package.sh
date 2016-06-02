@@ -198,7 +198,7 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	while [ $attempts -ge 0 ] || $resultINSTALL ; do
 		$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive install -f megasync 
 		resultINSTALL=$?
-		$attempts=$(($attempts - 1))
+		attempts=$(($attempts - 1))
 	done
 	#TODO: zypper might fail and still say "IT IS OK!"
 	#Doing stderr checking will give false FAILS, since zypper outputs non failure stuff in stderr
