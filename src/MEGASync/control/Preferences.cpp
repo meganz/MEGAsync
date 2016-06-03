@@ -11,12 +11,12 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/2.9.5.0";
-const int Preferences::VERSION_CODE = 2905;
+const char Preferences::USER_AGENT[] = "MEGAsync/2.9.6.0";
+const int Preferences::VERSION_CODE = 2906;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.5");
-const QString Preferences::SDK_ID = QString::fromAscii("f1f9d");
+const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.6");
+const QString Preferences::SDK_ID = QString::fromAscii("78f90");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- Save the state and resume transfers\n"
             "- Better management of errors during transfers\n"
