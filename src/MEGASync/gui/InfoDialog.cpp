@@ -1044,6 +1044,8 @@ void InfoDialog::on_bSyncFolder_clicked()
         syncsMenu->addSeparator();
 
         QSignalMapper *menuSignalMapper = new QSignalMapper();
+        connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
+        
         int activeFolders = 0;
         for (int i = 0; i < num; i++)
         {
@@ -1061,7 +1063,6 @@ void InfoDialog::on_bSyncFolder_clicked()
 #endif
             action->setIconVisibleInMenu(true);
             menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
-            connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
         }
 
         connect(syncsMenu, SIGNAL(aboutToHide()), syncsMenu, SLOT(deleteLater()));
