@@ -125,13 +125,29 @@ QModelIndex QMegaModel::index(int row, int column, const QModelIndex &parent) co
 QModelIndex QMegaModel::parent(const QModelIndex &index) const
 {
     MegaItem *item = (MegaItem *)index.internalPointer();
+    if (!item)
+    {
+        return QModelIndex();
+    }
+
     MegaItem *parent = item->getParent();
     if (!parent)
     {
         return QModelIndex();
     }
 
-    return createIndex(parent->indexOf(item), 0, parent);
+    MegaItem *grandparent = parent->getParent();
+    if (!grandparent)
+    {
+        if (parent == rootItem)
+        {
+            return createIndex(0, 0, parent);
+        }
+
+        return createIndex(1 + inshareItems.indexOf(parent), 0, parent);
+    }
+
+    return createIndex(grandparent->indexOf(parent), 0, parent);
 }
 
 int QMegaModel::rowCount(const QModelIndex &parent) const
