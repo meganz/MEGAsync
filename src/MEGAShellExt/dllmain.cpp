@@ -14,7 +14,8 @@ STDAPI DllUnregisterServer(void);
 // {0229E5E7-09E9-45CF-9228-0228EC7D5F17}
 const CLSID CLSID_ContextMenuExt = 
 { 0x229e5e7, 0x9e9, 0x45cf, { 0x92, 0x28, 0x2, 0x28, 0xec, 0x7d, 0x5f, 0x17 } };
-const TCHAR ContextMenuExtFriendlyName[] = L"###MegaContextMenuExt";
+const TCHAR ContextMenuExtFriendlyNameOld[] = L"###MegaContextMenuExt";
+const TCHAR ContextMenuExtFriendlyName[] = L"MEGA (Context menu)";
 
 // {05B38830-F4E9-4329-978B-1DD28605D202}
 const CLSID CLSID_ShellExtSynced = 
@@ -143,6 +144,11 @@ STDAPI DllRegisterServer(void)
             ContextMenuExtFriendlyName);
         if (!SUCCEEDED(hr)) return hr;
 
+        hr = RegisterShellExtContextMenuHandler(L"AllFilesystemObjects",
+            CLSID_ContextMenuExt,
+            ContextMenuExtFriendlyName);
+        if (!SUCCEEDED(hr)) return hr;
+
         hr = RegisterInprocServer(szModule, CLSID_ShellExtSynced,
             ShellExtSyncedFriendlyName,
             L"Apartment");
@@ -200,11 +206,6 @@ STDAPI DllUnregisterServer(void)
         hr = UnregisterInprocServer(CLSID_ContextMenuExt);
         if (!SUCCEEDED(hr)) return hr;
 
-        // Unregister the context menu handler.
-        hr = UnregisterShellExtContextMenuHandler(L"*",
-            CLSID_ContextMenuExt, ContextMenuExtFriendlyName);
-        if (!SUCCEEDED(hr)) return hr;
-
         hr = UnregisterInprocServer(CLSID_ShellExtSynced);
         if (!SUCCEEDED(hr)) return hr;;
 
@@ -214,6 +215,9 @@ STDAPI DllUnregisterServer(void)
         hr = UnregisterInprocServer(CLSID_ShellExtSyncing);
         if (!SUCCEEDED(hr)) return hr;
 
+        UnregisterShellExtContextMenuHandler(L"*", CLSID_ContextMenuExt, ContextMenuExtFriendlyNameOld);
+        UnregisterShellExtContextMenuHandler(L"*", CLSID_ContextMenuExt, ContextMenuExtFriendlyName);
+        UnregisterShellExtContextMenuHandler(L"AllFilesystemObjects", CLSID_ContextMenuExt, ContextMenuExtFriendlyName);
         UnregisterShellExtIconHandler(CLSID_ShellExtSynced, ShellExtSyncedFriendlyNameOld);
         UnregisterShellExtIconHandler(CLSID_ShellExtSynced, ShellExtSyncedFriendlyName);
         UnregisterShellExtIconHandler(CLSID_ShellExtPending, ShellExtPendingFriendlyNameOld);
