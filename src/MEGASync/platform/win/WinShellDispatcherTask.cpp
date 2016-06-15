@@ -428,13 +428,30 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         }
         case L'P':
         {
-            if ((lstrlen(pipe->chRequest) < 3) || (Preferences::instance()->overlayIconsDisabled()))
+            if (lstrlen(pipe->chRequest) < 3)
+            {
+                break;
+            }
+
+            bool overlayIcons = true;
+            QStringList parameters = QString::fromWCharArray(content).split(QChar::fromAscii('|'));
+            if (parameters.size() > 1)
+            {
+                bool ok;
+                overlayIcons = parameters[1].toInt(&ok);
+                if (!ok)
+                {
+                    overlayIcons = true;
+                }
+            }
+
+            if ((parameters[0].size() < 3) || (overlayIcons && Preferences::instance()->overlayIconsDisabled()))
             {
                 break;
             }
 
             int state;
-            QString temp = QString::fromWCharArray(content);
+            QString temp = parameters[0];
             if (temp.startsWith(QString::fromAscii("\\\\?\\")))
             {
                 temp = temp.mid(4);
