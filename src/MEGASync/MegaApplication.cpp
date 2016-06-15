@@ -2693,8 +2693,8 @@ void MegaApplication::importLinks()
     if (preferences->logged() && importDialog->shouldImport())
     {
         connect(linkProcessor, SIGNAL(onLinkImportFinish()), this, SLOT(onLinkImportFinished()));
-        connect(linkProcessor, SIGNAL(onDupplicateLink(QString, QString, long long)),
-                this, SLOT(onDupplicateLink(QString, QString, long long)));
+        connect(linkProcessor, SIGNAL(onDupplicateLink(QString, QString, mega::MegaHandle)),
+                this, SLOT(onDupplicateLink(QString, QString, mega::MegaHandle)));
         linkProcessor->importLinks(importDialog->getImportPath());
     }
     else
