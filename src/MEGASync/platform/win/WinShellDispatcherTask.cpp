@@ -353,24 +353,12 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 
             bool ok;
             QStringList parameters = QString::fromWCharArray(content).split(QChar::fromAscii(':'));
-            if (parameters.size() != 3)
+            if (parameters.size() < 1)
             {
                 break;
             }
 
             int stringId = parameters[0].toInt(&ok);
-            if (!ok)
-            {
-                break;
-            }
-
-            int numFiles = parameters[1].toInt(&ok);
-            if (!ok)
-            {
-                break;
-            }
-
-            int numFolders = parameters[2].toInt(&ok);
             if (!ok)
             {
                 break;
@@ -393,46 +381,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                     break;
             }
 
-            QString sNumFiles;
-            if (numFiles == 1)
-            {
-                sNumFiles = QCoreApplication::translate("ShellExtension", "1 file");
-            }
-            else if (numFiles > 1)
-            {
-                sNumFiles = QCoreApplication::translate("ShellExtension", "%1 files")
-                        .arg(numFiles);
-            }
-
-            QString sNumFolders;
-            if (numFolders == 1)
-            {
-                sNumFolders = QCoreApplication::translate("ShellExtension", "1 folder");
-            }
-            else if (numFolders > 1)
-            {
-                sNumFolders = QCoreApplication::translate("ShellExtension", "%1 folders")
-                        .arg(numFolders);
-            }
-
-            QString fullString;
-            if (numFiles && numFolders)
-            {
-                fullString = QCoreApplication::translate("ShellExtension", "%1 (%2, %3)")
-                        .arg(actionString).arg(sNumFiles).arg(sNumFolders);
-            }
-            else if (numFiles && !numFolders)
-            {
-                fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)")
-                        .arg(actionString).arg(sNumFiles);
-            }
-            else if (!numFiles && numFolders)
-            {
-                fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)")
-                        .arg(actionString).arg(sNumFolders);
-            }
-
-            wcscpy_s( pipe->chReply, BUFSIZE, (const wchar_t *)fullString.utf16());
+            wcscpy_s( pipe->chReply, BUFSIZE, (const wchar_t *)actionString.utf16());
             break;
         }
         case L'F':
