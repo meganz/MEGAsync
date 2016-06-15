@@ -81,22 +81,24 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
         if (testNode)
         {
             const char *tPath = megaApi->getNodePath(testNode);
-            if (tPath)
-            {
+            if (tPath && strncmp(tPath, QString::fromUtf8("//bin/").toStdString().c_str(), 6))
+            {   
                 ui->eMegaFolder->setText(QString::fromUtf8(tPath));
                 delete [] tPath;
             }
             else
-            {
+            {       
                 delete testNode;
                 ui->eMegaFolder->setText(tr("/MEGAsync Imports"));
                 testNode = megaApi->getNodeByPath(tr("/MEGAsync Imports").toUtf8().constData());
+                preferences->setImportFolder(mega::INVALID_HANDLE);
             }
         }
         else
         {
             ui->eMegaFolder->setText(tr("/MEGAsync Imports"));
             testNode = megaApi->getNodeByPath(tr("/MEGAsync Imports").toUtf8().constData());
+            preferences->setImportFolder(mega::INVALID_HANDLE);
         }
 
         if (!testNode)
