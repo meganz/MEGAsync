@@ -87,6 +87,7 @@ public:
     void showErrorMessage(QString message, QString title = tr("MEGAsync"));
     void showNotificationMessage(QString message, QString title = tr("MEGAsync"));
     void setUploadLimit(int limit);
+    void setDownloadLimit(int limit);
     void setUseHttpsOnly(bool httpsOnly);
     void startUpdateTask();
     void stopUpdateTask();

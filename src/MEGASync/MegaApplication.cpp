@@ -1232,6 +1232,7 @@ void MegaApplication::loggedIn()
 
     //Set the upload limit
     setUploadLimit(preferences->uploadLimitKB());
+    setDownloadLimit(preferences->downloadLimitKB());
 
     // Process any pending download/upload queued during GuestMode
     processDownloads();
@@ -2494,6 +2495,16 @@ void MegaApplication::setUploadLimit(int limit)
     {
         megaApi->setUploadLimit(limit * 1024);
     }
+}
+
+void MegaApplication::setDownloadLimit(int limit)
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    //TO-DO - Apply download limit to megaApi
 }
 
 void MegaApplication::setUseHttpsOnly(bool httpsOnly)

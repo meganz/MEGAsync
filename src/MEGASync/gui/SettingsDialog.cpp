@@ -103,7 +103,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     debugCounter = 0;
 
     ui->eProxyPort->setValidator(new QIntValidator(this));
-    ui->eLimit->setValidator(new QDoubleValidator(this));
+    ui->eUploadLimit->setValidator(new QDoubleValidator(this));
     ui->bAccount->setChecked(true);
     ui->wStack->setCurrentWidget(ui->pAccount);
 
@@ -687,14 +687,29 @@ void SettingsDialog::on_bUpgradeBandwidth_clicked()
     megaApi->getSessionTransferURL(url.toUtf8().constData());
 }
 
-void SettingsDialog::on_rNoLimit_clicked()
+void SettingsDialog::on_rUploadAutoLimit_clicked()
 {
-    ui->eLimit->setEnabled(false);
+    ui->eUploadLimit->setEnabled(false);
 }
 
-void SettingsDialog::on_rLimit_clicked()
+void SettingsDialog::on_rUploadNoLimit_clicked()
 {
-    ui->eLimit->setEnabled(true);
+    ui->eUploadLimit->setEnabled(false);
+}
+
+void SettingsDialog::on_rUploadLimit_clicked()
+{
+    ui->eUploadLimit->setEnabled(true);
+}
+
+void SettingsDialog::on_rDownloadNoLimit_clicked()
+{
+    ui->eDownloadLimit->setEnabled(false);
+}
+
+void SettingsDialog::on_rDownloadLimit_clicked()
+{
+    ui->eDownloadLimit->setEnabled(true);
 }
 
 void SettingsDialog::on_cProxyRequiresPassword_clicked()
@@ -796,9 +811,9 @@ void SettingsDialog::loadSettings()
             ui->bBandwidth->setText(tr("Transfers"));
         }
 
-        if (ui->lAutoLimit->text().trimmed().at(0)!=QChar::fromAscii('('))
+        if (ui->lUploadAutoLimit->text().trimmed().at(0)!=QChar::fromAscii('('))
         {
-            ui->lAutoLimit->setText(QString::fromAscii("(%1)").arg(ui->lAutoLimit->text().trimmed()));
+            ui->lUploadAutoLimit->setText(QString::fromAscii("(%1)").arg(ui->lUploadAutoLimit->text().trimmed()));
         }
 
         //Account
@@ -869,11 +884,16 @@ void SettingsDialog::loadSettings()
         loadSyncSettings();
 
         //Bandwidth
-        ui->rAutoLimit->setChecked(preferences->uploadLimitKB()<0);
-        ui->rLimit->setChecked(preferences->uploadLimitKB()>0);
-        ui->rNoLimit->setChecked(preferences->uploadLimitKB()==0);
-        ui->eLimit->setText((preferences->uploadLimitKB()<=0)? QString::fromAscii("0") : QString::number(preferences->uploadLimitKB()));
-        ui->eLimit->setEnabled(ui->rLimit->isChecked());
+        ui->rUploadAutoLimit->setChecked(preferences->uploadLimitKB()<0);
+        ui->rUploadLimit->setChecked(preferences->uploadLimitKB()>0);
+        ui->rUploadNoLimit->setChecked(preferences->uploadLimitKB()==0);
+        ui->eUploadLimit->setText((preferences->uploadLimitKB()<=0)? QString::fromAscii("0") : QString::number(preferences->uploadLimitKB()));
+        ui->eUploadLimit->setEnabled(ui->rUploadLimit->isChecked());
+
+        ui->rDownloadLimit->setChecked(preferences->downloadLimitKB()>0);
+        ui->rDownloadNoLimit->setChecked(preferences->downloadLimitKB()==0);
+        ui->eDownloadLimit->setText((preferences->downloadLimitKB()<=0)? QString::fromAscii("0") : QString::number(preferences->downloadLimitKB()));
+        ui->eDownloadLimit->setEnabled(ui->rDownloadLimit->isChecked());
 
         ui->cbUseHttps->setChecked(preferences->usingHttpsOnly());
 
@@ -1178,20 +1198,31 @@ bool SettingsDialog::saveSettings()
 #endif
 
         //Bandwidth
-        if (ui->rNoLimit->isChecked() || ui->lLimit->text().trimmed().length() == 0)
+        if (ui->rUploadNoLimit->isChecked())
         {
             preferences->setUploadLimitKB(0);
         }
-        else if (ui->rAutoLimit->isChecked())
+        else if (ui->rUploadAutoLimit->isChecked())
         {
             preferences->setUploadLimitKB(-1);
         }
         else
         {
-            preferences->setUploadLimitKB(ui->eLimit->text().trimmed().toInt());
+            preferences->setUploadLimitKB(ui->eUploadLimit->text().trimmed().toInt());
         }
 
         app->setUploadLimit(preferences->uploadLimitKB());
+
+        if (ui->rDownloadNoLimit->isChecked())
+        {
+            preferences->setDownloadLimitKB(0);
+        }
+        else
+        {
+            preferences->setDownloadLimitKB(ui->eDownloadLimit->text().trimmed().toInt());
+        }
+
+        app->setDownloadLimit(preferences->downloadLimitKB());
 
         preferences->setUseHttpsOnly(ui->cbUseHttps->isChecked());
         app->setUseHttpsOnly(preferences->usingHttpsOnly());

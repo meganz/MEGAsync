@@ -80,9 +80,12 @@ private slots:
     void on_bUpgrade_clicked();
     void on_bUpgradeBandwidth_clicked();
 
-    void on_rNoLimit_clicked();
+    void on_rUploadAutoLimit_clicked();
+    void on_rUploadNoLimit_clicked();
+    void on_rUploadLimit_clicked();
 
-    void on_rLimit_clicked();
+    void on_rDownloadNoLimit_clicked();
+    void on_rDownloadLimit_clicked();
 
     void on_cProxyRequiresPassword_clicked();
 #ifndef WIN32
