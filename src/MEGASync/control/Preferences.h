@@ -105,7 +105,9 @@ public:
     void setHasDefaultImportFolder(bool value);
     bool canUpdate(QString filePath);
     int uploadLimitKB();
+    int downloadLimitKB();
     void setUploadLimitKB(int value);
+    void setDownloadLimitKB(int value);
     long long upperSizeLimitValue();
     void setUpperSizeLimitValue(long long value);
     long long lowerSizeLimitValue();
@@ -351,6 +353,7 @@ protected:
     static const QString languageKey;
     static const QString updateAutomaticallyKey;
     static const QString uploadLimitKBKey;
+    static const QString downloadLimitKBKey;
     static const QString upperSizeLimitKey;
     static const QString lowerSizeLimitKey;
     static const QString upperSizeLimitValueKey;
@@ -418,6 +421,7 @@ protected:
     static const bool defaultStartOnStartup;
     static const bool defaultUpdateAutomatically;
     static const int  defaultUploadLimitKB;
+    static const int  defaultDownloadLimitKB;
     static const int  defaultProxyType;
     static const int  defaultProxyProtocol;
     static const QString  defaultProxyServer;
