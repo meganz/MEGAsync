@@ -397,16 +397,16 @@ QString WindowsPlatform::getDefaultOpenApp(QString extension)
     QString extensionWithDot = QString::fromUtf8(".") + extension;
     QString mimeType;
 
-    HRESULT ret = AssocQueryString(0, type, extensionWithDot.utf16(),
+    HRESULT ret = AssocQueryString(0, type, (LPCWSTR)extensionWithDot.utf16(),
                                  NULL, NULL, &length);
     if (ret == S_FALSE)
     {
         WCHAR *buffer = new WCHAR[length];
-        ret = AssocQueryString(0, type, extensionWithDot.utf16(),
+        ret = AssocQueryString(0, type, (LPCWSTR)extensionWithDot.utf16(),
                                NULL, buffer, &length);
         if (ret == S_OK)
         {
-            mimeType = QString::fromUtf16(buffer);
+            mimeType = QString::fromUtf16((ushort *)buffer);
         }
         delete [] buffer;
     }
@@ -417,16 +417,16 @@ QString WindowsPlatform::getDefaultOpenApp(QString extension)
     }
 
     type = ASSOCSTR_EXECUTABLE;
-    ret = AssocQueryString(0, type, extensionWithDot.utf16(),
+    ret = AssocQueryString(0, type, (LPCWSTR)extensionWithDot.utf16(),
                                  NULL, NULL, &length);
     if (ret == S_FALSE)
     { 
         WCHAR *buffer = new WCHAR[length];
-        ret = AssocQueryString(0, type, extensionWithDot.utf16(),
+        ret = AssocQueryString(0, type, (LPCWSTR)extensionWithDot.utf16(),
                                NULL, buffer, &length);
         if (ret == S_OK)
         {
-            QString result = QString::fromUtf16(buffer);
+            QString result = QString::fromUtf16((ushort *)buffer);
             delete [] buffer;
             return result;
         }
@@ -436,7 +436,7 @@ QString WindowsPlatform::getDefaultOpenApp(QString extension)
     WCHAR buff[MAX_PATH];
     if (SHGetFolderPath(0, CSIDL_PROGRAM_FILESX86, NULL, SHGFP_TYPE_CURRENT, buff) == S_OK)
     {
-        QString path = QString::fromUtf16(buff);
+        QString path = QString::fromUtf16((ushort *)buff);
         path.append(QString::fromUtf8("\\Windows Media Player\\wmplayer.exe"));
         if (QFile(path).exists())
         {

@@ -93,7 +93,7 @@ private:
     HBITMAP m_hMenuBmp;
     HICON hIcon;
 
-    PWSTR m_pszUploadMenuText;
+    PCWSTR m_pszUploadMenuText;
     PCSTR m_pszUploadVerb;
     PCWSTR m_pwszUploadVerb;
     PCSTR m_pszUploadVerbCanonicalName;
@@ -101,7 +101,7 @@ private:
     PCSTR m_pszUploadVerbHelpText;
     PCWSTR m_pwszUploadVerbHelpText;
 
-    PWSTR m_pszGetLinkMenuText;
+    PCWSTR m_pszGetLinkMenuText;
     PCSTR m_pszGetLinkVerb;
     PCWSTR m_pwszGetLinkVerb;
     PCSTR m_pszGetLinkVerbCanonicalName;
