@@ -4548,7 +4548,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         if (settingsDialog)
         {
-            settingsDialog->refreshAccountDetails();
+            settingsDialog->loadSettings();
         }
 
         if (bwOverquotaDialog)
