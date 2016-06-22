@@ -15,6 +15,7 @@ NodeSelector::NodeSelector(MegaApi *megaApi, int selectMode, QWidget *parent) :
 {
     ui->setupUi(this);
     this->megaApi = megaApi;
+    this->model = NULL;
     folderIcon =  QIcon(QString::fromAscii("://images/small_folder.png"));
     selectedFolder = mega::INVALID_HANDLE;
     selectedItem = QModelIndex();
