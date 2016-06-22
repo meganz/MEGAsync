@@ -88,6 +88,8 @@ public:
     void showNotificationMessage(QString message, QString title = tr("MEGAsync"));
     void setUploadLimit(int limit);
     void setDownloadLimit(int limit);
+    //Uncomment when branch change-num-connections is merged into develop
+    //void setMaxConnections(int direction, int connections);
     void setUseHttpsOnly(bool httpsOnly);
     void startUpdateTask();
     void stopUpdateTask();

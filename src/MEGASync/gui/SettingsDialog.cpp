@@ -1223,6 +1223,9 @@ bool SettingsDialog::saveSettings()
         }
 
         app->setDownloadLimit(preferences->downloadLimitKB());
+        //Uncomment when branch change-num-connections is merged into develop
+        //app->setMaxConnections(MegaTransfer::TYPE_UPLOAD, preferences->parallelUploadConnections());
+        //app->setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());
 
         preferences->setUseHttpsOnly(ui->cbUseHttps->isChecked());
         app->setUseHttpsOnly(preferences->usingHttpsOnly());
