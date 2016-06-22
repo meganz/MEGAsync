@@ -2769,6 +2769,7 @@ void MegaApplication::toggleLogging()
 
     if (logger->isLogToFileEnabled() || logger->isLogToStdoutEnabled())
     {
+        Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
         logger->sendLogsToFile(false);
         logger->sendLogsToStdout(false);
         MegaApi::setLogLevel(MegaApi::LOG_LEVEL_WARNING);
@@ -2776,6 +2777,7 @@ void MegaApplication::toggleLogging()
     }
     else
     {
+        Preferences::HTTPS_ORIGIN_CHECK_ENABLED = false;
         logger->sendLogsToFile(true);
         MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
         showInfoMessage(tr("DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)"));
