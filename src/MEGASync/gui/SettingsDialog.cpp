@@ -104,6 +104,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     ui->eProxyPort->setValidator(new QIntValidator(this));
     ui->eUploadLimit->setValidator(new QDoubleValidator(this));
+    ui->eDownloadLimit->setValidator(new QDoubleValidator(this));
+
     ui->bAccount->setChecked(true);
     ui->wStack->setCurrentWidget(ui->pAccount);
 
@@ -895,6 +897,9 @@ void SettingsDialog::loadSettings()
         ui->eDownloadLimit->setText((preferences->downloadLimitKB()<=0)? QString::fromAscii("0") : QString::number(preferences->downloadLimitKB()));
         ui->eDownloadLimit->setEnabled(ui->rDownloadLimit->isChecked());
 
+        ui->eMaxDownloadConnections->setValue(preferences->parallelDownloadConnections());
+        ui->eMaxUploadConnections->setValue(preferences->parallelUploadConnections());
+
         ui->cbUseHttps->setChecked(preferences->usingHttpsOnly());
 
         double totalBandwidth = preferences->totalBandwidth();
@@ -1198,20 +1203,27 @@ bool SettingsDialog::saveSettings()
 #endif
 
         //Bandwidth
-        if (ui->rUploadNoLimit->isChecked())
+        if (ui->rUploadLimit->isChecked())
         {
-            preferences->setUploadLimitKB(0);
-        }
-        else if (ui->rUploadAutoLimit->isChecked())
-        {
-            preferences->setUploadLimitKB(-1);
+            preferences->setUploadLimitKB(ui->eUploadLimit->text().trimmed().toInt());
+            app->setUploadLimit(0);
+            app->setMaxUploadSpeed(preferences->uploadLimitKB());
+
         }
         else
         {
-            preferences->setUploadLimitKB(ui->eUploadLimit->text().trimmed().toInt());
-        }
+            if (ui->rUploadNoLimit->isChecked())
+            {
+                preferences->setUploadLimitKB(0);
+            }
+            else if (ui->rUploadAutoLimit->isChecked())
+            {
+                preferences->setUploadLimitKB(-1);
+            }
 
-        app->setUploadLimit(preferences->uploadLimitKB());
+            app->setUploadLimit(preferences->uploadLimitKB());
+            app->setMaxUploadSpeed(preferences->uploadLimitKB());
+        }
 
         if (ui->rDownloadNoLimit->isChecked())
         {
@@ -1222,7 +1234,10 @@ bool SettingsDialog::saveSettings()
             preferences->setDownloadLimitKB(ui->eDownloadLimit->text().trimmed().toInt());
         }
 
-        app->setDownloadLimit(preferences->downloadLimitKB());
+        app->setMaxDownloadSpeed(preferences->downloadLimitKB());
+
+        preferences->setParallelDownloadConnections(ui->eMaxDownloadConnections->value());
+        preferences->setParallelUploadConnections(ui->eMaxUploadConnections->value());
         //Uncomment when branch change-num-connections is merged into develop
         //app->setMaxConnections(MegaTransfer::TYPE_UPLOAD, preferences->parallelUploadConnections());
         //app->setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());

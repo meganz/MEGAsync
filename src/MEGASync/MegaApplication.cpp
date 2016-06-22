@@ -1235,7 +1235,8 @@ void MegaApplication::loggedIn()
 
     //Set the upload limit
     setUploadLimit(preferences->uploadLimitKB());
-    setDownloadLimit(preferences->downloadLimitKB());
+    setMaxUploadSpeed(preferences->uploadLimitKB());
+    setMaxDownloadSpeed(preferences->downloadLimitKB());
     //Uncomment when branch change-num-connections is merged into develop
     //setMaxConnections(MegaTransfer::TYPE_UPLOAD,   preferences->parallelUploadConnections());
     //setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());
@@ -2503,14 +2504,38 @@ void MegaApplication::setUploadLimit(int limit)
     }
 }
 
-void MegaApplication::setDownloadLimit(int limit)
+void MegaApplication::setMaxUploadSpeed(int limit)
 {
     if (appfinished)
     {
         return;
     }
 
-    //TO-DO - Apply download limit to megaApi
+    if (limit < 0)
+    {
+        megaApi->setMaxUploadSpeed(-1);
+    }
+    else
+    {
+        megaApi->setMaxUploadSpeed(limit * 1024);
+    }
+}
+
+void MegaApplication::setMaxDownloadSpeed(int limit)
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    if (limit < 0)
+    {
+        megaApi->setMaxDownloadSpeed(-1);
+    }
+    else
+    {
+        megaApi->setMaxDownloadSpeed(limit * 1024);
+    }
 }
 //Uncomment when branch change-num-connections is merged into develop
 //void MegaApplication::setMaxConnections(int direction, int connections)
