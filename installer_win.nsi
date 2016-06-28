@@ -25,10 +25,10 @@ VIAddVersionKey "LegalCopyright" "MEGA Limited 2016"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 ; Version info
-VIProductVersion "2.9.2.0"
-VIAddVersionKey "FileVersion" "2.9.2.0"
-VIAddVersionKey "ProductVersion" "2.9.2.0"
-!define PRODUCT_VERSION "2.9.2_BETA"
+VIProductVersion "2.9.6.0"
+VIAddVersionKey "FileVersion" "2.9.6.0"
+VIAddVersionKey "ProductVersion" "2.9.6.0"
+!define PRODUCT_VERSION "2.9.6"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.nz"
@@ -657,7 +657,7 @@ modeselected:
   ; Register shell extension 1 (x86_32)
   !define LIBRARY_COM
   !define LIBRARY_SHELL_EXTENSION
-  !insertmacro InstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
+  !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X32}\MEGAShellExt.dll" "$INSTDIR\ShellExtX32.dll" "$INSTDIR"
   !undef LIBRARY_COM
   !undef LIBRARY_SHELL_EXTENSION
 
@@ -676,7 +676,7 @@ modeselected:
         !define LIBRARY_X64
         !define LIBRARY_COM
         !define LIBRARY_SHELL_EXTENSION
-        !insertmacro InstallLib REGDLL NOTSHARED REBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.dll" "$INSTDIR\ShellExtX64.dll" "$INSTDIR"
+        !insertmacro InstallLib REGDLL NOTSHARED NOREBOOT_NOTPROTECTED "${SRCDIR_MEGASHELLEXT_X64}\MEGAShellExt.dll" "$INSTDIR\ShellExtX64.dll" "$INSTDIR"
         !undef LIBRARY_X64
         !undef LIBRARY_COM
         !undef LIBRARY_SHELL_EXTENSION

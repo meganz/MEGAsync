@@ -1385,7 +1385,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Please enter a valid folder name</source>
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
-        <translation type="unfinished">Prosímk zadajte platný názov priečinku</translation>
+        <translation type="unfinished">Prosím zadajte platný názov priečinku</translation>
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
@@ -2363,7 +2363,7 @@ when the application starts again</source>
     <message>
         <source>Have you verified your account?</source>
         <translatorcomment>Label displayed to inform the user about the need of verify the created account.</translatorcomment>
-        <translation>Overili ste už váš účet?</translation>
+        <translation>Máte už overený účet?</translation>
     </message>
     <message>
         <source>MEGA folder doesn&#039;t exist</source>

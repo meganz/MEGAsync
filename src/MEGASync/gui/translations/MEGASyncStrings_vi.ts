@@ -184,7 +184,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">You are about to enable an option that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
+        <translation type="unfinished">Bạn đang chuẩn bị bật một tùy chỉnh có thể cho phép việc giao tiếp của bạn bị gián đoạn. Dữ liệu của bạn có thể vẫn sẽ an toàn và các hackers sẽ không thể truy cập được vì phương thức mã hóa đầu-cuối của chúng tôi, tuy nhiên họ vẫn có thể di chuyển dữ liệu của bạn bằng cách đoán mò, rồi xóa hay chặn bạn khỏi quyền truy cập tài khoản.</translation>
     </message>
 </context>
 <context>
@@ -636,7 +636,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
-        <translation type="unfinished">[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</translation>
+        <translation type="unfinished">[S]MEGAsync:[/S] Dễ dàng và tự động hóa khâu đồng bộ giữa các máy tính và ổ mây MEGA của bạn</translation>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
@@ -644,7 +644,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</translation>
+        <translation type="unfinished">Hưởng quyền lợi từ 50GB không gian lưu trữ trên mây với tài khoản miễn phí và được mã hóa toàn bộ an toàn với các [A]gói PRO[/A] với giá phải chăng.</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
@@ -652,7 +652,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
-        <translation type="unfinished">MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</translation>
+        <translation type="unfinished">Trình MEGAsync sử dụng toàn lực từ hệ thống cơ sở hạ tầng năng lượng cao từ máy chủ MEGA, cùng với truyền tải đa kết nối.</translation>
     </message>
     <message>
         <source>Lean &amp; mean resource usage</source>
@@ -660,7 +660,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
-        <translation type="unfinished">Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</translation>
+        <translation type="unfinished">Sử dụng hệ thống mã hóa số bảo mật đầu-cuối mạnh mẽ từ MEGA ngay trên máy của bạn mà không hề ảnh hưởng đến tốc độ của trình duyệt web.</translation>
     </message>
     <message>
         <source>Unlimited file size</source>
@@ -668,7 +668,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
-        <translation type="unfinished">While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</translation>
+        <translation type="unfinished">Các trình duyệt web hiện nay có thể giới hạn độ lớn của dữ liệu khi truyền tải, mọi cản trở sẽ được loại bỏ khi bạn dùng trình MEGAsync.</translation>
     </message>
     <message>
         <source>Login</source>
@@ -1452,7 +1452,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Permissions for new folders and files</source>
         <translatorcomment>Title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.</translatorcomment>
-        <translation type="unfinished">Permissions for new folders and files</translation>
+        <translation type="unfinished">Các quyền hạn cho thư mục và tệp tin mới</translation>
     </message>
     <message>
         <source>Folders</source>
@@ -1482,7 +1482,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them on the default permissions for security reasons.</translation>
+        <translation type="unfinished">Những tệp tin và thư mục này có chủ sở hữu và thuộc về một nhóm người dùng. Sử dụng hộp thoại này bạn có thể sẽ được cấp phép truy cập vào các tệp tin và thư mục mới được tạo ra bởi MEGAsync cho người sử dụng thuộc về cùng một nhóm và để phần còn lại của người sử dụng trong máy tính. Nếu bạn không muốn thay đổi gì, xin hãy để yên các dữ liệu đó mặc định vì lý do an ninh.</translation>
     </message>
 </context>
 <context>
@@ -1500,7 +1500,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Execution</source>
         <translatorcomment>Text next to a checkbox that allows to grant execution permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Execution</translation>
+        <translation type="unfinished">Sử dụng / thực hành</translation>
     </message>
 </context>
 <context>
@@ -1556,7 +1556,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Button tooltip to generate a public link for a specific file. Keep capital letters.</translatorcomment>
-        <translation>Tạo MEGA link</translation>
+        <translation>Tạo đường dẫn liên kết MEGA</translation>
     </message>
     <message>
         <source>just now</source>
@@ -1708,7 +1708,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>MIỄN PHÍ</translation>
+        <translation>MIễN PHÍ</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1915,7 +1915,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Transfers</source>
         <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>Phiên truyền tải</translation>
+        <translation>Các Phiên Truyền Tải</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2572,7 +2572,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label displayed when a user is trying to get public link of a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
-        <translation>Tạo MEGA link</translation>
+        <translation>Tạo đường dẫn liên kết MEGA</translation>
     </message>
     <message>
         <source>Share with a MEGA user</source>
@@ -2673,7 +2673,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Public link</source>
         <translatorcomment>Text of the button to select a file from a public link for streaming</translatorcomment>
-        <translation type="unfinished">Đường dẫn công khai</translation>
+        <translation type="unfinished">Đường dẫn liên kết công khai</translation>
     </message>
     <message>
         <source>File info:</source>
@@ -2723,7 +2723,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open link</source>
         <translatorcomment>Title of the dialog to enter a MEGA file link for streaming</translatorcomment>
-        <translation type="unfinished">Mở đường liên kết</translation>
+        <translation type="unfinished">Mở đường dẫn liên kết</translation>
     </message>
     <message>
         <source>Enter a MEGA file link:</source>
@@ -2800,7 +2800,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded.</translatorcomment>
-        <translation>MEGAsync Tải Lên</translation>
+        <translation>MEGAsync Uploads</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2857,11 +2857,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Used</source>
-        <translation type="unfinished">Đã dùng</translation>
+        <translation type="unfinished">Đã dùng (mạng)</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Khả dụng</translation>
+        <translation type="unfinished">Còn lại (mạng)</translation>
     </message>
 </context>
 <context>

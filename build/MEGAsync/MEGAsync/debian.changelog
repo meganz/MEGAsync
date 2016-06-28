@@ -1,10 +1,11 @@
-megasync (2.9.2) stable; urgency=low
+megasync (2.9.5) stable; urgency=low
 
   * Save the state and resume transfers
+  * Better management of errors during transfers
   * Compatibility with HDPI displays
   * Bug fixes
 
- -- MEGA Team <linux@mega.co.nz>  Fri, 13 May 2016 12:48:33 +0200
+ -- MEGA Team <linux@mega.co.nz>  Tue, 31 May 2016 12:05:33 +0200
 
 megasync (2.9.0) stable; urgency=low
 

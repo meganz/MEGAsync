@@ -169,7 +169,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Remember my decision and don&#039;t ask me again</source>
         <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Remember my decision and don&#039;t ask me again</translation>
+        <translation type="unfinished">Muista valintani äläkä kysy minulta uudestaan</translation>
     </message>
     <message>
         <source>No</source>
@@ -184,7 +184,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">You are about to enable an option that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
+        <translation type="unfinished">Olet sallimassa asetusta, joka saattaa mahdollistaa tietokulkusi sieppaamisen. Tietosi olisivat silti hyökkääjien saavuttamattomissa meidän päästä päähän-salauksen ansiosta, mutta he voisivat siirtää sokeasti tiedostojasi ja kansioitasi MEGAssa, poistaa niitä tai estää pääsyn käyttäjätilillesi.</translation>
     </message>
 </context>
 <context>
@@ -336,7 +336,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is on guest mode</source>
         <translatorcomment>Label to inform a user that MEGAsync is running on Guest Mode</translatorcomment>
-        <translation type="unfinished">MEGAsync is in guest mode</translation>
+        <translation type="unfinished">MEGAsync vierailijatilassa</translation>
     </message>
     <message>
         <source>Login</source>
@@ -495,12 +495,12 @@ Are you sure?</source>
     <message>
         <source>%1 of %2 (paused)</source>
         <translatorcomment>Label to keep the count of pending and total files. Preserve %1 and %2 codes beacuse they are used to include the number of pending and total files.</translatorcomment>
-        <translation>%1 / %2 (keskeytetty)</translation>
+        <translation>%1 / %2 (tauotettu)</translation>
     </message>
     <message>
         <source>File transfers paused</source>
         <translatorcomment>Label to indicate that the state of transfers is actually paused.</translatorcomment>
-        <translation>Tiedostosiirrot keskeytetty</translation>
+        <translation>Tiedostosiirrot tauotettu</translation>
     </message>
     <message>
         <source>MEGAsync is scanning</source>
@@ -543,7 +543,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>one file (paused)</source>
-        <translation type="obsolete">yksi tiedosto (keskeytetty)</translation>
+        <translation type="obsolete">yksi tiedosto (tauotettu)</translation>
     </message>
     <message>
         <source>%1 of %2 files at %3/s</source>
@@ -551,7 +551,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>%1 of %2 files (paused)</source>
-        <translation type="obsolete">%1 %2 tiedostosta (keskeytetty)</translation>
+        <translation type="obsolete">%1 %2 tiedostosta (tauotettu)</translation>
     </message>
     <message>
         <source>Total Remaining: </source>
@@ -579,7 +579,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Pause</source>
-        <translation type="unfinished">Keskeytä</translation>
+        <translation type="unfinished">Tauota</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -636,7 +636,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
-        <translation type="unfinished">[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</translation>
+        <translation type="unfinished">[S]MEGAsync:[/S] Helppo automatisoitu synkronointi tietokoneidesi ja MEGA-pilvilevysi välillä.</translation>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
@@ -644,7 +644,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</translation>
+        <translation type="unfinished">Hyödynnä ilmaisen käyttäjätilin 50 gigatavun pilvitallennustila ja mahdollista kaikkien tiedostojen salaus meidän anteliailla [A]PRO-suunnitelmilla[/A].</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
@@ -660,7 +660,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
-        <translation type="unfinished">Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</translation>
+        <translation type="unfinished">Suorita MEGAn päästä-päähän salausalgoritmeja suoraan koneellasi turvautumatta hitaimpiin selaimiin.</translation>
     </message>
     <message>
         <source>Unlimited file size</source>
@@ -668,7 +668,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
-        <translation type="unfinished">While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</translation>
+        <translation type="unfinished">Vaikka selaintekniikka voi rajoittaa siirtojen tiedostokokoa, voit varmasti ladata tai lähettää minkä tahansa tiedoston MEGAsyncillä.</translation>
     </message>
     <message>
         <source>Login</source>
@@ -745,7 +745,7 @@ because the local folder doesn&#039;t exist</source>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
         <translatorcomment>Notification message launched when a problem occurs uploading files to a destination folder in MEGA.</translatorcomment>
-        <translation>Virhe: Epäkelpo asennuskansio. Lähetys on keskeytetetty</translation>
+        <translation>Virhe: Virheellinen asennuskansio. Lähetys on keskeytetetty</translation>
     </message>
     <message>
         <source>The folder (%1) wasn&#039;t uploaded because it&#039;s too large (this beta is limited to %2 folders or %3 files.</source>
@@ -804,7 +804,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Pause</source>
-        <translation type="obsolete">Keskeytä</translation>
+        <translation type="obsolete">Tauota</translation>
     </message>
     <message>
         <source>Resume</source>
@@ -823,7 +823,7 @@ Exit anyway?</source>
     <message>
         <source>Paused</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is in a paused state.</translatorcomment>
-        <translation>Keskeytetty</translation>
+        <translation>Tauotettu</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -912,7 +912,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>No update available at this time</source>
         <translatorcomment>Notification message launched when a user is cheking if there are any available updates.</translatorcomment>
-        <translation>Päivityksiä ei saatavilla tällä hetkellä</translation>
+        <translation>Ei päivityksiä saatavilla tällä hetkellä</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1069,22 +1069,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode disabled</source>
         <translatorcomment>Notification message shown when the DEBUG mode is disabled.</translatorcomment>
-        <translation type="unfinished">DEBUG mode disabled</translation>
+        <translation type="unfinished">Virheenkorjaustila poissa käytöstä</translation>
     </message>
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
         <translatorcomment>Notification message shown when the DEBUG mode is enabled.</translatorcomment>
-        <translation type="unfinished">DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log).</translation>
+        <translation type="unfinished">Virheenkorjaustila käytössä. Lokitiedostoa (MEGAsync.log) luodaan työpöydälle.</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The download has been cancelled</source>
         <translatorcomment>Notification message shown when an error occurs while downloading a file to a invalid destination folder.</translatorcomment>
-        <translation type="unfinished">Error: Invalid destination folder. The download has been cancelled.</translation>
+        <translation type="unfinished">Virhe: virheellinen kohdekansio. Lataus on peruutettu.</translation>
     </message>
     <message>
         <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please temporarily disable your antivirus software and try again.</translation>
+        <translation type="unfinished">SSL-avaintamme ei voida todentaa. Saatat olla altistunut niin sanotulle mies välissä -hyökkäykselle tai virustorjuntaohjelmistosi saattaa häiritä tiedonkulkua ja aiheuttaa ongelman. Ole hyvä ja ota tilapäisesti virustorjuntaohjelmistosi pois käytöstä ja yritä uudelleen.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -1107,7 +1107,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Stream from MEGA</translation>
+        <translation type="unfinished">Suoratoista MEGAsta</translation>
     </message>
     <message>
         <source>I don&#039;t care</source>
@@ -1121,7 +1121,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Transfer canceled</source>
-        <translation type="unfinished">Siirto keskeytetty!</translation>
+        <translation type="unfinished">Siirto keskeytetty</translation>
     </message>
     <message>
         <source>You are not logged in</source>
@@ -1143,7 +1143,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Invalid argument</source>
         <translatorcomment>Label to show that an error of Invalid argument occurs during a SDK operation.</translatorcomment>
-        <translation>Epäkelpo muuttuja</translation>
+        <translation>Virheellinen muuttuja</translation>
     </message>
     <message>
         <source>Request failed, retrying</source>
@@ -1203,12 +1203,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>Epäkelpo avain/Virhe salauksen purussa</translation>
+        <translation>Virheellinen avain/Virhe salauksen purussa</translation>
     </message>
     <message>
         <source>Bad session ID</source>
         <translatorcomment>Label to show that an error related with a bad session ID occurs during a SDK operation.</translatorcomment>
-        <translation>Epäkelpo istunnon tunnus</translation>
+        <translation>Virheelllinen istunnon tunnus</translation>
     </message>
     <message>
         <source>Blocked</source>
@@ -1243,7 +1243,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Invalid application key</source>
         <translatorcomment>Label to show that an error related with an invalid or missing application key occurs during a SDK operation.</translatorcomment>
-        <translation>Epäkelpo sovellusavain</translation>
+        <translation>Virheellinen sovellusavain</translation>
     </message>
     <message>
         <source>Unknown error</source>
@@ -1365,7 +1365,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#039; or &#039;:&#039; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &#039;\\&#039; &#039;/&#039; and &#039;:&#039; codes.</translatorcomment>
-        <translation>Epäkelpo synkronointikansio. Ole hyvä ja varmista, että et käytä merkkejä kuten &#039;&#039; &#039;/&#039; tai &#039;:&#039; kansioidesi nimissä. </translation>
+        <translation>Virheellinen synkronointikansio. Ole hyvä ja varmista, että et käytä merkkejä kuten &#039;&#039; &#039;/&#039; tai &#039;:&#039; kansioidesi nimissä. </translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1385,11 +1385,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Please enter a valid folder name</source>
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
-        <translation type="unfinished">Please enter a valid folder name</translation>
+        <translation type="unfinished">Syötä kelvollinen kansion nimi</translation>
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation type="unfinished">Are you sure that you want to delete &quot;%1&quot;?</translation>
+        <translation type="unfinished">Haluatko varmasti poistaa kohteen &quot;%1&quot;?</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -1398,7 +1398,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished">Only files can be used for streaming.</translation>
+        <translation type="unfinished">Ainoastaan tiedostoja voi suoratoistaa.</translation>
     </message>
     <message>
         <source>Select items</source>
@@ -1406,7 +1406,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">Valitse vain yksi tiedosto</translation>
+        <translation type="unfinished">Valitse vain yksi tiedosto.</translation>
     </message>
 </context>
 <context>
@@ -1452,7 +1452,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Permissions for new folders and files</source>
         <translatorcomment>Title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.</translatorcomment>
-        <translation type="unfinished">Permissions for new folders and files</translation>
+        <translation type="unfinished">Oikeudet uusille kansioille ja tiedostoille</translation>
     </message>
     <message>
         <source>Folders</source>
@@ -1462,12 +1462,12 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Numeric value:</source>
         <translatorcomment>Numeric value that represents the permissions that will be applied to new files and folders.</translatorcomment>
-        <translation type="unfinished">Numeric value:</translation>
+        <translation type="unfinished">Numeroarvo:</translation>
     </message>
     <message>
         <source>Group permissions:</source>
         <translatorcomment>Label just before the new group permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Group permissions:</translation>
+        <translation type="unfinished">Ryhmän oikeudet:</translation>
     </message>
     <message>
         <source>Public permissions:</source>
@@ -1482,7 +1482,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them on the default permissions for security reasons.</translation>
+        <translation type="unfinished">Tiedostoilla ja kansiolla on omistaja ja ne kuuluvat johonkin käyttäjäryhmään. Tämän ikkunan avulla voi myöntää MEGAsyncin luomiin uusiin tiedostoihin ja kansioihin erilaisia käyttöoikeuksia käyttäjille, jotka kuuluvat samaan ryhmään ja muille tietokoneen käyttäjille. Jos sinun ei tarvitse muuttaa niitä, niin jätä ne turvallisuussyistä oletusoikeuksiin.</translation>
     </message>
 </context>
 <context>
@@ -1490,17 +1490,17 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Read</source>
         <translatorcomment>Text next to a checkbox that allows to grant read permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Read</translation>
+        <translation type="unfinished">Lukuoikeudet</translation>
     </message>
     <message>
         <source>Write</source>
         <translatorcomment>Text next to a checkbox that allows to grant write permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Write</translation>
+        <translation type="unfinished">Kirjoitusoikeudet</translation>
     </message>
     <message>
         <source>Execution</source>
         <translatorcomment>Text next to a checkbox that allows to grant execution permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Execution</translation>
+        <translation type="unfinished">Suoritusoikeudet</translation>
     </message>
 </context>
 <context>
@@ -1782,7 +1782,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Bandwidth quota</source>
         <translatorcomment>Label to indicatte the actual use of Bandwidth quota.</translatorcomment>
-        <translation>Lähetyskiintiö</translation>
+        <translation>Liikennöintikiintiö</translation>
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
@@ -1795,7 +1795,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Excluded file names</source>
         <translatorcomment>Label to indicate the excluded file name for synchronizations. Keep capital letters.</translatorcomment>
-        <translation type="obsolete">Sisällyttämättä jätettävät tiedostonimet</translation>
+        <translation type="obsolete">Poissuljetut tiedostonimet</translation>
     </message>
     <message>
         <source>Proxy Settings</source>
@@ -1899,7 +1899,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Excluded name</source>
         <translatorcomment>Title of the dialog to add new excluded file name for the synchronizations.</translatorcomment>
-        <translation>Sisällyttämättä jätetty nimi</translation>
+        <translation>Poissuljettu nimi</translation>
     </message>
     <message>
         <source>Enter a name to exclude from synchronization.
@@ -1920,7 +1920,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation type="obsolete">Uudet ei-sisällytettävät tiedostonimet huomioidaan kun sovellus käynnistyy uudelleen.</translation>
+        <translation type="obsolete">Uudet poissuljettavat tiedostonimet huomioidaan kun sovellus käynnistyy uudelleen.</translation>
     </message>
     <message>
         <source>Cache</source>
@@ -1944,7 +1944,7 @@ when the application starts again.</source>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&#039;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
-        <translation>Välityspalvelimen asetus on epäkelpo tai palvelin ei vastaa</translation>
+        <translation>Välityspalvelimen asetukset ovat virheelliset tai palvelin ei vastaa</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -2125,12 +2125,12 @@ Do you want to restart MEGAsync now?</source>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
-        <translation type="unfinished">Uudet pois jätettävät tiedostonimet huomioidaan kun sovellus käynnistyy jälleen.</translation>
+        <translation type="unfinished">Uudet poissuljettavat tiedostonimet huomioidaan kun sovellus käynnistyy uudelleen.</translation>
     </message>
     <message>
         <source>The new excluded file sizes will be taken into account when the application starts again.</source>
         <translatorcomment>Message displayed to inform the user that the new file size exclusion changes will be applied on next startup.</translatorcomment>
-        <translation type="unfinished">Uudet pois jätettävät tiedostokoot huomioidaan kun sovellus käynnistyy jälleen.</translation>
+        <translation type="unfinished">Uudet poissuljettavat tiedostokoot huomioidaan kun sovellus käynnistyy uudelleen.</translation>
     </message>
     <message>
         <source>Disabled</source>
@@ -2150,7 +2150,7 @@ when the application starts again</source>
     <message>
         <source>Excluded file and folder names</source>
         <translatorcomment>Label to indicate the files and folders names exclude from the synchronization.</translatorcomment>
-        <translation type="unfinished">Excluded file and folder names</translation>
+        <translation type="unfinished">Poissuljetut tiedostojen ja kansioiden nimet</translation>
     </message>
     <message>
         <source>Clear local cache</source>
@@ -2160,27 +2160,27 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</translation>
+        <translation type="unfinished">Synkronoitujen tiedostojen aiempien versioiden varmuuskopiot poistetaan pysyvästi tietokoneelta. Ole hyvä ja tarkista ennen jatkamista varmuuskopioiden kansio, jos haluat säilyttää jotain:</translation>
     </message>
     <message>
         <source>Do you want to delete your local cache now?</source>
         <translatorcomment>Confirmation message before perform a deletion of local cache data</translatorcomment>
-        <translation type="unfinished">Do you want to delete your local cache now?</translation>
+        <translation type="unfinished">Haluatko poistaa paikallisen välimuistin nyt?</translation>
     </message>
     <message>
         <source>Clear remote cache</source>
         <translatorcomment>Title of dialog to clear remote cache for the current user.</translatorcomment>
-        <translation type="unfinished">Clear remote cache</translation>
+        <translation type="unfinished">Tyhjennä etävälimuisti</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">Synkronoitujen tiedostojen aiempien versioiden varmuuskopiot poistetaan pysyvästi tietokoneelta. Ole hyvä ja tarkista ennen jatkamista MEGAn käyttäjätilin roskakorissa oleva kansio [A], jos haluat säilyttää jotain:</translation>
     </message>
     <message>
         <source>Do you want to delete your remote cache now?</source>
         <translatorcomment>Confirmation message before perform a deletion of remote cache data</translatorcomment>
-        <translation type="unfinished">Do you want to delete your remote cache now?</translation>
+        <translation type="unfinished">Haluatko poistaa etävälimuistin nyt?</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
@@ -2199,7 +2199,7 @@ when the application starts again</source>
     <message>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</translation>
+        <translation type="unfinished">Ota tämä asetus käyttöön vain, jos lataukset eivät käynnisty. Normaaliolosuhteissa HTTP on riittävä, sillä kaikki siirrot ovat jo salattuja.</translation>
     </message>
 </context>
 <context>
@@ -2658,12 +2658,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Stream from MEGA</translation>
+        <translation type="unfinished">Suoratoista MEGAsta</translation>
     </message>
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation type="unfinished">Select media from...</translation>
+        <translation type="unfinished">Valitse media kohteesta...</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -2678,17 +2678,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>File info:</source>
         <translatorcomment>Text just before of the information of the file selected for streaming</translatorcomment>
-        <translation type="unfinished">File info:</translation>
+        <translation type="unfinished">Tiedoston ominaisuudet:</translation>
     </message>
     <message>
         <source>Nothing selected</source>
         <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
-        <translation type="unfinished">Nothing selected</translation>
+        <translation type="unfinished">Ei valintaa</translation>
     </message>
     <message>
         <source>Open with:</source>
         <translatorcomment>Text above the buttons to open a streaming link</translatorcomment>
-        <translation type="unfinished">Open with:</translation>
+        <translation type="unfinished">Avaa sovelluksessa:</translation>
     </message>
     <message>
         <source>Default application</source>
@@ -2708,7 +2708,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation type="unfinished">Are you sure that you want to stop the streaming?</translation>
+        <translation type="unfinished">Haluatko varmasti lopettaa suoratoiston?</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2728,7 +2728,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enter a MEGA file link:</source>
         <translatorcomment>Text of the dialog to enter a MEGA file link for streaming</translatorcomment>
-        <translation type="unfinished">Enter a MEGA file link:</translation>
+        <translation type="unfinished">Syötä MEGA-tiedostolinkki:</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -2738,7 +2738,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error generating streaming link</source>
         <translatorcomment>Text shown when there is an error generating an streaming link</translatorcomment>
-        <translation type="unfinished">Error generating streaming link</translation>
+        <translation type="unfinished">Virhe luotaessa suoratoistolinkkiä</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -2755,11 +2755,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UpgradeDialog</name>
     <message>
         <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">Vapaa sallittu siirtokiintiö ylittynyt </translation>
+        <translation type="unfinished">Vapaa liikennöintikiintiö ylittynyt </translation>
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">Latauksesi ei voi jatkua, koska se ylittäisi nykyisen ilmaisen liikennekiintiön IP-osoitteellesi. Rajoite on dynaaminen ja riippuvainen tarjolla olevasta vapaasta tietoliikennekaistasta.</translation>
+        <translation type="unfinished">Latauksesi ei voi jatkua, koska se ylittäisi nykyisen ilmaisen liikennöintikiintiön IP-osoitteellesi. Rajoite on dynaaminen ja riippuvainen tarjolla olevasta vapaasta tietoliikennekaistasta.</translation>
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>

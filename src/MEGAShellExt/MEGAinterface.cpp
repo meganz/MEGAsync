@@ -30,10 +30,14 @@ int MegaInterface::sendRequest(WCHAR type, PCWSTR content, PCWSTR response, int 
     return 0;
 }
 
-MegaInterface::FileState MegaInterface::getPathState(PCWSTR filePath)
+MegaInterface::FileState MegaInterface::getPathState(PCWSTR filePath, bool overlayIcons)
 {
     WCHAR chReadBuf[2];
-    int cbRead = sendRequest(MegaInterface::OP_PATH_STATE, filePath, chReadBuf, sizeof(chReadBuf));
+    int requestLen = lstrlen(filePath) + 3;
+    LPWSTR request = new WCHAR[requestLen];
+    StringCchPrintfW(request, requestLen, L"%s|%d", filePath, overlayIcons);
+
+    int cbRead = sendRequest(MegaInterface::OP_PATH_STATE, request, chReadBuf, sizeof(chReadBuf));
     if (cbRead > sizeof(WCHAR))
     {
         return ((MegaInterface::FileState)(chReadBuf[0] - L'0'));

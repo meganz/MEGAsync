@@ -28,7 +28,7 @@ public:
            STRING_SEND = 3
     } StringID;
 
-    static FileState getPathState(PCWSTR filePath);
+    static FileState getPathState(PCWSTR filePath, bool overlayIcons = true);
     static LPWSTR getString(StringID stringID, int numFiles, int numFolders);
     static bool upload(PCWSTR path);
     static bool send(PCWSTR path);

@@ -169,7 +169,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Remember my decision and don&#039;t ask me again</source>
         <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Remember my decision and don&#039;t ask me again</translation>
+        <translation type="unfinished">Ricorda la mia decisione e non chiedermelo di nuovo</translation>
     </message>
     <message>
         <source>No</source>
@@ -184,7 +184,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">You are about to enable an option that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
+        <translation type="unfinished">Stai per attivare un&#039;opzione che potrebbe far intercettare le tue comunicazioni. I tuoi dati saranno comunque inaccessibili da eventuali hacker grazie alla nostra criptazione end-to-end, ma potrebbero lo stesso spostare alla cieca i tuoi file e le tue cartelle in MEGA, cancellarle o non permetterti l&#039;accesso al tuo account.</translation>
     </message>
 </context>
 <context>
@@ -715,7 +715,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</translation>
+        <translation type="obsolete">Grazie per testare MEGAsync.&lt;br&gt;Questa versione beta non è più in uso ed è diventata obsoleta, scadendo.&lt;br&gt;Per favore segui &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; su Twitter per gli aggiornamenti.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -1084,7 +1084,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please temporarily disable your antivirus software and try again.</translation>
+        <translation type="unfinished">La nostra chiave SSL non può essere verificata. Potresti essere sotto un attacco man-in-the-middle o il tuo antivirus potrebbe star intercettando le tue comunicazioni e causando questo problema. Per favore, disattiva temporaneamente il tuo antivirus e riprova.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -1112,7 +1112,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>I don&#039;t care</source>
         <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
-        <translation type="unfinished">I don&#039;t care</translation>
+        <translation type="unfinished">Non mi interessa</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -1452,7 +1452,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Permissions for new folders and files</source>
         <translatorcomment>Title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.</translatorcomment>
-        <translation type="unfinished">Permissions for new folders and files</translation>
+        <translation type="unfinished">Permessi per le nuove cartelle ed i nuovi file</translation>
     </message>
     <message>
         <source>Folders</source>
@@ -1462,17 +1462,17 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Numeric value:</source>
         <translatorcomment>Numeric value that represents the permissions that will be applied to new files and folders.</translatorcomment>
-        <translation type="unfinished">Numeric value:</translation>
+        <translation type="unfinished">Valore numerico:</translation>
     </message>
     <message>
         <source>Group permissions:</source>
         <translatorcomment>Label just before the new group permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Group permissions:</translation>
+        <translation type="unfinished">Permessi del gruppo:</translation>
     </message>
     <message>
         <source>Public permissions:</source>
         <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Public permissions:</translation>
+        <translation type="unfinished">Permessi pubblici:</translation>
     </message>
     <message>
         <source>Files</source>
@@ -1482,7 +1482,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them on the default permissions for security reasons.</translation>
+        <translation type="unfinished">I file e le cartelle hanno un proprietario ed esso appartiene ad un gruppo di utenti. Usando questa schermata puoi dare differenti permessi ai nuovi file e alle nuove cartelle create da MEGAsync per gli utenti che appartengono allo stesso gruppo o al resto degli utenti del computer. Se non hai bisogno di cambiare i permessi, per favore lasciali impostati nel modo predefinito per motivi di sicurezza.</translation>
     </message>
 </context>
 <context>
@@ -1490,17 +1490,17 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Read</source>
         <translatorcomment>Text next to a checkbox that allows to grant read permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Read</translation>
+        <translation type="unfinished">Leggi</translation>
     </message>
     <message>
         <source>Write</source>
         <translatorcomment>Text next to a checkbox that allows to grant write permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Write</translation>
+        <translation type="unfinished">Scrivi</translation>
     </message>
     <message>
         <source>Execution</source>
         <translatorcomment>Text next to a checkbox that allows to grant execution permissions for new files and folder</translatorcomment>
-        <translation type="unfinished">Execution</translation>
+        <translation type="unfinished">Esegui</translation>
     </message>
 </context>
 <context>
@@ -1520,7 +1520,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
-        <translation type="unfinished">popular!</translation>
+        <translation type="unfinished">popolare!</translation>
     </message>
 </context>
 <context>
@@ -2160,7 +2160,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</translation>
+        <translation type="unfinished">I backup delle versioni precedenti dei tuoi file sincronizzati nel tuo computer verranno cancellati definitivamente. Per favore, controlla le tue cartelle di backup per vedere se hai bisogno di recuperare qualcosa prima di continuare:</translation>
     </message>
     <message>
         <source>Do you want to delete your local cache now?</source>
@@ -2175,7 +2175,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">I backup delle versioni precedenti dei tuoi file sincronizzati su MEGA verranno cancellati definitivamente. Per favore, controlla la tua cartella [A] nel Cestino del tuo account MEGA per vedere se hai bisogno di recuperare qualcosa prima di continuare:</translation>
     </message>
     <message>
         <source>Do you want to delete your remote cache now?</source>
@@ -2194,12 +2194,12 @@ when the application starts again</source>
     <message>
         <source>Don&#039;t use HTTP</source>
         <translatorcomment>Text next to a checkbox that allows to disable the HTTP protocol for transfers</translatorcomment>
-        <translation type="unfinished">Don&#039;t use HTTP</translation>
+        <translation type="unfinished">Non usare HTTP</translation>
     </message>
     <message>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</translation>
+        <translation type="unfinished">Attiva questa opzione solo se i tuoi trasferimenti non partono. Nelle situazioni normali HTTP soddisfa i requisiti di sicurezza in quanto tutti i trasferimenti sono già criptati.</translation>
     </message>
 </context>
 <context>
