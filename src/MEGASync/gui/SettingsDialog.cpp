@@ -1796,6 +1796,13 @@ void SettingsDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+
+#ifdef __APPLE__
+       setWindowTitle(tr("Preferences - MEGAsync"));
+       ui->cStartOnStartup->setText(tr("Open at login"));
+       ui->cOverlayIcons->hide();
+#endif
+
         loadSettings();
         onCacheSizeAvailable();
     }
