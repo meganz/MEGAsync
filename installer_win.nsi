@@ -7,7 +7,7 @@ Unicode true
 #!define BUILD_X64_VERSION
 #!define BUILD_WITH_LOGGER
 #!define ENABLE_DEBUG_MESSAGES
-#!define ENABLE_QT5
+!define ENABLE_QT5
 
 !macro DEBUG_MSG message
 !ifdef ENABLE_DEBUG_MESSAGES
