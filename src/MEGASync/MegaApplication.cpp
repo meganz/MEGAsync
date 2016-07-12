@@ -4536,6 +4536,15 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             onGlobalSyncStateChanged(megaApi);
         }
 
+        if (!megaApi->getBandwidthOverquotaDelay())
+        {
+            bwOverquotaTimestamp = 0;
+            if (bwOverquotaDialog)
+            {
+                bwOverquotaDialog->close();
+            }
+        }
+
         if (infoDialog)
         {
             infoDialog->setUsage();
