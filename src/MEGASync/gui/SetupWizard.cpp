@@ -120,6 +120,18 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             {
                 QMessageBox::warning(this, tr("Error"), tr("Incorrect email and/or password.") + QString::fromUtf8(" ") + tr("Have you verified your account?"), QMessageBox::Ok);
             }
+            else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
+            {
+                QMessageBox::warning(this, tr("Error"), tr("Please check your e-mail and click the link to confirm your account."), QMessageBox::Ok);
+            }
+            else if (error->getErrorCode() == MegaError::API_ETOOMANY)
+            {
+                QMessageBox::warning(this, tr("Error"),
+                                     tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
+                                     .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
+                                     .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")))
+                                     , QMessageBox::Ok);
+            }
             else if (error->getErrorCode() == MegaError::API_EBLOCKED)
             {
                 QMessageBox::critical(NULL, tr("Error"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
