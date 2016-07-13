@@ -439,6 +439,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     noKeyDetected = 0;
     isFirstSyncDone = false;
     isFirstFileSynced = false;
+    queuedUserStats = 0;
 
 #ifdef __APPLE__
     scanningTimer = NULL;
@@ -1631,6 +1632,12 @@ void MegaApplication::periodicTasks()
         return;
     }
 
+    if (queuedUserStats && queuedUserStats < QDateTime::currentMSecsSinceEpoch())
+    {
+        queuedUserStats = 0;
+        megaApi->getAccountDetails();
+    }
+
     checkNetworkInterfaces();
 
     static int counter = 0;
@@ -2471,6 +2478,10 @@ void MegaApplication::updateUserStats()
     {
         preferences->setLastStatsRequest(QDateTime::currentMSecsSinceEpoch());
         megaApi->getAccountDetails();
+    }
+    else
+    {
+        queuedUserStats = lastRequest + Preferences::MIN_UPDATE_STATS_INTERVAL;
     }
 }
 

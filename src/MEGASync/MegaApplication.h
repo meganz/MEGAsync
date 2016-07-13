@@ -241,6 +241,7 @@ protected:
     long long uploadSpeed, downloadSpeed;
     long long lastStartedDownload;
     long long lastStartedUpload;
+    long long queuedUserStats;
     int exportOps;
     int syncState;
     mega::MegaPricing *pricing;
