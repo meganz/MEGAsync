@@ -2089,12 +2089,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Exporter la Clef Maître</translation>
+        <translation type="unfinished">Exporter la clé</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Exporter clef maître</translation>
+        <translation type="unfinished">Sauvegarder la clé de récupération</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2104,12 +2104,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Exporter la Clef-Maître et la conserver dans un endroit sécurisé vous permet de changer de mot de passe sans encourir de perte de données.</translation>
+        <translation type="unfinished">En exportant la clé de récupération et en la conservant dans un endroit sûr, vous pourrez définir un nouveau mot de passe sans aucune perte de données.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Veillez à toujours avoir un contrôle physique sur votre clef maître (exemple : sur un appareil, un stockage externe ou une impression etc.).</translation>
+        <translation type="unfinished">Assurez toujours l&#039;intégrité physique de votre clé de récupération (p. ex. sur un dispositif client, un stockage externe, ou imprimée).</translation>
     </message>
     <message>
         <source>Exclude by size</source>

@@ -401,7 +401,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>/MEGAsync Imports</source>
         <translatorcomment>Default created folder for imported links at the user Cloud Drive.</translatorcomment>
-        <translation>/MEGAsync 들여오기</translation>
+        <translation type="obsolete">/MEGAsync 들여오기</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -1875,7 +1875,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default path for MEGAsync uploads.</translatorcomment>
-        <translation>/MEGAsync 업로드</translation>
+        <translation type="obsolete">/MEGAsync 업로드</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2089,12 +2089,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">키 내보내기</translation>
+        <translation type="unfinished">백업 키</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">마스터 키 내보내기</translation>
+        <translation type="unfinished">복구 키 백업</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2104,12 +2104,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">마스터 키를 내보내서 안전한 장소에 보관하는 것은 데이터 손실 없이 새로운 비밀번호를 설정할 수 있게 해줍니다.</translation>
+        <translation type="unfinished">복구 키를 내보내고 안전한 장소에 보관하면 데이터 손실 없이 새로운 비밀번호를 설정할 수 있습니다.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">항상 당신의 마스터 키를 물리적인 통제 아래에 두세요 (예: 클라이언트 장치, 외부 저장소, 인쇄)</translation>
+        <translation type="unfinished">항상 당신의 복구 키에 대한 물리적 통제를 유지하세요 (예를 들어, 장치, 외부 저장소, 또는 인쇄).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2795,7 +2795,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded. Keep / symbol.</translatorcomment>
-        <translation>/MEGAsync 업로드</translation>
+        <translation type="obsolete">/MEGAsync 업로드</translation>
     </message>
     <message>
         <source>MEGAsync Uploads</source>

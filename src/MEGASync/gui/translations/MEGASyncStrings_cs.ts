@@ -401,7 +401,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>/MEGAsync Imports</source>
         <translatorcomment>Default created folder for imported links at the user Cloud Drive.</translatorcomment>
-        <translation>/Importování MEGAsync</translation>
+        <translation type="obsolete">/Importování MEGAsync</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -1875,7 +1875,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default path for MEGAsync uploads.</translatorcomment>
-        <translation>/Nahrávání MEGAsync</translation>
+        <translation type="obsolete">/Nahrávání MEGAsync</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2089,12 +2089,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Exportovat Klíč</translation>
+        <translation type="unfinished">Zálohovat klíč</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Exportovat Hlavní klíč</translation>
+        <translation type="unfinished">Zálohovat obnovovací klíč</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2104,12 +2104,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Exportování Hlavního klíče a jeho ponechání na bezpečném místě vám umožňuje nastavit nové heslo bez ztráty dat.</translation>
+        <translation type="unfinished">Export obnovovacího klíče a jeho ponechání na bezpečném místě vám umožní nastavení nového hesla bez ztráty dat.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Vždy mějte fyzickou podobu svého hlavního klíče (např. na klientském zařízení, na externím úložišti nebo vytištěnou).</translation>
+        <translation type="unfinished">Vždy si ponechte fyzickou kontrolu nad svým obnovovacím klíčem (např. na klientském zařízení, externím úložišti nebo si ho vytiskněte).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2795,7 +2795,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded. Keep / symbol.</translatorcomment>
-        <translation>/Nahrávání MEGAsync</translation>
+        <translation type="obsolete">/Nahrávání MEGAsync</translation>
     </message>
     <message>
         <source>MEGAsync Uploads</source>
