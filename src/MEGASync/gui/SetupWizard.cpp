@@ -165,8 +165,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 break;
             }
 
-            MegaNode *root = megaApi->getRootNode();
-            if (!root)
+            if (!megaApi->isFilesystemAvailable())
             {
                 page_login();
                 QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
@@ -177,7 +176,6 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 app->rebootApplication(false);
                 return;
             }
-            delete root;
 
             char *session = megaApi->dumpSession();
             sessionKey = QString::fromUtf8(session);
