@@ -5256,7 +5256,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
     if (nodesRemoved)
     {
         preferences->setUsedStorage(usedStorage);
-        if (infoOverQuota && (preferences->usedStorage() < preferences->totalStorage()))
+        if (infoOverQuota)
         {
             updateUserStats();
         }
