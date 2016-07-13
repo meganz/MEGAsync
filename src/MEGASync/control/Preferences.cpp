@@ -2075,8 +2075,7 @@ void Preferences::loadExcludedSyncNames()
         excludedSyncNames.clear();
     }
 
-    if ((settings->value(lastVersionKey).toInt() < 108)
-            && (Preferences::VERSION_CODE >= 108))
+    if (settings->value(lastVersionKey).toInt() < 108)
     {
         excludedSyncNames.clear();
         excludedSyncNames.append(QString::fromUtf8("Thumbs.db"));
@@ -2085,10 +2084,10 @@ void Preferences::loadExcludedSyncNames()
         excludedSyncNames.append(QString::fromUtf8(".*"));
     }
 
-    if ((settings->value(lastVersionKey).toInt() < 1015)
-            && (Preferences::VERSION_CODE >= 1015))
+    if (settings->value(lastVersionKey).toInt() < 2907)
     {
-        excludedSyncNames.append(QString::fromUtf8("Icon?"));
+        //This string is no longer excluded by default since 2907
+        excludedSyncNames.removeAll(QString::fromUtf8("Icon?"));
     }
 
     QMap<QString, QString> strMap;
