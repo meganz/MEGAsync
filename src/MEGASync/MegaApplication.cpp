@@ -2472,16 +2472,22 @@ void MegaApplication::updateUserStats()
         return;
     }
 
+    long long interval = Preferences::MIN_UPDATE_STATS_INTERVAL;
+    if (infoOverQuota || bwOverquotaTimestamp)
+    {
+        interval = Preferences::MIN_UPDATE_STATS_INTERVAL_OVERQUOTA;
+    }
+
     long long lastRequest = preferences->lastStatsRequest();
-    if ((QDateTime::currentMSecsSinceEpoch() - lastRequest)
-            > Preferences::MIN_UPDATE_STATS_INTERVAL)
+    if ((QDateTime::currentMSecsSinceEpoch() - lastRequest) > interval)
     {
         preferences->setLastStatsRequest(QDateTime::currentMSecsSinceEpoch());
         megaApi->getAccountDetails();
+        queuedUserStats = 0;
     }
     else
     {
-        queuedUserStats = lastRequest + Preferences::MIN_UPDATE_STATS_INTERVAL;
+        queuedUserStats = lastRequest + interval;
     }
 }
 
