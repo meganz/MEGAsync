@@ -2089,7 +2089,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Copiar Clave</translation>
+        <translation type="unfinished">Clave de Recuperación</translation>
     </message>
     <message>
         <source>Export Master key</source>
@@ -2109,7 +2109,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">COnserva siempre control físico de tu Clave de Recuperación (p.e. en un dispositivo cliente, almacenamiento externo, o impresa).</translation>
+        <translation type="unfinished">Conserva siempre control físico de tu Clave de Recuperación (por ejemplo en un dispositivo cliente, almacenamiento externo, o impresa).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2560,6 +2560,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Strong</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
         <translation type="unfinished">Fuerte</translation>
+    </message>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translation type="unfinished">Por favor, comprueba tu correo y haz clic en el enlace para confirmar tu cuenta.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translation type="unfinished">Has intentado conectarte demasiadas veces.[BR]Por favor espera hasta las %1 y prueba de nuevo.</translation>
     </message>
 </context>
 <context>

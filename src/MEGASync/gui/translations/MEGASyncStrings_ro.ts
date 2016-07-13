@@ -2561,6 +2561,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
         <translation type="unfinished">Puternică</translation>
     </message>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translation type="unfinished">Te rugăm să verifici e-mailul şi să dai clic pe link pentru a confirma contul.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translation type="unfinished">Ai încercat să te autentifici de prea multe ori.[BR]Te rugăm să aştepţi până la %1 şi să încerci din nou.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>

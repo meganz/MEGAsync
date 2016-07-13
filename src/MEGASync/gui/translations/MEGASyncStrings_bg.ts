@@ -2561,6 +2561,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
         <translation type="unfinished">Силна</translation>
     </message>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translation type="unfinished">Моля, проверете имейла си и кликнете върху линка за да потвърдите профила си.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translation type="unfinished">Опитвали сте да влезете в системата твърде много пъти. [BR]Моля изчайтайте до %1 и опитайте отново.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
