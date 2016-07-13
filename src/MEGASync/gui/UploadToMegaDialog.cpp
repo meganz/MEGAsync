@@ -16,7 +16,7 @@ UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
     this->delegateListener = new QTMegaRequestListener(megaApi, this);
 
     selectedHandle = mega::INVALID_HANDLE;
-    ui->eFolderPath->setText(tr("/MEGAsync Uploads"));
+    ui->eFolderPath->setText(QString::fromUtf8("/MEGAsync Uploads"));
     ui->cDefaultPath->setChecked(false);
     ui->bChange->setEnabled(true);
     ui->bOK->setEnabled(true);
@@ -137,7 +137,7 @@ void UploadToMegaDialog::on_bOK_clicked()
         return;
     }
     delete node;
-    if (!ui->eFolderPath->text().compare(tr("/MEGAsync Uploads")))
+    if (!ui->eFolderPath->text().compare(QString::fromUtf8("/MEGAsync Uploads")))
     {
         ui->bChange->setEnabled(false);
         ui->bOK->setEnabled(false);
@@ -153,6 +153,6 @@ void UploadToMegaDialog::on_bOK_clicked()
     }
 
     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Folder not found: %1").arg(ui->eFolderPath->text()).toUtf8().constData());
-    ui->eFolderPath->setText(tr("/MEGAsync Uploads"));
+    ui->eFolderPath->setText(QString::fromUtf8("/MEGAsync Uploads"));
     return;
 }

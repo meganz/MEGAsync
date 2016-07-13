@@ -89,15 +89,15 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
             else
             {       
                 delete testNode;
-                ui->eMegaFolder->setText(tr("/MEGAsync Imports"));
-                testNode = megaApi->getNodeByPath(tr("/MEGAsync Imports").toUtf8().constData());
+                ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync Imports"));
+                testNode = megaApi->getNodeByPath(QString::fromUtf8("/MEGAsync Imports").toUtf8().constData());
                 preferences->setImportFolder(mega::INVALID_HANDLE);
             }
         }
         else
         {
-            ui->eMegaFolder->setText(tr("/MEGAsync Imports"));
-            testNode = megaApi->getNodeByPath(tr("/MEGAsync Imports").toUtf8().constData());
+            ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync Imports"));
+            testNode = megaApi->getNodeByPath(QString::fromUtf8("/MEGAsync Imports").toUtf8().constData());
             preferences->setImportFolder(mega::INVALID_HANDLE);
         }
 

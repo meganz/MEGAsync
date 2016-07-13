@@ -836,7 +836,7 @@ void SettingsDialog::loadSettings()
         if (!node)
         {
             hasDefaultUploadOption = false;
-            ui->eUploadFolder->setText(tr("/MEGAsync Uploads"));
+            ui->eUploadFolder->setText(QString::fromUtf8("/MEGAsync Uploads"));
         }
         else
         {
@@ -844,7 +844,7 @@ void SettingsDialog::loadSettings()
             if (!nPath)
             {
                 hasDefaultUploadOption = false;
-                ui->eUploadFolder->setText(tr("/MEGAsync Uploads"));
+                ui->eUploadFolder->setText(QString::fromUtf8("/MEGAsync Uploads"));
             }
             else
             {
