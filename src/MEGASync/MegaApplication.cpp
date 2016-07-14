@@ -1794,6 +1794,7 @@ void MegaApplication::showInfoDialog()
     if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
     {
         openBwOverquotaDialog();
+        trayIcon->setContextMenu(initialMenu);
         return;
     }
     else if (bwOverquotaTimestamp)
@@ -1805,6 +1806,7 @@ void MegaApplication::showInfoDialog()
             bwOverquotaDialog->refreshAccountDetails();
         }
 
+        trayIcon->setContextMenu(&emptyMenu);
         megaApi->getAccountDetails();
     }
 
@@ -4563,6 +4565,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             bwOverquotaTimestamp = 0;
             preferences->clearTemporalBandwidth();
+            trayIcon->setContextMenu(&emptyMenu);
             if (bwOverquotaDialog)
             {
                 if (preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
