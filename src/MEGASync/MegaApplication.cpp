@@ -1799,6 +1799,12 @@ void MegaApplication::showInfoDialog()
     else if (bwOverquotaTimestamp)
     {
         bwOverquotaTimestamp = 0;
+        preferences->clearTemporalBandwidth();
+        if (bwOverquotaDialog)
+        {
+            bwOverquotaDialog->refreshAccountDetails();
+        }
+
         megaApi->getAccountDetails();
     }
 
@@ -3726,7 +3732,8 @@ void MegaApplication::openBwOverquotaDialog()
         }
     }
 
-    bwOverquotaDialog->setTimestamp(bwOverquotaTimestamp);   
+    bwOverquotaDialog->setTimestamp(bwOverquotaTimestamp);
+    bwOverquotaDialog->refreshAccountDetails();
     if (!bwOverquotaDialog->isVisible())
     {
         bwOverquotaDialog->show();
@@ -4509,6 +4516,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
         preferences->setTemporalBandwidth(details->getTemporalBandwidth());
+        preferences->setTemporalBandwidthValid(details->isTemporalBandwidthValid());
 
         long long inShareSize = 0, inShareFiles = 0, inShareFolders  = 0;
         for (int i = 0; i < inShares->size(); i++)
@@ -4553,9 +4561,17 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (!megaApi->getBandwidthOverquotaDelay())
         {
             bwOverquotaTimestamp = 0;
+            preferences->clearTemporalBandwidth();
             if (bwOverquotaDialog)
             {
-                bwOverquotaDialog->close();
+                if (preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
+                {
+                    bwOverquotaDialog->close();
+                }
+                else
+                {
+                    bwOverquotaDialog->refreshAccountDetails();
+                }
             }
         }
 
@@ -5081,7 +5097,10 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     if (e->getErrorCode() == MegaError::API_EOVERQUOTA && e->getValue())
     {
         int t = e->getValue();
+
+        preferences->clearTemporalBandwidth();
         megaApi->getPricing();
+        megaApi->getAccountDetails();
         bwOverquotaTimestamp = QDateTime::currentMSecsSinceEpoch() / 1000 + t;
         closeDialogs();
         openBwOverquotaDialog();
@@ -5117,6 +5136,12 @@ void MegaApplication::onAccountUpdate(MegaApi *)
     if (appfinished || !preferences->logged())
     {
         return;
+    }
+
+    preferences->clearTemporalBandwidth();
+    if (bwOverquotaDialog)
+    {
+        bwOverquotaDialog->refreshAccountDetails();
     }
 
     megaApi->getAccountDetails();
