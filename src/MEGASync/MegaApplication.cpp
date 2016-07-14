@@ -3724,6 +3724,7 @@ void MegaApplication::openBwOverquotaDialog()
     {
         bwOverquotaDialog = new UpgradeDialog(megaApi, pricing);
         connect(bwOverquotaDialog, SIGNAL(finished(int)), this, SLOT(overquotaDialogFinished(int)));
+        bwOverquotaDialog->show();
 
         if (!bwOverquotaEvent)
         {
@@ -3731,10 +3732,7 @@ void MegaApplication::openBwOverquotaDialog()
             bwOverquotaEvent = true;
         }
     }
-
-    bwOverquotaDialog->setTimestamp(bwOverquotaTimestamp);
-    bwOverquotaDialog->refreshAccountDetails();
-    if (!bwOverquotaDialog->isVisible())
+    else if (!bwOverquotaDialog->isVisible())
     {
         bwOverquotaDialog->show();
 
@@ -3744,6 +3742,9 @@ void MegaApplication::openBwOverquotaDialog()
         bwOverquotaDialog->showNormal();
     #endif
     }
+
+    bwOverquotaDialog->setTimestamp(bwOverquotaTimestamp);
+    bwOverquotaDialog->refreshAccountDetails();
     bwOverquotaDialog->raise();
     bwOverquotaDialog->activateWindow();
     bwOverquotaDialog->setFocus();
