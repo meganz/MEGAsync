@@ -2834,7 +2834,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Compartilhamentos de entrada</translation>
+        <translation type="unfinished">Partilhas Recebidas</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -2857,7 +2857,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Compartilhamentos de entrada</translation>
+        <translation type="unfinished">Partilhas Recebidas</translation>
     </message>
     <message>
         <source>Inbox</source>
