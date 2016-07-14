@@ -565,7 +565,7 @@ Are you sure?</source>
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Upload</translation>
+        <translation>Téléversement </translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
