@@ -4720,6 +4720,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Sync added");
             infoDialog->updateSyncsButton();
         }
+
+        if (settingsDialog)
+        {
+            settingsDialog->loadSettings();
+        }
+
         break;
     }
     case MegaRequest::TYPE_REMOVE_SYNC:
