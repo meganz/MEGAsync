@@ -2771,11 +2771,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Bạn vừa sử dụng %1 dữ liệu trong vòng 6 giờ qua, đồng nghĩa là bạn đã vượt quá giới hạn cho phép đối với hạng tài khoản của bạn. Để tránh khỏi giới hạn này, bạn có thể [A]nâng cấp lên hạng Pro[/A], để lấy băng thông riêng và thên không gian dự trữ.</translation>
+        <translation type="unfinished">Bạn vừa sử dụng %1 dữ liệu trong vòng 6 giờ qua, đồng nghĩa là bạn đã vượt quá giới hạn cho phép đối với hạng tài khoản của bạn. Để tránh khỏi giới hạn này, bạn có thể [A]nâng cấp lên hạng PRO[/A], để lấy băng thông riêng và thên không gian dự trữ.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Là người dùng miễn phí bạn sẽ phải chờ %1 để tiếp tục. Bạn có thể nâng cấp lên hạng Pro để không bị giới hạn.</translation>
+        <translation type="unfinished">Là người dùng miễn phí bạn sẽ phải chờ %1 để tiếp tục. Bạn có thể nâng cấp lên hạng PRO để không bị giới hạn.</translation>
     </message>
 </context>
 <context>

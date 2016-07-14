@@ -2775,7 +2775,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Por favor, atualize a sua conta para Pro, para continuar imediatamente ou aguarde %1 para continuar gratuitamente.</translation>
+        <translation type="unfinished">Por favor, atualize a sua conta para PRO, para continuar imediatamente ou aguarde %1 para continuar gratuitamente.</translation>
     </message>
 </context>
 <context>

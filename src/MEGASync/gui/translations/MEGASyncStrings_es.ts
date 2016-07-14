@@ -2119,7 +2119,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">Lite</translation>
+        <translation type="unfinished">LITE</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2771,11 +2771,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Has utilizado %1 de transferencia en las últimas 6 horas, lo que te ha llevado por encima de nuestro límite actual. Para eliminar esta limitación, puedes [A]mejorar a Pro[/A], lo que te dará tu propio paquete de transferencia y además amplio almacenaje extra. </translation>
+        <translation type="unfinished">Has utilizado %1 de transferencia en las últimas 6 horas, lo que te ha llevado por encima de nuestro límite actual. Para eliminar esta limitación, puedes [A]mejorar a PRO[/A], lo que te dará tu propio paquete de transferencia y además amplio almacenaje extra. </translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Por favor mejora a Pro para continuar ahora mismo, o espera %1 para continuar gratis.</translation>
+        <translation type="unfinished">Por favor mejora a PRO para continuar ahora mismo, o espera %1 para continuar gratis.</translation>
     </message>
 </context>
 <context>

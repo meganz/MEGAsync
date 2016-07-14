@@ -2567,7 +2567,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translation type="unfinished">Du har försökt logga in för många gånger. [BR] Vänta tills% 1 och försök igen.</translation>
+        <translation type="unfinished">Du har försökt logga in för många gånger. [BR] Vänta tills %1 och försök igen.</translation>
     </message>
 </context>
 <context>
@@ -2771,11 +2771,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Du har använt %1 av dataöverföring under de senaste 6 timmarna som tog du över vårt nuvarande gräns. För att kringgå denna gräns, kan du [A]uppgradera till Pro[/A], vilket kommer att ge dig din egen bandbredd paket och också gott om extra lagringsutrymme.</translation>
+        <translation type="unfinished">Du har använt %1 av dataöverföring under de senaste 6 timmarna som tog du över vårt nuvarande gräns. För att kringgå denna gräns, kan du [A]uppgradera till PRO[/A], vilket kommer att ge dig din egen bandbredd paket och också gott om extra lagringsutrymme.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Uppgradera till Pro för att fortsätta omedelbart, eller vänta %1 för att fortsätta gratis.</translation>
+        <translation type="unfinished">Uppgradera till PRO för att fortsätta omedelbart, eller vänta %1 för att fortsätta gratis.</translation>
     </message>
 </context>
 <context>

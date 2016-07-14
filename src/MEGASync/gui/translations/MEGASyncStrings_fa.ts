@@ -2771,11 +2771,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">شما در 6 ساعت گذشته از %1 انتقال اطلاعات استفاده کرده اید که شما را از محدودیت فعلی رد کرد.برای کنار زدن این محدودیت, شما می توانید به &lt;span class=&quot;red&quot;&gt;Pro&lt;/span&gt; ارتقا دهید, که به شما پهنای باند اختصاصی خودتان را به همراه فضای ذخیره سازی اضافه خواهد داد.</translation>
+        <translation type="unfinished">شما در 6 ساعت گذشته از %1 انتقال اطلاعات استفاده کرده اید که شما را از محدودیت فعلی رد کرد.برای کنار زدن این محدودیت, شما می توانید به &lt;span class=&quot;red&quot;&gt;PRO&lt;/span&gt; ارتقا دهید, که به شما پهنای باند اختصاصی خودتان را به همراه فضای ذخیره سازی اضافه خواهد داد.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">لطفا به Pro ارتقا بدهید تا بلافاصله ادامه دهید یا %1 صبر کنید تا به صورت رایگان ادامه بدهید.</translation>
+        <translation type="unfinished">لطفا به PRO ارتقا بدهید تا بلافاصله ادامه دهید یا %1 صبر کنید تا به صورت رایگان ادامه بدهید.</translation>
     </message>
 </context>
 <context>

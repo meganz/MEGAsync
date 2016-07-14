@@ -1860,7 +1860,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>PRO I</source>
         <translatorcomment>Label to indicate that the current user has a PRO I account.</translatorcomment>
-        <translation>Pro 1</translation>
+        <translation>PRO 1</translation>
     </message>
     <message>
         <source>PRO II</source>
