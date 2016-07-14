@@ -136,8 +136,6 @@ const QString Preferences::inboxFoldersKey          = QString::fromAscii("inboxF
 const QString Preferences::rubbishFoldersKey        = QString::fromAscii("rubbishFolders");
 const QString Preferences::inShareFoldersKey        = QString::fromAscii("inShareFolders");
 const QString Preferences::totalBandwidthKey        = QString::fromAscii("totalBandwidth");
-const QString Preferences::temporalBandwidthKey     = QString::fromAscii("temporalBandwidth");
-const QString Preferences::temporalBandwidthIntervalKey     = QString::fromAscii("temporalBandwidthInterval");
 const QString Preferences::usedBandwidthKey         = QString::fromAscii("usedBandwidth");
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
 const QString Preferences::showNotificationsKey     = QString::fromAscii("showNotifications");
@@ -325,7 +323,7 @@ void Preferences::initialize()
 
 Preferences::Preferences() : QObject(), mutex(QMutex::Recursive)
 {
-
+    clearTemporalBandwidth();
 }
 
 QString Preferences::email()
@@ -645,34 +643,34 @@ void Preferences::setTotalBandwidth(long long value)
     mutex.unlock();
 }
 
+bool Preferences::isTemporalBandwidthValid()
+{
+    return isTempBandwidthValid;
+}
+
+void Preferences::setTemporalBandwidthValid(bool value)
+{
+    this->isTempBandwidthValid = value;
+}
+
 long long Preferences::temporalBandwidth()
 {
-    mutex.lock();
-    long long value = settings->value(temporalBandwidthKey, 0).toLongLong();
-    mutex.unlock();
-    return value > 0 ? value : 0;
+    return tempBandwidth > 0 ? tempBandwidth : 0;
 }
 
 void Preferences::setTemporalBandwidth(long long value)
 {
-    mutex.lock();
-    settings->setValue(temporalBandwidthKey, value);
-    mutex.unlock();
+    this->tempBandwidth = value;
 }
 
-long long Preferences::temporalBandwidthInterval()
+int Preferences::temporalBandwidthInterval()
 {
-    mutex.lock();
-    long long value = settings->value(temporalBandwidthIntervalKey, 6).toLongLong();
-    mutex.unlock();
-    return value;
+    return tempBandwidthInterval > 0 ? tempBandwidthInterval : 6;
 }
 
-void Preferences::setTemporalBandwidthInterval(long long value)
+void Preferences::setTemporalBandwidthInterval(int value)
 {
-    mutex.lock();
-    settings->setValue(temporalBandwidthIntervalKey, value);
-    mutex.unlock();
+    this->tempBandwidthInterval = value;
 }
 
 long long Preferences::usedBandwidth()
@@ -1881,6 +1879,7 @@ void Preferences::leaveUser()
     assert(logged());
     settings->endGroup();
 
+    clearTemporalBandwidth();
     syncNames.clear();
     localFolders.clear();
     megaFolders.clear();
@@ -1901,6 +1900,7 @@ void Preferences::unlink()
     settings->endGroup();
 
     settings->remove(currentAccountKey);
+    clearTemporalBandwidth();
     syncNames.clear();
     localFolders.clear();
     megaFolders.clear();
@@ -1982,6 +1982,13 @@ bool Preferences::error()
     return errorFlag;
 }
 
+void Preferences::clearTemporalBandwidth()
+{
+    isTempBandwidthValid = false;
+    tempBandwidth = 0;
+    tempBandwidthInterval = 6;
+}
+
 void Preferences::clearAll()
 {
     mutex.lock();
@@ -2056,6 +2063,7 @@ void Preferences::logout()
     {
         settings->endGroup();
     }
+    clearTemporalBandwidth();
     syncNames.clear();
     localFolders.clear();
     megaFolders.clear();
