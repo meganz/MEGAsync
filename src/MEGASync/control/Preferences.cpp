@@ -18,9 +18,9 @@ const int Preferences::BUILD_ID = 0;
 const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.7");
 const QString Preferences::SDK_ID = QString::fromAscii("64f7b");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- Save the state and resume transfers\n"
-            "- Better management of errors during transfers\n"
-            "- Compatibility with HDPI displays\n"
+            "- More efficient upload completion\n"
+            "- Creation of new cryptographic keys\n"
+            "- Upgrade to QT5 and VS2015 (Windows)\n"
             "- Bug fixes");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
