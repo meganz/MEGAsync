@@ -560,7 +560,7 @@ Are you sure?</source>
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Téléchargement en cours</translation>
+        <translation>Téléchargement </translation>
     </message>
     <message>
         <source>Uploading </source>
