@@ -94,6 +94,9 @@ void msgHandler(QtMsgType type, const char *msg)
 
 int main(int argc, char *argv[])
 {
+    // adds thread-safety to OpenSSL
+    QSslSocket::supportsSsl();
+
 #ifdef _WIN32
     HINSTANCE shcore = LoadLibrary(L"Shcore.dll");
     if (shcore)
