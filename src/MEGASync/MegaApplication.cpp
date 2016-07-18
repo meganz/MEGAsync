@@ -436,7 +436,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     bwOverquotaDialog = NULL;
     bwOverquotaEvent = false;
     infoWizard = NULL;
-    infoWizardEvent = false;
     externalNodesTimestamp = 0;
     overquotaCheck = false;
     noKeyDetected = 0;
@@ -3656,12 +3655,6 @@ void MegaApplication::openInfoWizard()
     infoWizard->showNormal();
 #endif
     infoWizard->show();
-
-    if (!infoWizardEvent)
-    {
-        megaApi->sendEvent(99507, "Not logged in");
-        infoWizardEvent = true;
-    }
 }
 
 void MegaApplication::openBwOverquotaDialog()

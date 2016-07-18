@@ -249,7 +249,6 @@ protected:
     UpgradeDialog *bwOverquotaDialog;
     bool bwOverquotaEvent;
     InfoWizard *infoWizard;
-    bool infoWizardEvent;
     mega::QTMegaListener *delegateListener;
     QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;
