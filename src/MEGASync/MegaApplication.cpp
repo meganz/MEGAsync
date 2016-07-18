@@ -1864,6 +1864,9 @@ void MegaApplication::showInfoDialog()
 
             infoDialog->updateTransfers();
             infoDialog->show();
+            infoDialog->setFocus();
+            infoDialog->raise();
+            infoDialog->activateWindow();
         }
         else
         {
