@@ -95,10 +95,6 @@ public:
     void showTrayMenu(QPoint *point = NULL);
     void toggleLogging();
 
-#if (QT_VERSION == 0x050500) && defined(_WIN32)
-    bool eventFilter(QObject *o, QEvent * ev);
-#endif
-
 signals:
     void startUpdaterThread();
     void tryUpdate();

@@ -2600,34 +2600,6 @@ void MegaApplication::toggleLogging()
     }
 }
 
-#if (QT_VERSION == 0x050500) && defined(_WIN32)
-bool MegaApplication::eventFilter(QObject *o, QEvent *ev)
-{
-    if (appfinished)
-    {
-        return false;
-    }
-
-    QMenu *menu = dynamic_cast<QMenu *>(o);
-    if (menu && menu->isVisible() && menu->isEnabled()
-            && ev->type() == QEvent::MouseButtonRelease)
-    {
-        QMouseEvent * mouseEvent = dynamic_cast<QMouseEvent *>(ev);
-        if (mouseEvent)
-        {
-            QAction *action = menu->actionAt(mouseEvent->pos());
-            if (action && action->isEnabled())
-            {
-                action->trigger();
-                menu->close();
-                return true;
-            }
-        }
-    }
-    return false;
-}
-#endif
-
 //Called when the "Import links" menu item is clicked
 void MegaApplication::importLinks()
 {
@@ -3765,9 +3737,6 @@ void MegaApplication::createTrayMenu()
     if (!initialMenu)
     {
         initialMenu = new QMenu();
-        #if (QT_VERSION == 0x050500) && defined(_WIN32)
-            initialMenu->installEventFilter(this);
-        #endif
     }
     else
     {
@@ -3801,10 +3770,6 @@ void MegaApplication::createTrayMenu()
     if (!windowsMenu)
     {
         windowsMenu = new QMenu();
-
-        #if (QT_VERSION == 0x050500)
-            windowsMenu->installEventFilter(this);
-        #endif
     }
     else
     {
@@ -3829,11 +3794,6 @@ void MegaApplication::createTrayMenu()
     if (!trayMenu)
     {
         trayMenu = new QMenu();
-
-#if (QT_VERSION == 0x050500) && defined(_WIN32)
-        trayMenu->installEventFilter(this);
-#endif
-
         #ifndef __APPLE__
             trayMenu->setStyleSheet(QString::fromAscii(
                     "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
@@ -3953,11 +3913,6 @@ void MegaApplication::createOverQuotaMenu()
     if (!trayOverQuotaMenu)
     {
         trayOverQuotaMenu = new QMenu();
-
-#if (QT_VERSION == 0x050500) && defined(_WIN32)
-        trayOverQuotaMenu->installEventFilter(this);
-#endif
-
 #ifndef __APPLE__
         trayOverQuotaMenu->setStyleSheet(QString::fromAscii(
             "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "

@@ -809,11 +809,6 @@ void InfoDialog::onTransfer1Cancel(int x, int y)
     }
 
     transferMenu = new QMenu();
-
-#if (QT_VERSION == 0x050500) && defined(_WIN32)
-    transferMenu->installEventFilter(app);
-#endif
-
 #ifndef __APPLE__
     transferMenu->setStyleSheet(QString::fromAscii(
             "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
@@ -853,11 +848,6 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
     }
 
     transferMenu = new QMenu();
-
-#if (QT_VERSION == 0x050500) && defined(_WIN32)
-    transferMenu->installEventFilter(app);
-#endif
-
 #ifndef __APPLE__
     transferMenu->setStyleSheet(QString::fromAscii(
             "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
@@ -1020,11 +1010,6 @@ void InfoDialog::on_bSyncFolder_clicked()
     else
     {
         syncsMenu = new QMenu();
-
-#if (QT_VERSION == 0x050500) && defined(_WIN32)
-        syncsMenu->installEventFilter(app);
-#endif
-
         #ifndef __APPLE__
             syncsMenu->setStyleSheet(QString::fromAscii(
                     "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
