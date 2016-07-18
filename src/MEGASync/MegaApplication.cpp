@@ -1436,8 +1436,8 @@ void MegaApplication::exitApplication()
     }
     else
     {
-        exitDialog->raise();
         exitDialog->activateWindow();
+        exitDialog->raise();
     }
 }
 
@@ -1827,9 +1827,6 @@ void MegaApplication::showInfoDialog()
 
             infoOverQuota->move(posx, posy);
             infoOverQuota->show();
-            infoOverQuota->setFocus();
-            infoOverQuota->raise();
-            infoOverQuota->activateWindow();
         }
         else
         {
@@ -1866,11 +1863,8 @@ void MegaApplication::showInfoDialog()
                 infoDialog->moveArrow(localCoordinates);
             #endif
 
-            infoDialog->show();
-            infoDialog->setFocus();
-            infoDialog->raise();
-            infoDialog->activateWindow();
             infoDialog->updateTransfers();
+            infoDialog->show();
         }
         else
         {
@@ -2651,19 +2645,15 @@ void MegaApplication::importLinks()
 
     if (pasteMegaLinksDialog)
     {
-        pasteMegaLinksDialog->setVisible(true);
         pasteMegaLinksDialog->activateWindow();
         pasteMegaLinksDialog->raise();
-        pasteMegaLinksDialog->setFocus();
         return;
     }
 
     if (importDialog)
     {
-        importDialog->setVisible(true);
         importDialog->activateWindow();
         importDialog->raise();
-        importDialog->setFocus();
         return;
     }
 
@@ -2745,16 +2735,12 @@ void MegaApplication::showChangeLog()
 
     if (changeLogDialog)
     {
-        changeLogDialog->setVisible(true);
         changeLogDialog->activateWindow();
         changeLogDialog->raise();
-        changeLogDialog->setFocus();
         return;
     }
 
     changeLogDialog = new ChangeLogDialog(Preferences::VERSION_STRING, Preferences::SDK_ID, Preferences::CHANGELOG);
-    changeLogDialog->activateWindow();
-    changeLogDialog->raise();
     changeLogDialog->show();
 }
 
@@ -2787,14 +2773,8 @@ void MegaApplication::uploadActionClicked()
 
     if (multiUploadFileDialog)
     {
-#ifdef WIN32
-        multiUploadFileDialog->showMinimized();
-        multiUploadFileDialog->setWindowState(Qt::WindowActive);
-        multiUploadFileDialog->showNormal();
-#endif
-
-        multiUploadFileDialog->raise();
         multiUploadFileDialog->activateWindow();
+        multiUploadFileDialog->raise();
         return;
     }
 
@@ -2839,10 +2819,8 @@ void MegaApplication::downloadActionClicked()
 
     if (downloadNodeSelector)
     {
-        downloadNodeSelector->setVisible(true);
         downloadNodeSelector->activateWindow();
         downloadNodeSelector->raise();
-        downloadNodeSelector->setFocus();
         return;
     }
 
@@ -2886,10 +2864,8 @@ void MegaApplication::streamActionClicked()
 
     if (streamSelector)
     {
-        streamSelector->setVisible(true);
         streamSelector->activateWindow();
         streamSelector->raise();
-        streamSelector->setFocus();
         return;
     }
 
@@ -2919,10 +2895,8 @@ void MegaApplication::userAction(int action)
         if (setupWizard)
         {
             setupWizard->goToStep(action);
-            setupWizard->setVisible(true);
-            setupWizard->raise();
             setupWizard->activateWindow();
-            setupWizard->setFocus();
+            setupWizard->raise();
             return;
         }
         setupWizard = new SetupWizard(this);
@@ -3047,15 +3021,8 @@ void MegaApplication::processUploads()
     //Files will be uploaded when the user selects the upload folder
     if (uploadFolderSelector)
     {
-        uploadFolderSelector->setVisible(true);
-#ifdef WIN32
-        uploadFolderSelector->showMinimized();
-        uploadFolderSelector->setWindowState(Qt::WindowActive);
-        uploadFolderSelector->showNormal();
-#endif
-        uploadFolderSelector->raise();
         uploadFolderSelector->activateWindow();
-        uploadFolderSelector->setFocus();
+        uploadFolderSelector->raise();
         return;
     }
 
@@ -3087,12 +3054,8 @@ void MegaApplication::processUploads()
 
 #ifdef WIN32
     uploadFolderSelector->showMinimized();
-    uploadFolderSelector->setWindowState(Qt::WindowActive);
     uploadFolderSelector->showNormal();
 #endif
-    uploadFolderSelector->raise();
-    uploadFolderSelector->activateWindow();
-    uploadFolderSelector->setFocus();
     uploadFolderSelector->exec();
     if (!uploadFolderSelector)
     {
@@ -3141,15 +3104,8 @@ void MegaApplication::processDownloads()
 
     if (downloadFolderSelector)
     {
-        downloadFolderSelector->setVisible(true);
-        #ifdef WIN32
-            downloadFolderSelector->showMinimized();
-            downloadFolderSelector->setWindowState(Qt::WindowActive);
-            downloadFolderSelector->showNormal();
-        #endif
-        downloadFolderSelector->raise();
         downloadFolderSelector->activateWindow();
-        downloadFolderSelector->setFocus();
+        downloadFolderSelector->raise();
         return;
     }
 
@@ -3173,12 +3129,8 @@ void MegaApplication::processDownloads()
     downloadFolderSelector = new DownloadFromMegaDialog(preferences->downloadFolder());
 #ifdef WIN32
     downloadFolderSelector->showMinimized();
-    downloadFolderSelector->setWindowState(Qt::WindowActive);
     downloadFolderSelector->showNormal();
 #endif
-    downloadFolderSelector->raise();
-    downloadFolderSelector->activateWindow();
-    downloadFolderSelector->setFocus();
     downloadFolderSelector->exec();
     if (!downloadFolderSelector)
     {
@@ -3506,9 +3458,8 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         {
             if (setupWizard)
             {
-                setupWizard->setVisible(true);
-                setupWizard->raise();
                 setupWizard->activateWindow();
+                setupWizard->raise();
             }
             else if (reason == QSystemTrayIcon::Trigger)
             {
@@ -3564,9 +3515,8 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         {
             if (setupWizard)
             {
-                setupWizard->setVisible(true);
-                setupWizard->raise();
                 setupWizard->activateWindow();
+                setupWizard->raise();
             }
             else
             {
@@ -3652,8 +3602,8 @@ void MegaApplication::openSettings(int tab)
                 settingsDialog->openSettingsTab(tab);
             }
             settingsDialog->loadSettings();
-            settingsDialog->raise();
             settingsDialog->activateWindow();
+            settingsDialog->raise();
             return;
         }
 
@@ -3681,8 +3631,6 @@ void MegaApplication::openSettings(int tab)
     settingsDialog->setUpdateAvailable(updateAvailable);
     settingsDialog->setModal(false);
     settingsDialog->show();
-    settingsDialog->raise();
-    settingsDialog->activateWindow();
 }
 
 void MegaApplication::openInfoWizard()
@@ -3692,30 +3640,28 @@ void MegaApplication::openInfoWizard()
         return;
     }
 
-    if (!infoWizard)
+    if (infoWizard)
     {
-        infoWizard = new InfoWizard();
-        connect(infoWizard, SIGNAL(actionButtonClicked(int)), this, SLOT(userAction(int)));
-        connect(infoWizard, SIGNAL(finished(int)), this, SLOT(infoWizardDialogFinished(int)));
-
-        if (!infoWizardEvent)
-        {
-            megaApi->sendEvent(99507, "Not logged in");
-            infoWizardEvent = true;
-        }
+        infoWizard->activateWindow();
+        infoWizard->raise();
+        return;
     }
 
-    infoWizard->show();
+    infoWizard = new InfoWizard();
+    connect(infoWizard, SIGNAL(actionButtonClicked(int)), this, SLOT(userAction(int)));
+    connect(infoWizard, SIGNAL(finished(int)), this, SLOT(infoWizardDialogFinished(int)));
 
 #ifdef WIN32
     infoWizard->showMinimized();
-    infoWizard->setWindowState(Qt::WindowActive);
     infoWizard->showNormal();
 #endif
+    infoWizard->show();
 
-    infoWizard->raise();
-    infoWizard->activateWindow();
-    infoWizard->setFocus();
+    if (!infoWizardEvent)
+    {
+        megaApi->sendEvent(99507, "Not logged in");
+        infoWizardEvent = true;
+    }
 }
 
 void MegaApplication::openBwOverquotaDialog()
@@ -3729,6 +3675,11 @@ void MegaApplication::openBwOverquotaDialog()
     {
         bwOverquotaDialog = new UpgradeDialog(megaApi, pricing);
         connect(bwOverquotaDialog, SIGNAL(finished(int)), this, SLOT(overquotaDialogFinished(int)));
+
+#ifdef WIN32
+        bwOverquotaDialog->showMinimized();
+        bwOverquotaDialog->showNormal();
+#endif
         bwOverquotaDialog->show();
 
         if (!bwOverquotaEvent)
@@ -3737,22 +3688,14 @@ void MegaApplication::openBwOverquotaDialog()
             bwOverquotaEvent = true;
         }
     }
-    else if (!bwOverquotaDialog->isVisible())
+    else
     {
-        bwOverquotaDialog->show();
-
-    #ifdef WIN32
-        bwOverquotaDialog->showMinimized();
-        bwOverquotaDialog->setWindowState(Qt::WindowActive);
-        bwOverquotaDialog->showNormal();
-    #endif
+        bwOverquotaDialog->activateWindow();
+        bwOverquotaDialog->raise();
     }
 
     bwOverquotaDialog->setTimestamp(bwOverquotaTimestamp);
     bwOverquotaDialog->refreshAccountDetails();
-    bwOverquotaDialog->raise();
-    bwOverquotaDialog->activateWindow();
-    bwOverquotaDialog->setFocus();
 }
 
 void MegaApplication::changeProxy()
@@ -3791,8 +3734,8 @@ void MegaApplication::changeProxy()
 
             //and visible -> show it
             settingsDialog->loadSettings();
-            settingsDialog->raise();
             settingsDialog->activateWindow();
+            settingsDialog->raise();
             return;
         }
 
