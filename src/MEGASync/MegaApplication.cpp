@@ -2709,8 +2709,7 @@ void MegaApplication::showChangeLog()
 
     if (changeLogDialog)
     {
-        changeLogDialog->activateWindow();
-        changeLogDialog->raise();
+        changeLogDialog->show();
         return;
     }
 
