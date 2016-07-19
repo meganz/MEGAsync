@@ -73,6 +73,8 @@ void FolderBinder::on_bLocalFolder_clicked()
         defaultPath = Utilities::getDefaultBasePath();
     }
 
+    defaultPath = QDir::toNativeSeparators(defaultPath);
+
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Opening folder selector in: %1").arg(defaultPath).toUtf8().constData());
 #ifndef _WIN32
     QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);

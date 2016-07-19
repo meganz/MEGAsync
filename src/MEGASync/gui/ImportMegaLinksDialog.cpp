@@ -51,7 +51,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
     QFileInfo test(downloadFolder);
     if (!test.isDir())
     {
-        QDir defaultFolder(Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGAsync Downloads"));
+        QDir defaultFolder(QDir::toNativeSeparators(Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGAsync Downloads")));
         defaultFolder.mkpath(QString::fromAscii("."));
         defaultFolderPath = defaultFolder.absolutePath();
         defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
@@ -234,6 +234,8 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
     {
         defaultPath = Utilities::getDefaultBasePath();
     }
+
+    defaultPath = QDir::toNativeSeparators(defaultPath);
 
 #ifndef _WIN32
     QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
