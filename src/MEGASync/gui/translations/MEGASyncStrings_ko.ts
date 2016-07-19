@@ -184,7 +184,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">당신의 통신이 가로챔을 당할 수 있는 옵션을 활성화하려고 합니다. 당신의 데이터는 우리의 단대단 암호화 덕분에 공격자들이 접근할 수 없지만, 그들이 보이지 않게 당신의 파일과 폴더를 MEGA 안에서 움직이고, 삭제하거나 당신이 계정에 접근하지 못하게 할 수 있습니다.</translation>
+        <translation type="unfinished">당신의 통신이 가로챔을 당할 수 있는 옵션을 활성화하려고 합니다. 당신의 데이터는 우리의 종단간 암호화 덕분에 공격자들이 접근할 수 없지만, 그들이 보이지 않게 당신의 파일과 폴더를 MEGA 안에서 움직이고, 삭제하거나 당신이 계정에 접근하지 못하게 할 수 있습니다.</translation>
     </message>
 </context>
 <context>
@@ -596,7 +596,7 @@ Are you sure?</source>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
         <translatorcomment>Label to inform the user that is over quota and let him to upgrade his account. Keep [A] [/A] codes, will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">허용된 공간 할당량을 초과하였습니다. [A]업그레이드[/A]하고 안전한 단대단 암호화 공간을 즐기세요.</translation>
+        <translation type="unfinished">당신의 계정이 허용된 공간 할당량을 초과하였습니다. [A]업그레이드[/A]하고 안전한, 종단간 암호화 공간을 즐기세요.</translation>
     </message>
     <message>
         <source>Upgrade your account</source>
@@ -660,7 +660,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
-        <translation type="unfinished">MEGA의 단대단 알고리즘을 느린 브라우저에 의존하지 않고 기기에서 직접 실행하세요.</translation>
+        <translation type="unfinished">MEGA의 종단간 암호화 알고리즘을 느린 브라우저에 의존하지 않고 기기에서 직접 실행하세요.</translation>
     </message>
     <message>
         <source>Unlimited file size</source>

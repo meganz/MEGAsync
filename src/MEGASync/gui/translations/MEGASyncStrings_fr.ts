@@ -828,7 +828,7 @@ Exit anyway?</source>
     <message>
         <source>Scanning</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is in a scanning state.</translatorcomment>
-        <translation>Scan en cours</translation>
+        <translation>Analyse</translation>
     </message>
     <message>
         <source>Syncing</source>
@@ -1029,7 +1029,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Votre synchronisation &quot;%1&quot; a été désactivée car le dossier sur cloud MEGA est dans la corbeille</translation>
+        <translation type="unfinished">Votre synchronisation « %1 » a été désactivée, car le dossier distant est dans la corbeille</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -1054,7 +1054,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Logout</source>
         <translatorcomment>Label to indicate Logout action</translatorcomment>
-        <translation type="unfinished">Se déconnecter</translation>
+        <translation type="unfinished">Déconnexion</translation>
     </message>
     <message>
         <source>Transfer failed:</source>
@@ -1084,7 +1084,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Notre clef SSL ne peut pas être vérifiée. Il se peut que vous saoyez affecté(e) par une attaque de l&#039;homme au milieu. ou il se peut que votre logiciel anti-virus intercepte vos communications et donc pose problème. Veuillez temporairement désactivé votre anti-virus et essayer à nouveau.</translation>
+        <translation type="unfinished">Notre clé SSL ne peut pas être vérifiée. Vous pourriez être la cible d&#039;une attaque de l&#039;homme du milieu, ou votre logiciel antivirus pourrait intercepter vos communications, et ainsi créer ce problème. Veuillez désactiver temporairement votre logiciel antivirus et ressayer.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -1203,7 +1203,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>Clé invalide / Erreur de déchiffrage</translation>
+        <translation>Clé invalide / Erreur de déchiffrement</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -1472,7 +1472,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Public permissions:</source>
         <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Permissions Publiques :</translation>
+        <translation type="unfinished">Droits publics :</translation>
     </message>
     <message>
         <source>Files</source>
@@ -1713,7 +1713,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Logout</source>
         <translatorcomment>Button label to logout of the application. Strins as short as possible.</translatorcomment>
-        <translation>Se déconnecter</translation>
+        <translation>Déconnexion</translation>
     </message>
     <message>
         <source>Storage space</source>
@@ -1800,12 +1800,12 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Proxy Settings</source>
         <translatorcomment>Label to indicate the dialog of Proxy Settings. Keep capital letters.</translatorcomment>
-        <translation>Paramètres du proxy</translation>
+        <translation>Paramètres de serveur mandataire</translation>
     </message>
     <message>
         <source>No proxy</source>
         <translatorcomment>Label to indicate MEGAsync not to use any proxy. String as short as possible.</translatorcomment>
-        <translation>Pas de proxy</translation>
+        <translation>Aucun mandataire</translation>
     </message>
     <message>
         <source>Auto-detect</source>
@@ -1815,12 +1815,12 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Proxy</source>
         <translatorcomment>Tab label of Proxy dialog settings. Max 15 characters.</translatorcomment>
-        <translation>Proxy</translation>
+        <translation>Mandataire</translation>
     </message>
     <message>
         <source>Proxy type:</source>
         <translatorcomment>Label to indicate the proxy type to be used. String as short as possible.</translatorcomment>
-        <translation>Type de proxy :</translation>
+        <translation>Type de mandataire :</translation>
     </message>
     <message>
         <source>Server:</source>
@@ -1835,7 +1835,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Proxy server requires a password</source>
         <translatorcomment>Label to indicate if the proxy used requires a password. String as short as possible.</translatorcomment>
-        <translation>Le serveur proxy nécessite un mot de passe</translation>
+        <translation>Le mandataire exige un mot de passe</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -1884,7 +1884,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive.</source>
-        <translation type="obsolete">Vous êtes déjà entrain de synchroniser l&#039;intégralité de votre Espace de Stockage ?</translation>
+        <translation type="obsolete">Vous synchronisez déjà votre stockage nuagique dans son intégralité</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -1944,7 +1944,7 @@ when the application starts again.</source>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&#039;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
-        <translation>Vos réglages du proxy sont incorrectes ou alors le proxy ne répond pas</translation>
+        <translation>Vos paramètres de serveur mandataire sont invalides, ou le mandataire ne répond pas</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -1992,12 +1992,12 @@ when the application starts again.</source>
     <message>
         <source>Force a full scan</source>
         <translatorcomment>Button label to let the user force a full scan of his synced folders.</translatorcomment>
-        <translation>Forcer un scan complet</translation>
+        <translation>Forcer une analyse complète</translation>
     </message>
     <message>
         <source>Full scan</source>
         <translatorcomment>Title of the message dialog of Full scan operation.</translatorcomment>
-        <translation>Scan complet</translation>
+        <translation>Analyse complète</translation>
     </message>
     <message>
         <source>MEGAsync will perform a full scan of your synced folders
@@ -2069,7 +2069,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
-        <translation type="obsolete">Vous êtes déjà en train de synchroniser votre espace de stockage en ligne dans son intégralité</translation>
+        <translation type="obsolete">Vous synchronisez déjà votre stockage nuagique dans son intégralité</translation>
     </message>
     <message>
         <source>Enable / disable</source>
@@ -2104,7 +2104,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">En exportant la clé de récupération et en la conservant dans un endroit sûr, vous pourrez définir un nouveau mot de passe sans aucune perte de données.</translation>
+        <translation type="unfinished">En exportant et en conservant la clé de récupération dans un endroit sécurisé, vous pourrez définir un nouveau mot de passe, sans encourir de perte de données.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
@@ -2119,7 +2119,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>PRO lite</source>
         <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO LITE</translation>
+        <translation type="unfinished">PRO léger</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2286,7 +2286,7 @@ when the application starts again</source>
     <message>
         <source> Sync specific folders in your cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Selective  sync (Sync specific folders)</translatorcomment>
-        <translation>Synchroniser certains dossiers de votre espace de stockage</translation>
+        <translation>Synchroniser des dossiers particuliers vers votre stockage nuagique</translation>
     </message>
     <message>
         <source>The following folders will be automatically synchronized:</source>
@@ -2378,12 +2378,12 @@ when the application starts again</source>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Veuillez renseigner votre adresse e-mail</translation>
+        <translation>Veuillez saisir votre adresse courriel</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>Veuillez renseigner une adresse e-mail valide</translation>
+        <translation>Veuillez saisir une adresse courriel valide.</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
@@ -2423,7 +2423,7 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">Vous avez %1 dans votre Espace de Stockage.Êtes-vous certain(e) de bien vouloir synchroniser l&#039;intégralité de votre Espace de Stockage ?</translation>
+        <translation type="obsolete">Vous avez %1 dans votre stockage nuagique.Voulez-vous vraiment synchroniser l&#039;intégralité de votre stockage nuagique ?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -2475,7 +2475,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting session key</source>
         <translatorcomment>Message displayed when an error occurs checking session key</translatorcomment>
-        <translation type="obsolete">Erreur lors de l&#039;obtention de la clé de session</translation>
+        <translation type="obsolete">Erreur d&#039;obtention de la clé de session</translation>
     </message>
     <message>
         <source>Full sync</source>
@@ -2485,12 +2485,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>Votre dossier local et votre Espace de Stockage MEGA vont être automatiquement synchronisés.</translation>
+        <translation>Votre dossier local et votre stockage nuagique MEGA seront synchronisés automatiquement.</translation>
     </message>
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
         <translatorcomment>Label to inform the user wich local folder will be synchronized with the cloud drive. Keep colon.</translatorcomment>
-        <translation>Votre espace de stockage en ligne va être synchronisé avec ce dossier :</translation>
+        <translation>Votre stockage nuagique sera synchronisé avec ce dossier :</translation>
     </message>
     <message>
         <source>You don&#039;t have write permissions in this local folder.</source>
@@ -2716,7 +2716,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation type="unfinished">Êtes-vous certain(e) de bien vouloir mettre fin au streaming ?</translation>
+        <translation type="unfinished">Voulez-vous vraiment arrêter la diffusion en continu ?</translation>
     </message>
     <message>
         <source>Error</source>

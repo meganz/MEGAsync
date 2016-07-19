@@ -1148,7 +1148,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Request failed, retrying</source>
         <translatorcomment>Label to show that a request error occurs during a SDK operation.</translatorcomment>
-        <translation>Pumalpak ang hinihiling, sinusubakan muli</translation>
+        <translation>Bigo ang request, sinusubokang muli</translation>
     </message>
     <message>
         <source>Rate limit exceeded</source>
