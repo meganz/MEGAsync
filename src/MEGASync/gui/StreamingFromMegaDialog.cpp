@@ -190,7 +190,11 @@ void StreamingFromMegaDialog::on_bOpenOther_clicked()
             #if QT_VERSION < 0x050000
                 defaultPath = QDesktopServices::storageLocation(QDesktopServices::ApplicationsLocation);
             #else
-                defaultPath = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation)[0];
+                QStringList paths = QStandardPaths::standardLocations(QStandardPaths::ApplicationsLocation);
+                if (paths.size())
+                {
+                    defaultPath = paths.at(0);
+                }
             #endif
         #else
             defaultPath = QString::fromUtf8("/usr/bin");

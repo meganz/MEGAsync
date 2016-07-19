@@ -858,19 +858,7 @@ void SettingsDialog::loadSettings()
         QString downloadPath = preferences->downloadFolder();
         if (!downloadPath.size())
         {
-#ifdef WIN32
-    #if QT_VERSION < 0x050000
-            downloadPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + QString::fromUtf8("/MEGAsync Downloads");
-    #else
-            downloadPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + QString::fromUtf8("/MEGAsync Downloads");
-    #endif
-#else
-    #if QT_VERSION < 0x050000
-            downloadPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + QString::fromUtf8("/MEGAsync Downloads");
-    #else
-            downloadPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + QString::fromUtf8("/MEGAsync Downloads");
-    #endif
-#endif
+            downloadPath = Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGAsync Downloads");
         }
         downloadPath = QDir::toNativeSeparators(downloadPath);
         ui->eDownloadFolder->setText(downloadPath);
@@ -1043,20 +1031,7 @@ bool SettingsDialog::saveSettings()
         }
         delete node;
 
-        QString defaultDownloadPath;
-#ifdef WIN32
-    #if QT_VERSION < 0x050000
-        defaultDownloadPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + QString::fromUtf8("/MEGAsync Downloads");
-    #else
-        defaultDownloadPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + QString::fromUtf8("/MEGAsync Downloads");
-    #endif
-#else
-    #if QT_VERSION < 0x050000
-        defaultDownloadPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + QString::fromUtf8("/MEGAsync Downloads");
-    #else
-        defaultDownloadPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + QString::fromUtf8("/MEGAsync Downloads");
-    #endif
-#endif
+        QString defaultDownloadPath = Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGAsync Downloads");
         if (ui->eDownloadFolder->text().compare(QDir::toNativeSeparators(defaultDownloadPath))
                 || preferences->downloadFolder().size())
         {
@@ -1544,19 +1519,12 @@ void SettingsDialog::on_bUnlink_clicked()
 
 void SettingsDialog::on_bExportMasterKey_clicked()
 {
-    QString defaultPath;
-#ifdef WIN32
-    #if QT_VERSION < 0x050000
-    defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-    #else
-    defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-    #endif
-#else
-    #if QT_VERSION < 0x050000
-    defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-    #else
-    defaultPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
-    #endif
+    QString defaultPath = QDir::toNativeSeparators(Utilities::getDefaultBasePath());
+#ifndef _WIN32
+    if (defaultPath.isEmpty())
+    {
+        defaultPath = QString::fromUtf8("/");
+    }
 #endif
 
     QDir dir(defaultPath);

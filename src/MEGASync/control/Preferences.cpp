@@ -249,12 +249,10 @@ Preferences *Preferences::instance()
     return Preferences::preferences;
 }
 
-void Preferences::initialize()
+void Preferences::initialize(QString dataPath)
 {
-#if QT_VERSION < 0x050000
-    QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
-#else
-    QString dataPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
+    this->dataPath = dataPath;
+#if QT_VERSION >= 0x050000
     QString lockSettingsFile = QDir::toNativeSeparators(dataPath + QString::fromAscii("/MEGAsync.cfg.lock"));
     QFile::remove(lockSettingsFile);
 #endif
@@ -1980,6 +1978,14 @@ void Preferences::disableOverlayIcons(bool value)
 bool Preferences::error()
 {
     return errorFlag;
+}
+
+QString Preferences::getDataPath()
+{
+    mutex.lock();
+    QString ret = dataPath;
+    mutex.unlock();
+    return ret;
 }
 
 void Preferences::clearTemporalBandwidth()

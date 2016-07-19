@@ -147,8 +147,9 @@ int main(int argc, char *argv[])
     app.setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
 
-    QString crashPath = QDir::current().filePath(QString::fromAscii("crashDumps"));
-    QString appLockPath = QDir::current().filePath(QString::fromAscii("megasync.lock"));
+    QDir dataDir(app.applicationDataPath());
+    QString crashPath = dataDir.filePath(QString::fromAscii("crashDumps"));
+    QString appLockPath = dataDir.filePath(QString::fromAscii("megasync.lock"));
     QDir crashDir(crashPath);
     if (!crashDir.exists())
     {
@@ -161,7 +162,7 @@ int main(int argc, char *argv[])
     if ((argc == 2) && !strcmp("/uninstall", argv[1]))
     {
         Preferences *preferences = Preferences::instance();
-        preferences->initialize();
+        preferences->initialize(app.applicationDataPath());
         if (!preferences->error())
         {
             if (preferences->logged())
@@ -360,9 +361,19 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 #if QT_VERSION < 0x050000
     dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
 #else
-    dataPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
+    QStringList dataPaths = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
+    if (dataPaths.size())
+    {
+        dataPath = dataPaths.at(0);
+    }
 #endif
 
+    if (dataPath.isEmpty())
+    {
+        dataPath = QDir::currentPath();
+    }
+
+    dataPath = QDir::toNativeSeparators(dataPath);
     QDir currentDir(dataPath);
     if (!currentDir.exists())
     {
@@ -481,7 +492,7 @@ void MegaApplication::initialize()
     preferences = Preferences::instance();
     connect(preferences, SIGNAL(stateChanged()), this, SLOT(changeState()));
     connect(preferences, SIGNAL(updated()), this, SLOT(showUpdatedMessage()));
-    preferences->initialize();
+    preferences->initialize(dataPath);
     if (preferences->error())
     {
         QMessageBox::critical(NULL, QString::fromAscii("MEGAsync"), tr("Your config is corrupt, please start over"));
@@ -490,7 +501,7 @@ void MegaApplication::initialize()
     preferences->setLastStatsRequest(0);
     lastExit = preferences->getLastExit();
 
-    QString basePath = QDir::toNativeSeparators(QDir::currentPath()+QString::fromAscii("/"));
+    QString basePath = QDir::toNativeSeparators(dataPath + QString::fromAscii("/"));
 
 #ifdef WIN32
     //Backwards compatibility code
@@ -2754,7 +2765,12 @@ void MegaApplication::uploadActionClicked()
 #if QT_VERSION < 0x050000
     QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
 #else
-    QString defaultFolderPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
+    QString  defaultFolderPath;
+    QStringList paths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+    if (paths.size())
+    {
+        defaultFolderPath = paths.at(0);
+    }
 #endif
 
     multiUploadFileDialog = new MultiQFileDialog(NULL,
