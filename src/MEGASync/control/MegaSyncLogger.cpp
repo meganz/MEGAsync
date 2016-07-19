@@ -1,4 +1,6 @@
 #include "MegaSyncLogger.h"
+#include "Utilities.h"
+
 #include <iostream>
 #include <sstream>
 
@@ -108,15 +110,30 @@ void MegaSyncLogger::log(const char *time, int loglevel, const char *source, con
             static QString filePath;
             if (filePath.isEmpty())
             {
-                QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
+                QString dataPath;
+#if QT_VERSION < 0x050000
+                dataPath = QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
+#else
+                QStringList desktopPaths = QStandardPaths::standardLocations(QStandardPaths::DesktopLocation);
+                if (desktopPaths.size())
+                {
+                    dataPath = desktopPaths.at(0);
+                }
+                else
+                {
+                    dataPath = Utilities::getDefaultBasePath();
+                }
+#endif
                 filePath = dataPath + QDir::separator() + QString::fromAscii("MEGAsync.log");
             }
 
             QFile file(filePath);
-            file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text);
-            QTextStream out(&file);
-            out.setCodec("UTF-8");
-            out << QString::fromUtf8(oss.str().c_str()) << endl;
+            if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
+            {
+                QTextStream out(&file);
+                out.setCodec("UTF-8");
+                out << QString::fromUtf8(oss.str().c_str()) << endl;
+            }
         }
     }
 }
