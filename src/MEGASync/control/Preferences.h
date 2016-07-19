@@ -28,7 +28,7 @@ public:
     //NOT thread-safe. Must be called before creating threads.
     static Preferences *instance();
 
-    void initialize();
+    void initialize(QString dataPath);
 
     //Thread safe functions
     bool logged();
@@ -219,6 +219,7 @@ public:
     void disableOverlayIcons(bool value);
     bool error();
 
+    QString getDataPath();
     void clearTemporalBandwidth();
     void clearAll();
     void sync();
@@ -305,6 +306,7 @@ protected:
     long long tempBandwidth;
     int tempBandwidthInterval;
     bool isTempBandwidthValid;
+    QString dataPath;
 
     static const QString currentAccountKey;
     static const QString syncsGroupKey;

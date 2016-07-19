@@ -70,23 +70,7 @@ void FolderBinder::on_bLocalFolder_clicked()
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Default path: %1").arg(defaultPath).toUtf8().constData());
     if (!defaultPath.size())
     {
-#ifdef WIN32
-    #if QT_VERSION < 0x050000
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-    #else
-        defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-    #endif
-#else
-    #if QT_VERSION < 0x050000
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Getting home path (QT4)");
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Result: %1").arg(defaultPath).toUtf8().constData());
-    #else
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Getting home path (QT5)");
-        defaultPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Result: %1").arg(defaultPath).toUtf8().constData());
-    #endif
-#endif
+        defaultPath = Utilities::getDefaultBasePath();
     }
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Opening folder selector in: %1").arg(defaultPath).toUtf8().constData());

@@ -371,20 +371,7 @@ void SetupWizard::on_bNext_clicked()
     }
     else if (w == ui->pSetupType)
     {
-        #ifdef WIN32
-            #if QT_VERSION < 0x050000
-                QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-            #else
-                QString defaultFolderPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-            #endif
-        #else
-            #if QT_VERSION < 0x050000
-                QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-            #else
-                QString defaultFolderPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
-            #endif
-        #endif
-
+        QString defaultFolderPath = Utilities::getDefaultBasePath();
         if (ui->rAdvancedSetup->isChecked())
         {
             defaultFolderPath.append(QString::fromUtf8("/MEGAsync"));
@@ -564,19 +551,7 @@ void SetupWizard::on_bLocalFolder_clicked()
     QString defaultPath = ui->eLocalFolder->text().trimmed();
     if (!defaultPath.size())
     {
-        #ifdef WIN32
-            #if QT_VERSION < 0x050000
-                defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-            #else
-                defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-            #endif
-        #else
-            #if QT_VERSION < 0x050000
-                defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-            #else
-                defaultPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
-            #endif
-        #endif
+        defaultPath = Utilities::getDefaultBasePath();
     }
 
 #ifndef _WIN32

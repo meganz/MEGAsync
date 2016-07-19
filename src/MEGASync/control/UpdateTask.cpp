@@ -56,11 +56,7 @@ void UpdateTask::startUpdateThread()
     connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 
     //Set the working directory
-#if QT_VERSION < 0x050000
-    basePath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
-#else
-    basePath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
-#endif
+    basePath = preferences->getDataPath();
 
 #ifdef __APPLE__
     appFolder.cdUp();

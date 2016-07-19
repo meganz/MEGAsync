@@ -3,6 +3,7 @@
 #include "gui/ImportListWidgetItem.h"
 #include "gui/NodeSelector.h"
 #include "gui/MultiQFileDialog.h"
+#include "Utilities.h"
 
 #include <QDesktopServices>
 #include <QDir>
@@ -50,20 +51,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
     QFileInfo test(downloadFolder);
     if (!test.isDir())
     {
-#ifdef WIN32
-    #if QT_VERSION < 0x050000
-        QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + QString::fromUtf8("/MEGAsync Downloads"));
-    #else
-        QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + QString::fromUtf8("/MEGAsync Downloads"));
-    #endif
-#else
-    #if QT_VERSION < 0x050000
-        QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + QString::fromUtf8("/MEGAsync Downloads"));
-    #else
-        QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + QString::fromUtf8("/MEGAsync Downloads"));
-    #endif
-#endif
-
+        QDir defaultFolder(Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGAsync Downloads"));
         defaultFolder.mkpath(QString::fromAscii("."));
         defaultFolderPath = defaultFolder.absolutePath();
         defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
@@ -244,19 +232,7 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
     QString defaultPath = ui->eLocalFolder->text().trimmed();
     if (!defaultPath.size())
     {
-#ifdef WIN32
-    #if QT_VERSION < 0x050000
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-    #else
-        defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-    #endif
-#else
-    #if QT_VERSION < 0x050000
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-    #else
-        defaultPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
-    #endif
-#endif
+        defaultPath = Utilities::getDefaultBasePath();
     }
 
 #ifndef _WIN32
