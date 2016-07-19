@@ -557,6 +557,11 @@ void SetupWizard::on_bLocalFolder_clicked()
     defaultPath = QDir::toNativeSeparators(defaultPath);
 
 #ifndef _WIN32
+    if (defaultPath.isEmpty())
+    {
+        defaultPath = QString::fromUtf8("/");
+    }
+
     QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
     dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     dialog->setFileMode(QFileDialog::DirectoryOnly);

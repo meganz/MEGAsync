@@ -77,6 +77,11 @@ void FolderBinder::on_bLocalFolder_clicked()
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Opening folder selector in: %1").arg(defaultPath).toUtf8().constData());
 #ifndef _WIN32
+    if (defaultPath.isEmpty())
+    {
+        defaultPath = QString::fromUtf8("/");
+    }
+
     QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
     dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     dialog->setFileMode(QFileDialog::DirectoryOnly);

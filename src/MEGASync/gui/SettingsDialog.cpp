@@ -1520,6 +1520,13 @@ void SettingsDialog::on_bUnlink_clicked()
 void SettingsDialog::on_bExportMasterKey_clicked()
 {
     QString defaultPath = QDir::toNativeSeparators(Utilities::getDefaultBasePath());
+#ifndef _WIN32
+    if (defaultPath.isEmpty())
+    {
+        defaultPath = QString::fromUtf8("/");
+    }
+#endif
+
     QDir dir(defaultPath);
     QString fileName = QFileDialog::getSaveFileName(0,
              tr("Export Master key"), dir.filePath(QString::fromUtf8("MEGA-RECOVERYKEY")),
