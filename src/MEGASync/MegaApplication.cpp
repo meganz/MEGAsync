@@ -373,6 +373,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
         dataPath = QDir::currentPath();
     }
 
+    dataPath = QDir::toNativeSeparators(dataPath);
     QDir currentDir(dataPath);
     if (!currentDir.exists())
     {
