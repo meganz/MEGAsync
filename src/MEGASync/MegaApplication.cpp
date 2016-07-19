@@ -2837,6 +2837,7 @@ void MegaApplication::streamActionClicked()
 
     if (streamSelector)
     {
+        streamSelector->showNormal();
         streamSelector->activateWindow();
         streamSelector->raise();
         return;
