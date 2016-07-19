@@ -15,6 +15,7 @@ DownloadFromMegaDialog::DownloadFromMegaDialog(QString defaultPath, QWidget *par
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     QString defaultDownloadPath;
 

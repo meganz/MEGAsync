@@ -2,13 +2,17 @@
 #include <Shlobj.h>
 #include <Shlwapi.h>
 
-WinShellDispatcherTask* WindowsPlatform::shellDispatcherTask = NULL;
+#if QT_VERSION >= 0x050700
+#include <QtPlatformHeaders/QWindowsWindowFunctions>
+#endif
 
+WinShellDispatcherTask* WindowsPlatform::shellDispatcherTask = NULL;
 
 void WindowsPlatform::initialize(int argc, char *argv[])
 {
-
-
+#if QT_VERSION >= 0x050700
+    QWindowsWindowFunctions::setWindowActivationBehavior(QWindowsWindowFunctions::AlwaysActivateWindow);
+#endif
 }
 
 bool WindowsPlatform::enableTrayIcon(QString executable)

@@ -6,6 +6,8 @@ CrashReportDialog::CrashReportDialog(QString crash, QWidget *parent) :
     ui(new Ui::CrashReportDialog)
 {
     ui->setupUi(this);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
     ui->tCrash->setText(crash);
     ui->bOK->setDefault(true);
 }

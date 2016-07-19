@@ -14,6 +14,7 @@ PasteMegaLinksDialog::PasteMegaLinksDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     const QClipboard *clipboard = QApplication::clipboard();
     QString text = clipboard->text();
