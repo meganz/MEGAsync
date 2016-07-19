@@ -56,6 +56,7 @@ void UpdateTask::startUpdateThread()
     connect(timeoutTimer, SIGNAL(timeout()), this, SLOT(onTimeout()));
 
     //Set the working directory
+    preferences = Preferences::instance();
     basePath = preferences->getDataPath();
 
 #ifdef __APPLE__
@@ -69,7 +70,6 @@ void UpdateTask::startUpdateThread()
     connect(m_WebCtrl, SIGNAL(proxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)), this, SLOT(onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)));
 
     signatureChecker = new MegaHashSignature((const char *)Preferences::UPDATE_PUBLIC_KEY);
-    preferences = Preferences::instance();
 
     updateTimer->start(Preferences::UPDATE_RETRY_INTERVAL_SECS*1000);
     QTimer::singleShot(Preferences::UPDATE_INITIAL_DELAY_SECS*1000, this, SLOT(tryUpdate()));
