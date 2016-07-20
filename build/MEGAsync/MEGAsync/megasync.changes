@@ -1,3 +1,11 @@
+Wed Jul 20 18:19:17 CEST 2016 - linux@mega.co.nz
+- Update to version 2.9.8:
+  * More efficient upload completio
+  * Creation of new cryptographic keys
+  * Upgrade to QT5 and VS2015 (Windows)
+  * Bug fixes
+
+-------------------------------------------------------------------
 Tue May 31 12:05:33 CEST 2016 - linux@mega.co.nz
 - Update to version 2.9.5:
   * Save the state and resume transfers
