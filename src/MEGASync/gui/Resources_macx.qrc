@@ -455,5 +455,45 @@
         <file>images/speed_meter@2x.png</file>
         <file>images/unlimited_file_size.png</file>
         <file>images/unlimited_file_size@2x.png</file>
+        <file>images/add_ico.png</file>
+        <file>images/add_ico@2x.png</file>
+        <file>images/clear_ico.png</file>
+        <file>images/clear_ico@2x.png</file>
+        <file>images/clear_item_ico.png</file>
+        <file>images/clear_item_ico@2x.png</file>
+        <file>images/cloud_download_item_ico.png</file>
+        <file>images/cloud_download_item_ico@2x.png</file>
+        <file>images/cloud_item_ico.png</file>
+        <file>images/cloud_item_ico@2x.png</file>
+        <file>images/cloud_upload_item_ico.png</file>
+        <file>images/cloud_upload_item_ico@2x.png</file>
+        <file>images/download_from_mega_ico.png</file>
+        <file>images/download_from_mega_ico@2x.png</file>
+        <file>images/download_item_ico.png</file>
+        <file>images/download_item_ico@2x.png</file>
+        <file>images/get_link_ico.png</file>
+        <file>images/get_link_ico@2x.png</file>
+        <file>images/megasync_logo.png</file>
+        <file>images/megasync_logo@2x.png</file>
+        <file>images/no_downloads.png</file>
+        <file>images/no_downloads@2x.png</file>
+        <file>images/no_transfers.png</file>
+        <file>images/no_transfers@2x.png</file>
+        <file>images/no_uploads.png</file>
+        <file>images/no_uploads@2x.png</file>
+        <file>images/pause_ico.png</file>
+        <file>images/pause_ico@2x.png</file>
+        <file>images/paused_transfers.png</file>
+        <file>images/paused_transfers@2x.png</file>
+        <file>images/play_ico.png</file>
+        <file>images/play_ico@2x.png</file>
+        <file>images/settings_ico.png</file>
+        <file>images/settings_ico@2x.png</file>
+        <file>images/sync_item_ico.png</file>
+        <file>images/sync_item_ico@2x.png</file>
+        <file>images/upload_item_ico.png</file>
+        <file>images/upload_item_ico@2x.png</file>
+        <file>images/upload_to_mega_ico.png</file>
+        <file>images/upload_to_mega_ico@2x.png</file>
     </qresource>
 </RCC>
