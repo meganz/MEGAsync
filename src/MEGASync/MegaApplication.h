@@ -117,6 +117,7 @@ public slots:
     void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
     void streamActionClicked();
+    void transferManagerActionClicked();
     void logoutActionClicked();
     void processDownloads();
     void processUploads();
@@ -199,6 +200,7 @@ protected:
     QAction *uploadAction;
     QAction *downloadAction;
     QAction *streamAction;
+    QAction *transferManagerAction;
 
     QAction *updateAction;
     QAction *showStatusAction;

@@ -421,6 +421,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     uploadAction = NULL;
     downloadAction = NULL;
     streamAction = NULL;
+    transferManagerAction = NULL;
     loginActionGuest = NULL;
     waiting = false;
     updated = false;
@@ -1087,31 +1088,6 @@ void MegaApplication::loggedIn()
         infoWizard->deleteLater();
         infoWizard = NULL;
     }
-
-    if (transferManager)
-    {
-        transferManager->setVisible(true);
-        #ifdef WIN32
-            transferManager->showMinimized();
-            transferManager->setWindowState(Qt::WindowActive);
-            transferManager->showNormal();
-        #endif
-        transferManager->raise();
-        transferManager->activateWindow();
-        transferManager->setFocus();
-        return;
-    }
-
-    transferManager = new TransferManager(megaApi);
-#ifdef WIN32
-    transferManager->showMinimized();
-    transferManager->setWindowState(Qt::WindowActive);
-    transferManager->showNormal();
-#endif
-    transferManager->raise();
-    transferManager->activateWindow();
-    transferManager->setFocus();
-    transferManager->show();
 
     pauseTransfers(paused);
     megaApi->getAccountDetails();
@@ -2892,6 +2868,25 @@ void MegaApplication::streamActionClicked()
     streamSelector->show();
 }
 
+void MegaApplication::transferManagerActionClicked()
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    if (transferManager)
+    {
+        transferManager->showNormal();
+        transferManager->activateWindow();
+        transferManager->raise();
+        return;
+    }
+
+    transferManager = new TransferManager(megaApi);
+    transferManager->show();
+}
+
 void MegaApplication::loginActionClicked()
 {
     if (appfinished)
@@ -3920,6 +3915,15 @@ void MegaApplication::createTrayMenu()
     streamAction = new QAction(tr("Stream from MEGA"), this);
     connect(streamAction, SIGNAL(triggered()), this, SLOT(streamActionClicked()));
 
+    if (transferManagerAction)
+    {
+        transferManagerAction->deleteLater();
+        transferManagerAction = NULL;
+    }
+
+    transferManagerAction = new QAction(tr("Transfer manager"), this);
+    connect(transferManagerAction, SIGNAL(triggered()), this, SLOT(transferManagerActionClicked()));
+
     if (updateAction)
     {
         updateAction->deleteLater();
@@ -3946,6 +3950,7 @@ void MegaApplication::createTrayMenu()
     trayMenu->addAction(uploadAction);
     trayMenu->addAction(downloadAction);
     trayMenu->addAction(streamAction);
+    trayMenu->addAction(transferManagerAction);
     trayMenu->addAction(settingsAction);
     trayMenu->addSeparator();
     trayMenu->addAction(exitAction);
