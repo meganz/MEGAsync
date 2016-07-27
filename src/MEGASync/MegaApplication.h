@@ -142,7 +142,7 @@ public slots:
     void checkNetworkInterfaces();
     void periodicTasks();
     void cleanAll();
-    void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
+    void onDupplicateLink(QString name, mega::MegaHandle handle);
     void onDupplicateTransfer(QString localPath, QString name, mega::MegaHandle handle, QString nodeKey = QString());
     void onInstallUpdateClicked();
     void showInfoDialog();
@@ -229,6 +229,7 @@ protected:
     InfoOverQuotaDialog *infoOverQuota;
     Preferences *preferences;
     mega::MegaApi *megaApi;
+    mega::MegaApi *megaApiFolders;
     HTTPServer *httpServer;
     UploadToMegaDialog *uploadFolderSelector;
     DownloadFromMegaDialog *downloadFolderSelector;
