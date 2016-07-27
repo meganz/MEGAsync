@@ -30,17 +30,24 @@ PasteMegaLinksDialog::~PasteMegaLinksDialog()
     delete ui;
 }
 
-QStringList PasteMegaLinksDialog::getLinks()
+QStringList PasteMegaLinksDialog::getFileLinks()
 {
-    return links;
+    return fileLinks;
+}
+
+QStringList PasteMegaLinksDialog::getFolderLinks()
+{
+    return folderLinks;
 }
 
 void PasteMegaLinksDialog::on_bSubmit_clicked()
 {
     QString text = ui->eLinks->toPlainText();
-    links = extractLinks(text);
-    links = links.toSet().toList();
-    if (links.size() == 0)
+    fileLinks = extractLinks(text, ONLY_FILE_LINKS);
+    fileLinks = fileLinks.toSet().toList();
+    folderLinks = extractLinks(text, ONLY_FOLDER_LINKS);
+    folderLinks = folderLinks.toSet().toList();
+    if (fileLinks.size() == 0 && folderLinks.size() == 0)
     {
         if (!text.trimmed().size())
         {
@@ -48,7 +55,7 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
         }
         else
         {
-            QMessageBox::warning(this, tr("Warning"), tr("No valid MEGA links found. (Folder links aren't yet supported)"));
+            QMessageBox::warning(this, tr("Warning"), tr("Invalid MEGA Link"));
         }
         return;
     }
@@ -66,21 +73,35 @@ void PasteMegaLinksDialog::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
-QStringList PasteMegaLinksDialog::extractLinks(QString text)
+QStringList PasteMegaLinksDialog::extractLinks(QString text, int extraction)
 {
-    QStringList tempLinks = text.split(QString::fromAscii("https://mega.co.nz/#!"), QString::KeepEmptyParts, Qt::CaseInsensitive);
+    QString linkHeader;
+    switch (extraction)
+    {
+        case ONLY_FILE_LINKS:
+            linkHeader = QString::fromUtf8("#!");
+            break;
+        case ONLY_FOLDER_LINKS:
+            linkHeader = QString::fromUtf8("#F!");
+            break;
+        default:
+            linkHeader = QString::fromUtf8("#!");
+            break;
+    }
+
+    QStringList tempLinks = text.split(QString::fromAscii("https://mega.co.nz/").append(linkHeader), QString::KeepEmptyParts, Qt::CaseInsensitive);
     tempLinks.removeAt(0);
-    QStringList tempLinks2 = text.split(QString::fromAscii("mega://#!"), QString::KeepEmptyParts, Qt::CaseInsensitive);
+    QStringList tempLinks2 = text.split(QString::fromAscii("mega://").append(linkHeader), QString::KeepEmptyParts, Qt::CaseInsensitive);
     tempLinks2.removeAt(0);
     tempLinks.append(tempLinks2);
-    QStringList tempLinksNewSite = text.split(QString::fromAscii("https://mega.nz/#!"), QString::KeepEmptyParts, Qt::CaseInsensitive);
+    QStringList tempLinksNewSite = text.split(QString::fromAscii("https://mega.nz/").append(linkHeader), QString::KeepEmptyParts, Qt::CaseInsensitive);
     tempLinksNewSite.removeAt(0);
     tempLinks.append(tempLinksNewSite);
 
     QStringList finalLinks;
     for (int i = 0; i < tempLinks.size(); i++)
     {
-        QString link = checkLink(tempLinks[i].insert(0, QString::fromAscii("https://mega.nz/#!")));
+        QString link = checkLink(tempLinks[i].insert(0, QString::fromAscii("https://mega.nz/").append(linkHeader)));
         if (!link.isNull())
         {
             finalLinks.append(link);
@@ -95,15 +116,27 @@ QString PasteMegaLinksDialog::checkLink(QString link)
     link = QUrl::fromPercentEncoding(link.toUtf8());
     link.replace(QChar::fromAscii(' '), QChar::fromAscii('+'));
 
-    if (link.length() < 70)
+    // File link
+    if (link.at(26) == QLatin1Char('!'))
     {
-        return QString();
+        if (link.length() < FILE_LINK_SIZE)
+        {
+            return QString();
+        }
+
+        link.truncate(FILE_LINK_SIZE);
+        return link;
     }
 
-    link.truncate(73);
-    QByteArray data = link.toUtf8();
-    if (data.constData()[26] == '!')
+    // Folder link
+    if (link.at(27) == QLatin1Char('!'))
     {
+        if (link.length() < FOLDER_LINK_SIZE)
+        {
+            return QString();
+        }
+
+        link.truncate(FOLDER_LINK_SIZE);
         return link;
     }
 

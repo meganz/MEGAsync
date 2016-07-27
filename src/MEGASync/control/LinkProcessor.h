@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QStringList>
+#include <QQueue>
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
 
@@ -11,9 +12,7 @@ class LinkProcessor: public QObject, public mega::MegaRequestListener
     Q_OBJECT
 
 public:
-    // If you want to manage public transfers in a different MegaApi object,
-    // provide megaApiGuest
-    LinkProcessor(QStringList linkList, mega::MegaApi *megaApi, mega::MegaApi *megaApiGuest = NULL);
+    LinkProcessor(QStringList fileList, QStringList folderList, mega::MegaApi *megaApi, mega::MegaApi *megaApiFolders);
     virtual ~LinkProcessor();
 
     QString getLink(int id);
@@ -36,8 +35,9 @@ public:
 
 protected:
     mega::MegaApi *megaApi;
-    mega::MegaApi *megaApiGuest;
-    QStringList linkList;
+    mega::MegaApi *megaApiFolders;
+    QQueue<QString> linkList;
+
     QList<bool> linkSelected;
     QList<mega::MegaNode *> linkNode;
     QList<int> linkError;
@@ -45,6 +45,8 @@ protected:
     int remainingNodes;
     int importSuccess;
     int importFailed;
+    int numLinks;
+    bool processingFolderLink;
     mega::MegaHandle importParentFolder;
     mega::QTMegaRequestListener *delegateListener;
 
@@ -52,7 +54,7 @@ signals:
     void onLinkInfoAvailable(int i);
     void onLinkInfoRequestFinish();
     void onLinkImportFinish();
-    void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
+    void onDupplicateLink(QString name, mega::MegaHandle handle);
     void dupplicateDownload(QString localPath, QString name, mega::MegaHandle handle, QString nodeKey);
 
 public slots:
