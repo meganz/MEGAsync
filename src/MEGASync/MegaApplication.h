@@ -96,10 +96,6 @@ public:
     void showTrayMenu(QPoint *point = NULL);
     void toggleLogging();
 
-#if (QT_VERSION == 0x050500) && defined(_WIN32)
-    bool eventFilter(QObject *o, QEvent * ev);
-#endif
-
 signals:
     void startUpdaterThread();
     void tryUpdate();
@@ -242,6 +238,7 @@ protected:
     long long uploadSpeed, downloadSpeed;
     long long lastStartedDownload;
     long long lastStartedUpload;
+    long long queuedUserStats;
     int exportOps;
     int syncState;
     mega::MegaPricing *pricing;
@@ -249,7 +246,6 @@ protected:
     UpgradeDialog *bwOverquotaDialog;
     bool bwOverquotaEvent;
     InfoWizard *infoWizard;
-    bool infoWizardEvent;
     mega::QTMegaListener *delegateListener;
     QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;

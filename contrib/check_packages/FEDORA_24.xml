@@ -1,6 +1,6 @@
-<domain type='kvm' id='27'>
-  <name>FEDORA_24_Alpha</name>
-  <uuid>4e0471df-b6b1-4523-80f0-8a66e8ec11e6</uuid>
+<domain type='kvm' id='31'>
+  <name>FEDORA_24</name>
+  <uuid>b77bebdf-7af3-45a6-9ff8-5da9b19104be</uuid>
   <memory unit='KiB'>4120576</memory>
   <currentMemory unit='KiB'>4120576</currentMemory>
   <vcpu placement='static'>2</vcpu>
@@ -35,7 +35,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2'/>
-      <source file='/mnt/DATA/VM/vm1-19.qcow2'/>
+      <source file='/mnt/DATA/VM/vm1-26.qcow2'/>
       <backingStore/>
       <target dev='hda' bus='ide'/>
       <alias name='ide0-0-0'/>
@@ -80,20 +80,20 @@
       <address type='pci' domain='0x0000' bus='0x00' slot='0x06' function='0x0'/>
     </controller>
     <interface type='network'>
-      <mac address='52:54:00:f3:0b:24'/>
+      <mac address='52:54:00:4f:14:81'/>
       <source network='default'/>
-      <target dev='vnet0'/>
+      <target dev='vnet1'/>
       <model type='rtl8139'/>
       <alias name='net0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
     </interface>
     <serial type='pty'>
-      <source path='/dev/pts/11'/>
+      <source path='/dev/pts/13'/>
       <target port='0'/>
       <alias name='serial0'/>
     </serial>
-    <console type='pty' tty='/dev/pts/11'>
-      <source path='/dev/pts/11'/>
+    <console type='pty' tty='/dev/pts/13'>
+      <source path='/dev/pts/13'/>
       <target type='serial' port='0'/>
       <alias name='serial0'/>
     </console>
@@ -104,7 +104,7 @@
     </channel>
     <input type='mouse' bus='ps2'/>
     <input type='keyboard' bus='ps2'/>
-    <graphics type='spice' port='5900' autoport='yes' listen='127.0.0.1'>
+    <graphics type='spice' port='5902' autoport='yes' listen='127.0.0.1'>
       <listen type='address' address='127.0.0.1'/>
     </graphics>
     <sound model='ich6'>

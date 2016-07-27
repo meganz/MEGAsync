@@ -91,6 +91,7 @@ TRANSLATIONS = \
     gui/translations/MEGASyncStrings_sl.ts \
     gui/translations/MEGASyncStrings_sr.ts \
     gui/translations/MEGASyncStrings_sv.ts \
+    gui/translations/MEGASyncStrings_th.ts \
     gui/translations/MEGASyncStrings_tl.ts \
     gui/translations/MEGASyncStrings_tr.ts \
     gui/translations/MEGASyncStrings_uk.ts \
@@ -103,6 +104,9 @@ CODECFORTR = UTF8
 win32 {
     RC_FILE = icon.rc
     QMAKE_LFLAGS += /LARGEADDRESSAWARE
+    QMAKE_LFLAGS_WINDOWS += /SUBSYSTEM:WINDOWS,5.01
+    QMAKE_LFLAGS_CONSOLE += /SUBSYSTEM:CONSOLE,5.01
+    DEFINES += PSAPI_VERSION=1
 }
 
 

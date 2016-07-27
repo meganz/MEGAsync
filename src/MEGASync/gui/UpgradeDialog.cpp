@@ -74,7 +74,7 @@ void UpgradeDialog::setPricing(MegaPricing *pricing)
 void UpgradeDialog::refreshAccountDetails()
 {
     Preferences *preferences = Preferences::instance();
-    if (preferences->temporalBandwidth())
+    if (preferences->isTemporalBandwidthValid() && preferences->temporalBandwidth())
     {
         QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
         ui->lDescRecommendation->setText(tr("You have utilized %1 of data transfer in the last 6 hours, "

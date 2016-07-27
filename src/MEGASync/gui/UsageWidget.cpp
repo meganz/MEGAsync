@@ -160,7 +160,7 @@ void UsageWidget::paintEvent(QPaintEvent *)
     painter.setPen(QPen(QColor("#333333")));
     font.setWeight(QFont::Bold);
     painter.setFont(font);
-    painter.drawText(QRectF(196, -35, 78, 20),Qt::AlignRight,QString::fromUtf8("%1").arg(cloudLabel));
+    painter.drawText(QRectF(210, -35, 78, 20),Qt::AlignRight,QString::fromUtf8("%1").arg(cloudLabel));
 
     painter.setPen(QPen(QColor(GREEN)));
     painter.setBrush(QBrush(QColor(GREEN)));
@@ -172,7 +172,7 @@ void UsageWidget::paintEvent(QPaintEvent *)
     painter.setPen(QPen(QColor("#333333")));
     font.setWeight(QFont::Bold);
     painter.setFont(font);
-    painter.drawText(QRectF(196, -8, 78, 20),Qt::AlignRight,QString::fromUtf8("%1").arg(rubbishLabel));
+    painter.drawText(QRectF(210, -8, 78, 20),Qt::AlignRight,QString::fromUtf8("%1").arg(rubbishLabel));
 
     painter.setPen(QPen(QColor(YELLOW)));
     painter.setBrush(QBrush(QColor(YELLOW)));
@@ -184,41 +184,41 @@ void UsageWidget::paintEvent(QPaintEvent *)
     painter.setPen(QPen(QColor("#333333")));
     font.setWeight(QFont::Bold);
     painter.setFont(font);
-    painter.drawText(QRectF(196, 20, 78, 20),Qt::AlignRight,QString::fromUtf8("%1").arg(inShareLabel));
+    painter.drawText(QRectF(210, 20, 78, 20),Qt::AlignRight,QString::fromUtf8("%1").arg(inShareLabel));
 
     painter.setPen(QPen(QColor(ORANGE)));
     painter.setBrush(QBrush(QColor(ORANGE)));
-    painter.drawEllipse(QRectF(303, -35, 12, 12));
+    painter.drawEllipse(QRectF(313, -35, 12, 12));
     painter.setPen(QPen(QColor("#666666")));
     font.setWeight(QFont::Normal);
     painter.setFont(font);
-    painter.drawText(QRectF(323, -35, 130, 20),Qt::AlignLeft,tr("Inbox"));
+    painter.drawText(QRectF(333, -35, 130, 20),Qt::AlignLeft,tr("Inbox"));
     painter.setPen(QPen(QColor("#333333")));
     font.setWeight(QFont::Bold);
     painter.setFont(font);
-    painter.drawText(QRectF(430, -35, 78, 20),Qt::AlignRight,QString::fromUtf8("%1").arg(inboxLabel));
+    painter.drawText(QRectF(450, -35, 78, 20),Qt::AlignRight,QString::fromUtf8("%1").arg(inboxLabel));
 
     painter.setPen(QPen(QColor(GREY)));
     painter.setBrush(QBrush(QColor(GREY)));
-    painter.drawEllipse(QRectF(303, -8, 12, 12));
+    painter.drawEllipse(QRectF(313, -8, 12, 12));
     painter.setPen(QPen(QColor("#666666")));
     font.setWeight(QFont::Normal);
     painter.setFont(font);
-    painter.drawText(QRectF(323, -8, 130,20),Qt::AlignLeft,tr("Used"));
+    painter.drawText(QRectF(333, -8, 130,20),Qt::AlignLeft,tr("Used"));
     painter.setPen(QPen(QColor("#333333")));
     font.setWeight(QFont::Bold);
     painter.setFont(font);
-    painter.drawText(QRectF(430, -8, 78, 20),Qt::AlignRight,QString::fromUtf8("%1").arg(usedLabel));
+    painter.drawText(QRectF(450, -8, 78, 20),Qt::AlignRight,QString::fromUtf8("%1").arg(usedLabel));
 
     painter.setPen(QPen(QColor(0, 0, 0, 50), 2));
     painter.setBrush(QBrush(Qt::NoBrush));
-    painter.drawEllipse(QRectF(303, 20, 12, 12));
+    painter.drawEllipse(QRectF(313, 20, 12, 12));
     painter.setPen(QPen(QColor("#666666")));
     font.setWeight(QFont::Normal);
     painter.setFont(font);
-    painter.drawText(QRectF(323, 20, 130, 20),Qt::AlignLeft,tr("Available"));
+    painter.drawText(QRectF(333, 20, 130, 20),Qt::AlignLeft,tr("Available"));
     painter.setPen(QPen(QColor("#333333")));
     font.setWeight(QFont::Bold);
     painter.setFont(font);
-    painter.drawText(QRectF(370, 20, 138, 20),Qt::AlignRight,QString::fromUtf8("%1").arg(availableLabel));
+    painter.drawText(QRectF(390, 20, 138, 20),Qt::AlignRight,QString::fromUtf8("%1").arg(availableLabel));
 }

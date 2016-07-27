@@ -7,7 +7,7 @@ Unicode true
 #!define BUILD_X64_VERSION
 #!define BUILD_WITH_LOGGER
 #!define ENABLE_DEBUG_MESSAGES
-#!define ENABLE_QT5
+!define ENABLE_QT5
 
 !macro DEBUG_MSG message
 !ifdef ENABLE_DEBUG_MESSAGES
@@ -25,10 +25,10 @@ VIAddVersionKey "LegalCopyright" "MEGA Limited 2016"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 ; Version info
-VIProductVersion "2.9.6.0"
-VIAddVersionKey "FileVersion" "2.9.6.0"
-VIAddVersionKey "ProductVersion" "2.9.6.0"
-!define PRODUCT_VERSION "2.9.6"
+VIProductVersion "2.9.8.0"
+VIAddVersionKey "FileVersion" "2.9.8.0"
+VIAddVersionKey "ProductVersion" "2.9.8.0"
+!define PRODUCT_VERSION "2.9.8"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.nz"
@@ -48,7 +48,7 @@ VIAddVersionKey "ProductVersion" "2.9.6.0"
 !ifndef ENABLE_QT5
 !define QT_PATH "C:\Qt\4.8.6.0\"
 !else
-!define QT_PATH "C:\Qt\Qt5.5.0\5.5\msvc2010"
+!define QT_PATH "C:\Qt\Qt5.7.0\5.7\msvc2015"
 !endif
 !endif
 
@@ -316,9 +316,9 @@ modeselected:
   ;SetRebootFlag true
   SetOverwrite try
 
-  ;VC++2010 Redistributable x32
   SetOutPath "$INSTDIR"
   
+  !ifndef ENABLE_QT5
   !insertmacro DEBUG_MSG "Looking for MSVC++ Redistributable 2010 SP1 (x86)"
   
   ;VC++ 2010 SP1 x86
@@ -414,6 +414,188 @@ modeselected:
         !insertmacro DEBUG_MSG "MSVC++ Redistributable (x64) is installed"
         SetRegView 32
   ${EndIf}
+!else
+  File "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\vcruntime140.dll"
+  AccessControl::SetFileOwner "$INSTDIR\vcruntime140.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\vcruntime140.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\msvcp140.dll"
+  AccessControl::SetFileOwner "$INSTDIR\msvcp140.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\msvcp140.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\concrt140.dll"
+  AccessControl::SetFileOwner "$INSTDIR\concrt140.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\concrt140.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\redist\x86\Microsoft.VC140.CRT\vccorlib140.dll"
+  AccessControl::SetFileOwner "$INSTDIR\vccorlib140.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\vccorlib140.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\ucrtbase.dll"
+  AccessControl::SetFileOwner "$INSTDIR\ucrtbase.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\ucrtbase.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-utility-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite" 
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-time-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-string-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-string-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-string-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-stdio-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-stdio-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-stdio-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-runtime-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-runtime-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-runtime-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-process-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-process-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-process-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-private-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-private-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-private-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-multibyte-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-multibyte-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-multibyte-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-math-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-math-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-math-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-locale-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-locale-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-locale-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-heap-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-heap-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-heap-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-filesystem-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-filesystem-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-filesystem-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-environment-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-environment-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-environment-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-convert-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-convert-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-convert-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-crt-conio-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-crt-conio-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-crt-conio-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-util-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-util-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-util-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-timezone-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-timezone-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-timezone-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-sysinfo-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-sysinfo-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-sysinfo-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-synch-l1-2-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-synch-l1-2-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-synch-l1-2-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-synch-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-synch-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-synch-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-string-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-string-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-string-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-rtlsupport-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-rtlsupport-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-rtlsupport-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-profile-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-profile-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-profile-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+  
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-processthreads-l1-1-1.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-processthreads-l1-1-1.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-processthreads-l1-1-1.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-processthreads-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-processthreads-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-processthreads-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-processenvironment-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-processenvironment-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-processenvironment-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-namedpipe-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-namedpipe-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-namedpipe-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-memory-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-memory-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-memory-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-localization-l1-2-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-localization-l1-2-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-localization-l1-2-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-libraryloader-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-libraryloader-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-libraryloader-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-interlocked-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-interlocked-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-interlocked-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-heap-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-heap-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-heap-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-handle-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-handle-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-handle-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-file-l2-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-file-l2-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-file-l2-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-file-l1-2-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-file-l1-2-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-file-l1-2-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-file-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-file-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-file-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-errorhandling-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-errorhandling-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-errorhandling-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-debug-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-datetime-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+
+  File "C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86\api-ms-win-core-console-l1-1-0.dll"
+  AccessControl::SetFileOwner "$INSTDIR\api-ms-win-core-console-l1-1-0.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\api-ms-win-core-console-l1-1-0.dll" "$USERNAME" "GenericRead + GenericWrite"  
+!endif
+
 
   !insertmacro DEBUG_MSG "Closing MEGAsync"
   ExecDos::exec /DETAILED /DISABLEFSR "taskkill /f /IM MEGAsync.exe"
@@ -475,17 +657,6 @@ modeselected:
   File "${QT_PATH}\plugins\imageformats\qtiff4.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qtiff4.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qtiff4.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
-  SetOutPath "$INSTDIR\accessible"
-  File "${QT_PATH}\plugins\accessible\qtaccessiblecompatwidgets4.dll"
-  AccessControl::SetFileOwner "$INSTDIR\accessible" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\accessible" "$USERNAME" "GenericRead + GenericWrite"
-  AccessControl::SetFileOwner "$INSTDIR\accessible\qtaccessiblecompatwidgets4.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\accessible\qtaccessiblecompatwidgets4.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\plugins\accessible\qtaccessiblewidgets4.dll"
-  AccessControl::SetFileOwner "$INSTDIR\accessible\qtaccessiblewidgets4.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\accessible\qtaccessiblewidgets4.dll" "$USERNAME" "GenericRead + GenericWrite"
 !else
   ;x86_32 files
   File "${QT_PATH}\bin\Qt5Core.dll"
@@ -516,18 +687,6 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\Qt5Concurrent.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\Qt5Concurrent.dll" "$USERNAME" "GenericRead + GenericWrite"
   
-  File "${QT_PATH}\bin\icudt54.dll"
-  AccessControl::SetFileOwner "$INSTDIR\icudt54.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\icudt54.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
-  File "${QT_PATH}\bin\icuin54.dll"
-  AccessControl::SetFileOwner "$INSTDIR\icuin54.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\icuin54.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
-  File "${QT_PATH}\bin\icuuc54.dll"
-  AccessControl::SetFileOwner "$INSTDIR\icuuc54.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\icuuc54.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
   SetOutPath "$INSTDIR\imageformats"
   File "${QT_PATH}\plugins\imageformats\qdds.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats" "$USERNAME"
@@ -546,18 +705,10 @@ modeselected:
   File "${QT_PATH}\plugins\imageformats\qico.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qico.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qico.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\plugins\imageformats\qjp2.dll"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qjp2.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qjp2.dll" "$USERNAME" "GenericRead + GenericWrite"
   
   File "${QT_PATH}\plugins\imageformats\qjpeg.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qjpeg.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qjpeg.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\plugins\imageformats\qmng.dll"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qmng.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qmng.dll" "$USERNAME" "GenericRead + GenericWrite"
 
   File "${QT_PATH}\plugins\imageformats\qsvg.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qsvg.dll" "$USERNAME"
@@ -637,6 +788,10 @@ modeselected:
   File "${SRCDIR_MEGASYNC}\libuv.dll"
   AccessControl::SetFileOwner "$INSTDIR\libuv.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\libuv.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "${SRCDIR_MEGASYNC}\libsodium.dll"
+  AccessControl::SetFileOwner "$INSTDIR\libsodium.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\libsodium.dll" "$USERNAME" "GenericRead + GenericWrite"
 
 ;!ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
   File "${UNINSTALLER_NAME}"
@@ -844,6 +999,53 @@ Section Uninstall
   Delete "$INSTDIR\platforms\qwindows.dll"
   Delete "$INSTDIR\bearer\qgenericbearer.dll"
   Delete "$INSTDIR\bearer\qnativewifibearer.dll"
+
+  ;VC++ Redistributable
+  Delete "$INSTDIR\vcruntime140.dll"
+  Delete "$INSTDIR\msvcp140.dll"
+  Delete "$INSTDIR\concrt140.dll"
+  Delete "$INSTDIR\vccorlib140.dll"
+  Delete "$INSTDIR\ucrtbase.dll"
+  Delete "$INSTDIR\api-ms-win-crt-utility-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-crt-time-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-crt-string-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-crt-stdio-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-crt-runtime-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-crt-process-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-crt-private-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-crt-multibyte-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-crt-math-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-crt-locale-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-crt-heap-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-crt-filesystem-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-crt-environment-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-crt-convert-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-crt-conio-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-util-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-timezone-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-sysinfo-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-synch-l1-2-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-synch-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-string-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-rtlsupport-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-profile-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-processthreads-l1-1-1.dll"
+  Delete "$INSTDIR\api-ms-win-core-processthreads-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-processenvironment-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-namedpipe-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-memory-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-localization-l1-2-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-libraryloader-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-interlocked-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-heap-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-handle-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-file-l2-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-file-l1-2-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-file-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-errorhandling-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-debug-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-datetime-l1-1-0.dll"
+  Delete "$INSTDIR\api-ms-win-core-console-l1-1-0.dll"
   
   ;Common files
   Delete "$INSTDIR\MEGAsync.exe"
@@ -853,6 +1055,7 @@ Section Uninstall
   Delete "$INSTDIR\libcurl.dll"
   Delete "$INSTDIR\cares.dll"
   Delete "$INSTDIR\libuv.dll"
+  Delete "$INSTDIR\libsodium.dll"
   Delete "$INSTDIR\NSIS.Library.RegTool*.exe"
 
   !define LIBRARY_COM
