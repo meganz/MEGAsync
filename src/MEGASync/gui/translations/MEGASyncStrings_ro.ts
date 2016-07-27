@@ -112,7 +112,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Renunţă</translation>
+        <translation>Anulează</translation>
     </message>
     <message>
         <source>Error</source>
@@ -207,7 +207,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Renunţă</translation>
+        <translation>Anulează</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -245,7 +245,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Renunţă</translation>
+        <translation>Anulează</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -392,7 +392,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Renunţă</translation>
+        <translation>Anulează</translation>
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
@@ -401,7 +401,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>/MEGAsync Imports</source>
         <translatorcomment>Default created folder for imported links at the user Cloud Drive.</translatorcomment>
-        <translation>/MEGAsync Imports</translation>
+        <translation type="obsolete">/MEGAsync Imports</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -1285,7 +1285,7 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">Renunţă</translation>
+        <translation type="unfinished">Anulează</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1328,7 +1328,7 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Renunţă</translation>
+        <translation>Anulează</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -1406,7 +1406,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">Selectează doar un fişier.</translation>
+        <translation type="unfinished">Selectează un singur fişier.</translation>
     </message>
 </context>
 <context>
@@ -1429,7 +1429,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>Renunţă</translation>
+        <translation>Anulează</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1543,7 +1543,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>&amp;Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>&amp;Renunţă</translation>
+        <translation>&amp;Anulează</translation>
     </message>
 </context>
 <context>
@@ -1668,7 +1668,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Renunţă</translation>
+        <translation>Anulează</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -1875,7 +1875,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default path for MEGAsync uploads.</translatorcomment>
-        <translation>/MEGAsync Uploads</translation>
+        <translation type="obsolete">/MEGAsync Uploads</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2089,12 +2089,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Exportă cheia</translation>
+        <translation type="unfinished">Cheie de backup</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Exportă cheia principală</translation>
+        <translation type="unfinished">Cheie de recuperare pentru backup</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2104,12 +2104,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Exportarea cheii principale şi păstrarea ei într-o locaţie sigură îţi permite să setezi o parolă nouă fără pierderea datelor.</translation>
+        <translation type="unfinished">Exportarea cheii de recuperare şi păstrarea ei într-o locaţie sigură îţi dă posibilitatea să setezi o parolă nouă fără pierderi de date.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Păstrează mereu controlul fizic al cheii tale principale (ex. pe un dispozitiv, stocare externă sau printeaz-o).</translation>
+        <translation type="unfinished">Păstrează mereu controlul fizic al cheii tale de recuperare (ex. pe un dispozitiv al clientului, stocare externă sau printeaz-o).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2338,7 +2338,7 @@ when the application starts again</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>Renunţă</translation>
+        <translation>Anulează</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2561,6 +2561,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
         <translation type="unfinished">Puternică</translation>
     </message>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translation type="unfinished">Te rugăm să verifici e-mailul şi să dai clic pe link pentru a confirma contul.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translation type="unfinished">Ai încercat să te autentifici de prea multe ori.[BR]Te rugăm să aştepţi până la %1 şi să încerci din nou.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -2635,7 +2643,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">Renunţă</translation>
+        <translation type="unfinished">Anulează</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2763,11 +2771,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Ai utilizat %1 din transferul de date în ultimele 6 ore care a depăşit limita noastră actuală. Pentru a ocoli această limită, poţi [A]upgrada la Pro[/A] care îţi  va oferi propriul pachet cu bandă de lăţime şi, de asemenea, spaţiu de stocare extra vast.</translation>
+        <translation type="unfinished">Ai utilizat %1 din transferul de date în ultimele 6 ore care a depăşit limita noastră actuală. Pentru a ocoli această limită, poţi [A]upgrada la PRO[/A] care îţi  va oferi propriul pachet cu bandă de lăţime şi, de asemenea, spaţiu de stocare extra vast.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Te rugăm să upgradezi la Pro pentru a continua imediat sau aşteaptă %1 pentru a continua gratuit.</translation>
+        <translation type="unfinished">Te rugăm să upgradezi la PRO pentru a continua imediat sau aşteaptă %1 pentru a continua gratuit.</translation>
     </message>
 </context>
 <context>
@@ -2795,7 +2803,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded. Keep / symbol.</translatorcomment>
-        <translation>/MEGAsync Uploads</translation>
+        <translation type="obsolete">/MEGAsync Uploads</translation>
     </message>
     <message>
         <source>MEGAsync Uploads</source>
@@ -2810,7 +2818,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Renunţă</translation>
+        <translation>Anulează</translation>
     </message>
     <message>
         <source>Choose</source>

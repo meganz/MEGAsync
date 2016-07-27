@@ -401,7 +401,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>/MEGAsync Imports</source>
         <translatorcomment>Default created folder for imported links at the user Cloud Drive.</translatorcomment>
-        <translation>/MEGAsync Imports</translation>
+        <translation type="obsolete">/MEGAsync Imports</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -1875,7 +1875,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default path for MEGAsync uploads.</translatorcomment>
-        <translation>/MEGAsync Uploads</translation>
+        <translation type="obsolete">/MEGAsync Uploads</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2089,12 +2089,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Export Key</translation>
+        <translation type="unfinished">Backup Key</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Export Master Key</translation>
+        <translation type="unfinished">Backup Recovery Key</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2104,12 +2104,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Meng-ekspor Master Key dan menyimpan nya dalam tempat yang aman;  membolehkan anda untuk mengganti password tanpa kehilangan data</translation>
+        <translation type="unfinished">Mengekspor Recovery Key dan menyimpan dalam lokasi yang aman membolehkan anda mengatur password baru tanpa kehilangan data.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Selalu simpan kontrol fisik master key anda (contohnya pada perangkat klien, tempat penyimpanan luar, atau print).</translation>
+        <translation type="unfinished">Selalu simpan kontrol fisik dari Recovery Key anda (contoh: pada perangkat klien, external storage, atau print).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2561,6 +2561,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
         <translation type="unfinished">Kuat</translation>
     </message>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translation type="unfinished">Harap periksa e-mail anda dan klik tautan untuk meng-konfirmasi akun anda.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translation type="unfinished">Anda telah mencoba untuk masuk terlalu banyak.[BR]Harap tunggu sampai %1 dan coba kembali.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -2763,11 +2771,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Anda telah memakai %1 dari data transfer dalam 6 jam terakhir yang mana membuat anda melampaui batas. Untuk menambah batas, anda dapat [A]upgrade ke Pro[/A], yang mana akan memberikan anda paket bandwidth dan juga extra storage yang mencukupi.</translation>
+        <translation type="unfinished">Anda telah memakai %1 dari data transfer dalam 6 jam terakhir yang mana membuat anda melampaui batas. Untuk menambah batas, anda dapat [A]upgrade ke PRO[/A], yang mana akan memberikan anda paket bandwidth dan juga extra storage yang mencukupi.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Harap upgrade ke Pro untuk melanjutkan, atau tunggu %1 untuk melanjutkan dengan gratis.</translation>
+        <translation type="unfinished">Harap upgrade ke PRO untuk melanjutkan, atau tunggu %1 untuk melanjutkan dengan gratis.</translation>
     </message>
 </context>
 <context>
@@ -2795,7 +2803,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded. Keep / symbol.</translatorcomment>
-        <translation>/MEGAsync Uploads</translation>
+        <translation type="obsolete">/MEGAsync Uploads</translation>
     </message>
     <message>
         <source>MEGAsync Uploads</source>

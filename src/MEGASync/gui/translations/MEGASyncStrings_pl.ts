@@ -401,7 +401,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>/MEGAsync Imports</source>
         <translatorcomment>Default created folder for imported links at the user Cloud Drive.</translatorcomment>
-        <translation>/MEGAsync Importy</translation>
+        <translation type="obsolete">/MEGAsync Importy</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -1875,7 +1875,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default path for MEGAsync uploads.</translatorcomment>
-        <translation>/ MEGAsync Pobrania</translation>
+        <translation type="obsolete">/ MEGAsync Pobrania</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1992,7 +1992,7 @@ when the application starts again.</source>
     <message>
         <source>Force a full scan</source>
         <translatorcomment>Button label to let the user force a full scan of his synced folders.</translatorcomment>
-        <translation>Pełny ekran</translation>
+        <translation>Wymuś pełny ekran</translation>
     </message>
     <message>
         <source>Full scan</source>
@@ -2089,12 +2089,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Eksporuj klucz</translation>
+        <translation type="unfinished">Zrób kopię klucza</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Wyeksportuj klucz główny</translation>
+        <translation type="unfinished">Kopia klucza zapasowego</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2104,12 +2104,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Wyeksportowanie klucza głównego i przechowywanie go w bezpiecznym miejscu, umożliwi Ci zmianę hasła w przyszłości bez ryzyka utraty danych.</translation>
+        <translation type="unfinished">Posiadanie Klucza Zapasowego i przechowywanie go w bezpiecznym miejscu, umożliwia później ustawienie nowego hasła bez ryzyka utraty danych.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Zawsze pilnuj bezpieczenstwa klucza głównego (na urządzeniach, dyskach czy wydrukach).</translation>
+        <translation type="unfinished">Zawsze bądź w posiadaniu Klucza Zapasowego (e.g. na  swoim urządzeniu, zewnętrznym dysku lub w wersji drukowanej).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2561,6 +2561,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
         <translation type="unfinished">Silne</translation>
     </message>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translation type="unfinished">Sprawdź pocztę i kliknij w link w celu weryfikacji.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translation type="unfinished">Dokonano za dużo nieprawidłowch logowań.[BR]Odczekaj do %1 i spróbuj ponownie.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -2763,11 +2771,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Zużyłeś już %1  swojego dostępnego transferu w ostatnich 6 godzinach. Aby wyłączyć takie ograniczenia, [A]wybierz konto Pro[/A] które nie ma ograniczeń na przesyłanie danych.</translation>
+        <translation type="unfinished">Zużyłeś już %1  swojego dostępnego transferu w ostatnich 6 godzinach. Aby wyłączyć takie ograniczenia, [A]wybierz konto PRO[/A] które nie ma ograniczeń na przesyłanie danych.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Wybierz konto Pro aby kontynuować teraz, lub poczekaj %1 aby kontynuować w ramach darmowego konta.</translation>
+        <translation type="unfinished">Wybierz konto PRO aby kontynuować teraz, lub poczekaj %1 aby kontynuować w ramach darmowego konta.</translation>
     </message>
 </context>
 <context>
@@ -2795,7 +2803,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded. Keep / symbol.</translatorcomment>
-        <translation>/ MEGAsync Pobrania</translation>
+        <translation type="obsolete">/ MEGAsync Pobrania</translation>
     </message>
     <message>
         <source>MEGAsync Uploads</source>

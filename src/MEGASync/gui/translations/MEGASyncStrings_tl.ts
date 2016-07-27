@@ -401,7 +401,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>/MEGAsync Imports</source>
         <translatorcomment>Default created folder for imported links at the user Cloud Drive.</translatorcomment>
-        <translation>/MEGAsync Imports</translation>
+        <translation type="obsolete">/MEGAsync Imports</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -1148,7 +1148,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Request failed, retrying</source>
         <translatorcomment>Label to show that a request error occurs during a SDK operation.</translatorcomment>
-        <translation>Pumalpak ang hinihiling, sinusubakan muli</translation>
+        <translation>Bigo ang request, sinusubokang muli</translation>
     </message>
     <message>
         <source>Rate limit exceeded</source>
@@ -1875,7 +1875,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default path for MEGAsync uploads.</translatorcomment>
-        <translation>/MEGAsync Uploads</translation>
+        <translation type="obsolete">/MEGAsync Uploads</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2089,12 +2089,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">I-export ang Key</translation>
+        <translation type="unfinished">Susi ng Backup</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">I-export ang Master key</translation>
+        <translation type="unfinished">Backup na Recovery Key</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2104,12 +2104,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Ang paglalabas ng Master Key at paglalagay nito sa isang ligtas na lugar ay magbibigay daan para makapag-set ka ng bagong password ng walang anumang nalalagas na data.</translation>
+        <translation type="unfinished">Ang pag-eexport sa Recovery Key at ang pagtatabi nito sa isang maingat na lokasyon ay magbibigay daan upang makabuo ka ng bagong password ng walang data loss.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Laging maglaan ng kopya ng inyong master key (e.g. sa client device, external storage, o sa printed material).</translation>
+        <translation type="unfinished">Magtabi palagi ng sariling kopya ng Recovery Key (hal. sa iyong device, external na storage o iprint sa papel).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2561,6 +2561,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
         <translation type="unfinished">Matindi</translation>
     </message>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translation type="unfinished">I-check ang inyong e-mail address at i-click ang link para i-confirm ang inyong account.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translation type="unfinished">Sinubukan mong mag log-in ng maraming beses. [BR]Subukan muli ng bandang mga %1.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -2763,11 +2771,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Nagamit mo ang %1 ng data transfer sa loob ng anim na oras na kumuha sa inyong kasalukuyang hangganan. Para matanggal ang hangganang ito, pwede kang [A]Mag-upgrade sa Pro[/A], na kung saan ay magbibigay sa iyo ng inyong bandwidth package at karagdagang storage space.</translation>
+        <translation type="unfinished">Nagamit mo ang %1 ng data transfer sa loob ng anim na oras na kumuha sa inyong kasalukuyang hangganan. Para matanggal ang hangganang ito, pwede kang [A]Mag-upgrade sa PRO[/A], na kung saan ay magbibigay sa iyo ng inyong bandwidth package at karagdagang storage space.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Mag-upgrade sa Pro para magpatuloy kaagad o maghintay ng %1 para magpatuloy ng libre.</translation>
+        <translation type="unfinished">Mag-upgrade sa PRO para magpatuloy kaagad o maghintay ng %1 para magpatuloy ng libre.</translation>
     </message>
 </context>
 <context>
@@ -2795,7 +2803,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded. Keep / symbol.</translatorcomment>
-        <translation>/MEGAsync Uploads</translation>
+        <translation type="obsolete">/MEGAsync Uploads</translation>
     </message>
     <message>
         <source>MEGAsync Uploads</source>

@@ -7,6 +7,7 @@ PermissionsDialog::PermissionsDialog(QWidget *parent) :
     ui(new Ui::PermissionsDialog)
 {
     ui->setupUi(this);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     connect(ui->wFileGroup, SIGNAL(onPermissionChanged()), this, SLOT(permissionsChanged()));
     connect(ui->wFilePublic, SIGNAL(onPermissionChanged()), this, SLOT(permissionsChanged()));

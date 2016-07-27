@@ -226,11 +226,6 @@ void RecentFile::on_lFileType_customContextMenuRequested(const QPoint &pos)
     }
 
     menu = new QMenu();
-
-#if (QT_VERSION == 0x050500) && defined(_WIN32)
-    menu->installEventFilter(qApp);
-#endif
-
 #ifndef __APPLE__
     menu->setStyleSheet(QString::fromAscii(
             "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
@@ -262,12 +257,7 @@ void RecentFile::on_wText_customContextMenuRequested(const QPoint &pos)
         return;
     }
 
-    menu = new QMenu();
-
-#if (QT_VERSION == 0x050500) && defined(_WIN32)
-    menu->installEventFilter(qApp);
-#endif
-
+    menu = new QMenu(); 
 #ifndef __APPLE__
     menu->setStyleSheet(QString::fromAscii(
             "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "

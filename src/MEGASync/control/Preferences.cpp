@@ -11,16 +11,16 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/2.9.6.0";
-const int Preferences::VERSION_CODE = 2906;
+const char Preferences::USER_AGENT[] = "MEGAsync/2.9.8.0";
+const int Preferences::VERSION_CODE = 2908;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.6");
-const QString Preferences::SDK_ID = QString::fromAscii("64f7b");
+const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.8");
+const QString Preferences::SDK_ID = QString::fromAscii("d7412");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- Save the state and resume transfers\n"
-            "- Better management of errors during transfers\n"
-            "- Compatibility with HDPI displays\n"
+            "- More efficient upload completion\n"
+            "- Creation of new cryptographic keys\n"
+            "- Upgrade to QT5 and VS2015 (Windows)\n"
             "- Bug fixes");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
@@ -28,6 +28,7 @@ const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStri
 
 const int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
+const long long Preferences::MIN_UPDATE_STATS_INTERVAL_OVERQUOTA  = 30000;
 const long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
 const long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
 const long long Preferences::MIN_EXTERNAL_NODES_WARNING_MS          = 60000;
@@ -135,8 +136,6 @@ const QString Preferences::inboxFoldersKey          = QString::fromAscii("inboxF
 const QString Preferences::rubbishFoldersKey        = QString::fromAscii("rubbishFolders");
 const QString Preferences::inShareFoldersKey        = QString::fromAscii("inShareFolders");
 const QString Preferences::totalBandwidthKey        = QString::fromAscii("totalBandwidth");
-const QString Preferences::temporalBandwidthKey     = QString::fromAscii("temporalBandwidth");
-const QString Preferences::temporalBandwidthIntervalKey     = QString::fromAscii("temporalBandwidthInterval");
 const QString Preferences::usedBandwidthKey         = QString::fromAscii("usedBandwidth");
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
 const QString Preferences::showNotificationsKey     = QString::fromAscii("showNotifications");
@@ -250,12 +249,10 @@ Preferences *Preferences::instance()
     return Preferences::preferences;
 }
 
-void Preferences::initialize()
+void Preferences::initialize(QString dataPath)
 {
-#if QT_VERSION < 0x050000
-    QString dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
-#else
-    QString dataPath = QStandardPaths::standardLocations(QStandardPaths::DataLocation)[0];
+    this->dataPath = dataPath;
+#if QT_VERSION >= 0x050000
     QString lockSettingsFile = QDir::toNativeSeparators(dataPath + QString::fromAscii("/MEGAsync.cfg.lock"));
     QFile::remove(lockSettingsFile);
 #endif
@@ -324,7 +321,7 @@ void Preferences::initialize()
 
 Preferences::Preferences() : QObject(), mutex(QMutex::Recursive)
 {
-
+    clearTemporalBandwidth();
 }
 
 QString Preferences::email()
@@ -644,34 +641,34 @@ void Preferences::setTotalBandwidth(long long value)
     mutex.unlock();
 }
 
+bool Preferences::isTemporalBandwidthValid()
+{
+    return isTempBandwidthValid;
+}
+
+void Preferences::setTemporalBandwidthValid(bool value)
+{
+    this->isTempBandwidthValid = value;
+}
+
 long long Preferences::temporalBandwidth()
 {
-    mutex.lock();
-    long long value = settings->value(temporalBandwidthKey, 0).toLongLong();
-    mutex.unlock();
-    return value > 0 ? value : 0;
+    return tempBandwidth > 0 ? tempBandwidth : 0;
 }
 
 void Preferences::setTemporalBandwidth(long long value)
 {
-    mutex.lock();
-    settings->setValue(temporalBandwidthKey, value);
-    mutex.unlock();
+    this->tempBandwidth = value;
 }
 
-long long Preferences::temporalBandwidthInterval()
+int Preferences::temporalBandwidthInterval()
 {
-    mutex.lock();
-    long long value = settings->value(temporalBandwidthIntervalKey, 6).toLongLong();
-    mutex.unlock();
-    return value;
+    return tempBandwidthInterval > 0 ? tempBandwidthInterval : 6;
 }
 
-void Preferences::setTemporalBandwidthInterval(long long value)
+void Preferences::setTemporalBandwidthInterval(int value)
 {
-    mutex.lock();
-    settings->setValue(temporalBandwidthIntervalKey, value);
-    mutex.unlock();
+    this->tempBandwidthInterval = value;
 }
 
 long long Preferences::usedBandwidth()
@@ -1880,6 +1877,7 @@ void Preferences::leaveUser()
     assert(logged());
     settings->endGroup();
 
+    clearTemporalBandwidth();
     syncNames.clear();
     localFolders.clear();
     megaFolders.clear();
@@ -1900,6 +1898,7 @@ void Preferences::unlink()
     settings->endGroup();
 
     settings->remove(currentAccountKey);
+    clearTemporalBandwidth();
     syncNames.clear();
     localFolders.clear();
     megaFolders.clear();
@@ -1981,6 +1980,21 @@ bool Preferences::error()
     return errorFlag;
 }
 
+QString Preferences::getDataPath()
+{
+    mutex.lock();
+    QString ret = dataPath;
+    mutex.unlock();
+    return ret;
+}
+
+void Preferences::clearTemporalBandwidth()
+{
+    isTempBandwidthValid = false;
+    tempBandwidth = 0;
+    tempBandwidthInterval = 6;
+}
+
 void Preferences::clearAll()
 {
     mutex.lock();
@@ -2055,6 +2069,7 @@ void Preferences::logout()
     {
         settings->endGroup();
     }
+    clearTemporalBandwidth();
     syncNames.clear();
     localFolders.clear();
     megaFolders.clear();
@@ -2074,8 +2089,7 @@ void Preferences::loadExcludedSyncNames()
         excludedSyncNames.clear();
     }
 
-    if ((settings->value(lastVersionKey).toInt() < 108)
-            && (Preferences::VERSION_CODE >= 108))
+    if (settings->value(lastVersionKey).toInt() < 108)
     {
         excludedSyncNames.clear();
         excludedSyncNames.append(QString::fromUtf8("Thumbs.db"));
@@ -2084,10 +2098,10 @@ void Preferences::loadExcludedSyncNames()
         excludedSyncNames.append(QString::fromUtf8(".*"));
     }
 
-    if ((settings->value(lastVersionKey).toInt() < 1015)
-            && (Preferences::VERSION_CODE >= 1015))
+    if (settings->value(lastVersionKey).toInt() < 2907)
     {
-        excludedSyncNames.append(QString::fromUtf8("Icon?"));
+        //This string is no longer excluded by default since 2907
+        excludedSyncNames.removeAll(QString::fromUtf8("Icon?"));
     }
 
     QMap<QString, QString> strMap;

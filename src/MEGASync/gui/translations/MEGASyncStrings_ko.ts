@@ -184,7 +184,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">당신의 통신이 가로챔을 당할 수 있는 옵션을 활성화하려고 합니다. 당신의 데이터는 우리의 단대단 암호화 덕분에 공격자들이 접근할 수 없지만, 그들이 보이지 않게 당신의 파일과 폴더를 MEGA 안에서 움직이고, 삭제하거나 당신이 계정에 접근하지 못하게 할 수 있습니다.</translation>
+        <translation type="unfinished">당신의 통신이 가로챔을 당할 수 있는 옵션을 활성화하려고 합니다. 당신의 데이터는 우리의 종단간 암호화 덕분에 공격자들이 접근할 수 없지만, 그들이 보이지 않게 당신의 파일과 폴더를 MEGA 안에서 움직이고, 삭제하거나 당신이 계정에 접근하지 못하게 할 수 있습니다.</translation>
     </message>
 </context>
 <context>
@@ -401,7 +401,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>/MEGAsync Imports</source>
         <translatorcomment>Default created folder for imported links at the user Cloud Drive.</translatorcomment>
-        <translation>/MEGAsync 들여오기</translation>
+        <translation type="obsolete">/MEGAsync 들여오기</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -596,7 +596,7 @@ Are you sure?</source>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
         <translatorcomment>Label to inform the user that is over quota and let him to upgrade his account. Keep [A] [/A] codes, will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">허용된 공간 할당량을 초과하였습니다. [A]업그레이드[/A]하고 안전한 단대단 암호화 공간을 즐기세요.</translation>
+        <translation type="unfinished">당신의 계정이 허용된 공간 할당량을 초과하였습니다. [A]업그레이드[/A]하고 안전한, 종단간 암호화 공간을 즐기세요.</translation>
     </message>
     <message>
         <source>Upgrade your account</source>
@@ -660,7 +660,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
-        <translation type="unfinished">MEGA의 단대단 알고리즘을 느린 브라우저에 의존하지 않고 기기에서 직접 실행하세요.</translation>
+        <translation type="unfinished">MEGA의 종단간 암호화 알고리즘을 느린 브라우저에 의존하지 않고 기기에서 직접 실행하세요.</translation>
     </message>
     <message>
         <source>Unlimited file size</source>
@@ -1875,7 +1875,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default path for MEGAsync uploads.</translatorcomment>
-        <translation>/MEGAsync 업로드</translation>
+        <translation type="obsolete">/MEGAsync 업로드</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2089,12 +2089,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">키 내보내기</translation>
+        <translation type="unfinished">백업 키</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">마스터 키 내보내기</translation>
+        <translation type="unfinished">복구 키 백업</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2104,12 +2104,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">마스터 키를 내보내서 안전한 장소에 보관하는 것은 데이터 손실 없이 새로운 비밀번호를 설정할 수 있게 해줍니다.</translation>
+        <translation type="unfinished">복구 키를 내보내고 안전한 장소에 보관하면 데이터 손실 없이 새로운 비밀번호를 설정할 수 있습니다.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">항상 당신의 마스터 키를 물리적인 통제 아래에 두세요 (예: 클라이언트 장치, 외부 저장소, 인쇄)</translation>
+        <translation type="unfinished">항상 당신의 복구 키에 대한 물리적 통제를 유지하세요 (예를 들어, 장치, 외부 저장소, 또는 인쇄).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2561,6 +2561,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
         <translation type="unfinished">강함</translation>
     </message>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translation type="unfinished">당신의 이메일을 확인하고 계정 확인을 위한 링크를 클릭하세요.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translation type="unfinished">로그인 시도를 너무 많이 했습니다.[BR]%1까지 기다렸다가 다시 시도하세요.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -2795,7 +2803,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded. Keep / symbol.</translatorcomment>
-        <translation>/MEGAsync 업로드</translation>
+        <translation type="obsolete">/MEGAsync 업로드</translation>
     </message>
     <message>
         <source>MEGAsync Uploads</source>

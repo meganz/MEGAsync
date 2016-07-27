@@ -120,6 +120,18 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             {
                 QMessageBox::warning(this, tr("Error"), tr("Incorrect email and/or password.") + QString::fromUtf8(" ") + tr("Have you verified your account?"), QMessageBox::Ok);
             }
+            else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
+            {
+                QMessageBox::warning(this, tr("Error"), tr("Please check your e-mail and click the link to confirm your account."), QMessageBox::Ok);
+            }
+            else if (error->getErrorCode() == MegaError::API_ETOOMANY)
+            {
+                QMessageBox::warning(this, tr("Error"),
+                                     tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
+                                     .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
+                                     .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")))
+                                     , QMessageBox::Ok);
+            }
             else if (error->getErrorCode() == MegaError::API_EBLOCKED)
             {
                 QMessageBox::critical(NULL, tr("Error"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
@@ -165,8 +177,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 break;
             }
 
-            MegaNode *root = megaApi->getRootNode();
-            if (!root)
+            if (!megaApi->isFilesystemAvailable())
             {
                 page_login();
                 QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
@@ -177,7 +188,6 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 app->rebootApplication(false);
                 return;
             }
-            delete root;
 
             char *session = megaApi->dumpSession();
             sessionKey = QString::fromUtf8(session);
@@ -361,20 +371,7 @@ void SetupWizard::on_bNext_clicked()
     }
     else if (w == ui->pSetupType)
     {
-        #ifdef WIN32
-            #if QT_VERSION < 0x050000
-                QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-            #else
-                QString defaultFolderPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-            #endif
-        #else
-            #if QT_VERSION < 0x050000
-                QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-            #else
-                QString defaultFolderPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
-            #endif
-        #endif
-
+        QString defaultFolderPath = Utilities::getDefaultBasePath();
         if (ui->rAdvancedSetup->isChecked())
         {
             defaultFolderPath.append(QString::fromUtf8("/MEGAsync"));
@@ -554,22 +551,17 @@ void SetupWizard::on_bLocalFolder_clicked()
     QString defaultPath = ui->eLocalFolder->text().trimmed();
     if (!defaultPath.size())
     {
-        #ifdef WIN32
-            #if QT_VERSION < 0x050000
-                defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-            #else
-                defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-            #endif
-        #else
-            #if QT_VERSION < 0x050000
-                defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-            #else
-                defaultPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
-            #endif
-        #endif
+        defaultPath = Utilities::getDefaultBasePath();
     }
 
+    defaultPath = QDir::toNativeSeparators(defaultPath);
+
 #ifndef _WIN32
+    if (defaultPath.isEmpty())
+    {
+        defaultPath = QString::fromUtf8("/");
+    }
+
     QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
     dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     dialog->setFileMode(QFileDialog::DirectoryOnly);
