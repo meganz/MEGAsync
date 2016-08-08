@@ -15,6 +15,9 @@ BuildRequires:	hicolor-icon-theme, gnome-shell
 %if 0%{?rhel_version} 
 BuildRequires: redhat-logos
 %endif
+%if 0%{?fedora_version} 
+BuildRequires: fedora-logos
+%endif
 Requires:       nautilus, megasync
 
 %description
