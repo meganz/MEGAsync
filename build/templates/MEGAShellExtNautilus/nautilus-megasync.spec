@@ -16,7 +16,7 @@ BuildRequires:	hicolor-icon-theme, gnome-shell
 BuildRequires: redhat-logos
 %endif
 %if 0%{?scientificlinux_version} 
-BuildRequires: sl-logos
+BuildRequires: sl-logos, gcc-c++
 %endif
 Requires:       nautilus, megasync
 
