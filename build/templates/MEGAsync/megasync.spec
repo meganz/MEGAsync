@@ -29,7 +29,7 @@ BuildRequires: qt, qt-x11
 BuildRequires: terminus-fonts, fontpackages-filesystem
 %endif
 
-%if 0%{?centos_version}
+%if 0%{?centos_version} || 0%{?scientificlinux_version}
 BuildRequires: c-ares-devel,
 BuildRequires: desktop-file-utils
 BuildRequires: qt, qt-x11
@@ -61,7 +61,7 @@ Store up to 50 GB for free!
 
 %define flag_cryptopp %{nil}
 
-%if 0%{?centos_version}
+%if 0%{?centos_version} || 0%{?scientificlinux_version}
 %define flag_cryptopp -q
 %endif
 
@@ -79,7 +79,7 @@ export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
+%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
 qmake-qt4 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot}
 lrelease-qt4  MEGASync/MEGASync.pro
 %else
@@ -124,7 +124,20 @@ enabled=1
 DATA
 %endif
 
-%if 0%{?centos_version} == 700
+%if 0%{?scientificlinux_version} == 700
+# Scientific Linux 7
+YUM_FILE="/etc/yum.repos.d/megasync.repo"
+cat > "$YUM_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+baseurl=http://mega.nz/linux/MEGAsync/ScientificLinux_7/
+gpgkey=https://mega.nz/linux/MEGAsync/ScientificLinux_7/repodata/repomd.xml.key
+gpgcheck=1
+enabled=1
+DATA
+%endif
+
+%if 0%{?sc} == 700
 # CentOS 7
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
@@ -383,7 +396,7 @@ fi
 killall megasync 2> /dev/null || true
 
 
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
+%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
 %posttrans
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %endif
