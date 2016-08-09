@@ -156,7 +156,7 @@ for i in $PAIRSVMNAMEREPOURL; do
 
     RUNNING=`ps aux | grep check_package.sh | grep -v check_all_packages | grep -v grep | wc -l`
     
-    while [ $RUNNING -ge 7 ]; do
+    while [ $RUNNING -ge 11 ]; do
 	 echo "$RUNNING processes running. Waiting for one to finish ..."
 	 sleep 5;
 	 RUNNING=`ps aux | grep check_package.sh | grep -v check_all_packages | grep -v grep | wc -l`
