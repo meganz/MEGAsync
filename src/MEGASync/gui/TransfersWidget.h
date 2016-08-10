@@ -25,6 +25,11 @@ private:
     QTransfersModel *model;
     MegaTransferDelegate *tDelegate;
 
+    int type;
+private slots:
+    void noTransfers(int type);
+    void onTransferAdded();
+
 };
 
 #endif // TRANSFERSWIDGET_H
