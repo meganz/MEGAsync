@@ -2,6 +2,7 @@
 #define TRANSFERMANAGER_H
 
 #include <QDialog>
+#include <QMenu>
 #include "megaapi.h"
 
 namespace Ui {
@@ -19,12 +20,23 @@ public:
 private:
     Ui::TransferManager *ui;
     mega::MegaApi *megaApi;
+    QMenu *addMenu;
+    QAction *settingsAction;
+    QAction *importLinksAction;
+    QAction *uploadAction;
+    QAction *downloadAction;
+
+    void createAddMenu();
 
 private slots:
     void on_tCompleted_clicked();
     void on_tDownloads_clicked();
     void on_tUploads_clicked();
     void on_tAllTransfers_clicked();
+    void on_bAdd_clicked();
+    void on_bClose_clicked();
+    void on_bPause_clicked();
+    void on_bClearAll_clicked();
 };
 
 #endif // TRANSFERMANAGER_H
