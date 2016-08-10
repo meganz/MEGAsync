@@ -3,15 +3,14 @@
 
 using namespace mega;
 
-QTransfersModel::QTransfersModel(MegaTransferList *transfers, int type, QObject *parent) :
+QTransfersModel::QTransfersModel(int type, QObject *parent) :
     QAbstractItemModel(parent)
 {
     MegaApi *api =  ((MegaApplication *)qApp)->getMegaApi();
     this->type = type;
+
     delegateListener = new QTMegaTransferListener(api, this);
     api->addTransferListener(delegateListener);
-
-    setupModelTransfers(transfers);
 }
 
 TransferItem *QTransfersModel::transferFromIndex(const QModelIndex &index) const
@@ -63,6 +62,11 @@ QModelIndex QTransfersModel::index(int row, int column, const QModelIndex &paren
 
 void QTransfersModel::insertTransfer(MegaTransfer *transfer, const QModelIndex &parent)
 {
+    if (transfers.isEmpty())
+    {
+        emit onTransferAdded();
+    }
+
     beginInsertRows(QModelIndex(), transfers.size(), transfers.size());
     transfers.insert(transfer->getTag(), new TransferItem());
     transfersOrder.append(transfer->getTag());
@@ -76,6 +80,11 @@ void QTransfersModel::removeTransfer(MegaTransfer *transfer, const QModelIndex &
     transfers.remove(transfer->getTag());
     transfersOrder.removeAt(row);
     endRemoveRows();
+
+    if (transfers.isEmpty())
+    {
+        emit noTransfers(type);
+    }
 }
 
 int QTransfersModel::rowCount(const QModelIndex &parent) const
@@ -98,6 +107,7 @@ void QTransfersModel::onTransferStart(MegaApi *api, MegaTransfer *transfer)
     if (type == TYPE_ALL || transfer->getType() == type)
     {
         insertTransfer(transfer, QModelIndex());
+        emit onTransferAdded();
         updateTransferInfo(transfer);
     }
 
@@ -116,7 +126,6 @@ void QTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
             //Update modified item
             int row = transfersOrder.indexOf(transfer->getTag());
             emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
-
         }
     }
 }
@@ -130,7 +139,6 @@ void QTransfersModel::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
             updateTransferInfo(transfer);
         }
     }
-
 }
 
 void QTransfersModel::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError *e)
@@ -140,18 +148,24 @@ void QTransfersModel::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
 
 void QTransfersModel::setupModelTransfers(MegaTransferList *transfers)
 {
+    if (!transfers)
+    {
+        return;
+    }
+
     for (int i = 0; i < transfers->size(); i++)
     {
         MegaTransfer *t = transfers->get(i);
         insertTransfer(t, QModelIndex());
-    }   
+    }
+    delete transfers;
 }
 
 void QTransfersModel::updateTransferInfo(MegaTransfer *transfer)
 {
     TransferItem *item = transfers.value(transfer->getTag());
     item->setFileName(QString::fromUtf8(transfer->getFileName()));
-    item->setType(transfer->getType());
+    item->setType(transfer->getType(), transfer->isSyncTransfer());
     item->setSpeed(transfer->getSpeed());
     item->setTotalSize(transfer->getTotalBytes());
     item->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());

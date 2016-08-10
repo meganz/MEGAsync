@@ -19,10 +19,10 @@ public:
         TYPE_FINISHED
     };
 
-    explicit QTransfersModel(mega::MegaTransferList *transfers, int type, QObject *parent = 0);
+    explicit QTransfersModel(int type, QObject *parent = 0);
 
-    void insertTransfer(mega::MegaTransfer *transfer, const QModelIndex &parent);
-    void removeTransfer(mega::MegaTransfer *transfer, const QModelIndex &parent);
+    void setupModelTransfers(mega::MegaTransferList *transfers);
+
     TransferItem *transferFromIndex(const QModelIndex &index) const;
     virtual int columnCount(const QModelIndex & parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role) const;
@@ -36,9 +36,15 @@ public:
     virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
     virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e);
 
+signals:
+    void noTransfers(int type);
+    void onTransferAdded();
+
 private:
-    void setupModelTransfers(mega::MegaTransferList *transfers);
     void updateTransferInfo(mega::MegaTransfer *transfer);
+    void insertTransfer(mega::MegaTransfer *transfer, const QModelIndex &parent);
+    void removeTransfer(mega::MegaTransfer *transfer, const QModelIndex &parent);
+
 protected:
     QMap<int, TransferItem*> transfers;
     QList<int> transfersOrder;
