@@ -253,5 +253,6 @@
         <file>images/upload_item_ico.png</file>
         <file>images/upload_to_mega_ico.png</file>
         <file>images/completed_item_ico.png</file>
+        <file>images/downloading.gif</file>
     </qresource>
 </RCC>

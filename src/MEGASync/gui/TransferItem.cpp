@@ -17,6 +17,7 @@ TransferItem::TransferItem(QWidget *parent) :
     transferSpeed = 0;
     effectiveTransferSpeed = 200000;
     regular = false;
+    animation = NULL;
     lastUpdate = QDateTime::currentMSecsSinceEpoch();
 }
 
@@ -57,26 +58,25 @@ void TransferItem::setType(int type, bool isSyncTransfer)
 
     if (type)
     {
+
         icon.addFile(QString::fromUtf8(":/images/upload_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-        QString loadIconResource = isSyncTransfer ? QString::fromUtf8(":/images/sync_item_ico.png")
-                                                  : QString::fromUtf8(":/images/cloud_upload_item_ico.png");
+        QPixmap loadIconResource = isSyncTransfer ? QPixmap(QString::fromUtf8(":/images/sync_item_ico.png"))
+                                                  : QPixmap(QString::fromUtf8(":/images/cloud_upload_item_ico.png"));
 
-        ui->lActionType->setIcon(QIcon(loadIconResource));
-        ui->lActionType->setIconSize(QSize(32, 32));
-
+        ui->lActionType->setPixmap(loadIconResource);
         ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
                                                         "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
-
     }
     else
     {
+        if (!animation)
+        {
+            animation = new QMovie(QString::fromUtf8(":/images/downloading.gif"));
+            ui->lActionType->setMovie(animation);
+            animation->start();
+        }
+
         icon.addFile(QString::fromUtf8(":/images/download_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-        QString loadIconResource = isSyncTransfer ? QString::fromUtf8(":/images/sync_item_ico.png")
-                                                  : QString::fromUtf8(":/images/cloud_download_item_ico.png");
-
-        ui->lActionType->setIcon(QIcon(loadIconResource));
-        ui->lActionType->setIconSize(QSize(32, 32));
-
         ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
                                                         "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
     }
@@ -93,19 +93,19 @@ void TransferItem::setType(int type, bool isSyncTransfer)
 TransferItem::~TransferItem()
 {
     delete ui;
+    delete animation;
 }
 
 void TransferItem::finishTransfer()
 {
-
     ui->lTotal->setText(QString::fromUtf8("%1").arg(Utilities::getSizeString(totalSize)));
     ui->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/completed_item_ico.png")));
     ui->lCompleted->setIconSize(QSize(12, 12));
     ui->pbTransfer->setVisible(false);
     ui->lSpeed->setEnabled(false);
     ui->lRemainingTime->setText(QString::fromUtf8(""));
-
 }
+
 void TransferItem::updateTransfer()
 {
     // Update remaining time

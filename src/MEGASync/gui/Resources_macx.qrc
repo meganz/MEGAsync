@@ -501,5 +501,6 @@
         <file>fonts/SourceSansPro-Bold.ttf</file>
         <file>images/completed_item_ico.png</file>
         <file>images/completed_item_ico@2x.png</file>
+        <file>images/downloading.gif</file>
     </qresource>
 </RCC>

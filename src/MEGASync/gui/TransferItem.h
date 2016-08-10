@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QDateTime>
+#include <QMovie>
 
 namespace Ui {
 class TransferItem;
@@ -38,6 +39,7 @@ private:
 protected:
     QString fileName;
     int type;
+    QMovie *animation;
     long long transferSpeed;
     long long totalSize, totalTransferredBytes;
     unsigned long long effectiveSpeed, effectiveTransferSpeed, lastUpdate, elapsedTransferTime;
