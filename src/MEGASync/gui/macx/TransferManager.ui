@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>406</height>
+    <width>720</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>600</width>
-    <height>0</height>
+    <width>720</width>
+    <height>480</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>600</width>
-    <height>16777215</height>
+    <width>720</width>
+    <height>480</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -30,10 +30,83 @@
 {
 	border: none;
 }
+#wHeader
+{
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0.1 #f9f9f9, stop: 0.2 #f6f6f6,
+								 stop: 0.3 #f5f5f5, stop: 0.4 #f4f4f4,
+								 stop: 0.5#f3f3f3, stop: 0.6 #f2f2f2,
+								 stop: 0.7 #f1f1f1, stop: 0.8 #f0f0f0,
+								 stop: 0.9 #efefef, stop: 1 #EEEEEE);
+}
+#wOptions
+{
+	background: #ececec;
+}
+#tAllTransfers, #tCompleted, #tDownloads, #tUploads
+{
+  font-family: &quot;Source Sans Pro&quot;;
+  font-size: 18px;
+  font-weight: 400;
+  color: #333333;
+  padding: 5px 12px 5px 12px;
+  border: none;
+}
+#bAdd
+{
+  background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0.16 #ffffff, stop: 0.32 #fefefe,
+								 stop: 0.48 #fdfdfd, stop: 0.64 #fcfcfc,
+								 stop: 0.8#fbfbfb, stop: 1 #fafafa);
+ border-radius: 3px;
+ border: 1px solid rgba(0, 0, 0, 0.05);
+ padding: 6px 12px 8px 12px;
+ font-family: &quot;Source Sans Pro&quot;;
+ font-size: 14px;
+ font-weight: 400;
+ color: #777777;
+}
+#bAdd:pressed, #bPause::pressed, #bClearAll::pressed
+{
+  background-color: rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+#bPause, #bClearAll
+{
+  font-family: &quot;Source Sans Pro&quot;;
+  font-size: 14px;
+  font-weight: 400;
+  color: #777777;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 7px 12px 7px 12px;
+  background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0.16 #ffffff, stop: 0.32 #fefefe,
+								 stop: 0.48 #fdfdfd, stop: 0.64 #fcfcfc,
+								 stop: 0.8#fbfbfb, stop: 1 #fafafa);
+}
 
-</string>
+#bClose
+{
+  background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0.16 #a9a9a9, stop: 0.32 #a7a7a7,
+								 stop: 0.48 #a5a5a5, stop: 0.64 #a3a3a3,
+								 stop: 0.8#a1a1a1, stop: 1 #aaaaaa);
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.45);
+  padding: 7px 24px 7px 24px;
+  font-family: &quot;Source Sans Pro&quot;;
+  font-size: 14px;
+  font-weight: 400;
+  color: #ffffff;
+}
+#bClose::pressed
+{
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.5);
+}</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -51,201 +124,484 @@
    </property>
    <item>
     <widget class="QWidget" name="wHeader" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>60</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>60</height>
-      </size>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
       <property name="leftMargin">
-       <number>16</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>16</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
       </property>
       <item>
-       <widget class="QPushButton" name="lHeader">
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
-          <normaloff>:/images/mega_logo.png</normaloff>:/images/mega_logo.png</iconset>
-        </property>
-        <property name="iconSize">
+       <widget class="QWidget" name="wLogoHeader" native="true">
+        <property name="minimumSize">
          <size>
-          <width>150</width>
-          <height>60</height>
+          <width>720</width>
+          <height>56</height>
          </size>
         </property>
+        <property name="maximumSize">
+         <size>
+          <width>720</width>
+          <height>56</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>24</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>12</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="lHeader">
+           <property name="minimumSize">
+            <size>
+             <width>128</width>
+             <height>48</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>128</width>
+             <height>48</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources_macx.qrc">
+             <normaloff>:/images/megasync_logo.png</normaloff>:/images/megasync_logo.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>150</width>
+             <height>60</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>230</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="bAdd">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="text">
+            <string>Add...</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources_macx.qrc">
+             <normaloff>:/images/add_ico.png</normaloff>:/images/add_ico.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
+       <widget class="QWidget" name="wTabHeader" native="true">
+        <property name="minimumSize">
          <size>
-          <width>230</width>
-          <height>20</height>
+          <width>720</width>
+          <height>40</height>
          </size>
         </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="bAdd">
-        <property name="text">
-         <string>+ Add...</string>
+        <property name="maximumSize">
+         <size>
+          <width>720</width>
+          <height>40</height>
+         </size>
         </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="wTabHeader" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>45</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>45</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">QToolButton
+        <property name="styleSheet">
+         <string notr="true">QToolButton
 {
 	border: none;
 }
 </string>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <property name="spacing">
-       <number>32</number>
-      </property>
-      <property name="leftMargin">
-       <number>16</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>16</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QToolButton" name="tAllTransfers">
-        <property name="text">
-         <string>All Transfers</string>
         </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QToolButton" name="tAllTransfers">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>38</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>38</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>All Transfers</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lAll">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>2</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>2</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QToolButton" name="tDownloads">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>38</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>38</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Downloads</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lDownloads">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>2</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>2</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QToolButton" name="tUploads">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>38</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>38</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Uploads</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lUploads">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>2</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>2</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QToolButton" name="tCompleted">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>38</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Completed</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lCompleted">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>2</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>2</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: none;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="tDownloads">
-        <property name="text">
-         <string>Downloads</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="tUploads">
-        <property name="text">
-         <string>Uploads</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="tCompleted">
-        <property name="text">
-         <string>Completed</string>
-        </property>
-        <property name="checkable">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_3">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
       </item>
      </layout>
     </widget>
    </item>
    <item>
     <widget class="QStackedWidget" name="wTransfers">
+     <property name="minimumSize">
+      <size>
+       <width>720</width>
+       <height>336</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>336</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>3</number>
      </property>
      <widget class="TransfersWidget" name="wAllTransfers"/>
      <widget class="TransfersWidget" name="wDownloads"/>
      <widget class="TransfersWidget" name="wUploads"/>
-     <widget class="TransfersWidget" name="wCompleted"/>
+     <widget class="TransfersWidget" name="wCompleted">
+      <zorder>tDownloads</zorder>
+     </widget>
     </widget>
    </item>
    <item>
     <widget class="QWidget" name="wOptions" native="true">
      <property name="minimumSize">
       <size>
-       <width>0</width>
-       <height>50</height>
+       <width>720</width>
+       <height>48</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>16777215</width>
-       <height>50</height>
+       <width>720</width>
+       <height>48</height>
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>27</number>
+      </property>
+      <property name="topMargin">
+       <number>10</number>
+      </property>
+      <property name="bottomMargin">
+       <number>12</number>
+      </property>
       <item>
        <widget class="QPushButton" name="bPause">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
         <property name="text">
          <string>Pause</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_macx.qrc">
+          <normaloff>:/images/pause_ico.png</normaloff>:/images/pause_ico.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QPushButton" name="bClearAll">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
         <property name="text">
          <string>Clear all</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_macx.qrc">
+          <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -264,6 +620,18 @@
       </item>
       <item>
        <widget class="QPushButton" name="bClose">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
         <property name="text">
          <string>Close</string>
         </property>
@@ -283,7 +651,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>

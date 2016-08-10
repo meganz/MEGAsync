@@ -6,29 +6,52 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>350</height>
+    <width>720</width>
+    <height>336</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>600</width>
-    <height>0</height>
+    <width>720</width>
+    <height>336</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>600</width>
-    <height>16777215</height>
+    <width>720</width>
+    <height>336</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">#lStatus
+{
+  font-family: &quot;Source Sans Pro&quot;;
+  font-size: 24px;
+  font-weight: 300;
+  color: rgba(51, 51, 51, 0.7)
+}
+
+#pNoTransfers
+{
+     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0.0954 #fcfcfc, stop: 0.5725 #f7f7f7);
+}
+
+#tvTransfers
+{
+	background-color: white;
+	paint-alternating-row-colors-for-empty-area: false;
+}
+
+#tvTransfers::branch:selected
+{
+	background-color:  #f7f7f7;	
+}</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout_2">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -48,14 +71,14 @@
     <widget class="QStackedWidget" name="sWidget">
      <property name="minimumSize">
       <size>
-       <width>600</width>
-       <height>0</height>
+       <width>720</width>
+       <height>336</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>600</width>
-       <height>16777215</height>
+       <width>720</width>
+       <height>336</height>
       </size>
      </property>
      <property name="currentIndex">
@@ -64,56 +87,149 @@
      <widget class="QWidget" name="pNoTransfers">
       <property name="minimumSize">
        <size>
-        <width>518</width>
-        <height>0</height>
+        <width>720</width>
+        <height>336</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>518</width>
-        <height>16777215</height>
+        <width>720</width>
+        <height>336</height>
        </size>
       </property>
-      <widget class="QPushButton" name="lNoTransfers">
+      <widget class="QWidget" name="wContainer" native="true">
        <property name="geometry">
         <rect>
-         <x>6</x>
-         <y>8</y>
-         <width>518</width>
-         <height>281</height>
+         <x>0</x>
+         <y>0</y>
+         <width>720</width>
+         <height>336</height>
         </rect>
        </property>
        <property name="minimumSize">
         <size>
-         <width>518</width>
-         <height>0</height>
+         <width>720</width>
+         <height>336</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>518</width>
-         <height>16777215</height>
+         <width>720</width>
+         <height>336</height>
         </size>
        </property>
-       <property name="styleSheet">
-        <string notr="true">border: none;</string>
-       </property>
-       <property name="text">
-        <string>NO TRANSFERS</string>
-       </property>
+       <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>257</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QWidget" name="wStatus" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QPushButton" name="lStatusIcon">
+             <property name="minimumSize">
+              <size>
+               <width>156</width>
+               <height>156</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>156</width>
+               <height>156</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border: none;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>156</width>
+               <height>156</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lStatus">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>31</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>31</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>257</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
       </widget>
      </widget>
      <widget class="QWidget" name="pTransfers">
       <property name="minimumSize">
        <size>
-        <width>600</width>
-        <height>0</height>
+        <width>720</width>
+        <height>336</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>600</width>
-        <height>16777215</height>
+        <width>720</width>
+        <height>336</height>
        </size>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
@@ -133,17 +249,33 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QTreeView" name="tvTransfers">
+        <widget class="MegaTransferView" name="tvTransfers">
+         <property name="minimumSize">
+          <size>
+           <width>720</width>
+           <height>336</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>720</width>
+           <height>336</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
-          <string notr="true">background-color: white;
-alternate-background-color: #D3D3D3;
-paint-alternating-row-colors-for-empty-area: false;</string>
+          <string notr="true"/>
          </property>
          <property name="showDropIndicator" stdset="0">
           <bool>true</bool>
          </property>
          <property name="alternatingRowColors">
-          <bool>true</bool>
+          <bool>false</bool>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::MultiSelection</enum>
          </property>
         </widget>
        </item>
@@ -153,6 +285,13 @@ paint-alternating-row-colors-for-empty-area: false;</string>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MegaTransferView</class>
+   <extends>QTreeView</extends>
+   <header>MegaTransferView.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
