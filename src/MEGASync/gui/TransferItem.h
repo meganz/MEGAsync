@@ -20,11 +20,14 @@ public:
     void setTransferType(int type);
     void setSpeed(long long transferSpeed);
     void setTotalSize(long long size);
-    void setType(int type);
+    void setType(int type, bool isSyncTransfer = false);
 
     void finishTransfer();
     void updateTransfer();
+    void mouseHoverTransfer(bool isHover);
 
+    QSize minimumSizeHint() const;
+    QSize sizeHint() const;
     void mouseEventClicked(QPoint pos, bool rightClick = false);
 
     ~TransferItem();

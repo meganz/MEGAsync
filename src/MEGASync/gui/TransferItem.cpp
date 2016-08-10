@@ -2,13 +2,17 @@
 #include "ui_TransferItem.h"
 #include "control/Utilities.h"
 #include <QMouseEvent>
-#include <QDebug>
+#include "megaapi.h"
+
+using namespace mega;
 
 TransferItem::TransferItem(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TransferItem)
 {
     ui->setupUi(this);
+    ui->lCancelTransfer->setHidden(true);
+
     totalSize = totalTransferredBytes = elapsedTransferTime = 0;
     transferSpeed = 0;
     effectiveTransferSpeed = 200000;
@@ -21,8 +25,8 @@ void TransferItem::setFileName(QString fileName)
     this->fileName = fileName;
     QFont f = ui->lTransferName->font();
     QFontMetrics fm = QFontMetrics(f);
-    ui->lTransferName->setStyleSheet(QString::fromUtf8("color: grey;"));
     ui->lTransferName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lTransferName->width()));
+    ui->lTransferName->setToolTip(fileName);
 
     QIcon icon;
     icon.addFile(Utilities::getExtensionPixmapSmall(fileName), QSize(), QIcon::Normal, QIcon::Off);
@@ -46,24 +50,42 @@ void TransferItem::setTotalSize(long long size)
     this->totalSize = size;
 }
 
-void TransferItem::setType(int type)
+void TransferItem::setType(int type, bool isSyncTransfer)
 {
     this->type = type;
     QIcon icon;
+
     if (type)
     {
-        icon.addFile(QString::fromUtf8(":/images/tray_upload_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/images/upload_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+        QString loadIconResource = isSyncTransfer ? QString::fromUtf8(":/images/sync_item_ico.png")
+                                                  : QString::fromUtf8(":/images/cloud_upload_item_ico.png");
+
+        ui->lActionType->setIcon(QIcon(loadIconResource));
+        ui->lActionType->setIconSize(QSize(32, 32));
+
+        ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
+                                                        "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
+
     }
     else
     {
-        icon.addFile(QString::fromUtf8(":/images/tray_download_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QString::fromUtf8(":/images/download_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+        QString loadIconResource = isSyncTransfer ? QString::fromUtf8(":/images/sync_item_ico.png")
+                                                  : QString::fromUtf8(":/images/cloud_download_item_ico.png");
+
+        ui->lActionType->setIcon(QIcon(loadIconResource));
+        ui->lActionType->setIconSize(QSize(32, 32));
+
+        ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
+                                                        "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
     }
 
 #ifndef Q_OS_LINUX
     ui->lTransferType->setIcon(icon);
-    ui->lTransferType->setIconSize(QSize(16, 16));
+    ui->lTransferType->setIconSize(QSize(12, 12));
 #else
-    ui->lTransferType->setPixmap(icon.pixmap(QSize(16, 16)));
+    ui->lTransferType->setPixmap(icon.pixmap(QSize(12, 12)));
 #endif
 
 }
@@ -77,7 +99,10 @@ void TransferItem::finishTransfer()
 {
 
     ui->lTotal->setText(QString::fromUtf8("%1").arg(Utilities::getSizeString(totalSize)));
-    ui->lSpeed->setText(tr("completed"));
+    ui->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/completed_item_ico.png")));
+    ui->lCompleted->setIconSize(QSize(12, 12));
+    ui->pbTransfer->setVisible(false);
+    ui->lSpeed->setEnabled(false);
     ui->lRemainingTime->setText(QString::fromUtf8(""));
 
 }
@@ -106,20 +131,11 @@ void TransferItem::updateTransfer()
     effectiveTransferSpeed += (effectiveSpeed-effectiveTransferSpeed)/3; //Smooth the effective speed
 
     int totalRemainingSeconds = (effectiveTransferSpeed) ? remainingBytes/effectiveTransferSpeed : 0;
-    int remainingHours = totalRemainingSeconds/3600;
-    if ((remainingHours<0) || (remainingHours>99))
-    {
-        totalRemainingSeconds = 0;
-    }
 
-    int remainingMinutes = (totalRemainingSeconds%3600)/60;
-    int remainingSeconds =  (totalRemainingSeconds%60);
     QString remainingTime;
     if (totalRemainingSeconds)
     {
-        remainingTime = QString::fromAscii("%1:%2:%3").arg(remainingHours, 2, 10, QChar::fromAscii('0'))
-            .arg(remainingMinutes, 2, 10, QChar::fromAscii('0'))
-            .arg(remainingSeconds, 2, 10, QChar::fromAscii('0'));
+        remainingTime = Utilities::getTimeString(totalRemainingSeconds);
     }
     else
     {
@@ -167,11 +183,25 @@ void TransferItem::updateTransfer()
     ui->pbTransfer->setValue(permil);
 
     // Update transferred bytes
-    ui->lTotal->setText(QString::fromUtf8("%1 of %2").arg(Utilities::getSizeString(totalTransferredBytes))
+    ui->lTotal->setText(QString::fromUtf8("%1   <span style=\"color:#777777; text-decoration:none;\">of   </span>%2").arg(Utilities::getSizeString(totalTransferredBytes))
                         .arg(Utilities::getSizeString(totalSize)));
 }
 
 void TransferItem::mouseEventClicked(QPoint pos, bool rightClick)
 {
+}
+
+void TransferItem::mouseHoverTransfer(bool isHover)
+{
+    ui->lCancelTransfer->setHidden(!isHover);
+}
+
+QSize TransferItem::minimumSizeHint() const
+{
+    return QSize(720, 48);
+}
+QSize TransferItem::sizeHint() const
+{
+    return QSize(720, 48);
 }
 
