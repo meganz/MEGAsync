@@ -7,24 +7,22 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 {
     if (index.data().canConvert<TransferItem*>())
     {
-        // example of simple drawing (selection) before widget
         if (option.state & QStyle::State_Selected)
         {
-            painter->fillRect(option.rect, option.palette.highlight());
+            painter->fillRect(option.rect, QColor(247, 247, 247));
         }
 
         TransferItem *ti = qvariant_cast<TransferItem*>(index.data());
         painter->save();
         painter->translate(option.rect.topLeft());
-        //ti->render(painter, QPoint(), option.rect, QWidget::DrawChildren);
         ti->render(painter, QPoint(0, 0), QRegion(0, 0, option.rect.width(), option.rect.height()));
         painter->restore();
 
-        }
-        else
-        {
-            QStyledItemDelegate::paint(painter, option, index);
-        }
+    }
+    else
+    {
+        QStyledItemDelegate::paint(painter, option, index);
+    }
 
 }
 
