@@ -495,5 +495,11 @@
         <file>images/upload_item_ico@2x.png</file>
         <file>images/upload_to_mega_ico.png</file>
         <file>images/upload_to_mega_ico@2x.png</file>
+        <file>fonts/SourceSansPro-Regular.ttf</file>
+        <file>fonts/SourceSansPro-Light.ttf</file>
+        <file>fonts/SourceSansPro-Semibold.ttf</file>
+        <file>fonts/SourceSansPro-Bold.ttf</file>
+        <file>images/completed_item_ico.png</file>
+        <file>images/completed_item_ico@2x.png</file>
     </qresource>
 </RCC>
