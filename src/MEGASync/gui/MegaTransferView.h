@@ -17,10 +17,6 @@ private:
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event);
 
-signals:
-
-public slots:
-
 };
 
 #endif // MEGATRANSFERVIEW_H

@@ -36,7 +36,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/TransferManager.cpp \
     $$PWD/TransfersWidget.cpp \
     $$PWD/QTransfersModel.cpp \
-    $$PWD/MegaTransferDelegate.cpp
+    $$PWD/MegaTransferDelegate.cpp \
+    $$PWD/MegaTransferView.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -74,7 +75,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/TransferManager.h \
     $$PWD/TransfersWidget.h \
     $$PWD/QTransfersModel.h \
-    $$PWD/MegaTransferDelegate.h
+    $$PWD/MegaTransferDelegate.h \
+    $$PWD/MegaTransferView.h
 
 INCLUDEPATH += $$PWD
 
