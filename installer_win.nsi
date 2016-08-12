@@ -781,6 +781,10 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\libsodium.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\libsodium.dll" "$USERNAME" "GenericRead + GenericWrite"
 
+  File "installer\qt.conf"
+  AccessControl::SetFileOwner "$INSTDIR\qt.conf" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\qt.conf" "$USERNAME" "GenericRead + GenericWrite"
+
 ;!ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
   File "${UNINSTALLER_NAME}"
   AccessControl::SetFileOwner "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME"
