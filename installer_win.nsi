@@ -784,10 +784,6 @@ modeselected:
   File "${SRCDIR_MEGASYNC}\cares.dll"
   AccessControl::SetFileOwner "$INSTDIR\cares.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\cares.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
-  File "${SRCDIR_MEGASYNC}\libuv.dll"
-  AccessControl::SetFileOwner "$INSTDIR\libuv.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\libuv.dll" "$USERNAME" "GenericRead + GenericWrite"
 
   File "${SRCDIR_MEGASYNC}\libsodium.dll"
   AccessControl::SetFileOwner "$INSTDIR\libsodium.dll" "$USERNAME"
