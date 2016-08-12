@@ -743,17 +743,9 @@ modeselected:
   AccessControl::GrantOnFile "$INSTDIR\platforms" "$USERNAME" "GenericRead + GenericWrite"
   AccessControl::SetFileOwner "$INSTDIR\platforms\qwindows.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\platforms\qwindows.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
-  SetOutPath "$INSTDIR\bearer"
-  File "${QT_PATH}\plugins\bearer\qgenericbearer.dll"
-  AccessControl::SetFileOwner "$INSTDIR\bearer" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\bearer" "$USERNAME" "GenericRead + GenericWrite"
-  AccessControl::SetFileOwner "$INSTDIR\bearer\qgenericbearer.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\bearer\qgenericbearer.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
-  File "${QT_PATH}\plugins\bearer\qnativewifibearer.dll"
-  AccessControl::SetFileOwner "$INSTDIR\bearer\qnativewifibearer.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\bearer\qnativewifibearer.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  ;Disable bearer plugin if it's a reinstallation
+  RMDir /r "$INSTDIR\bearer"
 !endif
           
   SetOutPath "$INSTDIR"
