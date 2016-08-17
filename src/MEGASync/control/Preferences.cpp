@@ -11,12 +11,12 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/2.9.8.0";
+const char Preferences::USER_AGENT[] = "MEGAsync/2.9.8.2";
 const int Preferences::VERSION_CODE = 2908;
-const int Preferences::BUILD_ID = 0;
+const int Preferences::BUILD_ID = 2;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.8");
-const QString Preferences::SDK_ID = QString::fromAscii("d7412");
+const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.8.2");
+const QString Preferences::SDK_ID = QString::fromAscii("64f54");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- More efficient upload completion\n"
             "- Creation of new cryptographic keys\n"
@@ -204,6 +204,8 @@ const QString Preferences::accountCreationTimeKey   = QString::fromAscii("accoun
 const QString Preferences::hasLoggedInKey           = QString::fromAscii("hasLoggedIn");
 const QString Preferences::useHttpsOnlyKey          = QString::fromAscii("useHttpsOnly");
 const QString Preferences::SSLcertificateExceptionKey  = QString::fromAscii("SSLcertificateException");
+const QString Preferences::maxMemoryUsageKey        = QString::fromAscii("maxMemoryUsage");
+const QString Preferences::maxMemoryReportTimeKey   = QString::fromAscii("maxMemoryReportTime");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -1333,6 +1335,38 @@ void Preferences::setLastCustomStreamingApp(const QString &value)
 {
     mutex.lock();
     settings->setValue(lastCustomStreamingAppKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+long long Preferences::getMaxMemoryUsage()
+{
+    mutex.lock();
+    long long value = settings->value(maxMemoryUsageKey, 0).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setMaxMemoryUsage(long long value)
+{
+    mutex.lock();
+    settings->setValue(maxMemoryUsageKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+long long Preferences::getMaxMemoryReportTime()
+{
+    mutex.lock();
+    long long value = settings->value(maxMemoryReportTimeKey, 0).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setMaxMemoryReportTime(long long timestamp)
+{
+    mutex.lock();
+    settings->setValue(maxMemoryReportTimeKey, timestamp);
     settings->sync();
     mutex.unlock();
 }

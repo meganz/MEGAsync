@@ -112,6 +112,7 @@ fi
 PAIRSVMNAMEREPOURL=""
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL ARCHLINUX;$BASEURLARCH/Arch_Extra"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL CENTOS_7;$BASEURLRPM/CentOS_7"
+PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL SCIENTIFICLINUX_7;$BASEURLRPM/ScientificLinux_7"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_19;$BASEURLRPM/Fedora_19"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_20;$BASEURLRPM/Fedora_20"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_21;$BASEURLRPM/Fedora_21"
@@ -153,6 +154,15 @@ PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_9_i386_T;$URLDEB9" #NOTICE: using
 count=0
 for i in $PAIRSVMNAMEREPOURL; do
 
+    RUNNING=`ps aux | grep check_package.sh | grep -v check_all_packages | grep -v grep | wc -l`
+    
+    while [ $RUNNING -ge 11 ]; do
+	 echo "$RUNNING processes running. Waiting for one to finish ..."
+	 sleep 5;
+	 RUNNING=`ps aux | grep check_package.sh | grep -v check_all_packages | grep -v grep | wc -l`
+	done
+    
+
 	VMNAME=`echo $i | cut -d";" -f1`;
 	REPO=`echo $i | cut -d";" -f2`;
 	
@@ -164,6 +174,5 @@ for i in $PAIRSVMNAMEREPOURL; do
 	
 	sleep 1
 	
-	count=$(( $count + 1 ))
-	if [[ $(( $count % 7 )) == 0 ]]; then sleep 70; fi
+	
 done
