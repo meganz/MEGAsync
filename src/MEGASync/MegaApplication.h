@@ -244,6 +244,7 @@ protected:
     int syncState;
     mega::MegaPricing *pricing;
     long long bwOverquotaTimestamp;
+    bool enablingBwOverquota;
     UpgradeDialog *bwOverquotaDialog;
     bool bwOverquotaEvent;
     InfoWizard *infoWizard;

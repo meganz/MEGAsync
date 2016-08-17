@@ -447,6 +447,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     notificator = NULL;
     pricing = NULL;
     bwOverquotaTimestamp = 0;
+    enablingBwOverquota = false;
     bwOverquotaDialog = NULL;
     bwOverquotaEvent = false;
     infoWizard = NULL;
@@ -4561,6 +4562,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             bwOverquotaDialog->refreshAccountDetails();
         }
 
+        enablingBwOverquota = false;
         delete details;
         break;
     }
@@ -5066,10 +5068,11 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     preferences->setTransferDownloadMethod(api->getDownloadMethod());
     preferences->setTransferUploadMethod(api->getUploadMethod());
 
-    if (e->getErrorCode() == MegaError::API_EOVERQUOTA && e->getValue())
+    if (e->getErrorCode() == MegaError::API_EOVERQUOTA && e->getValue() && (!bwOverquotaTimestamp || !enablingBwOverquota))
     {
         int t = e->getValue();
 
+        enablingBwOverquota = true;
         preferences->clearTemporalBandwidth();
         megaApi->getPricing();
         megaApi->getAccountDetails();
