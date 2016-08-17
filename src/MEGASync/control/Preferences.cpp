@@ -204,6 +204,8 @@ const QString Preferences::accountCreationTimeKey   = QString::fromAscii("accoun
 const QString Preferences::hasLoggedInKey           = QString::fromAscii("hasLoggedIn");
 const QString Preferences::useHttpsOnlyKey          = QString::fromAscii("useHttpsOnly");
 const QString Preferences::SSLcertificateExceptionKey  = QString::fromAscii("SSLcertificateException");
+const QString Preferences::maxMemoryUsageKey        = QString::fromAscii("maxMemoryUsage");
+const QString Preferences::maxMemoryReportTimeKey   = QString::fromAscii("maxMemoryReportTime");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -1333,6 +1335,38 @@ void Preferences::setLastCustomStreamingApp(const QString &value)
 {
     mutex.lock();
     settings->setValue(lastCustomStreamingAppKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+long long Preferences::getMaxMemoryUsage()
+{
+    mutex.lock();
+    long long value = settings->value(maxMemoryUsageKey, 0).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setMaxMemoryUsage(long long value)
+{
+    mutex.lock();
+    settings->setValue(maxMemoryUsageKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+long long Preferences::getMaxMemoryReportTime()
+{
+    mutex.lock();
+    long long value = settings->value(maxMemoryReportTimeKey, 0).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setMaxMemoryReportTime(long long timestamp)
+{
+    mutex.lock();
+    settings->setValue(maxMemoryReportTimeKey, timestamp);
     settings->sync();
     mutex.unlock();
 }
