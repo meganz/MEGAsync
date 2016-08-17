@@ -25,7 +25,7 @@
 DIR=${1}
 DIST=${2}
 ARCHS=`find * -maxdepth 0 -type d | paste -s -d" "`
-FECHA=`date -R`
+FECHA=`date -Ru`
 
 # cleanup existing repository files
 rm -f Packages Packages.gz Release
