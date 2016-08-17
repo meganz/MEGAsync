@@ -21,6 +21,9 @@
 #ifndef WIN32
 //sleep
 #include <unistd.h>
+#else
+#include <Windows.h>
+#include <Psapi.h>
 #endif
 
 using namespace mega;
@@ -444,6 +447,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     notificator = NULL;
     pricing = NULL;
     bwOverquotaTimestamp = 0;
+    enablingBwOverquota = false;
     bwOverquotaDialog = NULL;
     bwOverquotaEvent = false;
     infoWizard = NULL;
@@ -453,6 +457,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     isFirstSyncDone = false;
     isFirstFileSynced = false;
     queuedUserStats = 0;
+    maxMemoryUsage = 0;
 
 #ifdef __APPLE__
     scanningTimer = NULL;
@@ -1638,6 +1643,48 @@ void MegaApplication::checkNetworkInterfaces()
     }
 }
 
+void MegaApplication::checkMemoryUsage()
+{
+#ifdef _WIN32
+    long long numNodes = megaApi->getNumNodes();
+    long long numLocalNodes = megaApi->getNumLocalNodes();
+    long long totalNodes = numNodes + numLocalNodes;
+    if (!totalNodes)
+    {
+        totalNodes++;
+    }
+
+
+    PROCESS_MEMORY_COUNTERS_EX pmc;
+    GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc));
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG,
+                 QString::fromUtf8("Memory usage: %1 MB / %2 Nodes / %3 LocalNodes / %4 B/N")
+                 .arg(pmc.PrivateUsage / (1024 * 1024))
+                 .arg(numNodes).arg(numLocalNodes)
+                 .arg((float)pmc.PrivateUsage / totalNodes).toUtf8().constData());
+
+    if (pmc.PrivateUsage > maxMemoryUsage)
+    {
+        maxMemoryUsage = pmc.PrivateUsage;
+    }
+
+    if (maxMemoryUsage > preferences->getMaxMemoryUsage()
+            && maxMemoryUsage > 100 * 1024 * 1024 + 2 * 1024 * totalNodes)
+    {
+        long long currentTime = QDateTime::currentMSecsSinceEpoch();
+        if (currentTime - preferences->getMaxMemoryReportTime() > 86400000)
+        {
+            preferences->setMaxMemoryUsage(maxMemoryUsage);
+            preferences->setMaxMemoryReportTime(currentTime);
+            megaApi->sendEvent(99509, QString::fromUtf8("%1 %2 %3")
+                               .arg(maxMemoryUsage)
+                               .arg(numNodes)
+                               .arg(numLocalNodes).toUtf8().constData());
+        }
+    }
+#endif
+}
+
 void MegaApplication::periodicTasks()
 {
     if (appfinished)
@@ -1659,6 +1706,7 @@ void MegaApplication::periodicTasks()
         if (!(++counter % 6))
         {
             networkConfigurationManager.updateConfigurations();
+            checkMemoryUsage();
             megaApi->update();
         }
 
@@ -4514,6 +4562,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             bwOverquotaDialog->refreshAccountDetails();
         }
 
+        enablingBwOverquota = false;
         delete details;
         break;
     }
@@ -5019,10 +5068,11 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     preferences->setTransferDownloadMethod(api->getDownloadMethod());
     preferences->setTransferUploadMethod(api->getUploadMethod());
 
-    if (e->getErrorCode() == MegaError::API_EOVERQUOTA && e->getValue())
+    if (e->getErrorCode() == MegaError::API_EOVERQUOTA && e->getValue() && (!bwOverquotaTimestamp || !enablingBwOverquota))
     {
         int t = e->getValue();
 
+        enablingBwOverquota = true;
         preferences->clearTemporalBandwidth();
         megaApi->getPricing();
         megaApi->getAccountDetails();

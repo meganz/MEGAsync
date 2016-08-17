@@ -743,17 +743,9 @@ modeselected:
   AccessControl::GrantOnFile "$INSTDIR\platforms" "$USERNAME" "GenericRead + GenericWrite"
   AccessControl::SetFileOwner "$INSTDIR\platforms\qwindows.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\platforms\qwindows.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
-  SetOutPath "$INSTDIR\bearer"
-  File "${QT_PATH}\plugins\bearer\qgenericbearer.dll"
-  AccessControl::SetFileOwner "$INSTDIR\bearer" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\bearer" "$USERNAME" "GenericRead + GenericWrite"
-  AccessControl::SetFileOwner "$INSTDIR\bearer\qgenericbearer.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\bearer\qgenericbearer.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
-  File "${QT_PATH}\plugins\bearer\qnativewifibearer.dll"
-  AccessControl::SetFileOwner "$INSTDIR\bearer\qnativewifibearer.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\bearer\qnativewifibearer.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  ;Disable bearer plugin if it's a reinstallation
+  RMDir /r "$INSTDIR\bearer"
 !endif
           
   SetOutPath "$INSTDIR"
@@ -784,14 +776,14 @@ modeselected:
   File "${SRCDIR_MEGASYNC}\cares.dll"
   AccessControl::SetFileOwner "$INSTDIR\cares.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\cares.dll" "$USERNAME" "GenericRead + GenericWrite"
-  
-  File "${SRCDIR_MEGASYNC}\libuv.dll"
-  AccessControl::SetFileOwner "$INSTDIR\libuv.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\libuv.dll" "$USERNAME" "GenericRead + GenericWrite"
 
   File "${SRCDIR_MEGASYNC}\libsodium.dll"
   AccessControl::SetFileOwner "$INSTDIR\libsodium.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\libsodium.dll" "$USERNAME" "GenericRead + GenericWrite"
+
+  File "installer\qt.conf"
+  AccessControl::SetFileOwner "$INSTDIR\qt.conf" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\qt.conf" "$USERNAME" "GenericRead + GenericWrite"
 
 ;!ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
   File "${UNINSTALLER_NAME}"
