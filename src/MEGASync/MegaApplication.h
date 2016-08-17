@@ -136,6 +136,7 @@ public slots:
     void exitApplication();
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
+    void checkMemoryUsage();
     void periodicTasks();
     void cleanAll();
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
@@ -238,6 +239,7 @@ protected:
     long long lastStartedDownload;
     long long lastStartedUpload;
     long long queuedUserStats;
+    long long maxMemoryUsage;
     int exportOps;
     int syncState;
     mega::MegaPricing *pricing;
