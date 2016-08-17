@@ -47,5 +47,5 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
         QMouseEvent * e = (QMouseEvent *)event;
         item->mouseEventClicked(e->pos(), ((QMouseEvent*)event)->button() == Qt::RightButton);
     }
-
+    return true;
 }
