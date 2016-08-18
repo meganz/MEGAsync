@@ -427,6 +427,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     loginActionGuest = NULL;
     waiting = false;
     updated = false;
+    checkupdate = false;
     updateAction = NULL;
     updateActionOverquota = NULL;
     updateActionGuest = NULL;
@@ -1022,7 +1023,14 @@ void MegaApplication::start()
         startUpdateTask();
         QString language = preferences->language();
         changeLanguage(language);
+
+        if (updated)
+        {
+            megaApi->sendEvent(99510, "MEGAsync update");
+            checkupdate = true;
+        }
         updated = false;
+
         if (!infoDialog)
         {
             infoDialog = new InfoDialog(this);
@@ -1075,6 +1083,12 @@ void MegaApplication::start()
             megaApi->fastLogin(preferences->email().toUtf8().constData(),
                        preferences->emailHash().toUtf8().constData(),
                        preferences->privatePw().toUtf8().constData());
+        }
+
+        if (updated)
+        {
+            megaApi->sendEvent(99510, "MEGAsync update");
+            checkupdate = true;
         }
     }
 }
@@ -1705,6 +1719,12 @@ void MegaApplication::periodicTasks()
     {
         if (!(++counter % 6))
         {
+            if (checkupdate)
+            {
+                checkupdate = false;
+                megaApi->sendEvent(99511, "MEGAsync updated OK");
+            }
+
             networkConfigurationManager.updateConfigurations();
             checkMemoryUsage();
             megaApi->update();

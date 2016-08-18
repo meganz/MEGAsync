@@ -282,6 +282,7 @@ protected:
     bool indexing;
     bool waiting;
     bool updated;
+    bool checkupdate;
     bool updateBlocked;
     long long lastExit;
     bool appfinished;
