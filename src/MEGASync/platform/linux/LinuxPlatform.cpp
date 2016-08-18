@@ -9,8 +9,8 @@ NotifyServer *LinuxPlatform::notify_server = NULL;
 
 static QString autostart_dir = QDir::homePath() + QString::fromAscii("/.config/autostart/");
 QString LinuxPlatform::desktop_file = autostart_dir + QString::fromAscii("megasync.desktop");
-QString LinuxPlatform::set_icon = QString::fromUtf8("gvfs-set-attribute -t string %1 metadata::custom-icon file://%2");
-QString LinuxPlatform::remove_icon = QString::fromUtf8("gvfs-set-attribute -t unset %1 metadata::custom-icon");
+QString LinuxPlatform::set_icon = QString::fromUtf8("gvfs-set-attribute -t string \"%1\" metadata::custom-icon file://%2");
+QString LinuxPlatform::remove_icon = QString::fromUtf8("gvfs-set-attribute -t unset \"%1\" metadata::custom-icon");
 QString LinuxPlatform::custom_icon = QString::fromUtf8("/usr/share/icons/hicolor/256x256/apps/mega.png");
 
 void LinuxPlatform::initialize(int argc, char *argv[])
@@ -117,7 +117,13 @@ void LinuxPlatform::syncFolderAdded(QString syncPath, QString syncName)
 {
     if (QFile(custom_icon).exists())
     {
-        QProcess::startDetached(set_icon.arg(syncPath).arg(custom_icon));
+        QFile *folder = new QFile(syncPath);
+        if (folder->exists())
+        {
+            QProcess::startDetached(set_icon.arg(folder->fileName()).arg(custom_icon));
+        }
+        delete folder;
+
     }
 
     if (notify_server)
@@ -128,7 +134,12 @@ void LinuxPlatform::syncFolderAdded(QString syncPath, QString syncName)
 
 void LinuxPlatform::syncFolderRemoved(QString syncPath, QString syncName)
 {
-    QProcess::startDetached(remove_icon.arg(syncPath));
+    QFile *folder = new QFile(syncPath);
+    if (folder->exists())
+    {
+        QProcess::startDetached(remove_icon.arg(folder->fileName()));
+    }
+    delete folder;
 
     if (notify_server)
     {
