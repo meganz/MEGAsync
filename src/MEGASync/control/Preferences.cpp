@@ -16,7 +16,7 @@ const int Preferences::VERSION_CODE = 2909;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.9");
-const QString Preferences::SDK_ID = QString::fromAscii("64f54");
+const QString Preferences::SDK_ID = QString::fromAscii("f2fb1");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- Fixed the creation of thumbnails for JPG images (Windows)\n"
             "- Fixed incompatibilities with some WiFi drivers (Windows)\n"
