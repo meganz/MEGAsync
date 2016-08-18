@@ -40,7 +40,6 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
                 last_row = -1;
                 lastItemHovered = NULL;
             }
-
         }
     }
     QTreeView::mouseMoveEvent(event);

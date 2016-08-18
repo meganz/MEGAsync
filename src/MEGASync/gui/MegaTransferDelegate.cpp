@@ -17,13 +17,11 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         painter->translate(option.rect.topLeft());
         ti->render(painter, QPoint(0, 0), QRegion(0, 0, option.rect.width(), option.rect.height()));
         painter->restore();
-
     }
     else
     {
         QStyledItemDelegate::paint(painter, option, index);
     }
-
 }
 
 QSize MegaTransferDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
@@ -44,7 +42,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *model,
     if (QEvent::MouseButtonRelease ==  event->type())
     {
         TransferItem *item = (TransferItem *)index.internalPointer();
-        QMouseEvent * e = (QMouseEvent *)event;
+        QMouseEvent *e = (QMouseEvent *)event;
         item->mouseEventClicked(e->pos(), ((QMouseEvent*)event)->button() == Qt::RightButton);
     }
     return true;

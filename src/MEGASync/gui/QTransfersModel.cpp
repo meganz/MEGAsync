@@ -15,10 +15,11 @@ QTransfersModel::QTransfersModel(int type, QObject *parent) :
 
 TransferItem *QTransfersModel::transferFromIndex(const QModelIndex &index) const
 {
-    if(index.isValid())
+    if (index.isValid())
     {
         return static_cast<TransferItem *>(index.internalPointer());
-    }else
+    }
+    else
     {
         return NULL;
     }
@@ -47,7 +48,6 @@ QVariant QTransfersModel::data(const QModelIndex &index, int role) const
 QModelIndex QTransfersModel::parent(const QModelIndex &index) const
 {
     return QModelIndex();
-
 }
 
 QModelIndex QTransfersModel::index(int row, int column, const QModelIndex &parent) const
@@ -62,15 +62,15 @@ QModelIndex QTransfersModel::index(int row, int column, const QModelIndex &paren
 
 void QTransfersModel::insertTransfer(MegaTransfer *transfer, const QModelIndex &parent)
 {
-    if (transfers.isEmpty())
-    {
-        emit onTransferAdded();
-    }
-
     beginInsertRows(QModelIndex(), transfers.size(), transfers.size());
     transfers.insert(transfer->getTag(), new TransferItem());
     transfersOrder.append(transfer->getTag());
     endInsertRows();
+
+    if (transfersOrder.size() == 1)
+    {
+        emit onTransferAdded();
+    }
 }
 
 void QTransfersModel::removeTransfer(MegaTransfer *transfer, const QModelIndex &parent)
@@ -110,7 +110,6 @@ void QTransfersModel::onTransferStart(MegaApi *api, MegaTransfer *transfer)
         emit onTransferAdded();
         updateTransferInfo(transfer);
     }
-
 }
 
 void QTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *e)
@@ -134,10 +133,7 @@ void QTransfersModel::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
 {
     if (type == TYPE_ALL || transfer->getType() == type)
     {
-        if (transfers.contains(transfer->getTag()))
-        {
-            updateTransferInfo(transfer);
-        }
+        updateTransferInfo(transfer);
     }
 }
 
@@ -164,6 +160,11 @@ void QTransfersModel::setupModelTransfers(MegaTransferList *transfers)
 void QTransfersModel::updateTransferInfo(MegaTransfer *transfer)
 {
     TransferItem *item = transfers.value(transfer->getTag());
+    if (!item)
+    {
+        return;
+    }
+
     item->setFileName(QString::fromUtf8(transfer->getFileName()));
     item->setType(transfer->getType(), transfer->isSyncTransfer());
     item->setSpeed(transfer->getSpeed());

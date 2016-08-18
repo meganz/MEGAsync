@@ -278,7 +278,7 @@ protected:
     QList<QNetworkInterface> activeNetworkInterfaces;
     QMap<QString, QString> pendingLinks;
     MegaSyncLogger *logger;
-    TransferManager *transferManager;
+    QPointer<TransferManager> transferManager;
 
     bool reboot;
     bool syncActive;

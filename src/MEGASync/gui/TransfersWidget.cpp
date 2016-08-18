@@ -13,7 +13,6 @@ TransfersWidget::TransfersWidget(QWidget *parent) :
     tDelegate = new MegaTransferDelegate(this);
     ui->tvTransfers->setItemDelegate((QAbstractItemDelegate *)tDelegate);
     ui->tvTransfers->header()->close();
-
 }
 
 void TransfersWidget::setupTransfers(mega::MegaTransferList *tList, int type)
@@ -44,17 +43,17 @@ void TransfersWidget::noTransfers(int type)
             ui->lStatusIcon->setIcon(QIcon(QString::fromAscii("://images/no_downloads.png")));
             ui->lStatusIcon->setIconSize(QSize(156, 156));
             ui->lStatus->setText(tr("No Downloads"));
-        break;
+            break;
         case QTransfersModel::TYPE_UPLOAD:
             ui->lStatusIcon->setIcon(QIcon(QString::fromAscii("://images/no_uploads.png")));
             ui->lStatusIcon->setIconSize(QSize(156, 156));
             ui->lStatus->setText(tr("No Uploads"));
-        break;
+            break;
         default:
             ui->lStatusIcon->setIcon(QIcon(QString::fromAscii("://images/no_transfers.png")));
             ui->lStatusIcon->setIconSize(QSize(156, 156));
             ui->lStatus->setText(tr("No Transfers"));
-        break;
+            break;
     }
 }
 

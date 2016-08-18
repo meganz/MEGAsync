@@ -58,7 +58,6 @@ void TransferItem::setType(int type, bool isSyncTransfer)
 
     if (type)
     {
-
         icon.addFile(QString::fromUtf8(":/images/upload_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
         QPixmap loadIconResource = isSyncTransfer ? QPixmap(QString::fromUtf8(":/images/sync_item_ico.png"))
                                                   : QPixmap(QString::fromUtf8(":/images/cloud_upload_item_ico.png"));
@@ -81,13 +80,8 @@ void TransferItem::setType(int type, bool isSyncTransfer)
                                                         "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
     }
 
-#ifndef Q_OS_LINUX
     ui->lTransferType->setIcon(icon);
     ui->lTransferType->setIconSize(QSize(12, 12));
-#else
-    ui->lTransferType->setPixmap(icon.pixmap(QSize(12, 12)));
-#endif
-
 }
 
 TransferItem::~TransferItem()
@@ -204,4 +198,3 @@ QSize TransferItem::sizeHint() const
 {
     return QSize(720, 48);
 }
-

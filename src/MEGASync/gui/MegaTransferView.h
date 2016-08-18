@@ -7,6 +7,7 @@
 class MegaTransferView : public QTreeView
 {
     Q_OBJECT
+
 public:
     MegaTransferView(QWidget *parent = 0);
 
@@ -16,7 +17,6 @@ private:
 
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event);
-
 };
 
 #endif // MEGATRANSFERVIEW_H

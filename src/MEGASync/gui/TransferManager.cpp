@@ -10,6 +10,13 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     ui(new Ui::TransferManager)
 {
     ui->setupUi(this);
+    setAttribute(Qt::WA_QuitOnClose, false);
+    setAttribute(Qt::WA_DeleteOnClose, true);
+    Qt::WindowFlags flags =  Qt::Window | Qt::WindowSystemMenuHint
+                                | Qt::WindowMinimizeButtonHint
+                                | Qt::WindowCloseButtonHint;
+    this->setWindowFlags(flags);
+
     addMenu = NULL;
     importLinksAction = NULL;
     uploadAction = NULL;
@@ -78,7 +85,6 @@ void TransferManager::createAddMenu()
     downloadAction = new QAction(tr("Download from MEGA"), this);
     downloadAction->setIcon(QIcon(QString::fromAscii("://images/download_from_mega_ico.png")));
     connect(downloadAction, SIGNAL(triggered()), qApp, SLOT(downloadActionClicked()));
-
 
     if (settingsAction)
     {
@@ -164,21 +170,18 @@ void TransferManager::on_tAllTransfers_clicked()
 void TransferManager::on_bAdd_clicked()
 {
     QPoint point = ui->bAdd->mapToGlobal(QPoint(ui->bAdd->width() , ui->bAdd->height() + 4));
+    QPoint p = &point ? (point) - QPoint(addMenu->sizeHint().width(), 0) : QCursor::pos();
 
-    QPoint p = &point ? (point) - QPoint(addMenu->sizeHint().width(), 0)
-                     : QCursor::pos();
 #ifdef __APPLE__
     addMenu->exec(p);
 #else
     addMenu->popup(p);
 #endif
-
 }
 
 void TransferManager::on_bClose_clicked()
 {
     close();
-    return;
 }
 
 void TransferManager::on_bPause_clicked()

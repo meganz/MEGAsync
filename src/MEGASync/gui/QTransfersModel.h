@@ -9,8 +9,8 @@
 class QTransfersModel : public QAbstractItemModel, public mega::MegaTransferListener
 {
     Q_OBJECT
-public:
 
+public:
     enum {
         TYPE_DOWNLOAD = 0,
         TYPE_UPLOAD,
@@ -20,9 +20,7 @@ public:
     };
 
     explicit QTransfersModel(int type, QObject *parent = 0);
-
     void setupModelTransfers(mega::MegaTransferList *transfers);
-
     TransferItem *transferFromIndex(const QModelIndex &index) const;
     virtual int columnCount(const QModelIndex & parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role) const;
