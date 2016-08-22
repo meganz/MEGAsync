@@ -1659,27 +1659,47 @@ void MegaApplication::checkNetworkInterfaces()
 
 void MegaApplication::checkMemoryUsage()
 {
-#ifdef _WIN32
     long long numNodes = megaApi->getNumNodes();
     long long numLocalNodes = megaApi->getNumLocalNodes();
     long long totalNodes = numNodes + numLocalNodes;
+    long long procesUsage = 0;
+
     if (!totalNodes)
     {
         totalNodes++;
     }
 
-
+#ifdef _WIN32
     PROCESS_MEMORY_COUNTERS_EX pmc;
     GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc));
+    procesUsage = pmc.PrivateUsage;
+#else
+    #ifdef __APPLE__
+        struct task_basic_info t_info;
+        mach_msg_type_number_t t_info_count = TASK_BASIC_INFO_COUNT;
+
+        if (KERN_SUCCESS == task_info(mach_task_self(),
+                                      TASK_BASIC_INFO, (task_info_t)&t_info,
+                                      &t_info_count))
+        {
+            procesUsage = t_info.resident_size;
+        }
+        else
+        {
+            return;
+        }
+    #endif
+#endif
+
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG,
                  QString::fromUtf8("Memory usage: %1 MB / %2 Nodes / %3 LocalNodes / %4 B/N")
-                 .arg(pmc.PrivateUsage / (1024 * 1024))
+                 .arg(procesUsage / (1024 * 1024))
                  .arg(numNodes).arg(numLocalNodes)
-                 .arg((float)pmc.PrivateUsage / totalNodes).toUtf8().constData());
+                 .arg((float)procesUsage / totalNodes).toUtf8().constData());
 
-    if (pmc.PrivateUsage > maxMemoryUsage)
+    if (procesUsage > maxMemoryUsage)
     {
-        maxMemoryUsage = pmc.PrivateUsage;
+        maxMemoryUsage = procesUsage;
     }
 
     if (maxMemoryUsage > preferences->getMaxMemoryUsage()
@@ -1696,7 +1716,7 @@ void MegaApplication::checkMemoryUsage()
                                .arg(numLocalNodes).toUtf8().constData());
         }
     }
-#endif
+
 }
 
 void MegaApplication::periodicTasks()
