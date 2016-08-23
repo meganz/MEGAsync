@@ -188,13 +188,13 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/megasync_logo.png</normaloff>:/images/megasync_logo.png</iconset>
            </property>
            <property name="iconSize">
             <size>
-             <width>150</width>
-             <height>60</height>
+             <width>128</width>
+             <height>48</height>
             </size>
            </property>
           </widget>
@@ -230,7 +230,7 @@
             <string>Add...</string>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/add_ico.png</normaloff>:/images/add_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -518,9 +518,7 @@
      <widget class="TransfersWidget" name="wAllTransfers"/>
      <widget class="TransfersWidget" name="wDownloads"/>
      <widget class="TransfersWidget" name="wUploads"/>
-     <widget class="TransfersWidget" name="wCompleted">
-      <zorder>tDownloads</zorder>
-     </widget>
+     <widget class="TransfersWidget" name="wCompleted"/>
     </widget>
    </item>
    <item>
@@ -565,7 +563,7 @@
          <string>Pause</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/pause_ico.png</normaloff>:/images/pause_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -594,7 +592,7 @@
          <string>Clear all</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -651,7 +649,7 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>
