@@ -401,7 +401,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>/MEGAsync Imports</source>
         <translatorcomment>Default created folder for imported links at the user Cloud Drive.</translatorcomment>
-        <translation>/MEGAsync同步匯入</translation>
+        <translation type="obsolete">/MEGAsync同步匯入</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -1860,7 +1860,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>PRO I</source>
         <translatorcomment>Label to indicate that the current user has a PRO I account.</translatorcomment>
-        <translation>Pro 1</translation>
+        <translation>PRO 1</translation>
     </message>
     <message>
         <source>PRO II</source>
@@ -1875,7 +1875,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default path for MEGAsync uploads.</translatorcomment>
-        <translation>/MEGAsync同步上傳</translation>
+        <translation type="obsolete">/MEGAsync同步上傳</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2089,12 +2089,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">匯出金鑰</translation>
+        <translation type="unfinished">備份金鑰</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">匯出金鑰</translation>
+        <translation type="unfinished">備份還原金鑰</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2104,12 +2104,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">正在導出您的萬能密鑰，請妥善保管。您的萬能密鑰使您不會因為密碼重置而丟失已上傳的數據。</translation>
+        <translation type="unfinished">匯出還原金鑰並將其保存於安全的位置，使您於設置新密碼時不會有資料遺失。</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">請確實掌握保存您的master key金鑰(如存於client端設備，外部儲存空間，或列印出)</translation>
+        <translation type="unfinished">始終於實體物品上備份管理您的還原金鑰（例如：於客戶端設備、外部儲存或印出保存）。</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2561,6 +2561,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
         <translation type="unfinished">強</translation>
     </message>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translation type="unfinished">請檢查你的電子郵件，並點擊信中的連結以確認帳號。</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translation type="unfinished">您於短時間內已登入太多次。[BR] 請等待至 %1 後再重試。</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -2795,7 +2803,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded. Keep / symbol.</translatorcomment>
-        <translation>/MEGAsync同步上傳</translation>
+        <translation type="obsolete">/MEGAsync同步上傳</translation>
     </message>
     <message>
         <source>MEGAsync Uploads</source>

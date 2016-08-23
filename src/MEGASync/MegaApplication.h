@@ -38,6 +38,7 @@
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
+    #include <mach/mach.h>
 #endif
 
 Q_DECLARE_METATYPE(QQueue<QString>)
@@ -95,10 +96,6 @@ public:
     void showTrayMenu(QPoint *point = NULL);
     void toggleLogging();
 
-#if (QT_VERSION == 0x050500) && defined(_WIN32)
-    bool eventFilter(QObject *o, QEvent * ev);
-#endif
-
 signals:
     void startUpdaterThread();
     void tryUpdate();
@@ -140,6 +137,7 @@ public slots:
     void exitApplication();
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
+    void checkMemoryUsage();
     void periodicTasks();
     void cleanAll();
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
@@ -241,14 +239,16 @@ protected:
     long long uploadSpeed, downloadSpeed;
     long long lastStartedDownload;
     long long lastStartedUpload;
+    long long queuedUserStats;
+    long long maxMemoryUsage;
     int exportOps;
     int syncState;
     mega::MegaPricing *pricing;
     long long bwOverquotaTimestamp;
+    bool enablingBwOverquota;
     UpgradeDialog *bwOverquotaDialog;
     bool bwOverquotaEvent;
     InfoWizard *infoWizard;
-    bool infoWizardEvent;
     mega::QTMegaListener *delegateListener;
     QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;
@@ -283,6 +283,7 @@ protected:
     bool indexing;
     bool waiting;
     bool updated;
+    bool checkupdate;
     bool updateBlocked;
     long long lastExit;
     bool appfinished;

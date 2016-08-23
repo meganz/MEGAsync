@@ -1,8 +1,8 @@
 <domain type='kvm'>
-  <name>UBUNTU_16.04BETA</name>
-  <uuid>347b0438-eb85-4b39-89e9-b3e4cab384cd</uuid>
-  <memory unit='KiB'>4194304</memory>
-  <currentMemory unit='KiB'>4194304</currentMemory>
+  <name>SCIENTIFICLINUX_7</name>
+  <uuid>bf596889-92c7-4412-bea9-f22b844a12a6</uuid>
+  <memory unit='KiB'>4120576</memory>
+  <currentMemory unit='KiB'>4120576</currentMemory>
   <vcpu placement='static'>2</vcpu>
   <os>
     <type arch='x86_64' machine='pc-i440fx-2.1'>hvm</type>
@@ -32,7 +32,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2'/>
-      <source file='/mnt/DATA/VM/vm1-12.qcow2'/>
+      <source file='/mnt/DATA/VM/vm1-34.qcow2'/>
       <target dev='hda' bus='ide'/>
       <address type='drive' controller='0' bus='0' target='0' unit='0'/>
     </disk>
@@ -65,7 +65,7 @@
       <address type='pci' domain='0x0000' bus='0x00' slot='0x06' function='0x0'/>
     </controller>
     <interface type='network'>
-      <mac address='52:54:00:83:f4:ed'/>
+      <mac address='52:54:00:2c:db:0b'/>
       <source network='default'/>
       <model type='rtl8139'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>

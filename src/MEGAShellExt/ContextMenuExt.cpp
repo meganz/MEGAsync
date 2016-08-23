@@ -226,7 +226,7 @@ void ContextMenuExt::processFile(HDROP hDrop, int i)
                 type = (fad.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ?
                             MegaInterface::TYPE_FOLDER : MegaInterface::TYPE_FILE;
 
-            int state = MegaInterface::getPathState((PCWSTR)buffer.data());
+            int state = MegaInterface::getPathState((PCWSTR)buffer.data(), false);
             selectedFiles.push_back(buffer);
             pathStates.push_back(state);
             pathTypes.push_back(type);

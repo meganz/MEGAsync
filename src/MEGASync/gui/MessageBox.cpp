@@ -7,6 +7,8 @@ MessageBox::MessageBox(QWidget *parent) :
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
     ui->cDefaultOption->setChecked(false);
     ui->bOK->setEnabled(true);
     ui->bOK->setDefault(true);

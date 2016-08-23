@@ -40,7 +40,7 @@ cd $cwd
 archives=$cwd/archives
 rm -fr $archives
 mkdir $archives
-../src/MEGASync/mega/contrib/build_sdk.sh -q -n -f -w -s -v -o $archives
+../src/MEGASync/mega/contrib/build_sdk.sh -q -n -f -w -s -v -u -o $archives
 
 # get current version
 MEGASYNC_VERSION=`grep -Po 'const QString Preferences::VERSION_STRING = QString::fromAscii\("\K[^"]*' ../src/MEGASync/control/Preferences.cpp`
@@ -58,7 +58,15 @@ sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.spec
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.dsc > MEGAsync/MEGAsync/megasync_$MEGASYNC_VERSION.dsc
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/PKGBUILD > MEGAsync/MEGAsync/PKGBUILD
 
-
+#include license as copyright file
+echo "Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/" > MEGAsync/MEGAsync/debian.copyright
+echo "Upstream-Name: megasync" >> MEGAsync/MEGAsync/debian.copyright
+echo "Upstream-Contact: <support@mega.nz>" >> MEGAsync/MEGAsync/debian.copyright
+echo "Source: https://github.com/meganz/MEGAsync" >> MEGAsync/MEGAsync/debian.copyright
+echo "Files: *" >> MEGAsync/MEGAsync/debian.copyright
+echo "Copyright: 2013, Mega Limited" >> MEGAsync/MEGAsync/debian.copyright
+echo -n "License:" >> MEGAsync/MEGAsync/debian.copyright # Some software (e.g: gnome-software) would only recognized these licenses: http://spdx.org/licenses/
+cat ../LICENCE.md | sed 's#^\s*$#\.#g' | sed 's#^# #' >> MEGAsync/MEGAsync/debian.copyright
 
 # read the last generated ChangeLog version
 version_file="version"
@@ -103,6 +111,7 @@ mkdir $MEGASYNC_NAME
 ln -s ../MEGAsync/MEGAsync/megasync.spec $MEGASYNC_NAME/megasync.spec
 ln -s ../MEGAsync/MEGAsync/debian.postinst $MEGASYNC_NAME/debian.postinst
 ln -s ../MEGAsync/MEGAsync/debian.postrm $MEGASYNC_NAME/debian.postrm
+ln -s ../MEGAsync/MEGAsync/debian.copyright $MEGASYNC_NAME/debian.copyright
 ln -s ../../src/configure $MEGASYNC_NAME/configure
 ln -s ../../src/MEGA.pro $MEGASYNC_NAME/MEGA.pro
 ln -s ../../src/MEGASync $MEGASYNC_NAME/MEGASync

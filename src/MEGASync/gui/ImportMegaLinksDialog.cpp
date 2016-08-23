@@ -3,6 +3,7 @@
 #include "gui/ImportListWidgetItem.h"
 #include "gui/NodeSelector.h"
 #include "gui/MultiQFileDialog.h"
+#include "Utilities.h"
 
 #include <QDesktopServices>
 #include <QDir>
@@ -19,6 +20,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     const int SLOT_HEIGHT = 35;
     this->megaApi = megaApi;
@@ -50,20 +52,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
     QFileInfo test(downloadFolder);
     if (!test.isDir())
     {
-#ifdef WIN32
-    #if QT_VERSION < 0x050000
-        QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation) + QString::fromUtf8("/MEGAsync Downloads"));
-    #else
-        QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0] + QString::fromUtf8("/MEGAsync Downloads"));
-    #endif
-#else
-    #if QT_VERSION < 0x050000
-        QDir defaultFolder(QDesktopServices::storageLocation(QDesktopServices::HomeLocation) + QString::fromUtf8("/MEGAsync Downloads"));
-    #else
-        QDir defaultFolder(QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0] + QString::fromUtf8("/MEGAsync Downloads"));
-    #endif
-#endif
-
+        QDir defaultFolder(QDir::toNativeSeparators(Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGAsync Downloads")));
         defaultFolder.mkpath(QString::fromAscii("."));
         defaultFolderPath = defaultFolder.absolutePath();
         defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
@@ -81,22 +70,24 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
         if (testNode)
         {
             const char *tPath = megaApi->getNodePath(testNode);
-            if (tPath)
-            {
+            if (tPath && strncmp(tPath, QString::fromUtf8("//bin/").toStdString().c_str(), 6))
+            {   
                 ui->eMegaFolder->setText(QString::fromUtf8(tPath));
                 delete [] tPath;
             }
             else
-            {
+            {       
                 delete testNode;
-                ui->eMegaFolder->setText(tr("/MEGAsync Imports"));
-                testNode = megaApi->getNodeByPath(tr("/MEGAsync Imports").toUtf8().constData());
+                ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync Imports"));
+                testNode = megaApi->getNodeByPath(QString::fromUtf8("/MEGAsync Imports").toUtf8().constData());
+                preferences->setImportFolder(mega::INVALID_HANDLE);
             }
         }
         else
         {
-            ui->eMegaFolder->setText(tr("/MEGAsync Imports"));
-            testNode = megaApi->getNodeByPath(tr("/MEGAsync Imports").toUtf8().constData());
+            ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync Imports"));
+            testNode = megaApi->getNodeByPath(QString::fromUtf8("/MEGAsync Imports").toUtf8().constData());
+            preferences->setImportFolder(mega::INVALID_HANDLE);
         }
 
         if (!testNode)
@@ -242,22 +233,17 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
     QString defaultPath = ui->eLocalFolder->text().trimmed();
     if (!defaultPath.size())
     {
-#ifdef WIN32
-    #if QT_VERSION < 0x050000
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
-    #else
-        defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
-    #endif
-#else
-    #if QT_VERSION < 0x050000
-        defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
-    #else
-        defaultPath = QStandardPaths::standardLocations(QStandardPaths::HomeLocation)[0];
-    #endif
-#endif
+        defaultPath = Utilities::getDefaultBasePath();
     }
 
+    defaultPath = QDir::toNativeSeparators(defaultPath);
+
 #ifndef _WIN32
+    if (defaultPath.isEmpty())
+    {
+        defaultPath = QString::fromUtf8("/");
+    }
+
     QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local folder"), defaultPath, false);
     dialog->setOptions(QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
     dialog->setFileMode(QFileDialog::DirectoryOnly);

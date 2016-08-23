@@ -7,6 +7,7 @@ ConfirmSSLexception::ConfirmSSLexception(QWidget *parent) :
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 }
 
 ConfirmSSLexception::~ConfirmSSLexception()

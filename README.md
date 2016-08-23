@@ -72,9 +72,16 @@ https://mega.nz/#!G5xmTLZY!jB2LyuXRSNGmBo1djUNhRbvy_pa42aDZyhgaTK1PAlI
 ## Linux compilation
 
 Preparation:
+
+First install dependencies. e.g., for a debian/ubuntu:
 ```
 sudo apt-get install build-essential autoconf automake m4 libtool qt4-qmake make libqt4-dev libcrypto++-dev libsqlite3-dev libc-ares-dev
 sudo apt-get install libnautilus-extension-dev
+```
+
+Addition: for RPM based (e.g: Fedora): 
+```
+sudo dnf libtool install gcc-c++ c-ares-devel cryptopp-devel openssl-devel qt-devel sqlite-devel zlib-devel
 ```
 
 Building:
@@ -85,3 +92,9 @@ qmake MEGA.pro
 lrelease MEGASync/MEGASync.pro
 make
 ```
+
+Note: when compiling for Fedora/RHEL/CentOS and alike, `qmake` and `lrelease` might be missing for qt4. Use `qmake-qt4` and `lrelease-qt4` instead. Also, adding `-q` to `configure` is recommended in order to download and build cryptopp for RHEL and CentOS.
+
+Known Issues
+------------
+For Solum, c-ares might not compile do to a CFLAG defined by gcc: -D_FORTIFY_SOURCE=2. This issue and its possible solution is described here https://github.com/c-ares/c-ares/issues/58 and http://ma.tc/ehuboqatec.md.

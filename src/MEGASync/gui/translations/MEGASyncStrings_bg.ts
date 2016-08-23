@@ -401,7 +401,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>/MEGAsync Imports</source>
         <translatorcomment>Default created folder for imported links at the user Cloud Drive.</translatorcomment>
-        <translation>/MEGAsync Импортирани</translation>
+        <translation type="obsolete">/MEGAsync Импортирани</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -1875,7 +1875,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default path for MEGAsync uploads.</translatorcomment>
-        <translation>/MEGAsync Качвания</translation>
+        <translation type="obsolete">/MEGAsync Качвания</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2089,12 +2089,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Експортирай ключ</translation>
+        <translation type="unfinished">Резервен Ключ</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Експортирай Главен ключ</translation>
+        <translation type="unfinished">Резервно копие на Възстановяващ Ключ</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2104,12 +2104,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Експортирането на Главния Ключ и съхраняването му на сигурно място ви позволява да зададете нова парола без загуба на данни.</translation>
+        <translation type="unfinished">Експортирането на Възстановяващия Ключ и съхранението му на сигурно място ви дава възможност да зададете нова парола, без загуба на данни.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Винаги поддържайте физически контрол над вашия главен ключ (на клиентско устройство, външна памет, или принтиран).</translation>
+        <translation type="unfinished">Винаги имайте физически контрол над Ключа за Възстановяване (например на устройство на клиента, външна памет, или принтирано копие).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2561,6 +2561,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
         <translation type="unfinished">Силна</translation>
     </message>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translation type="unfinished">Моля, проверете имейла си и кликнете върху линка за да потвърдите профила си.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translation type="unfinished">Опитвали сте да влезете в системата твърде много пъти. [BR]Моля изчайтайте до %1 и опитайте отново.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -2763,11 +2771,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Вие сте използвали %1 трафик на данни през последните 6 часа, с които сте надвишили сегашната ни граница. За да не изпитвате това ограничение, можете да [A]надстроите към Pro [/A], който ще ви даде свой собствен пакет трафик и достатъчно допълнително пространство за съхранение.</translation>
+        <translation type="unfinished">Вие сте използвали %1 трафик на данни през последните 6 часа, с които сте надвишили сегашната ни граница. За да не изпитвате това ограничение, можете да [A]надстроите към PRO [/A], който ще ви даде свой собствен пакет трафик и достатъчно допълнително пространство за съхранение.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Моля, преминете към Pro за да продължите веднага, или изчакайте %1 за да продължите безплатно.</translation>
+        <translation type="unfinished">Моля, преминете към PRO за да продължите веднага, или изчакайте %1 за да продължите безплатно.</translation>
     </message>
 </context>
 <context>
@@ -2795,7 +2803,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded. Keep / symbol.</translatorcomment>
-        <translation>/MEGAsync Качвания</translation>
+        <translation type="obsolete">/MEGAsync Качвания</translation>
     </message>
     <message>
         <source>MEGAsync Uploads</source>

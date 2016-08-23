@@ -6,6 +6,7 @@ SizeLimitDialog::SizeLimitDialog(QWidget *parent) :
     ui(new Ui::SizeLimitDialog)
 {
     ui->setupUi(this);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     ui->eLowerThan->setMaximum(9999);
     ui->eUpperThan->setMaximum(9999);

@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 }
 
 MainWindow::~MainWindow()
@@ -25,7 +26,12 @@ void MainWindow::on_bSourceFolder_clicked()
 #if QT_VERSION < 0x050000
     QString defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
 #else
-    QString defaultPath = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation)[0];
+    QString defaultPath;
+    QStringList dataPaths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
+    if (dataPaths.size())
+    {
+        defaultPath = dataPaths.at(0);
+    }
 #endif
 
     QString path =  QFileDialog::getExistingDirectory(this, tr("Select local folder"),

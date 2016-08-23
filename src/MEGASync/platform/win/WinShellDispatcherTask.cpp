@@ -39,7 +39,7 @@ int WinShellDispatcherTask::dispatchPipe()
 {
     DWORD i, dwWait, cbRet, dwErr;
     BOOL fSuccess;
-    LPTSTR lpszPipename = TEXT("\\\\.\\pipe\\MEGAprivacyMEGAsync");
+    PCWSTR lpszPipename = TEXT("\\\\.\\pipe\\MEGAprivacyMEGAsync");
 
     // The initial loop creates several instances of a named pipe
     // along with an event object for each instance.  An
@@ -353,24 +353,12 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 
             bool ok;
             QStringList parameters = QString::fromWCharArray(content).split(QChar::fromAscii(':'));
-            if (parameters.size() != 3)
+            if (parameters.size() < 1)
             {
                 break;
             }
 
             int stringId = parameters[0].toInt(&ok);
-            if (!ok)
-            {
-                break;
-            }
-
-            int numFiles = parameters[1].toInt(&ok);
-            if (!ok)
-            {
-                break;
-            }
-
-            int numFolders = parameters[2].toInt(&ok);
             if (!ok)
             {
                 break;
@@ -393,46 +381,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                     break;
             }
 
-            QString sNumFiles;
-            if (numFiles == 1)
-            {
-                sNumFiles = QCoreApplication::translate("ShellExtension", "1 file");
-            }
-            else if (numFiles > 1)
-            {
-                sNumFiles = QCoreApplication::translate("ShellExtension", "%1 files")
-                        .arg(numFiles);
-            }
-
-            QString sNumFolders;
-            if (numFolders == 1)
-            {
-                sNumFolders = QCoreApplication::translate("ShellExtension", "1 folder");
-            }
-            else if (numFolders > 1)
-            {
-                sNumFolders = QCoreApplication::translate("ShellExtension", "%1 folders")
-                        .arg(numFolders);
-            }
-
-            QString fullString;
-            if (numFiles && numFolders)
-            {
-                fullString = QCoreApplication::translate("ShellExtension", "%1 (%2, %3)")
-                        .arg(actionString).arg(sNumFiles).arg(sNumFolders);
-            }
-            else if (numFiles && !numFolders)
-            {
-                fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)")
-                        .arg(actionString).arg(sNumFiles);
-            }
-            else if (!numFiles && numFolders)
-            {
-                fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)")
-                        .arg(actionString).arg(sNumFolders);
-            }
-
-            wcscpy_s( pipe->chReply, BUFSIZE, (const wchar_t *)fullString.utf16());
+            wcscpy_s( pipe->chReply, BUFSIZE, (const wchar_t *)actionString.utf16());
             break;
         }
         case L'F':
@@ -479,13 +428,30 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
         }
         case L'P':
         {
-            if ((lstrlen(pipe->chRequest) < 3) || (Preferences::instance()->overlayIconsDisabled()))
+            if (lstrlen(pipe->chRequest) < 3)
+            {
+                break;
+            }
+
+            bool overlayIcons = true;
+            QStringList parameters = QString::fromWCharArray(content).split(QChar::fromAscii('|'));
+            if (parameters.size() > 1)
+            {
+                bool ok;
+                overlayIcons = parameters[1].toInt(&ok);
+                if (!ok)
+                {
+                    overlayIcons = true;
+                }
+            }
+
+            if ((parameters[0].size() < 3) || (overlayIcons && Preferences::instance()->overlayIconsDisabled()))
             {
                 break;
             }
 
             int state;
-            QString temp = QString::fromWCharArray(content);
+            QString temp = parameters[0];
             if (temp.startsWith(QString::fromAscii("\\\\?\\")))
             {
                 temp = temp.mid(4);

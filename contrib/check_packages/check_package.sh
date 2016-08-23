@@ -182,11 +182,11 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	resultMODREPO=$?
 	#notice: zypper will report 0 as status even though it "failed", we do stderr checking
 	if cat tmp$VMNAME | grep $REPO; then
-	 resultMODREPO=$((1000 + 0$resultMODREPO)); cat tmp$VMNAME; 
+	 resultMODREPO=$(expr 1000 + 0$resultMODREPO); cat tmp$VMNAME; 
 	else
 	 resultMODREPO=0 #we discard any other failure
 	fi; rm tmp$VMNAME;	
-	#~ if [ -s tmp$VMNAME ]; then resultMODREPO=$((1000 + $resultMODREPO)); cat tmp$VMNAME; fi; rm tmp$VMNAME;	
+	#~ if [ -s tmp$VMNAME ]; then resultMODREPO=$(expr 1000 + $resultMODREPO); cat tmp$VMNAME; fi; rm tmp$VMNAME;	
 	logOperationResult "modifying repos ..." $resultMODREPO
 	cat /etc/zypp/repos.d/megasync.repo
 	
@@ -195,20 +195,20 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	attempts=3
 	$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive install -f megasync 
 	resultINSTALL=$?
-	while [ attempts -ge 0 ] || $resultINSTALL ; do
+	while [[ $attempts -ge 0 && $resultINSTALL -ne 0 ]]; do
 		$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive install -f megasync 
 		resultINSTALL=$?
-		$attempts=$(($attempts - 1))
+		attempts=$(($attempts - 1))
 	done
 	#TODO: zypper might fail and still say "IT IS OK!"
 	#Doing stderr checking will give false FAILS, since zypper outputs non failure stuff in stderr
-	#if [ -s tmp$VMNAME ]; then resultINSTALL=$((1000 + $resultINSTALL)); cat tmp$VMNAME; fi; rm tmp$VMNAME;	
+	#if [ -s tmp$VMNAME ]; then resultINSTALL=$(expr 1000 + $resultINSTALL); cat tmp$VMNAME; fi; rm tmp$VMNAME;	
 	AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
 	resultINSTALL=$(($? + 0$resultINSTALL))
 	echo "BEFOREINSTALL = $BEFOREINSTALL"
 	echo "AFTERINSTALL = $AFTERINSTALL"
 	if [ $require_change -eq 1 ]; then
-		if [ "$BEFOREINSTALL" == "$AFTERINSTALL" ]; then resultINSTALL=$((1000 + 0$resultINSTALL)); fi
+		if [ "$BEFOREINSTALL" == "$AFTERINSTALL" ]; then resultINSTALL=$(expr 1000 + 0$resultINSTALL); fi
 	fi
 	logOperationResult "reinstalling/updating megasync ..." $resultINSTALL
 	VERSIONINSTALLEDAFTER=`echo $AFTERINSTALL	| grep megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
@@ -231,7 +231,7 @@ elif [[ $1 == *"DEBIAN"* ]] || [[ $1 == *"UBUNTU"* ]] || [[ $1 == *"LINUXMINT"* 
 	resultMODREPO=$?
 	#notice: zypper will report 0 as status even though it "failed", we do stderr checking
 	if cat tmp$VMNAME | grep $REPO; then
-	 resultMODREPO=$((1000 + 0$resultMODREPO)); cat tmp$VMNAME; 
+	 resultMODREPO=$(expr 1000 + 0$resultMODREPO); cat tmp$VMNAME; 
 	#~ else
 	 #~ resultMODREPO=0 #we discard any other failure
 	fi; rm tmp$VMNAME;	
@@ -249,7 +249,7 @@ elif [[ $1 == *"DEBIAN"* ]] || [[ $1 == *"UBUNTU"* ]] || [[ $1 == *"LINUXMINT"* 
 	echo "BEFOREINSTALL = $BEFOREINSTALL"
 	echo "AFTERINSTALL = $AFTERINSTALL"
 	if [ $require_change -eq 1 ]; then
-		if [ "$BEFOREINSTALL" == "$AFTERINSTALL" ]; then resultINSTALL=$((1000 + 0$resultINSTALL)); fi
+		if [ "$BEFOREINSTALL" == "$AFTERINSTALL" ]; then resultINSTALL=$(expr 1000 + 0$resultINSTALL); fi
 	fi
 	logOperationResult "reinstalling/updating megasync ..." $resultINSTALL	
 	VERSIONINSTALLEDAFTER=`echo $AFTERINSTALL	| grep megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
@@ -282,7 +282,7 @@ EOF
 	resultMODREPO=$?
 	#notice: in case pacman reports 0 as status even though it "failed", we do stderr checking
 	if cat tmp$VMNAME | grep $REPO; then
-	 resultMODREPO=$((1000 + 0$resultMODREPO)); cat tmp$VMNAME; 
+	 resultMODREPO=$(expr 1000 + 0$resultMODREPO); cat tmp$VMNAME; 
 	#~ else
 	 #~ resultMODREPO=0 #we discard any other failure
 	fi; rm tmp$VMNAME;	
@@ -299,7 +299,7 @@ EOF
 	echo "BEFOREINSTALL = $BEFOREINSTALL"
 	echo "AFTERINSTALL = $AFTERINSTALL"
 	if [ $require_change -eq 1 ]; then
-		if [ "$BEFOREINSTALL" == "$AFTERINSTALL" ]; then resultINSTALL=$((1000 + 0$resultINSTALL)); fi
+		if [ "$BEFOREINSTALL" == "$AFTERINSTALL" ]; then resultINSTALL=$(expr 1000 + 0$resultINSTALL); fi
 	fi
 	logOperationResult "reinstalling/updating megasync ..." $resultINSTALL	
 	VERSIONINSTALLEDAFTER=`echo $AFTERINSTALL	| grep megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
@@ -339,7 +339,7 @@ else
 	resultMODREPO=$?
 	#fix inconclusive problem in Fedora24:
 	cat tmp$VMNAME | grep -v "FutureWarning: split() requires a non-empty pattern match\|return _compile(pattern, flags).split(stri" > tmp$VMNAME
-	if [ -s tmp$VMNAME ]; then resultMODREPO=$((1000 + $resultMODREPO)); cat tmp$VMNAME; fi; rm tmp$VMNAME; 
+	if [ -s tmp$VMNAME ]; then resultMODREPO=$(expr 1000 + $resultMODREPO); cat tmp$VMNAME; fi; rm tmp$VMNAME; 
 	logOperationResult "modifying repos ..." $resultMODREPO
 	
 	cat /etc/yum.repos.d/megasync.repo
@@ -352,7 +352,7 @@ else
 	resultINSTALL=$(($? + 0$resultINSTALL)) #TODO: yum might fail and still say "IT IS OK!"
 	#Doing simple stderr checking will give false FAILS, since yum outputs non failure stuff in stderr
 	if cat tmp$VMNAME | grep $REPO; then
-	 resultINSTALL=$((1000 + 0$resultINSTALL)); cat tmp$VMNAME; 
+	 resultINSTALL=$(expr 1000 + 0$resultINSTALL); cat tmp$VMNAME; 
 	fi; rm tmp$VMNAME;	
 	
 	AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
@@ -360,7 +360,7 @@ else
 	echo "BEFOREINSTALL = $BEFOREINSTALL"
 	echo "AFTERINSTALL = $AFTERINSTALL"
 	if [ $require_change -eq 1 ]; then
-		if [ "$BEFOREINSTALL" == "$AFTERINSTALL" ]; then resultINSTALL=$((1000 + 0$resultINSTALL)); fi
+		if [ "$BEFOREINSTALL" == "$AFTERINSTALL" ]; then resultINSTALL=$(expr 1000 + 0$resultINSTALL); fi
 	fi
 	logOperationResult "reinstalling/updating megasync ..." $resultINSTALL
 	VERSIONINSTALLEDAFTER=`echo $AFTERINSTALL	| grep megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
@@ -384,11 +384,17 @@ logOperationResult "checking new megasync running ..." $resultRunning
 
 echo " forcing POST to dl test file ..."
 $sshpasscommand ssh root@$IP_GUEST "curl 'https://127.0.0.1:6342/' -H 'Origin: https://mega.nz' --data-binary '{\"a\":\"l\",\"h\":\"FQ5miCCB\",\"k\":\"WkMOvzgPWhBtvE7tYQQv8urhwuYmuS74C3HnhboDE-I\"}' --compressed --insecure"
-sleep 20 #TODO: sleep longer?
 
-echo " check file dl correctly ..."
-$sshpasscommand ssh root@$IP_GUEST cat /home/mega/testFile.txt >/dev/null  #TODO: do hash file comparation
-resultDL=$?
+resultDL=27
+attempts=10
+while [[ $attempts -ge 0 && $resultDL -ne 0 ]]; do
+	sleep $((5*(10-$attempts)))
+	echo " check file dl correctly ..."
+	$sshpasscommand ssh root@$IP_GUEST cat /home/mega/testFile.txt >/dev/null  #TODO: do hash file comparation
+	resultDL=$?
+	attempts=$(($attempts - 1))
+done
+
 logOperationResult "check file dl correctly ..." $resultDL
 
 if [ $resultDL -eq 0 ] && [ $resultRunning -eq 0 ] \

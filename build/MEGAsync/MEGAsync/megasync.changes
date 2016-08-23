@@ -1,81 +1,88 @@
--------------------------------------------------------------------
-Fri May 6 14:30:50 CEST 2016 - linux@mega.co.nz
+Wed Jul 20 19:08:50 CEST 2016 - linux@mega.co.nz
+- Update to version 2.9.8:
+  * More efficient upload completion
+  * Creation of new cryptographic keys
+  * Upgrade to QT5 and VS2015 (Windows)
+  * Bug fixes
 
-- Save the state and resume transfers
-- Compatibility with HDPI displays
-- Bug fixes
+-------------------------------------------------------------------
+Tue May 31 12:05:33 CEST 2016 - linux@mega.co.nz
+- Update to version 2.9.5:
+  * Save the state and resume transfers
+  * Better management of errors during transfers
+  * Compatibility with HDPI displays
+  * Bug fixes
 
 -------------------------------------------------------------------
 Mon Apr 11 20:11:50 CEST 2016 - linux@mega.co.nz
-
-- Management of bandwidth quota for PRO users
-- New information dialog
-- ARM support (Raspberry Pi)
-- Bug fixes
+- Update to version 2.9.0:
+  * Management of bandwidth quota for PRO users
+  * New information dialog
+  * ARM support (Raspberry Pi)
+  * Bug fixes
 
 -------------------------------------------------------------------
 Wed Apr 6 17:32:34 CEST 2016 - linux@mega.co.nz
-
-- Check if public links have been already downloaded
-- Better management of communications with the webclient
-- Management of bandwidth quotas
-- Bug fixes
+- Update to version 2.8.0:
+  * Check if public links have been already downloaded
+  * Better management of communications with the webclient
+  * Management of bandwidth quotas
+  * Bug fixes
 
 -------------------------------------------------------------------
 Tue Mar 1 13:10:21 CET 2016 - linux@mega.co.nz
-
-- Fixed the compilation. The previous version failed with some CPUs
+- Update to version 2.7.2:
+  * Fixed the compilation. The previous version failed with some CPUs
 
 -------------------------------------------------------------------
 Sun Feb 21 02:38:15 CET 2016 - linux@mega.co.nz
-
-- Allow to select hidden files and folders
-- Management of permissions (OS X, Linux)
-- Better management of HTTPS errors
-- Allow to use HTTPS connections only
-- Bug fixes
+- Update to version 2.7.1:
+  * Allow to select hidden files and folders
+  * Management of permissions (OS X, Linux)
+  * Better management of HTTPS errors
+  * Allow to use HTTPS connections only
+  * Bug fixes
 
 -------------------------------------------------------------------
 Tue Jan 19 14:52:38 CET 2016 - linux@mega.co.nz
-
-- Streaming from MEGA with a builtin HTTP proxy server
-- Fixed the automatic detection of the proxy (Win32)
-- More and better translations
-- Bug fixes
+- Update to version 2.6.1:
+  * Streaming from MEGA with a builtin HTTP proxy server
+  * Fixed the automatic detection of the proxy (Win32)
+  * More and better translations
+  * Bug fixes
 
 -------------------------------------------------------------------
 Mon Jan 4 12:16:28 CET 2016 - linux@mega.co.nz
-
-- Allow the usage of MEGAsync without being logged in
-- New network layer using cURL and c-ares (Win32)
-- Accessibility and SOCKS5 proxy support (Win32)
-- Bug fixes and improvements for the synchronization engine
+- Update to version 2.5.3:
+  * Allow the usage of MEGAsync without being logged in
+  * New network layer using cURL and c-ares (Win32)
+  * Accessibility and SOCKS5 proxy support (Win32)
+  * Bug fixes and improvements for the synchronization engine
 
 -------------------------------------------------------------------
 Thu Oct 8 19:51:46 CEST 2015 - linux@mega.co.nz
-
-- Inform about MITM attacks
-- Compatibility with OS X 10.11 El Capita
-- Improvements for the synchronization engine
-- Bug fixes
+- Update to version 2.3.1:
+  * Inform about MITM attacks
+  * Compatibility with OS X 10.11 El Capita
+  * Improvements for the synchronization engine
+  * Bug fixes
 
 -------------------------------------------------------------------
 Mon Aug 10 10:00:00 CEST 2015 - linux@mega.co.nz
-
-- Built with a custom version of QT that will allow us to debug crashes in QT libraries
-- List of allowed origins for webclient communications
-- Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)
-- Report events for new installations
-- Built with a custom version of QT that will allow us to debug crashes in QT libraries
-- List of allowed origins for webclient communications
-- Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)
-- Report events for new installations
-- Built with a custom version of QT that will allow us to debug crashes in QT libraries
-- List of allowed origins for webclient communications
-- Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)
-- Report events for new installations
-- Built with a custom version of QT that will allow us to debug crashes in QT libraries
-- List of allowed origins for webclient communications
-- Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)
-- Report events for new installations
-
+- Update to version 2.1.1:
+  * Built with a custom version of QT that will allow us to debug crashes in QT libraries
+  * List of allowed origins for webclient communications
+  * Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)
+  * Report events for new installations
+  * Built with a custom version of QT that will allow us to debug crashes in QT libraries
+  * List of allowed origins for webclient communications
+  * Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)
+  * Report events for new installations
+  * Built with a custom version of QT that will allow us to debug crashes in QT libraries
+  * List of allowed origins for webclient communications
+  * Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)
+  * Report events for new installations
+  * Built with a custom version of QT that will allow us to debug crashes in QT libraries
+  * List of allowed origins for webclient communications
+  * Disable the crash handler when MEGAsync is being closed (to ignore crashes closing QT when the app exits)
+  * Report events for new installations

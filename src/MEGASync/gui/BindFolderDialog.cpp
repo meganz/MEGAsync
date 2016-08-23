@@ -12,6 +12,8 @@ BindFolderDialog::BindFolderDialog(MegaApplication *app, QWidget *parent) :
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
     this->app = app;
     Preferences *preferences = Preferences::instance();
     syncNames = preferences->getSyncNames();
@@ -29,6 +31,8 @@ BindFolderDialog::BindFolderDialog(MegaApplication *app, QStringList syncNames,
 {
     ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
     this->app = app;
     this->syncNames = syncNames;
     this->localFolders = localFolders;

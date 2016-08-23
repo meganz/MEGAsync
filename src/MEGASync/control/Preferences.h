@@ -28,7 +28,7 @@ public:
     //NOT thread-safe. Must be called before creating threads.
     static Preferences *instance();
 
-    void initialize();
+    void initialize(QString dataPath);
 
     //Thread safe functions
     bool logged();
@@ -73,10 +73,12 @@ public:
 
     long long totalBandwidth();
     void setTotalBandwidth(long long value);
+    bool isTemporalBandwidthValid();
+    void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
     void setTemporalBandwidth(long long value);
-    long long temporalBandwidthInterval();
-    void setTemporalBandwidthInterval(long long value);
+    int temporalBandwidthInterval();
+    void setTemporalBandwidthInterval(int value);
     long long usedBandwidth();
     void setUsedBandwidth(long long value);
     int accountType();
@@ -151,6 +153,10 @@ public:
     void setFirstWebDownloadDone(bool value = true);
     QString lastCustomStreamingApp();
     void setLastCustomStreamingApp(const QString &value);
+    long long getMaxMemoryUsage();
+    void setMaxMemoryUsage(long long value);
+    long long getMaxMemoryReportTime();
+    void setMaxMemoryReportTime(long long timestamp);
 
     int transferDownloadMethod();
     void setTransferDownloadMethod(int value);
@@ -217,6 +223,8 @@ public:
     void disableOverlayIcons(bool value);
     bool error();
 
+    QString getDataPath();
+    void clearTemporalBandwidth();
     void clearAll();
     void sync();
 
@@ -248,6 +256,7 @@ public:
     static const int MAX_FILES_IN_NEW_SYNC_FOLDER;
     static const int MAX_FOLDERS_IN_NEW_SYNC_FOLDER;
     static const long long MIN_UPDATE_STATS_INTERVAL;
+    static const long long MIN_UPDATE_STATS_INTERVAL_OVERQUOTA;
     static const int STATE_REFRESH_INTERVAL_MS;
     static const long long MIN_UPDATE_NOTIFICATION_INTERVAL_MS;
     static const unsigned int UPDATE_INITIAL_DELAY_SECS;
@@ -298,6 +307,10 @@ protected:
     QList<bool> temporaryInactiveFolders;
     QStringList excludedSyncNames;
     bool errorFlag;
+    long long tempBandwidth;
+    int tempBandwidthInterval;
+    bool isTempBandwidthValid;
+    QString dataPath;
 
     static const QString currentAccountKey;
     static const QString syncsGroupKey;
@@ -319,8 +332,6 @@ protected:
     static const QString rubbishFoldersKey;
     static const QString inShareFoldersKey;
     static const QString totalBandwidthKey;
-    static const QString temporalBandwidthKey;
-    static const QString temporalBandwidthIntervalKey;
     static const QString usedBandwidthKey;
     static const QString accountTypeKey;
     static const QString setupWizardCompletedKey;
@@ -386,6 +397,8 @@ protected:
     static const QString lastCustomStreamingAppKey;
     static const QString useHttpsOnlyKey;
     static const QString SSLcertificateExceptionKey;
+    static const QString maxMemoryUsageKey;
+    static const QString maxMemoryReportTimeKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;

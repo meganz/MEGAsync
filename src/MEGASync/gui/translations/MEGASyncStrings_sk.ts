@@ -401,7 +401,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>/MEGAsync Imports</source>
         <translatorcomment>Default created folder for imported links at the user Cloud Drive.</translatorcomment>
-        <translation>/MEGAsync Importy</translation>
+        <translation type="obsolete">/MEGAsync Importy</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -510,7 +510,7 @@ Are you sure?</source>
     <message>
         <source>All transfers have been completed</source>
         <translatorcomment>Label to indicate that all pending transfers are already completed</translatorcomment>
-        <translation>Všetky prenosy bolu dokončené</translation>
+        <translation>Všetky prenosy boli dokončené</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
@@ -1875,7 +1875,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default path for MEGAsync uploads.</translatorcomment>
-        <translation>/MEGAsync Uploady</translation>
+        <translation type="obsolete">/MEGAsync Uploady</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2089,12 +2089,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Exportovať kľúč</translation>
+        <translation type="unfinished">Zálohovať kľúč</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Exportovať Hlavný kľúč</translation>
+        <translation type="unfinished">Zálohovať kľúč pre obnovu</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2104,12 +2104,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Exportovanie Hlavného kľúča a uchovanie si ho na bezpečnom mieste vám umožní nastavenie nového hesla bez straty dát.</translation>
+        <translation type="unfinished">Exporting the Recovery Key and keeping it in a secure location enables you to set a new password without data loss.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Vždy si uchovajte fyzickú kópiu vášho hlavného kľúča (napr. na klientskom zariadení, externom úložisku, alebo ako výtlačok).</translation>
+        <translation type="unfinished">Always keep physical control of your Recovery Key (e.g. on a client device, external storage, or print).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2561,6 +2561,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
         <translation type="unfinished">Silné</translation>
     </message>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translation type="unfinished">Prosím, skontrolujte si e-mailovú schránku a kliknite na odkaz pre overenie vášho účtu.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translation type="unfinished">You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -2763,11 +2771,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Za posledných 6 hodín ste využili %1 svojích dátových prenosov, čo vás prehuplo cez náš aktuálny limit. Pre zvrátenie tohoto limitu môžete [A]vylepšiť svoj účet na Pro[/A], čo vám zabezpečí váš vlastný balík prenosov a extra úložný priestor.</translation>
+        <translation type="unfinished">Za posledných 6 hodín ste využili %1 svojích dátových prenosov, čo vás prehuplo cez náš aktuálny limit. Pre zvrátenie tohoto limitu môžete [A]vylepšiť svoj účet na PRO[/A], čo vám zabezpečí váš vlastný balík prenosov a extra úložný priestor.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Prosím vylepšite si účet na Pro pre pokračovanie, alebo počkajte %1 pre pokračovanie zdarma.</translation>
+        <translation type="unfinished">Prosím vylepšite si účet na PRO pre pokračovanie, alebo počkajte %1 pre pokračovanie zdarma.</translation>
     </message>
 </context>
 <context>
@@ -2795,7 +2803,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded. Keep / symbol.</translatorcomment>
-        <translation>/MEGAsync Uploady</translation>
+        <translation type="obsolete">/MEGAsync Uploady</translation>
     </message>
     <message>
         <source>MEGAsync Uploads</source>

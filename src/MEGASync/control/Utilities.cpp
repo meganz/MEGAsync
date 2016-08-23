@@ -11,6 +11,7 @@
 
 #ifndef WIN32
 #include "megaapi.h"
+#include <utime.h>
 #endif
 
 using namespace std;
@@ -270,6 +271,7 @@ QString Utilities::languageCodeToString(QString code)
         languageNames[QString::fromAscii("sl")] = QString::fromUtf8("Slovenščina");
         languageNames[QString::fromAscii("sr")] = QString::fromUtf8("Serbian");
         languageNames[QString::fromAscii("sv")] = QString::fromUtf8("Svenska");
+        languageNames[QString::fromAscii("th")] = QString::fromUtf8("ภาษาไทย");
         languageNames[QString::fromAscii("tl")] = QString::fromUtf8("Tagalog");
         languageNames[QString::fromAscii("tr")] = QString::fromUtf8("Türkçe");
         languageNames[QString::fromAscii("uk")] = QString::fromUtf8("Українська");
@@ -288,7 +290,6 @@ QString Utilities::languageCodeToString(QString code)
         languageNames[QString::fromAscii("da")] = QString::fromUtf8("Dansk");
         languageNames[QString::fromAscii("el")] = QString::fromUtf8("ελληνικά");
         languageNames[QString::fromAscii("lt")] = QString::fromUtf8("Lietuvos");
-        languageNames[QString::fromAscii("th")] = QString::fromUtf8("ภาษาไทย");
         languageNames[QString::fromAscii("lv")] = QString::fromUtf8("Latviešu");
         languageNames[QString::fromAscii("mk")] = QString::fromUtf8("македонски");
         languageNames[QString::fromAscii("hi")] = QString::fromUtf8("हिंदी");
@@ -351,6 +352,12 @@ void Utilities::copyRecursively(QString srcPath, QString dstPath)
     {
         QFile src(srcPath);
         src.copy(dstPath);
+#ifndef _WIN32
+       QFileInfo info(src);
+       time_t t = info.lastModified().toTime_t();
+       struct utimbuf times = { t, t };
+       utime(dstPath.toUtf8().constData(), &times);
+#endif
     }
     else if (source.isDir())
     {
@@ -492,4 +499,106 @@ long long Utilities::extractJSONNumber(QString json, QString name)
     }
 
     return json.mid(pos + pattern.size(), count).toLongLong();
+}
+
+QString Utilities::getDefaultBasePath()
+{
+#ifdef WIN32
+    #if QT_VERSION < 0x050000
+        QString defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+        if (!defaultPath.isEmpty())
+        {
+            return defaultPath;
+        }
+
+        defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+        if (!defaultPath.isEmpty())
+        {
+            return defaultPath;
+        }
+
+        defaultPath = QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
+        if (!defaultPath.isEmpty())
+        {
+            return defaultPath;
+        }
+    #else
+        QStringList defaultPaths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
+        if (defaultPaths.size())
+        {
+            return defaultPaths.at(0);
+        }
+
+        defaultPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+        if (defaultPaths.size())
+        {
+            return defaultPaths.at(0);
+        }
+
+        defaultPaths = QStandardPaths::standardLocations(QStandardPaths::DesktopLocation);
+        if (defaultPaths.size())
+        {
+            return defaultPaths.at(0);
+        }
+
+        defaultPaths = QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
+        if (defaultPaths.size())
+        {
+            return defaultPaths.at(0);
+        }
+    #endif
+#else
+    #if QT_VERSION < 0x050000
+        QString defaultPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+        if (!defaultPath.isEmpty())
+        {
+            return defaultPath;
+        }
+
+        defaultPath = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+        if (!defaultPath.isEmpty())
+        {
+            return defaultPath;
+        }
+
+        defaultPath = QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
+        if (!defaultPath.isEmpty())
+        {
+            return defaultPath;
+        }
+    #else
+        QStringList defaultPaths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+        if (defaultPaths.size())
+        {
+            return defaultPaths.at(0);
+        }
+
+        defaultPaths = QStandardPaths::standardLocations(QStandardPaths::DocumentsLocation);
+        if (defaultPaths.size())
+        {
+            return defaultPaths.at(0);
+        }
+
+        defaultPaths = QStandardPaths::standardLocations(QStandardPaths::DesktopLocation);
+        if (defaultPaths.size())
+        {
+            return defaultPaths.at(0);
+        }
+
+        defaultPaths = QStandardPaths::standardLocations(QStandardPaths::DownloadLocation);
+        if (defaultPaths.size())
+        {
+            return defaultPaths.at(0);
+        }
+    #endif
+#endif
+
+    QDir dataDir = QDir(Preferences::instance()->getDataPath());
+    QString rootPath = QDir::toNativeSeparators(dataDir.rootPath());
+    if (rootPath.size() && rootPath.at(rootPath.size() - 1) == QDir::separator())
+    {
+        rootPath.resize(rootPath.size() - 1);
+        return rootPath;
+    }
+    return QString();
 }

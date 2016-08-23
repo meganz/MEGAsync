@@ -401,7 +401,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>/MEGAsync Imports</source>
         <translatorcomment>Default created folder for imported links at the user Cloud Drive.</translatorcomment>
-        <translation>/MEGAsync Увози</translation>
+        <translation type="obsolete">/MEGAsync Увози</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -1875,7 +1875,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default path for MEGAsync uploads.</translatorcomment>
-        <translation>/MEGAsync Качења</translation>
+        <translation type="obsolete">/MEGAsync Качења</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2089,12 +2089,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Кључ за извоз</translation>
+        <translation type="unfinished">Backup Key</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Извези Master кључ</translation>
+        <translation type="unfinished">Backup Recovery Key</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2104,12 +2104,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Експортовање мастер кључа и чување на сигурној локацији омогућава Вам да поставите нову лозинку без губљења података.</translation>
+        <translation type="unfinished">Exporting the Recovery Key and keeping it in a secure location enables you to set a new password without data loss.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Увек одржавајте физичку контролу Вашег мастер кључа (нпр. на уређају клијента, екстерном диску, или испринтајте).</translation>
+        <translation type="unfinished">Always keep physical control of your Recovery Key (e.g. on a client device, external storage, or print).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2561,6 +2561,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
         <translation type="unfinished">снажно</translation>
     </message>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translation type="unfinished">Молимо проверите свој e-mail и кликните на линк који смо Вам послали да потврдите свој налог.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translation type="unfinished">You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -2763,11 +2771,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Искористили сте %1 трансфера података у задњих 6 сати чиме сте прекорачили наше тренутно ограничење.  Да бисте заобишли ово ограничење, можете  [A]унапреди у Pro[/A], чиме добијате само Ваш пакет преноса података и такође обиман додатни простор за складиштење.</translation>
+        <translation type="unfinished">Искористили сте %1 трансфера података у задњих 6 сати чиме сте прекорачили наше тренутно ограничење.  Да бисте заобишли ово ограничење, можете  [A]унапреди у PRO[/A], чиме добијате само Ваш пакет преноса података и такође обиман додатни простор за складиштење.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Молимо унапредите у Pro да наставите одмах, или сачекајте %1 да наставите бесплатно.</translation>
+        <translation type="unfinished">Молимо унапредите у PRO да наставите одмах, или сачекајте %1 да наставите бесплатно.</translation>
     </message>
 </context>
 <context>
@@ -2795,7 +2803,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded. Keep / symbol.</translatorcomment>
-        <translation>/MEGAsync Качења</translation>
+        <translation type="obsolete">/MEGAsync Качења</translation>
     </message>
     <message>
         <source>MEGAsync Uploads</source>

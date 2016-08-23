@@ -2,13 +2,60 @@
 #include <Shlobj.h>
 #include <Shlwapi.h>
 
-WinShellDispatcherTask* WindowsPlatform::shellDispatcherTask = NULL;
+#if QT_VERSION >= 0x050700
+#include <QtPlatformHeaders/QWindowsWindowFunctions>
+#endif
 
+// Windows headers don't define this for WinXP despite the documentation says that they should
+// and it indeed works
+#ifndef SHFOLDERCUSTOMSETTINGS
+#include <pshpack8.h>
+
+// Used by SHGetSetFolderCustomSettings
+typedef struct
+{
+    DWORD           dwSize;
+    DWORD           dwMask;                 // IN/OUT  Which Attributes to Get/Set
+    SHELLVIEWID*    pvid;                   // OUT - if dwReadWrite is FCS_READ, IN - otherwise
+    // The folder's WebView template path
+    LPWSTR          pszWebViewTemplate;     // OUT - if dwReadWrite is FCS_READ, IN - otherwise
+    DWORD           cchWebViewTemplate;     // IN - Specifies the size of the buffer pointed to by pszWebViewTemplate
+                                            // Ignored if dwReadWrite is FCS_READ
+    LPWSTR           pszWebViewTemplateVersion;  // currently IN only
+    // Infotip for the folder
+    LPWSTR          pszInfoTip;             // OUT - if dwReadWrite is FCS_READ, IN - otherwise
+    DWORD           cchInfoTip;             // IN - Specifies the size of the buffer pointed to by pszInfoTip
+                                            // Ignored if dwReadWrite is FCS_READ
+    // CLSID that points to more info in the registry
+    CLSID*          pclsid;                 // OUT - if dwReadWrite is FCS_READ, IN - otherwise
+    // Other flags for the folder. Takes FCS_FLAG_* values
+    DWORD           dwFlags;                // OUT - if dwReadWrite is FCS_READ, IN - otherwise
+
+
+    LPWSTR           pszIconFile;           // OUT - if dwReadWrite is FCS_READ, IN - otherwise
+    DWORD            cchIconFile;           // IN - Specifies the size of the buffer pointed to by pszIconFile
+                                            // Ignored if dwReadWrite is FCS_READ
+
+    int              iIconIndex;            // OUT - if dwReadWrite is FCS_READ, IN - otherwise
+
+    LPWSTR           pszLogo;               // OUT - if dwReadWrite is FCS_READ, IN - otherwise
+    DWORD            cchLogo;               // IN - Specifies the size of the buffer pointed to by pszIconFile
+                                            // Ignored if dwReadWrite is FCS_READ
+} SHFOLDERCUSTOMSETTINGS, *LPSHFOLDERCUSTOMSETTINGS;
+
+#include <poppack.h>        /* Return to byte packing */
+
+// Gets/Sets the Folder Custom Settings for pszPath based on dwReadWrite. dwReadWrite can be FCS_READ/FCS_WRITE/FCS_FORCEWRITE
+SHSTDAPI SHGetSetFolderCustomSettings(_Inout_ LPSHFOLDERCUSTOMSETTINGS pfcs, _In_ PCWSTR pszPath, DWORD dwReadWrite);
+#endif
+
+WinShellDispatcherTask* WindowsPlatform::shellDispatcherTask = NULL;
 
 void WindowsPlatform::initialize(int argc, char *argv[])
 {
-
-
+#if QT_VERSION >= 0x050700
+    QWindowsWindowFunctions::setWindowActivationBehavior(QWindowsWindowFunctions::AlwaysActivateWindow);
+#endif
 }
 
 bool WindowsPlatform::enableTrayIcon(QString executable)
@@ -397,16 +444,16 @@ QString WindowsPlatform::getDefaultOpenApp(QString extension)
     QString extensionWithDot = QString::fromUtf8(".") + extension;
     QString mimeType;
 
-    HRESULT ret = AssocQueryString(0, type, extensionWithDot.utf16(),
+    HRESULT ret = AssocQueryString(0, type, (LPCWSTR)extensionWithDot.utf16(),
                                  NULL, NULL, &length);
     if (ret == S_FALSE)
     {
         WCHAR *buffer = new WCHAR[length];
-        ret = AssocQueryString(0, type, extensionWithDot.utf16(),
+        ret = AssocQueryString(0, type, (LPCWSTR)extensionWithDot.utf16(),
                                NULL, buffer, &length);
         if (ret == S_OK)
         {
-            mimeType = QString::fromUtf16(buffer);
+            mimeType = QString::fromUtf16((ushort *)buffer);
         }
         delete [] buffer;
     }
@@ -417,16 +464,16 @@ QString WindowsPlatform::getDefaultOpenApp(QString extension)
     }
 
     type = ASSOCSTR_EXECUTABLE;
-    ret = AssocQueryString(0, type, extensionWithDot.utf16(),
+    ret = AssocQueryString(0, type, (LPCWSTR)extensionWithDot.utf16(),
                                  NULL, NULL, &length);
     if (ret == S_FALSE)
     { 
         WCHAR *buffer = new WCHAR[length];
-        ret = AssocQueryString(0, type, extensionWithDot.utf16(),
+        ret = AssocQueryString(0, type, (LPCWSTR)extensionWithDot.utf16(),
                                NULL, buffer, &length);
         if (ret == S_OK)
         {
-            QString result = QString::fromUtf16(buffer);
+            QString result = QString::fromUtf16((ushort *)buffer);
             delete [] buffer;
             return result;
         }
@@ -436,7 +483,7 @@ QString WindowsPlatform::getDefaultOpenApp(QString extension)
     WCHAR buff[MAX_PATH];
     if (SHGetFolderPath(0, CSIDL_PROGRAM_FILESX86, NULL, SHGFP_TYPE_CURRENT, buff) == S_OK)
     {
-        QString path = QString::fromUtf16(buff);
+        QString path = QString::fromUtf16((ushort *)buff);
         path.append(QString::fromUtf8("\\Windows Media Player\\wmplayer.exe"));
         if (QFile(path).exists())
         {

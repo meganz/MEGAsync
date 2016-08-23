@@ -16,6 +16,10 @@ BuildRequires: hicolor-icon-theme, unzip, wget
 BuildRequires: libcares-devel, libcryptopp-devel
 BuildRequires: update-desktop-files
 BuildRequires: libqt4, libqt4-x11
+
+# disabling post-build-checks that ocassionally prevent opensuse rpms from being generated
+# plus it speeds up building process
+BuildRequires: -post-build-checks
 %endif
 
 %if 0%{?fedora}
@@ -25,7 +29,7 @@ BuildRequires: qt, qt-x11
 BuildRequires: terminus-fonts, fontpackages-filesystem
 %endif
 
-%if 0%{?centos_version}
+%if 0%{?centos_version} || 0%{?scientificlinux_version}
 BuildRequires: c-ares-devel,
 BuildRequires: desktop-file-utils
 BuildRequires: qt, qt-x11
@@ -35,6 +39,7 @@ BuildRequires: qt, qt-x11
 BuildRequires: desktop-file-utils
 BuildRequires: qt, qt-x11
 %endif
+
 
 %description
 Secure:
@@ -56,7 +61,7 @@ Store up to 50 GB for free!
 
 %define flag_cryptopp %{nil}
 
-%if 0%{?centos_version}
+%if 0%{?centos_version} || 0%{?scientificlinux_version}
 %define flag_cryptopp -q
 %endif
 
@@ -74,7 +79,7 @@ export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
+%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
 qmake-qt4 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot}
 lrelease-qt4  MEGASync/MEGASync.pro
 %else
@@ -106,8 +111,8 @@ desktop-file-install \
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 %endif
 
-# RHEL 7
 %if 0%{?rhel_version} == 700
+# RHEL 7
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
 [MEGAsync]
@@ -119,8 +124,21 @@ enabled=1
 DATA
 %endif
 
+%if 0%{?scientificlinux_version} == 700
+# Scientific Linux 7
+YUM_FILE="/etc/yum.repos.d/megasync.repo"
+cat > "$YUM_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+baseurl=http://mega.nz/linux/MEGAsync/ScientificLinux_7/
+gpgkey=https://mega.nz/linux/MEGAsync/ScientificLinux_7/repodata/repomd.xml.key
+gpgcheck=1
+enabled=1
+DATA
+%endif
+
+%if 0%{?sc} == 700
 # CentOS 7
-%if 0%{?centos_version} == 700
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
 [MEGAsync]
@@ -132,8 +150,8 @@ enabled=1
 DATA
 %endif
 
-# Fedora 24
 %if 0%{?fedora_version} == 24
+# Fedora 24
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
 [MEGAsync]
@@ -145,8 +163,8 @@ enabled=1
 DATA
 %endif
 
-# Fedora 23
 %if 0%{?fedora_version} == 23
+# Fedora 23
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
 [MEGAsync]
@@ -158,8 +176,8 @@ enabled=1
 DATA
 %endif
 
-# Fedora 22
 %if 0%{?fedora_version} == 22
+# Fedora 22
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
 [MEGAsync]
@@ -171,8 +189,8 @@ enabled=1
 DATA
 %endif
 
-# Fedora 21
 %if 0%{?fedora_version} == 21
+# Fedora 21
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
 [MEGAsync]
@@ -184,8 +202,8 @@ enabled=1
 DATA
 %endif
 
-# Fedora 20
 %if 0%{?fedora_version} == 20
+# Fedora 20
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
 [MEGAsync]
@@ -197,8 +215,8 @@ enabled=1
 DATA
 %endif
 
-# Fedora 19
 %if 0%{?fedora_version} == 19
+# Fedora 19
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
 [MEGAsync]
@@ -210,8 +228,8 @@ enabled=1
 DATA
 %endif
 
-# openSUSE Leap 42.1
 %if 0%{?suse_version} == 1315
+# openSUSE Leap 42.1
 if [ -d "/etc/zypp/repos.d/" ]; then
 ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
 cat > "$ZYPP_FILE" << DATA
@@ -227,8 +245,8 @@ DATA
 fi
 %endif
 
-# openSUSE Tumbleweed (rolling release)
 %if 0%{?suse_version} > 1320
+# openSUSE Tumbleweed (rolling release)
 if [ -d "/etc/zypp/repos.d/" ]; then
 ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
 cat > "$ZYPP_FILE" << DATA
@@ -244,8 +262,8 @@ DATA
 fi
 %endif
 
-# openSUSE 13.2
 %if 0%{?suse_version} == 1320
+# openSUSE 13.2
 if [ -d "/etc/zypp/repos.d/" ]; then
 ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
 cat > "$ZYPP_FILE" << DATA
@@ -261,8 +279,8 @@ DATA
 fi
 %endif
 
-# openSUSE 13.1
 %if 0%{?suse_version} == 1310
+# openSUSE 13.1
 if [ -d "/etc/zypp/repos.d/" ]; then
 ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
 cat > "$ZYPP_FILE" << DATA
@@ -278,8 +296,8 @@ DATA
 fi
 %endif
 
-# openSUSE 12.3
 %if 0%{?suse_version} == 1230
+# openSUSE 12.3
 if [ -d "/etc/zypp/repos.d/" ]; then
 ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
 cat > "$ZYPP_FILE" << DATA
@@ -295,8 +313,8 @@ DATA
 fi
 %endif
 
-# openSUSE 12.2
 %if 0%{?suse_version} == 1220
+# openSUSE 12.2
 if [ -d "/etc/zypp/repos.d/" ]; then
 ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
 cat > "$ZYPP_FILE" << DATA
@@ -312,6 +330,58 @@ DATA
 fi
 %endif
 
+
+### include public signing key #####
+# Install new key if it's not present
+# Notice, for openSuse, postinst is checked (and therefore executed) when creating the rpm
+# we need to ensure no command results in fail (returns !=0)
+rpm -q gpg-pubkey-7f068e5d-563dc081 > /dev/null 2>&1 || KEY_NOT_FOUND=1
+
+if [ ! -z "$KEY_NOT_FOUND" ]; then
+KEYFILE=$(mktemp /tmp/megasync.XXXXXX || :)
+if [ -n "$KEYFILE" ]; then
+    cat > "$KEYFILE" <<KEY || :
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v2
+
+mI0EVj3AgQEEAO2XyJgpvE5HDRVsggcrMhf5+KpQepl7m7OyrPSgxLi72Wuy5GWp
+hO64BX1UzmdUirIEOc13YxdeuhwJ3YP0wnKUyUrdWA0r2HjOz555vN6ldrPlSCBI
+RxKBWRMQaR4cwNKQ8V4xV9tVdPGgrQ9L/4H3fM9fYqCwEMKBxxLZsF3PABEBAAG0
+IE1lZ2FMaW1pdGVkIDxzdXBwb3J0QG1lZ2EuY28ubno+iL8EEwECACkFAlY9wIEC
+GwMFCRLMAwAHCwkIBwMCAQYVCAIJCgsEFgIDAQIeAQIXgAAKCRADw606fwaOXfOS
+A/998rh6f0wsrHmX2LTw2qmrWzwPj4m+vp0m3w5swPZw1x4qSNsmNsIXX8J0ZcSE
+qymOwHZ0B9imBS3iz+U496NSfPNWABbIBnUAu8zq0IR28Q9pUcLe5MWFsw9NO+w2
+5dByoN9JKeUftZt1x76NHn5wmxB9fv7WVlCnZJ+T16+nh7iNBFY9wIEBBADHpopM
+oXNkrGZLI6Ok1F5N7+bSgiyZwkvBMAqCkPawUgwJztFKGf8F/sSbydsKRC2aQcuJ
+eOj0ZPUtJ80+o3w8MsHRtZDSxDIxqqiHeupoDRI3Be9S544vI5/UmiiygTuhmNTT
+NWgStoZz7hEK4IsELAG1EFodIMtBSkptDL92HwARAQABiKUEGAECAA8FAlY9wIEC
+GwwFCRLMAwAACgkQA8OtOn8Gjl3HlAQAoOckF5JBJWekmlX+k2RYwtgfszk31Gq+
+Jjiho4rUEW8c1EUPvK8v1jRGwjYED3ihJ6510eblYFPl+6k91OWlScnxuVVAmSn4
+35RW3vR+nYUvf3s8rctbw97gJJZAA7p5oAowTux3oHotKSYhhxKcz15goMXzSb5G
+/h7fJRhMnw4=
+=fp/e
+-----END PGP PUBLIC KEY BLOCK-----
+KEY
+
+mv /var/lib/rpm/.rpm.lock /var/lib/rpm/.rpm.lock_moved || : #to allow rpm import within postinst
+%if 0%{?suse_version}
+#Key import would hang and fail due to lock in /var/lib/rpm/Packages. We create a copy
+mv /var/lib/rpm/Packages{,_moved}
+cp /var/lib/rpm/Packages{_moved,}
+%endif
+rpm --import "$KEYFILE" 2>&1 || FAILED_IMPORT=1
+%if 0%{?suse_version}
+rm /var/lib/rpm/Packages_moved  #remove the old one
+%endif
+mv /var/lib/rpm/.rpm.lock_moved /var/lib/rpm/.rpm.lock || : #take it back
+
+rm $KEYFILE || :
+fi
+fi
+
+### END of POSTINST
+
+
 %postun
 %if 0%{?suse_version} >= 1140
 %desktop_database_postun
@@ -326,7 +396,7 @@ fi
 killall megasync 2> /dev/null || true
 
 
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
+%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
 %posttrans
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %endif

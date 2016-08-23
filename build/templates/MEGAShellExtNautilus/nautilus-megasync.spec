@@ -15,6 +15,13 @@ BuildRequires:	hicolor-icon-theme, gnome-shell
 %if 0%{?rhel_version} 
 BuildRequires: redhat-logos
 %endif
+%if 0%{?fedora_version} 
+BuildRequires: fedora-logos
+%endif
+%if 0%{?scientificlinux_version} 
+BuildRequires: sl-logos, gcc-c++
+%endif
+
 Requires:       nautilus, megasync
 
 %description
@@ -36,7 +43,7 @@ Store up to 50 GB for free!
 %build
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
+%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
 qmake-qt4
 %else
 qmake
@@ -105,7 +112,7 @@ DATA
 fi
 
 
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
+%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
 %posttrans
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %endif

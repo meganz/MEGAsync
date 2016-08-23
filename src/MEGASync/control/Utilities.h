@@ -14,6 +14,7 @@ public:
     static bool verifySyncedFolderLimits(QString path);
     static QString extractJSONString(QString json, QString name);
     static long long extractJSONNumber(QString json, QString name);
+    static QString getDefaultBasePath();
 
 private:
     Utilities() {}
