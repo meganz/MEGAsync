@@ -1671,7 +1671,10 @@ void MegaApplication::checkMemoryUsage()
 
 #ifdef _WIN32
     PROCESS_MEMORY_COUNTERS_EX pmc;
-    GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc));
+    if (!GetProcessMemoryInfo(GetCurrentProcess(), (PROCESS_MEMORY_COUNTERS*)&pmc, sizeof(pmc)))
+    {
+        return;
+    }
     procesUsage = pmc.PrivateUsage;
 #else
     #ifdef __APPLE__
