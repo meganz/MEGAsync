@@ -102,6 +102,11 @@ QTransfersModel::~QTransfersModel()
     delete delegateListener;
 }
 
+int QTransfersModel::getModelType()
+{
+    return type;
+}
+
 void QTransfersModel::onTransferStart(MegaApi *api, MegaTransfer *transfer)
 {
     if (type == TYPE_ALL || transfer->getType() == type)

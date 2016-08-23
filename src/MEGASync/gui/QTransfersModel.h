@@ -29,6 +29,8 @@ public:
     virtual int rowCount(const QModelIndex &parent) const;
     virtual ~QTransfersModel();
 
+    int getModelType();
+
     virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
     virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
