@@ -32,18 +32,26 @@ void MacXSystemServiceTask::processItems(QStringList itemsSelected)
             MegaNode *node = megaApi->getSyncedNode(&tmpPath);
             if (!node)
             {
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MEGA service not synced node...");
                 const char *fpLocal = megaApi->getFingerprint(itemsSelected.at(i).toUtf8().constData());
                 node = megaApi->getExportableNodeByFingerprint(fpLocal);
                 delete [] fpLocal;
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MEGA service found exportable node...");
+            }
+            else
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MEGA service synced node...");
             }
 
             if(node)
             {
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MEGA service enqueue export link...");
                 exportQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
                 delete node;
             }
             else
             {
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MEGA service enqueue upload item...");
                 uploadQueue.enqueue(QDir::toNativeSeparators(file.absoluteFilePath()));
             }
 
