@@ -1719,7 +1719,6 @@ void MegaApplication::checkMemoryUsage()
                                .arg(numLocalNodes).toUtf8().constData());
         }
     }
-
 }
 
 void MegaApplication::periodicTasks()
@@ -3275,18 +3274,34 @@ void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
     MegaNode *node = megaApi->getNodeByHandle(fileHandle);
     if (!node)
     {
-        showErrorMessage(tr("Error getting link: ") + QString::fromUtf8("File not found"));
+        showErrorMessage(tr("Error getting link:") + QString::fromUtf8(" ") + tr("File not found"));
         return;
     }
+
+    char *path = megaApi->getNodePath(node);
+    if (path && strncmp(path, "//bin/", 6) && megaApi->checkAccess(node, MegaShare::ACCESS_OWNER).getErrorCode() == MegaError::API_OK)
+    {
+        //Launch the creation of the import link, it will be handled in the "onRequestFinish" callback
+        if (infoDialog)
+        {
+            infoDialog->disableGetLink(true);
+        }
+        megaApi->exportNode(node);
+
+        delete node;
+        delete [] path;
+        return;
+    }
+    delete [] path;
 
     const char *fp = megaApi->getFingerprint(node);
     if (!fp)
     {
-        showErrorMessage(tr("Error getting link: ") + QString::fromUtf8("File not found"));
+        showErrorMessage(tr("Error getting link:") + QString::fromUtf8(" ") + tr("File not found"));
         delete node;
         return;
     }
-    MegaNode *exportableNode = megaApi->getExportableNodeByFingerprint(fp);
+    MegaNode *exportableNode = megaApi->getExportableNodeByFingerprint(fp, node->getName());
     if (exportableNode)
     {
 
@@ -3304,7 +3319,7 @@ void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
     }
     delete node;
     delete [] fp;
-    showErrorMessage(tr("Error getting link: ") + QString::fromUtf8("Not exportable node"));
+    showErrorMessage(tr("The link can't be generated because the file is in an incoming shared folder or in your Rubbish Bin"));
 }
 
 //Called when the user wants to upload a list of files and/or folders from the shell
