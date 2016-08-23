@@ -36,14 +36,3 @@ QSize MegaTransferDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
         return QStyledItemDelegate::sizeHint(option, index);
     }
 }
-
-bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
-{
-    if (QEvent::MouseButtonRelease ==  event->type())
-    {
-        TransferItem *item = (TransferItem *)index.internalPointer();
-        QMouseEvent *e = (QMouseEvent *)event;
-        item->mouseEventClicked(e->pos(), ((QMouseEvent*)event)->button() == Qt::RightButton);
-    }
-    return true;
-}
