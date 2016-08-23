@@ -38,6 +38,7 @@
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
+    #include <mach/mach.h>
 #endif
 
 Q_DECLARE_METATYPE(QQueue<QString>)
