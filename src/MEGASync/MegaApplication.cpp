@@ -3304,7 +3304,6 @@ void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
     MegaNode *exportableNode = megaApi->getExportableNodeByFingerprint(fp, node->getName());
     if (exportableNode)
     {
-
         //Launch the creation of the import link, it will be handled in the "onRequestFinish" callback
         if (infoDialog)
         {
