@@ -49,7 +49,7 @@ shift $((OPTIND-1))
 # if archives are not yet downloaded
 if [ ! -d "$archives" ]; then
     mkdir $archives
-    ./MEGASync/mega/contrib/build_sdk.sh $FLAG_CRYPTOPP -n -f -w -s -v -u -o $archives
+    ./MEGASync/mega/contrib/build_sdk.sh $FLAG_CRYPTOPP -n -f -g -w -s -v -u -o $archives
     rm_archives=1
 fi
 
@@ -58,6 +58,7 @@ cd MEGASync/mega
     $FLAG_CRYPTOPP \
     -o $archives \
     -f \
+    -g \
     -l \
     -n \
     -c \
