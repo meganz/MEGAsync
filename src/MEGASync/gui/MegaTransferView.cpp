@@ -10,7 +10,7 @@ MegaTransferView::MegaTransferView(QWidget *parent) :
     moveToTop = NULL;
     moveUp = NULL;
     moveDown = NULL;
-    moveToDown = NULL;
+    moveToBottom = NULL;
     clearTransfer = NULL;
     contextCompleted = NULL;
     clearCompleted = NULL;
@@ -48,6 +48,7 @@ void MegaTransferView::createContextMenu()
     }
 
     pauseTransfer = new QAction(tr("Pause Transfer"), this);
+    connect(pauseTransfer, SIGNAL(triggered()), this, SLOT(pauseTransferClicked()));
 
     if (moveToTop)
     {
@@ -56,6 +57,7 @@ void MegaTransferView::createContextMenu()
     }
 
     moveToTop = new QAction(tr("Move to top"), this);
+    connect(moveToTop, SIGNAL(triggered()), this, SLOT(moveToTopClicked()));
 
     if (moveUp)
     {
@@ -64,6 +66,7 @@ void MegaTransferView::createContextMenu()
     }
 
     moveUp = new QAction(tr("Move up"), this);
+    connect(moveUp, SIGNAL(triggered()), this, SLOT(moveUpClicked()));
 
     if (moveDown)
     {
@@ -72,14 +75,16 @@ void MegaTransferView::createContextMenu()
     }
 
     moveDown = new QAction(tr("Move down"), this);
+    connect(moveDown, SIGNAL(triggered()), this, SLOT(moveDownClicked()));
 
-    if (moveToDown)
+    if (moveToBottom)
     {
-        moveToDown->deleteLater();
-        moveToDown = NULL;
+        moveToBottom->deleteLater();
+        moveToBottom = NULL;
     }
 
-    moveToDown = new QAction(tr("Move to bottom"), this);
+    moveToBottom = new QAction(tr("Move to bottom"), this);
+    connect(moveToBottom, SIGNAL(triggered()), this, SLOT(moveToBottomClicked()));
 
     if (clearTransfer)
     {
@@ -88,13 +93,14 @@ void MegaTransferView::createContextMenu()
     }
 
     clearTransfer = new QAction(tr("Clear"), this);
+    connect(clearTransfer, SIGNAL(triggered()), this, SLOT(clearTransferClicked()));
 
     contextInProgressMenu->addAction(pauseTransfer);
     contextInProgressMenu->addSeparator();
     contextInProgressMenu->addAction(moveToTop);
     contextInProgressMenu->addAction(moveUp);
     contextInProgressMenu->addAction(moveDown);
-    contextInProgressMenu->addAction(moveToDown);
+    contextInProgressMenu->addAction(moveToBottom);
     contextInProgressMenu->addSeparator();
     contextInProgressMenu->addAction(clearTransfer);
 }
@@ -192,4 +198,64 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
             }
         }
     }
+}
+
+void MegaTransferView::pauseTransferClicked()
+{
+    QModelIndex index = currentIndex();
+    if (index.isValid())
+    {
+
+    }
+
+}
+
+void MegaTransferView::moveToTopClicked()
+{
+    QModelIndex index = currentIndex();
+    if (index.isValid())
+    {
+
+    }
+
+}
+
+void MegaTransferView::moveUpClicked()
+{
+    QModelIndex index = currentIndex();
+    if (index.isValid())
+    {
+
+    }
+
+}
+
+void MegaTransferView::moveDownClicked()
+{
+    QModelIndex index = currentIndex();
+    if (index.isValid())
+    {
+
+    }
+
+}
+
+void MegaTransferView::moveToBottomClicked()
+{
+    QModelIndex index = currentIndex();
+    if (index.isValid())
+    {
+
+    }
+
+}
+
+void MegaTransferView::clearTransferClicked()
+{
+    QModelIndex index = currentIndex();
+    if (index.isValid())
+    {
+
+    }
+
 }

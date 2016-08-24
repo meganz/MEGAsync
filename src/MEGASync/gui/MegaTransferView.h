@@ -23,7 +23,7 @@ private:
     QAction *moveToTop;
     QAction *moveUp;
     QAction *moveDown;
-    QAction *moveToDown;
+    QAction *moveToBottom;
     QAction *clearTransfer;
     QMenu *contextCompleted;
     QAction *clearCompleted;
@@ -37,6 +37,12 @@ protected:
 
 private slots:
     void onCustomContextMenu(const QPoint &point);
+    void pauseTransferClicked();
+    void moveToTopClicked();
+    void moveUpClicked();
+    void moveDownClicked();
+    void moveToBottomClicked();
+    void clearTransferClicked();
 };
 
 #endif // MEGATRANSFERVIEW_H
