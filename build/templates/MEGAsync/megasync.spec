@@ -69,11 +69,16 @@ Store up to 50 GB for free!
 %define flag_cryptopp -q
 %endif
 
-
+%define flag_disablezlib %{nil}
+%if 0%{?fedora_version} == 23
+%define flag_disablezlib -z
+%endif
 
 
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
-./configure %{flag_cryptopp}
+
+./configure %{flag_cryptopp} -g %{flag_disablezlib}
+
 # Fedora uses system Crypto++ header files
 %if 0%{?fedora}
 rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp

@@ -3,7 +3,7 @@
 build: build-stamp
 build-stamp:
 	dh_testdir
-	./configure
+	./configure -g
 	qmake
 	lrelease MEGASync/MEGASync.pro
 	make
