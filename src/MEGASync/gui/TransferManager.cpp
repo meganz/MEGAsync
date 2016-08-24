@@ -27,6 +27,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     ui->wUploads->setupTransfers(megaApi->getTransfers(QTransfersModel::TYPE_UPLOAD), QTransfersModel::TYPE_UPLOAD);
     ui->wDownloads->setupTransfers(megaApi->getTransfers(QTransfersModel::TYPE_DOWNLOAD), QTransfersModel::TYPE_DOWNLOAD);
     ui->wAllTransfers->setupTransfers(megaApi->getTransfers(), QTransfersModel::TYPE_ALL);
+    ui->wCompleted->setupTransfers(NULL, QTransfersModel::TYPE_FINISHED);
 
     on_tAllTransfers_clicked();
     createAddMenu();

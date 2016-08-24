@@ -21,6 +21,8 @@ public:
 
     explicit QTransfersModel(int type, QObject *parent = 0);
     void setupModelTransfers(mega::MegaTransferList *transfers);
+    void insertTransfer(mega::MegaTransfer *transfer);
+    void removeTransfer(mega::MegaTransfer *transfer);
     TransferItem *transferFromIndex(const QModelIndex &index) const;
     virtual int columnCount(const QModelIndex & parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role) const;
@@ -42,8 +44,8 @@ signals:
 
 private:
     void updateTransferInfo(mega::MegaTransfer *transfer);
-    void insertTransfer(mega::MegaTransfer *transfer, const QModelIndex &parent);
-    void removeTransfer(mega::MegaTransfer *transfer, const QModelIndex &parent);
+    void updateInitialTransferInfo(mega::MegaTransfer *transfer);
+
 
 protected:
     QMap<int, TransferItem*> transfers;
