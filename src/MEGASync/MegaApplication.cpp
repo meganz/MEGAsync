@@ -24,6 +24,7 @@
 #else
 #include <Windows.h>
 #include <Psapi.h>
+#include <Strsafe.h>
 #endif
 
 using namespace mega;
@@ -101,7 +102,19 @@ int main(int argc, char *argv[])
     QSslSocket::supportsSsl();
 
 #ifdef _WIN32
-    HINSTANCE shcore = LoadLibrary(L"Shcore.dll");
+    HINSTANCE shcore = NULL;
+    WCHAR systemPath[MAX_PATH];
+    UINT len = GetSystemDirectory(systemPath, MAX_PATH);
+    if (len + 20 >= MAX_PATH)
+    {
+        shcore = LoadLibrary(L"shcore.dll");
+    }
+    else
+    {
+        StringCchPrintfW(systemPath + len, MAX_PATH - len, L"\\shcore.dll");
+        shcore = LoadLibrary(systemPath);
+    }
+
     if (shcore)
     {
         enum MEGA_PROCESS_DPI_AWARENESS

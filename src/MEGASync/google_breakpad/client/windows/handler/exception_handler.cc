@@ -30,6 +30,7 @@
 #include "MegaApplication.h"
 #include <ObjBase.h>
 #include <Psapi.h>
+#include <Strsafe.h>
 
 #include <algorithm>
 #include <cassert>
@@ -227,7 +228,22 @@ void ExceptionHandler::Initialize(
       assert(handler_thread_ != NULL);
     }
 
-    dbghelp_module_ = LoadLibrary(L"dbghelp.dll");
+    WCHAR systemPath[MAX_PATH];
+    UINT len = GetSystemDirectory(systemPath, MAX_PATH);
+    if (len + 20 >= MAX_PATH)
+    {
+        dbghelp_module_ = LoadLibrary(L"dbghelp.dll");
+        rpcrt4_module_ = LoadLibrary(L"rpcrt4.dll");
+    }
+    else
+    {
+        StringCchPrintfW(systemPath + len, MAX_PATH - len, L"\\dbghelp.dll");
+        dbghelp_module_ = LoadLibrary(systemPath);
+
+        StringCchPrintfW(systemPath + len, MAX_PATH - len, L"\\rpcrt4.dll");
+        rpcrt4_module_ = LoadLibrary(systemPath);
+    }
+
     if (dbghelp_module_) {
       minidump_write_dump_ = reinterpret_cast<MiniDumpWriteDump_type>(
           GetProcAddress(dbghelp_module_, "MiniDumpWriteDump"));
@@ -236,7 +252,6 @@ void ExceptionHandler::Initialize(
     // Load this library dynamically to not affect existing projects.  Most
     // projects don't link against this directly, it's usually dynamically
     // loaded by dependent code.
-    rpcrt4_module_ = LoadLibrary(L"rpcrt4.dll");
     if (rpcrt4_module_) {
       uuid_create_ = reinterpret_cast<UuidCreate_type>(
           GetProcAddress(rpcrt4_module_, "UuidCreate"));
