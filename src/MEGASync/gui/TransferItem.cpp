@@ -18,6 +18,7 @@ TransferItem::TransferItem(QWidget *parent) :
     effectiveTransferSpeed = 200000;
     regular = false;
     animation = NULL;
+    priority = 0;
     lastUpdate = QDateTime::currentMSecsSinceEpoch();
 }
 
@@ -82,6 +83,16 @@ void TransferItem::setType(int type, bool isSyncTransfer)
 
     ui->lTransferType->setIcon(icon);
     ui->lTransferType->setIconSize(QSize(12, 12));
+}
+
+void TransferItem::setPriority(float priority)
+{
+    this->priority = priority;
+}
+
+float TransferItem::getPriority()
+{
+    return this->priority;
 }
 
 TransferItem::~TransferItem()

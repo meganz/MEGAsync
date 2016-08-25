@@ -5,6 +5,7 @@
 #include "TransferItem.h"
 #include <megaapi.h>
 #include "QTMegaTransferListener.h"
+#include <deque>
 
 class QTransfersModel : public QAbstractItemModel, public mega::MegaTransferListener
 {
@@ -49,7 +50,8 @@ private:
 
 protected:
     QMap<int, TransferItem*> transfers;
-    QList<int> transfersOrder;
+    std::deque<TransferItem*> transferOrder;
+
     mega::QTMegaTransferListener *delegateListener;
     int type;
 };

@@ -22,6 +22,8 @@ public:
     void setSpeed(long long transferSpeed);
     void setTotalSize(long long size);
     void setType(int type, bool isSyncTransfer = false);
+    void setPriority(float priority);
+    float getPriority();
 
     void finishTransfer();
     void updateTransfer();
@@ -44,6 +46,7 @@ protected:
     long long totalSize, totalTransferredBytes;
     unsigned long long effectiveSpeed, effectiveTransferSpeed, lastUpdate, elapsedTransferTime;
     bool regular;
+    float priority;
 };
 
 Q_DECLARE_METATYPE(TransferItem*)

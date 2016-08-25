@@ -3,6 +3,11 @@
 
 using namespace mega;
 
+bool priority_comparator(TransferItem* i, TransferItem *j)
+{
+    return (i->getPriority() < j->getPriority());
+}
+
 QTransfersModel::QTransfersModel(int type, QObject *parent) :
     QAbstractItemModel(parent)
 {
@@ -57,20 +62,26 @@ QModelIndex QTransfersModel::index(int row, int column, const QModelIndex &paren
         return QModelIndex();
     }
 
-    return createIndex(row, column, transfers.value(transfersOrder.at(row)));
+    return createIndex(row, column, transferOrder[row]);
 }
 
 void QTransfersModel::insertTransfer(MegaTransfer *transfer)
 {
-    beginInsertRows(QModelIndex(), transfers.size(), transfers.size());
-    transfers.insert(transfer->getTag(), new TransferItem());
-    transfersOrder.append(transfer->getTag());
+    TransferItem *item = new TransferItem();
+    item->setPriority(transfer->getPriority());
+
+    auto it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
+    int row = std::distance(transferOrder.begin(), it);
+
+    beginInsertRows(QModelIndex(), row, row);
+    transfers.insert(transfer->getTag(), item);
+    transferOrder.insert(it, item);
     endInsertRows();
 
     updateInitialTransferInfo(transfer);
     updateTransferInfo(transfer);
 
-    if (transfersOrder.size() == 1)
+    if (transferOrder.size() == 1)
     {
         emit onTransferAdded();
     }
@@ -78,10 +89,13 @@ void QTransfersModel::insertTransfer(MegaTransfer *transfer)
 
 void QTransfersModel::removeTransfer(MegaTransfer *transfer)
 {
-    int row = transfersOrder.indexOf(transfer->getTag());
+    TransferItem *item =  transfers.value(transfer->getTag());
+    auto it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
+    int row = std::distance(transferOrder.begin(), it);
+
     beginRemoveRows(QModelIndex(), row, row);
     transfers.remove(transfer->getTag());
-    transfersOrder.removeAt(row);
+    transferOrder.erase(it);
     endRemoveRows();
 
     if (transfers.isEmpty())
@@ -96,7 +110,7 @@ int QTransfersModel::rowCount(const QModelIndex &parent) const
     {
         return 0;
     }
-    return transfersOrder.size();
+    return transferOrder.size();
 }
 
 QTransfersModel::~QTransfersModel()
@@ -176,7 +190,8 @@ void QTransfersModel::updateInitialTransferInfo(MegaTransfer *transfer)
     item->setTotalSize(transfer->getTotalBytes());
 
     //Update modified item
-    int row = transfersOrder.indexOf(transfer->getTag());
+    auto it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
+    int row = std::distance(transferOrder.begin(), it);
     emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
 
 }
@@ -192,7 +207,27 @@ void QTransfersModel::updateTransferInfo(MegaTransfer *transfer)
     item->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
     type == TYPE_FINISHED ? item->finishTransfer() : item->updateTransfer();
 
-    //Update modified item
-    int row = transfersOrder.indexOf(transfer->getTag());
-    emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
+    if (transfer->getPriority() == item->getPriority())
+    {
+        //Update modified item
+        auto it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
+        int row = std::distance(transferOrder.begin(), it);
+        emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
+    }
+    else
+    {
+        //Move item to its new position
+        auto it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
+        int row = std::distance(transferOrder.begin(), it);
+
+        item->setPriority(transfer->getPriority());
+        auto newit = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
+        int newrow = std::distance(transferOrder.begin(), newit);
+
+        beginMoveRows(QModelIndex(), row, row, QModelIndex(), newrow);
+        transferOrder.erase(it);
+        auto finalit = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
+        transferOrder.insert(finalit, item);
+        endMoveRows();
+    }
 }
