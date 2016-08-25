@@ -3000,7 +3000,7 @@ background:transparent;</string>
                 <enum>Qt::StrongFocus</enum>
                </property>
                <property name="text">
-                <string>Local cache: %1</string>
+                <string>Local backup: %1</string>
                </property>
                <property name="margin">
                 <number>2</number>
@@ -3081,7 +3081,7 @@ background:transparent;</string>
                 <enum>Qt::StrongFocus</enum>
                </property>
                <property name="text">
-                <string>Remote cache: %1</string>
+                <string>Remote backup: %1</string>
                </property>
                <property name="margin">
                 <number>10</number>

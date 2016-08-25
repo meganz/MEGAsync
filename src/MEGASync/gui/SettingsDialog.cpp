@@ -1824,7 +1824,7 @@ void SettingsDialog::on_bClearCache_clicked()
 
     QPointer<QMessageBox> warningDel = new QMessageBox(this);
     warningDel->setIcon(QMessageBox::Warning);
-    warningDel->setWindowTitle(tr("Clear local cache"));
+    warningDel->setWindowTitle(tr("Clear local backup"));
     warningDel->setTextFormat(Qt::RichText);
 
 #if QT_VERSION > 0x050100
@@ -1834,7 +1834,7 @@ void SettingsDialog::on_bClearCache_clicked()
     warningDel->setText(tr("Backups of the previous versions of your synced files in your computer will be permanently deleted. "
                            "Please, check your backup folders to see if you need to rescue something before continuing:")
                            + QString::fromUtf8("<br/>") + syncs
-                           + QString::fromUtf8("<br/><br/>") + tr("Do you want to delete your local cache now?"));
+                           + QString::fromUtf8("<br/><br/>") + tr("Do you want to delete your local backup now?"));
     warningDel->setStandardButtons(QMessageBox::No | QMessageBox::Yes);
     warningDel->setDefaultButton(QMessageBox::No);
     int result = warningDel->exec();
@@ -1867,7 +1867,7 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
 
     QPointer<QMessageBox> warningDel = new QMessageBox(this);
     warningDel->setIcon(QMessageBox::Warning);
-    warningDel->setWindowTitle(tr("Clear remote cache"));
+    warningDel->setWindowTitle(tr("Clear remote backup"));
     warningDel->setTextFormat(Qt::RichText);
 
 #if QT_VERSION > 0x050100
@@ -1878,7 +1878,7 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
     warningDel->setText(tr("Backups of the previous versions of your synced files in MEGA will be permanently deleted. "
                            "Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.")
                            .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#fm/%1\">SyncDebris</a>").arg(QString::fromUtf8(base64Handle)))
-                           + QString::fromUtf8("<br/><br/>") + tr("Do you want to delete your remote cache now?"));
+                           + QString::fromUtf8("<br/><br/>") + tr("Do you want to delete your remote backup now?"));
     delete [] base64Handle;
 
     warningDel->setStandardButtons(QMessageBox::No | QMessageBox::Yes);
