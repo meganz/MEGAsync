@@ -476,6 +476,7 @@ MegaApplication::~MegaApplication()
     {
         removeTranslator(&translator);
     }
+    delete pricing;
 }
 
 void MegaApplication::initialize()
@@ -1787,9 +1788,11 @@ void MegaApplication::cleanAll()
     QApplication::processEvents();
 
     delete megaApi;
+    megaApi = NULL;
 
     preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
     trayIcon->deleteLater();
+    trayIcon = NULL;
 
     if (reboot)
     {
