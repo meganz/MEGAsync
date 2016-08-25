@@ -257,7 +257,7 @@ protected:
     MegaDownloader *downloader;
     QTimer *periodicTasksTimer;
     QTimer *infoDialogTimer;
-    QTranslator *translator;
+    QTranslator translator;
     PasteMegaLinksDialog *pasteMegaLinksDialog;
     ChangeLogDialog *changeLogDialog;
     ImportMegaLinksDialog *importDialog;

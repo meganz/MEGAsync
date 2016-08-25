@@ -409,7 +409,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     settingsDialog = NULL;
     streamSelector = NULL;
     reboot = false;
-    translator = NULL;
     exitAction = NULL;
     exitActionOverquota = NULL;
     exitActionGuest = NULL;
@@ -473,7 +472,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 MegaApplication::~MegaApplication()
 {
-
+    if (!translator.isEmpty())
+    {
+        removeTranslator(&translator);
+    }
 }
 
 void MegaApplication::initialize()
@@ -529,6 +531,7 @@ void MegaApplication::initialize()
     }
 #endif
 
+    installTranslator(&translator);
     QString language = preferences->language();
     changeLanguage(language);
     trayIcon->show();
@@ -653,27 +656,13 @@ void MegaApplication::changeLanguage(QString languageCode)
         return;
     }
 
-    if (translator)
-    {
-        removeTranslator(translator);
-        delete translator;
-        translator = NULL;
-    }
-
-    QTranslator *newTranslator = new QTranslator();
-    if (newTranslator->load(Preferences::TRANSLATION_FOLDER
+    if (!translator.load(Preferences::TRANSLATION_FOLDER
                             + Preferences::TRANSLATION_PREFIX
-                            + languageCode)
-            || newTranslator->load(Preferences::TRANSLATION_FOLDER
+                            + languageCode))
+    {
+        translator.load(Preferences::TRANSLATION_FOLDER
                                    + Preferences::TRANSLATION_PREFIX
-                                   + QString::fromUtf8("en")))
-    {
-        installTranslator(newTranslator);
-        translator = newTranslator;
-    }
-    else
-    {
-        delete newTranslator;
+                                   + QString::fromUtf8("en"));
     }
 
     createTrayIcon();
