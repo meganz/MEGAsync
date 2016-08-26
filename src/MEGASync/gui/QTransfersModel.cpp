@@ -284,12 +284,14 @@ void QTransfersModel::updateTransferInfo(MegaTransfer *transfer)
         auto it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
         int row = std::distance(transferOrder.begin(), it);
 
-        item->setPriority(transfer->getPriority());
-        auto newit = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
+        TransferItem testItem;
+        testItem.setPriority(transfer->getPriority());
+        auto newit = std::lower_bound(transferOrder.begin(), transferOrder.end(), &testItem, priority_comparator);
         int newrow = std::distance(transferOrder.begin(), newit);
 
         beginMoveRows(QModelIndex(), row, row, QModelIndex(), newrow);
         transferOrder.erase(it);
+        item->setPriority(transfer->getPriority());
         auto finalit = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
         transferOrder.insert(finalit, item);
         endMoveRows();
