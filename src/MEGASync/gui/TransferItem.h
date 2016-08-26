@@ -17,6 +17,7 @@ public:
     explicit TransferItem(QWidget *parent = 0);
 
     void setFileName(QString fileName);
+    QString getFileName();
     void setTransferredBytes(long long totalTransferredBytes, bool cancellable);
     void setTransferType(int type);
     void setSpeed(long long transferSpeed);
@@ -27,6 +28,7 @@ public:
 
     void finishTransfer();
     void updateTransfer();
+    void pauseTransfer();
     void mouseHoverTransfer(bool isHover);
 
     QSize minimumSizeHint() const;
@@ -35,12 +37,23 @@ public:
 
     ~TransferItem();
 
+    int getTransferState();
+    void setTransferState(int value);
+
+    int getTransferTag();
+    void setTransferTag(int value);
+
+    bool getRegular();
+    void setRegular(bool value);
+
 private:
     Ui::TransferItem *ui;
 
 protected:
     QString fileName;
     int type;
+    int transferState;
+    int transferTag;
     QMovie *animation;
     long long transferSpeed;
     long long totalSize, totalTransferredBytes;

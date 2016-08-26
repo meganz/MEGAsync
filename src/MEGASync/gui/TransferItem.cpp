@@ -19,6 +19,8 @@ TransferItem::TransferItem(QWidget *parent) :
     regular = false;
     animation = NULL;
     priority = 0;
+    transferState = 0;
+    transferTag = 0;
     lastUpdate = QDateTime::currentMSecsSinceEpoch();
 }
 
@@ -34,6 +36,11 @@ void TransferItem::setFileName(QString fileName)
     icon.addFile(Utilities::getExtensionPixmapSmall(fileName), QSize(), QIcon::Normal, QIcon::Off);
     ui->lFileType->setIcon(icon);
     ui->lFileType->setIconSize(QSize(20, 22));
+}
+
+QString TransferItem::getFileName()
+{
+    return fileName;
 }
 
 void TransferItem::setTransferredBytes(long long totalTransferredBytes, bool cancellable)
@@ -99,6 +106,44 @@ TransferItem::~TransferItem()
 {
     delete ui;
     delete animation;
+}
+int TransferItem::getTransferState()
+{
+    return transferState;
+}
+
+void TransferItem::setTransferState(int value)
+{
+    transferState = value;
+    switch (transferState) {
+    case MegaTransfer::STATE_COMPLETED:
+        finishTransfer();
+        break;
+    case MegaTransfer::STATE_PAUSED:
+        pauseTransfer();
+        break;
+    default:
+        updateTransfer();
+        break;
+    }
+}
+int TransferItem::getTransferTag()
+{
+    return transferTag;
+}
+
+void TransferItem::setTransferTag(int value)
+{
+    transferTag = value;
+}
+bool TransferItem::getRegular()
+{
+    return regular;
+}
+
+void TransferItem::setRegular(bool value)
+{
+    regular = value;
 }
 
 void TransferItem::finishTransfer()
@@ -190,6 +235,11 @@ void TransferItem::updateTransfer()
     // Update transferred bytes
     ui->lTotal->setText(QString::fromUtf8("%1   <span style=\"color:#777777; text-decoration:none;\">of   </span>%2").arg(Utilities::getSizeString(totalTransferredBytes))
                         .arg(Utilities::getSizeString(totalSize)));
+}
+
+void TransferItem::pauseTransfer()
+{
+    transferState == MegaTransfer::STATE_PAUSED ?  ui->lSpeed->setText(QString::fromUtf8("(paused)")) : ui->lSpeed->setText(QString::fromUtf8(""));
 }
 
 void TransferItem::mouseEventClicked(QPoint pos, bool rightClick)
