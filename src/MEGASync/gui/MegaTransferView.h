@@ -17,6 +17,8 @@ public:
 private:
     int last_row;
     TransferItem *lastItemHovered;
+    int transferTagSelected;
+    int transferStateSelected;
 
     QMenu *contextInProgressMenu;
     QAction *pauseTransfer;
@@ -24,13 +26,14 @@ private:
     QAction *moveUp;
     QAction *moveDown;
     QAction *moveToBottom;
-    QAction *clearTransfer;
+    QAction *cancelTransfer;
     QMenu *contextCompleted;
     QAction *clearCompleted;
     QAction *clearAllCompleted;
 
     void createContextMenu();
     void createCompletedContextMenu();
+    void customizeContextInProgressMenu(bool paused, bool enableUpMoves, bool enableDownMoves, bool isCancellable);
 
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event);
@@ -42,7 +45,9 @@ private slots:
     void moveUpClicked();
     void moveDownClicked();
     void moveToBottomClicked();
+    void cancelTransferClicked();
     void clearTransferClicked();
+    void clearAllTransferClicked();
 };
 
 #endif // MEGATRANSFERVIEW_H

@@ -11,10 +11,12 @@ MegaTransferView::MegaTransferView(QWidget *parent) :
     moveUp = NULL;
     moveDown = NULL;
     moveToBottom = NULL;
-    clearTransfer = NULL;
+    cancelTransfer = NULL;
     contextCompleted = NULL;
     clearCompleted = NULL;
     clearAllCompleted = NULL;
+    transferTagSelected = 0;
+    transferStateSelected = 0;
 
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
@@ -30,7 +32,8 @@ void MegaTransferView::createContextMenu()
         contextInProgressMenu->setStyleSheet(QString::fromAscii(
                                    "QMenu {background: #ffffff;}"
                                    "QMenu::item {font-family: Source Sans Pro; margin-left: 8px; margin-right: 8px; color: #777777; padding: 5px 8px;} "
-                                   "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 7px; margin-right: 7px; color: #ffffff; padding: 5px 8px;}"));
+                                   "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 7px; margin-right: 7px; color: #ffffff; padding: 5px 8px;}"
+                                   "QMenu::item:disabled {background-color: #ffffff; color: rgba(119,119,119,0.3); border: none; margin-left: 7px; margin-right: 7px;}"));
     }
     else
     {
@@ -86,14 +89,14 @@ void MegaTransferView::createContextMenu()
     moveToBottom = new QAction(tr("Move to bottom"), this);
     connect(moveToBottom, SIGNAL(triggered()), this, SLOT(moveToBottomClicked()));
 
-    if (clearTransfer)
+    if (cancelTransfer)
     {
-        clearTransfer->deleteLater();
-        clearTransfer = NULL;
+        cancelTransfer->deleteLater();
+        cancelTransfer = NULL;
     }
 
-    clearTransfer = new QAction(tr("Clear"), this);
-    connect(clearTransfer, SIGNAL(triggered()), this, SLOT(clearTransferClicked()));
+    cancelTransfer = new QAction(tr("Cancel"), this);
+    connect(cancelTransfer, SIGNAL(triggered()), this, SLOT(cancelTransferClicked()));
 
     contextInProgressMenu->addAction(pauseTransfer);
     contextInProgressMenu->addSeparator();
@@ -102,7 +105,7 @@ void MegaTransferView::createContextMenu()
     contextInProgressMenu->addAction(moveDown);
     contextInProgressMenu->addAction(moveToBottom);
     contextInProgressMenu->addSeparator();
-    contextInProgressMenu->addAction(clearTransfer);
+    contextInProgressMenu->addAction(cancelTransfer);
 }
 
 void MegaTransferView::createCompletedContextMenu()
@@ -131,6 +134,7 @@ void MegaTransferView::createCompletedContextMenu()
     }
 
     clearCompleted = new QAction(tr("Clear"), this);
+    connect(clearCompleted, SIGNAL(triggered()), this, SLOT(clearTransferClicked()));
 
     if (clearAllCompleted)
     {
@@ -139,9 +143,20 @@ void MegaTransferView::createCompletedContextMenu()
     }
 
     clearAllCompleted = new QAction(tr("Clear All"), this);
+    connect(clearAllCompleted, SIGNAL(triggered()), this, SLOT(clearAllTransferClicked()));
 
     contextCompleted->addAction(clearCompleted);
     contextCompleted->addAction(clearAllCompleted);
+}
+
+void MegaTransferView::customizeContextInProgressMenu(bool paused, bool enableUpMoves, bool enableDownMoves, bool isCancellable)
+{
+    paused ?  pauseTransfer->setText(tr("Resume Transfer")) :  pauseTransfer->setText(tr("Pause Transfer"));
+    moveToTop->setEnabled(enableUpMoves);
+    moveUp->setEnabled(enableUpMoves);
+    moveToBottom->setEnabled(enableDownMoves);
+    moveDown->setEnabled(enableDownMoves);
+    cancelTransfer->setEnabled(isCancellable);
 }
 
 void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
@@ -188,74 +203,117 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
         QModelIndex index = indexAt(point);
         if (index.isValid())
         {
+            transferTagSelected = model->data(index, TagRole).toInt();
+
             if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
             {
                 contextCompleted->exec(mapToGlobal(point));
             }
             else
             {
+                transferStateSelected = model->data(index, TransferStatusRole).toInt();
+                bool isRegularTransfer = model->data(index, IsRegularTransferRole).toBool();
+                customizeContextInProgressMenu(transferStateSelected == mega::MegaTransfer::STATE_PAUSED, model->rowCount(QModelIndex()) > 1, model->rowCount(QModelIndex()) > 1, isRegularTransfer);
                 contextInProgressMenu->exec(mapToGlobal(point));
             }
+            transferTagSelected = 0;
+            transferStateSelected = 0;
         }
     }
 }
 
 void MegaTransferView::pauseTransferClicked()
 {
-    QModelIndex index = currentIndex();
-    if (index.isValid())
+    QTransfersModel *model = (QTransfersModel*)this->model();
+    if (model)
     {
-
+        if (transferTagSelected)
+        {
+            model->onTransferPaused(transferTagSelected, !(transferStateSelected == mega::MegaTransfer::STATE_PAUSED));
+        }
     }
-
 }
 
 void MegaTransferView::moveToTopClicked()
 {
-    QModelIndex index = currentIndex();
-    if (index.isValid())
+    QTransfersModel *model = (QTransfersModel*)this->model();
+    if (model)
     {
-
+        if (transferTagSelected)
+        {
+            model->onMoveTransferToFirst(transferTagSelected);
+        }
     }
-
 }
 
 void MegaTransferView::moveUpClicked()
 {
-    QModelIndex index = currentIndex();
-    if (index.isValid())
+    QTransfersModel *model = (QTransfersModel*)this->model();
+    if (model)
     {
-
+        if (transferTagSelected)
+        {
+            model->onMoveTransferUp(transferTagSelected);
+        }
     }
-
 }
 
 void MegaTransferView::moveDownClicked()
 {
-    QModelIndex index = currentIndex();
-    if (index.isValid())
+    QTransfersModel *model = (QTransfersModel*)this->model();
+    if (model)
     {
-
+        if (transferTagSelected)
+        {
+            model->onMoveTransferDown(transferTagSelected);
+        }
     }
-
 }
 
 void MegaTransferView::moveToBottomClicked()
 {
-    QModelIndex index = currentIndex();
-    if (index.isValid())
+    QTransfersModel *model = (QTransfersModel*)this->model();
+    if (model)
     {
-
+        if (transferTagSelected)
+        {
+            model->onMoveTransferToLast(transferTagSelected);
+        }
     }
+}
 
+void MegaTransferView::cancelTransferClicked()
+{
+    QTransfersModel *model = (QTransfersModel*)this->model();
+    if (model)
+    {
+        if (transferTagSelected)
+        {
+            model->onTransferCancel(transferTagSelected);
+        }
+    }
 }
 
 void MegaTransferView::clearTransferClicked()
 {
-    QModelIndex index = currentIndex();
-    if (index.isValid())
+    QTransfersModel *model = (QTransfersModel*)this->model();
+    if (model)
     {
-
+        if (transferTagSelected)
+        {
+            model->removeTransferByTag(transferTagSelected);
+        }
     }
+}
 
+void MegaTransferView::clearAllTransferClicked()
+{
+    QTransfersModel *model = (QTransfersModel*)this->model();
+    if (model)
+    {
+        if (transferTagSelected)
+        {
+            model->removeAllTransfers();
+        }
+    }
 }
