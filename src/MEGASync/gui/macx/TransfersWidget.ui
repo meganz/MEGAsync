@@ -275,7 +275,7 @@
           <bool>false</bool>
          </property>
          <property name="selectionMode">
-          <enum>QAbstractItemView::MultiSelection</enum>
+          <enum>QAbstractItemView::SingleSelection</enum>
          </property>
         </widget>
        </item>
