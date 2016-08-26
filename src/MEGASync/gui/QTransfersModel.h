@@ -7,6 +7,10 @@
 #include "QTMegaTransferListener.h"
 #include <deque>
 
+const int TransferStatusRole = 32;
+const int TagRole = 33;
+const int IsRegularTransferRole = 34;
+
 class QTransfersModel : public QAbstractItemModel, public mega::MegaTransferListener
 {
     Q_OBJECT
@@ -24,6 +28,8 @@ public:
     void setupModelTransfers(mega::MegaTransferList *transfers);
     void insertTransfer(mega::MegaTransfer *transfer);
     void removeTransfer(mega::MegaTransfer *transfer);
+    void removeTransferByTag(int transferTag);
+    void removeAllTransfers();
     TransferItem *transferFromIndex(const QModelIndex &index) const;
     virtual int columnCount(const QModelIndex & parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role) const;
@@ -33,6 +39,13 @@ public:
     virtual ~QTransfersModel();
 
     int getModelType();
+
+    void onTransferPaused(int transferTag, bool pause);
+    void onTransferCancel(int transferTag);
+    void onMoveTransferToFirst(int transferTag);
+    void onMoveTransferUp(int transferTag);
+    void onMoveTransferDown(int transferTag);
+    void onMoveTransferToLast(int transferTag);
 
     virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);

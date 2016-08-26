@@ -47,6 +47,21 @@ QVariant QTransfersModel::data(const QModelIndex &index, int role) const
         return QVariant::fromValue(static_cast<TransferItem *>(index.internalPointer()));
     }
 
+    if (role == TransferStatusRole)
+    {
+        return QVariant::fromValue(static_cast<TransferItem *>(index.internalPointer())->getTransferState());
+    }
+
+    if (role == TagRole)
+    {
+        return QVariant::fromValue(static_cast<TransferItem *>(index.internalPointer())->getTransferTag());
+    }
+
+    if (role == IsRegularTransferRole)
+    {
+        return QVariant::fromValue(static_cast<TransferItem *>(index.internalPointer())->getRegular());
+    }
+
     return QVariant();
 }
 
@@ -89,13 +104,31 @@ void QTransfersModel::insertTransfer(MegaTransfer *transfer)
 
 void QTransfersModel::removeTransfer(MegaTransfer *transfer)
 {
-    TransferItem *item =  transfers.value(transfer->getTag());
+    removeTransferByTag(transfer->getTag());
+}
+
+void QTransfersModel::removeTransferByTag(int transferTag)
+{
+    TransferItem *item =  transfers.value(transferTag);
     auto it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
     int row = std::distance(transferOrder.begin(), it);
 
     beginRemoveRows(QModelIndex(), row, row);
-    transfers.remove(transfer->getTag());
+    transfers.remove(transferTag);
     transferOrder.erase(it);
+    endRemoveRows();
+
+    if (transfers.isEmpty())
+    {
+        emit noTransfers(type);
+    }
+}
+
+void QTransfersModel::removeAllTransfers()
+{
+    beginRemoveRows(QModelIndex(), 0, transfers.size());
+    transfers.clear();
+    transferOrder.clear();
     endRemoveRows();
 
     if (transfers.isEmpty())
@@ -124,6 +157,36 @@ int QTransfersModel::getModelType()
     return type;
 }
 
+void QTransfersModel::onTransferPaused(int transferTag, bool pause)
+{
+    ((MegaApplication *)qApp)->getMegaApi()->pauseTransferByTag(transferTag, pause);
+}
+
+void QTransfersModel::onTransferCancel(int transferTag)
+{
+    ((MegaApplication *)qApp)->getMegaApi()->cancelTransferByTag(transferTag);
+}
+
+void QTransfersModel::onMoveTransferToFirst(int transferTag)
+{
+    ((MegaApplication *)qApp)->getMegaApi()->moveTransferToFirstByTag(transferTag);
+}
+
+void QTransfersModel::onMoveTransferUp(int transferTag)
+{
+    ((MegaApplication *)qApp)->getMegaApi()->moveTransferUpByTag(transferTag);
+}
+
+void QTransfersModel::onMoveTransferDown(int transferTag)
+{
+    ((MegaApplication *)qApp)->getMegaApi()->moveTransferDownByTag(transferTag);
+}
+
+void QTransfersModel::onMoveTransferToLast(int transferTag)
+{
+    ((MegaApplication *)qApp)->getMegaApi()->moveTransferToLastByTag(transferTag);
+}
+
 void QTransfersModel::onTransferStart(MegaApi *, MegaTransfer *transfer)
 {
     if (type == TYPE_ALL || transfer->getType() == type)
@@ -143,7 +206,7 @@ void QTransfersModel::onTransferFinish(MegaApi *, MegaTransfer *transfer, MegaEr
             removeTransfer(transfer);
         }
     }
-    else if (type == TYPE_FINISHED)
+    else if (type == TYPE_FINISHED && transfer->getState() == MegaTransfer::STATE_COMPLETED)
     {
         insertTransfer(transfer);
     }
@@ -185,6 +248,7 @@ void QTransfersModel::updateInitialTransferInfo(MegaTransfer *transfer)
         return;
     }
 
+    item->setTransferTag(transfer->getTag());
     item->setFileName(QString::fromUtf8(transfer->getFileName()));
     item->setType(transfer->getType(), transfer->isSyncTransfer());
     item->setTotalSize(transfer->getTotalBytes());
@@ -205,7 +269,7 @@ void QTransfersModel::updateTransferInfo(MegaTransfer *transfer)
 
     item->setSpeed(transfer->getSpeed());
     item->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
-    type == TYPE_FINISHED ? item->finishTransfer() : item->updateTransfer();
+    item->setTransferState(transfer->getState());
 
     if (transfer->getPriority() == item->getPriority())
     {
