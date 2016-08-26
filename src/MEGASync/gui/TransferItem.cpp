@@ -92,12 +92,12 @@ void TransferItem::setType(int type, bool isSyncTransfer)
     ui->lTransferType->setIconSize(QSize(12, 12));
 }
 
-void TransferItem::setPriority(float priority)
+void TransferItem::setPriority(unsigned long long priority)
 {
     this->priority = priority;
 }
 
-float TransferItem::getPriority()
+unsigned long long TransferItem::getPriority()
 {
     return this->priority;
 }
