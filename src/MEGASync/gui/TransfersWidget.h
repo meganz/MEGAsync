@@ -17,6 +17,7 @@ class TransfersWidget : public QWidget
 public:
     explicit TransfersWidget(QWidget *parent = 0);
     void setupTransfers(mega::MegaTransferList *tList, int type);
+    void clearTransfers();
     ~TransfersWidget();
 
 private:

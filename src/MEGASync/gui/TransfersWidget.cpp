@@ -27,6 +27,11 @@ void TransfersWidget::setupTransfers(mega::MegaTransferList *tList, int type)
     ui->tvTransfers->setModel(model);
 }
 
+void TransfersWidget::clearTransfers()
+{
+    model->removeAllTransfers();
+}
+
 TransfersWidget::~TransfersWidget()
 {
     delete ui;

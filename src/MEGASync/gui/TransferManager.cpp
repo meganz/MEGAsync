@@ -119,7 +119,7 @@ void TransferManager::on_tCompleted_clicked()
     ui->tCompleted->setStyleSheet(QString::fromUtf8("color: #333333;"));
     ui->tUploads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->tDownloads->setStyleSheet(QString::fromUtf8("color: #999999;"));
-
+    ui->bClearAll->setText(tr("Clear all"));
     ui->wTransfers->setCurrentWidget(ui->wCompleted);
 }
 
@@ -134,7 +134,7 @@ void TransferManager::on_tDownloads_clicked()
     ui->tCompleted->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->tUploads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->tDownloads->setStyleSheet(QString::fromUtf8("color: #333333;"));
-
+    ui->bClearAll->setText(tr("Cancel all"));
     ui->wTransfers->setCurrentWidget(ui->wDownloads);
 }
 
@@ -149,7 +149,7 @@ void TransferManager::on_tUploads_clicked()
     ui->tCompleted->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->tUploads->setStyleSheet(QString::fromUtf8("color: #333333;"));
     ui->tDownloads->setStyleSheet(QString::fromUtf8("color: #999999;"));
-
+    ui->bClearAll->setText(tr("Cancel all"));
     ui->wTransfers->setCurrentWidget(ui->wUploads);
 }
 
@@ -164,7 +164,7 @@ void TransferManager::on_tAllTransfers_clicked()
     ui->tCompleted->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->tUploads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->tDownloads->setStyleSheet(QString::fromUtf8("color: #999999;"));
-
+    ui->bClearAll->setText(tr("Cancel all"));
     ui->wTransfers->setCurrentWidget(ui->wAllTransfers);
 }
 
@@ -196,6 +196,22 @@ void TransferManager::on_bPause_clicked()
 
 void TransferManager::on_bClearAll_clicked()
 {
-    megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
-    megaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
+    QWidget *w = ui->wTransfers->currentWidget();
+    if (w == ui->wAllTransfers)
+    {
+        megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
+        megaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
+    }
+    else if(w == ui->wDownloads)
+    {
+        megaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
+    }
+    else if(w == ui->wUploads)
+    {
+        megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
+    }
+    else if(w == ui->wCompleted)
+    {
+        ui->wCompleted->clearTransfers();
+    }
 }
