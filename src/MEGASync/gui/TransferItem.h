@@ -56,8 +56,10 @@ protected:
     int transferTag;
     QMovie *animation;
     long long transferSpeed;
-    long long totalSize, totalTransferredBytes;
-    unsigned long long effectiveSpeed, effectiveTransferSpeed, lastUpdate, elapsedTransferTime;
+    long long meanTransferSpeed;
+    long long speedCounter;
+    long long totalSize;
+    long long totalTransferredBytes;
     bool regular;
     unsigned long long priority;
 };

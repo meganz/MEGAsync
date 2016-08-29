@@ -13,15 +13,16 @@ TransferItem::TransferItem(QWidget *parent) :
     ui->setupUi(this);
     ui->lCancelTransfer->setHidden(true);
 
-    totalSize = totalTransferredBytes = elapsedTransferTime = 0;
+    totalSize = 0;
+    totalTransferredBytes = 0;
     transferSpeed = 0;
-    effectiveTransferSpeed = 200000;
+    meanTransferSpeed = 0;
+    speedCounter = 0;
     regular = false;
     animation = NULL;
     priority = 0;
     transferState = 0;
     transferTag = 0;
-    lastUpdate = QDateTime::currentMSecsSinceEpoch();
 }
 
 void TransferItem::setFileName(QString fileName)
@@ -46,17 +47,41 @@ QString TransferItem::getFileName()
 void TransferItem::setTransferredBytes(long long totalTransferredBytes, bool cancellable)
 {
     this->totalTransferredBytes = totalTransferredBytes;
+    if (this->totalTransferredBytes < 0)
+    {
+        this->totalTransferredBytes = 0;
+    }
+    if (this->totalTransferredBytes > this->totalSize)
+    {
+        this->totalTransferredBytes = this->totalSize;
+    }
     regular = cancellable;
 }
 
 void TransferItem::setSpeed(long long transferSpeed)
 {
     this->transferSpeed = transferSpeed;
+    if (this->transferSpeed < 0)
+    {
+        this->transferSpeed = 0;
+    }
+
+    meanTransferSpeed = meanTransferSpeed * speedCounter + this->transferSpeed;
+    speedCounter++;
+    meanTransferSpeed /= speedCounter;
 }
 
 void TransferItem::setTotalSize(long long size)
 {
     this->totalSize = size;
+    if (this->totalSize < 0)
+    {
+        this->totalSize = 0;
+    }
+    if (this->totalTransferredBytes > this->totalSize)
+    {
+        this->totalTransferredBytes = this->totalSize;
+    }
 }
 
 void TransferItem::setType(int type, bool isSyncTransfer)
@@ -160,27 +185,7 @@ void TransferItem::updateTransfer()
 {
     // Update remaining time
     long long remainingBytes = totalSize - totalTransferredBytes;
-    if (remainingBytes < 0)
-    {
-        remainingBytes = 0;
-    }
-
-    unsigned long long timeIncrement = QDateTime::currentMSecsSinceEpoch()-lastUpdate;
-    if (timeIncrement < 1000)
-    {
-        elapsedTransferTime += timeIncrement;
-    }
-
-    double effectiveSpeed = effectiveTransferSpeed;
-    double elapsedDownloadTimeSecs = elapsedTransferTime/1000.0;
-    if (elapsedDownloadTimeSecs)
-    {
-        effectiveSpeed = totalTransferredBytes/elapsedDownloadTimeSecs;
-    }
-
-    effectiveTransferSpeed += (effectiveSpeed-effectiveTransferSpeed)/3; //Smooth the effective speed
-
-    int totalRemainingSeconds = (effectiveTransferSpeed) ? remainingBytes/effectiveTransferSpeed : 0;
+    int totalRemainingSeconds = meanTransferSpeed ? remainingBytes / meanTransferSpeed : 0;
 
     QString remainingTime;
     if (totalRemainingSeconds)
@@ -191,45 +196,23 @@ void TransferItem::updateTransfer()
     {
         remainingTime = QString::fromAscii("--:--:--");
     }
-
     ui->lRemainingTime->setText(remainingTime);
 
     // Update current transfer speed
     QString pattern(tr("(%1/s)"));
-    QString pausedPattern(tr("(paused)"));
-    QString invalidSpeedPattern(tr(""));
     QString downloadString;
-
-    if (transferSpeed >= 20000)
+    if (meanTransferSpeed >= 20000)
     {
         downloadString = pattern.arg(Utilities::getSizeString(transferSpeed));
     }
-    else if (transferSpeed >= 0)
-    {
-        downloadString = invalidSpeedPattern;
-    }
     else
     {
-        downloadString = pausedPattern;
+        downloadString = QString::fromUtf8("");
     }
-
     ui->lSpeed->setText(downloadString);
 
-    lastUpdate = QDateTime::currentMSecsSinceEpoch();
-
     // Update progress bar
-    unsigned int permil = 0;
-
-    if ((totalSize > 0) && (totalTransferredBytes > 0))
-    {
-        permil = (1000 * totalTransferredBytes) / totalSize;
-    }
-
-    if (permil > 1000)
-    {
-        permil = 1000;
-    }
-
+    unsigned int permil = (totalSize > 0) ? ((1000 * totalTransferredBytes) / totalSize) : 0;
     ui->pbTransfer->setValue(permil);
 
     // Update transferred bytes
