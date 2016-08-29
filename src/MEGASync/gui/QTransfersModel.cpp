@@ -146,6 +146,49 @@ int QTransfersModel::rowCount(const QModelIndex &parent) const
     return transferOrder.size();
 }
 
+QMimeData *QTransfersModel::mimeData(const QModelIndexList &indexes) const
+{
+    QMimeData *data = new QMimeData();
+    QModelIndex index = indexes.at(0);
+    TransferItem *item = transferFromIndex(index);
+    if (item)
+    {
+        data->setData(QString::fromUtf8("application/x-qabstractitemmodeldatalist"), QString::number(item->getTransferTag()).toUtf8());
+    }
+    return data;
+}
+
+Qt::ItemFlags QTransfersModel::flags(const QModelIndex &index) const
+{
+    Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index);
+    if (index.isValid())
+    {
+        return Qt::ItemIsDragEnabled | defaultFlags;
+    }
+    return Qt::ItemIsDropEnabled | defaultFlags;
+}
+
+Qt::DropActions QTransfersModel::supportedDropActions() const
+{
+    return Qt::MoveAction;
+}
+
+bool QTransfersModel::dropMimeData(const QMimeData *data, Qt::DropAction, int row, int, const QModelIndex &)
+{
+    TransferItem *item = NULL;
+    int transferTag = QString::fromUtf8(data->data(QString::fromUtf8("application/x-qabstractitemmodeldatalist"))).toInt();
+    if (row >= 0 && row < (int)transferOrder.size())
+    {
+        item = transferOrder[row];
+        ((MegaApplication *)qApp)->getMegaApi()->moveTransferBeforeByTag(transferTag, item->getTransferTag());
+    }
+    else
+    {
+        ((MegaApplication *)qApp)->getMegaApi()->moveTransferToLastByTag(transferTag);
+    }
+    return true;
+}
+
 QTransfersModel::~QTransfersModel()
 {
     qDeleteAll(transfers);

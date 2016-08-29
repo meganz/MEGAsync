@@ -13,6 +13,11 @@ TransfersWidget::TransfersWidget(QWidget *parent) :
     tDelegate = new MegaTransferDelegate(this);
     ui->tvTransfers->setItemDelegate((QAbstractItemDelegate *)tDelegate);
     ui->tvTransfers->header()->close();
+    ui->tvTransfers->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->tvTransfers->setDragEnabled(true);
+    ui->tvTransfers->viewport()->setAcceptDrops(true);
+    ui->tvTransfers->setDropIndicatorShown(true);
+    ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
 }
 
 void TransfersWidget::setupTransfers(mega::MegaTransferList *tList, int type)

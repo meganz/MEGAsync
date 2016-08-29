@@ -36,6 +36,10 @@ public:
     virtual QModelIndex parent(const QModelIndex & index) const;
     virtual QModelIndex index(int row, int column, const QModelIndex &parent) const;
     virtual int rowCount(const QModelIndex &parent) const;
+    QMimeData *mimeData(const QModelIndexList & indexes) const;
+    virtual Qt::ItemFlags flags(const QModelIndex&index) const;
+    virtual Qt::DropActions supportedDropActions() const;
+    virtual bool dropMimeData(const QMimeData *data, Qt::DropAction action, int row, int column, const QModelIndex &parent);
     virtual ~QTransfersModel();
 
     int getModelType();
