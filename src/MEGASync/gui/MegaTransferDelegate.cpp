@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <QEvent>
 #include <QMouseEvent>
+#include "QTransfersModel.h"
 
 void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
@@ -35,4 +36,31 @@ QSize MegaTransferDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
     {
         return QStyledItemDelegate::sizeHint(option, index);
     }
+}
+
+bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
+{
+    if (QEvent::MouseButtonRelease ==  event->type())
+    {
+        TransferItem *item = (TransferItem *)index.internalPointer();
+        QMouseEvent *e = (QMouseEvent *)event;
+
+        QPoint clickPosition = e->pos();
+        QPoint itemPosition = option.rect.topLeft();
+        clickPosition = clickPosition - itemPosition;
+
+        if (item->cancelButtonClicked(clickPosition))
+        {
+            if (((QTransfersModel*)model)->getModelType() == QTransfersModel::TYPE_FINISHED)
+            {
+                ((QTransfersModel*)model)->removeTransferByTag(item->getTransferTag());
+            }
+            else
+            {
+                ((QTransfersModel*)model)->onTransferCancel(item->getTransferTag());
+            }
+        }
+    }
+
+    return QAbstractItemDelegate::editorEvent(event, model, option, index);;
 }
