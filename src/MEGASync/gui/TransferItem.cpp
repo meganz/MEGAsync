@@ -11,7 +11,6 @@ TransferItem::TransferItem(QWidget *parent) :
     ui(new Ui::TransferItem)
 {
     ui->setupUi(this);
-    ui->lCancelTransfer->setHidden(true);
 
     totalSize = 0;
     totalTransferredBytes = 0;
@@ -19,10 +18,14 @@ TransferItem::TransferItem(QWidget *parent) :
     meanTransferSpeed = 0;
     speedCounter = 0;
     regular = false;
+    cancelButtonEnabled = false;
     animation = NULL;
     priority = 0;
     transferState = 0;
     transferTag = 0;
+
+    ui->lCancelTransfer->installEventFilter(this);
+    update();
 }
 
 void TransferItem::setFileName(QString fileName)
@@ -225,13 +228,34 @@ void TransferItem::pauseTransfer()
     transferState == MegaTransfer::STATE_PAUSED ?  ui->lSpeed->setText(QString::fromUtf8("(paused)")) : ui->lSpeed->setText(QString::fromUtf8(""));
 }
 
-void TransferItem::mouseEventClicked(QPoint pos, bool rightClick)
+bool TransferItem::cancelButtonClicked(QPoint pos)
 {
+    if (cancelButtonEnabled && ui->lCancelTransfer->rect().contains(ui->lCancelTransfer->mapFrom(this, pos)))
+    {
+        return true;
+    }
+    return false;
 }
 
 void TransferItem::mouseHoverTransfer(bool isHover)
 {
-    ui->lCancelTransfer->setHidden(!isHover);
+    if (isHover)
+    {
+        cancelButtonEnabled = true;
+        ui->lCancelTransfer->removeEventFilter(this);
+        ui->lCancelTransfer->update();
+    }
+    else
+    {
+        cancelButtonEnabled = false;
+        ui->lCancelTransfer->installEventFilter(this);
+        ui->lCancelTransfer->update();
+    }
+}
+
+bool TransferItem::eventFilter(QObject *, QEvent *ev)
+{
+    return ev->type() == QEvent::Paint || ev->type() == QEvent::ToolTip;
 }
 
 QSize TransferItem::minimumSizeHint() const

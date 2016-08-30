@@ -33,7 +33,7 @@ public:
 
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
-    void mouseEventClicked(QPoint pos, bool rightClick = false);
+    bool cancelButtonClicked(QPoint pos);
 
     ~TransferItem();
 
@@ -45,6 +45,8 @@ public:
 
     bool getRegular();
     void setRegular(bool value);
+
+    bool eventFilter(QObject *, QEvent * ev);
 
 private:
     Ui::TransferItem *ui;
@@ -62,6 +64,8 @@ protected:
     long long totalTransferredBytes;
     bool regular;
     unsigned long long priority;
+    bool cancelButtonEnabled;
+
 };
 
 Q_DECLARE_METATYPE(TransferItem*)
