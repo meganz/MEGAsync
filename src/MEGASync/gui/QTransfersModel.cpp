@@ -179,8 +179,30 @@ bool QTransfersModel::dropMimeData(const QMimeData *data, Qt::DropAction, int ro
     int transferTag = QString::fromUtf8(data->data(QString::fromUtf8("application/x-qabstractitemmodeldatalist"))).toInt();
     if (row >= 0 && row < (int)transferOrder.size())
     {
-        item = transferOrder[row];
-        ((MegaApplication *)qApp)->getMegaApi()->moveTransferBeforeByTag(transferTag, item->getTransferTag());
+        QMap<int, TransferItem*>::iterator it = transfers.find(transferTag);
+        if (it == transfers.end())
+        {
+            return false;
+        }
+
+        TransferItem *srcItem = it.value();
+        auto srcit = std::lower_bound(transferOrder.begin(), transferOrder.end(), srcItem, priority_comparator);
+        int srcrow = std::distance(transferOrder.begin(), srcit);
+        if (row == srcrow || row == (srcrow + 1))
+        {
+            return false;
+        }
+
+        if (row < srcrow)
+        {
+            item = transferOrder[row];
+            ((MegaApplication *)qApp)->getMegaApi()->moveTransferBeforeByTag(transferTag, item->getTransferTag());
+        }
+        else
+        {
+            item = transferOrder[row - 1];
+            ((MegaApplication *)qApp)->getMegaApi()->moveTransferBeforeByTag(transferTag, item->getTransferTag());
+        }
     }
     else
     {
