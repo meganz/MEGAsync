@@ -143,12 +143,13 @@ int TransferItem::getTransferState()
 void TransferItem::setTransferState(int value)
 {
     transferState = value;
-    switch (transferState) {
+    switch (transferState)
+    {
     case MegaTransfer::STATE_COMPLETED:
+    case MegaTransfer::STATE_FAILED:
         finishTransfer();
         break;
-    case MegaTransfer::STATE_PAUSED:
-        pauseTransfer();
+    case MegaTransfer::STATE_CANCELLED:
         break;
     default:
         updateTransfer();
@@ -186,33 +187,60 @@ void TransferItem::finishTransfer()
 
 void TransferItem::updateTransfer()
 {
-    // Update remaining time
-    long long remainingBytes = totalSize - totalTransferredBytes;
-    int totalRemainingSeconds = meanTransferSpeed ? remainingBytes / meanTransferSpeed : 0;
+    switch (transferState)
+    {
+        case MegaTransfer::STATE_ACTIVE:
+        {
+            // Update remaining time
+            long long remainingBytes = totalSize - totalTransferredBytes;
+            int totalRemainingSeconds = meanTransferSpeed ? remainingBytes / meanTransferSpeed : 0;
 
-    QString remainingTime;
-    if (totalRemainingSeconds)
-    {
-        remainingTime = Utilities::getTimeString(totalRemainingSeconds);
-    }
-    else
-    {
-        remainingTime = QString::fromAscii("--:--:--");
-    }
-    ui->lRemainingTime->setText(remainingTime);
+            QString remainingTime;
+            if (totalRemainingSeconds)
+            {
+                remainingTime = Utilities::getTimeString(totalRemainingSeconds);
+            }
+            else
+            {
+                remainingTime = QString::fromAscii("--:--:--");
+            }
+            ui->lRemainingTime->setText(remainingTime);
 
-    // Update current transfer speed
-    QString pattern(tr("(%1/s)"));
-    QString downloadString;
-    if (meanTransferSpeed >= 20000)
-    {
-        downloadString = pattern.arg(Utilities::getSizeString(transferSpeed));
+            // Update current transfer speed
+            QString pattern(tr("(%1/s)"));
+            QString downloadString;
+            if (meanTransferSpeed >= 20000)
+            {
+                downloadString = pattern.arg(Utilities::getSizeString(transferSpeed));
+            }
+            else
+            {
+                downloadString = QString::fromUtf8("");
+            }
+            ui->lSpeed->setText(downloadString);
+            break;
+        }
+        case MegaTransfer::STATE_PAUSED:
+            ui->lSpeed->setText(tr("(paused)"));
+            ui->lRemainingTime->setText(QString::fromUtf8(""));
+            break;
+        case MegaTransfer::STATE_QUEUED:
+            ui->lSpeed->setText(tr("(queued)"));
+            ui->lRemainingTime->setText(QString::fromUtf8(""));
+            break;
+        case MegaTransfer::STATE_RETRYING:
+            ui->lSpeed->setText(tr("(retrying)"));
+            ui->lRemainingTime->setText(QString::fromUtf8(""));
+            break;
+        case MegaTransfer::STATE_COMPLETING:
+            ui->lSpeed->setText(tr("(completing)"));
+            ui->lRemainingTime->setText(QString::fromUtf8(""));
+            break;
+        default:
+            ui->lSpeed->setText(QString::fromUtf8(""));
+            ui->lRemainingTime->setText(QString::fromUtf8(""));
+            break;
     }
-    else
-    {
-        downloadString = QString::fromUtf8("");
-    }
-    ui->lSpeed->setText(downloadString);
 
     // Update progress bar
     unsigned int permil = (totalSize > 0) ? ((1000 * totalTransferredBytes) / totalSize) : 0;
@@ -221,11 +249,6 @@ void TransferItem::updateTransfer()
     // Update transferred bytes
     ui->lTotal->setText(QString::fromUtf8("%1   <span style=\"color:#777777; text-decoration:none;\">of   </span>%2").arg(Utilities::getSizeString(totalTransferredBytes))
                         .arg(Utilities::getSizeString(totalSize)));
-}
-
-void TransferItem::pauseTransfer()
-{
-    transferState == MegaTransfer::STATE_PAUSED ?  ui->lSpeed->setText(QString::fromUtf8("(paused)")) : ui->lSpeed->setText(QString::fromUtf8(""));
 }
 
 bool TransferItem::cancelButtonClicked(QPoint pos)

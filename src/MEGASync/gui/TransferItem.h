@@ -28,7 +28,6 @@ public:
 
     void finishTransfer();
     void updateTransfer();
-    void pauseTransfer();
     void mouseHoverTransfer(bool isHover);
 
     QSize minimumSizeHint() const;
