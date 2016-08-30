@@ -277,6 +277,9 @@
          <property name="selectionMode">
           <enum>QAbstractItemView::SingleSelection</enum>
          </property>
+         <property name="rootIsDecorated">
+          <bool>false</bool>
+         </property>
         </widget>
        </item>
       </layout>
