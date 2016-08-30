@@ -184,6 +184,8 @@ const QString Preferences::localFingerprintKey      = QString::fromAscii("localF
 const QString Preferences::fileTimeKey              = QString::fromAscii("fileTime");
 const QString Preferences::isCrashedKey             = QString::fromAscii("isCrashed");
 const QString Preferences::wasPausedKey             = QString::fromAscii("wasPaused");
+const QString Preferences::wasUploadsPausedKey      = QString::fromAscii("wasUploadsPaused");
+const QString Preferences::wasDownloadsPausedKey    = QString::fromAscii("wasDownloadsPaused");
 const QString Preferences::lastExecutionTimeKey     = QString::fromAscii("lastExecutionTime");
 const QString Preferences::excludedSyncNamesKey     = QString::fromAscii("excludedSyncNames");
 const QString Preferences::lastVersionKey           = QString::fromAscii("lastVersion");
@@ -1973,6 +1975,38 @@ void Preferences::setWasPaused(bool value)
 {
     mutex.lock();
     settings->setValue(wasPausedKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::wasUploadsPaused()
+{
+    mutex.lock();
+    bool value = settings->value(wasUploadsPausedKey, false).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setWasUploadsPaused(bool value)
+{
+    mutex.lock();
+    settings->setValue(wasUploadsPausedKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::wasDownloadsPaused()
+{
+    mutex.lock();
+    bool value = settings->value(wasDownloadsPausedKey, false).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setWasDownloadsPaused(bool value)
+{
+    mutex.lock();
+    settings->setValue(wasDownloadsPausedKey, value);
     settings->sync();
     mutex.unlock();
 }

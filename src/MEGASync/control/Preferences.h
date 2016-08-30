@@ -215,6 +215,10 @@ public:
     void setCrashed(bool value);
     bool wasPaused();
     void setWasPaused(bool value);
+    bool wasUploadsPaused();
+    void setWasUploadsPaused(bool value);
+    bool wasDownloadsPaused();
+    void setWasDownloadsPaused(bool value);
 
     long long lastStatsRequest();
     void setLastStatsRequest(long long value);
@@ -378,6 +382,8 @@ protected:
     static const QString isCrashedKey;
     static const QString lastStatsRequestKey;
     static const QString wasPausedKey;
+    static const QString wasUploadsPausedKey;
+    static const QString wasDownloadsPausedKey;
     static const QString lastUpdateTimeKey;
     static const QString lastUpdateVersionKey;
     static const QString previousCrashesKey;
