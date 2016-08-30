@@ -18,6 +18,7 @@ public:
     explicit TransfersWidget(QWidget *parent = 0);
     void setupTransfers(mega::MegaTransferList *tList, int type);
     void clearTransfers();
+    void pausedTransfers(bool paused);
     ~TransfersWidget();
 
 private:

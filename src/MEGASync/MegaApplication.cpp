@@ -2944,6 +2944,7 @@ void MegaApplication::transferManagerActionClicked()
         transferManager->showNormal();
         transferManager->activateWindow();
         transferManager->raise();
+        transferManager->updateState();
         return;
     }
 
@@ -4619,7 +4620,24 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     case MegaRequest::TYPE_PAUSE_TRANSFERS:
     {
         paused = request->getFlag();
-        preferences->setWasPaused(paused);
+        switch (request->getNumber())
+        {
+            case MegaTransfer::TYPE_DOWNLOAD:
+                preferences->setWasDownloadsPaused(paused);
+                break;
+            case MegaTransfer::TYPE_UPLOAD:
+                preferences->setWasUploadsPaused(paused);
+                break;
+            default:
+                preferences->setWasUploadsPaused(paused);
+                preferences->setWasDownloadsPaused(paused);
+                preferences->setWasPaused(paused);
+                break;
+        }
+        if (preferences->wasDownloadsPaused() == preferences->wasUploadsPaused())
+        {
+            preferences->setWasPaused(paused);
+        }
         onGlobalSyncStateChanged(megaApi);
         break;
     }
@@ -5377,6 +5395,11 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
         infoDialog->updateState();
         infoDialog->transferFinished(MegaError::API_OK);
         infoDialog->updateRecentFiles();
+    }
+
+    if (transferManager)
+    {
+        transferManager->updateState();
     }
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Current state. Paused = %1   Indexing = %2   Waiting = %3")

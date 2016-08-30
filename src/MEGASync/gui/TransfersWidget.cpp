@@ -44,6 +44,28 @@ TransfersWidget::~TransfersWidget()
     delete model;
 }
 
+void TransfersWidget::pausedTransfers(bool paused)
+{
+    if (paused)
+    {
+        ui->sWidget->setCurrentWidget(ui->pNoTransfers);
+        ui->lStatusIcon->setIcon(QIcon(QString::fromAscii("://images/paused_transfers.png")));
+        ui->lStatusIcon->setIconSize(QSize(156, 156));
+        ui->lStatus->setText(tr("Paused Transfers"));
+    }
+    else if(model->rowCount(QModelIndex()) == 0)
+    {
+        ui->sWidget->setCurrentWidget(ui->pNoTransfers);
+        ui->lStatusIcon->setIcon(QIcon(QString::fromAscii("://images/no_transfers.png")));
+        ui->lStatusIcon->setIconSize(QSize(156, 156));
+        ui->lStatus->setText(tr("No Transfers"));
+    }
+    else
+    {
+        ui->sWidget->setCurrentWidget(ui->pTransfers);
+    }
+}
+
 void TransfersWidget::noTransfers(int type)
 {
     ui->sWidget->setCurrentWidget(ui->pNoTransfers);

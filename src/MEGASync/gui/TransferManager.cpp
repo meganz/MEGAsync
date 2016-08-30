@@ -1,6 +1,4 @@
 #include "TransferManager.h"
-#include "MegaApplication.h"
-#include "Preferences.h"
 #include "ui_TransferManager.h"
 
 using namespace mega;
@@ -16,6 +14,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
                                 | Qt::WindowMinimizeButtonHint
                                 | Qt::WindowCloseButtonHint;
     this->setWindowFlags(flags);
+    preferences = Preferences::instance();
 
     addMenu = NULL;
     importLinksAction = NULL;
@@ -30,6 +29,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     ui->wCompleted->setupTransfers(NULL, QTransfersModel::TYPE_FINISHED);
 
     on_tAllTransfers_clicked();
+    updateState();
     createAddMenu();
 }
 
@@ -120,6 +120,7 @@ void TransferManager::on_tCompleted_clicked()
     ui->tUploads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->tDownloads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->bClearAll->setText(tr("Clear all"));
+    ui->bPause->setEnabled(false);
     ui->wTransfers->setCurrentWidget(ui->wCompleted);
 }
 
@@ -135,7 +136,10 @@ void TransferManager::on_tDownloads_clicked()
     ui->tUploads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->tDownloads->setStyleSheet(QString::fromUtf8("color: #333333;"));
     ui->bClearAll->setText(tr("Cancel all"));
+    ui->bPause->setEnabled(true);
+
     ui->wTransfers->setCurrentWidget(ui->wDownloads);
+    updateState();
 }
 
 void TransferManager::on_tUploads_clicked()
@@ -150,7 +154,10 @@ void TransferManager::on_tUploads_clicked()
     ui->tUploads->setStyleSheet(QString::fromUtf8("color: #333333;"));
     ui->tDownloads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->bClearAll->setText(tr("Cancel all"));
+    ui->bPause->setEnabled(true);
+
     ui->wTransfers->setCurrentWidget(ui->wUploads);
+    updateState();
 }
 
 void TransferManager::on_tAllTransfers_clicked()
@@ -165,7 +172,10 @@ void TransferManager::on_tAllTransfers_clicked()
     ui->tUploads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->tDownloads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->bClearAll->setText(tr("Cancel all"));
+    ui->bPause->setEnabled(true);
+
     ui->wTransfers->setCurrentWidget(ui->wAllTransfers);
+    updateState();
 }
 
 void TransferManager::on_bAdd_clicked()
@@ -185,13 +195,45 @@ void TransferManager::on_bClose_clicked()
     close();
 }
 
+void TransferManager::updateState()
+{
+    QWidget *w = ui->wTransfers->currentWidget();
+    if (w == ui->wAllTransfers)
+    {
+        ui->wAllTransfers->pausedTransfers(preferences->wasPaused());
+        preferences->wasPaused() ? ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/play_ico.png")))
+                                 : ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/pause_ico.png")));
+    }
+    else if(w == ui->wDownloads)
+    {
+        ui->wDownloads->pausedTransfers(preferences->wasDownloadsPaused());
+        preferences->wasDownloadsPaused() ? ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/play_ico.png")))
+                                          : ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/pause_ico.png")));
+    }
+    else if(w == ui->wUploads)
+    {
+        ui->wUploads->pausedTransfers(preferences->wasUploadsPaused());
+        preferences->wasUploadsPaused() ? ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/play_ico.png")))
+                                        : ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/pause_ico.png")));
+    }
+
+}
+
 void TransferManager::on_bPause_clicked()
 {
-    Preferences *preferences = Preferences::instance();
-    preferences->wasPaused() ? ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/pause_ico.png")))
-                             : ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/play_ico.png")));
-
-    ((MegaApplication *)qApp)->pauseTransfers(!preferences->wasPaused());
+    QWidget *w = ui->wTransfers->currentWidget();
+    if (w == ui->wAllTransfers)
+    {
+        megaApi->pauseTransfers(!preferences->wasPaused());
+    }
+    else if(w == ui->wDownloads)
+    {
+        megaApi->pauseTransfers(!preferences->wasDownloadsPaused(), MegaTransfer::TYPE_DOWNLOAD);
+    }
+    else if(w == ui->wUploads)
+    {
+        megaApi->pauseTransfers(!preferences->wasUploadsPaused(), MegaTransfer::TYPE_UPLOAD);
+    }
 }
 
 void TransferManager::on_bClearAll_clicked()

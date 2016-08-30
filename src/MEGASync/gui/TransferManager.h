@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QMenu>
 #include "megaapi.h"
+#include "Preferences.h"
 
 namespace Ui {
 class TransferManager;
@@ -15,6 +16,7 @@ class TransferManager : public QDialog
 
 public:
     explicit TransferManager(mega::MegaApi *megaApi, QWidget *parent = 0);
+    void updateState();
     ~TransferManager();
 
 private:
@@ -25,6 +27,7 @@ private:
     QAction *importLinksAction;
     QAction *uploadAction;
     QAction *downloadAction;
+    Preferences *preferences;
 
     void createAddMenu();
 
