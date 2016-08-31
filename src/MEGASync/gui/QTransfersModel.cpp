@@ -354,11 +354,20 @@ void QTransfersModel::updateTransferInfo(MegaTransfer *transfer)
         auto newit = std::lower_bound(transferOrder.begin(), transferOrder.end(), &testItem, priority_comparator);
         int newrow = std::distance(transferOrder.begin(), newit);
 
-        beginMoveRows(QModelIndex(), row, row, QModelIndex(), newrow);
-        transferOrder.erase(it);
-        item->setPriority(transfer->getPriority());
-        auto finalit = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
-        transferOrder.insert(finalit, item);
-        endMoveRows();
+        if (row == newrow || (row + 1) == newrow)
+        {
+            //Priorities are being adjusted, but there isn't an actual move operation
+            item->setPriority(transfer->getPriority());
+            emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
+        }
+        else
+        {
+            beginMoveRows(QModelIndex(), row, row, QModelIndex(), newrow);
+            transferOrder.erase(it);
+            item->setPriority(transfer->getPriority());
+            auto finalit = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
+            transferOrder.insert(finalit, item);
+            endMoveRows();
+        }
     }
 }
