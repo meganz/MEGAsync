@@ -17,7 +17,10 @@ MegaTransferView::MegaTransferView(QWidget *parent) :
     clearAllCompleted = NULL;
     transferTagSelected = 0;
     transferStateSelected = 0;
+}
 
+void MegaTransferView::setup(int type)
+{
     setContextMenuPolicy(Qt::CustomContextMenu);
     connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
     createContextMenu();
@@ -209,11 +212,24 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
             {
                 contextCompleted->exec(mapToGlobal(point));
             }
+            else if (model->getModelType() == QTransfersModel::TYPE_ALL)
+            {
+                transferStateSelected = model->data(index, TransferStatusRole).toInt();
+                bool isRegularTransfer = model->data(index, IsRegularTransferRole).toBool();
+                customizeContextInProgressMenu(transferStateSelected == mega::MegaTransfer::STATE_PAUSED,
+                                               false,
+                                               false,
+                                               isRegularTransfer);
+                contextInProgressMenu->exec(mapToGlobal(point));
+            }
             else
             {
                 transferStateSelected = model->data(index, TransferStatusRole).toInt();
                 bool isRegularTransfer = model->data(index, IsRegularTransferRole).toBool();
-                customizeContextInProgressMenu(transferStateSelected == mega::MegaTransfer::STATE_PAUSED, model->rowCount(QModelIndex()) > 1, model->rowCount(QModelIndex()) > 1, isRegularTransfer);
+                customizeContextInProgressMenu(transferStateSelected == mega::MegaTransfer::STATE_PAUSED,
+                                               index.row() > 0,
+                                               (model->rowCount(QModelIndex()) - 1) > index.row(),
+                                               isRegularTransfer);
                 contextInProgressMenu->exec(mapToGlobal(point));
             }
             transferTagSelected = 0;

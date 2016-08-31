@@ -22,7 +22,9 @@ public:
     void setTransferType(int type);
     void setSpeed(long long transferSpeed);
     void setTotalSize(long long size);
+
     void setType(int type, bool isSyncTransfer = false);
+    int getType();
     void setPriority(unsigned long long priority);
     unsigned long long getPriority();
 

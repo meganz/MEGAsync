@@ -9,8 +9,13 @@ TransfersWidget::TransfersWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     this->model = NULL;
+}
 
+void TransfersWidget::setupTransfers(mega::MegaTransferList *tList, int type)
+{
+    this->type = type;
     tDelegate = new MegaTransferDelegate(this);
+    ui->tvTransfers->setup(type);
     ui->tvTransfers->setItemDelegate((QAbstractItemDelegate *)tDelegate);
     ui->tvTransfers->header()->close();
     ui->tvTransfers->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -18,11 +23,6 @@ TransfersWidget::TransfersWidget(QWidget *parent) :
     ui->tvTransfers->viewport()->setAcceptDrops(true);
     ui->tvTransfers->setDropIndicatorShown(true);
     ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
-}
-
-void TransfersWidget::setupTransfers(mega::MegaTransferList *tList, int type)
-{
-    this->type = type;
 
     noTransfers(type);
     model = new QTransfersModel(type);

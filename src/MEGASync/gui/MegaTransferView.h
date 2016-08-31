@@ -13,6 +13,7 @@ class MegaTransferView : public QTreeView
 
 public:
     MegaTransferView(QWidget *parent = 0);
+    void setup(int type);
 
 private:
     int last_row;

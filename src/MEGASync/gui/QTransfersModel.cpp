@@ -161,6 +161,11 @@ QMimeData *QTransfersModel::mimeData(const QModelIndexList &indexes) const
 Qt::ItemFlags QTransfersModel::flags(const QModelIndex &index) const
 {
     Qt::ItemFlags defaultFlags = QAbstractItemModel::flags(index);
+    if (type == TYPE_ALL || type == TYPE_FINISHED)
+    {
+        return defaultFlags;
+    }
+
     if (index.isValid())
     {
         return Qt::ItemIsDragEnabled | defaultFlags;

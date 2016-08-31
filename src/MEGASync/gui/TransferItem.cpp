@@ -12,6 +12,7 @@ TransferItem::TransferItem(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    type = -1;
     totalSize = 0;
     totalTransferredBytes = 0;
     transferSpeed = 0;
@@ -118,6 +119,11 @@ void TransferItem::setType(int type, bool isSyncTransfer)
 
     ui->lTransferType->setIcon(icon);
     ui->lTransferType->setIconSize(QSize(12, 12));
+}
+
+int TransferItem::getType()
+{
+    return type;
 }
 
 void TransferItem::setPriority(unsigned long long priority)
