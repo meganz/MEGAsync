@@ -1439,7 +1439,7 @@ void MegaApplication::exitApplication()
     if (!exitDialog)
     {
         exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"),
-                                     tr("Synchronization will stop.\n\nExit anyway?"), QMessageBox::Yes|QMessageBox::No);
+                                     tr("Are you sure you want to exit?"), QMessageBox::Yes|QMessageBox::No);
         int button = exitDialog->exec();
         if (!exitDialog)
         {
