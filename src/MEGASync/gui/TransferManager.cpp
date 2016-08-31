@@ -120,7 +120,7 @@ void TransferManager::on_tCompleted_clicked()
     ui->tUploads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->tDownloads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->bClearAll->setText(tr("Clear all"));
-    ui->bPause->setEnabled(false);
+    ui->bPause->setVisible(false);
     ui->wTransfers->setCurrentWidget(ui->wCompleted);
 }
 
@@ -136,7 +136,7 @@ void TransferManager::on_tDownloads_clicked()
     ui->tUploads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->tDownloads->setStyleSheet(QString::fromUtf8("color: #333333;"));
     ui->bClearAll->setText(tr("Cancel all"));
-    ui->bPause->setEnabled(true);
+    ui->bPause->setVisible(true);
 
     ui->wTransfers->setCurrentWidget(ui->wDownloads);
     updateState();
@@ -154,7 +154,7 @@ void TransferManager::on_tUploads_clicked()
     ui->tUploads->setStyleSheet(QString::fromUtf8("color: #333333;"));
     ui->tDownloads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->bClearAll->setText(tr("Cancel all"));
-    ui->bPause->setEnabled(true);
+    ui->bPause->setVisible(true);
 
     ui->wTransfers->setCurrentWidget(ui->wUploads);
     updateState();
@@ -172,7 +172,7 @@ void TransferManager::on_tAllTransfers_clicked()
     ui->tUploads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->tDownloads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->bClearAll->setText(tr("Cancel all"));
-    ui->bPause->setEnabled(true);
+    ui->bPause->setVisible(true);
 
     ui->wTransfers->setCurrentWidget(ui->wAllTransfers);
     updateState();
