@@ -20,12 +20,14 @@ TransferItem::TransferItem(QWidget *parent) :
     speedCounter = 0;
     regular = false;
     cancelButtonEnabled = false;
+    isSyncTransfer = false;
     animation = NULL;
     priority = 0;
     transferState = 0;
     transferTag = 0;
 
     ui->lCancelTransfer->installEventFilter(this);
+    ui->lCancelTransferCompleted->installEventFilter(this);
     update();
 }
 
@@ -34,6 +36,8 @@ void TransferItem::setFileName(QString fileName)
     this->fileName = fileName;
     QFont f = ui->lTransferName->font();
     QFontMetrics fm = QFontMetrics(f);
+    ui->lTransferNameCompleted->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lTransferNameCompleted->width()));
+    ui->lTransferNameCompleted->setToolTip(fileName);
     ui->lTransferName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lTransferName->width()));
     ui->lTransferName->setToolTip(fileName);
 
@@ -41,6 +45,8 @@ void TransferItem::setFileName(QString fileName)
     icon.addFile(Utilities::getExtensionPixmapSmall(fileName), QSize(), QIcon::Normal, QIcon::Off);
     ui->lFileType->setIcon(icon);
     ui->lFileType->setIconSize(QSize(20, 22));
+    ui->lFileTypeCompleted->setIcon(icon);
+    ui->lFileTypeCompleted->setIconSize(QSize(20, 22));
 }
 
 QString TransferItem::getFileName()
@@ -91,25 +97,52 @@ void TransferItem::setTotalSize(long long size)
 void TransferItem::setType(int type, bool isSyncTransfer)
 {
     this->type = type;
+    this->isSyncTransfer = isSyncTransfer;
     QIcon icon;
 
-    if (type)
+    if (type == MegaTransfer::TYPE_UPLOAD)
     {
-        icon.addFile(QString::fromUtf8(":/images/upload_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-        QPixmap loadIconResource = isSyncTransfer ? QPixmap(QString::fromUtf8(":/images/sync_item_ico.png"))
-                                                  : QPixmap(QString::fromUtf8(":/images/cloud_upload_item_ico.png"));
+        if (isSyncTransfer)
+        {
+            QPixmap loadIconResource = QPixmap(QString::fromUtf8(":/images/sync_item_ico.png"));
+            ui->lActionType->setPixmap(loadIconResource);
+            ui->lActionTypeCompleted->setPixmap(loadIconResource);
+        }
+        else
+        {
+            QPixmap loadIconResource = QPixmap(QString::fromUtf8(":/images/cloud_upload_item_ico.png"));
+            QPixmap loadIconResourceCompleted = QPixmap(QString::fromUtf8(":/images/cloud_item_ico.png"));
+            ui->lActionType->setPixmap(loadIconResource);
+            ui->lActionTypeCompleted->setPixmap(loadIconResourceCompleted);
+        }
 
-        ui->lActionType->setPixmap(loadIconResource);
+        icon.addFile(QString::fromUtf8(":/images/upload_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
         ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
                                                         "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
     }
     else
     {
-        if (!animation)
+        // Temporarely disabled animation
+//        if (!animation)
+//        {
+//            animation = new QMovie(QString::fromUtf8(":/images/downloading.gif"));
+//            ui->lActionType->setMovie(animation);
+//            ui->lActionTypeCompleted->setMovie(animation);
+//            animation->start();
+//        }
+
+        if (isSyncTransfer)
         {
-            animation = new QMovie(QString::fromUtf8(":/images/downloading.gif"));
-            ui->lActionType->setMovie(animation);
-            animation->start();
+            QPixmap loadIconResource = QPixmap(QString::fromUtf8(":/images/sync_item_ico.png"));
+            ui->lActionType->setPixmap(loadIconResource);
+            ui->lActionTypeCompleted->setPixmap(loadIconResource);
+        }
+        else
+        {
+            QPixmap loadIconResource = QPixmap(QString::fromUtf8(":/images/cloud_download_item_ico.png"));
+            QPixmap loadIconResourceCompleted = QPixmap(QString::fromUtf8(":/images/cloud_item_ico.png"));
+            ui->lActionType->setPixmap(loadIconResource);
+            ui->lActionTypeCompleted->setPixmap(loadIconResourceCompleted);
         }
 
         icon.addFile(QString::fromUtf8(":/images/download_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
@@ -119,6 +152,8 @@ void TransferItem::setType(int type, bool isSyncTransfer)
 
     ui->lTransferType->setIcon(icon);
     ui->lTransferType->setIconSize(QSize(12, 12));
+    ui->lTransferTypeCompleted->setIcon(icon);
+    ui->lTransferTypeCompleted->setIconSize(QSize(12, 12));
 }
 
 int TransferItem::getType()
@@ -183,16 +218,23 @@ void TransferItem::setRegular(bool value)
 
 void TransferItem::finishTransfer()
 {
-    ui->lTotal->setText(QString::fromUtf8("%1").arg(Utilities::getSizeString(totalSize)));
-    ui->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/completed_item_ico.png")));
+    ui->sTransferState->setCurrentWidget(ui->stateCompleted);
+    if (transferState == MegaTransfer::STATE_COMPLETED)
+    {
+        ui->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/completed_item_ico.png")));
+    }
+    else
+    {
+        ui->lCompleted->setIcon(QIcon(QString::fromUtf8(":/images/import_error_ico.png")));
+    }
     ui->lCompleted->setIconSize(QSize(12, 12));
-    ui->pbTransfer->setVisible(false);
-    ui->lSpeed->setEnabled(false);
-    ui->lRemainingTime->setText(QString::fromUtf8(""));
+    ui->lTotalCompleted->setText(QString::fromUtf8("%1").arg(Utilities::getSizeString(totalSize)));
+    ui->lRemainingTime->setText(QString::fromUtf8("00 m 00 s"));
 }
 
 void TransferItem::updateTransfer()
 {
+    ui->sTransferState->setCurrentWidget(ui->stateActive);
     switch (transferState)
     {
         case MegaTransfer::STATE_ACTIVE:
@@ -259,10 +301,30 @@ void TransferItem::updateTransfer()
 
 bool TransferItem::cancelButtonClicked(QPoint pos)
 {
-    if (cancelButtonEnabled && ui->lCancelTransfer->rect().contains(ui->lCancelTransfer->mapFrom(this, pos)))
+    if (!cancelButtonEnabled)
     {
-        return true;
+        return false;
     }
+
+    switch (transferState)
+    {
+    case MegaTransfer::STATE_COMPLETED:
+    case MegaTransfer::STATE_FAILED:
+        if (ui->lCancelTransferCompleted->rect().contains(ui->lCancelTransferCompleted->mapFrom(this, pos)))
+        {
+            return true;
+        }
+        break;
+    case MegaTransfer::STATE_CANCELLED:
+        break;
+    default:
+        if (ui->lCancelTransfer->rect().contains(ui->lCancelTransfer->mapFrom(this, pos)))
+        {
+            return true;
+        }
+        break;
+    }
+
     return false;
 }
 
@@ -270,15 +332,26 @@ void TransferItem::mouseHoverTransfer(bool isHover)
 {
     if (isHover)
     {
+        if (isSyncTransfer)
+        {
+            ui->lCancelTransfer->installEventFilter(this);
+            ui->lCancelTransfer->update();
+            return;
+        }
+
         cancelButtonEnabled = true;
         ui->lCancelTransfer->removeEventFilter(this);
         ui->lCancelTransfer->update();
+        ui->lCancelTransferCompleted->removeEventFilter(this);
+        ui->lCancelTransferCompleted->update();
     }
     else
     {
         cancelButtonEnabled = false;
         ui->lCancelTransfer->installEventFilter(this);
         ui->lCancelTransfer->update();
+        ui->lCancelTransferCompleted->installEventFilter(this);
+        ui->lCancelTransferCompleted->update();
     }
 }
 

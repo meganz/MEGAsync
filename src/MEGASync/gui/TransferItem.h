@@ -66,6 +66,7 @@ protected:
     bool regular;
     unsigned long long priority;
     bool cancelButtonEnabled;
+    bool isSyncTransfer;
 
 };
 
