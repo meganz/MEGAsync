@@ -252,13 +252,13 @@
         <widget class="MegaTransferView" name="tvTransfers">
          <property name="minimumSize">
           <size>
-           <width>720</width>
+           <width>721</width>
            <height>336</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>720</width>
+           <width>721</width>
            <height>336</height>
           </size>
          </property>
@@ -279,6 +279,9 @@
          </property>
          <property name="rootIsDecorated">
           <bool>false</bool>
+         </property>
+         <property name="uniformRowHeights">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
