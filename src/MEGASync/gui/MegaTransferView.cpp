@@ -4,7 +4,7 @@ MegaTransferView::MegaTransferView(QWidget *parent) :
     QTreeView(parent), last_row(-1)
 {
     setMouseTracking(true);
-    lastItemHovered = NULL;
+    lastItemHoveredTag = 0;
     contextInProgressMenu = NULL;
     pauseTransfer = NULL;
     moveToTop = NULL;
@@ -164,34 +164,45 @@ void MegaTransferView::customizeContextInProgressMenu(bool paused, bool enableUp
 
 void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
 {
-    QAbstractItemModel *model = this->model();
+    QTransfersModel *model = dynamic_cast<QTransfersModel*>(this->model());
     if (model)
     {
         QModelIndex index = indexAt(event->pos());
+        int tag = index.internalId();
+
         if (index.isValid())
         {
              if (index.row() != last_row)
              {
                 last_row = index.row();
-                if (lastItemHovered)
+                if (lastItemHoveredTag)
                 {
-                    lastItemHovered->mouseHoverTransfer(false);
+                    TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
+                    if (lastItemHovered)
+                    {
+                        lastItemHovered->mouseHoverTransfer(false);
+                    }
                 }
-                TransferItem *ti = qvariant_cast<TransferItem*>(index.data());
-                if (ti)
+
+                TransferItem *item = model->transferItems[tag];
+                if (item)
                 {
-                    lastItemHovered = ti;
-                    ti->mouseHoverTransfer(true);
+                    lastItemHoveredTag = item->getTransferTag();
+                    item->mouseHoverTransfer(true);
                 }
              }
         }
         else
         {
-            if (lastItemHovered)
+            if (lastItemHoveredTag)
             {
-                lastItemHovered->mouseHoverTransfer(false);
-                last_row = -1;
-                lastItemHovered = NULL;
+                TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
+                if (lastItemHovered)
+                {
+                    lastItemHovered->mouseHoverTransfer(false);
+                    last_row = -1;
+                    lastItemHoveredTag = 0;
+                }
             }
         }
     }
@@ -200,22 +211,23 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
 
 void MegaTransferView::onCustomContextMenu(const QPoint &point)
 {
-    QTransfersModel *model = (QTransfersModel*)this->model();
+    QTransfersModel *model = dynamic_cast<QTransfersModel*>(this->model());
     if (model)
     {
         QModelIndex index = indexAt(point);
-        if (index.isValid())
+        int tag = index.internalId();
+        TransferItem *item = model->transferItems[tag];
+        if (index.isValid() && item)
         {
-            transferTagSelected = model->data(index, TagRole).toInt();
-
+            transferTagSelected = tag;
             if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
             {
                 contextCompleted->exec(mapToGlobal(point));
             }
             else if (model->getModelType() == QTransfersModel::TYPE_ALL)
             {
-                transferStateSelected = model->data(index, TransferStatusRole).toInt();
-                bool isRegularTransfer = model->data(index, IsRegularTransferRole).toBool();
+                transferStateSelected = item->getTransferState();
+                bool isRegularTransfer = item->getRegular();
                 customizeContextInProgressMenu(transferStateSelected == mega::MegaTransfer::STATE_PAUSED,
                                                false,
                                                false,
@@ -224,8 +236,8 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
             }
             else
             {
-                transferStateSelected = model->data(index, TransferStatusRole).toInt();
-                bool isRegularTransfer = model->data(index, IsRegularTransferRole).toBool();
+                transferStateSelected = item->getTransferState();
+                bool isRegularTransfer = item->getRegular();
                 customizeContextInProgressMenu(transferStateSelected == mega::MegaTransfer::STATE_PAUSED,
                                                index.row() > 0,
                                                (model->rowCount(QModelIndex()) - 1) > index.row(),

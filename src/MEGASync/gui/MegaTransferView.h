@@ -17,7 +17,7 @@ public:
 
 private:
     int last_row;
-    TransferItem *lastItemHovered;
+    int lastItemHoveredTag;
     int transferTagSelected;
     int transferStateSelected;
 

@@ -2,14 +2,18 @@
 #define QTRANSFERSMODEL_H
 
 #include <QAbstractItemModel>
+#include <QCache>
 #include "TransferItem.h"
 #include <megaapi.h>
 #include "QTMegaTransferListener.h"
 #include <deque>
 
-const int TransferStatusRole = 32;
-const int TagRole = 33;
-const int IsRegularTransferRole = 34;
+class TransferItemData
+{
+public:
+    int tag;
+    unsigned long long priority;
+};
 
 class QTransfersModel : public QAbstractItemModel, public mega::MegaTransferListener
 {
@@ -25,12 +29,11 @@ public:
     };
 
     explicit QTransfersModel(int type, QObject *parent = 0);
-    void setupModelTransfers(mega::MegaTransferList *transfers);
+    void setupModelTransfers(mega::MegaTransferData *transferData);
     void insertTransfer(mega::MegaTransfer *transfer);
     void removeTransfer(mega::MegaTransfer *transfer);
     void removeTransferByTag(int transferTag);
     void removeAllTransfers();
-    TransferItem *transferFromIndex(const QModelIndex &index) const;
     virtual int columnCount(const QModelIndex & parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role) const;
     virtual QModelIndex parent(const QModelIndex & index) const;
@@ -55,6 +58,9 @@ public:
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
     virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
     virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e);
+    QMap<int, mega::MegaTransfer*> finishedTransfers;
+    QCache<int, TransferItem> transferItems;
+    mega::MegaApi *megaApi;
 
 signals:
     void noTransfers(int type);
@@ -62,14 +68,10 @@ signals:
 
 private:
     void updateTransferInfo(mega::MegaTransfer *transfer);
-    void updateInitialTransferInfo(mega::MegaTransfer *transfer);
-
 
 protected:
-    QMap<int, TransferItem*> transfers;
-    std::deque<TransferItem*> transferOrder;
-
-    mega::QTMegaTransferListener *delegateListener;
+    QMap<int, TransferItemData*> transfers;
+    std::deque<TransferItemData*> transferOrder;
     int type;
 };
 

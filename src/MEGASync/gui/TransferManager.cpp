@@ -22,20 +22,52 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     downloadAction = NULL;
     settingsAction = NULL;
     this->megaApi = megaApi;
+    delegateListener = new QTMegaTransferListener(megaApi, this);
 
-    ui->wUploads->setupTransfers(megaApi->getTransfers(QTransfersModel::TYPE_UPLOAD), QTransfersModel::TYPE_UPLOAD);
-    ui->wDownloads->setupTransfers(megaApi->getTransfers(QTransfersModel::TYPE_DOWNLOAD), QTransfersModel::TYPE_DOWNLOAD);
-    ui->wAllTransfers->setupTransfers(megaApi->getTransfers(), QTransfersModel::TYPE_ALL);
+    MegaTransferData *transferData = megaApi->getTransferData(delegateListener);
+    ui->wUploads->setupTransfers(transferData, QTransfersModel::TYPE_UPLOAD);
+    ui->wDownloads->setupTransfers(transferData, QTransfersModel::TYPE_DOWNLOAD);
+    ui->wAllTransfers->setupTransfers(transferData, QTransfersModel::TYPE_ALL);
     ui->wCompleted->setupTransfers(NULL, QTransfersModel::TYPE_FINISHED);
+    delete transferData;
 
     on_tAllTransfers_clicked();
     updateState();
-    createAddMenu();
+    createAddMenu();    
 }
 
 TransferManager::~TransferManager()
 {
     delete ui;
+}
+
+void TransferManager::onTransferStart(MegaApi *api, MegaTransfer *transfer)
+{
+    ui->wUploads->getModel()->onTransferStart(api, transfer);
+    ui->wDownloads->getModel()->onTransferStart(api, transfer);
+    ui->wAllTransfers->getModel()->onTransferStart(api, transfer);
+}
+
+void TransferManager::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *e)
+{
+    ui->wUploads->getModel()->onTransferFinish(api, transfer, e);
+    ui->wDownloads->getModel()->onTransferFinish(api, transfer, e);
+    ui->wAllTransfers->getModel()->onTransferFinish(api, transfer, e);
+    ui->wCompleted->getModel()->onTransferFinish(api, transfer, e);
+}
+
+void TransferManager::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
+{
+    ui->wUploads->getModel()->onTransferUpdate(api, transfer);
+    ui->wDownloads->getModel()->onTransferUpdate(api, transfer);
+    ui->wAllTransfers->getModel()->onTransferUpdate(api, transfer);
+}
+
+void TransferManager::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError *e)
+{
+    ui->wUploads->getModel()->onTransferTemporaryError(api, transfer, e);
+    ui->wDownloads->getModel()->onTransferTemporaryError(api, transfer, e);
+    ui->wAllTransfers->getModel()->onTransferTemporaryError(api, transfer, e);
 }
 
 void TransferManager::createAddMenu()

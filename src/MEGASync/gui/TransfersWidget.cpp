@@ -3,6 +3,8 @@
 #include <QTextEdit>
 #include <QTimer>
 
+using namespace mega;
+
 TransfersWidget::TransfersWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::TransfersWidget)
@@ -11,10 +13,15 @@ TransfersWidget::TransfersWidget(QWidget *parent) :
     this->model = NULL;
 }
 
-void TransfersWidget::setupTransfers(mega::MegaTransferList *tList, int type)
+void TransfersWidget::setupTransfers(MegaTransferData *transferData, int type)
 {
     this->type = type;
-    tDelegate = new MegaTransferDelegate(this);
+    model = new QTransfersModel(type);
+    connect(model, SIGNAL(noTransfers(int)), this, SLOT(noTransfers(int)));
+    connect(model, SIGNAL(onTransferAdded()), this, SLOT(onTransferAdded()));
+    model->setupModelTransfers(transferData);
+
+    tDelegate = new MegaTransferDelegate(model, this);
     ui->tvTransfers->setup(type);
     ui->tvTransfers->setItemDelegate((QAbstractItemDelegate *)tDelegate);
     ui->tvTransfers->header()->close();
@@ -25,10 +32,6 @@ void TransfersWidget::setupTransfers(mega::MegaTransferList *tList, int type)
     ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
 
     noTransfers(type);
-    model = new QTransfersModel(type);
-    connect(model, SIGNAL(noTransfers(int)), this, SLOT(noTransfers(int)));
-    connect(model, SIGNAL(onTransferAdded()), this, SLOT(onTransferAdded()));
-    model->setupModelTransfers(tList);
     ui->tvTransfers->setModel(model);
 }
 
@@ -64,6 +67,11 @@ void TransfersWidget::pausedTransfers(bool paused)
     {
         ui->sWidget->setCurrentWidget(ui->pTransfers);
     }
+}
+
+QTransfersModel *TransfersWidget::getModel()
+{
+    return model;
 }
 
 void TransfersWidget::noTransfers(int type)

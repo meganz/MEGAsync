@@ -2,18 +2,56 @@
 #include <QPainter>
 #include <QEvent>
 #include <QMouseEvent>
+#include "megaapi.h"
 #include "QTransfersModel.h"
+
+
+using namespace mega;
+
+MegaTransferDelegate::MegaTransferDelegate(QTransfersModel *model, QObject *parent)
+    : QStyledItemDelegate(parent)
+{
+    this->model = model;
+}
 
 void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    if (index.data().canConvert<TransferItem*>())
+    if (index.isValid())
     {
         if (option.state & QStyle::State_Selected)
         {
             painter->fillRect(option.rect, QColor(247, 247, 247));
         }
 
-        TransferItem *ti = qvariant_cast<TransferItem*>(index.data());
+        int tag = index.internalId();
+        TransferItem *ti = model->transferItems[tag];
+        if (!ti)
+        {
+            ti = new TransferItem();
+            ti->setTransferTag(tag);
+            model->transferItems.insert(tag, ti);
+
+            if (model->getModelType() != QTransfersModel::TYPE_FINISHED)
+            {
+                model->megaApi->notifyTransferByTag(tag);
+                return;
+            }
+            else
+            {
+                MegaTransfer *transfer = model->finishedTransfers.value(tag);
+                if (transfer)
+                {
+                    ti->setType(transfer->getType(), transfer->isSyncTransfer());
+                    ti->setFileName(QString::fromUtf8(transfer->getFileName()));
+                    ti->setTotalSize(transfer->getTotalBytes());
+                    ti->setSpeed(transfer->getSpeed());
+                    ti->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
+                    ti->setTransferState(transfer->getState());
+                    ti->setPriority(transfer->getPriority());
+                }
+            }
+        }
+
         painter->save();
         painter->translate(option.rect.topLeft());
         ti->render(painter, QPoint(0, 0), QRegion(0, 0, option.rect.width(), option.rect.height()));
@@ -27,10 +65,9 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
 QSize MegaTransferDelegate::sizeHint(const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
-    if (index.data().canConvert<TransferItem*>())
+    if (index.isValid())
     {
-        TransferItem *ti = qvariant_cast<TransferItem*>(index.data());
-        return ti->sizeHint();
+        return QSize(720, 48);
     }
     else
     {
@@ -38,28 +75,29 @@ QSize MegaTransferDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
     }
 }
 
-bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
+bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
     if (QEvent::MouseButtonRelease ==  event->type())
     {
-        TransferItem *item = (TransferItem *)index.internalPointer();
-        QMouseEvent *e = (QMouseEvent *)event;
-
-        QPoint clickPosition = e->pos();
-        QPoint itemPosition = option.rect.topLeft();
-        clickPosition = clickPosition - itemPosition;
-
-        if (item->cancelButtonClicked(clickPosition))
+        int tag = index.internalId();
+        TransferItem *item = model->transferItems[tag];
+        if (!item)
         {
-            if (((QTransfersModel*)model)->getModelType() == QTransfersModel::TYPE_FINISHED)
+            return true;
+        }
+
+        if (item->cancelButtonClicked(((QMouseEvent *)event)->pos() - option.rect.topLeft()))
+        {
+            if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
             {
-                ((QTransfersModel*)model)->removeTransferByTag(item->getTransferTag());
+                model->removeTransferByTag(tag);
             }
             else
             {
-                ((QTransfersModel*)model)->onTransferCancel(item->getTransferTag());
+                model->onTransferCancel(tag);
             }
         }
+        return true;
     }
 
     return QAbstractItemDelegate::editorEvent(event, model, option, index);;
