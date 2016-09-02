@@ -91,6 +91,7 @@ void QTransfersModel::removeTransferByTag(int transferTag)
     transfers.remove(transferTag);
     transferOrder.erase(it);
     endRemoveRows();
+    delete item;
 
     if (transfers.isEmpty())
     {
@@ -101,14 +102,11 @@ void QTransfersModel::removeTransferByTag(int transferTag)
 void QTransfersModel::removeAllTransfers()
 {
     beginRemoveRows(QModelIndex(), 0, transfers.size());
+    qDeleteAll(transfers);
     transfers.clear();
     transferOrder.clear();
     endRemoveRows();
-
-    if (transfers.isEmpty())
-    {
-        emit noTransfers(type);
-    }
+    emit noTransfers(type);
 }
 
 int QTransfersModel::rowCount(const QModelIndex &parent) const

@@ -51,6 +51,11 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 ti->setTransferState(transfer->getState());
                 ti->setPriority(transfer->getPriority());
             }
+
+            if (model->getModelType() != QTransfersModel::TYPE_FINISHED)
+            {
+                delete transfer;
+            }
         }
 
         painter->save();
