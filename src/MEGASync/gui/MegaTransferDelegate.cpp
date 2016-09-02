@@ -30,25 +30,26 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             ti = new TransferItem();
             ti->setTransferTag(tag);
             model->transferItems.insert(tag, ti);
+            MegaTransfer *transfer = NULL;
 
             if (model->getModelType() != QTransfersModel::TYPE_FINISHED)
             {
-                model->megaApi->notifyTransferByTag(tag);
-                return;
+                transfer = model->megaApi->getTransferByTag(tag);
             }
             else
             {
-                MegaTransfer *transfer = model->finishedTransfers.value(tag);
-                if (transfer)
-                {
-                    ti->setType(transfer->getType(), transfer->isSyncTransfer());
-                    ti->setFileName(QString::fromUtf8(transfer->getFileName()));
-                    ti->setTotalSize(transfer->getTotalBytes());
-                    ti->setSpeed(transfer->getSpeed());
-                    ti->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
-                    ti->setTransferState(transfer->getState());
-                    ti->setPriority(transfer->getPriority());
-                }
+                transfer = model->finishedTransfers.value(tag);
+            }
+
+            if (transfer)
+            {
+                ti->setType(transfer->getType(), transfer->isSyncTransfer());
+                ti->setFileName(QString::fromUtf8(transfer->getFileName()));
+                ti->setTotalSize(transfer->getTotalBytes());
+                ti->setSpeed(transfer->getSpeed());
+                ti->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
+                ti->setTransferState(transfer->getState());
+                ti->setPriority(transfer->getPriority());
             }
         }
 

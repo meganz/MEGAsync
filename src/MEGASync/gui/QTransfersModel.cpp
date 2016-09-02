@@ -13,7 +13,7 @@ QTransfersModel::QTransfersModel(int type, QObject *parent) :
 {
     this->type = type;
     this->megaApi = ((MegaApplication *)qApp)->getMegaApi();
-    this->transferItems.setMaxCost(20);
+    this->transferItems.setMaxCost(16);
 }
 
 int QTransfersModel::columnCount(const QModelIndex &parent) const
@@ -36,7 +36,7 @@ QVariant QTransfersModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QModelIndex QTransfersModel::parent(const QModelIndex &index) const
+QModelIndex QTransfersModel::parent(const QModelIndex &) const
 {
     return QModelIndex();
 }

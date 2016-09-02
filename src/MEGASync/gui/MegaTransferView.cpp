@@ -164,7 +164,7 @@ void MegaTransferView::customizeContextInProgressMenu(bool paused, bool enableUp
 
 void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
 {
-    QTransfersModel *model = dynamic_cast<QTransfersModel*>(this->model());
+    QTransfersModel *model = (QTransfersModel*)this->model();
     if (model)
     {
         QModelIndex index = indexAt(event->pos());
@@ -211,7 +211,7 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
 
 void MegaTransferView::onCustomContextMenu(const QPoint &point)
 {
-    QTransfersModel *model = dynamic_cast<QTransfersModel*>(this->model());
+    QTransfersModel *model = (QTransfersModel*)this->model();
     if (model)
     {
         QModelIndex index = indexAt(point);
