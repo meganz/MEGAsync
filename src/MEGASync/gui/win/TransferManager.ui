@@ -49,7 +49,7 @@
   font-size: 18px;
   font-weight: 400;
   color: #333333;
-  padding: 5px 12px 5px 12px;
+  padding: 5px 19px 0px 19px;
   border: none;
 }
 #bAdd
@@ -126,7 +126,7 @@
     <widget class="QWidget" name="wHeader" native="true">
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -159,13 +159,13 @@
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>24</number>
+          <number>23</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>7</number>
          </property>
          <property name="rightMargin">
-          <number>12</number>
+          <number>7</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -188,7 +188,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/megasync_logo.png</normaloff>:/images/megasync_logo.png</iconset>
            </property>
            <property name="iconSize">
@@ -213,32 +213,62 @@
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="bAdd">
+          <widget class="QWidget" name="widget" native="true">
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>32</height>
+             <height>0</height>
             </size>
            </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Add...</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
-             <normaloff>:/images/add_ico.png</normaloff>:/images/add_ico.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>24</width>
-             <height>24</height>
-            </size>
-           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>16</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="bAdd">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>Add...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/add_ico.png</normaloff>:/images/add_ico.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
@@ -518,9 +548,7 @@
      <widget class="TransfersWidget" name="wAllTransfers"/>
      <widget class="TransfersWidget" name="wDownloads"/>
      <widget class="TransfersWidget" name="wUploads"/>
-     <widget class="TransfersWidget" name="wCompleted">
-      <zorder>tDownloads</zorder>
-     </widget>
+     <widget class="TransfersWidget" name="wCompleted"/>
     </widget>
    </item>
    <item>
@@ -539,13 +567,19 @@
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
-       <number>27</number>
+       <number>6</number>
+      </property>
+      <property name="leftMargin">
+       <number>7</number>
       </property>
       <property name="topMargin">
-       <number>10</number>
+       <number>7</number>
+      </property>
+      <property name="rightMargin">
+       <number>7</number>
       </property>
       <property name="bottomMargin">
-       <number>12</number>
+       <number>4</number>
       </property>
       <item>
        <widget class="QPushButton" name="bPause">
