@@ -76,9 +76,10 @@ void TransferManager::createAddMenu()
     {
         addMenu = new QMenu(this);
         addMenu->setStyleSheet(QString::fromAscii(
-                                   "QMenu {background: #ffffff; margin: 15px;}"
-                                   "QMenu::item {font-family: Source Sans Pro; border-left: 10px solid transparent; color: #777777;padding: 5px 16px;padding-left: 30px;} "
-                                   "QMenu::item:selected {background: #aaaaaa; border-left: 10px solid #aaaaaa; color:#ffffff;padding: 5px 16px;padding-left: 30px;}"));
+                                   "QMenu {background: #ffffff;}"
+                                   "QMenu::item {height: 24px; font-family: Source Sans Pro; margin-left: 8px; margin-right: 14px; border-left: 10px solid transparent; color: #777777; padding: 6px 16px 8px 36px;}"
+                                   "QMenu::separator {height: 1px; margin: 6px 0px 6px 0px; background-color: rgba(0, 0, 0, 0.1);}"
+                                   "QMenu::item:selected {height: 24px; background: #aaaaaa; border-left: 10px solid #aaaaaa; color:#ffffff; }"));
     }
     else
     {
