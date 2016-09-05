@@ -30,7 +30,7 @@ private:
     int type;
 
 private slots:
-    void noTransfers(int type);
+    void noTransfers();
     void onTransferAdded();
 };
 

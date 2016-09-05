@@ -63,7 +63,7 @@ public:
     mega::MegaApi *megaApi;
 
 signals:
-    void noTransfers(int type);
+    void noTransfers();
     void onTransferAdded();
 
 private:

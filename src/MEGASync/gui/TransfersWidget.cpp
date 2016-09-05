@@ -17,7 +17,7 @@ void TransfersWidget::setupTransfers(MegaTransferData *transferData, int type)
 {
     this->type = type;
     model = new QTransfersModel(type);
-    connect(model, SIGNAL(noTransfers(int)), this, SLOT(noTransfers(int)));
+    connect(model, SIGNAL(noTransfers()), this, SLOT(noTransfers()));
     connect(model, SIGNAL(onTransferAdded()), this, SLOT(onTransferAdded()));
     model->setupModelTransfers(transferData);
 
@@ -31,7 +31,7 @@ void TransfersWidget::setupTransfers(MegaTransferData *transferData, int type)
     ui->tvTransfers->setDropIndicatorShown(true);
     ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
 
-    noTransfers(type);
+    noTransfers();
     ui->tvTransfers->setModel(model);
 }
 
@@ -58,10 +58,7 @@ void TransfersWidget::pausedTransfers(bool paused)
     }
     else if(model->rowCount(QModelIndex()) == 0)
     {
-        ui->sWidget->setCurrentWidget(ui->pNoTransfers);
-        ui->lStatusIcon->setIcon(QIcon(QString::fromAscii("://images/no_transfers.png")));
-        ui->lStatusIcon->setIconSize(QSize(156, 156));
-        ui->lStatus->setText(tr("No Transfers"));
+        noTransfers();
     }
     else
     {
@@ -74,7 +71,7 @@ QTransfersModel *TransfersWidget::getModel()
     return model;
 }
 
-void TransfersWidget::noTransfers(int type)
+void TransfersWidget::noTransfers()
 {
     ui->sWidget->setCurrentWidget(ui->pNoTransfers);
     switch (type)
