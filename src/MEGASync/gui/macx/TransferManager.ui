@@ -240,7 +240,7 @@
              <widget class="QPushButton" name="bAdd">
               <property name="minimumSize">
                <size>
-                <width>0</width>
+                <width>80</width>
                 <height>32</height>
                </size>
               </property>
@@ -585,7 +585,7 @@
        <widget class="QPushButton" name="bPause">
         <property name="minimumSize">
          <size>
-          <width>0</width>
+          <width>80</width>
           <height>32</height>
          </size>
         </property>
@@ -614,7 +614,7 @@
        <widget class="QPushButton" name="bClearAll">
         <property name="minimumSize">
          <size>
-          <width>0</width>
+          <width>80</width>
           <height>32</height>
          </size>
         </property>
@@ -656,7 +656,7 @@
        <widget class="QPushButton" name="bClose">
         <property name="minimumSize">
          <size>
-          <width>0</width>
+          <width>80</width>
           <height>32</height>
          </size>
         </property>
