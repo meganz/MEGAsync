@@ -21,9 +21,6 @@ public:
     void processDownloadQueue(QQueue<mega::MegaNode *> *downloadQueue, QString path);
     void download(mega::MegaNode *parent, QString path);
 
-signals:
-    void dupplicateDownload(QString localPath, QString name, mega::MegaHandle handle);
-
 protected:
     void download(mega::MegaNode *parent, QFileInfo info);
 

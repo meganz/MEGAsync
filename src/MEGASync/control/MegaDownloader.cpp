@@ -58,33 +58,6 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
 
     if (parent->getType() == MegaNode::TYPE_FILE)
     {
-        QDir dir(currentPath);
-
-        char *escapedName = megaApi->escapeFsIncompatible(parent->getName());
-        QString fullPath = dir.filePath(QString::fromUtf8(escapedName));
-        delete [] escapedName;
-
-        QFileInfo info(fullPath);
-        if (info.exists())
-        {
-            const char *fpLocal = megaApi->getFingerprint(fullPath.toUtf8().constData());
-            const char *fpRemote = megaApi->getFingerprint(parent);
-
-            if ((fpLocal && fpRemote && !strcmp(fpLocal,fpRemote))
-                    || (!fpRemote && parent->getSize() == info.size()
-                        && parent->getModificationTime() == (info.lastModified().toMSecsSinceEpoch()/1000)))
-            {
-                delete [] fpLocal;
-                delete [] fpRemote;
-                emit dupplicateDownload(QDir::toNativeSeparators(fullPath),
-                                        QString::fromUtf8(parent->getName()),
-                                        parent->getHandle());
-                return;
-            }
-            delete [] fpLocal;
-            delete [] fpRemote;
-        }
-
         if ((parent->isPublic() || parent->isForeign()) && megaApiGuest)
         {
             megaApiGuest->startDownload(parent, (currentPath + QDir::separator()).toUtf8().constData());
