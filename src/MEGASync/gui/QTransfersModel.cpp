@@ -5,7 +5,13 @@ using namespace mega;
 
 bool priority_comparator(TransferItemData* i, TransferItemData *j)
 {
-    return (i->priority < j->priority);
+    if (i->priority < j->priority)
+        return true;
+
+    if (i->priority > j->priority)
+        return false;
+
+    return i->tag < j->tag;
 }
 
 QTransfersModel::QTransfersModel(int type, QObject *parent) :
