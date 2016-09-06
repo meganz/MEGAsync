@@ -32,6 +32,9 @@ private:
 private slots:
     void noTransfers();
     void onTransferAdded();
+
+protected:
+    void changeEvent(QEvent *event);
 };
 
 #endif // TRANSFERSWIDGET_H

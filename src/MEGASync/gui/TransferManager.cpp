@@ -308,3 +308,12 @@ void TransferManager::on_bClearAll_clicked()
         ui->wCompleted->clearTransfers();
     }
 }
+
+void TransferManager::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+    QDialog::changeEvent(event);
+}

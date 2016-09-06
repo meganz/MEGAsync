@@ -98,3 +98,12 @@ void TransfersWidget::onTransferAdded()
 {
     ui->sWidget->setCurrentWidget(ui->pTransfers);
 }
+
+void TransfersWidget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+    QWidget::changeEvent(event);
+}

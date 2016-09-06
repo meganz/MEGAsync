@@ -47,6 +47,9 @@ private slots:
     void on_bClose_clicked();
     void on_bPause_clicked();
     void on_bClearAll_clicked();
+
+protected:
+    void changeEvent(QEvent *event);
 };
 
 #endif // TRANSFERMANAGER_H
