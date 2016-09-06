@@ -2,6 +2,7 @@
 #include <QPainter>
 #include <QEvent>
 #include <QMouseEvent>
+#include <QMessageBox>
 #include "megaapi.h"
 #include "QTransfersModel.h"
 
@@ -100,7 +101,17 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
             }
             else
             {
-                model->onTransferCancel(tag);
+                QMessageBox question;
+                question.setWindowTitle(QString::fromUtf8("MEGAsync"));
+                question.setText(tr("Are you sure you want to cancel this transfer?"));
+                question.setIcon(QMessageBox::Question);
+                question.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+                question.setDefaultButton(QMessageBox::No);
+                int result = question.exec();
+                if (result == QMessageBox::Yes)
+                {
+                    model->onTransferCancel(tag);
+                }
             }
         }
         return true;

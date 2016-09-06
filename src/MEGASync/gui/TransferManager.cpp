@@ -1,4 +1,5 @@
 #include "TransferManager.h"
+#include <QMessageBox>
 #include "ui_TransferManager.h"
 
 using namespace mega;
@@ -272,6 +273,23 @@ void TransferManager::on_bPause_clicked()
 void TransferManager::on_bClearAll_clicked()
 {
     QWidget *w = ui->wTransfers->currentWidget();
+    if (((TransfersWidget *)w)->getModel()->rowCount(QModelIndex()) == 0)
+    {
+        return;
+    }
+
+    if (w != ui->wCompleted)
+    {
+        if(QMessageBox::question(this,
+                                 QString::fromUtf8("MEGAsync"),
+                                 tr("Are you sure you want to cancel all transfers?"),
+                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No)
+        {
+            return;
+        }
+
+    }
+
     if (w == ui->wAllTransfers)
     {
         megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
