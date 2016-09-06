@@ -585,7 +585,6 @@ void MegaApplication::initialize()
     connectivityTimer->setInterval(Preferences::MAX_LOGIN_TIME_MS);
     connect(connectivityTimer, SIGNAL(timeout()), this, SLOT(runConnectivityCheck()));
 
-    connect(uploader, SIGNAL(dupplicateUpload(QString, QString, mega::MegaHandle)), this, SLOT(onDupplicateTransfer(QString, QString, mega::MegaHandle)));
     connect(downloader, SIGNAL(dupplicateDownload(QString, QString, mega::MegaHandle)), this, SLOT(onDupplicateTransfer(QString, QString, mega::MegaHandle)));
 
     if (preferences->isCrashed())
