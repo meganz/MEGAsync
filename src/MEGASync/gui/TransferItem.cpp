@@ -99,55 +99,41 @@ void TransferItem::setType(int type, bool isSyncTransfer)
     this->type = type;
     this->isSyncTransfer = isSyncTransfer;
     QIcon icon;
+    QPixmap loadIconResourceCompleted;
 
-    if (type == MegaTransfer::TYPE_UPLOAD)
+    if (isSyncTransfer)
     {
-        if (isSyncTransfer)
-        {
-            QPixmap loadIconResource = QPixmap(QString::fromUtf8(":/images/sync_item_ico.png"));
-            ui->lActionType->setPixmap(loadIconResource);
-            ui->lActionTypeCompleted->setPixmap(loadIconResource);
-        }
-        else
-        {
-            QPixmap loadIconResource = QPixmap(QString::fromUtf8(":/images/cloud_upload_item_ico.png"));
-            QPixmap loadIconResourceCompleted = QPixmap(QString::fromUtf8(":/images/cloud_item_ico.png"));
-            ui->lActionType->setPixmap(loadIconResource);
-            ui->lActionTypeCompleted->setPixmap(loadIconResourceCompleted);
-        }
-
-        icon.addFile(QString::fromUtf8(":/images/upload_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-        ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
-                                                        "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
+        loadIconResource = QPixmap(QString::fromUtf8(":/images/sync_item_ico.png"));
+        animation = new QMovie(QString::fromUtf8(":/images/downloading.gif"));
+        ui->lActionType->setPixmap(loadIconResource);
+        ui->lActionTypeCompleted->setPixmap(loadIconResource);
+        return;
     }
-    else
+
+    switch (type)
     {
-        // Temporarely disabled animation
-//        if (!animation)
-//        {
-//            animation = new QMovie(QString::fromUtf8(":/images/downloading.gif"));
-//            ui->lActionType->setMovie(animation);
-//            ui->lActionTypeCompleted->setMovie(animation);
-//            animation->start();
-//        }
-
-        if (isSyncTransfer)
-        {
-            QPixmap loadIconResource = QPixmap(QString::fromUtf8(":/images/sync_item_ico.png"));
-            ui->lActionType->setPixmap(loadIconResource);
-            ui->lActionTypeCompleted->setPixmap(loadIconResource);
-        }
-        else
-        {
-            QPixmap loadIconResource = QPixmap(QString::fromUtf8(":/images/cloud_download_item_ico.png"));
-            QPixmap loadIconResourceCompleted = QPixmap(QString::fromUtf8(":/images/cloud_item_ico.png"));
-            ui->lActionType->setPixmap(loadIconResource);
+        case MegaTransfer::TYPE_UPLOAD:
+            this->loadIconResource = QPixmap(QString::fromUtf8(":/images/cloud_upload_item_ico.png"));
+            loadIconResourceCompleted = QPixmap(QString::fromUtf8(":/images/cloud_item_ico.png"));
             ui->lActionTypeCompleted->setPixmap(loadIconResourceCompleted);
-        }
-
-        icon.addFile(QString::fromUtf8(":/images/download_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-        ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
-                                                        "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
+            animation = new QMovie(QString::fromUtf8(":/images/downloading.gif"));
+            connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
+            icon.addFile(QString::fromUtf8(":/images/upload_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
+                                                            "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
+            break;
+        case MegaTransfer::TYPE_DOWNLOAD:
+            this->loadIconResource = QPixmap(QString::fromUtf8(":/images/cloud_download_item_ico.png"));
+            loadIconResourceCompleted = QPixmap(QString::fromUtf8(":/images/cloud_item_ico.png"));
+            ui->lActionTypeCompleted->setPixmap(loadIconResourceCompleted);
+            animation = new QMovie(QString::fromUtf8(":/images/downloading.gif"));
+            connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
+            icon.addFile(QString::fromUtf8(":/images/download_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
+                                                            "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
+            break;
+        default:
+            break;
     }
 
     ui->lTransferType->setIcon(icon);
@@ -174,7 +160,10 @@ unsigned long long TransferItem::getPriority()
 TransferItem::~TransferItem()
 {
     delete ui;
-    delete animation;
+    if (animation)
+    {
+        delete animation;
+    }
 }
 int TransferItem::getTransferState()
 {
@@ -235,6 +224,7 @@ void TransferItem::finishTransfer()
 void TransferItem::updateTransfer()
 {
     ui->sTransferState->setCurrentWidget(ui->stateActive);
+    updateAnimation();
     switch (transferState)
     {
         case MegaTransfer::STATE_ACTIVE:
@@ -358,6 +348,38 @@ void TransferItem::mouseHoverTransfer(bool isHover)
 bool TransferItem::eventFilter(QObject *, QEvent *ev)
 {
     return ev->type() == QEvent::Paint || ev->type() == QEvent::ToolTip;
+}
+
+void TransferItem::frameChanged(int)
+{
+    emit animationChanged(this->getTransferTag());
+}
+
+void TransferItem::updateAnimation()
+{
+    if (!animation)
+    {
+        return;
+    }
+
+    switch (transferState)
+    {
+        case MegaTransfer::STATE_ACTIVE:
+            if (animation->state() != QMovie::Running)
+            {
+                ui->lActionType->setMovie(animation);
+                animation->start();
+            }
+            break;
+        default:
+            if (animation->state() != QMovie::NotRunning)
+            {
+                animation->stop();
+                ui->lActionType->setMovie(NULL);
+                ui->lActionType->setPixmap(loadIconResource);
+            }
+            break;
+    }
 }
 
 QSize TransferItem::minimumSizeHint() const

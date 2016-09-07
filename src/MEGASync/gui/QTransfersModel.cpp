@@ -383,3 +383,16 @@ void QTransfersModel::updateTransferInfo(MegaTransfer *transfer)
         }
     }
 }
+
+void QTransfersModel::animationChanged(int tag)
+{
+    TransferItemData *itemData = transfers.value(tag);
+    if (!itemData)
+    {
+        return;
+    }
+
+    auto it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
+    int row = std::distance(transferOrder.begin(), it);
+    emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
+}

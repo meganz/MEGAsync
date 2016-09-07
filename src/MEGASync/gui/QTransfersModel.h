@@ -69,6 +69,9 @@ signals:
 private:
     void updateTransferInfo(mega::MegaTransfer *transfer);
 
+private slots:
+    void animationChanged(int tag);
+
 protected:
     QMap<int, TransferItemData*> transfers;
     std::deque<TransferItemData*> transferOrder;

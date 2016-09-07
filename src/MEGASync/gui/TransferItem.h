@@ -49,8 +49,17 @@ public:
 
     bool eventFilter(QObject *, QEvent * ev);
 
+signals:
+    void animationChanged(int tag);
+
 private:
     Ui::TransferItem *ui;
+
+private slots:
+    void frameChanged(int);
+
+private:
+    void updateAnimation();
 
 protected:
     QString fileName;
@@ -58,6 +67,7 @@ protected:
     int transferState;
     int transferTag;
     QMovie *animation;
+    QPixmap loadIconResource;
     long long transferSpeed;
     long long meanTransferSpeed;
     long long speedCounter;
