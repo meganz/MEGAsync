@@ -99,6 +99,11 @@ void QTransfersModel::removeTransferByTag(int transferTag)
     endRemoveRows();
     delete item;
 
+    if (type == TYPE_FINISHED)
+    {
+        ((MegaApplication *)qApp)->removeFinishedTransfer(transferTag);
+    }
+
     if (transfers.isEmpty())
     {
         emit noTransfers();
@@ -112,6 +117,12 @@ void QTransfersModel::removeAllTransfers()
     transfers.clear();
     transferOrder.clear();
     endRemoveRows();
+
+    if (type == TYPE_FINISHED)
+    {
+        ((MegaApplication *)qApp)->removeAllFinishedTransfers();
+    }
+
     emit noTransfers();
 }
 
@@ -199,6 +210,11 @@ int QTransfersModel::getModelType()
     return type;
 }
 
+MegaTransfer* QTransfersModel::getFinishedTransferByTag(int tag)
+{
+    return ((MegaApplication *)qApp)->getFinishedTransferByTag(tag);
+}
+
 void QTransfersModel::onTransferPaused(int transferTag, bool pause)
 {
     megaApi->pauseTransferByTag(transferTag, pause);
@@ -245,7 +261,6 @@ void QTransfersModel::onTransferFinish(MegaApi *, MegaTransfer *transfer, MegaEr
     }
     else if (type == TYPE_FINISHED && transfer->getState() == MegaTransfer::STATE_COMPLETED)
     {
-        finishedTransfers.insert(transfer->getTag(), transfer->copy());
         insertTransfer(transfer);
     }
 }
@@ -263,6 +278,19 @@ void QTransfersModel::onTransferTemporaryError(MegaApi *, MegaTransfer *transfer
 
 }
 
+void QTransfersModel::setupModelTransfers(QList<MegaTransfer*> tList)
+{
+    if (tList.isEmpty())
+    {
+        return;
+    }
+
+    for (int i = 0; i < tList.size(); i++)
+    {
+        insertTransfer(tList.at(i));
+        updateTransferInfo(tList.at(i));
+    }
+ }
 void QTransfersModel::setupModelTransfers(MegaTransferData *transferData)
 {
     if (!transferData)

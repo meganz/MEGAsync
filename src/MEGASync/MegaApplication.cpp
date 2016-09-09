@@ -2670,6 +2670,26 @@ void MegaApplication::toggleLogging()
     }
 }
 
+void MegaApplication::removeFinishedTransfer(int transferTag)
+{
+    finishedTransfers.remove(transferTag);
+}
+
+void MegaApplication::removeAllFinishedTransfers()
+{
+    finishedTransfers.clear();
+}
+
+QList<MegaTransfer*> MegaApplication::getFinishedTransfers()
+{
+    return finishedTransfers.values();
+}
+
+MegaTransfer* MegaApplication::getFinishedTransferByTag(int tag)
+{
+    return finishedTransfers.value(tag);
+}
+
 //Called when the "Import links" menu item is clicked
 void MegaApplication::importLinks()
 {
@@ -4952,6 +4972,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                 delete [] key;
                 delete node;
             }
+            finishedTransfers.insert(transfer->getTag(), transfer->copy());
             addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath, publicKey);
         }
     }
@@ -4965,16 +4986,20 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         //The SDK still has to put the new node.
         //onNodes update will be called with node->tag == transfer->getTag()
         //so we save the path of the file to show it later
-        if ((e->getErrorCode() == MegaError::API_OK) && (!transfer->isSyncTransfer()))
+        if ((e->getErrorCode() == MegaError::API_OK))
         {
-            QString localPath = QString::fromUtf8(transfer->getPath());
-#ifdef WIN32
-            if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+            finishedTransfers.insert(transfer->getTag(), transfer->copy());
+            if (!transfer->isSyncTransfer())
             {
-                localPath = localPath.mid(4);
+                QString localPath = QString::fromUtf8(transfer->getPath());
+    #ifdef WIN32
+                if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+                {
+                    localPath = localPath.mid(4);
+                }
+    #endif
+                uploadLocalPaths[transfer->getTag()]=localPath;
             }
-#endif
-            uploadLocalPaths[transfer->getTag()]=localPath;
         }
     }
 
@@ -5289,7 +5314,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                 MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Unable to get the local path of the file: %1 Tag: %2")
                              .arg(QString::fromUtf8(node->getName())).arg(node->getTag()).toUtf8().constData());
             }
-
             addRecentFile(QString::fromUtf8(node->getName()), node->getHandle(), localPath);
             if (node->getAttrString()->size())
             {

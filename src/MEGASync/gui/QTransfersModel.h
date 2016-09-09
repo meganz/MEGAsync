@@ -29,6 +29,7 @@ public:
     };
 
     explicit QTransfersModel(int type, QObject *parent = 0);
+    void setupModelTransfers(QList<mega::MegaTransfer *>transfers);
     void setupModelTransfers(mega::MegaTransferData *transferData);
     void insertTransfer(mega::MegaTransfer *transfer);
     void removeTransfer(mega::MegaTransfer *transfer);
@@ -46,6 +47,7 @@ public:
     virtual ~QTransfersModel();
 
     int getModelType();
+    mega::MegaTransfer* getFinishedTransferByTag(int tag);
 
     void onTransferPaused(int transferTag, bool pause);
     void onTransferCancel(int transferTag);
@@ -58,7 +60,6 @@ public:
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
     virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
     virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e);
-    QMap<int, mega::MegaTransfer*> finishedTransfers;
     QCache<int, TransferItem> transferItems;
     mega::MegaApi *megaApi;
 

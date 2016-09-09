@@ -95,6 +95,10 @@ public:
     void checkForUpdates();
     void showTrayMenu(QPoint *point = NULL);
     void toggleLogging();
+    QList<mega::MegaTransfer* > getFinishedTransfers();
+    void removeFinishedTransfer(int transferTag);
+    void removeAllFinishedTransfers();
+    mega::MegaTransfer* getFinishedTransferByTag(int tag);
 
 signals:
     void startUpdaterThread();
@@ -278,6 +282,7 @@ protected:
     QMap<QString, QString> pendingLinks;
     MegaSyncLogger *logger;
     QPointer<TransferManager> transferManager;
+    QMap<int, mega::MegaTransfer*> finishedTransfers;
 
     bool reboot;
     bool syncActive;

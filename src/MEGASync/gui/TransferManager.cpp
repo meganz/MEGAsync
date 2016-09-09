@@ -1,6 +1,7 @@
 #include "TransferManager.h"
 #include <QMessageBox>
 #include "ui_TransferManager.h"
+#include "MegaApplication.h"
 
 using namespace mega;
 
@@ -29,7 +30,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     ui->wUploads->setupTransfers(transferData, QTransfersModel::TYPE_UPLOAD);
     ui->wDownloads->setupTransfers(transferData, QTransfersModel::TYPE_DOWNLOAD);
     ui->wAllTransfers->setupTransfers(transferData, QTransfersModel::TYPE_ALL);
-    ui->wCompleted->setupTransfers(NULL, QTransfersModel::TYPE_FINISHED);
+    ui->wCompleted->setupTransfers(((MegaApplication *)qApp)->getFinishedTransfers(), QTransfersModel::TYPE_FINISHED);
     delete transferData;
 
     on_tAllTransfers_clicked();
@@ -39,6 +40,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
 TransferManager::~TransferManager()
 {
+    delete delegateListener;
     delete ui;
 }
 

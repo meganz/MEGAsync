@@ -40,7 +40,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             }
             else
             {
-                transfer = model->finishedTransfers.value(tag);
+                transfer = model->getFinishedTransferByTag(tag);
             }
 
             if (transfer)

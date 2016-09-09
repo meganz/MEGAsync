@@ -16,6 +16,7 @@ class TransfersWidget : public QWidget
 
 public:
     explicit TransfersWidget(QWidget *parent = 0);
+    void setupTransfers(QList<mega::MegaTransfer* > transferData, int type);
     void setupTransfers(mega::MegaTransferData *transferData, int type);
     void clearTransfers();
     void pausedTransfers(bool paused);
@@ -28,6 +29,9 @@ private:
     QTransfersModel *model;
     MegaTransferDelegate *tDelegate;
     int type;
+
+private:
+    void configureTransferView();
 
 private slots:
     void noTransfers();

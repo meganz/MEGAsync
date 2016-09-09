@@ -21,18 +21,18 @@ void TransfersWidget::setupTransfers(MegaTransferData *transferData, int type)
     connect(model, SIGNAL(onTransferAdded()), this, SLOT(onTransferAdded()));
     model->setupModelTransfers(transferData);
 
-    tDelegate = new MegaTransferDelegate(model, this);
-    ui->tvTransfers->setup(type);
-    ui->tvTransfers->setItemDelegate((QAbstractItemDelegate *)tDelegate);
-    ui->tvTransfers->header()->close();
-    ui->tvTransfers->setSelectionMode(QAbstractItemView::SingleSelection);
-    ui->tvTransfers->setDragEnabled(true);
-    ui->tvTransfers->viewport()->setAcceptDrops(true);
-    ui->tvTransfers->setDropIndicatorShown(true);
-    ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
+    configureTransferView();
+}
 
-    noTransfers();
-    ui->tvTransfers->setModel(model);
+void TransfersWidget::setupTransfers(QList<MegaTransfer* > transferData, int type)
+{
+    this->type = type;
+    model = new QTransfersModel(type);
+    connect(model, SIGNAL(noTransfers()), this, SLOT(noTransfers()));
+    connect(model, SIGNAL(onTransferAdded()), this, SLOT(onTransferAdded()));
+
+    configureTransferView();
+    model->setupModelTransfers(transferData);
 }
 
 void TransfersWidget::clearTransfers()
@@ -45,6 +45,27 @@ TransfersWidget::~TransfersWidget()
     delete ui;
     delete tDelegate;
     delete model;
+}
+
+void TransfersWidget::configureTransferView()
+{
+    if (!model)
+    {
+        return;
+    }
+
+    tDelegate = new MegaTransferDelegate(model, this);
+    ui->tvTransfers->setup(type);
+    ui->tvTransfers->setItemDelegate((QAbstractItemDelegate *)tDelegate);
+    ui->tvTransfers->header()->close();
+    ui->tvTransfers->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->tvTransfers->setDragEnabled(true);
+    ui->tvTransfers->viewport()->setAcceptDrops(true);
+    ui->tvTransfers->setDropIndicatorShown(true);
+    ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
+
+    noTransfers();
+    ui->tvTransfers->setModel(model);
 }
 
 void TransfersWidget::pausedTransfers(bool paused)
