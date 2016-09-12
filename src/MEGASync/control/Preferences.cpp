@@ -11,16 +11,16 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/2.9.9.0";
+const char Preferences::USER_AGENT[] = "MEGAsync/2.9.9.10";
 const int Preferences::VERSION_CODE = 2909;
-const int Preferences::BUILD_ID = 0;
+const int Preferences::BUILD_ID = 10;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.9");
-const QString Preferences::SDK_ID = QString::fromAscii("f2fb1");
+const QString Preferences::VERSION_STRING = QString::fromAscii("3.0 BETA1");
+const QString Preferences::SDK_ID = QString::fromAscii("885c9");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- Fixed the creation of thumbnails for JPG images (Windows)\n"
-            "- Fixed incompatibilities with some WiFi drivers (Windows)\n"
-            "- Fixed problems downloading files with incorrect metadata\n"
+            "- Transfer manager\n"
+            "- Improvements uploading images\n"
+            "- Updated translations\n"
             "- Other bug fixes");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
