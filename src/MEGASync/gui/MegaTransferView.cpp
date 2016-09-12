@@ -1,4 +1,12 @@
 #include "MegaTransferView.h"
+#include "MegaApplication.h"
+#include "platform/Platform.h"
+
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrent>
+#endif
+
+using namespace mega;
 
 MegaTransferView::MegaTransferView(QWidget *parent) :
     QTreeView(parent), last_row(-1)
@@ -13,10 +21,14 @@ MegaTransferView::MegaTransferView(QWidget *parent) :
     moveToBottom = NULL;
     cancelTransfer = NULL;
     contextCompleted = NULL;
+    getLink = NULL;
+    openItem = NULL;
+    showInFolder = NULL;
     clearCompleted = NULL;
     clearAllCompleted = NULL;
     transferTagSelected = 0;
     transferStateSelected = 0;
+    disableLink = false;
 }
 
 void MegaTransferView::setup(int type)
@@ -25,6 +37,12 @@ void MegaTransferView::setup(int type)
     connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
     createContextMenu();
     createCompletedContextMenu();
+}
+
+void MegaTransferView::disableGetLink(bool disable)
+{
+    disableLink = disable;
+    getLink->setEnabled(!disable);
 }
 
 void MegaTransferView::createContextMenu()
@@ -131,6 +149,33 @@ void MegaTransferView::createCompletedContextMenu()
         }
     }
 
+    if (getLink)
+    {
+        getLink->deleteLater();
+        getLink = NULL;
+    }
+
+    getLink = new QAction(tr("Get MEGA link"), this);
+    connect(getLink, SIGNAL(triggered()), this, SLOT(getLinkClicked()));
+
+    if (openItem)
+    {
+        openItem->deleteLater();
+        openItem = NULL;
+    }
+
+    openItem = new QAction(tr("Open"), this);
+    connect(openItem, SIGNAL(triggered()), this, SLOT(openItemClicked()));
+
+    if (showInFolder)
+    {
+        showInFolder->deleteLater();
+        showInFolder = NULL;
+    }
+
+    showInFolder = new QAction(tr("Show in folder"), this);
+    connect(showInFolder, SIGNAL(triggered()), this, SLOT(showInFolderClicked()));
+
     if (clearCompleted)
     {
         clearCompleted->deleteLater();
@@ -149,6 +194,10 @@ void MegaTransferView::createCompletedContextMenu()
     clearAllCompleted = new QAction(tr("Clear All"), this);
     connect(clearAllCompleted, SIGNAL(triggered()), this, SLOT(clearAllTransferClicked()));
 
+    contextCompleted->addAction(getLink);
+    contextCompleted->addAction(openItem);
+    contextCompleted->addAction(showInFolder);
+    contextCompleted->addSeparator();
     contextCompleted->addAction(clearCompleted);
     contextCompleted->addAction(clearAllCompleted);
 }
@@ -319,6 +368,62 @@ void MegaTransferView::cancelTransferClicked()
         if (transferTagSelected)
         {
             model->onTransferCancel(transferTagSelected);
+        }
+    }
+}
+
+void MegaTransferView::getLinkClicked()
+{
+    if (disableLink)
+    {
+        return;
+    }
+
+    MegaTransfer *transfer = NULL;
+    QTransfersModel *model = (QTransfersModel*)this->model();
+    if (model)
+    {
+        if (transferTagSelected)
+        {
+            transfer = model->getFinishedTransferByTag(transferTagSelected);
+            if (transfer->getNodeHandle() != mega::INVALID_HANDLE)
+            {
+                ((MegaApplication*)qApp)->copyFileLink(transfer->getNodeHandle(), QString());
+            }
+        }
+    }
+}
+
+void MegaTransferView::openItemClicked()
+{
+    MegaTransfer *transfer = NULL;
+    QTransfersModel *model = (QTransfersModel*)this->model();
+    if (model)
+    {
+        if (transferTagSelected)
+        {
+            transfer = model->getFinishedTransferByTag(transferTagSelected);
+            if (transfer->getPath())
+            {
+                QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(QString::fromUtf8(transfer->getPath())));
+            }
+        }
+    }
+}
+
+void MegaTransferView::showInFolderClicked()
+{
+    MegaTransfer *transfer = NULL;
+    QTransfersModel *model = (QTransfersModel*)this->model();
+    if (model)
+    {
+        if (transferTagSelected)
+        {
+            transfer = model->getFinishedTransferByTag(transferTagSelected);
+            if (transfer->getPath())
+            {
+                Platform::showInFolder(QString::fromUtf8(transfer->getPath()));
+            }
         }
     }
 }

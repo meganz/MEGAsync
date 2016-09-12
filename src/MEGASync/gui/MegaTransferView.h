@@ -14,12 +14,14 @@ class MegaTransferView : public QTreeView
 public:
     MegaTransferView(QWidget *parent = 0);
     void setup(int type);
+    void disableGetLink(bool disable);
 
 private:
     int last_row;
     int lastItemHoveredTag;
     int transferTagSelected;
     int transferStateSelected;
+    bool disableLink;
 
     QMenu *contextInProgressMenu;
     QAction *pauseTransfer;
@@ -29,6 +31,9 @@ private:
     QAction *moveToBottom;
     QAction *cancelTransfer;
     QMenu *contextCompleted;
+    QAction *getLink;
+    QAction *openItem;
+    QAction *showInFolder;
     QAction *clearCompleted;
     QAction *clearAllCompleted;
 
@@ -47,6 +52,9 @@ private slots:
     void moveDownClicked();
     void moveToBottomClicked();
     void cancelTransferClicked();
+    void getLinkClicked();
+    void openItemClicked();
+    void showInFolderClicked();
     void clearTransferClicked();
     void clearAllTransferClicked();
 };

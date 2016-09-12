@@ -3281,6 +3281,11 @@ void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
     {
         infoDialog->disableGetLink(true);
     }
+
+    if (transferManager)
+    {
+        transferManager->disableGetLink(true);
+    }
     megaApi->exportNode(megaApi->getNodeByHandle(fileHandle));
 }
 
@@ -4299,6 +4304,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (infoDialog)
         {
             infoDialog->disableGetLink(false);
+        }
+
+        if (transferManager)
+        {
+            transferManager->disableGetLink(false);
         }
 
         break;

@@ -18,6 +18,7 @@ class TransferManager : public QDialog, public mega::MegaTransferListener
 public:
     explicit TransferManager(mega::MegaApi *megaApi, QWidget *parent = 0);
     void updateState();
+    void disableGetLink(bool disable);
     ~TransferManager();
 
     virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);

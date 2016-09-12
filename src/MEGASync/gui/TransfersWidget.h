@@ -20,6 +20,7 @@ public:
     void setupTransfers(mega::MegaTransferData *transferData, int type);
     void clearTransfers();
     void pausedTransfers(bool paused);
+    void disableGetLink(bool disable);
     QTransfersModel *getModel();
     ~TransfersWidget();
 

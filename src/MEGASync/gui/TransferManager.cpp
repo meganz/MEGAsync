@@ -255,6 +255,11 @@ void TransferManager::updateState()
 
 }
 
+void TransferManager::disableGetLink(bool disable)
+{
+    ui->wCompleted->disableGetLink(disable);
+}
+
 void TransferManager::on_bPause_clicked()
 {
     QWidget *w = ui->wTransfers->currentWidget();
