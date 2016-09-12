@@ -259,7 +259,7 @@ void QTransfersModel::onTransferFinish(MegaApi *, MegaTransfer *transfer, MegaEr
     {
         removeTransfer(transfer);
     }
-    else if (type == TYPE_FINISHED && transfer->getState() == MegaTransfer::STATE_COMPLETED)
+    else if (type == TYPE_FINISHED && (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED))
     {
         insertTransfer(transfer);
     }
