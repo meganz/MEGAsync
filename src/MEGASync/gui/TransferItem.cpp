@@ -103,31 +103,40 @@ void TransferItem::setType(int type, bool isSyncTransfer)
 
     if (isSyncTransfer)
     {
-        loadIconResource = QPixmap(QString::fromUtf8(":/images/sync_item_ico.png"));
-        animation = new QMovie(QString::fromUtf8(":/images/downloading.gif"));
-        ui->lActionType->setPixmap(loadIconResource);
+        this->loadIconResource = QPixmap(QString::fromUtf8(":/images/sync_item_ico.png"));
         ui->lActionTypeCompleted->setPixmap(loadIconResource);
-        return;
+        animation = new QMovie(QString::fromUtf8(":/images/synching.gif"));
+        connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
     }
 
     switch (type)
     {
         case MegaTransfer::TYPE_UPLOAD:
-            this->loadIconResource = QPixmap(QString::fromUtf8(":/images/cloud_upload_item_ico.png"));
-            loadIconResourceCompleted = QPixmap(QString::fromUtf8(":/images/cloud_item_ico.png"));
-            ui->lActionTypeCompleted->setPixmap(loadIconResourceCompleted);
-            animation = new QMovie(QString::fromUtf8(":/images/downloading.gif"));
-            connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
+
+            if (!isSyncTransfer)
+            {
+                this->loadIconResource = QPixmap(QString::fromUtf8(":/images/cloud_upload_item_ico.png"));
+                loadIconResourceCompleted = QPixmap(QString::fromUtf8(":/images/cloud_item_ico.png"));
+                ui->lActionTypeCompleted->setPixmap(loadIconResourceCompleted);
+                animation = new QMovie(QString::fromUtf8(":/images/uploading.gif"));
+                connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
+            }
+
             icon.addFile(QString::fromUtf8(":/images/upload_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
             ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
             break;
         case MegaTransfer::TYPE_DOWNLOAD:
-            this->loadIconResource = QPixmap(QString::fromUtf8(":/images/cloud_download_item_ico.png"));
-            loadIconResourceCompleted = QPixmap(QString::fromUtf8(":/images/cloud_item_ico.png"));
-            ui->lActionTypeCompleted->setPixmap(loadIconResourceCompleted);
-            animation = new QMovie(QString::fromUtf8(":/images/downloading.gif"));
-            connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
+
+            if (!isSyncTransfer)
+            {
+                this->loadIconResource = QPixmap(QString::fromUtf8(":/images/cloud_download_item_ico.png"));
+                loadIconResourceCompleted = QPixmap(QString::fromUtf8(":/images/cloud_item_ico.png"));
+                ui->lActionTypeCompleted->setPixmap(loadIconResourceCompleted);
+                animation = new QMovie(QString::fromUtf8(":/images/downloading.gif"));
+                connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
+            }
+
             icon.addFile(QString::fromUtf8(":/images/download_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
             ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
