@@ -1273,6 +1273,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>MegaTransferDelegate</name>
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1280,50 +1281,62 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>MegaTransferView</name>
     <message>
         <source>Pause Transfer</source>
+        <translatorcomment>Label of context menu option to pause selected transfer</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Move to top</source>
+        <translatorcomment>Label of context menu option to move selected transfer to top of the list and give it highest priority</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Move up</source>
+        <translatorcomment>Label of context menu option to move selected transfer one step up of the list and give it more priority</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Move down</source>
+        <translatorcomment>Label of context menu option to move selected transfer one step down of the list and give it less priority</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Move to bottom</source>
+        <translatorcomment>Label of context menu option to move selected transfer to the bottom of the list and give it lowest priority</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cancel</source>
+        <translatorcomment>Label of context menu option to cancel selected transfer</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Get MEGA link</source>
+        <translatorcomment>Label of context menu option to generate a public link of selected completed transfer</translatorcomment>
         <translation type="unfinished">[$1698]</translation>
     </message>
     <message>
         <source>Open</source>
+        <translatorcomment>Label of context menu option to open selected completed transfer</translatorcomment>
         <translation type="unfinished">[$1710]</translation>
     </message>
     <message>
         <source>Show in folder</source>
+        <translatorcomment>Label of context menu option to open the selected completed transfer using the specific file browser</translatorcomment>
         <translation type="unfinished">[$1711]</translation>
     </message>
     <message>
         <source>Clear</source>
+        <translatorcomment>Label of context menu option to clear selected transfer item of completed view</translatorcomment>
         <translation type="unfinished">[$1878]</translation>
     </message>
     <message>
         <source>Clear All</source>
+        <translatorcomment>Label of context menu option to clear all transfer items of completed view</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Resume Transfer</source>
+        <translatorcomment>Label of context menu option to resume selected transfer</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2839,18 +2852,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>TransferItem</name>
     <message>
         <source>paused</source>
+        <translatorcomment>Label to indicate a paused state for a transfer item (upload/download)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>queued</source>
+        <translatorcomment>Label to indicate a queued state for a transfer item (upload/download)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>retrying</source>
+        <translatorcomment>Label to indicate a state or retrying for a transfer item (upload/download)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>completing</source>
+        <translatorcomment>Label to indicate a completing state for a transfer item (upload/download)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2858,66 +2875,82 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>TransferManager</name>
     <message>
         <source>Transfer Manager</source>
+        <translatorcomment>Title of the dialog of Transfer Manager</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Add...</source>
+        <translatorcomment>Button label to add transfers items (uploads/downloads/public links) to the dialog (String as short as possible)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>All Transfers</source>
+        <translatorcomment>Label of tab to access all active transfers</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Downloads</source>
+        <translatorcomment>Label of tab to access all active downloads</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Uploads</source>
+        <translatorcomment>Label of tab to access all active uploads</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Completed</source>
+        <translatorcomment>Label of tab to access all completed transfers</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Pause</source>
+        <translatorcomment>Button label to pause visible transfers</translatorcomment>
         <translation type="unfinished">[$1647]</translation>
     </message>
     <message>
         <source>Clear all</source>
+        <translatorcomment>Button label to clear all items of completed transfers view</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Close</source>
+        <translatorcomment>Button label to close transfer manager dialog</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Import links</source>
+        <translatorcomment>Label to indicate the Import link option from transfer manager dialog</translatorcomment>
         <translation type="unfinished">[$1593]</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>
+        <translatorcomment>Label to indicate the file upload option from transfer manager dialog</translatorcomment>
         <translation type="unfinished">[$1803]</translation>
     </message>
     <message>
         <source>Download from MEGA</source>
+        <translatorcomment>Label to indicate the file download option from transfer manager dialog</translatorcomment>
         <translation type="unfinished">[$2037]</translation>
     </message>
     <message>
         <source>Settings</source>
+        <translatorcomment>Label to indicate the Settings option for the application</translatorcomment>
         <translation type="unfinished">[$1646]</translation>
     </message>
     <message>
         <source>Preferences</source>
+        <translatorcomment>Label to indicate the Preferences option for the application</translatorcomment>
         <translation type="unfinished">[$1646]</translation>
     </message>
     <message>
         <source>Cancel all</source>
+        <translatorcomment>Button label to cancel all items of active transfers view</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Are you sure you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2925,18 +2958,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>TransfersWidget</name>
     <message>
         <source>Paused Transfers</source>
+        <translatorcomment>Label to indicate that active transfers are paused</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Downloads</source>
+        <translatorcomment>Label to indicate that there are no active downloads</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Uploads</source>
+        <translatorcomment>Label to indicate that there are no active uploads</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>No Transfers</source>
+        <translatorcomment>Label to indicate that there are no active downloads nor uploads</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
