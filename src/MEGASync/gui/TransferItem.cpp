@@ -245,7 +245,14 @@ void TransferItem::updateTransfer()
             QString remainingTime;
             if (totalRemainingSeconds)
             {
-                remainingTime = Utilities::getTimeString(totalRemainingSeconds);
+                if (totalRemainingSeconds < 60)
+                {
+                    remainingTime = QString::fromUtf8("< 1m");
+                }
+                else
+                {
+                    remainingTime = Utilities::getTimeString(totalRemainingSeconds, false);
+                }
             }
             else
             {
