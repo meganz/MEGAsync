@@ -10,7 +10,7 @@ class Utilities
 {
 public:
     static QString getSizeString(unsigned long long bytes);
-    static QString getTimeString(long long secs);
+    static QString getTimeString(long long secs, bool secondPrecision = true);
     static bool verifySyncedFolderLimits(QString path);
     static QString extractJSONString(QString json, QString name);
     static long long extractJSONNumber(QString json, QString name);

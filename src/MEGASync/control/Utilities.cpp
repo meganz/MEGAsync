@@ -391,7 +391,7 @@ bool Utilities::verifySyncedFolderLimits(QString path)
     }
     return true;
 }
-QString Utilities::getTimeString(long long secs)
+QString Utilities::getTimeString(long long secs, bool secondPrecision)
 {
     int seconds = (int) secs % 60;
     int minutes = (int) ((secs / 60) % 60);
@@ -429,7 +429,10 @@ QString Utilities::getTimeString(long long secs)
         return time;
     }
 
-    time.append(QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">s </span>").arg(seconds));
+    if (secondPrecision)
+    {
+        time.append(QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">s </span>").arg(seconds));
+    }
     return time;
 }
 
