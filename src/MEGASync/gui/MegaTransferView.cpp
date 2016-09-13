@@ -362,6 +362,14 @@ void MegaTransferView::moveToBottomClicked()
 
 void MegaTransferView::cancelTransferClicked()
 {
+    if(QMessageBox::question(this,
+                             QString::fromUtf8("MEGAsync"),
+                             tr("Are you sure you want to cancel this transfer?"),
+                             QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No)
+    {
+        return;
+    }
+
     QTransfersModel *model = (QTransfersModel*)this->model();
     if (model)
     {
