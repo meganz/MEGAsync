@@ -101,11 +101,18 @@ void TransferItem::setType(int type, bool isSyncTransfer)
     QIcon icon;
     QPixmap loadIconResourceCompleted;
 
+    qreal ratio = 1.0;
+#if QT_VERSION >= 0x050000
+    ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+#endif
+
     if (isSyncTransfer)
     {
-        this->loadIconResource = QPixmap(QString::fromUtf8(":/images/sync_item_ico.png"));
+        this->loadIconResource = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/sync_item_ico.png")
+                                                   : QString::fromUtf8(":/images/sync_item_ico@2x.png"));
         ui->lActionTypeCompleted->setPixmap(loadIconResource);
-        animation = new QMovie(QString::fromUtf8(":/images/synching.gif"));
+        animation = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/synching.gif")
+                                         : QString::fromUtf8(":/images/synching@2x.gif"));
         connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
     }
 
@@ -115,10 +122,13 @@ void TransferItem::setType(int type, bool isSyncTransfer)
 
             if (!isSyncTransfer)
             {
-                this->loadIconResource = QPixmap(QString::fromUtf8(":/images/cloud_upload_item_ico.png"));
-                loadIconResourceCompleted = QPixmap(QString::fromUtf8(":/images/cloud_item_ico.png"));
+                this->loadIconResource = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_upload_item_ico.png")
+                                                           : QString::fromUtf8(":/images/cloud_upload_item_ico@2x.png"));
+                loadIconResourceCompleted = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
+                                                              : QString::fromUtf8(":/images/cloud_item_ico@2x.png"));
                 ui->lActionTypeCompleted->setPixmap(loadIconResourceCompleted);
-                animation = new QMovie(QString::fromUtf8(":/images/uploading.gif"));
+                animation = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/uploading.gif")
+                                                 : QString::fromUtf8(":/images/uploading@2x.gif"));
                 connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
             }
 
@@ -130,10 +140,13 @@ void TransferItem::setType(int type, bool isSyncTransfer)
 
             if (!isSyncTransfer)
             {
-                this->loadIconResource = QPixmap(QString::fromUtf8(":/images/cloud_download_item_ico.png"));
-                loadIconResourceCompleted = QPixmap(QString::fromUtf8(":/images/cloud_item_ico.png"));
+                this->loadIconResource = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_download_item_ico.png")
+                                                           : QString::fromUtf8(":/images/cloud_download_item_ico@2x.png"));
+                loadIconResourceCompleted = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
+                                                              : QString::fromUtf8(":/images/cloud_item_ico@2x.png"));
                 ui->lActionTypeCompleted->setPixmap(loadIconResourceCompleted);
-                animation = new QMovie(QString::fromUtf8(":/images/downloading.gif"));
+                animation = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/downloading.gif")
+                                                 : QString::fromUtf8(":/images/downloading@2x.gif"));
                 connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
             }
 

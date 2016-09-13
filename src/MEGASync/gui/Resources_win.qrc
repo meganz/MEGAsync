@@ -254,5 +254,13 @@
         <file>images/downloading.gif</file>
         <file>images/synching.gif</file>
         <file>images/uploading.gif</file>
+        <file>images/downloading@2x.gif</file>
+        <file>images/synching@2x.gif</file>
+        <file>images/uploading@2x.gif</file>
+        <file>images/cloud_download_item_ico@2x.png</file>
+        <file>images/cloud_item_ico@2x.png</file>
+        <file>images/cloud_upload_item_ico@2x.png</file>
+        <file>images/sync_item_ico@2x.png</file>
+        <file>images/completed_item_ico@2x.png</file>
     </qresource>
 </RCC>
