@@ -254,7 +254,7 @@ void TransferItem::updateTransfer()
             ui->lRemainingTime->setText(remainingTime);
 
             // Update current transfer speed
-            QString pattern(tr("(%1/s)"));
+            QString pattern(QString::fromUtf8("(%1/s)"));
             QString downloadString;
             if (meanTransferSpeed >= 20000)
             {
@@ -268,19 +268,19 @@ void TransferItem::updateTransfer()
             break;
         }
         case MegaTransfer::STATE_PAUSED:
-            ui->lSpeed->setText(tr("(paused)"));
+            ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("paused")));
             ui->lRemainingTime->setText(QString::fromUtf8(""));
             break;
         case MegaTransfer::STATE_QUEUED:
-            ui->lSpeed->setText(tr("(queued)"));
+            ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("queued")));
             ui->lRemainingTime->setText(QString::fromUtf8(""));
             break;
         case MegaTransfer::STATE_RETRYING:
-            ui->lSpeed->setText(tr("(retrying)"));
+            ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("retrying")));
             ui->lRemainingTime->setText(QString::fromUtf8(""));
             break;
         case MegaTransfer::STATE_COMPLETING:
-            ui->lSpeed->setText(tr("(completing)"));
+            ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("completing")));
             ui->lRemainingTime->setText(QString::fromUtf8(""));
             break;
         default:

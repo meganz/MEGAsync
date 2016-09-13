@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string/>
   </property>
   <property name="autoFillBackground">
    <bool>true</bool>
@@ -236,7 +236,7 @@ padding-top: 1px;</string>
                 <string notr="true">padding-left: 0px;</string>
                </property>
                <property name="text">
-                <string>Captura de pantalla 2016-09-0</string>
+                <string notr="true">Captura de pantalla 2016-09-0</string>
                </property>
               </widget>
              </item>
@@ -271,7 +271,7 @@ padding-top: 1px;</string>
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string>150 MB of 200 MB</string>
+                <string notr="true">150 MB of 200 MB</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -309,7 +309,7 @@ padding-top: 1px;</string>
                 <string notr="true">padding-right: -2px;</string>
                </property>
                <property name="text">
-                <string>(800 KB/s)</string>
+                <string notr="true">(800 KB/s)</string>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -408,7 +408,7 @@ padding-top: 1px;</string>
              </size>
             </property>
             <property name="text">
-             <string>00 h 03 m</string>
+             <string notr="true">00 h 03 m</string>
             </property>
            </widget>
           </item>

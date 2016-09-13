@@ -927,7 +927,7 @@ https://mega.co.nz/#sync</source>
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation>[$1637]
+        <translation type="obsolete">[$1637]
 
 [$1639]</translation>
     </message>
@@ -1133,6 +1133,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You are not logged in</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Are you sure you want to exit?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transfer manager</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1259,6 +1267,64 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error</source>
         <translation type="obsolete">[$1578]</translation>
+    </message>
+</context>
+<context>
+    <name>MegaTransferDelegate</name>
+    <message>
+        <source>Are you sure you want to cancel this transfer?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MegaTransferView</name>
+    <message>
+        <source>Pause Transfer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to top</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move to bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Get MEGA link</source>
+        <translation type="unfinished">[$1698]</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translation type="unfinished">[$1710]</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translation type="unfinished">[$1711]</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished">[$1878]</translation>
+    </message>
+    <message>
+        <source>Clear All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume Transfer</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2152,23 +2218,8 @@ when the application starts again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Local cache: %1</source>
-        <translatorcomment>Label to indicate the user the total size of local cache. Keep %1 code, will be filled at runtime.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Remote cache: %1</source>
-        <translatorcomment>Label to indicate the user the total size of remote cache. Keep %1 code, will be filled at runtime.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Excluded file and folder names</source>
         <translatorcomment>Label to indicate the files and folders names exclude from the synchronization.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear local cache</source>
-        <translatorcomment>Title of dialog to clear local cache for the current user.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2177,23 +2228,8 @@ when the application starts again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Do you want to delete your local cache now?</source>
-        <translatorcomment>Confirmation message before perform a deletion of local cache data</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear remote cache</source>
-        <translatorcomment>Title of dialog to clear remote cache for the current user.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Do you want to delete your remote cache now?</source>
-        <translatorcomment>Confirmation message before perform a deletion of remote cache data</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2213,6 +2249,30 @@ when the application starts again</source>
     <message>
         <source>Enable this option only if your transfers don&apos;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Local backup: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remote backup: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear local backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to delete your local backup now?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear remote backup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Do you want to delete your remote backup now?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2772,6 +2832,111 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting link information</source>
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TransferItem</name>
+    <message>
+        <source>paused</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>queued</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>retrying</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>completing</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TransferManager</name>
+    <message>
+        <source>Transfer Manager</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>All Transfers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Uploads</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Completed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translation type="unfinished">[$1647]</translation>
+    </message>
+    <message>
+        <source>Clear all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import links</source>
+        <translation type="unfinished">[$1593]</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translation type="unfinished">[$1803]</translation>
+    </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translation type="unfinished">[$2037]</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">[$1646]</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translation type="unfinished">[$1646]</translation>
+    </message>
+    <message>
+        <source>Cancel all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to cancel all transfers?</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>TransfersWidget</name>
+    <message>
+        <source>Paused Transfers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Downloads</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Uploads</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No Transfers</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
