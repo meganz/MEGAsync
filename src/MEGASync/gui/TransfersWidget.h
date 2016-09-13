@@ -5,6 +5,7 @@
 #include "TransferItem.h"
 #include "QTransfersModel.h"
 #include "MegaTransferDelegate.h"
+#include <QToolButton>
 
 namespace Ui {
 class TransfersWidget;
@@ -26,10 +27,12 @@ public:
 
 private:
     Ui::TransfersWidget *ui;
+    QToolButton *overlay;
     QList<TransferItem *> activeTransfers;
     QTransfersModel *model;
     MegaTransferDelegate *tDelegate;
     int type;
+    int isPaused;
 
 private:
     void configureTransferView();

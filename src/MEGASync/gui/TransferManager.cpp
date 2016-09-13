@@ -237,22 +237,48 @@ void TransferManager::updateState()
     if (w == ui->wAllTransfers)
     {
         ui->wAllTransfers->pausedTransfers(preferences->wasPaused());
-        preferences->wasPaused() ? ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/play_ico.png")))
-                                 : ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/pause_ico.png")));
+        if (preferences->wasPaused())
+        {
+            ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/play_ico.png")));
+            ui->bPause->setText(tr("Resume"));
+
+        }
+        else
+        {
+            ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/pause_ico.png")));
+            ui->bPause->setText(tr("Pause"));
+        }
     }
     else if(w == ui->wDownloads)
     {
-        ui->wDownloads->pausedTransfers(preferences->wasDownloadsPaused());
-        preferences->wasDownloadsPaused() ? ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/play_ico.png")))
-                                          : ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/pause_ico.png")));
+        ui->wDownloads->pausedTransfers(preferences->wasDownloadsPaused());     
+        if (preferences->wasDownloadsPaused())
+        {
+            ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/play_ico.png")));
+            ui->bPause->setText(tr("Resume"));
+
+        }
+        else
+        {
+            ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/pause_ico.png")));
+            ui->bPause->setText(tr("Pause"));
+        }
     }
     else if(w == ui->wUploads)
     {
         ui->wUploads->pausedTransfers(preferences->wasUploadsPaused());
-        preferences->wasUploadsPaused() ? ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/play_ico.png")))
-                                        : ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/pause_ico.png")));
-    }
+        if (preferences->wasUploadsPaused())
+        {
+            ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/play_ico.png")));
+            ui->bPause->setText(tr("Resume"));
 
+        }
+        else
+        {
+            ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/pause_ico.png")));
+            ui->bPause->setText(tr("Pause"));
+        }
+    }
 }
 
 void TransferManager::disableGetLink(bool disable)

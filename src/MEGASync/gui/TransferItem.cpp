@@ -169,11 +169,9 @@ unsigned long long TransferItem::getPriority()
 TransferItem::~TransferItem()
 {
     delete ui;
-    if (animation)
-    {
-        delete animation;
-    }
+    delete animation;
 }
+
 int TransferItem::getTransferState()
 {
     return transferState;

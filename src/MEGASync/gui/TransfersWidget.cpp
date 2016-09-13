@@ -1,6 +1,5 @@
 #include "TransfersWidget.h"
 #include "ui_TransfersWidget.h"
-#include <QTextEdit>
 #include <QTimer>
 
 using namespace mega;
@@ -11,6 +10,24 @@ TransfersWidget::TransfersWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     this->model = NULL;
+    isPaused = false;
+
+    //Create the overlay widget with a semi-transparent background
+    //that will be shown over the transfers when they are paused
+    overlay = new QToolButton(this);
+    overlay->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    overlay->setIcon(QIcon(QString::fromAscii("://images/paused_transfers.png")));
+    overlay->setIconSize(QSize(156, 156));
+    overlay->setText(tr("Paused Transfers"));
+    overlay->setStyleSheet(QString::fromAscii("background-color: rgba(247, 247, 247, 200); "
+                                              "padding: 50px 0 20px 0;"
+                                              "font-family: \"Source Sans Pro\";"
+                                              "font-size: 24px;"
+                                              "font-weight: 300;"
+                                              "color: rgba(51, 51, 51, 0.7);"
+                                              "border: none; "));
+    overlay->resize(ui->pTransfers->minimumSize());
+    overlay->hide();
 }
 
 void TransfersWidget::setupTransfers(MegaTransferData *transferData, int type)
@@ -45,6 +62,7 @@ TransfersWidget::~TransfersWidget()
     delete ui;
     delete tDelegate;
     delete model;
+    delete overlay;
 }
 
 void TransfersWidget::configureTransferView()
@@ -70,14 +88,9 @@ void TransfersWidget::configureTransferView()
 
 void TransfersWidget::pausedTransfers(bool paused)
 {
-    if (paused)
-    {
-        ui->sWidget->setCurrentWidget(ui->pNoTransfers);
-        ui->lStatusIcon->setIcon(QIcon(QString::fromAscii("://images/paused_transfers.png")));
-        ui->lStatusIcon->setIconSize(QSize(156, 156));
-        ui->lStatus->setText(tr("Paused Transfers"));
-    }
-    else if(model->rowCount(QModelIndex()) == 0)
+    isPaused = paused;
+    overlay->setVisible(paused);
+    if (model->rowCount(QModelIndex()) == 0)
     {
         noTransfers();
     }
@@ -99,6 +112,12 @@ QTransfersModel *TransfersWidget::getModel()
 
 void TransfersWidget::noTransfers()
 {
+    if (isPaused)
+    {
+        ui->sWidget->setCurrentWidget(ui->pTransfers);
+        return;
+    }
+
     ui->sWidget->setCurrentWidget(ui->pNoTransfers);
     switch (type)
     {
