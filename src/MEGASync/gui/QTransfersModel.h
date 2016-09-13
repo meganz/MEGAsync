@@ -15,6 +15,8 @@ public:
     unsigned long long priority;
 };
 
+typedef bool (*comparator_function)(TransferItemData* i, TransferItemData *j);
+
 class QTransfersModel : public QAbstractItemModel, public mega::MegaTransferListener
 {
     Q_OBJECT
@@ -74,6 +76,7 @@ private slots:
     void animationChanged(int tag);
 
 protected:
+    comparator_function priority_comparator;
     QMap<int, TransferItemData*> transfers;
     std::deque<TransferItemData*> transferOrder;
     int type;

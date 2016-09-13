@@ -3,7 +3,7 @@
 
 using namespace mega;
 
-bool priority_comparator(TransferItemData* i, TransferItemData *j)
+bool forward_comparator(TransferItemData* i, TransferItemData *j)
 {
     if (i->priority < j->priority)
         return true;
@@ -14,12 +14,28 @@ bool priority_comparator(TransferItemData* i, TransferItemData *j)
     return i->tag < j->tag;
 }
 
+bool reverse_comparator(TransferItemData* i, TransferItemData *j)
+{
+    if (i->priority == j->priority && i->tag == j->tag)
+        return false;
+    return !forward_comparator(i, j);
+}
+
 QTransfersModel::QTransfersModel(int type, QObject *parent) :
     QAbstractItemModel(parent)
 {
     this->type = type;
     this->megaApi = ((MegaApplication *)qApp)->getMegaApi();
     this->transferItems.setMaxCost(16);
+
+    if (type != TYPE_FINISHED)
+    {
+        priority_comparator = forward_comparator;
+    }
+    else
+    {
+        priority_comparator = reverse_comparator;
+    }
 }
 
 int QTransfersModel::columnCount(const QModelIndex &parent) const
