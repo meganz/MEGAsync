@@ -1150,6 +1150,8 @@ void MegaApplication::loggedIn()
 #endif
 
     preferences->setLastExecutionTime(QDateTime::currentDateTime().toMSecsSinceEpoch());
+    QDateTime now = QDateTime::currentDateTime();
+    preferences->setMsDiffTimeWithSDK(now.toMSecsSinceEpoch() - megaApi->getSDKtime() * 100);
 
     startUpdateTask();
     QString language = preferences->language();

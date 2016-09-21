@@ -52,12 +52,21 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 ti->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
                 ti->setTransferState(transfer->getState());
                 ti->setPriority(transfer->getPriority());
+                if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
+                {
+                    ti->setFinishedTime(transfer->getUpdateTime() * 100);
+                }
             }
 
             if (model->getModelType() != QTransfersModel::TYPE_FINISHED)
             {
                 delete transfer;
             }
+        }
+
+        if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
+        {
+            ti->updateFinishedTime();
         }
 
         painter->save();

@@ -1,8 +1,9 @@
 #include "TransferItem.h"
 #include "ui_TransferItem.h"
-#include "control/Utilities.h"
 #include <QMouseEvent>
 #include "megaapi.h"
+#include "control/Utilities.h"
+#include "Preferences.h"
 
 using namespace mega;
 
@@ -25,6 +26,7 @@ TransferItem::TransferItem(QWidget *parent) :
     priority = 0;
     transferState = 0;
     transferTag = 0;
+    msFinishedTime = 0;
 
     ui->lCancelTransfer->installEventFilter(this);
     ui->lCancelTransferCompleted->installEventFilter(this);
@@ -92,6 +94,11 @@ void TransferItem::setTotalSize(long long size)
     {
         this->totalTransferredBytes = this->totalSize;
     }
+}
+
+void TransferItem::setFinishedTime(long long time)
+{
+    msFinishedTime = time;
 }
 
 void TransferItem::setType(int type, bool isSyncTransfer)
@@ -238,7 +245,7 @@ void TransferItem::finishTransfer()
     }
     ui->lCompleted->setIconSize(QSize(12, 12));
     ui->lTotalCompleted->setText(QString::fromUtf8("%1").arg(Utilities::getSizeString(totalSize)));
-    ui->lRemainingTime->setText(QString::fromUtf8("00 m 00 s"));
+
 }
 
 void TransferItem::updateTransfer()
@@ -314,6 +321,87 @@ void TransferItem::updateTransfer()
     // Update transferred bytes
     ui->lTotal->setText(QString::fromUtf8("%1%2").arg(!totalTransferredBytes ? QString::fromUtf8(""): QString::fromUtf8("%1<span style=\"color:#777777; text-decoration:none;\">&nbsp;&nbsp;of&nbsp;&nbsp;</span>").arg(Utilities::getSizeString(totalTransferredBytes)))
                         .arg(Utilities::getSizeString(totalSize)));
+}
+
+void TransferItem::updateFinishedTime()
+{
+    if (!msFinishedTime)
+    {
+        return;
+    }
+
+    Preferences *preferences = Preferences::instance();
+    QDateTime now = QDateTime::currentDateTime();
+    qint64 ms = now.toMSecsSinceEpoch();
+    qint64 secs = ( now.toMSecsSinceEpoch() - (preferences->getMsDiffTimeWithSDK() + msFinishedTime) ) / 1000;
+    if (secs < 2)
+    {
+        ui->lRemainingTimeCompleted->setText(tr("just now"));
+    }
+    else if (secs < 60)
+    {
+        ui->lRemainingTimeCompleted->setText(tr("%1 seconds ago").arg(secs));
+    }
+    else if (secs < 3600)
+    {
+        int minutes = secs/60;
+        if (minutes == 1)
+        {
+            ui->lRemainingTimeCompleted->setText(tr("1 minute ago"));
+        }
+        else
+        {
+            ui->lRemainingTimeCompleted->setText(tr("%1 minutes ago").arg(minutes));
+        }
+    }
+    else if (secs < 86400)
+    {
+        int hours = secs/3600;
+        if (hours == 1)
+        {
+            ui->lRemainingTimeCompleted->setText(tr("1 hour ago"));
+        }
+        else
+        {
+            ui->lRemainingTimeCompleted->setText(tr("%1 hours ago").arg(hours));
+        }
+    }
+    else if (secs < 2592000)
+    {
+        int days = secs/86400;
+        if (days == 1)
+        {
+            ui->lRemainingTimeCompleted->setText(tr("1 day ago"));
+        }
+        else
+        {
+            ui->lRemainingTimeCompleted->setText(tr("%1 days ago").arg(days));
+        }
+    }
+    else if (secs < 31536000)
+    {
+        int months = secs/2592000;
+        if (months == 1)
+        {
+            ui->lRemainingTimeCompleted->setText(tr("1 month ago"));
+        }
+        else
+        {
+            ui->lRemainingTimeCompleted->setText(tr("%1 months ago").arg(months));
+        }
+    }
+    else
+    {
+        int years = secs/31536000;
+        if (years == 1)
+        {
+            ui->lRemainingTimeCompleted->setText(tr("1 year ago"));
+        }
+        else
+        {
+            ui->lRemainingTimeCompleted->setText(tr("%1 years ago").arg(years));
+        }
+    }
 }
 
 bool TransferItem::cancelButtonClicked(QPoint pos)

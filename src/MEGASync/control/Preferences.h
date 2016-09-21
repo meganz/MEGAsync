@@ -74,6 +74,8 @@ public:
     long long totalBandwidth();
     void setTotalBandwidth(long long value);
     bool isTemporalBandwidthValid();
+    long long getMsDiffTimeWithSDK();
+    void setMsDiffTimeWithSDK(long long diffTime);
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
     void setTemporalBandwidth(long long value);
@@ -315,6 +317,7 @@ protected:
     int tempBandwidthInterval;
     bool isTempBandwidthValid;
     QString dataPath;
+    long long diffTimeWithSDK;
 
     static const QString currentAccountKey;
     static const QString syncsGroupKey;

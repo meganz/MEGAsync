@@ -52,6 +52,11 @@ void TransfersWidget::setupTransfers(QList<MegaTransfer* > transferData, int typ
     model->setupModelTransfers(transferData);
 }
 
+void TransfersWidget::refreshTransferItems()
+{
+    model->refreshTransfers();
+}
+
 void TransfersWidget::clearTransfers()
 {
     model->removeAllTransfers();

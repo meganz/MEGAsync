@@ -19,6 +19,7 @@ public:
     explicit TransfersWidget(QWidget *parent = 0);
     void setupTransfers(QList<mega::MegaTransfer* > transferData, int type);
     void setupTransfers(mega::MegaTransferData *transferData, int type);
+    void refreshTransferItems();
     void clearTransfers();
     void pausedTransfers(bool paused);
     void disableGetLink(bool disable);

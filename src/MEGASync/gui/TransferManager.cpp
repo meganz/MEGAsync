@@ -158,6 +158,7 @@ void TransferManager::on_tCompleted_clicked()
     ui->bClearAll->setText(tr("Clear all"));
     ui->bPause->setVisible(false);
     ui->wTransfers->setCurrentWidget(ui->wCompleted);
+    ui->wCompleted->refreshTransferItems();
 }
 
 void TransferManager::on_tDownloads_clicked()

@@ -16,6 +16,7 @@ public:
 };
 
 typedef bool (*comparator_function)(TransferItemData* i, TransferItemData *j);
+typedef std::deque<TransferItemData*>::iterator transfer_it;
 
 class QTransfersModel : public QAbstractItemModel, public mega::MegaTransferListener
 {
@@ -37,6 +38,7 @@ public:
     void removeTransfer(mega::MegaTransfer *transfer);
     void removeTransferByTag(int transferTag);
     void removeAllTransfers();
+    void refreshTransfers();
     virtual int columnCount(const QModelIndex & parent = QModelIndex()) const;
     QVariant data(const QModelIndex &index, int role) const;
     virtual QModelIndex parent(const QModelIndex & index) const;

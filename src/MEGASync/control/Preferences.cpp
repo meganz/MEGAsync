@@ -325,6 +325,7 @@ void Preferences::initialize(QString dataPath)
 
 Preferences::Preferences() : QObject(), mutex(QMutex::Recursive)
 {
+    diffTimeWithSDK = 0;
     clearTemporalBandwidth();
 }
 
@@ -648,6 +649,16 @@ void Preferences::setTotalBandwidth(long long value)
 bool Preferences::isTemporalBandwidthValid()
 {
     return isTempBandwidthValid;
+}
+
+long long Preferences::getMsDiffTimeWithSDK()
+{
+    return diffTimeWithSDK;
+}
+
+void Preferences::setMsDiffTimeWithSDK(long long diffTime)
+{
+    this->diffTimeWithSDK = diffTime;
 }
 
 void Preferences::setTemporalBandwidthValid(bool value)

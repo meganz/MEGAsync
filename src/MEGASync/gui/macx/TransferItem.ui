@@ -65,6 +65,14 @@
   color: #aaaaaa;
 }
 
+#lRemainingTimeCompleted
+{
+   font: &quot;Source Sans Pro&quot;;
+   font-size: 10px;
+   font-weight: normal;
+   color: #333333;
+}
+
 </string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -681,18 +689,21 @@ padding-top: 1px;</string>
            <widget class="QLabel" name="lRemainingTimeCompleted">
             <property name="minimumSize">
              <size>
-              <width>70</width>
+              <width>75</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>70</width>
+              <width>75</width>
               <height>16777215</height>
              </size>
             </property>
             <property name="text">
              <string/>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
           </item>

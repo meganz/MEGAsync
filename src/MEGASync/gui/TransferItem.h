@@ -22,6 +22,7 @@ public:
     void setTransferType(int type);
     void setSpeed(long long transferSpeed);
     void setTotalSize(long long size);
+    void setFinishedTime(long long time);
 
     void setType(int type, bool isSyncTransfer = false);
     int getType();
@@ -30,6 +31,7 @@ public:
 
     void finishTransfer();
     void updateTransfer();
+    void updateFinishedTime();
     void mouseHoverTransfer(bool isHover);
 
     QSize minimumSizeHint() const;
@@ -77,6 +79,7 @@ protected:
     unsigned long long priority;
     bool cancelButtonEnabled;
     bool isSyncTransfer;
+    long long msFinishedTime;
 
 };
 

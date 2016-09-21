@@ -81,6 +81,18 @@ void QTransfersModel::insertTransfer(MegaTransfer *transfer)
 
     auto it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
     int row = std::distance(transferOrder.begin(), it);
+    transfer_it it;
+    int row;
+    if (type == TYPE_FINISHED)
+    {
+         it = transferOrder.begin();
+         row = 0;
+    }
+    else
+    {
+        it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
+        row = std::distance(transferOrder.begin(), it);
+    }
 
     beginInsertRows(QModelIndex(), row, row);
     transfers.insert(item->tag, item);
@@ -106,7 +118,7 @@ void QTransfersModel::removeTransferByTag(int transferTag)
         return;
     }
 
-    auto it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
+    transfer_it it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
     int row = std::distance(transferOrder.begin(), it);
 
     beginRemoveRows(QModelIndex(), row, row);
@@ -140,6 +152,11 @@ void QTransfersModel::removeAllTransfers()
     }
 
     emit noTransfers();
+}
+
+void QTransfersModel::refreshTransfers()
+{
+    emit dataChanged(index(0, 0, QModelIndex()), index(transferItems.size(), 0, QModelIndex()));
 }
 
 int QTransfersModel::rowCount(const QModelIndex &parent) const
