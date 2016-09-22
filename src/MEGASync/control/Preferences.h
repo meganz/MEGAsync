@@ -75,7 +75,7 @@ public:
     void setTotalBandwidth(long long value);
     bool isTemporalBandwidthValid();
     long long getMsDiffTimeWithSDK();
-    void setMsDiffTimeWithSDK(long long diffTime);
+    void setDsDiffTimeWithSDK(long long diffTime);
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
     void setTemporalBandwidth(long long value);

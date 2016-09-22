@@ -54,7 +54,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 ti->setPriority(transfer->getPriority());
                 if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
                 {
-                    ti->setFinishedTime(transfer->getUpdateTime() * 100);
+                    ti->setFinishedTime(transfer->getUpdateTime());
                 }
             }
 

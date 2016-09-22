@@ -79,7 +79,7 @@ protected:
     unsigned long long priority;
     bool cancelButtonEnabled;
     bool isSyncTransfer;
-    long long msFinishedTime;
+    long long dsFinishedTime;
 
 };
 

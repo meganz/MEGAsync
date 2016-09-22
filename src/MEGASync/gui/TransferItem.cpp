@@ -26,7 +26,7 @@ TransferItem::TransferItem(QWidget *parent) :
     priority = 0;
     transferState = 0;
     transferTag = 0;
-    msFinishedTime = 0;
+    dsFinishedTime = 0;
 
     ui->lCancelTransfer->installEventFilter(this);
     ui->lCancelTransferCompleted->installEventFilter(this);
@@ -98,7 +98,7 @@ void TransferItem::setTotalSize(long long size)
 
 void TransferItem::setFinishedTime(long long time)
 {
-    msFinishedTime = time;
+    dsFinishedTime = time;
 }
 
 void TransferItem::setType(int type, bool isSyncTransfer)
@@ -325,15 +325,14 @@ void TransferItem::updateTransfer()
 
 void TransferItem::updateFinishedTime()
 {
-    if (!msFinishedTime)
+    if (!dsFinishedTime)
     {
         return;
     }
 
     Preferences *preferences = Preferences::instance();
     QDateTime now = QDateTime::currentDateTime();
-    qint64 ms = now.toMSecsSinceEpoch();
-    qint64 secs = ( now.toMSecsSinceEpoch() - (preferences->getMsDiffTimeWithSDK() + msFinishedTime) ) / 1000;
+    qint64 secs = ( now.toMSecsSinceEpoch() / 100 - (preferences->getMsDiffTimeWithSDK() + dsFinishedTime) ) / 10;
     if (secs < 2)
     {
         ui->lRemainingTimeCompleted->setText(tr("just now"));

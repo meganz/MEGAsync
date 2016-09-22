@@ -656,7 +656,7 @@ long long Preferences::getMsDiffTimeWithSDK()
     return diffTimeWithSDK;
 }
 
-void Preferences::setMsDiffTimeWithSDK(long long diffTime)
+void Preferences::setDsDiffTimeWithSDK(long long diffTime)
 {
     this->diffTimeWithSDK = diffTime;
 }
