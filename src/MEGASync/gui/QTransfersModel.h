@@ -8,6 +8,8 @@
 #include "QTMegaTransferListener.h"
 #include <deque>
 
+const int MAX_COMPLETED_ITEMS = 3;
+
 class TransferItemData
 {
 public:

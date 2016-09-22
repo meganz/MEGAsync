@@ -79,8 +79,12 @@ void QTransfersModel::insertTransfer(MegaTransfer *transfer)
     item->tag = transfer->getTag();
     item->priority = transfer->getPriority();
 
-    auto it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
-    int row = std::distance(transferOrder.begin(), it);
+    if (transfers.size() == MAX_COMPLETED_ITEMS  && type == TYPE_FINISHED)
+    {
+        TransferItemData *t = transferOrder.back();
+        removeTransferByTag(t->tag);
+    }
+
     transfer_it it;
     int row;
     if (type == TYPE_FINISHED)
