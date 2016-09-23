@@ -5083,12 +5083,15 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     }
 
     int errorCode = e->getErrorCode();
-    if (errorCode != MegaError::API_OK && !transfer->isSyncTransfer()
-            && errorCode != MegaError::API_EACCESS
-            && errorCode != MegaError::API_ESID
-            && errorCode != MegaError::API_ESSL
-            && errorCode != MegaError::API_EINCOMPLETE
-            && errorCode != MegaError::API_EEXIST)
+    if (errorCode != MegaError::API_OK
+            && ((!transfer->isSyncTransfer()
+                    && errorCode != MegaError::API_EACCESS
+                    && errorCode != MegaError::API_ESID
+                    && errorCode != MegaError::API_ESSL
+                    && errorCode != MegaError::API_EINCOMPLETE
+                    && errorCode != MegaError::API_EEXIST)
+                || (transfer->isSyncTransfer()
+                    && errorCode == MegaError::API_EKEY)))
     {
         showErrorMessage(tr("Transfer failed:") + QString::fromUtf8(" " ) + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
     }
