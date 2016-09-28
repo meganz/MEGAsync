@@ -233,7 +233,25 @@ enabled=1
 DATA
 %endif
 
-%if 0%{?suse_version} == 1315
+%if 0%{?sle_version} == 120200
+# openSUSE Leap 42.2
+if [ -d "/etc/zypp/repos.d/" ]; then
+ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
+cat > "$ZYPP_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+type=rpm-md
+baseurl=http://mega.nz/linux/MEGAsync/openSUSE_Leap_42.2/
+gpgcheck=1
+autorefresh=1
+gpgkey=http://mega.nz/linux/MEGAsync/openSUSE_Leap_42.2/repodata/repomd.xml.key
+enabled=1
+DATA
+fi
+%endif
+
+
+%if 0%{?sle_version} == 120100
 # openSUSE Leap 42.1
 if [ -d "/etc/zypp/repos.d/" ]; then
 ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
@@ -249,6 +267,7 @@ enabled=1
 DATA
 fi
 %endif
+ 
 
 %if 0%{?suse_version} > 1320
 # openSUSE Tumbleweed (rolling release)
