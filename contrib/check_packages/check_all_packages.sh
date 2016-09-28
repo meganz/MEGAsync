@@ -158,11 +158,11 @@ PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_9_i386_T;$URLDEB9" #NOTICE: using
 
 
 count=0
-for i in $PAIRSVMNAMEREPOURL; do
+for i in `shuf -e $PAIRSVMNAMEREPOURL`; do
 
     RUNNING=`ps aux | grep check_package.sh | grep -v check_all_packages | grep -v grep | wc -l`
     
-    while [ $RUNNING -ge 11 ]; do
+    while [ $RUNNING -ge 10 ]; do
 	 echo "$RUNNING processes running. Waiting for one to finish ..."
 	 sleep 5;
 	 RUNNING=`ps aux | grep check_package.sh | grep -v check_all_packages | grep -v grep | wc -l`
