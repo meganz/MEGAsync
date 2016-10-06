@@ -256,6 +256,16 @@ int main(int argc, char *argv[])
             alreadyStarted = false;
             break;
         }
+        else
+        {
+             QString appShowInterfacePath = dataDir.filePath(QString::fromAscii("megasync.show"));
+             QFile fappShowInterfacePath(appShowInterfacePath);
+             if (fappShowInterfacePath.open(QIODevice::WriteOnly))
+             {
+                 fappShowInterfacePath.close();
+                 break;
+             }
+        }
 
         #ifdef WIN32
             Sleep(1000);
@@ -483,6 +493,12 @@ MegaApplication::~MegaApplication()
 
 }
 
+bool MegaApplication::showInterface(QString)
+{
+    showInfoDialog();
+    return true;
+}
+
 void MegaApplication::initialize()
 {
     if (megaApi)
@@ -635,6 +651,20 @@ void MegaApplication::initialize()
     if (preferences->logged() && preferences->wasPaused())
     {
         pauseTransfers(true);
+    }
+
+    QDir dataDir(applicationDataPath());
+    if (dataDir.exists())
+    {
+        QString appShowInterfacePath = dataDir.filePath(QString::fromAscii("megasync.show"));
+        QFileSystemWatcher *watcher = new QFileSystemWatcher(this);
+        QFile fappShowInterfacePath(appShowInterfacePath);
+        if (fappShowInterfacePath.open(QIODevice::WriteOnly))
+        {
+            fappShowInterfacePath.close();
+        }
+        watcher->addPath(appShowInterfacePath);
+        connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(showInterface(QString)));
     }
 }
 
@@ -969,6 +999,12 @@ void MegaApplication::start()
 
     indexing = false;
     overquotaCheck = false;
+
+
+    if ( !QSystemTrayIcon::isSystemTrayAvailable() )
+    {
+        QMessageBox::warning(NULL, tr("MEGAsync"), tr("Could not find a systray to place MEGAsync tray icon. Megasync is intended to be used with a systray icon. However,  it will be working just fine. If you wish to open the interface, just try to open megasync again."));
+    }
 
     if (isLinux && trayIcon->contextMenu())
     {
@@ -3031,6 +3067,7 @@ void MegaApplication::createTrayIcon()
     #else
         trayIcon = new QSystemTrayIcon();
     #endif
+
 
         connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(onMessageClicked()));
         connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
