@@ -1002,12 +1002,6 @@ void MegaApplication::start()
     indexing = false;
     overquotaCheck = false;
 
-
-    if ( !QSystemTrayIcon::isSystemTrayAvailable() )
-    {
-        QMessageBox::warning(NULL, tr("MEGAsync"), tr("Could not find a systray to place MEGAsync tray icon. Megasync is intended to be used with a systray icon. However,  it will be working just fine. If you wish to open the interface, just try to open megasync again."));
-    }
-
     if (isLinux && trayIcon->contextMenu())
     {
         if (showStatusAction)
@@ -1085,6 +1079,13 @@ void MegaApplication::start()
         if (!infoDialog)
         {
             infoDialog = new InfoDialog(this);
+            if (!QSystemTrayIcon::isSystemTrayAvailable())
+            {
+                QMessageBox::warning(NULL, tr("MEGAsync"),
+                                     tr("Could not find a system tray to place MEGAsync tray icon. "
+                                        "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
+                                        "If you want to open the interface, just try to open MEGAsync again."));
+            }
         }
 
         if (!preferences->isFirstStartDone())
@@ -1216,6 +1217,13 @@ void MegaApplication::loggedIn()
     if (!infoDialog)
     {
         infoDialog = new InfoDialog(this);
+        if (!QSystemTrayIcon::isSystemTrayAvailable())
+        {
+            QMessageBox::warning(NULL, tr("MEGAsync"),
+                                 tr("Could not find a system tray to place MEGAsync tray icon. "
+                                    "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
+                                    "If you want to open the interface, just try to open MEGAsync again."));
+        }
     }
 
     //Set the upload limit
