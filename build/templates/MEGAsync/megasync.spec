@@ -13,13 +13,17 @@ BuildRequires: qt-devel, openssl-devel, sqlite-devel, zlib-devel, autoconf, auto
 BuildRequires: hicolor-icon-theme, unzip, wget
 
 %if 0%{?suse_version}
-BuildRequires: libcares-devel, libcryptopp-devel
+BuildRequires: libcares-devel
 BuildRequires: update-desktop-files
 BuildRequires: libqt4, libqt4-x11
 
 # disabling post-build-checks that ocassionally prevent opensuse rpms from being generated
 # plus it speeds up building process
 BuildRequires: -post-build-checks
+%endif
+
+%if 0%{?suse_version} <= 1320
+BuildRequires: libcryptopp-devel
 %endif
 
 %if 0%{?fedora}
@@ -74,6 +78,9 @@ Store up to 50 GB for free!
 %define flag_disablezlib -z
 %endif
 
+%if 0%{?suse_version} > 1320
+%define flag_cryptopp -q
+%endif
 
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 
