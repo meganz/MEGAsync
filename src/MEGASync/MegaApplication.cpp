@@ -256,14 +256,13 @@ int main(int argc, char *argv[])
             alreadyStarted = false;
             break;
         }
-        else
+        else if (i == 0)
         {
              QString appShowInterfacePath = dataDir.filePath(QString::fromAscii("megasync.show"));
              QFile fappShowInterfacePath(appShowInterfacePath);
              if (fappShowInterfacePath.open(QIODevice::WriteOnly))
              {
                  fappShowInterfacePath.close();
-                 break;
              }
         }
 
@@ -493,10 +492,13 @@ MegaApplication::~MegaApplication()
 
 }
 
-bool MegaApplication::showInterface(QString)
+void MegaApplication::showInterface(QString)
 {
+    if (appfinished)
+    {
+        return;
+    }
     showInfoDialog();
-    return true;
 }
 
 void MegaApplication::initialize()

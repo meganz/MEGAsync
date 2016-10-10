@@ -103,7 +103,7 @@ signals:
     void unityFixSignal();
 
 public slots:
-    bool showInterface(QString);
+    void showInterface(QString);
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onMessageClicked();
     void start();
