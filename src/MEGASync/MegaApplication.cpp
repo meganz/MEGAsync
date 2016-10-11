@@ -256,6 +256,15 @@ int main(int argc, char *argv[])
             alreadyStarted = false;
             break;
         }
+        else if (i == 0)
+        {
+             QString appShowInterfacePath = dataDir.filePath(QString::fromAscii("megasync.show"));
+             QFile fappShowInterfacePath(appShowInterfacePath);
+             if (fappShowInterfacePath.open(QIODevice::WriteOnly))
+             {
+                 fappShowInterfacePath.close();
+             }
+        }
 
         #ifdef WIN32
             Sleep(1000);
@@ -483,6 +492,15 @@ MegaApplication::~MegaApplication()
 
 }
 
+void MegaApplication::showInterface(QString)
+{
+    if (appfinished)
+    {
+        return;
+    }
+    showInfoDialog();
+}
+
 void MegaApplication::initialize()
 {
     if (megaApi)
@@ -635,6 +653,20 @@ void MegaApplication::initialize()
     if (preferences->logged() && preferences->wasPaused())
     {
         pauseTransfers(true);
+    }
+
+    QDir dataDir(applicationDataPath());
+    if (dataDir.exists())
+    {
+        QString appShowInterfacePath = dataDir.filePath(QString::fromAscii("megasync.show"));
+        QFileSystemWatcher *watcher = new QFileSystemWatcher(this);
+        QFile fappShowInterfacePath(appShowInterfacePath);
+        if (fappShowInterfacePath.open(QIODevice::WriteOnly))
+        {
+            fappShowInterfacePath.close();
+        }
+        watcher->addPath(appShowInterfacePath);
+        connect(watcher, SIGNAL(fileChanged(QString)), this, SLOT(showInterface(QString)));
     }
 }
 
@@ -1047,6 +1079,13 @@ void MegaApplication::start()
         if (!infoDialog)
         {
             infoDialog = new InfoDialog(this);
+            if (!QSystemTrayIcon::isSystemTrayAvailable())
+            {
+                QMessageBox::warning(NULL, tr("MEGAsync"),
+                                     tr("Could not find a system tray to place MEGAsync tray icon. "
+                                        "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
+                                        "If you want to open the interface, just try to open MEGAsync again."));
+            }
         }
 
         if (!preferences->isFirstStartDone())
@@ -1178,6 +1217,13 @@ void MegaApplication::loggedIn()
     if (!infoDialog)
     {
         infoDialog = new InfoDialog(this);
+        if (!QSystemTrayIcon::isSystemTrayAvailable())
+        {
+            QMessageBox::warning(NULL, tr("MEGAsync"),
+                                 tr("Could not find a system tray to place MEGAsync tray icon. "
+                                    "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
+                                    "If you want to open the interface, just try to open MEGAsync again."));
+        }
     }
 
     //Set the upload limit
@@ -3031,6 +3077,7 @@ void MegaApplication::createTrayIcon()
     #else
         trayIcon = new QSystemTrayIcon();
     #endif
+
 
         connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(onMessageClicked()));
         connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
