@@ -38,6 +38,7 @@
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
+    #include <mach/mach.h>
 #endif
 
 Q_DECLARE_METATYPE(QQueue<QString>)
@@ -102,6 +103,7 @@ signals:
     void unityFixSignal();
 
 public slots:
+    void showInterface(QString);
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onMessageClicked();
     void start();
@@ -136,6 +138,7 @@ public slots:
     void exitApplication();
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
+    void checkMemoryUsage();
     void periodicTasks();
     void cleanAll();
     void onDupplicateLink(QString name, mega::MegaHandle handle);
@@ -239,10 +242,12 @@ protected:
     long long lastStartedDownload;
     long long lastStartedUpload;
     long long queuedUserStats;
+    long long maxMemoryUsage;
     int exportOps;
     int syncState;
     mega::MegaPricing *pricing;
     long long bwOverquotaTimestamp;
+    bool enablingBwOverquota;
     UpgradeDialog *bwOverquotaDialog;
     bool bwOverquotaEvent;
     InfoWizard *infoWizard;
@@ -280,6 +285,7 @@ protected:
     bool indexing;
     bool waiting;
     bool updated;
+    bool checkupdate;
     bool updateBlocked;
     long long lastExit;
     bool appfinished;

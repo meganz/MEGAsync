@@ -11,17 +11,18 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/2.9.8.0";
-const int Preferences::VERSION_CODE = 2908;
+const char Preferences::USER_AGENT[] = "MEGAsync/2.9.9.0";
+const int Preferences::VERSION_CODE = 2909;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.8");
-const QString Preferences::SDK_ID = QString::fromAscii("d7412");
+const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.9");
+const QString Preferences::SDK_ID = QString::fromAscii("f2fb1");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- More efficient upload completion\n"
-            "- Creation of new cryptographic keys\n"
-            "- Upgrade to QT5 and VS2015 (Windows)\n"
-            "- Bug fixes");
+            "- Fixed compatibility with some web browsers\n"
+            "- Fixed the creation of thumbnails for JPG images (Windows)\n"
+            "- Fixed incompatibilities with some WiFi drivers (Windows)\n"
+            "- Fixed problems downloading files with incorrect metadata\n"
+            "- Other bug fixes");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -99,6 +100,34 @@ const QString Preferences::HTTPS_CERT = QString::fromUtf8(
             "45pgKmyUqQ04helAJicvg0ZYdB2h/Hhq19+wuxTcNG2X310uuZDFixdRQbAYiu8f\n"
             "p8OT4JuRITJYjdanbssvCFIsTIGjaXsUzq1yN/lvKmNx3DqBPij8i6mnPK6Gey+f\n"
             "G9o0Zsj+Lm4txzqbB0/o6hnZEgkrsMrTcZYy\n"
+            "-----END CERTIFICATE-----\n"
+            );
+
+const QString Preferences::HTTPS_CERT_INTERMEDIATE = QString::fromUtf8(
+            "-----BEGIN CERTIFICATE-----\n"
+            "MIIEJTCCAw2gAwIBAgIDAjp3MA0GCSqGSIb3DQEBCwUAMEIxCzAJBgNVBAYTAlVT\n"
+            "MRYwFAYDVQQKEw1HZW9UcnVzdCBJbmMuMRswGQYDVQQDExJHZW9UcnVzdCBHbG9i\n"
+            "YWwgQ0EwHhcNMTQwODI5MjEzOTMyWhcNMjIwNTIwMjEzOTMyWjBHMQswCQYDVQQG\n"
+            "EwJVUzEWMBQGA1UEChMNR2VvVHJ1c3QgSW5jLjEgMB4GA1UEAxMXUmFwaWRTU0wg\n"
+            "U0hBMjU2IENBIC0gRzMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCv\n"
+            "VJvZWF0eLFbG1eh/9H0WA//Qi1rkjqfdVC7UBMBdmJyNkA+8EGVf2prWRHzAn7Xp\n"
+            "SowLBkMEu/SW4ib2YQGRZjEiwzQ0Xz8/kS9EX9zHFLYDn4ZLDqP/oIACg8PTH2lS\n"
+            "1p1kD8mD5xvEcKyU58Okaiy9uJ5p2L4KjxZjWmhxgHsw3hUEv8zTvz5IBVV6s9cQ\n"
+            "DAP8m/0Ip4yM26eO8R5j3LMBL3+vV8M8SKeDaCGnL+enP/C1DPz1hNFTvA5yT2AM\n"
+            "QriYrRmIV9cE7Ie/fodOoyH5U/02mEiN1vi7SPIpyGTRzFRIU4uvt2UevykzKdkp\n"
+            "YEj4/5G8V1jlNS67abZZAgMBAAGjggEdMIIBGTAfBgNVHSMEGDAWgBTAephojYn7\n"
+            "qwVkDBF9qn1luMrMTjAdBgNVHQ4EFgQUw5zz/NNGCDS7zkZ/oHxb8+IIy1kwEgYD\n"
+            "VR0TAQH/BAgwBgEB/wIBADAOBgNVHQ8BAf8EBAMCAQYwNQYDVR0fBC4wLDAqoCig\n"
+            "JoYkaHR0cDovL2cuc3ltY2IuY29tL2NybHMvZ3RnbG9iYWwuY3JsMC4GCCsGAQUF\n"
+            "BwEBBCIwIDAeBggrBgEFBQcwAYYSaHR0cDovL2cuc3ltY2QuY29tMEwGA1UdIARF\n"
+            "MEMwQQYKYIZIAYb4RQEHNjAzMDEGCCsGAQUFBwIBFiVodHRwOi8vd3d3Lmdlb3Ry\n"
+            "dXN0LmNvbS9yZXNvdXJjZXMvY3BzMA0GCSqGSIb3DQEBCwUAA4IBAQCjWB7GQzKs\n"
+            "rC+TeLfqrlRARy1+eI1Q9vhmrNZPc9ZE768LzFvB9E+aj0l+YK/CJ8cW8fuTgZCp\n"
+            "fO9vfm5FlBaEvexJ8cQO9K8EWYOHDyw7l8NaEpt7BDV7o5UzCHuTcSJCs6nZb0+B\n"
+            "kvwHtnm8hEqddwnxxYny8LScVKoSew26T++TGezvfU5ho452nFnPjJSxhJf3GrkH\n"
+            "uLLGTxN5279PURt/aQ1RKsHWFf83UTRlUfQevjhq7A6rvz17OQV79PP7GqHQyH5O\n"
+            "ZI3NjGFVkP46yl0lD/gdo0p0Vk8aVUBwdSWmMy66S6VdU5oNMOGNX2Esr8zvsJmh\n"
+            "gP8L8mJMcCaY\n"
             "-----END CERTIFICATE-----\n"
             );
 
@@ -204,6 +233,8 @@ const QString Preferences::accountCreationTimeKey   = QString::fromAscii("accoun
 const QString Preferences::hasLoggedInKey           = QString::fromAscii("hasLoggedIn");
 const QString Preferences::useHttpsOnlyKey          = QString::fromAscii("useHttpsOnly");
 const QString Preferences::SSLcertificateExceptionKey  = QString::fromAscii("SSLcertificateException");
+const QString Preferences::maxMemoryUsageKey        = QString::fromAscii("maxMemoryUsage");
+const QString Preferences::maxMemoryReportTimeKey   = QString::fromAscii("maxMemoryReportTime");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -1333,6 +1364,38 @@ void Preferences::setLastCustomStreamingApp(const QString &value)
 {
     mutex.lock();
     settings->setValue(lastCustomStreamingAppKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+long long Preferences::getMaxMemoryUsage()
+{
+    mutex.lock();
+    long long value = settings->value(maxMemoryUsageKey, 0).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setMaxMemoryUsage(long long value)
+{
+    mutex.lock();
+    settings->setValue(maxMemoryUsageKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+long long Preferences::getMaxMemoryReportTime()
+{
+    mutex.lock();
+    long long value = settings->value(maxMemoryReportTimeKey, 0).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setMaxMemoryReportTime(long long timestamp)
+{
+    mutex.lock();
+    settings->setValue(maxMemoryReportTimeKey, timestamp);
     settings->sync();
     mutex.unlock();
 }

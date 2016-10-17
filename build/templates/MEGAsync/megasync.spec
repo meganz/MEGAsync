@@ -13,13 +13,17 @@ BuildRequires: qt-devel, openssl-devel, sqlite-devel, zlib-devel, autoconf, auto
 BuildRequires: hicolor-icon-theme, unzip, wget
 
 %if 0%{?suse_version}
-BuildRequires: libcares-devel, libcryptopp-devel
+BuildRequires: libcares-devel
 BuildRequires: update-desktop-files
 BuildRequires: libqt4, libqt4-x11
 
 # disabling post-build-checks that ocassionally prevent opensuse rpms from being generated
 # plus it speeds up building process
 BuildRequires: -post-build-checks
+%endif
+
+%if 0%{?suse_version} <= 1320
+BuildRequires: libcryptopp-devel
 %endif
 
 %if 0%{?fedora}
@@ -29,7 +33,7 @@ BuildRequires: qt, qt-x11
 BuildRequires: terminus-fonts, fontpackages-filesystem
 %endif
 
-%if 0%{?centos_version}
+%if 0%{?centos_version} || 0%{?scientificlinux_version}
 BuildRequires: c-ares-devel,
 BuildRequires: desktop-file-utils
 BuildRequires: qt, qt-x11
@@ -61,7 +65,7 @@ Store up to 50 GB for free!
 
 %define flag_cryptopp %{nil}
 
-%if 0%{?centos_version}
+%if 0%{?centos_version} || 0%{?scientificlinux_version}
 %define flag_cryptopp -q
 %endif
 
@@ -69,17 +73,25 @@ Store up to 50 GB for free!
 %define flag_cryptopp -q
 %endif
 
+%define flag_disablezlib %{nil}
+%if 0%{?fedora_version} == 23
+%define flag_disablezlib -z
+%endif
 
-
+%if 0%{?suse_version} > 1320
+%define flag_cryptopp -q
+%endif
 
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
-./configure %{flag_cryptopp}
+
+./configure %{flag_cryptopp} -g %{flag_disablezlib}
+
 # Fedora uses system Crypto++ header files
 %if 0%{?fedora}
 rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
+%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
 qmake-qt4 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot}
 lrelease-qt4  MEGASync/MEGASync.pro
 %else
@@ -124,7 +136,20 @@ enabled=1
 DATA
 %endif
 
-%if 0%{?centos_version} == 700
+%if 0%{?scientificlinux_version} == 700
+# Scientific Linux 7
+YUM_FILE="/etc/yum.repos.d/megasync.repo"
+cat > "$YUM_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+baseurl=http://mega.nz/linux/MEGAsync/ScientificLinux_7/
+gpgkey=https://mega.nz/linux/MEGAsync/ScientificLinux_7/repodata/repomd.xml.key
+gpgcheck=1
+enabled=1
+DATA
+%endif
+
+%if 0%{?sc} == 700
 # CentOS 7
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
@@ -215,7 +240,25 @@ enabled=1
 DATA
 %endif
 
-%if 0%{?suse_version} == 1315
+%if 0%{?sle_version} == 120200
+# openSUSE Leap 42.2
+if [ -d "/etc/zypp/repos.d/" ]; then
+ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
+cat > "$ZYPP_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+type=rpm-md
+baseurl=http://mega.nz/linux/MEGAsync/openSUSE_Leap_42.2/
+gpgcheck=1
+autorefresh=1
+gpgkey=http://mega.nz/linux/MEGAsync/openSUSE_Leap_42.2/repodata/repomd.xml.key
+enabled=1
+DATA
+fi
+%endif
+
+
+%if 0%{?sle_version} == 120100
 # openSUSE Leap 42.1
 if [ -d "/etc/zypp/repos.d/" ]; then
 ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
@@ -231,6 +274,7 @@ enabled=1
 DATA
 fi
 %endif
+ 
 
 %if 0%{?suse_version} > 1320
 # openSUSE Tumbleweed (rolling release)
@@ -383,7 +427,7 @@ fi
 killall megasync 2> /dev/null || true
 
 
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
+%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
 %posttrans
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 %endif

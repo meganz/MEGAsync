@@ -153,6 +153,10 @@ public:
     void setFirstWebDownloadDone(bool value = true);
     QString lastCustomStreamingApp();
     void setLastCustomStreamingApp(const QString &value);
+    long long getMaxMemoryUsage();
+    void setMaxMemoryUsage(long long value);
+    long long getMaxMemoryReportTime();
+    void setMaxMemoryReportTime(long long timestamp);
 
     int transferDownloadMethod();
     void setTransferDownloadMethod(int value);
@@ -282,6 +286,7 @@ public:
     static const qint16 HTTPS_PORT;
     static const QString HTTPS_KEY;
     static const QString HTTPS_CERT;
+    static const QString HTTPS_CERT_INTERMEDIATE;
     static QStringList HTTPS_ALLOWED_ORIGINS;
 
 protected:
@@ -393,6 +398,8 @@ protected:
     static const QString lastCustomStreamingAppKey;
     static const QString useHttpsOnlyKey;
     static const QString SSLcertificateExceptionKey;
+    static const QString maxMemoryUsageKey;
+    static const QString maxMemoryReportTimeKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;

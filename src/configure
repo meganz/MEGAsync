@@ -9,21 +9,34 @@ display_help() {
     local app=$(basename "$0")
     echo ""
     echo "Usage:"
-    echo " $app [-f]"
+    echo " $app [-e] [-f] [-g] [-q] [-z]"
     echo ""
     echo "Configure MEGA SDK (creates config.h file)"
     echo ""
     echo "Options:"
+    echo " -e : Download and link CARES statically."
     echo " -f : Force software packages rebuild."
+    echo " -g : Download and link CURL statically."
+    echo " -q : Download and link CRYPTOPP statically."
+    echo " -z : Do not download and link ZLIB statically."
     echo ""
 }
 
 FLAG_CRYPTOPP=""
+FLAG_CARES=""
+FLAG_CURL=""
+FLAG_DISABLE_ZLIB=""
 
-while getopts ":fq" opt; do
+while getopts ":efgqz" opt; do
     case $opt in
         q) 
             FLAG_CRYPTOPP="-q"; 
+            ;;
+        g) 
+            FLAG_CURL="-g"; 
+            ;;
+        e) 
+            FLAG_CARES="-e"; 
             ;;
         f)
             if [ -d "$archives" ]; then
@@ -33,6 +46,9 @@ while getopts ":fq" opt; do
         h)
             display_help $0
             exit
+            ;;
+        z) 
+            FLAG_DISABLE_ZLIB="-z"; 
             ;;
         \?)
             display_help $0
@@ -49,7 +65,7 @@ shift $((OPTIND-1))
 # if archives are not yet downloaded
 if [ ! -d "$archives" ]; then
     mkdir $archives
-    ./MEGASync/mega/contrib/build_sdk.sh $FLAG_CRYPTOPP -n -f -w -s -v -u -o $archives
+    ./MEGASync/mega/contrib/build_sdk.sh $FLAG_CRYPTOPP -n $FLAG_CARES -f $FLAG_CURL $FLAG_DISABLE_ZLIB -w -s -v -u -o $archives
     rm_archives=1
 fi
 
@@ -57,7 +73,7 @@ cd MEGASync/mega
 ./contrib/build_sdk.sh \
     $FLAG_CRYPTOPP \
     -o $archives \
-    -f \
+    -f $FLAG_CARES $FLAG_CURL $FLAG_DISABLE_ZLIB \
     -l \
     -n \
     -c \

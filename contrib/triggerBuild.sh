@@ -47,6 +47,8 @@ osc co RPM
 osc co DEB
 
 for package in MEGAShellExtNautilus MEGAsync; do
+	oldver=`cat $NEWOSCFOLDER_PATH/DEB/MEGAsync/PKGBUILD | grep  pkgver= | cut -d "=" -f2`
+	oldrelease=`cat $NEWOSCFOLDER_PATH/DEB/MEGAsync/PKGBUILD | grep pkgrel= | cut -d "=" -f2`
 	
 	echo "deleting old files for package $package ... : "$NEWOSCFOLDER_PATH/{DEB,RPM}/$package/*
 	rm $NEWOSCFOLDER_PATH/{DEB,RPM}/$package/*
@@ -56,6 +58,15 @@ for package in MEGAShellExtNautilus MEGAsync; do
 	ln -sf $PROJECT_PATH/build/MEGAsync/$package/*tar.gz $NEWOSCFOLDER_PATH/RPM/$package/
 	if ls $PROJECT_PATH/build/MEGAsync/$package/*changes 2>&1 > /dev/null ; then ln -sf $PROJECT_PATH/build/MEGAsync/$package/*changes $NEWOSCFOLDER_PATH/RPM/$package/; fi
 	for i in $PROJECT_PATH/build/MEGAsync/$package/{PKGBUILD,megasync.install,*.dsc,*.tar.gz,debian.changelog,debian.control,debian.postinst,debian.postrm,debian.rules,debian.compat,debian.copyright} ; do ln -sf $i $NEWOSCFOLDER_PATH/DEB/$package/; done
+	
+	newver=`cat $NEWOSCFOLDER_PATH/DEB/MEGAsync/PKGBUILD | grep  pkgver= | cut -d "=" -f2`
+	fixedrelease=`cat $NEWOSCFOLDER_PATH/DEB/MEGAsync/PKGBUILD | grep pkgrel= | cut -d "=" -f2`
+	if [ "$newver" = "$oldver" ]; then
+		((newrelease=oldrelease+1))
+	else
+		newrelease=1
+	fi
+	sed -i "s#pkgrel=$fixedrelease#pkgrel=$newrelease#g" $NEWOSCFOLDER_PATH/DEB/MEGAsync/PKGBUILD
 done
 
 echo "modifying files included/excluded in projects (to respond to e.g. tar.gz version changes)"
