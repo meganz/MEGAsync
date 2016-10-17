@@ -15,16 +15,9 @@ class PasteMegaLinksDialog : public QDialog
     Q_OBJECT
 
 public:
-
-    typedef enum {
-           ONLY_FILE_LINKS = 0,
-           ONLY_FOLDER_LINKS = 1
-    } ExtractionMode;
-
     explicit PasteMegaLinksDialog(QWidget *parent = 0);
     ~PasteMegaLinksDialog();
-    QStringList getFileLinks();
-    QStringList getFolderLinks();
+    QStringList getLinks();
 
 private slots:
     void on_bSubmit_clicked();
@@ -34,10 +27,9 @@ protected:
 
 private:
     Ui::PasteMegaLinksDialog *ui;
-    QStringList fileLinks;
-    QStringList folderLinks;
+    QStringList links;
 
-    QStringList extractLinks(QString text, int extraction = 0);
+    QStringList extractLinks(QString text);
     QString checkLink(QString link);
 };
 

@@ -12,7 +12,7 @@ class LinkProcessor: public QObject, public mega::MegaRequestListener
     Q_OBJECT
 
 public:
-    LinkProcessor(QStringList fileList, QStringList folderList, mega::MegaApi *megaApi, mega::MegaApi *megaApiFolders);
+    LinkProcessor(QStringList linkList, mega::MegaApi *megaApi, mega::MegaApi *megaApiFolders);
     virtual ~LinkProcessor();
 
     QString getLink(int id);
@@ -36,7 +36,7 @@ public:
 protected:
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
-    QQueue<QString> linkList;
+    QStringList linkList;
 
     QList<bool> linkSelected;
     QList<mega::MegaNode *> linkNode;
@@ -45,8 +45,6 @@ protected:
     int remainingNodes;
     int importSuccess;
     int importFailed;
-    int numLinks;
-    bool processingFolderLink;
     mega::MegaHandle importParentFolder;
     mega::QTMegaRequestListener *delegateListener;
 
@@ -54,7 +52,7 @@ signals:
     void onLinkInfoAvailable(int i);
     void onLinkInfoRequestFinish();
     void onLinkImportFinish();
-    void onDupplicateLink(QString name, mega::MegaHandle handle);
+    void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
     void dupplicateDownload(QString localPath, QString name, mega::MegaHandle handle, QString nodeKey);
 
 public slots:

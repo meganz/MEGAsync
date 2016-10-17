@@ -1907,7 +1907,7 @@ void MegaApplication::cleanAll()
     //QFontDatabase::removeAllApplicationFonts();
 }
 
-void MegaApplication::onDupplicateLink(QString name, MegaHandle handle)
+void MegaApplication::onDupplicateLink(QString, QString name, MegaHandle handle)
 {
     if (appfinished)
     {
@@ -2812,13 +2812,13 @@ void MegaApplication::importLinks()
     }
 
     //Get the list of links from the dialog
-    QStringList fileList = pasteMegaLinksDialog->getFileLinks();
-    QStringList folderList = pasteMegaLinksDialog->getFolderLinks();
+    QStringList linkList = pasteMegaLinksDialog->getLinks();
+
     delete pasteMegaLinksDialog;
     pasteMegaLinksDialog = NULL;
 
     //Send links to the link processor
-    LinkProcessor *linkProcessor = new LinkProcessor(fileList, folderList, megaApi, megaApiFolders);
+    LinkProcessor *linkProcessor = new LinkProcessor(linkList, megaApi, megaApiFolders);
 
     //Open the import dialog
     importDialog = new ImportMegaLinksDialog(megaApi, preferences, linkProcessor);
@@ -2850,8 +2850,8 @@ void MegaApplication::importLinks()
     if (preferences->logged() && importDialog->shouldImport())
     {
         connect(linkProcessor, SIGNAL(onLinkImportFinish()), this, SLOT(onLinkImportFinished()));
-        connect(linkProcessor, SIGNAL(onDupplicateLink(QString, mega::MegaHandle)),
-                this, SLOT(onDupplicateLink(QString, mega::MegaHandle)));
+        connect(linkProcessor, SIGNAL(onDupplicateLink(QString, QString, mega::MegaHandle)),
+                this, SLOT(onDupplicateLink(QString, QString, mega::MegaHandle)));
         linkProcessor->importLinks(importDialog->getImportPath());
     }
     else

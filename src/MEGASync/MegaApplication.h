@@ -141,7 +141,7 @@ public slots:
     void checkMemoryUsage();
     void periodicTasks();
     void cleanAll();
-    void onDupplicateLink(QString name, mega::MegaHandle handle);
+    void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
     void onDupplicateTransfer(QString localPath, QString name, mega::MegaHandle handle, QString nodeKey = QString());
     void onInstallUpdateClicked();
     void showInfoDialog();
