@@ -141,6 +141,19 @@ int main(int argc, char *argv[])
 #endif
 
 #ifdef Q_OS_LINUX
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
+    if (!getenv("QT_SCALE_FACTOR"))
+    {
+        MegaApplication appaux(argc,argv); //needed to get geometry (it needs to be instantiated a second time to actually use scale factor)
+        QRect geom = appaux.desktop()->availableGeometry(QCursor::pos());
+        qreal ratio = min(geom.width()/(1920.0),geom.width()/(1080.0)*1920.0/1080.0);
+        ratio = max(1.0,ratio);
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8(" stablishing ratio to = %1").arg(QString::number(ratio)).toUtf8().constData() );
+        qputenv("QT_SCALE_FACTOR", QString::number(ratio).toUtf8());
+    }
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("QT_SCALE_FACTOR = %1").arg(QString::fromUtf8(getenv("QT_SCALE_FACTOR"))).toUtf8().constData() );
+#endif
     QApplication::setDesktopSettingsAware(false);
 #endif
     MegaApplication app(argc, argv);
