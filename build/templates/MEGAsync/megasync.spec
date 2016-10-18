@@ -27,10 +27,18 @@ BuildRequires: libcryptopp-devel
 %endif
 
 %if 0%{?fedora}
+%if 0%{?fedora_version >= 23}
+BuildRequires: c-ares-devel, cryptopp-devel
+BuildRequires: desktop-file-utils
+BuildRequires: qt5-qtbase-devel qt5-qttools-devel
+Requires: qt5-qtbase >= 5.6
+BuildRequires: terminus-fonts, fontpackages-filesystem
+%else
 BuildRequires: c-ares-devel, cryptopp-devel
 BuildRequires: desktop-file-utils
 BuildRequires: qt, qt-x11
 BuildRequires: terminus-fonts, fontpackages-filesystem
+%endif
 %endif
 
 %if 0%{?centos_version} || 0%{?scientificlinux_version}
@@ -91,12 +99,25 @@ export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
+%if 0%{?fedora}
+
+%if 0%{?fedora_version >= 23}
+qmake-qt5 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot}
+lrelease-qt5  MEGASync/MEGASync.pro
+%else
+qmake-qt4 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot}
+lrelease-qt4  MEGASync/MEGASync.pro
+%endif
+%else
+
+%if 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
 qmake-qt4 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot}
 lrelease-qt4  MEGASync/MEGASync.pro
 %else
 qmake DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot}
 lrelease MEGASync/MEGASync.pro
+%endif
+
 %endif
 
 make
