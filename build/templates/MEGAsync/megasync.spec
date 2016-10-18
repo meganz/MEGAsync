@@ -30,7 +30,7 @@ BuildRequires: libcryptopp-devel
 
 
 %if 0%{?fedora}
-%if 0%{?fedora_version >= 23}
+%if 0%{?fedora_version} >= 23
 BuildRequires: c-ares-devel, cryptopp-devel
 BuildRequires: desktop-file-utils
 BuildRequires: qt5-qtbase-devel qt5-qttools-devel
@@ -104,7 +104,7 @@ rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 
 %if 0%{?fedora}
 
-%if 0%{?fedora_version >= 23}
+%if 0%{?fedora_version} >= 23
 qmake-qt5 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot}
 lrelease-qt5  MEGASync/MEGASync.pro
 %else
