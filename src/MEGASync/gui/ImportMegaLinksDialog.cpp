@@ -321,11 +321,11 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
         QString name = QString::fromUtf8(node->getName());
         if (!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("CRYPTO_ERROR")))
         {
-            item->setData(tr("Decryption error"), ImportListWidgetItem::WARNING, megaApi->getSize(node));
+            item->setData(tr("Decryption error"), ImportListWidgetItem::WARNING, megaApi->getSize(node), !(node->getType() == MegaNode::TYPE_FILE));
         }
         else
         {
-            item->setData(name, ImportListWidgetItem::CORRECT, megaApi->getSize(node), node->getType() == MegaNode::TYPE_FOLDER);
+            item->setData(name, ImportListWidgetItem::CORRECT, megaApi->getSize(node), !(node->getType() == MegaNode::TYPE_FILE));
         }
     }
     else

@@ -23,7 +23,7 @@ ImportListWidgetItem::~ImportListWidgetItem()
     delete ui;
 }
 
-void ImportListWidgetItem::setData(QString fileName, linkstatus status, long long size, int isFolder)
+void ImportListWidgetItem::setData(QString fileName, linkstatus status, long long size, bool isFolder)
 {
     this->fileName = fileName;
     this->status = status;
