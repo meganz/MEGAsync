@@ -142,7 +142,8 @@ int main(int argc, char *argv[])
 
 #ifdef Q_OS_LINUX
 
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0))
+
+#if QT_VERSION >= 0x050600
     if (!getenv("QT_SCALE_FACTOR"))
     {
         MegaApplication appaux(argc,argv); //needed to get geometry (it needs to be instantiated a second time to actually use scale factor)
