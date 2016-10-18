@@ -2813,7 +2813,6 @@ void MegaApplication::importLinks()
 
     //Get the list of links from the dialog
     QStringList linkList = pasteMegaLinksDialog->getLinks();
-
     delete pasteMegaLinksDialog;
     pasteMegaLinksDialog = NULL;
 

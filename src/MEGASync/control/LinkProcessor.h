@@ -3,7 +3,6 @@
 
 #include <QObject>
 #include <QStringList>
-#include <QQueue>
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
 
@@ -37,7 +36,6 @@ protected:
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
     QStringList linkList;
-
     QList<bool> linkSelected;
     QList<mega::MegaNode *> linkNode;
     QList<int> linkError;

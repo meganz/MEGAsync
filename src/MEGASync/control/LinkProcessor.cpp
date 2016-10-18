@@ -11,7 +11,6 @@ LinkProcessor::LinkProcessor(QStringList linkList, MegaApi *megaApi, MegaApi *me
     this->megaApi = megaApi;
     this->megaApiFolders = megaApiFolders;
     this->linkList = linkList;
-
     for (int i = 0; i < linkList.size(); i++)
     {
         linkSelected.append(true);
