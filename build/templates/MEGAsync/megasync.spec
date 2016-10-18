@@ -20,11 +20,14 @@ BuildRequires: libqt4, libqt4-x11
 # disabling post-build-checks that ocassionally prevent opensuse rpms from being generated
 # plus it speeds up building process
 BuildRequires: -post-build-checks
-%endif
 
 %if 0%{?suse_version} <= 1320
 BuildRequires: libcryptopp-devel
 %endif
+
+%endif
+
+
 
 %if 0%{?fedora}
 %if 0%{?fedora_version >= 23}
