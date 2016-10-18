@@ -14,7 +14,9 @@ ImportListWidgetItem::ImportListWidgetItem(QString link, int id, QWidget *parent
     this->fileSize = 0;
     this->isFolder = false;
     status = LOADING;
-    fileName = link;
+    fileName = tr("Please wait...");
+    ui->cSelected->setChecked(false);
+    ui->cSelected->setEnabled(false);
     updateGui();
 }
 
@@ -64,6 +66,8 @@ void ImportListWidgetItem::updateGui()
         break;
     case CORRECT:
         statusIcon.addFile(QString::fromUtf8(":/images/import_ok_icon.png"), QSize(), QIcon::Normal, QIcon::Off);
+        ui->cSelected->setChecked(true);
+        ui->cSelected->setEnabled(true);
         break;
     case WARNING:
         statusIcon.addFile(QString::fromUtf8(":/images/import_warning_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
