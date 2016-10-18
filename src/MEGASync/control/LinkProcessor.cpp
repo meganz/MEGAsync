@@ -76,7 +76,7 @@ void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaErro
 
         linkError[currentIndex] = e->getErrorCode();
         linkSelected[currentIndex] = (linkError[currentIndex] == MegaError::API_OK);
-        if (!linkError[currentIndex])
+        if (!linkError[currentIndex] && linkNode[currentIndex])
         {
             QString name = QString::fromUtf8(linkNode[currentIndex]->getName());
             if (!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("DECRYPTION_ERROR")))
@@ -124,23 +124,39 @@ void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaErro
         {
             megaApiFolders->fetchNodes(this);
         }
+        else
+        {
+            linkNode[currentIndex] = NULL;
+            linkError[currentIndex] = e->getErrorCode();
+            linkSelected[currentIndex] = false;
+            currentIndex++;
+            emit onLinkInfoAvailable(currentIndex - 1);
+            if (currentIndex == linkList.size())
+            {
+                emit onLinkInfoRequestFinish();
+            }
+            else
+            {
+                requestLinkInfo();
+            }
+        }
     }
     else if (request->getType() == MegaRequest::TYPE_FETCH_NODES)
     {
         if (e->getErrorCode() == MegaError::API_OK)
         {
-            if (e->getErrorCode() != MegaError::API_OK)
-            {
-                linkNode[currentIndex] = NULL;
-            }
-            else
-            {
-                linkNode[currentIndex] = megaApiFolders->authorizeNode(megaApiFolders->getRootNode());
-            }
+            MegaNode *rootNode = megaApiFolders->getRootNode();
+            linkNode[currentIndex] = megaApiFolders->authorizeNode(rootNode);
+            delete rootNode;
         }
+        else
+        {
+            linkNode[currentIndex] = NULL;
+        }
+
         linkError[currentIndex] = e->getErrorCode();
         linkSelected[currentIndex] = (linkError[currentIndex] == MegaError::API_OK);
-        if (!linkError[currentIndex])
+        if (!linkError[currentIndex] && linkNode[currentIndex])
         {
             QString name = QString::fromUtf8(linkNode[currentIndex]->getName());
             if (!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("DECRYPTION_ERROR")))
@@ -163,6 +179,11 @@ void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaErro
 
 void LinkProcessor::requestLinkInfo()
 {
+    if (currentIndex < 0 || currentIndex >= linkList.size())
+    {
+        return;
+    }
+
     QString link = linkList[currentIndex];
     if (link.startsWith(QString::fromUtf8("https://mega.nz/#F!")))
     {
