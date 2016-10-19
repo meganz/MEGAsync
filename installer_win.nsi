@@ -48,7 +48,7 @@ VIAddVersionKey "ProductVersion" "2.9.9.0"
 !ifndef ENABLE_QT5
 !define QT_PATH "C:\Qt\4.8.6.0\"
 !else
-!define QT_PATH "C:\Qt\Qt5.7.0\5.7\msvc2015"
+!define QT_PATH "C:\Qt\Qt5.6.2\5.6\msvc2015"
 !endif
 !endif
 
