@@ -8,8 +8,6 @@
 #include "QTMegaTransferListener.h"
 #include <deque>
 
-const int MAX_COMPLETED_ITEMS = 3;
-
 class TransferItemData
 {
 public:
@@ -25,6 +23,8 @@ class QTransfersModel : public QAbstractItemModel, public mega::MegaTransferList
     Q_OBJECT
 
 public:
+    const int MAX_COMPLETED_ITEMS = 20;
+
     enum {
         TYPE_DOWNLOAD = 0,
         TYPE_UPLOAD,

@@ -79,7 +79,7 @@ void QTransfersModel::insertTransfer(MegaTransfer *transfer)
     item->tag = transfer->getTag();
     item->priority = transfer->getPriority();
 
-    if (transfers.size() == MAX_COMPLETED_ITEMS  && type == TYPE_FINISHED)
+    if (transfers.size() == QTransfersModel::MAX_COMPLETED_ITEMS  && type == TYPE_FINISHED)
     {
         TransferItemData *t = transferOrder.back();
         removeTransferByTag(t->tag);
