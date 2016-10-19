@@ -5385,11 +5385,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                 localPath = uploadLocalPaths.value(node->getTag());
                 uploadLocalPaths.remove(node->getTag());
             }
-            else
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Unable to get the local path of the file: %1 Tag: %2")
-                             .arg(QString::fromUtf8(node->getName())).arg(node->getTag()).toUtf8().constData());
-            }
 
             addRecentFile(QString::fromUtf8(node->getName()), node->getHandle(), localPath);
             if (node->getAttrString()->size())
