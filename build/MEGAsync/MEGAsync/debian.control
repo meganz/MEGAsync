@@ -3,7 +3,7 @@ Section: Tools
 Priority: normal
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
 Build-Depends:  debhelper,
-                libqt4-dev,
+                libqt4-dev | qtbase5-dev,
                 libcrypto++-dev,
                 libc-ares-dev,
                 libssl-dev,
@@ -13,7 +13,7 @@ Build-Depends:  debhelper,
                 libtool,
                 dh-autoreconf,
                 cdbs,
-                libqt4-dbus
+                libqt4-dbus | libqt5dbus5
 
 Package: megasync
 Architecture: any
