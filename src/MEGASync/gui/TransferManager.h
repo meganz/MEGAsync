@@ -5,6 +5,7 @@
 #include <QMenu>
 #include "megaapi.h"
 #include "Preferences.h"
+#include "TransferMenuItemAction.h"
 #include <QGraphicsEffect>
 #include "QTMegaTransferListener.h"
 
@@ -31,10 +32,10 @@ private:
     Ui::TransferManager *ui;
     mega::MegaApi *megaApi;
     QMenu *addMenu;
-    QAction *settingsAction;
-    QAction *importLinksAction;
-    QAction *uploadAction;
-    QAction *downloadAction;
+    TransferMenuItemAction *settingsAction;
+    TransferMenuItemAction *importLinksAction;
+    TransferMenuItemAction *uploadAction;
+    TransferMenuItemAction *downloadAction;
     Preferences *preferences;
     QGraphicsDropShadowEffect *shadowAdd;
     QGraphicsDropShadowEffect *shadowPause;
