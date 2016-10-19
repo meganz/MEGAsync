@@ -274,7 +274,7 @@ void TransferItem::updateTransfer()
             }
             else
             {
-                remainingTime = QString::fromAscii("--:--:--");
+                remainingTime = QString::fromAscii("");
             }
             ui->lRemainingTime->setText(remainingTime);
 
