@@ -4,6 +4,7 @@
 #include <QWidgetAction>
 #include <QLabel>
 #include <QPushButton>
+#include <QHBoxLayout>
 
 class TransferMenuItemAction : public QWidgetAction
 {
@@ -19,6 +20,7 @@ private:
     QIcon* hoverIcon;
     QPushButton* iconButton;
     QLabel* title;
+    QHBoxLayout* layout;
 
     void setupActionWidget();
 
