@@ -345,6 +345,7 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
         }
     }
     item->updateGui();
+    linkProcessor->setSelected(id, item->isSelected());
 }
 
 void ImportMegaLinksDialog::onLinkInfoRequestFinish()

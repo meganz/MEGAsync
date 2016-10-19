@@ -13,7 +13,7 @@ LinkProcessor::LinkProcessor(QStringList linkList, MegaApi *megaApi, MegaApi *me
     this->linkList = linkList;
     for (int i = 0; i < linkList.size(); i++)
     {
-        linkSelected.append(true);
+        linkSelected.append(false);
         linkNode.append(NULL);
         linkError.append(MegaError::API_ENOENT);
     }
@@ -75,15 +75,6 @@ void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaErro
         }
 
         linkError[currentIndex] = e->getErrorCode();
-        linkSelected[currentIndex] = (linkError[currentIndex] == MegaError::API_OK);
-        if (!linkError[currentIndex] && linkNode[currentIndex])
-        {
-            QString name = QString::fromUtf8(linkNode[currentIndex]->getName());
-            if (!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("DECRYPTION_ERROR")))
-            {
-                linkSelected[currentIndex] = false;
-            }
-        }
         currentIndex++;
         emit onLinkInfoAvailable(currentIndex-1);
         if (currentIndex == linkList.size())
@@ -128,7 +119,6 @@ void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaErro
         {
             linkNode[currentIndex] = NULL;
             linkError[currentIndex] = e->getErrorCode();
-            linkSelected[currentIndex] = false;
             currentIndex++;
             emit onLinkInfoAvailable(currentIndex - 1);
             if (currentIndex == linkList.size())
@@ -155,15 +145,6 @@ void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaErro
         }
 
         linkError[currentIndex] = e->getErrorCode();
-        linkSelected[currentIndex] = (linkError[currentIndex] == MegaError::API_OK);
-        if (!linkError[currentIndex] && linkNode[currentIndex])
-        {
-            QString name = QString::fromUtf8(linkNode[currentIndex]->getName());
-            if (!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("DECRYPTION_ERROR")))
-            {
-                linkSelected[currentIndex] = false;
-            }
-        }
         currentIndex++;
         emit onLinkInfoAvailable(currentIndex-1);
         if (currentIndex == linkList.size())
