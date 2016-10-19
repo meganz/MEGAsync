@@ -198,7 +198,7 @@ padding-top: 1px;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_linux.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/download_item_ico.png</normaloff>:/images/download_item_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -215,7 +215,7 @@ padding-top: 1px;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_linux.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/small_executable.png</normaloff>:/images/small_executable.png</iconset>
                </property>
                <property name="iconSize">
@@ -397,7 +397,7 @@ padding-top: 1px;</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../Resources_linux.qrc">:/images/cloud_item_ico.png</pixmap>
+             <pixmap resource="../Resources_win.qrc">:/images/cloud_item_ico.png</pixmap>
             </property>
            </widget>
           </item>
@@ -438,7 +438,7 @@ padding-top: 1px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -689,13 +689,13 @@ padding-top: 1px;</string>
            <widget class="QLabel" name="lRemainingTimeCompleted">
             <property name="minimumSize">
              <size>
-              <width>75</width>
+              <width>80</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>75</width>
+              <width>80</width>
               <height>16777215</height>
              </size>
             </property>
@@ -725,7 +725,7 @@ padding-top: 1px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -746,7 +746,7 @@ padding-top: 1px;</string>
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

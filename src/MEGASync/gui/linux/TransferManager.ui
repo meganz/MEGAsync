@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>TransferManager</class>
  <widget class="QDialog" name="TransferManager">
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -32,7 +35,7 @@
 }
 #wHeader
 {
-     background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                 stop: 0.1 #f9f9f9, stop: 0.2 #f6f6f6,
 								 stop: 0.3 #f5f5f5, stop: 0.4 #f4f4f4,
 								 stop: 0.5#f3f3f3, stop: 0.6 #f2f2f2,
@@ -52,58 +55,71 @@
   padding: 5px 19px 0px 19px;
   border: none;
 }
-#bAdd
+#bClearAll:disabled, #bPause:disabled, #bAdd
 {
-  background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0.16 #ffffff, stop: 0.32 #fefefe,
-								 stop: 0.48 #fdfdfd, stop: 0.64 #fcfcfc,
-								 stop: 0.8#fbfbfb, stop: 1 #fafafa);
- border-radius: 3px;
- border: 1px solid rgba(0, 0, 0, 0.05);
- padding: 6px 12px 8px 12px;
- font-family: &quot;Source Sans Pro&quot;;
- font-size: 14px;
- font-weight: 400;
- color: #777777;
-}
-#bAdd:pressed, #bPause::pressed, #bClearAll::pressed
-{
-  background-color: rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(0, 0, 0, 0.2);
-}
-#bPause, #bClearAll
-{
-  font-family: &quot;Source Sans Pro&quot;;
-  font-size: 14px;
-  font-weight: 400;
-  color: #777777;
-  border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  padding: 7px 12px 7px 12px;
-  background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0.16 #ffffff, stop: 0.32 #fefefe,
-								 stop: 0.48 #fdfdfd, stop: 0.64 #fcfcfc,
-								 stop: 0.8#fbfbfb, stop: 1 #fafafa);
+	color: rgba(119, 119, 119, 30%);
 }
 
 #bClose
 {
-  background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0.16 #a9a9a9, stop: 0.32 #a7a7a7,
-								 stop: 0.48 #a5a5a5, stop: 0.64 #a3a3a3,
-								 stop: 0.8#a1a1a1, stop: 1 #aaaaaa);
+    color: rgba(255, 255, 255, 30%);
+}
+
+#bAdd, #bPause, #bClearAll
+{
+ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #ffffff, stop: 1 #fafafa);
+ border-radius: 3px;
+ border: 1px solid rgba(0, 0, 0, 5%);
+ padding: 9px 12px 10px 6px;
+ font-family: &quot;Source Sans Pro&quot;;
+ font-size: 14px;
+ color: #777777;
+
+}
+
+#bAdd:hover, #bPause::hover, #bClearAll::hover
+{
+  border: 1px solid rgba(0, 0, 0, 20%);
   border-radius: 3px;
-  border: 1px solid rgba(0, 0, 0, 0.45);
+  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #ffffff, stop: 1 #fafafa);
+
+}
+
+#bAdd:pressed, #bPause::pressed, #bClearAll::pressed
+{
+  background-color: rgba(0, 0, 0, 10%);
+  border: 1px solid rgba(0, 0, 0, 20%);
+  border-radius: 3px;
+}
+
+#bClose
+{
+  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #999999, stop: 1 #aaaaaa);
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 45%);
   padding: 7px 24px 7px 24px;
   font-family: &quot;Source Sans Pro&quot;;
   font-size: 14px;
-  font-weight: 400;
+  font-weight: normal;
+  font-style: normal;
   color: #ffffff;
 }
+#bClose::hover
+{
+  border: 1px solid rgba(0, 0, 0, 60%);
+  border-radius: 3px;
+  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #999999, stop: 1 #aaaaaa);
+}
+
 #bClose::pressed
 {
-  border: 1px solid rgba(0, 0, 0, 0.6);
-  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0, 60%);
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 50%);
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -250,6 +266,9 @@
                 <height>32</height>
                </size>
               </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="styleSheet">
                <string notr="true"/>
               </property>
@@ -289,9 +308,13 @@
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">QToolButton
+         <string notr="true">#wTabHeader
 {
-	border: none;
+   border-bottom: 1px solid rgba(0, 0, 0, 10%);
+}
+QToolButton
+{
+   border: none;
 }
 </string>
         </property>
@@ -542,8 +565,11 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="TransfersWidget" name="wAllTransfers"/>
      <widget class="TransfersWidget" name="wDownloads"/>
@@ -564,6 +590,13 @@
        <width>720</width>
        <height>48</height>
       </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#wOptions
+{
+border-top: 1px solid rgba(0, 0, 0, 10%);
+}
+</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
@@ -595,6 +628,9 @@
           <height>32</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Pause</string>
         </property>
@@ -612,6 +648,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="bClearAll">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="minimumSize">
          <size>
           <width>80</width>
@@ -623,6 +662,9 @@
           <width>16777215</width>
           <height>32</height>
          </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="text">
          <string>Clear all</string>
@@ -665,6 +707,9 @@
           <width>16777215</width>
           <height>32</height>
          </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="text">
          <string>Close</string>
