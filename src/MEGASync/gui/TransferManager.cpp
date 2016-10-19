@@ -54,7 +54,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     delete transferData;
 
     on_tAllTransfers_clicked();
-    updateState();
     createAddMenu();    
 }
 
@@ -171,6 +170,7 @@ void TransferManager::on_tCompleted_clicked()
     ui->bClearAll->setText(tr("Clear all"));
     ui->bPause->setVisible(false);
     ui->wTransfers->setCurrentWidget(ui->wCompleted);
+    updateState();
     ui->wCompleted->refreshTransferItems();
 }
 
@@ -250,6 +250,7 @@ void TransferManager::updateState()
     QWidget *w = ui->wTransfers->currentWidget();
     if (w == ui->wAllTransfers)
     {
+        onTransfersActive(ui->wAllTransfers->areTransfersActive());
         ui->wAllTransfers->pausedTransfers(preferences->wasPaused());
         if (preferences->wasPaused())
         {
@@ -263,8 +264,9 @@ void TransferManager::updateState()
             ui->bPause->setText(tr("Pause"));
         }
     }
-    else if(w == ui->wDownloads)
+    else if (w == ui->wDownloads)
     {
+        onTransfersActive(ui->wDownloads->areTransfersActive());
         ui->wDownloads->pausedTransfers(preferences->wasDownloadsPaused());     
         if (preferences->wasDownloadsPaused())
         {
@@ -278,8 +280,9 @@ void TransferManager::updateState()
             ui->bPause->setText(tr("Pause"));
         }
     }
-    else if(w == ui->wUploads)
+    else if (w == ui->wUploads)
     {
+        onTransfersActive(ui->wUploads->areTransfersActive());
         ui->wUploads->pausedTransfers(preferences->wasUploadsPaused());
         if (preferences->wasUploadsPaused())
         {
@@ -292,6 +295,10 @@ void TransferManager::updateState()
             ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/pause_ico.png")));
             ui->bPause->setText(tr("Pause"));
         }
+    }
+    else if (w == ui->wCompleted)
+    {
+        onTransfersActive(ui->wCompleted->areTransfersActive());
     }
 }
 
@@ -354,6 +361,13 @@ void TransferManager::on_bClearAll_clicked()
     {
         ui->wCompleted->clearTransfers();
     }
+
+    updateState();
+}
+
+void TransferManager::onTransfersActive(bool exists)
+{
+    ui->bClearAll->setEnabled(exists);
 }
 
 void TransferManager::changeEvent(QEvent *event)

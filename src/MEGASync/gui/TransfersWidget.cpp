@@ -11,6 +11,7 @@ TransfersWidget::TransfersWidget(QWidget *parent) :
     ui->setupUi(this);
     this->model = NULL;
     isPaused = false;
+    transfersActive = false;
 
     //Create the overlay widget with a semi-transparent background
     //that will be shown over the transfers when they are paused
@@ -37,9 +38,10 @@ void TransfersWidget::setupTransfers(MegaTransferData *transferData, int type)
     model = new QTransfersModel(type);
     connect(model, SIGNAL(noTransfers()), this, SLOT(noTransfers()));
     connect(model, SIGNAL(onTransferAdded()), this, SLOT(onTransferAdded()));
-    model->setupModelTransfers(transferData);
 
+    noTransfers();
     configureTransferView();
+    model->setupModelTransfers(transferData);
 }
 
 void TransfersWidget::setupTransfers(QList<MegaTransfer* > transferData, int type)
@@ -49,6 +51,7 @@ void TransfersWidget::setupTransfers(QList<MegaTransfer* > transferData, int typ
     connect(model, SIGNAL(noTransfers()), this, SLOT(noTransfers()));
     connect(model, SIGNAL(onTransferAdded()), this, SLOT(onTransferAdded()));
 
+    noTransfers();
     configureTransferView();
     model->setupModelTransfers(transferData);
 }
@@ -71,6 +74,11 @@ TransfersWidget::~TransfersWidget()
     delete overlay;
 }
 
+bool TransfersWidget::areTransfersActive()
+{
+    return transfersActive;
+}
+
 void TransfersWidget::configureTransferView()
 {
     if (!model)
@@ -87,8 +95,6 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->viewport()->setAcceptDrops(true);
     ui->tvTransfers->setDropIndicatorShown(true);
     ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
-
-    noTransfers();
     ui->tvTransfers->setModel(model);
 }
 
@@ -98,10 +104,12 @@ void TransfersWidget::pausedTransfers(bool paused)
     overlay->setVisible(paused);
     if (model->rowCount(QModelIndex()) == 0)
     {
+        transfersActive = false;
         noTransfers();
     }
     else
     {
+        transfersActive = true;
         ui->sWidget->setCurrentWidget(ui->pTransfers);
     }
 }
@@ -118,6 +126,7 @@ QTransfersModel *TransfersWidget::getModel()
 
 void TransfersWidget::noTransfers()
 {
+    transfersActive = false;
     if (isPaused)
     {
         ui->sWidget->setCurrentWidget(ui->pTransfers);
@@ -147,6 +156,7 @@ void TransfersWidget::noTransfers()
 
 void TransfersWidget::onTransferAdded()
 {
+    transfersActive = true;
     ui->sWidget->setCurrentWidget(ui->pTransfers);
 }
 

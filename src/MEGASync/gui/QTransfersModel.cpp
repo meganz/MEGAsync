@@ -339,6 +339,11 @@ void QTransfersModel::setupModelTransfers(MegaTransferData *transferData)
     if (type == TYPE_DOWNLOAD)
     {
         int numDownloads = transferData->getNumDownloads();
+        if (numDownloads)
+        {
+            emit onTransferAdded();
+        }
+
         transferOrder.resize(numDownloads);
         for (int i = 0; i < numDownloads; i++)
         {
@@ -352,6 +357,11 @@ void QTransfersModel::setupModelTransfers(MegaTransferData *transferData)
     else if (type == TYPE_UPLOAD)
     {
         int numUploads = transferData->getNumUploads();
+        if (numUploads)
+        {
+            emit onTransferAdded();
+        }
+
         transferOrder.resize(numUploads);
         for (int i = 0; i < numUploads; i++)
         {
@@ -384,6 +394,11 @@ void QTransfersModel::setupModelTransfers(MegaTransferData *transferData)
             transfers.insert(itemData->tag, itemData);
             auto it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
             transferOrder.insert(it, itemData);
+        }
+
+        if (numUploads || numDownloads)
+        {
+            emit onTransferAdded();
         }
     }
 }

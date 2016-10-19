@@ -43,6 +43,7 @@ private:
     mega::QTMegaTransferListener *delegateListener;
 
     void createAddMenu();
+    void onTransfersActive(bool exists);
 
 private slots:
     void on_tCompleted_clicked();

@@ -26,6 +26,8 @@ public:
     QTransfersModel *getModel();
     ~TransfersWidget();
 
+    bool areTransfersActive();
+
 private:
     Ui::TransfersWidget *ui;
     QToolButton *overlay;
@@ -34,6 +36,7 @@ private:
     MegaTransferDelegate *tDelegate;
     int type;
     int isPaused;
+    bool transfersActive;
 
 private:
     void configureTransferView();
