@@ -261,6 +261,26 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
     QTreeView::mouseMoveEvent(event);
 }
 
+void MegaTransferView::leaveEvent(QEvent *event)
+{
+    QTransfersModel *model = (QTransfersModel*)this->model();
+    if (model)
+    {
+        if (lastItemHoveredTag)
+        {
+            TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
+            if (lastItemHovered)
+            {
+                lastItemHovered->mouseHoverTransfer(false);
+                last_row = -1;
+                lastItemHoveredTag = 0;
+                repaint();
+            }
+        }
+    }
+    QTreeView::leaveEvent(event);
+}
+
 void MegaTransferView::onCustomContextMenu(const QPoint &point)
 {
     QTransfersModel *model = (QTransfersModel*)this->model();

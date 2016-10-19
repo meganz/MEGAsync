@@ -43,6 +43,7 @@ private:
 
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event);
+    virtual void leaveEvent(QEvent* event);
 
 private slots:
     void onCustomContextMenu(const QPoint &point);
