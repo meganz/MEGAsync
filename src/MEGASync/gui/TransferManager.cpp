@@ -1,7 +1,8 @@
 #include "TransferManager.h"
-#include <QMessageBox>
+#include "QMegaMessageBox.h"
 #include "ui_TransferManager.h"
 #include "MegaApplication.h"
+#include "Utilities.h"
 
 using namespace mega;
 

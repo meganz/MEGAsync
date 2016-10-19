@@ -2,6 +2,7 @@
 #include "gui/CrashReportDialog.h"
 #include "gui/MegaProxyStyle.h"
 #include "gui/ConfirmSSLexception.h"
+#include "gui/QMegaMessageBox.h"
 #include "control/Utilities.h"
 #include "control/CrashHandler.h"
 #include "control/ExportProcessor.h"
@@ -510,7 +511,7 @@ void MegaApplication::initialize()
     preferences->initialize(dataPath);
     if (preferences->error())
     {
-        QMessageBox::critical(NULL, QString::fromAscii("MEGAsync"), tr("Your config is corrupt, please start over"));
+        QMegaMessageBox::critical(NULL, QString::fromAscii("MEGAsync"), tr("Your config is corrupt, please start over"), Utilities::getDevicePixelRatio());
     }
 
     preferences->setLastStatsRequest(0);
@@ -610,7 +611,7 @@ void MegaApplication::initialize()
                 applyProxySettings();
                 CrashHandler::instance()->sendPendingCrashReports(crashDialog.getUserMessage());
 #ifndef __APPLE__
-                QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("Thank you for your collaboration!"));
+                QMegaMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("Thank you for your collaboration!"));
 #endif
             }
         }
@@ -1439,6 +1440,9 @@ void MegaApplication::exitApplication()
     {
         exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"),
                                      tr("Are you sure you want to exit?"), QMessageBox::Yes|QMessageBox::No);
+//        TO-DO: Uncomment when asset is included to the project
+//        exitDialog->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-question.png")
+//                                                            : QString::fromUtf8(":/images/mbox-question@2x.png")));
         int button = exitDialog->exec();
         if (!exitDialog)
         {
@@ -2304,7 +2308,7 @@ void MegaApplication::showInfoMessage(QString message, QString title)
     }
     else
     {
-        QMessageBox::information(NULL, title, message);
+        QMegaMessageBox::information(NULL, title, message, Utilities::getDevicePixelRatio());
     }
 }
 
@@ -2328,7 +2332,7 @@ void MegaApplication::showWarningMessage(QString message, QString title)
         notificator->notify(Notificator::Warning, title, message,
                                     QIcon(QString::fromUtf8("://images/app_128.png")));
     }
-    else QMessageBox::warning(NULL, title, message);
+    else QMegaMessageBox::warning(NULL, title, message, Utilities::getDevicePixelRatio());
 }
 
 void MegaApplication::showErrorMessage(QString message, QString title)
@@ -2352,7 +2356,7 @@ void MegaApplication::showErrorMessage(QString message, QString title)
     }
     else
     {
-        QMessageBox::critical(NULL, title, message);
+        QMegaMessageBox::critical(NULL, title, message, Utilities::getDevicePixelRatio());
     }
 }
 
@@ -4355,12 +4359,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
             else if (errorCode == MegaError::API_EBLOCKED)
             {
-                QMessageBox::critical(NULL, tr("MEGAsync"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
+                QMegaMessageBox::critical(NULL, tr("MEGAsync"), tr("Your account has been blocked. Please contact support@mega.co.nz"), Utilities::getDevicePixelRatio());
             }
             else if (errorCode != MegaError::API_ESID && errorCode != MegaError::API_ESSL)
             //Invalid session or public key, already managed in TYPE_LOGOUT
             {
-                QMessageBox::warning(NULL, tr("MEGAsync"), tr("Login error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString())));
+                QMegaMessageBox::warning(NULL, tr("MEGAsync"), tr("Login error: %1").arg(QCoreApplication::translate("MegaError", e->getErrorString())), Utilities::getDevicePixelRatio());
             }
 
             //Wrong login -> logout
@@ -4382,6 +4386,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                                                 tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
                                                 + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")),
                                                          QMessageBox::Retry | QMessageBox::Yes | QMessageBox::Cancel);
+
+            //        TO-DO: Uncomment when asset is included to the project
+            //        sslKeyPinningError->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-critical.png")
+            //                                                    : QString::fromUtf8(":/images/mbox-critical@2x.png")));
+
                     sslKeyPinningError->setButtonText(QMessageBox::Yes, trUtf8("I don't care"));
                     sslKeyPinningError->setButtonText(QMessageBox::Cancel, trUtf8("Logout"));
                     sslKeyPinningError->setButtonText(QMessageBox::Retry, trUtf8("Retry"));
@@ -4436,18 +4445,18 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
             if (errorCode == MegaError::API_ESID)
             {
-                QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out on this computer from another location"));
+                QMegaMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out on this computer from another location"), Utilities::getDevicePixelRatio());
             }
             else if (errorCode == MegaError::API_ESSL)
             {
-                QMessageBox::critical(NULL, QString::fromAscii("MEGAsync"),
+                QMegaMessageBox::critical(NULL, QString::fromAscii("MEGAsync"),
                                       tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
-                                       + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")));
+                                       + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")), Utilities::getDevicePixelRatio());
             }
             else if (errorCode != MegaError::API_EACCESS)
             {
-                QMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out because of this error: %1")
-                                         .arg(QCoreApplication::translate("MegaError", e->getErrorString())));
+                QMegaMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("You have been logged out because of this error: %1")
+                                         .arg(QCoreApplication::translate("MegaError", e->getErrorString())), Utilities::getDevicePixelRatio());
             }
             unlink();
         }
@@ -4488,7 +4497,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             {
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
                              .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
-                QMessageBox::warning(NULL, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()), QMessageBox::Ok);
+                QMegaMessageBox::warning(NULL, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()), QMessageBox::Ok);
                 unlink();
             }
         }
@@ -4698,7 +4707,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                             && GetVolumeInformationW((LPCWSTR)path.data(), NULL, 0, NULL, NULL, NULL, (LPWSTR)fsname.data(), MAX_PATH)
                             && !memcmp(fsname.data(), VBoxSharedFolderFS, sizeof(VBoxSharedFolderFS)))
                         {
-                            QMessageBox::critical(NULL, tr("MEGAsync"),
+                            QMegaMessageBox::critical(NULL, tr("MEGAsync"),
                                 tr("Your sync \"%1\" has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.")
                                 .arg(preferences->getSyncName(i)));
                         }
@@ -5339,8 +5348,8 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                 }
                 else if (noKeyDetected > 20)
                 {
-                    QMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"),
-                        QString::fromUtf8("Something went wrong. MEGAsync will restart now. If the problem persists please contact bug@mega.co.nz"));
+                    QMegaMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"),
+                        QString::fromUtf8("Something went wrong. MEGAsync will restart now. If the problem persists please contact bug@mega.co.nz"), Utilities::getDevicePixelRatio());
                     preferences->setCrashed(true);
                     rebootApplication(false);
                 }

@@ -12,6 +12,7 @@
 
 #include "MegaApplication.h"
 #include "SettingsDialog.h"
+#include "QMegaMessageBox.h"
 #include "ui_SettingsDialog.h"
 #include "control/Utilities.h"
 #include "platform/Platform.h"
@@ -1212,7 +1213,7 @@ bool SettingsDialog::saveSettings()
             }
             megaApi->setExcludedNames(&vExclusions);
 
-            QMessageBox::information(this, tr("Warning"), tr("The new excluded file names will be taken into account\n"
+            QMegaMessageBox::information(this, tr("Warning"), tr("The new excluded file names will be taken into account\n"
                                                                             "when the application starts again"), QMessageBox::Ok);
             excludedNamesChanged = false;
             preferences->setCrashed(true);
@@ -1247,7 +1248,7 @@ bool SettingsDialog::saveSettings()
                 megaApi->setExclusionUpperSizeLimit(0);
             }
 
-            QMessageBox::information(this, tr("Warning"), tr("The new excluded file sizes will be taken into account when the application starts again."), QMessageBox::Ok);
+            QMegaMessageBox::information(this, tr("Warning"), tr("The new excluded file sizes will be taken into account when the application starts again."), QMessageBox::Ok);
             sizeLimitsChanged = false;
         }
 
@@ -1541,7 +1542,7 @@ void SettingsDialog::on_bExportMasterKey_clicked()
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly | QFile::Truncate))
     {
-        QMessageBox::information(this, tr("Unable to write file"), file.errorString());
+        QMegaMessageBox::information(this, tr("Unable to write file"), file.errorString(), Utilities::getDevicePixelRatio());
         return;
     }
 
@@ -1550,7 +1551,7 @@ void SettingsDialog::on_bExportMasterKey_clicked()
 
     file.close();
 
-    QMessageBox::information(this, tr("Warning"), tr("Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.")+QString::fromUtf8("\n")+
+    QMegaMessageBox::information(this, tr("Warning"), tr("Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.")+QString::fromUtf8("\n")+
                                                       tr("Always keep physical control of your master key (e.g. on a client device, external storage, or print)."), QMessageBox::Ok);
 }
 
@@ -1824,6 +1825,9 @@ void SettingsDialog::on_bClearCache_clicked()
 
     QPointer<QMessageBox> warningDel = new QMessageBox(this);
     warningDel->setIcon(QMessageBox::Warning);
+    warningDel->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-warning.png")
+                                                                : QString::fromUtf8(":/images/mbox-warning@2x.png")));
+
     warningDel->setWindowTitle(tr("Clear local backup"));
     warningDel->setTextFormat(Qt::RichText);
 
@@ -1867,6 +1871,8 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
 
     QPointer<QMessageBox> warningDel = new QMessageBox(this);
     warningDel->setIcon(QMessageBox::Warning);
+    warningDel->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-warning.png")
+                                                                : QString::fromUtf8(":/images/mbox-warning@2x.png")));
     warningDel->setWindowTitle(tr("Clear remote backup"));
     warningDel->setTextFormat(Qt::RichText);
 

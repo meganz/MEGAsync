@@ -8,7 +8,8 @@
 #include <QByteArray>
 #include <QIcon>
 #include <QImageWriter>
-#include <QMessageBox>
+#include "QMegaMessageBox.h"
+#include "Utilities.h"
 #include <QMetaType>
 #include <QStyle>
 #include <QSystemTrayIcon>
@@ -370,9 +371,9 @@ void Notificator::notify(Class cls, const QString &title, const QString &text, c
     default:
         switch(cls) // Set icon based on class
         {
-            case Information: QMessageBox::information(parent, title, text, QMessageBox::Ok); break;
-            case Warning: QMessageBox::warning(parent, title, text, QMessageBox::Ok); break;
-            case Critical: QMessageBox::critical(parent, title, text, QMessageBox::Ok); break;
+            case Information: QMegaMessageBox::information(parent, title, text, Utilities::getDevicePixelRatio(), QMessageBox::Ok); break;
+            case Warning: QMegaMessageBox::warning(parent, title, text, Utilities::getDevicePixelRatio(), QMessageBox::Ok); break;
+            case Critical: QMegaMessageBox::critical(parent, title, text, Utilities::getDevicePixelRatio(), QMessageBox::Ok); break;
         }
 
         break;

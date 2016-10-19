@@ -509,6 +509,10 @@ void SetupWizard::on_bCancel_clicked()
 
         QPointer<QMessageBox> msg = new QMessageBox(this);
         msg->setIcon(QMessageBox::Question);
+        //        TO-DO: Uncomment when asset is included to the project
+        //        msg->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-question.png")
+        //                                                                    : QString::fromUtf8(":/images/mbox-question@2x.png")));
+
         msg->setWindowTitle(tr("MEGAsync"));
         msg->setText(tr("Are you sure you want to cancel this wizard and undo all changes?"));
         msg->addButton(QMessageBox::Yes);
@@ -726,6 +730,10 @@ void SetupWizard::closeEvent(QCloseEvent *event)
     event->ignore();
     QPointer<QMessageBox> msg = new QMessageBox(this);
     msg->setIcon(QMessageBox::Question);
+    //        TO-DO: Uncomment when asset is included to the project
+    //        msg->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-question.png")
+    //                                                            : QString::fromUtf8(":/images/mbox-question@2x.png")));
+
     msg->setWindowTitle(tr("MEGAsync"));
     msg->setText(tr("Are you sure you want to cancel this wizard and undo all changes?"));
     msg->addButton(QMessageBox::Yes);

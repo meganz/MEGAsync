@@ -61,6 +61,10 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 
     QPointer<QMessageBox> msg = new QMessageBox(this);
     msg->setIcon(QMessageBox::Question);
+    //        TO-DO: Uncomment when asset is included to the project
+    //        msg->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-question.png")
+    //                                                            : QString::fromUtf8(":/images/mbox-question@2x.png")));
+
     msg->setWindowTitle(tr("Stream from MEGA"));
     msg->setText(tr("Are you sure that you want to stop the streaming?"));
     msg->addButton(QMessageBox::Yes);
