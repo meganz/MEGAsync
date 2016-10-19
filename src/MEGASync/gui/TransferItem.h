@@ -52,7 +52,7 @@ public:
     bool eventFilter(QObject *, QEvent * ev);
 
 signals:
-    void animationChanged(int tag);
+    void refreshTransfer(int tag);
 
 private:
     Ui::TransferItem *ui;

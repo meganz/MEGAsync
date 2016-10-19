@@ -457,6 +457,8 @@ void TransferItem::mouseHoverTransfer(bool isHover)
         ui->lCancelTransferCompleted->installEventFilter(this);
         ui->lCancelTransferCompleted->update();
     }
+
+    emit refreshTransfer(this->getTransferTag());
 }
 
 bool TransferItem::eventFilter(QObject *, QEvent *ev)
@@ -466,7 +468,7 @@ bool TransferItem::eventFilter(QObject *, QEvent *ev)
 
 void TransferItem::frameChanged(int)
 {
-    emit animationChanged(this->getTransferTag());
+    emit refreshTransfer(this->getTransferTag());
 }
 
 void TransferItem::updateAnimation()

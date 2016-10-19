@@ -32,7 +32,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         {
             ti = new TransferItem();
             ti->setTransferTag(tag);
-            connect(ti, SIGNAL(animationChanged(int)), model, SLOT(animationChanged(int)));
+            connect(ti, SIGNAL(refreshTransfer(int)), model, SLOT(refreshTransferItem(int)));
             model->transferItems.insert(tag, ti);
             MegaTransfer *transfer = NULL;
 

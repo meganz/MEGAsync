@@ -77,7 +77,7 @@ private:
     void updateTransferInfo(mega::MegaTransfer *transfer);
 
 private slots:
-    void animationChanged(int tag);
+    void refreshTransferItem(int tag);
 
 protected:
     comparator_function priority_comparator;

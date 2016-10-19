@@ -449,7 +449,7 @@ void QTransfersModel::updateTransferInfo(MegaTransfer *transfer)
     }
 }
 
-void QTransfersModel::animationChanged(int tag)
+void QTransfersModel::refreshTransferItem(int tag)
 {
     TransferItemData *itemData = transfers.value(tag);
     if (!itemData)
