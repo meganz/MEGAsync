@@ -314,10 +314,10 @@ void TransferManager::on_bClearAll_clicked()
 
     if (w != ui->wCompleted)
     {
-        if(QMessageBox::question(this,
+        if(QMegaMessageBox::warning(this,
                                  QString::fromUtf8("MEGAsync"),
                                  tr("Are you sure you want to cancel all transfers?"),
-                                 QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No)
+                                 Utilities::getDevicePixelRatio(), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No)
         {
             return;
         }

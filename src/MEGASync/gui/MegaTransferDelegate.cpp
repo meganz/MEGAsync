@@ -3,6 +3,8 @@
 #include <QEvent>
 #include <QMouseEvent>
 #include <QMessageBox>
+#include "control/Utilities.h"
+#include "gui/QMegaMessageBox.h"
 #include "megaapi.h"
 #include "QTransfersModel.h"
 
@@ -111,13 +113,15 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
             }
             else
             {
-                QMessageBox question;
-                question.setWindowTitle(QString::fromUtf8("MEGAsync"));
-                question.setText(tr("Are you sure you want to cancel this transfer?"));
-                question.setIcon(QMessageBox::Question);
-                question.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
-                question.setDefaultButton(QMessageBox::No);
-                int result = question.exec();
+                QMessageBox warning;
+                warning.setWindowTitle(QString::fromUtf8("MEGAsync"));
+                warning.setText(tr("Are you sure you want to cancel this transfer?"));
+                warning.setIcon(QMessageBox::Warning);
+                warning.setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-warning.png")
+                                                                                   : QString::fromUtf8(":/images/mbox-warning@2x.png")));
+                warning.setStandardButtons(QMessageBox::Yes | QMessageBox::No);
+                warning.setDefaultButton(QMessageBox::No);
+                int result = warning.exec();
                 if (result == QMessageBox::Yes)
                 {
                     model->onTransferCancel(tag);

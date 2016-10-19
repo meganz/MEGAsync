@@ -1,6 +1,8 @@
 #include "MegaTransferView.h"
 #include "MegaApplication.h"
 #include "platform/Platform.h"
+#include "control/Utilities.h"
+#include "gui/QMegaMessageBox.h"
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -362,9 +364,9 @@ void MegaTransferView::moveToBottomClicked()
 
 void MegaTransferView::cancelTransferClicked()
 {
-    if(QMessageBox::question(this,
+    if(QMegaMessageBox::warning(0,
                              QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to cancel this transfer?"),
+                             tr("Are you sure you want to cancel this transfer?"), Utilities::getDevicePixelRatio(),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No)
     {
         return;
