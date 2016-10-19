@@ -15,7 +15,13 @@ BuildRequires: hicolor-icon-theme, unzip, wget
 %if 0%{?suse_version}
 BuildRequires: libcares-devel
 BuildRequires: update-desktop-files
-BuildRequires: libqt4, libqt4-x11
+ 
+%if 0%{?sle_version} == 120200 || 0%{?suse_version} > 1320
+BuildRequires: libqt5-qtbase-devel >= 5.6, libqt5-linguist
+Requires: libQt5Core5 >= 5.6
+%else
+BuildRequires: libqt4-devel
+%endif
 
 # disabling post-build-checks that ocassionally prevent opensuse rpms from being generated
 # plus it speeds up building process
@@ -102,9 +108,9 @@ export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
-%if 0%{?fedora}
+%if 0%{?fedora} || 0%{?sle_version} == 120200 || 0%{?suse_version} > 1320
 
-%if 0%{?fedora_version} >= 23
+%if 0%{?fedora_version} >= 23 || 0%{?sle_version} == 120200 || 0%{?suse_version} > 1320
 qmake-qt5 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot}
 lrelease-qt5  MEGASync/MEGASync.pro
 %else
