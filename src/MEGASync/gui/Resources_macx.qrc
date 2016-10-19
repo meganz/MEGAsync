@@ -507,5 +507,15 @@
         <file>images/downloading@2x.gif</file>
         <file>images/synching@2x.gif</file>
         <file>images/uploading@2x.gif</file>
+        <file>images/mbox-warning.png</file>
+        <file>images/mbox-warning@2x.png</file>
+        <file>images/download_from_mega_ico_white.png</file>
+        <file>images/download_from_mega_ico_white@2x.png</file>
+        <file>images/get_link_ico_white.png</file>
+        <file>images/get_link_ico_white@2x.png</file>
+        <file>images/settings_ico_white.png</file>
+        <file>images/settings_ico_white@2x.png</file>
+        <file>images/upload_to_mega_ico_white.png</file>
+        <file>images/upload_to_mega_ico_white@2x.png</file>
     </qresource>
 </RCC>
