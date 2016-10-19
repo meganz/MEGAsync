@@ -32,6 +32,7 @@ public:
     static bool removeRecursively(QString path);
     static void copyRecursively(QString srcPath, QString dstPath);
     static void getFolderSize(QString folderPath, long long *size);
+    static qreal getDevicePixelRatio();
 };
 
 #endif // UTILITIES_H
