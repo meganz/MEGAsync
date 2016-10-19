@@ -2693,6 +2693,10 @@ QList<MegaTransfer*> MegaApplication::getFinishedTransfers()
 
 MegaTransfer* MegaApplication::getFinishedTransferByTag(int tag)
 {
+    if (!finishedTransfers.contains(tag))
+    {
+        return NULL;
+    }
     return finishedTransfers.value(tag);
 }
 
@@ -4993,7 +4997,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                 delete [] key;
                 delete node;
             }
-            finishedTransfers.insert(transfer->getTag(), transfer->copy());
             addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath, publicKey);
         }
     }
@@ -5009,7 +5012,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         //so we save the path of the file to show it later
         if ((e->getErrorCode() == MegaError::API_OK))
         {
-            finishedTransfers.insert(transfer->getTag(), transfer->copy());
             if (!transfer->isSyncTransfer())
             {
                 QString localPath = QString::fromUtf8(transfer->getPath());
@@ -5023,6 +5025,9 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             }
         }
     }
+
+    // Add finished transfer to TransferManager map, regardless there is error or not
+    finishedTransfers.insert(transfer->getTag(), transfer->copy());
 
     //Send updated statics to the information dialog
     if (infoDialog)
