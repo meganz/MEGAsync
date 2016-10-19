@@ -5,6 +5,7 @@
 #include <QMenu>
 #include "megaapi.h"
 #include "Preferences.h"
+#include <QGraphicsEffect>
 #include "QTMegaTransferListener.h"
 
 namespace Ui {
@@ -35,6 +36,9 @@ private:
     QAction *uploadAction;
     QAction *downloadAction;
     Preferences *preferences;
+    QGraphicsDropShadowEffect *shadowAdd;
+    QGraphicsDropShadowEffect *shadowPause;
+    QGraphicsDropShadowEffect *shadowClearAll;
     mega::QTMegaTransferListener *delegateListener;
 
     void createAddMenu();

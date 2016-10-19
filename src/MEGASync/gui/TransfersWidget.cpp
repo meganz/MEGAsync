@@ -19,12 +19,13 @@ TransfersWidget::TransfersWidget(QWidget *parent) :
     overlay->setIcon(QIcon(QString::fromAscii("://images/paused_transfers.png")));
     overlay->setIconSize(QSize(156, 156));
     overlay->setText(tr("Paused Transfers"));
-    overlay->setStyleSheet(QString::fromAscii("background-color: rgba(247, 247, 247, 200); "
+    overlay->setStyleSheet(QString::fromAscii("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
+                                              "stop: 0 rgba(252, 252, 252, 90%), stop: 1 rgba(247, 247, 247, 90%)); "
                                               "padding: 50px 0 20px 0;"
                                               "font-family: \"Source Sans Pro\";"
                                               "font-size: 24px;"
                                               "font-weight: 300;"
-                                              "color: rgba(51, 51, 51, 0.7);"
+                                              "color: rgba(51, 51, 51, 70%);"
                                               "border: none; "));
     overlay->resize(ui->pTransfers->minimumSize());
     overlay->hide();
