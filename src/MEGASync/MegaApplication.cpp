@@ -400,11 +400,15 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 #if QT_VERSION < 0x050000
     dataPath = QDesktopServices::storageLocation(QDesktopServices::DataLocation);
 #else
+#ifdef Q_OS_LINUX
+    dataPath = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation) + QString::fromUtf8("/data/Mega Limited/MEGAsync");
+#else
     QStringList dataPaths = QStandardPaths::standardLocations(QStandardPaths::DataLocation);
     if (dataPaths.size())
     {
         dataPath = dataPaths.at(0);
     }
+#endif
 #endif
 
     if (dataPath.isEmpty())
