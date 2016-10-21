@@ -51,268 +51,148 @@
 	background-color:  #f7f7f7;	
 }</string>
   </property>
-  <layout class="QHBoxLayout" name="horizontalLayout_2">
-   <property name="spacing">
+  <widget class="QStackedWidget" name="sWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>720</width>
+     <height>336</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>720</width>
+     <height>336</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>720</width>
+     <height>336</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="currentIndex">
     <number>0</number>
    </property>
-   <property name="leftMargin">
-    <number>0</number>
-   </property>
-   <property name="topMargin">
-    <number>0</number>
-   </property>
-   <property name="rightMargin">
-    <number>0</number>
-   </property>
-   <property name="bottomMargin">
-    <number>0</number>
-   </property>
-   <item>
-    <widget class="QStackedWidget" name="sWidget">
-     <property name="minimumSize">
-      <size>
-       <width>720</width>
-       <height>336</height>
-      </size>
+   <widget class="TransfersStateInfoWidget" name="pNoTransfers">
+    <property name="minimumSize">
+     <size>
+      <width>720</width>
+      <height>336</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>720</width>
+      <height>336</height>
+     </size>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <property name="spacing">
+      <number>0</number>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>720</width>
-       <height>336</height>
-      </size>
+     <property name="leftMargin">
+      <number>0</number>
      </property>
-     <property name="styleSheet">
-      <string notr="true"/>
+     <property name="topMargin">
+      <number>0</number>
      </property>
-     <property name="currentIndex">
-      <number>1</number>
+     <property name="rightMargin">
+      <number>0</number>
      </property>
-     <widget class="QWidget" name="pNoTransfers">
-      <property name="minimumSize">
-       <size>
-        <width>720</width>
-        <height>336</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>720</width>
-        <height>336</height>
-       </size>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <property name="spacing">
-        <number>0</number>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="pTransfers">
+    <property name="minimumSize">
+     <size>
+      <width>720</width>
+      <height>336</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>720</width>
+      <height>336</height>
+     </size>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: none;</string>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="spacing">
+      <number>0</number>
+     </property>
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
+     <item>
+      <widget class="MegaTransferView" name="tvTransfers">
+       <property name="minimumSize">
+        <size>
+         <width>721</width>
+         <height>336</height>
+        </size>
        </property>
-       <property name="leftMargin">
-        <number>0</number>
+       <property name="maximumSize">
+        <size>
+         <width>721</width>
+         <height>336</height>
+        </size>
        </property>
-       <property name="topMargin">
-        <number>0</number>
+       <property name="focusPolicy">
+        <enum>Qt::NoFocus</enum>
        </property>
-       <property name="rightMargin">
-        <number>0</number>
+       <property name="styleSheet">
+        <string notr="true"/>
        </property>
-       <property name="bottomMargin">
-        <number>0</number>
+       <property name="showDropIndicator" stdset="0">
+        <bool>true</bool>
        </property>
-       <item>
-        <widget class="QWidget" name="wContainer" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>720</width>
-           <height>336</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>720</width>
-           <height>336</height>
-          </size>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <item>
-           <spacer name="horizontalSpacer">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>257</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QWidget" name="wStatus" native="true">
-            <layout class="QVBoxLayout" name="verticalLayout">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QPushButton" name="lStatusIcon">
-               <property name="minimumSize">
-                <size>
-                 <width>156</width>
-                 <height>156</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>156</width>
-                 <height>156</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">border: none;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>156</width>
-                 <height>156</height>
-                </size>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="lStatus">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>31</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>31</height>
-                </size>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>257</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="pTransfers">
-      <property name="minimumSize">
-       <size>
-        <width>720</width>
-        <height>336</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>720</width>
-        <height>336</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">border: none;</string>
-      </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <property name="spacing">
-        <number>0</number>
+       <property name="alternatingRowColors">
+        <bool>false</bool>
        </property>
-       <property name="leftMargin">
-        <number>0</number>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
        </property>
-       <property name="topMargin">
-        <number>0</number>
+       <property name="rootIsDecorated">
+        <bool>false</bool>
        </property>
-       <property name="rightMargin">
-        <number>0</number>
+       <property name="uniformRowHeights">
+        <bool>true</bool>
        </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="MegaTransferView" name="tvTransfers">
-         <property name="minimumSize">
-          <size>
-           <width>721</width>
-           <height>336</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>721</width>
-           <height>336</height>
-          </size>
-         </property>
-         <property name="focusPolicy">
-          <enum>Qt::NoFocus</enum>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="showDropIndicator" stdset="0">
-          <bool>true</bool>
-         </property>
-         <property name="alternatingRowColors">
-          <bool>false</bool>
-         </property>
-         <property name="selectionMode">
-          <enum>QAbstractItemView::SingleSelection</enum>
-         </property>
-         <property name="rootIsDecorated">
-          <bool>false</bool>
-         </property>
-         <property name="uniformRowHeights">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-   </item>
-  </layout>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
  </widget>
  <customwidgets>
   <customwidget>
    <class>MegaTransferView</class>
    <extends>QTreeView</extends>
    <header>MegaTransferView.h</header>
+  </customwidget>
+  <customwidget>
+   <class>TransfersStateInfoWidget</class>
+   <extends>QWidget</extends>
+   <header>TransfersStateInfoWidget.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

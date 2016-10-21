@@ -15,20 +15,12 @@ TransfersWidget::TransfersWidget(QWidget *parent) :
 
     //Create the overlay widget with a semi-transparent background
     //that will be shown over the transfers when they are paused
-    overlay = new QToolButton(this);
-    overlay->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    overlay = new TransfersStateInfoWidget(this);
     overlay->setIcon(QIcon(QString::fromAscii("://images/paused_transfers.png")));
-    overlay->setIconSize(QSize(156, 156));
     overlay->setText(tr("Paused Transfers"));
-    overlay->setStyleSheet(QString::fromAscii("background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
-                                              "stop: 0 rgba(252, 252, 252, 90%), stop: 1 rgba(247, 247, 247, 90%)); "
-                                              "padding: 50px 0 20px 0;"
-                                              "font-family: \"Source Sans Pro\";"
-                                              "font-size: 24px;"
-                                              "font-weight: 300;"
-                                              "color: rgba(51, 51, 51, 70%);"
-                                              "border: none; "));
-    overlay->resize(ui->pTransfers->minimumSize());
+    overlay->setBackgroundStyle(QString::fromAscii("background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
+                                                   "stop: 0 rgba(252, 252, 252, 90%), stop: 1 rgba(247, 247, 247, 90%));"));
+    overlay->resize(ui->sWidget->minimumSize());
     overlay->hide();
 }
 
@@ -137,19 +129,16 @@ void TransfersWidget::noTransfers()
     switch (type)
     {
         case QTransfersModel::TYPE_DOWNLOAD:
-            ui->lStatusIcon->setIcon(QIcon(QString::fromAscii("://images/no_downloads.png")));
-            ui->lStatusIcon->setIconSize(QSize(156, 156));
-            ui->lStatus->setText(tr("No Downloads"));
+            ui->pNoTransfers->setIcon(QIcon(QString::fromAscii("://images/no_downloads.png")));
+            ui->pNoTransfers->setText(tr("No Downloads"));
             break;
         case QTransfersModel::TYPE_UPLOAD:
-            ui->lStatusIcon->setIcon(QIcon(QString::fromAscii("://images/no_uploads.png")));
-            ui->lStatusIcon->setIconSize(QSize(156, 156));
-            ui->lStatus->setText(tr("No Uploads"));
+            ui->pNoTransfers->setIcon(QIcon(QString::fromAscii("://images/no_uploads.png")));
+            ui->pNoTransfers->setText(tr("No Uploads"));
             break;
         default:
-            ui->lStatusIcon->setIcon(QIcon(QString::fromAscii("://images/no_transfers.png")));
-            ui->lStatusIcon->setIconSize(QSize(156, 156));
-            ui->lStatus->setText(tr("No Transfers"));
+            ui->pNoTransfers->setIcon(QIcon(QString::fromAscii("://images/no_transfers.png")));
+            ui->pNoTransfers->setText(tr("No Transfers"));
             break;
     }
 }
