@@ -37,9 +37,6 @@ private:
     TransferMenuItemAction *uploadAction;
     TransferMenuItemAction *downloadAction;
     Preferences *preferences;
-    QGraphicsDropShadowEffect *shadowAdd;
-    QGraphicsDropShadowEffect *shadowPause;
-    QGraphicsDropShadowEffect *shadowClearAll;
     mega::QTMegaTransferListener *delegateListener;
 
     void createAddMenu();

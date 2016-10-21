@@ -12,24 +12,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    QGraphicsDropShadowEffect *shadowAdd = new QGraphicsDropShadowEffect(this);
-    QGraphicsDropShadowEffect *shadowPause = new QGraphicsDropShadowEffect(this);
-    QGraphicsDropShadowEffect *shadowClearAll = new QGraphicsDropShadowEffect(this);
-
-    shadowAdd->setBlurRadius(2.0);
-    shadowAdd->setColor(QColor(0, 0, 0, 39));
-    shadowAdd->setOffset(1.0);
-    shadowPause->setBlurRadius(2.0);
-    shadowPause->setColor(QColor(0, 0, 0, 39));
-    shadowPause->setOffset(1.0);
-    shadowClearAll->setBlurRadius(2.0);
-    shadowClearAll->setColor(QColor(0, 0, 0, 39));
-    shadowClearAll->setOffset(1.0);
-
-    ui->bAdd->setGraphicsEffect(shadowAdd);
-    ui->bPause->setGraphicsEffect(shadowPause);
-    ui->bClearAll->setGraphicsEffect(shadowClearAll);
-
     setAttribute(Qt::WA_QuitOnClose, false);
     setAttribute(Qt::WA_DeleteOnClose, true);
     Qt::WindowFlags flags =  Qt::Window | Qt::WindowSystemMenuHint
