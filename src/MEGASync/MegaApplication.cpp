@@ -4947,11 +4947,11 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
     //Update statics
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
     {
-        totalDownloadSize += transfer->getTotalBytes();
+        totalDownloadSize = transfer->getTotalBytes();
     }
     else
     {
-        totalUploadSize += transfer->getTotalBytes();
+        totalUploadSize = transfer->getTotalBytes();
     }
 
     //Send statics to the information dialog
@@ -4960,6 +4960,15 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
         infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
         infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
         infoDialog->updateTransfers();
+    }
+
+    if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
+    {
+        totalDownloadSize++;
+    }
+    else
+    {
+        totalUploadSize++;
     }
 }
 
