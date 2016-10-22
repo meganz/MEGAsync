@@ -85,6 +85,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     transfersFinishedTimer.setInterval(5000);
     connect(&transfersFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllTransfersFinished()));
 
+    recentFilesTimer.setSingleShot(true);
+    recentFilesTimer.setInterval(200);
+    connect(&recentFilesTimer, SIGNAL(timeout()), this, SLOT(onUpdateRecentFiles()));
+
     ui->wDownloadDesc->hide();
     ui->wUploadDesc->hide();
 
@@ -979,6 +983,12 @@ void InfoDialog::onAllTransfersFinished()
     }
 }
 
+void InfoDialog::onUpdateRecentFiles()
+{
+    ui->wRecent1->updateWidget();
+    ui->wRecent2->updateWidget();
+    ui->wRecent3->updateWidget();
+}
 
 void InfoDialog::on_bSettings_clicked()
 {   
@@ -1091,9 +1101,10 @@ void InfoDialog::openFolder(QString path)
 
 void InfoDialog::updateRecentFiles()
 {
-    ui->wRecent1->updateWidget();
-    ui->wRecent2->updateWidget();
-    ui->wRecent3->updateWidget();
+    if (!recentFilesTimer.isActive())
+    {
+        recentFilesTimer.start();
+    }
 }
 
 void InfoDialog::disableGetLink(bool disable)

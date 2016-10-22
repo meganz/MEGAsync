@@ -69,6 +69,7 @@ public slots:
    void onAllUploadsFinished();
    void onAllDownloadsFinished();
    void onAllTransfersFinished();
+   void onUpdateRecentFiles();
 
 private slots:
     void on_bSettings_clicked();
@@ -147,6 +148,7 @@ protected:
     QTimer downloadsFinishedTimer;
     QTimer uploadsFinishedTimer;
     QTimer transfersFinishedTimer;
+    QTimer recentFilesTimer;
     int scanningAnimationIndex;
     MegaApplication *app;
     Preferences *preferences;
