@@ -4932,7 +4932,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 //Called when a transfer is about to start
 void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 {
-    if (appfinished || transfer->isStreamingTransfer() || transfer->isFolderTransfer())
+    if (appfinished || transfer->isStreamingTransfer() || transfer->isFolderTransfer()
+            || transfer->getTotalBytes() == transfer->getTransferredBytes()) // Skipped transfer
     {
         return;
     }
@@ -5023,9 +5024,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     //Update statics
     if (transfer->getType()==MegaTransfer::TYPE_DOWNLOAD)
     {
-        totalDownloadedSize += transfer->getDeltaSize();
-        downloadSpeed = transfer->getSpeed();
-
         //Show the transfer in the "recently updated" list
         if (e->getErrorCode() == MegaError::API_OK)
         {
@@ -5047,7 +5045,15 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                 delete node;
             }
             addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath, publicKey);
+            if (!transfer->getSpeed())
+            {
+                // Skipped transfer
+                return;
+            }
         }
+
+        totalDownloadedSize += transfer->getDeltaSize();
+        downloadSpeed = transfer->getSpeed();
     }
     else
     {
