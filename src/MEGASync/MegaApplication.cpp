@@ -4947,12 +4947,10 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
     //Update statics
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
     {
-        downloadSpeed = 0;
         totalDownloadSize += transfer->getTotalBytes();
     }
     else
     {
-        uploadSpeed = 0;
         totalUploadSize += transfer->getTotalBytes();
     }
 
