@@ -1554,11 +1554,13 @@ void MegaApplication::checkNetworkInterfaces()
     for (int i = 0; i < configs.size(); i++)
     {
         QNetworkInterface networkInterface = configs.at(i);
+        QString interfaceName = networkInterface.humanReadableName();
         QNetworkInterface::InterfaceFlags flags = networkInterface.flags();
         if ((flags & (QNetworkInterface::IsUp | QNetworkInterface::IsRunning))
-                && !(flags & QNetworkInterface::IsLoopBack))
+                && !(flags & QNetworkInterface::IsLoopBack)
+                && !(interfaceName == QString::fromUtf8("Teredo Tunneling Pseudo-Interface")))
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Active network interface: %1").arg(networkInterface.humanReadableName()).toUtf8().constData());
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Active network interface: %1").arg(interfaceName).toUtf8().constData());
 
             int numActiveIPs = 0;
             QList<QNetworkAddressEntry> addresses = networkInterface.addressEntries();
@@ -1615,7 +1617,7 @@ void MegaApplication::checkNetworkInterfaces()
         else
         {
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Ignored network interface: %1 Flags: %2")
-                         .arg(networkInterface.humanReadableName())
+                         .arg(interfaceName)
                          .arg(QString::number(flags)).toUtf8().constData());
         }
     }
