@@ -357,6 +357,7 @@ void TransferManager::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        createAddMenu();
     }
     QDialog::changeEvent(event);
 }

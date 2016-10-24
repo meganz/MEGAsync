@@ -281,6 +281,16 @@ void MegaTransferView::leaveEvent(QEvent *event)
     QTreeView::leaveEvent(event);
 }
 
+void MegaTransferView::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        createContextMenu();
+        createCompletedContextMenu();
+    }
+    QWidget::changeEvent(event);
+}
+
 void MegaTransferView::onCustomContextMenu(const QPoint &point)
 {
     QTransfersModel *model = (QTransfersModel*)this->model();

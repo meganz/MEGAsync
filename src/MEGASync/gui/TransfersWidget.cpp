@@ -15,11 +15,7 @@ TransfersWidget::TransfersWidget(QWidget *parent) :
 
     //Create the overlay widget with a semi-transparent background
     //that will be shown over the transfers when they are paused
-    overlay = new TransfersStateInfoWidget(this);
-    overlay->setIcon(QIcon(QString::fromAscii("://images/paused_transfers.png")));
-    overlay->setText(tr("Paused Transfers"));
-    overlay->setBackgroundStyle(QString::fromAscii("background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,"
-                                                   "stop: 0 rgba(252, 252, 252, 90%), stop: 1 rgba(247, 247, 247, 90%));"));
+    overlay = new TransfersStateInfoWidget(this, TransfersStateInfoWidget::PAUSED);
     overlay->resize(ui->sWidget->minimumSize());
     overlay->hide();
 }
@@ -129,16 +125,13 @@ void TransfersWidget::noTransfers()
     switch (type)
     {
         case QTransfersModel::TYPE_DOWNLOAD:
-            ui->pNoTransfers->setIcon(QIcon(QString::fromAscii("://images/no_downloads.png")));
-            ui->pNoTransfers->setText(tr("No Downloads"));
+            ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_DOWNLOADS);
             break;
         case QTransfersModel::TYPE_UPLOAD:
-            ui->pNoTransfers->setIcon(QIcon(QString::fromAscii("://images/no_uploads.png")));
-            ui->pNoTransfers->setText(tr("No Uploads"));
+            ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_UPLOADS);
             break;
         default:
-            ui->pNoTransfers->setIcon(QIcon(QString::fromAscii("://images/no_transfers.png")));
-            ui->pNoTransfers->setText(tr("No Transfers"));
+            ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_TRANSFERS);
             break;
     }
 }
