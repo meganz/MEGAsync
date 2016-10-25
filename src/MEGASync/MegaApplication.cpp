@@ -611,7 +611,7 @@ void MegaApplication::initialize()
                 applyProxySettings();
                 CrashHandler::instance()->sendPendingCrashReports(crashDialog.getUserMessage());
 #ifndef __APPLE__
-                QMegaMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("Thank you for your collaboration!"));
+                QMegaMessageBox::information(NULL, QString::fromAscii("MEGAsync"), tr("Thank you for your collaboration!"), Utilities::getDevicePixelRatio());
 #endif
             }
         }
@@ -4501,7 +4501,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             {
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
                              .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
-                QMegaMessageBox::warning(NULL, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()), QMessageBox::Ok);
+                QMegaMessageBox::warning(NULL, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()),
+                                         Utilities::getDevicePixelRatio(), QMessageBox::Ok);
                 unlink();
             }
         }
@@ -4713,7 +4714,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                         {
                             QMegaMessageBox::critical(NULL, tr("MEGAsync"),
                                 tr("Your sync \"%1\" has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.")
-                                .arg(preferences->getSyncName(i)));
+                                .arg(preferences->getSyncName(i)), Utilities::getDevicePixelRatio());
                         }
                         else
                         {

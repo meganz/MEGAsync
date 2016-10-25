@@ -1214,7 +1214,8 @@ bool SettingsDialog::saveSettings()
             megaApi->setExcludedNames(&vExclusions);
 
             QMegaMessageBox::information(this, tr("Warning"), tr("The new excluded file names will be taken into account\n"
-                                                                            "when the application starts again"), QMessageBox::Ok);
+                                                                            "when the application starts again"),
+                                         Utilities::getDevicePixelRatio(), QMessageBox::Ok);
             excludedNamesChanged = false;
             preferences->setCrashed(true);
 
@@ -1248,7 +1249,10 @@ bool SettingsDialog::saveSettings()
                 megaApi->setExclusionUpperSizeLimit(0);
             }
 
-            QMegaMessageBox::information(this, tr("Warning"), tr("The new excluded file sizes will be taken into account when the application starts again."), QMessageBox::Ok);
+            QMegaMessageBox::information(this, tr("Warning"),
+                                         tr("The new excluded file sizes will be taken into account when the application starts again."),
+                                         Utilities::getDevicePixelRatio(),
+                                         QMessageBox::Ok);
             sizeLimitsChanged = false;
         }
 
@@ -1551,8 +1555,11 @@ void SettingsDialog::on_bExportMasterKey_clicked()
 
     file.close();
 
-    QMegaMessageBox::information(this, tr("Warning"), tr("Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.")+QString::fromUtf8("\n")+
-                                                      tr("Always keep physical control of your master key (e.g. on a client device, external storage, or print)."), QMessageBox::Ok);
+    QMegaMessageBox::information(this, tr("Warning"),
+                                 tr("Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.") + QString::fromUtf8("\n")
+                                 + tr("Always keep physical control of your master key (e.g. on a client device, external storage, or print)."),
+                                 Utilities::getDevicePixelRatio(),
+                                 QMessageBox::Ok);
 }
 
 void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
