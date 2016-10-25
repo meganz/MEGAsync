@@ -55,7 +55,7 @@
   padding: 5px 19px 0px 19px;
   border: none;
 }
-#bClearAll:disabled, #bPause:disabled, #bAdd
+#bClearAll:disabled, #bPause:disabled, #bAdd:disabled
 {
 	color: rgba(119, 119, 119, 30%);
 }
@@ -71,7 +71,7 @@
                                       stop: 0 #ffffff, stop: 1 #fafafa);
  border-radius: 3px;
  border: 1px solid rgba(0, 0, 0, 5%);
- padding: 9px 12px 10px 6px;
+ padding: 7px 12px 7px 6px;
  font-family: &quot;Source Sans Pro&quot;;
  font-size: 14px;
  color: #777777;
