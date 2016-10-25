@@ -1339,6 +1339,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label of context menu option to resume selected transfer</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Are you sure you want to cancel this transfer?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaUploader</name>
@@ -2870,6 +2874,54 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate a completing state for a transfer item (upload/download)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>just now</source>
+        <translation type="unfinished">[$1699]</translation>
+    </message>
+    <message>
+        <source>%1 seconds ago</source>
+        <translation type="unfinished">[$1700]</translation>
+    </message>
+    <message>
+        <source>1 minute ago</source>
+        <translation type="unfinished">[$1701]</translation>
+    </message>
+    <message>
+        <source>%1 minutes ago</source>
+        <translation type="unfinished">[$1702]</translation>
+    </message>
+    <message>
+        <source>1 hour ago</source>
+        <translation type="unfinished">[$1703]</translation>
+    </message>
+    <message>
+        <source>%1 hours ago</source>
+        <translation type="unfinished">[$1697]</translation>
+    </message>
+    <message>
+        <source>1 day ago</source>
+        <translation type="unfinished">[$1704]</translation>
+    </message>
+    <message>
+        <source>%1 days ago</source>
+        <translation type="unfinished">[$1705]</translation>
+    </message>
+    <message>
+        <source>1 month ago</source>
+        <translation type="unfinished">[$1706]</translation>
+    </message>
+    <message>
+        <source>%1 months ago</source>
+        <translation type="unfinished">[$1707]</translation>
+    </message>
+    <message>
+        <source>1 year ago</source>
+        <translation type="unfinished">[$1708]</translation>
+    </message>
+    <message>
+        <source>%1 years ago</source>
+        <translation type="unfinished">[$1709]</translation>
+    </message>
 </context>
 <context>
     <name>TransferManager</name>
@@ -2953,14 +3005,13 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Resume</source>
+        <translation type="unfinished">[$1649]</translation>
+    </message>
 </context>
 <context>
-    <name>TransfersWidget</name>
-    <message>
-        <source>Paused Transfers</source>
-        <translatorcomment>Label to indicate that active transfers are paused</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
+    <name>TransfersStateInfoWidget</name>
     <message>
         <source>No Downloads</source>
         <translatorcomment>Label to indicate that there are no active downloads</translatorcomment>
@@ -2969,6 +3020,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>No Uploads</source>
         <translatorcomment>Label to indicate that there are no active uploads</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused Transfers</source>
+        <translatorcomment>Label to indicate that active transfers are paused</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
