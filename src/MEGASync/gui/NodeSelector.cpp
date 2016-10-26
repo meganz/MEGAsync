@@ -250,13 +250,24 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
 
 void NodeSelector::onCustomContextMenu(const QPoint &point)
 {
+    QMenu customMenu;
+
     MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
     MegaNode *parent = megaApi->getParentNode(node);
 
     if (parent && node && megaApi->getAccess(node) >= MegaShare::ACCESS_FULL)
-    {
-        QMenu customMenu;
+    {        
         customMenu.addAction(tr("Delete"), this, SLOT(onDeleteClicked()));
+    }
+
+    if (node && node->getType() != MegaNode::TYPE_ROOT
+            && (megaApi->checkAccess(node, MegaShare::ACCESS_OWNER).getErrorCode() == MegaError::API_OK))
+    {
+        customMenu.addAction(tr("Get MEGA link"), this, SLOT(onGenMEGALinkClicked()));
+    }
+
+    if (!customMenu.actions().isEmpty())
+    {
         customMenu.exec(ui->tMegaFolders->mapToGlobal(point));
     }
 
@@ -298,6 +309,20 @@ void NodeSelector::onDeleteClicked()
             delete rubbish;
         }
     }
+    delete node;
+}
+
+void NodeSelector::onGenMEGALinkClicked()
+{
+    MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
+    if(!node || node->getType() == MegaNode::TYPE_ROOT
+            || (megaApi->checkAccess(node, MegaShare::ACCESS_OWNER).getErrorCode() != MegaError::API_OK))
+    {
+        delete node;
+        return;
+    }
+
+    megaApi->exportNode(node);
     delete node;
 }
 
