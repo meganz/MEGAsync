@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>460</width>
-    <height>440</height>
+    <height>460</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>460</width>
-    <height>440</height>
+    <height>460</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>460</width>
-    <height>440</height>
+    <height>460</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -118,13 +118,13 @@ font-size: 11px;
         <property name="minimumSize">
          <size>
           <width>254</width>
-          <height>31</height>
+          <height>36</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>31</height>
+          <height>33</height>
          </size>
         </property>
        </widget>
@@ -159,13 +159,13 @@ font-size: 11px;
         <property name="minimumSize">
          <size>
           <width>254</width>
-          <height>31</height>
+          <height>36</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>31</height>
+          <height>33</height>
          </size>
         </property>
        </widget>
@@ -301,13 +301,13 @@ font-size: 11px;
         <property name="minimumSize">
          <size>
           <width>254</width>
-          <height>31</height>
+          <height>36</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>31</height>
+          <height>33</height>
          </size>
         </property>
        </widget>
@@ -336,13 +336,13 @@ font-size: 11px;
         <property name="minimumSize">
          <size>
           <width>254</width>
-          <height>31</height>
+          <height>36</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>31</height>
+          <height>33</height>
          </size>
         </property>
        </widget>
@@ -374,13 +374,13 @@ font-size: 11px;
         <property name="minimumSize">
          <size>
           <width>254</width>
-          <height>31</height>
+          <height>36</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>31</height>
+          <height>33</height>
          </size>
         </property>
        </widget>
