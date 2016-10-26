@@ -45,6 +45,8 @@ void Utilities::initializeExtensions()
 
     extensionIcons[QString::fromAscii("dwt")] = QString::fromAscii("dreamweaver.png");
 
+    extensionIcons[QString::fromAscii("folder")] = QString::fromAscii("folder.png");
+
     extensionIcons[QString::fromAscii("xls")] = extensionIcons[QString::fromAscii("xlsx")] = extensionIcons[QString::fromAscii("xlt")]  =
                             extensionIcons[QString::fromAscii("xltm")]  = QString::fromAscii("excel.png");
 

@@ -103,6 +103,7 @@ signals:
     void unityFixSignal();
 
 public slots:
+    void showInterface(QString);
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onMessageClicked();
     void start();
@@ -227,6 +228,7 @@ protected:
     InfoOverQuotaDialog *infoOverQuota;
     Preferences *preferences;
     mega::MegaApi *megaApi;
+    mega::MegaApi *megaApiFolders;
     HTTPServer *httpServer;
     UploadToMegaDialog *uploadFolderSelector;
     DownloadFromMegaDialog *downloadFolderSelector;

@@ -29,8 +29,8 @@ arch=('i686' 'x86_64')
 url="http://mega.nz/#sync"
 license=() #TODO
 groups=()
-depends=('glibc' 'gcc-libs' 'qt4' 'sqlite' 'openssl' 'zlib' )
-makedepends=('unzip' 'wget' 'ca-certificates' 'qt4')
+depends=('glibc' 'gcc-libs' 'qt5-base>=5.6' 'sqlite' 'openssl' 'zlib' )
+makedepends=('unzip' 'wget' 'ca-certificates' 'qt5-tools')
 checkdepends=()
 optdepends=('sni-qt: fix systray issue on KDE and LXQt', 'nautilus-megasync: for integration with nautilus')
 provides=("megasync=${pkgver}")
@@ -54,8 +54,8 @@ build() {
 	_bindir=$pkgdir/usr/bin
 	cd "$pkgname-$pkgver"
 	./configure -e -g -q
-	qmake MEGA.pro || qmake-qt4 MEGA.pro #qmake would fail when qt4 installed (due to some path missconfigurations)
-	lrelease MEGASync/MEGASync.pro || lrelease-qt4 MEGASync/MEGASync.pro 
+	qmake-qt5 MEGA.pro || qmake-qt4 MEGA.pro #qmake would fail when qt4 installed (due to some path missconfigurations)
+	lrelease-qt5 MEGASync/MEGASync.pro || lrelease-qt4 MEGASync/MEGASync.pro 
 	make
 }
 
