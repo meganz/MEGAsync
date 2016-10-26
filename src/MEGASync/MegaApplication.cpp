@@ -433,6 +433,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     trayOverQuotaMenu = NULL;
     trayGuestMenu = NULL;
     megaApi = NULL;
+    megaApiFolders = NULL;
     delegateListener = NULL;
     httpServer = NULL;
     totalDownloadSize = totalUploadSize = 0;
@@ -591,8 +592,10 @@ void MegaApplication::initialize()
 
 #ifndef __APPLE__
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
+    megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
 #else
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT, MacXPlatform::fd);
+    megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT, MacXPlatform::fd);
 #endif
 
     megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGAsync is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
@@ -1890,6 +1893,7 @@ void MegaApplication::cleanAll()
     QApplication::processEvents();
 
     delete megaApi;
+    delete megaApiFolders;
 
     preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
     trayIcon->deleteLater();
@@ -2833,7 +2837,7 @@ void MegaApplication::importLinks()
     pasteMegaLinksDialog = NULL;
 
     //Send links to the link processor
-    LinkProcessor *linkProcessor = new LinkProcessor(linkList, megaApi);
+    LinkProcessor *linkProcessor = new LinkProcessor(linkList, megaApi, megaApiFolders);
 
     //Open the import dialog
     importDialog = new ImportMegaLinksDialog(megaApi, preferences, linkProcessor);
@@ -4948,7 +4952,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 //Called when a transfer is about to start
 void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
 {
-    if (appfinished || transfer->isStreamingTransfer())
+    if (appfinished || transfer->isStreamingTransfer() || transfer->isFolderTransfer()
+            || transfer->getTotalBytes() == transfer->getTransferredBytes()) // Skipped transfer
     {
         return;
     }
@@ -4962,13 +4967,11 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
     //Update statics
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
     {
-        downloadSpeed = 0;
-        totalDownloadSize += transfer->getTotalBytes();
+        totalDownloadSize = transfer->getTotalBytes();
     }
     else
     {
-        uploadSpeed = 0;
-        totalUploadSize += transfer->getTotalBytes();
+        totalUploadSize = transfer->getTotalBytes();
     }
 
     //Send statics to the information dialog
@@ -4977,6 +4980,15 @@ void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
         infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
         infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
         infoDialog->updateTransfers();
+    }
+
+    if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
+    {
+        totalDownloadSize++;
+    }
+    else
+    {
+        totalUploadSize++;
     }
 }
 
@@ -4988,7 +5000,7 @@ void MegaApplication::onRequestTemporaryError(MegaApi *, MegaRequest *, MegaErro
 //Called when a transfer has finished
 void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaError* e)
 {
-    if (appfinished || transfer->isStreamingTransfer())
+    if (appfinished || transfer->isStreamingTransfer() || transfer->isFolderTransfer())
     {
         return;
     }
@@ -5039,9 +5051,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     //Update statics
     if (transfer->getType()==MegaTransfer::TYPE_DOWNLOAD)
     {
-        totalDownloadedSize += transfer->getDeltaSize();
-        downloadSpeed = transfer->getSpeed();
-
         //Show the transfer in the "recently updated" list
         if (e->getErrorCode() == MegaError::API_OK)
         {
@@ -5063,7 +5072,15 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                 delete node;
             }
             addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath, publicKey);
+            if (!transfer->getSpeed())
+            {
+                // Skipped transfer
+                return;
+            }
         }
+
+        totalDownloadedSize += transfer->getDeltaSize();
+        downloadSpeed = transfer->getSpeed();
     }
     else
     {
@@ -5180,7 +5197,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 //Called when a transfer has been updated
 void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 {
-    if (appfinished || transfer->isStreamingTransfer())
+    if (appfinished || transfer->isStreamingTransfer() || transfer->isFolderTransfer())
     {
         return;
     }
@@ -5400,11 +5417,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                 //we recover the path using the tag of the transfer
                 localPath = uploadLocalPaths.value(node->getTag());
                 uploadLocalPaths.remove(node->getTag());
-            }
-            else
-            {
-                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Unable to get the local path of the file: %1 Tag: %2")
-                             .arg(QString::fromUtf8(node->getName())).arg(node->getTag()).toUtf8().constData());
             }
 
             addRecentFile(QString::fromUtf8(node->getName()), node->getHandle(), localPath);

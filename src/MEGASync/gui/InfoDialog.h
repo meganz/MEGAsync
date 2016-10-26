@@ -18,6 +18,14 @@ class InfoDialog : public QDialog
 {
     Q_OBJECT
 
+    enum {
+        STATE_STARTING,
+        STATE_PAUSED,
+        STATE_WAITING,
+        STATE_INDEXING,
+        STATE_UPDATED
+    };
+
 public:
     explicit InfoDialog(MegaApplication *app, QWidget *parent = 0);
     ~InfoDialog();
@@ -61,6 +69,7 @@ public slots:
    void onAllUploadsFinished();
    void onAllDownloadsFinished();
    void onAllTransfersFinished();
+   void onUpdateRecentFiles();
 
 private slots:
     void on_bSettings_clicked();
@@ -124,6 +133,7 @@ private:
     bool indexing;
     bool waiting;
     GuestWidget *gWidget;
+    int state;
 
 protected:
     void changeEvent(QEvent * event);
@@ -138,6 +148,7 @@ protected:
     QTimer downloadsFinishedTimer;
     QTimer uploadsFinishedTimer;
     QTimer transfersFinishedTimer;
+    QTimer recentFilesTimer;
     int scanningAnimationIndex;
     MegaApplication *app;
     Preferences *preferences;

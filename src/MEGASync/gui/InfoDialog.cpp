@@ -65,6 +65,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->wTransfer2->setType(MegaTransfer::TYPE_UPLOAD);
     ui->wTransfer2->hideTransfer();
 
+    state = STATE_STARTING;
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
     scanningTimer.setSingleShot(false);
@@ -83,6 +84,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     transfersFinishedTimer.setSingleShot(true);
     transfersFinishedTimer.setInterval(5000);
     connect(&transfersFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllTransfersFinished()));
+
+    recentFilesTimer.setSingleShot(true);
+    recentFilesTimer.setInterval(200);
+    connect(&recentFilesTimer, SIGNAL(timeout()), this, SLOT(onUpdateRecentFiles()));
 
     ui->wDownloadDesc->hide();
     ui->wUploadDesc->hide();
@@ -638,18 +643,22 @@ void InfoDialog::updateState()
             return;
         }
 
-        if (scanningTimer.isActive())
-        {
-            scanningTimer.stop();
-        }
-
         setTransferSpeeds(-1, -1);
-        ui->lSyncUpdated->setText(tr("File transfers paused"));
-        QIcon icon;
-        icon.addFile(QString::fromUtf8(":/images/tray_paused_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+        if (state != STATE_PAUSED)
+        {
+            state = STATE_PAUSED;
+            if (scanningTimer.isActive())
+            {
+                scanningTimer.stop();
+            }
 
-        ui->label->setIcon(icon);
-        ui->label->setIconSize(QSize(64, 64));
+            ui->lSyncUpdated->setText(tr("File transfers paused"));
+            QIcon icon;
+            icon.addFile(QString::fromUtf8(":/images/tray_paused_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+
+            ui->label->setIcon(icon);
+            ui->label->setIconSize(QSize(64, 64));
+        }
 
         if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
         {
@@ -682,45 +691,57 @@ void InfoDialog::updateState()
 
         if (waiting)
         {
-            if (scanningTimer.isActive())
+            if (state != STATE_WAITING)
             {
-                scanningTimer.stop();
+                state = STATE_WAITING;
+                if (scanningTimer.isActive())
+                {
+                    scanningTimer.stop();
+                }
+
+                ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
+                QIcon icon;
+                icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+
+                ui->label->setIcon(icon);
+                ui->label->setIconSize(QSize(64, 64));
             }
-
-            ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
-            QIcon icon;
-            icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-
-            ui->label->setIcon(icon);
-            ui->label->setIconSize(QSize(64, 64));
         }
         else if (indexing)
         {
-            if (!scanningTimer.isActive())
+            if (state != STATE_INDEXING)
             {
-                scanningAnimationIndex = 1;
-                scanningTimer.start();
+                state = STATE_INDEXING;
+                if (!scanningTimer.isActive())
+                {
+                    scanningAnimationIndex = 1;
+                    scanningTimer.start();
+                }
+
+                ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
+
+                QIcon icon;
+                icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+                ui->label->setIcon(icon);
+                ui->label->setIconSize(QSize(64, 64));
             }
-
-            ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
-
-            QIcon icon;
-            icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-            ui->label->setIcon(icon);
-            ui->label->setIconSize(QSize(64, 64));
         }
         else
         {
-            if (scanningTimer.isActive())
+            if (state != STATE_UPDATED)
             {
-                scanningTimer.stop();
-            }
+                state = STATE_UPDATED;
+                if (scanningTimer.isActive())
+                {
+                    scanningTimer.stop();
+                }
 
-            ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
-            QIcon icon;
-            icon.addFile(QString::fromUtf8(":/images/tray_updated_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-            ui->label->setIcon(icon);
-            ui->label->setIconSize(QSize(64, 64));
+                ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
+                QIcon icon;
+                icon.addFile(QString::fromUtf8(":/images/tray_updated_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+                ui->label->setIcon(icon);
+                ui->label->setIconSize(QSize(64, 64));
+            }
         }
     }
 }
@@ -962,6 +983,12 @@ void InfoDialog::onAllTransfersFinished()
     }
 }
 
+void InfoDialog::onUpdateRecentFiles()
+{
+    ui->wRecent1->updateWidget();
+    ui->wRecent2->updateWidget();
+    ui->wRecent3->updateWidget();
+}
 
 void InfoDialog::on_bSettings_clicked()
 {   
@@ -1074,9 +1101,10 @@ void InfoDialog::openFolder(QString path)
 
 void InfoDialog::updateRecentFiles()
 {
-    ui->wRecent1->updateWidget();
-    ui->wRecent2->updateWidget();
-    ui->wRecent3->updateWidget();
+    if (!recentFilesTimer.isActive())
+    {
+        recentFilesTimer.start();
+    }
 }
 
 void InfoDialog::disableGetLink(bool disable)
