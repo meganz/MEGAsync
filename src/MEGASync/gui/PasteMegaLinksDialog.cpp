@@ -70,7 +70,8 @@ void PasteMegaLinksDialog::changeEvent(QEvent *event)
 QStringList PasteMegaLinksDialog::extractLinks(QString text)
 {
     QStringList finalLinks;
-    QStringList linkHeaders = { QString::fromUtf8("#!"), QString::fromUtf8("#F!") };
+    QStringList linkHeaders;
+    linkHeaders << QString::fromUtf8("#!") << QString::fromUtf8("#F!");
 
     for (int i = 0; i < linkHeaders.size(); i++)
     {
