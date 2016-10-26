@@ -106,12 +106,12 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
         {
 #ifndef WIN32
             if (!megaApi->createLocalFolder(dir.toNativeSeparators(destPath).toStdString().c_str()))
-            {
-                 return;
-            }
 #else
-           dir.mkpath(QString::fromAscii("."));
+            if (!dir.mkpath(QString::fromAscii(".")))
 #endif
+            {
+                return;
+            }
         }
 
         if (!parent->isForeign())
