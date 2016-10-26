@@ -84,6 +84,19 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->setDropIndicatorShown(true);
     ui->tvTransfers->setDragDropMode(QAbstractItemView::InternalMove);
     ui->tvTransfers->setModel(model);
+
+    switch (type)
+    {
+        case QTransfersModel::TYPE_DOWNLOAD:
+            ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_DOWNLOADS);
+            break;
+        case QTransfersModel::TYPE_UPLOAD:
+            ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_UPLOADS);
+            break;
+        default:
+            ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_TRANSFERS);
+            break;
+    }
 }
 
 void TransfersWidget::pausedTransfers(bool paused)
@@ -120,20 +133,7 @@ void TransfersWidget::noTransfers()
         ui->sWidget->setCurrentWidget(ui->pTransfers);
         return;
     }
-
     ui->sWidget->setCurrentWidget(ui->pNoTransfers);
-    switch (type)
-    {
-        case QTransfersModel::TYPE_DOWNLOAD:
-            ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_DOWNLOADS);
-            break;
-        case QTransfersModel::TYPE_UPLOAD:
-            ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_UPLOADS);
-            break;
-        default:
-            ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_TRANSFERS);
-            break;
-    }
 }
 
 void TransfersWidget::onTransferAdded()
