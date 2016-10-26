@@ -15,8 +15,9 @@ TransfersStateInfoWidget::~TransfersStateInfoWidget()
     delete ui;
 }
 
-void TransfersStateInfoWidget::setState(int state)
+void TransfersStateInfoWidget::setState(int newState)
 {
+    this->state = newState;
     switch(state)
     {
         case NO_DOWNLOADS:
@@ -45,6 +46,7 @@ void TransfersStateInfoWidget::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        setState(this->state);
     }
     QWidget::changeEvent(event);
 }
