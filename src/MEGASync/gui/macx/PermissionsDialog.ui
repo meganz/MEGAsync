@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>460</width>
-    <height>400</height>
+    <height>440</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>460</width>
-    <height>400</height>
+    <height>440</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>460</width>
-    <height>400</height>
+    <height>440</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -55,7 +55,7 @@ font-size: 11px;
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="widget_5" native="true">
+    <widget class="QWidget" name="wFolderPermissions" native="true">
      <property name="layoutDirection">
       <enum>Qt::LeftToRight</enum>
      </property>
@@ -95,7 +95,7 @@ font-size: 11px;
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label_7">
+       <widget class="QLabel" name="lGroupFolders">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -130,7 +130,7 @@ font-size: 11px;
        </widget>
       </item>
       <item row="3" column="0">
-       <widget class="QLabel" name="label_9">
+       <widget class="QLabel" name="lPublicFolders">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -209,7 +209,7 @@ font-size: 11px;
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="widget_8" native="true">
+    <widget class="QWidget" name="wFilePermissions" native="true">
      <layout class="QFormLayout" name="formLayout_2">
       <property name="labelAlignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -242,7 +242,7 @@ font-size: 11px;
         </property>
        </widget>
       </item>
-      <item row="5" column="0">
+      <item row="6" column="0">
        <widget class="QLabel" name="lFilePermissionsDesc">
         <property name="minimumSize">
          <size>
@@ -261,7 +261,7 @@ font-size: 11px;
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
+      <item row="6" column="1">
        <widget class="QLabel" name="lFilePermissions">
         <property name="minimumSize">
          <size>
@@ -277,8 +277,8 @@ font-size: 11px;
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_8">
+      <item row="2" column="0">
+       <widget class="QLabel" name="lGroupFiles">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -296,7 +296,7 @@ font-size: 11px;
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
+      <item row="2" column="1">
        <widget class="PermissionsWidget" name="wFileGroup" native="true">
         <property name="minimumSize">
          <size>
@@ -312,8 +312,8 @@ font-size: 11px;
         </property>
        </widget>
       </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="label_11">
+      <item row="4" column="0">
+       <widget class="QLabel" name="lPublicFiles">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -331,8 +331,46 @@ font-size: 11px;
         </property>
        </widget>
       </item>
-      <item row="3" column="1">
+      <item row="4" column="1">
        <widget class="PermissionsWidget" name="wFilePublic" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>254</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>31</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="lOwnerFiles">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>31</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: normal;</string>
+        </property>
+        <property name="text">
+         <string>Owner permissions:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="PermissionsWidget" name="wFileOwner" native="true">
         <property name="minimumSize">
          <size>
           <width>254</width>
@@ -350,11 +388,13 @@ font-size: 11px;
      </layout>
      <zorder>lFilePermissionsDesc</zorder>
      <zorder>lFilePermissions</zorder>
-     <zorder>label_8</zorder>
-     <zorder>label_11</zorder>
+     <zorder>lGroupFiles</zorder>
+     <zorder>lPublicFiles</zorder>
      <zorder>lFiles</zorder>
      <zorder>wFileGroup</zorder>
      <zorder>wFilePublic</zorder>
+     <zorder>lOwnerFiles</zorder>
+     <zorder>wFileOwner</zorder>
     </widget>
    </item>
    <item>
