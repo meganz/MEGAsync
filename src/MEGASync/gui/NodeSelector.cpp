@@ -255,15 +255,19 @@ void NodeSelector::onCustomContextMenu(const QPoint &point)
     MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
     MegaNode *parent = megaApi->getParentNode(node);
 
-    if (parent && node && megaApi->getAccess(node) >= MegaShare::ACCESS_FULL)
+    if (parent && node)
     {        
-        customMenu.addAction(tr("Delete"), this, SLOT(onDeleteClicked()));
-    }
+        int access = megaApi->getAccess(node);
 
-    if (node && node->getType() != MegaNode::TYPE_ROOT
-            && (megaApi->checkAccess(node, MegaShare::ACCESS_OWNER).getErrorCode() == MegaError::API_OK))
-    {
-        customMenu.addAction(tr("Get MEGA link"), this, SLOT(onGenMEGALinkClicked()));
+        if (access == MegaShare::ACCESS_OWNER)
+        {
+            customMenu.addAction(tr("Get MEGA link"), this, SLOT(onGenMEGALinkClicked()));
+        }
+
+        if (access >= MegaShare::ACCESS_FULL)
+        {
+            customMenu.addAction(tr("Delete"), this, SLOT(onDeleteClicked()));
+        }
     }
 
     if (!customMenu.actions().isEmpty())
@@ -279,13 +283,13 @@ void NodeSelector::onDeleteClicked()
 {
     MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
     int access = megaApi->getAccess(node);
-    if(!node || access < MegaShare::ACCESS_FULL)
+    if (!node || access < MegaShare::ACCESS_FULL)
     {
         delete node;
         return;
     }
 
-    if(QMessageBox::question(this,
+    if (QMessageBox::question(this,
                              QString::fromUtf8("MEGAsync"),
                              tr("Are you sure that you want to delete \"%1\"?")
                                 .arg(QString::fromUtf8(node->getName())),
@@ -315,8 +319,8 @@ void NodeSelector::onDeleteClicked()
 void NodeSelector::onGenMEGALinkClicked()
 {
     MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
-    if(!node || node->getType() == MegaNode::TYPE_ROOT
-            || (megaApi->checkAccess(node, MegaShare::ACCESS_OWNER).getErrorCode() != MegaError::API_OK))
+    if (!node || node->getType() == MegaNode::TYPE_ROOT
+            || megaApi->getAccess(node) != MegaShare::ACCESS_OWNER)
     {
         delete node;
         return;
