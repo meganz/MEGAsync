@@ -19,17 +19,24 @@ public:
         Read = 4
     };
 
+    enum {
+      ENABLED_READ = 0x01,
+      ENABLED_WRITE = 0x02,
+      ENABLED_EXECUTION = 0x04
+    };
+
     explicit PermissionsWidget(QWidget *parent = 0);
     void setDefaultPermissions(int permissions);
     int getCurrentPermissions();
+    void configurePermissions(unsigned int enabledPermissions);
     ~PermissionsWidget();
 
 signals:
     void onPermissionChanged();
+
 private:
     Ui::PermissionsWidget *ui;
     int permissionState;
-
     void updatePermissions();
 
 private slots:
