@@ -41,7 +41,7 @@ binary-arch: build install
 #	dh_undocumented
 	dh_installchangelogs
 	dh_link
-	dh_strip
+	dh_strip --dbg-package=megasync-dbg
 	dh_compress
 	dh_fixperms
 #	dh_makeshlibs
