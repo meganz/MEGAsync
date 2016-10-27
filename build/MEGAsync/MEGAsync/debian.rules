@@ -15,7 +15,7 @@ clean:
 	rm -f build-stamp
 
 install: build
-	dh_auto_install
+	dh_auto_install --destdir=debian/megasync
 	dh_install MEGASync/megasync /usr/bin/
 
 # Build architecture-independent files here.
