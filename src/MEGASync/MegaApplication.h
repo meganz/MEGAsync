@@ -39,6 +39,7 @@
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
+    #include <mach/mach.h>
 #endif
 
 Q_DECLARE_METATYPE(QQueue<QString>)
@@ -107,6 +108,7 @@ signals:
     void unityFixSignal();
 
 public slots:
+    void showInterface(QString);
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
     void onMessageClicked();
     void start();
@@ -232,6 +234,7 @@ protected:
     InfoOverQuotaDialog *infoOverQuota;
     Preferences *preferences;
     mega::MegaApi *megaApi;
+    mega::MegaApi *megaApiFolders;
     HTTPServer *httpServer;
     UploadToMegaDialog *uploadFolderSelector;
     DownloadFromMegaDialog *downloadFolderSelector;

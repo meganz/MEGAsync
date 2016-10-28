@@ -64,7 +64,19 @@ ContextMenuExt::ContextMenuExt(void) : m_cRef(1),
 
     InterlockedIncrement(&g_cDllRef);
 
-    HMODULE UxThemeDLL = LoadLibrary(L"UXTHEME.DLL");
+    HINSTANCE UxThemeDLL = NULL;
+    WCHAR systemPath[MAX_PATH];
+    UINT len = GetSystemDirectory(systemPath, MAX_PATH);
+    if (len + 20 >= MAX_PATH)
+    {
+        UxThemeDLL = LoadLibrary(L"UXTHEME.DLL");
+    }
+    else
+    {
+        StringCchPrintfW(systemPath + len, MAX_PATH - len, L"\\UXTHEME.DLL");
+        UxThemeDLL = LoadLibrary(systemPath);
+    }
+
     if (UxThemeDLL)
     {
         GetBufferedPaintBits = (pGetBufferedPaintBits)::GetProcAddress(UxThemeDLL, "GetBufferedPaintBits");

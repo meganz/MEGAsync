@@ -3,7 +3,7 @@ Section: Tools
 Priority: normal
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
 Build-Depends:  debhelper,
-                libqt4-dev,
+                libqt4-dev | qtbase5-dev,
                 libcrypto++-dev,
                 libc-ares-dev,
                 libssl-dev,
@@ -13,7 +13,7 @@ Build-Depends:  debhelper,
                 libtool,
                 dh-autoreconf,
                 cdbs,
-                libqt4-dbus
+                libqt4-dbus | libqt5dbus5
 
 Package: megasync
 Architecture: any
@@ -27,3 +27,11 @@ Description: Easy automated syncing between your computers and your MEGA cloud d
  Take advantage of MEGA's high-powered infrastructure and multi-connection transfers.
  Generous:
  Store up to 50 GB for free!
+
+Package: megasync-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends:
+    megasync
+Description: debugging symbols for megasync

@@ -107,9 +107,9 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->bAccount->setChecked(true);
     ui->wStack->setCurrentWidget(ui->pAccount);
 
-#ifndef WIN32
-    ui->rProxyAuto->hide();
+#ifndef WIN32    
     #ifndef __APPLE__
+    ui->rProxyAuto->hide();
     ui->cAutoUpdate->hide();
     ui->bUpdate->hide();
     #endif
@@ -597,8 +597,8 @@ void SettingsDialog::on_bProxies_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(416);
-    maxHeightAnimation->setEndValue(416);
+    minHeightAnimation->setEndValue(435);
+    maxHeightAnimation->setEndValue(435);
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
@@ -1412,8 +1412,8 @@ void SettingsDialog::loadSizeLimits()
 void SettingsDialog::on_bPermissions_clicked()
 {
     QPointer<PermissionsDialog> dialog = new PermissionsDialog(this);
-    dialog->setFolderPermissions(folderPermissions ? folderPermissions : preferences->folderPermissionsValue());
-    dialog->setFilePermissions(filePermissions ? filePermissions : preferences->filePermissionsValue());
+    dialog->setFolderPermissions(folderPermissions ? folderPermissions : megaApi->getDefaultFolderPermissions());
+    dialog->setFilePermissions(filePermissions ? filePermissions : megaApi->getDefaultFilePermissions());
 
     int result = dialog->exec();
     if (!dialog || result != QDialog::Accepted)

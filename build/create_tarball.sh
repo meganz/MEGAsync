@@ -40,7 +40,7 @@ cd $cwd
 archives=$cwd/archives
 rm -fr $archives
 mkdir $archives
-../src/MEGASync/mega/contrib/build_sdk.sh -q -n -f -w -s -v -u -o $archives
+../src/MEGASync/mega/contrib/build_sdk.sh -q -n -e -f -g -w -s -v -u -o $archives
 
 # get current version
 MEGASYNC_VERSION=`grep -Po 'const QString Preferences::VERSION_STRING = QString::fromAscii\("\K[^"]*' ../src/MEGASync/control/Preferences.cpp`
@@ -51,11 +51,17 @@ rm -rf $MEGASYNC_NAME
 echo "MEGAsync version: $MEGASYNC_VERSION"
 
 # delete previously generated files
-rm -fr MEGAsync/MEGAsync/megasync_*.dsc
+rm -fr MEGAsync/MEGAsync/megasync*.dsc
 
 # fix version number in template files and copy to appropriate directories
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.spec > MEGAsync/MEGAsync/megasync.spec
-sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.dsc > MEGAsync/MEGAsync/megasync_$MEGASYNC_VERSION.dsc
+for dist in xUbuntu_1{2,3,4,5,6}.{04,10} Debian_{7,8,9}.0; do
+if [ -f templates/MEGAsync/megasync-$dist.dsc ]; then
+	sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync-$dist.dsc > MEGAsync/MEGAsync/megasync-$dist.dsc
+else
+	sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.dsc > MEGAsync/MEGAsync/megasync-$dist.dsc
+fi
+done
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/PKGBUILD > MEGAsync/MEGAsync/PKGBUILD
 
 #include license as copyright file

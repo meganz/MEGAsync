@@ -3,9 +3,9 @@
 build: build-stamp
 build-stamp:
 	dh_testdir
-	./configure
-	qmake
-	lrelease MEGASync/MEGASync.pro
+	./configure -g
+	qmake-qt5 || qmake || /usr/lib/*/qt5/bin/qmake
+	lrelease-qt5 MEGASync/MEGASync.pro || lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt5/bin/lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt4/bin/lrelease MEGASync/MEGASync.pro
 	make
 	touch build-stamp
 
@@ -15,7 +15,7 @@ clean:
 	rm -f build-stamp
 
 install: build
-	dh_auto_install
+	dh_auto_install --destdir=debian/megasync
 	dh_install MEGASync/megasync /usr/bin/
 
 # Build architecture-independent files here.
@@ -41,7 +41,7 @@ binary-arch: build install
 #	dh_undocumented
 	dh_installchangelogs
 	dh_link
-	dh_strip
+	dh_strip --dbg-package=megasync-dbg
 	dh_compress
 	dh_fixperms
 #	dh_makeshlibs

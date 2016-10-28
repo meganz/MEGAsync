@@ -292,7 +292,9 @@ public:
     static const qint16 HTTPS_PORT;
     static const QString HTTPS_KEY;
     static const QString HTTPS_CERT;
+    static const QString HTTPS_CERT_INTERMEDIATE;
     static QStringList HTTPS_ALLOWED_ORIGINS;
+    static bool HTTPS_ORIGIN_CHECK_ENABLED;
 
 protected:
     QMutex mutex;

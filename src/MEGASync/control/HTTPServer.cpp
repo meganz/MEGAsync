@@ -61,7 +61,14 @@ void HTTPServer::incomingConnection(int socket)
             return;
         }
 
+#if QT_VERSION >= 0x050100
+        QList<QSslCertificate> certificates;
+        certificates.append(QSslCertificate(Preferences::HTTPS_CERT.toUtf8(), QSsl::Pem));
+        certificates.append(QSslCertificate(Preferences::HTTPS_CERT_INTERMEDIATE.toUtf8(), QSsl::Pem));
+        sslSocket->setLocalCertificateChain(certificates);
+#else
         sslSocket->setLocalCertificate(QSslCertificate(Preferences::HTTPS_CERT.toUtf8(), QSsl::Pem));
+#endif
         sslSocket->setPrivateKey(key);
         sslSocket->startServerEncryption();
     }
@@ -98,7 +105,7 @@ void HTTPServer::readClient()
             return;
         }
 
-        if (!Preferences::HTTPS_ALLOWED_ORIGINS.isEmpty())
+        if (Preferences::HTTPS_ORIGIN_CHECK_ENABLED && !Preferences::HTTPS_ALLOWED_ORIGINS.isEmpty())
         {
             bool found = false;
             for (int i = 0; i < Preferences::HTTPS_ALLOWED_ORIGINS.size(); i++)
