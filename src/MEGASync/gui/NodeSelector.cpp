@@ -250,13 +250,28 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
 
 void NodeSelector::onCustomContextMenu(const QPoint &point)
 {
+    QMenu customMenu;
+
     MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
     MegaNode *parent = megaApi->getParentNode(node);
 
-    if (parent && node && megaApi->getAccess(node) >= MegaShare::ACCESS_FULL)
+    if (parent && node)
+    {        
+        int access = megaApi->getAccess(node);
+
+        if (access == MegaShare::ACCESS_OWNER)
+        {
+            customMenu.addAction(tr("Get MEGA link"), this, SLOT(onGenMEGALinkClicked()));
+        }
+
+        if (access >= MegaShare::ACCESS_FULL)
+        {
+            customMenu.addAction(tr("Delete"), this, SLOT(onDeleteClicked()));
+        }
+    }
+
+    if (!customMenu.actions().isEmpty())
     {
-        QMenu customMenu;
-        customMenu.addAction(tr("Delete"), this, SLOT(onDeleteClicked()));
         customMenu.exec(ui->tMegaFolders->mapToGlobal(point));
     }
 
@@ -268,13 +283,13 @@ void NodeSelector::onDeleteClicked()
 {
     MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
     int access = megaApi->getAccess(node);
-    if(!node || access < MegaShare::ACCESS_FULL)
+    if (!node || access < MegaShare::ACCESS_FULL)
     {
         delete node;
         return;
     }
 
-    if(QMessageBox::question(this,
+    if (QMessageBox::question(this,
                              QString::fromUtf8("MEGAsync"),
                              tr("Are you sure that you want to delete \"%1\"?")
                                 .arg(QString::fromUtf8(node->getName())),
@@ -298,6 +313,20 @@ void NodeSelector::onDeleteClicked()
             delete rubbish;
         }
     }
+    delete node;
+}
+
+void NodeSelector::onGenMEGALinkClicked()
+{
+    MegaNode *node = megaApi->getNodeByHandle(selectedFolder);
+    if (!node || node->getType() == MegaNode::TYPE_ROOT
+            || megaApi->getAccess(node) != MegaShare::ACCESS_OWNER)
+    {
+        delete node;
+        return;
+    }
+
+    megaApi->exportNode(node);
     delete node;
 }
 

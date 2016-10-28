@@ -105,7 +105,7 @@ void HTTPServer::readClient()
             return;
         }
 
-        if (!Preferences::HTTPS_ALLOWED_ORIGINS.isEmpty())
+        if (Preferences::HTTPS_ORIGIN_CHECK_ENABLED && !Preferences::HTTPS_ALLOWED_ORIGINS.isEmpty())
         {
             bool found = false;
             for (int i = 0; i < Preferences::HTTPS_ALLOWED_ORIGINS.size(); i++)

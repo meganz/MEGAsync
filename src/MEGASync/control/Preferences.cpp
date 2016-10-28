@@ -132,6 +132,7 @@ const QString Preferences::HTTPS_CERT_INTERMEDIATE = QString::fromUtf8(
             );
 
 QStringList Preferences::HTTPS_ALLOWED_ORIGINS;
+bool Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
 
 #ifdef WIN32
     const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");

@@ -27,3 +27,11 @@ Description: Easy automated syncing between your computers and your MEGA cloud d
  Take advantage of MEGA's high-powered infrastructure and multi-connection transfers.
  Generous:
  Store up to 50 GB for free!
+
+Package: megasync-dbg
+Architecture: any
+Section: debug
+Priority: extra
+Depends:
+    megasync
+Description: debugging symbols for megasync
