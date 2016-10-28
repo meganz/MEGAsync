@@ -1578,7 +1578,6 @@ void MegaApplication::checkNetworkInterfaces()
         QString interfaceName = networkInterface.humanReadableName();
         QNetworkInterface::InterfaceFlags flags = networkInterface.flags();
         if ((flags & (QNetworkInterface::IsUp | QNetworkInterface::IsRunning))
-                && !(flags & QNetworkInterface::IsLoopBack)
                 && !(interfaceName == QString::fromUtf8("Teredo Tunneling Pseudo-Interface")))
         {
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Active network interface: %1").arg(interfaceName).toUtf8().constData());
