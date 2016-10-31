@@ -11,18 +11,17 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/2.9.9.0";
+const char Preferences::USER_AGENT[] = "MEGAsync/2.9.10.0";
 const int Preferences::VERSION_CODE = 2909;
-const int Preferences::BUILD_ID = 0;
+const int Preferences::BUILD_ID = 8;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.9");
-const QString Preferences::SDK_ID = QString::fromAscii("f2fb1");
+const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.10");
+const QString Preferences::SDK_ID = QString::fromAscii("5b0b7");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- Fixed compatibility with some web browsers\n"
-            "- Fixed the creation of thumbnails for JPG images (Windows)\n"
-            "- Fixed incompatibilities with some WiFi drivers (Windows)\n"
-            "- Fixed problems downloading files with incorrect metadata\n"
-            "- Other bug fixes");
+            "- Support to download/import folder links\n"
+            "- Automatic HTTP/HTTPS proxy detection on OS X\n"
+            "- Better compatibility with antivirus software\n"
+            "- Other bug fixes and minor improvements");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
