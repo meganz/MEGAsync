@@ -136,7 +136,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">terms of service</translation>
+        <translation type="unfinished">Terms of Service</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
@@ -365,6 +365,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
         <translation type="unfinished">Nagsisimula na ang iyong download</translation>
+    </message>
+</context>
+<context>
+    <name>ImportListWidgetItem</name>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">Mangyaring maghintay...</translation>
     </message>
 </context>
 <context>
@@ -1112,7 +1119,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>I don&#039;t care</source>
         <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
-        <translation type="unfinished">Wala akong pakialam</translation>
+        <translation type="unfinished">Lampake</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -1126,6 +1133,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are not logged in</source>
         <translation type="unfinished">Hindi ka naka-log-in</translation>
+    </message>
+    <message>
+        <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
+        <translation type="unfinished">A system tray to place MEGAsync tray icon could not found. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translatorcomment>Error message shown at startup when MEGAsync is executed in a Linux desktop that does not have a system tray</translatorcomment>
+    </message>
+    <message>
+        <source>Error getting link:</source>
+        <translation type="unfinished">Mali ang nakukuhang link:</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that is not in the Cloud Drive of the user</translatorcomment>
+        <translation type="unfinished">Hindi makita ang file</translation>
+    </message>
+    <message>
+        <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that can not be exported</translatorcomment>
+        <translation type="unfinished">The link can&#039;t be generated because the file is inside an incoming shared folder or your Rubbish Bin.</translation>
     </message>
 </context>
 <context>
@@ -1408,6 +1434,10 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Select just one file.</source>
         <translation type="unfinished">Pumili ng isang file</translation>
     </message>
+    <message>
+        <source>Get MEGA link</source>
+        <translation type="unfinished">Kumuha ng MEGA link</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1444,7 +1474,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>Walang valid na MEGA links na nakita. (Hindi pa suportado ang folder links)</translation>
+        <translation type="obsolete">Walang valid na MEGA links na nakita. (Hindi pa suportado ang folder links)</translation>
+    </message>
+    <message>
+        <source>Invalid MEGA Link</source>
+        <translation type="unfinished">Maling MEGA Link</translation>
     </message>
 </context>
 <context>
@@ -1483,6 +1517,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
         <translation type="unfinished">Ang files at folders ay nasa pagmamay-ari ng isang grupo ng users. Gamit ang dialogong ito, pupwedeng mong pahintulotan ng access para sa mga bagong files at folders na mabubo ng MEGAsync users na nasa iisang grupo at para sa iba pang users sa iyong computer. Kung hindi mo kailangan itong baguhin, iwan mo ito sa default permissions para sa rasong pangseguridad.</translation>
+    </message>
+    <message>
+        <source>Owner permissions:</source>
+        <translatorcomment>Label just before the owner permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">Owner permissions:</translation>
     </message>
 </context>
 <context>
@@ -2408,7 +2447,7 @@ when the application starts again</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Tinatanggap mo ang aming terms of service</translation>
+        <translation>Kailangan mong tanggapin ang aming Terms of Service</translation>
     </message>
     <message>
         <source>Creating account...</source>

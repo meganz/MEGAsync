@@ -169,7 +169,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Remember my decision and don&#039;t ask me again</source>
         <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Remember my decision and don&#039;t ask me again</translation>
+        <translation type="unfinished">Nicht wieder fragen</translation>
     </message>
     <message>
         <source>No</source>
@@ -365,6 +365,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
         <translation type="unfinished">Ihr Download wurde gestartet</translation>
+    </message>
+</context>
+<context>
+    <name>ImportListWidgetItem</name>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">Bitte warten...</translation>
     </message>
 </context>
 <context>
@@ -636,15 +643,15 @@ Are you sure?</source>
     </message>
     <message>
         <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
-        <translation type="unfinished">[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</translation>
+        <translation type="unfinished">[S]MEGAsync:[/S] Komfortabler automatischer Datenabgleich zwischen Ihren Computern und Ihrem Cloud Drive</translation>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
-        <translation type="unfinished">[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</translation>
+        <translation type="unfinished">[S]Flexibel:[/S] Synchronisieren Sie beliebig viele lokale Ordner mit beliebigen Zielordnern in Ihrem Cloud Drive!</translation>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</translation>
+        <translation type="unfinished">Sie erhalten 50 GB kostenlosen verschlüsselten Onlinespeicher mit einem Standardaccount. Für noch mehr Speicherplatz und Übertraungsvolumen stehen Ihnen unsere [A]PRO-Angebote[/A] zur Verfügung.</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
@@ -652,7 +659,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
-        <translation type="unfinished">MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</translation>
+        <translation type="unfinished">MEGAsync nutzt unsere mächtige Infrastruktur mit parallelisierten Transfers voll aus.</translation>
     </message>
     <message>
         <source>Lean &amp; mean resource usage</source>
@@ -660,7 +667,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
-        <translation type="unfinished">Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</translation>
+        <translation type="unfinished">MEGAs lückenlose Verschlüsselungsalgorithmen laufen direkt auf Ihrer Hardware - ohne einen leistungshungrigen Browser dazwischen.</translation>
     </message>
     <message>
         <source>Unlimited file size</source>
@@ -668,7 +675,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
-        <translation type="unfinished">While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</translation>
+        <translation type="unfinished">Manche Browser setzen ein Limit für die maximale Dateigröße. MEGAsync kennt keine solche Größenbegrenzung.</translation>
     </message>
     <message>
         <source>Login</source>
@@ -1127,6 +1134,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You are not logged in</source>
         <translation type="unfinished">Sie sind nicht eingeloggt</translation>
     </message>
+    <message>
+        <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
+        <translation type="unfinished">A system tray to place MEGAsync tray icon could not found. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translatorcomment>Error message shown at startup when MEGAsync is executed in a Linux desktop that does not have a system tray</translatorcomment>
+    </message>
+    <message>
+        <source>Error getting link:</source>
+        <translation type="unfinished">Fehler bei der Linkerstellung:</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that is not in the Cloud Drive of the user</translatorcomment>
+        <translation type="unfinished">Datei nicht gefunden</translation>
+    </message>
+    <message>
+        <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that can not be exported</translatorcomment>
+        <translation type="unfinished">The link can&#039;t be generated because the file is inside an incoming shared folder or your Rubbish Bin.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1408,6 +1434,10 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Select just one file.</source>
         <translation type="unfinished">Wählen Sie genau eine Datei</translation>
     </message>
+    <message>
+        <source>Get MEGA link</source>
+        <translation type="unfinished">MEGA-Link exportieren</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1444,7 +1474,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>Keine gültigen MEGA-Links gefunden. (Ordnerlinks werden noch nicht unterstützt!)</translation>
+        <translation type="obsolete">Keine gültigen MEGA-Links gefunden. (Ordnerlinks werden noch nicht unterstützt!)</translation>
+    </message>
+    <message>
+        <source>Invalid MEGA Link</source>
+        <translation type="unfinished">Ungültiger MEGA-Link</translation>
     </message>
 </context>
 <context>
@@ -1483,6 +1517,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
         <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them on the default permissions for security reasons.</translation>
+    </message>
+    <message>
+        <source>Owner permissions:</source>
+        <translatorcomment>Label just before the owner permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">Owner permissions:</translation>
     </message>
 </context>
 <context>
@@ -2089,7 +2128,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Schlüssel sichern</translation>
+        <translation type="unfinished">Rettungsschlüssel sichern</translation>
     </message>
     <message>
         <source>Export Master key</source>
@@ -2104,12 +2143,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Exporting the Recovery Key and keeping it in a secure location enables you to set a new password without data loss.</translation>
+        <translation type="unfinished">Der Export Ihres Rettungsschlüssels und das Verwahren an einem sicheren Ort ermöglicht es Ihnen, Ihr Passwort ohne Datenverlust zurückzusetzen.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Always keep physical control of your Recovery Key (e.g. on a client device, external storage, or print).</translation>
+        <translation type="unfinished">Stellen Sie sicher, dass Ihr Rettungsschlüssel nicht in falsche Hände gerät. Speichern Sie ihn an einem sicheren Ort.</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2199,7 +2238,7 @@ when the application starts again</source>
     <message>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</translation>
+        <translation type="unfinished">Aktivieren Sie diese Option ausschließlich bei Übertragungsproblemen. Normalerweise ist HTTP ausreichend, da alle Daten bereits verschlüsselt sind.</translation>
     </message>
 </context>
 <context>
@@ -2567,7 +2606,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translation type="unfinished">You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
+        <translation type="unfinished">Zuviele Fehlversuche.[BR]Bitte warten Sie bis %1 und versuchen Sie es dann noch einmal.</translation>
     </message>
 </context>
 <context>

@@ -136,7 +136,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">regulaminem serwisu</translation>
+        <translation type="unfinished">Regulamin serwisu</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
@@ -151,7 +151,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Credits</source>
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
-        <translation type="unfinished">Podziękowania dla</translation>
+        <translation type="unfinished">Podziękowania</translation>
     </message>
 </context>
 <context>
@@ -365,6 +365,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
         <translation type="unfinished">Pobieranie rozpoczęte</translation>
+    </message>
+</context>
+<context>
+    <name>ImportListWidgetItem</name>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">Proszę czekać...</translation>
     </message>
 </context>
 <context>
@@ -644,7 +651,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Korzystaj za darmo z dostepnej 50GB przestrzeni na swoje pliki oraz w razie potrzeby miej możliwość szyfrowania wszystkich swoich plików z naszymi planami [A]PRO[/A].</translation>
+        <translation type="unfinished">Odbierz 50 GB na pliki z bezpiecznym szyfrowaniem,  zarejestruj się za DARMO lub wybierz jedno z naszych [A]planów PRO[/A].</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
@@ -1127,6 +1134,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You are not logged in</source>
         <translation type="unfinished">Nie jesteś zalogowany</translation>
     </message>
+    <message>
+        <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
+        <translation type="unfinished">A system tray to place MEGAsync tray icon could not found. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translatorcomment>Error message shown at startup when MEGAsync is executed in a Linux desktop that does not have a system tray</translatorcomment>
+    </message>
+    <message>
+        <source>Error getting link:</source>
+        <translation type="unfinished">Błąd w pobraniu linku:</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that is not in the Cloud Drive of the user</translatorcomment>
+        <translation type="unfinished">Plik nie znaleziony</translation>
+    </message>
+    <message>
+        <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that can not be exported</translatorcomment>
+        <translation type="unfinished">The link can&#039;t be generated because the file is inside an incoming shared folder or your Rubbish Bin.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1408,6 +1434,10 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Select just one file.</source>
         <translation type="unfinished">Wybierz tylko jeden plik.</translation>
     </message>
+    <message>
+        <source>Get MEGA link</source>
+        <translation type="unfinished">Pobierz link MEGA</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1444,7 +1474,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>Nie znaleziono popranych linków mega (Linki do katalogów nie są jeszcze obsługiwane)</translation>
+        <translation type="obsolete">Nie znaleziono popranych linków mega (Linki do katalogów nie są jeszcze obsługiwane)</translation>
+    </message>
+    <message>
+        <source>Invalid MEGA Link</source>
+        <translation type="unfinished">MEGA Link nie jest poprawny</translation>
     </message>
 </context>
 <context>
@@ -1483,6 +1517,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
         <translation type="unfinished">Pliki i katalogi mają właściciela i przyporządkowane są do grupy użytkowników. Używając tego okna, możesz nadać inne uprawnienia dla nowych plików i katalogów, stworzonych przez MEGAsync dla innych użytkowników. Jeżeli nie masz potrzeby dokonywania zmian, pozostaw domyślne ustawienia bez zmian.</translation>
+    </message>
+    <message>
+        <source>Owner permissions:</source>
+        <translatorcomment>Label just before the owner permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">Owner permissions:</translation>
     </message>
 </context>
 <context>
@@ -1992,7 +2031,7 @@ when the application starts again.</source>
     <message>
         <source>Force a full scan</source>
         <translatorcomment>Button label to let the user force a full scan of his synced folders.</translatorcomment>
-        <translation>Wymuś pełny ekran</translation>
+        <translation>Wymuś pełne skanowanie</translation>
     </message>
     <message>
         <source>Full scan</source>

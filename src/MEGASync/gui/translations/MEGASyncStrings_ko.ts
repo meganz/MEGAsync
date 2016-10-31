@@ -368,6 +368,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>ImportListWidgetItem</name>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">잠시만 기다리세요...</translation>
+    </message>
+</context>
+<context>
     <name>ImportMegaLinksDialog</name>
     <message>
         <source>Import links</source>
@@ -644,7 +651,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">무료 계정으로 50GB의 클라우드 저장소의 이득을 얻고 우리의 저렴한 [A]PRO 요금제[/A]로 모든 파일을 암호화하세요.</translation>
+        <translation type="unfinished">안전한 이용자 통제 종단간 암호화를 갖춘 50 GB 클라우드 저장소를 얻고 무료 계정이나 우리의 [A]PRO 요금제[/A]에 가입하세요.</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
@@ -1127,6 +1134,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You are not logged in</source>
         <translation type="unfinished">로그인하지 않은 상태입니다.</translation>
     </message>
+    <message>
+        <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
+        <translation type="unfinished">A system tray to place MEGAsync tray icon could not found. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translatorcomment>Error message shown at startup when MEGAsync is executed in a Linux desktop that does not have a system tray</translatorcomment>
+    </message>
+    <message>
+        <source>Error getting link:</source>
+        <translation type="unfinished">링크 받기 오류:</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that is not in the Cloud Drive of the user</translatorcomment>
+        <translation type="unfinished">파일이 발견되지 않음</translation>
+    </message>
+    <message>
+        <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that can not be exported</translatorcomment>
+        <translation type="unfinished">The link can&#039;t be generated because the file is inside an incoming shared folder or your Rubbish Bin.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1408,6 +1434,10 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Select just one file.</source>
         <translation type="unfinished">하나의 파일만 선택하세요</translation>
     </message>
+    <message>
+        <source>Get MEGA link</source>
+        <translation type="unfinished">MEGA 링크 얻기</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1444,7 +1474,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>유효한 MEGA 링크가 없습니다. (폴더 링크는 아직 지원되지 않습니다)</translation>
+        <translation type="obsolete">유효한 MEGA 링크가 없습니다. (폴더 링크는 아직 지원되지 않습니다)</translation>
+    </message>
+    <message>
+        <source>Invalid MEGA Link</source>
+        <translation type="unfinished">잘못된 MEGA 링크</translation>
     </message>
 </context>
 <context>
@@ -1483,6 +1517,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
         <translation type="unfinished">파일과 폴더는 소유자와 한 그룹의 이용자에게 있습니다. 이 대화창을 이용하면 MEGAsync를 통해 생성된 새 파일과 폴더에 대하여 같은 그룹의 이용자와 이 컴퓨터의 다른 이용자들에게 다른 접근 권한을 부여할 수 있습니다. 만약 그것을 바꿀 필요가 없다면, 보안 상의 이유로 기본 권한으로 두시기 바랍니다.</translation>
+    </message>
+    <message>
+        <source>Owner permissions:</source>
+        <translatorcomment>Label just before the owner permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">Owner permissions:</translation>
     </message>
 </context>
 <context>

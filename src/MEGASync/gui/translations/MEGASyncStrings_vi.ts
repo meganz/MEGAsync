@@ -368,6 +368,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>ImportListWidgetItem</name>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">Xin chờ...</translation>
+    </message>
+</context>
+<context>
     <name>ImportMegaLinksDialog</name>
     <message>
         <source>Import links</source>
@@ -601,7 +608,7 @@ Are you sure?</source>
     <message>
         <source>Upgrade your account</source>
         <translatorcomment>Button label to redirect the user to upgrade web page.</translatorcomment>
-        <translation type="unfinished">Nâng cấp tài khoản của bạn</translation>
+        <translation type="unfinished">Nâng cấp tài khoản</translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
@@ -644,7 +651,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Hưởng quyền lợi từ 50GB không gian lưu trữ trên mây với tài khoản miễn phí và được mã hóa toàn bộ an toàn với các [A]gói PRO[/A] với giá phải chăng.</translation>
+        <translation type="unfinished">Hưởng quyền lợi từ 50 GB không gian lưu trữ trên mây với thuật toán bảo mật người dùng cuối và dễ dàng làm chủ, đăng ký ngay để nhận ngay một tài khoản MIỄN PHÍ hay chọn một [A]gói PRO[/A] bạn thích.</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
@@ -1098,7 +1105,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Fetching file list...</source>
-        <translation type="unfinished">Đang lấy danh sách các tệp tin...</translation>
+        <translation type="unfinished">Đang truy vấn danh sách các tệp tin...</translation>
     </message>
     <message>
         <source>Temporary error, retrying.</source>
@@ -1126,6 +1133,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are not logged in</source>
         <translation type="unfinished">Bạn chưa có đăng nhập</translation>
+    </message>
+    <message>
+        <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
+        <translation type="unfinished">A system tray to place MEGAsync tray icon could not found. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translatorcomment>Error message shown at startup when MEGAsync is executed in a Linux desktop that does not have a system tray</translatorcomment>
+    </message>
+    <message>
+        <source>Error getting link:</source>
+        <translation type="unfinished">Lỗi khi lấy liên kết:</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that is not in the Cloud Drive of the user</translatorcomment>
+        <translation type="unfinished">Không tìm thấy tệp tin</translation>
+    </message>
+    <message>
+        <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that can not be exported</translatorcomment>
+        <translation type="unfinished">The link can&#039;t be generated because the file is inside an incoming shared folder or your Rubbish Bin.</translation>
     </message>
 </context>
 <context>
@@ -1313,7 +1339,7 @@ Are you sure?</source>
     <message>
         <source>Retrieving folders...</source>
         <translatorcomment>Label to indicate the user that remote folders are being retrieving to be displayed (String short as possible)</translatorcomment>
-        <translation type="obsolete">Đang lấy các thư mục...</translation>
+        <translation type="obsolete">Đang truy vấn các thư mục...</translation>
     </message>
     <message>
         <source>New folder</source>
@@ -1408,6 +1434,10 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Select just one file.</source>
         <translation type="unfinished">Xin chọn đúng MỘT tệp tin.</translation>
     </message>
+    <message>
+        <source>Get MEGA link</source>
+        <translation type="unfinished">Tạo đường dẫn liên kết MEGA</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1444,7 +1474,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>Không tìm thấy đường link MEGA nào phù hợp (liên kết tới thư mục chưa được hỗ trợ vào lúc này).</translation>
+        <translation type="obsolete">Không tìm thấy đường link MEGA nào phù hợp (Đường dẫn liên kết thư mục hiện chưa được hỗ trợ).</translation>
+    </message>
+    <message>
+        <source>Invalid MEGA Link</source>
+        <translation type="unfinished">Cú pháp MEGA link không đúng</translation>
     </message>
 </context>
 <context>
@@ -1483,6 +1517,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
         <translation type="unfinished">Những tệp tin và thư mục này có chủ sở hữu và thuộc về một nhóm người dùng. Sử dụng hộp thoại này bạn có thể sẽ được cấp phép truy cập vào các tệp tin và thư mục mới được tạo ra bởi MEGAsync cho người sử dụng thuộc về cùng một nhóm và để phần còn lại của người sử dụng trong máy tính. Nếu bạn không muốn thay đổi gì, xin hãy để yên các dữ liệu đó mặc định vì lý do an ninh.</translation>
+    </message>
+    <message>
+        <source>Owner permissions:</source>
+        <translatorcomment>Label just before the owner permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">Owner permissions:</translation>
     </message>
 </context>
 <context>
@@ -1915,7 +1954,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Transfers</source>
         <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>Các Phiên Truyền Tải</translation>
+        <translation>Các phiên truyền tải</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2089,12 +2128,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Backup Key</translation>
+        <translation type="unfinished">Sao Lưu Mã Khóa</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Backup Recovery Key</translation>
+        <translation type="unfinished">Lưu Dự Phòng Mã Khóa Phục Hồi</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2104,12 +2143,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Exporting the Recovery Key and keeping it in a secure location enables you to set a new password without data loss.</translation>
+        <translation type="unfinished">Xuất ra Mã Phục Hồi và giữ mã ở một nơi an toàn và dễ nhớ sẽ giúp bạn tránh việc mất dữ liệu khi thay đổi mật khẩu.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Always keep physical control of your Recovery Key (e.g. on a client device, external storage, or print).</translation>
+        <translation type="unfinished">Luôn luôn giữ một bản lưu dự phòng của Mã Phục Hồi để phòng ngừa (vd: máy tính, ổ đĩa ngoài, hoặc in ra).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2353,7 +2392,7 @@ when the application starts again</source>
     <message>
         <source>Fetching file list...</source>
         <translatorcomment>Label displayed while the application is retrieving all file list from the server.</translatorcomment>
-        <translation>Đang lấy danh sách các tệp tin...</translation>
+        <translation>Đang truy vấn danh sách các tệp tin...</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>

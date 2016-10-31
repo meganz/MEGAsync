@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ee" sourcelanguage="en">
+<TS version="2.1" language="ee" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -62,7 +62,7 @@
         <translation>Lisa sünkroniseeritud kaust</translation>
     </message>
     <message>
-        <source/>
+        <source></source>
         <translation></translation>
     </message>
     <message>
@@ -162,7 +162,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>MEGAsünk tuvastas probleemi. Detailid on järgmised:</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&#039;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
         <translation>Veateate saatmisega meile saate  MEGAsünki täiustada. See ei sisalda Teie isiklikku informatsiooni. Kui soovite anda lisainfot siis, palun kirjutage see siia: </translation>
     </message>
@@ -225,8 +225,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Viga</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&#039;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Selles kohalikud kaustas puuduvad Teil muutmise õigused.</translation>
     </message>
 </context>
@@ -258,12 +258,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Hoiatus</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this folder.</source>
+        <source>You don&apos;t have write permissions in this folder.</source>
         <translation type="obsolete">Selles kasutas pole Teil muutmise õiguseid.</translation>
     </message>
     <message>
-        <source>MEGAsync won&#039;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&#039;t be able to download anything due to the user doesn&#039;t have writhe permissions on the local selected folder.</translatorcomment>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
         <translation>MEGAsünk ei suuda siia alla laadida midagi.</translation>
     </message>
     <message>
@@ -272,8 +272,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Soovite jätkata?</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&#039;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
         <translation>Selles kohalikud kaustas puuduvad Teil muutmise õigused.</translation>
     </message>
     <message>
@@ -377,7 +377,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&#039;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
         <translation>Ei leitud</translation>
     </message>
     <message>
@@ -407,7 +407,7 @@ Are you sure?</source>
         <translation>Viga</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>Selles kohalikud kaustas puuduvad Teil muutmise õigused.</translation>
     </message>
@@ -640,7 +640,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the remote folder doesn&#039;t exist</source>
+because the remote folder doesn&apos;t exist</source>
         <translation type="obsolete">Teie sünkroniseering &quot;%1&quot; on keelatud, sest sihtkausta pole olemas</translation>
     </message>
     <message>
@@ -650,7 +650,7 @@ because the remote folder is in the rubbish bin</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the local folder doesn&#039;t exist</source>
+because the local folder doesn&apos;t exist</source>
         <translation type="obsolete">Teie sünkroniseering &quot;%1&quot; on keelatud, kuna kohalikku kausta pole olemas</translation>
     </message>
     <message>
@@ -659,11 +659,11 @@ because the local folder doesn&#039;t exist</source>
         <translation>Viga: Vale sihtkaust. Üleslaadimine on peatatud.</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&#039;t uploaded because it&#039;s too large (this beta is limited to %2 folders or %3 files.</source>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
         <translation type="obsolete">Kausta (%1) ei laetud üles liiga suure mahu tõttu (antud beta piiranguks on %2 kausta ja %3 faili.</translation>
     </message>
     <message>
-        <source>%1 folders weren&#039;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
+        <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
         <translation type="obsolete">%1 kausta ei laetud üles nende liiga suure mahu tõttu (antud beta piiranguks on %2 kausta ja %3 faili.</translation>
     </message>
     <message>
@@ -728,7 +728,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&#039;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>Uuendatud</translation>
     </message>
     <message>
@@ -767,11 +767,11 @@ Exit anyway?</source>
         <translation>Ootel</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&#039;t uploaded because it&#039;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">Kausta (%1) ei laetud üles kuna see on liiga mahukas. Kontrolli teostame selleks, et ei laetakse üles kogu kõvaketta sisu, mis on ebatõhus ja ohtlik.</translation>
     </message>
     <message>
-        <source>%1 folders weren&#039;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">%1 kausta ei laetud üles, kuna need on liiga mahukad. Kontrolli teostame selleks, et ei laetakse üles kogu kõvaketta sisu, mis on ebatõhus ja ohtlik.</translation>
     </message>
     <message>
@@ -908,12 +908,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGAsünk ei suuda võrku ühenduda. Palun kontrollige oma internetiühendust ja arvuti tulemüüri seadeid. Pidage meeles, et enamik viirusetõrje programmid sisaldavad tulemüüri. </translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&#039;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">Teie sünkroniseering &quot;%1&quot; on keelatud, kuna eemalolevat kausta pole olemas</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&#039;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">Teie sünkroniseering &quot;%1&quot; on keelatud, sest sihtkausta pole olemas</translation>
     </message>
@@ -948,7 +948,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Teie sünkroniseering &quot;%1&quot; on keelatud, sest sihtkausta on muudetud</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&#039;t have full access</source>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
         <translation type="unfinished">Teie sünkroniseering &quot;%1&quot; on keelatud. Sihtkausta ( või osa selle) kasutamiseks puuduv täielik ligipääs</translation>
     </message>
@@ -960,7 +960,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Teie sünkroniseering &quot;%1&quot; keelati, sest see failisüsteem ei toeta VirtualBox&#039;i jagatud kaustade sünkroniseerimist.</translation>
+        <translation type="unfinished">Teie sünkroniseering &quot;%1&quot; keelati, sest see failisüsteem ei toeta VirtualBox&apos;i jagatud kaustade sünkroniseerimist.</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -993,7 +993,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Viga: Ebasobiv sihtkaust. Allalaadimine on tühistatud.</translation>
     </message>
     <message>
-        <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
         <translation type="unfinished">Meie SSL võtit ei suudetud tuvastada. Võite olla vahendajaründe ohver või teie viirusetõrje tarkvara segab ühendust ning põhjustab probleeme. Palun lülitage ajutiselt oma viirusetõrje välja ja proovige uuesti.</translation>
     </message>
@@ -1023,12 +1023,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Streaming from MEGA</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Edastamine MEGA&#039;st</translation>
+        <translation type="unfinished">Edastamine MEGA&apos;st</translation>
     </message>
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Edastage MEGA&#039;st</translation>
+        <translation type="unfinished">Edastage MEGA&apos;st</translation>
     </message>
     <message>
         <source>seconds</source>
@@ -1269,7 +1269,7 @@ Are you sure?</source>
         <translation>Viga</translation>
     </message>
     <message>
-        <source>The root folder can&#039;t be synced.
+        <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
         <translation type="obsolete">Kõvaketta kausta ei saa sünkroniseerida.Palun valige alamkaust.</translation>
@@ -1286,9 +1286,9 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>Invalid folder for synchronization.
-Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#039; or &#039;:&#039; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &#039;\\&#039; &#039;/&#039; and &#039;:&#039; codes.</translatorcomment>
-        <translation>Sünkroniseerimiseks on vale kaust valitud.Palun veenduge, et kaustade nimedes ei ole kasutatud tähemärke &#039;&#039; &#039;/ või &#039;:&#039; .</translation>
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
+        <translation>Sünkroniseerimiseks on vale kaust valitud.Palun veenduge, et kaustade nimedes ei ole kasutatud tähemärke &apos;&apos; &apos;/ või &apos;:&apos; .</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1365,7 +1365,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translation>Sisestage üks või mitu MEGA faililinki</translation>
     </message>
     <message>
-        <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
+        <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
         <translation>Kehtivaid MEga linke ei leitud. </translation>
     </message>
@@ -1602,7 +1602,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translation>Üleslaadimise piirang</translation>
     </message>
     <message>
-        <source>Don&#039;t limit</source>
+        <source>Don&apos;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
         <translation>Ära piira</translation>
     </message>
@@ -1789,7 +1789,7 @@ when the application starts again.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&#039;t respond</source>
+        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
         <translation>Teie proksi seaded on kehtetud või proksi ei võta infot vastu</translation>
     </message>
@@ -1905,12 +1905,12 @@ Do you want to restart MEGAsync now?</source>
         <translation>Allalaadimised:</translation>
     </message>
     <message>
-        <source>This sync can&#039;t be enabled because the local folder doesn&#039;t exist</source>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
         <translation>Ei suudeta sünkroniseerida, kuna kohalikku kausta pole olemas.</translation>
     </message>
     <message>
-        <source>This sync can&#039;t be enabled because the remote folder doesn&#039;t exist</source>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
         <translation>Seda sünkroniseerimist ei saa sihtkausta olemasoluta lubada</translation>
     </message>
@@ -1929,7 +1929,7 @@ Do you want to restart MEGAsync now?</source>
         <translation type="obsolete">Vali kohalik kaust</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
         <translation>Selles kohalikud kaustas puuduvad Teil muutmise õigused.</translation>
     </message>
@@ -2022,7 +2022,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Eelnevalt sünkroniseeritud failide tagavaraversioonid kustutatakse MEGA&#039;st jäädavalt. Palun vaadake enne jätkamist oma MEGA kontol olevat [A] kausta prügikastis, et vajadusel säilitada sealt midagi vajalikku.</translation>
+        <translation type="unfinished">Eelnevalt sünkroniseeritud failide tagavaraversioonid kustutatakse MEGA&apos;st jäädavalt. Palun vaadake enne jätkamist oma MEGA kontol olevat [A] kausta prügikastis, et vajadusel säilitada sealt midagi vajalikku.</translation>
     </message>
     <message>
         <source>Do you want to delete your remote cache now?</source>
@@ -2047,8 +2047,8 @@ when the application starts again</source>
         <translation>Mul on MEGA konto</translation>
     </message>
     <message>
-        <source>I don&#039;t have a MEGA account</source>
-        <translatorcomment>Label to indicate if the user hasn&#039;t already a MEGA account with a checkbox.</translatorcomment>
+        <source>I don&apos;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>Mul ei ole MEGA kontot</translation>
     </message>
     <message>
@@ -2198,7 +2198,7 @@ when the application starts again</source>
         <translation>Olete oma konto kinnitanud?</translation>
     </message>
     <message>
-        <source>MEGA folder doesn&#039;t exist</source>
+        <source>MEGA folder doesn&apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>MEGA kausta pole olemas</translation>
     </message>
@@ -2233,7 +2233,7 @@ when the application starts again</source>
         <translation>Palun sisestage keerukam parool</translation>
     </message>
     <message>
-        <source>The entered passwords don&#039;t match</source>
+        <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
         <translation>Sisestatud paroolid ei kattu</translation>
     </message>
@@ -2325,12 +2325,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Teie Pilvekaust sünkroniseeritakse sellesse kausta:</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>Selles kohalikud kaustas puuduvad Teil muutmise õigused.</translation>
     </message>
     <message>
-        <source>MEGAsync won&#039;t be able to download anything here.</source>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>MEGAsünk ei suuda siia alla laadida midagi.</translation>
     </message>
@@ -2490,7 +2490,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Edastage MEGA&#039;st</translation>
+        <translation type="unfinished">Edastage MEGA&apos;st</translation>
     </message>
     <message>
         <source>Select media from...</source>

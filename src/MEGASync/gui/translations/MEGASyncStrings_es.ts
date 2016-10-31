@@ -368,6 +368,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>ImportListWidgetItem</name>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">Por favor, espera...</translation>
+    </message>
+</context>
+<context>
     <name>ImportMegaLinksDialog</name>
     <message>
         <source>Import links</source>
@@ -644,7 +651,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Aprovéchate de los 50GB de almacenamiento en la nube con una cuenta gratuita y encripta todos tus archivos con nuestros generosos [A]planes PRO[/A].</translation>
+        <translation type="unfinished">Aprovecha los 50 GB de almacenamiento cifrado con tecnología end to end controlada por el usuario y crea una cuenta GRATIS o adquiere uno de nuestros [A]Planes PRO [/A].</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
@@ -1127,6 +1134,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You are not logged in</source>
         <translation type="unfinished">No has iniciado sesión</translation>
     </message>
+    <message>
+        <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
+        <translation type="unfinished">No se pudo encontrar la bandeja de sistema para colocar el icono de MEGAsync. MEGAsync está diseñado para funcionar con ese icono, pero puede funcionar bien sin él. Si quieres abrir la interfaz gráfica, simplemente intenta ejecutar MEGAsync otra vez.</translation>
+        <translatorcomment>Error message shown at startup when MEGAsync is executed in a Linux desktop that does not have a system tray</translatorcomment>
+    </message>
+    <message>
+        <source>Error getting link:</source>
+        <translation type="unfinished">Error obteniendo el enlace:</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that is not in the Cloud Drive of the user</translatorcomment>
+        <translation type="unfinished">No se encuentra el archivo</translation>
+    </message>
+    <message>
+        <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that can not be exported</translatorcomment>
+        <translation type="unfinished">El link no se puede generar porque el archivo está dentro de una carpeta compartida entrante o en la papelera de tu cuenta de MEGA</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1408,6 +1434,10 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Select just one file.</source>
         <translation type="unfinished">Seleccione sólo un fichero.</translation>
     </message>
+    <message>
+        <source>Get MEGA link</source>
+        <translation type="unfinished">Obtener enlace de MEGA</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1444,7 +1474,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>No se han encontrado enlaces de MEGA válidos (los enlaces de carpeta no están soportados todavía)</translation>
+        <translation type="obsolete">No se han encontrado enlaces de MEGA válidos (los enlaces de carpeta no están soportados todavía)</translation>
+    </message>
+    <message>
+        <source>Invalid MEGA Link</source>
+        <translation type="unfinished">Enlace incorrecto a MEGA</translation>
     </message>
 </context>
 <context>
@@ -1483,6 +1517,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
         <translation type="unfinished">Los archivos y carpetas tienen un propietario y pertenecen a un grupo de usuarios. Utilizando esta ventana, puedes dar diferentes permisos de acceso a los nuevos archivos y carpetas creados con MEGAsync a usuarios que pertenezcan al mismo grupo, y al resto de usuarios del PC. Si no necesitas cambiarlos, por favor déjalos en los valores por defecto por motivos de seguridad.</translation>
+    </message>
+    <message>
+        <source>Owner permissions:</source>
+        <translatorcomment>Label just before the owner permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">Permisos del propietario:</translation>
     </message>
 </context>
 <context>

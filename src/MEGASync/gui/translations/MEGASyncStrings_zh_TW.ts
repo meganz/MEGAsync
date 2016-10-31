@@ -21,7 +21,7 @@
     <message>
         <source>Rubbish Bin</source>
         <translatorcomment>Label for Rubbish Bin space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">垃圾夾</translation>
+        <translation type="obsolete">垃圾桶</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -368,6 +368,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>ImportListWidgetItem</name>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">請等待...</translation>
+    </message>
+</context>
+<context>
     <name>ImportMegaLinksDialog</name>
     <message>
         <source>Import links</source>
@@ -644,7 +651,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">免費註冊帳號並享有50GB雲端空間，還可加密所有雲端檔案，都在優渥的[A]PRO計劃[/ A]中</translation>
+        <translation type="unfinished">享受50GB雲端空間與由用戶控制的安全端對端加密，並註冊一個免費帳戶或使用我們的[A]PRO方案[/A]。</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
@@ -735,7 +742,7 @@ because the remote folder doesn&#039;t exist</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">您的同步&quot;%1&quot;因遠端資料夾在垃圾夾中已被停用</translation>
+        <translation type="obsolete">您的同步&quot;%1&quot;因遠端資料夾在垃圾桶中故已被停用</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1029,7 +1036,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">因遠端資料夾已於垃圾夾內，您的同步 &quot;%1&quot; 已被停用。</translation>
+        <translation type="unfinished">因遠端資料夾已於垃圾桶內，您的同步 &quot;%1&quot; 已被停用。</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -1126,6 +1133,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are not logged in</source>
         <translation type="unfinished">您未登入</translation>
+    </message>
+    <message>
+        <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
+        <translation type="unfinished">A system tray to place MEGAsync tray icon could not found. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translatorcomment>Error message shown at startup when MEGAsync is executed in a Linux desktop that does not have a system tray</translatorcomment>
+    </message>
+    <message>
+        <source>Error getting link:</source>
+        <translation type="unfinished">生成鏈接出錯：</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that is not in the Cloud Drive of the user</translatorcomment>
+        <translation type="unfinished">未找到檔案</translation>
+    </message>
+    <message>
+        <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that can not be exported</translatorcomment>
+        <translation type="unfinished">無法生成連結，因為該檔案位於傳入的共享資料夾或垃圾桶中。</translation>
     </message>
 </context>
 <context>
@@ -1408,6 +1434,10 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Select just one file.</source>
         <translation type="unfinished">儘可選擇一個檔案。</translation>
     </message>
+    <message>
+        <source>Get MEGA link</source>
+        <translation type="unfinished">取得MEGA連結</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1444,7 +1474,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>未找到有效MEGA連結(尚不支援資料夾連結)。</translation>
+        <translation type="obsolete">未找到有效MEGA連結(尚不支援資料夾連結)。</translation>
+    </message>
+    <message>
+        <source>Invalid MEGA Link</source>
+        <translation type="unfinished">無效的 MEGA 連接</translation>
     </message>
 </context>
 <context>
@@ -1483,6 +1517,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
         <translation type="unfinished">文件和文件夾有一個所有者，屬於一組用戶。使用該對話框可以授予由MEGAsync創建屬於同一個組，並在計算機中的用戶的用戶休息新文件和文件夾的不同訪問權限。如果你不需要改變他們，請留下他們出於安全原因的默認權限。檔案與資料夾有其所有者，或屬於某群組使用者。經由這個對話框您可授權，同群組使用者或同台電腦使用者，擁不同存取權限至MEGAsync新建檔案或資料夾。如您無須變更，因安全因素請採用預設權限。</translation>
+    </message>
+    <message>
+        <source>Owner permissions:</source>
+        <translatorcomment>Label just before the owner permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">擁有者權限：</translation>
     </message>
 </context>
 <context>
@@ -1629,16 +1668,16 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Settings - MEGAsync</source>
         <translatorcomment>Title of the MEGAsync Settings dialog. Keep capital letters.</translatorcomment>
-        <translation>設定-MEGAsync同步</translation>
+        <translation>設定 - MEGAsync同步</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="obsolete">一班</translation>
+        <translation type="obsolete">綜述</translation>
     </message>
     <message>
         <source>Account</source>
         <translatorcomment>Tab label of Account dialog. Max 15 characters.</translatorcomment>
-        <translation>帳號</translation>
+        <translation>帳戶</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -1800,12 +1839,12 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Proxy Settings</source>
         <translatorcomment>Label to indicate the dialog of Proxy Settings. Keep capital letters.</translatorcomment>
-        <translation>Proxy設定</translation>
+        <translation>Proxy代理伺服器設定</translation>
     </message>
     <message>
         <source>No proxy</source>
         <translatorcomment>Label to indicate MEGAsync not to use any proxy. String as short as possible.</translatorcomment>
-        <translation>無Proxy</translation>
+        <translation>無Proxy代理伺服器</translation>
     </message>
     <message>
         <source>Auto-detect</source>
@@ -1815,12 +1854,12 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Proxy</source>
         <translatorcomment>Tab label of Proxy dialog settings. Max 15 characters.</translatorcomment>
-        <translation>Proxy</translation>
+        <translation>Proxy代理伺服器</translation>
     </message>
     <message>
         <source>Proxy type:</source>
         <translatorcomment>Label to indicate the proxy type to be used. String as short as possible.</translatorcomment>
-        <translation>Proxy類型:</translation>
+        <translation>Proxy代理伺服器類型：</translation>
     </message>
     <message>
         <source>Server:</source>
@@ -1835,7 +1874,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Proxy server requires a password</source>
         <translatorcomment>Label to indicate if the proxy used requires a password. String as short as possible.</translatorcomment>
-        <translation>Proxy伺服器須輸入密碼</translation>
+        <translation>Proxy代理伺服器需輸入密碼</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -1860,7 +1899,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>PRO I</source>
         <translatorcomment>Label to indicate that the current user has a PRO I account.</translatorcomment>
-        <translation>PRO 1</translation>
+        <translation>PRO I</translation>
     </message>
     <message>
         <source>PRO II</source>
@@ -2109,7 +2148,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">始終於實體物品上備份管理您的還原金鑰（例如：於客戶端設備、外部儲存或印出保存）。</translation>
+        <translation type="unfinished">始終於實體物品上備份管理您的還原金鑰（例如：於用戶端設備、外部儲存或印出保存）。</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2175,7 +2214,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">在MEGA中已同步的檔案之備份版本將被永久刪除。請檢查您於MEGA帳戶之垃圾夾中的 [A] 資料夾，並確定在繼續進行此動作前，是否需要先備份或救回任何檔案。</translation>
+        <translation type="unfinished">在MEGA中已同步的檔案之備份版本將被永久刪除。請檢查您於MEGA帳戶之垃圾桶中的 [A] 資料夾，並確定在繼續進行此動作前，是否需要先備份或救回任何檔案。</translation>
     </message>
     <message>
         <source>Do you want to delete your remote cache now?</source>
@@ -2567,7 +2606,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translation type="unfinished">您於短時間內已登入太多次。[BR] 請等待至 %1 後再重試。</translation>
+        <translation type="unfinished">您於短時間內嘗試登入的次數過多。[BR] 請等待至 %1 後再重試。</translation>
     </message>
 </context>
 <context>
@@ -2808,7 +2847,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded.</translatorcomment>
-        <translation>MEGA同步上傳</translation>
+        <translation>MEGAsync上傳</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2842,7 +2881,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">垃圾夾</translation>
+        <translation type="unfinished">垃圾桶</translation>
     </message>
 </context>
 <context>
@@ -2853,7 +2892,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">垃圾夾</translation>
+        <translation type="unfinished">垃圾桶</translation>
     </message>
     <message>
         <source>Incoming Shares</source>

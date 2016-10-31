@@ -169,7 +169,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Remember my decision and don&#039;t ask me again</source>
         <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Remember my decision and don&#039;t ask me again</translation>
+        <translation type="unfinished">Упамти моју одлуку и не питај ме поново</translation>
     </message>
     <message>
         <source>No</source>
@@ -184,7 +184,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">You are about to enable an option that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
+        <translation type="unfinished">Омогућићете опцију која би могла да дозволи Вашим комуникацијама да буду пресретнуте. Ваши подаци ће и даље бити недоступни за нападаче због наше end-to-end енкрипције, али они могу на слепо да премештају Ваше фајлове и фолдере на MEGA, бришу их или Вам онемогуће приступ налогу.</translation>
     </message>
 </context>
 <context>
@@ -365,6 +365,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
         <translation type="unfinished">Ваше скидање је започето</translation>
+    </message>
+</context>
+<context>
+    <name>ImportListWidgetItem</name>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">Молимо причекајте...</translation>
     </message>
 </context>
 <context>
@@ -668,7 +675,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
-        <translation type="unfinished">While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</translation>
+        <translation type="unfinished">Док технологија браузера може ограничити величину Ваших трансфера, са MEGAsync можете преузети или отпремити сваки фајл.</translation>
     </message>
     <message>
         <source>Login</source>
@@ -1127,6 +1134,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You are not logged in</source>
         <translation type="unfinished">Ви сте улоговани у</translation>
     </message>
+    <message>
+        <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
+        <translation type="unfinished">A system tray to place MEGAsync tray icon could not found. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translatorcomment>Error message shown at startup when MEGAsync is executed in a Linux desktop that does not have a system tray</translatorcomment>
+    </message>
+    <message>
+        <source>Error getting link:</source>
+        <translation type="unfinished">Грешка на линку:</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that is not in the Cloud Drive of the user</translatorcomment>
+        <translation type="unfinished">Фајл није пронађен</translation>
+    </message>
+    <message>
+        <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that can not be exported</translatorcomment>
+        <translation type="unfinished">The link can&#039;t be generated because the file is inside an incoming shared folder or your Rubbish Bin.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1408,6 +1434,10 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Select just one file.</source>
         <translation type="unfinished">Изаберите само један документ.</translation>
     </message>
+    <message>
+        <source>Get MEGA link</source>
+        <translation type="unfinished">Додајте MEGA линк</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1444,7 +1474,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>Исправни MEGA линкови нису пронађени. (Линкови фолдера још увек нису подржани)</translation>
+        <translation type="obsolete">Исправни MEGA линкови нису пронађени. (Линкови фолдера још увек нису подржани)</translation>
+    </message>
+    <message>
+        <source>Invalid MEGA Link</source>
+        <translation type="unfinished">Неисправни MEGА линк</translation>
     </message>
 </context>
 <context>
@@ -1452,7 +1486,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Permissions for new folders and files</source>
         <translatorcomment>Title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.</translatorcomment>
-        <translation type="unfinished">Permissions for new folders and files</translation>
+        <translation type="unfinished">Дозволе за нове фолдере и фајлове</translation>
     </message>
     <message>
         <source>Folders</source>
@@ -1472,7 +1506,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Public permissions:</source>
         <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Public permissions:</translation>
+        <translation type="unfinished">Јавне дозволе:</translation>
     </message>
     <message>
         <source>Files</source>
@@ -1482,7 +1516,12 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them on the default permissions for security reasons.</translation>
+        <translation type="unfinished">Фајлови и фолдери имају власника и припадају групи корисника. Користећи овај дијалог можете доделити различите дозволе приступа за нове фајлове и фолдере креиране од стране MEGAsync корисницима који припадају истој групи и осталим корисницима у рачунару. Уколико немате потребу да их мењате, молимо оставите их на подразумеваним дозволама из сигуроносних разлога.</translation>
+    </message>
+    <message>
+        <source>Owner permissions:</source>
+        <translatorcomment>Label just before the owner permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">Owner permissions:</translation>
     </message>
 </context>
 <context>
@@ -2089,12 +2128,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Backup Key</translation>
+        <translation type="unfinished">Резервни кључ</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Backup Recovery Key</translation>
+        <translation type="unfinished">Кључ за повраћај бекапа</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2104,12 +2143,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Exporting the Recovery Key and keeping it in a secure location enables you to set a new password without data loss.</translation>
+        <translation type="unfinished">Извоз Кључа за повраћај и његово чување на сигурној локацији омогућава Вам да поставите нову лозинку без губитка података.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Always keep physical control of your Recovery Key (e.g. on a client device, external storage, or print).</translation>
+        <translation type="unfinished">Увек одржавајте физичку контролу свог Кључа за повраћај (нпр. на клијентском уређају, екстерном складишту, или штампано).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2199,7 +2238,7 @@ when the application starts again</source>
     <message>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</translation>
+        <translation type="unfinished">Омогући ову опцију само ако твоји трансфери не почну. У нормалним условима HTTP је задовољавајући јер су сви трансфери већ енкриптовани.</translation>
     </message>
 </context>
 <context>
@@ -2567,7 +2606,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translation type="unfinished">You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
+        <translation type="unfinished">Превише пута сте пробали да се пријавите. [BR]Молимо сачекајте до  %1 и покушајте поново.</translation>
     </message>
 </context>
 <context>

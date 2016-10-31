@@ -368,6 +368,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>ImportListWidgetItem</name>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">しばらくお待ちください…</translation>
+    </message>
+</context>
+<context>
     <name>ImportMegaLinksDialog</name>
     <message>
         <source>Import links</source>
@@ -401,7 +408,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>/MEGAsync Imports</source>
         <translatorcomment>Default created folder for imported links at the user Cloud Drive.</translatorcomment>
-        <translation>/MEGAsync インポート</translation>
+        <translation type="obsolete">/MEGAsync インポート</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -644,7 +651,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</translation>
+        <translation type="unfinished">Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
@@ -1127,6 +1134,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You are not logged in</source>
         <translation type="unfinished">ログインしていません。</translation>
     </message>
+    <message>
+        <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
+        <translation type="unfinished">A system tray to place MEGAsync tray icon could not found. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translatorcomment>Error message shown at startup when MEGAsync is executed in a Linux desktop that does not have a system tray</translatorcomment>
+    </message>
+    <message>
+        <source>Error getting link:</source>
+        <translation type="unfinished">リンクエラー</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that is not in the Cloud Drive of the user</translatorcomment>
+        <translation type="unfinished">ファイル見つからず</translation>
+    </message>
+    <message>
+        <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that can not be exported</translatorcomment>
+        <translation type="unfinished">The link can&#039;t be generated because the file is inside an incoming shared folder or your Rubbish Bin.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1408,6 +1434,10 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Select just one file.</source>
         <translation type="unfinished">ファイル１個だけ選択</translation>
     </message>
+    <message>
+        <source>Get MEGA link</source>
+        <translation type="unfinished">MEGAリンクを作る</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1444,7 +1474,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>有効なMEGAのリンクがありません（フォルダリンクはまだサポートされていません）。</translation>
+        <translation type="obsolete">有効なMEGAのリンクがありません（フォルダリンクはまだサポートされていません）。</translation>
+    </message>
+    <message>
+        <source>Invalid MEGA Link</source>
+        <translation type="unfinished">無効MEGAリンク</translation>
     </message>
 </context>
 <context>
@@ -1483,6 +1517,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
         <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them on the default permissions for security reasons.</translation>
+    </message>
+    <message>
+        <source>Owner permissions:</source>
+        <translatorcomment>Label just before the owner permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">Owner permissions:</translation>
     </message>
 </context>
 <context>
@@ -1875,7 +1914,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default path for MEGAsync uploads.</translatorcomment>
-        <translation>/MEGAsync アップロード</translation>
+        <translation type="obsolete">/MEGAsync アップロード</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2089,12 +2128,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">親鍵エキスポート</translation>
+        <translation type="unfinished">Backup Key</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">親鍵をエキスポート</translation>
+        <translation type="unfinished">Backup Recovery Key</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2104,12 +2143,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">親鍵を安全な場所にエキスポートしておけば、データを失わずにパスワードを変更できます。</translation>
+        <translation type="unfinished">Exporting the Recovery Key and keeping it in a secure location enables you to set a new password without data loss.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">親鍵の管理は厳密に行って下さい（クライエントのデバイス、外部ストレージ、印刷物など）。</translation>
+        <translation type="unfinished">Always keep physical control of your Recovery Key (e.g. on a client device, external storage, or print).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2561,6 +2600,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Strong security </translatorcomment>
         <translation type="unfinished">強い</translation>
     </message>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translation type="unfinished">メールを確認し、そこにあるリンクをクリックすると、あなたのアカウントにアクセス出来ます。</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translation type="unfinished">You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -2795,7 +2842,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded. Keep / symbol.</translatorcomment>
-        <translation>/MEGAsync アップロード</translation>
+        <translation type="obsolete">/MEGAsync アップロード</translation>
     </message>
     <message>
         <source>MEGAsync Uploads</source>

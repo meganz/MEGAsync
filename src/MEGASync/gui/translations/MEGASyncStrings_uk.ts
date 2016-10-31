@@ -368,6 +368,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>ImportListWidgetItem</name>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">Будь ласка, зачекайте…</translation>
+    </message>
+</context>
+<context>
     <name>ImportMegaLinksDialog</name>
     <message>
         <source>Import links</source>
@@ -644,7 +651,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Скористайтесь перевагами 50 ГБ хмарного сховища безкоштовного акаунту і можливістю шифрування усіх файлів нашого [A]PRO плану[/A].</translation>
+        <translation type="unfinished">Скористайтесь 50 ГБ</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
@@ -1127,6 +1134,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You are not logged in</source>
         <translation type="unfinished">Ви не увійшли в систему</translation>
     </message>
+    <message>
+        <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
+        <translation type="unfinished">A system tray to place MEGAsync tray icon could not found. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translatorcomment>Error message shown at startup when MEGAsync is executed in a Linux desktop that does not have a system tray</translatorcomment>
+    </message>
+    <message>
+        <source>Error getting link:</source>
+        <translation type="unfinished">Помилка під час отримання ланки:</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that is not in the Cloud Drive of the user</translatorcomment>
+        <translation type="unfinished">Файл не знайдено</translation>
+    </message>
+    <message>
+        <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that can not be exported</translatorcomment>
+        <translation type="unfinished">The link can&#039;t be generated because the file is inside an incoming shared folder or your Rubbish Bin.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1408,6 +1434,10 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Select just one file.</source>
         <translation type="unfinished">Оберіть лише один файл.</translation>
     </message>
+    <message>
+        <source>Get MEGA link</source>
+        <translation type="unfinished">Отримати ланку MEGA</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1444,7 +1474,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>Не знайдено дійсних ланок MEGA. (Ланки на теки не підтримуються)</translation>
+        <translation type="obsolete">Не знайдено дійсних ланок MEGA. (Ланки на теки не підтримуються)</translation>
+    </message>
+    <message>
+        <source>Invalid MEGA Link</source>
+        <translation type="unfinished">Невірна ланка MEGA</translation>
     </message>
 </context>
 <context>
@@ -1483,6 +1517,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
         <translation type="unfinished">Файли і теки мають власника і належать групі користувачів. За допомогою цього діалогу ви можете надати різні види доступу для нових файлів і тек, створених MEGAsync для користувачів, що належать до тієї групи а також для решти користувачів комп&#039;ютеру. Якщо вам не потрібно їх змінювати, будь ласка, з міркувань безпеки, залиште їх права доступу як усталено.</translation>
+    </message>
+    <message>
+        <source>Owner permissions:</source>
+        <translatorcomment>Label just before the owner permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">Owner permissions:</translation>
     </message>
 </context>
 <context>
@@ -2104,12 +2143,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Exporting the Recovery Key and keeping it in a secure location enables you to set a new password without data loss.</translation>
+        <translation type="unfinished">Експорт ключа відновлення і тримання його в безпечному місці дозволяє встановити новий пароль без втрати даних.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Always keep physical control of your Recovery Key (e.g. on a client device, external storage, or print).</translation>
+        <translation type="unfinished">Завжди зберігайте фізичний контроль над ключем відновлення (на вашому пристрої, зовнішньому носії, або у друку).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2232,7 +2271,7 @@ when the application starts again</source>
     <message>
         <source>Email:</source>
         <translatorcomment>Label for field email at create account. String as short as possible.</translatorcomment>
-        <translation>Електронна пошта:</translation>
+        <translation>Е-пошта:</translation>
     </message>
     <message>
         <source>Password:</source>
@@ -2257,7 +2296,7 @@ when the application starts again</source>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Будь ласка, засвідчіть свій обліковий запис, натиснувши на ланку, що надіслано вам електронною поштою</translation>
+        <translation>Будь ласка, засвідчіть свій обліковий запис, натиснувши на ланку, що надіслано вам е-поштою</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -2358,7 +2397,7 @@ when the application starts again</source>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>Невірна електронна пошта та/або пароль.</translation>
+        <translation>Невірна е-пошта та/або пароль.</translation>
     </message>
     <message>
         <source>Have you verified your account?</source>
@@ -2378,12 +2417,12 @@ when the application starts again</source>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Будь ласка, введіть вашу адресу електронної пошти</translation>
+        <translation>Будь ласка, введіть вашу адресу е-пошти</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>Будь ласка, введіть правильну адресу електронної пошти</translation>
+        <translation>Будь ласка, введіть правильну адресу е-пошти</translation>
     </message>
     <message>
         <source>Please, enter your password</source>

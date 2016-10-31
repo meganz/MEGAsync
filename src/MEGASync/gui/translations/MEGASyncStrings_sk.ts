@@ -368,6 +368,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>ImportListWidgetItem</name>
+    <message>
+        <source>Please wait...</source>
+        <translation type="unfinished">Prosím čakajte...</translation>
+    </message>
+</context>
+<context>
     <name>ImportMegaLinksDialog</name>
     <message>
         <source>Import links</source>
@@ -1127,6 +1134,25 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You are not logged in</source>
         <translation type="unfinished">Ste prihlásený</translation>
     </message>
+    <message>
+        <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
+        <translation type="unfinished">A system tray to place MEGAsync tray icon could not found. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translatorcomment>Error message shown at startup when MEGAsync is executed in a Linux desktop that does not have a system tray</translatorcomment>
+    </message>
+    <message>
+        <source>Error getting link:</source>
+        <translation type="unfinished">Chyba pri získavaní odkazu:</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that is not in the Cloud Drive of the user</translatorcomment>
+        <translation type="unfinished">Súbor nenájdený</translation>
+    </message>
+    <message>
+        <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
+        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that can not be exported</translatorcomment>
+        <translation type="unfinished">The link can&#039;t be generated because the file is inside an incoming shared folder or your Rubbish Bin.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1408,6 +1434,10 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Select just one file.</source>
         <translation type="unfinished">Vyberte jeden súbor.</translation>
     </message>
+    <message>
+        <source>Get MEGA link</source>
+        <translation type="unfinished">Získať MEGA odkaz</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1444,7 +1474,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>Nenájdený žiadny platný MEGA odkaz (odkazy na priečinky nie sú podporované).</translation>
+        <translation type="obsolete">Nenájdený žiadny platný MEGA odkaz (odkazy na priečinky nie sú podporované).</translation>
+    </message>
+    <message>
+        <source>Invalid MEGA Link</source>
+        <translation type="unfinished">Neplatný MEGA Odkaz</translation>
     </message>
 </context>
 <context>
@@ -1483,6 +1517,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
         <translation type="unfinished">Súbory a priečinky majú vlastníka a patria skupine užívateľov. Pomocou tohoto dialógového okna možete udeľovať rozličné prístupové práva novým súborom a priečinkom vytovrených cez MEGAsync užívateľom patriacim do rovnakej skupiny a zbytku užívatelov na počítači. Pokiaľ ich nepotrebujete meniť, prosím nechajte z bezpečnostných dôvodov prednastavené hodnoty.</translation>
+    </message>
+    <message>
+        <source>Owner permissions:</source>
+        <translatorcomment>Label just before the owner permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">Owner permissions:</translation>
     </message>
 </context>
 <context>
@@ -1899,7 +1938,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Excluded name</source>
         <translatorcomment>Title of the dialog to add new excluded file name for the synchronizations.</translatorcomment>
-        <translation>Vyradené meno</translation>
+        <translation>Vyradený názov</translation>
     </message>
     <message>
         <source>Enter a name to exclude from synchronization.
@@ -1962,7 +2001,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Enable full account sync</source>
-        <translation type="obsolete">Povoliť úplnú synchronizáciu účtu.</translation>
+        <translation type="obsolete">Povoliť úplnú synchronizáciu účtu</translation>
     </message>
     <message>
         <source>Enabling full account sync will disable all your current syncs</source>
@@ -2104,12 +2143,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Exporting the Recovery Key and keeping it in a secure location enables you to set a new password without data loss.</translation>
+        <translation type="unfinished">Export Kľúča pre obnovu a držsanie ho na bezpečnom mieste dovoľuje zmeniť si svoje heslo bez straty údajov.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Always keep physical control of your Recovery Key (e.g. on a client device, external storage, or print).</translation>
+        <translation type="unfinished">Vždy si udržujte fyzickú kópiu vášho Kľúču pre obnovu (napr. na klientskom zariadení, externom disku alebo vo vytlačenej podobe).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2252,7 +2291,7 @@ when the application starts again</source>
     <message>
         <source>Login to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>Prijláste sa do svojho MEGA účtu</translation>
+        <translation>Prihláste sa do svojho MEGA účtu</translation>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
@@ -2567,7 +2606,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translation type="unfinished">You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
+        <translation type="unfinished">Príliš veľa krát ste sa pokúsili prihlásiť. [BR]Prosím počkajte do %1 a skúste to znovu.</translation>
     </message>
 </context>
 <context>
