@@ -1743,6 +1743,7 @@ void MegaApplication::checkMemoryUsage()
     long long numNodes = megaApi->getNumNodes();
     long long numLocalNodes = megaApi->getNumLocalNodes();
     long long totalNodes = numNodes + numLocalNodes;
+    long long totalTransfers =  megaApi->getNumPendingUploads() + megaApi->getNumPendingDownloads();
     long long procesUsage = 0;
 
     if (!totalNodes)
@@ -1776,10 +1777,11 @@ void MegaApplication::checkMemoryUsage()
 #endif
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG,
-                 QString::fromUtf8("Memory usage: %1 MB / %2 Nodes / %3 LocalNodes / %4 B/N")
+                 QString::fromUtf8("Memory usage: %1 MB / %2 Nodes / %3 LocalNodes / %4 B/N / %5 transfers")
                  .arg(procesUsage / (1024 * 1024))
                  .arg(numNodes).arg(numLocalNodes)
-                 .arg((float)procesUsage / totalNodes).toUtf8().constData());
+                 .arg((float)procesUsage / totalNodes)
+                 .arg(totalTransfers).toUtf8().constData());
 
     if (procesUsage > maxMemoryUsage)
     {
@@ -1787,7 +1789,7 @@ void MegaApplication::checkMemoryUsage()
     }
 
     if (maxMemoryUsage > preferences->getMaxMemoryUsage()
-            && maxMemoryUsage > 100 * 1024 * 1024 + 2 * 1024 * totalNodes)
+            && maxMemoryUsage > 100 * 1024 * 1024 + 2 * 1024 * (totalNodes + totalTransfers))
     {
         long long currentTime = QDateTime::currentMSecsSinceEpoch();
         if (currentTime - preferences->getMaxMemoryReportTime() > 86400000)
