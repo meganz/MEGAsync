@@ -118,11 +118,6 @@ padding-bottom: -1px;
 padding-bottom: 1px;
 }
 
-#lEmail
-{
- padding-bottom: -5px;
-}
-
 #lProxyType
 {
 padding-bottom: -1px;
