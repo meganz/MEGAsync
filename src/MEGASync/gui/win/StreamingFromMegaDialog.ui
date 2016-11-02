@@ -417,7 +417,7 @@ padding-left: -16px;</string>
                          </size>
                         </property>
                         <property name="text">
-                         <string/>
+                         <string notr="true"/>
                         </property>
                        </widget>
                       </item>
@@ -471,7 +471,7 @@ padding-left: -16px;</string>
                    <item>
                     <widget class="QLabel" name="lFileSize">
                      <property name="text">
-                      <string/>
+                      <string notr="true"/>
                      </property>
                     </widget>
                    </item>
