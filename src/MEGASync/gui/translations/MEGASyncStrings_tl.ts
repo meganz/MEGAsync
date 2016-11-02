@@ -1521,7 +1521,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Owner permissions:</source>
         <translatorcomment>Label just before the owner permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Owner permissions:</translation>
+        <translation type="unfinished">Pahintulot ng may-ari:</translation>
     </message>
 </context>
 <context>
