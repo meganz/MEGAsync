@@ -228,8 +228,8 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
         ui->pProxies->show();
 
 #ifdef __APPLE__
-        setMinimumHeight(410);
-        setMaximumHeight(410);
+        setMinimumHeight(435);
+        setMaximumHeight(435);
         ui->bApply->show();
 #endif
     }
