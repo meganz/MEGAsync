@@ -215,12 +215,12 @@ public:
 
     bool isCrashed();
     void setCrashed(bool value);
-    bool wasPaused();
-    void setWasPaused(bool value);
-    bool wasUploadsPaused();
-    void setWasUploadsPaused(bool value);
-    bool wasDownloadsPaused();
-    void setWasDownloadsPaused(bool value);
+    bool getGlobalPaused();
+    void setGlobalPaused(bool value);
+    bool getUploadsPaused();
+    void setUploadsPaused(bool value);
+    bool getDownloadsPaused();
+    void setDownloadsPaused(bool value);
 
     long long lastStatsRequest();
     void setLastStatsRequest(long long value);

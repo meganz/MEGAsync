@@ -35,6 +35,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     ui->wCompleted->setupTransfers(((MegaApplication *)qApp)->getFinishedTransfers(), QTransfersModel::TYPE_FINISHED);
     delete transferData;
 
+    updatePauseState();
     on_tAllTransfers_clicked();
     createAddMenu();    
 }
@@ -153,6 +154,7 @@ void TransferManager::on_tCompleted_clicked()
     ui->bPause->setVisible(false);
     ui->wTransfers->setCurrentWidget(ui->wCompleted);
     updateState();
+    updatePauseState();
     ui->wCompleted->refreshTransferItems();
 }
 
@@ -172,6 +174,7 @@ void TransferManager::on_tDownloads_clicked()
 
     ui->wTransfers->setCurrentWidget(ui->wDownloads);
     updateState();
+    updatePauseState();
 }
 
 void TransferManager::on_tUploads_clicked()
@@ -190,6 +193,7 @@ void TransferManager::on_tUploads_clicked()
 
     ui->wTransfers->setCurrentWidget(ui->wUploads);
     updateState();
+    updatePauseState();
 }
 
 void TransferManager::on_tAllTransfers_clicked()
@@ -208,6 +212,7 @@ void TransferManager::on_tAllTransfers_clicked()
 
     ui->wTransfers->setCurrentWidget(ui->wAllTransfers);
     updateState();
+    updatePauseState();
 }
 
 void TransferManager::on_bAdd_clicked()
@@ -227,14 +232,13 @@ void TransferManager::on_bClose_clicked()
     close();
 }
 
-void TransferManager::updateState()
+void TransferManager::updatePauseState()
 {
     QWidget *w = ui->wTransfers->currentWidget();
     if (w == ui->wAllTransfers)
     {
-        onTransfersActive(ui->wAllTransfers->areTransfersActive());
-        ui->wAllTransfers->pausedTransfers(preferences->wasPaused());
-        if (preferences->wasPaused())
+        ui->wAllTransfers->pausedTransfers(preferences->getGlobalPaused());
+        if (preferences->getGlobalPaused())
         {
             ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/play_ico.png")));
             ui->bPause->setText(tr("Resume"));
@@ -248,9 +252,8 @@ void TransferManager::updateState()
     }
     else if (w == ui->wDownloads)
     {
-        onTransfersActive(ui->wDownloads->areTransfersActive());
-        ui->wDownloads->pausedTransfers(preferences->wasDownloadsPaused());     
-        if (preferences->wasDownloadsPaused())
+        ui->wDownloads->pausedTransfers(preferences->getDownloadsPaused());
+        if (preferences->getDownloadsPaused())
         {
             ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/play_ico.png")));
             ui->bPause->setText(tr("Resume"));
@@ -264,9 +267,8 @@ void TransferManager::updateState()
     }
     else if (w == ui->wUploads)
     {
-        onTransfersActive(ui->wUploads->areTransfersActive());
-        ui->wUploads->pausedTransfers(preferences->wasUploadsPaused());
-        if (preferences->wasUploadsPaused())
+        ui->wUploads->pausedTransfers(preferences->getUploadsPaused());
+        if (preferences->getUploadsPaused())
         {
             ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/play_ico.png")));
             ui->bPause->setText(tr("Resume"));
@@ -277,6 +279,26 @@ void TransferManager::updateState()
             ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/pause_ico.png")));
             ui->bPause->setText(tr("Pause"));
         }
+    }
+}
+
+void TransferManager::updateState()
+{
+    QWidget *w = ui->wTransfers->currentWidget();
+    if (w == ui->wAllTransfers)
+    {
+        onTransfersActive(ui->wAllTransfers->areTransfersActive());
+        ui->wAllTransfers->pausedTransfers(preferences->getGlobalPaused());
+    }
+    else if (w == ui->wDownloads)
+    {
+        onTransfersActive(ui->wDownloads->areTransfersActive());
+        ui->wDownloads->pausedTransfers(preferences->getDownloadsPaused());
+    }
+    else if (w == ui->wUploads)
+    {
+        onTransfersActive(ui->wUploads->areTransfersActive());
+        ui->wUploads->pausedTransfers(preferences->getUploadsPaused());
     }
     else if (w == ui->wCompleted)
     {
@@ -294,15 +316,15 @@ void TransferManager::on_bPause_clicked()
     QWidget *w = ui->wTransfers->currentWidget();
     if (w == ui->wAllTransfers)
     {
-        megaApi->pauseTransfers(!preferences->wasPaused());
+        megaApi->pauseTransfers(!preferences->getGlobalPaused());
     }
     else if(w == ui->wDownloads)
     {
-        megaApi->pauseTransfers(!preferences->wasDownloadsPaused(), MegaTransfer::TYPE_DOWNLOAD);
+        megaApi->pauseTransfers(!preferences->getDownloadsPaused(), MegaTransfer::TYPE_DOWNLOAD);
     }
     else if(w == ui->wUploads)
     {
-        megaApi->pauseTransfers(!preferences->wasUploadsPaused(), MegaTransfer::TYPE_UPLOAD);
+        megaApi->pauseTransfers(!preferences->getUploadsPaused(), MegaTransfer::TYPE_UPLOAD);
     }
 }
 

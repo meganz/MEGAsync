@@ -679,7 +679,7 @@ void MegaApplication::initialize()
 
     connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
 
-    if (preferences->logged() && preferences->wasPaused())
+    if (preferences->logged() && preferences->getGlobalPaused())
     {
         pauseTransfers(true);
     }
@@ -4803,21 +4803,27 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         switch (request->getNumber())
         {
             case MegaTransfer::TYPE_DOWNLOAD:
-                preferences->setWasDownloadsPaused(paused);
+                preferences->setDownloadsPaused(paused);
                 break;
             case MegaTransfer::TYPE_UPLOAD:
-                preferences->setWasUploadsPaused(paused);
+                preferences->setUploadsPaused(paused);
                 break;
             default:
-                preferences->setWasUploadsPaused(paused);
-                preferences->setWasDownloadsPaused(paused);
-                preferences->setWasPaused(paused);
+                preferences->setUploadsPaused(paused);
+                preferences->setDownloadsPaused(paused);
+                preferences->setGlobalPaused(paused);
                 break;
         }
-        if (preferences->wasDownloadsPaused() == preferences->wasUploadsPaused())
+        if (preferences->getDownloadsPaused() == preferences->getUploadsPaused())
         {
-            preferences->setWasPaused(paused);
+            preferences->setGlobalPaused(paused);
         }
+
+        if (transferManager)
+        {
+            transferManager->updatePauseState();
+        }
+
         onGlobalSyncStateChanged(megaApi);
         break;
     }

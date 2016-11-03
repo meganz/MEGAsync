@@ -2003,7 +2003,7 @@ void Preferences::setCrashed(bool value)
     mutex.unlock();
 }
 
-bool Preferences::wasPaused()
+bool Preferences::getGlobalPaused()
 {
     mutex.lock();
     bool value = settings->value(wasPausedKey, false).toBool();
@@ -2011,7 +2011,7 @@ bool Preferences::wasPaused()
     return value;
 }
 
-void Preferences::setWasPaused(bool value)
+void Preferences::setGlobalPaused(bool value)
 {
     mutex.lock();
     settings->setValue(wasPausedKey, value);
@@ -2019,7 +2019,7 @@ void Preferences::setWasPaused(bool value)
     mutex.unlock();
 }
 
-bool Preferences::wasUploadsPaused()
+bool Preferences::getUploadsPaused()
 {
     mutex.lock();
     bool value = settings->value(wasUploadsPausedKey, false).toBool();
@@ -2027,7 +2027,7 @@ bool Preferences::wasUploadsPaused()
     return value;
 }
 
-void Preferences::setWasUploadsPaused(bool value)
+void Preferences::setUploadsPaused(bool value)
 {
     mutex.lock();
     settings->setValue(wasUploadsPausedKey, value);
@@ -2035,7 +2035,7 @@ void Preferences::setWasUploadsPaused(bool value)
     mutex.unlock();
 }
 
-bool Preferences::wasDownloadsPaused()
+bool Preferences::getDownloadsPaused()
 {
     mutex.lock();
     bool value = settings->value(wasDownloadsPausedKey, false).toBool();
@@ -2043,7 +2043,7 @@ bool Preferences::wasDownloadsPaused()
     return value;
 }
 
-void Preferences::setWasDownloadsPaused(bool value)
+void Preferences::setDownloadsPaused(bool value)
 {
     mutex.lock();
     settings->setValue(wasDownloadsPausedKey, value);
