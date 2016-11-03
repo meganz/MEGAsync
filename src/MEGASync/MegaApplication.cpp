@@ -4818,6 +4818,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             preferences->setGlobalPaused(paused);
         }
+        else
+        {
+            preferences->setGlobalPaused(false);
+        }
 
         if (transferManager)
         {
