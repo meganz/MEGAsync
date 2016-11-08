@@ -647,7 +647,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
-        <translation type="unfinished">[S]充滿彈性的：[/ S] 同步您電腦中的資料夾至雲端硬碟。亦可同時同步無限多個資料夾。</translation>
+        <translation type="unfinished">[S]充滿彈性的：[/S] 同步您電腦中的資料夾至雲端硬碟。亦可同時同步無限多個資料夾。</translation>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
@@ -1136,7 +1136,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
-        <translation type="unfinished">A system tray to place MEGAsync tray icon could not found. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translation type="unfinished">找不到放置MEGAsync小圖示的系統工作列。MEGAsync可在系統工作列中出現圖示以使用，但它也可以在沒有小圖示的狀況下正常運作使用。如果要打開該界面，只需試著再次開啟MEGAsync。</translation>
         <translatorcomment>Error message shown at startup when MEGAsync is executed in a Linux desktop that does not have a system tray</translatorcomment>
     </message>
     <message>

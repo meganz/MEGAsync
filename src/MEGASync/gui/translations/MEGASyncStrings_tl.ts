@@ -1151,7 +1151,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that can not be exported</translatorcomment>
-        <translation type="unfinished">The link can&#039;t be generated because the file is inside an incoming shared folder or your Rubbish Bin.</translation>
+        <translation type="unfinished">Hindi magawa ang link dahil ang file ay nasa loob ng isang padating na binahaging folder o sa iyong Basurahan.</translation>
     </message>
 </context>
 <context>

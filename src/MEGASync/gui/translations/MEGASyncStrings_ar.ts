@@ -1151,7 +1151,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that can not be exported</translatorcomment>
-        <translation type="unfinished">The link can&#039;t be generated because the file is inside an incoming shared folder or your Rubbish Bin.</translation>
+        <translation type="unfinished">لا يمكن إنشاء الرابط لأن الملف إما داخل مجلد مشاركة وارد أو في سلة المهملات.</translation>
     </message>
 </context>
 <context>
@@ -1521,7 +1521,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Owner permissions:</source>
         <translatorcomment>Label just before the owner permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Owner permissions:</translation>
+        <translation type="unfinished">أذونات المالك:</translation>
     </message>
 </context>
 <context>

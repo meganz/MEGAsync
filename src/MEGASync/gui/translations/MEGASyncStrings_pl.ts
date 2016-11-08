@@ -1136,7 +1136,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
-        <translation type="unfinished">A system tray to place MEGAsync tray icon could not found. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translation type="unfinished">Pasek narzędzi do umieszczenia ikonki MEGAsync nie został odnaleziony. MEGAsync powinen być używany bezpośrednio z paska narzędzi, ale nie jest to wymagane. Jeżeli chcesz uruchomić aplikację kliknij ikonę MEGAsync.</translation>
         <translatorcomment>Error message shown at startup when MEGAsync is executed in a Linux desktop that does not have a system tray</translatorcomment>
     </message>
     <message>

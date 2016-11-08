@@ -647,7 +647,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
-        <translation type="unfinished">[S]Flexível:[/ S] sincronizar qualquer pasta do seu PC para qualquer pasta na nuvem. Sincronizar qualquer número de pastas em paralelo.</translation>
+        <translation type="unfinished">[S]Flexível:[/S] sincronizar qualquer pasta do seu PC para qualquer pasta na nuvem. Sincronizar qualquer número de pastas em paralelo.</translation>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
@@ -756,11 +756,11 @@ because the local folder doesn&#039;t exist</source>
     </message>
     <message>
         <source>The folder (%1) wasn&#039;t uploaded because it&#039;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">A pasta (%1) não foi enviada porque é demasiado grande (esta versão beta está limitado a %2 pastas ou % 3 ficheiros.</translation>
+        <translation type="obsolete">A pasta (%1) não foi enviada porque é demasiado grande (esta versão beta está limitado a %2 pastas ou %3 ficheiros.</translation>
     </message>
     <message>
         <source>%1 folders weren&#039;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 pastas não foram enviadas porque são muito grandes (esta versão beta está limitado a %2 pastas ou % 3 ficheiros.</translation>
+        <translation type="obsolete">%1 pastas não foram enviadas porque são muito grandes (esta versão beta está limitado a %2 pastas ou %3 ficheiros.</translation>
     </message>
     <message>
         <source>Synchronization will stop.

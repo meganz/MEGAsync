@@ -1136,7 +1136,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
-        <translation type="unfinished">A system tray to place MEGAsync tray icon could not found. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translation type="unfinished">Orodna vrstica, v katero bi lahko postavili MEGAsync orodno ikono, ni bila najdena. MEGAsync je načrtovan, da deluje z orodno ikono, ampak lahko povsem normalno deluje tudi brez nje. Če želite odpreti vmesnik, samo ponovno zaženite MEGAsync.</translation>
         <translatorcomment>Error message shown at startup when MEGAsync is executed in a Linux desktop that does not have a system tray</translatorcomment>
     </message>
     <message>
@@ -1151,7 +1151,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that can not be exported</translatorcomment>
-        <translation type="unfinished">The link can&#039;t be generated because the file is inside an incoming shared folder or your Rubbish Bin.</translation>
+        <translation type="unfinished">Povezave ni mogoče ustvariti, ker je datoteka znotraj mape z dohodnimi deljenimi mapami ali v vašem košu.</translation>
     </message>
 </context>
 <context>
@@ -1521,7 +1521,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Owner permissions:</source>
         <translatorcomment>Label just before the owner permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Owner permissions:</translation>
+        <translation type="unfinished">Lastniške pravice:</translation>
     </message>
 </context>
 <context>
