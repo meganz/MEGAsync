@@ -229,6 +229,7 @@ const QString Preferences::firstStartDoneKey        = QString::fromAscii("firstS
 const QString Preferences::firstSyncDoneKey         = QString::fromAscii("firstSyncDone");
 const QString Preferences::firstFileSyncedKey       = QString::fromAscii("firstFileSynced");
 const QString Preferences::firstWebDownloadKey      = QString::fromAscii("firstWebclientDownload");
+const QString Preferences::fatWarningShownKey       = QString::fromAscii("fatWarningShown");
 const QString Preferences::installationTimeKey      = QString::fromAscii("installationTime");
 const QString Preferences::accountCreationTimeKey   = QString::fromAscii("accountCreationTime");
 const QString Preferences::hasLoggedInKey           = QString::fromAscii("hasLoggedIn");
@@ -1349,6 +1350,22 @@ void Preferences::setFirstWebDownloadDone(bool value)
 {
     mutex.lock();
     settings->setValue(firstWebDownloadKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::isFatWarningShown()
+{
+    mutex.lock();
+    bool value = settings->value(fatWarningShownKey, false).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setFatWarningShown(bool value)
+{
+    mutex.lock();
+    settings->setValue(fatWarningShownKey, value);
     settings->sync();
     mutex.unlock();
 }
