@@ -7,6 +7,15 @@ Fri Nov 11 14:16:26 CET 2016 - linux@mega.co.nz
   * Other bug fixes and minor improvements
 
 -------------------------------------------------------------------
+Mon Oct 17 17:28:29 CEST 2016 - linux@mega.co.nz
+- Update to version 2.9.9:
+  * Fixed compatibility with some web browsers
+  * Fixed the creation of thumbnails for JPG images (Windows)
+  * Fixed incompatibilities with some WiFi drivers (Windows)
+  * Fixed problems downloading files with incorrect metadata
+  * Other bug fixes
+
+-------------------------------------------------------------------
 Wed Jul 20 19:08:50 CEST 2016 - linux@mega.co.nz
 - Update to version 2.9.8:
   * More efficient upload completion
