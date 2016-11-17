@@ -520,6 +520,16 @@ void MegaApplication::showInterface(QString)
     showInfoDialog();
 }
 
+#ifdef __linux__
+void MegaApplication::showTrayIcon(){
+    if (trayIcon && strcmp(getenv("XDG_CURRENT_DESKTOP"),"GNOME"))
+    {
+        trayIcon->hide();
+        trayIcon->show();
+    }
+}
+#endif
+
 void MegaApplication::initialize()
 {
     if (megaApi)
@@ -1020,6 +1030,13 @@ void MegaApplication::start()
         return;
     }
 
+#ifdef __linux__
+    QTimer *trayIconTimer = new QTimer(this);
+    trayIconTimer->setSingleShot(true);
+    trayIconTimer->setInterval(Preferences::MAX_LOGIN_TIME_MS);
+    connect(trayIconTimer, SIGNAL(timeout()), this, SLOT(showTrayIcon()));
+    trayIconTimer->start(30000);
+#endif
     indexing = false;
     overquotaCheck = false;
 

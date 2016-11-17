@@ -5,10 +5,10 @@ GenericName=File Synchronizer
 Name=MEGASync
 Comment=Easy automated syncing between your computers and your MEGA cloud drive.
 TryExec=megasync
-Exec=sh -c "sleep 30 && megasync"
+Exec=megasync
 Icon=mega
 Terminal=false
 Categories=Network;System;
 StartupNotify=false
-X-GNOME-Autostart-Delay=30
+X-GNOME-Autostart-Delay=60
 
