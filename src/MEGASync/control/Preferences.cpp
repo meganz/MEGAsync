@@ -2144,6 +2144,11 @@ void Preferences::logout()
     mutex.unlock();
 }
 
+static bool caseInsensitiveLessThan(const QString &s1, const QString &s2)
+{
+    return s1.toLower() < s2.toLower();
+}
+
 void Preferences::loadExcludedSyncNames()
 {
     mutex.lock();
@@ -2168,12 +2173,10 @@ void Preferences::loadExcludedSyncNames()
         excludedSyncNames.removeAll(QString::fromUtf8("Icon?"));
     }
 
-    QMap<QString, QString> strMap;
-    foreach (QString str, excludedSyncNames)
-    {
-        strMap.insert( str.toLower(), str );
-    }
-    excludedSyncNames = strMap.values();
+    QSet<QString> excludedSyncNamesSet = QSet<QString>::fromList(excludedSyncNames);
+    excludedSyncNames = excludedSyncNamesSet.toList();
+    qSort(excludedSyncNames.begin(), excludedSyncNames.end(), caseInsensitiveLessThan);
+
     setExcludedSyncNames(excludedSyncNames);
     mutex.unlock();
 }
