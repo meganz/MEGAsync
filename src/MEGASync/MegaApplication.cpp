@@ -522,7 +522,7 @@ void MegaApplication::showInterface(QString)
 
 #ifdef __linux__
 void MegaApplication::showTrayIcon(){
-    if (trayIcon && strcmp(getenv("XDG_CURRENT_DESKTOP"),"GNOME"))
+    if (trayIcon && getenv("XDG_CURRENT_DESKTOP") && !strcmp(getenv("XDG_CURRENT_DESKTOP"),"XFCE"))
     {
         trayIcon->hide();
         trayIcon->show();
