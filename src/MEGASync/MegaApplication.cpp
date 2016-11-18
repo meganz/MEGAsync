@@ -1846,6 +1846,12 @@ void MegaApplication::periodicTasks()
 
     if (trayIcon)
     {
+#ifdef Q_OS_LINUX
+        if (counter==4 && getenv("XDG_CURRENT_DESKTOP") && !strcmp(getenv("XDG_CURRENT_DESKTOP"),"XFCE"))
+        {
+            trayIcon->hide();
+        }
+#endif
         trayIcon->show();
     }
 }
