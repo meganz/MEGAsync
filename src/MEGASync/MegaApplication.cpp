@@ -4834,9 +4834,23 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             if ((request->getNodeHandle() == preferences->getMegaFolderHandle(i)))
             {
+                QString localFolder = preferences->getLocalFolder(i);
+
+        #ifdef WIN32
+                string path, fsname;
+                path.resize(MAX_PATH * sizeof(WCHAR));
+                if (GetVolumePathNameW((LPCWSTR)localFolder.utf16(), (LPWSTR)path.data(), MAX_PATH))
+                {
+                    fsname.resize(MAX_PATH * sizeof(WCHAR));
+                    if (!GetVolumeInformationW((LPCWSTR)path.data(), NULL, 0, NULL, NULL, NULL, (LPWSTR)fsname.data(), MAX_PATH))
+                    {
+                        fsname.clear();
+                    }
+                }
+        #endif
+
                 if (e->getErrorCode() != MegaError::API_OK)
                 {
-                    QString localFolder = preferences->getLocalFolder(i);
                     MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
                     const char *nodePath = megaApi->getNodePath(node);
                     delete node;
@@ -4860,12 +4874,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     {
 #ifdef WIN32
                         WCHAR VBoxSharedFolderFS[] = L"VBoxSharedFolderFS";
-                        string path, fsname;
-                        path.resize(MAX_PATH * sizeof(WCHAR));
-                        fsname.resize(MAX_PATH * sizeof(WCHAR));
-                        if (GetVolumePathNameW((LPCWSTR)localFolder.utf16(), (LPWSTR)path.data(), MAX_PATH)
-                            && GetVolumeInformationW((LPCWSTR)path.data(), NULL, 0, NULL, NULL, NULL, (LPWSTR)fsname.data(), MAX_PATH)
-                            && !memcmp(fsname.data(), VBoxSharedFolderFS, sizeof(VBoxSharedFolderFS)))
+                        if (fsname.size() && !memcmp(fsname.data(), VBoxSharedFolderFS, sizeof(VBoxSharedFolderFS)))
                         {
                             QMessageBox::critical(NULL, tr("MEGAsync"),
                                 tr("Your sync \"%1\" has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.")
@@ -4925,6 +4934,17 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     {
                         SetFileAttributesW((LPCWSTR)debrisPath.utf16(),
                                            fad.dwFileAttributes | FILE_ATTRIBUTE_HIDDEN);
+                    }
+
+                    WCHAR exFatFS[] = L"exFAT";
+                    if (fsname.size() && (!memcmp(fsname.data(), L"FAT", 6) || !memcmp(fsname.data(), exFatFS, sizeof(exFatFS)))
+                            && !preferences->isFatWarningShown())
+                    {
+                        QMessageBox::warning(NULL, tr("MEGAsync"),
+                                         tr("You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it's strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).")
+                                             .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://help.mega.nz/megasync/syncing.html#can-i-sync-fat-fat32-partitions-under-windows\">"))
+                                             .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>")));
+                        preferences->setFatWarningShown();
                     }
 #endif
                 }

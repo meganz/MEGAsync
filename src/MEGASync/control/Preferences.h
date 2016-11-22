@@ -151,6 +151,8 @@ public:
     void setFirstFileSynced(bool value = true);
     bool isFirstWebDownloadDone();
     void setFirstWebDownloadDone(bool value = true);
+    bool isFatWarningShown();
+    void setFatWarningShown(bool value = true);
     QString lastCustomStreamingApp();
     void setLastCustomStreamingApp(const QString &value);
     long long getMaxMemoryUsage();
@@ -391,6 +393,7 @@ protected:
     static const QString firstSyncDoneKey;
     static const QString firstFileSyncedKey;
     static const QString firstWebDownloadKey;
+    static const QString fatWarningShownKey;
     static const QString installationTimeKey;
     static const QString accountCreationTimeKey;
     static const QString hasLoggedInKey;
