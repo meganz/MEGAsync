@@ -461,6 +461,12 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 #ifdef _WIN32
     windowsMenu = NULL;
     windowsExitAction = NULL;
+    windowsUpdateAction = NULL;
+    windowsImportLinksAction = NULL;
+    windowsUploadAction = NULL;
+    windowsDownloadAction = NULL;
+    windowsStreamAction = NULL;
+    windowsSettingsAction = NULL;
 #endif
     changeProxyAction = NULL;
     initialExitAction = NULL;
@@ -4034,6 +4040,76 @@ void MegaApplication::createTrayMenu()
 
     windowsExitAction = new QAction(tr("Exit"), this);
     connect(windowsExitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
+
+    if (windowsSettingsAction)
+    {
+        windowsSettingsAction->deleteLater();
+        windowsSettingsAction = NULL;
+    }
+
+    windowsSettingsAction = new QAction(tr("Settings"), this);
+    connect(windowsSettingsAction, SIGNAL(triggered()), this, SLOT(openSettings()));
+
+    if (windowsImportLinksAction)
+    {
+        windowsImportLinksAction->deleteLater();
+        windowsImportLinksAction = NULL;
+    }
+
+    windowsImportLinksAction = new QAction(tr("Import links"), this);
+    connect(windowsImportLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()));
+
+    if (windowsUploadAction)
+    {
+        windowsUploadAction->deleteLater();
+        windowsUploadAction = NULL;
+    }
+
+    windowsUploadAction = new QAction(tr("Upload"), this);
+    connect(windowsUploadAction, SIGNAL(triggered()), this, SLOT(uploadActionClicked()));
+
+    if (windowsDownloadAction)
+    {
+        windowsDownloadAction->deleteLater();
+        windowsDownloadAction = NULL;
+    }
+
+    windowsDownloadAction = new QAction(tr("Download"), this);
+    connect(windowsDownloadAction, SIGNAL(triggered()), this, SLOT(downloadActionClicked()));
+
+    if (windowsStreamAction)
+    {
+        windowsStreamAction->deleteLater();
+        windowsStreamAction = NULL;
+    }
+
+    windowsStreamAction = new QAction(tr("Stream from MEGA"), this);
+    connect(windowsStreamAction, SIGNAL(triggered()), this, SLOT(streamActionClicked()));
+
+    if (windowsUpdateAction)
+    {
+        windowsUpdateAction->deleteLater();
+        windowsUpdateAction = NULL;
+    }
+
+    if (updateAvailable)
+    {
+        windowsUpdateAction = new QAction(tr("Install update"), this);
+    }
+    else
+    {
+        windowsUpdateAction = new QAction(tr("About"), this);
+    }
+    connect(windowsUpdateAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
+
+    windowsMenu->addAction(windowsUpdateAction);
+    windowsMenu->addSeparator();
+    windowsMenu->addAction(windowsImportLinksAction);
+    windowsMenu->addAction(windowsUploadAction);
+    windowsMenu->addAction(windowsDownloadAction);
+    windowsMenu->addAction(windowsStreamAction);
+    windowsMenu->addAction(windowsSettingsAction);
+    windowsMenu->addSeparator();
     windowsMenu->addAction(windowsExitAction);
 #endif
 
