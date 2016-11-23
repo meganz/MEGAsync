@@ -218,17 +218,8 @@ bool QTransfersModel::dropMimeData(const QMimeData *data, Qt::DropAction, int ro
         {
             return false;
         }
-
-        if (row < srcrow)
-        {
-            item = transferOrder[row];
-            megaApi->moveTransferBeforeByTag(transferTag, item->tag);
-        }
-        else
-        {
-            item = transferOrder[row - 1];
-            megaApi->moveTransferBeforeByTag(transferTag, item->tag);
-        }
+        item = transferOrder[row];
+        megaApi->moveTransferBeforeByTag(transferTag, item->tag);
     }
     else
     {
