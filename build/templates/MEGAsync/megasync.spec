@@ -9,7 +9,7 @@ Source0:	megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
-BuildRequires: qt-devel, openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libtool, gcc-c++
+BuildRequires: openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libtool, gcc-c++
 BuildRequires: hicolor-icon-theme, unzip, wget
 
 %if 0%{?suse_version}
@@ -20,7 +20,7 @@ BuildRequires: update-desktop-files
 BuildRequires: libqt5-qtbase-devel >= 5.6, libqt5-linguist
 Requires: libQt5Core5 >= 5.6
 %else
-BuildRequires: libqt4-devel
+BuildRequires: libqt4-devel, qt-devel
 %endif
 
 # disabling post-build-checks that ocassionally prevent opensuse rpms from being generated
@@ -45,7 +45,7 @@ BuildRequires: terminus-fonts, fontpackages-filesystem
 %else
 BuildRequires: c-ares-devel, cryptopp-devel
 BuildRequires: desktop-file-utils
-BuildRequires: qt, qt-x11
+BuildRequires: qt, qt-x11, qt-devel
 BuildRequires: terminus-fonts, fontpackages-filesystem
 %endif
 %endif
@@ -53,12 +53,12 @@ BuildRequires: terminus-fonts, fontpackages-filesystem
 %if 0%{?centos_version} || 0%{?scientificlinux_version}
 BuildRequires: c-ares-devel,
 BuildRequires: desktop-file-utils
-BuildRequires: qt, qt-x11
+BuildRequires: qt, qt-x11, qt-devel
 %endif
 
 %if 0%{?rhel_version}
 BuildRequires: desktop-file-utils
-BuildRequires: qt, qt-x11
+BuildRequires: qt, qt-x11, qt-devel
 %endif
 
 
@@ -187,6 +187,19 @@ cat > "$YUM_FILE" << DATA
 name=MEGAsync
 baseurl=http://mega.nz/linux/MEGAsync/CentOS_7/
 gpgkey=https://mega.nz/linux/MEGAsync/CentOS_7/repodata/repomd.xml.key
+gpgcheck=1
+enabled=1
+DATA
+%endif
+
+%if 0%{?fedora_version} == 25
+# Fedora 25
+YUM_FILE="/etc/yum.repos.d/megasync.repo"
+cat > "$YUM_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+baseurl=http://mega.nz/linux/MEGAsync/Fedora_25/
+gpgkey=https://mega.nz/linux/MEGAsync/Fedora_25/repodata/repomd.xml.key
 gpgcheck=1
 enabled=1
 DATA
@@ -475,4 +488,3 @@ killall megasync 2> /dev/null || true
 %{_datadir}/doc/megasync/*
 
 %changelog
-
