@@ -174,9 +174,17 @@ int QTransfersModel::rowCount(const QModelIndex &parent) const
 
 QMimeData *QTransfersModel::mimeData(const QModelIndexList &indexes) const
 {
+    QByteArray byteArray;
+    QDataStream stream(&byteArray, QIODevice::WriteOnly);
+    QList<quintptr> selectedTags;
+    for (int i = 0; i < indexes.size(); i++)
+    {
+        selectedTags.append(indexes.at(i).internalId());
+    }
+    stream << selectedTags;
+
     QMimeData *data = new QMimeData();
-    QModelIndex index = indexes.at(0);
-    data->setData(QString::fromUtf8("application/x-qabstractitemmodeldatalist"), QString::number(index.internalId()).toUtf8());
+    data->setData(QString::fromUtf8("application/x-qabstractitemmodeldatalist"), byteArray);
     return data;
 }
 
@@ -202,28 +210,43 @@ Qt::DropActions QTransfersModel::supportedDropActions() const
 
 bool QTransfersModel::dropMimeData(const QMimeData *data, Qt::DropAction, int row, int, const QModelIndex &)
 {
-    TransferItemData *item = NULL;
-    int transferTag = QString::fromUtf8(data->data(QString::fromUtf8("application/x-qabstractitemmodeldatalist"))).toInt();
-    if (row >= 0 && row < (int)transferOrder.size())
+    QByteArray byteArray = data->data(QString::fromUtf8("application/x-qabstractitemmodeldatalist"));
+    QDataStream stream(&byteArray, QIODevice::ReadWrite);
+    QList<quintptr> selectedTags;
+    stream >> selectedTags;
+
+    if (row < 0 || row > transferOrder.size() || !selectedTags.size())
     {
-        TransferItemData *srcItem = transfers.value(transferTag);
-        if (!srcItem)
+        return false;
+    }
+
+    TransferItemData *item = NULL;
+    if (row != transferOrder.size())
+    {
+        item = transferOrder[row];
+        if (item->tag == selectedTags[0])
         {
             return false;
         }
 
-        auto srcit = std::lower_bound(transferOrder.begin(), transferOrder.end(), srcItem, priority_comparator);
+        auto srcit = std::lower_bound(transferOrder.begin(), transferOrder.end(), transfers.value(selectedTags[0]), priority_comparator);
         int srcrow = std::distance(transferOrder.begin(), srcit);
-        if (row == srcrow || row == (srcrow + 1))
+        if (srcrow + selectedTags.size() == row)
         {
             return false;
         }
-        item = transferOrder[row];
-        megaApi->moveTransferBeforeByTag(transferTag, item->tag);
     }
-    else
+
+    for (int i = 0; i< selectedTags.size(); i++)
     {
-        megaApi->moveTransferToLastByTag(transferTag);
+        if (item)
+        {
+            megaApi->moveTransferBeforeByTag(selectedTags[i], item->tag);
+        }
+        else
+        {
+            megaApi->moveTransferToLastByTag(selectedTags[i]);
+        }
     }
     return true;
 }

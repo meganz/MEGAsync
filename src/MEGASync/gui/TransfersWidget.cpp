@@ -78,7 +78,7 @@ void TransfersWidget::configureTransferView()
     ui->tvTransfers->setup(type);
     ui->tvTransfers->setItemDelegate((QAbstractItemDelegate *)tDelegate);
     ui->tvTransfers->header()->close();
-    ui->tvTransfers->setSelectionMode(QAbstractItemView::SingleSelection);
+    ui->tvTransfers->setSelectionMode(QAbstractItemView::ContiguousSelection);
     ui->tvTransfers->setDragEnabled(true);
     ui->tvTransfers->viewport()->setAcceptDrops(true);
     ui->tvTransfers->setDropIndicatorShown(true);
