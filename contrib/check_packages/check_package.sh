@@ -192,10 +192,11 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	
 	echo " reinstalling/updating megasync ..."
 	BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
-	attempts=3
+	attempts=10
 	$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive install -f megasync 
 	resultINSTALL=$?
 	while [[ $attempts -ge 0 && $resultINSTALL -ne 0 ]]; do
+		sleep $((5*(10-$attempts)))
 		$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive install -f megasync 
 		resultINSTALL=$?
 		attempts=$(($attempts - 1))
@@ -227,8 +228,18 @@ elif [[ $1 == *"DEBIAN"* ]] || [[ $1 == *"UBUNTU"* ]] || [[ $1 == *"LINUXMINT"* 
 	$sshpasscommand ssh root@$IP_GUEST "cat > /etc/apt/sources.list.d/megasync.list" <<-EOF
 	deb $REPO/ ./
 	EOF
+	
 	$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y update 2> tmp$VMNAME
 	resultMODREPO=$?
+	attempts=10
+	while [[ $attempts -ge 0 && $resultMODREPO -ne 0 ]]; do
+		sleep $((5*(10-$attempts)))
+		echo " modifing repos ... attempts left="$attempts
+		$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y update 2> tmp$VMNAME
+		resultMODREPO=$?
+		attempts=$(($attempts - 1))
+	done
+	
 	#notice: zypper will report 0 as status even though it "failed", we do stderr checking
 	if cat tmp$VMNAME | grep $REPO; then
 	 resultMODREPO=$(expr 1000 + 0$resultMODREPO); cat tmp$VMNAME; 
@@ -251,6 +262,22 @@ elif [[ $1 == *"DEBIAN"* ]] || [[ $1 == *"UBUNTU"* ]] || [[ $1 == *"LINUXMINT"* 
 	if [ $require_change -eq 1 ]; then
 		if [ "$BEFOREINSTALL" == "$AFTERINSTALL" ]; then resultINSTALL=$(expr 1000 + 0$resultINSTALL); fi
 	fi
+	attempts=10
+	while [[ $attempts -ge 0 && $resultINSTALL -ne 0 ]]; do
+		sleep $((5*(10-$attempts)))
+		echo " reinstalling/updating megasync ... attempts left="$attempts
+		BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST dpkg -l megasync`
+		$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y install megasync
+		resultINSTALL=$?
+		AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST dpkg -l megasync`
+		resultINSTALL=$(($? + 0$resultINSTALL))
+		echo "BEFOREINSTALL = $BEFOREINSTALL"
+		echo "AFTERINSTALL = $AFTERINSTALL"
+		if [ $require_change -eq 1 ]; then
+			if [ "$BEFOREINSTALL" == "$AFTERINSTALL" ]; then resultINSTALL=$(expr 1000 + 0$resultINSTALL); fi
+		fi
+		attempts=$(($attempts - 1))
+	done
 	logOperationResult "reinstalling/updating megasync ..." $resultINSTALL	
 	VERSIONINSTALLEDAFTER=`echo $AFTERINSTALL	| grep megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
 	logSth "installed megasync ..." "$VERSIONINSTALLEDAFTER"
@@ -294,6 +321,7 @@ EOF
 	BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST pacman -Q megasync`
 	$sshpasscommand ssh root@$IP_GUEST pacman -S --noconfirm megasync
 	resultINSTALL=$?
+	
 	AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST pacman -Q megasync`
 	resultINSTALL=$(($? + 0$resultINSTALL))
 	echo "BEFOREINSTALL = $BEFOREINSTALL"
@@ -301,6 +329,25 @@ EOF
 	if [ $require_change -eq 1 ]; then
 		if [ "$BEFOREINSTALL" == "$AFTERINSTALL" ]; then resultINSTALL=$(expr 1000 + 0$resultINSTALL); fi
 	fi
+	
+	attempts=10
+	while [[ $attempts -ge 0 && $resultINSTALL -ne 0 ]]; do
+		sleep $((5*(10-$attempts)))
+		echo " reinstalling/updating megasync ... attempts left="$attempts
+		BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST pacman -Q megasync`
+		$sshpasscommand ssh root@$IP_GUEST pacman -S --noconfirm megasync
+		resultINSTALL=$?
+		
+		AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST pacman -Q megasync`
+		resultINSTALL=$(($? + 0$resultINSTALL))
+		echo "BEFOREINSTALL = $BEFOREINSTALL"
+		echo "AFTERINSTALL = $AFTERINSTALL"
+		if [ $require_change -eq 1 ]; then
+			if [ "$BEFOREINSTALL" == "$AFTERINSTALL" ]; then resultINSTALL=$(expr 1000 + 0$resultINSTALL); fi
+		fi
+		attempts=$(($attempts - 1))
+	done
+	
 	logOperationResult "reinstalling/updating megasync ..." $resultINSTALL	
 	VERSIONINSTALLEDAFTER=`echo $AFTERINSTALL	| grep megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
 	logSth "installed megasync ..." "$VERSIONINSTALLEDAFTER"
@@ -362,6 +409,30 @@ else
 	if [ $require_change -eq 1 ]; then
 		if [ "$BEFOREINSTALL" == "$AFTERINSTALL" ]; then resultINSTALL=$(expr 1000 + 0$resultINSTALL); fi
 	fi
+	
+	attempts=10
+	while [[ $attempts -ge 0 && $resultINSTALL -ne 0 ]]; do
+		sleep $((5*(10-$attempts)))
+		echo " reinstalling/updating megasync ... attempts left="$attempts
+		BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
+		$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit install megasync  2> tmp$VMNAME
+		resultINSTALL=$(($? + 0$resultINSTALL)) #TODO: yum might fail and still say "IT IS OK!"
+		#Doing simple stderr checking will give false FAILS, since yum outputs non failure stuff in stderr
+		if cat tmp$VMNAME | grep $REPO; then
+		 resultINSTALL=$(expr 1000 + 0$resultINSTALL); cat tmp$VMNAME; 
+		fi; rm tmp$VMNAME;	
+		
+		AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
+		resultINSTALL=$(($? + 0$resultINSTALL))
+		echo "BEFOREINSTALL = $BEFOREINSTALL"
+		echo "AFTERINSTALL = $AFTERINSTALL"
+		if [ $require_change -eq 1 ]; then
+			if [ "$BEFOREINSTALL" == "$AFTERINSTALL" ]; then resultINSTALL=$(expr 1000 + 0$resultINSTALL); fi
+		fi
+		attempts=$(($attempts - 1))
+	done
+	
+	
 	logOperationResult "reinstalling/updating megasync ..." $resultINSTALL
 	VERSIONINSTALLEDAFTER=`echo $AFTERINSTALL	| grep megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
 	logSth "installed megasync ..." "$VERSIONINSTALLEDAFTER"
@@ -389,7 +460,7 @@ resultDL=27
 attempts=10
 while [[ $attempts -ge 0 && $resultDL -ne 0 ]]; do
 	sleep $((5*(10-$attempts)))
-	echo " check file dl correctly ..."
+	echo " check file dl correctly ... attempts left="$attempts
 	$sshpasscommand ssh root@$IP_GUEST cat /home/mega/testFile.txt >/dev/null  #TODO: do hash file comparation
 	resultDL=$?
 	attempts=$(($attempts - 1))
