@@ -160,7 +160,7 @@ void QTransfersModel::removeAllTransfers()
 
 void QTransfersModel::refreshTransfers()
 {
-    emit dataChanged(index(0, 0, QModelIndex()), index(transferItems.size(), 0, QModelIndex()));
+    emit dataChanged(index(0, 0, QModelIndex()), index(transferOrder.size(), 0, QModelIndex()));
 }
 
 int QTransfersModel::rowCount(const QModelIndex &parent) const
