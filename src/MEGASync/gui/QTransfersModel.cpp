@@ -128,13 +128,12 @@ void QTransfersModel::removeTransferByTag(int transferTag)
     beginRemoveRows(QModelIndex(), row, row);
     transfers.remove(transferTag);
     transferOrder.erase(it);
-    endRemoveRows();
-    delete item;
-
     if (type == TYPE_FINISHED)
     {
         ((MegaApplication *)qApp)->removeFinishedTransfer(transferTag);
     }
+    endRemoveRows();
+    delete item;
 
     if (transfers.isEmpty())
     {
