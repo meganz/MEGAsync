@@ -7,9 +7,24 @@ ExportProcessor::ExportProcessor(MegaApi *megaApi, QStringList fileList) : QObje
 {
     this->megaApi = megaApi;
     this->fileList = fileList;
+    this->mode = MODE_PATHS;
 
     currentIndex = 0;
     remainingNodes = fileList.size();
+    importSuccess = 0;
+    importFailed = 0;
+
+    delegateListener = new QTMegaRequestListener(megaApi, this);
+}
+
+ExportProcessor::ExportProcessor(MegaApi *megaApi, QList<MegaHandle> handleList)
+{
+    this->megaApi = megaApi;
+    this->handleList = handleList;
+    this->mode = MODE_HANDLES;
+
+    currentIndex = 0;
+    remainingNodes = handleList.size();
     importSuccess = 0;
     importFailed = 0;
 
@@ -23,25 +38,34 @@ ExportProcessor::~ExportProcessor()
 
 void ExportProcessor::requestLinks()
 {
-    for (int i = 0; i < fileList.size(); i++)
+    int size = (mode == MODE_PATHS) ? fileList.size() : handleList.size();
+    for (int i = 0; i < size; i++)
     {
-#ifdef WIN32
-        if (!fileList[i].startsWith(QString::fromAscii("\\\\")))
+        MegaNode *node = NULL;
+        if (mode == MODE_PATHS)
         {
-            fileList[i].insert(0, QString::fromAscii("\\\\?\\"));
+    #ifdef WIN32
+            if (!fileList[i].startsWith(QString::fromAscii("\\\\")))
+            {
+                fileList[i].insert(0, QString::fromAscii("\\\\?\\"));
+            }
+
+            string tmpPath((const char*)fileList[i].utf16(), fileList[i].size()*sizeof(wchar_t));
+    #else
+            string tmpPath((const char*)fileList[i].toUtf8().constData());
+    #endif
+
+            node = megaApi->getSyncedNode(&tmpPath);
+            if (!node)
+            {
+                const char *fpLocal = megaApi->getFingerprint(tmpPath.c_str());
+                node = megaApi->getNodeByFingerprint(fpLocal);
+                delete [] fpLocal;
+            }
         }
-
-        string tmpPath((const char*)fileList[i].utf16(), fileList[i].size()*sizeof(wchar_t));
-#else
-        string tmpPath((const char*)fileList[i].toUtf8().constData());
-#endif
-
-        MegaNode *node = megaApi->getSyncedNode(&tmpPath);
-        if (!node)
+        else
         {
-            const char *fpLocal = megaApi->getFingerprint(tmpPath.c_str());
-            node = megaApi->getNodeByFingerprint(fpLocal);
-            delete [] fpLocal;
+            node = megaApi->getNodeByHandle(handleList[i]);
         }
         megaApi->exportNode(node, delegateListener);
         delete node;

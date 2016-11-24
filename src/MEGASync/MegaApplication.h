@@ -129,6 +129,7 @@ public slots:
     void processUploads();
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
+    void exportNodes(QList<mega::MegaHandle> exportList);
     void externalDownload(QQueue<mega::MegaNode *> newDownloadQueue);
     void externalDownload(QString megaLink, QString auth);
     void internalDownload(long long handle);

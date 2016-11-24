@@ -3473,6 +3473,19 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
     exportOps++;
 }
 
+void MegaApplication::exportNodes(QList<MegaHandle> exportList)
+{
+    if (appfinished || !megaApi->isLoggedIn())
+    {
+        return;
+    }
+
+    ExportProcessor *processor = new ExportProcessor(megaApi, exportList);
+    connect(processor, SIGNAL(onRequestLinksFinished()), this, SLOT(onRequestLinksFinished()));
+    processor->requestLinks();
+    exportOps++;
+}
+
 void MegaApplication::externalDownload(QQueue<MegaNode *> newDownloadQueue)
 {
     if (appfinished)
