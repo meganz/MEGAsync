@@ -19,12 +19,12 @@ public:
 private:
     int last_row;
     int lastItemHoveredTag;
-    int transferTagSelected;
-    int transferStateSelected;
+    QList<int> transferTagSelected;
     bool disableLink;
 
     QMenu *contextInProgressMenu;
     QAction *pauseTransfer;
+    QAction *resumeTransfer;
     QAction *moveToTop;
     QAction *moveUp;
     QAction *moveDown;
@@ -39,7 +39,7 @@ private:
 
     void createContextMenu();
     void createCompletedContextMenu();
-    void customizeContextInProgressMenu(bool paused, bool enableUpMoves, bool enableDownMoves, bool isCancellable);
+    void customizeContextInProgressMenu(bool enablePause, bool enableResume, bool enableUpMoves, bool enableDownMoves, bool isCancellable);
 
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event);
@@ -49,6 +49,7 @@ protected:
 private slots:
     void onCustomContextMenu(const QPoint &point);
     void pauseTransferClicked();
+    void resumeTransferClicked();
     void moveToTopClicked();
     void moveUpClicked();
     void moveDownClicked();
