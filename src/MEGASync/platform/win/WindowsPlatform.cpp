@@ -2,6 +2,10 @@
 #include <Shlobj.h>
 #include <Shlwapi.h>
 
+#if QT_VERSION >= 0x050200
+#include <QtWin>
+#endif
+
 #if QT_VERSION >= 0x050700
 #include <QtPlatformHeaders/QWindowsWindowFunctions>
 #endif
@@ -491,4 +495,49 @@ QString WindowsPlatform::getDefaultOpenApp(QString extension)
         }
     }
     return QString();
+}
+
+void WindowsPlatform::enableDialogBlur(QDialog *dialog)
+{
+    bool win10 = false;
+    HWND hWnd = (HWND)dialog->winId();
+    dialog->setAttribute(Qt::WA_TranslucentBackground, true);
+    dialog->setAttribute(Qt::WA_NoSystemBackground, true);
+
+    const HINSTANCE hModule = LoadLibrary(TEXT("user32.dll"));
+    if (hModule)
+    {
+        struct ACCENTPOLICY
+        {
+            int nAccentState;
+            int nFlags;
+            int nColor;
+            int nAnimationId;
+        };
+        struct WINCOMPATTRDATA
+        {
+            int nAttribute;
+            PVOID pData;
+            ULONG ulDataSize;
+        };
+        typedef BOOL(WINAPI*pSetWindowCompositionAttribute)(HWND, WINCOMPATTRDATA*);
+        const pSetWindowCompositionAttribute SetWindowCompositionAttribute = (pSetWindowCompositionAttribute)GetProcAddress(hModule, "SetWindowCompositionAttribute");
+        if (SetWindowCompositionAttribute)
+        {
+            ACCENTPOLICY policy = { 3, 0, 0xFFFFFFFF, 0 };
+            WINCOMPATTRDATA data = { 19, &policy, sizeof(ACCENTPOLICY) };
+            SetWindowCompositionAttribute(hWnd, &data);
+            win10 = true;
+        }
+        FreeLibrary(hModule);
+    }
+
+#if QT_VERSION >= 0x050200
+    if (!win10)
+    {
+        QtWin::setCompositionEnabled(true);
+        QtWin::extendFrameIntoClientArea(dialog, -1, -1, -1, -1);
+        QtWin::enableBlurBehindWindow(dialog);
+    }
+#endif
 }

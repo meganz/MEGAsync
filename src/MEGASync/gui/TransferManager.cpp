@@ -3,6 +3,7 @@
 #include "ui_TransferManager.h"
 #include "MegaApplication.h"
 #include "Utilities.h"
+#include "platform/Platform.h"
 
 using namespace mega;
 
@@ -35,7 +36,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     updatePauseState();
     on_tAllTransfers_clicked();
-    createAddMenu();    
+    createAddMenu();
+
+    Platform::enableDialogBlur(this);
 }
 
 TransferManager::~TransferManager()

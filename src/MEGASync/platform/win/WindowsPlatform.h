@@ -38,6 +38,7 @@ public:
     static QByteArray decrypt(QByteArray data, QByteArray key);
     static QByteArray getLocalStorageKey();
     static QString getDefaultOpenApp(QString extension);
+    static void enableDialogBlur(QDialog *dialog);
 };
 
 #endif // WINDOWSPLATFORM_H

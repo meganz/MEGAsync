@@ -224,3 +224,8 @@ QString LinuxPlatform::getDefaultOpenApp(QString extension)
 
     return line.mid(5, size);
 }
+
+void LinuxPlatform::enableDialogBlur(QDialog *dialog)
+{
+
+}
