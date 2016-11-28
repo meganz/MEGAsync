@@ -39,6 +39,7 @@ private:
     TransferMenuItemAction *downloadAction;
     Preferences *preferences;
     mega::QTMegaTransferListener *delegateListener;
+    QPoint dragPosition;
 
     void createAddMenu();
     void onTransfersActive(bool exists);
@@ -55,6 +56,8 @@ private slots:
 
 protected:
     void changeEvent(QEvent *event);
+    void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
 };
 
 #endif // TRANSFERMANAGER_H

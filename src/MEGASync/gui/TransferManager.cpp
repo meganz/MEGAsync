@@ -14,9 +14,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
     setAttribute(Qt::WA_QuitOnClose, false);
     setAttribute(Qt::WA_DeleteOnClose, true);
-    Qt::WindowFlags flags =  Qt::Window | Qt::WindowSystemMenuHint
-                                | Qt::WindowMinimizeButtonHint
-                                | Qt::WindowCloseButtonHint;
+    Qt::WindowFlags flags =  Qt::Window | Qt::FramelessWindowHint;
     this->setWindowFlags(flags);
     preferences = Preferences::instance();
 
@@ -382,4 +380,22 @@ void TransferManager::changeEvent(QEvent *event)
         createAddMenu();
     }
     QDialog::changeEvent(event);
+}
+
+void TransferManager::mouseMoveEvent(QMouseEvent *event)
+{
+    if (event->buttons() & Qt::LeftButton)
+    {
+        move(event->globalPos() - dragPosition);
+        event->accept();
+    }
+}
+
+void TransferManager::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        dragPosition = event->globalPos() - frameGeometry().topLeft();
+        event->accept();
+    }
 }
