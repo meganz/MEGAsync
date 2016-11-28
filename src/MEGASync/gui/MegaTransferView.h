@@ -15,12 +15,14 @@ public:
     MegaTransferView(QWidget *parent = 0);
     void setup(int type);
     void disableGetLink(bool disable);
+    int getType() const;
 
 private:
     int last_row;
     int lastItemHoveredTag;
     QList<int> transferTagSelected;
     bool disableLink;
+    int type;
 
     QMenu *contextInProgressMenu;
     QAction *pauseTransfer;

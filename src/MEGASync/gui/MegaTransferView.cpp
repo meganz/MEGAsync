@@ -30,6 +30,7 @@ MegaTransferView::MegaTransferView(QWidget *parent) :
     clearCompleted = NULL;
     clearAllCompleted = NULL;
     disableLink = false;
+    type = 0;
 }
 
 void MegaTransferView::setup(int type)
@@ -38,12 +39,18 @@ void MegaTransferView::setup(int type)
     connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
     createContextMenu();
     createCompletedContextMenu();
+    this->type = type;
 }
 
 void MegaTransferView::disableGetLink(bool disable)
 {
     disableLink = disable;
     getLink->setEnabled(!disable);
+}
+
+int MegaTransferView::getType() const
+{
+    return type;
 }
 
 void MegaTransferView::createContextMenu()
