@@ -6,10 +6,6 @@
 #include <QtWin>
 #endif
 
-#if QT_VERSION >= 0x050700
-#include <QtPlatformHeaders/QWindowsWindowFunctions>
-#endif
-
 // Windows headers don't define this for WinXP despite the documentation says that they should
 // and it indeed works
 #ifndef SHFOLDERCUSTOMSETTINGS
@@ -57,9 +53,7 @@ WinShellDispatcherTask* WindowsPlatform::shellDispatcherTask = NULL;
 
 void WindowsPlatform::initialize(int argc, char *argv[])
 {
-#if QT_VERSION >= 0x050700
-    QWindowsWindowFunctions::setWindowActivationBehavior(QWindowsWindowFunctions::AlwaysActivateWindow);
-#endif
+
 }
 
 bool WindowsPlatform::enableTrayIcon(QString executable)
@@ -540,4 +534,26 @@ void WindowsPlatform::enableDialogBlur(QDialog *dialog)
         QtWin::enableBlurBehindWindow(dialog);
     }
 #endif
+}
+
+void WindowsPlatform::activateBackgroundWindow(QDialog *window)
+{
+    DWORD currentThreadId = GetCurrentThreadId();
+    DWORD foregroundThreadId;
+    HWND foregroundWindow;
+    bool threadAttached = false;
+
+    if (QGuiApplication::applicationState() != Qt::ApplicationActive
+        && (foregroundWindow = GetForegroundWindow())
+        && (foregroundThreadId = GetWindowThreadProcessId(foregroundWindow, NULL))
+        && (foregroundThreadId != currentThreadId))
+    {
+        threadAttached = AttachThreadInput(foregroundThreadId, currentThreadId, TRUE);
+    }
+    window->showMinimized();
+    window->showNormal();
+    if (threadAttached)
+    {
+        AttachThreadInput(foregroundThreadId, currentThreadId, FALSE);
+    }
 }

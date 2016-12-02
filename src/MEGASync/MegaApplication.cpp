@@ -3256,11 +3256,7 @@ void MegaApplication::processUploads()
     }
     uploadFolderSelector = new UploadToMegaDialog(megaApi);
     uploadFolderSelector->setDefaultFolder(preferences->uploadFolder());
-
-#ifdef WIN32
-    uploadFolderSelector->showMinimized();
-    uploadFolderSelector->showNormal();
-#endif
+    Platform::activateBackgroundWindow(uploadFolderSelector);
     uploadFolderSelector->exec();
     if (!uploadFolderSelector)
     {
@@ -3332,10 +3328,7 @@ void MegaApplication::processDownloads()
     }
 
     downloadFolderSelector = new DownloadFromMegaDialog(preferences->downloadFolder());
-#ifdef WIN32
-    downloadFolderSelector->showMinimized();
-    downloadFolderSelector->showNormal();
-#endif
+    Platform::activateBackgroundWindow(downloadFolderSelector);
     downloadFolderSelector->exec();
     if (!downloadFolderSelector)
     {
@@ -3911,11 +3904,7 @@ void MegaApplication::openInfoWizard()
     infoWizard = new InfoWizard();
     connect(infoWizard, SIGNAL(actionButtonClicked(int)), this, SLOT(userAction(int)));
     connect(infoWizard, SIGNAL(finished(int)), this, SLOT(infoWizardDialogFinished(int)));
-
-#ifdef WIN32
-    infoWizard->showMinimized();
-    infoWizard->showNormal();
-#endif
+    Platform::activateBackgroundWindow(infoWizard);
     infoWizard->show();
 }
 
@@ -3930,11 +3919,7 @@ void MegaApplication::openBwOverquotaDialog()
     {
         bwOverquotaDialog = new UpgradeDialog(megaApi, pricing);
         connect(bwOverquotaDialog, SIGNAL(finished(int)), this, SLOT(overquotaDialogFinished(int)));
-
-#ifdef WIN32
-        bwOverquotaDialog->showMinimized();
-        bwOverquotaDialog->showNormal();
-#endif
+        Platform::activateBackgroundWindow(bwOverquotaDialog);
         bwOverquotaDialog->show();
 
         if (!bwOverquotaEvent)

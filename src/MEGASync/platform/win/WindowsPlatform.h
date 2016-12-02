@@ -39,6 +39,7 @@ public:
     static QByteArray getLocalStorageKey();
     static QString getDefaultOpenApp(QString extension);
     static void enableDialogBlur(QDialog *dialog);
+    static void activateBackgroundWindow(QDialog *window);
 };
 
 #endif // WINDOWSPLATFORM_H

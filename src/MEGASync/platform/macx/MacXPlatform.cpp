@@ -144,3 +144,8 @@ bool MacXPlatform::enableSetuidBit()
     delete response;
     return result;
 }
+
+void MacXPlatform::activateBackgroundWindow(QDialog *)
+{
+
+}
