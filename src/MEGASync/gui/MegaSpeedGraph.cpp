@@ -25,6 +25,20 @@ void MegaSpeedGraph::init(MegaApi *megaApi, int type, int numPoints, int totalTi
     this->type = type;
     this->numPoints = numPoints;
     this->totalTimeMs = totalTimeMs;
+
+    radius = 8;
+    verticalLineColor = QColor(QString::fromUtf8("#CCCCCC"));
+    if (type == MegaTransfer::TYPE_DOWNLOAD)
+    {
+        gradientColor = QColor(QString::fromUtf8("#C3E1EF"));
+        graphLineColor = QColor(QString::fromUtf8("#95D0E9"));
+    }
+    else
+    {
+        gradientColor = QColor(QString::fromUtf8("#FFCCCC"));
+        graphLineColor = QColor(QString::fromUtf8("#FF0000"));
+    }
+
     clearValues();
 
     if (timer->isActive())
@@ -70,19 +84,6 @@ void MegaSpeedGraph::paintEvent(QPaintEvent *)
 
     float h = height();
     float w = width();
-    QString gradientColor;
-    QString graphLineColor;
-    QString verticalLineColor = QString::fromUtf8("#CCCCCC");
-    if (type == MegaTransfer::TYPE_DOWNLOAD)
-    {
-        gradientColor = QString::fromUtf8("#C3E1EF");
-        graphLineColor = QString::fromUtf8("#95D0E9");
-    }
-    else
-    {
-        gradientColor = QString::fromUtf8("#FFCCCC");
-        graphLineColor = QString::fromUtf8("#FF0000");
-    }
 
     // Calculate graph points if needed
     if (polygon.isEmpty())
@@ -96,9 +97,39 @@ void MegaSpeedGraph::paintEvent(QPaintEvent *)
             {
                 y -= (((float)values[i] / max) * h);
             }
-            polygon.push_back(QPoint(x, y));
+            polygon.push_back(QPointF(x, y));
             x += xStep;
         }
+
+        linePath = QPainterPath();
+        linePath.moveTo(polygon.first());
+        for (int i = 1; i < (numPoints - 1); i++)
+        {
+            QPointF pt;
+            QPointF pt1 = polygon.at(i);
+            QPointF pt2 = polygon.at(i + 1);
+            QPointF pdist = pt2 - pt1;
+            float ratio = radius / sqrtf(powf(pdist.x(), 2) + pow(pdist.y(), 2));
+            if (ratio > 0.5f)
+            {
+                ratio = 0.5f;
+            }
+
+            pt.setX((1.0f - ratio) * pt1.x() + ratio * pt2.x());
+            pt.setY((1.0f - ratio) * pt1.y() + ratio * pt2.y());
+            linePath.quadTo(polygon.at(i), pt);
+
+            if (i < (numPoints - 2))
+            {
+                pt.setX(ratio * pt1.x() + (1.0f - ratio) * pt2.x());
+                pt.setY(ratio * pt1.y() + (1.0f - ratio) * pt2.y());
+                linePath.lineTo(pt);
+            }
+        }
+        linePath.lineTo(polygon.last());
+        closedLinePath = linePath;
+        closedLinePath.lineTo(rect().bottomRight());
+        closedLinePath.lineTo(rect().bottomLeft());
     }
 
     QPainter painter(this);
@@ -110,21 +141,17 @@ void MegaSpeedGraph::paintEvent(QPaintEvent *)
     QLinearGradient gradient(0, 0, 0, h);
     gradient.setColorAt(0, gradientColor);
     gradient.setColorAt(1, Qt::white);
-    polygon.push_back(rect().bottomRight());
-    polygon.push_back(rect().bottomLeft());
     painter.setBrush(gradient);
     painter.setPen(Qt::transparent);
-    painter.drawPolygon(polygon);
-    polygon.pop_back();
-    polygon.pop_back();
+    painter.drawPath(closedLinePath);
 
     // Draw graph line
     QPen graphPen;
     graphPen.setWidth(1);
-    graphPen.setColor(QColor(graphLineColor));
+    graphPen.setColor(graphLineColor);
     painter.setPen(graphPen);
-    painter.setBrush(QColor(graphLineColor));
-    painter.drawPolyline(polygon);
+    painter.setBrush(Qt::transparent);
+    painter.drawPath(linePath);
 
     // Draw vertical lines
     painter.setRenderHints(QPainter::Antialiasing
@@ -132,16 +159,13 @@ void MegaSpeedGraph::paintEvent(QPaintEvent *)
                            | QPainter::HighQualityAntialiasing, false);
     QPen linePen;
     linePen.setWidth(1);
-    linePen.setColor(QColor(verticalLineColor));
+    linePen.setColor(verticalLineColor);
     painter.setPen(linePen);
-    QBrush lineBrush;
-    lineBrush.setColor(QColor(verticalLineColor));
-    painter.setBrush(lineBrush);
     float lineStep = w / 9.0;
     float lineX = 0;
     for (int i = 0; i < 10; i++)
     {
-        QLineF line(QPoint(lineX, 0), QPoint(lineX, h));
+        QLineF line(QPointF(lineX, 0), QPointF(lineX, h));
         painter.drawLine(line);
         lineX += lineStep;
     }

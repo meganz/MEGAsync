@@ -27,8 +27,15 @@ private:
     int totalTimeMs;
     QTimer *timer;
     QList<long long> values;
-    QPolygon polygon;
+    QPolygonF polygon;
+    QPainterPath linePath;
+    QPainterPath closedLinePath;
     long long max;
+
+    int radius;
+    QColor gradientColor;
+    QColor graphLineColor;
+    QColor verticalLineColor;
 
 protected:
     void clearValues();
