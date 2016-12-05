@@ -86,7 +86,7 @@ QSize MegaTransferDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
 {
     if (index.isValid())
     {
-        return QSize(720, 48);
+        return QSize(800, 48);
     }
     else
     {

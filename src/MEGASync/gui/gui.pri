@@ -41,7 +41,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/QMegaMessageBox.cpp \
     $$PWD/TransferMenuItemAction.cpp \
     $$PWD/TransfersStateInfoWidget.cpp \
-    $$PWD/MegaSpeedGraph.cpp
+    $$PWD/MegaSpeedGraph.cpp \
+    $$PWD/ActiveTransfersWidget.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -84,7 +85,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/QMegaMessageBox.h \
     $$PWD/TransferMenuItemAction.h \
     $$PWD/TransfersStateInfoWidget.h \
-    $$PWD/MegaSpeedGraph.h
+    $$PWD/MegaSpeedGraph.h \
+    $$PWD/ActiveTransfersWidget.h
 
 INCLUDEPATH += $$PWD
 
@@ -126,7 +128,8 @@ win32 {
                 $$PWD/win/TransferManager.ui \
                 $$PWD/win/TransfersWidget.ui \
                 $$PWD/win/TransfersStateInfoWidget.ui \
-                $$PWD/win/MegaSpeedGraph.ui
+                $$PWD/win/MegaSpeedGraph.ui \
+                $$PWD/win/ActiveTransfersWidget.ui
 }
 
 macx {
@@ -165,7 +168,8 @@ macx {
                 $$PWD/macx/TransferManager.ui \
                 $$PWD/macx/TransfersWidget.ui \
                 $$PWD/macx/TransfersStateInfoWidget.ui \
-                $$PWD/macx/MegaSpeedGraph.ui
+                $$PWD/macx/MegaSpeedGraph.ui \
+                $$PWD/macx/ActiveTransfersWidget.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -213,7 +217,8 @@ unix:!macx {
                 $$PWD/linux/TransferManager.ui \
                 $$PWD/linux/TransfersWidget.ui \
                 $$PWD/linux/TransfersStateInfoWidget.ui \
-                $$PWD/linux/MegaSpeedGraph.ui
+                $$PWD/linux/MegaSpeedGraph.ui \
+                $$PWD/linux/ActiveTransfersWidget.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

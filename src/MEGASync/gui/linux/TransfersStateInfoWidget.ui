@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
-    <height>336</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>720</width>
-    <height>336</height>
+    <width>800</width>
+    <height>480</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>720</width>
-    <height>336</height>
+    <width>800</width>
+    <height>480</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -45,20 +45,20 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>720</width>
-     <height>336</height>
+     <width>800</width>
+     <height>480</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>720</width>
-     <height>336</height>
+     <width>800</width>
+     <height>480</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>720</width>
-     <height>336</height>
+     <width>800</width>
+     <height>480</height>
     </size>
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
