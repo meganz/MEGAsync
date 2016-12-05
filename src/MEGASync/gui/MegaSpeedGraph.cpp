@@ -5,6 +5,7 @@
 #include <QBrush>
 #include <QColor>
 #include <QTimer>
+#include <math.h>
 
 using namespace mega;
 
@@ -27,16 +28,16 @@ void MegaSpeedGraph::init(MegaApi *megaApi, int type, int numPoints, int totalTi
     this->totalTimeMs = totalTimeMs;
 
     radius = 8;
-    verticalLineColor = QColor(QString::fromUtf8("#CCCCCC"));
+    verticalLineColor = QColor(QString::fromUtf8("#EEEEEE"));
     if (type == MegaTransfer::TYPE_DOWNLOAD)
     {
-        gradientColor = QColor(QString::fromUtf8("#C3E1EF"));
-        graphLineColor = QColor(QString::fromUtf8("#95D0E9"));
+        gradientColor = QColor(QString::fromUtf8("#D2ECC8"));
+        graphLineColor = QColor(QString::fromUtf8("#92D678"));
     }
     else
     {
-        gradientColor = QColor(QString::fromUtf8("#FFCCCC"));
-        graphLineColor = QColor(QString::fromUtf8("#FF0000"));
+        gradientColor = QColor(QString::fromUtf8("#D0E9F4"));
+        graphLineColor = QColor(QString::fromUtf8("#93CFEC"));
     }
 
     clearValues();
@@ -82,8 +83,8 @@ void MegaSpeedGraph::paintEvent(QPaintEvent *)
         return;
     }
 
-    float h = height();
-    float w = width();
+    float h = height() - 1;
+    float w = width() - 1;
 
     // Calculate graph points if needed
     if (polygon.isEmpty())
@@ -109,7 +110,7 @@ void MegaSpeedGraph::paintEvent(QPaintEvent *)
             QPointF pt1 = polygon.at(i);
             QPointF pt2 = polygon.at(i + 1);
             QPointF pdist = pt2 - pt1;
-            float ratio = radius / sqrtf(powf(pdist.x(), 2) + pow(pdist.y(), 2));
+            float ratio = radius / sqrtf(pdist.x() * pdist.x() + pdist.y() * pdist.y());
             if (ratio > 0.5f)
             {
                 ratio = 0.5f;
@@ -133,6 +134,8 @@ void MegaSpeedGraph::paintEvent(QPaintEvent *)
     }
 
     QPainter painter(this);
+
+
     painter.setRenderHints(QPainter::Antialiasing
                            | QPainter::SmoothPixmapTransform
                            | QPainter::HighQualityAntialiasing);
@@ -144,14 +147,6 @@ void MegaSpeedGraph::paintEvent(QPaintEvent *)
     painter.setBrush(gradient);
     painter.setPen(Qt::transparent);
     painter.drawPath(closedLinePath);
-
-    // Draw graph line
-    QPen graphPen;
-    graphPen.setWidth(1);
-    graphPen.setColor(graphLineColor);
-    painter.setPen(graphPen);
-    painter.setBrush(Qt::transparent);
-    painter.drawPath(linePath);
 
     // Draw vertical lines
     painter.setRenderHints(QPainter::Antialiasing
@@ -169,6 +164,20 @@ void MegaSpeedGraph::paintEvent(QPaintEvent *)
         painter.drawLine(line);
         lineX += lineStep;
     }
+
+    painter.setRenderHints(QPainter::Antialiasing
+                           | QPainter::SmoothPixmapTransform
+                           | QPainter::HighQualityAntialiasing);
+
+    // Draw graph line
+    QPen graphPen;
+    graphPen.setWidth(1);
+    graphPen.setColor(graphLineColor);
+    painter.setPen(graphPen);
+    painter.setBrush(Qt::transparent);
+    painter.drawPath(linePath);
+
+
 }
 
 void MegaSpeedGraph::sample()
