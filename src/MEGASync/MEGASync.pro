@@ -102,7 +102,12 @@ TRANSLATIONS = \
 CODECFORTR = UTF8
 
 win32 {
-    QT       += winextras
+    greaterThan(QT_MAJOR_VERSION, 4) {
+        greaterThan(QT_MINOR_VERSION, 1) {
+            QT += winextras
+        }
+    }
+
     RC_FILE = icon.rc
     QMAKE_LFLAGS += /LARGEADDRESSAWARE
     QMAKE_LFLAGS_WINDOWS += /SUBSYSTEM:WINDOWS,5.01

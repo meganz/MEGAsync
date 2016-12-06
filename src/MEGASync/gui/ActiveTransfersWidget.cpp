@@ -90,8 +90,6 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
         return;
     }
 
-
-
     int type = transfer->getType();
     if (type == MegaTransfer::TYPE_DOWNLOAD)
     {
@@ -144,7 +142,6 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
         setSpeed(&activeUpload, transfer->getSpeed());
         setTransferredBytes(&activeUpload, transfer->getTransferredBytes());
         udpateTransferState(&activeUpload);
-
     }
 }
 
@@ -152,7 +149,7 @@ void ActiveTransfersWidget::updateDownSpeed(long long speed)
 {
     if (activeDownload.transferState == MegaTransfer::STATE_PAUSED)
     {
-        ui->lCurrentDownSpeed->setText(QString::fromUtf8("PAUSED"));
+        ui->lCurrentDownSpeed->setText(tr("PAUSED"));
     }
     else
     {
@@ -174,7 +171,7 @@ void ActiveTransfersWidget::updateUpSpeed(long long speed)
 {
     if (activeUpload.transferState == MegaTransfer::STATE_PAUSED)
     {
-        ui->lCurrentUpSpeed->setText(QString::fromUtf8("PAUSED"));
+        ui->lCurrentUpSpeed->setText(tr("PAUSED"));
     }
     else
     {
@@ -196,7 +193,6 @@ void ActiveTransfersWidget::on_bDownCancel_clicked()
 {
     MegaTransfer *transfer = NULL;
     transfer = megaApi->getTransferByTag(activeDownload.tag);
-
     if (!transfer)
     {
         return;
@@ -221,7 +217,6 @@ void ActiveTransfersWidget::on_bUpCancel_clicked()
 {
     MegaTransfer *transfer = NULL;
     transfer = megaApi->getTransferByTag(activeUpload.tag);
-
     if (!transfer)
     {
         return;
@@ -254,14 +249,12 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
     switch (type)
     {
         case MegaTransfer::TYPE_UPLOAD:
-
             if (!isSyncTransfer)
             {
                 loadIconResourceUp = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_upload_item_ico.png")
                                                            : QString::fromUtf8(":/images/cloud_upload_item_ico@2x.png"));
                 animationUp = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/uploading.gif")
                                                  : QString::fromUtf8(":/images/uploading@2x.gif"));
-
             }
             else
             {
@@ -269,11 +262,10 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
                                                            : QString::fromUtf8(":/images/sync_item_ico@2x.png"));
                 animationUp = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/synching.gif")
                                                  : QString::fromUtf8(":/images/synching@2x.gif"));
-
             }
             break;
-        case MegaTransfer::TYPE_DOWNLOAD:
 
+        case MegaTransfer::TYPE_DOWNLOAD:
             if (!isSyncTransfer)
             {
                 loadIconResourceDown = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_download_item_ico.png")
@@ -291,6 +283,7 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
 
             }
             break;
+
         default:
             break;
     }
@@ -356,7 +349,6 @@ void ActiveTransfersWidget::udpateTransferState(TransferData *td)
             // Update remaining time
             long long remainingBytes = td->totalSize - td->totalTransferredBytes;
             int totalRemainingSeconds = td->meanTransferSpeed ? remainingBytes / td->meanTransferSpeed : 0;
-
             if (totalRemainingSeconds)
             {
                 if (totalRemainingSeconds < 60)
@@ -395,7 +387,6 @@ void ActiveTransfersWidget::udpateTransferState(TransferData *td)
 
     // Update progress bar
     unsigned int permil = (td->totalSize > 0) ? ((1000 * td->totalTransferredBytes) / td->totalSize) : 0;
-
     if (td->type == MegaTransfer::TYPE_DOWNLOAD)
     {
         ui->sDownloads->setCurrentWidget(ui->wActiveDownloads);
@@ -408,7 +399,7 @@ void ActiveTransfersWidget::udpateTransferState(TransferData *td)
     }
     else
     {
-        ui->sDownloads->setCurrentWidget(ui->wActiveUploads);
+        ui->sUploads->setCurrentWidget(ui->wActiveUploads);
         ui->lUpRemainingTime->setText(remainingTime);
         ui->pbUploads->setValue(permil);
         ui->lUpCompletedSize->setText(QString::fromUtf8("%1%2")
@@ -468,7 +459,6 @@ void ActiveTransfersWidget::updateAnimation(TransferData *td)
     switch (td->transferState)
     {
         case MegaTransfer::STATE_ACTIVE:
-
             if (td->type == MegaTransfer::TYPE_UPLOAD)
             {
                 if (animationUp->state() != QMovie::Running)
@@ -486,6 +476,7 @@ void ActiveTransfersWidget::updateAnimation(TransferData *td)
                 }
             }
             break;
+
         default:
             if(td->type == MegaTransfer::TYPE_UPLOAD)
             {

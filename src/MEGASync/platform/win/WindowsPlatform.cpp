@@ -493,6 +493,9 @@ QString WindowsPlatform::getDefaultOpenApp(QString extension)
 
 void WindowsPlatform::enableDialogBlur(QDialog *dialog)
 {
+    // this feature doesn't work well yet
+    return;
+
     bool win10 = false;
     HWND hWnd = (HWND)dialog->winId();
     dialog->setAttribute(Qt::WA_TranslucentBackground, true);

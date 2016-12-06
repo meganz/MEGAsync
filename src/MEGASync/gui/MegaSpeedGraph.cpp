@@ -27,7 +27,7 @@ void MegaSpeedGraph::init(MegaApi *megaApi, int type, int numPoints, int totalTi
     this->numPoints = numPoints;
     this->totalTimeMs = totalTimeMs;
 
-    radius = 8;
+    radius = 4;
     verticalLineColor = QColor(QString::fromUtf8("#EEEEEE"));
     if (type == MegaTransfer::TYPE_DOWNLOAD)
     {
@@ -135,12 +135,10 @@ void MegaSpeedGraph::paintEvent(QPaintEvent *)
 
     QPainter painter(this);
 
-
+    // Draw gradient
     painter.setRenderHints(QPainter::Antialiasing
                            | QPainter::SmoothPixmapTransform
                            | QPainter::HighQualityAntialiasing);
-
-    // Draw gradient
     QLinearGradient gradient(0, 0, 0, h);
     gradient.setColorAt(0, gradientColor);
     gradient.setColorAt(1, Qt::white);
@@ -165,19 +163,16 @@ void MegaSpeedGraph::paintEvent(QPaintEvent *)
         lineX += lineStep;
     }
 
+    // Draw graph line
     painter.setRenderHints(QPainter::Antialiasing
                            | QPainter::SmoothPixmapTransform
                            | QPainter::HighQualityAntialiasing);
-
-    // Draw graph line
     QPen graphPen;
     graphPen.setWidth(1);
     graphPen.setColor(graphLineColor);
     painter.setPen(graphPen);
     painter.setBrush(Qt::transparent);
     painter.drawPath(linePath);
-
-
 }
 
 void MegaSpeedGraph::sample()

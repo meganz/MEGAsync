@@ -11,11 +11,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::TransferManager)
 {
-
-
     ui->setupUi(this);
-
-
     setAttribute(Qt::WA_QuitOnClose, false);
     setAttribute(Qt::WA_DeleteOnClose, true);
     Qt::WindowFlags flags =  Qt::Window | Qt::FramelessWindowHint;
@@ -41,13 +37,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     on_tAllTransfers_clicked();
     createAddMenu();
 
-
     Platform::enableDialogBlur(this);
-
-//    setAttribute(Qt::WA_TranslucentBackground, true);
-//    setAttribute(Qt::WA_NoSystemBackground, true);
-//    enableBlurForWindow(this);
-
 }
 
 TransferManager::~TransferManager()
@@ -398,8 +388,11 @@ void TransferManager::mouseMoveEvent(QMouseEvent *event)
 {
     if (event->buttons() & Qt::LeftButton)
     {
-        move(event->globalPos() - dragPosition);
-        event->accept();
+        if (dragPosition.x() != -1)
+        {
+            move(event->globalPos() - dragPosition);
+            event->accept();
+        }
     }
 }
 
@@ -411,3 +404,9 @@ void TransferManager::mousePressEvent(QMouseEvent *event)
         event->accept();
     }
 }
+
+void TransferManager::mouseReleaseEvent(QMouseEvent *event)
+{
+    dragPosition = QPoint(-1, -1);
+}
+

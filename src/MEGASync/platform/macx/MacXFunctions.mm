@@ -505,7 +505,6 @@ QString defaultOpenApp(QString extension)
 
 void enableBlurForWindow(QWidget *window)
 {
-
     NSView *nsview = (NSView *)window->winId();
     NSWindow *nswindow = [nsview window];
 
@@ -530,5 +529,4 @@ void enableBlurForWindow(QWidget *window)
         //[self addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
         [nsview addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
     }
-
 }
