@@ -151,7 +151,6 @@ public slots:
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
     void onInstallUpdateClicked();
     void showInfoDialog();
-    bool anUpdateIsAvailable();
     void triggerInstallUpdate();
     void scanningAnimationStep();
     void setupWizardFinished(int result);
@@ -243,11 +242,9 @@ protected:
     MultiQFileDialog *multiUploadFileDialog;
     QQueue<QString> uploadQueue;
     QQueue<mega::MegaNode *> downloadQueue;
-    long long totalDownloadSize, totalUploadSize;
-    long long totalDownloadedSize, totalUploadedSize;
-    long long uploadSpeed, downloadSpeed;
-    long long lastStartedDownload;
-    long long lastStartedUpload;
+    int numUploads, numDownloads;
+    unsigned long long activeDownloadPriority;
+    unsigned long long activeUploadPriority;
     long long queuedUserStats;
     long long maxMemoryUsage;
     int exportOps;
@@ -259,7 +256,6 @@ protected:
     bool bwOverquotaEvent;
     InfoWizard *infoWizard;
     mega::QTMegaListener *delegateListener;
-    QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;
     MegaDownloader *downloader;
     QTimer *periodicTasksTimer;

@@ -43,11 +43,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     totalDownloads = 0;
     totalDownloadedSize = totalUploadedSize = 0;
     totalDownloadSize = totalUploadSize = 0;
+    meanDownloadSpeed = meanUploadSpeed = 0;
     remainingUploads = remainingDownloads = 0;
-    uploadStartTime = 0;
-    downloadStartTime = 0;
-    effectiveDownloadSpeed = 200000;
-    effectiveUploadSpeed = 200000;
     ui->lDownloads->setText(QString::fromAscii(""));
     ui->lUploads->setText(QString::fromAscii(""));
     indexing = false;
@@ -207,13 +204,6 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
             delete activeDownload;
             activeDownload = transfer->copy();
         }
-
-        if (!downloadStartTime)
-        {
-            downloadStartTime = QDateTime::currentMSecsSinceEpoch();
-            elapsedDownloadTime=0;
-            lastUpdate = QDateTime::currentMSecsSinceEpoch();
-        }
     }
     else
     {
@@ -222,13 +212,6 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
         {
             delete activeUpload;
             activeUpload = transfer->copy();
-        }
-
-        if (!uploadStartTime)
-        {
-            uploadStartTime = QDateTime::currentMSecsSinceEpoch();
-            elapsedUploadTime=0;
-            lastUpdate = QDateTime::currentMSecsSinceEpoch();
         }
     }
 
@@ -297,29 +280,15 @@ void InfoDialog::updateTransfers()
 
     if (remainingDownloads)
     {
-        long long remainingBytes = totalDownloadSize-totalDownloadedSize;
+        long long remainingBytes = totalDownloadSize - totalDownloadedSize;
         if (remainingBytes < 0)
         {
             remainingBytes = 0;
         }
 
-        unsigned long long timeIncrement = QDateTime::currentMSecsSinceEpoch()-lastUpdate;
-        if (timeIncrement < 1000)
-        {
-            elapsedDownloadTime += timeIncrement;
-        }
-
-        double effectiveSpeed = effectiveDownloadSpeed;
-        double elapsedDownloadTimeSecs = elapsedDownloadTime/1000.0;
-        if (elapsedDownloadTimeSecs)
-        {
-            effectiveSpeed = totalDownloadedSize/elapsedDownloadTimeSecs;
-        }
-
-        effectiveDownloadSpeed += (effectiveSpeed-effectiveDownloadSpeed)/3; //Smooth the effective speed
         if (isVisible())
         {
-            int totalRemainingSeconds = (effectiveDownloadSpeed) ? remainingBytes/effectiveDownloadSpeed : 0;
+            int totalRemainingSeconds = meanDownloadSpeed ? remainingBytes / meanDownloadSpeed : 0;
             int remainingHours = totalRemainingSeconds/3600;
             if ((remainingHours<0) || (remainingHours>99))
             {
@@ -400,30 +369,15 @@ void InfoDialog::updateTransfers()
 
     if (remainingUploads)
     {
-        long long remainingBytes = totalUploadSize-totalUploadedSize;
+        long long remainingBytes = totalUploadSize - totalUploadedSize;
         if (remainingBytes < 0)
         {
             remainingBytes = 0;
         }
 
-        unsigned long long timeIncrement = QDateTime::currentMSecsSinceEpoch()-lastUpdate;
-        if (timeIncrement < 1000)
-        {
-            elapsedUploadTime += timeIncrement;
-        }
-
-        double effectiveSpeed = effectiveUploadSpeed;
-        double elapsedUploadTimeSecs = elapsedUploadTime / 1000.0;
-        if (elapsedUploadTimeSecs)
-        {
-            effectiveSpeed = totalUploadedSize / elapsedUploadTimeSecs;
-        }
-
-        effectiveUploadSpeed += (effectiveSpeed - effectiveUploadSpeed) / 3; //Smooth the effective speed
-
         if (isVisible())
         {
-            int totalRemainingSeconds = (effectiveUploadSpeed) ? remainingBytes/effectiveUploadSpeed : 0;
+            int totalRemainingSeconds = meanUploadSpeed ? remainingBytes / meanUploadSpeed : 0;
             int remainingHours = totalRemainingSeconds/3600;
             if ((remainingHours < 0) || (remainingHours > 99))
             {
@@ -496,8 +450,6 @@ void InfoDialog::updateTransfers()
             updateState();
         }
     }
-
-    lastUpdate = QDateTime::currentMSecsSinceEpoch();
 }
 
 void InfoDialog::transferFinished(int error)
@@ -643,7 +595,8 @@ void InfoDialog::updateState()
             return;
         }
 
-        setTransferSpeeds(-1, -1);
+        downloadSpeed = -1;
+        uploadSpeed = -1;
         if (state != STATE_PAUSED)
         {
             state = STATE_PAUSED;
@@ -684,9 +637,10 @@ void InfoDialog::updateState()
             return;
         }
         overlay->setVisible(false);
-        if ((downloadSpeed<0) && (uploadSpeed<0))
+        if (downloadSpeed < 0 && uploadSpeed < 0)
         {
-            setTransferSpeeds(0, 0);
+            downloadSpeed = 0;
+            uploadSpeed = 0;
         }
 
         if (waiting)
@@ -781,29 +735,58 @@ void InfoDialog::closeSyncsMenu()
 #endif
 }
 
-void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpeed)
+void InfoDialog::setTransferSpeed(int type, long long speed)
 {
-    if (downloadSpeed || this->downloadSpeed < 0)
+    if (type == MegaTransfer::TYPE_DOWNLOAD)
     {
-        this->downloadSpeed = downloadSpeed;
+        if (speed || this->downloadSpeed < 0)
+        {
+            this->downloadSpeed = speed;
+        }
     }
-
-    if (uploadSpeed || this->uploadSpeed < 0)
+    else
     {
-        this->uploadSpeed = uploadSpeed;
+        if (speed || this->uploadSpeed < 0)
+        {
+            this->uploadSpeed = speed;
+        }
     }
 }
 
-void InfoDialog::setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize)
+void InfoDialog::setTransferredSize(int type, long long transferredSize)
 {
-    this->totalDownloadedSize = totalDownloadedSize;
-    this->totalUploadedSize = totalUploadedSize;
+    if (type == MegaTransfer::TYPE_DOWNLOAD)
+    {
+        this->totalDownloadedSize = transferredSize;
+    }
+    else
+    {
+        this->totalUploadedSize = transferredSize;
+    }
 }
 
-void InfoDialog::setTotalTransferSize(long long totalDownloadSize, long long totalUploadSize)
+void InfoDialog::setTotalTransferSize(int type, long long totalSize)
 {
-    this->totalDownloadSize = totalDownloadSize;
-    this->totalUploadSize = totalUploadSize;
+    if (type == MegaTransfer::TYPE_DOWNLOAD)
+    {
+        this->totalDownloadSize = totalSize;
+    }
+    else
+    {
+        this->totalUploadSize = totalSize;
+    }
+}
+
+void InfoDialog::setMeanSpeed(int type, long long meanSpeed)
+{
+    if (type == MegaTransfer::TYPE_DOWNLOAD)
+    {
+        this->meanDownloadSpeed = meanSpeed;
+    }
+    else
+    {
+        this->meanUploadSpeed = meanSpeed;
+    }
 }
 
 void InfoDialog::setPaused(bool paused)
@@ -924,12 +907,12 @@ void InfoDialog::onAllUploadsFinished()
         ui->wTransfer2->hideTransfer();
         ui->lUploads->setText(QString::fromAscii(""));
         ui->wUploadDesc->hide();
-        uploadStartTime = 0;
         uploadSpeed = 0;
         currentUpload = 0;
         totalUploads = 0;
         totalUploadedSize = 0;
         totalUploadSize = 0;
+        meanUploadSpeed = 0;
         megaApi->resetTotalUploads();
     }
 }
@@ -951,12 +934,12 @@ void InfoDialog::onAllDownloadsFinished()
             ui->lDownloads->setText(QString::fromAscii(""));
             ui->wDownloadDesc->hide();
         }
-        downloadStartTime = 0;
         downloadSpeed = 0;
         currentDownload = 0;
         totalDownloads = 0;
         totalDownloadedSize = 0;
         totalDownloadSize = 0;
+        meanDownloadSpeed = 0;
         megaApi->resetTotalDownloads();
     }
 }
