@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
-    <height>336</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>720</width>
-    <height>336</height>
+    <width>800</width>
+    <height>480</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>720</width>
-    <height>336</height>
+    <width>800</width>
+    <height>480</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -56,20 +56,20 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>720</width>
-     <height>336</height>
+     <width>800</width>
+     <height>480</height>
     </rect>
    </property>
    <property name="minimumSize">
     <size>
-     <width>720</width>
-     <height>336</height>
+     <width>800</width>
+     <height>480</height>
     </size>
    </property>
    <property name="maximumSize">
     <size>
-     <width>720</width>
-     <height>336</height>
+     <width>800</width>
+     <height>480</height>
     </size>
    </property>
    <property name="styleSheet">
@@ -81,14 +81,14 @@
    <widget class="TransfersStateInfoWidget" name="pNoTransfers">
     <property name="minimumSize">
      <size>
-      <width>720</width>
-      <height>336</height>
+      <width>800</width>
+      <height>480</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>720</width>
-      <height>336</height>
+      <width>800</width>
+      <height>480</height>
      </size>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -112,14 +112,14 @@
    <widget class="QWidget" name="pTransfers">
     <property name="minimumSize">
      <size>
-      <width>720</width>
-      <height>336</height>
+      <width>800</width>
+      <height>480</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>720</width>
-      <height>336</height>
+      <width>800</width>
+      <height>480</height>
      </size>
     </property>
     <property name="styleSheet">
@@ -145,14 +145,14 @@
       <widget class="MegaTransferView" name="tvTransfers">
        <property name="minimumSize">
         <size>
-         <width>721</width>
-         <height>336</height>
+         <width>800</width>
+         <height>480</height>
         </size>
        </property>
        <property name="maximumSize">
         <size>
-         <width>721</width>
-         <height>336</height>
+         <width>800</width>
+         <height>480</height>
         </size>
        </property>
        <property name="focusPolicy">

@@ -12,7 +12,6 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     ui(new Ui::TransferManager)
 {
     ui->setupUi(this);
-
     setAttribute(Qt::WA_QuitOnClose, false);
     setAttribute(Qt::WA_DeleteOnClose, true);
     Qt::WindowFlags flags =  Qt::Window | Qt::FramelessWindowHint;
@@ -30,7 +29,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     MegaTransferData *transferData = megaApi->getTransferData(delegateListener);
     ui->wUploads->setupTransfers(transferData, QTransfersModel::TYPE_UPLOAD);
     ui->wDownloads->setupTransfers(transferData, QTransfersModel::TYPE_DOWNLOAD);
-    ui->wAllTransfers->setupTransfers(transferData, QTransfersModel::TYPE_ALL);
+    ui->wActiveTransfers->init(megaApi);
     ui->wCompleted->setupTransfers(((MegaApplication *)qApp)->getFinishedTransfers(), QTransfersModel::TYPE_FINISHED);
     delete transferData;
 
@@ -51,14 +50,14 @@ void TransferManager::onTransferStart(MegaApi *api, MegaTransfer *transfer)
 {
     ui->wUploads->getModel()->onTransferStart(api, transfer);
     ui->wDownloads->getModel()->onTransferStart(api, transfer);
-    ui->wAllTransfers->getModel()->onTransferStart(api, transfer);
+    ui->wActiveTransfers->onTransferStart(api, transfer);
 }
 
 void TransferManager::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *e)
 {
     ui->wUploads->getModel()->onTransferFinish(api, transfer, e);
     ui->wDownloads->getModel()->onTransferFinish(api, transfer, e);
-    ui->wAllTransfers->getModel()->onTransferFinish(api, transfer, e);
+    ui->wActiveTransfers->onTransferFinish(api, transfer, e);
     ui->wCompleted->getModel()->onTransferFinish(api, transfer, e);
 }
 
@@ -66,14 +65,14 @@ void TransferManager::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
 {
     ui->wUploads->getModel()->onTransferUpdate(api, transfer);
     ui->wDownloads->getModel()->onTransferUpdate(api, transfer);
-    ui->wAllTransfers->getModel()->onTransferUpdate(api, transfer);
+    ui->wActiveTransfers->onTransferUpdate(api, transfer);
 }
 
 void TransferManager::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError *e)
 {
     ui->wUploads->getModel()->onTransferTemporaryError(api, transfer, e);
     ui->wDownloads->getModel()->onTransferTemporaryError(api, transfer, e);
-    ui->wAllTransfers->getModel()->onTransferTemporaryError(api, transfer, e);
+    ui->wActiveTransfers->onTransferTemporaryError(api, transfer, e);
 }
 
 void TransferManager::createAddMenu()
@@ -211,7 +210,7 @@ void TransferManager::on_tAllTransfers_clicked()
     ui->bClearAll->setText(tr("Cancel all"));
     ui->bPause->setVisible(true);
 
-    ui->wTransfers->setCurrentWidget(ui->wAllTransfers);
+    ui->wTransfers->setCurrentWidget(ui->wActiveTransfers);
     updateState();
     updatePauseState();
 }
@@ -236,9 +235,9 @@ void TransferManager::on_bClose_clicked()
 void TransferManager::updatePauseState()
 {
     QWidget *w = ui->wTransfers->currentWidget();
-    if (w == ui->wAllTransfers)
+    if (w == ui->wActiveTransfers)
     {
-        ui->wAllTransfers->pausedTransfers(preferences->getGlobalPaused());
+        //ui->wActiveTransfers->pausedTransfers(preferences->getGlobalPaused());
         if (preferences->getGlobalPaused())
         {
             ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/play_ico.png")));
@@ -286,10 +285,10 @@ void TransferManager::updatePauseState()
 void TransferManager::updateState()
 {
     QWidget *w = ui->wTransfers->currentWidget();
-    if (w == ui->wAllTransfers)
+    if (w == ui->wActiveTransfers)
     {
-        onTransfersActive(ui->wAllTransfers->areTransfersActive());
-        ui->wAllTransfers->pausedTransfers(preferences->getGlobalPaused());
+        //onTransfersActive(ui->wActiveTransfers->areTransfersActive());
+        //ui->wActiveTransfers->pausedTransfers(preferences->getGlobalPaused());
     }
     else if (w == ui->wDownloads)
     {
@@ -315,7 +314,7 @@ void TransferManager::disableGetLink(bool disable)
 void TransferManager::on_bPause_clicked()
 {
     QWidget *w = ui->wTransfers->currentWidget();
-    if (w == ui->wAllTransfers)
+    if (w == ui->wActiveTransfers)
     {
         megaApi->pauseTransfers(!preferences->getGlobalPaused());
     }
@@ -332,10 +331,10 @@ void TransferManager::on_bPause_clicked()
 void TransferManager::on_bClearAll_clicked()
 {
     QWidget *w = ui->wTransfers->currentWidget();
-    if (((TransfersWidget *)w)->getModel()->rowCount(QModelIndex()) == 0)
-    {
-        return;
-    }
+//    if (((TransfersWidget *)w)->getModel()->rowCount(QModelIndex()) == 0)
+//    {
+//        return;
+//    }
 
     if (w != ui->wCompleted)
     {
@@ -349,7 +348,7 @@ void TransferManager::on_bClearAll_clicked()
 
     }
 
-    if (w == ui->wAllTransfers)
+    if (w == ui->wActiveTransfers)
     {
         megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
         megaApi->cancelTransfers(MegaTransfer::TYPE_DOWNLOAD);
@@ -389,8 +388,11 @@ void TransferManager::mouseMoveEvent(QMouseEvent *event)
 {
     if (event->buttons() & Qt::LeftButton)
     {
-        move(event->globalPos() - dragPosition);
-        event->accept();
+        if (dragPosition.x() != -1)
+        {
+            move(event->globalPos() - dragPosition);
+            event->accept();
+        }
     }
 }
 
@@ -402,3 +404,9 @@ void TransferManager::mousePressEvent(QMouseEvent *event)
         event->accept();
     }
 }
+
+void TransferManager::mouseReleaseEvent(QMouseEvent *event)
+{
+    dragPosition = QPoint(-1, -1);
+}
+

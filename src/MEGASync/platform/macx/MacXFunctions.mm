@@ -2,6 +2,8 @@
 #include <Cocoa/Cocoa.h>
 #include <QFileInfo>
 #include <QCoreApplication>
+#include <QWidget>
+#import <objc/runtime.h>
 
 #ifndef kCFCoreFoundationVersionNumber10_9
 #define kCFCoreFoundationVersionNumber10_9 855.00
@@ -498,4 +500,33 @@ QString defaultOpenApp(QString extension)
     CFRelease(info);
 
     return defaultAppPath;
+}
+
+
+void enableBlurForWindow(QWidget *window)
+{
+    NSView *nsview = (NSView *)window->winId();
+    NSWindow *nswindow = [nsview window];
+
+    Class vibrantClass = NSClassFromString(@"NSVisualEffectView");
+    if (vibrantClass)
+    {
+        static const NSRect frameRect = {
+        { 0.0, 0.0 }
+        ,
+        { window->width(), window->height() }
+        };
+
+        auto vibrant = [[vibrantClass alloc] initWithFrame:frameRect];
+
+        [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
+
+        if ([vibrant respondsToSelector:@selector(setBlendingMode:)])
+        {
+              [vibrant setBlendingMode:0];
+        }
+
+        //[self addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
+        [nsview addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
+    }
 }

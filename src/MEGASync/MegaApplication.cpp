@@ -5163,6 +5163,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             if (!transfer->getSpeed())
             {
                 // Skipped transfer
+                finishedTransfers.insert(transfer->getTag(), transfer->copy());
                 return;
             }
         }

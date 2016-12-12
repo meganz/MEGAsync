@@ -9,20 +9,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
-    <height>480</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>720</width>
-    <height>480</height>
+    <width>800</width>
+    <height>600</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>720</width>
-    <height>480</height>
+    <width>800</width>
+    <height>600</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -35,16 +35,16 @@
 }
 #wHeader
 {
-     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+     /*background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                 stop: 0.1 #f9f9f9, stop: 0.2 #f6f6f6,
 								 stop: 0.3 #f5f5f5, stop: 0.4 #f4f4f4,
 								 stop: 0.5#f3f3f3, stop: 0.6 #f2f2f2,
 								 stop: 0.7 #f1f1f1, stop: 0.8 #f0f0f0,
-								 stop: 0.9 #efefef, stop: 1 #EEEEEE);
+								 stop: 0.9 #efefef, stop: 1 #EEEEEE);*/
 }
 #wOptions
 {
-	background: #ececec;
+	/*background: #ececec;*/
 }
 #tAllTransfers, #tCompleted, #tDownloads, #tUploads
 {
@@ -52,7 +52,7 @@
   font-size: 18px;
   font-weight: 400;
   color: #333333;
-  padding: 5px 19px 0px 19px;
+  padding: 0px 19px 0px 19px;
   border: none;
 }
 #bClearAll:disabled, #bPause:disabled, #bAdd:disabled
@@ -140,6 +140,18 @@
    </property>
    <item>
     <widget class="QWidget" name="wHeader" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>800</width>
+       <height>72</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>800</width>
+       <height>72</height>
+      </size>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
        <number>1</number>
@@ -160,14 +172,14 @@
        <widget class="QWidget" name="wLogoHeader" native="true">
         <property name="minimumSize">
          <size>
-          <width>720</width>
-          <height>56</height>
+          <width>800</width>
+          <height>45</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>720</width>
-          <height>56</height>
+          <width>800</width>
+          <height>45</height>
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -187,35 +199,6 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QPushButton" name="lHeader">
-           <property name="minimumSize">
-            <size>
-             <width>128</width>
-             <height>48</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>128</width>
-             <height>48</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
-             <normaloff>:/images/megasync_logo.png</normaloff>:/images/megasync_logo.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>128</width>
-             <height>48</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
           <spacer name="horizontalSpacer_2">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -223,7 +206,7 @@
            <property name="sizeHint" stdset="0">
             <size>
              <width>230</width>
-             <height>20</height>
+             <height>10</height>
             </size>
            </property>
           </spacer>
@@ -297,14 +280,14 @@
        <widget class="QWidget" name="wTabHeader" native="true">
         <property name="minimumSize">
          <size>
-          <width>720</width>
-          <height>40</height>
+          <width>800</width>
+          <height>35</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>720</width>
-          <height>40</height>
+          <width>800</width>
+          <height>35</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -353,8 +336,11 @@ QToolButton
                <height>38</height>
               </size>
              </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
              <property name="text">
-              <string>All Transfers</string>
+              <string>Active Transfers</string>
              </property>
              <property name="checkable">
               <bool>true</bool>
@@ -403,6 +389,9 @@ QToolButton
                <width>16777215</width>
                <height>38</height>
               </size>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="text">
               <string>Downloads</string>
@@ -455,6 +444,9 @@ QToolButton
                <height>38</height>
               </size>
              </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
              <property name="text">
               <string>Uploads</string>
              </property>
@@ -499,6 +491,9 @@ QToolButton
                <width>0</width>
                <height>38</height>
               </size>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
              </property>
              <property name="text">
               <string>Completed</string>
@@ -555,23 +550,23 @@ QToolButton
     <widget class="QStackedWidget" name="wTransfers">
      <property name="minimumSize">
       <size>
-       <width>720</width>
-       <height>336</height>
+       <width>800</width>
+       <height>480</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>336</width>
-       <height>16777215</height>
+       <width>800</width>
+       <height>480</height>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">background-color: white;</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
-     <widget class="TransfersWidget" name="wAllTransfers"/>
+     <widget class="ActiveTransfersWidget" name="wActiveTransfers"/>
      <widget class="TransfersWidget" name="wDownloads"/>
      <widget class="TransfersWidget" name="wUploads"/>
      <widget class="TransfersWidget" name="wCompleted"/>
@@ -581,13 +576,13 @@ QToolButton
     <widget class="QWidget" name="wOptions" native="true">
      <property name="minimumSize">
       <size>
-       <width>720</width>
+       <width>800</width>
        <height>48</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>720</width>
+       <width>800</width>
        <height>48</height>
       </size>
      </property>
@@ -635,7 +630,7 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
          <string>Pause</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/pause_ico.png</normaloff>:/images/pause_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -670,7 +665,7 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
          <string>Clear all</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -728,9 +723,15 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
    <header>TransfersWidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>ActiveTransfersWidget</class>
+   <extends>QWidget</extends>
+   <header>ActiveTransfersWidget.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

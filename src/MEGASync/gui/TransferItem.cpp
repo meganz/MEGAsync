@@ -500,9 +500,9 @@ void TransferItem::updateAnimation()
 
 QSize TransferItem::minimumSizeHint() const
 {
-    return QSize(720, 48);
+    return QSize(800, 48);
 }
 QSize TransferItem::sizeHint() const
 {
-    return QSize(720, 48);
+    return QSize(800, 48);
 }

@@ -19,7 +19,7 @@ CONFIG(release, debug|release) {
     CONFIG += release
 }
 
-QT       += core gui winextras
+QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -102,6 +102,12 @@ TRANSLATIONS = \
 CODECFORTR = UTF8
 
 win32 {
+    greaterThan(QT_MAJOR_VERSION, 4) {
+        greaterThan(QT_MINOR_VERSION, 1) {
+            QT += winextras
+        }
+    }
+
     RC_FILE = icon.rc
     QMAKE_LFLAGS += /LARGEADDRESSAWARE
     QMAKE_LFLAGS_WINDOWS += /SUBSYSTEM:WINDOWS,5.01
