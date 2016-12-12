@@ -242,9 +242,8 @@ protected:
     MultiQFileDialog *multiUploadFileDialog;
     QQueue<QString> uploadQueue;
     QQueue<mega::MegaNode *> downloadQueue;
-    int numUploads, numDownloads;
-    unsigned long long activeDownloadPriority;
-    unsigned long long activeUploadPriority;
+    int numTransfers[2];
+    unsigned long long activeTransferPriority[2];
     long long queuedUserStats;
     long long maxMemoryUsage;
     int exportOps;

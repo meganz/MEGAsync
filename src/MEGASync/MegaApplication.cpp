@@ -430,8 +430,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
     updateAvailable = false;
     networkConnectivity = true;
-    activeDownloadPriority = 0xFFFFFFFFFFFFFFFFLL;
-    activeUploadPriority = 0xFFFFFFFFFFFFFFFFLL;
+    activeTransferPriority[MegaTransfer::TYPE_DOWNLOAD] = 0xFFFFFFFFFFFFFFFFLL;
+    activeTransferPriority[MegaTransfer::TYPE_UPLOAD] = 0xFFFFFFFFFFFFFFFFLL;
     trayIcon = NULL;
     trayMenu = NULL;
     trayOverQuotaMenu = NULL;
@@ -440,7 +440,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     megaApiFolders = NULL;
     delegateListener = NULL;
     httpServer = NULL;
-    numUploads = numDownloads = 0;
+    numTransfers[MegaTransfer::TYPE_DOWNLOAD] = 0;
+    numTransfers[MegaTransfer::TYPE_UPLOAD] = 0;
     exportOps = 0;
     infoDialog = NULL;
     infoOverQuota = NULL;
@@ -2019,8 +2020,8 @@ void MegaApplication::showInfoDialog()
                 infoDialog->moveArrow(localCoordinates);
             #endif
 
-            infoDialog->updateTransfers();
             infoDialog->show();
+            infoDialog->updateTransfers();
             infoDialog->setFocus();
             infoDialog->raise();
             infoDialog->activateWindow();
@@ -5016,22 +5017,13 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
         return;
     }
 
-    if (infoDialog && !numUploads && !numDownloads)
+    onTransferUpdate(api, transfer);
+    if (!numTransfers[MegaTransfer::TYPE_DOWNLOAD]
+            && !numTransfers[MegaTransfer::TYPE_UPLOAD])
     {
         onGlobalSyncStateChanged(megaApi);
     }
-
-    int type = transfer->getType();
-    if (type == MegaTransfer::TYPE_DOWNLOAD)
-    {
-        numDownloads++;
-    }
-    else
-    {
-        numUploads++;
-    }
-
-    onTransferUpdate(api, transfer);
+    numTransfers[transfer->getType()]++;
 }
 
 //Called when there is a temporal problem in a request
@@ -5123,41 +5115,24 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         isFirstFileSynced = true;
     }
 
-    bool showTransfer = false;
     int type = transfer->getType();
     unsigned long long priority = transfer->getPriority();
-    if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
+
+    numTransfers[type]--;
+    if (priority && priority <= activeTransferPriority[type])
     {
-        numDownloads--;
-        if (priority && priority <= activeDownloadPriority)
+        activeTransferPriority[type] = 0xFFFFFFFFFFFFFFFFLL;
+
+        //Send updated statics to the information dialog
+        if (infoDialog)
         {
-            activeDownloadPriority = 0xFFFFFFFFFFFFFFFFLL;
-            showTransfer = true;
-        }
-    }
-    else
-    {
-        numUploads--;
-        if (priority && priority <= activeUploadPriority)
-        {
-            activeUploadPriority = 0xFFFFFFFFFFFFFFFFLL;
-            showTransfer = true;
+            infoDialog->setTransfer(transfer);
+            infoDialog->updateTransfers();
+            infoDialog->transferFinished(e->getErrorCode());
         }
     }
 
-    //Send updated statics to the information dialog
-    if (infoDialog && showTransfer)
-    {
-        infoDialog->setTransfer(transfer);
-        infoDialog->setTotalTransferSize(type, transfer->getTotalBytes());
-        infoDialog->setMeanSpeed(type, transfer->getMeanSpeed());
-        infoDialog->setTransferSpeed(type, megaApi->getCurrentSpeed(type));
-        infoDialog->setTransferredSize(type, transfer->getTransferredBytes());
-        infoDialog->updateTransfers();
-        infoDialog->transferFinished(e->getErrorCode());
-    }
-
-    if (transfer->getType() == MegaTransfer::TYPE_UPLOAD)
+    if (type == MegaTransfer::TYPE_UPLOAD)
     {
         if (e->getErrorCode() == MegaError::API_OK)
         {
@@ -5202,7 +5177,8 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     }
 
     //If there are no pending transfers, reset the statics and update the state of the tray icon
-    if (!numUploads && !numDownloads)
+    if (!numTransfers[MegaTransfer::TYPE_DOWNLOAD]
+            && !numTransfers[MegaTransfer::TYPE_UPLOAD])
     {
         onGlobalSyncStateChanged(megaApi);
     }
@@ -5217,34 +5193,16 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
         return;
     }
 
-    bool showTransfer = false;
     int type = transfer->getType();
-    unsigned long long priority = transfer->getPriority();
-    if (type == MegaTransfer::TYPE_DOWNLOAD)
+    unsigned long long priority = transfer->getPriority();    
+    if (priority && priority <= activeTransferPriority[type])
     {
-        if (priority && priority <= activeDownloadPriority)
+        activeTransferPriority[type] = priority;
+        if (infoDialog)
         {
-            activeDownloadPriority = priority;
-            showTransfer = true;
+            infoDialog->setTransfer(transfer);
+            infoDialog->updateTransfers();
         }
-    }
-    else
-    {
-        if (priority && priority <= activeUploadPriority)
-        {
-            activeUploadPriority = priority;
-            showTransfer = true;
-        }
-    }
-
-    if (infoDialog && showTransfer)
-    {
-        infoDialog->setTransfer(transfer);
-        infoDialog->setTotalTransferSize(type, transfer->getTotalBytes());
-        infoDialog->setMeanSpeed(type, transfer->getMeanSpeed());
-        infoDialog->setTransferSpeed(type, megaApi->getCurrentSpeed(type));
-        infoDialog->setTransferredSize(type, transfer->getTransferredBytes());
-        infoDialog->updateTransfers();
     }
 }
 

@@ -41,8 +41,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     currentDownload = 0;
     totalUploads = 0;
     totalDownloads = 0;
-    totalDownloadedSize = totalUploadedSize = 0;
-    totalDownloadSize = totalUploadSize = 0;
+    remainingDownloadBytes = remainingUploadBytes = 0;
     meanDownloadSpeed = meanUploadSpeed = 0;
     remainingUploads = remainingDownloads = 0;
     ui->lDownloads->setText(QString::fromAscii(""));
@@ -191,37 +190,48 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
     }
 
     int type = transfer->getType();
-    QString fileName = QString::fromUtf8(transfer->getFileName());
     long long completedSize = transfer->getTransferredBytes();
     long long totalSize = transfer->getTotalBytes();
+    long long meanSpeed = transfer->getMeanSpeed();
 
-    ActiveTransfer *wTransfer;
+    ActiveTransfer *wTransfer = NULL;
     if (type == MegaTransfer::TYPE_DOWNLOAD)
     {
+        long long speed = megaApi->getCurrentDownloadSpeed();
+        meanDownloadSpeed = meanSpeed;
+        remainingDownloadBytes = totalSize - completedSize;
+        if (speed || downloadSpeed < 0)
+        {
+            downloadSpeed = speed;
+        }
+
         wTransfer = !preferences->logged() ? gWidget->getTransfer() : ui->wTransfer1;
-        if (activeDownload != transfer)
+        if (!activeDownload || activeDownload->getTag() != transfer->getTag())
         {
             delete activeDownload;
             activeDownload = transfer->copy();
+            wTransfer->setFileName(QString::fromUtf8(transfer->getFileName()));
         }
     }
     else
     {
+        long long speed = megaApi->getCurrentUploadSpeed();
+        remainingUploadBytes = totalSize - completedSize;
+        meanUploadSpeed = meanSpeed;
+        if (speed || uploadSpeed < 0)
+        {
+            uploadSpeed = speed;
+        }
+
         wTransfer = ui->wTransfer2;
-        if (activeUpload != transfer)
+        if (!activeUpload || activeUpload->getTag() != transfer->getTag())
         {
             delete activeUpload;
             activeUpload = transfer->copy();
+            wTransfer->setFileName(QString::fromUtf8(transfer->getFileName()));
         }
     }
-
-    bool shown = wTransfer->isVisible();
-    wTransfer->setFileName(fileName);
     wTransfer->setProgress(completedSize, totalSize, !transfer->isSyncTransfer());
-    if (!shown)
-    {
-        updateState();
-    }
 }
 
 void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey)
@@ -278,17 +288,11 @@ void InfoDialog::updateTransfers()
     currentDownload = totalDownloads - remainingDownloads + 1;
     currentUpload = totalUploads - remainingUploads + 1;
 
-    if (remainingDownloads)
+    if (isVisible())
     {
-        long long remainingBytes = totalDownloadSize - totalDownloadedSize;
-        if (remainingBytes < 0)
+        if (remainingDownloads)
         {
-            remainingBytes = 0;
-        }
-
-        if (isVisible())
-        {
-            int totalRemainingSeconds = meanDownloadSpeed ? remainingBytes / meanDownloadSpeed : 0;
+            int totalRemainingSeconds = meanDownloadSpeed ? remainingDownloadBytes / meanDownloadSpeed : 0;
             int remainingHours = totalRemainingSeconds/3600;
             if ((remainingHours<0) || (remainingHours>99))
             {
@@ -364,20 +368,10 @@ void InfoDialog::updateTransfers()
                 }
             }
         }
-    }
 
-
-    if (remainingUploads)
-    {
-        long long remainingBytes = totalUploadSize - totalUploadedSize;
-        if (remainingBytes < 0)
+        if (remainingUploads)
         {
-            remainingBytes = 0;
-        }
-
-        if (isVisible())
-        {
-            int totalRemainingSeconds = meanUploadSpeed ? remainingBytes / meanUploadSpeed : 0;
+            int totalRemainingSeconds = meanUploadSpeed ? remainingUploadBytes / meanUploadSpeed : 0;
             int remainingHours = totalRemainingSeconds/3600;
             if ((remainingHours < 0) || (remainingHours > 99))
             {
@@ -436,18 +430,17 @@ void InfoDialog::updateTransfers()
                 ui->wUploadDesc->show();
             }
         }
-    }
 
-    if (remainingUploads || remainingDownloads)
-    {
-        if (!preferences->logged() && gWidget->getTransfer()->isActive())
+        if (remainingUploads || remainingDownloads)
         {
-            gWidget->setIdleState(false);
-        }
-        else if (ui->wTransfer1->isActive() || ui->wTransfer2->isActive())
-        {
-            ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
-            updateState();
+            if (!preferences->logged() && gWidget->getTransfer()->isActive())
+            {
+                gWidget->setIdleState(false);
+            }
+            else if (ui->wTransfer1->isActive() || ui->wTransfer2->isActive())
+            {
+                ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
+            }
         }
     }
 }
@@ -572,7 +565,7 @@ void InfoDialog::increaseUsedStorage(long long bytes, bool isInShare)
     }
 
     preferences->setUsedStorage(preferences->usedStorage() + bytes);
-    this->setUsage();
+    setUsage();
 }
 
 void InfoDialog::updateState()
@@ -735,60 +728,6 @@ void InfoDialog::closeSyncsMenu()
 #endif
 }
 
-void InfoDialog::setTransferSpeed(int type, long long speed)
-{
-    if (type == MegaTransfer::TYPE_DOWNLOAD)
-    {
-        if (speed || this->downloadSpeed < 0)
-        {
-            this->downloadSpeed = speed;
-        }
-    }
-    else
-    {
-        if (speed || this->uploadSpeed < 0)
-        {
-            this->uploadSpeed = speed;
-        }
-    }
-}
-
-void InfoDialog::setTransferredSize(int type, long long transferredSize)
-{
-    if (type == MegaTransfer::TYPE_DOWNLOAD)
-    {
-        this->totalDownloadedSize = transferredSize;
-    }
-    else
-    {
-        this->totalUploadedSize = transferredSize;
-    }
-}
-
-void InfoDialog::setTotalTransferSize(int type, long long totalSize)
-{
-    if (type == MegaTransfer::TYPE_DOWNLOAD)
-    {
-        this->totalDownloadSize = totalSize;
-    }
-    else
-    {
-        this->totalUploadSize = totalSize;
-    }
-}
-
-void InfoDialog::setMeanSpeed(int type, long long meanSpeed)
-{
-    if (type == MegaTransfer::TYPE_DOWNLOAD)
-    {
-        this->meanDownloadSpeed = meanSpeed;
-    }
-    else
-    {
-        this->meanUploadSpeed = meanSpeed;
-    }
-}
-
 void InfoDialog::setPaused(bool paused)
 {
     ui->bPause->setChecked(paused);
@@ -896,7 +835,6 @@ void InfoDialog::cancelCurrentUpload()
 void InfoDialog::cancelCurrentDownload()
 {
     megaApi->cancelTransfer(activeDownload);
-
 }
 
 void InfoDialog::onAllUploadsFinished()
@@ -910,8 +848,7 @@ void InfoDialog::onAllUploadsFinished()
         uploadSpeed = 0;
         currentUpload = 0;
         totalUploads = 0;
-        totalUploadedSize = 0;
-        totalUploadSize = 0;
+        remainingUploadBytes = 0;
         meanUploadSpeed = 0;
         megaApi->resetTotalUploads();
     }
@@ -937,8 +874,7 @@ void InfoDialog::onAllDownloadsFinished()
         downloadSpeed = 0;
         currentDownload = 0;
         totalDownloads = 0;
-        totalDownloadedSize = 0;
-        totalDownloadSize = 0;
+        remainingDownloadBytes = 0;
         meanDownloadSpeed = 0;
         megaApi->resetTotalDownloads();
     }
@@ -1261,7 +1197,15 @@ void InfoDialog::regenerateLayout()
         ((QVBoxLayout *)dialogLayout)->insertWidget(dialogLayout->count(), ui->wBottom);
     }
 
-    setTransfer(activeDownload);
+    if (activeDownload)
+    {
+        ActiveTransfer *wTransfer = !preferences->logged() ? gWidget->getTransfer() : ui->wTransfer1;
+        wTransfer->setFileName(QString::fromUtf8(activeDownload->getFileName()));
+        wTransfer->setProgress(activeDownload->getTotalBytes() - remainingDownloadBytes,
+                               activeDownload->getTotalBytes(),
+                               !activeDownload->isSyncTransfer());
+    }
+
     updateTransfers();
     app->onGlobalSyncStateChanged(NULL);
 }
@@ -1368,4 +1312,3 @@ void InfoDialog::on_bOfficialWebIcon_clicked()
     on_bOfficialWeb_clicked();
 }
 #endif
-
