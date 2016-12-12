@@ -340,7 +340,8 @@ void QTransfersModel::setupModelTransfers(QList<MegaTransfer*> tList)
         insertTransfer(tList.at(i));
         updateTransferInfo(tList.at(i));
     }
- }
+}
+
 void QTransfersModel::setupModelTransfers(MegaTransferData *transferData)
 {
     if (!transferData)

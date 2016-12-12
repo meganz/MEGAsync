@@ -34,9 +34,6 @@ public:
     void setTransfer(mega::MegaTransfer *transfer);
     void addRecentFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey);
     void clearRecentFiles();
-    void setTransferSpeeds(long long downloadSpeed, long long uploadSpeed);
-    void setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize);
-    void setTotalTransferSize(long long totalDownloadSize, long long totalUploadSize);
     void setPaused(bool paused);
     void updateTransfers();
     void transferFinished(int error);
@@ -116,19 +113,12 @@ private:
 
     long long downloadSpeed;
     long long uploadSpeed;
-    unsigned long long effectiveDownloadSpeed;
-    unsigned long long effectiveUploadSpeed;
-    unsigned long long uploadStartTime;
-    unsigned long long downloadStartTime;
-    unsigned long long elapsedDownloadTime;
-    unsigned long long elapsedUploadTime;
-    unsigned long long lastUpdate;
     int currentUpload;
     int currentDownload;
     int totalUploads;
     int totalDownloads;
-    long long totalDownloadedSize, totalUploadedSize;
-    long long totalDownloadSize, totalUploadSize;
+    long long remainingDownloadBytes, remainingUploadBytes;
+    long long meanDownloadSpeed, meanUploadSpeed;
     int remainingUploads, remainingDownloads;
     bool indexing;
     bool waiting;

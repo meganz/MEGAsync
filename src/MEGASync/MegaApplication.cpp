@@ -143,7 +143,6 @@ int main(int argc, char *argv[])
 
 #ifdef Q_OS_LINUX
 
-
 #if QT_VERSION >= 0x050600
     if (!getenv("QT_SCALE_FACTOR"))
     {
@@ -431,8 +430,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
     updateAvailable = false;
     networkConnectivity = true;
-    lastStartedDownload = 0;
-    lastStartedUpload = 0;
+    activeTransferPriority[MegaTransfer::TYPE_DOWNLOAD] = 0xFFFFFFFFFFFFFFFFLL;
+    activeTransferPriority[MegaTransfer::TYPE_UPLOAD] = 0xFFFFFFFFFFFFFFFFLL;
     trayIcon = NULL;
     trayMenu = NULL;
     trayOverQuotaMenu = NULL;
@@ -441,9 +440,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     megaApiFolders = NULL;
     delegateListener = NULL;
     httpServer = NULL;
-    totalDownloadSize = totalUploadSize = 0;
-    totalDownloadedSize = totalUploadedSize = 0;
-    uploadSpeed = downloadSpeed = 0;
+    numTransfers[MegaTransfer::TYPE_DOWNLOAD] = 0;
+    numTransfers[MegaTransfer::TYPE_UPLOAD] = 0;
     exportOps = 0;
     infoDialog = NULL;
     infoOverQuota = NULL;
@@ -567,22 +565,6 @@ void MegaApplication::initialize()
     preferences->setLastStatsRequest(0);
     lastExit = preferences->getLastExit();
 
-    QString basePath = QDir::toNativeSeparators(dataPath + QString::fromAscii("/"));
-
-#ifdef WIN32
-    //Backwards compatibility code
-    QDirIterator di(dataPath, QDir::Files | QDir::NoDotAndDotDot);
-    while (di.hasNext())
-    {
-        di.next();
-        const QFileInfo& fi = di.fileInfo();
-        if (fi.fileName().startsWith(QString::fromAscii(".tmp.")))
-        {
-            QFile::remove(di.filePath());
-        }
-    }
-#endif
-
     installTranslator(&translator);
     QString language = preferences->language();
     changeLanguage(language);
@@ -601,6 +583,7 @@ void MegaApplication::initialize()
         toggleLogging();
     }
 
+    QString basePath = QDir::toNativeSeparators(dataPath + QString::fromAscii("/"));
 #ifndef __APPLE__
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
     megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
@@ -684,7 +667,7 @@ void MegaApplication::initialize()
         pauseTransfers(true);
     }
 
-    QDir dataDir(applicationDataPath());
+    QDir dataDir(dataPath);
     if (dataDir.exists())
     {
         QString appShowInterfacePath = dataDir.filePath(QString::fromAscii("megasync.show"));
@@ -735,12 +718,7 @@ void MegaApplication::changeLanguage(QString languageCode)
 
 void MegaApplication::updateTrayIcon()
 {
-    if (appfinished)
-    {
-        return;
-    }
-
-    if (!trayIcon)
+    if (appfinished || !trayIcon)
     {
         return;
     }
@@ -2042,8 +2020,8 @@ void MegaApplication::showInfoDialog()
                 infoDialog->moveArrow(localCoordinates);
             #endif
 
-            infoDialog->updateTransfers();
             infoDialog->show();
+            infoDialog->updateTransfers();
             infoDialog->setFocus();
             infoDialog->raise();
             infoDialog->activateWindow();
@@ -2154,11 +2132,6 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
         }
     #endif
 
-}
-
-bool MegaApplication::anUpdateIsAvailable()
-{
-    return updateAvailable;
 }
 
 void MegaApplication::triggerInstallUpdate()
@@ -3143,7 +3116,6 @@ void MegaApplication::createTrayIcon()
         trayIcon = new QSystemTrayIcon();
     #endif
 
-
         connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(onMessageClicked()));
         connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
                 this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
@@ -3204,6 +3176,7 @@ void MegaApplication::createTrayIcon()
     }
 #endif
 }
+
 void MegaApplication::processUploads()
 {
     if (appfinished)
@@ -3283,7 +3256,6 @@ void MegaApplication::processUploads()
     return;
 
 }
-
 
 void MegaApplication::processDownloads()
 {
@@ -4227,7 +4199,6 @@ void MegaApplication::createOverQuotaMenu()
 #endif
     connect(exitActionOverquota, SIGNAL(triggered()), this, SLOT(exitApplication()));
 
-
     if (logoutActionOverquota)
     {
         logoutActionOverquota->deleteLater();
@@ -4386,8 +4357,7 @@ void MegaApplication::onRequestStart(MegaApi* , MegaRequest *request)
         return;
     }
 
-    int type = request->getType();
-    if (type == MegaRequest::TYPE_LOGIN)
+    if (request->getType() == MegaRequest::TYPE_LOGIN)
     {
         connectivityTimer->start();
     }
@@ -4441,7 +4411,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         onGlobalSyncStateChanged(megaApi);
     }
 
-    switch (request->getType()) {
+    switch (request->getType())
+    {
     case MegaRequest::TYPE_EXPORT:
     {
         if (!exportOps && e->getErrorCode() == MegaError::API_OK)
@@ -5038,46 +5009,21 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 }
 
 //Called when a transfer is about to start
-void MegaApplication::onTransferStart(MegaApi *, MegaTransfer *transfer)
+void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
 {
     if (appfinished || transfer->isStreamingTransfer() || transfer->isFolderTransfer()
-            || transfer->getTotalBytes() == transfer->getTransferredBytes()) // Skipped transfer
+            || !transfer->getPriority()) // Skipped transfer
     {
         return;
     }
 
-    if (infoDialog && !totalUploadSize && !totalDownloadSize)
+    onTransferUpdate(api, transfer);
+    if (!numTransfers[MegaTransfer::TYPE_DOWNLOAD]
+            && !numTransfers[MegaTransfer::TYPE_UPLOAD])
     {
-        infoDialog->setWaiting(true);
         onGlobalSyncStateChanged(megaApi);
     }
-
-    //Update statics
-    if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
-    {
-        totalDownloadSize = transfer->getTotalBytes();
-    }
-    else
-    {
-        totalUploadSize = transfer->getTotalBytes();
-    }
-
-    //Send statics to the information dialog
-    if (infoDialog)
-    {
-        infoDialog->setTotalTransferSize(totalDownloadSize, totalUploadSize);
-        infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
-        infoDialog->updateTransfers();
-    }
-
-    if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
-    {
-        totalDownloadSize++;
-    }
-    else
-    {
-        totalUploadSize++;
-    }
+    numTransfers[transfer->getType()]++;
 }
 
 //Called when there is a temporal problem in a request
@@ -5090,6 +5036,39 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 {
     if (appfinished || transfer->isStreamingTransfer() || transfer->isFolderTransfer())
     {
+        return;
+    }
+
+    // Add finished transfer to TransferManager map, regardless there is error or not
+    finishedTransfers.insert(transfer->getTag(), transfer->copy());
+
+    //Show the transfer in the "recently updated" list
+    if (e->getErrorCode() == MegaError::API_OK && transfer->getNodeHandle() != INVALID_HANDLE)
+    {
+        QString localPath = QString::fromUtf8(transfer->getPath());
+#ifdef WIN32
+        if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+        {
+            localPath = localPath.mid(4);
+        }
+#endif
+
+        MegaNode *node = transfer->getPublicMegaNode();
+        QString publicKey;
+        if (node)
+        {
+            const char* key = node->getBase64Key();
+            publicKey = QString::fromUtf8(key);
+            delete [] key;
+            delete node;
+        }
+
+        addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath, publicKey);
+    }
+
+    if (!transfer->getPriority())
+    {
+        // Skipped transfer
         return;
     }
 
@@ -5136,104 +5115,26 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         isFirstFileSynced = true;
     }
 
-    //Update statics
-    if (transfer->getType()==MegaTransfer::TYPE_DOWNLOAD)
+    int type = transfer->getType();
+    unsigned long long priority = transfer->getPriority();
+
+    numTransfers[type]--;
+    if (priority && priority <= activeTransferPriority[type])
     {
-        //Show the transfer in the "recently updated" list
-        if (e->getErrorCode() == MegaError::API_OK)
+        activeTransferPriority[type] = 0xFFFFFFFFFFFFFFFFLL;
+
+        //Send updated statics to the information dialog
+        if (infoDialog)
         {
-            QString localPath = QString::fromUtf8(transfer->getPath());
-#ifdef WIN32
-            if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
-            {
-                localPath = localPath.mid(4);
-            }
-#endif
-
-            MegaNode *node = transfer->getPublicMegaNode();
-            QString publicKey;
-            if (node)
-            {
-                const char* key = node->getBase64Key();
-                publicKey = QString::fromUtf8(key);
-                delete [] key;
-                delete node;
-            }
-            addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath, publicKey);
-            if (!transfer->getSpeed())
-            {
-                // Skipped transfer
-                finishedTransfers.insert(transfer->getTag(), transfer->copy());
-                return;
-            }
-        }
-
-        totalDownloadedSize += transfer->getDeltaSize();
-        downloadSpeed = transfer->getSpeed();
-    }
-    else
-    {
-        totalUploadedSize += transfer->getDeltaSize();
-        uploadSpeed = transfer->getSpeed();
-
-        //Here the file isn't added to the "recently updated" list,
-        //because the file isn't in the destination folder yet.
-        //The SDK still has to put the new node.
-        //onNodes update will be called with node->tag == transfer->getTag()
-        //so we save the path of the file to show it later
-        if ((e->getErrorCode() == MegaError::API_OK))
-        {
-            if (!transfer->isSyncTransfer())
-            {
-                QString localPath = QString::fromUtf8(transfer->getPath());
-    #ifdef WIN32
-                if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
-                {
-                    localPath = localPath.mid(4);
-                }
-    #endif
-                uploadLocalPaths[transfer->getTag()]=localPath;
-            }
+            infoDialog->setTransfer(transfer);
+            infoDialog->updateTransfers();
+            infoDialog->transferFinished(e->getErrorCode());
         }
     }
 
-    // Add finished transfer to TransferManager map, regardless there is error or not
-    finishedTransfers.insert(transfer->getTag(), transfer->copy());
-
-    //Send updated statics to the information dialog
-    if (infoDialog)
+    if (type == MegaTransfer::TYPE_UPLOAD)
     {
         if (e->getErrorCode() == MegaError::API_OK)
-        {
-            if (((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) && (transfer->getStartTime()>=lastStartedDownload)) ||
-                ((transfer->getType() == MegaTransfer::TYPE_UPLOAD) && (transfer->getStartTime()>=lastStartedUpload)))
-            {
-                infoDialog->setTransfer(transfer);
-            }
-
-            infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
-            infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
-        }
-
-        infoDialog->updateTransfers();
-        infoDialog->transferFinished(e->getErrorCode());
-    }
-
-    if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
-    {
-        if (lastStartedDownload == transfer->getStartTime())
-        {
-            lastStartedDownload = 0;
-        }
-    }
-    else
-    {
-        if (lastStartedUpload == transfer->getStartTime())
-        {
-            lastStartedUpload = 0;
-        }
-
-        if ((e->getErrorCode() == MegaError::API_OK))
         {
             if (settingsDialog)
             {
@@ -5276,56 +5177,30 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     }
 
     //If there are no pending transfers, reset the statics and update the state of the tray icon
-    if (!megaApi->getNumPendingDownloads() && !megaApi->getNumPendingUploads())
+    if (!numTransfers[MegaTransfer::TYPE_DOWNLOAD]
+            && !numTransfers[MegaTransfer::TYPE_UPLOAD])
     {
-        if (totalUploadSize || totalDownloadSize)
-        {
-            onGlobalSyncStateChanged(megaApi);
-        }
-
-        totalUploadSize = totalDownloadSize = 0;
-        totalUploadedSize = totalDownloadedSize = 0;
-        uploadSpeed = downloadSpeed = 0;
+        onGlobalSyncStateChanged(megaApi);
     }
 }
 
 //Called when a transfer has been updated
 void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 {
-    if (appfinished || transfer->isStreamingTransfer() || transfer->isFolderTransfer())
+    if (appfinished || transfer->isStreamingTransfer() || transfer->isFolderTransfer()
+            || !transfer->getPriority()) // Skipped transfer
     {
         return;
     }
 
-    //Update statics
-    if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
+    int type = transfer->getType();
+    unsigned long long priority = transfer->getPriority();    
+    if (priority && priority <= activeTransferPriority[type])
     {
-        downloadSpeed = transfer->getSpeed();
-        if (!lastStartedDownload || !transfer->getTransferredBytes())
-        {
-            lastStartedDownload = transfer->getStartTime();
-        }
-        totalDownloadedSize += transfer->getDeltaSize();
-    }
-    else
-    {
-        uploadSpeed = transfer->getSpeed();
-        if (!lastStartedUpload || !transfer->getTransferredBytes())
-        {
-            lastStartedUpload = transfer->getStartTime();
-        }
-        totalUploadedSize += transfer->getDeltaSize();
-    }
-
-    //Send updated statics to the information dialog
-    if (infoDialog)
-    {
-        if (((transfer->getType() == MegaTransfer::TYPE_DOWNLOAD) && (transfer->getStartTime()>=lastStartedDownload)) ||
-            ((transfer->getType() == MegaTransfer::TYPE_UPLOAD) && (transfer->getStartTime()>=lastStartedUpload)))
+        activeTransferPriority[type] = priority;
+        if (infoDialog)
         {
             infoDialog->setTransfer(transfer);
-            infoDialog->setTransferSpeeds(downloadSpeed, uploadSpeed);
-            infoDialog->setTransferredSize(totalDownloadedSize, totalUploadedSize);
             infoDialog->updateTransfers();
         }
     }
@@ -5339,11 +5214,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         return;
     }
 
-    if (!transfer->isStreamingTransfer())
-    {
-        onTransferUpdate(api, transfer);
-    }
-
+    onTransferUpdate(api, transfer);
     preferences->setTransferDownloadMethod(api->getDownloadMethod());
     preferences->setTransferUploadMethod(api->getUploadMethod());
 
@@ -5488,68 +5359,37 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
 
         if (!node->isRemoved() && node->getTag()
                 && !node->isSyncDeleted()
-                && (node->getType() == MegaNode::TYPE_FILE))
+                && (node->getType() == MegaNode::TYPE_FILE)
+                && node->getAttrString()->size())
         {
-            //Get the associated local node
-            string path = node->getLocalPath();
-            if (path.size())
+            //NO_KEY node created by this client detected
+            if (!noKeyDetected)
             {
-                //If the node has been uploaded by a synced folder
-                //the SDK provides its local path
-#ifdef WIN32
-                localPath = QString::fromWCharArray((const wchar_t *)path.data());
-                if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+                if (megaApi->isLoggedIn())
                 {
-                    localPath = localPath.mid(4);
+                    megaApi->fetchNodes();
                 }
-#else
-                localPath = QString::fromUtf8(path.data());
-#endif
             }
-            else if (uploadLocalPaths.contains(node->getTag()))
+            else if (noKeyDetected > 20)
             {
-                //If the node has been uploaded by a regular upload,
-                //we recover the path using the tag of the transfer
-                localPath = uploadLocalPaths.value(node->getTag());
-                uploadLocalPaths.remove(node->getTag());
+                QMegaMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"),
+                    QString::fromUtf8("Something went wrong. MEGAsync will restart now. If the problem persists please contact bug@mega.co.nz"), Utilities::getDevicePixelRatio());
+                preferences->setCrashed(true);
+                rebootApplication(false);
             }
-
-            addRecentFile(QString::fromUtf8(node->getName()), node->getHandle(), localPath);
-            if (node->getAttrString()->size())
-            {
-                //NO_KEY node created by this client detected
-                if (!noKeyDetected)
-                {
-                    if (megaApi->isLoggedIn())
-                    {
-                        megaApi->fetchNodes();
-                    }
-                }
-                else if (noKeyDetected > 20)
-                {
-                    QMegaMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"),
-                        QString::fromUtf8("Something went wrong. MEGAsync will restart now. If the problem persists please contact bug@mega.co.nz"), Utilities::getDevicePixelRatio());
-                    preferences->setCrashed(true);
-                    rebootApplication(false);
-                }
-                noKeyDetected++;
-            }
+            noKeyDetected++;
         }
     }
 
     if (nodesRemoved)
     {
         preferences->setUsedStorage(usedStorage);
-        if (infoOverQuota)
-        {
-            updateUserStats();
-        }
+        updateUserStats();
     }
 
     if (externalNodes)
     {
         updateUserStats();
-
         if (QDateTime::currentMSecsSinceEpoch() - externalNodesTimestamp > Preferences::MIN_EXTERNAL_NODES_WARNING_MS)
         {
             externalNodesTimestamp = QDateTime::currentMSecsSinceEpoch();
@@ -5569,7 +5409,6 @@ void MegaApplication::onReloadNeeded(MegaApi*)
     //and the most probable cause for this callback is a false positive.
     //Simply set the crashed flag to force a filesystem reload in the next execution.
     preferences->setCrashed(true);
-    //megaApi->fetchNodes();
 }
 
 void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
@@ -5579,7 +5418,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
         return;
     }
 
-    if (megaApi)
+    if (megaApi && infoDialog)
     {
         indexing = megaApi->isScanning();
         waiting = megaApi->isWaiting();
@@ -5595,10 +5434,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
         {
             MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Pending downloads: %1").arg(pendingDownloads).toUtf8().constData());
         }
-    }
 
-    if (infoDialog)
-    {
         infoDialog->setIndexing(indexing);
         infoDialog->setWaiting(waiting);
         infoDialog->setPaused(paused);

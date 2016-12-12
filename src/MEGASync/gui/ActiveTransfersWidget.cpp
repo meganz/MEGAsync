@@ -249,6 +249,7 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
     switch (type)
     {
         case MegaTransfer::TYPE_UPLOAD:
+            delete animationUp;
             if (!isSyncTransfer)
             {
                 loadIconResourceUp = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_upload_item_ico.png")
@@ -266,6 +267,7 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
             break;
 
         case MegaTransfer::TYPE_DOWNLOAD:
+            delete animationDown;
             if (!isSyncTransfer)
             {
                 loadIconResourceDown = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_download_item_ico.png")
