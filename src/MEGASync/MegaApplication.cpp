@@ -142,8 +142,11 @@ int main(int argc, char *argv[])
 #endif
 
 #ifdef Q_OS_LINUX
-
 #if QT_VERSION >= 0x050600
+    if (getenv("XDG_CURRENT_DESKTOP") && !strcmp(getenv("XDG_CURRENT_DESKTOP"),"KDE"))
+    {
+        qputenv("XDG_CURRENT_DESKTOP","OVERRIDEN");
+    }
     if (!getenv("QT_SCALE_FACTOR"))
     {
         MegaApplication appaux(argc,argv); //needed to get geometry (it needs to be instantiated a second time to actually use scale factor)
@@ -461,6 +464,12 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 #ifdef _WIN32
     windowsMenu = NULL;
     windowsExitAction = NULL;
+    windowsUpdateAction = NULL;
+    windowsImportLinksAction = NULL;
+    windowsUploadAction = NULL;
+    windowsDownloadAction = NULL;
+    windowsStreamAction = NULL;
+    windowsSettingsAction = NULL;
 #endif
     changeProxyAction = NULL;
     initialExitAction = NULL;
@@ -1558,7 +1567,6 @@ void MegaApplication::checkNetworkInterfaces()
         QString interfaceName = networkInterface.humanReadableName();
         QNetworkInterface::InterfaceFlags flags = networkInterface.flags();
         if ((flags & (QNetworkInterface::IsUp | QNetworkInterface::IsRunning))
-                && !(flags & QNetworkInterface::IsLoopBack)
                 && !(interfaceName == QString::fromUtf8("Teredo Tunneling Pseudo-Interface")))
         {
             MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Active network interface: %1").arg(interfaceName).toUtf8().constData());
@@ -1724,6 +1732,7 @@ void MegaApplication::checkMemoryUsage()
     long long numNodes = megaApi->getNumNodes();
     long long numLocalNodes = megaApi->getNumLocalNodes();
     long long totalNodes = numNodes + numLocalNodes;
+    long long totalTransfers =  megaApi->getNumPendingUploads() + megaApi->getNumPendingDownloads();
     long long procesUsage = 0;
 
     if (!totalNodes)
@@ -1757,10 +1766,11 @@ void MegaApplication::checkMemoryUsage()
 #endif
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG,
-                 QString::fromUtf8("Memory usage: %1 MB / %2 Nodes / %3 LocalNodes / %4 B/N")
+                 QString::fromUtf8("Memory usage: %1 MB / %2 Nodes / %3 LocalNodes / %4 B/N / %5 transfers")
                  .arg(procesUsage / (1024 * 1024))
                  .arg(numNodes).arg(numLocalNodes)
-                 .arg((float)procesUsage / totalNodes).toUtf8().constData());
+                 .arg((float)procesUsage / totalNodes)
+                 .arg(totalTransfers).toUtf8().constData());
 
     if (procesUsage > maxMemoryUsage)
     {
@@ -1768,7 +1778,7 @@ void MegaApplication::checkMemoryUsage()
     }
 
     if (maxMemoryUsage > preferences->getMaxMemoryUsage()
-            && maxMemoryUsage > 100 * 1024 * 1024 + 2 * 1024 * totalNodes)
+            && maxMemoryUsage > 100 * 1024 * 1024 + 2 * 1024 * (totalNodes + totalTransfers))
     {
         long long currentTime = QDateTime::currentMSecsSinceEpoch();
         if (currentTime - preferences->getMaxMemoryReportTime() > 86400000)
@@ -1825,6 +1835,12 @@ void MegaApplication::periodicTasks()
 
     if (trayIcon)
     {
+#ifdef Q_OS_LINUX
+        if (counter==4 && getenv("XDG_CURRENT_DESKTOP") && !strcmp(getenv("XDG_CURRENT_DESKTOP"),"XFCE"))
+        {
+            trayIcon->hide();
+        }
+#endif
         trayIcon->show();
     }
 }
@@ -4035,6 +4051,76 @@ void MegaApplication::createTrayMenu()
 
     windowsExitAction = new QAction(tr("Exit"), this);
     connect(windowsExitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
+
+    if (windowsSettingsAction)
+    {
+        windowsSettingsAction->deleteLater();
+        windowsSettingsAction = NULL;
+    }
+
+    windowsSettingsAction = new QAction(tr("Settings"), this);
+    connect(windowsSettingsAction, SIGNAL(triggered()), this, SLOT(openSettings()));
+
+    if (windowsImportLinksAction)
+    {
+        windowsImportLinksAction->deleteLater();
+        windowsImportLinksAction = NULL;
+    }
+
+    windowsImportLinksAction = new QAction(tr("Import links"), this);
+    connect(windowsImportLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()));
+
+    if (windowsUploadAction)
+    {
+        windowsUploadAction->deleteLater();
+        windowsUploadAction = NULL;
+    }
+
+    windowsUploadAction = new QAction(tr("Upload"), this);
+    connect(windowsUploadAction, SIGNAL(triggered()), this, SLOT(uploadActionClicked()));
+
+    if (windowsDownloadAction)
+    {
+        windowsDownloadAction->deleteLater();
+        windowsDownloadAction = NULL;
+    }
+
+    windowsDownloadAction = new QAction(tr("Download"), this);
+    connect(windowsDownloadAction, SIGNAL(triggered()), this, SLOT(downloadActionClicked()));
+
+    if (windowsStreamAction)
+    {
+        windowsStreamAction->deleteLater();
+        windowsStreamAction = NULL;
+    }
+
+    windowsStreamAction = new QAction(tr("Stream from MEGA"), this);
+    connect(windowsStreamAction, SIGNAL(triggered()), this, SLOT(streamActionClicked()));
+
+    if (windowsUpdateAction)
+    {
+        windowsUpdateAction->deleteLater();
+        windowsUpdateAction = NULL;
+    }
+
+    if (updateAvailable)
+    {
+        windowsUpdateAction = new QAction(tr("Install update"), this);
+    }
+    else
+    {
+        windowsUpdateAction = new QAction(tr("About"), this);
+    }
+    connect(windowsUpdateAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
+
+    windowsMenu->addAction(windowsUpdateAction);
+    windowsMenu->addSeparator();
+    windowsMenu->addAction(windowsImportLinksAction);
+    windowsMenu->addAction(windowsUploadAction);
+    windowsMenu->addAction(windowsDownloadAction);
+    windowsMenu->addAction(windowsStreamAction);
+    windowsMenu->addAction(windowsSettingsAction);
+    windowsMenu->addSeparator();
     windowsMenu->addAction(windowsExitAction);
 #endif
 
@@ -4806,9 +4892,23 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             if ((request->getNodeHandle() == preferences->getMegaFolderHandle(i)))
             {
+                QString localFolder = preferences->getLocalFolder(i);
+
+        #ifdef WIN32
+                string path, fsname;
+                path.resize(MAX_PATH * sizeof(WCHAR));
+                if (GetVolumePathNameW((LPCWSTR)localFolder.utf16(), (LPWSTR)path.data(), MAX_PATH))
+                {
+                    fsname.resize(MAX_PATH * sizeof(WCHAR));
+                    if (!GetVolumeInformationW((LPCWSTR)path.data(), NULL, 0, NULL, NULL, NULL, (LPWSTR)fsname.data(), MAX_PATH))
+                    {
+                        fsname.clear();
+                    }
+                }
+        #endif
+
                 if (e->getErrorCode() != MegaError::API_OK)
                 {
-                    QString localFolder = preferences->getLocalFolder(i);
                     MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
                     const char *nodePath = megaApi->getNodePath(node);
                     delete node;
@@ -4832,12 +4932,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     {
 #ifdef WIN32
                         WCHAR VBoxSharedFolderFS[] = L"VBoxSharedFolderFS";
-                        string path, fsname;
-                        path.resize(MAX_PATH * sizeof(WCHAR));
-                        fsname.resize(MAX_PATH * sizeof(WCHAR));
-                        if (GetVolumePathNameW((LPCWSTR)localFolder.utf16(), (LPWSTR)path.data(), MAX_PATH)
-                            && GetVolumeInformationW((LPCWSTR)path.data(), NULL, 0, NULL, NULL, NULL, (LPWSTR)fsname.data(), MAX_PATH)
-                            && !memcmp(fsname.data(), VBoxSharedFolderFS, sizeof(VBoxSharedFolderFS)))
+                        if (fsname.size() && !memcmp(fsname.data(), VBoxSharedFolderFS, sizeof(VBoxSharedFolderFS)))
                         {
                             QMegaMessageBox::critical(NULL, tr("MEGAsync"),
                                 tr("Your sync \"%1\" has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.")
@@ -4897,6 +4992,17 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     {
                         SetFileAttributesW((LPCWSTR)debrisPath.utf16(),
                                            fad.dwFileAttributes | FILE_ATTRIBUTE_HIDDEN);
+                    }
+
+                    WCHAR exFatFS[] = L"exFAT";
+                    if (fsname.size() && (!memcmp(fsname.data(), L"FAT", 6) || !memcmp(fsname.data(), exFatFS, sizeof(exFatFS)))
+                            && !preferences->isFatWarningShown())
+                    {
+                        QMessageBox::warning(NULL, tr("MEGAsync"),
+                                         tr("You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it's strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).")
+                                             .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://help.mega.nz/megasync/syncing.html#can-i-sync-fat-fat32-partitions-under-windows\">"))
+                                             .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>")));
+                        preferences->setFatWarningShown();
                     }
 #endif
                 }

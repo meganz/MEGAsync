@@ -443,7 +443,7 @@ font-size: 11px;
                          </size>
                         </property>
                         <property name="text">
-                         <string/>
+                         <string notr="true"/>
                         </property>
                        </widget>
                       </item>
@@ -494,7 +494,7 @@ font-size: 11px;
                    <item>
                     <widget class="QLabel" name="lFileSize">
                      <property name="text">
-                      <string/>
+                      <string notr="true"/>
                      </property>
                     </widget>
                    </item>

@@ -11,17 +11,18 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/2.9.9.10";
-const int Preferences::VERSION_CODE = 2999;
+const char Preferences::USER_AGENT[] = "MEGAsync/2.9.10.0";
+const int Preferences::VERSION_CODE = 2910;
 const int Preferences::BUILD_ID = 10;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("3.0 BETA1");
-const QString Preferences::SDK_ID = QString::fromAscii("885c9");
+const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.10");
+const QString Preferences::SDK_ID = QString::fromAscii("2c928");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- Transfer manager\n"
-            "- Improvements uploading images\n"
-            "- Updated translations\n"
-            "- Other bug fixes");
+            "- Support to download/import folder links\n"
+            "- Automatic HTTP/HTTPS proxy detection on OS X\n"
+            "- Better compatibility with antivirus software\n"
+            "- HDPI support for Linux distros having QT >= 5.6\n"
+            "- Other bug fixes and minor improvements");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -230,6 +231,7 @@ const QString Preferences::firstStartDoneKey        = QString::fromAscii("firstS
 const QString Preferences::firstSyncDoneKey         = QString::fromAscii("firstSyncDone");
 const QString Preferences::firstFileSyncedKey       = QString::fromAscii("firstFileSynced");
 const QString Preferences::firstWebDownloadKey      = QString::fromAscii("firstWebclientDownload");
+const QString Preferences::fatWarningShownKey       = QString::fromAscii("fatWarningShown");
 const QString Preferences::installationTimeKey      = QString::fromAscii("installationTime");
 const QString Preferences::accountCreationTimeKey   = QString::fromAscii("accountCreationTime");
 const QString Preferences::hasLoggedInKey           = QString::fromAscii("hasLoggedIn");
@@ -1365,6 +1367,22 @@ void Preferences::setFirstWebDownloadDone(bool value)
     mutex.unlock();
 }
 
+bool Preferences::isFatWarningShown()
+{
+    mutex.lock();
+    bool value = settings->value(fatWarningShownKey, false).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setFatWarningShown(bool value)
+{
+    mutex.lock();
+    settings->setValue(fatWarningShownKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
 QString Preferences::lastCustomStreamingApp()
 {
     mutex.lock();
@@ -2188,6 +2206,11 @@ void Preferences::logout()
     mutex.unlock();
 }
 
+static bool caseInsensitiveLessThan(const QString &s1, const QString &s2)
+{
+    return s1.toLower() < s2.toLower();
+}
+
 void Preferences::loadExcludedSyncNames()
 {
     mutex.lock();
@@ -2212,12 +2235,10 @@ void Preferences::loadExcludedSyncNames()
         excludedSyncNames.removeAll(QString::fromUtf8("Icon?"));
     }
 
-    QMap<QString, QString> strMap;
-    foreach (QString str, excludedSyncNames)
-    {
-        strMap.insert( str.toLower(), str );
-    }
-    excludedSyncNames = strMap.values();
+    QSet<QString> excludedSyncNamesSet = QSet<QString>::fromList(excludedSyncNames);
+    excludedSyncNames = excludedSyncNamesSet.toList();
+    qSort(excludedSyncNames.begin(), excludedSyncNames.end(), caseInsensitiveLessThan);
+
     setExcludedSyncNames(excludedSyncNames);
     mutex.unlock();
 }

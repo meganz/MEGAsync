@@ -194,6 +194,12 @@ protected:
 #ifdef _WIN32
     QMenu *windowsMenu;
     QAction *windowsExitAction;
+    QAction *windowsUpdateAction;
+    QAction *windowsImportLinksAction;
+    QAction *windowsUploadAction;
+    QAction *windowsDownloadAction;
+    QAction *windowsStreamAction;
+    QAction *windowsSettingsAction;
 #endif
 
     QMenu *trayMenu;

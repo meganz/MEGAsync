@@ -1,3 +1,23 @@
+megasync (2.9.10) stable; urgency=low
+
+  * Support to download/import folder links
+  * Automatic HTTP/HTTPS proxy detection on OS X
+  * Better compatibility with antivirus software
+  * HDPI support for Linux distros having QT >= 5.6
+  * Other bug fixes and minor improvements
+
+ -- MEGA Team <linux@mega.co.nz>  Fri, 11 Nov 2016 14:16:26 +0100
+
+megasync (2.9.9) stable; urgency=low
+
+  * Fixed compatibility with some web browsers
+  * Fixed the creation of thumbnails for JPG images (Windows)
+  * Fixed incompatibilities with some WiFi drivers (Windows)
+  * Fixed problems downloading files with incorrect metadata
+  * Other bug fixes
+
+ -- MEGA Team <linux@mega.co.nz>  Mon, 17 Oct 2016 17:28:29 +0200
+
 megasync (2.9.8) stable; urgency=low
 
   * More efficient upload completion

@@ -149,7 +149,7 @@ void UploadToMegaDialog::on_bOK_clicked()
             return;
         }
 
-        megaApi->createFolder(tr("MEGAsync Uploads").toUtf8().constData(), rootNode, delegateListener);
+        megaApi->createFolder(QString::fromUtf8("MEGAsync Uploads").toUtf8().constData(), rootNode, delegateListener);
         delete rootNode;
         return;
     }

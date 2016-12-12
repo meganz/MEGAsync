@@ -268,7 +268,7 @@ void StreamingFromMegaDialog::openStreamWithApp(QString app)
 {
     if (app.isEmpty())
     {
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl(streamURL));
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromEncoded(streamURL.toUtf8()));
         return;
     }
 
