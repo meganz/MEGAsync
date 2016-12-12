@@ -8,6 +8,7 @@
 #include <QNetworkProxy>
 #include <QProgressDialog>
 #include <QCloseEvent>
+#include <QButtonGroup>
 #include <ConnectivityChecker.h>
 
 #include "AccountDetailsDialog.h"
@@ -147,6 +148,9 @@ private:
     int upperLimitUnit;
     int lowerLimitUnit;
     bool sizeLimitsChanged;
+    QButtonGroup downloadButtonGroup;
+    QButtonGroup uploadButtonGroup;
+
 #ifndef WIN32
     int folderPermissions;
     int filePermissions;

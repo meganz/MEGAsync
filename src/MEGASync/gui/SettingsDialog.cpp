@@ -105,6 +105,11 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->eProxyPort->setValidator(new QIntValidator(this));
     ui->eUploadLimit->setValidator(new QDoubleValidator(this));
     ui->eDownloadLimit->setValidator(new QDoubleValidator(this));
+    downloadButtonGroup.addButton(ui->rDownloadLimit);
+    downloadButtonGroup.addButton(ui->rDownloadNoLimit);
+    uploadButtonGroup.addButton(ui->rUploadLimit);
+    uploadButtonGroup.addButton(ui->rUploadNoLimit);
+    uploadButtonGroup.addButton(ui->rUploadAutoLimit);
 
     ui->bAccount->setChecked(true);
     ui->wStack->setCurrentWidget(ui->pAccount);
@@ -142,7 +147,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 #ifdef __APPLE__
     ui->bOk->hide();
     ui->bCancel->hide();
-    ui->gBandwidthQuota->hide();
 
     const qreal ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
     if (ratio < 2)
@@ -169,7 +173,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->lCacheSeparator->hide();
 
 #else
-    ui->gBandwidthQuota->hide();
 
     ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
     ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
@@ -910,8 +913,8 @@ void SettingsDialog::loadSettings()
         }
         else
         {
-            int bandwidthPercentage = 100*((double)preferences->usedBandwidth()/totalBandwidth);
-            ui->pUsedBandwidth->setValue(bandwidthPercentage);
+            int bandwidthPercentage = ceil(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+            ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
             ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
                     .arg(Utilities::getSizeString(preferences->usedBandwidth()))
                     .arg(QString::number(bandwidthPercentage))
@@ -993,6 +996,21 @@ void SettingsDialog::refreshAccountDetails()
               .arg(Utilities::getSizeString(preferences->usedStorage()))
               .arg(QString::number(percentage))
               .arg(Utilities::getSizeString(preferences->totalStorage())));
+    }
+
+    if (preferences->totalBandwidth() == 0)
+    {
+        ui->pUsedBandwidth->setValue(0);
+        ui->lBandwidth->setText(tr("Data temporarily unavailable"));
+    }
+    else
+    {
+        int percentage = ceil(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+        ui->pUsedBandwidth->setValue((percentage < 100) ? percentage : 100);
+        ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
+              .arg(Utilities::getSizeString(preferences->usedBandwidth()))
+              .arg(QString::number(percentage))
+              .arg(Utilities::getSizeString(preferences->totalBandwidth())));
     }
 
     if (accountDetailsDialog)
