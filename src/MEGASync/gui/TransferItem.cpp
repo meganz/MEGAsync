@@ -118,6 +118,8 @@ void TransferItem::setType(int type, bool isSyncTransfer)
         this->loadIconResource = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/sync_item_ico.png")
                                                    : QString::fromUtf8(":/images/sync_item_ico@2x.png"));
         ui->lActionTypeCompleted->setPixmap(loadIconResource);
+
+        delete animation;
         animation = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/synching.gif")
                                          : QString::fromUtf8(":/images/synching@2x.gif"));
         connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
@@ -134,6 +136,8 @@ void TransferItem::setType(int type, bool isSyncTransfer)
                 loadIconResourceCompleted = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
                                                               : QString::fromUtf8(":/images/cloud_item_ico@2x.png"));
                 ui->lActionTypeCompleted->setPixmap(loadIconResourceCompleted);
+
+                delete animation;
                 animation = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/uploading.gif")
                                                  : QString::fromUtf8(":/images/uploading@2x.gif"));
                 connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
@@ -152,6 +156,8 @@ void TransferItem::setType(int type, bool isSyncTransfer)
                 loadIconResourceCompleted = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
                                                               : QString::fromUtf8(":/images/cloud_item_ico@2x.png"));
                 ui->lActionTypeCompleted->setPixmap(loadIconResourceCompleted);
+
+                delete animation;
                 animation = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/downloading.gif")
                                                  : QString::fromUtf8(":/images/downloading@2x.gif"));
                 connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
