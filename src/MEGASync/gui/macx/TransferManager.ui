@@ -46,7 +46,7 @@
 {
 	/*background: #ececec;*/
 }
-#tAllTransfers, #tCompleted, #tDownloads, #tUploads
+#tAllTransfers, #tDownloads, #tUploads
 {
   font-family: &quot;Source Sans Pro&quot;;
   font-size: 18px;
@@ -55,6 +55,17 @@
   padding: 0px 19px 0px 19px;
   border: none;
 }
+
+#tCompleted
+{
+  font-family: &quot;Source Sans Pro&quot;;
+  font-size: 18px;
+  font-weight: 400;
+  color: #333333;
+  padding: 0px 5px 0px 19px;
+  border: none;
+}
+
 #bClearAll:disabled, #bPause:disabled, #bAdd:disabled
 {
 	color: rgba(119, 119, 119, 30%);
@@ -120,6 +131,17 @@
   border: 1px solid rgba(0, 0, 0, 60%);
   border-radius: 3px;
   background-color: rgba(0, 0, 0, 50%);
+}
+
+#bNumberCompleted
+
+{
+  font-family: &quot;Source Sans Pro&quot;;
+  font-size: 12px;
+  color: #FFFFFF;
+  background-color: #9A9A9A;
+  border-radius: 4px;
+  padding: 1px 5px 1px 5px;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -301,7 +323,7 @@ QToolButton
 }
 </string>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
          <property name="spacing">
           <number>0</number>
          </property>
@@ -484,23 +506,66 @@ QToolButton
            <property name="spacing">
             <number>0</number>
            </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
            <item>
-            <widget class="QToolButton" name="tCompleted">
-             <property name="minimumSize">
-              <size>
-               <width>0</width>
-               <height>38</height>
-              </size>
-             </property>
-             <property name="cursor">
-              <cursorShape>PointingHandCursor</cursorShape>
-             </property>
-             <property name="text">
-              <string>Completed</string>
-             </property>
-             <property name="checkable">
-              <bool>true</bool>
-             </property>
+            <widget class="QWidget" name="widget_2" native="true">
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QToolButton" name="tCompleted">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>31</height>
+                 </size>
+                </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+                <property name="text">
+                 <string>Completed</string>
+                </property>
+                <property name="checkable">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="bNumberCompleted">
+                <property name="minimumSize">
+                 <size>
+                  <width>6</width>
+                  <height>15</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>15</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>5</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
            <item>
