@@ -102,9 +102,9 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     lowerLimitUnit = Preferences::MEGA_BYTE_UNIT;
     debugCounter = 0;
 
-    ui->eProxyPort->setValidator(new QIntValidator(this));
-    ui->eUploadLimit->setValidator(new QDoubleValidator(this));
-    ui->eDownloadLimit->setValidator(new QDoubleValidator(this));
+    ui->eProxyPort->setValidator(new QIntValidator(0, 65535, this));
+    ui->eUploadLimit->setValidator(new QIntValidator(0, 1000000000, this));
+    ui->eDownloadLimit->setValidator(new QIntValidator(0, 1000000000, this));
     downloadButtonGroup.addButton(ui->rDownloadLimit);
     downloadButtonGroup.addButton(ui->rDownloadNoLimit);
     uploadButtonGroup.addButton(ui->rUploadLimit);
