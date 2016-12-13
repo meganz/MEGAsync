@@ -105,6 +105,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->eProxyPort->setValidator(new QIntValidator(0, 65535, this));
     ui->eUploadLimit->setValidator(new QIntValidator(0, 1000000000, this));
     ui->eDownloadLimit->setValidator(new QIntValidator(0, 1000000000, this));
+    ui->tNoHttp->viewport()->setCursor(Qt::ArrowCursor);
     downloadButtonGroup.addButton(ui->rDownloadLimit);
     downloadButtonGroup.addButton(ui->rDownloadNoLimit);
     uploadButtonGroup.addButton(ui->rUploadLimit);
