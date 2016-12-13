@@ -355,7 +355,7 @@ void ActiveTransfersWidget::udpateTransferState(TransferData *td)
             {
                 if (totalRemainingSeconds < 60)
                 {
-                    remainingTime = QString::fromUtf8("< 1m");
+                    remainingTime = QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(QString::fromUtf8("&lt; 1"));
                 }
                 else
                 {
@@ -379,7 +379,7 @@ void ActiveTransfersWidget::udpateTransferState(TransferData *td)
             {
                 ui->bUpPaused->setVisible(true);
             }
-            remainingTime = QString::fromUtf8("- m - s");
+            remainingTime = QString::fromUtf8("- <span style=\"color:#777777; text-decoration:none;\">m</span> - <span style=\"color:#777777; text-decoration:none;\">s</span>");
             break;
         }
         default:
