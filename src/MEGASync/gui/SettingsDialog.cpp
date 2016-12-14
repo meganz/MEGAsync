@@ -115,6 +115,33 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->bAccount->setChecked(true);
     ui->wStack->setCurrentWidget(ui->pAccount);
 
+    connect(ui->rNoProxy, SIGNAL(clicked()), this, SLOT(stateChanged()));
+    connect(ui->rProxyAuto, SIGNAL(clicked()), this, SLOT(stateChanged()));
+    connect(ui->rProxyManual, SIGNAL(clicked()), this, SLOT(proxyStateChanged()));
+    connect(ui->eProxyUsername, SIGNAL(textChanged(QString)), this, SLOT(proxyStateChanged()));
+    connect(ui->eProxyPassword, SIGNAL(textChanged(QString)), this, SLOT(proxyStateChanged()));
+    connect(ui->eProxyServer, SIGNAL(textChanged(QString)), this, SLOT(proxyStateChanged()));
+    connect(ui->eProxyPort, SIGNAL(textChanged(QString)), this, SLOT(proxyStateChanged()));
+    connect(ui->cProxyType, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyStateChanged()));
+    connect(ui->cProxyRequiresPassword, SIGNAL(clicked()), this, SLOT(proxyStateChanged()));
+
+    connect(ui->cStartOnStartup, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
+    connect(ui->cShowNotifications, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
+    connect(ui->cOverlayIcons, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
+    connect(ui->cAutoUpdate, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
+    connect(ui->cLanguage, SIGNAL(currentIndexChanged(int)), this, SLOT(stateChanged()));
+
+    connect(ui->rDownloadNoLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
+    connect(ui->rDownloadLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
+    connect(ui->eDownloadLimit, SIGNAL(textChanged(QString)), this, SLOT(stateChanged()));
+    connect(ui->rUploadAutoLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
+    connect(ui->rUploadNoLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
+    connect(ui->rUploadLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
+    connect(ui->eUploadLimit, SIGNAL(textChanged(QString)), this, SLOT(stateChanged()));
+    connect(ui->eMaxDownloadConnections, SIGNAL(valueChanged(int)), this, SLOT(stateChanged()));
+    connect(ui->eMaxUploadConnections, SIGNAL(valueChanged(int)), this, SLOT(stateChanged()));
+    connect(ui->cbUseHttps, SIGNAL(clicked()), this, SLOT(stateChanged()));
+
 #ifndef WIN32    
     #ifndef __APPLE__
     ui->rProxyAuto->hide();
@@ -512,8 +539,8 @@ void SettingsDialog::on_bBandwidth_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(350);
-    maxHeightAnimation->setEndValue(350);
+    minHeightAnimation->setEndValue(540);
+    maxHeightAnimation->setEndValue(540);
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
@@ -1336,7 +1363,7 @@ bool SettingsDialog::saveSettings()
 
     bool proxyChanged = false;
     //Proxies
-    if ((ui->rNoProxy->isChecked() && (preferences->proxyType() != Preferences::PROXY_TYPE_NONE))       ||
+    if (!proxyTestProgressDialog && ((ui->rNoProxy->isChecked() && (preferences->proxyType() != Preferences::PROXY_TYPE_NONE))       ||
         (ui->rProxyAuto->isChecked() &&  (preferences->proxyType() != Preferences::PROXY_TYPE_AUTO))    ||
         (ui->rProxyManual->isChecked() &&  (preferences->proxyType() != Preferences::PROXY_TYPE_CUSTOM))||
         (preferences->proxyProtocol() != ui->cProxyType->currentIndex())                                ||
@@ -1344,7 +1371,7 @@ bool SettingsDialog::saveSettings()
         (preferences->proxyPort() != ui->eProxyPort->text().toInt())                                    ||
         (preferences->proxyRequiresAuth() != ui->cProxyRequiresPassword->isChecked())                   ||
         (preferences->getProxyUsername() != ui->eProxyUsername->text())                                 ||
-        (preferences->getProxyPassword() != ui->eProxyPassword->text()))
+        (preferences->getProxyPassword() != ui->eProxyPassword->text())))
     {
         proxyChanged = true;
         QNetworkProxy proxy;

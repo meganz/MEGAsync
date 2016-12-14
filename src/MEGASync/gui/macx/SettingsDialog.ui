@@ -2536,13 +2536,13 @@ border: none;</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>0</height>
+           <height>35</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>32</height>
+           <height>35</height>
           </size>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_20">
@@ -2646,55 +2646,55 @@ border: none;</string>
         </widget>
        </item>
        <item>
-       <widget class="QPlainTextEdit" name="tNoHttp">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>46</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>46</height>
-         </size>
-        </property>
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">padding-top: -6px;
+        <widget class="QPlainTextEdit" name="tNoHttp">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>46</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>46</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">padding-top: -6px;
 padding-left: 23px;
 padding-right: 23px;
 background: transparent;
 border: none;</string>
-        </property>
-        <property name="verticalScrollBarPolicy">
-         <enum>Qt::ScrollBarAlwaysOff</enum>
-        </property>
-        <property name="horizontalScrollBarPolicy">
-         <enum>Qt::ScrollBarAlwaysOff</enum>
-        </property>
-        <property name="readOnly">
-         <bool>true</bool>
-        </property>
-        <property name="plainText">
-         <string>Enable this option only if your transfers don't start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</string>
-        </property>
-        <property name="textInteractionFlags">
-         <set>Qt::NoTextInteraction</set>
-        </property>
-       </widget>
-      </item>
+         </property>
+         <property name="verticalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="horizontalScrollBarPolicy">
+          <enum>Qt::ScrollBarAlwaysOff</enum>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+         <property name="plainText">
+          <string>Enable this option only if your transfers don't start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</string>
+         </property>
+         <property name="textInteractionFlags">
+          <set>Qt::NoTextInteraction</set>
+         </property>
+        </widget>
+       </item>
        <item>
         <spacer name="verticalSpacer">
          <property name="orientation">
@@ -4124,232 +4124,7 @@ background:transparent;</string>
  <resources>
   <include location="../Resources_macx.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>cProxyType</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>proxyStateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>102</x>
-     <y>137</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cProxyRequiresPassword</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>proxyStateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>86</x>
-     <y>142</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cLanguage</sender>
-   <signal>currentIndexChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>223</x>
-     <y>445</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eProxyPassword</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>proxyStateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>197</x>
-     <y>146</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eProxyUsername</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>proxyStateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>197</x>
-     <y>144</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>rProxyManual</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>proxyStateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>77</x>
-     <y>135</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>rProxyAuto</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>77</x>
-     <y>151</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eProxyPort</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>proxyStateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>69</x>
-     <y>139</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>eProxyServer</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>proxyStateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>197</x>
-     <y>139</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cAutoUpdate</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>152</x>
-     <y>377</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cShowNotifications</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>152</x>
-     <y>339</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cStartOnStartup</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>152</x>
-     <y>358</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>213</x>
-     <y>226</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cOverlayIcons</sender>
-   <signal>stateChanged(int)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>53</x>
-     <y>182</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>249</x>
-     <y>259</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbUseHttps</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>SettingsDialog</receiver>
-   <slot>stateChanged()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>255</x>
-     <y>244</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>249</x>
-     <y>296</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>stateChanged()</slot>
   <slot>proxyStateChanged()</slot>
