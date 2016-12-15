@@ -5170,21 +5170,24 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         return;
     }
 
-    // Add finished transfer to TransferManager map, regardless there is error or not
-    finishedTransfers.insert(transfer->getTag(), transfer->copy());
-    if (!transferManager)
+    if (e->getErrorCode() != MegaError::API_EINCOMPLETE)
     {
-        completedTabActive = false;
-    }
+        // Add finished transfer to TransferManager map, regardless there is error or not
+        finishedTransfers.insert(transfer->getTag(), transfer->copy());
+        if (!transferManager)
+        {
+            completedTabActive = false;
+        }
 
-    if (!completedTabActive)
-    {
-        ++nUnviewedTransfers;
-    }
+        if (!completedTabActive)
+        {
+            ++nUnviewedTransfers;
+        }
 
-    if (transferManager)
-    {
-        transferManager->updateNumberOfCompletedTransfers(nUnviewedTransfers);
+        if (transferManager)
+        {
+            transferManager->updateNumberOfCompletedTransfers(nUnviewedTransfers);
+        }
     }
 
     //Show the transfer in the "recently updated" list
