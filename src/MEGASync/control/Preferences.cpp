@@ -173,6 +173,10 @@ const QString Preferences::startOnStartupKey        = QString::fromAscii("startO
 const QString Preferences::languageKey              = QString::fromAscii("language");
 const QString Preferences::updateAutomaticallyKey   = QString::fromAscii("updateAutomatically");
 const QString Preferences::uploadLimitKBKey         = QString::fromAscii("uploadLimitKB");
+const QString Preferences::downloadLimitKBKey       = QString::fromAscii("downloadLimitKB");
+const QString Preferences::parallelUploadConnectionsKey       = QString::fromAscii("parallelUploadConnections");
+const QString Preferences::parallelDownloadConnectionsKey     = QString::fromAscii("parallelDownloadConnections");
+
 const QString Preferences::upperSizeLimitKey        = QString::fromAscii("upperSizeLimit");
 const QString Preferences::lowerSizeLimitKey        = QString::fromAscii("lowerSizeLimit");
 
@@ -248,6 +252,9 @@ const bool Preferences::defaultLowerSizeLimit       = false;
 const bool Preferences::defaultUseHttpsOnly         = false;
 const bool Preferences::defaultSSLcertificateException = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
+const int  Preferences::defaultDownloadLimitKB      = 0;
+const int  Preferences::defaultParallelUploadConnections      = 3;
+const int  Preferences::defaultParallelDownloadConnections    = 4;
 const int Preferences::defaultTransferDownloadMethod      = MegaApi::TRANSFER_METHOD_AUTO;
 const int Preferences::defaultTransferUploadMethod        = MegaApi::TRANSFER_METHOD_AUTO;
 const long long  Preferences::defaultUpperSizeLimitValue              = 0;
@@ -984,6 +991,68 @@ void Preferences::setUploadLimitKB(int value)
     mutex.lock();
     assert(logged());
     settings->setValue(uploadLimitKBKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+int Preferences::downloadLimitKB()
+{
+    mutex.lock();
+    assert(logged());
+    int value = settings->value(downloadLimitKBKey, defaultDownloadLimitKB).toInt();
+    mutex.unlock();
+    return value;
+}
+
+int Preferences::parallelUploadConnections()
+{
+    mutex.lock();
+    assert(logged());
+    int value = settings->value(parallelUploadConnectionsKey, defaultParallelUploadConnections).toInt();
+    mutex.unlock();
+    return value;
+}
+
+int Preferences::parallelDownloadConnections()
+{
+    mutex.lock();
+    assert(logged());
+    int value = settings->value(parallelDownloadConnectionsKey, defaultParallelDownloadConnections).toInt();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setParallelUploadConnections(int value)
+{
+    mutex.lock();
+    assert(logged());
+    if (value < 1 || value > 6)
+    {
+       value = 3;
+    }
+    settings->setValue(parallelUploadConnectionsKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+void Preferences::setParallelDownloadConnections(int value)
+{
+    mutex.lock();
+    assert(logged());
+    if (value < 1 || value > 6)
+    {
+       value = 4;
+    }
+    settings->setValue(parallelDownloadConnectionsKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+void Preferences::setDownloadLimitKB(int value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(downloadLimitKBKey, value);
     settings->sync();
     mutex.unlock();
 }

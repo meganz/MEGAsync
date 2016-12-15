@@ -8,6 +8,7 @@
 #include <QNetworkProxy>
 #include <QProgressDialog>
 #include <QCloseEvent>
+#include <QButtonGroup>
 #include <ConnectivityChecker.h>
 
 #include "AccountDetailsDialog.h"
@@ -80,9 +81,12 @@ private slots:
     void on_bUpgrade_clicked();
     void on_bUpgradeBandwidth_clicked();
 
-    void on_rNoLimit_clicked();
+    void on_rUploadAutoLimit_clicked();
+    void on_rUploadNoLimit_clicked();
+    void on_rUploadLimit_clicked();
 
-    void on_rLimit_clicked();
+    void on_rDownloadNoLimit_clicked();
+    void on_rDownloadLimit_clicked();
 
     void on_cProxyRequiresPassword_clicked();
 #ifndef WIN32
@@ -144,6 +148,9 @@ private:
     int upperLimitUnit;
     int lowerLimitUnit;
     bool sizeLimitsChanged;
+    QButtonGroup downloadButtonGroup;
+    QButtonGroup uploadButtonGroup;
+
 #ifndef WIN32
     int folderPermissions;
     int filePermissions;
