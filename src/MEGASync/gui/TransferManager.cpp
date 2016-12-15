@@ -301,7 +301,7 @@ void TransferManager::updateState()
     QWidget *w = ui->wTransfers->currentWidget();
     if (w == ui->wActiveTransfers)
     {
-        //onTransfersActive(ui->wActiveTransfers->areTransfersActive());
+        onTransfersActive(ui->wActiveTransfers->areTransfersActive());
         //ui->wActiveTransfers->pausedTransfers(preferences->getGlobalPaused());
     }
     else if (w == ui->wDownloads)

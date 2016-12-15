@@ -1,6 +1,7 @@
 #include "ActiveTransfersWidget.h"
 #include "ui_ActiveTransfersWidget.h"
 #include "control/Utilities.h"
+#include "Preferences.h"
 #include <QMessageBox>
 
 using namespace mega;
@@ -145,6 +146,39 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
     }
 }
 
+void ActiveTransfersWidget::pausedDownTransfers(bool paused)
+{
+    if (paused)
+    {
+        QString remainingTime = QString::fromUtf8("- <span style=\"color:#777777; text-decoration:none;\">m</span> - <span style=\"color:#777777; text-decoration:none;\">s</span>");
+        if (totalDownloads)
+        {
+            ui->bDownPaused->setVisible(true);
+            ui->lDownRemainingTime->setText(remainingTime);
+            ui->lCurrentDownSpeed->setText(tr("PAUSED"));
+        }
+    }
+}
+
+bool ActiveTransfersWidget::areTransfersActive()
+{
+    return totalDownloads || totalUploads;
+}
+
+void ActiveTransfersWidget::pausedUpTransfers(bool paused)
+{
+    if (paused)
+    {
+        QString remainingTime = QString::fromUtf8("- <span style=\"color:#777777; text-decoration:none;\">m</span> - <span style=\"color:#777777; text-decoration:none;\">s</span>");
+        if (totalUploads)
+        {
+            ui->bUpPaused->setVisible(true);
+            ui->lUpRemainingTime->setText(remainingTime);
+            ui->lCurrentUpSpeed->setText(tr("PAUSED"));
+        }
+    }
+}
+
 void ActiveTransfersWidget::updateDownSpeed(long long speed)
 {
     if (activeDownload.transferState == MegaTransfer::STATE_PAUSED)
@@ -153,7 +187,11 @@ void ActiveTransfersWidget::updateDownSpeed(long long speed)
     }
     else
     {
-        if (!speed)
+        if (Preferences::instance()->getDownloadsPaused())
+        {
+            pausedDownTransfers(true);
+        }
+        else if (!speed)
         {
             ui->lCurrentDownSpeed->setText(QString::fromUtf8(""));
         }
@@ -175,7 +213,11 @@ void ActiveTransfersWidget::updateUpSpeed(long long speed)
     }
     else
     {
-        if (!speed)
+        if (Preferences::instance()->getUploadsPaused())
+        {
+            pausedUpTransfers(true);
+        }
+        else if (!speed)
         {
             ui->lCurrentUpSpeed->setText(QString::fromUtf8(""));
         }
