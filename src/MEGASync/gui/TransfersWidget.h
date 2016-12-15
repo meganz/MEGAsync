@@ -31,7 +31,6 @@ public:
 
 private:
     Ui::TransfersWidget *ui;
-    TransfersStateInfoWidget *overlay;
     QList<TransferItem *> activeTransfers;
     QTransfersModel *model;
     MegaTransferDelegate *tDelegate;

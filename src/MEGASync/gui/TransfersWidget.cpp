@@ -12,12 +12,6 @@ TransfersWidget::TransfersWidget(QWidget *parent) :
     this->model = NULL;
     isPaused = false;
     transfersActive = false;
-
-    //Create the overlay widget with a semi-transparent background
-    //that will be shown over the transfers when they are paused
-    overlay = new TransfersStateInfoWidget(this, TransfersStateInfoWidget::PAUSED);
-    overlay->resize(ui->sWidget->minimumSize());
-    overlay->hide();
 }
 
 void TransfersWidget::setupTransfers(MegaTransferData *transferData, int type)
@@ -59,7 +53,6 @@ TransfersWidget::~TransfersWidget()
     delete ui;
     delete tDelegate;
     delete model;
-    delete overlay;
 }
 
 bool TransfersWidget::areTransfersActive()
@@ -102,7 +95,6 @@ void TransfersWidget::configureTransferView()
 void TransfersWidget::pausedTransfers(bool paused)
 {
     isPaused = paused;
-    overlay->setVisible(paused);
     if (model->rowCount(QModelIndex()) == 0)
     {
         transfersActive = false;
@@ -130,9 +122,24 @@ void TransfersWidget::noTransfers()
     transfersActive = false;
     if (isPaused)
     {
-        ui->sWidget->setCurrentWidget(ui->pTransfers);
-        return;
+        ui->pNoTransfers->setState(TransfersStateInfoWidget::PAUSED);
     }
+    else
+    {
+        switch (type)
+        {
+            case QTransfersModel::TYPE_DOWNLOAD:
+                ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_DOWNLOADS);
+                break;
+            case QTransfersModel::TYPE_UPLOAD:
+                ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_UPLOADS);
+                break;
+            default:
+                ui->pNoTransfers->setState(TransfersStateInfoWidget::NO_TRANSFERS);
+                break;
+        }
+    }
+
     ui->sWidget->setCurrentWidget(ui->pNoTransfers);
 }
 

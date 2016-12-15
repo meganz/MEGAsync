@@ -101,6 +101,12 @@ void TransferItem::setFinishedTime(long long time)
     dsFinishedTime = time;
 }
 
+void TransferItem::setStateLabel(QString labelState)
+{
+    ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(labelState));
+    ui->lRemainingTime->setText(QString::fromUtf8(""));
+}
+
 void TransferItem::setType(int type, bool isSyncTransfer)
 {
     this->type = type;
