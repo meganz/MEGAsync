@@ -469,6 +469,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     windowsUploadAction = NULL;
     windowsDownloadAction = NULL;
     windowsStreamAction = NULL;
+    windowsTransferManagerAction = NULL;
     windowsSettingsAction = NULL;
 #endif
     changeProxyAction = NULL;
@@ -4186,6 +4187,15 @@ void MegaApplication::createTrayMenu()
     windowsStreamAction = new QAction(tr("Stream from MEGA"), this);
     connect(windowsStreamAction, SIGNAL(triggered()), this, SLOT(streamActionClicked()));
 
+    if (windowsTransferManagerAction)
+    {
+        windowsTransferManagerAction->deleteLater();
+        windowsTransferManagerAction = NULL;
+    }
+
+    windowsTransferManagerAction = new QAction(tr("Transfer manager"), this);
+    connect(windowsTransferManagerAction, SIGNAL(triggered()), this, SLOT(transferManagerActionClicked()));
+
     if (windowsUpdateAction)
     {
         windowsUpdateAction->deleteLater();
@@ -4208,6 +4218,7 @@ void MegaApplication::createTrayMenu()
     windowsMenu->addAction(windowsUploadAction);
     windowsMenu->addAction(windowsDownloadAction);
     windowsMenu->addAction(windowsStreamAction);
+    windowsMenu->addAction(windowsTransferManagerAction);
     windowsMenu->addAction(windowsSettingsAction);
     windowsMenu->addSeparator();
     windowsMenu->addAction(windowsExitAction);

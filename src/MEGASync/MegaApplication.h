@@ -205,6 +205,7 @@ protected:
     QAction *windowsUploadAction;
     QAction *windowsDownloadAction;
     QAction *windowsStreamAction;
+    QAction *windowsTransferManagerAction;
     QAction *windowsSettingsAction;
 #endif
 
