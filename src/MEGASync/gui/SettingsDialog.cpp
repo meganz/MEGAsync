@@ -105,6 +105,9 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->eProxyPort->setValidator(new QIntValidator(0, 65535, this));
     ui->eUploadLimit->setValidator(new QIntValidator(0, 1000000000, this));
     ui->eDownloadLimit->setValidator(new QIntValidator(0, 1000000000, this));
+    ui->eMaxDownloadConnections->setRange(1, 6);
+    ui->eMaxUploadConnections->setRange(1, 6);
+
     ui->tNoHttp->viewport()->setCursor(Qt::ArrowCursor);
     downloadButtonGroup.addButton(ui->rDownloadLimit);
     downloadButtonGroup.addButton(ui->rDownloadNoLimit);
@@ -1253,8 +1256,6 @@ bool SettingsDialog::saveSettings()
         {
             preferences->setUploadLimitKB(ui->eUploadLimit->text().trimmed().toInt());
             app->setUploadLimit(0);
-            app->setMaxUploadSpeed(preferences->uploadLimitKB());
-
         }
         else
         {
@@ -1268,8 +1269,8 @@ bool SettingsDialog::saveSettings()
             }
 
             app->setUploadLimit(preferences->uploadLimitKB());
-            app->setMaxUploadSpeed(preferences->uploadLimitKB());
         }
+        app->setMaxUploadSpeed(preferences->uploadLimitKB());
 
         if (ui->rDownloadNoLimit->isChecked())
         {
@@ -1282,11 +1283,17 @@ bool SettingsDialog::saveSettings()
 
         app->setMaxDownloadSpeed(preferences->downloadLimitKB());
 
-        preferences->setParallelDownloadConnections(ui->eMaxDownloadConnections->value());
-        preferences->setParallelUploadConnections(ui->eMaxUploadConnections->value());
-        //Uncomment when branch change-num-connections is merged into develop
-        //app->setMaxConnections(MegaTransfer::TYPE_UPLOAD, preferences->parallelUploadConnections());
-        //app->setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());
+        if (ui->eMaxDownloadConnections->value() != preferences->parallelDownloadConnections())
+        {
+            preferences->setParallelDownloadConnections(ui->eMaxDownloadConnections->value());
+            app->setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());
+        }
+
+        if (ui->eMaxUploadConnections->value() != preferences->parallelUploadConnections())
+        {
+            preferences->setParallelUploadConnections(ui->eMaxUploadConnections->value());
+            app->setMaxConnections(MegaTransfer::TYPE_UPLOAD, preferences->parallelUploadConnections());
+        }
 
         preferences->setUseHttpsOnly(ui->cbUseHttps->isChecked());
         app->setUseHttpsOnly(preferences->usingHttpsOnly());

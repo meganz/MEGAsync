@@ -608,9 +608,8 @@ void MegaApplication::initialize()
 
     megaApi->setDownloadMethod(preferences->transferDownloadMethod());
     megaApi->setUploadMethod(preferences->transferUploadMethod());
-    //Uncomment when branch change-num-connections is merged into develop
-    //megaApi->setMaxConnections(MegaTransfer::TYPE_UPLOAD,   preferences->parallelUploadConnections());
-    //megaApi->setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());
+    setMaxConnections(MegaTransfer::TYPE_UPLOAD,   preferences->parallelUploadConnections());
+    setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());
     setUseHttpsOnly(preferences->usingHttpsOnly());
 
     megaApi->setDefaultFilePermissions(preferences->filePermissionsValue());
@@ -1236,12 +1235,22 @@ void MegaApplication::loggedIn()
     }
 
     //Set the upload limit
-    setUploadLimit(preferences->uploadLimitKB());
+    if (preferences->uploadLimitKB() > 0)
+    {
+        setUploadLimit(0);
+    }
+    else
+    {
+        setUploadLimit(preferences->uploadLimitKB());
+    }
     setMaxUploadSpeed(preferences->uploadLimitKB());
     setMaxDownloadSpeed(preferences->downloadLimitKB());
-    //Uncomment when branch change-num-connections is merged into develop
-    //setMaxConnections(MegaTransfer::TYPE_UPLOAD,   preferences->parallelUploadConnections());
-    //setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());
+    setMaxConnections(MegaTransfer::TYPE_UPLOAD,   preferences->parallelUploadConnections());
+    setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());
+    setUseHttpsOnly(preferences->usingHttpsOnly());
+
+    megaApi->setDefaultFilePermissions(preferences->filePermissionsValue());
+    megaApi->setDefaultFolderPermissions(preferences->folderPermissionsValue());
 
     // Process any pending download/upload queued during GuestMode
     processDownloads();
@@ -2513,9 +2522,9 @@ void MegaApplication::setMaxUploadSpeed(int limit)
         return;
     }
 
-    if (limit < 0)
+    if (limit <= 0)
     {
-        megaApi->setMaxUploadSpeed(-1);
+        megaApi->setMaxUploadSpeed(0);
     }
     else
     {
@@ -2530,28 +2539,28 @@ void MegaApplication::setMaxDownloadSpeed(int limit)
         return;
     }
 
-    if (limit < 0)
+    if (limit <= 0)
     {
-        megaApi->setMaxDownloadSpeed(-1);
+        megaApi->setMaxDownloadSpeed(0);
     }
     else
     {
         megaApi->setMaxDownloadSpeed(limit * 1024);
     }
 }
-//Uncomment when branch change-num-connections is merged into develop
-//void MegaApplication::setMaxConnections(int direction, int connections)
-//{
-//    if (appfinished)
-//    {
-//        return;
-//    }
 
-//    if (connections > 1 && connections < 6)
-//    {
-//        megaApi->setMaxConnections(direction, connections);
-//    }
-//}
+void MegaApplication::setMaxConnections(int direction, int connections)
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    if (connections > 0 && connections <= 6)
+    {
+        megaApi->setMaxConnections(direction, connections);
+    }
+}
 
 void MegaApplication::setUseHttpsOnly(bool httpsOnly)
 {
