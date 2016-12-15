@@ -4,6 +4,7 @@
 #include <QMouseEvent>
 #include <QMessageBox>
 #include "control/Utilities.h"
+#include "Preferences.h"
 #include "gui/QMegaMessageBox.h"
 #include "megaapi.h"
 #include "QTransfersModel.h"
@@ -69,6 +70,20 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
         {
             ti->updateFinishedTime();
+        }
+        else
+        {
+            if ((model->getModelType() == QTransfersModel::TYPE_DOWNLOAD) &&
+                (Preferences::instance()->getDownloadsPaused()))
+            {
+                ti->setStateLabel(tr("paused"));
+            }
+
+            if ((model->getModelType() == QTransfersModel::TYPE_UPLOAD) &&
+                (Preferences::instance()->getUploadsPaused()))
+            {
+                ti->setStateLabel(tr("paused"));
+            }
         }
 
         painter->save();

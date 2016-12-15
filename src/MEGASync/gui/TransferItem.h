@@ -23,6 +23,7 @@ public:
     void setSpeed(long long transferSpeed);
     void setTotalSize(long long size);
     void setFinishedTime(long long time);
+    void setStateLabel(QString labelState);
 
     void setType(int type, bool isSyncTransfer = false);
     int getType();

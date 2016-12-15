@@ -29,38 +29,24 @@
    <string>Transfer Manager</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#wContainer
-{
-    padding: 1px;
-    border: 1px solid rgb(100, 100, 100);
-}
-
-#lHeader
+   <string notr="true">#lHeader
 {
 	border: none;
 }
-
 #wHeader
 {
-     background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                stop: 0.1 #AAf9f9f9, stop: 0.2 #AAf6f6f6,
-								 stop: 0.3 #AAf5f5f5, stop: 0.4 #AAf4f4f4,
-								 stop: 0.5#AAf3f3f3, stop: 0.6 #AAf2f2f2,
-								 stop: 0.7 #AAf1f1f1, stop: 0.8 #AAf0f0f0,
-								 stop: 0.9 #AAefefef, stop: 1 #AAEEEEEE);
+     /*background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                stop: 0.1 #f9f9f9, stop: 0.2 #f6f6f6,
+								 stop: 0.3 #f5f5f5, stop: 0.4 #f4f4f4,
+								 stop: 0.5#f3f3f3, stop: 0.6 #f2f2f2,
+								 stop: 0.7 #f1f1f1, stop: 0.8 #f0f0f0,
+								 stop: 0.9 #efefef, stop: 1 #EEEEEE);*/
 }
 #wOptions
 {
-	background: #aaececec;
+	/*background: #ececec;*/
 }
-
-#wTransfers
-{
-   margin-left: 1px;
-   margin-right: 1px;
-}
-
-#tAllTransfers, #tCompleted, #tDownloads, #tUploads
+#tAllTransfers, #tDownloads, #tUploads
 {
   font-family: &quot;Source Sans Pro&quot;;
   font-size: 18px;
@@ -69,6 +55,17 @@
   padding: 0px 19px 0px 19px;
   border: none;
 }
+
+#tCompleted
+{
+  font-family: &quot;Source Sans Pro&quot;;
+  font-size: 18px;
+  font-weight: 400;
+  color: #333333;
+  padding: 0px 5px 0px 19px;
+  border: none;
+}
+
 #bClearAll:disabled, #bPause:disabled, #bAdd:disabled
 {
 	color: rgba(119, 119, 119, 30%);
@@ -134,6 +131,17 @@
   border: 1px solid rgba(0, 0, 0, 60%);
   border-radius: 3px;
   background-color: rgba(0, 0, 0, 50%);
+}
+
+#bNumberCompleted
+
+{
+  font-family: &quot;Source Sans Pro&quot;;
+  font-size: 12px;
+  color: #FFFFFF;
+  background-color: #9A9A9A;
+  border-radius: 4px;
+  padding: 1px 5px 1px 5px;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -153,10 +161,22 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QWidget" name="wContainer" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout_22">
+    <widget class="QWidget" name="wHeader" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>800</width>
+       <height>72</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>800</width>
+       <height>72</height>
+      </size>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="leftMargin">
        <number>0</number>
@@ -171,22 +191,141 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QWidget" name="wHeader" native="true">
+       <widget class="QWidget" name="wLogoHeader" native="true">
         <property name="minimumSize">
          <size>
           <width>800</width>
-          <height>72</height>
+          <height>45</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>800</width>
-          <height>72</height>
+          <height>45</height>
          </size>
         </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
          <property name="spacing">
-          <number>1</number>
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>23</number>
+         </property>
+         <property name="topMargin">
+          <number>7</number>
+         </property>
+         <property name="rightMargin">
+          <number>7</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>230</width>
+             <height>10</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QWidget" name="widget" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>16</number>
+            </property>
+            <item>
+             <widget class="QPushButton" name="bAdd">
+              <property name="minimumSize">
+               <size>
+                <width>80</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>32</height>
+               </size>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>Add...</string>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/add_ico.png</normaloff>:/images/add_ico.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QWidget" name="wTabHeader" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>800</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>800</width>
+          <height>35</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">#wTabHeader
+{
+   border-bottom: 1px solid rgba(0, 0, 0, 10%);
+}
+QToolButton
+{
+   border: none;
+}
+</string>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <property name="spacing">
+          <number>0</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -201,319 +340,191 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QWidget" name="wLogoHeader" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>800</width>
-             <height>45</height>
-            </size>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="spacing">
+            <number>0</number>
            </property>
-           <property name="maximumSize">
-            <size>
-             <width>800</width>
-             <height>45</height>
-            </size>
-           </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="leftMargin">
-             <number>23</number>
-            </property>
-            <property name="topMargin">
-             <number>7</number>
-            </property>
-            <property name="rightMargin">
-             <number>7</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <spacer name="horizontalSpacer_2">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>230</width>
-                <height>10</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-            <item>
-             <widget class="QWidget" name="widget" native="true">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <layout class="QHBoxLayout" name="horizontalLayout_4">
-               <property name="spacing">
-                <number>0</number>
-               </property>
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>16</number>
-               </property>
-               <item>
-                <widget class="QPushButton" name="bAdd">
-                 <property name="minimumSize">
-                  <size>
-                   <width>80</width>
-                   <height>32</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>32</height>
-                  </size>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                 <property name="text">
-                  <string>Add...</string>
-                 </property>
-                 <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
-                   <normaloff>:/images/add_ico.png</normaloff>:/images/add_ico.png</iconset>
-                 </property>
-                 <property name="iconSize">
-                  <size>
-                   <width>24</width>
-                   <height>24</height>
-                  </size>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-           </layout>
-          </widget>
+           <item>
+            <widget class="QToolButton" name="tAllTransfers">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>38</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>38</height>
+              </size>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>Active Transfers</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lAll">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>2</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>2</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
-          <widget class="QWidget" name="wTabHeader" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>800</width>
-             <height>35</height>
-            </size>
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <property name="spacing">
+            <number>0</number>
            </property>
-           <property name="maximumSize">
-            <size>
-             <width>800</width>
-             <height>35</height>
-            </size>
+           <item>
+            <widget class="QToolButton" name="tDownloads">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>38</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>38</height>
+              </size>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>Downloads</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lDownloads">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>2</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>2</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <property name="spacing">
+            <number>0</number>
            </property>
-           <property name="styleSheet">
-            <string notr="true">#wTabHeader
-{
-   border-bottom: 1px solid rgba(0, 0, 0, 10%);
-}
-QToolButton
-{
-   border: none;
-}
-</string>
+           <item>
+            <widget class="QToolButton" name="tUploads">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>38</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>38</height>
+              </size>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="text">
+              <string>Uploads</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lUploads">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>2</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>2</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_6">
+           <property name="spacing">
+            <number>0</number>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_3">
-            <property name="spacing">
-             <number>0</number>
-            </property>
-            <property name="leftMargin">
-             <number>0</number>
-            </property>
-            <property name="topMargin">
-             <number>0</number>
-            </property>
-            <property name="rightMargin">
-             <number>0</number>
-            </property>
-            <property name="bottomMargin">
-             <number>0</number>
-            </property>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <widget class="QWidget" name="widget_2" native="true">
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
               <property name="spacing">
                <number>0</number>
               </property>
-              <item>
-               <widget class="QToolButton" name="tAllTransfers">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>38</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>38</height>
-                 </size>
-                </property>
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="text">
-                 <string>Active Transfers</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="lAll">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>2</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>2</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_4">
-              <property name="spacing">
+              <property name="leftMargin">
                <number>0</number>
               </property>
-              <item>
-               <widget class="QToolButton" name="tDownloads">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>38</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>38</height>
-                 </size>
-                </property>
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="text">
-                 <string>Downloads</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="lDownloads">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>2</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>2</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_5">
-              <property name="spacing">
+              <property name="topMargin">
+               <number>2</number>
+              </property>
+              <property name="rightMargin">
                <number>0</number>
               </property>
-              <item>
-               <widget class="QToolButton" name="tUploads">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>38</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>38</height>
-                 </size>
-                </property>
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="text">
-                 <string>Uploads</string>
-                </property>
-                <property name="checkable">
-                 <bool>true</bool>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QLabel" name="lUploads">
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>2</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>2</height>
-                 </size>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_6">
-              <property name="spacing">
+              <property name="bottomMargin">
                <number>0</number>
               </property>
               <item>
@@ -521,7 +532,7 @@ QToolButton
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>38</height>
+                  <height>31</height>
                  </size>
                 </property>
                 <property name="cursor">
@@ -536,214 +547,233 @@ QToolButton
                </widget>
               </item>
               <item>
-               <widget class="QLabel" name="lCompleted">
+               <widget class="QPushButton" name="bNumberCompleted">
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
-                  <height>2</height>
+                  <width>6</width>
+                  <height>15</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
                   <width>16777215</width>
-                  <height>2</height>
+                  <height>15</height>
                  </size>
                 </property>
-                <property name="styleSheet">
-                 <string notr="true">background-color: none;</string>
-                </property>
                 <property name="text">
-                 <string/>
+                 <string>5</string>
                 </property>
                </widget>
               </item>
              </layout>
-            </item>
-            <item>
-             <spacer name="horizontalSpacer_3">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-              <property name="sizeHint" stdset="0">
-               <size>
-                <width>40</width>
-                <height>20</height>
-               </size>
-              </property>
-             </spacer>
-            </item>
-           </layout>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QStackedWidget" name="wTransfers">
-        <property name="minimumSize">
-         <size>
-          <width>798</width>
-          <height>480</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>798</width>
-          <height>480</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: white;</string>
-        </property>
-        <property name="currentIndex">
-         <number>3</number>
-        </property>
-        <widget class="ActiveTransfersWidget" name="wActiveTransfers"/>
-        <widget class="TransfersWidget" name="wDownloads"/>
-        <widget class="TransfersWidget" name="wUploads"/>
-        <widget class="TransfersWidget" name="wCompleted"/>
-       </widget>
-      </item>
-      <item>
-       <widget class="QWidget" name="wOptions" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>800</width>
-          <height>48</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>800</width>
-          <height>48</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">#wOptions
-{
-border-top: 1px solid rgba(0, 0, 0, 10%);
-}
-</string>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout">
-         <property name="spacing">
-          <number>6</number>
-         </property>
-         <property name="leftMargin">
-          <number>7</number>
-         </property>
-         <property name="topMargin">
-          <number>7</number>
-         </property>
-         <property name="rightMargin">
-          <number>7</number>
-         </property>
-         <property name="bottomMargin">
-          <number>4</number>
-         </property>
-         <item>
-          <widget class="QPushButton" name="bPause">
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
-           <property name="text">
-            <string>Pause</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
-             <normaloff>:/images/pause_ico.png</normaloff>:/images/pause_ico.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>24</width>
-             <height>24</height>
-            </size>
-           </property>
-          </widget>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="lCompleted">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>2</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>2</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: none;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
-          <widget class="QPushButton" name="bClearAll">
-           <property name="enabled">
-            <bool>false</bool>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
-           <property name="text">
-            <string>Clear all</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
-             <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>24</width>
-             <height>24</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <spacer name="horizontalSpacer">
+          <spacer name="horizontalSpacer_3">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>237</width>
+             <width>40</width>
              <height>20</height>
             </size>
            </property>
           </spacer>
          </item>
-         <item>
-          <widget class="QPushButton" name="bClose">
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
-           <property name="text">
-            <string>Close</string>
-           </property>
-          </widget>
-         </item>
         </layout>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QStackedWidget" name="wTransfers">
+     <property name="minimumSize">
+      <size>
+       <width>800</width>
+       <height>480</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>800</width>
+       <height>480</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: white;</string>
+     </property>
+     <property name="currentIndex">
+      <number>3</number>
+     </property>
+     <widget class="ActiveTransfersWidget" name="wActiveTransfers"/>
+     <widget class="TransfersWidget" name="wDownloads"/>
+     <widget class="TransfersWidget" name="wUploads"/>
+     <widget class="TransfersWidget" name="wCompleted"/>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="wOptions" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>800</width>
+       <height>48</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>800</width>
+       <height>48</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#wOptions
+{
+border-top: 1px solid rgba(0, 0, 0, 10%);
+}
+</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>6</number>
+      </property>
+      <property name="leftMargin">
+       <number>7</number>
+      </property>
+      <property name="topMargin">
+       <number>7</number>
+      </property>
+      <property name="rightMargin">
+       <number>7</number>
+      </property>
+      <property name="bottomMargin">
+       <number>4</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="bPause">
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="text">
+         <string>Pause</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_linux.qrc">
+          <normaloff>:/images/pause_ico.png</normaloff>:/images/pause_ico.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="bClearAll">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="text">
+         <string>Clear all</string>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_linux.qrc">
+          <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>237</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="bClose">
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="text">
+         <string>Close</string>
+        </property>
        </widget>
       </item>
      </layout>

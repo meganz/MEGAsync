@@ -101,6 +101,7 @@ public:
     void showTrayMenu(QPoint *point = NULL);
     void toggleLogging();
     QList<mega::MegaTransfer* > getFinishedTransfers();
+    int getNumUnviewedTransfers();
     void removeFinishedTransfer(int transferTag);
     void removeAllFinishedTransfers();
     mega::MegaTransfer* getFinishedTransferByTag(int tag);
@@ -168,6 +169,8 @@ public slots:
     void showUpdatedMessage();
     void handleMEGAurl(const QUrl &url);
     void handleLocalPath(const QUrl &url);
+    void clearViewedTransfers();
+    void onCompletedTransfersTabActive(bool active);
 
 protected:
     void createTrayIcon();
@@ -311,6 +314,8 @@ protected:
     bool isFirstSyncDone;
     bool isFirstFileSynced;
     bool networkConnectivity;
+    int nUnviewedTransfers;
+    bool completedTabActive;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener

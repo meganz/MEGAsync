@@ -42,6 +42,9 @@ public:
     virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e);
 
     void updateTransferInfo(mega::MegaTransfer *transfer);
+    void pausedUpTransfers(bool paused);
+    void pausedDownTransfers(bool paused);
+    bool areTransfersActive();
 
 public slots:
     void updateDownSpeed(long long speed);

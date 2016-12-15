@@ -513,6 +513,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     transferManager = NULL;
     queuedUserStats = 0;
     maxMemoryUsage = 0;
+    nUnviewedTransfers = 0;
+    completedTabActive = false;
 
 #ifdef __APPLE__
     scanningTimer = NULL;
@@ -2696,6 +2698,20 @@ void MegaApplication::handleLocalPath(const QUrl &url)
     QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(QDir::toNativeSeparators(url.fragment())));
 }
 
+void MegaApplication::clearViewedTransfers()
+{
+    nUnviewedTransfers = 0;
+    if (transferManager)
+    {
+        transferManager->updateNumberOfCompletedTransfers(nUnviewedTransfers);
+    }
+}
+
+void MegaApplication::onCompletedTransfersTabActive(bool active)
+{
+    completedTabActive = active;
+}
+
 void MegaApplication::updateUserStats()
 {
     if (appfinished)
@@ -2842,6 +2858,11 @@ void MegaApplication::removeAllFinishedTransfers()
 QList<MegaTransfer*> MegaApplication::getFinishedTransfers()
 {
     return finishedTransfers.values();
+}
+
+int MegaApplication::getNumUnviewedTransfers()
+{
+    return nUnviewedTransfers;
 }
 
 MegaTransfer* MegaApplication::getFinishedTransferByTag(int tag)
@@ -3118,6 +3139,10 @@ void MegaApplication::transferManagerActionClicked()
     }
 
     transferManager = new TransferManager(megaApi);
+    // Signal/slot to notify the tracking of unseen completed transfers of Transfer Manager. If Completed tab is
+    // active, tracking is disabled
+    connect(transferManager, SIGNAL(viewedCompletedTransfers()), this, SLOT(clearViewedTransfers()));
+    connect(transferManager, SIGNAL(completedTransfersTabActive(bool)), this, SLOT(onCompletedTransfersTabActive(bool)));
     transferManager->show();
 }
 
@@ -5200,8 +5225,25 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         return;
     }
 
-    // Add finished transfer to TransferManager map, regardless there is error or not
-    finishedTransfers.insert(transfer->getTag(), transfer->copy());
+    if (e->getErrorCode() != MegaError::API_EINCOMPLETE)
+    {
+        // Add finished transfer to TransferManager map, regardless there is error or not
+        finishedTransfers.insert(transfer->getTag(), transfer->copy());
+        if (!transferManager)
+        {
+            completedTabActive = false;
+        }
+
+        if (!completedTabActive)
+        {
+            ++nUnviewedTransfers;
+        }
+
+        if (transferManager)
+        {
+            transferManager->updateNumberOfCompletedTransfers(nUnviewedTransfers);
+        }
+    }
 
     //Show the transfer in the "recently updated" list
     if (e->getErrorCode() == MegaError::API_OK && transfer->getNodeHandle() != INVALID_HANDLE)

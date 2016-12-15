@@ -23,7 +23,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     uploadAction = NULL;
     downloadAction = NULL;
     settingsAction = NULL;
-    this->megaApi = megaApi;
+    this->megaApi = megaApi; 
     delegateListener = new QTMegaTransferListener(megaApi, this);
 
     MegaTransferData *transferData = megaApi->getTransferData(delegateListener);
@@ -31,6 +31,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     ui->wDownloads->setupTransfers(transferData, QTransfersModel::TYPE_DOWNLOAD);
     ui->wActiveTransfers->init(megaApi);
     ui->wCompleted->setupTransfers(((MegaApplication *)qApp)->getFinishedTransfers(), QTransfersModel::TYPE_FINISHED);
+    updateNumberOfCompletedTransfers(((MegaApplication *)qApp)->getNumUnviewedTransfers());
     delete transferData;
 
     updatePauseState();
@@ -141,13 +142,17 @@ void TransferManager::createAddMenu()
 
 void TransferManager::on_tCompleted_clicked()
 {
+    // Disable tracking of completed transfers and reset value
+    emit viewedCompletedTransfers();
+    emit completedTransfersTabActive(true);
+
     ui->lCompleted->setStyleSheet(QString::fromUtf8("background-color : #ff333a;"));
     ui->lAll->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
     ui->lUploads->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
     ui->lDownloads->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
 
     ui->tAllTransfers->setStyleSheet(QString::fromUtf8("color: #999999;"));
-    ui->tCompleted->setStyleSheet(QString::fromUtf8("color: #333333;"));
+    ui->tCompleted->setStyleSheet(QString::fromUtf8("color: #333333; padding-right: 19px;"));
     ui->tUploads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->tDownloads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->bClearAll->setText(tr("Clear all"));
@@ -160,13 +165,16 @@ void TransferManager::on_tCompleted_clicked()
 
 void TransferManager::on_tDownloads_clicked()
 {
+    // Enable tracking of completed transfers
+    emit completedTransfersTabActive(false);
+
     ui->lDownloads->setStyleSheet(QString::fromUtf8("background-color : #ff333a;"));
     ui->lAll->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
     ui->lUploads->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
     ui->lCompleted->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
 
     ui->tAllTransfers->setStyleSheet(QString::fromUtf8("color: #999999;"));
-    ui->tCompleted->setStyleSheet(QString::fromUtf8("color: #999999;"));
+    ui->tCompleted->setStyleSheet(QString::fromUtf8("color: #999999; padding-right: 5px;"));
     ui->tUploads->setStyleSheet(QString::fromUtf8("color: #999999;"));
     ui->tDownloads->setStyleSheet(QString::fromUtf8("color: #333333;"));
     ui->bClearAll->setText(tr("Cancel all"));
@@ -179,8 +187,11 @@ void TransferManager::on_tDownloads_clicked()
 
 void TransferManager::on_tUploads_clicked()
 {
+    // Enable tracking of completed transfers
+    emit completedTransfersTabActive(false);
+
     ui->lUploads->setStyleSheet(QString::fromUtf8("background-color : #ff333a;"));
-    ui->lCompleted->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
+    ui->lCompleted->setStyleSheet(QString::fromUtf8("background-color : transparent; padding-right: 5px;"));
     ui->lAll->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
     ui->lDownloads->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
 
@@ -198,8 +209,11 @@ void TransferManager::on_tUploads_clicked()
 
 void TransferManager::on_tAllTransfers_clicked()
 {
+    // Enable tracking of completed transfers
+    emit completedTransfersTabActive(false);
+
     ui->lAll->setStyleSheet(QString::fromUtf8("background-color : #ff333a;"));
-    ui->lCompleted->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
+    ui->lCompleted->setStyleSheet(QString::fromUtf8("background-color : transparent; padding-right: 5px;"));
     ui->lUploads->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
     ui->lDownloads->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
 
@@ -287,7 +301,7 @@ void TransferManager::updateState()
     QWidget *w = ui->wTransfers->currentWidget();
     if (w == ui->wActiveTransfers)
     {
-        //onTransfersActive(ui->wActiveTransfers->areTransfersActive());
+        onTransfersActive(ui->wActiveTransfers->areTransfersActive());
         //ui->wActiveTransfers->pausedTransfers(preferences->getGlobalPaused());
     }
     else if (w == ui->wDownloads)
@@ -372,6 +386,25 @@ void TransferManager::on_bClearAll_clicked()
 void TransferManager::onTransfersActive(bool exists)
 {
     ui->bClearAll->setEnabled(exists);
+}
+
+void TransferManager::updateNumberOfCompletedTransfers(int num)
+{
+    if (!num)
+    {
+        ui->bNumberCompleted->setVisible(false);
+        return;
+    }
+
+    if (num > TransferManager::COMPLETED_ITEMS_LIMIT)
+    {
+        ui->bNumberCompleted->setVisible(true);
+        ui->bNumberCompleted->setText(QString::fromUtf8("+") + QString::number(TransferManager::COMPLETED_ITEMS_LIMIT));
+        return;
+    }
+
+    ui->bNumberCompleted->setVisible(true);
+    ui->bNumberCompleted->setText(QString::number(num));
 }
 
 void TransferManager::changeEvent(QEvent *event)
