@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>720</width>
+    <width>784</width>
     <height>48</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>720</width>
+    <width>784</width>
     <height>48</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>720</width>
+    <width>784</width>
     <height>48</height>
    </size>
   </property>
@@ -95,20 +95,32 @@
     <widget class="QStackedWidget" name="sTransferState">
      <property name="minimumSize">
       <size>
-       <width>720</width>
+       <width>784</width>
        <height>48</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>720</width>
+       <width>784</width>
        <height>48</height>
       </size>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="stateActive">
+      <property name="minimumSize">
+       <size>
+        <width>784</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>784</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <property name="spacing">
         <number>0</number>
@@ -120,7 +132,7 @@
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>17</number>
+        <number>5</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -129,13 +141,13 @@
         <widget class="QWidget" name="wContainerLeft" native="true">
          <property name="minimumSize">
           <size>
-           <width>522</width>
+           <width>580</width>
            <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>522</width>
+           <width>580</width>
            <height>48</height>
           </size>
          </property>
@@ -159,13 +171,13 @@
            <widget class="QWidget" name="widget" native="true">
             <property name="minimumSize">
              <size>
-              <width>522</width>
+              <width>580</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>522</width>
+              <width>580</width>
               <height>16777215</height>
              </size>
             </property>
@@ -455,6 +467,18 @@ padding-top: 1px;</string>
       </layout>
      </widget>
      <widget class="QWidget" name="stateCompleted">
+      <property name="minimumSize">
+       <size>
+        <width>784</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>784</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <layout class="QHBoxLayout" name="horizontalLayout_5">
        <property name="spacing">
         <number>0</number>
@@ -466,7 +490,7 @@ padding-top: 1px;</string>
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>23</number>
+        <number>10</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -475,13 +499,13 @@ padding-top: 1px;</string>
         <widget class="QWidget" name="wContainerLeftCompleted" native="true">
          <property name="minimumSize">
           <size>
-           <width>522</width>
+           <width>580</width>
            <height>38</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>522</width>
+           <width>580</width>
            <height>38</height>
           </size>
          </property>
