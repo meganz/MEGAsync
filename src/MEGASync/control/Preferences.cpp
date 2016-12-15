@@ -11,18 +11,14 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/2.9.10.0";
-const int Preferences::VERSION_CODE = 2910;
-const int Preferences::BUILD_ID = 10;
+const char Preferences::USER_AGENT[] = "MEGAsync/2.9.90.0";
+const int Preferences::VERSION_CODE = 2990;
+const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.10");
-const QString Preferences::SDK_ID = QString::fromAscii("2c928");
+const QString Preferences::VERSION_STRING = QString::fromAscii("3.0");
+const QString Preferences::SDK_ID = QString::fromAscii("BETA_2");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- Support to download/import folder links\n"
-            "- Automatic HTTP/HTTPS proxy detection on OS X\n"
-            "- Better compatibility with antivirus software\n"
-            "- HDPI support for Linux distros having QT >= 5.6\n"
-            "- Other bug fixes and minor improvements");
+            "- MEGAsync 3.0 BETA 2");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
