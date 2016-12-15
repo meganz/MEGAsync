@@ -23,7 +23,7 @@ ActiveTransfersWidget::ActiveTransfersWidget(QWidget *parent) :
                                                            "border: none; "));
 }
 
-void ActiveTransfersWidget::init(MegaApi *megaApi)
+void ActiveTransfersWidget::init(MegaApi *megaApi, MegaTransfer *activeUpload, MegaTransfer *activeDownload)
 {
     this->megaApi = megaApi;
     ui->wDownGraph->init(megaApi,MegaTransfer::TYPE_DOWNLOAD);
@@ -33,6 +33,17 @@ void ActiveTransfersWidget::init(MegaApi *megaApi)
     connect(ui->wUpGraph, SIGNAL(newValue(long long)), this, SLOT(updateUpSpeed(long long)));
     ui->wDownGraph->start();
     ui->wUpGraph->start();
+
+    updateNumberOfTransfers(megaApi);
+    if (activeUpload)
+    {
+        updateTransferInfo(activeUpload);
+    }
+
+    if (activeDownload)
+    {
+        updateTransferInfo(activeDownload);
+    }
 }
 
 ActiveTransfersWidget::~ActiveTransfersWidget()

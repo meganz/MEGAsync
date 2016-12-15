@@ -33,7 +33,7 @@ class ActiveTransfersWidget : public QWidget, public mega::MegaTransferListener
 public:
 
     explicit ActiveTransfersWidget(QWidget *parent = 0);
-    void init(mega::MegaApi *megaApi);
+    void init(mega::MegaApi *megaApi, mega::MegaTransfer *activeUpload = NULL, mega::MegaTransfer *activeDownload = NULL);
     ~ActiveTransfersWidget();
 
     virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);

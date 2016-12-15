@@ -29,7 +29,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     MegaTransferData *transferData = megaApi->getTransferData(delegateListener);
     ui->wUploads->setupTransfers(transferData, QTransfersModel::TYPE_UPLOAD);
     ui->wDownloads->setupTransfers(transferData, QTransfersModel::TYPE_DOWNLOAD);
-    ui->wActiveTransfers->init(megaApi);
+    ui->wActiveTransfers->init(megaApi,
+                               transferData->getNumUploads() ? megaApi->getTransferByTag(transferData->getUploadTag(0)) : NULL,
+                               transferData->getNumDownloads() ? megaApi->getTransferByTag(transferData->getDownloadTag(0)) : NULL);
     ui->wCompleted->setupTransfers(((MegaApplication *)qApp)->getFinishedTransfers(), QTransfersModel::TYPE_FINISHED);
     updateNumberOfCompletedTransfers(((MegaApplication *)qApp)->getNumUnviewedTransfers());
     delete transferData;
@@ -49,6 +51,11 @@ TransferManager::~TransferManager()
 
 void TransferManager::onTransferStart(MegaApi *api, MegaTransfer *transfer)
 {
+    if (!transfer->getPriority())
+    {
+        return;
+    }
+
     ui->wUploads->getModel()->onTransferStart(api, transfer);
     ui->wDownloads->getModel()->onTransferStart(api, transfer);
     ui->wActiveTransfers->onTransferStart(api, transfer);
@@ -56,14 +63,24 @@ void TransferManager::onTransferStart(MegaApi *api, MegaTransfer *transfer)
 
 void TransferManager::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *e)
 {
+    ui->wCompleted->getModel()->onTransferFinish(api, transfer, e);
+    if (!transfer->getPriority())
+    {
+        return;
+    }
+
     ui->wUploads->getModel()->onTransferFinish(api, transfer, e);
     ui->wDownloads->getModel()->onTransferFinish(api, transfer, e);
     ui->wActiveTransfers->onTransferFinish(api, transfer, e);
-    ui->wCompleted->getModel()->onTransferFinish(api, transfer, e);
 }
 
 void TransferManager::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
 {
+    if (!transfer->getPriority())
+    {
+        return;
+    }
+
     ui->wUploads->getModel()->onTransferUpdate(api, transfer);
     ui->wDownloads->getModel()->onTransferUpdate(api, transfer);
     ui->wActiveTransfers->onTransferUpdate(api, transfer);
