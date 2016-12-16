@@ -874,7 +874,7 @@ background-color: rgba(0, 0, 0, 10%);
                    </property>
                    <property name="icon">
                     <iconset resource="../Resources_linux.qrc">
-                     <normaloff>:/images/no_uploads.png</normaloff>:/images/no_uploads.png</iconset>
+                     <normaloff>:/images/no_downloads.png</normaloff>:/images/no_downloads.png</iconset>
                    </property>
                    <property name="iconSize">
                     <size>
@@ -915,7 +915,7 @@ background-color: rgba(0, 0, 0, 10%);
                  </size>
                 </property>
                 <property name="text">
-                 <string>No Uploads</string>
+                 <string>No Downloads</string>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignCenter</set>
