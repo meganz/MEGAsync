@@ -536,14 +536,28 @@ void SettingsDialog::on_bBandwidth_clicked()
     ui->pProxies->hide();
     ui->pSyncs->hide();
 
+    int bwHeight;
+    if (preferences->accountType() == 0)
+    {
+        ui->gBandwidthQuota->hide();
+        ui->bSeparatorBandwidth->hide();
+        bwHeight = 440;
+    }
+    else
+    {
+        ui->gBandwidthQuota->show();
+        ui->bSeparatorBandwidth->show();
+        bwHeight = 540;
+    }
+
     minHeightAnimation->setTargetObject(this);
     maxHeightAnimation->setTargetObject(this);
     minHeightAnimation->setPropertyName("minimumHeight");
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(540);
-    maxHeightAnimation->setEndValue(540);
+    minHeightAnimation->setEndValue(bwHeight);
+    maxHeightAnimation->setEndValue(bwHeight);
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
