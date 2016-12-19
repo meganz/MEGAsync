@@ -483,7 +483,7 @@ bool MegaTransferView::areTransfersFailed(QList<int> selectedTransfers)
     {
         for (int i = 0; i < selectedTransfers.size(); i++)
         {
-            transfer = model->getFinishedTransferByTag(transferTagSelected[i]);
+            transfer = model->getFinishedTransferByTag(selectedTransfers[i]);
             if (transfer->getState() == MegaTransfer::STATE_FAILED)
             {
                 return true;
