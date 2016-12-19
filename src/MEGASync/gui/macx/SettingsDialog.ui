@@ -2028,6 +2028,9 @@ border: none;</string>
          <property name="text">
           <string>Upload rate limit</string>
          </property>
+         <property name="indent">
+          <number>0</number>
+         </property>
         </widget>
        </item>
        <item>
@@ -2073,7 +2076,7 @@ border: none;</string>
            <number>6</number>
           </property>
           <property name="leftMargin">
-           <number>32</number>
+           <number>29</number>
           </property>
           <property name="topMargin">
            <number>0</number>
@@ -2316,6 +2319,9 @@ border: none;</string>
          <property name="text">
           <string>Download rate limit</string>
          </property>
+         <property name="indent">
+          <number>0</number>
+         </property>
         </widget>
        </item>
        <item>
@@ -2358,7 +2364,7 @@ border: none;</string>
            <number>8</number>
           </property>
           <property name="leftMargin">
-           <number>32</number>
+           <number>29</number>
           </property>
           <property name="topMargin">
            <number>0</number>
@@ -2527,7 +2533,7 @@ border: none;</string>
           <number>0</number>
          </property>
          <property name="indent">
-          <number>30</number>
+          <number>27</number>
          </property>
         </widget>
        </item>
@@ -2536,13 +2542,13 @@ border: none;</string>
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>35</height>
+           <height>40</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>35</height>
+           <height>40</height>
           </size>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_20">
@@ -2550,7 +2556,7 @@ border: none;</string>
            <number>12</number>
           </property>
           <property name="leftMargin">
-           <number>36</number>
+           <number>27</number>
           </property>
           <property name="topMargin">
            <number>6</number>
@@ -2637,8 +2643,14 @@ border: none;</string>
        </item>
        <item>
         <widget class="QCheckBox" name="cbUseHttps">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>20</height>
+          </size>
+         </property>
          <property name="styleSheet">
-          <string notr="true">padding-left : 26px;</string>
+          <string notr="true">padding-left : 27px;</string>
          </property>
          <property name="text">
           <string>Don't use HTTP</string>
@@ -2703,7 +2715,7 @@ border: none;</string>
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>40</height>
+           <height>1</height>
           </size>
          </property>
         </spacer>
