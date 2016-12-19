@@ -231,6 +231,13 @@ void MegaTransferView::customizeContextInProgressMenu(bool enablePause, bool ena
     cancelTransfer->setVisible(isCancellable);
 }
 
+void MegaTransferView::customizeCompletedContextMenu(bool enableGetLink, bool enableOpen, bool enableShow)
+{
+    getLink->setVisible(enableGetLink);
+    openItem->setVisible(enableOpen);
+    showInFolder->setVisible(enableShow);
+}
+
 void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
 {
     QTransfersModel *model = (QTransfersModel*)this->model();
@@ -363,6 +370,14 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
         {
             if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
             {
+                if (areTransfersFailed(transferTagSelected))
+                {
+                    customizeCompletedContextMenu(false, false, false);
+                }
+                else
+                {
+                    customizeCompletedContextMenu();
+                }
                 contextCompleted->exec(mapToGlobal(point));
             }
             else if (model->getModelType() == QTransfersModel::TYPE_ALL)
@@ -458,6 +473,24 @@ void MegaTransferView::moveToBottomClicked()
             model->onMoveTransferToLast(transferTagSelected[i]);
         }
     }
+}
+
+bool MegaTransferView::areTransfersFailed(QList<int> selectedTransfers)
+{
+    MegaTransfer *transfer = NULL;
+    QTransfersModel *model = (QTransfersModel*)this->model();
+    if (model)
+    {
+        for (int i = 0; i < selectedTransfers.size(); i++)
+        {
+            transfer = model->getFinishedTransferByTag(transferTagSelected[i]);
+            if (transfer->getState() == MegaTransfer::STATE_FAILED)
+            {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 void MegaTransferView::cancelTransferClicked()

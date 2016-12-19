@@ -42,6 +42,7 @@ private:
     void createContextMenu();
     void createCompletedContextMenu();
     void customizeContextInProgressMenu(bool enablePause, bool enableResume, bool enableUpMoves, bool enableDownMoves, bool isCancellable);
+    void customizeCompletedContextMenu(bool enableGetLink = true, bool enableOpen = true, bool enableShow = true);
 
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event);
@@ -62,6 +63,7 @@ private slots:
     void showInFolderClicked();
     void clearTransferClicked();
     void clearAllTransferClicked();
+    bool areTransfersFailed(QList<int> selectedTransfers);
 };
 
 #endif // MEGATRANSFERVIEW_H
