@@ -249,7 +249,7 @@ void TransferManager::on_tAllTransfers_clicked()
 void TransferManager::on_bAdd_clicked()
 {
     QPoint point = ui->bAdd->mapToGlobal(QPoint(ui->bAdd->width() , ui->bAdd->height() + 4));
-    QPoint p = &point ? (point) - QPoint(addMenu->sizeHint().width(), 0) : QCursor::pos();
+    QPoint p = !point.isNull() ? point - QPoint(addMenu->sizeHint().width(), 0) : QCursor::pos();
 
 #ifdef __APPLE__
     addMenu->exec(p);

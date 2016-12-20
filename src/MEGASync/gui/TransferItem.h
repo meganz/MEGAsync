@@ -84,6 +84,4 @@ protected:
 
 };
 
-Q_DECLARE_METATYPE(TransferItem*)
-
 #endif // TRANSFERITEM_H

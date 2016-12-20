@@ -228,7 +228,7 @@ bool QTransfersModel::dropMimeData(const QMimeData *data, Qt::DropAction, int ro
             return false;
         }
 
-        auto srcit = std::lower_bound(transferOrder.begin(), transferOrder.end(), transfers.value(selectedTags[0]), priority_comparator);
+        std::deque<TransferItemData*>::iterator srcit = std::lower_bound(transferOrder.begin(), transferOrder.end(), transfers.value(selectedTags[0]), priority_comparator);
         int srcrow = std::distance(transferOrder.begin(), srcit);
         if (srcrow + selectedTags.size() == row)
         {
@@ -406,7 +406,7 @@ void QTransfersModel::setupModelTransfers(MegaTransferData *transferData)
             itemData->tag = transferData->getUploadTag(i);
             itemData->priority = transferData->getUploadPriority(i);
             transfers.insert(itemData->tag, itemData);
-            auto it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
+            std::deque<TransferItemData*>::iterator it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
             transferOrder.insert(it, itemData);
         }
 
@@ -445,19 +445,19 @@ void QTransfersModel::updateTransferInfo(MegaTransfer *transfer)
     if (newPriority == itemData->priority)
     {
         //Update modified item
-        auto it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
+        std::deque<TransferItemData*>::iterator it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
         int row = std::distance(transferOrder.begin(), it);
         emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
     }
     else
     {
         //Move item to its new position
-        auto it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
+        std::deque<TransferItemData*>::iterator it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
         int row = std::distance(transferOrder.begin(), it);
 
         TransferItemData testItem;
         testItem.priority = newPriority;
-        auto newit = std::lower_bound(transferOrder.begin(), transferOrder.end(), &testItem, priority_comparator);
+        std::deque<TransferItemData*>::iterator newit = std::lower_bound(transferOrder.begin(), transferOrder.end(), &testItem, priority_comparator);
         int newrow = std::distance(transferOrder.begin(), newit);
 
         if (row == newrow || (row + 1) == newrow)
@@ -471,7 +471,7 @@ void QTransfersModel::updateTransferInfo(MegaTransfer *transfer)
             beginMoveRows(QModelIndex(), row, row, QModelIndex(), newrow);
             transferOrder.erase(it);
             itemData->priority = newPriority;
-            auto finalit = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
+            std::deque<TransferItemData*>::iterator finalit = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
             transferOrder.insert(finalit, itemData);
             endMoveRows();
         }
@@ -486,7 +486,7 @@ void QTransfersModel::refreshTransferItem(int tag)
         return;
     }
 
-    auto it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
+    std::deque<TransferItemData*>::iterator it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
     int row = std::distance(transferOrder.begin(), it);
     emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
 }

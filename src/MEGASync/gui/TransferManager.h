@@ -18,7 +18,7 @@ class TransferManager : public QDialog, public mega::MegaTransferListener
     Q_OBJECT
 
 public:
-    const int COMPLETED_ITEMS_LIMIT = 999;
+    static const int COMPLETED_ITEMS_LIMIT = 999;
 
     explicit TransferManager(mega::MegaApi *megaApi, QWidget *parent = 0);
     void updatePauseState();
@@ -63,9 +63,9 @@ private slots:
 
 protected:
     void changeEvent(QEvent *event);
-    void mouseMoveEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    void mousePressEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
-    void mouseReleaseEvent(QMouseEvent *event) Q_DECL_OVERRIDE;
+    void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 };
 
 #endif // TRANSFERMANAGER_H
