@@ -152,7 +152,7 @@ background-color: rgba(0, 0, 0, 10%);
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pNoTransfers">
       <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -174,6 +174,15 @@ background-color: rgba(0, 0, 0, 10%);
        <item>
         <widget class="QWidget" name="widget_5" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout_11">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
           <property name="bottomMargin">
            <number>0</number>
           </property>
@@ -240,13 +249,13 @@ background-color: rgba(0, 0, 0, 10%);
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>31</height>
+           <height>40</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>31</height>
+           <height>40</height>
           </size>
          </property>
          <property name="text">
@@ -254,6 +263,9 @@ background-color: rgba(0, 0, 0, 10%);
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
+         </property>
+         <property name="margin">
+          <number>0</number>
          </property>
         </widget>
        </item>
@@ -1648,7 +1660,7 @@ background-color: rgba(0, 0, 0, 10%);
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>30</number>
+          <number>22</number>
          </property>
          <item>
           <widget class="MegaSpeedGraph" name="wDownGraph" native="true">
@@ -1716,7 +1728,7 @@ background-color: rgba(0, 0, 0, 10%);
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>30</number>
+          <number>22</number>
          </property>
          <item>
           <widget class="MegaSpeedGraph" name="wUpGraph" native="true">

@@ -631,10 +631,62 @@ QToolButton
      <property name="currentIndex">
       <number>3</number>
      </property>
-     <widget class="ActiveTransfersWidget" name="wActiveTransfers"/>
-     <widget class="TransfersWidget" name="wDownloads"/>
-     <widget class="TransfersWidget" name="wUploads"/>
-     <widget class="TransfersWidget" name="wCompleted"/>
+     <widget class="ActiveTransfersWidget" name="wActiveTransfers">
+      <property name="minimumSize">
+       <size>
+        <width>800</width>
+        <height>480</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>800</width>
+        <height>480</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="TransfersWidget" name="wDownloads">
+      <property name="minimumSize">
+       <size>
+        <width>800</width>
+        <height>480</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>800</width>
+        <height>480</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="TransfersWidget" name="wUploads">
+      <property name="minimumSize">
+       <size>
+        <width>800</width>
+        <height>480</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>800</width>
+        <height>480</height>
+       </size>
+      </property>
+     </widget>
+     <widget class="TransfersWidget" name="wCompleted">
+      <property name="minimumSize">
+       <size>
+        <width>800</width>
+        <height>480</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>800</width>
+        <height>480</height>
+       </size>
+      </property>
+     </widget>
     </widget>
    </item>
    <item>
