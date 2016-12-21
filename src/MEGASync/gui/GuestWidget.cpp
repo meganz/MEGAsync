@@ -19,6 +19,7 @@ GuestWidget::GuestWidget(QWidget *parent) :
 
     overlayIdle = new QPushButton(this);
     overlayIdle->setIcon(QIcon(QString::fromAscii("://images/non_logged_graphic.png")));
+    overlayIdle->setStyleSheet(QString::fromUtf8("border: none;"));
     overlayIdle->setIconSize(QSize(104, 104));
     overlayIdle->resize(ui->wContainer->minimumSize());
 
@@ -41,6 +42,11 @@ GuestWidget::GuestWidget(QWidget *parent) :
 #endif
 
     overlayPaused->hide();
+
+    ui->lDescLogin->setText(QString::fromUtf8("<p style=\" line-height: 140%;\"><span style=\"font-size:13px;\">")
+                               + ui->lDescLogin->text().replace(QString::fromUtf8("[A]"), QString::fromUtf8("<font color=\"#d90007\"> "))
+                                                          .replace(QString::fromUtf8("[/A]"), QString::fromUtf8(" </font>"))
+                                                                   + QString::fromUtf8("</span></p>"));
 
     setIdleState(true);
 }
