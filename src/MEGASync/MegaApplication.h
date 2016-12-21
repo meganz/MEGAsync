@@ -186,6 +186,7 @@ protected:
     void restoreSyncs();
     void closeDialogs();
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
+    void deleteMenu(QMenu *menu);
 
 #ifdef __APPLE__
     MegaSystemTrayIcon *trayIcon;

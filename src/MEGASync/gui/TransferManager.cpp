@@ -29,9 +29,21 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     MegaTransferData *transferData = megaApi->getTransferData(delegateListener);
     ui->wUploads->setupTransfers(transferData, QTransfersModel::TYPE_UPLOAD);
     ui->wDownloads->setupTransfers(transferData, QTransfersModel::TYPE_DOWNLOAD);
-    ui->wActiveTransfers->init(megaApi,
-                               transferData->getNumUploads() ? megaApi->getTransferByTag(transferData->getUploadTag(0)) : NULL,
-                               transferData->getNumDownloads() ? megaApi->getTransferByTag(transferData->getDownloadTag(0)) : NULL);
+
+    MegaTransfer *firstUpload = NULL;
+    MegaTransfer *firstDownload = NULL;
+    if (transferData->getNumUploads())
+    {
+        firstUpload = megaApi->getTransferByTag(transferData->getUploadTag(0));
+    }
+    if (transferData->getNumDownloads())
+    {
+        firstDownload = megaApi->getTransferByTag(transferData->getDownloadTag(0));
+    }
+    ui->wActiveTransfers->init(megaApi, firstUpload, firstDownload);
+    delete firstUpload;
+    delete firstDownload;
+
     ui->wCompleted->setupTransfers(((MegaApplication *)qApp)->getFinishedTransfers(), QTransfersModel::TYPE_FINISHED);
     updateNumberOfCompletedTransfers(((MegaApplication *)qApp)->getNumUnviewedTransfers());
     delete transferData;

@@ -16,7 +16,7 @@
 using namespace mega;
 using namespace std;
 
-MegaSyncLogger::MegaSyncLogger() : QObject(), MegaLogger()
+MegaSyncLogger::MegaSyncLogger(QObject *parent) : QObject(parent), MegaLogger()
 {
     xmlWriter = NULL;
     connected = true;
@@ -26,7 +26,7 @@ MegaSyncLogger::MegaSyncLogger() : QObject(), MegaLogger()
 #ifdef LOG_TO_LOGGER
     QLocalServer::removeServer(ENABLE_MEGASYNC_LOGS);
     client = new QLocalSocket();
-    megaServer = new QLocalServer();
+    megaServer = new QLocalServer(this);
 
     connect(megaServer,SIGNAL(newConnection()),this,SLOT(clientConnected()));
     connect(this, SIGNAL(sendLog(QString,int,QString)),
@@ -37,6 +37,11 @@ MegaSyncLogger::MegaSyncLogger() : QObject(), MegaLogger()
     megaServer->listen(ENABLE_MEGASYNC_LOGS);
     client->connectToServer(MEGA_LOGGER);
 #endif
+}
+
+MegaSyncLogger::~MegaSyncLogger()
+{
+    disconnected();
 }
 
 void MegaSyncLogger::log(const char *time, int loglevel, const char *source, const char *message)
