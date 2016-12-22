@@ -23,7 +23,7 @@ class QTransfersModel : public QAbstractItemModel, public mega::MegaTransferList
     Q_OBJECT
 
 public:
-    const int MAX_COMPLETED_ITEMS = 20;
+    static const int MAX_COMPLETED_ITEMS = 20;
 
     enum {
         TYPE_DOWNLOAD = 0,

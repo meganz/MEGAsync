@@ -225,7 +225,11 @@ void Utilities::getFolderSize(QString folderPath, long long *size)
 
 qreal Utilities::getDevicePixelRatio()
 {
+#if QT_VERSION >= 0x050000
     return qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? qApp->devicePixelRatio() : 1.0;
+#else
+    return 1.0;
+#endif
 }
 
 QString Utilities::getExtensionPixmap(QString fileName, QString prefix)

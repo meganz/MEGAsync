@@ -32,9 +32,8 @@
 // https://wiki.ubuntu.com/NotificationDevelopmentGuidelines recommends at least 128
 const int FREEDESKTOP_NOTIFICATION_ICON_SIZE = 128;
 
-Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, QWidget *parent) :
+Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, QObject *parent) :
     QObject(parent),
-    parent(parent),
     programName(programName),
     mode(None),
     trayIcon(trayicon)
@@ -371,9 +370,9 @@ void Notificator::notify(Class cls, const QString &title, const QString &text, c
     default:
         switch(cls) // Set icon based on class
         {
-            case Information: QMegaMessageBox::information(parent, title, text, Utilities::getDevicePixelRatio(), QMessageBox::Ok); break;
-            case Warning: QMegaMessageBox::warning(parent, title, text, Utilities::getDevicePixelRatio(), QMessageBox::Ok); break;
-            case Critical: QMegaMessageBox::critical(parent, title, text, Utilities::getDevicePixelRatio(), QMessageBox::Ok); break;
+            case Information: QMegaMessageBox::information(NULL, title, text, Utilities::getDevicePixelRatio(), QMessageBox::Ok); break;
+            case Warning: QMegaMessageBox::warning(NULL, title, text, Utilities::getDevicePixelRatio(), QMessageBox::Ok); break;
+            case Critical: QMegaMessageBox::critical(NULL, title, text, Utilities::getDevicePixelRatio(), QMessageBox::Ok); break;
         }
 
         break;

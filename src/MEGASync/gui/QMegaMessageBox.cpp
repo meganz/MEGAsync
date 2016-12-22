@@ -36,17 +36,11 @@ QMessageBox::StandardButton QMegaMessageBox::showNewMessageBox(QWidget *parent, 
     switch (icon)
     {
         case Information:
-            break;
         case Warning:
+        case Question:
+        case Critical:
             msgBox.setIconPixmap(QPixmap(devPixelRatio < 2 ? QString::fromUtf8(":/images/mbox-warning.png")
                                                        : QString::fromUtf8(":/images/mbox-warning@2x.png")));
-            break;
-        case Question:
-
-            break;
-        case Critical:
-
-            break;
         default:
             break;
     }

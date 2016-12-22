@@ -25,7 +25,7 @@ public:
     /** Create a new notificator.
        @note Ownership of trayIcon is not transferred to this object.
     */
-    Notificator(const QString &programName, QSystemTrayIcon *trayIcon, QWidget *parent);
+    Notificator(const QString &programName, QSystemTrayIcon *trayIcon, QObject *parent);
     ~Notificator();
 
     // Message class
@@ -58,8 +58,6 @@ private:
         Growl13,                    /**< Use the Growl 1.3 notification system (Mac only) */
         UserNotificationCenter      /**< Use the 10.8+ User Notification Center (Mac only) */
     };
-
-    QWidget *parent;
 
     QString programName;
     Mode mode;

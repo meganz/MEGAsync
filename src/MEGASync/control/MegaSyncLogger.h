@@ -12,7 +12,8 @@ class MegaSyncLogger : public QObject, public mega::MegaLogger
     Q_OBJECT
 
 public:
-    MegaSyncLogger();
+    MegaSyncLogger(QObject *parent = NULL);
+    ~MegaSyncLogger();
     virtual void log(const char *time, int loglevel, const char *source, const char *message);
     void sendLogsToStdout(bool enable);
     void sendLogsToFile(bool enable);

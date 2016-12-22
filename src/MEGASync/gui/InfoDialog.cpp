@@ -163,6 +163,8 @@ InfoDialog::~InfoDialog()
 {
     delete ui;
     delete gWidget;
+    delete activeDownload;
+    delete activeUpload;
 }
 
 void InfoDialog::setUsage()

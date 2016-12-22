@@ -357,7 +357,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
     appfinished = false;
-    logger = new MegaSyncLogger();
+    logger = new MegaSyncLogger(this);
 
     #if defined(LOG_TO_STDOUT) || defined(LOG_TO_FILE) || defined(LOG_TO_LOGGER)
     #if defined(LOG_TO_STDOUT)
@@ -583,9 +583,9 @@ void MegaApplication::initialize()
     trayIcon->show();
 
 #ifdef __APPLE__
-    notificator = new Notificator(applicationName(), NULL, NULL);
+    notificator = new Notificator(applicationName(), NULL, this);
 #else
-    notificator = new Notificator(applicationName(), trayIcon, NULL);
+    notificator = new Notificator(applicationName(), trayIcon, this);
 #endif
 
     Qt::KeyboardModifiers modifiers = queryKeyboardModifiers();
@@ -666,11 +666,11 @@ void MegaApplication::initialize()
         }
     }
 
-    periodicTasksTimer = new QTimer();
+    periodicTasksTimer = new QTimer(this);
     periodicTasksTimer->start(Preferences::STATE_REFRESH_INTERVAL_MS);
     connect(periodicTasksTimer, SIGNAL(timeout()), this, SLOT(periodicTasks()));
 
-    infoDialogTimer = new QTimer();
+    infoDialogTimer = new QTimer(this);
     infoDialogTimer->setSingleShot(true);
     connect(infoDialogTimer, SIGNAL(timeout()), this, SLOT(showInfoDialog()));
 
@@ -1900,8 +1900,24 @@ void MegaApplication::cleanAll()
     httpServer = NULL;
     delete uploader;
     uploader = NULL;
+    delete downloader;
+    downloader = NULL;
     delete delegateListener;
     delegateListener = NULL;
+
+    // Delete menus and menu items
+    deleteMenu(initialMenu);
+    initialMenu = NULL;
+    deleteMenu(trayMenu);
+    trayMenu = NULL;
+    deleteMenu(trayOverQuotaMenu);
+    trayOverQuotaMenu = NULL;
+    deleteMenu(trayGuestMenu);
+    trayGuestMenu = NULL;
+#ifdef _WIN32
+    deleteMenu(windowsMenu);
+    windowsMenu = NULL;
+#endif
 
     // Ensure that there aren't objects deleted with deleteLater()
     // that may try to access megaApi after
@@ -1917,6 +1933,10 @@ void MegaApplication::cleanAll()
     preferences->setLastExit(QDateTime::currentMSecsSinceEpoch());
     trayIcon->deleteLater();
     trayIcon = NULL;
+
+    MegaApi::setLoggerObject(NULL);
+    delete logger;
+    logger = NULL;
 
     if (reboot)
     {
@@ -2168,6 +2188,20 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
         }
     #endif
 
+}
+
+void MegaApplication::deleteMenu(QMenu *menu)
+{
+    if (menu)
+    {
+        QList<QAction *> actions = menu->actions();
+        for (int i = 0; i < actions.size(); i++)
+        {
+            menu->removeAction(actions[i]);
+            delete actions[i];
+        }
+        delete menu;
+    }
 }
 
 void MegaApplication::triggerInstallUpdate()

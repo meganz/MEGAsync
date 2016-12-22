@@ -27,7 +27,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">#bDownType, #bUpType, #bNoDownloads, #bNoUploads, #bDownFileType, #bDownCancel, #bDownClock, #bUpFileType, #bUpCancel, #bUpClock,
-#bNoTransfers
+#bNoTransfers, #bDownPaused, #bUpPaused
 {
 	border: none;
 }
@@ -152,7 +152,7 @@ background-color: rgba(0, 0, 0, 10%);
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pNoTransfers">
       <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -455,6 +455,16 @@ background-color: rgba(0, 0, 0, 10%);
                       <property name="text">
                        <string/>
                       </property>
+                      <property name="icon">
+                       <iconset resource="../Resources_linux.qrc">
+                        <normaloff>:/images/pause_big_ico.png</normaloff>:/images/pause_big_ico.png</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>48</width>
+                        <height>64</height>
+                       </size>
+                      </property>
                      </widget>
                     </item>
                    </layout>
@@ -725,10 +735,14 @@ background-color: rgba(0, 0, 0, 10%);
                       <property name="text">
                        <string/>
                       </property>
+                      <property name="icon">
+                       <iconset resource="../Resources_linux.qrc">
+                        <normaloff>:/images/clock_ico.png</normaloff>:/images/clock_ico.png</iconset>
+                      </property>
                       <property name="iconSize">
                        <size>
-                        <width>13</width>
-                        <height>13</height>
+                        <width>24</width>
+                        <height>24</height>
                        </size>
                       </property>
                      </widget>
@@ -1130,6 +1144,16 @@ background-color: rgba(0, 0, 0, 10%);
                       <property name="text">
                        <string/>
                       </property>
+                      <property name="icon">
+                       <iconset resource="../Resources_linux.qrc">
+                        <normaloff>:/images/pause_big_ico.png</normaloff>:/images/pause_big_ico.png</iconset>
+                      </property>
+                      <property name="iconSize">
+                       <size>
+                        <width>48</width>
+                        <height>64</height>
+                       </size>
+                      </property>
                      </widget>
                     </item>
                    </layout>
@@ -1394,10 +1418,14 @@ background-color: rgba(0, 0, 0, 10%);
                       <property name="text">
                        <string/>
                       </property>
+                      <property name="icon">
+                       <iconset resource="../Resources_linux.qrc">
+                        <normaloff>:/images/clock_ico.png</normaloff>:/images/clock_ico.png</iconset>
+                      </property>
                       <property name="iconSize">
                        <size>
-                        <width>13</width>
-                        <height>13</height>
+                        <width>24</width>
+                        <height>24</height>
                        </size>
                       </property>
                      </widget>
