@@ -256,10 +256,13 @@
         <file>images/downloading.gif</file>
         <file>images/synching.gif</file>
         <file>images/uploading.gif</file>
-        <file>images/mbox-warning.png</file>
         <file>images/download_from_mega_ico_white.png</file>
         <file>images/get_link_ico_white.png</file>
         <file>images/settings_ico_white.png</file>
         <file>images/upload_to_mega_ico_white.png</file>
+        <file>images/clock_ico.png</file>
+        <file>images/completed_transfers.png</file>
+        <file>images/mbox.png</file>
+        <file>images/pause_big_ico.png</file>
     </qresource>
 </RCC>

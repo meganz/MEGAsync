@@ -262,10 +262,13 @@
         <file>images/cloud_upload_item_ico@2x.png</file>
         <file>images/sync_item_ico@2x.png</file>
         <file>images/completed_item_ico@2x.png</file>
-        <file>images/mbox-warning.png</file>
         <file>images/download_from_mega_ico_white.png</file>
         <file>images/get_link_ico_white.png</file>
         <file>images/settings_ico_white.png</file>
         <file>images/upload_to_mega_ico_white.png</file>
+        <file>images/pause_big_ico.png</file>
+        <file>images/clock_ico.png</file>
+        <file>images/completed_transfers.png</file>
+        <file>images/mbox.png</file>
     </qresource>
 </RCC>
