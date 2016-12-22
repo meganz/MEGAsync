@@ -262,7 +262,7 @@
         <file>images/upload_to_mega_ico_white.png</file>
         <file>images/clock_ico.png</file>
         <file>images/completed_transfers.png</file>
-        <file>images/mbox.png</file>
         <file>images/pause_big_ico.png</file>
+        <file>images/mbox-warning.png</file>
     </qresource>
 </RCC>

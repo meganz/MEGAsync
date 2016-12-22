@@ -519,9 +519,9 @@
         <file>images/clock_ico@2x.png</file>
         <file>images/completed_transfers.png</file>
         <file>images/completed_transfers@2x.png</file>
-        <file>images/mbox.png</file>
-        <file>images/mbox@2x.png</file>
         <file>images/pause_big_ico.png</file>
         <file>images/pause_big_ico@2x.png</file>
+        <file>images/mbox-warning.png</file>
+        <file>images/mbox-warning@2x.png</file>
     </qresource>
 </RCC>

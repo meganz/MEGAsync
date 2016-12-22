@@ -35,8 +35,7 @@ void TransfersStateInfoWidget::setState(int newState)
                                                               "stop: 0 rgba(252, 252, 252, 90%), stop: 1 rgba(247, 247, 247, 90%));")));
             break;
         default:
-            ui->lStatus->setText(tr("No Transfers"));
-            ui->lStatusIcon->setIcon(QIcon(QString::fromAscii("://images/no_transfers.png")));
+            ui->lStatusIcon->setIcon(QIcon(QString::fromAscii("://images/completed_transfers.png")));
             break;
     }
 }
