@@ -29,7 +29,17 @@
    <string>Transfer Manager</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lHeader
+   <string notr="true">#TransferManager
+{
+ border: 1px solid  rgb(100, 100, 100);
+}
+
+#wTransfers
+{
+    margin-right: 2px;
+}
+
+#lHeader
 {
 	border: none;
 }
@@ -149,7 +159,7 @@
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="topMargin">
     <number>0</number>
@@ -634,13 +644,13 @@ QToolButton
      <widget class="ActiveTransfersWidget" name="wActiveTransfers">
       <property name="minimumSize">
        <size>
-        <width>800</width>
+        <width>798</width>
         <height>480</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>800</width>
+        <width>798</width>
         <height>480</height>
        </size>
       </property>
@@ -648,13 +658,13 @@ QToolButton
      <widget class="TransfersWidget" name="wDownloads">
       <property name="minimumSize">
        <size>
-        <width>800</width>
+        <width>798</width>
         <height>480</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>800</width>
+        <width>798</width>
         <height>480</height>
        </size>
       </property>
@@ -662,13 +672,13 @@ QToolButton
      <widget class="TransfersWidget" name="wUploads">
       <property name="minimumSize">
        <size>
-        <width>800</width>
+        <width>798</width>
         <height>480</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>800</width>
+        <width>798</width>
         <height>480</height>
        </size>
       </property>
@@ -676,13 +686,13 @@ QToolButton
      <widget class="TransfersWidget" name="wCompleted">
       <property name="minimumSize">
        <size>
-        <width>800</width>
+        <width>798</width>
         <height>480</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>800</width>
+        <width>798</width>
         <height>480</height>
        </size>
       </property>
