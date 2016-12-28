@@ -335,6 +335,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                     {
                         QString parentHandle = Utilities::extractJSONString(file, QString::fromUtf8("p"));
                         p = megaApi->base64ToHandle(parentHandle.toUtf8().constData());
+                        QApplication::processEvents();
                     }
                     else
                     {
