@@ -14,6 +14,7 @@ ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString ch
     ui(new Ui::ChangeLogDialog)
 {
     ui->setupUi(this);
+    ui->lCopyright->setText(ui->lCopyright->text().arg(QDate::currentDate().year()));
     ui->tChangelog->document()->setDocumentMargin(16.0);
     ui->lVersion->setText(version);
     ui->lSDKVersion->setText(QString::fromAscii(" (") + SDKversion + QString::fromAscii(")"));

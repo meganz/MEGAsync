@@ -238,18 +238,19 @@ border-radius: 5px;
      </property>
      <property name="minimumSize">
       <size>
-       <width>360</width>
+       <width>361</width>
        <height>140</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>360</width>
+       <width>361</width>
        <height>140</height>
       </size>
      </property>
      <property name="styleSheet">
       <string notr="true">background: white;
+
 
 
 
@@ -392,7 +393,7 @@ border-radius: 5px;
       <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
-      <string notr="true">&lt;html&gt; Copyright &amp;copy; 2016 Mega Limited. All rights reserved.&lt;/html&gt;</string>
+      <string notr="true">&lt;html&gt; Copyright &amp;copy; %1 Mega Limited. All rights reserved.&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
