@@ -2098,7 +2098,7 @@ border: none;</string>
 border: none;</string>
          </property>
          <property name="text">
-          <string>...</string>
+          <string notr="true"/>
          </property>
          <property name="icon">
           <iconset resource="../Resources_linux.qrc">
