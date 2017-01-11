@@ -100,19 +100,19 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
        <property name="spacing">
-        <number>0</number>
+        <number>25</number>
        </property>
        <property name="leftMargin">
         <number>0</number>
        </property>
        <property name="topMargin">
-        <number>45</number>
+        <number>125</number>
        </property>
        <property name="rightMargin">
         <number>0</number>
        </property>
        <property name="bottomMargin">
-        <number>39</number>
+        <number>130</number>
        </property>
        <item>
         <widget class="QWidget" name="wIcon" native="true">
