@@ -571,7 +571,7 @@ QToolButton
                  </size>
                 </property>
                 <property name="text">
-                 <string>5</string>
+                 <string notr="true"/>
                 </property>
                </widget>
               </item>
