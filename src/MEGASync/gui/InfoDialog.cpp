@@ -41,6 +41,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     currentDownload = 0;
     totalUploads = 0;
     totalDownloads = 0;
+    activeDownloadState = activeUploadState = MegaTransfer::STATE_NONE;
     remainingDownloadBytes = remainingUploadBytes = 0;
     meanDownloadSpeed = meanUploadSpeed = 0;
     remainingUploads = remainingDownloads = 0;
@@ -199,6 +200,7 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
     ActiveTransfer *wTransfer = NULL;
     if (type == MegaTransfer::TYPE_DOWNLOAD)
     {
+        activeDownloadState = transfer->getState();
         long long speed = megaApi->getCurrentDownloadSpeed();
         meanDownloadSpeed = meanSpeed;
         remainingDownloadBytes = totalSize - completedSize;
@@ -217,6 +219,7 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
     }
     else
     {
+        activeUploadState = transfer->getState();
         long long speed = megaApi->getCurrentUploadSpeed();
         remainingUploadBytes = totalSize - completedSize;
         meanUploadSpeed = meanSpeed;
@@ -330,19 +333,26 @@ void InfoDialog::updateTransfers()
             QString invalidSpeedPattern(tr("%1 of %2"));
             QString downloadString;
 
-            if (downloadSpeed >= 20000)
+            if (activeDownloadState == MegaTransfer::STATE_PAUSED)
             {
-                downloadString = pattern.arg(currentDownload)
-                        .arg(totalDownloads)
-                        .arg(Utilities::getSizeString(downloadSpeed));
-            }
-            else if (downloadSpeed >= 0)
-            {
-                downloadString = invalidSpeedPattern.arg(currentDownload).arg(totalDownloads);
+                downloadString = pausedPattern.arg(currentDownload).arg(totalDownloads);
             }
             else
             {
-                downloadString = pausedPattern.arg(currentDownload).arg(totalDownloads);
+                if (downloadSpeed >= 20000)
+                {
+                    downloadString = pattern.arg(currentDownload)
+                            .arg(totalDownloads)
+                            .arg(Utilities::getSizeString(downloadSpeed));
+                }
+                else if (downloadSpeed >= 0)
+                {
+                    downloadString = invalidSpeedPattern.arg(currentDownload).arg(totalDownloads);
+                }
+                else
+                {
+                    downloadString = pausedPattern.arg(currentDownload).arg(totalDownloads);
+                }
             }
 
             if (preferences->logged())
@@ -408,17 +418,24 @@ void InfoDialog::updateTransfers()
             QString invalidSpeedPattern(tr("%1 of %2"));
             QString uploadString;
 
-            if (uploadSpeed >= 20000)
+            if (activeUploadState == MegaTransfer::STATE_PAUSED)
             {
-                uploadString = pattern.arg(currentUpload).arg(totalUploads).arg(Utilities::getSizeString(uploadSpeed));
-            }
-            else if (uploadSpeed >= 0)
-            {
-                uploadString = invalidSpeedPattern.arg(currentUpload).arg(totalUploads);
+                uploadString = pausedPattern.arg(currentUpload).arg(totalUploads);
             }
             else
             {
-                uploadString += pausedPattern.arg(currentUpload).arg(totalUploads);
+                if (uploadSpeed >= 20000)
+                {
+                    uploadString = pattern.arg(currentUpload).arg(totalUploads).arg(Utilities::getSizeString(uploadSpeed));
+                }
+                else if (uploadSpeed >= 0)
+                {
+                    uploadString = invalidSpeedPattern.arg(currentUpload).arg(totalUploads);
+                }
+                else
+                {
+                    uploadString = pausedPattern.arg(currentUpload).arg(totalUploads);
+                }
             }
 
             ui->lUploads->setText(fullPattern.arg(operation).arg(uploadString));
@@ -693,6 +710,7 @@ void InfoDialog::updateState()
             }
         }
     }
+    updateTransfers();
 }
 
 #ifdef __APPLE__
@@ -761,8 +779,12 @@ void InfoDialog::onTransfer1Cancel(int x, int y)
             "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
 #endif
 
+
+    QAction *downloadState = transferMenu->addAction(activeDownloadState == MegaTransfer::STATE_PAUSED ? tr("Resume download") : tr("Pause Download"), this, SLOT(downloadState()));
     QAction *cancelAll = transferMenu->addAction(tr("Cancel all downloads"), this, SLOT(cancelAllDownloads()));
     QAction *cancelCurrent = transferMenu->addAction(tr("Cancel download"), this, SLOT(cancelCurrentDownload()));
+
+    transferMenu->addAction(downloadState);
     transferMenu->addAction(cancelCurrent);
     transferMenu->addAction(cancelAll);
 
@@ -800,8 +822,11 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
             "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
 #endif
 
+    QAction *uploadState = transferMenu->addAction(activeUploadState == MegaTransfer::STATE_PAUSED ? tr("Resume upload") : tr("Pause upload"), this, SLOT(uploadState()));
     QAction *cancelAll = transferMenu->addAction(tr("Cancel all uploads"), this, SLOT(cancelAllUploads()));
     QAction *cancelCurrent = transferMenu->addAction(tr("Cancel upload"), this, SLOT(cancelCurrentUpload()));
+
+    transferMenu->addAction(uploadState);
     transferMenu->addAction(cancelCurrent);
     transferMenu->addAction(cancelAll);
 
@@ -817,6 +842,41 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
 #else
     transferMenu->popup(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
 #endif
+}
+
+void InfoDialog::downloadState()
+{
+    if (!activeDownload)
+    {
+        return;
+    }
+
+    if (activeDownloadState == MegaTransfer::STATE_ACTIVE)
+    {
+        megaApi->pauseTransfer(activeDownload, true);
+    }
+    else
+    {
+        megaApi->pauseTransfer(activeDownload, false);
+    }
+}
+
+void InfoDialog::uploadState()
+{
+    if (!activeUpload)
+    {
+        return;
+    }
+
+    if (activeUploadState == MegaTransfer::STATE_ACTIVE)
+    {
+        megaApi->pauseTransfer(activeUpload, true);
+    }
+    else
+    {
+        megaApi->pauseTransfer(activeUpload, false);
+    }
+
 }
 
 void InfoDialog::cancelAllUploads()

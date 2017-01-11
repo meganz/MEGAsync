@@ -59,6 +59,8 @@ public slots:
    void addSync();
    void onTransfer1Cancel(int x, int y);
    void onTransfer2Cancel(int x, int y);
+   void downloadState();
+   void uploadState();
    void cancelAllUploads();
    void cancelAllDownloads();
    void cancelCurrentUpload();
@@ -117,6 +119,7 @@ private:
     int currentDownload;
     int totalUploads;
     int totalDownloads;
+    int activeDownloadState, activeUploadState;
     long long remainingDownloadBytes, remainingUploadBytes;
     long long meanDownloadSpeed, meanUploadSpeed;
     int remainingUploads, remainingDownloads;
