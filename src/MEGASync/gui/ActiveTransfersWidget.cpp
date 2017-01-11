@@ -128,6 +128,7 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
 
         activeDownload.transferState = transfer->getState();
         activeDownload.priority = transfer->getPriority();
+        activeDownload.meanTransferSpeed = transfer->getMeanSpeed();
         setSpeed(&activeDownload, transfer->getSpeed());
         setTransferredBytes(&activeDownload, transfer->getTransferredBytes());
         udpateTransferState(&activeDownload);
@@ -143,7 +144,6 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
         if (activeUpload.tag != transfer->getTag())
         {
             activeUpload.tag = transfer->getTag();
-            activeUpload.priority = transfer->getPriority();
             setType(&activeUpload, type, transfer->isSyncTransfer());
             activeUpload.fileName = QString::fromUtf8(transfer->getFileName());
             QFont f = ui->lUpFilename->font();
@@ -157,6 +157,8 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
         }
 
         activeUpload.transferState = transfer->getState();
+        activeUpload.priority = transfer->getPriority();
+        activeUpload.meanTransferSpeed = transfer->getMeanSpeed();
         setSpeed(&activeUpload, transfer->getSpeed());
         setTransferredBytes(&activeUpload, transfer->getTransferredBytes());
         udpateTransferState(&activeUpload);
@@ -364,16 +366,15 @@ void ActiveTransfersWidget::setTotalSize(TransferData *td, long long size)
 }
 
 void ActiveTransfersWidget::setSpeed(TransferData *td, long long transferSpeed)
-{
-    td->transferSpeed = transferSpeed;
-    if (td->transferSpeed < 0)
+{   
+    if (transferSpeed < 0)
     {
         td->transferSpeed = 0;
     }
-
-    td->meanTransferSpeed = td->meanTransferSpeed * td->speedCounter + td->transferSpeed;
-    td->speedCounter++;
-    td->meanTransferSpeed /= td->speedCounter;
+    else
+    {
+        td->transferSpeed = transferSpeed;
+    }
 }
 
 void ActiveTransfersWidget::setTransferredBytes(TransferData *td, long long totalTransferredBytes)
@@ -573,7 +574,6 @@ void TransferData::clear()
     tag = 0;
     transferSpeed = 0;
     meanTransferSpeed = 0;
-    speedCounter = 0;
     totalSize = 0;
     totalTransferredBytes = 0;
     priority = 0xffffffffffffffff;

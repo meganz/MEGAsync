@@ -436,7 +436,7 @@ void QTransfersModel::updateTransferInfo(MegaTransfer *transfer)
             item->setTotalSize(transfer->getTotalBytes());
         }
 
-        item->setSpeed(transfer->getSpeed());
+        item->setSpeed(transfer->getSpeed(), transfer->getMeanSpeed());
         item->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
         item->setTransferState(transfer->getState());
         item->setPriority(newPriority);

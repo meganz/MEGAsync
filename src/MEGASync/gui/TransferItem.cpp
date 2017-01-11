@@ -18,7 +18,6 @@ TransferItem::TransferItem(QWidget *parent) :
     totalTransferredBytes = 0;
     transferSpeed = 0;
     meanTransferSpeed = 0;
-    speedCounter = 0;
     regular = false;
     cancelButtonEnabled = false;
     isSyncTransfer = false;
@@ -70,17 +69,17 @@ void TransferItem::setTransferredBytes(long long totalTransferredBytes, bool can
     regular = cancellable;
 }
 
-void TransferItem::setSpeed(long long transferSpeed)
+void TransferItem::setSpeed(long long transferSpeed, long long meanSpeed)
 {
-    this->transferSpeed = transferSpeed;
-    if (this->transferSpeed < 0)
+    if (transferSpeed < 0)
     {
         this->transferSpeed = 0;
     }
-
-    meanTransferSpeed = meanTransferSpeed * speedCounter + this->transferSpeed;
-    speedCounter++;
-    meanTransferSpeed /= speedCounter;
+    else
+    {
+        this->transferSpeed = transferSpeed;
+    }
+    meanTransferSpeed = meanSpeed;
 }
 
 void TransferItem::setTotalSize(long long size)

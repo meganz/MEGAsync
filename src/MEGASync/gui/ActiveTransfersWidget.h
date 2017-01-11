@@ -17,7 +17,6 @@ struct TransferData
     int type;
     long long transferSpeed;
     long long meanTransferSpeed;
-    long long speedCounter;
     long long totalSize;
     long long totalTransferredBytes;
     unsigned long long priority;

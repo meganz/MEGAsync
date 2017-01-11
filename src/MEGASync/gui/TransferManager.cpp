@@ -374,10 +374,6 @@ void TransferManager::on_bPause_clicked()
 void TransferManager::on_bClearAll_clicked()
 {
     QWidget *w = ui->wTransfers->currentWidget();
-//    if (((TransfersWidget *)w)->getModel()->rowCount(QModelIndex()) == 0)
-//    {
-//        return;
-//    }
 
     if (w != ui->wCompleted)
     {

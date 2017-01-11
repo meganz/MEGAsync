@@ -51,7 +51,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 ti->setType(transfer->getType(), transfer->isSyncTransfer());
                 ti->setFileName(QString::fromUtf8(transfer->getFileName()));
                 ti->setTotalSize(transfer->getTotalBytes());
-                ti->setSpeed(transfer->getSpeed());
+                ti->setSpeed(transfer->getSpeed(), transfer->getMeanSpeed());
                 ti->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
                 ti->setTransferState(transfer->getState());
                 ti->setPriority(transfer->getPriority());
