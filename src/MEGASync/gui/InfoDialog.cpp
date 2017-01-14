@@ -780,7 +780,7 @@ void InfoDialog::onTransfer1Cancel(int x, int y)
 #endif
 
 
-    QAction *downloadState = transferMenu->addAction(activeDownloadState == MegaTransfer::STATE_PAUSED ? tr("Resume download") : tr("Pause Download"), this, SLOT(downloadState()));
+    QAction *downloadState = transferMenu->addAction(activeDownloadState == MegaTransfer::STATE_PAUSED ? tr("Resume downloads") : tr("Pause downloads"), this, SLOT(downloadState()));
     QAction *cancelAll = transferMenu->addAction(tr("Cancel all downloads"), this, SLOT(cancelAllDownloads()));
     QAction *cancelCurrent = transferMenu->addAction(tr("Cancel download"), this, SLOT(cancelCurrentDownload()));
 
@@ -822,7 +822,7 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
             "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
 #endif
 
-    QAction *uploadState = transferMenu->addAction(activeUploadState == MegaTransfer::STATE_PAUSED ? tr("Resume upload") : tr("Pause upload"), this, SLOT(uploadState()));
+    QAction *uploadState = transferMenu->addAction(activeUploadState == MegaTransfer::STATE_PAUSED ? tr("Resume uploads") : tr("Pause uploads"), this, SLOT(uploadState()));
     QAction *cancelAll = transferMenu->addAction(tr("Cancel all uploads"), this, SLOT(cancelAllUploads()));
     QAction *cancelCurrent = transferMenu->addAction(tr("Cancel upload"), this, SLOT(cancelCurrentUpload()));
 

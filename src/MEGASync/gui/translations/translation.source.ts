@@ -642,23 +642,28 @@ Are you sure?</source>
         <translation type="unfinished">[$1646]</translation>
     </message>
     <message>
-        <source>Resume download</source>
-        <translatorcomment>Label to resume the actual download.(String as short as possible)</translatorcomment>
+        <source>Resume downloads</source>
+        <translatorcomment>Label to resume the download queue. (String as short as possible)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pause Download</source>
-        <translatorcomment>Label to pause the actual download.(String as short as possible)</translatorcomment>
+        <source>Pause downloads</source>
+        <translatorcomment>Label to pause the download queue. (String as short as possible)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Resume upload</source>
-        <translatorcomment>Label to resume the actual upload.(String as short as possible)</translatorcomment>
+        <source>Resume uploads</source>
+        <translatorcomment>Label to resume the upload queue. (String as short as possible)</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Pause upload</source>
-        <translatorcomment>Label to pause the actual upload.(String as short as possible)</translatorcomment>
+        <source>Pause uploads</source>
+        <translatorcomment>Label to pause the upload queue. (String as short as possible)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocked file: %1</source>
+        <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1051,7 +1056,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to upload file/folder to MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation type="obsolete">[$1803]</translation>
+        <translation type="unfinished">[$1803]</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -1066,7 +1071,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to download file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation type="obsolete">[$2037]</translation>
+        <translation type="unfinished">[$2037]</translation>
     </message>
     <message>
         <source>Error getting link: </source>
