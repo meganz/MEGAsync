@@ -1467,6 +1467,9 @@ void MegaApplication::closeDialogs()
 
     delete sslKeyPinningError;
     sslKeyPinningError = NULL;
+
+    delete bwOverquotaDialog;
+    bwOverquotaDialog = NULL;
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -2007,23 +2010,26 @@ void MegaApplication::showInfoDialog()
         megaApi->retryPendingConnections();
     }
 
-    if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
+    if (preferences && preferences->logged())
     {
-        openBwOverquotaDialog();
-        return;
-    }
-    else if (bwOverquotaTimestamp)
-    {
-        bwOverquotaTimestamp = 0;
-        preferences->clearTemporalBandwidth();
-        if (bwOverquotaDialog)
+        if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
         {
-            bwOverquotaDialog->refreshAccountDetails();
+                openBwOverquotaDialog();
+                return;
         }
-#ifdef __MACH__
-        trayIcon->setContextMenu(&emptyMenu);
-#endif
-        megaApi->getAccountDetails();
+        else if (bwOverquotaTimestamp)
+        {
+            bwOverquotaTimestamp = 0;
+            preferences->clearTemporalBandwidth();
+            if (bwOverquotaDialog)
+            {
+                bwOverquotaDialog->refreshAccountDetails();
+            }
+    #ifdef __MACH__
+            trayIcon->setContextMenu(&emptyMenu);
+    #endif
+            megaApi->getAccountDetails();
+        }
     }
 
     if (infoOverQuota)
