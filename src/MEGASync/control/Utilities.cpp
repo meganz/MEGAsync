@@ -426,6 +426,7 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
 
     if (items == 2)
     {
+        time = time.trimmed();
         return time;
     }
 
@@ -437,6 +438,7 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
 
     if (items == 2)
     {
+        time = time.trimmed();
         return time;
     }
 
@@ -444,6 +446,7 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
     {
         time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">s</span>").arg(seconds));
     }
+    time = time.trimmed();
     return time;
 }
 
