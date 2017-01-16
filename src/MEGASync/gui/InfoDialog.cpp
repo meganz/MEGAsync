@@ -804,13 +804,13 @@ void InfoDialog::onTransfer1Cancel(int x, int y)
             "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
 #endif
 
-    QAction *downloadState = transferMenu->addAction(megaApi->areTransfersPaused(MegaTransfer::TYPE_DOWNLOAD) ? tr("Resume downloads") : tr("Pause downloads"), this, SLOT(downloadState()));
-    QAction *cancelAll = transferMenu->addAction(tr("Cancel all downloads"), this, SLOT(cancelAllDownloads()));
-    QAction *cancelCurrent = transferMenu->addAction(tr("Cancel download"), this, SLOT(cancelCurrentDownload()));
-
-    transferMenu->addAction(downloadState);
-    transferMenu->addAction(cancelCurrent);
-    transferMenu->addAction(cancelAll);
+    if (activeDownloadState == MegaTransfer::STATE_PAUSED)
+    {
+        transferMenu->addAction(tr("Resume download"), this, SLOT(downloadState()));
+    }
+    transferMenu->addAction(megaApi->areTransfersPaused(MegaTransfer::TYPE_DOWNLOAD) ? tr("Resume downloads") : tr("Pause downloads"), this, SLOT(globalDownloadState()));
+    transferMenu->addAction(tr("Cancel download"), this, SLOT(cancelCurrentDownload()));
+    transferMenu->addAction(tr("Cancel all downloads"), this, SLOT(cancelAllDownloads()));
 
 #ifdef __APPLE__
     transferMenu->exec(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
@@ -846,13 +846,13 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
             "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
 #endif
 
-    QAction *uploadState = transferMenu->addAction(megaApi->areTransfersPaused(MegaTransfer::TYPE_UPLOAD) ? tr("Resume uploads") : tr("Pause uploads"), this, SLOT(uploadState()));
-    QAction *cancelAll = transferMenu->addAction(tr("Cancel all uploads"), this, SLOT(cancelAllUploads()));
-    QAction *cancelCurrent = transferMenu->addAction(tr("Cancel upload"), this, SLOT(cancelCurrentUpload()));
-
-    transferMenu->addAction(uploadState);
-    transferMenu->addAction(cancelCurrent);
-    transferMenu->addAction(cancelAll);
+    if (activeUploadState == MegaTransfer::STATE_PAUSED)
+    {
+        transferMenu->addAction(tr("Resume upload"), this, SLOT(uploadState()));
+    }
+    transferMenu->addAction(megaApi->areTransfersPaused(MegaTransfer::TYPE_UPLOAD) ? tr("Resume uploads") : tr("Pause uploads"), this, SLOT(globalUploadState()));
+    transferMenu->addAction(tr("Cancel upload"), this, SLOT(cancelCurrentUpload()));
+    transferMenu->addAction(tr("Cancel all uploads"), this, SLOT(cancelAllUploads()));
 
 #ifdef __APPLE__
     transferMenu->exec(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
@@ -868,7 +868,7 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
 #endif
 }
 
-void InfoDialog::downloadState()
+void InfoDialog::globalDownloadState()
 {
     if (!activeDownload)
     {
@@ -878,14 +878,44 @@ void InfoDialog::downloadState()
     if (megaApi->areTransfersPaused(MegaTransfer::TYPE_DOWNLOAD))
     {
         megaApi->pauseTransfers(false, MegaTransfer::TYPE_DOWNLOAD);
-        if (activeDownloadState == MegaTransfer::STATE_PAUSED)
-        {
-            megaApi->pauseTransfer(activeDownload, false);
-        }
     }
     else
     {
         megaApi->pauseTransfers(true, MegaTransfer::TYPE_DOWNLOAD);
+    }
+}
+
+void InfoDialog::downloadState()
+{
+    if (!activeDownload)
+    {
+        return;
+    }
+
+    if (activeDownloadState == MegaTransfer::STATE_PAUSED)
+    {
+        megaApi->pauseTransfer(activeDownload, false);
+    }
+    else
+    {
+        megaApi->pauseTransfer(activeDownload, true);
+    }
+}
+
+void InfoDialog::globalUploadState()
+{
+    if (!activeUpload)
+    {
+        return;
+    }
+
+    if (megaApi->areTransfersPaused(MegaTransfer::TYPE_UPLOAD))
+    {
+        megaApi->pauseTransfers(false, MegaTransfer::TYPE_UPLOAD);
+    }
+    else
+    {
+        megaApi->pauseTransfers(true, MegaTransfer::TYPE_UPLOAD);
     }
 }
 
@@ -896,17 +926,13 @@ void InfoDialog::uploadState()
         return;
     }
 
-    if (megaApi->areTransfersPaused(MegaTransfer::TYPE_UPLOAD))
+    if (activeUploadState == MegaTransfer::STATE_PAUSED)
     {
-        megaApi->pauseTransfers(false, MegaTransfer::TYPE_UPLOAD);
-        if (activeUploadState == MegaTransfer::STATE_PAUSED)
-        {
-            megaApi->pauseTransfer(activeUpload, false);
-        }
+        megaApi->pauseTransfer(activeUpload, false);
     }
     else
     {
-        megaApi->pauseTransfers(true, MegaTransfer::TYPE_UPLOAD);
+        megaApi->pauseTransfer(activeUpload, true);
     }
 }
 

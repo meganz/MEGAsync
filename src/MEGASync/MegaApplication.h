@@ -258,6 +258,7 @@ protected:
     QQueue<mega::MegaNode *> downloadQueue;
     int numTransfers[2];
     unsigned long long activeTransferPriority[2];
+    unsigned int activeTransferState[2];
     long long queuedUserStats;
     long long maxMemoryUsage;
     int exportOps;
