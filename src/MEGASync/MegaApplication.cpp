@@ -435,6 +435,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     networkConnectivity = true;
     activeTransferPriority[MegaTransfer::TYPE_DOWNLOAD] = 0xFFFFFFFFFFFFFFFFLL;
     activeTransferPriority[MegaTransfer::TYPE_UPLOAD] = 0xFFFFFFFFFFFFFFFFLL;
+    activeTransferState[MegaTransfer::TYPE_DOWNLOAD] = MegaTransfer::STATE_NONE;
+    activeTransferState[MegaTransfer::TYPE_UPLOAD] = MegaTransfer::STATE_NONE;
     trayIcon = NULL;
     trayMenu = NULL;
     trayOverQuotaMenu = NULL;
@@ -5382,9 +5384,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     unsigned long long priority = transfer->getPriority();
 
     numTransfers[type]--;
-    if (priority && priority <= activeTransferPriority[type])
+    if (priority && (priority <= activeTransferPriority[type]
+                     || activeTransferState[type] == MegaTransfer::STATE_PAUSED))
     {
         activeTransferPriority[type] = 0xFFFFFFFFFFFFFFFFLL;
+        activeTransferState[type] = transfer->getState();
 
         //Send updated statics to the information dialog
         if (infoDialog)
@@ -5445,6 +5449,15 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     {
         onGlobalSyncStateChanged(megaApi);
     }
+    else
+    {
+        MegaTransfer *nextTransfer = megaApi->getFirstTransfer(type);
+        if (nextTransfer)
+        {
+            onTransferUpdate(megaApi, nextTransfer);
+            delete nextTransfer;
+        }
+    }
 }
 
 //Called when a transfer has been updated
@@ -5458,9 +5471,12 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 
     int type = transfer->getType();
     unsigned long long priority = transfer->getPriority();    
-    if (priority && priority <= activeTransferPriority[type])
+    if (priority <= activeTransferPriority[type]
+            || activeTransferState[type] == MegaTransfer::STATE_PAUSED)
     {
         activeTransferPriority[type] = priority;
+        activeTransferState[type] = transfer->getState();
+
         if (infoDialog)
         {
             infoDialog->setTransfer(transfer);

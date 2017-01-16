@@ -59,7 +59,9 @@ public slots:
    void addSync();
    void onTransfer1Cancel(int x, int y);
    void onTransfer2Cancel(int x, int y);
+   void globalDownloadState();
    void downloadState();
+   void globalUploadState();
    void uploadState();
    void cancelAllUploads();
    void cancelAllDownloads();

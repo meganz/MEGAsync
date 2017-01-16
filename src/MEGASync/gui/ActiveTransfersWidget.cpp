@@ -77,6 +77,13 @@ void ActiveTransfersWidget::onTransferFinish(mega::MegaApi *api, mega::MegaTrans
     {
         activeUpload.clear();
     }
+
+    MegaTransfer *nextTransfer = megaApi->getFirstTransfer(type);
+    if (nextTransfer)
+    {
+        onTransferUpdate(api, nextTransfer);
+        delete nextTransfer;
+    }
 }
 
 void ActiveTransfersWidget::onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer)
@@ -105,7 +112,8 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
     int type = transfer->getType();
     if (type == MegaTransfer::TYPE_DOWNLOAD)
     {
-        if (transfer->getPriority() > activeDownload.priority)
+        if (transfer->getPriority() > activeDownload.priority
+                && !(activeDownload.transferState == MegaTransfer::STATE_PAUSED))
         {
             return;
         }
@@ -200,17 +208,20 @@ void ActiveTransfersWidget::pausedUpTransfers(bool paused)
 
 void ActiveTransfersWidget::updateDownSpeed(long long speed)
 {
+    if (Preferences::instance()->getDownloadsPaused())
+    {
+        pausedDownTransfers(true);
+        return;
+    }
+
+    ui->bDownPaused->setVisible(false);
     if (activeDownload.transferState == MegaTransfer::STATE_PAUSED)
     {
         ui->lCurrentDownSpeed->setText(tr("PAUSED"));
     }
     else
     {
-        if (Preferences::instance()->getDownloadsPaused())
-        {
-            pausedDownTransfers(true);
-        }
-        else if (!speed)
+        if (!speed)
         {
             ui->lCurrentDownSpeed->setText(QString::fromUtf8(""));
         }
@@ -226,17 +237,20 @@ void ActiveTransfersWidget::updateDownSpeed(long long speed)
 
 void ActiveTransfersWidget::updateUpSpeed(long long speed)
 {
+    if (Preferences::instance()->getUploadsPaused())
+    {
+        pausedUpTransfers(true);
+        return;
+    }
+
+    ui->bUpPaused->setVisible(false);
     if (activeUpload.transferState == MegaTransfer::STATE_PAUSED)
     {
         ui->lCurrentUpSpeed->setText(tr("PAUSED"));
     }
     else
     {
-        if (Preferences::instance()->getUploadsPaused())
-        {
-            pausedUpTransfers(true);
-        }
-        else if (!speed)
+        if (!speed)
         {
             ui->lCurrentUpSpeed->setText(QString::fromUtf8(""));
         }
@@ -399,15 +413,6 @@ void ActiveTransfersWidget::udpateTransferState(TransferData *td)
     {
         case MegaTransfer::STATE_ACTIVE:
         {
-            if (td->type == MegaTransfer::TYPE_DOWNLOAD)
-            {
-                ui->bDownPaused->setVisible(false);
-            }
-            else if (td->type == MegaTransfer::TYPE_UPLOAD)
-            {
-                ui->bUpPaused->setVisible(false);
-            }
-
             // Update remaining time
             long long remainingBytes = td->totalSize - td->totalTransferredBytes;
             int totalRemainingSeconds = td->meanTransferSpeed ? remainingBytes / td->meanTransferSpeed : 0;
@@ -431,14 +436,6 @@ void ActiveTransfersWidget::udpateTransferState(TransferData *td)
         }
         case MegaTransfer::STATE_PAUSED:
         {
-            if (td->type == MegaTransfer::TYPE_DOWNLOAD)
-            {
-                ui->bDownPaused->setVisible(true);
-            }
-            else if (td->type == MegaTransfer::TYPE_UPLOAD)
-            {
-                ui->bUpPaused->setVisible(true);
-            }
             remainingTime = QString::fromUtf8("- <span style=\"color:#777777; text-decoration:none;\">m</span> - <span style=\"color:#777777; text-decoration:none;\">s</span>");
             break;
         }

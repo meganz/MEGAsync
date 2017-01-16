@@ -280,12 +280,10 @@ void TransferManager::updatePauseState()
     QWidget *w = ui->wTransfers->currentWidget();
     if (w == ui->wActiveTransfers)
     {
-        //ui->wActiveTransfers->pausedTransfers(preferences->getGlobalPaused());
         if (preferences->getGlobalPaused())
         {
             ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/play_ico.png")));
             ui->bPause->setText(tr("Resume"));
-
         }
         else
         {
@@ -331,7 +329,6 @@ void TransferManager::updateState()
     if (w == ui->wActiveTransfers)
     {
         onTransfersActive(ui->wActiveTransfers->areTransfersActive());
-        //ui->wActiveTransfers->pausedTransfers(preferences->getGlobalPaused());
     }
     else if (w == ui->wDownloads)
     {
