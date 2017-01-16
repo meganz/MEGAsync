@@ -7,6 +7,7 @@
 #include <QToolTip>
 #include <QSignalMapper>
 #include <QVBoxLayout>
+#include <QFileInfo>
 #include "InfoDialog.h"
 #include "ActiveTransfer.h"
 #include "RecentFile.h"
@@ -88,6 +89,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     ui->wDownloadDesc->hide();
     ui->wUploadDesc->hide();
+    ui->lBlockedItem->hide();
 
 #ifdef __APPLE__
     arrow = new QPushButton(this);
@@ -653,6 +655,29 @@ void InfoDialog::updateState()
         {
             downloadSpeed = 0;
             uploadSpeed = 0;
+        }
+
+        const char *blockedPath = megaApi->getBlockedPath();
+        if (blockedPath)
+        {
+            QFileInfo fileBlocked (QString::fromUtf8(blockedPath));
+            ui->lBlockedItem->setToolTip(fileBlocked.absoluteFilePath());
+            ui->lBlockedItem->setAlignment(Qt::AlignLeft);
+            ui->lBlockedItem->setText(tr("Locked file: %1").arg(QString::fromUtf8("<a style=\" font-size: 12px;\" href=\"local://#%1\">%2</a>")
+                                                           .arg(fileBlocked.absoluteFilePath())
+                                                           .arg(fileBlocked.fileName())));
+            ui->lBlockedItem->show();
+            delete blockedPath;
+        }
+        else if (megaApi->areServersBusy())
+        {
+            ui->lBlockedItem->setText(tr("Servers too busy. Please wait…"));
+            ui->lBlockedItem->setAlignment(Qt::AlignCenter);
+            ui->lBlockedItem->show();
+        }
+        else
+        {
+            ui->lBlockedItem->hide();
         }
 
         if (waiting)
