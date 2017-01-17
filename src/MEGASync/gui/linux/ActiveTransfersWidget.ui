@@ -433,7 +433,7 @@ background-color: rgba(0, 0, 0, 10%);
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">margin-left: -3px;</string>
+                       <string notr="true"/>
                       </property>
                       <property name="text">
                        <string notr="true"/>
@@ -1133,7 +1133,7 @@ background-color: rgba(0, 0, 0, 10%);
                        </size>
                       </property>
                       <property name="styleSheet">
-                       <string notr="true">margin-left: -3px;</string>
+                       <string notr="true"/>
                       </property>
                       <property name="text">
                        <string notr="true"/>
