@@ -1003,7 +1003,6 @@ int Preferences::downloadLimitKB()
 int Preferences::parallelUploadConnections()
 {
     mutex.lock();
-    assert(logged());
     int value = settings->value(parallelUploadConnectionsKey, defaultParallelUploadConnections).toInt();
     mutex.unlock();
     return value;
@@ -1012,7 +1011,6 @@ int Preferences::parallelUploadConnections()
 int Preferences::parallelDownloadConnections()
 {
     mutex.lock();
-    assert(logged());
     int value = settings->value(parallelDownloadConnectionsKey, defaultParallelDownloadConnections).toInt();
     mutex.unlock();
     return value;
