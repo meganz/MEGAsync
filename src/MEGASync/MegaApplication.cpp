@@ -99,6 +99,10 @@ void msgHandler(QtMsgType type, const char *msg)
 
 int main(int argc, char *argv[])
 {
+    // Allow the usage of signals on Posix platforms
+    // (to enable asynchronous file reads / writes)
+    MegaApi::allowSignals();
+
     // adds thread-safety to OpenSSL
     QSslSocket::supportsSsl();
 
