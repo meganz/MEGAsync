@@ -17,25 +17,34 @@ TransfersWidget::TransfersWidget(QWidget *parent) :
 void TransfersWidget::setupTransfers(MegaTransferData *transferData, int type)
 {
     this->type = type;
-    model = new QTransfersModel(type);
+    model = new QActiveTransfersModel(type, transferData);
     connect(model, SIGNAL(noTransfers()), this, SLOT(noTransfers()));
     connect(model, SIGNAL(onTransferAdded()), this, SLOT(onTransferAdded()));
 
     noTransfers();
     configureTransferView();
-    model->setupModelTransfers(transferData);
+
+    if ((type == MegaTransfer::TYPE_DOWNLOAD && transferData->getNumDownloads())
+            || (type == MegaTransfer::TYPE_UPLOAD && transferData->getNumUploads()))
+    {
+        onTransferAdded();
+    }
 }
 
-void TransfersWidget::setupTransfers(QList<MegaTransfer* > transferData, int type)
+void TransfersWidget::setupFinishedTransfers(QList<MegaTransfer* > transferData)
 {
-    this->type = type;
-    model = new QTransfersModel(type);
+    this->type = QTransfersModel::TYPE_FINISHED ;
+    model = new QFinishedTransfersModel(transferData);
     connect(model, SIGNAL(noTransfers()), this, SLOT(noTransfers()));
     connect(model, SIGNAL(onTransferAdded()), this, SLOT(onTransferAdded()));
 
     noTransfers();
     configureTransferView();
-    model->setupModelTransfers(transferData);
+
+    if (transferData.size())
+    {
+        onTransferAdded();
+    }
 }
 
 void TransfersWidget::refreshTransferItems()
