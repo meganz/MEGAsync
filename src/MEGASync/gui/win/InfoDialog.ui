@@ -430,7 +430,7 @@ margin-top:-1px;
       </size>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pUpdated">
       <property name="minimumSize">
@@ -507,13 +507,13 @@ margin-top:-1px;
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>88</height>
+           <height>50</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>88</height>
+           <height>50</height>
           </size>
          </property>
          <property name="font">
@@ -539,6 +539,33 @@ padding-bottom: 25px;
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lBlockedItem">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font-size: 12px;
+color: #999999;
+margin-left: 15px;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="openExternalLinks">
+          <bool>true</bool>
          </property>
         </widget>
        </item>

@@ -197,7 +197,16 @@ padding-left: 1px;
    <property name="spacing">
     <number>0</number>
    </property>
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <item>
@@ -249,6 +258,9 @@ padding-left: 1px;
           <width>16777215</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -303,6 +315,9 @@ padding-left: 1px;
           <width>16777215</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="accessibleName">
+         <string>Pause</string>
         </property>
         <property name="styleSheet">
          <string notr="true">
@@ -369,6 +384,9 @@ QCheckBox::indicator:unchecked:hover
           <height>16777215</height>
          </size>
         </property>
+        <property name="accessibleName">
+         <string>Settings</string>
+        </property>
         <property name="styleSheet">
          <string notr="true">border: none;
 margin-top:-1px;
@@ -412,7 +430,7 @@ margin-top:-1px;
       </size>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pUpdated">
       <property name="minimumSize">
@@ -428,7 +446,16 @@ margin-top:-1px;
        </size>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_8">
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -480,13 +507,13 @@ margin-top:-1px;
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>88</height>
+           <height>50</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>88</height>
+           <height>50</height>
           </size>
          </property>
          <property name="font">
@@ -504,7 +531,6 @@ font: &quot;Helvetica&quot;;
 font-size: 20px;
 font-weight: normal;
 color: #999999;
-padding-bottom: 25px;
 }</string>
          </property>
          <property name="text">
@@ -512,6 +538,33 @@ padding-bottom: 25px;
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lBlockedItem">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">font-size: 12px;
+color: #999999;
+margin-left: 15px;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="openExternalLinks">
+          <bool>true</bool>
          </property>
         </widget>
        </item>
@@ -534,7 +587,16 @@ padding-bottom: 25px;
        <property name="spacing">
         <number>0</number>
        </property>
-       <property name="margin">
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
         <number>0</number>
        </property>
        <item>
@@ -555,7 +617,16 @@ padding-bottom: 25px;
           <property name="spacing">
            <number>0</number>
           </property>
-          <property name="margin">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
@@ -688,6 +759,9 @@ color: rgb(102, 102, 102);</string>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -771,6 +845,9 @@ color: rgb(102, 102, 102);</string>
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -820,7 +897,16 @@ color: rgb(102, 102, 102);</string>
       <property name="spacing">
        <number>0</number>
       </property>
-      <property name="margin">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
        <number>0</number>
       </property>
       <item>
@@ -872,6 +958,9 @@ color: rgb(102, 102, 102);</string>
              <width>16777215</width>
              <height>16777215</height>
             </size>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">margin-left:1px;</string>
@@ -949,7 +1038,16 @@ color: rgb(102, 102, 102);</string>
          <property name="spacing">
           <number>0</number>
          </property>
-         <property name="margin">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
           <number>0</number>
          </property>
          <item>
@@ -1112,6 +1210,9 @@ color: rgb(102, 102, 102);</string>
              <width>16777215</width>
              <height>20</height>
             </size>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
            </property>
            <property name="styleSheet">
             <string notr="true">#lTotalUsed
