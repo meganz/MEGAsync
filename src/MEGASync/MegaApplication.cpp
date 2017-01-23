@@ -2914,10 +2914,7 @@ void MegaApplication::removeFinishedTransfer(int transferTag)
 
 void MegaApplication::removeAllFinishedTransfers()
 {
-    for (QMap<int, mega::MegaTransfer*>::iterator it = finishedTransfers.begin(); it != finishedTransfers.end(); it++)
-    {
-        delete it.value();
-    }
+    qDeleteAll(finishedTransfers);
     finishedTransfers.clear();
 }
 
