@@ -22,6 +22,8 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent) : QObject(parent), MegaLogger()
     connected = true;
     logToStdout = false;
     logToFile = false;
+    client = NULL;
+    megaServer = NULL;
 
 #ifdef LOG_TO_LOGGER
     QLocalServer::removeServer(ENABLE_MEGASYNC_LOGS);
@@ -42,6 +44,11 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent) : QObject(parent), MegaLogger()
 MegaSyncLogger::~MegaSyncLogger()
 {
     disconnected();
+
+    if (megaServer)
+    {
+        delete megaServer;
+    }
 }
 
 void MegaSyncLogger::log(const char *time, int loglevel, const char *source, const char *message)
