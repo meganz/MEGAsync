@@ -680,6 +680,10 @@ void InfoDialog::updateState()
                 ui->lBlockedItem->setText(tr("Servers too busy. Please wait…"));
                 ui->lBlockedItem->setAlignment(Qt::AlignCenter);
             }
+            else
+            {
+                ui->lBlockedItem->setText(QString::fromUtf8(""));
+            }
 
             if (state != STATE_WAITING)
             {
@@ -1238,7 +1242,8 @@ void InfoDialog::changeEvent(QEvent *event)
                 setUsage();
             }
             updateSyncsButton();
-            updateTransfers();
+            state = STATE_STARTING;
+            updateState();
         }
     }
     QDialog::changeEvent(event);

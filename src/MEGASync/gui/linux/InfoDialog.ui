@@ -531,7 +531,6 @@ font: &quot;Helvetica&quot;;
 font-size: 20px;
 font-weight: normal;
 color: #999999;
-padding-bottom: 25px;
 }</string>
          </property>
          <property name="text">
