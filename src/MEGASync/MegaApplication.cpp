@@ -1896,6 +1896,7 @@ void MegaApplication::cleanAll()
     }
 
     closeDialogs();
+    removeAllFinishedTransfers();
 
     delete bwOverquotaDialog;
     bwOverquotaDialog = NULL;
@@ -2903,11 +2904,17 @@ void MegaApplication::toggleLogging()
 
 void MegaApplication::removeFinishedTransfer(int transferTag)
 {
-    finishedTransfers.remove(transferTag);
+    QMap<int, mega::MegaTransfer*>::iterator it = finishedTransfers.find(transferTag);
+    if (it != finishedTransfers.end())
+    {
+        delete it.value();
+        finishedTransfers.erase(it);
+    }
 }
 
 void MegaApplication::removeAllFinishedTransfers()
 {
+    qDeleteAll(finishedTransfers);
     finishedTransfers.clear();
 }
 
@@ -4818,6 +4825,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             preferences->unlink();
             closeDialogs();
+            removeAllFinishedTransfers();
             delete infoOverQuota;
             infoOverQuota = NULL;
             paused = false;

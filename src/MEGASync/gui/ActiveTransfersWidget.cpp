@@ -510,7 +510,8 @@ void ActiveTransfersWidget::updateNumberOfTransfers(mega::MegaApi *api)
 
 void ActiveTransfersWidget::updateAnimation(TransferData *td)
 {
-    if (!animationUp && !animationDown)
+    if ((!animationUp && td->type == MegaTransfer::TYPE_UPLOAD)
+            || (!animationDown && td->type == MegaTransfer::TYPE_DOWNLOAD))
     {
         return;
     }

@@ -290,10 +290,10 @@ void TransferItem::updateTransfer()
             ui->lRemainingTime->setText(remainingTime);
 
             // Update current transfer speed
-            QString pattern(QString::fromUtf8("(%1/s)"));
             QString downloadString;
             if (meanTransferSpeed >= 20000)
             {
+                QString pattern(QString::fromUtf8("(%1/s)"));
                 downloadString = pattern.arg(Utilities::getSizeString(transferSpeed));
             }
             else

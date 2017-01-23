@@ -28,6 +28,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         }
 
         int tag = index.internalId();
+        int modelType = model->getModelType();
         TransferItem *ti = model->transferItems[tag];
         if (!ti)
         {
@@ -35,16 +36,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             ti->setTransferTag(tag);
             connect(ti, SIGNAL(refreshTransfer(int)), model, SLOT(refreshTransferItem(int)));
             model->transferItems.insert(tag, ti);
-            MegaTransfer *transfer = NULL;
-
-            if (model->getModelType() != QTransfersModel::TYPE_FINISHED)
-            {
-                transfer = model->megaApi->getTransferByTag(tag);
-            }
-            else
-            {
-                transfer = model->getFinishedTransferByTag(tag);
-            }
+            MegaTransfer *transfer = model->getTransferByTag(tag);
 
             if (transfer)
             {
@@ -55,32 +47,35 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 ti->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
                 ti->setTransferState(transfer->getState());
                 ti->setPriority(transfer->getPriority());
-                if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
+                if (modelType == QTransfersModel::TYPE_FINISHED)
                 {
                     ti->setFinishedTime(transfer->getUpdateTime());
                 }
-            }
-
-            if (model->getModelType() != QTransfersModel::TYPE_FINISHED)
-            {
-                delete transfer;
+                else
+                {
+                    delete transfer;
+                }
             }
         }
+        else if (modelType != QTransfersModel::TYPE_FINISHED)
+        {
+            ti->updateTransfer();
+        }
 
-        if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
+        if (modelType == QTransfersModel::TYPE_FINISHED)
         {
             ti->updateFinishedTime();
         }
         else
         {
-            if ((model->getModelType() == QTransfersModel::TYPE_DOWNLOAD) &&
-                (Preferences::instance()->getDownloadsPaused()))
+            Preferences *preferences = Preferences::instance();
+            if ((modelType == QTransfersModel::TYPE_DOWNLOAD) &&
+                (preferences->getDownloadsPaused()))
             {
                 ti->setStateLabel(tr("paused"));
             }
-
-            if ((model->getModelType() == QTransfersModel::TYPE_UPLOAD) &&
-                (Preferences::instance()->getUploadsPaused()))
+            else if ((modelType == QTransfersModel::TYPE_UPLOAD) &&
+                (preferences->getUploadsPaused()))
             {
                 ti->setStateLabel(tr("paused"));
             }
@@ -139,7 +134,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
                 int result = warning.exec();
                 if (result == QMessageBox::Yes)
                 {
-                    model->onTransferCancel(tag);
+                    model->megaApi->cancelTransferByTag(tag);
                 }
             }
         }

@@ -44,7 +44,7 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     delete firstUpload;
     delete firstDownload;
 
-    ui->wCompleted->setupTransfers(((MegaApplication *)qApp)->getFinishedTransfers(), QTransfersModel::TYPE_FINISHED);
+    ui->wCompleted->setupFinishedTransfers(((MegaApplication *)qApp)->getFinishedTransfers());
     updateNumberOfCompletedTransfers(((MegaApplication *)qApp)->getNumUnviewedTransfers());
     delete transferData;
 
@@ -305,6 +305,7 @@ void TransferManager::updatePauseState()
             ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/pause_ico.png")));
             ui->bPause->setText(tr("Pause"));
         }
+        ui->wDownloads->refreshTransferItems();
     }
     else if (w == ui->wUploads)
     {
@@ -320,6 +321,7 @@ void TransferManager::updatePauseState()
             ui->bPause->setIcon(QIcon(QString::fromUtf8(":/images/pause_ico.png")));
             ui->bPause->setText(tr("Pause"));
         }
+        ui->wUploads->refreshTransferItems();
     }
 }
 
