@@ -560,6 +560,15 @@ void ActiveTransfersWidget::updateAnimation(TransferData *td)
     }
 }
 
+void ActiveTransfersWidget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+    QWidget::changeEvent(event);
+}
+
 TransferData::TransferData()
 {
     clear();

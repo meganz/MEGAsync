@@ -69,6 +69,8 @@ private:
     void udpateTransferState(TransferData *td);
     void updateNumberOfTransfers(mega::MegaApi *api);
     void updateAnimation(TransferData *td);
+
+    void changeEvent(QEvent *event);
 };
 
 #endif // ACTIVETRANSFERSWIDGET_H
