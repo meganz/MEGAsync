@@ -46,21 +46,21 @@
 #lTransferName, #lTransferNameCompleted
 {
   font-family: &quot;Source Sans Pro&quot;;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   color: #333333;
 }
 #lTotal, #lTotalCompleted
 {
   font-family: &quot;Source Sans Pro&quot;;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 400;
   color: #333333;
 }
 #lSpeed
 {
   font-family: &quot;Source Sans Pro&quot;;
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 400;
   color: #aaaaaa;
 }
@@ -240,7 +240,7 @@ padding-top: 1px;</string>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>315</width>
+                 <width>16777215</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -294,7 +294,7 @@ padding-top: 1px;</string>
               <widget class="QLabel" name="lSpeed">
                <property name="minimumSize">
                 <size>
-                 <width>55</width>
+                 <width>80</width>
                  <height>0</height>
                 </size>
                </property>
@@ -624,13 +624,13 @@ padding-top: 1px;</string>
               <widget class="QLabel" name="lTotalCompleted">
                <property name="minimumSize">
                 <size>
-                 <width>70</width>
+                 <width>80</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>70</width>
+                 <width>80</width>
                  <height>16777215</height>
                 </size>
                </property>
