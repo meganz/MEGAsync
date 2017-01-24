@@ -47,7 +47,7 @@ MegaTransferView::MegaTransferView(QWidget *parent) :
                            " background: #c0c0c0;"
                            " min-height: 20px;"
                            " border-radius: 4px;"
-#ifndef Q_OS_LINUX
+#ifdef Q_OS_MACX
                            " margin: 3px 3px 3px 3px;"
 #else
                            " margin: 3px 4px 3px 2px;"
