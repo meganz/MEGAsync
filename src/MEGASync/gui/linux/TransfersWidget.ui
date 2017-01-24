@@ -73,7 +73,7 @@
     </size>
    </property>
    <property name="styleSheet">
-    <string notr="true"/>
+    <string notr="true">background-color: normal;</string>
    </property>
    <property name="currentIndex">
     <number>0</number>
