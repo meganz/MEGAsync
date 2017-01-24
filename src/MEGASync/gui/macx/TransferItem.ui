@@ -240,7 +240,7 @@ padding-top: 1px;</string>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>315</width>
+                 <width>16777215</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -294,7 +294,7 @@ padding-top: 1px;</string>
               <widget class="QLabel" name="lSpeed">
                <property name="minimumSize">
                 <size>
-                 <width>55</width>
+                 <width>75</width>
                  <height>0</height>
                 </size>
                </property>
@@ -388,7 +388,7 @@ padding-top: 1px;</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../Resources_linux.qrc">:/images/cloud_item_ico.png</pixmap>
+             <pixmap resource="../Resources_macx.qrc">:/images/cloud_item_ico.png</pixmap>
             </property>
            </widget>
           </item>
@@ -429,7 +429,7 @@ padding-top: 1px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -728,7 +728,7 @@ padding-top: 1px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -749,7 +749,7 @@ padding-top: 1px;</string>
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
