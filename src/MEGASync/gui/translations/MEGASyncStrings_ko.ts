@@ -55,6 +55,54 @@
     </message>
 </context>
 <context>
+    <name>ActiveTransfersWidget</name>
+    <message>
+        <source>No Transfers</source>
+        <translatorcomment>Label to indicate that there are no active transfers at current time</translatorcomment>
+        <translation type="unfinished">전송 없음</translation>
+    </message>
+    <message>
+        <source>Remaining Downloads</source>
+        <translatorcomment>Label to indicate the number of remaining downloads</translatorcomment>
+        <translation type="unfinished">남은 다운로드</translation>
+    </message>
+    <message>
+        <source>download speed</source>
+        <translatorcomment>Label to indicate the actual current download speed</translatorcomment>
+        <translation type="unfinished">다운로드 속도</translation>
+    </message>
+    <message>
+        <source>No Downloads</source>
+        <translatorcomment>Label to indicate that there are no active downloads at current time</translatorcomment>
+        <translation type="unfinished">다운로드 없음</translation>
+    </message>
+    <message>
+        <source>Remaining Uploads</source>
+        <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
+        <translation type="unfinished">남은 업로드</translation>
+    </message>
+    <message>
+        <source>upload speed</source>
+        <translatorcomment>Label to indicate the actual current upload speed</translatorcomment>
+        <translation type="unfinished">업로드 속도</translation>
+    </message>
+    <message>
+        <source>No Uploads</source>
+        <translatorcomment>Label to indicate that there are no active uploads at current time</translatorcomment>
+        <translation type="unfinished">업로드 없음</translation>
+    </message>
+    <message>
+        <source>PAUSED</source>
+        <translatorcomment>Label to indicate a global Pause state for all active transfers</translatorcomment>
+        <translation type="unfinished">일시정지됨</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to cancel this transfer?</source>
+        <translatorcomment>Warning message shown when an user try to cancel the selected transfer</translatorcomment>
+        <translation type="unfinished">이 전송을 취소하시겠습니까?</translation>
+    </message>
+</context>
+<context>
     <name>BindFolderDialog</name>
     <message>
         <source>Add synchronized folder</source>
@@ -368,6 +416,14 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>ImportListWidgetItem</name>
+    <message>
+        <source>Please wait...</source>
+        <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
+        <translation type="unfinished">잠시만 기다리세요...</translation>
+    </message>
+</context>
+<context>
     <name>ImportMegaLinksDialog</name>
     <message>
         <source>Import links</source>
@@ -585,6 +641,31 @@ Are you sure?</source>
         <source>Settings</source>
         <translation type="unfinished">설정</translation>
     </message>
+    <message>
+        <source>Resume downloads</source>
+        <translatorcomment>Label to resume the download queue. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">다운로드 재개</translation>
+    </message>
+    <message>
+        <source>Pause downloads</source>
+        <translatorcomment>Label to pause the download queue. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">다운로드 일시정지</translation>
+    </message>
+    <message>
+        <source>Resume uploads</source>
+        <translatorcomment>Label to resume the upload queue. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">업로드 재개</translation>
+    </message>
+    <message>
+        <source>Pause uploads</source>
+        <translatorcomment>Label to pause the upload queue. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">업로드 일시정지</translation>
+    </message>
+    <message>
+        <source>Blocked file: %1</source>
+        <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
+        <translation type="unfinished">차단된 파일: %1</translation>
+    </message>
 </context>
 <context>
     <name>InfoOverQuotaDialog</name>
@@ -795,7 +876,7 @@ Exit anyway?</source>
     <message>
         <source>About</source>
         <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
-        <translation type="obsolete">대하여</translation>
+        <translation type="unfinished">대하여</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -969,7 +1050,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to upload file/folder to MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation>MEGA에 업로드</translation>
+        <translation type="unfinished">MEGA에 업로드</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -984,7 +1065,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to download file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation>MEGA에서 다운로드하기</translation>
+        <translation type="unfinished">MEGA에서 다운로드하기</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -1135,6 +1216,41 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Transfer manager</source>
         <translation type="unfinished">전송 관리자</translation>
     </message>
+    <message>
+        <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
+        <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
+        <translation type="unfinished">MEGAsync 트레이 아이콘을 놓을 시스템 트레이를 찾지 못했습니다. MEGAsync는 시스템 트레이 아이콘과 작동하도록 되어있지만 없어도 잘 작동합니다. 만약 인터페이스를 열고 싶다면, MEGAsync를 다시 여세요.</translation>
+    </message>
+    <message>
+        <source>Error getting link:</source>
+        <translatorcomment>Notification message shown when an error occurs while getting a public link .</translatorcomment>
+        <translation type="unfinished">링크 받기 오류:</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Notification message shown an error of file not found while getting a public link .</translatorcomment>
+        <translation type="unfinished">파일이 발견되지 않음</translation>
+    </message>
+    <message>
+        <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
+        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
+        <translation type="unfinished">파일이 들어오는 공유 폴더 또는 휴지통에 있어서 링크를 생성할 수 없습니다.</translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
+        <translation type="unfinished">업로드</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
+        <translation type="unfinished">다운로드</translation>
+    </message>
+    <message>
+        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
+        <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
+        <translation type="unfinished">당신은 지금 FAT 파일시스템으로 포맷된 로컬 폴더와 동기화를 하고 있습니다. 해당 파일시스템은 큰 파일과 수정 시간을 관리하는데에 결함이 있어, 동기화 문제를 야기할 수 있습니다 (예를 들어, 일광 절약 시간이 변경될 때), 그러므로 파일을 NTFS처럼 더 믿을만한 파일시스템으로 포맷된 폴더와 동기화할 것을 강력히 권장합니다 (더 많은 정보는 [A]여기[/A]에서).</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1269,6 +1385,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Are you sure you want to cancel this transfer?</source>
         <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
         <translation type="unfinished">이 전송을 취소하시겠습니까?</translation>
+    </message>
+    <message>
+        <source>paused</source>
+        <translatorcomment>Label to indicate that selected transfer is at paused state</translatorcomment>
+        <translation type="unfinished">일시정지됨</translation>
     </message>
 </context>
 <context>
@@ -1491,6 +1612,10 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Select just one file.</source>
         <translation type="unfinished">하나의 파일만 선택하세요</translation>
     </message>
+    <message>
+        <source>Get MEGA link</source>
+        <translation type="unfinished">MEGA 링크 얻기</translation>
+    </message>
 </context>
 <context>
     <name>PasteMegaLinksDialog</name>
@@ -1527,7 +1652,12 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>유효한 MEGA 링크가 없습니다. (폴더 링크는 아직 지원되지 않습니다)</translation>
+        <translation type="obsolete">유효한 MEGA 링크가 없습니다. (폴더 링크는 아직 지원되지 않습니다)</translation>
+    </message>
+    <message>
+        <source>Invalid MEGA Link</source>
+        <translatorcomment>Label to indicate that MEGA link processed is invalid/incorrect </translatorcomment>
+        <translation type="unfinished">잘못된 MEGA 링크</translation>
     </message>
 </context>
 <context>
@@ -1566,6 +1696,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
         <translation type="unfinished">파일과 폴더는 소유자와 한 그룹의 이용자에게 있습니다. 이 대화창을 이용하면 MEGAsync를 통해 생성된 새 파일과 폴더에 대하여 같은 그룹의 이용자와 이 컴퓨터의 다른 이용자들에게 다른 접근 권한을 부여할 수 있습니다. 만약 그것을 바꿀 필요가 없다면, 보안 상의 이유로 기본 권한으로 두시기 바랍니다.</translation>
+    </message>
+    <message>
+        <source>Owner permissions:</source>
+        <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">소유자 권한:</translation>
     </message>
 </context>
 <context>
@@ -2278,6 +2413,26 @@ when the application starts again</source>
         <source>Do you want to delete your remote backup now?</source>
         <translation type="unfinished">원격 백업을 지금 삭제하시겠습니까?</translation>
     </message>
+    <message>
+        <source>Download rate limit</source>
+        <translatorcomment>Label to indicate the actual bandwidth limit for downloads.</translatorcomment>
+        <translation type="unfinished">다운로드 속도 제한</translation>
+    </message>
+    <message>
+        <source>Number of parallel TCP connections per transfer:</source>
+        <translatorcomment>Label to indicate the actual number of parallel TCP connections used by MEGAsync. Keep colon.</translatorcomment>
+        <translation type="unfinished">전송당 병렬 TCP 연결 갯수:</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translatorcomment>Label to indicate the actual number of parallel TCP connections used for downloads</translatorcomment>
+        <translation type="unfinished">다운로드</translation>
+    </message>
+    <message>
+        <source>Uploads</source>
+        <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
+        <translation type="unfinished">업로드</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -2646,6 +2801,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translation type="unfinished">로그인 시도를 너무 많이 했습니다.[BR]%1까지 기다렸다가 다시 시도하세요.</translation>
     </message>
+    <message>
+        <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
+        <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
+        <translation type="unfinished">이 도우미를 끝내면, 설정 대화창을 이용하여 추가 폴더를 동기화할 수 있습니다.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -2920,11 +3080,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">추가...</translation>
     </message>
     <message>
-        <source>All Transfers</source>
-        <translatorcomment>Label of tab to access all active transfers</translatorcomment>
-        <translation type="unfinished">모든 전송</translation>
-    </message>
-    <message>
         <source>Downloads</source>
         <translatorcomment>Label of tab to access all active downloads</translatorcomment>
         <translation type="unfinished">다운로드</translation>
@@ -2993,6 +3148,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Resume</source>
         <translation type="unfinished">재개</translation>
     </message>
+    <message>
+        <source>Active Transfers</source>
+        <translatorcomment>Label of tab to access all active transfers</translatorcomment>
+        <translation type="unfinished">활성화된 전송</translation>
+    </message>
 </context>
 <context>
     <name>TransfersStateInfoWidget</name>
@@ -3011,17 +3171,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate that active transfers are paused</translatorcomment>
         <translation type="unfinished">일시정지된 전송</translation>
     </message>
-    <message>
-        <source>No Transfers</source>
-        <translatorcomment>Label to indicate that there are no active downloads nor uploads</translatorcomment>
-        <translation type="unfinished">전송 없음</translation>
-    </message>
 </context>
 <context>
     <name>UpgradeDialog</name>
     <message>
         <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">무료 대역폭 할당량 초과</translation>
+        <translation type="unfinished">무료 전송 할당량 초과</translation>
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
@@ -3066,7 +3221,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded.</translatorcomment>
-        <translation>MEGAsync 업로드</translation>
+        <translation type="obsolete">MEGAsync 업로드</translation>
     </message>
     <message>
         <source>OK</source>

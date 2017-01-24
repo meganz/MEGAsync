@@ -55,6 +55,54 @@
     </message>
 </context>
 <context>
+    <name>ActiveTransfersWidget</name>
+    <message>
+        <source>No Transfers</source>
+        <translatorcomment>Label to indicate that there are no active transfers at current time</translatorcomment>
+        <translation type="unfinished">Aucun transfert</translation>
+    </message>
+    <message>
+        <source>Remaining Downloads</source>
+        <translatorcomment>Label to indicate the number of remaining downloads</translatorcomment>
+        <translation type="unfinished">Téléchargements restants</translation>
+    </message>
+    <message>
+        <source>download speed</source>
+        <translatorcomment>Label to indicate the actual current download speed</translatorcomment>
+        <translation type="unfinished">vitesse de téléchargement</translation>
+    </message>
+    <message>
+        <source>No Downloads</source>
+        <translatorcomment>Label to indicate that there are no active downloads at current time</translatorcomment>
+        <translation type="unfinished">Aucun téléchargement</translation>
+    </message>
+    <message>
+        <source>Remaining Uploads</source>
+        <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
+        <translation type="unfinished">Téléversements restants</translation>
+    </message>
+    <message>
+        <source>upload speed</source>
+        <translatorcomment>Label to indicate the actual current upload speed</translatorcomment>
+        <translation type="unfinished">vitesse de téléversement</translation>
+    </message>
+    <message>
+        <source>No Uploads</source>
+        <translatorcomment>Label to indicate that there are no active uploads at current time</translatorcomment>
+        <translation type="unfinished">Aucun téléversement</translation>
+    </message>
+    <message>
+        <source>PAUSED</source>
+        <translatorcomment>Label to indicate a global Pause state for all active transfers</translatorcomment>
+        <translation type="unfinished">EN PAUSE</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to cancel this transfer?</source>
+        <translatorcomment>Warning message shown when an user try to cancel the selected transfer</translatorcomment>
+        <translation type="unfinished">Voulez-vous vraiment annuler ce transfert ?</translation>
+    </message>
+</context>
+<context>
     <name>BindFolderDialog</name>
     <message>
         <source>Add synchronized folder</source>
@@ -102,7 +150,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>Le nom &quot;%1&quot; est déjà pris par une autre synchronisation. Veuillez renseignez un autre nom différent pour identifier ce dossier synchronisé :</translation>
+        <translation>Le nom « %1 » est déjà utilisé pour une autre synchroVeuillez saisir un nom différent afin d&#039;identifier ce dossier synchronisé :</translation>
     </message>
     <message>
         <source>OK</source>
@@ -122,7 +170,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Dossier local trop gros (cette version est limitée à %1 dossiers ou %2 fichiers.)Veuillez, essayer un autre dossier.</translation>
+        <translation type="obsolete">Le dossier local est trop gros (cette version est limitée à %1 dossiers ou %2 fichiers.)Veuillez, choisir un autre dossier.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -368,6 +416,14 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>ImportListWidgetItem</name>
+    <message>
+        <source>Please wait...</source>
+        <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
+        <translation type="unfinished">Veuillez patienter...</translation>
+    </message>
+</context>
+<context>
     <name>ImportMegaLinksDialog</name>
     <message>
         <source>Import links</source>
@@ -585,6 +641,31 @@ Are you sure?</source>
         <source>Settings</source>
         <translation type="unfinished">Réglages</translation>
     </message>
+    <message>
+        <source>Resume downloads</source>
+        <translatorcomment>Label to resume the download queue. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Reprendre les téléversements</translation>
+    </message>
+    <message>
+        <source>Pause downloads</source>
+        <translatorcomment>Label to pause the download queue. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Mettre les téléchargements en pause</translation>
+    </message>
+    <message>
+        <source>Resume uploads</source>
+        <translatorcomment>Label to resume the upload queue. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Reprendre les téléversements</translation>
+    </message>
+    <message>
+        <source>Pause uploads</source>
+        <translatorcomment>Label to pause the upload queue. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Mettre les téléversements en pause</translation>
+    </message>
+    <message>
+        <source>Blocked file: %1</source>
+        <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
+        <translation type="unfinished">Fichier bloqué : %1</translation>
+    </message>
 </context>
 <context>
     <name>InfoOverQuotaDialog</name>
@@ -730,17 +811,17 @@ Are you sure?</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&#039;t exist</source>
-        <translation type="obsolete">Votre synchronisation &quot;%1&quot; a été désactivée parce que le dossier à distance n&#039;existe plus</translation>
+        <translation type="obsolete">Votre synchro « %1 » a été désactivée, car le dossier distant n&#039;existe pas</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">Votre synchronisation &quot;%1&quot; a été désactivée parce que le dossier à distance est dans la corbeille</translation>
+        <translation type="obsolete">Votre synchro « %1 » a été désactivée, car le dossier distant est dans la corbeille</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&#039;t exist</source>
-        <translation type="obsolete">Votre synchronisation &quot;%1&quot; a été désactivée car le dossier local n&#039;existe pas</translation>
+        <translation type="obsolete">Votre synchro « %1 » a été désactivée, car le dossier local n&#039;existe pas</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -795,7 +876,7 @@ Exit anyway?</source>
     <message>
         <source>About</source>
         <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
-        <translation type="obsolete">À propos</translation>
+        <translation type="unfinished">À propos</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -969,7 +1050,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to upload file/folder to MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation>Téléverser vers MEGA</translation>
+        <translation type="unfinished">Téléverser vers MEGA</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -984,7 +1065,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to download file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation>Télécharger de MEGA</translation>
+        <translation type="unfinished">Télécharger de MEGA</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -999,12 +1080,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&#039;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Votre synchronisation &quot;%1&quot; a été désactivée car le dossier en ligne n&#039;existe pas.</translation>
+        <translation type="unfinished">Votre synchro « %1 » a été désactivée, car le dossier distant n&#039;existe pas</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&#039;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Votre synchronisation &quot;%1&quot;  a été désactivée car le dossier local n&#039;existe pas</translation>
+        <translation type="unfinished">Votre synchro « %1 » a été désactivée, car le dossier local n&#039;existe pas</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -1029,17 +1110,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Votre synchronisation « %1 » a été désactivée, car le dossier distant est dans la corbeille</translation>
+        <translation type="unfinished">Votre synchro « %1 » a été désactivée, car le dossier distant est dans la corbeille</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Votre synchronisation &quot;%1&quot;  a été désactivée car le dossier local a changé</translation>
+        <translation type="unfinished">Votre synchro « %1 » a été désactivée, car le dossier local a été modifié</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&#039;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Votre synchronisation &quot;%1&quot; a été désactivée. Le dossier distant (ou une partie) n&#039;a pas tous les accès</translation>
+        <translation type="unfinished">Votre synchro « %1 » a été désactivée. Le dossier distant (ou une de ces parties) n&#039;a pas l&#039;accès total</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -1049,7 +1130,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Votre synchronisation &quot;%1&quot; a été désactivée parce que la synchronisation des dossiers partagés de Virtual Box n&#039;est pas supportée due à des déficiences du système de fichier.</translation>
+        <translation type="unfinished">Votre synchro « %1 » a été désactivée, car la synchronisation de dossiers partagés VirtualBox n&#039;est pas prise en charge, à cause de lacunes de ce système de fichiers.</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1129,11 +1210,46 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Are you sure you want to exit?</source>
-        <translation type="unfinished">Êtes-vous certain(e) de bien vouloir fermer ?</translation>
+        <translation type="unfinished">Voulez-vous vraiment fermer ?</translation>
     </message>
     <message>
         <source>Transfer manager</source>
         <translation type="unfinished">Gestionnaire de transferts</translation>
+    </message>
+    <message>
+        <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
+        <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
+        <translation type="unfinished">Impossible de trouver une zone de notification où placer l&#039;icône MEGAsync. MEGAsync est prévue pour être utilisée avec une icône de zone de notification, mais peut très bien fonctionner sans. Si vous souhaitez ouvrir l&#039;interface, il vous suffit d&#039;ouvrir MEGAsync de nouveau.</translation>
+    </message>
+    <message>
+        <source>Error getting link:</source>
+        <translatorcomment>Notification message shown when an error occurs while getting a public link .</translatorcomment>
+        <translation type="unfinished">Erreur de récupération du lien :</translation>
+    </message>
+    <message>
+        <source>File not found</source>
+        <translatorcomment>Notification message shown an error of file not found while getting a public link .</translatorcomment>
+        <translation type="unfinished">Fichier introuvable</translation>
+    </message>
+    <message>
+        <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
+        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
+        <translation type="unfinished">Le lien ne peut pas être généré, car le fichier se trouve soit dans un dossier partagé entrant, soit dans votre corbeille.</translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
+        <translation type="unfinished">Téléversement</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
+        <translation type="unfinished">Télécharger</translation>
+    </message>
+    <message>
+        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
+        <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
+        <translation type="unfinished">Vous synchronisez un dossier local formaté avec le système de fichiers FAT. Ce système de fichiers présente des lacunes de gestion des fichiers volumineux et des heures de modification qui peuvent causer des problèmes de synchronisations (p. ex. lors des passages à l&#039;heure avancée), et il est fortement recommandé de ne synchroniser que des dossiers formatés avec des systèmes de fichiers plus fiables comme NTFS (plus d&#039;informations [A]ici[/A]).</translation>
     </message>
 </context>
 <context>
@@ -1191,7 +1307,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Circular linkage detected</source>
         <translatorcomment>Label to show that an error related with a circular linkage occurs during a SDK operation.</translatorcomment>
-        <translation>Lien circulaire détecté</translation>
+        <translation>Un lien circulaire a été détecté</translation>
     </message>
     <message>
         <source>Access denied</source>
@@ -1269,6 +1385,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Are you sure you want to cancel this transfer?</source>
         <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
         <translation type="unfinished">Voulez-vous vraiment annuler ce transfert ?</translation>
+    </message>
+    <message>
+        <source>paused</source>
+        <translatorcomment>Label to indicate that selected transfer is at paused state</translatorcomment>
+        <translation type="unfinished">en pause</translation>
     </message>
 </context>
 <context>
@@ -1472,7 +1593,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation type="unfinished">Êtes-vous certain(e) de bien vouloir supprimer &quot;%1&quot; ?</translation>
+        <translation type="unfinished">Voulez-vous vraiment supprimer « %1 » ?</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -1490,6 +1611,10 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Select just one file.</source>
         <translation type="unfinished">Sélectionner un seul fichier.</translation>
+    </message>
+    <message>
+        <source>Get MEGA link</source>
+        <translation type="unfinished">Obtenir le lien MEGA</translation>
     </message>
 </context>
 <context>
@@ -1527,7 +1652,12 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation>Aucun lien MEGA valide trouvé. (Les liens de dossier ne sont pas encore pris en charge)</translation>
+        <translation type="obsolete">Aucun lien MEGA valide trouvé. (Les liens de dossier ne sont pas encore pris en charge)</translation>
+    </message>
+    <message>
+        <source>Invalid MEGA Link</source>
+        <translatorcomment>Label to indicate that MEGA link processed is invalid/incorrect </translatorcomment>
+        <translation type="unfinished">Lien MEGA invalide</translation>
     </message>
 </context>
 <context>
@@ -1566,6 +1696,11 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
         <translation type="unfinished">Les fichiers et les dossiers ont un propriétaire et appartiennent à un groupe d&#039;utilisateurs. En utilisant cette fenêtre de dialogue, vous pouvez octroyer différents droits pour les nouveaux fichiers et dossiers créés par MEGAsync aux utilisateurs qui appartiennent au même groupe et aux autres utilisateurs de l&#039;ordinateur. Si vous n&#039;avez pas à les changer, veuillez laisser les droits par défaut pour des raisons de sécurité.</translation>
+    </message>
+    <message>
+        <source>Owner permissions:</source>
+        <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
+        <translation type="unfinished">Droits du propriétaire :</translation>
     </message>
 </context>
 <context>
@@ -1938,7 +2073,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the user the amount and percentage of used space and total space available. Keep %1 (%2%) and %3 codes because they will be filled with the required amounts of storage space.</translatorcomment>
-        <translation>%1 (%2%) sur %3 utilisé</translation>
+        <translation>%1 (%2 %) utilisés sur %3</translation>
     </message>
     <message>
         <source>PRO I</source>
@@ -2087,7 +2222,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">MEGAsync effectuera une analyse complète de vos dossiers synchronisés lorsqu&#039;il démarrera.Voulez-vous redémarrer MEGAsync maintenant ?</translation>
+        <translation type="obsolete">MEGAsync effectuera une analyse complète de vos dossiers synchronisés au démarrage. Voulez-vous redémarrer MEGAsync maintenant ?</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2118,7 +2253,7 @@ Do you want to restart MEGAsync now?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync effectuera une analyse complète de vos dossiers synchronisés lorsqu&#039;il démarrera.Voulez-vous redémarrer MEGAsync maintenant ?</translation>
+        <translation>MEGAsync effectuera une analyse complète de vos dossiers synchronisés au démarrage. Voulez-vous redémarrer MEGAsync maintenant ?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -2277,6 +2412,26 @@ when the application starts again</source>
     <message>
         <source>Do you want to delete your remote backup now?</source>
         <translation type="unfinished">Souhaitez-vous supprimer votre sauvegarde à distance maintenant ?</translation>
+    </message>
+    <message>
+        <source>Download rate limit</source>
+        <translatorcomment>Label to indicate the actual bandwidth limit for downloads.</translatorcomment>
+        <translation type="unfinished">Débit limite en téléchargement</translation>
+    </message>
+    <message>
+        <source>Number of parallel TCP connections per transfer:</source>
+        <translatorcomment>Label to indicate the actual number of parallel TCP connections used by MEGAsync. Keep colon.</translatorcomment>
+        <translation type="unfinished">Nombre de connexions TCP simultanées par transfert :</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translatorcomment>Label to indicate the actual number of parallel TCP connections used for downloads</translatorcomment>
+        <translation type="unfinished">Téléchargements</translation>
+    </message>
+    <message>
+        <source>Uploads</source>
+        <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
+        <translation type="unfinished">Téléversements</translation>
     </message>
 </context>
 <context>
@@ -2519,7 +2674,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Dossier local trop gros (cette version est limitée à %1 dossiers ou %2 fichiers.)Veuillez, essayer un autre dossier.</translation>
+        <translation type="obsolete">Le dossier local est trop gros (cette version est limitée à %1 dossiers ou %2 fichiers.)Veuillez, choisir un autre dossier.</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -2645,6 +2800,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translation type="unfinished">Vous avez tenté de vous connecter trop de fois.[BR]Veuillez attendre jusqu&#039;à %1 et ressayer.</translation>
+    </message>
+    <message>
+        <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
+        <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
+        <translation type="unfinished">Après avoir fini cet assistant, vous pourrez synchroniser d&#039;autres dossiers par le biais de la fenêtre de dialogue des paramètres.</translation>
     </message>
 </context>
 <context>
@@ -2920,11 +3080,6 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Ajouter...</translation>
     </message>
     <message>
-        <source>All Transfers</source>
-        <translatorcomment>Label of tab to access all active transfers</translatorcomment>
-        <translation type="unfinished">Tous les transferts</translation>
-    </message>
-    <message>
         <source>Downloads</source>
         <translatorcomment>Label of tab to access all active downloads</translatorcomment>
         <translation type="unfinished">Téléchargements</translation>
@@ -2993,6 +3148,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Resume</source>
         <translation type="unfinished">Reprendre</translation>
     </message>
+    <message>
+        <source>Active Transfers</source>
+        <translatorcomment>Label of tab to access all active transfers</translatorcomment>
+        <translation type="unfinished">Transferts actifs</translation>
+    </message>
 </context>
 <context>
     <name>TransfersStateInfoWidget</name>
@@ -3011,21 +3171,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate that active transfers are paused</translatorcomment>
         <translation type="unfinished">Transferts en pause</translation>
     </message>
-    <message>
-        <source>No Transfers</source>
-        <translatorcomment>Label to indicate that there are no active downloads nor uploads</translatorcomment>
-        <translation type="unfinished">Aucun transfert</translation>
-    </message>
 </context>
 <context>
     <name>UpgradeDialog</name>
     <message>
         <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">Quota de bande passante gratuite dépassé</translation>
+        <translation type="unfinished">Le quota de transfert gratuit est dépassé</translation>
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">Votre téléchargement n&#039;a pas pu se faire, car cela vous ferait dépasser le quota de transferts gratuits actuellement alloué pour votre adresse IP. Cette limite est dynamique et dépend de la quantité de bande passante inutilisée à notre disposition.</translation>
+        <translation type="unfinished">Votre téléchargement n&#039;a pas pu continuer, car cela vous ferait dépasser la quantité actuelle de transfert gratuit allouée à votre adresse IP. Cette limite est dynamique et dépend de la quantité de bande passante inutilisée dont nous disposons.</translation>
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
@@ -3066,7 +3221,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded.</translatorcomment>
-        <translation>Téléversements MEGAsync</translation>
+        <translation type="obsolete">Téléversements MEGAsync</translation>
     </message>
     <message>
         <source>OK</source>
@@ -3123,7 +3278,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Used</source>
-        <translation type="unfinished">Utilisé</translation>
+        <translation type="unfinished">Utilisés</translation>
     </message>
     <message>
         <source>Available</source>
