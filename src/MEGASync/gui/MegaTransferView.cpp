@@ -3,6 +3,7 @@
 #include "platform/Platform.h"
 #include "control/Utilities.h"
 #include "gui/QMegaMessageBox.h"
+#include <QScrollBar>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -31,6 +32,24 @@ MegaTransferView::MegaTransferView(QWidget *parent) :
     clearAllCompleted = NULL;
     disableLink = false;
     type = 0;
+
+    verticalScrollBar()->setStyleSheet(
+                QString::fromUtf8("QScrollBar:vertical {"
+                           " background: #f6f6f6;"
+                           " width: 15px;"
+                           " border-left: 1px solid #E4E4E4;"
+                          "}"
+                          "QScrollBar::sub-line:vertical, QScrollBar::add-line:vertical {"
+                           " border: none;"
+                           " background: none;"
+                          "}"
+                          "QScrollBar::handle:vertical {"
+                           " background: #c0c0c0;"
+                           " min-height: 20px;"
+                           " border-radius: 4px;"
+                           " margin: 3px 3px 3px 3px;"
+                          "}"
+                 ""));
 }
 
 void MegaTransferView::setup(int type)
