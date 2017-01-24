@@ -27,6 +27,14 @@ TransferItem::TransferItem(QWidget *parent) :
     transferTag = 0;
     dsFinishedTime = 0;
 
+    // Choose the right icon for initial load (hdpi/normal displays)
+    qreal ratio = 1.0;
+#if QT_VERSION >= 0x050000
+    ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+#endif
+    ui->lActionType->setPixmap(QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
+                                                   : QString::fromUtf8(":/images/cloud_item_ico@2x.png")));
+
     ui->lCancelTransfer->installEventFilter(this);
     ui->lCancelTransferCompleted->installEventFilter(this);
     update();
