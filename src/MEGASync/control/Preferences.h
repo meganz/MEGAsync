@@ -303,6 +303,7 @@ public:
     static const QString HTTPS_CERT_INTERMEDIATE;
     static QStringList HTTPS_ALLOWED_ORIGINS;
     static bool HTTPS_ORIGIN_CHECK_ENABLED;
+    static const unsigned int MAX_COMPLETED_ITEMS;
 
 protected:
     QMutex mutex;

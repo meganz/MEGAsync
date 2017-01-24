@@ -14,8 +14,6 @@ class QFinishedTransfersModel : public QTransfersModel
     Q_OBJECT
 
 public:
-    static const int MAX_COMPLETED_ITEMS = 20;
-
     explicit QFinishedTransfersModel(QList<mega::MegaTransfer *>transfers, QObject *parent = 0);
     void setupModelTransfers();
     void removeTransferByTag(int transferTag);

@@ -2900,9 +2900,17 @@ void MegaApplication::toggleLogging()
 
 void MegaApplication::removeFinishedTransfer(int transferTag)
 {
-    QMap<int, mega::MegaTransfer*>::iterator it = finishedTransfers.find(transferTag);
+    QMap<int, MegaTransfer*>::iterator it = finishedTransfers.find(transferTag);
     if (it != finishedTransfers.end())
-    {
+    {     
+        for (QList<MegaTransfer*>::iterator it2 = finishedTransferOrder.begin(); it2 != finishedTransferOrder.end(); it2++)
+        {
+            if ((*it2)->getTag() == transferTag)
+            {
+                finishedTransferOrder.erase(it2);
+                break;
+            }
+        }
         delete it.value();
         finishedTransfers.erase(it);
     }
@@ -2911,12 +2919,13 @@ void MegaApplication::removeFinishedTransfer(int transferTag)
 void MegaApplication::removeAllFinishedTransfers()
 {
     qDeleteAll(finishedTransfers);
+    finishedTransferOrder.clear();
     finishedTransfers.clear();
 }
 
 QList<MegaTransfer*> MegaApplication::getFinishedTransfers()
 {
-    return finishedTransfers.values();
+    return finishedTransferOrder;
 }
 
 int MegaApplication::getNumUnviewedTransfers()
@@ -5298,10 +5307,17 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     if (e->getErrorCode() != MegaError::API_EINCOMPLETE)
     {
         // Add finished transfer to TransferManager map, regardless there is error or not
-        finishedTransfers.insert(transfer->getTag(), transfer->copy());
+        MegaTransfer *t = transfer->copy();
+        finishedTransfers.insert(transfer->getTag(), t);
+        finishedTransferOrder.push_back(t);
+
         if (!transferManager)
         {
             completedTabActive = false;
+            while (finishedTransferOrder.size() > Preferences::MAX_COMPLETED_ITEMS)
+            {
+                removeFinishedTransfer(finishedTransferOrder.first()->getTag());
+            }
         }
 
         if (!completedTabActive)

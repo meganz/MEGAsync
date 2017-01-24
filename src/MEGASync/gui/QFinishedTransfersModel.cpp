@@ -21,7 +21,7 @@ void QFinishedTransfersModel::insertTransfer(MegaTransfer *transfer)
     item->tag = transfer->getTag();
     item->priority = transfer->getPriority();
 
-    if (transfers.size() == MAX_COMPLETED_ITEMS)
+    if (transfers.size() == Preferences::MAX_COMPLETED_ITEMS)
     {
         TransferItemData *t = transferOrder.back();
         int row = transferOrder.size() - 1;

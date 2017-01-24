@@ -297,6 +297,7 @@ protected:
     MegaSyncLogger *logger;
     QPointer<TransferManager> transferManager;
     QMap<int, mega::MegaTransfer*> finishedTransfers;
+    QList<mega::MegaTransfer*> finishedTransferOrder;
 
     bool reboot;
     bool syncActive;
