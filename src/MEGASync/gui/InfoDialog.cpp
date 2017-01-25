@@ -671,14 +671,14 @@ void InfoDialog::updateState()
                 QFileInfo fileBlocked (QString::fromUtf8(blockedPath));
                 ui->lBlockedItem->setToolTip(fileBlocked.absoluteFilePath());
                 ui->lBlockedItem->setAlignment(Qt::AlignLeft);
-                ui->lBlockedItem->setText(tr("Locked file: %1").arg(QString::fromUtf8("<a style=\" font-size: 12px;\" href=\"local://#%1\">%2</a>")
+                ui->lBlockedItem->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a style=\" font-size: 12px;\" href=\"local://#%1\">%2</a>")
                                                                .arg(fileBlocked.absoluteFilePath())
                                                                .arg(fileBlocked.fileName())));
                 delete blockedPath;
             }
             else if (megaApi->areServersBusy())
             {
-                ui->lBlockedItem->setText(tr("Servers too busy. Please wait..."));
+                ui->lBlockedItem->setText(tr("Servers are too busy. Please wait..."));
                 ui->lBlockedItem->setAlignment(Qt::AlignCenter);
             }
             else
