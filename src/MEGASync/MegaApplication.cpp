@@ -675,6 +675,11 @@ void MegaApplication::initialize()
     infoDialogTimer->setSingleShot(true);
     connect(infoDialogTimer, SIGNAL(timeout()), this, SLOT(showInfoDialog()));
 
+    firstTransferTimer = new QTimer(this);
+    firstTransferTimer->setSingleShot(true);
+    firstTransferTimer->setInterval(200);
+    connect(firstTransferTimer, SIGNAL(timeout()), this, SLOT(checkFirstTransfer()));
+
     connect(this, SIGNAL(aboutToQuit()), this, SLOT(cleanAll()));
 
     if (preferences->logged() && preferences->getGlobalPaused())
@@ -2764,6 +2769,34 @@ void MegaApplication::clearViewedTransfers()
 void MegaApplication::onCompletedTransfersTabActive(bool active)
 {
     completedTabActive = active;
+}
+
+void MegaApplication::checkFirstTransfer()
+{
+    if (appfinished || !megaApi)
+    {
+        return;
+    }
+
+    if (numTransfers[MegaTransfer::TYPE_DOWNLOAD] && activeTransferPriority[MegaTransfer::TYPE_DOWNLOAD] == 0xFFFFFFFFFFFFFFFFLL)
+    {
+        MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD);
+        if (nextTransfer)
+        {
+            onTransferUpdate(megaApi, nextTransfer);
+            delete nextTransfer;
+        }
+    }
+
+    if (numTransfers[MegaTransfer::TYPE_UPLOAD] && activeTransferPriority[MegaTransfer::TYPE_UPLOAD] == 0xFFFFFFFFFFFFFFFFLL)
+    {
+        MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_UPLOAD);
+        if (nextTransfer)
+        {
+            onTransferUpdate(megaApi, nextTransfer);
+            delete nextTransfer;
+        }
+    }
 }
 
 void MegaApplication::updateUserStats()
@@ -5466,11 +5499,9 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     }
     else
     {
-        MegaTransfer *nextTransfer = megaApi->getFirstTransfer(type);
-        if (nextTransfer)
+        if (!firstTransferTimer->isActive())
         {
-            onTransferUpdate(megaApi, nextTransfer);
-            delete nextTransfer;
+            firstTransferTimer->start();
         }
     }
 }

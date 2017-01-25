@@ -170,6 +170,7 @@ public slots:
     void handleLocalPath(const QUrl &url);
     void clearViewedTransfers();
     void onCompletedTransfersTabActive(bool active);
+    void checkFirstTransfer();
 
 protected:
     void createTrayIcon();
@@ -273,6 +274,7 @@ protected:
     MegaDownloader *downloader;
     QTimer *periodicTasksTimer;
     QTimer *infoDialogTimer;
+    QTimer *firstTransferTimer;
     QTranslator translator;
     PasteMegaLinksDialog *pasteMegaLinksDialog;
     ChangeLogDialog *changeLogDialog;

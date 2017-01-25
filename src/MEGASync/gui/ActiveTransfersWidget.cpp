@@ -77,13 +77,6 @@ void ActiveTransfersWidget::onTransferFinish(mega::MegaApi *api, mega::MegaTrans
     {
         activeUpload.clear();
     }
-
-    MegaTransfer *nextTransfer = megaApi->getFirstTransfer(type);
-    if (nextTransfer)
-    {
-        onTransferUpdate(api, nextTransfer);
-        delete nextTransfer;
-    }
 }
 
 void ActiveTransfersWidget::onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer)
@@ -208,6 +201,16 @@ void ActiveTransfersWidget::pausedUpTransfers(bool paused)
 
 void ActiveTransfersWidget::updateDownSpeed(long long speed)
 {
+    if (totalDownloads && activeDownload.priority == 0xffffffffffffffff)
+    {
+        MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD);
+        if (nextTransfer)
+        {
+            onTransferUpdate(megaApi, nextTransfer);
+            delete nextTransfer;
+        }
+    }
+
     if (Preferences::instance()->getDownloadsPaused())
     {
         pausedDownTransfers(true);
@@ -237,6 +240,16 @@ void ActiveTransfersWidget::updateDownSpeed(long long speed)
 
 void ActiveTransfersWidget::updateUpSpeed(long long speed)
 {
+    if (totalUploads && activeUpload.priority == 0xffffffffffffffff)
+    {
+        MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_UPLOAD);
+        if (nextTransfer)
+        {
+            onTransferUpdate(megaApi, nextTransfer);
+            delete nextTransfer;
+        }
+    }
+
     if (Preferences::instance()->getUploadsPaused())
     {
         pausedUpTransfers(true);
