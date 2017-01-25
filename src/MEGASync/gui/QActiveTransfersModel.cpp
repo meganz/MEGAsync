@@ -1,5 +1,6 @@
 #include "QActiveTransfersModel.h"
 #include "MegaApplication.h"
+#include <assert.h>
 
 using namespace mega;
 
@@ -61,10 +62,16 @@ void QActiveTransfersModel::removeTransferByTag(int transferTag)
 
     transfer_it it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
     int row = std::distance(transferOrder.begin(), it);
+    assert(it != transferOrder.end() && (*it)->tag == transferTag);
+    if (it == transferOrder.end() || (*it)->tag != transferTag)
+    {
+        return;
+    }
 
     beginRemoveRows(QModelIndex(), row, row);
     transfers.remove(transferTag);
     transferOrder.erase(it);
+    transferItems.remove(transferTag);
     endRemoveRows();
     delete item;
 
@@ -80,6 +87,7 @@ void QActiveTransfersModel::removeAllTransfers()
     qDeleteAll(transfers);
     transfers.clear();
     transferOrder.clear();
+    transferItems.clear();
     endRemoveRows();
 
     emit noTransfers();
@@ -137,7 +145,13 @@ bool QActiveTransfersModel::dropMimeData(const QMimeData *data, Qt::DropAction, 
             return false;
         }
 
-        std::deque<TransferItemData*>::iterator srcit = std::lower_bound(transferOrder.begin(), transferOrder.end(), transfers.value(selectedTags[0]), priority_comparator);
+        TransferItemData* itemData = transfers.value(selectedTags[0]);
+        if (!itemData)
+        {
+            return false;
+        }
+
+        std::deque<TransferItemData*>::iterator srcit = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
         int srcrow = std::distance(transferOrder.begin(), srcit);
         if (srcrow + selectedTags.size() == row)
         {
@@ -240,6 +254,11 @@ void QActiveTransfersModel::updateTransferInfo(MegaTransfer *transfer)
         //Update modified item
         std::deque<TransferItemData*>::iterator it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
         int row = std::distance(transferOrder.begin(), it);
+        assert(it != transferOrder.end() && (*it)->tag == itemData->tag);
+        if (row >= transferOrder.size())
+        {
+            return;
+        }
         emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
     }
     else
@@ -247,6 +266,11 @@ void QActiveTransfersModel::updateTransferInfo(MegaTransfer *transfer)
         //Move item to its new position
         std::deque<TransferItemData*>::iterator it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
         int row = std::distance(transferOrder.begin(), it);
+        assert(it != transferOrder.end() && (*it)->tag == itemData->tag);
+        if (it == transferOrder.end() || (*it)->tag != itemData->tag)
+        {
+            return;
+        }
 
         TransferItemData testItem;
         testItem.priority = newPriority;
@@ -281,5 +305,11 @@ void QActiveTransfersModel::refreshTransferItem(int tag)
 
     std::deque<TransferItemData*>::iterator it = std::lower_bound(transferOrder.begin(), transferOrder.end(), itemData, priority_comparator);
     int row = std::distance(transferOrder.begin(), it);
+    assert(it != transferOrder.end() && (*it)->tag == itemData->tag);
+    if (row >= transferOrder.size())
+    {
+        return;
+    }
+
     emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
 }

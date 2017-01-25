@@ -29,6 +29,7 @@ void QFinishedTransfersModel::insertTransfer(MegaTransfer *transfer)
         transfers.remove(t->tag);
         transferOrder.pop_back();
         ((MegaApplication *)qApp)->removeFinishedTransfer(t->tag);
+        transferItems.remove(t->tag);
         endRemoveRows();
         delete t;
     }
@@ -67,6 +68,7 @@ void QFinishedTransfersModel::removeTransferByTag(int transferTag)
     transfers.remove(transferTag);
     transferOrder.erase(it);
     ((MegaApplication *)qApp)->removeFinishedTransfer(transferTag);
+    transferItems.remove(transferTag);
     endRemoveRows();
     delete item;
 
@@ -82,6 +84,7 @@ void QFinishedTransfersModel::removeAllTransfers()
     qDeleteAll(transfers);
     transfers.clear();
     transferOrder.clear();
+    transferItems.clear();
     endRemoveRows();
 
     ((MegaApplication *)qApp)->removeAllFinishedTransfers();
@@ -152,5 +155,10 @@ void QFinishedTransfersModel::refreshTransferItem(int tag)
     }
 
     assert(row < transferOrder.size());
+    if (row >= transferOrder.size())
+    {
+        return;
+    }
+
     emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
 }
