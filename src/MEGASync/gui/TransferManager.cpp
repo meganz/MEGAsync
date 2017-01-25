@@ -437,6 +437,23 @@ void TransferManager::changeEvent(QEvent *event)
     {
         ui->retranslateUi(this);
         createAddMenu();
+        QWidget *w = ui->wTransfers->currentWidget();
+        if (w == ui->wActiveTransfers)
+        {
+            on_tAllTransfers_clicked();
+        }
+        else if (w == ui->wUploads)
+        {
+            on_tUploads_clicked();
+        }
+        else if (w == ui->wDownloads)
+        {
+            on_tDownloads_clicked();
+        }
+        else if (w == ui->wCompleted)
+        {
+            on_tCompleted_clicked();
+        }
     }
     QDialog::changeEvent(event);
 }
