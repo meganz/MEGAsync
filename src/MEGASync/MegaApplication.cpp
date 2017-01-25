@@ -5416,11 +5416,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     {
         if (e->getErrorCode() == MegaError::API_OK)
         {
-            if (settingsDialog)
-            {
-                settingsDialog->refreshAccountDetails();
-            }
-
             if (infoDialog)
             {
                 bool isShare = false;
@@ -5438,6 +5433,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
                 delete node;
                 delete [] path;
+            }
+
+            if (settingsDialog)
+            {
+                settingsDialog->refreshAccountDetails();
             }
         }
     }
