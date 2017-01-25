@@ -467,7 +467,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Error de desencriptado </translation>
+        <translation>Error de descifrado</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -662,9 +662,23 @@ Are you sure?</source>
         <translation type="unfinished">Pausar subidas</translation>
     </message>
     <message>
+        <source>Resume download</source>
+        <translatorcomment>Label to resume the current download. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Reanudar descarga</translation>
+    </message>
+    <message>
+        <source>Resume upload</source>
+        <translatorcomment>Label to resume the current upload. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Reanudar subida</translation>
+    </message>
+    <message>
         <source>Blocked file: %1</source>
         <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
         <translation type="unfinished">Archivo bloqueado: %1</translation>
+    </message>
+    <message>
+        <source>Servers are too busy. Please wait...</source>
+        <translation type="unfinished">Servidores sobrecargados. Por favor espera...</translation>
     </message>
 </context>
 <context>
@@ -1327,7 +1341,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Invalid key/Decryption error</source>
         <translatorcomment>Label to show that an error related with the decryption process of a node occurs during a SDK operation.</translatorcomment>
-        <translation>Clave incorrecta / Error de desencriptado</translation>
+        <translation>Clave incorrecta / Error de descifrado</translation>
     </message>
     <message>
         <source>Bad session ID</source>
@@ -2988,7 +3002,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">Error de desencriptado </translation>
+        <translation type="unfinished">Error de descifrado</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3065,6 +3079,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 years ago</source>
         <translation type="unfinished">Hace %1 años</translation>
+    </message>
+    <message>
+        <source>starting</source>
+        <translatorcomment>Label to indicate a state or starting for a transfer item (upload/download)</translatorcomment>
+        <translation type="unfinished">iniciando</translation>
     </message>
 </context>
 <context>
@@ -3188,7 +3207,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Por favor mejora a PRO para continuar ahora mismo, o espera %1 para continuar gratis.</translation>
+        <translation type="unfinished">Por favor hazte PRO para continuar ahora mismo, o espera %1 para continuar gratis.</translation>
     </message>
 </context>
 <context>

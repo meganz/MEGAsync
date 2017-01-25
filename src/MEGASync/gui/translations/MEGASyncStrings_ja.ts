@@ -662,9 +662,23 @@ Are you sure?</source>
         <translation type="unfinished">アップロード停止</translation>
     </message>
     <message>
+        <source>Resume download</source>
+        <translatorcomment>Label to resume the current download. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">ダウンロードを続行</translation>
+    </message>
+    <message>
+        <source>Resume upload</source>
+        <translatorcomment>Label to resume the current upload. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">アップロードを再開</translation>
+    </message>
+    <message>
         <source>Blocked file: %1</source>
         <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
         <translation type="unfinished">Blocked file: %1</translation>
+    </message>
+    <message>
+        <source>Servers are too busy. Please wait...</source>
+        <translation type="unfinished">Servers are too busy. Please wait...</translation>
     </message>
 </context>
 <context>
@@ -3065,6 +3079,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 years ago</source>
         <translation type="unfinished">%1年前</translation>
+    </message>
+    <message>
+        <source>starting</source>
+        <translatorcomment>Label to indicate a state or starting for a transfer item (upload/download)</translatorcomment>
+        <translation type="unfinished">開始します</translation>
     </message>
 </context>
 <context>
