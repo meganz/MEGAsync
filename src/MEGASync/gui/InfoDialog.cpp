@@ -1054,6 +1054,11 @@ void InfoDialog::on_bSettings_clicked()
 #endif
 }
 
+void InfoDialog::on_bTransferManager_clicked()
+{
+    app->transferManagerActionClicked();
+}
+
 void InfoDialog::on_bOfficialWeb_clicked()
 {
     QString webUrl = QString::fromAscii("https://mega.nz/");

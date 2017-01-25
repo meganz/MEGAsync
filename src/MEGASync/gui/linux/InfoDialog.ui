@@ -40,6 +40,10 @@ QPushButton#bSettings:hover
 {
 	image: url(://images/tray_preferences_over_ico.png);
 }
+QPushButton#bTransferManager:hover
+{
+	image: url(://images/tray_transfer_manager_ico_over.png);
+}
 QWidget
 {
 font-size: 11px;
@@ -269,7 +273,7 @@ padding-left: 1px;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/mega_logo.png</normaloff>:/images/mega_logo.png</iconset>
         </property>
         <property name="iconSize">
@@ -295,6 +299,36 @@ padding-left: 1px;
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="bTransferManager">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: none;
+margin-top:-1px;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_linux.qrc">
+          <normaloff>:/images/tray_transfer_manager_ico.png</normaloff>:/images/tray_transfer_manager_ico.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="bPause">
@@ -398,7 +432,7 @@ margin-top:-1px;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -479,7 +513,7 @@ margin-top:-1px;
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_win.qrc">
+          <iconset resource="../Resources_linux.qrc">
            <normaloff>:/images/tray_updated_large_ico.png</normaloff>:/images/tray_updated_large_ico.png</iconset>
          </property>
          <property name="iconSize">
@@ -766,7 +800,7 @@ color: rgb(102, 102, 102);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_linux.qrc">
                  <normaloff>:/images/upload_timer_ico.png</normaloff>:/images/upload_timer_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -852,7 +886,7 @@ color: rgb(102, 102, 102);</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_linux.qrc">
                  <normaloff>:/images/download_timer_ico.png</normaloff>:/images/download_timer_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -1409,7 +1443,7 @@ color: #666666;
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/tray_web_ico.png</normaloff>:/images/tray_web_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -1482,7 +1516,7 @@ color: #666666;
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

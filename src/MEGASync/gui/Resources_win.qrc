@@ -270,5 +270,7 @@
         <file>images/clock_ico.png</file>
         <file>images/completed_transfers.png</file>
         <file>images/mbox-warning.png</file>
+        <file>images/tray_transfer_manager_ico_over.png</file>
+        <file>images/tray_transfer_manager_ico.png</file>
     </qresource>
 </RCC>

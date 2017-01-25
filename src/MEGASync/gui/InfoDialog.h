@@ -74,19 +74,13 @@ public slots:
 
 private slots:
     void on_bSettings_clicked();
-
+    void on_bTransferManager_clicked();
     void on_bOfficialWeb_clicked();
-
     void on_bSyncFolder_clicked();
-
     void openFolder(QString path);
-
     void on_bPause_clicked();
-
     void onOverlayClicked();
-
     void scanningAnimationStep();
-
     void onUserAction(int action);
 
 #ifdef __APPLE__

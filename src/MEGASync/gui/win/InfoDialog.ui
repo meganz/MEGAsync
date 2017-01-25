@@ -40,6 +40,10 @@ QPushButton#bSettings:hover
 {
 	image: url(://images/tray_preferences_over_ico.png);
 }
+QPushButton#bTransferManager:hover
+{
+	image: url(://images/tray_transfer_manager_ico_over.png);
+}
 QWidget
 {
 font-size: 11px;
@@ -295,6 +299,32 @@ padding-left: 1px;
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="bTransferManager">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_linux.qrc">
+          <normaloff>:/images/tray_transfer_manager_ico.png</normaloff>:/images/tray_transfer_manager_ico.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="bPause">

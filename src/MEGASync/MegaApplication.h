@@ -220,7 +220,6 @@ protected:
     QAction *uploadAction;
     QAction *downloadAction;
     QAction *streamAction;
-    QAction *transferManagerAction;
 
     QAction *updateAction;
     QAction *showStatusAction;
