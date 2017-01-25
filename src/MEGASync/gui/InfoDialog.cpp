@@ -1287,6 +1287,7 @@ void InfoDialog::regenerateLayout()
 #endif
 
         ui->bPause->setVisible(false);
+        ui->bTransferManager->setVisible(false);
         ui->bSyncFolder->setVisible(false);
         dialogLayout->removeWidget(ui->sActiveTransfers);
         ui->sActiveTransfers->setVisible(false);
@@ -1313,6 +1314,7 @@ void InfoDialog::regenerateLayout()
 #endif
 
         ui->bPause->setVisible(true);
+        ui->bTransferManager->setVisible(true);
         ui->bSyncFolder->setVisible(true);
         dialogLayout->removeWidget(gWidget);
         gWidget->setVisible(false);
