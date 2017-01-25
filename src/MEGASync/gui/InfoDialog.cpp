@@ -591,6 +591,7 @@ void InfoDialog::increaseUsedStorage(long long bytes, bool isInShare)
 
 void InfoDialog::updateState()
 {
+    updateTransfers();
     if (ui->bPause->isChecked())
     {
         if (!preferences->logged())
@@ -738,7 +739,6 @@ void InfoDialog::updateState()
             }
         }
     }
-    updateTransfers();
 }
 
 #ifdef __APPLE__

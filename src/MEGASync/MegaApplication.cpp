@@ -2085,7 +2085,7 @@ void MegaApplication::showInfoDialog()
             #endif
 
             infoDialog->show();
-            infoDialog->updateTransfers();
+            infoDialog->updateState();
             infoDialog->setFocus();
             infoDialog->raise();
             infoDialog->activateWindow();
