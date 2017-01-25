@@ -678,7 +678,7 @@ void InfoDialog::updateState()
             }
             else if (megaApi->areServersBusy())
             {
-                ui->lBlockedItem->setText(tr("Servers too busy. Please wait…"));
+                ui->lBlockedItem->setText(tr("Servers too busy. Please wait..."));
                 ui->lBlockedItem->setAlignment(Qt::AlignCenter);
             }
             else
