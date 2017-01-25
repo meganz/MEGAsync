@@ -315,7 +315,7 @@ padding-left: 1px;
         </property>
         <property name="styleSheet">
          <string notr="true">border: none;
-margin-top:-1px;</string>
+</string>
         </property>
         <property name="text">
          <string/>
