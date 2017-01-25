@@ -240,7 +240,7 @@ padding-top: 1px;</string>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>315</width>
+                 <width>16777215</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -292,15 +292,21 @@ padding-top: 1px;</string>
              </item>
              <item>
               <widget class="QLabel" name="lSpeed">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="minimumSize">
                 <size>
-                 <width>55</width>
+                 <width>80</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>16777215</width>
+                 <width>120</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -429,7 +435,7 @@ padding-top: 1px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_linux.qrc">
               <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -570,7 +576,7 @@ padding-top: 1px;</string>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>330</width>
+                 <width>16777215</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -624,13 +630,13 @@ padding-top: 1px;</string>
               <widget class="QLabel" name="lTotalCompleted">
                <property name="minimumSize">
                 <size>
-                 <width>70</width>
+                 <width>80</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>70</width>
+                 <width>80</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -728,7 +734,7 @@ padding-top: 1px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_linux.qrc">
               <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -749,7 +755,7 @@ padding-top: 1px;</string>
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>
