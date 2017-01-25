@@ -299,15 +299,17 @@ void TransferItem::updateTransfer()
 
             // Update current transfer speed
             QString downloadString;
-            if (meanTransferSpeed >= 20000)
+
+            if (!totalTransferredBytes)
+            {
+                downloadString = QString::fromUtf8("(%1)").arg(tr("starting"));
+            }
+            else
             {
                 QString pattern(QString::fromUtf8("(%1/s)"));
                 downloadString = pattern.arg(Utilities::getSizeString(transferSpeed));
             }
-            else
-            {
-                downloadString = QString::fromUtf8("");
-            }
+
             ui->lSpeed->setText(downloadString);
             break;
         }
