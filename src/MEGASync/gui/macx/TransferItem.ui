@@ -106,7 +106,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="stateActive">
       <property name="minimumSize">
@@ -292,15 +292,21 @@ padding-top: 1px;</string>
              </item>
              <item>
               <widget class="QLabel" name="lSpeed">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="minimumSize">
                 <size>
-                 <width>75</width>
+                 <width>80</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>16777215</width>
+                 <width>120</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -624,13 +630,13 @@ padding-top: 1px;</string>
               <widget class="QLabel" name="lTotalCompleted">
                <property name="minimumSize">
                 <size>
-                 <width>70</width>
+                 <width>80</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>70</width>
+                 <width>80</width>
                  <height>16777215</height>
                 </size>
                </property>
