@@ -30,11 +30,7 @@ ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString ch
                            " background: #c0c0c0;"
                            " min-height: 20px;"
                            " border-radius: 4px;"
-#ifdef Q_OS_MACX
                            " margin: 3px 3px 3px 3px;"
-#else
-                           " margin: 3px 4px 3px 2px;"
-#endif
                           "}"
                  ""));
 

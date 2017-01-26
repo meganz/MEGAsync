@@ -229,7 +229,7 @@ border-radius: 5px;
      </property>
      <property name="styleSheet">
       <string notr="true">background: white;
-
+border: none;
 
 
 
