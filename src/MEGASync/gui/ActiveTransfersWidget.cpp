@@ -11,6 +11,17 @@ ActiveTransfersWidget::ActiveTransfersWidget(QWidget *parent) :
     ui(new Ui::ActiveTransfersWidget)
 {
     ui->setupUi(this);
+
+    // Choose the right icon for initial load (hdpi/normal displays)
+    qreal ratio = 1.0;
+#if QT_VERSION >= 0x050000
+    ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+#endif
+    ui->lDownAnimation->setPixmap(QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
+                                                   : QString::fromUtf8(":/images/cloud_item_ico@2x.png")));
+    ui->lUpAnimation->setPixmap(QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
+                                                   : QString::fromUtf8(":/images/cloud_item_ico@2x.png")));
+
     activeDownload.clear();
     animationDown = animationUp = NULL;
 
