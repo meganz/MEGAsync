@@ -2727,9 +2727,11 @@ void MegaApplication::applyProxySettings()
     }
 
     megaApi->setProxySettings(proxySettings);
+    megaApiFolders->setProxySettings(proxySettings);
     delete proxySettings;
     QNetworkProxy::setApplicationProxy(proxy);
     megaApi->retryPendingConnections(true, true);
+    megaApiFolders->retryPendingConnections(true, true);
 }
 
 void MegaApplication::showUpdatedMessage()
