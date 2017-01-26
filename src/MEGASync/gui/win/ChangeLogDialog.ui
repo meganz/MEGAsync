@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>360</width>
-    <height>366</height>
+    <height>400</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>360</width>
-    <height>366</height>
+    <height>400</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>360</width>
-    <height>366</height>
+    <height>400</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -218,13 +218,13 @@ border-radius: 5px;
      <property name="minimumSize">
       <size>
        <width>360</width>
-       <height>144</height>
+       <height>178</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>360</width>
-       <height>144</height>
+       <height>178</height>
       </size>
      </property>
      <property name="styleSheet">
