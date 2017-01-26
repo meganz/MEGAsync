@@ -201,7 +201,7 @@ void ActiveTransfersWidget::pausedUpTransfers(bool paused)
 
 void ActiveTransfersWidget::updateDownSpeed(long long speed)
 {
-    if (totalDownloads && activeDownload.priority == 0xffffffffffffffff)
+    if (totalDownloads && activeDownload.priority == 0xFFFFFFFFFFFFFFFFULL)
     {
         MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD);
         if (nextTransfer)
@@ -240,7 +240,7 @@ void ActiveTransfersWidget::updateDownSpeed(long long speed)
 
 void ActiveTransfersWidget::updateUpSpeed(long long speed)
 {
-    if (totalUploads && activeUpload.priority == 0xffffffffffffffff)
+    if (totalUploads && activeUpload.priority == 0xFFFFFFFFFFFFFFFFULL)
     {
         MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_UPLOAD);
         if (nextTransfer)
@@ -596,5 +596,5 @@ void TransferData::clear()
     meanTransferSpeed = 0;
     totalSize = 0;
     totalTransferredBytes = 0;
-    priority = 0xffffffffffffffff;
+    priority = 0xFFFFFFFFFFFFFFFFULL;
 }
