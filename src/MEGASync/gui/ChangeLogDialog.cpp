@@ -4,6 +4,7 @@
 #include <QDesktopServices>
 #include <QString>
 #include <QUrl>
+#include <QScrollBar>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -14,6 +15,29 @@ ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString ch
     ui(new Ui::ChangeLogDialog)
 {
     ui->setupUi(this);
+
+    ui->tChangelog->verticalScrollBar()->setStyleSheet(
+                QString::fromUtf8("QScrollBar:vertical {"
+                           " background: #f6f6f6;"
+                           " width: 15px;"
+                           " border-left: 1px solid #E4E4E4;"
+                          "}"
+                          "QScrollBar::sub-line:vertical, QScrollBar::add-line:vertical {"
+                           " border: none;"
+                           " background: none;"
+                          "}"
+                          "QScrollBar::handle:vertical {"
+                           " background: #c0c0c0;"
+                           " min-height: 20px;"
+                           " border-radius: 4px;"
+#ifdef Q_OS_MACX
+                           " margin: 3px 3px 3px 3px;"
+#else
+                           " margin: 3px 4px 3px 2px;"
+#endif
+                          "}"
+                 ""));
+
     ui->lCopyright->setText(ui->lCopyright->text().arg(QDate::currentDate().year()));
     ui->tChangelog->document()->setDocumentMargin(16.0);
     ui->lVersion->setText(version);
