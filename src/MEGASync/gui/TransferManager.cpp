@@ -63,7 +63,7 @@ TransferManager::~TransferManager()
 
 void TransferManager::onTransferStart(MegaApi *api, MegaTransfer *transfer)
 {
-    if (!transfer->getPriority())
+    if (!transfer->getPriority() || transfer->isStreamingTransfer() || transfer->isFolderTransfer())
     {
         return;
     }
@@ -75,6 +75,11 @@ void TransferManager::onTransferStart(MegaApi *api, MegaTransfer *transfer)
 
 void TransferManager::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *e)
 {
+    if (transfer->isStreamingTransfer() || transfer->isFolderTransfer())
+    {
+        return;
+    }
+
     ui->wCompleted->getModel()->onTransferFinish(api, transfer, e);
     if (!transfer->getPriority())
     {
@@ -88,7 +93,7 @@ void TransferManager::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
 
 void TransferManager::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
 {
-    if (!transfer->getPriority())
+    if (!transfer->getPriority() || transfer->isStreamingTransfer() || transfer->isFolderTransfer())
     {
         return;
     }
@@ -100,6 +105,11 @@ void TransferManager::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
 
 void TransferManager::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError *e)
 {
+    if (!transfer->getPriority() || transfer->isStreamingTransfer() || transfer->isFolderTransfer())
+    {
+        return;
+    }
+
     ui->wUploads->getModel()->onTransferTemporaryError(api, transfer, e);
     ui->wDownloads->getModel()->onTransferTemporaryError(api, transfer, e);
     ui->wActiveTransfers->onTransferTemporaryError(api, transfer, e);

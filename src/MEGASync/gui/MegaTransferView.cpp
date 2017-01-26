@@ -393,7 +393,28 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
         {
             if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
             {
-                if (areTransfersFailed(transferTagSelected))
+                bool failed = false;
+                MegaTransfer *transfer = NULL;
+                QTransfersModel *model = (QTransfersModel*)this->model();
+                if (model)
+                {
+                    for (int i = 0; i < transferTagSelected.size(); i++)
+                    {
+                        transfer = model->getTransferByTag(transferTagSelected[i]);
+                        if (!transfer)
+                        {
+                            transferTagSelected.clear();
+                            return;
+                        }
+
+                        if (transfer->getState() == MegaTransfer::STATE_FAILED)
+                        {
+                            failed = true;
+                        }
+                    }
+                }
+
+                if (failed)
                 {
                     customizeCompletedContextMenu(false, false, false);
                 }
@@ -489,27 +510,9 @@ void MegaTransferView::moveToBottomClicked()
     }
 }
 
-bool MegaTransferView::areTransfersFailed(QList<int> selectedTransfers)
-{
-    MegaTransfer *transfer = NULL;
-    QTransfersModel *model = (QTransfersModel*)this->model();
-    if (model)
-    {
-        for (int i = 0; i < selectedTransfers.size(); i++)
-        {
-            transfer = model->getTransferByTag(selectedTransfers[i]);
-            if (transfer->getState() == MegaTransfer::STATE_FAILED)
-            {
-                return true;
-            }
-        }
-    }
-    return false;
-}
-
 void MegaTransferView::cancelTransferClicked()
 {
-    if(QMegaMessageBox::warning(0,
+    if (QMegaMessageBox::warning(0,
                              QString::fromUtf8("MEGAsync"),
                              tr("Are you sure you want to cancel this transfer?"), Utilities::getDevicePixelRatio(),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No)
@@ -542,7 +545,10 @@ void MegaTransferView::getLinkClicked()
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
             transfer = model->getTransferByTag(transferTagSelected[i]);
-            exportList.push_back(transfer->getNodeHandle());
+            if (transfer)
+            {
+                exportList.push_back(transfer->getNodeHandle());
+            }
         }
 
         if (exportList.size())
@@ -561,7 +567,7 @@ void MegaTransferView::openItemClicked()
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
             transfer = model->getTransferByTag(transferTagSelected[i]);
-            if (transfer->getPath())
+            if (transfer && transfer->getPath())
             {
                 QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(QString::fromUtf8(transfer->getPath())));
             }
@@ -578,7 +584,7 @@ void MegaTransferView::showInFolderClicked()
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
             transfer = model->getTransferByTag(transferTagSelected[i]);
-            if (transfer->getPath())
+            if (transfer && transfer->getPath())
             {
                 Platform::showInFolder(QString::fromUtf8(transfer->getPath()));
             }

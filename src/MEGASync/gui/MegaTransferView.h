@@ -63,7 +63,6 @@ private slots:
     void showInFolderClicked();
     void clearTransferClicked();
     void clearAllTransferClicked();
-    bool areTransfersFailed(QList<int> selectedTransfers);
 };
 
 #endif // MEGATRANSFERVIEW_H
