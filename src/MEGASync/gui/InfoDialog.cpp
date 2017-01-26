@@ -335,7 +335,8 @@ void InfoDialog::updateTransfers()
             QString invalidSpeedPattern(tr("%1 of %2"));
             QString downloadString;
 
-            if (activeDownloadState == MegaTransfer::STATE_PAUSED)
+
+            if (activeDownloadState == MegaTransfer::STATE_PAUSED || preferences->getDownloadsPaused())
             {
                 downloadString = pausedPattern.arg(currentDownload).arg(totalDownloads);
             }
@@ -420,7 +421,7 @@ void InfoDialog::updateTransfers()
             QString invalidSpeedPattern(tr("%1 of %2"));
             QString uploadString;
 
-            if (activeUploadState == MegaTransfer::STATE_PAUSED)
+            if (activeUploadState == MegaTransfer::STATE_PAUSED || preferences->getUploadsPaused())
             {
                 uploadString = pausedPattern.arg(currentUpload).arg(totalUploads);
             }

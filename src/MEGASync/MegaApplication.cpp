@@ -5037,7 +5037,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_PAUSE_TRANSFERS:
     {
-        paused = request->getFlag();
+        bool paused = request->getFlag();
         switch (request->getNumber())
         {
             case MegaTransfer::TYPE_DOWNLOAD:
@@ -5050,15 +5050,18 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 preferences->setUploadsPaused(paused);
                 preferences->setDownloadsPaused(paused);
                 preferences->setGlobalPaused(paused);
+                this->paused = paused;
                 break;
         }
         if (preferences->getDownloadsPaused() == preferences->getUploadsPaused())
         {
             preferences->setGlobalPaused(paused);
+            this->paused = paused;
         }
         else
         {
             preferences->setGlobalPaused(false);
+            this->paused = false;
         }
 
         if (transferManager)
