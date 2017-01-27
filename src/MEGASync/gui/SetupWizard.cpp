@@ -381,6 +381,7 @@ void SetupWizard::on_bNext_clicked()
             ui->bMegaFolder->show();
             ui->eMegaFolder->show();
             ui->lMegaFolder->show();
+            ui->lAdditionalSyncs->show();
         }
         else
         {
@@ -391,6 +392,7 @@ void SetupWizard::on_bNext_clicked()
             ui->bMegaFolder->hide();
             ui->eMegaFolder->hide();
             ui->lMegaFolder->hide();
+            ui->lAdditionalSyncs->hide();
         }
 
         ui->sPages->setCurrentWidget(ui->pAdvanced);
