@@ -542,18 +542,37 @@ void MegaTransferView::getLinkClicked()
     if (model)
     {
         QList<MegaHandle> exportList;
+        QStringList linkList;
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
             transfer = model->getTransferByTag(transferTagSelected[i]);
             if (transfer)
             {
-                exportList.push_back(transfer->getNodeHandle());
+                MegaNode *node = transfer->getPublicMegaNode();
+                if (!node || !node->isPublic())
+                {
+                    exportList.push_back(transfer->getNodeHandle());
+                }
+                else
+                {
+                    char *handle = node->getBase64Handle();
+                    char *key = node->getBase64Key();
+                    if (handle && key)
+                    {
+                        QString link = QString::fromUtf8("https://mega.nz/#!%1!%2")
+                                .arg(QString::fromUtf8(handle)).arg(QString::fromUtf8(key));
+                        linkList.append(link);
+                    }
+                    delete [] handle;
+                    delete [] key;
+                }
+                delete node;
             }
         }
 
-        if (exportList.size())
+        if (exportList.size() || linkList.size())
         {
-            ((MegaApplication*)qApp)->exportNodes(exportList);
+            ((MegaApplication*)qApp)->exportNodes(exportList, linkList);
         }
     }
 }

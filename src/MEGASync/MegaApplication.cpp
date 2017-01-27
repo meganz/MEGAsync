@@ -3638,13 +3638,14 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
     exportOps++;
 }
 
-void MegaApplication::exportNodes(QList<MegaHandle> exportList)
+void MegaApplication::exportNodes(QList<MegaHandle> exportList, QStringList extraLinks)
 {
     if (appfinished || !megaApi->isLoggedIn())
     {
         return;
     }
 
+    this->extraLinks.append(extraLinks);
     ExportProcessor *processor = new ExportProcessor(megaApi, exportList);
     connect(processor, SIGNAL(onRequestLinksFinished()), this, SLOT(onRequestLinksFinished()));
     processor->requestLinks();
@@ -3732,6 +3733,9 @@ void MegaApplication::onRequestLinksFinished()
 
     ExportProcessor *exportProcessor = ((ExportProcessor *)QObject::sender());
     QStringList links = exportProcessor->getValidLinks();
+    links.append(extraLinks);
+    extraLinks.clear();
+
     if (!links.size())
     {
         exportOps--;
