@@ -1048,6 +1048,7 @@ Section Uninstall
   Delete "$INSTDIR\cares.dll"
   Delete "$INSTDIR\libuv.dll"
   Delete "$INSTDIR\libsodium.dll"
+  Delete "$INSTDIR\qt.conf"
   Delete "$INSTDIR\NSIS.Library.RegTool*.exe"
 
   !define LIBRARY_COM
