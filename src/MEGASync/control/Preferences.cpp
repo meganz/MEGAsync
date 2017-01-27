@@ -16,7 +16,7 @@ const int Preferences::VERSION_CODE = 3000;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("3.0.0");
-const QString Preferences::SDK_ID = QString::fromAscii("5b67f");
+const QString Preferences::SDK_ID = QString::fromAscii("2ca65");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- Transfer manager\n"
             "- Transfer speed control\n"
