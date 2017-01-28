@@ -310,6 +310,7 @@ void ActiveTransfersWidget::on_bDownCancel_clicked()
     {
         megaApi->cancelTransfer(transfer);
     }
+    delete transfer;
 }
 
 void ActiveTransfersWidget::on_bUpCancel_clicked()
@@ -334,6 +335,7 @@ void ActiveTransfersWidget::on_bUpCancel_clicked()
     {
         megaApi->cancelTransfer(transfer);
     }
+    delete transfer;
 }
 
 void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTransfer)
