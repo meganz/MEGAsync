@@ -11,18 +11,19 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/2.9.10.0";
-const int Preferences::VERSION_CODE = 2910;
-const int Preferences::BUILD_ID = 0;
+const char Preferences::USER_AGENT[] = "MEGAsync/3.0.0.1";
+const int Preferences::VERSION_CODE = 3000;
+const int Preferences::BUILD_ID = 1;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("2.9.10");
-const QString Preferences::SDK_ID = QString::fromAscii("2c928");
+const QString Preferences::VERSION_STRING = QString::fromAscii("3.0.0");
+const QString Preferences::SDK_ID = QString::fromAscii("550d1");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- Support to download/import folder links\n"
-            "- Automatic HTTP/HTTPS proxy detection on OS X\n"
-            "- Better compatibility with antivirus software\n"
-            "- HDPI support for Linux distros having QT >= 5.6\n"
-            "- Other bug fixes and minor improvements");
+            "- Transfer manager\n"
+            "- Transfer speed control\n"
+            "- Configurable number of connections per transfer\n"
+            "- Improved the transfer speed\n"
+            "- Reduced CPU usage during synchronization\n"
+            "- Bug fixes");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -40,6 +41,7 @@ const unsigned int Preferences::UPDATE_TIMEOUT_SECS                 = 600;
 const unsigned int Preferences::MAX_LOGIN_TIME_MS                   = 40000;
 const unsigned int Preferences::PROXY_TEST_TIMEOUT_MS               = 10000;
 const unsigned int Preferences::MAX_IDLE_TIME_MS                    = 600000;
+const unsigned int Preferences::MAX_COMPLETED_ITEMS                 = 1000;
 
 const qint16 Preferences::HTTPS_PORT = 6342;
 const QString Preferences::HTTPS_KEY = QString::fromUtf8(
@@ -173,6 +175,10 @@ const QString Preferences::startOnStartupKey        = QString::fromAscii("startO
 const QString Preferences::languageKey              = QString::fromAscii("language");
 const QString Preferences::updateAutomaticallyKey   = QString::fromAscii("updateAutomatically");
 const QString Preferences::uploadLimitKBKey         = QString::fromAscii("uploadLimitKB");
+const QString Preferences::downloadLimitKBKey       = QString::fromAscii("downloadLimitKB");
+const QString Preferences::parallelUploadConnectionsKey       = QString::fromAscii("parallelUploadConnections");
+const QString Preferences::parallelDownloadConnectionsKey     = QString::fromAscii("parallelDownloadConnections");
+
 const QString Preferences::upperSizeLimitKey        = QString::fromAscii("upperSizeLimit");
 const QString Preferences::lowerSizeLimitKey        = QString::fromAscii("lowerSizeLimit");
 
@@ -214,6 +220,8 @@ const QString Preferences::localFingerprintKey      = QString::fromAscii("localF
 const QString Preferences::fileTimeKey              = QString::fromAscii("fileTime");
 const QString Preferences::isCrashedKey             = QString::fromAscii("isCrashed");
 const QString Preferences::wasPausedKey             = QString::fromAscii("wasPaused");
+const QString Preferences::wasUploadsPausedKey      = QString::fromAscii("wasUploadsPaused");
+const QString Preferences::wasDownloadsPausedKey    = QString::fromAscii("wasDownloadsPaused");
 const QString Preferences::lastExecutionTimeKey     = QString::fromAscii("lastExecutionTime");
 const QString Preferences::excludedSyncNamesKey     = QString::fromAscii("excludedSyncNames");
 const QString Preferences::lastVersionKey           = QString::fromAscii("lastVersion");
@@ -246,6 +254,9 @@ const bool Preferences::defaultLowerSizeLimit       = false;
 const bool Preferences::defaultUseHttpsOnly         = false;
 const bool Preferences::defaultSSLcertificateException = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
+const int  Preferences::defaultDownloadLimitKB      = 0;
+const int  Preferences::defaultParallelUploadConnections      = 3;
+const int  Preferences::defaultParallelDownloadConnections    = 4;
 const int Preferences::defaultTransferDownloadMethod      = MegaApi::TRANSFER_METHOD_AUTO;
 const int Preferences::defaultTransferUploadMethod        = MegaApi::TRANSFER_METHOD_AUTO;
 const long long  Preferences::defaultUpperSizeLimitValue              = 0;
@@ -354,6 +365,7 @@ void Preferences::initialize(QString dataPath)
 
 Preferences::Preferences() : QObject(), mutex(QMutex::Recursive)
 {
+    diffTimeWithSDK = 0;
     clearTemporalBandwidth();
 }
 
@@ -679,6 +691,16 @@ bool Preferences::isTemporalBandwidthValid()
     return isTempBandwidthValid;
 }
 
+long long Preferences::getMsDiffTimeWithSDK()
+{
+    return diffTimeWithSDK;
+}
+
+void Preferences::setDsDiffTimeWithSDK(long long diffTime)
+{
+    this->diffTimeWithSDK = diffTime;
+}
+
 void Preferences::setTemporalBandwidthValid(bool value)
 {
     this->isTempBandwidthValid = value;
@@ -971,6 +993,66 @@ void Preferences::setUploadLimitKB(int value)
     mutex.lock();
     assert(logged());
     settings->setValue(uploadLimitKBKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+int Preferences::downloadLimitKB()
+{
+    mutex.lock();
+    assert(logged());
+    int value = settings->value(downloadLimitKBKey, defaultDownloadLimitKB).toInt();
+    mutex.unlock();
+    return value;
+}
+
+int Preferences::parallelUploadConnections()
+{
+    mutex.lock();
+    int value = settings->value(parallelUploadConnectionsKey, defaultParallelUploadConnections).toInt();
+    mutex.unlock();
+    return value;
+}
+
+int Preferences::parallelDownloadConnections()
+{
+    mutex.lock();
+    int value = settings->value(parallelDownloadConnectionsKey, defaultParallelDownloadConnections).toInt();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setParallelUploadConnections(int value)
+{
+    mutex.lock();
+    assert(logged());
+    if (value < 1 || value > 6)
+    {
+       value = 3;
+    }
+    settings->setValue(parallelUploadConnectionsKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+void Preferences::setParallelDownloadConnections(int value)
+{
+    mutex.lock();
+    assert(logged());
+    if (value < 1 || value > 6)
+    {
+       value = 4;
+    }
+    settings->setValue(parallelDownloadConnectionsKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+void Preferences::setDownloadLimitKB(int value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(downloadLimitKBKey, value);
     settings->sync();
     mutex.unlock();
 }
@@ -2008,7 +2090,7 @@ void Preferences::setCrashed(bool value)
     mutex.unlock();
 }
 
-bool Preferences::wasPaused()
+bool Preferences::getGlobalPaused()
 {
     mutex.lock();
     bool value = settings->value(wasPausedKey, false).toBool();
@@ -2016,10 +2098,42 @@ bool Preferences::wasPaused()
     return value;
 }
 
-void Preferences::setWasPaused(bool value)
+void Preferences::setGlobalPaused(bool value)
 {
     mutex.lock();
     settings->setValue(wasPausedKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::getUploadsPaused()
+{
+    mutex.lock();
+    bool value = settings->value(wasUploadsPausedKey, false).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setUploadsPaused(bool value)
+{
+    mutex.lock();
+    settings->setValue(wasUploadsPausedKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::getDownloadsPaused()
+{
+    mutex.lock();
+    bool value = settings->value(wasDownloadsPausedKey, false).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setDownloadsPaused(bool value)
+{
+    mutex.lock();
+    settings->setValue(wasDownloadsPausedKey, value);
     settings->sync();
     mutex.unlock();
 }

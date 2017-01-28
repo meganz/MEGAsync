@@ -2,8 +2,8 @@
 #include <Shlobj.h>
 #include <Shlwapi.h>
 
-#if QT_VERSION >= 0x050700
-#include <QtPlatformHeaders/QWindowsWindowFunctions>
+#if QT_VERSION >= 0x050200
+#include <QtWin>
 #endif
 
 // Windows headers don't define this for WinXP despite the documentation says that they should
@@ -53,9 +53,7 @@ WinShellDispatcherTask* WindowsPlatform::shellDispatcherTask = NULL;
 
 void WindowsPlatform::initialize(int argc, char *argv[])
 {
-#if QT_VERSION >= 0x050700
-    QWindowsWindowFunctions::setWindowActivationBehavior(QWindowsWindowFunctions::AlwaysActivateWindow);
-#endif
+
 }
 
 bool WindowsPlatform::enableTrayIcon(QString executable)
@@ -491,4 +489,74 @@ QString WindowsPlatform::getDefaultOpenApp(QString extension)
         }
     }
     return QString();
+}
+
+void WindowsPlatform::enableDialogBlur(QDialog *dialog)
+{
+    // this feature doesn't work well yet
+    return;
+
+    bool win10 = false;
+    HWND hWnd = (HWND)dialog->winId();
+    dialog->setAttribute(Qt::WA_TranslucentBackground, true);
+    dialog->setAttribute(Qt::WA_NoSystemBackground, true);
+
+    const HINSTANCE hModule = LoadLibrary(TEXT("user32.dll"));
+    if (hModule)
+    {
+        struct ACCENTPOLICY
+        {
+            int nAccentState;
+            int nFlags;
+            int nColor;
+            int nAnimationId;
+        };
+        struct WINCOMPATTRDATA
+        {
+            int nAttribute;
+            PVOID pData;
+            ULONG ulDataSize;
+        };
+        typedef BOOL(WINAPI*pSetWindowCompositionAttribute)(HWND, WINCOMPATTRDATA*);
+        const pSetWindowCompositionAttribute SetWindowCompositionAttribute = (pSetWindowCompositionAttribute)GetProcAddress(hModule, "SetWindowCompositionAttribute");
+        if (SetWindowCompositionAttribute)
+        {
+            ACCENTPOLICY policy = { 3, 0, 0xFFFFFFFF, 0 };
+            WINCOMPATTRDATA data = { 19, &policy, sizeof(ACCENTPOLICY) };
+            SetWindowCompositionAttribute(hWnd, &data);
+            win10 = true;
+        }
+        FreeLibrary(hModule);
+    }
+
+#if QT_VERSION >= 0x050200
+    if (!win10)
+    {
+        QtWin::setCompositionEnabled(true);
+        QtWin::extendFrameIntoClientArea(dialog, -1, -1, -1, -1);
+        QtWin::enableBlurBehindWindow(dialog);
+    }
+#endif
+}
+
+void WindowsPlatform::activateBackgroundWindow(QDialog *window)
+{
+    DWORD currentThreadId = GetCurrentThreadId();
+    DWORD foregroundThreadId;
+    HWND foregroundWindow;
+    bool threadAttached = false;
+
+    if (QGuiApplication::applicationState() != Qt::ApplicationActive
+        && (foregroundWindow = GetForegroundWindow())
+        && (foregroundThreadId = GetWindowThreadProcessId(foregroundWindow, NULL))
+        && (foregroundThreadId != currentThreadId))
+    {
+        threadAttached = AttachThreadInput(foregroundThreadId, currentThreadId, TRUE);
+    }
+    window->showMinimized();
+    window->showNormal();
+    if (threadAttached)
+    {
+        AttachThreadInput(foregroundThreadId, currentThreadId, FALSE);
+    }
 }

@@ -74,6 +74,8 @@ public:
     long long totalBandwidth();
     void setTotalBandwidth(long long value);
     bool isTemporalBandwidthValid();
+    long long getMsDiffTimeWithSDK();
+    void setDsDiffTimeWithSDK(long long diffTime);
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
     void setTemporalBandwidth(long long value);
@@ -103,7 +105,13 @@ public:
     void setHasDefaultImportFolder(bool value);
     bool canUpdate(QString filePath);
     int uploadLimitKB();
+    int downloadLimitKB();
     void setUploadLimitKB(int value);
+    void setDownloadLimitKB(int value);
+    int parallelUploadConnections();
+    int parallelDownloadConnections();
+    void setParallelUploadConnections(int value);
+    void setParallelDownloadConnections(int value);
     long long upperSizeLimitValue();
     void setUpperSizeLimitValue(long long value);
     long long lowerSizeLimitValue();
@@ -215,8 +223,12 @@ public:
 
     bool isCrashed();
     void setCrashed(bool value);
-    bool wasPaused();
-    void setWasPaused(bool value);
+    bool getGlobalPaused();
+    void setGlobalPaused(bool value);
+    bool getUploadsPaused();
+    void setUploadsPaused(bool value);
+    bool getDownloadsPaused();
+    void setDownloadsPaused(bool value);
 
     long long lastStatsRequest();
     void setLastStatsRequest(long long value);
@@ -291,6 +303,7 @@ public:
     static const QString HTTPS_CERT_INTERMEDIATE;
     static QStringList HTTPS_ALLOWED_ORIGINS;
     static bool HTTPS_ORIGIN_CHECK_ENABLED;
+    static const unsigned int MAX_COMPLETED_ITEMS;
 
 protected:
     QMutex mutex;
@@ -315,6 +328,7 @@ protected:
     int tempBandwidthInterval;
     bool isTempBandwidthValid;
     QString dataPath;
+    long long diffTimeWithSDK;
 
     static const QString currentAccountKey;
     static const QString syncsGroupKey;
@@ -344,6 +358,9 @@ protected:
     static const QString languageKey;
     static const QString updateAutomaticallyKey;
     static const QString uploadLimitKBKey;
+    static const QString downloadLimitKBKey;
+    static const QString parallelUploadConnectionsKey;
+    static const QString parallelDownloadConnectionsKey;
     static const QString upperSizeLimitKey;
     static const QString lowerSizeLimitKey;
     static const QString upperSizeLimitValueKey;
@@ -382,6 +399,8 @@ protected:
     static const QString isCrashedKey;
     static const QString lastStatsRequestKey;
     static const QString wasPausedKey;
+    static const QString wasUploadsPausedKey;
+    static const QString wasDownloadsPausedKey;
     static const QString lastUpdateTimeKey;
     static const QString lastUpdateVersionKey;
     static const QString previousCrashesKey;
@@ -409,6 +428,9 @@ protected:
     static const bool defaultStartOnStartup;
     static const bool defaultUpdateAutomatically;
     static const int  defaultUploadLimitKB;
+    static const int  defaultDownloadLimitKB;
+    static const int  defaultParallelUploadConnections;
+    static const int  defaultParallelDownloadConnections;
     static const int  defaultProxyType;
     static const int  defaultProxyProtocol;
     static const QString  defaultProxyServer;

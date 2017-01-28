@@ -230,5 +230,47 @@
         <file>images/right_arrow.png</file>
         <file>images/speed_meter.png</file>
         <file>images/unlimited_file_size.png</file>
+        <file>images/add_ico.png</file>
+        <file>images/clear_ico.png</file>
+        <file>images/clear_item_ico.png</file>
+        <file>images/cloud_download_item_ico.png</file>
+        <file>images/cloud_item_ico.png</file>
+        <file>images/cloud_upload_item_ico.png</file>
+        <file>images/download_from_mega_ico.png</file>
+        <file>images/download_item_ico.png</file>
+        <file>images/get_link_ico.png</file>
+        <file>images/megasync_logo.png</file>
+        <file>images/no_downloads.png</file>
+        <file>images/no_transfers.png</file>
+        <file>images/no_uploads.png</file>
+        <file>images/pause_ico.png</file>
+        <file>images/paused_transfers.png</file>
+        <file>images/play_ico.png</file>
+        <file>images/settings_ico.png</file>
+        <file>images/sync_item_ico.png</file>
+        <file>images/upload_item_ico.png</file>
+        <file>images/upload_to_mega_ico.png</file>
+        <file>images/completed_item_ico.png</file>
+        <file>images/downloading.gif</file>
+        <file>images/synching.gif</file>
+        <file>images/uploading.gif</file>
+        <file>images/downloading@2x.gif</file>
+        <file>images/synching@2x.gif</file>
+        <file>images/uploading@2x.gif</file>
+        <file>images/cloud_download_item_ico@2x.png</file>
+        <file>images/cloud_item_ico@2x.png</file>
+        <file>images/cloud_upload_item_ico@2x.png</file>
+        <file>images/sync_item_ico@2x.png</file>
+        <file>images/completed_item_ico@2x.png</file>
+        <file>images/download_from_mega_ico_white.png</file>
+        <file>images/get_link_ico_white.png</file>
+        <file>images/settings_ico_white.png</file>
+        <file>images/upload_to_mega_ico_white.png</file>
+        <file>images/pause_big_ico.png</file>
+        <file>images/clock_ico.png</file>
+        <file>images/completed_transfers.png</file>
+        <file>images/mbox-warning.png</file>
+        <file>images/tray_transfer_manager_ico_over.png</file>
+        <file>images/tray_transfer_manager_ico.png</file>
     </qresource>
 </RCC>

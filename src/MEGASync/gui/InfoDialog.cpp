@@ -7,6 +7,7 @@
 #include <QToolTip>
 #include <QSignalMapper>
 #include <QVBoxLayout>
+#include <QFileInfo>
 #include "InfoDialog.h"
 #include "ActiveTransfer.h"
 #include "RecentFile.h"
@@ -41,13 +42,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     currentDownload = 0;
     totalUploads = 0;
     totalDownloads = 0;
-    totalDownloadedSize = totalUploadedSize = 0;
-    totalDownloadSize = totalUploadSize = 0;
+    activeDownloadState = activeUploadState = MegaTransfer::STATE_NONE;
+    remainingDownloadBytes = remainingUploadBytes = 0;
+    meanDownloadSpeed = meanUploadSpeed = 0;
     remainingUploads = remainingDownloads = 0;
-    uploadStartTime = 0;
-    downloadStartTime = 0;
-    effectiveDownloadSpeed = 200000;
-    effectiveUploadSpeed = 200000;
     ui->lDownloads->setText(QString::fromAscii(""));
     ui->lUploads->setText(QString::fromAscii(""));
     indexing = false;
@@ -91,6 +89,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     ui->wDownloadDesc->hide();
     ui->wUploadDesc->hide();
+    ui->lBlockedItem->setText(QString::fromUtf8(""));
 
 #ifdef __APPLE__
     arrow = new QPushButton(this);
@@ -167,6 +166,8 @@ InfoDialog::~InfoDialog()
 {
     delete ui;
     delete gWidget;
+    delete activeDownload;
+    delete activeUpload;
 }
 
 void InfoDialog::setUsage()
@@ -194,51 +195,50 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
     }
 
     int type = transfer->getType();
-    QString fileName = QString::fromUtf8(transfer->getFileName());
     long long completedSize = transfer->getTransferredBytes();
     long long totalSize = transfer->getTotalBytes();
+    long long meanSpeed = transfer->getMeanSpeed();
 
-    ActiveTransfer *wTransfer;
+    ActiveTransfer *wTransfer = NULL;
     if (type == MegaTransfer::TYPE_DOWNLOAD)
     {
+        activeDownloadState = transfer->getState();
+        long long speed = megaApi->getCurrentDownloadSpeed();
+        meanDownloadSpeed = meanSpeed;
+        remainingDownloadBytes = totalSize - completedSize;
+        if (speed || downloadSpeed < 0)
+        {
+            downloadSpeed = speed;
+        }
+
         wTransfer = !preferences->logged() ? gWidget->getTransfer() : ui->wTransfer1;
-        if (activeDownload != transfer)
+        if (!activeDownload || activeDownload->getTag() != transfer->getTag())
         {
             delete activeDownload;
             activeDownload = transfer->copy();
-        }
-
-        if (!downloadStartTime)
-        {
-            downloadStartTime = QDateTime::currentMSecsSinceEpoch();
-            elapsedDownloadTime=0;
-            lastUpdate = QDateTime::currentMSecsSinceEpoch();
+            wTransfer->setFileName(QString::fromUtf8(transfer->getFileName()));
         }
     }
     else
     {
+        activeUploadState = transfer->getState();
+        long long speed = megaApi->getCurrentUploadSpeed();
+        remainingUploadBytes = totalSize - completedSize;
+        meanUploadSpeed = meanSpeed;
+        if (speed || uploadSpeed < 0)
+        {
+            uploadSpeed = speed;
+        }
+
         wTransfer = ui->wTransfer2;
-        if (activeUpload != transfer)
+        if (!activeUpload || activeUpload->getTag() != transfer->getTag())
         {
             delete activeUpload;
             activeUpload = transfer->copy();
-        }
-
-        if (!uploadStartTime)
-        {
-            uploadStartTime = QDateTime::currentMSecsSinceEpoch();
-            elapsedUploadTime=0;
-            lastUpdate = QDateTime::currentMSecsSinceEpoch();
+            wTransfer->setFileName(QString::fromUtf8(transfer->getFileName()));
         }
     }
-
-    bool shown = wTransfer->isVisible();
-    wTransfer->setFileName(fileName);
     wTransfer->setProgress(completedSize, totalSize, !transfer->isSyncTransfer());
-    if (!shown)
-    {
-        updateState();
-    }
 }
 
 void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey)
@@ -295,31 +295,11 @@ void InfoDialog::updateTransfers()
     currentDownload = totalDownloads - remainingDownloads + 1;
     currentUpload = totalUploads - remainingUploads + 1;
 
-    if (remainingDownloads)
+    if (isVisible())
     {
-        long long remainingBytes = totalDownloadSize-totalDownloadedSize;
-        if (remainingBytes < 0)
+        if (remainingDownloads)
         {
-            remainingBytes = 0;
-        }
-
-        unsigned long long timeIncrement = QDateTime::currentMSecsSinceEpoch()-lastUpdate;
-        if (timeIncrement < 1000)
-        {
-            elapsedDownloadTime += timeIncrement;
-        }
-
-        double effectiveSpeed = effectiveDownloadSpeed;
-        double elapsedDownloadTimeSecs = elapsedDownloadTime/1000.0;
-        if (elapsedDownloadTimeSecs)
-        {
-            effectiveSpeed = totalDownloadedSize/elapsedDownloadTimeSecs;
-        }
-
-        effectiveDownloadSpeed += (effectiveSpeed-effectiveDownloadSpeed)/3; //Smooth the effective speed
-        if (isVisible())
-        {
-            int totalRemainingSeconds = (effectiveDownloadSpeed) ? remainingBytes/effectiveDownloadSpeed : 0;
+            int totalRemainingSeconds = meanDownloadSpeed ? remainingDownloadBytes / meanDownloadSpeed : 0;
             int remainingHours = totalRemainingSeconds/3600;
             if ((remainingHours<0) || (remainingHours>99))
             {
@@ -355,19 +335,27 @@ void InfoDialog::updateTransfers()
             QString invalidSpeedPattern(tr("%1 of %2"));
             QString downloadString;
 
-            if (downloadSpeed >= 20000)
+
+            if (activeDownloadState == MegaTransfer::STATE_PAUSED || preferences->getDownloadsPaused())
             {
-                downloadString = pattern.arg(currentDownload)
-                        .arg(totalDownloads)
-                        .arg(Utilities::getSizeString(downloadSpeed));
-            }
-            else if (downloadSpeed >= 0)
-            {
-                downloadString = invalidSpeedPattern.arg(currentDownload).arg(totalDownloads);
+                downloadString = pausedPattern.arg(currentDownload).arg(totalDownloads);
             }
             else
             {
-                downloadString = pausedPattern.arg(currentDownload).arg(totalDownloads);
+                if (downloadSpeed >= 20000)
+                {
+                    downloadString = pattern.arg(currentDownload)
+                            .arg(totalDownloads)
+                            .arg(Utilities::getSizeString(downloadSpeed));
+                }
+                else if (downloadSpeed >= 0)
+                {
+                    downloadString = invalidSpeedPattern.arg(currentDownload).arg(totalDownloads);
+                }
+                else
+                {
+                    downloadString = pausedPattern.arg(currentDownload).arg(totalDownloads);
+                }
             }
 
             if (preferences->logged())
@@ -395,35 +383,10 @@ void InfoDialog::updateTransfers()
                 }
             }
         }
-    }
 
-
-    if (remainingUploads)
-    {
-        long long remainingBytes = totalUploadSize-totalUploadedSize;
-        if (remainingBytes < 0)
+        if (remainingUploads)
         {
-            remainingBytes = 0;
-        }
-
-        unsigned long long timeIncrement = QDateTime::currentMSecsSinceEpoch()-lastUpdate;
-        if (timeIncrement < 1000)
-        {
-            elapsedUploadTime += timeIncrement;
-        }
-
-        double effectiveSpeed = effectiveUploadSpeed;
-        double elapsedUploadTimeSecs = elapsedUploadTime / 1000.0;
-        if (elapsedUploadTimeSecs)
-        {
-            effectiveSpeed = totalUploadedSize / elapsedUploadTimeSecs;
-        }
-
-        effectiveUploadSpeed += (effectiveSpeed - effectiveUploadSpeed) / 3; //Smooth the effective speed
-
-        if (isVisible())
-        {
-            int totalRemainingSeconds = (effectiveUploadSpeed) ? remainingBytes/effectiveUploadSpeed : 0;
+            int totalRemainingSeconds = meanUploadSpeed ? remainingUploadBytes / meanUploadSpeed : 0;
             int remainingHours = totalRemainingSeconds/3600;
             if ((remainingHours < 0) || (remainingHours > 99))
             {
@@ -458,17 +421,24 @@ void InfoDialog::updateTransfers()
             QString invalidSpeedPattern(tr("%1 of %2"));
             QString uploadString;
 
-            if (uploadSpeed >= 20000)
+            if (activeUploadState == MegaTransfer::STATE_PAUSED || preferences->getUploadsPaused())
             {
-                uploadString = pattern.arg(currentUpload).arg(totalUploads).arg(Utilities::getSizeString(uploadSpeed));
-            }
-            else if (uploadSpeed >= 0)
-            {
-                uploadString = invalidSpeedPattern.arg(currentUpload).arg(totalUploads);
+                uploadString = pausedPattern.arg(currentUpload).arg(totalUploads);
             }
             else
             {
-                uploadString += pausedPattern.arg(currentUpload).arg(totalUploads);
+                if (uploadSpeed >= 20000)
+                {
+                    uploadString = pattern.arg(currentUpload).arg(totalUploads).arg(Utilities::getSizeString(uploadSpeed));
+                }
+                else if (uploadSpeed >= 0)
+                {
+                    uploadString = invalidSpeedPattern.arg(currentUpload).arg(totalUploads);
+                }
+                else
+                {
+                    uploadString = pausedPattern.arg(currentUpload).arg(totalUploads);
+                }
             }
 
             ui->lUploads->setText(fullPattern.arg(operation).arg(uploadString));
@@ -482,22 +452,19 @@ void InfoDialog::updateTransfers()
                 ui->wUploadDesc->show();
             }
         }
-    }
 
-    if (remainingUploads || remainingDownloads)
-    {
-        if (!preferences->logged() && gWidget->getTransfer()->isActive())
+        if (remainingUploads || remainingDownloads)
         {
-            gWidget->setIdleState(false);
-        }
-        else if (ui->wTransfer1->isActive() || ui->wTransfer2->isActive())
-        {
-            ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
-            updateState();
+            if (!preferences->logged() && gWidget->getTransfer()->isActive())
+            {
+                gWidget->setIdleState(false);
+            }
+            else if (ui->wTransfer1->isActive() || ui->wTransfer2->isActive())
+            {
+                ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
+            }
         }
     }
-
-    lastUpdate = QDateTime::currentMSecsSinceEpoch();
 }
 
 void InfoDialog::transferFinished(int error)
@@ -620,11 +587,12 @@ void InfoDialog::increaseUsedStorage(long long bytes, bool isInShare)
     }
 
     preferences->setUsedStorage(preferences->usedStorage() + bytes);
-    this->setUsage();
+    setUsage();
 }
 
 void InfoDialog::updateState()
 {
+    updateTransfers();
     if (ui->bPause->isChecked())
     {
         if (!preferences->logged())
@@ -643,7 +611,8 @@ void InfoDialog::updateState()
             return;
         }
 
-        setTransferSpeeds(-1, -1);
+        downloadSpeed = -1;
+        uploadSpeed = -1;
         if (state != STATE_PAUSED)
         {
             state = STATE_PAUSED;
@@ -684,13 +653,40 @@ void InfoDialog::updateState()
             return;
         }
         overlay->setVisible(false);
-        if ((downloadSpeed<0) && (uploadSpeed<0))
+        if (downloadSpeed < 0 && uploadSpeed < 0)
         {
-            setTransferSpeeds(0, 0);
+            downloadSpeed = 0;
+            uploadSpeed = 0;
+        }
+
+        if (!waiting)
+        {
+            ui->lBlockedItem->setText(QString::fromUtf8(""));
         }
 
         if (waiting)
         {
+            const char *blockedPath = megaApi->getBlockedPath();
+            if (blockedPath)
+            {
+                QFileInfo fileBlocked (QString::fromUtf8(blockedPath));
+                ui->lBlockedItem->setToolTip(fileBlocked.absoluteFilePath());
+                ui->lBlockedItem->setAlignment(Qt::AlignLeft);
+                ui->lBlockedItem->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a style=\" font-size: 12px;\" href=\"local://#%1\">%2</a>")
+                                                               .arg(fileBlocked.absoluteFilePath())
+                                                               .arg(fileBlocked.fileName())));
+                delete blockedPath;
+            }
+            else if (megaApi->areServersBusy())
+            {
+                ui->lBlockedItem->setText(tr("Servers are too busy. Please wait..."));
+                ui->lBlockedItem->setAlignment(Qt::AlignCenter);
+            }
+            else
+            {
+                ui->lBlockedItem->setText(QString::fromUtf8(""));
+            }
+
             if (state != STATE_WAITING)
             {
                 state = STATE_WAITING;
@@ -781,31 +777,6 @@ void InfoDialog::closeSyncsMenu()
 #endif
 }
 
-void InfoDialog::setTransferSpeeds(long long downloadSpeed, long long uploadSpeed)
-{
-    if (downloadSpeed || this->downloadSpeed < 0)
-    {
-        this->downloadSpeed = downloadSpeed;
-    }
-
-    if (uploadSpeed || this->uploadSpeed < 0)
-    {
-        this->uploadSpeed = uploadSpeed;
-    }
-}
-
-void InfoDialog::setTransferredSize(long long totalDownloadedSize, long long totalUploadedSize)
-{
-    this->totalDownloadedSize = totalDownloadedSize;
-    this->totalUploadedSize = totalUploadedSize;
-}
-
-void InfoDialog::setTotalTransferSize(long long totalDownloadSize, long long totalUploadSize)
-{
-    this->totalDownloadSize = totalDownloadSize;
-    this->totalUploadSize = totalUploadSize;
-}
-
 void InfoDialog::setPaused(bool paused)
 {
     ui->bPause->setChecked(paused);
@@ -837,10 +808,13 @@ void InfoDialog::onTransfer1Cancel(int x, int y)
             "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
 #endif
 
-    QAction *cancelAll = transferMenu->addAction(tr("Cancel all downloads"), this, SLOT(cancelAllDownloads()));
-    QAction *cancelCurrent = transferMenu->addAction(tr("Cancel download"), this, SLOT(cancelCurrentDownload()));
-    transferMenu->addAction(cancelCurrent);
-    transferMenu->addAction(cancelAll);
+    if (activeDownloadState == MegaTransfer::STATE_PAUSED)
+    {
+        transferMenu->addAction(tr("Resume download"), this, SLOT(downloadState()));
+    }
+    transferMenu->addAction(megaApi->areTransfersPaused(MegaTransfer::TYPE_DOWNLOAD) ? tr("Resume downloads") : tr("Pause downloads"), this, SLOT(globalDownloadState()));
+    transferMenu->addAction(tr("Cancel download"), this, SLOT(cancelCurrentDownload()));
+    transferMenu->addAction(tr("Cancel all downloads"), this, SLOT(cancelAllDownloads()));
 
 #ifdef __APPLE__
     transferMenu->exec(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
@@ -876,10 +850,13 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
             "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
 #endif
 
-    QAction *cancelAll = transferMenu->addAction(tr("Cancel all uploads"), this, SLOT(cancelAllUploads()));
-    QAction *cancelCurrent = transferMenu->addAction(tr("Cancel upload"), this, SLOT(cancelCurrentUpload()));
-    transferMenu->addAction(cancelCurrent);
-    transferMenu->addAction(cancelAll);
+    if (activeUploadState == MegaTransfer::STATE_PAUSED)
+    {
+        transferMenu->addAction(tr("Resume upload"), this, SLOT(uploadState()));
+    }
+    transferMenu->addAction(megaApi->areTransfersPaused(MegaTransfer::TYPE_UPLOAD) ? tr("Resume uploads") : tr("Pause uploads"), this, SLOT(globalUploadState()));
+    transferMenu->addAction(tr("Cancel upload"), this, SLOT(cancelCurrentUpload()));
+    transferMenu->addAction(tr("Cancel all uploads"), this, SLOT(cancelAllUploads()));
 
 #ifdef __APPLE__
     transferMenu->exec(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
@@ -893,6 +870,74 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
 #else
     transferMenu->popup(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
 #endif
+}
+
+void InfoDialog::globalDownloadState()
+{
+    if (!activeDownload)
+    {
+        return;
+    }
+
+    if (megaApi->areTransfersPaused(MegaTransfer::TYPE_DOWNLOAD))
+    {
+        megaApi->pauseTransfers(false, MegaTransfer::TYPE_DOWNLOAD);
+    }
+    else
+    {
+        megaApi->pauseTransfers(true, MegaTransfer::TYPE_DOWNLOAD);
+    }
+}
+
+void InfoDialog::downloadState()
+{
+    if (!activeDownload)
+    {
+        return;
+    }
+
+    if (activeDownloadState == MegaTransfer::STATE_PAUSED)
+    {
+        megaApi->pauseTransfer(activeDownload, false);
+    }
+    else
+    {
+        megaApi->pauseTransfer(activeDownload, true);
+    }
+}
+
+void InfoDialog::globalUploadState()
+{
+    if (!activeUpload)
+    {
+        return;
+    }
+
+    if (megaApi->areTransfersPaused(MegaTransfer::TYPE_UPLOAD))
+    {
+        megaApi->pauseTransfers(false, MegaTransfer::TYPE_UPLOAD);
+    }
+    else
+    {
+        megaApi->pauseTransfers(true, MegaTransfer::TYPE_UPLOAD);
+    }
+}
+
+void InfoDialog::uploadState()
+{
+    if (!activeUpload)
+    {
+        return;
+    }
+
+    if (activeUploadState == MegaTransfer::STATE_PAUSED)
+    {
+        megaApi->pauseTransfer(activeUpload, false);
+    }
+    else
+    {
+        megaApi->pauseTransfer(activeUpload, true);
+    }
 }
 
 void InfoDialog::cancelAllUploads()
@@ -913,7 +958,6 @@ void InfoDialog::cancelCurrentUpload()
 void InfoDialog::cancelCurrentDownload()
 {
     megaApi->cancelTransfer(activeDownload);
-
 }
 
 void InfoDialog::onAllUploadsFinished()
@@ -924,12 +968,11 @@ void InfoDialog::onAllUploadsFinished()
         ui->wTransfer2->hideTransfer();
         ui->lUploads->setText(QString::fromAscii(""));
         ui->wUploadDesc->hide();
-        uploadStartTime = 0;
         uploadSpeed = 0;
         currentUpload = 0;
         totalUploads = 0;
-        totalUploadedSize = 0;
-        totalUploadSize = 0;
+        remainingUploadBytes = 0;
+        meanUploadSpeed = 0;
         megaApi->resetTotalUploads();
     }
 }
@@ -951,12 +994,11 @@ void InfoDialog::onAllDownloadsFinished()
             ui->lDownloads->setText(QString::fromAscii(""));
             ui->wDownloadDesc->hide();
         }
-        downloadStartTime = 0;
         downloadSpeed = 0;
         currentDownload = 0;
         totalDownloads = 0;
-        totalDownloadedSize = 0;
-        totalDownloadSize = 0;
+        remainingDownloadBytes = 0;
+        meanDownloadSpeed = 0;
         megaApi->resetTotalDownloads();
     }
 }
@@ -1011,6 +1053,11 @@ void InfoDialog::on_bSettings_clicked()
         this->hide();
     }
 #endif
+}
+
+void InfoDialog::on_bTransferManager_clicked()
+{
+    app->transferManagerActionClicked();
 }
 
 void InfoDialog::on_bOfficialWeb_clicked()
@@ -1201,7 +1248,8 @@ void InfoDialog::changeEvent(QEvent *event)
                 setUsage();
             }
             updateSyncsButton();
-            updateTransfers();
+            state = STATE_STARTING;
+            updateState();
         }
     }
     QDialog::changeEvent(event);
@@ -1240,6 +1288,7 @@ void InfoDialog::regenerateLayout()
 #endif
 
         ui->bPause->setVisible(false);
+        ui->bTransferManager->setVisible(false);
         ui->bSyncFolder->setVisible(false);
         dialogLayout->removeWidget(ui->sActiveTransfers);
         ui->sActiveTransfers->setVisible(false);
@@ -1266,6 +1315,7 @@ void InfoDialog::regenerateLayout()
 #endif
 
         ui->bPause->setVisible(true);
+        ui->bTransferManager->setVisible(true);
         ui->bSyncFolder->setVisible(true);
         dialogLayout->removeWidget(gWidget);
         gWidget->setVisible(false);
@@ -1278,7 +1328,15 @@ void InfoDialog::regenerateLayout()
         ((QVBoxLayout *)dialogLayout)->insertWidget(dialogLayout->count(), ui->wBottom);
     }
 
-    setTransfer(activeDownload);
+    if (activeDownload)
+    {
+        ActiveTransfer *wTransfer = !preferences->logged() ? gWidget->getTransfer() : ui->wTransfer1;
+        wTransfer->setFileName(QString::fromUtf8(activeDownload->getFileName()));
+        wTransfer->setProgress(activeDownload->getTotalBytes() - remainingDownloadBytes,
+                               activeDownload->getTotalBytes(),
+                               !activeDownload->isSyncTransfer());
+    }
+
     updateTransfers();
     app->onGlobalSyncStateChanged(NULL);
 }
@@ -1385,4 +1443,3 @@ void InfoDialog::on_bOfficialWebIcon_clicked()
     on_bOfficialWeb_clicked();
 }
 #endif
-

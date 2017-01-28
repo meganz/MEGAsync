@@ -12,6 +12,7 @@
 
 #include "MegaApplication.h"
 #include "SettingsDialog.h"
+#include "QMegaMessageBox.h"
 #include "ui_SettingsDialog.h"
 #include "control/Utilities.h"
 #include "platform/Platform.h"
@@ -101,10 +102,48 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     lowerLimitUnit = Preferences::MEGA_BYTE_UNIT;
     debugCounter = 0;
 
-    ui->eProxyPort->setValidator(new QIntValidator(this));
-    ui->eLimit->setValidator(new QDoubleValidator(this));
+    ui->eProxyPort->setValidator(new QIntValidator(0, 65535, this));
+    ui->eUploadLimit->setValidator(new QIntValidator(0, 1000000000, this));
+    ui->eDownloadLimit->setValidator(new QIntValidator(0, 1000000000, this));
+    ui->eMaxDownloadConnections->setRange(1, 6);
+    ui->eMaxUploadConnections->setRange(1, 6);
+
+    ui->tNoHttp->viewport()->setCursor(Qt::ArrowCursor);
+    downloadButtonGroup.addButton(ui->rDownloadLimit);
+    downloadButtonGroup.addButton(ui->rDownloadNoLimit);
+    uploadButtonGroup.addButton(ui->rUploadLimit);
+    uploadButtonGroup.addButton(ui->rUploadNoLimit);
+    uploadButtonGroup.addButton(ui->rUploadAutoLimit);
+
     ui->bAccount->setChecked(true);
     ui->wStack->setCurrentWidget(ui->pAccount);
+
+    connect(ui->rNoProxy, SIGNAL(clicked()), this, SLOT(stateChanged()));
+    connect(ui->rProxyAuto, SIGNAL(clicked()), this, SLOT(stateChanged()));
+    connect(ui->rProxyManual, SIGNAL(clicked()), this, SLOT(proxyStateChanged()));
+    connect(ui->eProxyUsername, SIGNAL(textChanged(QString)), this, SLOT(proxyStateChanged()));
+    connect(ui->eProxyPassword, SIGNAL(textChanged(QString)), this, SLOT(proxyStateChanged()));
+    connect(ui->eProxyServer, SIGNAL(textChanged(QString)), this, SLOT(proxyStateChanged()));
+    connect(ui->eProxyPort, SIGNAL(textChanged(QString)), this, SLOT(proxyStateChanged()));
+    connect(ui->cProxyType, SIGNAL(currentIndexChanged(int)), this, SLOT(proxyStateChanged()));
+    connect(ui->cProxyRequiresPassword, SIGNAL(clicked()), this, SLOT(proxyStateChanged()));
+
+    connect(ui->cStartOnStartup, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
+    connect(ui->cShowNotifications, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
+    connect(ui->cOverlayIcons, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
+    connect(ui->cAutoUpdate, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
+    connect(ui->cLanguage, SIGNAL(currentIndexChanged(int)), this, SLOT(stateChanged()));
+
+    connect(ui->rDownloadNoLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
+    connect(ui->rDownloadLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
+    connect(ui->eDownloadLimit, SIGNAL(textChanged(QString)), this, SLOT(stateChanged()));
+    connect(ui->rUploadAutoLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
+    connect(ui->rUploadNoLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
+    connect(ui->rUploadLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
+    connect(ui->eUploadLimit, SIGNAL(textChanged(QString)), this, SLOT(stateChanged()));
+    connect(ui->eMaxDownloadConnections, SIGNAL(valueChanged(int)), this, SLOT(stateChanged()));
+    connect(ui->eMaxUploadConnections, SIGNAL(valueChanged(int)), this, SLOT(stateChanged()));
+    connect(ui->cbUseHttps, SIGNAL(clicked()), this, SLOT(stateChanged()));
 
 #ifndef WIN32    
     #ifndef __APPLE__
@@ -139,7 +178,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 #ifdef __APPLE__
     ui->bOk->hide();
     ui->bCancel->hide();
-    ui->gBandwidthQuota->hide();
 
     const qreal ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
     if (ratio < 2)
@@ -166,7 +204,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->lCacheSeparator->hide();
 
 #else
-    ui->gBandwidthQuota->hide();
 
     ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
     ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
@@ -499,14 +536,28 @@ void SettingsDialog::on_bBandwidth_clicked()
     ui->pProxies->hide();
     ui->pSyncs->hide();
 
+    int bwHeight;
+    if (preferences->accountType() == 0)
+    {
+        ui->gBandwidthQuota->hide();
+        ui->bSeparatorBandwidth->hide();
+        bwHeight = 440;
+    }
+    else
+    {
+        ui->gBandwidthQuota->show();
+        ui->bSeparatorBandwidth->show();
+        bwHeight = 540;
+    }
+
     minHeightAnimation->setTargetObject(this);
     maxHeightAnimation->setTargetObject(this);
     minHeightAnimation->setPropertyName("minimumHeight");
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(350);
-    maxHeightAnimation->setEndValue(350);
+    minHeightAnimation->setEndValue(bwHeight);
+    maxHeightAnimation->setEndValue(bwHeight);
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
@@ -686,14 +737,29 @@ void SettingsDialog::on_bUpgradeBandwidth_clicked()
     megaApi->getSessionTransferURL(url.toUtf8().constData());
 }
 
-void SettingsDialog::on_rNoLimit_clicked()
+void SettingsDialog::on_rUploadAutoLimit_clicked()
 {
-    ui->eLimit->setEnabled(false);
+    ui->eUploadLimit->setEnabled(false);
 }
 
-void SettingsDialog::on_rLimit_clicked()
+void SettingsDialog::on_rUploadNoLimit_clicked()
 {
-    ui->eLimit->setEnabled(true);
+    ui->eUploadLimit->setEnabled(false);
+}
+
+void SettingsDialog::on_rUploadLimit_clicked()
+{
+    ui->eUploadLimit->setEnabled(true);
+}
+
+void SettingsDialog::on_rDownloadNoLimit_clicked()
+{
+    ui->eDownloadLimit->setEnabled(false);
+}
+
+void SettingsDialog::on_rDownloadLimit_clicked()
+{
+    ui->eDownloadLimit->setEnabled(true);
 }
 
 void SettingsDialog::on_cProxyRequiresPassword_clicked()
@@ -795,9 +861,9 @@ void SettingsDialog::loadSettings()
             ui->bBandwidth->setText(tr("Transfers"));
         }
 
-        if (ui->lAutoLimit->text().trimmed().at(0)!=QChar::fromAscii('('))
+        if (ui->lUploadAutoLimit->text().trimmed().at(0)!=QChar::fromAscii('('))
         {
-            ui->lAutoLimit->setText(QString::fromAscii("(%1)").arg(ui->lAutoLimit->text().trimmed()));
+            ui->lUploadAutoLimit->setText(QString::fromAscii("(%1)").arg(ui->lUploadAutoLimit->text().trimmed()));
         }
 
         //Account
@@ -868,24 +934,36 @@ void SettingsDialog::loadSettings()
         loadSyncSettings();
 
         //Bandwidth
-        ui->rAutoLimit->setChecked(preferences->uploadLimitKB()<0);
-        ui->rLimit->setChecked(preferences->uploadLimitKB()>0);
-        ui->rNoLimit->setChecked(preferences->uploadLimitKB()==0);
-        ui->eLimit->setText((preferences->uploadLimitKB()<=0)? QString::fromAscii("0") : QString::number(preferences->uploadLimitKB()));
-        ui->eLimit->setEnabled(ui->rLimit->isChecked());
+        ui->rUploadAutoLimit->setChecked(preferences->uploadLimitKB()<0);
+        ui->rUploadLimit->setChecked(preferences->uploadLimitKB()>0);
+        ui->rUploadNoLimit->setChecked(preferences->uploadLimitKB()==0);
+        ui->eUploadLimit->setText((preferences->uploadLimitKB()<=0)? QString::fromAscii("0") : QString::number(preferences->uploadLimitKB()));
+        ui->eUploadLimit->setEnabled(ui->rUploadLimit->isChecked());
+
+        ui->rDownloadLimit->setChecked(preferences->downloadLimitKB()>0);
+        ui->rDownloadNoLimit->setChecked(preferences->downloadLimitKB()==0);
+        ui->eDownloadLimit->setText((preferences->downloadLimitKB()<=0)? QString::fromAscii("0") : QString::number(preferences->downloadLimitKB()));
+        ui->eDownloadLimit->setEnabled(ui->rDownloadLimit->isChecked());
+
+        ui->eMaxDownloadConnections->setValue(preferences->parallelDownloadConnections());
+        ui->eMaxUploadConnections->setValue(preferences->parallelUploadConnections());
 
         ui->cbUseHttps->setChecked(preferences->usingHttpsOnly());
 
         double totalBandwidth = preferences->totalBandwidth();
         if (totalBandwidth == 0)
         {
+            ui->gBandwidthQuota->hide();
+            ui->bSeparatorBandwidth->hide();
             ui->pUsedBandwidth->setValue(0);
             ui->lBandwidth->setText(tr("Data temporarily unavailable"));
         }
         else
         {
-            int bandwidthPercentage = 100*((double)preferences->usedBandwidth()/totalBandwidth);
-            ui->pUsedBandwidth->setValue(bandwidthPercentage);
+            ui->gBandwidthQuota->show();
+            ui->bSeparatorBandwidth->show();
+            int bandwidthPercentage = ceil(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+            ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
             ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
                     .arg(Utilities::getSizeString(preferences->usedBandwidth()))
                     .arg(QString::number(bandwidthPercentage))
@@ -967,6 +1045,21 @@ void SettingsDialog::refreshAccountDetails()
               .arg(Utilities::getSizeString(preferences->usedStorage()))
               .arg(QString::number(percentage))
               .arg(Utilities::getSizeString(preferences->totalStorage())));
+    }
+
+    if (preferences->totalBandwidth() == 0)
+    {
+        ui->pUsedBandwidth->setValue(0);
+        ui->lBandwidth->setText(tr("Data temporarily unavailable"));
+    }
+    else
+    {
+        int percentage = ceil(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+        ui->pUsedBandwidth->setValue((percentage < 100) ? percentage : 100);
+        ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
+              .arg(Utilities::getSizeString(preferences->usedBandwidth()))
+              .arg(QString::number(percentage))
+              .arg(Utilities::getSizeString(preferences->totalBandwidth())));
     }
 
     if (accountDetailsDialog)
@@ -1177,20 +1270,48 @@ bool SettingsDialog::saveSettings()
 #endif
 
         //Bandwidth
-        if (ui->rNoLimit->isChecked() || ui->lLimit->text().trimmed().length() == 0)
+        if (ui->rUploadLimit->isChecked())
         {
-            preferences->setUploadLimitKB(0);
-        }
-        else if (ui->rAutoLimit->isChecked())
-        {
-            preferences->setUploadLimitKB(-1);
+            preferences->setUploadLimitKB(ui->eUploadLimit->text().trimmed().toInt());
+            app->setUploadLimit(0);
         }
         else
         {
-            preferences->setUploadLimitKB(ui->eLimit->text().trimmed().toInt());
+            if (ui->rUploadNoLimit->isChecked())
+            {
+                preferences->setUploadLimitKB(0);
+            }
+            else if (ui->rUploadAutoLimit->isChecked())
+            {
+                preferences->setUploadLimitKB(-1);
+            }
+
+            app->setUploadLimit(preferences->uploadLimitKB());
+        }
+        app->setMaxUploadSpeed(preferences->uploadLimitKB());
+
+        if (ui->rDownloadNoLimit->isChecked())
+        {
+            preferences->setDownloadLimitKB(0);
+        }
+        else
+        {
+            preferences->setDownloadLimitKB(ui->eDownloadLimit->text().trimmed().toInt());
         }
 
-        app->setUploadLimit(preferences->uploadLimitKB());
+        app->setMaxDownloadSpeed(preferences->downloadLimitKB());
+
+        if (ui->eMaxDownloadConnections->value() != preferences->parallelDownloadConnections())
+        {
+            preferences->setParallelDownloadConnections(ui->eMaxDownloadConnections->value());
+            app->setMaxConnections(MegaTransfer::TYPE_DOWNLOAD, preferences->parallelDownloadConnections());
+        }
+
+        if (ui->eMaxUploadConnections->value() != preferences->parallelUploadConnections())
+        {
+            preferences->setParallelUploadConnections(ui->eMaxUploadConnections->value());
+            app->setMaxConnections(MegaTransfer::TYPE_UPLOAD, preferences->parallelUploadConnections());
+        }
 
         preferences->setUseHttpsOnly(ui->cbUseHttps->isChecked());
         app->setUseHttpsOnly(preferences->usingHttpsOnly());
@@ -1212,8 +1333,9 @@ bool SettingsDialog::saveSettings()
             }
             megaApi->setExcludedNames(&vExclusions);
 
-            QMessageBox::information(this, tr("Warning"), tr("The new excluded file names will be taken into account\n"
-                                                                            "when the application starts again"), QMessageBox::Ok);
+            QMegaMessageBox::information(this, tr("Warning"), tr("The new excluded file names will be taken into account\n"
+                                                                            "when the application starts again"),
+                                         Utilities::getDevicePixelRatio(), QMessageBox::Ok);
             excludedNamesChanged = false;
             preferences->setCrashed(true);
 
@@ -1247,7 +1369,10 @@ bool SettingsDialog::saveSettings()
                 megaApi->setExclusionUpperSizeLimit(0);
             }
 
-            QMessageBox::information(this, tr("Warning"), tr("The new excluded file sizes will be taken into account when the application starts again."), QMessageBox::Ok);
+            QMegaMessageBox::information(this, tr("Warning"),
+                                         tr("The new excluded file sizes will be taken into account when the application starts again."),
+                                         Utilities::getDevicePixelRatio(),
+                                         QMessageBox::Ok);
             sizeLimitsChanged = false;
         }
 
@@ -1263,7 +1388,7 @@ bool SettingsDialog::saveSettings()
 
     bool proxyChanged = false;
     //Proxies
-    if ((ui->rNoProxy->isChecked() && (preferences->proxyType() != Preferences::PROXY_TYPE_NONE))       ||
+    if (!proxyTestProgressDialog && ((ui->rNoProxy->isChecked() && (preferences->proxyType() != Preferences::PROXY_TYPE_NONE))       ||
         (ui->rProxyAuto->isChecked() &&  (preferences->proxyType() != Preferences::PROXY_TYPE_AUTO))    ||
         (ui->rProxyManual->isChecked() &&  (preferences->proxyType() != Preferences::PROXY_TYPE_CUSTOM))||
         (preferences->proxyProtocol() != ui->cProxyType->currentIndex())                                ||
@@ -1271,7 +1396,7 @@ bool SettingsDialog::saveSettings()
         (preferences->proxyPort() != ui->eProxyPort->text().toInt())                                    ||
         (preferences->proxyRequiresAuth() != ui->cProxyRequiresPassword->isChecked())                   ||
         (preferences->getProxyUsername() != ui->eProxyUsername->text())                                 ||
-        (preferences->getProxyPassword() != ui->eProxyPassword->text()))
+        (preferences->getProxyPassword() != ui->eProxyPassword->text())))
     {
         proxyChanged = true;
         QNetworkProxy proxy;
@@ -1541,7 +1666,7 @@ void SettingsDialog::on_bExportMasterKey_clicked()
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly | QFile::Truncate))
     {
-        QMessageBox::information(this, tr("Unable to write file"), file.errorString());
+        QMegaMessageBox::information(this, tr("Unable to write file"), file.errorString(), Utilities::getDevicePixelRatio());
         return;
     }
 
@@ -1550,8 +1675,11 @@ void SettingsDialog::on_bExportMasterKey_clicked()
 
     file.close();
 
-    QMessageBox::information(this, tr("Warning"), tr("Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.")+QString::fromUtf8("\n")+
-                                                      tr("Always keep physical control of your master key (e.g. on a client device, external storage, or print)."), QMessageBox::Ok);
+    QMegaMessageBox::information(this, tr("Warning"),
+                                 tr("Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.") + QString::fromUtf8("\n")
+                                 + tr("Always keep physical control of your master key (e.g. on a client device, external storage, or print)."),
+                                 Utilities::getDevicePixelRatio(),
+                                 QMessageBox::Ok);
 }
 
 void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
@@ -1824,7 +1952,10 @@ void SettingsDialog::on_bClearCache_clicked()
 
     QPointer<QMessageBox> warningDel = new QMessageBox(this);
     warningDel->setIcon(QMessageBox::Warning);
-    warningDel->setWindowTitle(tr("Clear local cache"));
+    warningDel->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-warning.png")
+                                                                : QString::fromUtf8(":/images/mbox-warning@2x.png")));
+
+    warningDel->setWindowTitle(tr("Clear local backup"));
     warningDel->setTextFormat(Qt::RichText);
 
 #if QT_VERSION > 0x050100
@@ -1834,7 +1965,7 @@ void SettingsDialog::on_bClearCache_clicked()
     warningDel->setText(tr("Backups of the previous versions of your synced files in your computer will be permanently deleted. "
                            "Please, check your backup folders to see if you need to rescue something before continuing:")
                            + QString::fromUtf8("<br/>") + syncs
-                           + QString::fromUtf8("<br/><br/>") + tr("Do you want to delete your local cache now?"));
+                           + QString::fromUtf8("<br/><br/>") + tr("Do you want to delete your local backup now?"));
     warningDel->setStandardButtons(QMessageBox::No | QMessageBox::Yes);
     warningDel->setDefaultButton(QMessageBox::No);
     int result = warningDel->exec();
@@ -1867,7 +1998,9 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
 
     QPointer<QMessageBox> warningDel = new QMessageBox(this);
     warningDel->setIcon(QMessageBox::Warning);
-    warningDel->setWindowTitle(tr("Clear remote cache"));
+    warningDel->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-warning.png")
+                                                                : QString::fromUtf8(":/images/mbox-warning@2x.png")));
+    warningDel->setWindowTitle(tr("Clear remote backup"));
     warningDel->setTextFormat(Qt::RichText);
 
 #if QT_VERSION > 0x050100
@@ -1878,7 +2011,7 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
     warningDel->setText(tr("Backups of the previous versions of your synced files in MEGA will be permanently deleted. "
                            "Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.")
                            .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#fm/%1\">SyncDebris</a>").arg(QString::fromUtf8(base64Handle)))
-                           + QString::fromUtf8("<br/><br/>") + tr("Do you want to delete your remote cache now?"));
+                           + QString::fromUtf8("<br/><br/>") + tr("Do you want to delete your remote backup now?"));
     delete [] base64Handle;
 
     warningDel->setStandardButtons(QMessageBox::No | QMessageBox::Yes);

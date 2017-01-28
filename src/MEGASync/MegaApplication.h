@@ -13,6 +13,7 @@
 #include <QNetworkConfigurationManager>
 #include <QNetworkInterface>
 
+#include "gui/TransferManager.h"
 #include "gui/NodeSelector.h"
 #include "gui/InfoDialog.h"
 #include "gui/InfoOverQuotaDialog.h"
@@ -86,6 +87,9 @@ public:
     void showErrorMessage(QString message, QString title = tr("MEGAsync"));
     void showNotificationMessage(QString message, QString title = tr("MEGAsync"));
     void setUploadLimit(int limit);
+    void setMaxUploadSpeed(int limit);
+    void setMaxDownloadSpeed(int limit);
+    void setMaxConnections(int direction, int connections);
     void setUseHttpsOnly(bool httpsOnly);
     void startUpdateTask();
     void stopUpdateTask();
@@ -95,6 +99,11 @@ public:
     void checkForUpdates();
     void showTrayMenu(QPoint *point = NULL);
     void toggleLogging();
+    QList<mega::MegaTransfer* > getFinishedTransfers();
+    int getNumUnviewedTransfers();
+    void removeFinishedTransfer(int transferTag);
+    void removeAllFinishedTransfers();
+    mega::MegaTransfer* getFinishedTransferByTag(int tag);
 
 signals:
     void startUpdaterThread();
@@ -118,11 +127,13 @@ public slots:
     void copyFileLink(mega::MegaHandle fileHandle, QString nodeKey = QString());
     void downloadActionClicked();
     void streamActionClicked();
+    void transferManagerActionClicked();
     void logoutActionClicked();
     void processDownloads();
     void processUploads();
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
+    void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
     void externalDownload(QQueue<mega::MegaNode *> newDownloadQueue);
     void externalDownload(QString megaLink, QString auth);
     void internalDownload(long long handle);
@@ -142,10 +153,8 @@ public slots:
     void periodicTasks();
     void cleanAll();
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
-    void onDupplicateTransfer(QString localPath, QString name, mega::MegaHandle handle, QString nodeKey = QString());
     void onInstallUpdateClicked();
     void showInfoDialog();
-    bool anUpdateIsAvailable();
     void triggerInstallUpdate();
     void scanningAnimationStep();
     void setupWizardFinished(int result);
@@ -159,6 +168,9 @@ public slots:
     void showUpdatedMessage();
     void handleMEGAurl(const QUrl &url);
     void handleLocalPath(const QUrl &url);
+    void clearViewedTransfers();
+    void onCompletedTransfersTabActive(bool active);
+    void checkFirstTransfer();
 
 protected:
     void createTrayIcon();
@@ -175,6 +187,7 @@ protected:
     void restoreSyncs();
     void closeDialogs();
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
+    void deleteMenu(QMenu *menu);
 
 #ifdef __APPLE__
     MegaSystemTrayIcon *trayIcon;
@@ -194,6 +207,7 @@ protected:
     QAction *windowsUploadAction;
     QAction *windowsDownloadAction;
     QAction *windowsStreamAction;
+    QAction *windowsTransferManagerAction;
     QAction *windowsSettingsAction;
 #endif
 
@@ -242,11 +256,9 @@ protected:
     MultiQFileDialog *multiUploadFileDialog;
     QQueue<QString> uploadQueue;
     QQueue<mega::MegaNode *> downloadQueue;
-    long long totalDownloadSize, totalUploadSize;
-    long long totalDownloadedSize, totalUploadedSize;
-    long long uploadSpeed, downloadSpeed;
-    long long lastStartedDownload;
-    long long lastStartedUpload;
+    int numTransfers[2];
+    unsigned long long activeTransferPriority[2];
+    unsigned int activeTransferState[2];
     long long queuedUserStats;
     long long maxMemoryUsage;
     int exportOps;
@@ -258,12 +270,12 @@ protected:
     bool bwOverquotaEvent;
     InfoWizard *infoWizard;
     mega::QTMegaListener *delegateListener;
-    QMap<int, QString> uploadLocalPaths;
     MegaUploader *uploader;
     MegaDownloader *downloader;
     QTimer *periodicTasksTimer;
     QTimer *infoDialogTimer;
-    QTranslator *translator;
+    QTimer *firstTransferTimer;
+    QTranslator translator;
     PasteMegaLinksDialog *pasteMegaLinksDialog;
     ChangeLogDialog *changeLogDialog;
     ImportMegaLinksDialog *importDialog;
@@ -271,6 +283,7 @@ protected:
     QMessageBox *sslKeyPinningError;
     NodeSelector *downloadNodeSelector;
     QString lastTrayMessage;
+    QStringList extraLinks;
 
     static QString appPath;
     static QString appDirPath;
@@ -284,6 +297,9 @@ protected:
     QList<QNetworkInterface> activeNetworkInterfaces;
     QMap<QString, QString> pendingLinks;
     MegaSyncLogger *logger;
+    QPointer<TransferManager> transferManager;
+    QMap<int, mega::MegaTransfer*> finishedTransfers;
+    QList<mega::MegaTransfer*> finishedTransferOrder;
 
     bool reboot;
     bool syncActive;
@@ -303,6 +319,8 @@ protected:
     bool isFirstSyncDone;
     bool isFirstFileSynced;
     bool networkConnectivity;
+    int nUnviewedTransfers;
+    bool completedTabActive;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener

@@ -223,6 +223,15 @@ void Utilities::getFolderSize(QString folderPath, long long *size)
     }
 }
 
+qreal Utilities::getDevicePixelRatio()
+{
+#if QT_VERSION >= 0x050000
+    return qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? qApp->devicePixelRatio() : 1.0;
+#else
+    return 1.0;
+#endif
+}
+
 QString Utilities::getExtensionPixmap(QString fileName, QString prefix)
 {
     if (extensionIcons.isEmpty())
@@ -393,7 +402,7 @@ bool Utilities::verifySyncedFolderLimits(QString path)
     }
     return true;
 }
-QString Utilities::getTimeString(long long secs)
+QString Utilities::getTimeString(long long secs, bool secondPrecision)
 {
     int seconds = (int) secs % 60;
     int minutes = (int) ((secs / 60) % 60);
@@ -406,32 +415,38 @@ QString Utilities::getTimeString(long long secs)
     if (days)
     {
         items++;
-        time.append(QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">d </span>").arg(days));
+        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">d</span>").arg(days));
     }
 
     if (items || hours)
     {
         items++;
-        time.append(QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">h </span>").arg(hours));
+        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">h</span>").arg(hours));
     }
 
     if (items == 2)
     {
+        time = time.trimmed();
         return time;
     }
 
     if (items || minutes)
     {
         items++;
-        time.append(QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">m </span>").arg(minutes));
+        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(minutes));
     }
 
     if (items == 2)
     {
+        time = time.trimmed();
         return time;
     }
 
-    time.append(QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">s </span>").arg(seconds));
+    if (secondPrecision)
+    {
+        time.append(QString::fromUtf8(" %1 <span style=\"color:#777777; text-decoration:none;\">s</span>").arg(seconds));
+    }
+    time = time.trimmed();
     return time;
 }
 

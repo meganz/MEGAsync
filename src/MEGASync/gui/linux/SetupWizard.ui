@@ -127,6 +127,14 @@ margin-bottom: 9px;
 	color: #666666;
 }
 
+#lAdditionalSyncs
+{
+	font: &quot;Helvetica&quot;;
+	font-size: 13px;
+	font-weight: normal;
+	color: #666666;
+}
+
 #lCreateAccount, #lProgress, #lSetupType, #lAdvancedSetup
 {
 	font: &quot;Helvetica&quot;;
@@ -1185,7 +1193,7 @@ color: #666666;
      <widget class="QWidget" name="pAdvanced">
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <property name="spacing">
-        <number>26</number>
+        <number>22</number>
        </property>
        <property name="leftMargin">
         <number>50</number>
@@ -1197,7 +1205,7 @@ color: #666666;
         <number>50</number>
        </property>
        <property name="bottomMargin">
-        <number>9</number>
+        <number>27</number>
        </property>
        <item>
         <widget class="QLabel" name="lAdvancedSetup">
@@ -1385,6 +1393,19 @@ font-weight: normal;
           </size>
          </property>
         </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="lAdditionalSyncs">
+         <property name="text">
+          <string>When you finish this assistant, you will be able to sync additional folders using the settings dialog</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>

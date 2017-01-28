@@ -16,5 +16,6 @@ void removePathFromPlaces(QString path);
 void setFolderIcon(QString path);
 void unSetFolderIcon(QString path);
 QString defaultOpenApp(QString extension);
+void enableBlurForWindow(QWidget *window);
 
 #endif // MACXFUNCTIONS_H

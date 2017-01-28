@@ -199,7 +199,6 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 {
     QString response;
     QString openLinkRequestStart(QString::fromUtf8("{\"a\":\"l\","));
-    QRegExp syncRequest(QString::fromUtf8("\\{\"a\":\"s\",\"h\":\"(.*)\"\\}"));
     QString externalDownloadRequestStart = QString::fromUtf8("{\"a\":\"d\",");
     QPointer<QAbstractSocket> safeSocket = socket;
 
@@ -254,36 +253,6 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
         else if (key.size() && key.size() != 43)
         {
             response = QString::fromUtf8("-14");
-        }
-    }
-    else if (syncRequest.exactMatch(request.data))
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "SyncFolder command received from the webclient");
-        QStringList parameters = syncRequest.capturedTexts();
-        if (parameters.size() == 2)
-        {
-            QString handle = parameters[1];
-            MegaHandle h = megaApi->base64ToHandle(handle.toUtf8().constData());
-            MegaNode *node = megaApi->getNodeByHandle(h);
-            if (!node)
-            {
-                if (!megaApi->isLoggedIn())
-                {
-                    response = QString::fromUtf8("-11");
-                }
-                else
-                {
-                    response = QString::fromUtf8("-9");
-                }
-            }
-            else if (node->getType() == MegaNode::TYPE_FOLDER
-                     || node->getType() == MegaNode::TYPE_ROOT
-                     || node->getType() == MegaNode::TYPE_INCOMING)
-            {
-                emit onSyncRequested(h);
-                response = QString::fromUtf8("0");
-                delete node;
-            }
         }
     }
     else if (request.data.startsWith(externalDownloadRequestStart))
@@ -366,6 +335,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                     {
                         QString parentHandle = Utilities::extractJSONString(file, QString::fromUtf8("p"));
                         p = megaApi->base64ToHandle(parentHandle.toUtf8().constData());
+                        QApplication::processEvents();
                     }
                     else
                     {

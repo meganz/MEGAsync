@@ -34,6 +34,10 @@ QPushButton#bSettings:hover
 {
 	image: url(://images/tray_preferences_over_ico.png);
 }
+QPushButton#bTransferManager:hover
+{
+	image: url(://images/tray_transfer_manager_ico_over.png);
+}
 QWidget
 {
 font-size: 11px;
@@ -302,6 +306,36 @@ padding-left: 1px;
        </spacer>
       </item>
       <item>
+       <widget class="QPushButton" name="bTransferManager">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: none;
+</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_linux.qrc">
+          <normaloff>:/images/tray_transfer_manager_ico.png</normaloff>:/images/tray_transfer_manager_ico.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QCheckBox" name="bPause">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
@@ -427,7 +461,7 @@ margin-top:-1px;
       </size>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pUpdated">
       <property name="minimumSize">
@@ -504,13 +538,13 @@ margin-top:-1px;
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>88</height>
+           <height>50</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>88</height>
+           <height>50</height>
           </size>
          </property>
          <property name="font">
@@ -528,7 +562,7 @@ font: &quot;Helvetica&quot;;
 font-size: 20px;
 font-weight: normal;
 color: #999999;
-padding-bottom: 25px;
+
 }</string>
          </property>
          <property name="text">
@@ -536,6 +570,37 @@ padding-bottom: 25px;
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="lBlockedItem">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>30</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">#lBlockedItem
+{ 
+  font-family: &quot;Helvetica&quot;;
+  font-size: 12px;
+  color: #999999;
+margin-left: 15 px;
+}</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="openExternalLinks">
+          <bool>true</bool>
          </property>
         </widget>
        </item>

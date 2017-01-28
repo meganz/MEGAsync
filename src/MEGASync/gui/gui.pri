@@ -31,7 +31,20 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/ConfirmSSLexception.cpp \
     $$PWD/UpgradeDialog.cpp \
     $$PWD/PlanWidget.cpp \
-    $$PWD/InfoWizard.cpp
+    $$PWD/InfoWizard.cpp \
+    $$PWD/TransferItem.cpp \
+    $$PWD/TransferManager.cpp \
+    $$PWD/TransfersWidget.cpp \
+    $$PWD/QTransfersModel.cpp \
+    $$PWD/QActiveTransfersModel.cpp \
+    $$PWD/QFinishedTransfersModel.cpp \
+    $$PWD/MegaTransferDelegate.cpp \
+    $$PWD/MegaTransferView.cpp \
+    $$PWD/QMegaMessageBox.cpp \
+    $$PWD/TransferMenuItemAction.cpp \
+    $$PWD/TransfersStateInfoWidget.cpp \
+    $$PWD/MegaSpeedGraph.cpp \
+    $$PWD/ActiveTransfersWidget.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -64,7 +77,20 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ConfirmSSLexception.h \
     $$PWD/UpgradeDialog.h \
     $$PWD/PlanWidget.h \
-    $$PWD/InfoWizard.h
+    $$PWD/InfoWizard.h \
+    $$PWD/TransferItem.h \
+    $$PWD/TransferManager.h \
+    $$PWD/TransfersWidget.h \
+    $$PWD/QTransfersModel.h \
+    $$PWD/QActiveTransfersModel.h \
+    $$PWD/QFinishedTransfersModel.h \
+    $$PWD/MegaTransferDelegate.h \
+    $$PWD/MegaTransferView.h \
+    $$PWD/QMegaMessageBox.h \
+    $$PWD/TransferMenuItemAction.h \
+    $$PWD/TransfersStateInfoWidget.h \
+    $$PWD/MegaSpeedGraph.h \
+    $$PWD/ActiveTransfersWidget.h
 
 INCLUDEPATH += $$PWD
 
@@ -101,7 +127,13 @@ win32 {
                 $$PWD/win/ConfirmSSLexception.ui \
                 $$PWD/win/PlanWidget.ui \
                 $$PWD/win/UpgradeDialog.ui \
-                $$PWD/win/InfoWizard.ui
+                $$PWD/win/InfoWizard.ui \
+                $$PWD/win/TransferItem.ui \
+                $$PWD/win/TransferManager.ui \
+                $$PWD/win/TransfersWidget.ui \
+                $$PWD/win/TransfersStateInfoWidget.ui \
+                $$PWD/win/MegaSpeedGraph.ui \
+                $$PWD/win/ActiveTransfersWidget.ui
 }
 
 macx {
@@ -135,7 +167,13 @@ macx {
                 $$PWD/macx/ConfirmSSLexception.ui \
                 $$PWD/macx/PlanWidget.ui \
                 $$PWD/macx/UpgradeDialog.ui \
-                $$PWD/macx/InfoWizard.ui
+                $$PWD/macx/InfoWizard.ui \
+                $$PWD/macx/TransferItem.ui \
+                $$PWD/macx/TransferManager.ui \
+                $$PWD/macx/TransfersWidget.ui \
+                $$PWD/macx/TransfersStateInfoWidget.ui \
+                $$PWD/macx/MegaSpeedGraph.ui \
+                $$PWD/macx/ActiveTransfersWidget.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -178,10 +216,16 @@ unix:!macx {
                 $$PWD/linux/ConfirmSSLexception.ui \
                 $$PWD/linux/PlanWidget.ui \
                 $$PWD/linux/UpgradeDialog.ui \
-                $$PWD/linux/InfoWizard.ui
+                $$PWD/linux/InfoWizard.ui \
+                $$PWD/linux/TransferItem.ui \
+                $$PWD/linux/TransferManager.ui \
+                $$PWD/linux/TransfersWidget.ui \
+                $$PWD/linux/TransfersStateInfoWidget.ui \
+                $$PWD/linux/MegaSpeedGraph.ui \
+                $$PWD/linux/ActiveTransfersWidget.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
-}
+}    

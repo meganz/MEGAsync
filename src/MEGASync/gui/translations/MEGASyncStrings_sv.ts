@@ -55,6 +55,54 @@
     </message>
 </context>
 <context>
+    <name>ActiveTransfersWidget</name>
+    <message>
+        <source>No Transfers</source>
+        <translatorcomment>Label to indicate that there are no active transfers at current time</translatorcomment>
+        <translation type="unfinished">Inga överföringar</translation>
+    </message>
+    <message>
+        <source>Remaining Downloads</source>
+        <translatorcomment>Label to indicate the number of remaining downloads</translatorcomment>
+        <translation type="unfinished">återstående nedladdningar</translation>
+    </message>
+    <message>
+        <source>download speed</source>
+        <translatorcomment>Label to indicate the actual current download speed</translatorcomment>
+        <translation type="unfinished">Nedladdningshastighet </translation>
+    </message>
+    <message>
+        <source>No Downloads</source>
+        <translatorcomment>Label to indicate that there are no active downloads at current time</translatorcomment>
+        <translation type="unfinished">Inga nedladdningar</translation>
+    </message>
+    <message>
+        <source>Remaining Uploads</source>
+        <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
+        <translation type="unfinished">återstående uppladdningar</translation>
+    </message>
+    <message>
+        <source>upload speed</source>
+        <translatorcomment>Label to indicate the actual current upload speed</translatorcomment>
+        <translation type="unfinished">uppladdningshastighet </translation>
+    </message>
+    <message>
+        <source>No Uploads</source>
+        <translatorcomment>Label to indicate that there are no active uploads at current time</translatorcomment>
+        <translation type="unfinished">Inga uppladdningar</translation>
+    </message>
+    <message>
+        <source>PAUSED</source>
+        <translatorcomment>Label to indicate a global Pause state for all active transfers</translatorcomment>
+        <translation type="unfinished">PAUSAD</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to cancel this transfer?</source>
+        <translatorcomment>Warning message shown when an user try to cancel the selected transfer</translatorcomment>
+        <translation type="unfinished">Är du säker att du vill avbryta den här överföringen?</translation>
+    </message>
+</context>
+<context>
     <name>BindFolderDialog</name>
     <message>
         <source>Add synchronized folder</source>
@@ -371,6 +419,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>ImportListWidgetItem</name>
     <message>
         <source>Please wait...</source>
+        <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
         <translation type="unfinished">Var god vänta ...</translation>
     </message>
 </context>
@@ -592,6 +641,45 @@ Are you sure?</source>
         <source>Settings</source>
         <translation type="unfinished">Inställningar</translation>
     </message>
+    <message>
+        <source>Resume downloads</source>
+        <translatorcomment>Label to resume the download queue. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Återuppta nedladdningar</translation>
+    </message>
+    <message>
+        <source>Pause downloads</source>
+        <translatorcomment>Label to pause the download queue. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Pausa nedladdningar</translation>
+    </message>
+    <message>
+        <source>Resume uploads</source>
+        <translatorcomment>Label to resume the upload queue. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Återuppta uppladdningar </translation>
+    </message>
+    <message>
+        <source>Pause uploads</source>
+        <translatorcomment>Label to pause the upload queue. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Pausa uppladdningar</translation>
+    </message>
+    <message>
+        <source>Resume download</source>
+        <translatorcomment>Label to resume the current download. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Återuppta nedladdning</translation>
+    </message>
+    <message>
+        <source>Resume upload</source>
+        <translatorcomment>Label to resume the current upload. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Återuppta uppladdning</translation>
+    </message>
+    <message>
+        <source>Blocked file: %1</source>
+        <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
+        <translation type="unfinished">Blockerad fil: %1</translation>
+    </message>
+    <message>
+        <source>Servers are too busy. Please wait...</source>
+        <translation type="unfinished">Servrarna är upptagna. Var vänlig vänta </translation>
+    </message>
 </context>
 <context>
     <name>InfoOverQuotaDialog</name>
@@ -651,7 +739,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Utnyttja 50 GB moln lagring med säker användarstyrd end-to-end-kryptering och registrera dig för ett gratis konto eller en av våra [A] PRO planer [/ A].</translation>
+        <translation type="unfinished">Utnyttja 50 GB moln lagring med säker användarstyrd end-to-end-kryptering och registrera dig för ett gratis konto eller en av våra [A] PRO planer [/A].</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
@@ -802,7 +890,7 @@ Exit anyway?</source>
     <message>
         <source>About</source>
         <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
-        <translation type="obsolete">Om</translation>
+        <translation type="unfinished">Om</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -931,7 +1019,7 @@ https://mega.co.nz/#sync</source>
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation>Synkroniseringen kommer att sluta.</translation>
+        <translation type="obsolete">Synkroniseringen kommer att sluta.</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -976,7 +1064,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to upload file/folder to MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation>Ladda upp till MEGA</translation>
+        <translation type="unfinished">Ladda upp till MEGA</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -991,7 +1079,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to download file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation>Ladda ned från MEGA</translation>
+        <translation type="unfinished">Ladda ned från MEGA</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -1135,23 +1223,47 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Du är inte inloggad</translation>
     </message>
     <message>
+        <source>Are you sure you want to exit?</source>
+        <translation type="unfinished">Är du säker på att du vill avsluta?</translation>
+    </message>
+    <message>
+        <source>Transfer manager</source>
+        <translation type="unfinished">Överföringsassistent </translation>
+    </message>
+    <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
+        <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
         <translation type="unfinished">Ett systemfält för att placera MEGAsync ikonen kunde inte hittas. MEGAsync är avsedd att användas med system bricka ikonen men det kan fungera bra utan det. Om du vill öppna gränssnittet, bara försök att öppna MEGAsync igen.</translation>
-        <translatorcomment>Error message shown at startup when MEGAsync is executed in a Linux desktop that does not have a system tray</translatorcomment>
     </message>
     <message>
         <source>Error getting link:</source>
+        <translatorcomment>Notification message shown when an error occurs while getting a public link .</translatorcomment>
         <translation type="unfinished">Fel vid hämtande av länk:</translation>
     </message>
     <message>
         <source>File not found</source>
-        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that is not in the Cloud Drive of the user</translatorcomment>
+        <translatorcomment>Notification message shown an error of file not found while getting a public link .</translatorcomment>
         <translation type="unfinished">Hittar ej filen</translation>
     </message>
     <message>
         <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that can not be exported</translatorcomment>
+        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
         <translation type="unfinished">Länken kan inte skapas eftersom filen ligger i en inkommande delad mapp eller din soptunna.</translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
+        <translation type="unfinished">Uppladdning</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
+        <translation type="unfinished">Ladda ned</translation>
+    </message>
+    <message>
+        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
+        <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
+        <translation type="unfinished">Du synkroniserar en lokal mapp formaterad med ett FAT-filsystem. Det filsystem har svårt att hantera stora filer och modifieringstider som kan orsaka synkroniseringsproblem (t.ex. när sommartid förändringar), så det är starkt rekommenderat att du bara synkroniserar mappar formaterade med mer tillförlitliga filsystem som NTFS (mer information [A] här [/ A] ).</translation>
     </message>
 </context>
 <context>
@@ -1279,6 +1391,86 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error</source>
         <translation type="obsolete">Fel</translation>
+    </message>
+</context>
+<context>
+    <name>MegaTransferDelegate</name>
+    <message>
+        <source>Are you sure you want to cancel this transfer?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation type="unfinished">Är du säker att du vill avbryta den här överföringen?</translation>
+    </message>
+    <message>
+        <source>paused</source>
+        <translatorcomment>Label to indicate that selected transfer is at paused state</translatorcomment>
+        <translation type="unfinished">pausad</translation>
+    </message>
+</context>
+<context>
+    <name>MegaTransferView</name>
+    <message>
+        <source>Pause Transfer</source>
+        <translatorcomment>Label of context menu option to pause selected transfer</translatorcomment>
+        <translation type="unfinished">Pausa överföring</translation>
+    </message>
+    <message>
+        <source>Move to top</source>
+        <translatorcomment>Label of context menu option to move selected transfer to top of the list and give it highest priority</translatorcomment>
+        <translation type="unfinished">Flytta till toppen</translation>
+    </message>
+    <message>
+        <source>Move up</source>
+        <translatorcomment>Label of context menu option to move selected transfer one step up of the list and give it more priority</translatorcomment>
+        <translation type="unfinished">Flytta upp</translation>
+    </message>
+    <message>
+        <source>Move down</source>
+        <translatorcomment>Label of context menu option to move selected transfer one step down of the list and give it less priority</translatorcomment>
+        <translation type="unfinished">Flytta ned</translation>
+    </message>
+    <message>
+        <source>Move to bottom</source>
+        <translatorcomment>Label of context menu option to move selected transfer to the bottom of the list and give it lowest priority</translatorcomment>
+        <translation type="unfinished">Flytta till botten</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label of context menu option to cancel selected transfer</translatorcomment>
+        <translation type="unfinished">Avbryt</translation>
+    </message>
+    <message>
+        <source>Get MEGA link</source>
+        <translatorcomment>Label of context menu option to generate a public link of selected completed transfer</translatorcomment>
+        <translation type="unfinished">Skapa en MEGA-länk</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translatorcomment>Label of context menu option to open selected completed transfer</translatorcomment>
+        <translation type="unfinished">Öppen</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Label of context menu option to open the selected completed transfer using the specific file browser</translatorcomment>
+        <translation type="unfinished">Visa i mapp</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translatorcomment>Label of context menu option to clear selected transfer item of completed view</translatorcomment>
+        <translation type="unfinished">Rensa</translation>
+    </message>
+    <message>
+        <source>Clear All</source>
+        <translatorcomment>Label of context menu option to clear all transfer items of completed view</translatorcomment>
+        <translation type="unfinished">Rensa alla</translation>
+    </message>
+    <message>
+        <source>Resume Transfer</source>
+        <translatorcomment>Label of context menu option to resume selected transfer</translatorcomment>
+        <translation type="unfinished">Återuppta överföring</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to cancel this transfer?</source>
+        <translation type="unfinished">Är du säker att du vill avbryta den här överföringen?</translation>
     </message>
 </context>
 <context>
@@ -1478,6 +1670,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     </message>
     <message>
         <source>Invalid MEGA Link</source>
+        <translatorcomment>Label to indicate that MEGA link processed is invalid/incorrect </translatorcomment>
         <translation type="unfinished">Ogiltig MEGA länk</translation>
     </message>
 </context>
@@ -1520,7 +1713,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     </message>
     <message>
         <source>Owner permissions:</source>
-        <translatorcomment>Label just before the owner permissions that will be applied to new files and folders</translatorcomment>
+        <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
         <translation type="unfinished">Ägarbehörighet:</translation>
     </message>
 </context>
@@ -2177,24 +2370,9 @@ when the application starts again</source>
         <translation type="unfinished">Inaktiverad</translation>
     </message>
     <message>
-        <source>Local cache: %1</source>
-        <translatorcomment>Label to indicate the user the total size of local cache. Keep %1 code, will be filled at runtime.</translatorcomment>
-        <translation type="unfinished">Lokal cache: %1</translation>
-    </message>
-    <message>
-        <source>Remote cache: %1</source>
-        <translatorcomment>Label to indicate the user the total size of remote cache. Keep %1 code, will be filled at runtime.</translatorcomment>
-        <translation type="unfinished">Tillgängligt cacheminne: %1</translation>
-    </message>
-    <message>
         <source>Excluded file and folder names</source>
         <translatorcomment>Label to indicate the files and folders names exclude from the synchronization.</translatorcomment>
         <translation type="unfinished">Exkluderade filer och mapp namn </translation>
-    </message>
-    <message>
-        <source>Clear local cache</source>
-        <translatorcomment>Title of dialog to clear local cache for the current user.</translatorcomment>
-        <translation type="unfinished">Rensa lokal cache</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
@@ -2202,24 +2380,9 @@ when the application starts again</source>
         <translation type="unfinished">Backup av tidigare versioner synkade filer på din dator kommer permanent att raderas. Var vänlig kontrollera din backup mapp för att se om du behöver återställa något innan du fortsätter.</translation>
     </message>
     <message>
-        <source>Do you want to delete your local cache now?</source>
-        <translatorcomment>Confirmation message before perform a deletion of local cache data</translatorcomment>
-        <translation type="unfinished">Vill du tömma din lokala cache nu?</translation>
-    </message>
-    <message>
-        <source>Clear remote cache</source>
-        <translatorcomment>Title of dialog to clear remote cache for the current user.</translatorcomment>
-        <translation type="unfinished">Rensa fjärr-cache</translation>
-    </message>
-    <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
         <translation type="unfinished">Backup på tidigare versioner av synkade filer på MEGA kommer att blir borttagna permanent. Var vänlig kontrollera din [A] mapp i papperskorgen på ditt MEGA konto för att kontrollera om det är något du vill återställa innan du fortsätter. </translation>
-    </message>
-    <message>
-        <source>Do you want to delete your remote cache now?</source>
-        <translatorcomment>Confirmation message before perform a deletion of remote cache data</translatorcomment>
-        <translation type="unfinished">Vill du tömma din fjärr-cache nu?</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
@@ -2239,6 +2402,50 @@ when the application starts again</source>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
         <translation type="unfinished">Aktivera det här alternativet om dina överföringar inte startar. I normala fall är HTTP tillfredsställande eftersom alla överföringar redan är krypterade .</translation>
+    </message>
+    <message>
+        <source>Local backup: %1</source>
+        <translation type="unfinished">Local backup: %1</translation>
+    </message>
+    <message>
+        <source>Remote backup: %1</source>
+        <translation type="unfinished">Remote backup: %1</translation>
+    </message>
+    <message>
+        <source>Clear local backup</source>
+        <translation type="unfinished">Rensa lokal back up </translation>
+    </message>
+    <message>
+        <source>Do you want to delete your local backup now?</source>
+        <translation type="unfinished">Vill du radera din lokala backup nu?</translation>
+    </message>
+    <message>
+        <source>Clear remote backup</source>
+        <translation type="unfinished">Rensa fjärr back up </translation>
+    </message>
+    <message>
+        <source>Do you want to delete your remote backup now?</source>
+        <translation type="unfinished">Vill du radera din fjärrbackup nu? </translation>
+    </message>
+    <message>
+        <source>Download rate limit</source>
+        <translatorcomment>Label to indicate the actual bandwidth limit for downloads.</translatorcomment>
+        <translation type="unfinished">Nedladdningshastighet gräns</translation>
+    </message>
+    <message>
+        <source>Number of parallel TCP connections per transfer:</source>
+        <translatorcomment>Label to indicate the actual number of parallel TCP connections used by MEGAsync. Keep colon.</translatorcomment>
+        <translation type="unfinished">Antal parallella TCP-anslutningar per överföring:</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translatorcomment>Label to indicate the actual number of parallel TCP connections used for downloads</translatorcomment>
+        <translation type="unfinished">Nedladdningar</translation>
+    </message>
+    <message>
+        <source>Uploads</source>
+        <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
+        <translation type="unfinished">Uppladdat</translation>
     </message>
 </context>
 <context>
@@ -2608,6 +2815,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translation type="unfinished">Du har försökt logga in för många gånger. [BR] Vänta tills %1 och försök igen.</translation>
     </message>
+    <message>
+        <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
+        <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
+        <translation type="unfinished">När du är klar denna assistent kommer du att kunna synkronisera ytterligare mappar med inställningsdialogrutan .</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -2799,10 +3011,191 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>TransferItem</name>
+    <message>
+        <source>paused</source>
+        <translatorcomment>Label to indicate a paused state for a transfer item (upload/download)</translatorcomment>
+        <translation type="unfinished">pausad</translation>
+    </message>
+    <message>
+        <source>queued</source>
+        <translatorcomment>Label to indicate a queued state for a transfer item (upload/download)</translatorcomment>
+        <translation type="unfinished">köar</translation>
+    </message>
+    <message>
+        <source>retrying</source>
+        <translatorcomment>Label to indicate a state or retrying for a transfer item (upload/download)</translatorcomment>
+        <translation type="unfinished">försöker igen</translation>
+    </message>
+    <message>
+        <source>completing</source>
+        <translatorcomment>Label to indicate a completing state for a transfer item (upload/download)</translatorcomment>
+        <translation type="unfinished">avslutar</translation>
+    </message>
+    <message>
+        <source>just now</source>
+        <translation type="unfinished">nyss</translation>
+    </message>
+    <message>
+        <source>%1 seconds ago</source>
+        <translation type="unfinished">%1 sekunder sedan</translation>
+    </message>
+    <message>
+        <source>1 minute ago</source>
+        <translation type="unfinished">en minut sedan</translation>
+    </message>
+    <message>
+        <source>%1 minutes ago</source>
+        <translation type="unfinished">%1 minuter sedan</translation>
+    </message>
+    <message>
+        <source>1 hour ago</source>
+        <translation type="unfinished">en timme sedan</translation>
+    </message>
+    <message>
+        <source>%1 hours ago</source>
+        <translation type="unfinished">%1 timmar sedan</translation>
+    </message>
+    <message>
+        <source>1 day ago</source>
+        <translation type="unfinished">en dag sedan</translation>
+    </message>
+    <message>
+        <source>%1 days ago</source>
+        <translation type="unfinished">%1 dagar sedan</translation>
+    </message>
+    <message>
+        <source>1 month ago</source>
+        <translation type="unfinished">en månad sedan</translation>
+    </message>
+    <message>
+        <source>%1 months ago</source>
+        <translation type="unfinished">%1 månader sedan</translation>
+    </message>
+    <message>
+        <source>1 year ago</source>
+        <translation type="unfinished">ett år sedan</translation>
+    </message>
+    <message>
+        <source>%1 years ago</source>
+        <translation type="unfinished">%1 år sedan</translation>
+    </message>
+    <message>
+        <source>starting</source>
+        <translatorcomment>Label to indicate a state or starting for a transfer item (upload/download)</translatorcomment>
+        <translation type="unfinished">påbörjar</translation>
+    </message>
+</context>
+<context>
+    <name>TransferManager</name>
+    <message>
+        <source>Transfer Manager</source>
+        <translatorcomment>Title of the dialog of Transfer Manager</translatorcomment>
+        <translation type="unfinished">Överföringsassistent</translation>
+    </message>
+    <message>
+        <source>Add...</source>
+        <translatorcomment>Button label to add transfers items (uploads/downloads/public links) to the dialog (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Lägg till</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translatorcomment>Label of tab to access all active downloads</translatorcomment>
+        <translation type="unfinished">Nedladdningar</translation>
+    </message>
+    <message>
+        <source>Uploads</source>
+        <translatorcomment>Label of tab to access all active uploads</translatorcomment>
+        <translation type="unfinished">Uppladdat</translation>
+    </message>
+    <message>
+        <source>Completed</source>
+        <translatorcomment>Label of tab to access all completed transfers</translatorcomment>
+        <translation type="unfinished">Färdig</translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translatorcomment>Button label to pause visible transfers</translatorcomment>
+        <translation type="unfinished">Paus</translation>
+    </message>
+    <message>
+        <source>Clear all</source>
+        <translatorcomment>Button label to clear all items of completed transfers view</translatorcomment>
+        <translation type="unfinished">Rensa alla</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Button label to close transfer manager dialog</translatorcomment>
+        <translation type="unfinished">Stäng</translation>
+    </message>
+    <message>
+        <source>Import links</source>
+        <translatorcomment>Label to indicate the Import link option from transfer manager dialog</translatorcomment>
+        <translation type="unfinished">Importera länkar</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translatorcomment>Label to indicate the file upload option from transfer manager dialog</translatorcomment>
+        <translation type="unfinished">Ladda upp till MEGA</translation>
+    </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translatorcomment>Label to indicate the file download option from transfer manager dialog</translatorcomment>
+        <translation type="unfinished">Ladda ned från MEGA</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translatorcomment>Label to indicate the Settings option for the application</translatorcomment>
+        <translation type="unfinished">Inställningar</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translatorcomment>Label to indicate the Preferences option for the application</translatorcomment>
+        <translation type="unfinished">Vad du föredrar</translation>
+    </message>
+    <message>
+        <source>Cancel all</source>
+        <translatorcomment>Button label to cancel all items of active transfers view</translatorcomment>
+        <translation type="unfinished">Avbryt alla</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation type="unfinished">Är du säker på att du vill avbryta alla överföringar?</translation>
+    </message>
+    <message>
+        <source>Resume</source>
+        <translation type="unfinished">Återuppta</translation>
+    </message>
+    <message>
+        <source>Active Transfers</source>
+        <translatorcomment>Label of tab to access all active transfers</translatorcomment>
+        <translation type="unfinished">aktiva överföringar</translation>
+    </message>
+</context>
+<context>
+    <name>TransfersStateInfoWidget</name>
+    <message>
+        <source>No Downloads</source>
+        <translatorcomment>Label to indicate that there are no active downloads</translatorcomment>
+        <translation type="unfinished">Inga nedladdningar</translation>
+    </message>
+    <message>
+        <source>No Uploads</source>
+        <translatorcomment>Label to indicate that there are no active uploads</translatorcomment>
+        <translation type="unfinished">Inga uppladdningar</translation>
+    </message>
+    <message>
+        <source>Paused Transfers</source>
+        <translatorcomment>Label to indicate that active transfers are paused</translatorcomment>
+        <translation type="unfinished">Pausade överföringar</translation>
+    </message>
+</context>
+<context>
     <name>UpgradeDialog</name>
     <message>
         <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">Fri tilldelade bandbredd överskrids</translation>
+        <translation type="unfinished">Gratis överföringskvot överskriden</translation>
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
@@ -2847,7 +3240,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded.</translatorcomment>
-        <translation>MEGAsync Uppladdningar</translation>
+        <translation type="obsolete">MEGAsync Uppladdningar</translation>
     </message>
     <message>
         <source>OK</source>

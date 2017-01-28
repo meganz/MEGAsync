@@ -21,14 +21,14 @@ BrandingText "MEGA Limited"
 
 VIAddVersionKey "CompanyName" "MEGA Limited"
 VIAddVersionKey "FileDescription" "MEGAsync"
-VIAddVersionKey "LegalCopyright" "MEGA Limited 2016"
+VIAddVersionKey "LegalCopyright" "MEGA Limited 2017"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 ; Version info
-VIProductVersion "2.9.10.0"
-VIAddVersionKey "FileVersion" "2.9.10.0"
-VIAddVersionKey "ProductVersion" "2.9.10.0"
-!define PRODUCT_VERSION "2.9.10"
+VIProductVersion "3.0.0.1"
+VIAddVersionKey "FileVersion" "3.0.0.1"
+VIAddVersionKey "ProductVersion" "3.0.0.1"
+!define PRODUCT_VERSION "3.0.0"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.nz"
@@ -1048,6 +1048,7 @@ Section Uninstall
   Delete "$INSTDIR\cares.dll"
   Delete "$INSTDIR\libuv.dll"
   Delete "$INSTDIR\libsodium.dll"
+  Delete "$INSTDIR\qt.conf"
   Delete "$INSTDIR\NSIS.Library.RegTool*.exe"
 
   !define LIBRARY_COM

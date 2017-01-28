@@ -55,6 +55,54 @@
     </message>
 </context>
 <context>
+    <name>ActiveTransfersWidget</name>
+    <message>
+        <source>No Transfers</source>
+        <translatorcomment>Label to indicate that there are no active transfers at current time</translatorcomment>
+        <translation type="unfinished">Žiadne Prenosy</translation>
+    </message>
+    <message>
+        <source>Remaining Downloads</source>
+        <translatorcomment>Label to indicate the number of remaining downloads</translatorcomment>
+        <translation type="unfinished">Remaining Downloads</translation>
+    </message>
+    <message>
+        <source>download speed</source>
+        <translatorcomment>Label to indicate the actual current download speed</translatorcomment>
+        <translation type="unfinished">download speed</translation>
+    </message>
+    <message>
+        <source>No Downloads</source>
+        <translatorcomment>Label to indicate that there are no active downloads at current time</translatorcomment>
+        <translation type="unfinished">Žiadne Sťahovania</translation>
+    </message>
+    <message>
+        <source>Remaining Uploads</source>
+        <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
+        <translation type="unfinished">Remaining Uploads</translation>
+    </message>
+    <message>
+        <source>upload speed</source>
+        <translatorcomment>Label to indicate the actual current upload speed</translatorcomment>
+        <translation type="unfinished">upload speed</translation>
+    </message>
+    <message>
+        <source>No Uploads</source>
+        <translatorcomment>Label to indicate that there are no active uploads at current time</translatorcomment>
+        <translation type="unfinished">Žiadne Uploady</translation>
+    </message>
+    <message>
+        <source>PAUSED</source>
+        <translatorcomment>Label to indicate a global Pause state for all active transfers</translatorcomment>
+        <translation type="unfinished">PAUSED</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to cancel this transfer?</source>
+        <translatorcomment>Warning message shown when an user try to cancel the selected transfer</translatorcomment>
+        <translation type="unfinished">Ste si istý, že chcete zrušiť tento prenos?</translation>
+    </message>
+</context>
+<context>
     <name>BindFolderDialog</name>
     <message>
         <source>Add synchronized folder</source>
@@ -371,6 +419,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>ImportListWidgetItem</name>
     <message>
         <source>Please wait...</source>
+        <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
         <translation type="unfinished">Prosím čakajte...</translation>
     </message>
 </context>
@@ -592,6 +641,45 @@ Are you sure?</source>
         <source>Settings</source>
         <translation type="unfinished">Nastavenia</translation>
     </message>
+    <message>
+        <source>Resume downloads</source>
+        <translatorcomment>Label to resume the download queue. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Resume downloads</translation>
+    </message>
+    <message>
+        <source>Pause downloads</source>
+        <translatorcomment>Label to pause the download queue. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Pause downloads</translation>
+    </message>
+    <message>
+        <source>Resume uploads</source>
+        <translatorcomment>Label to resume the upload queue. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Resume uploads</translation>
+    </message>
+    <message>
+        <source>Pause uploads</source>
+        <translatorcomment>Label to pause the upload queue. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Pause uploads</translation>
+    </message>
+    <message>
+        <source>Resume download</source>
+        <translatorcomment>Label to resume the current download. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Resume download</translation>
+    </message>
+    <message>
+        <source>Resume upload</source>
+        <translatorcomment>Label to resume the current upload. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Resume upload</translation>
+    </message>
+    <message>
+        <source>Blocked file: %1</source>
+        <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
+        <translation type="unfinished">Blocked file: %1</translation>
+    </message>
+    <message>
+        <source>Servers are too busy. Please wait...</source>
+        <translation type="unfinished">Servery sú príliš zaťažené. Prosím čakajte...</translation>
+    </message>
 </context>
 <context>
     <name>InfoOverQuotaDialog</name>
@@ -802,7 +890,7 @@ Exit anyway?</source>
     <message>
         <source>About</source>
         <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
-        <translation type="obsolete">Viac o</translation>
+        <translation type="unfinished">Viac o</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -931,7 +1019,7 @@ https://mega.co.nz/#sync</source>
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation>Synchronizácia bola pozastavená.</translation>
+        <translation type="obsolete">Synchronizácia bola pozastavená.</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -976,7 +1064,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to upload file/folder to MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation>Nahrať do MEGA</translation>
+        <translation type="unfinished">Nahrať do MEGA</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -991,7 +1079,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to download file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation>Stiahnuť z MEGA</translation>
+        <translation type="unfinished">Stiahnuť z MEGA</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -1135,23 +1223,47 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Ste prihlásený</translation>
     </message>
     <message>
+        <source>Are you sure you want to exit?</source>
+        <translation type="unfinished">Ste si istý, že chcete odísť?</translation>
+    </message>
+    <message>
+        <source>Transfer manager</source>
+        <translation type="unfinished">Správca prenosov</translation>
+    </message>
+    <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
+        <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
         <translation type="unfinished">A system tray to place MEGAsync tray icon could not found. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
-        <translatorcomment>Error message shown at startup when MEGAsync is executed in a Linux desktop that does not have a system tray</translatorcomment>
     </message>
     <message>
         <source>Error getting link:</source>
+        <translatorcomment>Notification message shown when an error occurs while getting a public link .</translatorcomment>
         <translation type="unfinished">Chyba pri získavaní odkazu:</translation>
     </message>
     <message>
         <source>File not found</source>
-        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that is not in the Cloud Drive of the user</translatorcomment>
+        <translatorcomment>Notification message shown an error of file not found while getting a public link .</translatorcomment>
         <translation type="unfinished">Súbor nenájdený</translation>
     </message>
     <message>
         <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
-        <translatorcomment>Error message shown when the user tries to create a MEGA link for a file that can not be exported</translatorcomment>
+        <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
         <translation type="unfinished">The link can&#039;t be generated because the file is inside an incoming shared folder or your Rubbish Bin.</translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
+        <translation type="unfinished">Upload</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
+        <translation type="unfinished">Stiahnuť</translation>
+    </message>
+    <message>
+        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
+        <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
+        <translation type="unfinished">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
     </message>
 </context>
 <context>
@@ -1279,6 +1391,86 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error</source>
         <translation type="obsolete">Chyba</translation>
+    </message>
+</context>
+<context>
+    <name>MegaTransferDelegate</name>
+    <message>
+        <source>Are you sure you want to cancel this transfer?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation type="unfinished">Ste si istý, že chcete zrušiť tento prenos?</translation>
+    </message>
+    <message>
+        <source>paused</source>
+        <translatorcomment>Label to indicate that selected transfer is at paused state</translatorcomment>
+        <translation type="unfinished">pozastavené</translation>
+    </message>
+</context>
+<context>
+    <name>MegaTransferView</name>
+    <message>
+        <source>Pause Transfer</source>
+        <translatorcomment>Label of context menu option to pause selected transfer</translatorcomment>
+        <translation type="unfinished">Pozastaviť prenos</translation>
+    </message>
+    <message>
+        <source>Move to top</source>
+        <translatorcomment>Label of context menu option to move selected transfer to top of the list and give it highest priority</translatorcomment>
+        <translation type="unfinished">Presunúť navrch</translation>
+    </message>
+    <message>
+        <source>Move up</source>
+        <translatorcomment>Label of context menu option to move selected transfer one step up of the list and give it more priority</translatorcomment>
+        <translation type="unfinished">Posunúť vyššie</translation>
+    </message>
+    <message>
+        <source>Move down</source>
+        <translatorcomment>Label of context menu option to move selected transfer one step down of the list and give it less priority</translatorcomment>
+        <translation type="unfinished">Posunúť dolu</translation>
+    </message>
+    <message>
+        <source>Move to bottom</source>
+        <translatorcomment>Label of context menu option to move selected transfer to the bottom of the list and give it lowest priority</translatorcomment>
+        <translation type="unfinished">Presunúť na spodok</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label of context menu option to cancel selected transfer</translatorcomment>
+        <translation type="unfinished">Zrušiť</translation>
+    </message>
+    <message>
+        <source>Get MEGA link</source>
+        <translatorcomment>Label of context menu option to generate a public link of selected completed transfer</translatorcomment>
+        <translation type="unfinished">Získať MEGA odkaz</translation>
+    </message>
+    <message>
+        <source>Open</source>
+        <translatorcomment>Label of context menu option to open selected completed transfer</translatorcomment>
+        <translation type="unfinished">Otvoriť</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Label of context menu option to open the selected completed transfer using the specific file browser</translatorcomment>
+        <translation type="unfinished">Zobraziť v priečinku</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translatorcomment>Label of context menu option to clear selected transfer item of completed view</translatorcomment>
+        <translation type="unfinished">Vyčistiť</translation>
+    </message>
+    <message>
+        <source>Clear All</source>
+        <translatorcomment>Label of context menu option to clear all transfer items of completed view</translatorcomment>
+        <translation type="unfinished">Vyčistiť všetko</translation>
+    </message>
+    <message>
+        <source>Resume Transfer</source>
+        <translatorcomment>Label of context menu option to resume selected transfer</translatorcomment>
+        <translation type="unfinished">Obnoviť prenos</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to cancel this transfer?</source>
+        <translation type="unfinished">Ste si istý, že chcete zrušiť tento prenos?</translation>
     </message>
 </context>
 <context>
@@ -1478,6 +1670,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     </message>
     <message>
         <source>Invalid MEGA Link</source>
+        <translatorcomment>Label to indicate that MEGA link processed is invalid/incorrect </translatorcomment>
         <translation type="unfinished">Neplatný MEGA Odkaz</translation>
     </message>
 </context>
@@ -1520,7 +1713,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     </message>
     <message>
         <source>Owner permissions:</source>
-        <translatorcomment>Label just before the owner permissions that will be applied to new files and folders</translatorcomment>
+        <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
         <translation type="unfinished">Povolenia majitela:</translation>
     </message>
 </context>
@@ -2177,24 +2370,9 @@ when the application starts again</source>
         <translation type="unfinished">Zakázané</translation>
     </message>
     <message>
-        <source>Local cache: %1</source>
-        <translatorcomment>Label to indicate the user the total size of local cache. Keep %1 code, will be filled at runtime.</translatorcomment>
-        <translation type="unfinished">Lokálny vyrovnávací priečinok: %1</translation>
-    </message>
-    <message>
-        <source>Remote cache: %1</source>
-        <translatorcomment>Label to indicate the user the total size of remote cache. Keep %1 code, will be filled at runtime.</translatorcomment>
-        <translation type="unfinished">Vzdiaľená vyrovnávacia pamäť: %1</translation>
-    </message>
-    <message>
         <source>Excluded file and folder names</source>
         <translatorcomment>Label to indicate the files and folders names exclude from the synchronization.</translatorcomment>
         <translation type="unfinished">Vynechané názvy súborov a priečinkov</translation>
-    </message>
-    <message>
-        <source>Clear local cache</source>
-        <translatorcomment>Title of dialog to clear local cache for the current user.</translatorcomment>
-        <translation type="unfinished">Vyčistiť lokálnu dočasnú pamäť</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
@@ -2202,24 +2380,9 @@ when the application starts again</source>
         <translation type="unfinished">Zálohy predchádzajúcich verzií vašich synchronizovaných súborov vo vašom počítači budú permanentne zmazané. Prosím skontrolujte priečinky záloh a skontorlujte si či niečo nepotrebujete zachrániť pred tým ako budete pokračovať.</translation>
     </message>
     <message>
-        <source>Do you want to delete your local cache now?</source>
-        <translatorcomment>Confirmation message before perform a deletion of local cache data</translatorcomment>
-        <translation type="unfinished">Chcete zmazať vašu lokálnu dočasnú pamäť?</translation>
-    </message>
-    <message>
-        <source>Clear remote cache</source>
-        <translatorcomment>Title of dialog to clear remote cache for the current user.</translatorcomment>
-        <translation type="unfinished">Vyčistiť vzdialenú dočasnú pamäť</translation>
-    </message>
-    <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
         <translation type="unfinished">Zálohy predchádzajúcich verzií vašich synchronizovaných súborov budú permanentne zmazané. Prosím skontrolujte priečinok [A] v Koši vášho MEGA účtu a skontorlujte si či niečo nepotrebujete zachrániť predtým, ako budete pokračovať.</translation>
-    </message>
-    <message>
-        <source>Do you want to delete your remote cache now?</source>
-        <translatorcomment>Confirmation message before perform a deletion of remote cache data</translatorcomment>
-        <translation type="unfinished">Chcete zmazať vašu vzdialenú dočasnú pamäť?</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
@@ -2239,6 +2402,50 @@ when the application starts again</source>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
         <translation type="unfinished">Túto možnosť povoľte iba v prípade, že vaše prenosy nezačnú. Za normálnych okolností je HTTP dostačujúce, keďže všetky prenosy sú šifrované.</translation>
+    </message>
+    <message>
+        <source>Local backup: %1</source>
+        <translation type="unfinished">Lokálna záloha: %1</translation>
+    </message>
+    <message>
+        <source>Remote backup: %1</source>
+        <translation type="unfinished">Vzdialená záloha: %1</translation>
+    </message>
+    <message>
+        <source>Clear local backup</source>
+        <translation type="unfinished">Vyčistiť lokálnu zálohu</translation>
+    </message>
+    <message>
+        <source>Do you want to delete your local backup now?</source>
+        <translation type="unfinished">Chcete teraz zmazať vašu lokálnu zálohu?</translation>
+    </message>
+    <message>
+        <source>Clear remote backup</source>
+        <translation type="unfinished">Vyčistiť vzdialenú zálohu</translation>
+    </message>
+    <message>
+        <source>Do you want to delete your remote backup now?</source>
+        <translation type="unfinished">Chcete teraz zmazať vašu vzdialenú zálohu?</translation>
+    </message>
+    <message>
+        <source>Download rate limit</source>
+        <translatorcomment>Label to indicate the actual bandwidth limit for downloads.</translatorcomment>
+        <translation type="unfinished">Download rate limit</translation>
+    </message>
+    <message>
+        <source>Number of parallel TCP connections per transfer:</source>
+        <translatorcomment>Label to indicate the actual number of parallel TCP connections used by MEGAsync. Keep colon.</translatorcomment>
+        <translation type="unfinished">Number of parallel TCP connections per transfer:</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translatorcomment>Label to indicate the actual number of parallel TCP connections used for downloads</translatorcomment>
+        <translation type="unfinished">Sťahovania</translation>
+    </message>
+    <message>
+        <source>Uploads</source>
+        <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
+        <translation type="unfinished">Uploady</translation>
     </message>
 </context>
 <context>
@@ -2608,6 +2815,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
         <translation type="unfinished">Príliš veľa krát ste sa pokúsili prihlásiť. [BR]Prosím počkajte do %1 a skúste to znovu.</translation>
     </message>
+    <message>
+        <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
+        <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
+        <translation type="unfinished">When you finish this assistant, you will be able to sync additional folders using the settings dialog.</translation>
+    </message>
 </context>
 <context>
     <name>ShellExtension</name>
@@ -2799,6 +3011,187 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>TransferItem</name>
+    <message>
+        <source>paused</source>
+        <translatorcomment>Label to indicate a paused state for a transfer item (upload/download)</translatorcomment>
+        <translation type="unfinished">pozastavené</translation>
+    </message>
+    <message>
+        <source>queued</source>
+        <translatorcomment>Label to indicate a queued state for a transfer item (upload/download)</translatorcomment>
+        <translation type="unfinished">v poradí</translation>
+    </message>
+    <message>
+        <source>retrying</source>
+        <translatorcomment>Label to indicate a state or retrying for a transfer item (upload/download)</translatorcomment>
+        <translation type="unfinished">skúšanie znovu</translation>
+    </message>
+    <message>
+        <source>completing</source>
+        <translatorcomment>Label to indicate a completing state for a transfer item (upload/download)</translatorcomment>
+        <translation type="unfinished">dokončovanie</translation>
+    </message>
+    <message>
+        <source>just now</source>
+        <translation type="unfinished">práve teraz</translation>
+    </message>
+    <message>
+        <source>%1 seconds ago</source>
+        <translation type="unfinished">pred %1 sekundami</translation>
+    </message>
+    <message>
+        <source>1 minute ago</source>
+        <translation type="unfinished">pred minútou</translation>
+    </message>
+    <message>
+        <source>%1 minutes ago</source>
+        <translation type="unfinished">pred %1 minútami</translation>
+    </message>
+    <message>
+        <source>1 hour ago</source>
+        <translation type="unfinished">pred hodinou</translation>
+    </message>
+    <message>
+        <source>%1 hours ago</source>
+        <translation type="unfinished">pred %1 hodinami</translation>
+    </message>
+    <message>
+        <source>1 day ago</source>
+        <translation type="unfinished">deň dozadu</translation>
+    </message>
+    <message>
+        <source>%1 days ago</source>
+        <translation type="unfinished">%1 dní dozadu</translation>
+    </message>
+    <message>
+        <source>1 month ago</source>
+        <translation type="unfinished">pred mesiacom</translation>
+    </message>
+    <message>
+        <source>%1 months ago</source>
+        <translation type="unfinished">pred %1 mesiacmi</translation>
+    </message>
+    <message>
+        <source>1 year ago</source>
+        <translation type="unfinished">pred rokom</translation>
+    </message>
+    <message>
+        <source>%1 years ago</source>
+        <translation type="unfinished">pred %1 rokmi</translation>
+    </message>
+    <message>
+        <source>starting</source>
+        <translatorcomment>Label to indicate a state or starting for a transfer item (upload/download)</translatorcomment>
+        <translation type="unfinished">začína</translation>
+    </message>
+</context>
+<context>
+    <name>TransferManager</name>
+    <message>
+        <source>Transfer Manager</source>
+        <translatorcomment>Title of the dialog of Transfer Manager</translatorcomment>
+        <translation type="unfinished">Správca prenosov</translation>
+    </message>
+    <message>
+        <source>Add...</source>
+        <translatorcomment>Button label to add transfers items (uploads/downloads/public links) to the dialog (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Pridať...</translation>
+    </message>
+    <message>
+        <source>Downloads</source>
+        <translatorcomment>Label of tab to access all active downloads</translatorcomment>
+        <translation type="unfinished">Sťahovania</translation>
+    </message>
+    <message>
+        <source>Uploads</source>
+        <translatorcomment>Label of tab to access all active uploads</translatorcomment>
+        <translation type="unfinished">Uploady</translation>
+    </message>
+    <message>
+        <source>Completed</source>
+        <translatorcomment>Label of tab to access all completed transfers</translatorcomment>
+        <translation type="unfinished">Dokončené</translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translatorcomment>Button label to pause visible transfers</translatorcomment>
+        <translation type="unfinished">Pozastaviť</translation>
+    </message>
+    <message>
+        <source>Clear all</source>
+        <translatorcomment>Button label to clear all items of completed transfers view</translatorcomment>
+        <translation type="unfinished">Vyčistiť všetko</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translatorcomment>Button label to close transfer manager dialog</translatorcomment>
+        <translation type="unfinished">Zavrieť</translation>
+    </message>
+    <message>
+        <source>Import links</source>
+        <translatorcomment>Label to indicate the Import link option from transfer manager dialog</translatorcomment>
+        <translation type="unfinished">Importovať odkazy</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA</source>
+        <translatorcomment>Label to indicate the file upload option from transfer manager dialog</translatorcomment>
+        <translation type="unfinished">Nahrať do MEGA</translation>
+    </message>
+    <message>
+        <source>Download from MEGA</source>
+        <translatorcomment>Label to indicate the file download option from transfer manager dialog</translatorcomment>
+        <translation type="unfinished">Stiahnuť z MEGA</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translatorcomment>Label to indicate the Settings option for the application</translatorcomment>
+        <translation type="unfinished">Nastavenia</translation>
+    </message>
+    <message>
+        <source>Preferences</source>
+        <translatorcomment>Label to indicate the Preferences option for the application</translatorcomment>
+        <translation type="unfinished">Nastavenia</translation>
+    </message>
+    <message>
+        <source>Cancel all</source>
+        <translatorcomment>Button label to cancel all items of active transfers view</translatorcomment>
+        <translation type="unfinished">Zrušiť všetky</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to cancel all transfers?</source>
+        <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
+        <translation type="unfinished">Ste si istý, že chcete zrušiť všetky prenosy?</translation>
+    </message>
+    <message>
+        <source>Resume</source>
+        <translation type="unfinished">Obnoviť</translation>
+    </message>
+    <message>
+        <source>Active Transfers</source>
+        <translatorcomment>Label of tab to access all active transfers</translatorcomment>
+        <translation type="unfinished">Active Transfers</translation>
+    </message>
+</context>
+<context>
+    <name>TransfersStateInfoWidget</name>
+    <message>
+        <source>No Downloads</source>
+        <translatorcomment>Label to indicate that there are no active downloads</translatorcomment>
+        <translation type="unfinished">Žiadne Sťahovania</translation>
+    </message>
+    <message>
+        <source>No Uploads</source>
+        <translatorcomment>Label to indicate that there are no active uploads</translatorcomment>
+        <translation type="unfinished">Žiadne Uploady</translation>
+    </message>
+    <message>
+        <source>Paused Transfers</source>
+        <translatorcomment>Label to indicate that active transfers are paused</translatorcomment>
+        <translation type="unfinished">Pozastaviť prenosy</translation>
+    </message>
+</context>
+<context>
     <name>UpgradeDialog</name>
     <message>
         <source>Free bandwidth quota exceeded</source>
@@ -2847,7 +3240,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded.</translatorcomment>
-        <translation>MEGAsync Uploady</translation>
+        <translation type="obsolete">MEGAsync Uploady</translation>
     </message>
     <message>
         <source>OK</source>

@@ -197,3 +197,21 @@ License: MIT
 https://github.com/libuv/libuv/blob/v1.x/LICENSE
 
 --------------------------------------------------------------------
+
+#### Source Sans Pro fonts
+https://github.com/adobe-fonts/source-sans-pro
+
+Copyright 2010, 2012, 2014 Adobe Systems Incorporated (http://www.adobe.com/), with Reserved Font Name 'Source'. All Rights Reserved. Source is a trademark of Adobe Systems Incorporated in the United States and/or other countries.
+
+###### Description:
+Set of OpenType fonts that have been designed to work well in user interface (UI) environments.
+
+###### Usage:
+MEGAsync uses as default application font. 
+
+###### License: 
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+
+https://github.com/adobe-fonts/source-sans-pro/blob/master/LICENSE.txt
+
+--------------------------------------------------------------------
