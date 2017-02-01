@@ -1899,6 +1899,7 @@ void MegaApplication::cleanAll()
 
     closeDialogs();
     removeAllFinishedTransfers();
+    clearViewedTransfers();
 
     delete bwOverquotaDialog;
     bwOverquotaDialog = NULL;
@@ -4861,6 +4862,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             preferences->unlink();
             closeDialogs();
             removeAllFinishedTransfers();
+            clearViewedTransfers();
             delete infoOverQuota;
             infoOverQuota = NULL;
             paused = false;
