@@ -88,15 +88,17 @@ void QFinishedTransfersModel::removeTransferByTag(int transferTag)
 
 void QFinishedTransfersModel::removeAllTransfers()
 {
-    beginRemoveRows(QModelIndex(), 0, transfers.size());
-    qDeleteAll(transfers);
-    transfers.clear();
-    transferOrder.clear();
-    transferItems.clear();
-    endRemoveRows();
+    if (transfers.size())
+    {
+        beginRemoveRows(QModelIndex(), 0, transfers.size() - 1);
+        qDeleteAll(transfers);
+        transfers.clear();
+        transferOrder.clear();
+        transferItems.clear();
+        endRemoveRows();
+    }
 
     ((MegaApplication *)qApp)->removeAllFinishedTransfers();
-
     emit noTransfers();
 }
 
