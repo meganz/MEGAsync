@@ -60,6 +60,12 @@ QActiveTransfersModel::QActiveTransfersModel(int type, MegaTransferData *transfe
             endInsertRows();
         }
     }
+
+    if (transferOrder.size() != transfers.size())
+    {
+        assert(false);
+        megaApi->sendEvent(99513, QString::fromUtf8("Duplicated active transfer during initialization").toUtf8().constData());
+    }
 }
 
 void QActiveTransfersModel::removeTransferByTag(int transferTag)
@@ -190,6 +196,14 @@ void QActiveTransfersModel::onTransferStart(MegaApi *, MegaTransfer *transfer)
 
         transfer_it it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
         int row = std::distance(transferOrder.begin(), it);
+        if (transfers.count(item->tag))
+        {
+            assert(false);
+            megaApi->sendEvent(99514, QString::fromUtf8("Duplicated active transfer during insertion: %1").arg(QString::number(item->tag)).toUtf8().constData());
+            delete item;
+            return;
+        }
+
         beginInsertRows(QModelIndex(), row, row);
         transfers.insert(item->tag, item);
         transferOrder.insert(it, item);

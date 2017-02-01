@@ -14,6 +14,7 @@
 #include <QDesktopWidget>
 #include <QFontDatabase>
 #include <QNetworkProxy>
+#include <assert.h>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -5347,6 +5348,13 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     if (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED)
     {
         MegaTransfer *t = transfer->copy();
+        if (finishedTransfers.count(transfer->getTag()))
+        {
+            assert(false);
+            megaApi->sendEvent(99512, QString::fromUtf8("Duplicated finished transfer: %1").arg(QString::number(transfer->getTag())).toUtf8().constData());
+            removeFinishedTransfer(transfer->getTag());
+        }
+
         finishedTransfers.insert(transfer->getTag(), t);
         finishedTransferOrder.push_back(t);
 
