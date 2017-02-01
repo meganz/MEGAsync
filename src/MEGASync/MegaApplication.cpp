@@ -5317,6 +5317,11 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
         return;
     }
 
+    if (transferManager)
+    {
+        transferManager->onTransferStart(megaApi, transfer);
+    }
+
     onTransferUpdate(api, transfer);
     if (!numTransfers[MegaTransfer::TYPE_DOWNLOAD]
             && !numTransfers[MegaTransfer::TYPE_UPLOAD])
@@ -5339,9 +5344,8 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         return;
     }
 
-    if (e->getErrorCode() != MegaError::API_EINCOMPLETE)
+    if (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED)
     {
-        // Add finished transfer to TransferManager map, regardless there is error or not
         MegaTransfer *t = transfer->copy();
         finishedTransfers.insert(transfer->getTag(), t);
         finishedTransferOrder.push_back(t);
@@ -5349,10 +5353,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         if (!transferManager)
         {
             completedTabActive = false;
-            while (finishedTransferOrder.size() > Preferences::MAX_COMPLETED_ITEMS)
-            {
-                removeFinishedTransfer(finishedTransferOrder.first()->getTag());
-            }
         }
 
         if (!completedTabActive)
@@ -5364,6 +5364,16 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         {
             transferManager->updateNumberOfCompletedTransfers(nUnviewedTransfers);
         }
+    }
+
+    if (transferManager)
+    {
+        transferManager->onTransferFinish(megaApi, transfer, e);
+    }
+
+    if (finishedTransferOrder.size() > Preferences::MAX_COMPLETED_ITEMS)
+    {
+        removeFinishedTransfer(finishedTransferOrder.first()->getTag());
     }
 
     //Show the transfer in the "recently updated" list
@@ -5526,6 +5536,11 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
         return;
     }
 
+    if (transferManager)
+    {
+        transferManager->onTransferUpdate(megaApi, transfer);
+    }
+
     int type = transfer->getType();
     unsigned long long priority = transfer->getPriority();    
     if (priority <= activeTransferPriority[type]
@@ -5560,6 +5575,11 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     if (appfinished)
     {
         return;
+    }
+
+    if (transferManager)
+    {
+        transferManager->onTransferTemporaryError(megaApi, transfer, e);
     }
 
     onTransferUpdate(api, transfer);

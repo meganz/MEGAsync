@@ -24,9 +24,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     downloadAction = NULL;
     settingsAction = NULL;
     this->megaApi = megaApi; 
-    delegateListener = new QTMegaTransferListener(megaApi, this);
 
-    MegaTransferData *transferData = megaApi->getTransferData(delegateListener);
+    MegaTransferData *transferData = megaApi->getTransferData();
+    notificationNumber = transferData->getNotificationNumber();
     ui->wUploads->setupTransfers(transferData, QTransfersModel::TYPE_UPLOAD);
     ui->wDownloads->setupTransfers(transferData, QTransfersModel::TYPE_DOWNLOAD);
 
@@ -57,13 +57,13 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
 
 TransferManager::~TransferManager()
 {
-    delete delegateListener;
     delete ui;
 }
 
 void TransferManager::onTransferStart(MegaApi *api, MegaTransfer *transfer)
 {
-    if (!transfer->getPriority() || transfer->isStreamingTransfer() || transfer->isFolderTransfer())
+    if (!transfer->getPriority() || transfer->isStreamingTransfer()
+            || transfer->isFolderTransfer() || notificationNumber >= transfer->getNotificationNumber())
     {
         return;
     }
@@ -81,7 +81,7 @@ void TransferManager::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
     }
 
     ui->wCompleted->getModel()->onTransferFinish(api, transfer, e);
-    if (!transfer->getPriority())
+    if (!transfer->getPriority() || notificationNumber >= transfer->getNotificationNumber())
     {
         return;
     }
@@ -93,7 +93,8 @@ void TransferManager::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
 
 void TransferManager::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
 {
-    if (!transfer->getPriority() || transfer->isStreamingTransfer() || transfer->isFolderTransfer())
+    if (!transfer->getPriority() || transfer->isStreamingTransfer()
+            || transfer->isFolderTransfer() || notificationNumber >= transfer->getNotificationNumber())
     {
         return;
     }
@@ -105,7 +106,8 @@ void TransferManager::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
 
 void TransferManager::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError *e)
 {
-    if (!transfer->getPriority() || transfer->isStreamingTransfer() || transfer->isFolderTransfer())
+    if (!transfer->getPriority() || transfer->isStreamingTransfer()
+            || transfer->isFolderTransfer() || notificationNumber >= transfer->getNotificationNumber())
     {
         return;
     }

@@ -37,7 +37,6 @@ void QFinishedTransfersModel::insertTransfer(MegaTransfer *transfer)
         beginRemoveRows(QModelIndex(), row, row);
         transfers.remove(t->tag);
         transferOrder.pop_back();
-        ((MegaApplication *)qApp)->removeFinishedTransfer(t->tag);
         transferItems.remove(t->tag);
         endRemoveRows();
         delete t;

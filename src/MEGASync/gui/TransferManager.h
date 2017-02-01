@@ -45,8 +45,8 @@ private:
     TransferMenuItemAction *uploadAction;
     TransferMenuItemAction *downloadAction;
     Preferences *preferences;
-    mega::QTMegaTransferListener *delegateListener;
     QPoint dragPosition;
+    long long notificationNumber;
 
     void createAddMenu();
     void onTransfersActive(bool exists);  
