@@ -21,11 +21,9 @@ public:
 
     virtual mega::MegaTransfer *getTransferByTag(int tag);
 
-    mega::MegaTransfer* getFinishedTransferByTag(int tag);
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
 
 protected:
-    void updateTransferInfo(mega::MegaTransfer *transfer);
     void insertTransfer(mega::MegaTransfer *transfer);
 
 private slots:

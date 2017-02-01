@@ -97,52 +97,11 @@ MegaTransfer *QFinishedTransfersModel::getTransferByTag(int tag)
     return ((MegaApplication *)qApp)->getFinishedTransferByTag(tag);
 }
 
-MegaTransfer* QFinishedTransfersModel::getFinishedTransferByTag(int tag)
-{
-    return ((MegaApplication *)qApp)->getFinishedTransferByTag(tag);
-}
-
 void QFinishedTransfersModel::onTransferFinish(MegaApi *, MegaTransfer *transfer, MegaError *)
 {
     if (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED)
     {
         insertTransfer(transfer);
-    }
-}
-
-void QFinishedTransfersModel::updateTransferInfo(MegaTransfer *transfer)
-{
-    TransferItemData *itemData = transfers.value(transfer->getTag());
-    if (!itemData)
-    {
-        return;
-    }
-
-    unsigned long long newPriority = transfer->getPriority();
-    TransferItem *item = transferItems[transfer->getTag()];
-    if (item)
-    {
-        if (item->getType() < 0)
-        {
-            item->setType(transfer->getType(), transfer->isSyncTransfer());
-            item->setFileName(QString::fromUtf8(transfer->getFileName()));
-            item->setTotalSize(transfer->getTotalBytes());
-        }
-
-        item->setSpeed(transfer->getSpeed(), transfer->getMeanSpeed());
-        item->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
-        item->setTransferState(transfer->getState());
-        item->setPriority(newPriority);
-
-        int row = 0;
-        int tag = item->getTransferTag();
-        for (transfer_it it = transferOrder.begin(); it != transferOrder.end() && (*it)->tag != tag; ++it)
-        {
-            ++row;
-        }
-
-        assert(row < transferOrder.size());
-        emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
     }
 }
 

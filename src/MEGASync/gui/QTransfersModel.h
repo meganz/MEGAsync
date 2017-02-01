@@ -54,7 +54,6 @@ private slots:
     virtual void refreshTransferItem(int tag) = 0;
 
 protected:
-    virtual void updateTransferInfo(mega::MegaTransfer *transfer) = 0;
     QMap<int, TransferItemData*> transfers;
     std::deque<TransferItemData*> transferOrder;
     int type;
