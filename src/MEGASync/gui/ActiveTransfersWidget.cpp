@@ -119,6 +119,10 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
         if (transfer->getPriority() > activeDownload.priority
                 && !(activeDownload.transferState == MegaTransfer::STATE_PAUSED))
         {
+            if (activeDownload.tag == transfer->getTag())
+            {
+                activeDownload.clear();
+            }
             return;
         }
 
@@ -149,6 +153,10 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
     {
         if (transfer->getPriority() > activeUpload.priority)
         {
+            if (activeUpload.tag == transfer->getTag())
+            {
+                activeUpload.clear();
+            }
             return;
         }
 
