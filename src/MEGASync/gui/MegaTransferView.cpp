@@ -12,7 +12,7 @@
 using namespace mega;
 
 MegaTransferView::MegaTransferView(QWidget *parent) :
-    QTreeView(parent), last_row(-1)
+    QTreeView(parent)
 {
     setMouseTracking(true);
     lastItemHoveredTag = 0;
@@ -267,13 +267,11 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
     if (model)
     {
         QModelIndex index = indexAt(event->pos());
-        int tag = index.internalId();
-
         if (index.isValid())
         {
-             if (index.row() != last_row)
-             {
-                last_row = index.row();
+            int tag = index.internalId();
+            if (tag != lastItemHoveredTag)
+            {
                 if (lastItemHoveredTag)
                 {
                     TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
@@ -289,7 +287,11 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
                     lastItemHoveredTag = item->getTransferTag();
                     item->mouseHoverTransfer(true);
                 }
-             }
+                else
+                {
+                    lastItemHoveredTag = 0;
+                }
+            }
         }
         else
         {
@@ -299,9 +301,9 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
                 if (lastItemHovered)
                 {
                     lastItemHovered->mouseHoverTransfer(false);
-                    last_row = -1;
-                    lastItemHoveredTag = 0;
+                    update();
                 }
+                lastItemHoveredTag = 0;
             }
         }
     }
@@ -319,10 +321,9 @@ void MegaTransferView::leaveEvent(QEvent *event)
             if (lastItemHovered)
             {
                 lastItemHovered->mouseHoverTransfer(false);
-                last_row = -1;
-                lastItemHoveredTag = 0;
-                repaint();
+                update();
             }
+            lastItemHoveredTag = 0;
         }
     }
     QTreeView::leaveEvent(event);
