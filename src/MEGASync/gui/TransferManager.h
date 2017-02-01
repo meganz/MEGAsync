@@ -22,7 +22,6 @@ public:
 
     explicit TransferManager(mega::MegaApi *megaApi, QWidget *parent = 0);
     void updatePauseState();
-    void updateState();
     void disableGetLink(bool disable);
     void updateNumberOfCompletedTransfers(int num);
     ~TransferManager();
@@ -50,6 +49,9 @@ private:
 
     void createAddMenu();
     void onTransfersActive(bool exists);  
+
+public slots:
+    void updateState();
 
 private slots:
     void on_tCompleted_clicked();
