@@ -320,6 +320,10 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("QDialogButtonBox", "&No");
     QT_TRANSLATE_NOOP("QDialogButtonBox", "&OK");
     QT_TRANSLATE_NOOP("QDialogButtonBox", "&Cancel");
+    QT_TRANSLATE_NOOP("QPlatformTheme", "&Yes");
+    QT_TRANSLATE_NOOP("QPlatformTheme", "&No");
+    QT_TRANSLATE_NOOP("QPlatformTheme", "OK");
+    QT_TRANSLATE_NOOP("QPlatformTheme", "Cancel"):
     QT_TRANSLATE_NOOP("Installer", "Choose Users");
     QT_TRANSLATE_NOOP("Installer", "Choose for which users you want to install $(^NameDA).");
     QT_TRANSLATE_NOOP("Installer", "Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)");

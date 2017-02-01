@@ -1779,6 +1779,25 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     </message>
 </context>
 <context>
+    <name>QPlatformTheme</name>
+    <message>
+        <source>&amp;Yes</source>
+        <translation type="unfinished">&amp;Kyllä</translation>
+    </message>
+    <message>
+        <source>&amp;No</source>
+        <translation type="unfinished">&amp;Ei</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Peruuta</translation>
+    </message>
+</context>
+<context>
     <name>RecentFile</name>
     <message>
         <source>%1 hours ago</source>

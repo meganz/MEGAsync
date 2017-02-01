@@ -1787,6 +1787,25 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>QPlatformTheme</name>
+    <message>
+        <source>&amp;Yes</source>
+        <translation type="unfinished">&amp;[$78]</translation>
+    </message>
+    <message>
+        <source>&amp;No</source>
+        <translation type="unfinished">&amp;[$79]</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>RecentFile</name>
     <message>
         <source>%1 hours ago</source>
