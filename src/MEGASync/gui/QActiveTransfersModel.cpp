@@ -93,14 +93,6 @@ void QActiveTransfersModel::removeTransferByTag(int transferTag)
 
 void QActiveTransfersModel::removeAllTransfers()
 {
-    beginRemoveRows(QModelIndex(), 0, transfers.size());
-    qDeleteAll(transfers);
-    transfers.clear();
-    transferOrder.clear();
-    transferItems.clear();
-    endRemoveRows();
-
-    emit noTransfers();
 }
 
 QMimeData *QActiveTransfersModel::mimeData(const QModelIndexList &indexes) const
