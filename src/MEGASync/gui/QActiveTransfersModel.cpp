@@ -289,6 +289,7 @@ void QActiveTransfersModel::updateTransferInfo(MegaTransfer *transfer)
         }
 
         TransferItemData testItem;
+        testItem.tag = itemData->tag;
         testItem.priority = newPriority;
         std::deque<TransferItemData*>::iterator newit = std::lower_bound(transferOrder.begin(), transferOrder.end(), &testItem, priority_comparator);
         int newrow = std::distance(transferOrder.begin(), newit);
