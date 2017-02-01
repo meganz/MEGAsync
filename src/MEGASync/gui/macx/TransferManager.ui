@@ -560,6 +560,9 @@ QToolButton
                   <height>15</height>
                  </size>
                 </property>
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
+                </property>
                 <property name="text">
                  <string notr="true"/>
                 </property>
@@ -847,6 +850,16 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>bAdd</tabstop>
+  <tabstop>tAllTransfers</tabstop>
+  <tabstop>tDownloads</tabstop>
+  <tabstop>tUploads</tabstop>
+  <tabstop>tCompleted</tabstop>
+  <tabstop>bPause</tabstop>
+  <tabstop>bClearAll</tabstop>
+  <tabstop>bClose</tabstop>
+ </tabstops>
  <resources>
   <include location="../Resources_linux.qrc"/>
  </resources>
