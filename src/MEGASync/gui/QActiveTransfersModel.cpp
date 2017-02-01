@@ -27,27 +27,37 @@ QActiveTransfersModel::QActiveTransfersModel(int type, MegaTransferData *transfe
     if (type == TYPE_DOWNLOAD)
     {
         int numDownloads = transferData->getNumDownloads();
-        transferOrder.resize(numDownloads);
-        for (int i = 0; i < numDownloads; i++)
+        if (numDownloads)
         {
-            itemData = new TransferItemData();
-            itemData->tag = transferData->getDownloadTag(i);
-            itemData->priority = transferData->getDownloadPriority(i);
-            transfers.insert(itemData->tag, itemData);
-            transferOrder[i] = itemData;
+            beginInsertRows(QModelIndex(), 0, numDownloads - 1);
+            transferOrder.resize(numDownloads);
+            for (int i = 0; i < numDownloads; i++)
+            {
+                itemData = new TransferItemData();
+                itemData->tag = transferData->getDownloadTag(i);
+                itemData->priority = transferData->getDownloadPriority(i);
+                transfers.insert(itemData->tag, itemData);
+                transferOrder[i] = itemData;
+            }
+            endInsertRows();
         }
     }
     else if (type == TYPE_UPLOAD)
     {
         int numUploads = transferData->getNumUploads();
-        transferOrder.resize(numUploads);
-        for (int i = 0; i < numUploads; i++)
+        if (numUploads)
         {
-            itemData = new TransferItemData();
-            itemData->tag = transferData->getUploadTag(i);
-            itemData->priority = transferData->getUploadPriority(i);
-            transfers.insert(itemData->tag, itemData);
-            transferOrder[i] = itemData;
+            beginInsertRows(QModelIndex(), 0, numUploads - 1);
+            transferOrder.resize(numUploads);
+            for (int i = 0; i < numUploads; i++)
+            {
+                itemData = new TransferItemData();
+                itemData->tag = transferData->getUploadTag(i);
+                itemData->priority = transferData->getUploadPriority(i);
+                transfers.insert(itemData->tag, itemData);
+                transferOrder[i] = itemData;
+            }
+            endInsertRows();
         }
     }
 }
