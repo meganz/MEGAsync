@@ -4,14 +4,23 @@
 
 using namespace mega;
 
-QFinishedTransfersModel::QFinishedTransfersModel(QList<MegaTransfer *> transfers, QObject *parent) :
+QFinishedTransfersModel::QFinishedTransfersModel(QList<MegaTransfer *> finishedTransfers, QObject *parent) :
     QTransfersModel(QTransfersModel::TYPE_FINISHED, parent)
 {
-    for (int i = 0; i < transfers.size(); i++)
+    int numTransfers = finishedTransfers.size();
+    if (numTransfers)
     {
-        MegaTransfer *transfer = transfers.at(i);
-        insertTransfer(transfer);
-        updateTransferInfo(transfer);
+        beginInsertRows(QModelIndex(), 0, numTransfers - 1);
+        for (int i = 0; i < numTransfers; i++)
+        {
+            MegaTransfer *transfer = finishedTransfers.at(i);
+            TransferItemData *item = new TransferItemData();
+            item->tag = transfer->getTag();
+            item->priority = transfer->getPriority();
+            transfers.insert(item->tag, item);
+            transferOrder.push_front(item);
+        }
+        endInsertRows();
     }
 }
 
