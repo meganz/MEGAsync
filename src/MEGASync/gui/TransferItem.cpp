@@ -457,7 +457,7 @@ void TransferItem::mouseHoverTransfer(bool isHover)
 {
     if (isHover)
     {
-        if (isSyncTransfer)
+        if (isSyncTransfer && !(transferState == MegaTransfer::STATE_COMPLETED || transferSpeed == MegaTransfer::STATE_FAILED))
         {
             ui->lCancelTransfer->installEventFilter(this);
             ui->lCancelTransfer->update();
