@@ -11,7 +11,6 @@ TransfersWidget::TransfersWidget(QWidget *parent) :
     ui->setupUi(this);
     this->model = NULL;
     isPaused = false;
-    transfersActive = false;
 }
 
 void TransfersWidget::setupTransfers(MegaTransferData *transferData, int type)
@@ -66,7 +65,7 @@ TransfersWidget::~TransfersWidget()
 
 bool TransfersWidget::areTransfersActive()
 {
-    return transfersActive;
+    return model && model->rowCount(QModelIndex()) != 0;
 }
 
 void TransfersWidget::configureTransferView()
@@ -106,12 +105,10 @@ void TransfersWidget::pausedTransfers(bool paused)
     isPaused = paused;
     if (model->rowCount(QModelIndex()) == 0)
     {
-        transfersActive = false;
         noTransfers();
     }
     else
     {
-        transfersActive = true;
         ui->sWidget->setCurrentWidget(ui->pTransfers);
     }
 }
@@ -128,7 +125,6 @@ QTransfersModel *TransfersWidget::getModel()
 
 void TransfersWidget::noTransfers()
 {
-    transfersActive = false;
     if (isPaused)
     {
         ui->pNoTransfers->setState(TransfersStateInfoWidget::PAUSED);
@@ -154,7 +150,6 @@ void TransfersWidget::noTransfers()
 
 void TransfersWidget::onTransferAdded()
 {
-    transfersActive = true;
     ui->sWidget->setCurrentWidget(ui->pTransfers);
 }
 
