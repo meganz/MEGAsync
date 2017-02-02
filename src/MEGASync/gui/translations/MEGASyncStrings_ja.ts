@@ -64,12 +64,12 @@
     <message>
         <source>Remaining Downloads</source>
         <translatorcomment>Label to indicate the number of remaining downloads</translatorcomment>
-        <translation type="unfinished">Remaining Downloads</translation>
+        <translation type="unfinished">残りダウンロード</translation>
     </message>
     <message>
         <source>download speed</source>
         <translatorcomment>Label to indicate the actual current download speed</translatorcomment>
-        <translation type="unfinished">download speed</translation>
+        <translation type="unfinished">ダウンロード速度</translation>
     </message>
     <message>
         <source>No Downloads</source>
@@ -79,7 +79,7 @@
     <message>
         <source>Remaining Uploads</source>
         <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
-        <translation type="unfinished">Remaining Uploads</translation>
+        <translation type="unfinished">残りアップロード</translation>
     </message>
     <message>
         <source>upload speed</source>
@@ -412,7 +412,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your download has started</source>
         <translatorcomment>Notification shown when a web download is started.</translatorcomment>
-        <translation type="unfinished">Your download has started</translation>
+        <translation type="unfinished">ダウンロードが開始しました。</translation>
     </message>
 </context>
 <context>
@@ -1603,7 +1603,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Please enter a valid folder name</source>
         <translatorcomment>Error message shown when an user is trying to create a folder with an empty name</translatorcomment>
-        <translation type="unfinished">Please enter a valid folder name</translation>
+        <translation type="unfinished">有効なフォルダ名前を入力してください</translation>
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
@@ -1776,6 +1776,25 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>&amp;Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
         <translation>&amp;キャンセル</translation>
+    </message>
+</context>
+<context>
+    <name>QPlatformTheme</name>
+    <message>
+        <source>&amp;Yes</source>
+        <translation type="unfinished">&amp;はい</translation>
+    </message>
+    <message>
+        <source>&amp;No</source>
+        <translation type="unfinished">&amp;いいえ</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">キャンセル</translation>
     </message>
 </context>
 <context>

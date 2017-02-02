@@ -48,6 +48,9 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     updateNumberOfCompletedTransfers(((MegaApplication *)qApp)->getNumUnviewedTransfers());
     delete transferData;
 
+    connect(ui->wCompleted->getModel(), SIGNAL(noTransfers()), this, SLOT(updateState()));
+    connect(ui->wCompleted->getModel(), SIGNAL(onTransferAdded()), this, SLOT(updateState()));
+
     updatePauseState();
     on_tAllTransfers_clicked();
     createAddMenu();
@@ -413,8 +416,6 @@ void TransferManager::on_bClearAll_clicked()
     {
         ui->wCompleted->clearTransfers();
     }
-
-    updateState();
 }
 
 void TransferManager::onTransfersActive(bool exists)

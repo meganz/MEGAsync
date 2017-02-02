@@ -649,7 +649,7 @@ Are you sure?</source>
     <message>
         <source>Pause downloads</source>
         <translatorcomment>Label to pause the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Pause downloads</translation>
+        <translation type="unfinished">Itigil muna ang downloads</translation>
     </message>
     <message>
         <source>Resume uploads</source>
@@ -664,7 +664,7 @@ Are you sure?</source>
     <message>
         <source>Resume download</source>
         <translatorcomment>Label to resume the current download. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume download</translation>
+        <translation type="unfinished">Simulan muli ang download</translation>
     </message>
     <message>
         <source>Resume upload</source>
@@ -1776,6 +1776,25 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>&amp;Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
         <translation>&amp;Itigil</translation>
+    </message>
+</context>
+<context>
+    <name>QPlatformTheme</name>
+    <message>
+        <source>&amp;Yes</source>
+        <translation type="unfinished">&amp;Oo</translation>
+    </message>
+    <message>
+        <source>&amp;No</source>
+        <translation type="unfinished">&amp;Hindi</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">SIGE</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Kanselahin</translation>
     </message>
 </context>
 <context>
