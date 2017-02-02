@@ -14,6 +14,7 @@
 #include <QDesktopWidget>
 #include <QFontDatabase>
 #include <QNetworkProxy>
+#include <assert.h>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -441,6 +442,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     activeTransferPriority[MegaTransfer::TYPE_UPLOAD] = 0xFFFFFFFFFFFFFFFFULL;
     activeTransferState[MegaTransfer::TYPE_DOWNLOAD] = MegaTransfer::STATE_NONE;
     activeTransferState[MegaTransfer::TYPE_UPLOAD] = MegaTransfer::STATE_NONE;
+    activeTransferTag[MegaTransfer::TYPE_DOWNLOAD] = 0;
+    activeTransferTag[MegaTransfer::TYPE_UPLOAD] = 0;
     trayIcon = NULL;
     trayMenu = NULL;
     trayOverQuotaMenu = NULL;
@@ -5321,6 +5324,11 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
         return;
     }
 
+    if (transferManager)
+    {
+        transferManager->onTransferStart(megaApi, transfer);
+    }
+
     onTransferUpdate(api, transfer);
     if (!numTransfers[MegaTransfer::TYPE_DOWNLOAD]
             && !numTransfers[MegaTransfer::TYPE_UPLOAD])
@@ -5343,20 +5351,22 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         return;
     }
 
-    if (e->getErrorCode() != MegaError::API_EINCOMPLETE)
+    if (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED)
     {
-        // Add finished transfer to TransferManager map, regardless there is error or not
         MegaTransfer *t = transfer->copy();
+        if (finishedTransfers.count(transfer->getTag()))
+        {
+            assert(false);
+            megaApi->sendEvent(99512, QString::fromUtf8("Duplicated finished transfer: %1").arg(QString::number(transfer->getTag())).toUtf8().constData());
+            removeFinishedTransfer(transfer->getTag());
+        }
+
         finishedTransfers.insert(transfer->getTag(), t);
         finishedTransferOrder.push_back(t);
 
         if (!transferManager)
         {
             completedTabActive = false;
-            while (finishedTransferOrder.size() > Preferences::MAX_COMPLETED_ITEMS)
-            {
-                removeFinishedTransfer(finishedTransferOrder.first()->getTag());
-            }
         }
 
         if (!completedTabActive)
@@ -5368,6 +5378,16 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         {
             transferManager->updateNumberOfCompletedTransfers(nUnviewedTransfers);
         }
+    }
+
+    if (transferManager)
+    {
+        transferManager->onTransferFinish(megaApi, transfer, e);
+    }
+
+    if (finishedTransferOrder.size() > Preferences::MAX_COMPLETED_ITEMS)
+    {
+        removeFinishedTransfer(finishedTransferOrder.first()->getTag());
     }
 
     //Show the transfer in the "recently updated" list
@@ -5447,11 +5467,13 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     unsigned long long priority = transfer->getPriority();
 
     numTransfers[type]--;
-    if (priority && (priority <= activeTransferPriority[type]
-                     || activeTransferState[type] == MegaTransfer::STATE_PAUSED))
+    if (priority <= activeTransferPriority[type]
+            || activeTransferState[type] == MegaTransfer::STATE_PAUSED
+            || transfer->getTag() == activeTransferTag[type])
     {
         activeTransferPriority[type] = 0xFFFFFFFFFFFFFFFFULL;
-        activeTransferState[type] = transfer->getState();
+        activeTransferState[type] = MegaTransfer::STATE_NONE;
+        activeTransferTag[type] = 0;
 
         //Send updated statics to the information dialog
         if (infoDialog)
@@ -5459,6 +5481,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             infoDialog->setTransfer(transfer);
             infoDialog->updateTransfers();
             infoDialog->transferFinished(e->getErrorCode());
+        }
+
+        if (!firstTransferTimer->isActive())
+        {
+            firstTransferTimer->start();
         }
     }
 
@@ -5512,13 +5539,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     {
         onGlobalSyncStateChanged(megaApi);
     }
-    else
-    {
-        if (!firstTransferTimer->isActive())
-        {
-            firstTransferTimer->start();
-        }
-    }
 }
 
 //Called when a transfer has been updated
@@ -5530,6 +5550,11 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
         return;
     }
 
+    if (transferManager)
+    {
+        transferManager->onTransferUpdate(megaApi, transfer);
+    }
+
     int type = transfer->getType();
     unsigned long long priority = transfer->getPriority();    
     if (priority <= activeTransferPriority[type]
@@ -5537,11 +5562,23 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     {
         activeTransferPriority[type] = priority;
         activeTransferState[type] = transfer->getState();
+        activeTransferTag[type] = transfer->getTag();
 
         if (infoDialog)
         {
             infoDialog->setTransfer(transfer);
             infoDialog->updateTransfers();
+        }
+    }
+    else if (activeTransferTag[type] == transfer->getTag())
+    {
+        // First transfer moved to a lower priority
+        activeTransferPriority[type] = 0xFFFFFFFFFFFFFFFFULL;
+        activeTransferState[type] = MegaTransfer::STATE_NONE;
+        activeTransferTag[type] = 0;
+        if (!firstTransferTimer->isActive())
+        {
+            firstTransferTimer->start();
         }
     }
 }
@@ -5552,6 +5589,11 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     if (appfinished)
     {
         return;
+    }
+
+    if (transferManager)
+    {
+        transferManager->onTransferTemporaryError(megaApi, transfer, e);
     }
 
     onTransferUpdate(api, transfer);

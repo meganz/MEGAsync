@@ -14,18 +14,16 @@ class QFinishedTransfersModel : public QTransfersModel
     Q_OBJECT
 
 public:
-    explicit QFinishedTransfersModel(QList<mega::MegaTransfer *>transfers, QObject *parent = 0);
+    explicit QFinishedTransfersModel(QList<mega::MegaTransfer *>finishedTransfers, QObject *parent = 0);
     void setupModelTransfers();
     void removeTransferByTag(int transferTag);
     void removeAllTransfers();
 
     virtual mega::MegaTransfer *getTransferByTag(int tag);
 
-    mega::MegaTransfer* getFinishedTransferByTag(int tag);
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
 
 protected:
-    void updateTransferInfo(mega::MegaTransfer *transfer);
     void insertTransfer(mega::MegaTransfer *transfer);
 
 private slots:

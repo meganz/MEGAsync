@@ -38,7 +38,6 @@ private:
     MegaTransferDelegate *tDelegate;
     int type;
     int isPaused;
-    bool transfersActive;
 
 private:
     void configureTransferView();

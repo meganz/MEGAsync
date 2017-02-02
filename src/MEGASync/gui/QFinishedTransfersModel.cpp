@@ -4,14 +4,23 @@
 
 using namespace mega;
 
-QFinishedTransfersModel::QFinishedTransfersModel(QList<MegaTransfer *> transfers, QObject *parent) :
+QFinishedTransfersModel::QFinishedTransfersModel(QList<MegaTransfer *> finishedTransfers, QObject *parent) :
     QTransfersModel(QTransfersModel::TYPE_FINISHED, parent)
 {
-    for (int i = 0; i < transfers.size(); i++)
+    int numTransfers = finishedTransfers.size();
+    if (numTransfers)
     {
-        MegaTransfer *transfer = transfers.at(i);
-        insertTransfer(transfer);
-        updateTransferInfo(transfer);
+        beginInsertRows(QModelIndex(), 0, numTransfers - 1);
+        for (int i = 0; i < numTransfers; i++)
+        {
+            MegaTransfer *transfer = finishedTransfers.at(i);
+            TransferItemData *item = new TransferItemData();
+            item->tag = transfer->getTag();
+            item->priority = transfer->getPriority();
+            transfers.insert(item->tag, item);
+            transferOrder.push_front(item);
+        }
+        endInsertRows();
     }
 }
 
@@ -28,7 +37,6 @@ void QFinishedTransfersModel::insertTransfer(MegaTransfer *transfer)
         beginRemoveRows(QModelIndex(), row, row);
         transfers.remove(t->tag);
         transferOrder.pop_back();
-        ((MegaApplication *)qApp)->removeFinishedTransfer(t->tag);
         transferItems.remove(t->tag);
         endRemoveRows();
         delete t;
@@ -80,24 +88,21 @@ void QFinishedTransfersModel::removeTransferByTag(int transferTag)
 
 void QFinishedTransfersModel::removeAllTransfers()
 {
-    beginRemoveRows(QModelIndex(), 0, transfers.size());
-    qDeleteAll(transfers);
-    transfers.clear();
-    transferOrder.clear();
-    transferItems.clear();
-    endRemoveRows();
+    if (transfers.size())
+    {
+        beginRemoveRows(QModelIndex(), 0, transfers.size() - 1);
+        qDeleteAll(transfers);
+        transfers.clear();
+        transferOrder.clear();
+        transferItems.clear();
+        endRemoveRows();
+    }
 
     ((MegaApplication *)qApp)->removeAllFinishedTransfers();
-
     emit noTransfers();
 }
 
 MegaTransfer *QFinishedTransfersModel::getTransferByTag(int tag)
-{
-    return ((MegaApplication *)qApp)->getFinishedTransferByTag(tag);
-}
-
-MegaTransfer* QFinishedTransfersModel::getFinishedTransferByTag(int tag)
 {
     return ((MegaApplication *)qApp)->getFinishedTransferByTag(tag);
 }
@@ -107,42 +112,6 @@ void QFinishedTransfersModel::onTransferFinish(MegaApi *, MegaTransfer *transfer
     if (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED)
     {
         insertTransfer(transfer);
-    }
-}
-
-void QFinishedTransfersModel::updateTransferInfo(MegaTransfer *transfer)
-{
-    TransferItemData *itemData = transfers.value(transfer->getTag());
-    if (!itemData)
-    {
-        return;
-    }
-
-    unsigned long long newPriority = transfer->getPriority();
-    TransferItem *item = transferItems[transfer->getTag()];
-    if (item)
-    {
-        if (item->getType() < 0)
-        {
-            item->setType(transfer->getType(), transfer->isSyncTransfer());
-            item->setFileName(QString::fromUtf8(transfer->getFileName()));
-            item->setTotalSize(transfer->getTotalBytes());
-        }
-
-        item->setSpeed(transfer->getSpeed(), transfer->getMeanSpeed());
-        item->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
-        item->setTransferState(transfer->getState());
-        item->setPriority(newPriority);
-
-        int row = 0;
-        int tag = item->getTransferTag();
-        for (transfer_it it = transferOrder.begin(); it != transferOrder.end() && (*it)->tag != tag; ++it)
-        {
-            ++row;
-        }
-
-        assert(row < transferOrder.size());
-        emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
     }
 }
 

@@ -27,28 +27,44 @@ QActiveTransfersModel::QActiveTransfersModel(int type, MegaTransferData *transfe
     if (type == TYPE_DOWNLOAD)
     {
         int numDownloads = transferData->getNumDownloads();
-        transferOrder.resize(numDownloads);
-        for (int i = 0; i < numDownloads; i++)
+        if (numDownloads)
         {
-            itemData = new TransferItemData();
-            itemData->tag = transferData->getDownloadTag(i);
-            itemData->priority = transferData->getDownloadPriority(i);
-            transfers.insert(itemData->tag, itemData);
-            transferOrder[i] = itemData;
+            beginInsertRows(QModelIndex(), 0, numDownloads - 1);
+            transferOrder.resize(numDownloads);
+            for (int i = 0; i < numDownloads; i++)
+            {
+                itemData = new TransferItemData();
+                itemData->tag = transferData->getDownloadTag(i);
+                itemData->priority = transferData->getDownloadPriority(i);
+                transfers.insert(itemData->tag, itemData);
+                transferOrder[i] = itemData;
+            }
+            endInsertRows();
         }
     }
     else if (type == TYPE_UPLOAD)
     {
         int numUploads = transferData->getNumUploads();
-        transferOrder.resize(numUploads);
-        for (int i = 0; i < numUploads; i++)
+        if (numUploads)
         {
-            itemData = new TransferItemData();
-            itemData->tag = transferData->getUploadTag(i);
-            itemData->priority = transferData->getUploadPriority(i);
-            transfers.insert(itemData->tag, itemData);
-            transferOrder[i] = itemData;
+            beginInsertRows(QModelIndex(), 0, numUploads - 1);
+            transferOrder.resize(numUploads);
+            for (int i = 0; i < numUploads; i++)
+            {
+                itemData = new TransferItemData();
+                itemData->tag = transferData->getUploadTag(i);
+                itemData->priority = transferData->getUploadPriority(i);
+                transfers.insert(itemData->tag, itemData);
+                transferOrder[i] = itemData;
+            }
+            endInsertRows();
         }
+    }
+
+    if (transferOrder.size() != transfers.size())
+    {
+        assert(false);
+        megaApi->sendEvent(99513, QString::fromUtf8("Duplicated active transfer during initialization").toUtf8().constData());
     }
 }
 
@@ -83,14 +99,6 @@ void QActiveTransfersModel::removeTransferByTag(int transferTag)
 
 void QActiveTransfersModel::removeAllTransfers()
 {
-    beginRemoveRows(QModelIndex(), 0, transfers.size());
-    qDeleteAll(transfers);
-    transfers.clear();
-    transferOrder.clear();
-    transferItems.clear();
-    endRemoveRows();
-
-    emit noTransfers();
 }
 
 QMimeData *QActiveTransfersModel::mimeData(const QModelIndexList &indexes) const
@@ -188,6 +196,14 @@ void QActiveTransfersModel::onTransferStart(MegaApi *, MegaTransfer *transfer)
 
         transfer_it it = std::lower_bound(transferOrder.begin(), transferOrder.end(), item, priority_comparator);
         int row = std::distance(transferOrder.begin(), it);
+        if (transfers.count(item->tag))
+        {
+            assert(false);
+            megaApi->sendEvent(99514, QString::fromUtf8("Duplicated active transfer during insertion: %1").arg(QString::number(item->tag)).toUtf8().constData());
+            delete item;
+            return;
+        }
+
         beginInsertRows(QModelIndex(), row, row);
         transfers.insert(item->tag, item);
         transferOrder.insert(it, item);
@@ -273,6 +289,7 @@ void QActiveTransfersModel::updateTransferInfo(MegaTransfer *transfer)
         }
 
         TransferItemData testItem;
+        testItem.tag = itemData->tag;
         testItem.priority = newPriority;
         std::deque<TransferItemData*>::iterator newit = std::lower_bound(transferOrder.begin(), transferOrder.end(), &testItem, priority_comparator);
         int newrow = std::distance(transferOrder.begin(), newit);

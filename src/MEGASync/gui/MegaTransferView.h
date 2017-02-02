@@ -18,7 +18,6 @@ public:
     int getType() const;
 
 private:
-    int last_row;
     int lastItemHoveredTag;
     QList<int> transferTagSelected;
     bool disableLink;
