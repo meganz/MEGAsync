@@ -48,7 +48,10 @@ QModelIndex QTransfersModel::index(int row, int column, const QModelIndex &paren
 
 void QTransfersModel::refreshTransfers()
 {
-    emit dataChanged(index(0, 0, QModelIndex()), index(transferOrder.size(), 0, QModelIndex()));
+    if (transferOrder.size())
+    {
+        emit dataChanged(index(0, 0, QModelIndex()), index(transferOrder.size() - 1, 0, QModelIndex()));
+    }
 }
 
 int QTransfersModel::rowCount(const QModelIndex &parent) const
