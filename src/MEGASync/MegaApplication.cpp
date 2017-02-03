@@ -5393,7 +5393,12 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     //Show the transfer in the "recently updated" list
     if (e->getErrorCode() == MegaError::API_OK && transfer->getNodeHandle() != INVALID_HANDLE)
     {
-        QString localPath = QString::fromUtf8(transfer->getPath());
+        QString localPath;
+        if (transfer->getPath())
+        {
+            localPath = QString::fromUtf8(transfer->getPath());
+        }
+
 #ifdef WIN32
         if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
         {
