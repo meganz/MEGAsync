@@ -8,7 +8,7 @@ cat >> /etc/pacman.conf <<-EOF
 ###REPO for MEGA###
 [DEB_Arch_Extra]
 SigLevel = Optional TrustAll
-Server = http://mega.nz/linux/MEGAsync/Arch_Extra/\$arch
+Server = https://mega.nz/linux/MEGAsync/Arch_Extra/\$arch
 ###END REPO for MEGA###
 EOF
 
