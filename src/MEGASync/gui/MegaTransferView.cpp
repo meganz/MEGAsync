@@ -606,7 +606,14 @@ void MegaTransferView::showInFolderClicked()
             transfer = model->getTransferByTag(transferTagSelected[i]);
             if (transfer && transfer->getPath())
             {
-                Platform::showInFolder(QString::fromUtf8(transfer->getPath()));
+                QString localPath = QString::fromUtf8(transfer->getPath());
+                #ifdef WIN32
+                if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+                {
+                    localPath = localPath.mid(4);
+                }
+                #endif
+                Platform::showInFolder(localPath);
             }
         }
     }
