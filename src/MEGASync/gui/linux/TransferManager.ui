@@ -271,7 +271,7 @@
              <widget class="QPushButton" name="bAdd">
               <property name="minimumSize">
                <size>
-                <width>80</width>
+                <width>120</width>
                 <height>32</height>
                </size>
               </property>
@@ -743,7 +743,7 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
        <widget class="QPushButton" name="bPause">
         <property name="minimumSize">
          <size>
-          <width>80</width>
+          <width>120</width>
           <height>32</height>
          </size>
         </property>
@@ -778,7 +778,7 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
         </property>
         <property name="minimumSize">
          <size>
-          <width>80</width>
+          <width>120</width>
           <height>32</height>
          </size>
         </property>
@@ -823,7 +823,7 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
        <widget class="QPushButton" name="bClose">
         <property name="minimumSize">
          <size>
-          <width>80</width>
+          <width>120</width>
           <height>32</height>
          </size>
         </property>

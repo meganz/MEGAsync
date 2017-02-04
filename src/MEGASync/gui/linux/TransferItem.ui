@@ -294,13 +294,13 @@ padding-top: 1px;</string>
               <widget class="QLabel" name="lSpeed">
                <property name="minimumSize">
                 <size>
-                 <width>80</width>
+                 <width>84</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>16777215</width>
+                 <width>84</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -570,7 +570,7 @@ padding-top: 1px;</string>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>330</width>
+                 <width>16777215</width>
                  <height>16777215</height>
                 </size>
                </property>

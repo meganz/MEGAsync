@@ -98,21 +98,21 @@ background-color: rgba(0, 0, 0, 10%);
 #lDownCompletedSize, #lUpCompletedSize
 {
   font-family: &quot;Source Sans Pro&quot;;
-  font-size: 16px;
+  font-size: 14px;
   color: #999999;
 }
 
 #lCurrentDownSpeed, #lCurrentUpSpeed
 {
   font-family: &quot;Source Sans Pro&quot;;
-  font-size: 16px;
+  font-size: 15px;
   color: #999999;
 }
 
 #lDownRemainingTime, #lUpRemainingTime
 {
   font-family: &quot;Source Sans Pro&quot;;
-  font-size: 16px;
+  font-size: 14px;
   color: #333333;
 }
 
@@ -762,12 +762,21 @@ background-color: rgba(0, 0, 0, 10%);
                      <widget class="QLabel" name="lDownRemainingTime">
                       <property name="minimumSize">
                        <size>
-                        <width>0</width>
+                        <width>64</width>
                         <height>0</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>64</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="text">
                        <string notr="true"/>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                       </property>
                      </widget>
                     </item>
@@ -1459,12 +1468,21 @@ background-color: rgba(0, 0, 0, 10%);
                      <widget class="QLabel" name="lUpRemainingTime">
                       <property name="minimumSize">
                        <size>
-                        <width>0</width>
+                        <width>64</width>
                         <height>0</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>64</width>
+                        <height>16777215</height>
                        </size>
                       </property>
                       <property name="text">
                        <string notr="true"/>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                       </property>
                      </widget>
                     </item>
