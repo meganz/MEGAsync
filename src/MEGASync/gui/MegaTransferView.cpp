@@ -184,11 +184,11 @@ void MegaTransferView::createCompletedContextMenu()
         contextCompleted->setStyleSheet(QString::fromAscii(
                                    "QMenu {background: #ffffff;}"
 #if QT_VERSION < 0x050000
-                                   "QMenu::item {font-family: Source Sans Pro; margin-left: 8px; margin-right: 8px; color: #777777; padding: 5px 16px 5px 8px;} "
+                                   "QMenu::item {font-family: Source Sans Pro; margin: 5px 9px 5px 9px; margin-right: 8px; color: #777777; padding: 5px 16px 5px 8px;} "
                                    "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 7px; margin-right: 7px; color: #ffffff; padding: 4px 15px 4px 7px;}"
 #else
-                                   "QMenu::item {font-family: Source Sans Pro; margin-left: 8px; margin-right: 8px; color: #777777; padding: 5px 8px;} "
-                                   "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 7px; margin-right: 7px; color: #ffffff; padding: 4px 7px;}"
+                                   "QMenu::item {font-family: Source Sans Pro; margin: 5px 9px 5px 9px; color: #777777; padding: 5px 8px;} "
+                                   "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin: 5px 9px 5px 9px; color: #ffffff; padding: 4px 7px;}"
 #endif
                                    ));
     }
