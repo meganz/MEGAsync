@@ -366,6 +366,7 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
                                                            : QString::fromUtf8(":/images/cloud_upload_item_ico@2x.png"));
                 animationUp = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/uploading.gif")
                                                  : QString::fromUtf8(":/images/uploading@2x.gif"));
+                ui->bUpCancel->show();
             }
             else
             {
@@ -373,6 +374,7 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
                                                            : QString::fromUtf8(":/images/sync_item_ico@2x.png"));
                 animationUp = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/synching.gif")
                                                  : QString::fromUtf8(":/images/synching@2x.gif"));
+                ui->bUpCancel->hide();
             }
             break;
 
@@ -384,6 +386,7 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
                                                            : QString::fromUtf8(":/images/cloud_download_item_ico@2x.png"));
                 animationDown = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/downloading.gif")
                                                  : QString::fromUtf8(":/images/downloading@2x.gif"));
+                ui->bDownCancel->show();
 
             }
             else
@@ -392,6 +395,7 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
                                                            : QString::fromUtf8(":/images/sync_item_ico@2x.png"));
                 animationDown = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/synching.gif")
                                                  : QString::fromUtf8(":/images/synching@2x.gif"));
+                ui->bDownCancel->hide();
 
             }
             break;
