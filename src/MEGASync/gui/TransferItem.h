@@ -34,6 +34,7 @@ public:
     void updateTransfer();
     void updateFinishedTime();
     void mouseHoverTransfer(bool isHover);
+    void loadDefaultTransferIcon();
 
     QSize minimumSizeHint() const;
     QSize sizeHint() const;

@@ -73,11 +73,13 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 (preferences->getDownloadsPaused()))
             {
                 ti->setStateLabel(tr("paused"));
+                ti->loadDefaultTransferIcon();
             }
             else if ((modelType == QTransfersModel::TYPE_UPLOAD) &&
                 (preferences->getUploadsPaused()))
             {
                 ti->setStateLabel(tr("paused"));
+                ti->loadDefaultTransferIcon();
             }
         }
 
