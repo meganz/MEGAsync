@@ -350,6 +350,7 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
         int firstIndex = 0;
         int lastIndex = 0;
         QModelIndexList indexes = selectedIndexes();
+        transferTagSelected.clear();
         for (int i = 0; i< indexes.size(); i++)
         {
             if (i == 0)
@@ -435,7 +436,6 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                 contextInProgressMenu->exec(mapToGlobal(point));
             }
         }
-        transferTagSelected.clear();
     }
 }
 
