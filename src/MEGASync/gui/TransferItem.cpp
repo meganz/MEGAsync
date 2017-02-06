@@ -478,7 +478,7 @@ void TransferItem::mouseHoverTransfer(bool isHover)
 void TransferItem::loadDefaultTransferIcon()
 {
     ui->lActionType->setPixmap(loadIconResource);
-    if (animation->state() != QMovie::NotRunning)
+    if (animation && animation->state() != QMovie::NotRunning)
     {
         animation->stop();
     }
