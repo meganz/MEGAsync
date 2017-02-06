@@ -277,7 +277,7 @@ void StreamingFromMegaDialog::openStreamWithApp(QString app)
     QProcess::startDetached(command);
 #else
     QString args;
-    args = QLatin1String("-a ");
+    args = QString::fromUtf8("-a ");
     args += QDir::toNativeSeparators(QString::fromUtf8("\"")+ app + QString::fromUtf8("\"")) + QString::fromAscii(" \"%1\"").arg(streamURL);
     QProcess::startDetached(QString::fromAscii("open ") + args);
 #endif

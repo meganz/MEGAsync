@@ -71,12 +71,12 @@ bool MacXPlatform::isStartOnStartupActive()
 void MacXPlatform::showInFolder(QString pathIn)
 {
     QStringList scriptArgs;
-    scriptArgs << QLatin1String("-e")
-               << QString::fromLatin1("tell application \"Finder\" to reveal POSIX file \"%1\"").arg(pathIn);
-    QProcess::startDetached(QLatin1String("osascript"), scriptArgs);
+    scriptArgs << QString::fromUtf8("-e")
+               << QString::fromUtf8("tell application \"Finder\" to reveal POSIX file \"%1\"").arg(pathIn);
+    QProcess::startDetached(QString::fromUtf8("osascript"), scriptArgs);
     scriptArgs.clear();
-    scriptArgs << QLatin1String("-e")
-               << QLatin1String("tell application \"Finder\" to activate");
+    scriptArgs << QString::fromUtf8("-e")
+               << QString::fromUtf8("tell application \"Finder\" to activate");
     QProcess::startDetached(QString::fromAscii("osascript"), scriptArgs);
 }
 
