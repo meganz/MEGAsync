@@ -1814,7 +1814,7 @@ void MegaApplication::checkMemoryUsage()
     }
 
     if (maxMemoryUsage > preferences->getMaxMemoryUsage()
-            && maxMemoryUsage > 209715200 //200MB
+            && maxMemoryUsage > 268435456 //256MB
             + 2028 * totalNodes // 2KB per node
             + 5120 * totalTransfers) // 5KB per transfer
     {
