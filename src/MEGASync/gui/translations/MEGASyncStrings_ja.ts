@@ -678,7 +678,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Servers are too busy. Please wait...</source>
-        <translation type="unfinished">Servers are too busy. Please wait...</translation>
+        <translation type="unfinished">サーバーがビジーです。少々お待ちください。</translation>
     </message>
 </context>
 <context>
@@ -1228,7 +1228,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Transfer manager</source>
-        <translation type="unfinished">Transfer manager</translation>
+        <translation type="unfinished">転送マネージャー</translation>
     </message>
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
@@ -1694,12 +1694,12 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Group permissions:</source>
         <translatorcomment>Label just before the new group permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Group permissions:</translation>
+        <translation type="unfinished">グループ許可:</translation>
     </message>
     <message>
         <source>Public permissions:</source>
         <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Public permissions:</translation>
+        <translation type="unfinished">公共許可</translation>
     </message>
     <message>
         <source>Files</source>
@@ -3110,7 +3110,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transfer Manager</source>
         <translatorcomment>Title of the dialog of Transfer Manager</translatorcomment>
-        <translation type="unfinished">Transfer Manager</translation>
+        <translation type="unfinished">転送マネージャー</translation>
     </message>
     <message>
         <source>Add...</source>
