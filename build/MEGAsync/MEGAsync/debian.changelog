@@ -1,3 +1,14 @@
+megasync (3.0.1) stable; urgency=low
+
+  * Transfer manager
+  * Transfer speed control
+  * Configurable number of connections per transfer
+  * Improved the transfer speed
+  * Reduced CPU usage during synchronization
+  * Bug fixes
+
+ -- MEGA Team <linux@mega.co.nz>  Mon, 06 Feb 2017 12:07:29 +0100
+
 megasync (2.9.10) stable; urgency=low
 
   * Support to download/import folder links
