@@ -18,6 +18,10 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     this->setWindowFlags(flags);
     preferences = Preferences::instance();
 
+    refreshTransferTime = new QTimer(this);
+    refreshTransferTime->setSingleShot(false);
+    connect(refreshTransferTime, SIGNAL(timeout()), this, SLOT(refreshFinishedTime()));
+
     addMenu = NULL;
     importLinksAction = NULL;
     uploadAction = NULL;
@@ -186,6 +190,10 @@ void TransferManager::createAddMenu()
 
 void TransferManager::on_tCompleted_clicked()
 {
+    if (!refreshTransferTime->isActive())
+    {
+        refreshTransferTime->start(Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS);
+    }
     // Disable tracking of completed transfers and reset value
     emit viewedCompletedTransfers();
     emit completedTransfersTabActive(true);
@@ -209,6 +217,11 @@ void TransferManager::on_tCompleted_clicked()
 
 void TransferManager::on_tDownloads_clicked()
 {
+    if (refreshTransferTime->isActive())
+    {
+        refreshTransferTime->stop();
+    }
+
     // Enable tracking of completed transfers
     emit completedTransfersTabActive(false);
 
@@ -231,6 +244,11 @@ void TransferManager::on_tDownloads_clicked()
 
 void TransferManager::on_tUploads_clicked()
 {
+    if (refreshTransferTime->isActive())
+    {
+        refreshTransferTime->stop();
+    }
+
     // Enable tracking of completed transfers
     emit completedTransfersTabActive(false);
 
@@ -253,6 +271,11 @@ void TransferManager::on_tUploads_clicked()
 
 void TransferManager::on_tAllTransfers_clicked()
 {
+    if (refreshTransferTime->isActive())
+    {
+        refreshTransferTime->stop();
+    }
+
     // Enable tracking of completed transfers
     emit completedTransfersTabActive(false);
 
@@ -417,6 +440,15 @@ void TransferManager::on_bClearAll_clicked()
     else if(w == ui->wCompleted)
     {
         ui->wCompleted->clearTransfers();
+    }
+}
+
+void TransferManager::refreshFinishedTime()
+{
+    QWidget *w = ui->wTransfers->currentWidget();
+    if (w == ui->wCompleted)
+    {
+        ui->wCompleted->getModel()->refreshTransfers();
     }
 }
 

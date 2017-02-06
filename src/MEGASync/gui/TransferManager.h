@@ -7,6 +7,7 @@
 #include "Preferences.h"
 #include "TransferMenuItemAction.h"
 #include <QGraphicsEffect>
+#include <QTimer>
 #include "QTMegaTransferListener.h"
 
 namespace Ui {
@@ -46,6 +47,7 @@ private:
     Preferences *preferences;
     QPoint dragPosition;
     long long notificationNumber;
+    QTimer *refreshTransferTime;
 
     void createAddMenu();
     void onTransfersActive(bool exists);  
@@ -62,6 +64,8 @@ private slots:
     void on_bClose_clicked();
     void on_bPause_clicked();
     void on_bClearAll_clicked();
+
+    void refreshFinishedTime();
 
 protected:
     void changeEvent(QEvent *event);
