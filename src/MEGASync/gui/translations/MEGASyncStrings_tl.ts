@@ -644,7 +644,7 @@ Are you sure?</source>
     <message>
         <source>Resume downloads</source>
         <translatorcomment>Label to resume the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume downloads</translation>
+        <translation type="unfinished">Simulan muli ang download</translation>
     </message>
     <message>
         <source>Pause downloads</source>
@@ -674,7 +674,7 @@ Are you sure?</source>
     <message>
         <source>Blocked file: %1</source>
         <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
-        <translation type="unfinished">Blocked file: %1</translation>
+        <translation type="unfinished">Blocked na file: %1</translation>
     </message>
     <message>
         <source>Servers are too busy. Please wait...</source>
@@ -3189,7 +3189,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Active Transfers</source>
         <translatorcomment>Label of tab to access all active transfers</translatorcomment>
-        <translation type="unfinished">Active Transfers</translation>
+        <translation type="unfinished">Aktibong Transfers</translation>
     </message>
 </context>
 <context>
