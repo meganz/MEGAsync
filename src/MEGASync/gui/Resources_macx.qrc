@@ -523,5 +523,9 @@
         <file>images/pause_big_ico@2x.png</file>
         <file>images/mbox-warning.png</file>
         <file>images/mbox-warning@2x.png</file>
+        <file>images/tray_transfer_manager_ico_over.png</file>
+        <file>images/tray_transfer_manager_ico_over@2x.png</file>
+        <file>images/tray_transfer_manager_ico.png</file>
+        <file>images/tray_transfer_manager_ico@2x.png</file>
     </qresource>
 </RCC>

@@ -53,8 +53,8 @@ QCheckBox::indicator {
  }
 
 QRadioButton::indicator {
-     width: 22px;
-     height: 22px;
+     width: 16px;
+     height: 16px;
  }
 
 QScrollBar:horizontal {
@@ -590,7 +590,7 @@ background:transparent;</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <property name="sizePolicy">
@@ -1942,7 +1942,7 @@ border: none;</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_10">
        <property name="spacing">
-        <number>7</number>
+        <number>0</number>
        </property>
        <property name="leftMargin">
         <number>0</number>
@@ -2098,7 +2098,7 @@ border: none;</string>
 border: none;</string>
          </property>
          <property name="text">
-          <string>...</string>
+          <string notr="true"/>
          </property>
          <property name="icon">
           <iconset resource="../Resources_linux.qrc">
@@ -2118,7 +2118,7 @@ border: none;</string>
           <enum>Qt::StrongFocus</enum>
          </property>
          <property name="styleSheet">
-          <string notr="true">padding-left: 27px;</string>
+          <string notr="true">padding-left: 27px; padding-bottom: 6px;</string>
          </property>
          <property name="text">
           <string>Upload rate limit</string>
@@ -2405,8 +2405,7 @@ border: none;</string>
           <enum>Qt::StrongFocus</enum>
          </property>
          <property name="styleSheet">
-          <string notr="true">padding-left: 27px;
-        </string>
+          <string notr="true">padding-left: 27px; padding-bottom: 6px;</string>
          </property>
          <property name="text">
           <string>Download rate limit</string>
@@ -2615,6 +2614,9 @@ border: none;</string>
            <height>0</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">padding-bottom: 6px;</string>
+         </property>
          <property name="text">
           <string>Number of parallel TCP connections per transfer:</string>
          </property>
@@ -2733,7 +2735,7 @@ border: none;</string>
        <item>
         <widget class="QCheckBox" name="cbUseHttps">
          <property name="styleSheet">
-          <string notr="true">padding-left : 26px;</string>
+          <string notr="true">padding-left : 26px; padding-top: 10px; padding-bottom: 7px;</string>
          </property>
          <property name="text">
           <string>Don't use HTTP</string>
@@ -3666,8 +3668,7 @@ background:transparent;</string>
           <item row="8" column="1">
            <widget class="QWidget" name="widget_13" native="true">
             <property name="styleSheet">
-             <string notr="true">padding-left: -1px;
-</string>
+             <string notr="true"/>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_19">
              <property name="spacing">

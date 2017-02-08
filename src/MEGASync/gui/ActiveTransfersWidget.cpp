@@ -11,6 +11,17 @@ ActiveTransfersWidget::ActiveTransfersWidget(QWidget *parent) :
     ui(new Ui::ActiveTransfersWidget)
 {
     ui->setupUi(this);
+
+    // Choose the right icon for initial load (hdpi/normal displays)
+    qreal ratio = 1.0;
+#if QT_VERSION >= 0x050000
+    ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+#endif
+    ui->lDownAnimation->setPixmap(QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
+                                                   : QString::fromUtf8(":/images/cloud_item_ico@2x.png")));
+    ui->lUpAnimation->setPixmap(QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
+                                                   : QString::fromUtf8(":/images/cloud_item_ico@2x.png")));
+
     activeDownload.clear();
     animationDown = animationUp = NULL;
 
@@ -105,8 +116,13 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
     int type = transfer->getType();
     if (type == MegaTransfer::TYPE_DOWNLOAD)
     {
-        if (transfer->getPriority() > activeDownload.priority)
+        if (transfer->getPriority() > activeDownload.priority
+                && !(activeDownload.transferState == MegaTransfer::STATE_PAUSED))
         {
+            if (activeDownload.tag == transfer->getTag())
+            {
+                activeDownload.clear();
+            }
             return;
         }
 
@@ -120,19 +136,28 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
             QFontMetrics fm = QFontMetrics(f);
             ui->lDownFilename->setText(fm.elidedText(activeDownload.fileName, Qt::ElideRight,ui->lDownFilename->width()));
             ui->lDownFilename->setToolTip(activeDownload.fileName);
+            QIcon icon;
+            icon.addFile(Utilities::getExtensionPixmapSmall(activeDownload.fileName), QSize(), QIcon::Normal, QIcon::Off);
+            ui->bDownFileType->setIcon(icon);
             setTotalSize(&activeDownload, transfer->getTotalBytes());
         }
 
         activeDownload.transferState = transfer->getState();
         activeDownload.priority = transfer->getPriority();
+        activeDownload.meanTransferSpeed = transfer->getMeanSpeed();
         setSpeed(&activeDownload, transfer->getSpeed());
         setTransferredBytes(&activeDownload, transfer->getTransferredBytes());
         udpateTransferState(&activeDownload);
     }
     else
     {
-        if (transfer->getPriority() > activeUpload.priority)
+        if (transfer->getPriority() > activeUpload.priority
+                && !(activeUpload.transferState == MegaTransfer::STATE_PAUSED))
         {
+            if (activeUpload.tag == transfer->getTag())
+            {
+                activeUpload.clear();
+            }
             return;
         }
 
@@ -140,17 +165,21 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
         if (activeUpload.tag != transfer->getTag())
         {
             activeUpload.tag = transfer->getTag();
-            activeUpload.priority = transfer->getPriority();
             setType(&activeUpload, type, transfer->isSyncTransfer());
             activeUpload.fileName = QString::fromUtf8(transfer->getFileName());
             QFont f = ui->lUpFilename->font();
             QFontMetrics fm = QFontMetrics(f);
             ui->lUpFilename->setText(fm.elidedText(activeUpload.fileName, Qt::ElideRight,ui->lUpFilename->width()));
             ui->lUpFilename->setToolTip(activeUpload.fileName);
+            QIcon icon;
+            icon.addFile(Utilities::getExtensionPixmapSmall(activeUpload.fileName), QSize(), QIcon::Normal, QIcon::Off);
+            ui->bUpFileType->setIcon(icon);
             setTotalSize(&activeUpload, transfer->getTotalBytes());
         }
 
         activeUpload.transferState = transfer->getState();
+        activeUpload.priority = transfer->getPriority();
+        activeUpload.meanTransferSpeed = transfer->getMeanSpeed();
         setSpeed(&activeUpload, transfer->getSpeed());
         setTransferredBytes(&activeUpload, transfer->getTransferredBytes());
         udpateTransferState(&activeUpload);
@@ -192,17 +221,30 @@ void ActiveTransfersWidget::pausedUpTransfers(bool paused)
 
 void ActiveTransfersWidget::updateDownSpeed(long long speed)
 {
+    if (totalDownloads && activeDownload.priority == 0xFFFFFFFFFFFFFFFFULL)
+    {
+        MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_DOWNLOAD);
+        if (nextTransfer)
+        {
+            onTransferUpdate(megaApi, nextTransfer);
+            delete nextTransfer;
+        }
+    }
+
+    if (Preferences::instance()->getDownloadsPaused())
+    {
+        pausedDownTransfers(true);
+        return;
+    }
+
+    ui->bDownPaused->setVisible(false);
     if (activeDownload.transferState == MegaTransfer::STATE_PAUSED)
     {
         ui->lCurrentDownSpeed->setText(tr("PAUSED"));
     }
     else
     {
-        if (Preferences::instance()->getDownloadsPaused())
-        {
-            pausedDownTransfers(true);
-        }
-        else if (!speed)
+        if (!speed)
         {
             ui->lCurrentDownSpeed->setText(QString::fromUtf8(""));
         }
@@ -218,17 +260,30 @@ void ActiveTransfersWidget::updateDownSpeed(long long speed)
 
 void ActiveTransfersWidget::updateUpSpeed(long long speed)
 {
+    if (totalUploads && activeUpload.priority == 0xFFFFFFFFFFFFFFFFULL)
+    {
+        MegaTransfer *nextTransfer = megaApi->getFirstTransfer(MegaTransfer::TYPE_UPLOAD);
+        if (nextTransfer)
+        {
+            onTransferUpdate(megaApi, nextTransfer);
+            delete nextTransfer;
+        }
+    }
+
+    if (Preferences::instance()->getUploadsPaused())
+    {
+        pausedUpTransfers(true);
+        return;
+    }
+
+    ui->bUpPaused->setVisible(false);
     if (activeUpload.transferState == MegaTransfer::STATE_PAUSED)
     {
         ui->lCurrentUpSpeed->setText(tr("PAUSED"));
     }
     else
     {
-        if (Preferences::instance()->getUploadsPaused())
-        {
-            pausedUpTransfers(true);
-        }
-        else if (!speed)
+        if (!speed)
         {
             ui->lCurrentUpSpeed->setText(QString::fromUtf8(""));
         }
@@ -264,6 +319,7 @@ void ActiveTransfersWidget::on_bDownCancel_clicked()
     {
         megaApi->cancelTransfer(transfer);
     }
+    delete transfer;
 }
 
 void ActiveTransfersWidget::on_bUpCancel_clicked()
@@ -288,6 +344,7 @@ void ActiveTransfersWidget::on_bUpCancel_clicked()
     {
         megaApi->cancelTransfer(transfer);
     }
+    delete transfer;
 }
 
 void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTransfer)
@@ -309,6 +366,7 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
                                                            : QString::fromUtf8(":/images/cloud_upload_item_ico@2x.png"));
                 animationUp = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/uploading.gif")
                                                  : QString::fromUtf8(":/images/uploading@2x.gif"));
+                ui->bUpCancel->show();
             }
             else
             {
@@ -316,6 +374,7 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
                                                            : QString::fromUtf8(":/images/sync_item_ico@2x.png"));
                 animationUp = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/synching.gif")
                                                  : QString::fromUtf8(":/images/synching@2x.gif"));
+                ui->bUpCancel->hide();
             }
             break;
 
@@ -327,6 +386,7 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
                                                            : QString::fromUtf8(":/images/cloud_download_item_ico@2x.png"));
                 animationDown = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/downloading.gif")
                                                  : QString::fromUtf8(":/images/downloading@2x.gif"));
+                ui->bDownCancel->show();
 
             }
             else
@@ -335,6 +395,7 @@ void ActiveTransfersWidget::setType(TransferData *td, int type, bool isSyncTrans
                                                            : QString::fromUtf8(":/images/sync_item_ico@2x.png"));
                 animationDown = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/synching.gif")
                                                  : QString::fromUtf8(":/images/synching@2x.gif"));
+                ui->bDownCancel->hide();
 
             }
             break;
@@ -358,16 +419,15 @@ void ActiveTransfersWidget::setTotalSize(TransferData *td, long long size)
 }
 
 void ActiveTransfersWidget::setSpeed(TransferData *td, long long transferSpeed)
-{
-    td->transferSpeed = transferSpeed;
-    if (td->transferSpeed < 0)
+{   
+    if (transferSpeed < 0)
     {
         td->transferSpeed = 0;
     }
-
-    td->meanTransferSpeed = td->meanTransferSpeed * td->speedCounter + td->transferSpeed;
-    td->speedCounter++;
-    td->meanTransferSpeed /= td->speedCounter;
+    else
+    {
+        td->transferSpeed = transferSpeed;
+    }
 }
 
 void ActiveTransfersWidget::setTransferredBytes(TransferData *td, long long totalTransferredBytes)
@@ -392,15 +452,6 @@ void ActiveTransfersWidget::udpateTransferState(TransferData *td)
     {
         case MegaTransfer::STATE_ACTIVE:
         {
-            if (td->type == MegaTransfer::TYPE_DOWNLOAD)
-            {
-                ui->bDownPaused->setVisible(false);
-            }
-            else if (td->type == MegaTransfer::TYPE_UPLOAD)
-            {
-                ui->bUpPaused->setVisible(false);
-            }
-
             // Update remaining time
             long long remainingBytes = td->totalSize - td->totalTransferredBytes;
             int totalRemainingSeconds = td->meanTransferSpeed ? remainingBytes / td->meanTransferSpeed : 0;
@@ -424,14 +475,6 @@ void ActiveTransfersWidget::udpateTransferState(TransferData *td)
         }
         case MegaTransfer::STATE_PAUSED:
         {
-            if (td->type == MegaTransfer::TYPE_DOWNLOAD)
-            {
-                ui->bDownPaused->setVisible(true);
-            }
-            else if (td->type == MegaTransfer::TYPE_UPLOAD)
-            {
-                ui->bUpPaused->setVisible(true);
-            }
             remainingTime = QString::fromUtf8("- <span style=\"color:#777777; text-decoration:none;\">m</span> - <span style=\"color:#777777; text-decoration:none;\">s</span>");
             break;
         }
@@ -506,7 +549,8 @@ void ActiveTransfersWidget::updateNumberOfTransfers(mega::MegaApi *api)
 
 void ActiveTransfersWidget::updateAnimation(TransferData *td)
 {
-    if (!animationUp && !animationDown)
+    if ((!animationUp && td->type == MegaTransfer::TYPE_UPLOAD)
+            || (!animationDown && td->type == MegaTransfer::TYPE_DOWNLOAD))
     {
         return;
     }
@@ -555,6 +599,15 @@ void ActiveTransfersWidget::updateAnimation(TransferData *td)
     }
 }
 
+void ActiveTransfersWidget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+    QWidget::changeEvent(event);
+}
+
 TransferData::TransferData()
 {
     clear();
@@ -567,8 +620,7 @@ void TransferData::clear()
     tag = 0;
     transferSpeed = 0;
     meanTransferSpeed = 0;
-    speedCounter = 0;
     totalSize = 0;
     totalTransferredBytes = 0;
-    priority = 0xffffffffffffffff;
+    priority = 0xFFFFFFFFFFFFFFFFULL;
 }

@@ -126,13 +126,13 @@
         <number>0</number>
        </property>
        <property name="leftMargin">
-        <number>17</number>
+        <number>25</number>
        </property>
        <property name="topMargin">
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>5</number>
+        <number>0</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -141,13 +141,13 @@
         <widget class="QWidget" name="wContainerLeft" native="true">
          <property name="minimumSize">
           <size>
-           <width>580</width>
+           <width>608</width>
            <height>48</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>580</width>
+           <width>608</width>
            <height>48</height>
           </size>
          </property>
@@ -171,13 +171,13 @@
            <widget class="QWidget" name="widget" native="true">
             <property name="minimumSize">
              <size>
-              <width>580</width>
+              <width>608</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>580</width>
+              <width>608</width>
               <height>16777215</height>
              </size>
             </property>
@@ -209,10 +209,6 @@ padding-top: 1px;</string>
                <property name="text">
                 <string/>
                </property>
-               <property name="icon">
-                <iconset resource="../Resources_win.qrc">
-                 <normaloff>:/images/download_item_ico.png</normaloff>:/images/download_item_ico.png</iconset>
-               </property>
                <property name="iconSize">
                 <size>
                  <width>12</width>
@@ -226,10 +222,6 @@ padding-top: 1px;</string>
                <property name="text">
                 <string/>
                </property>
-               <property name="icon">
-                <iconset resource="../Resources_win.qrc">
-                 <normaloff>:/images/small_executable.png</normaloff>:/images/small_executable.png</iconset>
-               </property>
                <property name="iconSize">
                 <size>
                  <width>20</width>
@@ -242,13 +234,13 @@ padding-top: 1px;</string>
               <widget class="QLabel" name="lTransferName">
                <property name="minimumSize">
                 <size>
-                 <width>260</width>
+                 <width>315</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>260</width>
+                 <width>16777215</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -256,7 +248,7 @@ padding-top: 1px;</string>
                 <string notr="true">padding-left: 0px;</string>
                </property>
                <property name="text">
-                <string notr="true">Captura de pantalla 2016-09-0</string>
+                <string notr="true"/>
                </property>
               </widget>
              </item>
@@ -291,7 +283,7 @@ padding-top: 1px;</string>
                 <string notr="true"/>
                </property>
                <property name="text">
-                <string notr="true">150 MB of 200 MB</string>
+                <string notr="true"/>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -299,20 +291,13 @@ padding-top: 1px;</string>
               </widget>
              </item>
              <item>
-              <spacer name="horizontalSpacer_2">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>10</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
               <widget class="QLabel" name="lSpeed">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="minimumSize">
                 <size>
                  <width>80</width>
@@ -321,7 +306,7 @@ padding-top: 1px;</string>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>80</width>
+                 <width>120</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -329,7 +314,7 @@ padding-top: 1px;</string>
                 <string notr="true">padding-right: -2px;</string>
                </property>
                <property name="text">
-                <string notr="true">(800 KB/s)</string>
+                <string notr="true"/>
                </property>
                <property name="alignment">
                 <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -409,7 +394,7 @@ padding-top: 1px;</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../Resources_win.qrc">:/images/cloud_item_ico.png</pixmap>
+             <pixmap resource="../Resources_linux.qrc">:/images/cloud_item_ico.png</pixmap>
             </property>
            </widget>
           </item>
@@ -428,7 +413,7 @@ padding-top: 1px;</string>
              </size>
             </property>
             <property name="text">
-             <string notr="true">00 h 03 m</string>
+             <string notr="true"/>
             </property>
            </widget>
           </item>
@@ -450,7 +435,7 @@ padding-top: 1px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_linux.qrc">
               <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -484,13 +469,13 @@ padding-top: 1px;</string>
         <number>0</number>
        </property>
        <property name="leftMargin">
-        <number>15</number>
+        <number>22</number>
        </property>
        <property name="topMargin">
         <number>0</number>
        </property>
        <property name="rightMargin">
-        <number>10</number>
+        <number>0</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -499,13 +484,13 @@ padding-top: 1px;</string>
         <widget class="QWidget" name="wContainerLeftCompleted" native="true">
          <property name="minimumSize">
           <size>
-           <width>580</width>
+           <width>550</width>
            <height>38</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
-           <width>580</width>
+           <width>550</width>
            <height>38</height>
           </size>
          </property>
@@ -529,13 +514,13 @@ padding-top: 1px;</string>
            <widget class="QWidget" name="widgetCompleted" native="true">
             <property name="minimumSize">
              <size>
-              <width>522</width>
+              <width>550</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>522</width>
+              <width>550</width>
               <height>16777215</height>
              </size>
             </property>
@@ -585,13 +570,13 @@ padding-top: 1px;</string>
               <widget class="QLabel" name="lTransferNameCompleted">
                <property name="minimumSize">
                 <size>
-                 <width>355</width>
+                 <width>330</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>355</width>
+                 <width>16777215</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -645,13 +630,13 @@ padding-top: 1px;</string>
               <widget class="QLabel" name="lTotalCompleted">
                <property name="minimumSize">
                 <size>
-                 <width>70</width>
+                 <width>80</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>70</width>
+                 <width>80</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -713,13 +698,13 @@ padding-top: 1px;</string>
            <widget class="QLabel" name="lRemainingTimeCompleted">
             <property name="minimumSize">
              <size>
-              <width>80</width>
+              <width>90</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>80</width>
+              <width>90</width>
               <height>16777215</height>
              </size>
             </property>
@@ -749,7 +734,7 @@ padding-top: 1px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_linux.qrc">
               <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -770,7 +755,7 @@ padding-top: 1px;</string>
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

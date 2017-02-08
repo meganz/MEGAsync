@@ -17,7 +17,6 @@ struct TransferData
     int type;
     long long transferSpeed;
     long long meanTransferSpeed;
-    long long speedCounter;
     long long totalSize;
     long long totalTransferredBytes;
     unsigned long long priority;
@@ -70,6 +69,8 @@ private:
     void udpateTransferState(TransferData *td);
     void updateNumberOfTransfers(mega::MegaApi *api);
     void updateAnimation(TransferData *td);
+
+    void changeEvent(QEvent *event);
 };
 
 #endif // ACTIVETRANSFERSWIDGET_H

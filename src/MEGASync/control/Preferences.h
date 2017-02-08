@@ -272,6 +272,7 @@ public:
     static const long long MIN_UPDATE_STATS_INTERVAL;
     static const long long MIN_UPDATE_STATS_INTERVAL_OVERQUOTA;
     static const int STATE_REFRESH_INTERVAL_MS;
+    static const int FINISHED_TRANSFER_REFRESH_INTERVAL_MS;
     static const long long MIN_UPDATE_NOTIFICATION_INTERVAL_MS;
     static const unsigned int UPDATE_INITIAL_DELAY_SECS;
     static const unsigned int UPDATE_RETRY_INTERVAL_SECS;
@@ -303,6 +304,7 @@ public:
     static const QString HTTPS_CERT_INTERMEDIATE;
     static QStringList HTTPS_ALLOWED_ORIGINS;
     static bool HTTPS_ORIGIN_CHECK_ENABLED;
+    static const unsigned int MAX_COMPLETED_ITEMS;
 
 protected:
     QMutex mutex;

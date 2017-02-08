@@ -18,7 +18,6 @@ public:
     int getType() const;
 
 private:
-    int last_row;
     int lastItemHoveredTag;
     QList<int> transferTagSelected;
     bool disableLink;
@@ -63,7 +62,6 @@ private slots:
     void showInFolderClicked();
     void clearTransferClicked();
     void clearAllTransferClicked();
-    bool areTransfersFailed(QList<int> selectedTransfers);
 };
 
 #endif // MEGATRANSFERVIEW_H

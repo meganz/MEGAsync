@@ -681,7 +681,7 @@ void SettingsDialog::on_bOk_clicked()
 
 void SettingsDialog::on_bHelp_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://mega.nz/#help/sync");
+    QString helpUrl = QString::fromAscii("https://mega.nz/help/client/megasync");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
 
@@ -953,11 +953,15 @@ void SettingsDialog::loadSettings()
         double totalBandwidth = preferences->totalBandwidth();
         if (totalBandwidth == 0)
         {
+            ui->gBandwidthQuota->hide();
+            ui->bSeparatorBandwidth->hide();
             ui->pUsedBandwidth->setValue(0);
             ui->lBandwidth->setText(tr("Data temporarily unavailable"));
         }
         else
         {
+            ui->gBandwidthQuota->show();
+            ui->bSeparatorBandwidth->show();
             int bandwidthPercentage = ceil(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
             ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
             ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")

@@ -3,6 +3,7 @@
 #include "platform/Platform.h"
 #include "control/Utilities.h"
 #include "gui/QMegaMessageBox.h"
+#include <QScrollBar>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -11,7 +12,7 @@
 using namespace mega;
 
 MegaTransferView::MegaTransferView(QWidget *parent) :
-    QTreeView(parent), last_row(-1)
+    QTreeView(parent)
 {
     setMouseTracking(true);
     lastItemHoveredTag = 0;
@@ -31,6 +32,28 @@ MegaTransferView::MegaTransferView(QWidget *parent) :
     clearAllCompleted = NULL;
     disableLink = false;
     type = 0;
+
+    verticalScrollBar()->setStyleSheet(
+                QString::fromUtf8("QScrollBar:vertical {"
+                           " background: #f6f6f6;"
+                           " width: 15px;"
+                           " border-left: 1px solid #E4E4E4;"
+                          "}"
+                          "QScrollBar::sub-line:vertical, QScrollBar::add-line:vertical {"
+                           " border: none;"
+                           " background: none;"
+                          "}"
+                          "QScrollBar::handle:vertical {"
+                           " background: #c0c0c0;"
+                           " min-height: 20px;"
+                           " border-radius: 4px;"
+#ifdef Q_OS_MACX
+                           " margin: 3px 3px 3px 3px;"
+#else
+                           " margin: 3px 4px 3px 2px;"
+#endif
+                          "}"
+                 ""));
 }
 
 void MegaTransferView::setup(int type)
@@ -60,8 +83,13 @@ void MegaTransferView::createContextMenu()
         contextInProgressMenu = new QMenu(this);
         contextInProgressMenu->setStyleSheet(QString::fromAscii(
                                    "QMenu {background: #ffffff;}"
+#if QT_VERSION < 0x050000
+                                   "QMenu::item {font-family: Source Sans Pro; margin: 5px 9px 5px 9px; color: #777777; padding: 5px 16px 5px 8px;} "
+                                   "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 9px; margin-right: 9px; color: #ffffff; padding: 4px 15px 4px 7px;}"
+#else
                                    "QMenu::item {font-family: Source Sans Pro; margin: 5px 9px 5px 9px; color: #777777; padding: 5px 8px;} "
-                                   "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 9px; margin-right: 9px; color: #ffffff; padding: 5px 8px;}"
+                                   "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 9px; margin-right: 9px; color: #ffffff; padding: 4px 7px;}"
+#endif
                                    "QMenu::separator {height: 1px; margin: 6px 0px 6px 0px; background-color: rgba(0, 0, 0, 0.1);}"
                                    "QMenu::item:disabled {background-color: #ffffff; color: rgba(119,119,119,0.3); border: none; margin: 5px 9px 5px 9px;}"));
     }
@@ -155,8 +183,14 @@ void MegaTransferView::createCompletedContextMenu()
         contextCompleted = new QMenu(this);
         contextCompleted->setStyleSheet(QString::fromAscii(
                                    "QMenu {background: #ffffff;}"
-                                   "QMenu::item {font-family: Source Sans Pro; margin-left: 8px; margin-right: 8px; color: #777777; padding: 5px 8px;} "
-                                   "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 7px; margin-right: 7px; color: #ffffff; padding: 5px 8px;}"));
+#if QT_VERSION < 0x050000
+                                   "QMenu::item {font-family: Source Sans Pro; margin: 5px 9px 5px 9px; margin-right: 8px; color: #777777; padding: 5px 16px 5px 8px;} "
+                                   "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 7px; margin-right: 7px; color: #ffffff; padding: 4px 15px 4px 7px;}"
+#else
+                                   "QMenu::item {font-family: Source Sans Pro; margin: 5px 9px 5px 9px; color: #777777; padding: 5px 8px;} "
+                                   "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 7px; margin-right: 7px; color: #ffffff; padding: 5px 8px;}"
+#endif
+                                   ));
     }
     else
     {
@@ -244,13 +278,11 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
     if (model)
     {
         QModelIndex index = indexAt(event->pos());
-        int tag = index.internalId();
-
         if (index.isValid())
         {
-             if (index.row() != last_row)
-             {
-                last_row = index.row();
+            int tag = index.internalId();
+            if (tag != lastItemHoveredTag)
+            {
                 if (lastItemHoveredTag)
                 {
                     TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
@@ -266,7 +298,11 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
                     lastItemHoveredTag = item->getTransferTag();
                     item->mouseHoverTransfer(true);
                 }
-             }
+                else
+                {
+                    lastItemHoveredTag = 0;
+                }
+            }
         }
         else
         {
@@ -276,9 +312,9 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
                 if (lastItemHovered)
                 {
                     lastItemHovered->mouseHoverTransfer(false);
-                    last_row = -1;
-                    lastItemHoveredTag = 0;
+                    update();
                 }
+                lastItemHoveredTag = 0;
             }
         }
     }
@@ -296,10 +332,9 @@ void MegaTransferView::leaveEvent(QEvent *event)
             if (lastItemHovered)
             {
                 lastItemHovered->mouseHoverTransfer(false);
-                last_row = -1;
-                lastItemHoveredTag = 0;
-                repaint();
+                update();
             }
+            lastItemHoveredTag = 0;
         }
     }
     QTreeView::leaveEvent(event);
@@ -326,6 +361,7 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
         int firstIndex = 0;
         int lastIndex = 0;
         QModelIndexList indexes = selectedIndexes();
+        transferTagSelected.clear();
         for (int i = 0; i< indexes.size(); i++)
         {
             if (i == 0)
@@ -370,7 +406,28 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
         {
             if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
             {
-                if (areTransfersFailed(transferTagSelected))
+                bool failed = false;
+                MegaTransfer *transfer = NULL;
+                QTransfersModel *model = (QTransfersModel*)this->model();
+                if (model)
+                {
+                    for (int i = 0; i < transferTagSelected.size(); i++)
+                    {
+                        transfer = model->getTransferByTag(transferTagSelected[i]);
+                        if (!transfer)
+                        {
+                            transferTagSelected.clear();
+                            return;
+                        }
+
+                        if (transfer->getState() == MegaTransfer::STATE_FAILED)
+                        {
+                            failed = true;
+                        }
+                    }
+                }
+
+                if (failed)
                 {
                     customizeCompletedContextMenu(false, false, false);
                 }
@@ -379,15 +436,6 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                     customizeCompletedContextMenu();
                 }
                 contextCompleted->exec(mapToGlobal(point));
-            }
-            else if (model->getModelType() == QTransfersModel::TYPE_ALL)
-            {
-                customizeContextInProgressMenu(enablePause,
-                                               enableResume,
-                                               false,
-                                               false,
-                                               enableCancel);
-                contextInProgressMenu->exec(mapToGlobal(point));
             }
             else
             {
@@ -399,7 +447,6 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                 contextInProgressMenu->exec(mapToGlobal(point));
             }
         }
-        transferTagSelected.clear();
     }
 }
 
@@ -410,7 +457,7 @@ void MegaTransferView::pauseTransferClicked()
     {
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
-            model->onTransferPaused(transferTagSelected[i], true);
+            model->megaApi->pauseTransferByTag(transferTagSelected[i], true);
         }
     }
 }
@@ -422,7 +469,7 @@ void MegaTransferView::resumeTransferClicked()
     {
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
-            model->onTransferPaused(transferTagSelected[i], false);
+            model->megaApi->pauseTransferByTag(transferTagSelected[i], false);
         }
     }
 }
@@ -434,7 +481,7 @@ void MegaTransferView::moveToTopClicked()
     {
         for (int i = transferTagSelected.size() - 1; i >= 0; i--)
         {
-            model->onMoveTransferToFirst(transferTagSelected[i]);
+            model->megaApi->moveTransferToFirstByTag(transferTagSelected[i]);
         }
     }
 }
@@ -446,7 +493,7 @@ void MegaTransferView::moveUpClicked()
     {
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
-            model->onMoveTransferUp(transferTagSelected[i]);
+            model->megaApi->moveTransferUpByTag(transferTagSelected[i]);
         }
     }
 }
@@ -458,7 +505,7 @@ void MegaTransferView::moveDownClicked()
     {
         for (int i = transferTagSelected.size() - 1; i >= 0 ; i--)
         {
-            model->onMoveTransferDown(transferTagSelected[i]);
+            model->megaApi->moveTransferDownByTag(transferTagSelected[i]);
         }
     }
 }
@@ -470,32 +517,14 @@ void MegaTransferView::moveToBottomClicked()
     {
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
-            model->onMoveTransferToLast(transferTagSelected[i]);
+            model->megaApi->moveTransferToLastByTag(transferTagSelected[i]);
         }
     }
-}
-
-bool MegaTransferView::areTransfersFailed(QList<int> selectedTransfers)
-{
-    MegaTransfer *transfer = NULL;
-    QTransfersModel *model = (QTransfersModel*)this->model();
-    if (model)
-    {
-        for (int i = 0; i < selectedTransfers.size(); i++)
-        {
-            transfer = model->getFinishedTransferByTag(selectedTransfers[i]);
-            if (transfer->getState() == MegaTransfer::STATE_FAILED)
-            {
-                return true;
-            }
-        }
-    }
-    return false;
 }
 
 void MegaTransferView::cancelTransferClicked()
 {
-    if(QMegaMessageBox::warning(0,
+    if (QMegaMessageBox::warning(0,
                              QString::fromUtf8("MEGAsync"),
                              tr("Are you sure you want to cancel this transfer?"), Utilities::getDevicePixelRatio(),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No)
@@ -508,7 +537,7 @@ void MegaTransferView::cancelTransferClicked()
     {
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
-            model->onTransferCancel(transferTagSelected[i]);
+            model->megaApi->cancelTransferByTag(transferTagSelected[i]);
         }
     }
 }
@@ -525,15 +554,37 @@ void MegaTransferView::getLinkClicked()
     if (model)
     {
         QList<MegaHandle> exportList;
+        QStringList linkList;
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
-            transfer = model->getFinishedTransferByTag(transferTagSelected[i]);
-            exportList.push_back(transfer->getNodeHandle());
+            transfer = model->getTransferByTag(transferTagSelected[i]);
+            if (transfer)
+            {
+                MegaNode *node = transfer->getPublicMegaNode();
+                if (!node || !node->isPublic())
+                {
+                    exportList.push_back(transfer->getNodeHandle());
+                }
+                else
+                {
+                    char *handle = node->getBase64Handle();
+                    char *key = node->getBase64Key();
+                    if (handle && key)
+                    {
+                        QString link = QString::fromUtf8("https://mega.nz/#!%1!%2")
+                                .arg(QString::fromUtf8(handle)).arg(QString::fromUtf8(key));
+                        linkList.append(link);
+                    }
+                    delete [] handle;
+                    delete [] key;
+                }
+                delete node;
+            }
         }
 
-        if (exportList.size())
+        if (exportList.size() || linkList.size())
         {
-            ((MegaApplication*)qApp)->exportNodes(exportList);
+            ((MegaApplication*)qApp)->exportNodes(exportList, linkList);
         }
     }
 }
@@ -546,8 +597,8 @@ void MegaTransferView::openItemClicked()
     {
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
-            transfer = model->getFinishedTransferByTag(transferTagSelected[i]);
-            if (transfer->getPath())
+            transfer = model->getTransferByTag(transferTagSelected[i]);
+            if (transfer && transfer->getPath())
             {
                 QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(QString::fromUtf8(transfer->getPath())));
             }
@@ -563,10 +614,17 @@ void MegaTransferView::showInFolderClicked()
     {
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
-            transfer = model->getFinishedTransferByTag(transferTagSelected[i]);
-            if (transfer->getPath())
+            transfer = model->getTransferByTag(transferTagSelected[i]);
+            if (transfer && transfer->getPath())
             {
-                Platform::showInFolder(QString::fromUtf8(transfer->getPath()));
+                QString localPath = QString::fromUtf8(transfer->getPath());
+                #ifdef WIN32
+                if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+                {
+                    localPath = localPath.mid(4);
+                }
+                #endif
+                Platform::showInFolder(localPath);
             }
         }
     }

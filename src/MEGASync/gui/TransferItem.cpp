@@ -18,7 +18,6 @@ TransferItem::TransferItem(QWidget *parent) :
     totalTransferredBytes = 0;
     transferSpeed = 0;
     meanTransferSpeed = 0;
-    speedCounter = 0;
     regular = false;
     cancelButtonEnabled = false;
     isSyncTransfer = false;
@@ -27,6 +26,15 @@ TransferItem::TransferItem(QWidget *parent) :
     transferState = 0;
     transferTag = 0;
     dsFinishedTime = 0;
+
+    // Choose the right icon for initial load (hdpi/normal displays)
+    qreal ratio = 1.0;
+#if QT_VERSION >= 0x050000
+    ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+#endif
+    loadIconResource = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
+                                         : QString::fromUtf8(":/images/cloud_item_ico@2x.png"));
+    ui->lActionType->setPixmap(loadIconResource);
 
     ui->lCancelTransfer->installEventFilter(this);
     ui->lCancelTransferCompleted->installEventFilter(this);
@@ -70,17 +78,17 @@ void TransferItem::setTransferredBytes(long long totalTransferredBytes, bool can
     regular = cancellable;
 }
 
-void TransferItem::setSpeed(long long transferSpeed)
+void TransferItem::setSpeed(long long transferSpeed, long long meanSpeed)
 {
-    this->transferSpeed = transferSpeed;
-    if (this->transferSpeed < 0)
+    if (transferSpeed < 0)
     {
         this->transferSpeed = 0;
     }
-
-    meanTransferSpeed = meanTransferSpeed * speedCounter + this->transferSpeed;
-    speedCounter++;
-    meanTransferSpeed /= speedCounter;
+    else
+    {
+        this->transferSpeed = transferSpeed;
+    }
+    meanTransferSpeed = meanSpeed;
 }
 
 void TransferItem::setTotalSize(long long size)
@@ -112,7 +120,6 @@ void TransferItem::setType(int type, bool isSyncTransfer)
     this->type = type;
     this->isSyncTransfer = isSyncTransfer;
     QIcon icon;
-    QPixmap loadIconResourceCompleted;
 
     qreal ratio = 1.0;
 #if QT_VERSION >= 0x050000
@@ -123,13 +130,18 @@ void TransferItem::setType(int type, bool isSyncTransfer)
     {
         this->loadIconResource = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/sync_item_ico.png")
                                                    : QString::fromUtf8(":/images/sync_item_ico@2x.png"));
-        ui->lActionTypeCompleted->setPixmap(loadIconResource);
-
         delete animation;
         animation = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/synching.gif")
                                          : QString::fromUtf8(":/images/synching@2x.gif"));
         connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
     }
+    else
+    {
+        this->loadIconResource = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
+                                                   : QString::fromUtf8(":/images/cloud_item_ico@2x.png"));
+    }
+    ui->lActionTypeCompleted->setPixmap(loadIconResource);
+    ui->lActionType->setPixmap(loadIconResource);
 
     switch (type)
     {
@@ -137,12 +149,6 @@ void TransferItem::setType(int type, bool isSyncTransfer)
 
             if (!isSyncTransfer)
             {
-                this->loadIconResource = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_upload_item_ico.png")
-                                                           : QString::fromUtf8(":/images/cloud_upload_item_ico@2x.png"));
-                loadIconResourceCompleted = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
-                                                              : QString::fromUtf8(":/images/cloud_item_ico@2x.png"));
-                ui->lActionTypeCompleted->setPixmap(loadIconResourceCompleted);
-
                 delete animation;
                 animation = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/uploading.gif")
                                                  : QString::fromUtf8(":/images/uploading@2x.gif"));
@@ -157,12 +163,6 @@ void TransferItem::setType(int type, bool isSyncTransfer)
 
             if (!isSyncTransfer)
             {
-                this->loadIconResource = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_download_item_ico.png")
-                                                           : QString::fromUtf8(":/images/cloud_download_item_ico@2x.png"));
-                loadIconResourceCompleted = QPixmap(ratio < 2 ? QString::fromUtf8(":/images/cloud_item_ico.png")
-                                                              : QString::fromUtf8(":/images/cloud_item_ico@2x.png"));
-                ui->lActionTypeCompleted->setPixmap(loadIconResourceCompleted);
-
                 delete animation;
                 animation = new QMovie(ratio < 2 ? QString::fromUtf8(":/images/downloading.gif")
                                                  : QString::fromUtf8(":/images/downloading@2x.gif"));
@@ -291,16 +291,18 @@ void TransferItem::updateTransfer()
             ui->lRemainingTime->setText(remainingTime);
 
             // Update current transfer speed
-            QString pattern(QString::fromUtf8("(%1/s)"));
             QString downloadString;
-            if (meanTransferSpeed >= 20000)
+
+            if (!totalTransferredBytes)
             {
-                downloadString = pattern.arg(Utilities::getSizeString(transferSpeed));
+                downloadString = QString::fromUtf8("(%1)").arg(tr("starting"));
             }
             else
             {
-                downloadString = QString::fromUtf8("");
+                QString pattern(QString::fromUtf8("(%1/s)"));
+                downloadString = pattern.arg(Utilities::getSizeString(transferSpeed));
             }
+
             ui->lSpeed->setText(downloadString);
             break;
         }
@@ -448,7 +450,7 @@ void TransferItem::mouseHoverTransfer(bool isHover)
 {
     if (isHover)
     {
-        if (isSyncTransfer)
+        if (isSyncTransfer && !(transferState == MegaTransfer::STATE_COMPLETED || transferSpeed == MegaTransfer::STATE_FAILED))
         {
             ui->lCancelTransfer->installEventFilter(this);
             ui->lCancelTransfer->update();
@@ -471,6 +473,15 @@ void TransferItem::mouseHoverTransfer(bool isHover)
     }
 
     emit refreshTransfer(this->getTransferTag());
+}
+
+void TransferItem::loadDefaultTransferIcon()
+{
+    ui->lActionType->setPixmap(loadIconResource);
+    if (animation && animation->state() != QMovie::NotRunning)
+    {
+        animation->stop();
+    }
 }
 
 bool TransferItem::eventFilter(QObject *, QEvent *ev)

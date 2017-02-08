@@ -133,7 +133,7 @@ public slots:
     void processUploads();
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
-    void exportNodes(QList<mega::MegaHandle> exportList);
+    void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
     void externalDownload(QQueue<mega::MegaNode *> newDownloadQueue);
     void externalDownload(QString megaLink, QString auth);
     void internalDownload(long long handle);
@@ -170,6 +170,7 @@ public slots:
     void handleLocalPath(const QUrl &url);
     void clearViewedTransfers();
     void onCompletedTransfersTabActive(bool active);
+    void checkFirstTransfer();
 
 protected:
     void createTrayIcon();
@@ -220,7 +221,6 @@ protected:
     QAction *uploadAction;
     QAction *downloadAction;
     QAction *streamAction;
-    QAction *transferManagerAction;
 
     QAction *updateAction;
     QAction *showStatusAction;
@@ -257,7 +257,9 @@ protected:
     QQueue<QString> uploadQueue;
     QQueue<mega::MegaNode *> downloadQueue;
     int numTransfers[2];
+    unsigned int activeTransferTag[2];
     unsigned long long activeTransferPriority[2];
+    unsigned int activeTransferState[2];
     long long queuedUserStats;
     long long maxMemoryUsage;
     int exportOps;
@@ -273,6 +275,7 @@ protected:
     MegaDownloader *downloader;
     QTimer *periodicTasksTimer;
     QTimer *infoDialogTimer;
+    QTimer *firstTransferTimer;
     QTranslator translator;
     PasteMegaLinksDialog *pasteMegaLinksDialog;
     ChangeLogDialog *changeLogDialog;
@@ -281,6 +284,7 @@ protected:
     QMessageBox *sslKeyPinningError;
     NodeSelector *downloadNodeSelector;
     QString lastTrayMessage;
+    QStringList extraLinks;
 
     static QString appPath;
     static QString appDirPath;
@@ -296,6 +300,7 @@ protected:
     MegaSyncLogger *logger;
     QPointer<TransferManager> transferManager;
     QMap<int, mega::MegaTransfer*> finishedTransfers;
+    QList<mega::MegaTransfer*> finishedTransferOrder;
 
     bool reboot;
     bool syncActive;

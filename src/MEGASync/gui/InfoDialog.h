@@ -59,6 +59,10 @@ public slots:
    void addSync();
    void onTransfer1Cancel(int x, int y);
    void onTransfer2Cancel(int x, int y);
+   void globalDownloadState();
+   void downloadState();
+   void globalUploadState();
+   void uploadState();
    void cancelAllUploads();
    void cancelAllDownloads();
    void cancelCurrentUpload();
@@ -70,19 +74,13 @@ public slots:
 
 private slots:
     void on_bSettings_clicked();
-
+    void on_bTransferManager_clicked();
     void on_bOfficialWeb_clicked();
-
     void on_bSyncFolder_clicked();
-
     void openFolder(QString path);
-
     void on_bPause_clicked();
-
     void onOverlayClicked();
-
     void scanningAnimationStep();
-
     void onUserAction(int action);
 
 #ifdef __APPLE__
@@ -117,6 +115,7 @@ private:
     int currentDownload;
     int totalUploads;
     int totalDownloads;
+    int activeDownloadState, activeUploadState;
     long long remainingDownloadBytes, remainingUploadBytes;
     long long meanDownloadSpeed, meanUploadSpeed;
     int remainingUploads, remainingDownloads;

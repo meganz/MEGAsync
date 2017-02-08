@@ -11,21 +11,28 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/2.9.90.0";
-const int Preferences::VERSION_CODE = 2990;
+const char Preferences::USER_AGENT[] = "MEGAsync/3.0.1.0";
+const int Preferences::VERSION_CODE = 3001;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("3.0");
-const QString Preferences::SDK_ID = QString::fromAscii("BETA_2");
+const QString Preferences::VERSION_STRING = QString::fromAscii("3.0.1");
+const QString Preferences::SDK_ID = QString::fromAscii("bba566");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- MEGAsync 3.0 BETA 2");
+            "- Transfer manager\n"
+            "- Transfer speed control\n"
+            "- Configurable number of connections per transfer\n"
+            "- Improved the transfer speed\n"
+            "- Reduced CPU usage during synchronization\n"
+            "- Bug fixes");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
 const int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
+const int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
+
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
-const long long Preferences::MIN_UPDATE_STATS_INTERVAL_OVERQUOTA  = 30000;
+const long long Preferences::MIN_UPDATE_STATS_INTERVAL_OVERQUOTA    = 30000;
 const long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
 const long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
 const long long Preferences::MIN_EXTERNAL_NODES_WARNING_MS          = 60000;
@@ -36,6 +43,7 @@ const unsigned int Preferences::UPDATE_TIMEOUT_SECS                 = 600;
 const unsigned int Preferences::MAX_LOGIN_TIME_MS                   = 40000;
 const unsigned int Preferences::PROXY_TEST_TIMEOUT_MS               = 10000;
 const unsigned int Preferences::MAX_IDLE_TIME_MS                    = 600000;
+const unsigned int Preferences::MAX_COMPLETED_ITEMS                 = 1000;
 
 const qint16 Preferences::HTTPS_PORT = 6342;
 const QString Preferences::HTTPS_KEY = QString::fromUtf8(
@@ -1003,7 +1011,6 @@ int Preferences::downloadLimitKB()
 int Preferences::parallelUploadConnections()
 {
     mutex.lock();
-    assert(logged());
     int value = settings->value(parallelUploadConnectionsKey, defaultParallelUploadConnections).toInt();
     mutex.unlock();
     return value;
@@ -1012,7 +1019,6 @@ int Preferences::parallelUploadConnections()
 int Preferences::parallelDownloadConnections()
 {
     mutex.lock();
-    assert(logged());
     int value = settings->value(parallelDownloadConnectionsKey, defaultParallelDownloadConnections).toInt();
     mutex.unlock();
     return value;

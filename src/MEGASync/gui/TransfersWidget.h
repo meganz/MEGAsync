@@ -4,6 +4,8 @@
 #include <QWidget>
 #include "TransferItem.h"
 #include "QTransfersModel.h"
+#include "QActiveTransfersModel.h"
+#include "QFinishedTransfersModel.h"
 #include "MegaTransferDelegate.h"
 #include "TransfersStateInfoWidget.h"
 #include <QToolButton>
@@ -18,7 +20,7 @@ class TransfersWidget : public QWidget
 
 public:
     explicit TransfersWidget(QWidget *parent = 0);
-    void setupTransfers(QList<mega::MegaTransfer* > transferData, int type);
+    void setupFinishedTransfers(QList<mega::MegaTransfer* > transferData);
     void setupTransfers(mega::MegaTransferData *transferData, int type);
     void refreshTransferItems();
     void clearTransfers();
@@ -36,7 +38,6 @@ private:
     MegaTransferDelegate *tDelegate;
     int type;
     int isPaused;
-    bool transfersActive;
 
 private:
     void configureTransferView();

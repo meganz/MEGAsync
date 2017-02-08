@@ -7,6 +7,7 @@
 #include "Preferences.h"
 #include "TransferMenuItemAction.h"
 #include <QGraphicsEffect>
+#include <QTimer>
 #include "QTMegaTransferListener.h"
 
 namespace Ui {
@@ -22,7 +23,6 @@ public:
 
     explicit TransferManager(mega::MegaApi *megaApi, QWidget *parent = 0);
     void updatePauseState();
-    void updateState();
     void disableGetLink(bool disable);
     void updateNumberOfCompletedTransfers(int num);
     ~TransferManager();
@@ -45,11 +45,15 @@ private:
     TransferMenuItemAction *uploadAction;
     TransferMenuItemAction *downloadAction;
     Preferences *preferences;
-    mega::QTMegaTransferListener *delegateListener;
     QPoint dragPosition;
+    long long notificationNumber;
+    QTimer *refreshTransferTime;
 
     void createAddMenu();
     void onTransfersActive(bool exists);  
+
+public slots:
+    void updateState();
 
 private slots:
     void on_tCompleted_clicked();
@@ -60,6 +64,8 @@ private slots:
     void on_bClose_clicked();
     void on_bPause_clicked();
     void on_bClearAll_clicked();
+
+    void refreshFinishedTime();
 
 protected:
     void changeEvent(QEvent *event);

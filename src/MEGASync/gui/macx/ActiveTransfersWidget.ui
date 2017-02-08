@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true"/>
   </property>
   <property name="styleSheet">
    <string notr="true">#bDownType, #bUpType, #bNoDownloads, #bNoUploads, #bDownFileType, #bDownCancel, #bDownClock, #bUpFileType, #bUpCancel, #bUpClock,
@@ -139,13 +139,13 @@ background-color: rgba(0, 0, 0, 10%);
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>270</height>
+       <height>305</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>270</height>
+       <height>305</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -155,6 +155,18 @@ background-color: rgba(0, 0, 0, 10%);
       <number>1</number>
      </property>
      <widget class="QWidget" name="pNoTransfers">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>16777215</height>
+       </size>
+      </property>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <property name="spacing">
         <number>0</number>
@@ -169,7 +181,7 @@ background-color: rgba(0, 0, 0, 10%);
         <number>0</number>
        </property>
        <property name="bottomMargin">
-        <number>15</number>
+        <number>35</number>
        </property>
        <item>
         <widget class="QWidget" name="widget_5" native="true">
@@ -178,7 +190,7 @@ background-color: rgba(0, 0, 0, 10%);
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>4</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
@@ -217,7 +229,7 @@ background-color: rgba(0, 0, 0, 10%);
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/no_transfers.png</normaloff>:/images/no_transfers.png</iconset>
             </property>
             <property name="iconSize">
@@ -274,7 +286,7 @@ background-color: rgba(0, 0, 0, 10%);
      <widget class="QWidget" name="pTransfers">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <property name="spacing">
-        <number>35</number>
+        <number>33</number>
        </property>
        <property name="leftMargin">
         <number>31</number>
@@ -293,13 +305,13 @@ background-color: rgba(0, 0, 0, 10%);
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>240</height>
+           <height>305</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>240</height>
+           <height>305</height>
           </size>
          </property>
          <property name="styleSheet">
@@ -326,17 +338,17 @@ background-color: rgba(0, 0, 0, 10%);
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>240</height>
+              <height>305</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>240</height>
+              <height>305</height>
              </size>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="wActiveDownloads">
              <property name="styleSheet">
@@ -344,19 +356,19 @@ background-color: rgba(0, 0, 0, 10%);
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_13">
               <property name="spacing">
-               <number>0</number>
+               <number>26</number>
               </property>
               <property name="leftMargin">
                <number>0</number>
               </property>
               <property name="topMargin">
-               <number>0</number>
+               <number>16</number>
               </property>
               <property name="rightMargin">
                <number>0</number>
               </property>
               <property name="bottomMargin">
-               <number>0</number>
+               <number>4</number>
               </property>
               <item>
                <widget class="QWidget" name="wRemainingDownloads" native="true">
@@ -420,8 +432,11 @@ background-color: rgba(0, 0, 0, 10%);
                         <height>70</height>
                        </size>
                       </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
                       <property name="text">
-                       <string>56</string>
+                       <string notr="true"/>
                       </property>
                      </widget>
                     </item>
@@ -456,7 +471,7 @@ background-color: rgba(0, 0, 0, 10%);
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="../Resources_linux.qrc">
+                       <iconset resource="../Resources_macx.qrc">
                         <normaloff>:/images/pause_big_ico.png</normaloff>:/images/pause_big_ico.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -496,13 +511,13 @@ background-color: rgba(0, 0, 0, 10%);
                <widget class="QWidget" name="wCurrentDownload" native="true">
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
+                  <width>336</width>
                   <height>80</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>16777215</width>
+                  <width>336</width>
                   <height>80</height>
                  </size>
                 </property>
@@ -532,7 +547,7 @@ background-color: rgba(0, 0, 0, 10%);
                    </property>
                    <layout class="QHBoxLayout" name="horizontalLayout_14">
                     <property name="leftMargin">
-                     <number>0</number>
+                     <number>2</number>
                     </property>
                     <property name="topMargin">
                      <number>0</number>
@@ -560,10 +575,6 @@ background-color: rgba(0, 0, 0, 10%);
                       <property name="text">
                        <string/>
                       </property>
-                      <property name="icon">
-                       <iconset resource="../Resources_linux.qrc">
-                        <normaloff>:/images/small_text.png</normaloff>:/images/small_text.png</iconset>
-                      </property>
                       <property name="iconSize">
                        <size>
                         <width>20</width>
@@ -581,7 +592,7 @@ background-color: rgba(0, 0, 0, 10%);
                        </size>
                       </property>
                       <property name="text">
-                       <string>Image2.jpeg</string>
+                       <string notr="true"/>
                       </property>
                      </widget>
                     </item>
@@ -616,7 +627,7 @@ background-color: rgba(0, 0, 0, 10%);
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="../Resources_linux.qrc">
+                       <iconset resource="../Resources_macx.qrc">
                         <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -644,6 +655,9 @@ background-color: rgba(0, 0, 0, 10%);
                      <height>2</height>
                     </size>
                    </property>
+                   <property name="styleSheet">
+                    <string notr="true">margin-left: 1px;</string>
+                   </property>
                    <property name="maximum">
                     <number>1000</number>
                    </property>
@@ -659,10 +673,10 @@ background-color: rgba(0, 0, 0, 10%);
                   <widget class="QWidget" name="widget_7" native="true">
                    <layout class="QHBoxLayout" name="horizontalLayout_15">
                     <property name="spacing">
-                     <number>6</number>
+                     <number>3</number>
                     </property>
                     <property name="leftMargin">
-                     <number>0</number>
+                     <number>2</number>
                     </property>
                     <property name="topMargin">
                      <number>0</number>
@@ -677,21 +691,18 @@ background-color: rgba(0, 0, 0, 10%);
                      <widget class="QLabel" name="lDownAnimation">
                       <property name="minimumSize">
                        <size>
-                        <width>21</width>
+                        <width>32</width>
                         <height>32</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>27</width>
+                        <width>32</width>
                         <height>32</height>
                        </size>
                       </property>
                       <property name="text">
                        <string/>
-                      </property>
-                      <property name="pixmap">
-                       <pixmap resource="../Resources_linux.qrc">:/images/cloud_upload_item_ico.png</pixmap>
                       </property>
                       <property name="margin">
                        <number>-5</number>
@@ -701,7 +712,7 @@ background-color: rgba(0, 0, 0, 10%);
                     <item>
                      <widget class="QLabel" name="lDownCompletedSize">
                       <property name="text">
-                       <string>5.6 MB</string>
+                       <string notr="true"/>
                       </property>
                      </widget>
                     </item>
@@ -736,7 +747,7 @@ background-color: rgba(0, 0, 0, 10%);
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="../Resources_linux.qrc">
+                       <iconset resource="../Resources_macx.qrc">
                         <normaloff>:/images/clock_ico.png</normaloff>:/images/clock_ico.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -749,8 +760,23 @@ background-color: rgba(0, 0, 0, 10%);
                     </item>
                     <item>
                      <widget class="QLabel" name="lDownRemainingTime">
+                      <property name="minimumSize">
+                       <size>
+                        <width>64</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>64</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
                       <property name="text">
-                       <string>01 m 02 s</string>
+                       <string notr="true"/>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                       </property>
                      </widget>
                     </item>
@@ -793,7 +819,7 @@ background-color: rgba(0, 0, 0, 10%);
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Resources_linux.qrc">
+                    <iconset resource="../Resources_macx.qrc">
                      <normaloff>:/images/download_item_ico.png</normaloff>:/images/download_item_ico.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -839,7 +865,7 @@ background-color: rgba(0, 0, 0, 10%);
                  <item>
                   <widget class="QLabel" name="lCurrentDownSpeed">
                    <property name="text">
-                    <string>currentDownSpeed</string>
+                    <string notr="true"/>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -853,6 +879,12 @@ background-color: rgba(0, 0, 0, 10%);
             </widget>
             <widget class="QWidget" name="wNoDownloads">
              <layout class="QVBoxLayout" name="verticalLayout_15">
+              <property name="topMargin">
+               <number>40</number>
+              </property>
+              <property name="bottomMargin">
+               <number>40</number>
+              </property>
               <item>
                <widget class="QWidget" name="wDownIcon" native="true">
                 <layout class="QHBoxLayout" name="horizontalLayout_17">
@@ -899,7 +931,7 @@ background-color: rgba(0, 0, 0, 10%);
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Resources_linux.qrc">
+                    <iconset resource="../Resources_macx.qrc">
                      <normaloff>:/images/no_downloads.png</normaloff>:/images/no_downloads.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -988,13 +1020,13 @@ background-color: rgba(0, 0, 0, 10%);
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>240</height>
+           <height>305</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>16777215</width>
-           <height>240</height>
+           <height>305</height>
           </size>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_10">
@@ -1018,34 +1050,34 @@ background-color: rgba(0, 0, 0, 10%);
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>240</height>
+              <height>305</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>240</height>
+              <height>305</height>
              </size>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="wActiveUploads">
              <layout class="QVBoxLayout" name="verticalLayout_9">
               <property name="spacing">
-               <number>0</number>
+               <number>26</number>
               </property>
               <property name="leftMargin">
                <number>0</number>
               </property>
               <property name="topMargin">
-               <number>0</number>
+               <number>16</number>
               </property>
               <property name="rightMargin">
                <number>0</number>
               </property>
               <property name="bottomMargin">
-               <number>0</number>
+               <number>4</number>
               </property>
               <item>
                <widget class="QWidget" name="wRemainingUploads" native="true">
@@ -1109,8 +1141,11 @@ background-color: rgba(0, 0, 0, 10%);
                         <height>70</height>
                        </size>
                       </property>
+                      <property name="styleSheet">
+                       <string notr="true"/>
+                      </property>
                       <property name="text">
-                       <string>56</string>
+                       <string notr="true"/>
                       </property>
                      </widget>
                     </item>
@@ -1145,7 +1180,7 @@ background-color: rgba(0, 0, 0, 10%);
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="../Resources_linux.qrc">
+                       <iconset resource="../Resources_macx.qrc">
                         <normaloff>:/images/pause_big_ico.png</normaloff>:/images/pause_big_ico.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -1185,13 +1220,13 @@ background-color: rgba(0, 0, 0, 10%);
                <widget class="QWidget" name="wCurrentUpload" native="true">
                 <property name="minimumSize">
                  <size>
-                  <width>0</width>
+                  <width>336</width>
                   <height>80</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>16777215</width>
+                  <width>336</width>
                   <height>80</height>
                  </size>
                 </property>
@@ -1215,7 +1250,7 @@ background-color: rgba(0, 0, 0, 10%);
                   <widget class="QWidget" name="widget_3" native="true">
                    <layout class="QHBoxLayout" name="horizontalLayout_7">
                     <property name="leftMargin">
-                     <number>0</number>
+                     <number>2</number>
                     </property>
                     <property name="topMargin">
                      <number>0</number>
@@ -1243,10 +1278,6 @@ background-color: rgba(0, 0, 0, 10%);
                       <property name="text">
                        <string/>
                       </property>
-                      <property name="icon">
-                       <iconset resource="../Resources_linux.qrc">
-                        <normaloff>:/images/small_text.png</normaloff>:/images/small_text.png</iconset>
-                      </property>
                       <property name="iconSize">
                        <size>
                         <width>20</width>
@@ -1264,7 +1295,7 @@ background-color: rgba(0, 0, 0, 10%);
                        </size>
                       </property>
                       <property name="text">
-                       <string>Image2.jpeg</string>
+                       <string notr="true"/>
                       </property>
                      </widget>
                     </item>
@@ -1299,7 +1330,7 @@ background-color: rgba(0, 0, 0, 10%);
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="../Resources_linux.qrc">
+                       <iconset resource="../Resources_macx.qrc">
                         <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -1327,6 +1358,9 @@ background-color: rgba(0, 0, 0, 10%);
                      <height>2</height>
                     </size>
                    </property>
+                   <property name="styleSheet">
+                    <string notr="true">margin-left: 1px;</string>
+                   </property>
                    <property name="maximum">
                     <number>1000</number>
                    </property>
@@ -1341,8 +1375,11 @@ background-color: rgba(0, 0, 0, 10%);
                  <item>
                   <widget class="QWidget" name="widget_4" native="true">
                    <layout class="QHBoxLayout" name="horizontalLayout_8">
+                    <property name="spacing">
+                     <number>3</number>
+                    </property>
                     <property name="leftMargin">
-                     <number>0</number>
+                     <number>2</number>
                     </property>
                     <property name="topMargin">
                      <number>0</number>
@@ -1370,9 +1407,6 @@ background-color: rgba(0, 0, 0, 10%);
                       <property name="text">
                        <string/>
                       </property>
-                      <property name="pixmap">
-                       <pixmap resource="../Resources_linux.qrc">:/images/cloud_upload_item_ico.png</pixmap>
-                      </property>
                       <property name="alignment">
                        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
                       </property>
@@ -1384,7 +1418,7 @@ background-color: rgba(0, 0, 0, 10%);
                     <item>
                      <widget class="QLabel" name="lUpCompletedSize">
                       <property name="text">
-                       <string>5.6 MB</string>
+                       <string notr="true"/>
                       </property>
                      </widget>
                     </item>
@@ -1419,7 +1453,7 @@ background-color: rgba(0, 0, 0, 10%);
                        <string/>
                       </property>
                       <property name="icon">
-                       <iconset resource="../Resources_linux.qrc">
+                       <iconset resource="../Resources_macx.qrc">
                         <normaloff>:/images/clock_ico.png</normaloff>:/images/clock_ico.png</iconset>
                       </property>
                       <property name="iconSize">
@@ -1432,8 +1466,23 @@ background-color: rgba(0, 0, 0, 10%);
                     </item>
                     <item>
                      <widget class="QLabel" name="lUpRemainingTime">
+                      <property name="minimumSize">
+                       <size>
+                        <width>64</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>64</width>
+                        <height>16777215</height>
+                       </size>
+                      </property>
                       <property name="text">
-                       <string>01 m 02 s</string>
+                       <string notr="true"/>
+                      </property>
+                      <property name="alignment">
+                       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                       </property>
                      </widget>
                     </item>
@@ -1476,7 +1525,7 @@ background-color: rgba(0, 0, 0, 10%);
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Resources_linux.qrc">
+                    <iconset resource="../Resources_macx.qrc">
                      <normaloff>:/images/upload_item_ico.png</normaloff>:/images/upload_item_ico.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -1522,7 +1571,7 @@ background-color: rgba(0, 0, 0, 10%);
                  <item>
                   <widget class="QLabel" name="lCurrentUpSpeed">
                    <property name="text">
-                    <string>currentUpSpeed</string>
+                    <string notr="true"/>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -1536,6 +1585,12 @@ background-color: rgba(0, 0, 0, 10%);
             </widget>
             <widget class="QWidget" name="wNoUploads">
              <layout class="QVBoxLayout" name="verticalLayout_4">
+              <property name="topMargin">
+               <number>40</number>
+              </property>
+              <property name="bottomMargin">
+               <number>40</number>
+              </property>
               <item>
                <widget class="QWidget" name="wUpIcon" native="true">
                 <layout class="QHBoxLayout" name="horizontalLayout">
@@ -1582,7 +1637,7 @@ background-color: rgba(0, 0, 0, 10%);
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Resources_linux.qrc">
+                    <iconset resource="../Resources_macx.qrc">
                      <normaloff>:/images/no_uploads.png</normaloff>:/images/no_uploads.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -1647,13 +1702,13 @@ background-color: rgba(0, 0, 0, 10%);
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>180</height>
+       <height>177</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>16777215</height>
+       <height>177</height>
       </size>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -1679,7 +1734,7 @@ background-color: rgba(0, 0, 0, 10%);
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>3</number>
          </property>
          <property name="topMargin">
           <number>0</number>
@@ -1747,7 +1802,7 @@ background-color: rgba(0, 0, 0, 10%);
           <number>0</number>
          </property>
          <property name="leftMargin">
-          <number>0</number>
+          <number>3</number>
          </property>
          <property name="topMargin">
           <number>0</number>
@@ -1794,7 +1849,7 @@ background-color: rgba(0, 0, 0, 10%);
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>

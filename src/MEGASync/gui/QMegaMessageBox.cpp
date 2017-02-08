@@ -58,7 +58,7 @@ QMessageBox::StandardButton QMegaMessageBox::showNewMessageBox(QWidget *parent, 
      // Choose the first accept role as the default
      if (msgBox.defaultButton())
          continue;
-     if ((defaultButton == QMessageBox::NoButton && buttonBox->buttonRole((QAbstractButton*)button) == QDialogButtonBox::AcceptRole)
+     if ((defaultButton == QMessageBox::NoButton && buttonBox && buttonBox->buttonRole((QAbstractButton*)button) == QDialogButtonBox::AcceptRole)
          || (defaultButton != QMessageBox::NoButton && sb == uint(defaultButton)))
          msgBox.setDefaultButton(button);
     }

@@ -20,7 +20,7 @@ public:
     QString getFileName();
     void setTransferredBytes(long long totalTransferredBytes, bool cancellable);
     void setTransferType(int type);
-    void setSpeed(long long transferSpeed);
+    void setSpeed(long long transferSpeed, long long meanSpeed);
     void setTotalSize(long long size);
     void setFinishedTime(long long time);
     void setStateLabel(QString labelState);
@@ -34,6 +34,7 @@ public:
     void updateTransfer();
     void updateFinishedTime();
     void mouseHoverTransfer(bool isHover);
+    void loadDefaultTransferIcon();
 
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
@@ -73,7 +74,6 @@ protected:
     QPixmap loadIconResource;
     long long transferSpeed;
     long long meanTransferSpeed;
-    long long speedCounter;
     long long totalSize;
     long long totalTransferredBytes;
     bool regular;

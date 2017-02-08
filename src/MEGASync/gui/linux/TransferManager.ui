@@ -29,7 +29,17 @@
    <string>Transfer Manager</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lHeader
+   <string notr="true">#TransferManager
+{
+ border: 1px solid  rgb(100, 100, 100);
+}
+
+#wTransfers
+{
+    margin-right: 2px;
+}
+
+#lHeader
 {
 	border: none;
 }
@@ -149,7 +159,7 @@
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="topMargin">
     <number>0</number>
@@ -261,7 +271,7 @@
              <widget class="QPushButton" name="bAdd">
               <property name="minimumSize">
                <size>
-                <width>80</width>
+                <width>120</width>
                 <height>32</height>
                </size>
               </property>
@@ -560,8 +570,11 @@ QToolButton
                   <height>15</height>
                  </size>
                 </property>
+                <property name="focusPolicy">
+                 <enum>Qt::NoFocus</enum>
+                </property>
                 <property name="text">
-                 <string>5</string>
+                 <string notr="true"/>
                 </property>
                </widget>
               </item>
@@ -634,13 +647,13 @@ QToolButton
      <widget class="ActiveTransfersWidget" name="wActiveTransfers">
       <property name="minimumSize">
        <size>
-        <width>800</width>
+        <width>798</width>
         <height>480</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>800</width>
+        <width>798</width>
         <height>480</height>
        </size>
       </property>
@@ -648,13 +661,13 @@ QToolButton
      <widget class="TransfersWidget" name="wDownloads">
       <property name="minimumSize">
        <size>
-        <width>800</width>
+        <width>798</width>
         <height>480</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>800</width>
+        <width>798</width>
         <height>480</height>
        </size>
       </property>
@@ -662,13 +675,13 @@ QToolButton
      <widget class="TransfersWidget" name="wUploads">
       <property name="minimumSize">
        <size>
-        <width>800</width>
+        <width>798</width>
         <height>480</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>800</width>
+        <width>798</width>
         <height>480</height>
        </size>
       </property>
@@ -676,13 +689,13 @@ QToolButton
      <widget class="TransfersWidget" name="wCompleted">
       <property name="minimumSize">
        <size>
-        <width>800</width>
+        <width>798</width>
         <height>480</height>
        </size>
       </property>
       <property name="maximumSize">
        <size>
-        <width>800</width>
+        <width>798</width>
         <height>480</height>
        </size>
       </property>
@@ -730,7 +743,7 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
        <widget class="QPushButton" name="bPause">
         <property name="minimumSize">
          <size>
-          <width>80</width>
+          <width>120</width>
           <height>32</height>
          </size>
         </property>
@@ -765,7 +778,7 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
         </property>
         <property name="minimumSize">
          <size>
-          <width>80</width>
+          <width>120</width>
           <height>32</height>
          </size>
         </property>
@@ -810,7 +823,7 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
        <widget class="QPushButton" name="bClose">
         <property name="minimumSize">
          <size>
-          <width>80</width>
+          <width>120</width>
           <height>32</height>
          </size>
         </property>
@@ -847,6 +860,16 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
    <container>1</container>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>bAdd</tabstop>
+  <tabstop>tAllTransfers</tabstop>
+  <tabstop>tDownloads</tabstop>
+  <tabstop>tUploads</tabstop>
+  <tabstop>tCompleted</tabstop>
+  <tabstop>bPause</tabstop>
+  <tabstop>bClearAll</tabstop>
+  <tabstop>bClose</tabstop>
+ </tabstops>
  <resources>
   <include location="../Resources_linux.qrc"/>
  </resources>
