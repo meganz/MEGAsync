@@ -171,6 +171,7 @@ public slots:
     void clearViewedTransfers();
     void onCompletedTransfersTabActive(bool active);
     void checkFirstTransfer();
+    void onDeprecatedOperatingSystem();
 
 protected:
     void createTrayIcon();

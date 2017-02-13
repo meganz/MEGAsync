@@ -1,6 +1,7 @@
 #include "WindowsPlatform.h"
 #include <Shlobj.h>
 #include <Shlwapi.h>
+#include <tchar.h>
 
 #if QT_VERSION >= 0x050200
 #include <QtWin>
@@ -160,6 +161,308 @@ HRESULT WindowsPlatform::CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, L
     return hres;
 }
 
+bool DeleteRegKey(HKEY key, LPTSTR subkey, REGSAM samDesired)
+{
+    TCHAR keyPath[MAX_PATH];
+    DWORD maxSize;
+    HKEY hKey;
+
+    LONG result = RegDeleteKeyEx(key, subkey, samDesired, 0);
+    if (result == ERROR_SUCCESS)
+    {
+        return true;
+    }
+
+    result = RegOpenKeyEx(key, subkey, 0, samDesired | KEY_READ, &hKey);
+    if (result != ERROR_SUCCESS)
+    {
+        return (result == ERROR_FILE_NOT_FOUND);
+    }
+
+    int len =  _tcslen(subkey);
+    if (!len || len >= (MAX_PATH - 1) || _tcscpy_s(keyPath, MAX_PATH, subkey))
+    {
+        RegCloseKey(hKey);
+        return false;
+    }
+
+    LPTSTR endPos = keyPath + len - 1;
+    if (*(endPos++) != TEXT('\\'))
+    {
+        *(endPos++) =  TEXT('\\');
+        *endPos =  TEXT('\0');
+        len++;
+    }
+
+    do
+    {
+        maxSize = MAX_PATH - len;
+    } while (RegEnumKeyEx(hKey, 0, endPos, &maxSize, NULL, NULL, NULL, NULL) == ERROR_SUCCESS
+             && DeleteRegKey(key, keyPath, samDesired));
+
+    RegCloseKey(hKey);
+    return (RegDeleteKeyEx(key, subkey, samDesired, 0) == ERROR_SUCCESS);
+}
+
+bool DeleteRegValue(HKEY key, LPTSTR subkey, LPTSTR value, REGSAM samDesired)
+{
+    HKEY hKey;
+    LONG result = RegOpenKeyEx(key, subkey, 0, samDesired | KEY_SET_VALUE, &hKey);
+    if (result != ERROR_SUCCESS)
+    {
+        return (result == ERROR_FILE_NOT_FOUND);
+    }
+
+    result = RegDeleteValue(hKey, value);
+    RegCloseKey(hKey);
+    return (result == ERROR_SUCCESS);
+}
+
+bool SetRegistryKeyAndValue(HKEY hkey, PCWSTR subkey, DWORD dwType,
+                            PCWSTR valuename, const BYTE *pszData, DWORD cbData,
+                            REGSAM samDesired)
+{
+    HRESULT hr;
+    HKEY hKey = NULL;
+    hr = HRESULT_FROM_WIN32(RegCreateKeyEx(hkey, subkey, 0, NULL,
+                                           REG_OPTION_NON_VOLATILE,
+                                           KEY_WRITE | samDesired,
+                                           NULL, &hKey, NULL));
+    if (!SUCCEEDED(hr))
+    {
+        return false;
+    }
+
+    hr = HRESULT_FROM_WIN32(RegSetValueEx(hKey, valuename, 0, dwType, pszData, cbData));
+    RegCloseKey(hKey);
+    return SUCCEEDED(hr);
+}
+
+typedef BOOL (WINAPI *LPFN_ISWOW64PROCESS) (HANDLE, PBOOL);
+LPFN_ISWOW64PROCESS fnIsWow64Process;
+
+BOOL IsWow64()
+{
+    BOOL bIsWow64 = FALSE;
+    fnIsWow64Process = (LPFN_ISWOW64PROCESS) GetProcAddress(
+        GetModuleHandle(TEXT("kernel32")),"IsWow64Process");
+    if (fnIsWow64Process)
+    {
+        fnIsWow64Process(GetCurrentProcess(),&bIsWow64);
+    }
+    return bIsWow64;
+}
+
+bool CheckLeftPaneIcon(wchar_t *path, bool remove)
+{
+    HKEY hKey = NULL;
+    LONG result = RegOpenKeyEx(HKEY_CURRENT_USER,
+                               L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace",
+                               0, KEY_READ | KEY_ENUMERATE_SUB_KEYS, &hKey);
+    if (result != ERROR_SUCCESS)
+    {
+        return false;
+    }
+
+    DWORD retCode = ERROR_SUCCESS;
+    WCHAR uuid[MAX_PATH];
+    DWORD uuidlen = sizeof(uuid);
+
+    for (int i = 0; retCode == ERROR_SUCCESS; i++)
+    {
+        uuidlen = sizeof(uuid);
+        uuid[0] = '\0';
+        retCode = RegEnumKeyEx(hKey, i, uuid, &uuidlen, NULL, NULL, NULL, NULL);
+        if (retCode == ERROR_SUCCESS)
+        {
+            HKEY hSubKey;
+            TCHAR subKeyPath[MAX_PATH];
+            swprintf_s(subKeyPath, MAX_PATH, L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\%s", uuid);
+            result = RegOpenKeyEx(HKEY_CURRENT_USER, subKeyPath, 0, KEY_READ, &hSubKey);
+            if (result != ERROR_SUCCESS)
+            {
+                continue;
+            }
+
+            DWORD type;
+            TCHAR value[MAX_PATH];
+            DWORD valuelen = sizeof(value);
+            result = RegQueryValueEx(hSubKey, L"", NULL, &type, (LPBYTE)value, &valuelen);
+            RegCloseKey(hSubKey);
+            if (result != ERROR_SUCCESS || type != REG_SZ || valuelen != 10 || memcmp(value, L"MEGA", 10))
+            {
+                continue;
+            }
+
+            if (path)
+            {                
+                bool found = false;
+
+                swprintf_s(subKeyPath, MAX_PATH, L"Software\\Classes\\CLSID\\%s\\Instance\\InitPropertyBag", uuid);
+                result = RegOpenKeyEx(HKEY_CURRENT_USER, subKeyPath, 0, KEY_READ, &hSubKey);
+                if (result == ERROR_SUCCESS)
+                {
+                    valuelen = sizeof(value);
+                    result = RegQueryValueEx(hSubKey, L"TargetFolderPath", NULL, &type, (LPBYTE)value, &valuelen);
+                    RegCloseKey(hSubKey);
+                    if (result == ERROR_SUCCESS && type == REG_EXPAND_SZ && !_wcsicmp(value, path))
+                    {
+                        found = true;
+                    }
+                }
+
+                if (found)
+                {
+                    swprintf_s(subKeyPath, MAX_PATH, L"Software\\Classes\\CLSID\\%s\\Instance\\InitPropertyBag", uuid);
+                    result = RegOpenKeyEx(HKEY_CURRENT_USER, subKeyPath, 0, KEY_WOW64_64KEY | KEY_READ, &hSubKey);
+                    if (result == ERROR_SUCCESS)
+                    {
+                        valuelen = sizeof(value);
+                        result = RegQueryValueEx(hSubKey, L"TargetFolderPath", NULL, &type, (LPBYTE)value, &valuelen);
+                        RegCloseKey(hSubKey);
+                        if (result == ERROR_SUCCESS && type == REG_EXPAND_SZ && !_wcsicmp(value, path))
+                        {
+                            found = true;
+                        }
+                    }
+                }
+
+                if (!found)
+                {
+                    continue;
+                }
+            }
+
+            if (remove)
+            {
+                wchar_t buffer[MAX_PATH];
+                swprintf_s(buffer, MAX_PATH, L"Software\\Classes\\CLSID\\%s", uuid);
+
+                if (IsWow64())
+                {
+                    DeleteRegKey(HKEY_CURRENT_USER, buffer, KEY_WOW64_64KEY);
+                }
+                DeleteRegKey(HKEY_CURRENT_USER, buffer, 0);
+
+                DeleteRegValue(HKEY_CURRENT_USER,
+                               (LPTSTR)L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel",
+                               uuid, 0);
+                swprintf_s(buffer, MAX_PATH, L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\%s", uuid);
+                DeleteRegKey(HKEY_CURRENT_USER, buffer, 0);
+            }
+            RegCloseKey(hKey);
+            return true;
+        }
+    }
+    RegCloseKey(hKey);
+    return false;
+}
+
+void WindowsPlatform::addSyncToLeftPane(QString syncPath, QString syncName, QString uuid)
+{
+    DWORD value;
+    QString sValue;
+    QString key = QString::fromUtf8("Software\\Classes\\CLSID\\%1").arg(uuid);
+    REGSAM samDesired = 0;
+    int it = 1;
+
+    if (IsWow64())
+    {
+        samDesired = KEY_WOW64_64KEY;
+        it++;
+    }
+
+    for (int i = 0; i < it; i++)
+    {
+        sValue = syncName;
+        SetRegistryKeyAndValue(HKEY_CURRENT_USER, (LPTSTR)key.utf16(),
+                               REG_SZ, L"", (const BYTE *)sValue.utf16(), sValue.size() * 2,
+                               samDesired);
+
+        sValue = MegaApplication::applicationFilePath();
+        SetRegistryKeyAndValue(HKEY_CURRENT_USER, (LPTSTR)(key + QString::fromUtf8("\\DefaultIcon")).utf16(),
+                               REG_EXPAND_SZ, L"", (const BYTE *)sValue.utf16(), sValue.size() * 2,
+                               samDesired);
+
+        value = 0x1;
+        SetRegistryKeyAndValue(HKEY_CURRENT_USER, (LPTSTR)key.utf16(),
+                               REG_DWORD, L"System.IsPinnedToNameSpaceTree", (const BYTE *)&value, sizeof(DWORD),
+                               samDesired);
+
+        value = 0x0;
+        SetRegistryKeyAndValue(HKEY_CURRENT_USER, (LPTSTR)key.utf16(),
+                               REG_DWORD, L"SortOrderIndex", (const BYTE *)&value, sizeof(DWORD),
+                               samDesired);
+
+        sValue = QString::fromUtf8("%systemroot%\\system32\\shell32.dll");
+        SetRegistryKeyAndValue(HKEY_CURRENT_USER, (LPTSTR)(key + QString::fromUtf8("\\InProcServer32")).utf16(),
+                               REG_EXPAND_SZ, L"", (const BYTE *)sValue.utf16(), sValue.size() * 2,
+                               samDesired);
+
+        sValue = QString::fromUtf8("{0E5AAE11-A475-4c5b-AB00-C66DE400274E}");
+        SetRegistryKeyAndValue(HKEY_CURRENT_USER, (LPTSTR)(key + QString::fromUtf8("\\Instance")).utf16(),
+                               REG_SZ, L"CLSID", (const BYTE *)sValue.utf16(), sValue.size() * 2,
+                               samDesired);
+
+        value = 0x10;
+        SetRegistryKeyAndValue(HKEY_CURRENT_USER, (LPTSTR)(key + QString::fromUtf8("\\Instance\\InitPropertyBag")).utf16(),
+                               REG_DWORD, L"Attributes", (const BYTE *)&value, sizeof(DWORD),
+                               samDesired);
+
+        sValue = QDir::toNativeSeparators(syncPath);
+        SetRegistryKeyAndValue(HKEY_CURRENT_USER, (LPTSTR)(key + QString::fromUtf8("\\Instance\\InitPropertyBag")).utf16(),
+                               REG_EXPAND_SZ, L"TargetFolderPath", (const BYTE *)sValue.utf16(), sValue.size() * 2,
+                               samDesired);
+
+        value = 0x28;
+        SetRegistryKeyAndValue(HKEY_CURRENT_USER, (LPTSTR)(key + QString::fromUtf8("\\ShellFolder")).utf16(),
+                               REG_DWORD, L"FolderValueFlags", (const BYTE *)&value, sizeof(DWORD),
+                               samDesired);
+
+        value = 0xF080004D;
+        SetRegistryKeyAndValue(HKEY_CURRENT_USER, (LPTSTR)(key + QString::fromUtf8("\\ShellFolder")).utf16(),
+                               REG_DWORD, L"Attributes", (const BYTE *)&value, sizeof(DWORD),
+                               samDesired);
+
+        samDesired = 0;
+    }
+
+    sValue = QString::fromUtf8("MEGA");
+    SetRegistryKeyAndValue(HKEY_CURRENT_USER, (LPTSTR) QString::fromUtf8("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\%1").arg(uuid).utf16(),
+                           REG_SZ, L"", (const BYTE *)sValue.utf16(), sValue.size() * 2,
+                           samDesired);
+
+    value = 0x1;
+    SetRegistryKeyAndValue(HKEY_CURRENT_USER, (LPTSTR) QString::fromUtf8("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel").utf16(),
+                           REG_DWORD, (LPTSTR)uuid.utf16(), (const BYTE *)&value, sizeof(DWORD),
+                           samDesired);
+}
+
+void WindowsPlatform::removeSyncFromLeftPane(QString, QString, QString uuid)
+{
+    REGSAM samDesired = 0;
+    int it = 1;
+
+    if (IsWow64())
+    {
+        samDesired = KEY_WOW64_64KEY;
+        it++;
+    }
+
+    QString key = QString::fromUtf8("Software\\Classes\\CLSID\\%1").arg(uuid);
+    for (int i = 0; i < it; i++)
+    {
+        DeleteRegKey(HKEY_CURRENT_USER, (LPTSTR)key.utf16(), samDesired);
+        samDesired = 0;
+    }
+
+    key = QString::fromUtf8("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\%1").arg(uuid);
+    DeleteRegKey(HKEY_CURRENT_USER, (LPTSTR)key.utf16(), samDesired);
+
+    key = QString::fromUtf8("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel");
+    DeleteRegValue(HKEY_CURRENT_USER, (LPTSTR)key.utf16(), (LPTSTR)uuid.utf16(), samDesired);
+}
+
 bool WindowsPlatform::startOnStartup(bool value)
 {
     WCHAR path[MAX_PATH];
@@ -253,7 +556,7 @@ void WindowsPlatform::stopShellDispatcher()
     }
 }
 
-void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
+void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName, QString syncID)
 {
     if (syncPath.startsWith(QString::fromAscii("\\\\?\\")))
     {
@@ -270,6 +573,8 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
     {
         return;
     }
+
+    addSyncToLeftPane(syncPath, syncName, syncID);
 
     DWORD dwVersion = GetVersion();
     DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(dwVersion)));
@@ -324,12 +629,14 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName)
     SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH | SHCNF_FLUSHNOWAIT, syncPath.utf16(), NULL);
 }
 
-void WindowsPlatform::syncFolderRemoved(QString syncPath, QString syncName)
+void WindowsPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString syncID)
 {
     if (!syncPath.size())
     {
         return;
     }
+
+    removeSyncFromLeftPane(syncPath, syncName, syncID);
 
     if (syncPath.startsWith(QString::fromAscii("\\\\?\\")))
     {
@@ -563,5 +870,14 @@ void WindowsPlatform::activateBackgroundWindow(QDialog *window)
     if (threadAttached)
     {
         AttachThreadInput(foregroundThreadId, currentThreadId, FALSE);
+    }
+}
+
+void WindowsPlatform::uninstall()
+{
+    bool deleted = true;
+    while (deleted)
+    {
+        deleted &= CheckLeftPaneIcon(NULL, true);
     }
 }

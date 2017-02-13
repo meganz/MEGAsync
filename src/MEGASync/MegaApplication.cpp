@@ -209,7 +209,9 @@ int main(int argc, char *argv[])
                 preferences->enterUser(i);
                 for (int j = 0; j < preferences->getNumSyncedFolders(); j++)
                 {
-                    Platform::syncFolderRemoved(preferences->getLocalFolder(j), preferences->getSyncName(j));
+                    Platform::syncFolderRemoved(preferences->getLocalFolder(j),
+                                                preferences->getSyncName(j),
+                                                preferences->getSyncID(j));
 
                     #ifdef WIN32
                         QString debrisPath = QDir::toNativeSeparators(preferences->getLocalFolder(j) +
@@ -239,6 +241,7 @@ int main(int argc, char *argv[])
         }
 
         Utilities::removeRecursively(MegaApplication::applicationDataPath());
+        Platform::uninstall();
 
 #ifdef WIN32
         if (preferences->installationTime() != -1)
@@ -1396,7 +1399,9 @@ void MegaApplication::disableSyncs()
            continue;
        }
 
-       Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+       Platform::syncFolderRemoved(preferences->getLocalFolder(i),
+                                   preferences->getSyncName(i),
+                                   preferences->getSyncID(i));
        Platform::notifyItemChange(preferences->getLocalFolder(i));
        preferences->setSyncState(i, false, true);
        MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
@@ -2653,6 +2658,7 @@ void MegaApplication::startUpdateTask()
         connect(updateTask, SIGNAL(installingUpdate(bool)), this, SLOT(onInstallingUpdate(bool)), Qt::UniqueConnection);
         connect(updateTask, SIGNAL(updateNotFound(bool)), this, SLOT(onUpdateNotFound(bool)), Qt::UniqueConnection);
         connect(updateTask, SIGNAL(updateError()), this, SLOT(onUpdateError()), Qt::UniqueConnection);
+        connect(updateTask, SIGNAL(deprecatedOperatingSystem()), this, SLOT(onDeprecatedOperatingSystem()), Qt::UniqueConnection);
 
         connect(updateThread, SIGNAL(finished()), updateTask, SLOT(deleteLater()), Qt::UniqueConnection);
         connect(updateThread, SIGNAL(finished()), updateThread, SLOT(deleteLater()), Qt::UniqueConnection);
@@ -2807,6 +2813,20 @@ void MegaApplication::checkFirstTransfer()
             delete nextTransfer;
         }
     }
+}
+
+void MegaApplication::onDeprecatedOperatingSystem()
+{
+#ifdef __APPLE__
+    if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_DEPRECATED_OPERATING_SYSTEM))
+    {
+        QMegaMessageBox::warning(NULL, tr("MEGAsync"),
+                             tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
+                             + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon."),
+                             Utilities::getDevicePixelRatio());
+        preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_DEPRECATED_OPERATING_SYSTEM, true);
+    }
+#endif
 }
 
 void MegaApplication::updateUserStats()
@@ -5166,7 +5186,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     delete[] nodePath;
 
                     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error adding sync");
-                    Platform::syncFolderRemoved(localFolder, preferences->getSyncName(i));
+                    Platform::syncFolderRemoved(localFolder,
+                                                preferences->getSyncName(i),
+                                                preferences->getSyncID(i));
                     preferences->setSyncState(i, false);
                     openSettings(SettingsDialog::SYNCS_TAB);
                     if (settingsDialog)
@@ -5717,7 +5739,9 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                         showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder doesn't exist")
                                          .arg(preferences->getSyncName(i)));
                     }
-                    Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                    Platform::syncFolderRemoved(preferences->getLocalFolder(i),
+                                                preferences->getSyncName(i),
+                                                preferences->getSyncID(i));
                     Platform::notifyItemChange(preferences->getLocalFolder(i));
                     MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
                     megaApi->removeSync(node);

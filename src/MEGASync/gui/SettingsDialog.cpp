@@ -1158,7 +1158,9 @@ bool SettingsDialog::saveSettings()
                     {
                         if (!enabled && preferences->isFolderActive(i) != enabled)
                         {
-                            Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                            Platform::syncFolderRemoved(preferences->getLocalFolder(i),
+                                                        preferences->getSyncName(i),
+                                                        preferences->getSyncID(i));
                             preferences->setSyncState(i, enabled);
 
                             MegaNode *node = megaApi->getNodeByHandle(megaHandle);
@@ -1176,7 +1178,9 @@ bool SettingsDialog::saveSettings()
                     MegaNode *node = megaApi->getNodeByHandle(megaHandle);
                     if (active)
                     {
-                        Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                        Platform::syncFolderRemoved(preferences->getLocalFolder(i),
+                                                    preferences->getSyncName(i),
+                                                    preferences->getSyncID(i));
                         megaApi->removeSync(node);
                     }
                     Utilities::removeRecursively(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
