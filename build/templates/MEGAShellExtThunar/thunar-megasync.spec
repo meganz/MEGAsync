@@ -9,9 +9,16 @@ Source0:	thunar-megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
-BuildRequires:  qt-devel, glib2-devel, libthunarx-2-0, gnome-common
-BuildRequires:  thunar-devel
-BuildRequires:	hicolor-icon-theme, gnome-shell
+
+BuildRequires:  qt-devel
+#, glib2-devel, libthunarx-2-0, gnome-common
+%if 0%{?suse_version}
+BuildRequires:  glib2-devel, libthunarx-2-0, thunar-devel
+%endif
+%if 0%{?fedora}
+BuildRequires:  Thunar-devel
+%endif
+
 Requires:       thunar, megasync
 
 %description
@@ -43,14 +50,12 @@ make
 
 %install
 make install
+export EXTENSIONSDIR=$(pkg-config --variable=extensionsdir thunarx-2)
 
-%ifarch x86_64
-mkdir -p $RPM_BUILD_ROOT%{_libdir}/x86_64-linux-gnu/thunarx-2
-%{__install} libMEGAShellExtThunar.so -D $RPM_BUILD_ROOT%{_libdir}/x86_64-linux-gnu/thunarx-2
-%else
-mkdir -p $RPM_BUILD_ROOT%{_libdir}/i386-linux-gnu/thunarx-2
-%{__install} libMEGAShellExtThunar.so -D $RPM_BUILD_ROOT%{_libdir}/i386-linux-gnu/thunarx-2
-%endif
+echo EY: mkdir -p %{buildroot}$EXTENSIONSDIR
+mkdir -p %{buildroot}$EXTENSIONSDIR
+
+%{__install} libMEGAShellExtThunar.so -D %{buildroot}$EXTENSIONSDIR
 
 %clean
 %{?buildroot:%__rm -rf "%{buildroot}"}
@@ -58,10 +63,9 @@ mkdir -p $RPM_BUILD_ROOT%{_libdir}/i386-linux-gnu/thunarx-2
 %files
 %defattr(-,root,root)
 
-%ifarch x86_64
-%{_libdir}/x86_64-linux-gnu/thunarx-2/libMEGAShellExtThunar.so
-%else
-%{_libdir}/i386-linux-gnu/thunarx-2/libMEGAShellExtThunar.so
-%endif
+%(pkg-config --variable=extensionsdir thunarx-2)/libMEGAShellExtThunar.so
+#%(echo $EXTENSIONSDIR/libMEGAShellExtThunar.so)
+#%{getenv:EXTENSIONSDIR}/libMEGAShellExtThunar.so
+#$EXTENSIONSDIR/libMEGAShellExtThunar.so
 
 %changelog
