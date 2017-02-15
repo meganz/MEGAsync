@@ -49,7 +49,6 @@ qmake
 make
 
 %install
-make install
 export EXTENSIONSDIR=$(pkg-config --variable=extensionsdir thunarx-2)
 
 echo EY: mkdir -p %{buildroot}$EXTENSIONSDIR
