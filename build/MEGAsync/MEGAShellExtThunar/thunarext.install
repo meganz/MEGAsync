@@ -1,0 +1,43 @@
+post_install() {
+# restart Thunar
+UPDATENOTIFIERDIR=/var/lib/update-notifier/user.d
+echo "Please restart all running instances of Thunar."
+
+if [ -d $UPDATENOTIFIERDIR ] ; then
+cat > $UPDATENOTIFIERDIR/megasync-install-notify <<DATA
+Name: Thunar Restart Required
+Priority: High
+Terminal: False
+Command: thunar -q
+DontShowAfterReboot: True
+ButtonText: _Restart Thunar
+DisplayIf: pgrep -x thunar -U \$(id -u) > /dev/null
+OnlyAdminUsers: False
+Description:
+ MEGAsync requires Thunar to be restarted to function properly.
+DATA
+fi
+}
+
+post_remove() {
+
+# restart Thunar
+UPDATENOTIFIERDIR=/var/lib/update-notifier/user.d
+echo "Please restart all running instances of Thunar."
+
+if [ -d $UPDATENOTIFIERDIR ] ; then
+cat > $UPDATENOTIFIERDIR/megasync-install-notify <<DATA
+Name: Thunar Restart Required
+Priority: High
+Terminal: False
+Command: thunar -q
+DontShowAfterReboot: True
+ButtonText: _Restart Thunar
+DisplayIf: pgrep -x thunar -U \$(id -u) > /dev/null
+OnlyAdminUsers: False
+Description:
+ MEGAsync requires Thunar to be restarted to function properly.
+DATA
+fi
+
+}
