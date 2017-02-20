@@ -15,6 +15,7 @@ public:
     static QString extractJSONString(QString json, QString name);
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();
+    static QChar getAvatarLetter();
 
 private:
     Utilities() {}
@@ -29,6 +30,7 @@ public:
     static QString languageCodeToString(QString code);
     static QString getExtensionPixmapSmall(QString fileName);
     static QString getExtensionPixmapMedium(QString fileName);
+    static QString getAvatarPath(QString email);
     static bool removeRecursively(QString path);
     static void copyRecursively(QString srcPath, QString dstPath);
     static void getFolderSize(QString folderPath, long long *size);
