@@ -227,5 +227,8 @@ rm -fr MEGAsync/MEGAShellExtThunar/thunar-megasync_*.tar.gz
 # transform arch name, to satisfy Debian requirements
 mv $EXT_NAME.tar.gz MEGAsync/MEGAShellExtThunar/thunar-megasync_$EXT_VERSION.tar.gz
 
+#get md5sum and replace in PKGBUILD
+MD5SUM=`md5sum MEGAsync/MEGAShellExtThunar/thunar-megasync_$EXT_VERSION.tar.gz | awk '{print $1}'`
+sed "s/MD5SUM/$MD5SUM/g"  -i MEGAsync/MEGAShellExtThunar/PKGBUILD
 
 rm -fr $archives
