@@ -31,9 +31,9 @@ public:
     ~InfoDialog();
 
     void setUsage();
+    void setUserName();
+    void setAvatar();
     void setTransfer(mega::MegaTransfer *transfer);
-    void addRecentFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey);
-    void clearRecentFiles();
     void setPaused(bool paused);
     void updateTransfers();
     void transferFinished(int error);
@@ -42,18 +42,18 @@ public:
     void setWaiting(bool waiting);
     void increaseUsedStorage(long long bytes, bool isInShare);
     void updateState();
-    void showRecentlyUpdated(bool show);
     void closeSyncsMenu();
-    void updateRecentFiles();
-    void disableGetLink(bool disable);
     void addSync(mega::MegaHandle h);
-
+    void clearUserAttributes();
 
 #ifdef __APPLE__
     void moveArrow(QPoint p);
 #endif
 
     void regenerateLayout();
+
+private:
+    void drawAvatar(QString email);
 
 public slots:
    void addSync();
@@ -70,28 +70,17 @@ public slots:
    void onAllUploadsFinished();
    void onAllDownloadsFinished();
    void onAllTransfersFinished();
-   void onUpdateRecentFiles();
 
 private slots:
     void on_bSettings_clicked();
-    void on_bTransferManager_clicked();
-    void on_bOfficialWeb_clicked();
     void on_bSyncFolder_clicked();
+    void on_bUpgrade_clicked();
     void openFolder(QString path);
     void on_bPause_clicked();
+    void on_bTransferManager_clicked();
     void onOverlayClicked();
     void scanningAnimationStep();
     void onUserAction(int action);
-
-#ifdef __APPLE__
-    void on_cRecentlyUpdated_stateChanged(int arg1);
-    void showRecentList();
-    void onAnimationFinished();
-#endif
-
-#if defined(_WIN32) || defined(__APPLE__)
-    void on_bOfficialWebIcon_clicked();
-#endif
 
 private:
     Ui::InfoDialog *ui;
