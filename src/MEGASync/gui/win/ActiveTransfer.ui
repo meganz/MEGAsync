@@ -26,19 +26,17 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#ActiveTransfer
+   <string notr="true">#lFileName
 {
+    font-family: &quot;Source Sans Pro&quot;;
+    font-size: 13px;
+    color: #333333;
+    border: none;
 }
 
-#lPercentage
+#pProgress, #lFileType
 {
-color: green;
-padding-right:8px;
-}
-
-#lFileName
-{
-color: grey;
+	border: none;
 }
 </string>
   </property>
@@ -47,7 +45,7 @@ color: grey;
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>15</number>
+    <number>17</number>
    </property>
    <property name="topMargin">
     <number>9</number>
@@ -62,7 +60,7 @@ color: grey;
     <widget class="QWidget" name="widget" native="true">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
-       <number>0</number>
+       <number>4</number>
       </property>
       <property name="leftMargin">
        <number>3</number>
@@ -71,29 +69,91 @@ color: grey;
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>2</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
       </property>
       <item>
+       <widget class="QPushButton" name="lTransferType">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>12</width>
+          <height>12</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>12</width>
+          <height>12</height>
+         </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: none;</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>12</width>
+          <height>12</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="lFileType">
+        <property name="minimumSize">
+         <size>
+          <width>20</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>20</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>22</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QLabel" name="lFileName">
         <property name="minimumSize">
          <size>
-          <width>273</width>
+          <width>230</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>273</width>
+          <width>230</width>
           <height>16777215</height>
          </size>
         </property>
         <property name="font">
          <font>
-          <weight>75</weight>
-          <bold>true</bold>
+          <family>Source Sans Pro</family>
+          <pointsize>-1</pointsize>
          </font>
         </property>
         <property name="focusPolicy">
@@ -117,98 +177,30 @@ color: grey;
         </property>
        </spacer>
       </item>
-      <item>
-       <widget class="QLabel" name="lPercentage">
-        <property name="minimumSize">
-         <size>
-          <width>50</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>50</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>9</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="focusPolicy">
-         <enum>Qt::StrongFocus</enum>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="lType">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">border: none;</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/tray_download_ico.png</normaloff>:/images/tray_download_ico.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-       </widget>
-      </item>
      </layout>
     </widget>
    </item>
    <item>
-    <widget class="TransferProgressBar" name="pProgress" native="true">
+    <widget class="QProgressBar" name="pProgress">
      <property name="minimumSize">
       <size>
        <width>368</width>
-       <height>0</height>
+       <height>2</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>2</height>
       </size>
      </property>
     </widget>
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>TransferProgressBar</class>
-   <extends>QWidget</extends>
-   <header>TransferProgressBar.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
- <resources>
-  <include location="../Resources_win.qrc"/>
- </resources>
+ <tabstops>
+  <tabstop>lFileName</tabstop>
+ </tabstops>
+ <resources/>
  <connections/>
 </ui>
