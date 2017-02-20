@@ -1,7 +1,7 @@
 Name:       thunar-megasync
 Version:    EXT_VERSION
 Release:	1%{?dist}
-Summary:	Easy automated syncing between your computers and your MEGA cloud drive
+Summary:	Extension for Thunar to interact with Megasync
 License:	Freeware
 Group:		Applications/Others
 Url:		https://mega.nz
@@ -11,7 +11,6 @@ Packager:	MEGA Linux Team <linux@mega.co.nz>
 
 
 BuildRequires:  qt-devel
-#, glib2-devel, libthunarx-2-0, gnome-common
 %if 0%{?suse_version}
 BuildRequires:  glib2-devel, libthunarx-2-0, thunar-devel
 %endif

@@ -17,6 +17,7 @@ win32 {
 unix:!macx {
     CONFIG(with_ext) {
         SUBDIRS += MEGAShellExtNautilus
+        SUBDIRS += MEGAShellExtThunar
     }
 }
 
