@@ -183,11 +183,18 @@ int main(int argc, char *argv[])
 
     QDir dataDir(app.applicationDataPath());
     QString crashPath = dataDir.filePath(QString::fromAscii("crashDumps"));
+    QString avatarPath = dataDir.filePath(QString::fromAscii("avatars"));
     QString appLockPath = dataDir.filePath(QString::fromAscii("megasync.lock"));
     QDir crashDir(crashPath);
     if (!crashDir.exists())
     {
         crashDir.mkpath(QString::fromAscii("."));
+    }
+
+    QDir avatarsDir(avatarPath);
+    if (!avatarsDir.exists())
+    {
+        avatarsDir.mkpath(QString::fromAscii("."));
     }
 
 #ifndef DEBUG
@@ -1181,6 +1188,9 @@ void MegaApplication::loggedIn()
     pauseTransfers(paused);
     megaApi->getAccountDetails();
     megaApi->getPricing();
+    megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
+    megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
+    megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(megaApi->getMyEmail())).toUtf8().constData());
 
     if (settingsDialog)
     {
@@ -2447,11 +2457,6 @@ void MegaApplication::unlink()
         return;
     }
 
-    if (infoDialog)
-    {
-        infoDialog->clearRecentFiles();
-    }
-
     //Reset fields that will be initialized again upon login
     qDeleteAll(downloadQueue);
     downloadQueue.clear();
@@ -2767,6 +2772,20 @@ void MegaApplication::handleLocalPath(const QUrl &url)
     QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(QDir::toNativeSeparators(url.fragment())));
 }
 
+void MegaApplication::clearUserAttributes()
+{
+    if (infoDialog)
+    {
+        infoDialog->clearUserAttributes();
+    }
+
+    QString pathToAvatar = Utilities::getAvatarPath(preferences->email());
+    if (QFileInfo(pathToAvatar).exists())
+    {
+        QFile::remove(pathToAvatar);
+    }
+}
+
 void MegaApplication::clearViewedTransfers()
 {
     nUnviewedTransfers = 0;
@@ -2840,11 +2859,6 @@ void MegaApplication::addRecentFile(QString fileName, long long fileHandle, QStr
     if (appfinished)
     {
         return;
-    }
-
-    if (infoDialog)
-    {
-        infoDialog->addRecentFile(fileName, fileHandle, localPath, nodeKey);
     }
 }
 
@@ -3580,10 +3594,6 @@ void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
     if (path && strncmp(path, "//bin/", 6) && megaApi->checkAccess(node, MegaShare::ACCESS_OWNER).getErrorCode() == MegaError::API_OK)
     {
         //Launch the creation of the import link, it will be handled in the "onRequestFinish" callback
-        if (infoDialog)
-        {
-            infoDialog->disableGetLink(true);
-        }
         megaApi->exportNode(node);
 
         delete node;
@@ -3603,10 +3613,6 @@ void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
     if (exportableNode)
     {
         //Launch the creation of the import link, it will be handled in the "onRequestFinish" callback
-        if (infoDialog)
-        {
-            infoDialog->disableGetLink(true);
-        }
         megaApi->exportNode(exportableNode);
 
         delete node;
@@ -4710,11 +4716,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             showErrorMessage(tr("Error getting link: ") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", e->getErrorString()));
         }
 
-        if (infoDialog)
-        {
-            infoDialog->disableGetLink(false);
-        }
-
         if (transferManager)
         {
             transferManager->disableGetLink(false);
@@ -4736,6 +4737,56 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 bwOverquotaDialog->setPricing(pricing);
             }
         }
+        break;
+    }
+    case MegaRequest::TYPE_GET_ATTR_USER:
+    {
+        if (!preferences->logged())
+        {
+            break;
+        }
+
+        if (e->getErrorCode() != MegaError::API_OK && e->getErrorCode() != MegaError::API_ENOENT)
+        {
+            break;
+        }
+
+        if (request->getParamType() == MegaApi::USER_ATTR_FIRSTNAME)
+        {
+            QString firstname(QString::fromUtf8(""));
+            if (e->getErrorCode() == MegaError::API_OK)
+            {
+                firstname = QString::fromUtf8(request->getText());
+            }
+            preferences->setFirstName(firstname);
+        }
+        else if (request->getParamType() == MegaApi::USER_ATTR_LASTNAME)
+        {
+            QString lastName(QString::fromUtf8(""));
+            if (e->getErrorCode() == MegaError::API_OK)
+            {
+                lastName = QString::fromUtf8(request->getText());
+            }
+            preferences->setLastName(lastName);
+        }
+        else if (request->getParamType() == MegaApi::USER_ATTR_AVATAR)
+        {
+            if (e->getErrorCode() == MegaError::API_ENOENT)
+            {
+                QFile::remove(Utilities::getAvatarPath(QString::fromUtf8(megaApi->getMyEmail())));
+            }
+
+            if (infoDialog)
+            {
+                infoDialog->setAvatar();
+            }
+        }
+
+        if (infoDialog)
+        {
+            infoDialog->setUserName();
+        }
+
         break;
     }
     case MegaRequest::TYPE_LOGIN:
@@ -4866,6 +4917,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         if (preferences && preferences->logged())
         {
+            clearUserAttributes();
             preferences->unlink();
             closeDialogs();
             removeAllFinishedTransfers();
@@ -5667,9 +5719,36 @@ void MegaApplication::onAccountUpdate(MegaApi *)
 }
 
 //Called when contacts have been updated in MEGA
-void MegaApplication::onUsersUpdate(MegaApi* , MegaUserList *)
+void MegaApplication::onUsersUpdate(MegaApi *, MegaUserList *userList)
 {
+    if (appfinished || !infoDialog || !userList || !preferences->logged())
+    {
+        return;
+    }
 
+    MegaHandle myHandle = megaApi->getMyUserHandleBinary();
+    for (int i = 0; i < userList->size(); i++)
+    {
+        MegaUser *user = userList->get(i);
+        if (!user->isOwnChange() && user->getHandle() == myHandle)
+        {
+            if (user->hasChanged(MegaUser::CHANGE_TYPE_FIRSTNAME))
+            {
+                megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
+            }
+
+            if (user->hasChanged(MegaUser::CHANGE_TYPE_LASTNAME))
+            {
+                megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
+            }
+
+            if (user->hasChanged(MegaUser::CHANGE_TYPE_AVATAR))
+            {
+                megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(megaApi->getMyEmail())).toUtf8().constData());
+            }
+            break;
+        }
+    }
 }
 
 //Called when nodes have been updated in MEGA
@@ -5827,7 +5906,6 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
         infoDialog->setPaused(paused);
         infoDialog->updateState();
         infoDialog->transferFinished(MegaError::API_OK);
-        infoDialog->updateRecentFiles();
     }
 
     if (transferManager)

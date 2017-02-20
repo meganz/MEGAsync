@@ -168,6 +168,7 @@ public slots:
     void showUpdatedMessage();
     void handleMEGAurl(const QUrl &url);
     void handleLocalPath(const QUrl &url);
+    void clearUserAttributes();
     void clearViewedTransfers();
     void onCompletedTransfersTabActive(bool active);
     void checkFirstTransfer();
