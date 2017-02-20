@@ -37,12 +37,13 @@ MEGASyncPlugin::MEGASyncPlugin(QObject* parent, const QVariantList & args):
 {
     Q_UNUSED(args);
     sockPath = QDir::home().path();
-    sockPath.append(QDir::separator()).append(".local/share/data/Mega Limited/MEGAsync");
+    sockPath.append(QDir::separator()).append(".local/share/data/Mega Limited/MEGAsync/mega.socket");
     sock.connectToServer(sockPath);
 }
 
 MEGASyncPlugin::~MEGASyncPlugin()
 {
+    sock.close();
 }
 
 QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItemInfos, QWidget * parentWidget)
@@ -115,14 +116,17 @@ void MEGASyncPlugin::getLink()
 
 void MEGASyncPlugin::uploadFile()
 {
-    sendRequest(OP_UPLOAD, selectedFilePath);
+    if (sendRequest(OP_UPLOAD, selectedFilePath).size())
+    {
+        sendRequest(OP_END, " ");
+    }
 }
 
 // send request and receive response from Extension server
 // Return newly-allocated response string
 QString MEGASyncPlugin::sendRequest(char type, QString command)
 {
-    int waitTime = 500;
+    int waitTime = -1; //this makes dolphin hang until the location for an upload is selected. Otherwise megayns segafaults accesing slient socket
     QString req;
     QString out;
 
