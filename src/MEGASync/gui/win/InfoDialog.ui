@@ -323,7 +323,7 @@ color: #999999;
           </spacer>
          </item>
          <item>
-          <widget class="QPushButton" name="bPause">
+          <widget class="QPushButton" name="bChats">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -351,10 +351,6 @@ margin-top:-1px;
            </property>
            <property name="text">
             <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
-             <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
            </property>
            <property name="iconSize">
             <size>
