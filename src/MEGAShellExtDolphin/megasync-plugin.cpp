@@ -12,8 +12,14 @@
 
 #include "megasync-plugin.h"
 
+
+//#if QT_VERSION >= 0x050000
+//K_PLUGIN_FACTORY_WITH_JSON(MEGASyncPluginFactory, megasync-plugin.json, registerPlugin<MEGASyncPluginFactory>();)
+//#else
 K_PLUGIN_FACTORY(MEGASyncPluginFactory, registerPlugin<MEGASyncPlugin>();)
 K_EXPORT_PLUGIN(MEGASyncPluginFactory("megasync-plugin"))
+//#endif
+
 
 enum {
     FILE_ERROR = 0,
@@ -111,7 +117,10 @@ int MEGASyncPlugin::getState()
 
 void MEGASyncPlugin::getLink()
 {
-    sendRequest(OP_LINK, selectedFilePath);
+    if (sendRequest(OP_LINK, selectedFilePath).size())
+    {
+        sendRequest(OP_END, " ");
+    }
 }
 
 void MEGASyncPlugin::uploadFile()

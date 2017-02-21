@@ -37,8 +37,6 @@ Store up to 50 GB for free!
 %setup -q
 
 %build
-export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
-
 %if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
 qmake-qt4
 %else
@@ -50,7 +48,6 @@ make
 %install
 export EXTENSIONSDIR=$(pkg-config --variable=extensionsdir thunarx-2)
 
-echo EY: mkdir -p %{buildroot}$EXTENSIONSDIR
 mkdir -p %{buildroot}$EXTENSIONSDIR
 
 %{__install} libMEGAShellExtThunar.so -D %{buildroot}$EXTENSIONSDIR

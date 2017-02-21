@@ -1,22 +1,20 @@
 QT       -= gui
 QT       += network
 
-TARGET = MEGAShellExtDolphin
+TARGET = megasyncplugin
 TEMPLATE = lib
 
-SOURCES += megasync-plugin.cpp
+SOURCES += megasync-plugin.cpp #megasync-plugin.json
 
 HEADERS += megasync-plugin.h
 
-#greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-#CONFIG += link_pkgconfig
-#PKGCONFIG+=dolphin
-
-## library
-#target.path = $$system(pkg-config --variable=extensionsdir thunarx-2)
+# library
+target.path = $$system(kde4-config --path module | cut -d ":" -f2)
 INSTALLS += target
 
 QMAKE_CLEAN += $(TARGET) lib$${TARGET}.so lib$${TARGET}.so.1 lib$${TARGET}.so.1.0
 
 QMAKE_CXXFLAGS += -std=c++11
+
+
+#greaterThan(QT_MAJOR_VERSION, 4): QT += KIOCore KIOFileWidgets KIOWidgets KNTLM

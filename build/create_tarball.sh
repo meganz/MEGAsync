@@ -232,3 +232,51 @@ MD5SUM=`md5sum MEGAsync/MEGAShellExtThunar/thunar-megasync_$EXT_VERSION.tar.gz |
 sed "s/MD5SUM/$MD5SUM/g"  -i MEGAsync/MEGAShellExtThunar/PKGBUILD
 
 rm -fr $archives
+
+
+
+
+#
+# Dolphin
+#
+
+# make sure the source tree is in "clean" state
+cd ../src/MEGAShellExtDolphin/
+make distclean 2> /dev/null || true
+cd ../../build
+
+# extension uses the same version number as MEGASync app
+export EXT_VERSION=$MEGASYNC_VERSION
+export EXT_NAME=dolphin-megasync-$EXT_VERSION
+rm -rf $EXT_NAME.tar.gz
+rm -rf $EXT_NAME
+
+# delete previously generated files
+rm -fr MEGAsync/MEGAShellExtDolphin/dolphin-megasync_*.dsc
+
+# fix version number in template files and copy to appropriate directories
+sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.spec > MEGAsync/MEGAShellExtDolphin/dolphin-megasync.spec
+sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.dsc > MEGAsync/MEGAShellExtDolphin/dolphin-megasync_$EXT_VERSION.dsc
+sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/PKGBUILD > MEGAsync/MEGAShellExtDolphin/PKGBUILD
+
+# create archive
+mkdir $EXT_NAME
+ln -s ../MEGAsync/MEGAShellExtDolphin/dolphin-megasync.spec $EXT_NAME/dolphin-megasync.spec
+ln -s ../../src/MEGAShellExtDolphin/megasync-plugin.cpp $EXT_NAME/megasync-plugin.cpp
+ln -s ../../src/MEGAShellExtDolphin/megasync-plugin.h $EXT_NAME/megasync-plugin.h
+ln -s ../../src/MEGAShellExtDolphin/megasync-plugin.desktop $EXT_NAME/megasync-plugin.desktop
+ln -s ../../src/MEGAShellExtDolphin/MEGAShellExtDolphin.pro $EXT_NAME/MEGAShellExtDolphin.pro
+export GZIP=-9
+tar czfh $EXT_NAME.tar.gz --exclude Makefile --exclude '*.o' $EXT_NAME
+rm -rf $EXT_NAME
+
+# delete any previous archive
+rm -fr MEGAsync/MEGAShellExtDolphin/dolphin-megasync_*.tar.gz
+# transform arch name, to satisfy Debian requirements
+mv $EXT_NAME.tar.gz MEGAsync/MEGAShellExtDolphin/dolphin-megasync_$EXT_VERSION.tar.gz
+
+#get md5sum and replace in PKGBUILD
+MD5SUM=`md5sum MEGAsync/MEGAShellExtDolphin/dolphin-megasync_$EXT_VERSION.tar.gz | awk '{print $1}'`
+sed "s/MD5SUM/$MD5SUM/g"  -i MEGAsync/MEGAShellExtDolphin/PKGBUILD
+
+rm -fr $archives
