@@ -34,7 +34,6 @@ public:
     void setUserName();
     void setAvatar();
     void setTransfer(mega::MegaTransfer *transfer);
-    void setPaused(bool paused);
     void updateTransfers();
     void transferFinished(int error);
     void updateSyncsButton();
@@ -76,7 +75,7 @@ private slots:
     void on_bSyncFolder_clicked();
     void on_bUpgrade_clicked();
     void openFolder(QString path);
-    void on_bPause_clicked();
+    void on_bChats_clicked();
     void on_bTransferManager_clicked();
     void onOverlayClicked();
     void scanningAnimationStep();
@@ -87,12 +86,6 @@ private:
     QPushButton *overlay;
 #ifdef __APPLE__
     QPushButton *arrow;
-#endif
-
-#ifdef __APPLE__
-    QPropertyAnimation *minHeightAnimation;
-    QPropertyAnimation *maxHeightAnimation;
-    QParallelAnimationGroup *animationGroup;
 #endif
 
     QMenu *syncsMenu;
@@ -126,7 +119,6 @@ protected:
     QTimer downloadsFinishedTimer;
     QTimer uploadsFinishedTimer;
     QTimer transfersFinishedTimer;
-    QTimer recentFilesTimer;
     int scanningAnimationIndex;
     MegaApplication *app;
     Preferences *preferences;

@@ -1,7 +1,7 @@
-#include "TransferMenuItemAction.h"
+#include "MenuItemAction.h"
 #include <QKeyEvent>
 
-TransferMenuItemAction::TransferMenuItemAction(const QString title, const QIcon icon)
+MenuItemAction::MenuItemAction(const QString title, const QIcon icon)
     : QWidgetAction(NULL)
 {
 
@@ -16,7 +16,7 @@ TransferMenuItemAction::TransferMenuItemAction(const QString title, const QIcon 
     setDefaultWidget(container);
 }
 
-TransferMenuItemAction::TransferMenuItemAction(const QString title, const QIcon icon, const QIcon hoverIcon)
+MenuItemAction::MenuItemAction(const QString title, const QIcon icon, const QIcon hoverIcon)
     : QWidgetAction(NULL)
 {
     this->title = new QLabel(title);
@@ -30,7 +30,12 @@ TransferMenuItemAction::TransferMenuItemAction(const QString title, const QIcon 
     setDefaultWidget(container);
 }
 
-TransferMenuItemAction::~TransferMenuItemAction()
+void MenuItemAction::setLabelText(QString title)
+{
+    this->title->setText(title);
+}
+
+MenuItemAction::~MenuItemAction()
 {
     delete title;
     delete iconButton;
@@ -40,7 +45,7 @@ TransferMenuItemAction::~TransferMenuItemAction()
     delete container;
 }
 
-void TransferMenuItemAction::setupActionWidget()
+void MenuItemAction::setupActionWidget()
 {
     container->setMinimumHeight(32);
     container->setMaximumHeight(32);
@@ -66,7 +71,7 @@ void TransferMenuItemAction::setupActionWidget()
     container->setLayout(layout);
 }
 
-bool TransferMenuItemAction::eventFilter(QObject *obj, QEvent *event)
+bool MenuItemAction::eventFilter(QObject *obj, QEvent *event)
 {
 
     if (event->type() == QEvent::Enter)

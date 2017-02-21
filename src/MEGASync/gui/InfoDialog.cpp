@@ -14,6 +14,7 @@
 #include "ui_InfoDialog.h"
 #include "control/Utilities.h"
 #include "MegaApplication.h"
+#include "MenuItemAction.h"
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -82,10 +83,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     transfersFinishedTimer.setInterval(5000);
     connect(&transfersFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllTransfersFinished()));
 
-    recentFilesTimer.setSingleShot(true);
-    recentFilesTimer.setInterval(200);
-    connect(&recentFilesTimer, SIGNAL(timeout()), this, SLOT(onUpdateRecentFiles()));
-
     ui->wDownloadDesc->hide();
     ui->wUploadDesc->hide();
     ui->lBlockedItem->setText(QString::fromUtf8(""));
@@ -111,20 +108,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     overlay->setIconSize(QSize(64, 64));
     overlay->setStyleSheet(QString::fromAscii("background-color: rgba(247, 247, 247, 200); "
                                               "border: none; "));
-
-#ifdef __APPLE__
-    minHeightAnimation = new QPropertyAnimation();
-    maxHeightAnimation = new QPropertyAnimation();
-    animationGroup = new QParallelAnimationGroup();
-
-    minHeightAnimation->setTargetObject(this);
-    maxHeightAnimation->setTargetObject(this);
-    minHeightAnimation->setPropertyName("minimumHeight");
-    maxHeightAnimation->setPropertyName("maximumHeight");
-    animationGroup->addAnimation(minHeightAnimation);
-    animationGroup->addAnimation(maxHeightAnimation);
-    connect(animationGroup, SIGNAL(finished()), this, SLOT(onAnimationFinished()));
-#endif
 
     ui->wTransfer1->hide();
     ui->wTransfer1->hide();
@@ -550,7 +533,7 @@ void InfoDialog::increaseUsedStorage(long long bytes, bool isInShare)
 void InfoDialog::updateState()
 {
     updateTransfers();
-    if (ui->bPause->isChecked())
+    if (preferences->getGlobalPaused())
     {
         if (!preferences->logged())
         {
@@ -712,12 +695,6 @@ void InfoDialog::closeSyncsMenu()
         transferMenu->close();
     }
 #endif
-}
-
-void InfoDialog::setPaused(bool paused)
-{
-    ui->bPause->setChecked(paused);
-    ui->bPause->setEnabled(true);
 }
 
 void InfoDialog::addSync()
@@ -1003,22 +980,11 @@ void InfoDialog::on_bSyncFolder_clicked()
     else
     {
         syncsMenu = new QMenu();
-        #ifndef __APPLE__
-            syncsMenu->setStyleSheet(QString::fromAscii(
-                    "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
-                    "QMenu::item {background-color: white; color: black;} "
-                    "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
-        #else
-            syncsMenu->setStyleSheet(QString::fromAscii("QMenu {padding-left: -10px; padding-top: 4px; } "
-                    "QMenu::separator {height: 8px; margin: 0px; }"));
-        #endif
-        QAction *addSyncAction = syncsMenu->addAction(tr("Add Sync"), this, SLOT(addSync()));
-#ifdef __APPLE__
-        addSyncAction->setIcon(QIcon(QString::fromAscii("://images/tray_add_sync_ico.png")));
-#else
-        addSyncAction->setIcon(QIcon(QString::fromAscii("://images/tray_add_sync_ico2.png")));
-#endif
-        addSyncAction->setIconVisibleInMenu(true);
+        syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+
+        MenuItemAction *addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
+        connect(addSyncAction, SIGNAL(triggered()), this, SLOT(addSync()));
+        syncsMenu->addAction(addSyncAction);
         syncsMenu->addSeparator();
 
         QSignalMapper *menuSignalMapper = new QSignalMapper();
@@ -1033,13 +999,9 @@ void InfoDialog::on_bSyncFolder_clicked()
             }
 
             activeFolders++;
-            QAction *action = syncsMenu->addAction(preferences->getSyncName(i), menuSignalMapper, SLOT(map()));
-#ifdef __APPLE__
-            action->setIcon(QIcon(QString::fromAscii("://images/tray_sync_ico.png")));
-#else
-            action->setIcon(QIcon(QString::fromAscii("://images/tray_sync_ico2.png")));
-#endif
-            action->setIconVisibleInMenu(true);
+            MenuItemAction *action = new MenuItemAction(preferences->getSyncName(i), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
+            connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()));
+            syncsMenu->addAction(action);
             menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
         }
 
@@ -1136,9 +1098,9 @@ void InfoDialog::moveArrow(QPoint p)
 }
 #endif
 
-void InfoDialog::on_bPause_clicked()
+void InfoDialog::on_bChats_clicked()
 {
-    app->pauseTransfers(ui->bPause->isChecked());
+
 }
 
 void InfoDialog::on_bTransferManager_clicked()
@@ -1148,8 +1110,7 @@ void InfoDialog::on_bTransferManager_clicked()
 
 void InfoDialog::onOverlayClicked()
 {
-    ui->bPause->setChecked(false);
-    on_bPause_clicked();
+    app->pauseTransfers();
 }
 
 void InfoDialog::clearUserAttributes()
@@ -1209,7 +1170,7 @@ void InfoDialog::regenerateLayout()
         setMaximumHeight(365);
 #endif
 
-        ui->bPause->setVisible(false);
+        ui->bChats->setVisible(false);
         ui->bTransferManager->setVisible(false);
         ui->bSyncFolder->setVisible(false);
         ui->bState->setVisible(false);
@@ -1236,7 +1197,7 @@ void InfoDialog::regenerateLayout()
         setMinimumHeight(539);
 #endif
 
-        ui->bPause->setVisible(true);
+        ui->bChats->setVisible(true);
         ui->bTransferManager->setVisible(true);
         ui->bSyncFolder->setVisible(true);
         ui->bState->setVisible(true);

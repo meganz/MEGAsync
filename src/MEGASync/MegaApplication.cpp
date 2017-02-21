@@ -493,6 +493,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     uploadAction = NULL;
     downloadAction = NULL;
     streamAction = NULL;
+    webAction = NULL;
+    pauseTransfersAction = NULL;
     loginActionGuest = NULL;
     waiting = false;
     updated = false;
@@ -2904,6 +2906,9 @@ void MegaApplication::showTrayMenu(QPoint *point)
 
         QPoint p = point ? (*point) - QPoint(trayMenu->sizeHint().width(), 0)
                          : QCursor::pos();
+        pauseTransfersAction->setLabelText(preferences->getGlobalPaused()
+                                      ? tr("Resume Transfers") : tr("Pause Transfers"));
+
 #ifdef __APPLE__
         trayMenu->exec(p);
 #else
@@ -2998,6 +3003,17 @@ MegaTransfer* MegaApplication::getFinishedTransferByTag(int tag)
         return NULL;
     }
     return finishedTransfers.value(tag);
+}
+
+void MegaApplication::pauseTransfers()
+{
+    pauseTransfers(!preferences->getGlobalPaused());
+}
+
+void MegaApplication::officialWeb()
+{
+    QString webUrl = QString::fromAscii("https://mega.nz/");
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(webUrl));
 }
 
 //Called when the "Import links" menu item is clicked
@@ -3785,17 +3801,17 @@ void MegaApplication::onUpdateCompleted()
 
     if (trayMenu)
     {
-        updateAction->setText(tr("About MEGAsync"));
+        updateAction->setLabelText(tr("About MEGAsync"));
     }
 
     if (trayOverQuotaMenu)
     {
-        updateActionOverquota->setText(tr("About MEGAsync"));
+        updateActionOverquota->setLabelText(tr("About MEGAsync"));
     }
 
     if (trayGuestMenu)
     {
-        updateActionGuest->setText(tr("About MEGAsync"));
+        updateActionGuest->setLabelText(tr("About MEGAsync"));
     }
 
     updateAvailable = false;
@@ -3813,17 +3829,17 @@ void MegaApplication::onUpdateAvailable(bool requested)
 
     if (trayMenu)
     {
-        updateAction->setText(tr("Install update"));
+        updateAction->setLabelText(tr("Install update"));
     }
 
     if (trayOverQuotaMenu)
     {
-        updateActionOverquota->setText(tr("Install update"));
+        updateActionOverquota->setLabelText(tr("Install update"));
     }
 
     if (trayGuestMenu)
     {
-        updateActionGuest->setText(tr("Install update"));
+        updateActionGuest->setLabelText(tr("Install update"));
     }
 
     if (settingsDialog)
@@ -4296,7 +4312,7 @@ void MegaApplication::createTrayMenu()
         windowsStreamAction = NULL;
     }
 
-    windowsStreamAction = new QAction(tr("Stream from MEGA"), this);
+    windowsStreamAction = new QAction(tr("Stream"), this);
     connect(windowsStreamAction, SIGNAL(triggered()), this, SLOT(streamActionClicked()));
 
     if (windowsTransferManagerAction)
@@ -4339,12 +4355,8 @@ void MegaApplication::createTrayMenu()
     if (!trayMenu)
     {
         trayMenu = new QMenu();
-        #ifndef __APPLE__
-            trayMenu->setStyleSheet(QString::fromAscii(
-                    "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
-                    "QMenu::item {background-color: white; color: black;} "
-                    "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
-        #endif
+        trayMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+
     }
     else
     {
@@ -4362,9 +4374,9 @@ void MegaApplication::createTrayMenu()
     }
 
 #ifndef __APPLE__
-    exitAction = new QAction(tr("Exit"), this);
+    exitAction = new MenuItemAction(tr("Exit"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
 #else
-    exitAction = new QAction(tr("Quit"), this);
+    exitAction = new MenuItemAction(tr("Quit"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
 #endif
     connect(exitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
 
@@ -4375,11 +4387,29 @@ void MegaApplication::createTrayMenu()
     }
 
 #ifndef __APPLE__
-    settingsAction = new QAction(tr("Settings"), this);
+    settingsAction = new MenuItemAction(tr("Settings"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
 #else
-    settingsAction = new QAction(tr("Preferences"), this);
+    settingsAction = new MenuItemAction(tr("Preferences"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
 #endif
     connect(settingsAction, SIGNAL(triggered()), this, SLOT(openSettings()));
+
+    if (webAction)
+    {
+        webAction->deleteLater();
+        webAction = NULL;
+    }
+
+    webAction = new MenuItemAction(tr("MEGA website"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
+    connect(webAction, SIGNAL(triggered()), this, SLOT(officialWeb()));
+
+    if (pauseTransfersAction)
+    {
+        pauseTransfersAction->deleteLater();
+        pauseTransfersAction = NULL;
+    }
+
+    pauseTransfersAction = new MenuItemAction(tr("Pause Transfers"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
+    connect(pauseTransfersAction, SIGNAL(triggered()), this, SLOT(pauseTransfers()));
 
     if (importLinksAction)
     {
@@ -4387,7 +4417,7 @@ void MegaApplication::createTrayMenu()
         importLinksAction = NULL;
     }
 
-    importLinksAction = new QAction(tr("Import links"), this);
+    importLinksAction = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
     connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()));
 
     if (uploadAction)
@@ -4396,7 +4426,7 @@ void MegaApplication::createTrayMenu()
         uploadAction = NULL;
     }
 
-    uploadAction = new QAction(tr("Upload to MEGA"), this);
+    uploadAction = new MenuItemAction(tr("Upload"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
     connect(uploadAction, SIGNAL(triggered()), this, SLOT(uploadActionClicked()));
 
     if (downloadAction)
@@ -4405,7 +4435,7 @@ void MegaApplication::createTrayMenu()
         downloadAction = NULL;
     }
 
-    downloadAction = new QAction(tr("Download from MEGA"), this);
+    downloadAction = new MenuItemAction(tr("Download"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
     connect(downloadAction, SIGNAL(triggered()), this, SLOT(downloadActionClicked()));
 
     if (streamAction)
@@ -4414,7 +4444,7 @@ void MegaApplication::createTrayMenu()
         streamAction = NULL;
     }
 
-    streamAction = new QAction(tr("Stream from MEGA"), this);
+    streamAction = new MenuItemAction(tr("Stream"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
     connect(streamAction, SIGNAL(triggered()), this, SLOT(streamActionClicked()));
 
     if (updateAction)
@@ -4425,11 +4455,11 @@ void MegaApplication::createTrayMenu()
 
     if (updateAvailable)
     {
-        updateAction = new QAction(tr("Install update"), this);
+        updateAction = new MenuItemAction(tr("Install update"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
     }
     else
     {
-        updateAction = new QAction(tr("About MEGAsync"), this);
+        updateAction = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
 #ifndef __APPLE__
         updateAction->setIcon(QIcon(QString::fromUtf8("://images/check_mega_version.png")));
         updateAction->setIconVisibleInMenu(true);
@@ -4438,7 +4468,9 @@ void MegaApplication::createTrayMenu()
     connect(updateAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
 
     trayMenu->addAction(updateAction);
+    trayMenu->addAction(webAction);
     trayMenu->addSeparator();
+    trayMenu->addAction(pauseTransfersAction);
     trayMenu->addAction(importLinksAction);
     trayMenu->addAction(uploadAction);
     trayMenu->addAction(downloadAction);
@@ -4458,6 +4490,7 @@ void MegaApplication::createOverQuotaMenu()
     if (!trayOverQuotaMenu)
     {
         trayOverQuotaMenu = new QMenu();
+        trayOverQuotaMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #ifndef __APPLE__
         trayOverQuotaMenu->setStyleSheet(QString::fromAscii(
             "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
@@ -4481,9 +4514,9 @@ void MegaApplication::createOverQuotaMenu()
     }
 
 #ifndef __APPLE__
-    exitActionOverquota = new QAction(tr("Exit"), this);
+    exitActionOverquota = new MenuItemAction(tr("Exit"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
 #else
-    exitActionOverquota = new QAction(tr("Quit"), this);
+    exitActionOverquota = new MenuItemAction(tr("Quit"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
 #endif
     connect(exitActionOverquota, SIGNAL(triggered()), this, SLOT(exitApplication()));
 
@@ -4493,7 +4526,7 @@ void MegaApplication::createOverQuotaMenu()
         logoutActionOverquota = NULL;
     }
 
-    logoutActionOverquota = new QAction(tr("Logout"), this);
+    logoutActionOverquota = new MenuItemAction(tr("Logout"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
     connect(logoutActionOverquota, SIGNAL(triggered()), this, SLOT(logoutActionClicked()));
 
     if (settingsActionOverquota)
@@ -4503,9 +4536,9 @@ void MegaApplication::createOverQuotaMenu()
     }
 
 #ifndef __APPLE__
-    settingsActionOverquota = new QAction(tr("Settings"), this);
+    settingsActionOverquota = new MenuItemAction(tr("Settings"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
 #else
-    settingsActionOverquota = new QAction(tr("Preferences"), this);
+    settingsActionOverquota = new MenuItemAction(tr("Preferences"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
 #endif
     connect(settingsActionOverquota, SIGNAL(triggered()), this, SLOT(openSettings()));
 
@@ -4517,11 +4550,11 @@ void MegaApplication::createOverQuotaMenu()
 
     if (updateAvailable)
     {
-        updateActionOverquota = new QAction(tr("Install update"), this);
+        updateActionOverquota = new MenuItemAction(tr("Install update"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
     }
     else
     {
-        updateActionOverquota = new QAction(tr("About MEGAsync"), this);
+        updateActionOverquota = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
 
 #ifndef __APPLE__
         updateActionOverquota->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
@@ -4548,6 +4581,7 @@ void MegaApplication::createGuestMenu()
     if (!trayGuestMenu)
     {
         trayGuestMenu = new QMenu();
+        trayGuestMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #ifndef __APPLE__
         trayGuestMenu->setStyleSheet(QString::fromAscii(
             "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
@@ -4571,9 +4605,9 @@ void MegaApplication::createGuestMenu()
     }
 
 #ifndef __APPLE__
-    exitActionGuest = new QAction(tr("Exit"), this);
+    exitActionGuest = new MenuItemAction(tr("Exit"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
 #else
-    exitActionGuest = new QAction(tr("Quit"), this);
+    exitActionGuest = new MenuItemAction(tr("Quit"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
 #endif
     connect(exitActionGuest, SIGNAL(triggered()), this, SLOT(exitApplication()));
 
@@ -4585,11 +4619,11 @@ void MegaApplication::createGuestMenu()
 
     if (updateAvailable)
     {
-        updateActionGuest = new QAction(tr("Install update"), this);
+        updateActionGuest = new MenuItemAction(tr("Install update"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
     }
     else
     {
-        updateActionGuest = new QAction(tr("About MEGAsync"), this);
+        updateActionGuest = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
 #ifndef __APPLE__
         updateActionGuest->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
         updateActionGuest->setIconVisibleInMenu(true);
@@ -4603,7 +4637,7 @@ void MegaApplication::createGuestMenu()
         importLinksActionGuest = NULL;
     }
 
-    importLinksActionGuest = new QAction(tr("Import links"), this);
+    importLinksActionGuest = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
     connect(importLinksActionGuest, SIGNAL(triggered()), this, SLOT(importLinks()));
 
     if (settingsActionGuest)
@@ -4613,9 +4647,9 @@ void MegaApplication::createGuestMenu()
     }
 
 #ifndef __APPLE__
-    settingsActionGuest = new QAction(tr("Settings"), this);
+    settingsActionGuest = new MenuItemAction(tr("Settings"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
 #else
-    settingsActionGuest = new QAction(tr("Preferences"), this);
+    settingsActionGuest = new MenuItemAction(tr("Preferences"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
 #endif
     connect(settingsActionGuest, SIGNAL(triggered()), this, SLOT(changeProxy()));
 
@@ -4625,7 +4659,7 @@ void MegaApplication::createGuestMenu()
         loginActionGuest = NULL;
     }
 
-    loginActionGuest = new QAction(tr("Login"), this);
+    loginActionGuest = new MenuItemAction(tr("Login"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
     connect(loginActionGuest, SIGNAL(triggered()), this, SLOT(loginActionClicked()));
 
     trayGuestMenu->addAction(updateActionGuest);
@@ -5903,7 +5937,6 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
 
         infoDialog->setIndexing(indexing);
         infoDialog->setWaiting(waiting);
-        infoDialog->setPaused(paused);
         infoDialog->updateState();
         infoDialog->transferFinished(MegaError::API_OK);
     }

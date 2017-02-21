@@ -121,6 +121,8 @@ public slots:
     void openBwOverquotaDialog();
     void changeProxy();
     void importLinks();
+    void officialWeb();
+    void pauseTransfers();
     void showChangeLog();
     void uploadActionClicked();
     void loginActionClicked();
@@ -216,26 +218,28 @@ protected:
     QMenu *trayOverQuotaMenu;
     QMenu *trayGuestMenu;
     QMenu emptyMenu;
-    QAction *exitAction;
-    QAction *settingsAction;
-    QAction *importLinksAction;
-    QAction *uploadAction;
-    QAction *downloadAction;
-    QAction *streamAction;
+    MenuItemAction *exitAction;
+    MenuItemAction *settingsAction;
+    MenuItemAction *importLinksAction;
+    MenuItemAction *uploadAction;
+    MenuItemAction *downloadAction;
+    MenuItemAction *streamAction;
+    MenuItemAction *webAction;
+    MenuItemAction *pauseTransfersAction;
 
-    QAction *updateAction;
+    MenuItemAction *updateAction;
     QAction *showStatusAction;
 
-    QAction *logoutActionOverquota;
-    QAction *settingsActionOverquota;
-    QAction *exitActionOverquota;
-    QAction *updateActionOverquota;
+    MenuItemAction *logoutActionOverquota;
+    MenuItemAction *settingsActionOverquota;
+    MenuItemAction *exitActionOverquota;
+    MenuItemAction *updateActionOverquota;
 
-    QAction *importLinksActionGuest;
-    QAction *exitActionGuest;
-    QAction *settingsActionGuest;
-    QAction *updateActionGuest;
-    QAction *loginActionGuest;
+    MenuItemAction *importLinksActionGuest;
+    MenuItemAction *exitActionGuest;
+    MenuItemAction *settingsActionGuest;
+    MenuItemAction *updateActionGuest;
+    MenuItemAction *loginActionGuest;
 
 #ifdef __APPLE__
     QTimer *scanningTimer;

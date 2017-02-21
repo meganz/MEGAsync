@@ -6,13 +6,14 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 
-class TransferMenuItemAction : public QWidgetAction
+class MenuItemAction : public QWidgetAction
 {
 public:
-    TransferMenuItemAction(const QString title, const QIcon icon);
-    TransferMenuItemAction(const QString title, const QIcon icon, const QIcon hoverIcon);
+    MenuItemAction(const QString title, const QIcon icon);
+    MenuItemAction(const QString title, const QIcon icon, const QIcon hoverIcon);
+    void setLabelText(QString title);
 
-    ~TransferMenuItemAction();
+    ~MenuItemAction();
 
 private:
     QWidget* container;
