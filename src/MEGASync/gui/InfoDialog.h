@@ -81,6 +81,9 @@ private slots:
     void scanningAnimationStep();
     void onUserAction(int action);
 
+    void on_bDotUsedStorage_clicked();
+    void on_bDotUsedQuota_clicked();
+
 private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;

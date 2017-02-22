@@ -192,7 +192,7 @@ background-color: #666666;
   border-radius: 3px;
 }
 
-#lPercentageUsedStorage, #lTotalUsedStorage
+#lPercentageUsedStorage, #lTotalUsedStorage, #lPercentageUsedQuota, #lTotalUsedQuota
 {
 font-family: &quot;Source Sans Pro&quot;;
 font-size: 13px;
@@ -1148,7 +1148,7 @@ padding-bottom: 25px;
           <number>0</number>
          </property>
          <item>
-          <widget class="QStackedWidget" name="stackedWidget">
+          <widget class="QStackedWidget" name="sUsedData">
            <property name="minimumSize">
             <size>
              <width>0</width>

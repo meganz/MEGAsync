@@ -86,6 +86,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->wDownloadDesc->hide();
     ui->wUploadDesc->hide();
     ui->lBlockedItem->setText(QString::fromUtf8(""));
+    ui->bDotUsedQuota->hide();
+    ui->bDotUsedStorage->hide();
+    ui->sUsedData->setCurrentWidget(ui->pStorage);
+
 
 #ifdef __APPLE__
     arrow = new QPushButton(this);
@@ -162,19 +166,56 @@ void InfoDialog::setAvatar()
 
 void InfoDialog::setUsage()
 {
-    if (!preferences->totalStorage())
+    if (preferences->accountType() == 0)
     {
-        return;
+        ui->bDotUsedQuota->hide();
+        ui->bDotUsedStorage->hide();
+    }
+    else
+    {
+        ui->bDotUsedQuota->show();
+        ui->bDotUsedStorage->show();
     }
 
-    int percentage = ceil((100 * preferences->usedStorage()) / (double)preferences->totalStorage());
-    QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1</span>")
-                                 .arg(QString::number(percentage).append(QString::fromAscii("%"))))
-                                 .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1</span>")
-                                 .arg(Utilities::getSizeString(preferences->totalStorage())));
-    ui->lPercentageUsedStorage->setText(used);
-    ui->lTotalUsedStorage->setText(tr("USED SPACE: %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1</span>")
-                                   .arg(Utilities::getSizeString(preferences->usedStorage()))));
+    on_bDotUsedStorage_clicked();
+
+    if (preferences->totalStorage() == 0)
+    {
+        ui->pUsageStorage->setValue(0);
+        ui->lPercentageUsedStorage->setText(QString::fromUtf8(""));
+        ui->lTotalUsedStorage->setText(tr("USED SPACE %1").arg(tr("Data temporarily unavailable")));
+    }
+    else
+    {
+        int percentage = ceil((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
+        ui->pUsageStorage->setValue((percentage < 100) ? percentage : 100);
+        QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1&nbsp;</span>")
+                                     .arg(QString::number(percentage).append(QString::fromAscii("%"))))
+                                     .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
+                                     .arg(Utilities::getSizeString(preferences->totalStorage())));
+        ui->lPercentageUsedStorage->setText(used);
+        ui->lTotalUsedStorage->setText(tr("USED SPACE %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
+                                       .arg(Utilities::getSizeString(preferences->usedStorage()))));
+    }
+
+    if (preferences->totalBandwidth() == 0)
+    {
+        ui->pUsageQuota->setValue(0);
+        ui->lPercentageUsedQuota->setText(QString::fromUtf8(""));
+        ui->lTotalUsedQuota->setText(tr("USED BANDWIDTH %1").arg(tr("Data temporarily unavailable")));
+    }
+    else
+    {
+        int percentage = ceil(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+        ui->pUsageQuota->setValue((percentage < 100) ? percentage : 100);
+        QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1&nbsp;</span>")
+                                     .arg(QString::number(percentage).append(QString::fromAscii("%"))))
+                                     .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
+                                     .arg(Utilities::getSizeString(preferences->totalBandwidth())));
+        ui->lPercentageUsedQuota->setText(used);
+        ui->lTotalUsedQuota->setText(tr("USED BANDWIDTH %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
+                                                              .arg(Utilities::getSizeString(preferences->usedBandwidth()))));
+    }
 }
 
 void InfoDialog::setTransfer(MegaTransfer *transfer)
@@ -1244,6 +1285,26 @@ void InfoDialog::drawAvatar(QString email)
 void InfoDialog::onUserAction(int action)
 {
     app->userAction(action);
+}
+
+void InfoDialog::on_bDotUsedStorage_clicked()
+{
+    ui->bDotUsedStorage->setIcon(QIcon(QString::fromAscii("://images/filled_dot.png")));
+    ui->bDotUsedStorage->setIconSize(QSize(16,16));
+    ui->bDotUsedQuota->setIcon(QIcon(QString::fromAscii("://images/empty_dot.png")));
+    ui->bDotUsedQuota->setIconSize(QSize(16,16));
+
+    ui->sUsedData->setCurrentWidget(ui->pStorage);
+}
+
+void InfoDialog::on_bDotUsedQuota_clicked()
+{
+    ui->bDotUsedStorage->setIcon(QIcon(QString::fromAscii("://images/empty_dot.png")));
+    ui->bDotUsedStorage->setIconSize(QSize(16,16));
+    ui->bDotUsedQuota->setIcon(QIcon(QString::fromAscii("://images/filled_dot.png")));
+    ui->bDotUsedQuota->setIconSize(QSize(16,16));
+
+    ui->sUsedData->setCurrentWidget(ui->pQuota);
 }
 void InfoDialog::scanningAnimationStep()
 {
