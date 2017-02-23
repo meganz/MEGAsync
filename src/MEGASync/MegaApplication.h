@@ -250,7 +250,7 @@ protected:
     SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
     InfoDialog *infoDialog;
-    InfoOverQuotaDialog *infoOverQuota;
+    bool infoOverQuota;
     Preferences *preferences;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;

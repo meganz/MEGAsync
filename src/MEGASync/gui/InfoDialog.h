@@ -40,6 +40,7 @@ public:
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
     void increaseUsedStorage(long long bytes, bool isInShare);
+    void setOverQuotaMode(bool state);
     void updateState();
     void closeSyncsMenu();
     void addSync(mega::MegaHandle h);
@@ -108,6 +109,7 @@ private:
     bool waiting;
     GuestWidget *gWidget;
     int state;
+    bool overQuotaState;
 
 protected:
     void changeEvent(QEvent * event);

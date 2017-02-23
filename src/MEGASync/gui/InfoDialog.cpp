@@ -55,6 +55,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     activeUpload = NULL;
     transferMenu = NULL;
     gWidget = NULL;
+    overQuotaState = false;
 
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
@@ -90,6 +91,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->bDotUsedStorage->hide();
     ui->sUsedData->setCurrentWidget(ui->pStorage);
 
+    ui->lDescDisabled->setText(QString::fromUtf8("<p style=\" line-height: 140%;\"><span style=\"font-size:14px;\">")
+                               + ui->lDescDisabled->text().replace(QString::fromUtf8("[A]"), QString::fromUtf8("<font color=\"#d90007\"> "))
+                                                          .replace(QString::fromUtf8("[/A]"), QString::fromUtf8(" </font>"))
+                                                                   + QString::fromUtf8("</span></p>"));
 
 #ifdef __APPLE__
     arrow = new QPushButton(this);
@@ -571,6 +576,31 @@ void InfoDialog::increaseUsedStorage(long long bytes, bool isInShare)
     setUsage();
 }
 
+void InfoDialog::setOverQuotaMode(bool state)
+{
+    overQuotaState = state;
+    if (state)
+    {
+        ui->sActiveTransfers->setCurrentWidget(ui->pOverQuota);
+        ui->bUpgrade->setProperty("overquota", true);
+        ui->pUsageStorage->setProperty("overquota", true);
+        ui->bUpgrade->style()->unpolish(ui->bUpgrade);
+        ui->bUpgrade->style()->polish(ui->bUpgrade);
+        ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
+        ui->pUsageStorage->style()->polish(ui->pUsageStorage);
+    }
+    else
+    {
+        ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+        ui->bUpgrade->setProperty("overquota", false);
+        ui->pUsageStorage->setProperty("overquota", false);
+        ui->bUpgrade->style()->unpolish(ui->bUpgrade);
+        ui->bUpgrade->style()->polish(ui->bUpgrade);
+        ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
+        ui->pUsageStorage->style()->polish(ui->pUsageStorage);
+    }
+}
+
 void InfoDialog::updateState()
 {
     updateTransfers();
@@ -962,7 +992,7 @@ void InfoDialog::onAllTransfersFinished()
 {
     if (!remainingDownloads && !remainingUploads)
     {
-        if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
+        if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
         {
             ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
         }
@@ -1174,6 +1204,10 @@ void InfoDialog::changeEvent(QEvent *event)
             updateSyncsButton();
             state = STATE_STARTING;
             updateState();
+            ui->lDescDisabled->setText(QString::fromUtf8("<p style=\" line-height: 140%;\"><span style=\"font-size:14px;\">")
+                                       + ui->lDescDisabled->text().replace(QString::fromUtf8("[A]"), QString::fromUtf8("<font color=\"#d90007\"> "))
+                                                                  .replace(QString::fromUtf8("[/A]"), QString::fromUtf8(" </font>"))
+                                                                           + QString::fromUtf8("</span></p>"));
         }
     }
     QDialog::changeEvent(event);

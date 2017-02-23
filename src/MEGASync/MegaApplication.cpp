@@ -463,7 +463,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     numTransfers[MegaTransfer::TYPE_UPLOAD] = 0;
     exportOps = 0;
     infoDialog = NULL;
-    infoOverQuota = NULL;
+    infoOverQuota = false;
     setupWizard = NULL;
     settingsDialog = NULL;
     streamSelector = NULL;
@@ -1926,8 +1926,6 @@ void MegaApplication::cleanAll()
     infoWizard = NULL;
     delete infoDialog;
     infoDialog = NULL;
-    delete infoOverQuota;
-    infoOverQuota = NULL;
     delete httpServer;
     httpServer = NULL;
     delete uploader;
@@ -2061,32 +2059,9 @@ void MegaApplication::showInfoDialog()
         }
     }
 
-    if (infoOverQuota)
+    if (infoDialog)
     {
-        if (!infoOverQuota->isVisible())
-        {
-            int posx, posy;
-            calculateInfoDialogCoordinates(infoOverQuota, &posx, &posy);
-
-            if (isLinux)
-            {
-                unityFix();
-            }
-
-            infoOverQuota->move(posx, posy);
-            infoOverQuota->show();
-        }
-        else
-        {
-            if (trayOverQuotaMenu->isVisible())
-            {
-                trayOverQuotaMenu->close();
-            }
-            infoOverQuota->hide();
-        }
-    }
-    else if (infoDialog)
-    {
+        infoDialog->setOverQuotaMode(infoOverQuota);
         if (!infoDialog->isVisible())
         {
             int posx, posy;
@@ -4705,7 +4680,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         disableSyncs();
         if (!infoOverQuota)
         {
-            infoOverQuota = new InfoOverQuotaDialog(this);
+            infoOverQuota = true;
 
             preferences->setUsedStorage(preferences->totalStorage());
             megaApi->getAccountDetails();
@@ -4956,8 +4931,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             closeDialogs();
             removeAllFinishedTransfers();
             clearViewedTransfers();
-            delete infoOverQuota;
-            infoOverQuota = NULL;
+            infoOverQuota = false;
             paused = false;
 
             periodicTasks();
@@ -5080,8 +5054,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 settingsDialog->setOverQuotaMode(false);
             }
 
-            infoOverQuota->deleteLater();
-            infoOverQuota = NULL;
+            infoOverQuota = false;
 
             if (trayOverQuotaMenu && trayOverQuotaMenu->isVisible())
             {
@@ -5115,11 +5088,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (infoDialog)
         {
             infoDialog->setUsage();
-        }
-
-        if (infoOverQuota)
-        {
-            infoOverQuota->setUsage();
         }
 
         if (settingsDialog)
@@ -5517,7 +5485,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         disableSyncs();
         if (!infoOverQuota)
         {
-            infoOverQuota = new InfoOverQuotaDialog(this);
+            infoOverQuota = true;
 
             preferences->setUsedStorage(preferences->totalStorage());
             megaApi->getAccountDetails();

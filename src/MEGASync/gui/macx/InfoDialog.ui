@@ -137,18 +137,35 @@ QProgressBar#pUsageStorage
 {
 background-color: #EEEEEE;
 }
+
+QProgressBar#pUsageStorage[overquota=true]
+{
+background-color: #EB4444;
+}
                                                             
 QProgressBar#pUsageStorage::chunk {
 background-color: #666666;
+}
+
+QProgressBar#pUsageStorage::chunk[overquota=true] {
+background-color: #EB4444;
 }
 
 QProgressBar#pUsageQuota
 {
 background-color: #EEEEEE;
 }
+
+QProgressBar#pUsageQuota[overquota=true]
+{
+background-color: #EB4444;
+}
                                                             
 QProgressBar#pUsageQuota::chunk {
 background-color: #666666;
+}
+QProgressBar#pUsageQuota::chunk[overquota=true] {
+background-color: #EB4444;
 }
 
 #lHeader
@@ -162,6 +179,32 @@ background-color: #666666;
     font-size: 12px;
     color: #666666;
     border: none;
+}
+
+#bUpgrade[overquota=true]
+{
+ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #999999, stop: 1 #aaaaaa);
+ border-radius: 3px;
+ border: 1px solid rgba(0, 0, 0, 45%);
+ padding: 7px 12px 7px 6px;
+ font-family: &quot;Source Sans Pro&quot;;
+ font-size: 13px;
+ color: #ffffff;
+}
+#bUpgrade::hover[overquota=true]
+{
+  border: 1px solid rgba(0, 0, 0, 60%);
+  border-radius: 3px;
+  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #999999, stop: 1 #aaaaaa);
+}
+
+#bUpgrade::pressed[overquota=true]
+{
+  border: 1px solid rgba(0, 0, 0, 60%);
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 50%);
 }
 
 #bSyncFolder, #bUpgrade
@@ -199,6 +242,20 @@ font-size: 13px;
 font-weight: normal;
 border: none;
 color: #999999;
+}
+
+#lDisabled
+{
+  font-family: &quot;Source Sans Pro&quot;;
+  font-size: 18px;
+  color: rgba(51, 51, 51, 70%);
+}
+
+#lDescDisabled
+{
+  font-family: &quot;Source Sans Pros&quot;;
+  font-size: 13px;
+  color: #666666;
 }</string>
   </property>
   <property name="sizeGripEnabled">
@@ -514,7 +571,7 @@ margin-top:-1px;
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>2</number>
            </property>
            <widget class="QWidget" name="pUpdated">
             <property name="minimumSize">
@@ -970,6 +1027,87 @@ padding-bottom: 25px;
                  </item>
                 </layout>
                </widget>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="pOverQuota">
+            <layout class="QVBoxLayout" name="verticalLayout_12">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>30</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lDisabled">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>MEGAsync is currently disabled</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="widget" native="true">
+               <layout class="QVBoxLayout" name="verticalLayout_6">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>12</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>12</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="lDescDisabled">
+                  <property name="text">
+                   <string>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</string>
+                  </property>
+                  <property name="textFormat">
+                   <enum>Qt::AutoText</enum>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </widget>
              </item>
             </layout>
@@ -1667,15 +1805,7 @@ color: #333333;
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">#bOfficialWeb
-{
-border: none;
-font: &quot;Helvetica&quot;;
-font-size: 12px;
-font-weight: normal;
-color: #666666;
-}
-</string>
+            <string notr="true"/>
            </property>
            <property name="text">
             <string>Upgrade to PRO</string>
