@@ -1,25 +1,35 @@
-#include <kaction.h>
 #include <kactionmenu.h>
-#include <kdemacros.h>
 #include <kfileitem.h>
 #include <kfileitemlistproperties.h>
 #include <QDir>
 #include <QFileInfo>
 #include <QString>
 
+#if QT_VERSION < 0x050000
+#include <kaction.h>
+#include <kdemacros.h>
 #include <KDE/KPluginFactory>
 #include <KDE/KPluginLoader>
+#else
+#include <KPluginFactory>
+#include <KPluginLoader>
+#include <KIOWidgets/kabstractfileitemactionplugin.h>
+#include <QtNetwork/QLocalSocket>
+#include <KIOCore/kfileitem.h>
+#include <KIOCore/KFileItemListProperties>
+#include <QtWidgets/QAction>
+#include <QtCore/QDir>
+#include <QtCore/QTimer>
+
+#define KAction QAction
+#define KIcon QIcon
+
+#endif
 
 #include "megasync-plugin.h"
 
-
-//#if QT_VERSION >= 0x050000
-//K_PLUGIN_FACTORY_WITH_JSON(MEGASyncPluginFactory, megasync-plugin.json, registerPlugin<MEGASyncPluginFactory>();)
-//#else
 K_PLUGIN_FACTORY(MEGASyncPluginFactory, registerPlugin<MEGASyncPlugin>();)
 K_EXPORT_PLUGIN(MEGASyncPluginFactory("megasync-plugin"))
-//#endif
-
 
 enum {
     FILE_ERROR = 0,
@@ -38,7 +48,7 @@ const char OP_SHARE       = 'S'; //Share folder
 const char OP_SEND        = 'C'; //Copy to user
 const char OP_STRING      = 'T'; //Get Translated String
 
-MEGASyncPlugin::MEGASyncPlugin(QObject* parent, const QVariantList & args):
+MEGASyncPlugin::MEGASyncPlugin(QObject* parent, const QList<QVariant> & args):
     KAbstractFileItemActionPlugin(parent)
 {
     Q_UNUSED(args);
@@ -160,3 +170,5 @@ QString MEGASyncPlugin::sendRequest(char type, QString command)
 
     return reply;
 }
+
+#include "megasync-plugin.moc"

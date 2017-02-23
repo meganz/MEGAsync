@@ -4,7 +4,7 @@ QT       += network
 TARGET = megasyncplugin
 TEMPLATE = lib
 
-SOURCES += megasync-plugin.cpp #megasync-plugin.json
+SOURCES += megasync-plugin.cpp
 
 HEADERS += megasync-plugin.h
 

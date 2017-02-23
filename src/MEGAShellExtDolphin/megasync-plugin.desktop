@@ -3,5 +3,5 @@ Type=Service
 Name=MEGAsync
 X-KDE-ServiceTypes=KFileItemAction/Plugin
 MimeType=application/octet-stream;inode/directory;
-X-KDE-Library=libmegasyncplugin
+X-KDE-Library=megasyncplugin
 
