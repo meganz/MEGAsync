@@ -5,7 +5,7 @@
 #include <QFileInfo>
 #include <QString>
 
-#if QT_VERSION < 0x050000
+#ifndef WITH_KF5
 #include <kaction.h>
 #include <kdemacros.h>
 #include <KDE/KPluginFactory>

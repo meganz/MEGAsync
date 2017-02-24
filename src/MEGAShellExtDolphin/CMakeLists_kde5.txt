@@ -30,13 +30,13 @@ set(CMAKE_AUTOMOC ON)
 
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
+add_definitions(-DWITH_KF5)
 
 #---ACTION PLUGIN---
 set(MEGASYNCPLUGIN megasyncplugin)
 add_library(${MEGASYNCPLUGIN} MODULE megasync-plugin.cpp)
 target_link_libraries(${MEGASYNCPLUGIN} KF5::CoreAddons KF5::KIOCore KF5::KIOWidgets)
 #configure_file(megasync-plugin.desktop.in ${MEGASYNCPLUGIN}.desktop ESCAPE_QUOTES @ONLY)
-configure_file(megasync-plugin.desktop ${MEGASYNCPLUGIN}.desktop ESCAPE_QUOTES @ONLY)
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${MEGASYNCPLUGIN}.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
-install(TARGETS ${MEGASYNCPLUGIN} DESTINATION ${KDE_INSTALL_PLUGINDIR})
 
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/megasync-plugin.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
+install(TARGETS ${MEGASYNCPLUGIN} DESTINATION ${CMAKE_INSTALL_LIBDIR}/qt5/plugins)

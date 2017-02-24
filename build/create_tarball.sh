@@ -264,6 +264,8 @@ mkdir $EXT_NAME
 ln -s ../MEGAsync/MEGAShellExtDolphin/dolphin-megasync.spec $EXT_NAME/dolphin-megasync.spec
 ln -s ../../src/MEGAShellExtDolphin/megasync-plugin.cpp $EXT_NAME/megasync-plugin.cpp
 ln -s ../../src/MEGAShellExtDolphin/megasync-plugin.moc $EXT_NAME/megasync-plugin.moc
+ln -s ../../src/MEGAShellExtDolphin/CMakeLists.txt $EXT_NAME/CMakeLists.txt
+ln -s ../../src/MEGAShellExtDolphin/CMakeLists_kde5.txt $EXT_NAME/CMakeLists_kde5.txt
 ln -s ../../src/MEGAShellExtDolphin/megasync-plugin.h $EXT_NAME/megasync-plugin.h
 ln -s ../../src/MEGAShellExtDolphin/megasync-plugin.desktop $EXT_NAME/megasync-plugin.desktop
 ln -s ../../src/MEGAShellExtDolphin/MEGAShellExtDolphin.pro $EXT_NAME/MEGAShellExtDolphin.pro
