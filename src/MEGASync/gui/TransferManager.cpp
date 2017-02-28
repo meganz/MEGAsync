@@ -174,7 +174,7 @@ void TransferManager::createAddMenu()
     }
 
 #ifndef __APPLE__
-    settingsAction = new TransferMenuItemAction(tr("Settings"), QIcon(QString::fromAscii("://images/settings_ico.png")), QIcon(QString::fromAscii("://images/settings_ico_white.png")));
+    settingsAction = new MenuItemAction(tr("Settings"), QIcon(QString::fromAscii("://images/settings_ico.png")), QIcon(QString::fromAscii("://images/settings_ico_white.png")));
 #else
     settingsAction = new MenuItemAction(tr("Preferences"), QIcon(QString::fromAscii("://images/settings_ico.png")), QIcon(QString::fromAscii("://images/settings_ico_white.png")));
 #endif

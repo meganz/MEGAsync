@@ -1271,16 +1271,6 @@ void InfoDialog::regenerateLayout()
             connect(gWidget, SIGNAL(pauseClicked()), this, SLOT(onOverlayClicked()));
         }
 
-#ifndef __APPLE__
-        ui->wRecent->hide();
-        ui->wRecentlyUpdated->hide();
-        ui->wRecent1->hide();
-        ui->wRecent2->hide();
-        ui->wRecent3->hide();
-        setMinimumHeight(365);
-        setMaximumHeight(365);
-#endif
-
         ui->bChats->setVisible(false);
         ui->bTransferManager->setVisible(false);
         ui->bSyncFolder->setVisible(false);
@@ -1298,16 +1288,6 @@ void InfoDialog::regenerateLayout()
     }
     else
     {
-#ifndef __APPLE__
-        ui->wRecent->show();
-        ui->wRecentlyUpdated->show();
-        ui->wRecent1->show();
-        ui->wRecent2->show();
-        ui->wRecent3->show();
-        setMaximumHeight(539);
-        setMinimumHeight(539);
-#endif
-
         ui->bChats->setVisible(true);
         ui->bTransferManager->setVisible(true);
         ui->bSyncFolder->setVisible(true);
