@@ -10,6 +10,7 @@ class MenuItemAction : public QWidgetAction
 {
 public:
     MenuItemAction(const QString title, const QIcon icon);
+    MenuItemAction(const QString title, const QString value, const QIcon icon);
     MenuItemAction(const QString title, const QIcon icon, const QIcon hoverIcon);
     void setLabelText(QString title);
 
@@ -21,6 +22,7 @@ private:
     QIcon* hoverIcon;
     QPushButton* iconButton;
     QLabel* title;
+    QLabel* value;
     QHBoxLayout* layout;
 
     void setupActionWidget();

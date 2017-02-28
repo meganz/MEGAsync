@@ -4,8 +4,23 @@
 MenuItemAction::MenuItemAction(const QString title, const QIcon icon)
     : QWidgetAction(NULL)
 {
-
     this->title = new QLabel(title);
+    this->icon = new QIcon(icon);
+    this->hoverIcon = NULL;
+    this->value = NULL;
+
+    container = new QWidget(NULL);
+    container->setObjectName(QString::fromUtf8("wContainer"));
+    container->installEventFilter(this);
+    setupActionWidget();
+    setDefaultWidget(container);
+}
+
+MenuItemAction::MenuItemAction(const QString title, const QString value, const QIcon icon)
+    : QWidgetAction(NULL)
+{
+    this->title = new QLabel(title);
+    this->value = new QLabel(value);
     this->icon = new QIcon(icon);
     this->hoverIcon = NULL;
 
@@ -16,12 +31,14 @@ MenuItemAction::MenuItemAction(const QString title, const QIcon icon)
     setDefaultWidget(container);
 }
 
+
 MenuItemAction::MenuItemAction(const QString title, const QIcon icon, const QIcon hoverIcon)
     : QWidgetAction(NULL)
 {
     this->title = new QLabel(title);
     this->icon = new QIcon(icon);
     this->hoverIcon = new QIcon(hoverIcon);
+    this->value = NULL;
 
     container = new QWidget (NULL);
     container->setObjectName(QString::fromUtf8("wContainer"));
@@ -38,6 +55,7 @@ void MenuItemAction::setLabelText(QString title)
 MenuItemAction::~MenuItemAction()
 {
     delete title;
+    delete value;
     delete iconButton;
     delete icon;
     delete hoverIcon;
@@ -68,26 +86,35 @@ void MenuItemAction::setupActionWidget()
     layout->addWidget(iconButton);
     layout->addWidget(title);
     layout->addItem(new QSpacerItem(10,10, QSizePolicy::Expanding, QSizePolicy::Expanding));
+
+    if (this->value)
+    {
+        value->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #777777;"));
+        layout->addWidget(value);
+    }
     container->setLayout(layout);
 }
 
 bool MenuItemAction::eventFilter(QObject *obj, QEvent *event)
 {
 
-    if (event->type() == QEvent::Enter)
+    if (!value)
     {
-        container->setStyleSheet(QString::fromUtf8("#wContainer { border: 2px solid #aaaaaa; border-radius: 2px; margin: 0px 8px 0px 8px; padding: 0px; background-color: #aaaaaa; }"));
-        title->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #ffffff;"));
-        iconButton->setStyleSheet(QString::fromAscii("border: none;"));
-        hoverIcon ? iconButton->setIcon(*hoverIcon) : iconButton->setIcon(*icon);
-    }
+        if (event->type() == QEvent::Enter)
+        {
+            container->setStyleSheet(QString::fromUtf8("#wContainer { border: 2px solid #aaaaaa; border-radius: 2px; margin: 0px 8px 0px 8px; padding: 0px; background-color: #aaaaaa; }"));
+            title->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #ffffff;"));
+            iconButton->setStyleSheet(QString::fromAscii("border: none;"));
+            hoverIcon ? iconButton->setIcon(*hoverIcon) : iconButton->setIcon(*icon);
+        }
 
-    if (event->type() == QEvent::Leave)
-    {
-        container->setStyleSheet(QString::fromUtf8("#wContainer { border: none; margin: 0px 0px 0px 0px; padding: 0px; background-color: #ffffff; }"));
-        title->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #777777;"));
-        iconButton->setStyleSheet(QString::fromAscii("border: none;"));
-        iconButton->setIcon(*icon);
+        if (event->type() == QEvent::Leave)
+        {
+            container->setStyleSheet(QString::fromUtf8("#wContainer { border: none; margin: 0px 0px 0px 0px; padding: 0px; background-color: #ffffff; }"));
+            title->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #777777;"));
+            iconButton->setStyleSheet(QString::fromAscii("border: none;"));
+            iconButton->setIcon(*icon);
+        }
     }
 
     return QObject::eventFilter(obj, event);
