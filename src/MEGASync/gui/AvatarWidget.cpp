@@ -1,7 +1,6 @@
 #include "AvatarWidget.h"
 #include "control/Utilities.h"
 #include <QPainter>
-#include <QBitmap>
 #include <math.h>
 
 AvatarWidget::AvatarWidget(QWidget *parent) :

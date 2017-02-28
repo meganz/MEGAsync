@@ -45,7 +45,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaSpeedGraph.cpp \
     $$PWD/ActiveTransfersWidget.cpp \
     $$PWD/AvatarWidget.cpp \
-    $$PWD/MenuItemAction.cpp
+    $$PWD/MenuItemAction.cpp \
+    $$PWD/DataUsageMenu.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -92,7 +93,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MegaSpeedGraph.h \
     $$PWD/ActiveTransfersWidget.h \
     $$PWD/AvatarWidget.h \
-    $$PWD/MenuItemAction.h
+    $$PWD/MenuItemAction.h \
+    $$PWD/DataUsageMenu.h
 
 INCLUDEPATH += $$PWD
 
