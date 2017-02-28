@@ -8,6 +8,8 @@
 #include <QPainter>
 #include "GuestWidget.h"
 #include "SettingsDialog.h"
+#include "DataUsageMenu.h"
+#include "MenuItemAction.h"
 
 namespace Ui {
 class InfoDialog;
@@ -54,6 +56,7 @@ public:
 
 private:
     void drawAvatar(QString email);
+    void createQuotaUsedMenu();
 
 public slots:
    void addSync();
@@ -94,6 +97,12 @@ private:
 
     QMenu *syncsMenu;
     QMenu *transferMenu;
+    DataUsageMenu *storageUsedMenu;
+
+    MenuItemAction *cloudItem;
+    MenuItemAction *inboxItem;
+    MenuItemAction *sharesItem;
+    MenuItemAction *rubbishItem;
 
     long long downloadSpeed;
     long long uploadSpeed;
@@ -113,6 +122,7 @@ private:
 
 protected:
     void changeEvent(QEvent * event);
+    bool eventFilter(QObject *obj, QEvent *e);
 #ifdef __APPLE__
     void paintEvent( QPaintEvent * e);
     void hideEvent(QHideEvent *event);

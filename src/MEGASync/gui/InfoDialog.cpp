@@ -8,6 +8,7 @@
 #include <QSignalMapper>
 #include <QVBoxLayout>
 #include <QFileInfo>
+#include <QEvent>
 #include "InfoDialog.h"
 #include "ActiveTransfer.h"
 #include "RecentFile.h"
@@ -54,6 +55,11 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     activeDownload = NULL;
     activeUpload = NULL;
     transferMenu = NULL;
+    storageUsedMenu = NULL;
+    cloudItem = NULL;
+    inboxItem = NULL;
+    sharesItem = NULL;
+    rubbishItem = NULL;
     gWidget = NULL;
     overQuotaState = false;
 
@@ -63,6 +69,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->wTransfer1->hideTransfer();
     ui->wTransfer2->setType(MegaTransfer::TYPE_UPLOAD);
     ui->wTransfer2->hideTransfer();
+
+    ui->pUsageStorage->installEventFilter(this);
 
     state = STATE_STARTING;
     megaApi = app->getMegaApi();
@@ -1213,6 +1221,34 @@ void InfoDialog::changeEvent(QEvent *event)
     QDialog::changeEvent(event);
 }
 
+bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
+{
+    if (obj != ui->pUsageStorage)
+    {
+        return false;
+    }
+
+    //Hide if InfoDialog is not visible
+    if (e->type() == QEvent::Hide)
+    {
+        if (storageUsedMenu)
+        {
+            storageUsedMenu->hide();
+        }
+    }
+
+    if (e->type() == QEvent::MouseButtonPress)
+    {
+        QMouseEvent* me = dynamic_cast<QMouseEvent*>(e);
+        createQuotaUsedMenu();
+        QPoint p = ui->pUsageStorage->mapToGlobal(me->pos());
+        QSize s = storageUsedMenu->sizeHint();
+        storageUsedMenu->exec(QPoint(p.x() - s.width() / 2, p.y() - s.height()));
+    }
+
+    return false;
+}
+
 void InfoDialog::regenerateLayout()
 {
     static bool loggedInMode = true;
@@ -1314,6 +1350,55 @@ void InfoDialog::drawAvatar(QString email)
         ui->bAvatar->setAvatarLetter(Utilities::getAvatarLetter(), megaApi->getUserAvatarColor(userHandle));
         delete userHandle;
     }
+}
+
+void InfoDialog::createQuotaUsedMenu()
+{
+    if (!storageUsedMenu)
+    {
+        storageUsedMenu = new DataUsageMenu(this);
+    }
+    else
+    {
+        QList<QAction *> actions = storageUsedMenu->actions();
+        for (int i = 0; i < actions.size(); i++)
+        {
+            storageUsedMenu->removeAction(actions[i]);
+        }
+    }
+
+    if (cloudItem)
+    {
+        cloudItem->deleteLater();
+        cloudItem = NULL;
+    }
+    cloudItem = new MenuItemAction(tr("Cloud Drive"), Utilities::getSizeString(preferences->cloudDriveStorage()), QIcon(QString::fromAscii("://images/get_link_ico.png")));
+
+    if (inboxItem)
+    {
+        inboxItem->deleteLater();
+        inboxItem = NULL;
+    }
+    inboxItem = new MenuItemAction(tr("Inbox"), Utilities::getSizeString(preferences->inboxStorage()), QIcon(QString::fromAscii("://images/get_link_ico.png")));
+
+    if (sharesItem)
+    {
+        sharesItem->deleteLater();
+        sharesItem = NULL;
+    }
+    sharesItem = new MenuItemAction(tr("Incoming Shares"), Utilities::getSizeString(preferences->inShareStorage()), QIcon(QString::fromAscii("://images/get_link_ico.png")));
+
+    if (rubbishItem)
+    {
+        rubbishItem->deleteLater();
+        rubbishItem = NULL;
+    }
+    rubbishItem = new MenuItemAction(tr("Rubbish bin"), Utilities::getSizeString(preferences->rubbishStorage()), QIcon(QString::fromAscii("://images/get_link_ico.png")));
+
+    storageUsedMenu->addAction(cloudItem);
+    storageUsedMenu->addAction(inboxItem);
+    storageUsedMenu->addAction(sharesItem);
+    storageUsedMenu->addAction(rubbishItem);
 }
 
 void InfoDialog::onUserAction(int action)
