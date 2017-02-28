@@ -372,8 +372,14 @@ color: #999999;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/streaming_on_icon.png</normaloff>:/images/streaming_on_icon.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>8</width>
+             <height>8</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -469,7 +475,7 @@ margin-top:-1px;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/tray_transfer_manager_ico.png</normaloff>:/images/tray_transfer_manager_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -514,7 +520,7 @@ margin-top:-1px;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -624,7 +630,7 @@ border: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_linux.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/tray_updated_large_ico.png</normaloff>:/images/tray_updated_large_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -870,7 +876,7 @@ padding-bottom: 25px;
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Resources_linux.qrc">
+                    <iconset resource="../Resources_macx.qrc">
                      <normaloff>:/images/clock_ico.png</normaloff>:/images/clock_ico.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -986,7 +992,7 @@ padding-bottom: 25px;
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Resources_linux.qrc">
+                    <iconset resource="../Resources_macx.qrc">
                      <normaloff>:/images/clock_ico.png</normaloff>:/images/clock_ico.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -1211,7 +1217,7 @@ padding-bottom: 25px;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/empty_dot.png</normaloff>:/images/empty_dot.png</iconset>
            </property>
           </widget>
@@ -1234,7 +1240,7 @@ padding-bottom: 25px;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/empty_dot.png</normaloff>:/images/empty_dot.png</iconset>
            </property>
           </widget>
@@ -1763,7 +1769,7 @@ color: #333333;
             <string>Syncs</string>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/sync_item_ico.png</normaloff>:/images/sync_item_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -1846,7 +1852,7 @@ color: #333333;
   <tabstop>label</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>

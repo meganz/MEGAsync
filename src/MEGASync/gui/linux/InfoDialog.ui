@@ -356,6 +356,12 @@ color: #999999;
             <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/streaming_on_icon.png</normaloff>:/images/streaming_on_icon.png</iconset>
            </property>
+           <property name="iconSize">
+            <size>
+             <width>8</width>
+             <height>8</height>
+            </size>
+           </property>
           </widget>
          </item>
          <item>
