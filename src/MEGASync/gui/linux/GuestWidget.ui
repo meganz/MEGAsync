@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>315</height>
+    <width>398</width>
+    <height>313</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,14 +18,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>400</width>
-    <height>315</height>
+    <width>398</width>
+    <height>313</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>400</width>
-    <height>315</height>
+    <width>398</width>
+    <height>313</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -133,7 +133,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>400</width>
+       <width>398</width>
        <height>114</height>
       </size>
      </property>
@@ -181,13 +181,13 @@
           <widget class="ActiveTransfer" name="wActiveDownload" native="true">
            <property name="minimumSize">
             <size>
-             <width>400</width>
+             <width>398</width>
              <height>60</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>400</width>
+             <width>398</width>
              <height>60</height>
             </size>
            </property>
