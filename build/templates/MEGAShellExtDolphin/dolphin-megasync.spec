@@ -19,11 +19,10 @@ BuildRequires:  kdelibs, kdelibs-devel
 %if 0%{?fedora_version} <= 23
 BuildRequires: qca2
 %endif
-%if 0%{?fedora_version} >= 19
+%if 0%{?fedora_version} >= 22
+# Fedora 21 cmake is too old for KF5
 BuildRequires: kf5-kdelibs4support-devel extra-cmake-modules
 %endif
-
-
 %endif
 
 Requires:       megasync
@@ -45,24 +44,14 @@ Store up to 50 GB for free!
 %setup -q
 
 %build
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
-qmake-qt4 INCLUDEPATH+=$(kde4-config --path include)
-%else
-qmake INCLUDEPATH+=$(kde4-config --path include)
-%endif
-
-cmake -DCMAKE_INSTALL_PREFIX="`kde4-config --prefix`" $PWD
-
-make
-export DESKTOPEXTDIR=$(kde4-config --path services | awk -NF ":" '{print $NF}')
-
-echo mkdir -p %{buildroot}$DESKTOPEXTDIR
-mkdir -p %{buildroot}$DESKTOPEXTDIR
-make install DESTDIR=%{buildroot}
 
 # Create a temporary file containing the list of files
 EXTRA_FILES=%{buildroot}/ExtraFiles.list
 touch %{EXTRA_FILES}
+
+cmake -DCMAKE_INSTALL_PREFIX="`kde4-config --prefix`" $PWD
+make
+make install DESTDIR=%{buildroot}
 
 echo %(kde4-config --path services | awk -NF ":" '{print $NF}')/megasync-plugin.desktop  >> %{EXTRA_FILES}
 echo %(kde4-config --path module | awk -NF ":" '{print $NF}')/megasyncplugin.so >> %{EXTRA_FILES}
@@ -77,14 +66,7 @@ make install DESTDIR=%{buildroot}
 
 echo %(kf5-config --path services | awk -NF ":" '{print $NF}')/megasync-plugin.desktop >> %{EXTRA_FILES}
 echo %(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/megasyncplugin.so >> %{EXTRA_FILES}
-
 fi
-
-echo tras install:
-find %{buildroot}
-
-echo cat %{EXTRA_FILES}
-cat %{EXTRA_FILES}
 
 %clean
 echo cleaning
