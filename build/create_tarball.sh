@@ -256,7 +256,18 @@ rm -fr MEGAsync/MEGAShellExtDolphin/dolphin-megasync_*.dsc
 
 # fix version number in template files and copy to appropriate directories
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.spec > MEGAsync/MEGAShellExtDolphin/dolphin-megasync.spec
-sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.dsc > MEGAsync/MEGAShellExtDolphin/dolphin-megasync_$EXT_VERSION.dsc
+#sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.dsc > MEGAsync/MEGAShellExtDolphin/dolphin-megasync_$EXT_VERSION.dsc
+
+for dist in xUbuntu_1{2,3,4,5,6}.{04,10} Debian_{7,8,9}.0; do
+if [ -f templates/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc ]; then
+	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc > MEGAsync/MEGAShellExtDolphin/megasyncextdolphin-$dist.dsc
+else
+	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.dsc > MEGAsync/MEGAShellExtDolphin/megasyncextdolphin-$dist.dsc
+fi
+done
+
+
+
 sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/PKGBUILD > MEGAsync/MEGAShellExtDolphin/PKGBUILD
 
 # create archive
