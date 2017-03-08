@@ -3,3 +3,4 @@ dolphin-megasync_*.tar.gz
 *.dsc
 dolphin-megasync.spec
 PKGBUILD
+debian.copyright

@@ -59,8 +59,5 @@ mkdir -p %{buildroot}$EXTENSIONSDIR
 %defattr(-,root,root)
 
 %(pkg-config --variable=extensionsdir thunarx-2)/libMEGAShellExtThunar.so
-#%(echo $EXTENSIONSDIR/libMEGAShellExtThunar.so)
-#%{getenv:EXTENSIONSDIR}/libMEGAShellExtThunar.so
-#$EXTENSIONSDIR/libMEGAShellExtThunar.so
 
 %changelog

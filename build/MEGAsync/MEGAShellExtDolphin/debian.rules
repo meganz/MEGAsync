@@ -3,27 +3,8 @@
 build: build-stamp
 build-stamp:
 	dh_testdir
-
-	#mkdir dolphinbuildir
-
 	cmake -DCMAKE_INSTALL_PREFIX="`kde4-config --prefix`" .
 	make
-	#make install DESTDIR=$PWD/dolphinbuildir
-
-	#echo %(kde4-config --path services | awk -NF ":" '{print $NF}')/megasync-plugin.desktop  >> %{EXTRA_FILES}
-	#echo %(kde4-config --path module | awk -NF ":" '{print $NF}')/megasyncplugin.so >> %{EXTRA_FILES}
-
-	#~ if which kf5-config >/dev/null; then
-	#~ rm -r CMakeFiles
-	#~ rm CMakeLists.txt
-	#~ mv CMakeLists_kde5.txt CMakeLists.txt
-	#~ cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" .
-	#~ make
-	#~ make install DESTDIR=%{buildroot}
-
-	#~ echo %(kf5-config --path services | awk -NF ":" '{print $NF}')/megasync-plugin.desktop >> %{EXTRA_FILES}
-	#~ echo %(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/megasyncplugin.so >> %{EXTRA_FILES}
-	#~ fi
 	touch build-stamp
 
 build2:
@@ -39,11 +20,9 @@ clean:
 
 install: build
 	dh_auto_install --destdir=debian/dolphin-megasync
-	#dh_install libMEGAShellExtDolphin.so* `pkg-config --variable=extensionsdir dolphinx-2`/
 
 # Build architecture-independent files here.
 binary-indep: build install build2 install2
-	# We have nothing to do by default.
 
 # Build architecture-dependent files here.
 binary-arch: build install

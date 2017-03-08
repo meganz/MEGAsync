@@ -24,6 +24,8 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+
+
 # make sure the source tree is in "clean" state
 cwd=$(pwd)
 cd ../src
@@ -73,6 +75,9 @@ echo "Files: *" >> MEGAsync/MEGAsync/debian.copyright
 echo "Copyright: 2013, Mega Limited" >> MEGAsync/MEGAsync/debian.copyright
 echo -n "License:" >> MEGAsync/MEGAsync/debian.copyright # Some software (e.g: gnome-software) would only recognized these licenses: http://spdx.org/licenses/
 cat ../LICENCE.md | sed 's#^\s*$#\.#g' | sed 's#^# #' >> MEGAsync/MEGAsync/debian.copyright
+cat ../LICENCE.md | sed 's#^\s*$#\.#g' | sed 's#^# #' >> MEGAsync/MEGAShellExtDolphin/debian.copyright
+cat ../LICENCE.md | sed 's#^\s*$#\.#g' | sed 's#^# #' >> MEGAsync/MEGAShellExtNautilus/debian.copyright
+cat ../LICENCE.md | sed 's#^\s*$#\.#g' | sed 's#^# #' >> MEGAsync/MEGAShellExtThunar/debian.copyright
 
 # read the last generated ChangeLog version
 version_file="version"
@@ -135,8 +140,6 @@ MD5SUM=`md5sum MEGAsync/MEGAsync/megasync_$MEGASYNC_VERSION.tar.gz | awk '{print
 sed "s/MD5SUM/$MD5SUM/g"  -i MEGAsync/MEGAsync/PKGBUILD
 
 
-# create archive for debug
-
 
 #
 # Nautilus
@@ -174,6 +177,8 @@ ln -s ../../src/MEGAShellExtNautilus/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
 ln -s ../../src/MEGAShellExtNautilus/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
 ln -s ../../src/MEGAShellExtNautilus/MEGAShellExtNautilus.pro $EXT_NAME/MEGAShellExtNautilus.pro
 ln -s ../../src/MEGAShellExtNautilus/data $EXT_NAME/data
+ln -s ../MEGAsync/MEGAsync/debian.copyright $EXT_NAME/debian.copyright
+
 export GZIP=-9
 tar czfh $EXT_NAME.tar.gz --exclude Makefile --exclude '*.o' $EXT_NAME
 rm -rf $EXT_NAME
@@ -218,6 +223,8 @@ ln -s ../../src/MEGAShellExtThunar/mega_ext_client.h $EXT_NAME/mega_ext_client.h
 ln -s ../../src/MEGAShellExtThunar/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
 ln -s ../../src/MEGAShellExtThunar/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
 ln -s ../../src/MEGAShellExtThunar/MEGAShellExtThunar.pro $EXT_NAME/MEGAShellExtThunar.pro
+ln -s ../MEGAsync/MEGAsync/debian.copyright $EXT_NAME/debian.copyright
+
 export GZIP=-9
 tar czfh $EXT_NAME.tar.gz --exclude Makefile --exclude '*.o' $EXT_NAME
 rm -rf $EXT_NAME
@@ -280,6 +287,8 @@ ln -s ../../src/MEGAShellExtDolphin/CMakeLists_kde5.txt $EXT_NAME/CMakeLists_kde
 ln -s ../../src/MEGAShellExtDolphin/megasync-plugin.h $EXT_NAME/megasync-plugin.h
 ln -s ../../src/MEGAShellExtDolphin/megasync-plugin.desktop $EXT_NAME/megasync-plugin.desktop
 ln -s ../../src/MEGAShellExtDolphin/MEGAShellExtDolphin.pro $EXT_NAME/MEGAShellExtDolphin.pro
+ln -s ../MEGAsync/MEGAsync/debian.copyright $EXT_NAME/debian.copyright
+
 export GZIP=-9
 tar czfh $EXT_NAME.tar.gz --exclude Makefile --exclude '*.o' $EXT_NAME
 rm -rf $EXT_NAME
