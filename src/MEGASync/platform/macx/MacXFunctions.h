@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QStringList>
+#include <QWidget>
 
 void setMacXActivationPolicy();
 QStringList qt_mac_NSArrayToQStringList(void *nsarray);
