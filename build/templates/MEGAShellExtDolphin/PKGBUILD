@@ -1,0 +1,96 @@
+##
+ # @file build/MEGAsync/MEGAShellExtDolphin/PKGBUILD
+ # @brief script to generate package dolphinmegasync for ArchLinux
+ #
+ # (c) 2013-2016 by Mega Limited, Auckland, New Zealand
+ #
+ # This file is part of the MEGA SDK - Client Access Engine.
+ #
+ # Applications using the MEGA API must present a valid application key
+ # and comply with the the rules set forth in the Terms of Service.
+ #
+ # The MEGA SDK is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ #
+ # @copyright Simplified (2-clause) BSD License.
+ #
+ # You should have received a copy of the license along with this
+ # program.
+##
+
+pkgname=dolphin-megasync
+pkgver=EXT_VERSION
+pkgrel=1
+epoch=
+pkgdesc="Extension for KDE based file managers to interact with Megasync"
+arch=('i686' 'x86_64')
+url="http://mega.nz/#sync"
+license=() #TODO
+depends=()
+makedepends=('qt4' 'extra-cmake-modules' 'kdelibs' 'automoc4' 'kdelibs4support' 'rsync')
+provides=("dolphin-megasync=${pkgver}")
+conflicts=()
+replaces=()
+backup=()
+options=()
+changelog= #TODO
+source=("./${pkgname}_$pkgver.tar.gz")
+noextract=()
+md5sums=('MD5SUM')
+validpgpkeys=()
+
+prepare() {
+	cd "$pkgname-$pkgver"
+}
+
+build() {
+	cd "$pkgname-$pkgver"
+
+	if which kf5-config >/dev/null; then
+	mkdir forplasma
+	cp -r * forplasma/ || :
+	fi
+	
+	cmake -DCMAKE_INSTALL_PREFIX="`kde4-config --prefix`" .
+	make
+	
+	if which kf5-config >/dev/null; then
+	cd forplasma
+	rm CMakeLists.txt
+	mv CMakeLists_kde5.txt CMakeLists.txt
+	cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" $PWD
+	make
+	fi
+
+}
+
+check() {
+	cd "$pkgname-$pkgver"
+}
+
+package() {
+	cd "$pkgname-$pkgver"
+	make install DESTDIR=$pkgdir
+	if which kf5-config >/dev/null; then
+		cd forplasma
+		make install DESTDIR=$pkgdir
+	fi
+	
+	#fix conflict with existing /usr/lib64 (pointing to /usr/lib)
+	if [ -d $pkgdir/usr/lib64 ]; then
+		rsync -av $pkgdir/usr/lib64/ $pkgdir/usr/lib/
+		rm -rf $pkgdir/usr/lib64
+	fi
+	
+	if which kf5-config >/dev/null; then
+		#fix missplaced .so for kf5
+		if [ -d $pkgdir/usr/lib/qt5 ]; then
+			rsync -av $pkgdir/usr/lib/qt5/ $pkgdir/usr/lib/qt/
+			rm -rf $pkgdir/usr/lib/qt5
+		fi
+		#mv $pkgdir/usr/lib/qt5/plugins$(find $pkgdir -name megasyncplugin.so) $pkgdir$(kf5-config --path lib | awk -NF ":" '{print $NF}')
+	fi
+	
+}
+
