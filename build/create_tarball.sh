@@ -267,9 +267,9 @@ sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-mega
 
 for dist in xUbuntu_1{2,3,4,5,6}.{04,10} Debian_{7,8,9}.0; do
 if [ -f templates/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc ]; then
-	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc > MEGAsync/MEGAShellExtDolphin/megasyncextdolphin-$dist.dsc
+	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc > MEGAsync/MEGAShellExtDolphin/MEGAShellExtDolphin-$dist.dsc
 else
-	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.dsc > MEGAsync/MEGAShellExtDolphin/megasyncextdolphin-$dist.dsc
+	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.dsc > MEGAsync/MEGAShellExtDolphin/MEGAShellExtDolphin-$dist.dsc
 fi
 done
 
