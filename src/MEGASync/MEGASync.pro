@@ -127,6 +127,10 @@ macx {
 
     QMAKE_INFO_PLIST = Info_MEGA.plist
 
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
+    QMAKE_CXXFLAGS -= -stdlib=libc++
+    QMAKE_LFLAGS -= -stdlib=libc++
+    CONFIG -= c++11
     QMAKE_CXXFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -F /System/Library/Frameworks/Security.framework/
 }
