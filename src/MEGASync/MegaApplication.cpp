@@ -1192,7 +1192,13 @@ void MegaApplication::loggedIn()
     megaApi->getPricing();
     megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
     megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
-    megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(megaApi->getMyEmail())).toUtf8().constData());
+
+    const char *email = megaApi->getMyEmail();
+    if (email)
+    {
+        megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(email)).toUtf8().constData());
+        delete [] email;
+    }
 
     if (settingsDialog)
     {
@@ -4782,7 +4788,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             if (e->getErrorCode() == MegaError::API_ENOENT)
             {
-                QFile::remove(Utilities::getAvatarPath(QString::fromUtf8(megaApi->getMyEmail())));
+                const char *email = megaApi->getMyEmail();
+                if (email)
+                {
+                    QFile::remove(Utilities::getAvatarPath(QString::fromUtf8(email)));
+                    delete [] email;
+                }
             }
 
             if (infoDialog)
@@ -5746,7 +5757,12 @@ void MegaApplication::onUsersUpdate(MegaApi *, MegaUserList *userList)
 
             if (user->hasChanged(MegaUser::CHANGE_TYPE_AVATAR))
             {
-                megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(megaApi->getMyEmail())).toUtf8().constData());
+                const char* email = megaApi->getMyEmail();
+                if (email)
+                {
+                    megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(email)).toUtf8().constData());
+                    delete [] email;
+                }
             }
             break;
         }

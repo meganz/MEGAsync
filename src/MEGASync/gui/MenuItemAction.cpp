@@ -8,7 +8,6 @@ MenuItemAction::MenuItemAction(const QString title, const QIcon icon)
     this->icon = new QIcon(icon);
     this->hoverIcon = NULL;
     this->value = NULL;
-
     container = new QWidget(NULL);
     container->setObjectName(QString::fromUtf8("wContainer"));
     container->installEventFilter(this);
@@ -23,14 +22,12 @@ MenuItemAction::MenuItemAction(const QString title, const QString value, const Q
     this->value = new QLabel(value);
     this->icon = new QIcon(icon);
     this->hoverIcon = NULL;
-
     container = new QWidget(NULL);
     container->setObjectName(QString::fromUtf8("wContainer"));
     container->installEventFilter(this);
     setupActionWidget();
     setDefaultWidget(container);
 }
-
 
 MenuItemAction::MenuItemAction(const QString title, const QIcon icon, const QIcon hoverIcon)
     : QWidgetAction(NULL)
@@ -39,7 +36,6 @@ MenuItemAction::MenuItemAction(const QString title, const QIcon icon, const QIco
     this->icon = new QIcon(icon);
     this->hoverIcon = new QIcon(hoverIcon);
     this->value = NULL;
-
     container = new QWidget (NULL);
     container->setObjectName(QString::fromUtf8("wContainer"));
     container->installEventFilter(this);
@@ -87,7 +83,7 @@ void MenuItemAction::setupActionWidget()
     layout->addWidget(title);
     layout->addItem(new QSpacerItem(10,10, QSizePolicy::Expanding, QSizePolicy::Expanding));
 
-    if (this->value)
+    if (value)
     {
         value->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #777777;"));
         layout->addWidget(value);
@@ -97,7 +93,6 @@ void MenuItemAction::setupActionWidget()
 
 bool MenuItemAction::eventFilter(QObject *obj, QEvent *event)
 {
-
     if (!value)
     {
         if (event->type() == QEvent::Enter)
@@ -119,5 +114,3 @@ bool MenuItemAction::eventFilter(QObject *obj, QEvent *event)
 
     return QObject::eventFilter(obj, event);
 }
-
-

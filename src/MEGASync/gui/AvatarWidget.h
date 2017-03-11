@@ -10,7 +10,7 @@ public:
     explicit AvatarWidget(QWidget *parent = 0);
     ~AvatarWidget();
 
-    void setAvatarLetter(QChar letter, const char* color);
+    void setAvatarLetter(QChar letter, QString color);
     void setAvatarImage(QString pathToFile);
     void clearData();
 
@@ -23,7 +23,7 @@ protected:
 private:
     QChar letter;
     QString pathToFile;
-    const char *color;
+    QString color;
 
 };
 

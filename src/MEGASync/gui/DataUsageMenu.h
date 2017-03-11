@@ -6,8 +6,8 @@
 class DataUsageMenu : public QMenu
 {
     Q_OBJECT
-public:
 
+public:
     explicit DataUsageMenu(QWidget *parent = 0);
     ~DataUsageMenu();
 
@@ -16,7 +16,6 @@ protected:
 
 private:
     QPolygonF polygon;
-
 };
 
 #endif // DATAUSAGEMENU_H

@@ -174,7 +174,12 @@ void InfoDialog::setUserName()
 
 void InfoDialog::setAvatar()
 {
-    drawAvatar(QString::fromUtf8(megaApi->getMyEmail()));
+    const char *email = megaApi->getMyEmail();
+    if (email)
+    {
+        drawAvatar(QString::fromUtf8(email));
+        delete [] email;
+    }
 }
 
 void InfoDialog::setUsage()
@@ -694,7 +699,7 @@ void InfoDialog::updateState()
                 ui->lBlockedItem->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a style=\" font-size: 12px;\" href=\"local://#%1\">%2</a>")
                                                                .arg(fileBlocked.absoluteFilePath())
                                                                .arg(fileBlocked.fileName())));
-                delete blockedPath;
+                delete [] blockedPath;
             }
             else if (megaApi->areServersBusy())
             {
@@ -1326,9 +1331,16 @@ void InfoDialog::drawAvatar(QString email)
     }
     else
     {
+        QString color;
         const char* userHandle = megaApi->getMyUserHandle();
-        ui->bAvatar->setAvatarLetter(Utilities::getAvatarLetter(), megaApi->getUserAvatarColor(userHandle));
-        delete userHandle;
+        const char* avatarColor = megaApi->getUserAvatarColor(userHandle);
+        if (avatarColor)
+        {
+            color = QString::fromUtf8(avatarColor);
+            delete [] avatarColor;
+        }
+        ui->bAvatar->setAvatarLetter(Utilities::getAvatarLetter(), color);
+        delete [] userHandle;
     }
 }
 

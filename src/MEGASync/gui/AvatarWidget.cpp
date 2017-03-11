@@ -9,13 +9,10 @@ AvatarWidget::AvatarWidget(QWidget *parent) :
     clearData();
 }
 
-void AvatarWidget::setAvatarLetter(QChar letter, const char* color)
+void AvatarWidget::setAvatarLetter(QChar letter, QString color)
 {
     this->letter = letter;
-    if (color)
-    {
-        this->color = color;
-    }
+    this->color = color;
     update();
 }
 
@@ -29,7 +26,7 @@ void AvatarWidget::clearData()
 {
     letter = QChar();
     pathToFile = QString();
-    color = NULL;
+    color = QString();
 }
 
 QSize AvatarWidget::minimumSizeHint() const
@@ -94,7 +91,7 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
         font.setFamily(QString::fromUtf8("Source Sans Pro"));
         painter.setFont(font);
         painter.setPen(Qt::NoPen);
-        painter.setBrush(QBrush(QColor(color ? color : "#D90007")));
+        painter.setBrush(QBrush(QColor(color.size() ? color : QString::fromUtf8("#D90007"))));
         painter.drawEllipse(QRect(-radius, -radius, radius * 2, radius * 2));
         painter.setPen(QPen(QColor("#ffffff")));
         painter.drawText(QRect(-radius, -radius, radius * 2, radius * 2), Qt::AlignCenter, letter);
@@ -103,5 +100,4 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
 
 AvatarWidget::~AvatarWidget()
 {
-    delete color;
 }
