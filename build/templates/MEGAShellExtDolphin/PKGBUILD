@@ -28,7 +28,7 @@ arch=('i686' 'x86_64')
 url="http://mega.nz/#sync"
 license=() #TODO
 depends=()
-makedepends=('qt4' 'extra-cmake-modules' 'kdelibs' 'automoc4' 'kdelibs4support' 'rsync')
+makedepends=('qt4' 'extra-cmake-modules' 'kdelibs' 'automoc4' 'kdelibs4support' 'rsync' 'mesa')
 provides=("dolphin-megasync=${pkgver}")
 conflicts=()
 replaces=()
