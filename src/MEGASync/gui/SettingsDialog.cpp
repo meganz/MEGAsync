@@ -890,7 +890,7 @@ void SettingsDialog::loadSettings()
                 ui->lAccountType->setText(tr("PRO III"));
                 break;
             default:
-                icon.addFile(QString::fromUtf8(":/images/Pro_I.png"), QSize(), QIcon::Normal, QIcon::Off);
+                icon.addFile(QString::fromUtf8(":/images/Lite.png"), QSize(), QIcon::Normal, QIcon::Off);
                 ui->lAccountType->setText(tr("PRO lite"));
                 break;
         }
