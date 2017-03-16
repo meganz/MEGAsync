@@ -25,6 +25,10 @@ BuildRequires: kf5-kdelibs4support-devel extra-cmake-modules
 %endif
 %endif
 
+%if 0%{?centos_version}
+BuildRequires: qt-devel kdelibs-devel
+%endif
+
 Requires:       megasync
 
 %description
@@ -67,6 +71,14 @@ make install DESTDIR=%{buildroot}
 echo %(kf5-config --path services | awk -NF ":" '{print $NF}')/megasync-plugin.desktop >> %{EXTRA_FILES}
 echo %(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/megasyncplugin.so >> %{EXTRA_FILES}
 fi
+
+%if 0%{?centos_version}
+#fix conflict with existing /usr/lib64 (pointing to /usr/lib)
+if [ -d %{buildroot}/usr/lib ]; then
+    rsync -av %{buildroot}/usr/lib/ %{buildroot}/usr/lib64/
+    rm -rf %{buildroot}/usr/lib
+fi
+%endif
 
 %clean
 echo cleaning
