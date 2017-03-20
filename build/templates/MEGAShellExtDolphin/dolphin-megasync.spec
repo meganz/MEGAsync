@@ -16,6 +16,9 @@ BuildRequires:  qt-devel
 %if 0%{?suse_version}
 BuildRequires:  libkde4-devel
 %endif
+%if 0%{?sle_version} >= 120100 || 0%{?suse_version} > 1320
+BuildRequires:  kdelibs4support extra-cmake-modules libQt5Core-devel libQt5Network-devel kio-devel
+%endif
 %if 0%{?fedora}
 BuildRequires:  kdelibs, kdelibs-devel
 %if 0%{?fedora_version} <= 23
