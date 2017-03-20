@@ -9,6 +9,8 @@ Source0:	dolphin-megasync_%{version}.tar.gz
 Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
+AutoReq: 0
+
 #BuildRequires:  libqt4-dev, kdelibs5-dev, cmake
 BuildRequires:  qt-devel
 %if 0%{?suse_version}
