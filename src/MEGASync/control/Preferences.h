@@ -264,7 +264,8 @@ public:
         ACCOUNT_TYPE_FREE = 0,
         ACCOUNT_TYPE_PROI = 1,
         ACCOUNT_TYPE_PROII = 2,
-        ACCOUNT_TYPE_PROIII = 3
+        ACCOUNT_TYPE_PROIII = 3,
+        ACCOUNT_TYPE_LITE = 4
     };
 
     static const int MAX_FILES_IN_NEW_SYNC_FOLDER;

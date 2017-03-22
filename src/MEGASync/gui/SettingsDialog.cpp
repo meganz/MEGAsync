@@ -889,9 +889,13 @@ void SettingsDialog::loadSettings()
                 icon.addFile(QString::fromUtf8(":/images/Pro_III.png"), QSize(), QIcon::Normal, QIcon::Off);
                 ui->lAccountType->setText(tr("PRO III"));
                 break;
+            case Preferences::ACCOUNT_TYPE_LITE:
+                icon.addFile(QString::fromUtf8(":/images/Lite.png"), QSize(), QIcon::Normal, QIcon::Off);
+                ui->lAccountType->setText(tr("PRO Lite"));
+                break;
             default:
                 icon.addFile(QString::fromUtf8(":/images/Pro_I.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->lAccountType->setText(tr("PRO lite"));
+                ui->lAccountType->setText(QString());
                 break;
         }
 
