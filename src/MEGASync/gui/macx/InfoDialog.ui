@@ -7,62 +7,51 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>552</height>
+    <height>385</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>400</width>
-    <height>552</height>
+    <height>385</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>400</width>
-    <height>552</height>
+    <height>385</height>
    </size>
   </property>
   <property name="windowTitle">
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPushButton
+   <string notr="true">#bAvatar, #bState, #bDotUsedQuota, #bDotUsedStorage
 {
-    border: none;
+	border: none;
 }
 QPushButton#bSettings:hover
 {
 	image: url(://images/tray_preferences_over_ico.png);
 }
+
 QPushButton#bTransferManager:hover
 {
 	image: url(://images/tray_transfer_manager_ico_over.png);
 }
-QWidget
+
+#wHeader
 {
-font-size: 11px;
+  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #FCFCFC, stop: 1 #FAFAFA);
 }
 
 #wHeader
 {
-border-top-left-radius: 5px;
-border-top-right-radius: 5px;
-background-color: white;
+border-top-left-radius: 2px;
+border-top-right-radius: 2px;
 }
 
-#lRecentlyUpdated
-{
-
-background: rgb(178, 178, 178);
-color:  rgb(255, 255, 255);
-font-size: 12px;
-font-weight: bold;
-}
-
-#wRecentlyUpdated
-{
-background: rgb(178, 178, 178);
-}
 #lSyncUpdated
 {
 color:  rgb(166, 166, 166);
@@ -70,14 +59,9 @@ font-size: 16px;
 font-weight: bold;
 }
 
-#wBottom
-{
-background: rgb(242, 242, 242);
-}
-
 #sActiveTransfers
 {
-background-color: #F7F7F7;
+background-color: transparent;
 }
 
 #lQueued
@@ -85,16 +69,12 @@ background-color: #F7F7F7;
 color: rgb(102, 102, 102);
 }
 
-#lDownloads
+#lDownloads, #lUploads
 {
-color: rgb(102, 102, 102);
-font-weight: bold;
-}
-
-#lUploads
-{
-color: rgb(102, 102, 102);
-font-weight: bold;
+    font-family: &quot;Source Sans Pro&quot;;
+    font-size: 13px;
+    color: #777777;
+    border: none;
 }
 
 #bUploads
@@ -113,11 +93,6 @@ font-size: 12px;
 }
 
 #lPercentageUsed
-{
-font-size: 12px;
-}
-
-#bSyncFolder
 {
 font-size: 12px;
 }
@@ -146,35 +121,141 @@ padding-right: 0px;
 {
 border-bottom-left-radius: 5px;
 border-bottom-right-radius: 5px;
+background-color: transparent;
 }
 
-#wUsage
+#wContainerBottom
 {
 background-color: white;
 }
 
-#wTransfers
+#pUsageStorage, #pUsageQuota
 {
-	background-color: #F7F7F7;
+	border: none;
+}
+QProgressBar#pUsageStorage
+{
+background-color: #EEEEEE;
 }
 
-#wDescriptions
+QProgressBar#pUsageStorage[overquota=true]
 {
-   background-color: white;
+background-color: #EB4444;
+}
+                                                            
+QProgressBar#pUsageStorage::chunk {
+background-color: #666666;
 }
 
-#pUsage
-{
-padding-left: 1px;
+QProgressBar#pUsageStorage::chunk[overquota=true] {
+background-color: #EB4444;
 }
 
-#wRecentLayout
+QProgressBar#pUsageQuota
 {
-    background-color: white;
+background-color: #EEEEEE;
 }
+
+QProgressBar#pUsageQuota[overquota=true]
+{
+background-color: #EB4444;
+}
+                                                            
+QProgressBar#pUsageQuota::chunk {
+background-color: #666666;
+}
+QProgressBar#pUsageQuota::chunk[overquota=true] {
+background-color: #EB4444;
+}
+
 #lHeader
 {
 	padding-top: 2px;
+}
+
+#lUsername
+{
+    font-family: &quot;Source Sans Pro&quot;;
+    font-size: 12px;
+    color: #666666;
+    border: none;
+}
+
+#bUpgrade[overquota=true]
+{
+ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #999999, stop: 1 #aaaaaa);
+ border-radius: 3px;
+ border: 1px solid rgba(0, 0, 0, 45%);
+ padding: 7px 12px 7px 6px;
+ font-family: &quot;Source Sans Pro&quot;;
+ font-size: 13px;
+ color: #ffffff;
+}
+#bUpgrade::hover[overquota=true]
+{
+  border: 1px solid rgba(0, 0, 0, 60%);
+  border-radius: 3px;
+  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #999999, stop: 1 #aaaaaa);
+}
+
+#bUpgrade::pressed[overquota=true]
+{
+  border: 1px solid rgba(0, 0, 0, 60%);
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 50%);
+}
+
+#bSyncFolder, #bUpgrade
+{
+ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #ffffff, stop: 1 #fafafa);
+ border-radius: 3px;
+ border: 1px solid rgba(0, 0, 0, 5%);
+ padding: 7px 12px 7px 6px;
+ font-family: &quot;Source Sans Pro&quot;;
+ font-size: 13px;
+ color: #777777;
+}
+
+#bSyncFolder:hover, #bUpgrade::hover
+{
+  border: 1px solid rgba(0, 0, 0, 20%);
+  border-radius: 3px;
+  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #ffffff, stop: 1 #fafafa);
+
+}
+
+#bSyncFolder:pressed, #bUpgrade::pressed
+{
+  background-color: rgba(0, 0, 0, 10%);
+  border: 1px solid rgba(0, 0, 0, 20%);
+  border-radius: 3px;
+}
+
+#lPercentageUsedStorage, #lTotalUsedStorage, #lPercentageUsedQuota, #lTotalUsedQuota
+{
+font-family: &quot;Source Sans Pro&quot;;
+font-size: 13px;
+font-weight: normal;
+border: none;
+color: #999999;
+}
+
+#lDisabled
+{
+  font-family: &quot;Source Sans Pro&quot;;
+  font-size: 18px;
+  color: rgba(51, 51, 51, 70%);
+}
+
+#lDescDisabled
+{
+  font-family: &quot;Source Sans Pros&quot;;
+  font-size: 13px;
+  color: #666666;
 }</string>
   </property>
   <property name="sizeGripEnabled">
@@ -183,7 +264,7 @@ padding-left: 1px;
   <property name="modal">
    <bool>false</bool>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_5" stretch="0,0,0,1,0,0">
+  <layout class="QVBoxLayout" name="verticalLayout_4">
    <property name="spacing">
     <number>0</number>
    </property>
@@ -219,714 +300,8 @@ padding-left: 1px;
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="wHeader" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>60</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>60</height>
-      </size>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout">
-      <property name="spacing">
-       <number>21</number>
-      </property>
-      <property name="leftMargin">
-       <number>17</number>
-      </property>
-      <property name="topMargin">
-       <number>8</number>
-      </property>
-      <property name="rightMargin">
-       <number>14</number>
-      </property>
-      <property name="bottomMargin">
-       <number>8</number>
-      </property>
-      <item>
-       <widget class="QPushButton" name="lHeader">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="focusPolicy">
-         <enum>Qt::NoFocus</enum>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">margin-top:-2px;</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
-          <normaloff>:/images/mega_logo.png</normaloff>:/images/mega_logo.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>150</width>
-          <height>60</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_2">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>60</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QPushButton" name="bTransferManager">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">border: none;
-</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
-          <normaloff>:/images/tray_transfer_manager_ico.png</normaloff>:/images/tray_transfer_manager_ico.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="bPause">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">
-QCheckBox::indicator {
-     width: 24px;
-     height: 24px;
-	 subcontrol-position:  center;
- }
-
-  QCheckBox::indicator:checked
-  {
-    image: url(://images/tray_play_ico.png);
-  }
-QCheckBox::indicator:checked:hover
-  {
-    image: url(://images/tray_play_over_ico.png);
-  }
-  QCheckBox::indicator:unchecked
-  {
-    image: url(://images/tray_pause_ico.png);
-  }
-QCheckBox::indicator:unchecked:hover
-  {
-    image: url(://images/tray_pause_over_ico.png);
-  }
-</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="checked">
-         <bool>false</bool>
-        </property>
-        <property name="tristate">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="bSettings">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">border: none;
-margin-top:-1px;
-
-
-</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
-          <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QStackedWidget" name="sActiveTransfers">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>200</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>200</height>
-      </size>
-     </property>
-     <property name="currentIndex">
-      <number>0</number>
-     </property>
-     <widget class="QWidget" name="pUpdated">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>200</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>200</height>
-       </size>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_8">
-       <property name="leftMargin">
-        <number>2</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QPushButton" name="label">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>112</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>112</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">padding-top: 46px;</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../Resources_macx.qrc">
-           <normaloff>:/images/tray_updated_large_ico.png</normaloff>:/images/tray_updated_large_ico.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>64</width>
-           <height>64</height>
-          </size>
-         </property>
-         <property name="default">
-          <bool>false</bool>
-         </property>
-         <property name="flat">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="lSyncUpdated">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <pointsize>-1</pointsize>
-           <weight>50</weight>
-           <italic>false</italic>
-           <bold>false</bold>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">#lSyncUpdated
-{
-font: &quot;Helvetica&quot;;
-font-size: 20px;
-font-weight: normal;
-color: #999999;
-
-}</string>
-         </property>
-         <property name="text">
-          <string>MEGAsync is starting</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="lBlockedItem">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">#lBlockedItem
-{ 
-  font-family: &quot;Helvetica&quot;;
-  font-size: 12px;
-  color: #999999;
-margin-left: 15 px;
-}</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="openExternalLinks">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="pUpdating">
-      <property name="minimumSize">
-       <size>
-        <width>0</width>
-        <height>200</height>
-       </size>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>200</height>
-       </size>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>0</number>
-       </property>
-       <property name="topMargin">
-        <number>0</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>0</number>
-       </property>
-       <item>
-        <widget class="QWidget" name="wTransfers" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>400</width>
-           <height>120</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>400</width>
-           <height>120</height>
-          </size>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="ActiveTransfer" name="wTransfer1" native="true">
-            <property name="minimumSize">
-             <size>
-              <width>400</width>
-              <height>60</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>400</width>
-              <height>60</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="ActiveTransfer" name="wTransfer2" native="true">
-            <property name="minimumSize">
-             <size>
-              <width>400</width>
-              <height>60</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>400</width>
-              <height>60</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="wDescriptions" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>80</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>80</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_6" stretch="0,0">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>10</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>10</number>
-          </property>
-          <item>
-           <widget class="QWidget" name="wUploadDesc" native="true">
-            <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,0,0">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>20</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>15</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QLabel" name="lUploads">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(102, 102, 102);</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="lRemainingTimeU">
-               <property name="minimumSize">
-                <size>
-                 <width>60</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>60</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">margin-right: 8px;
-color: rgb(102, 102, 102);</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButton">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
-                 <normaloff>:/images/upload_timer_ico.png</normaloff>:/images/upload_timer_ico.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-               <property name="flat">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-          <item>
-           <widget class="QWidget" name="wDownloadDesc" native="true">
-            <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,0,0">
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <property name="leftMargin">
-              <number>20</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>15</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QLabel" name="lDownloads">
-               <property name="styleSheet">
-                <string notr="true">color: rgb(102, 102, 102);</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="lRemainingTimeD">
-               <property name="minimumSize">
-                <size>
-                 <width>60</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>60</width>
-                 <height>16777215</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">margin-right: 8px;
-color: rgb(102, 102, 102);</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButton_2">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
-                 <normaloff>:/images/download_timer_ico.png</normaloff>:/images/download_timer_ico.png</iconset>
-               </property>
-               <property name="iconSize">
-                <size>
-                 <width>24</width>
-                 <height>24</height>
-                </size>
-               </property>
-               <property name="flat">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="wRecent" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>400</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>400</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_7">
+    <widget class="QWidget" name="wContainerHeader" native="true">
+     <layout class="QVBoxLayout" name="verticalLayout_5">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -943,39 +318,95 @@ color: rgb(102, 102, 102);</string>
        <number>0</number>
       </property>
       <item>
-       <widget class="QWidget" name="wRecentlyUpdated" native="true">
+       <widget class="QWidget" name="wHeader" native="true">
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>30</height>
+          <height>57</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>30</height>
+          <height>57</height>
          </size>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="1,0">
-         <property name="spacing">
-          <number>0</number>
-         </property>
+        <layout class="QHBoxLayout" name="horizontalLayout">
          <property name="leftMargin">
-          <number>19</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
+          <number>18</number>
          </property>
          <property name="rightMargin">
-          <number>19</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
+          <number>10</number>
          </property>
          <item>
-          <widget class="QLabel" name="lRecentlyUpdated">
+          <widget class="AvatarWidget" name="bAvatar" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>30</width>
+             <height>30</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="bState">
+           <property name="minimumSize">
+            <size>
+             <width>8</width>
+             <height>8</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>8</width>
+             <height>8</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources_macx.qrc">
+             <normaloff>:/images/streaming_on_icon.png</normaloff>:/images/streaming_on_icon.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>8</width>
+             <height>8</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lName">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>60</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="bChats">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -992,52 +423,15 @@ color: rgb(102, 102, 102);</string>
              <height>16777215</height>
             </size>
            </property>
-           <property name="focusPolicy">
-            <enum>Qt::StrongFocus</enum>
-           </property>
            <property name="styleSheet">
-            <string notr="true">margin-left:1px;</string>
+            <string notr="true">border: none;
+margin-top:-1px;
+
+
+</string>
            </property>
            <property name="text">
-            <string>RECENTLY UPDATED</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="cRecentlyUpdated">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>36</width>
-             <height>24</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>36</width>
-             <height>24</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QCheckBox::indicator {
-     width: 36px;
-     height: 24px;
-	 subcontrol-position:  center;
- }
-
-  QCheckBox::indicator:checked
-  {
-    image: url(://images/collapse_up.png);
-  }
-  QCheckBox::indicator:unchecked
-  {
-    image: url(://images/collapse_down.png);
-  }</string>
+            <string/>
            </property>
            <property name="iconSize">
             <size>
@@ -1045,193 +439,15 @@ color: rgb(102, 102, 102);</string>
              <height>24</height>
             </size>
            </property>
-           <property name="checked">
-            <bool>false</bool>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QWidget" name="wRecentLayout" native="true">
-        <property name="minimumSize">
-         <size>
-          <width>400</width>
-          <height>0</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>400</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="RecentFile" name="wRecent1" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>400</width>
-             <height>48</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>400</width>
-             <height>48</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QWidget
-{
-background-color: #F7F7F7;
-}</string>
+           <property name="flat">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="RecentFile" name="wRecent2" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>400</width>
-             <height>48</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>400</width>
-             <height>48</height>
-            </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="RecentFile" name="wRecent3" native="true">
-           <property name="minimumSize">
-            <size>
-             <width>400</width>
-             <height>48</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>400</width>
-             <height>48</height>
-            </size>
-           </property>
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QWidget
-{
-background-color: #F7F7F7;
-}
-</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="wUsage" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>60</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>60</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_3">
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <property name="leftMargin">
-       <number>19</number>
-      </property>
-      <property name="topMargin">
-       <number>8</number>
-      </property>
-      <property name="rightMargin">
-       <number>19</number>
-      </property>
-      <property name="bottomMargin">
-       <number>8</number>
-      </property>
-      <item>
-       <widget class="QWidget" name="widget_8" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>20</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>362</width>
-          <height>20</height>
-         </size>
-        </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>1</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="lTotalUsed">
+          <widget class="QPushButton" name="bTransferManager">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
@@ -1239,73 +455,82 @@ background-color: #F7F7F7;
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>20</height>
+             <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
              <width>16777215</width>
-             <height>20</height>
+             <height>16777215</height>
             </size>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::StrongFocus</enum>
            </property>
            <property name="styleSheet">
-            <string notr="true">#lTotalUsed
-{
-font: &quot;Helvetica&quot;;
-font-size: 12px;
-font-weight: normal;
-color: #333333;
-}</string>
-           </property>
-           <property name="text">
-            <string>Usage: Data temporarily unavailable</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="lPercentageUsed">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>20</height>
-            </size>
-           </property>
-           <property name="focusPolicy">
-            <enum>Qt::StrongFocus</enum>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">#lPercentageUsed
-{
-font: &quot;Helvetica&quot;;
-font-size: 12px;
-font-weight: normal;
-color: #333333;
-}
+            <string notr="true">border: none;
+margin-top:-1px;
+
+
 </string>
            </property>
            <property name="text">
             <string/>
            </property>
-           <property name="alignment">
-            <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+           <property name="icon">
+            <iconset resource="../Resources_macx.qrc">
+             <normaloff>:/images/tray_transfer_manager_ico.png</normaloff>:/images/tray_transfer_manager_ico.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="bSettings">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">border: none;
+margin-top:-1px;
+
+
+</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources_macx.qrc">
+             <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
@@ -1313,158 +538,1188 @@ color: #333333;
        </widget>
       </item>
       <item>
-       <widget class="UsageProgressBar" name="pUsage" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+       <widget class="QWidget" name="wActiveTransfersContainer" native="true">
+        <property name="styleSheet">
+         <string notr="true">background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #FAFAFA, stop: 1 #F7F7F7);</string>
         </property>
-        <property name="minimumSize">
-         <size>
-          <width>362</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>362</width>
-          <height>24</height>
-         </size>
-        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QStackedWidget" name="sActiveTransfers">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>190</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>190</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="currentIndex">
+            <number>2</number>
+           </property>
+           <widget class="QWidget" name="pUpdated">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>190</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>190</height>
+             </size>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_8">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>2</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="label">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>112</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>112</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">padding-top: 46px;
+border: none;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../Resources_macx.qrc">
+                 <normaloff>:/images/tray_updated_large_ico.png</normaloff>:/images/tray_updated_large_ico.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>64</width>
+                 <height>64</height>
+                </size>
+               </property>
+               <property name="default">
+                <bool>false</bool>
+               </property>
+               <property name="flat">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lSyncUpdated">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>400</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>50</height>
+                </size>
+               </property>
+               <property name="font">
+                <font>
+                 <pointsize>-1</pointsize>
+                 <weight>50</weight>
+                 <italic>false</italic>
+                 <bold>false</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">#lSyncUpdated
+{
+font: &quot;Helvetica&quot;;
+font-size: 20px;
+font-weight: normal;
+color: #999999;
+padding-bottom: 25px;
+}</string>
+               </property>
+               <property name="text">
+                <string>MEGAsync is starting</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lBlockedItem">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="pUpdating">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>190</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>190</height>
+             </size>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_2">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QWidget" name="wTransfers" native="true">
+               <property name="minimumSize">
+                <size>
+                 <width>400</width>
+                 <height>190</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>400</width>
+                 <height>190</height>
+                </size>
+               </property>
+               <widget class="ActiveTransfer" name="wTransfer1" native="true">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>5</y>
+                  <width>400</width>
+                  <height>60</height>
+                 </rect>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>400</width>
+                  <height>60</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>400</width>
+                  <height>60</height>
+                 </size>
+                </property>
+               </widget>
+               <widget class="ActiveTransfer" name="wTransfer2" native="true">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>100</y>
+                  <width>400</width>
+                  <height>60</height>
+                 </rect>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>400</width>
+                  <height>60</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>400</width>
+                  <height>60</height>
+                 </size>
+                </property>
+               </widget>
+               <widget class="QWidget" name="wDownloadDesc" native="true">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>65</y>
+                  <width>400</width>
+                  <height>35</height>
+                 </rect>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,0,0,0">
+                 <property name="spacing">
+                  <number>10</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>20</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>15</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="lDownloads">
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_5">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>150</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="bClockDown">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::NoFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../Resources_macx.qrc">
+                     <normaloff>:/images/clock_ico.png</normaloff>:/images/clock_ico.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                   <property name="flat">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="lRemainingTimeD">
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>60</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+               <widget class="QWidget" name="wUploadDesc" native="true">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>160</y>
+                  <width>400</width>
+                  <height>31</height>
+                 </rect>
+                </property>
+                <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,0,0,0">
+                 <property name="spacing">
+                  <number>10</number>
+                 </property>
+                 <property name="leftMargin">
+                  <number>20</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>15</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="lUploads">
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <spacer name="horizontalSpacer_6">
+                   <property name="orientation">
+                    <enum>Qt::Horizontal</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>150</width>
+                     <height>20</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="bClockUp">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Maximum" vsizetype="Minimum">
+                     <horstretch>0</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
+                   <property name="minimumSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                   <property name="focusPolicy">
+                    <enum>Qt::NoFocus</enum>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="icon">
+                    <iconset resource="../Resources_macx.qrc">
+                     <normaloff>:/images/clock_ico.png</normaloff>:/images/clock_ico.png</iconset>
+                   </property>
+                   <property name="iconSize">
+                    <size>
+                     <width>24</width>
+                     <height>24</height>
+                    </size>
+                   </property>
+                   <property name="flat">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="lRemainingTimeU">
+                   <property name="minimumSize">
+                    <size>
+                     <width>60</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>60</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
+                   <property name="styleSheet">
+                    <string notr="true"/>
+                   </property>
+                   <property name="text">
+                    <string/>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="pOverQuota">
+            <layout class="QVBoxLayout" name="verticalLayout_12">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>30</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lDisabled">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>MEGAsync is currently disabled</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="widget" native="true">
+               <layout class="QVBoxLayout" name="verticalLayout_6">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>12</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>12</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="lDescDisabled">
+                  <property name="text">
+                   <string>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</string>
+                  </property>
+                  <property name="textFormat">
+                   <enum>Qt::AutoText</enum>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                  <property name="wordWrap">
+                   <bool>true</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="wBottom" native="true">
+    <widget class="QWidget" name="wContainerBottom" native="true">
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>45</height>
+       <height>122</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>45</height>
+       <height>122</height>
       </size>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
        <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>17</number>
+       <number>0</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>19</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
       </property>
       <item>
-       <widget class="QPushButton" name="bSyncFolder">
+       <widget class="QWidget" name="wDots" native="true">
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>45</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>45</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">#bSyncFolder
-{
-border: none;
-font: &quot;Helvetica&quot;;
-font-size: 12px;
-font-weight: normal;
-color: #666666;
-}</string>
-        </property>
-        <property name="text">
-         <string>Syncs</string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>://images/tray_folder_ico.png</normaloff>://images/tray_folder_ico.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
           <height>20</height>
          </size>
         </property>
-       </spacer>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>20</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <property name="spacing">
+          <number>5</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>168</width>
+             <height>5</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="bDotUsedStorage">
+           <property name="minimumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources_macx.qrc">
+             <normaloff>:/images/empty_dot.png</normaloff>:/images/empty_dot.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="bDotUsedQuota">
+           <property name="minimumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16</width>
+             <height>16</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources_macx.qrc">
+             <normaloff>:/images/empty_dot.png</normaloff>:/images/empty_dot.png</iconset>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_3">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>168</width>
+             <height>5</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
+       </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="bOfficialWebIcon">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
+       <widget class="QWidget" name="wUsageContainer" native="true">
         <property name="minimumSize">
          <size>
-          <width>36</width>
-          <height>0</height>
+          <width>0</width>
+          <height>40</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>36</width>
-          <height>16777215</height>
+          <width>16777215</width>
+          <height>40</height>
          </size>
         </property>
-        <property name="styleSheet">
-         <string notr="true">border: none;</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
-          <normaloff>:/images/tray_web_ico@2x.png</normaloff>:/images/tray_web_ico@2x.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_11">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QStackedWidget" name="sUsedData">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="currentIndex">
+            <number>0</number>
+           </property>
+           <widget class="QWidget" name="pStorage">
+            <layout class="QVBoxLayout" name="verticalLayout_9">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QWidget" name="wUsage" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_3">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>19</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>19</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QWidget" name="widget_8" native="true">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>362</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_4">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>1</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="lTotalUsedStorage">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="focusPolicy">
+                      <enum>Qt::StrongFocus</enum>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true"/>
+                     </property>
+                     <property name="text">
+                      <string>USED SPACE: Data temporarily unavailable</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="lPercentageUsedStorage">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="focusPolicy">
+                      <enum>Qt::StrongFocus</enum>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true"/>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QProgressBar" name="pUsageStorage">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>362</width>
+                    <height>8</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>362</width>
+                    <height>8</height>
+                   </size>
+                  </property>
+                  <property name="value">
+                   <number>18</number>
+                  </property>
+                  <property name="format">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="pQuota">
+            <layout class="QVBoxLayout" name="verticalLayout_10">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QWidget" name="wUsage_2" native="true">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>40</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <layout class="QVBoxLayout" name="verticalLayout_7">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
+                <property name="leftMargin">
+                 <number>19</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>19</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QWidget" name="widget_9" native="true">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>362</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                  <layout class="QHBoxLayout" name="horizontalLayout_7">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>1</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QLabel" name="lTotalUsedQuota">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="focusPolicy">
+                      <enum>Qt::StrongFocus</enum>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">#lTotalUsed
+{
+font: &quot;Helvetica&quot;;
+font-size: 12px;
+font-weight: normal;
+color: #333333;
+}</string>
+                     </property>
+                     <property name="text">
+                      <string>USED BANDWIDTH: Data temporarily unavailable</string>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QLabel" name="lPercentageUsedQuota">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>20</height>
+                      </size>
+                     </property>
+                     <property name="focusPolicy">
+                      <enum>Qt::StrongFocus</enum>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">#lPercentageUsed
+{
+font: &quot;Helvetica&quot;;
+font-size: 12px;
+font-weight: normal;
+color: #333333;
+}
+</string>
+                     </property>
+                     <property name="text">
+                      <string/>
+                     </property>
+                     <property name="alignment">
+                      <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+                     </property>
+                    </widget>
+                   </item>
+                  </layout>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QProgressBar" name="pUsageQuota">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>362</width>
+                    <height>8</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>362</width>
+                    <height>8</height>
+                   </size>
+                  </property>
+                  <property name="value">
+                   <number>12</number>
+                  </property>
+                  <property name="format">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="bOfficialWeb">
+       <widget class="QWidget" name="wBottom" native="true">
         <property name="minimumSize">
          <size>
           <width>0</width>
@@ -1477,23 +1732,96 @@ color: #666666;
           <height>45</height>
          </size>
         </property>
-        <property name="styleSheet">
-         <string notr="true">#bOfficialWeb
-{
-border: none;
-font: &quot;Helvetica&quot;;
-font-size: 12px;
-font-weight: normal;
-color: #666666;
-}
-</string>
-        </property>
-        <property name="text">
-         <string>MEGA website</string>
-        </property>
-        <property name="flat">
-         <bool>true</bool>
-        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>17</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>19</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QPushButton" name="bSyncFolder">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string>Syncs</string>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources_macx.qrc">
+             <normaloff>:/images/sync_item_ico.png</normaloff>:/images/sync_item_ico.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>32</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QPushButton" name="bUpgrade">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
+           <property name="text">
+            <string>Upgrade to PRO</string>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
@@ -1509,29 +1837,18 @@ color: #666666;
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>RecentFile</class>
+   <class>AvatarWidget</class>
    <extends>QWidget</extends>
-   <header>RecentFile.h</header>
-   <container>1</container>
-  </customwidget>
-  <customwidget>
-   <class>UsageProgressBar</class>
-   <extends>QWidget</extends>
-   <header>UsageProgressBar.h</header>
+   <header location="global">AvatarWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>lHeader</tabstop>
-  <tabstop>bPause</tabstop>
   <tabstop>bSettings</tabstop>
-  <tabstop>lRecentlyUpdated</tabstop>
-  <tabstop>cRecentlyUpdated</tabstop>
-  <tabstop>lTotalUsed</tabstop>
-  <tabstop>lPercentageUsed</tabstop>
+  <tabstop>lTotalUsedStorage</tabstop>
+  <tabstop>lPercentageUsedStorage</tabstop>
   <tabstop>bSyncFolder</tabstop>
-  <tabstop>bOfficialWebIcon</tabstop>
-  <tabstop>bOfficialWeb</tabstop>
+  <tabstop>bUpgrade</tabstop>
   <tabstop>label</tabstop>
  </tabstops>
  <resources>

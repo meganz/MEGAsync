@@ -8,6 +8,8 @@
 #include <QPainter>
 #include "GuestWidget.h"
 #include "SettingsDialog.h"
+#include "DataUsageMenu.h"
+#include "MenuItemAction.h"
 
 namespace Ui {
 class InfoDialog;
@@ -31,29 +33,30 @@ public:
     ~InfoDialog();
 
     void setUsage();
+    void setUserName();
+    void setAvatar();
     void setTransfer(mega::MegaTransfer *transfer);
-    void addRecentFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey);
-    void clearRecentFiles();
-    void setPaused(bool paused);
     void updateTransfers();
     void transferFinished(int error);
     void updateSyncsButton();
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
     void increaseUsedStorage(long long bytes, bool isInShare);
+    void setOverQuotaMode(bool state);
     void updateState();
-    void showRecentlyUpdated(bool show);
     void closeSyncsMenu();
-    void updateRecentFiles();
-    void disableGetLink(bool disable);
     void addSync(mega::MegaHandle h);
-
+    void clearUserAttributes();
 
 #ifdef __APPLE__
     void moveArrow(QPoint p);
 #endif
 
     void regenerateLayout();
+
+private:
+    void drawAvatar(QString email);
+    void createQuotaUsedMenu();
 
 public slots:
    void addSync();
@@ -70,28 +73,20 @@ public slots:
    void onAllUploadsFinished();
    void onAllDownloadsFinished();
    void onAllTransfersFinished();
-   void onUpdateRecentFiles();
 
 private slots:
     void on_bSettings_clicked();
-    void on_bTransferManager_clicked();
-    void on_bOfficialWeb_clicked();
     void on_bSyncFolder_clicked();
+    void on_bUpgrade_clicked();
     void openFolder(QString path);
-    void on_bPause_clicked();
+    void on_bChats_clicked();
+    void on_bTransferManager_clicked();
     void onOverlayClicked();
     void scanningAnimationStep();
     void onUserAction(int action);
 
-#ifdef __APPLE__
-    void on_cRecentlyUpdated_stateChanged(int arg1);
-    void showRecentList();
-    void onAnimationFinished();
-#endif
-
-#if defined(_WIN32) || defined(__APPLE__)
-    void on_bOfficialWebIcon_clicked();
-#endif
+    void on_bDotUsedStorage_clicked();
+    void on_bDotUsedQuota_clicked();
 
 private:
     Ui::InfoDialog *ui;
@@ -100,14 +95,14 @@ private:
     QPushButton *arrow;
 #endif
 
-#ifdef __APPLE__
-    QPropertyAnimation *minHeightAnimation;
-    QPropertyAnimation *maxHeightAnimation;
-    QParallelAnimationGroup *animationGroup;
-#endif
-
     QMenu *syncsMenu;
     QMenu *transferMenu;
+    DataUsageMenu *storageUsedMenu;
+
+    MenuItemAction *cloudItem;
+    MenuItemAction *inboxItem;
+    MenuItemAction *sharesItem;
+    MenuItemAction *rubbishItem;
 
     long long downloadSpeed;
     long long uploadSpeed;
@@ -123,9 +118,11 @@ private:
     bool waiting;
     GuestWidget *gWidget;
     int state;
+    bool overQuotaState;
 
 protected:
     void changeEvent(QEvent * event);
+    bool eventFilter(QObject *obj, QEvent *e);
 #ifdef __APPLE__
     void paintEvent( QPaintEvent * e);
     void hideEvent(QHideEvent *event);
@@ -137,7 +134,6 @@ protected:
     QTimer downloadsFinishedTimer;
     QTimer uploadsFinishedTimer;
     QTimer transfersFinishedTimer;
-    QTimer recentFilesTimer;
     int scanningAnimationIndex;
     MegaApplication *app;
     Preferences *preferences;

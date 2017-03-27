@@ -1,5 +1,6 @@
 #include "ActiveTransfer.h"
 #include "ui_ActiveTransfer.h"
+#include "control/Utilities.h"
 #include <QMouseEvent>
 
 ActiveTransfer::ActiveTransfer(QWidget *parent) :
@@ -8,13 +9,11 @@ ActiveTransfer::ActiveTransfer(QWidget *parent) :
 {
     ui->setupUi(this);
     fileName = QString::fromAscii("");
-    ui->lType->setText(QString());
-    ui->lPercentage->setText(QString());
     ui->pProgress->hide();
-    ui->lType->hide();
+    ui->lTransferType->hide();
+    ui->lFileType->hide();
     regular = false;
     active = false;
-    connect(ui->pProgress, SIGNAL(cancel(int,int)), this, SLOT(onCancelClicked(int,int)));
 }
 
 ActiveTransfer::~ActiveTransfer()
@@ -29,6 +28,11 @@ void ActiveTransfer::setFileName(QString fileName)
     QFontMetrics fm = QFontMetrics(f);
     ui->lFileName->setStyleSheet(QString::fromUtf8("color: grey;"));
     ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
+
+    QIcon icon;
+    icon.addFile(Utilities::getExtensionPixmapSmall(fileName), QSize(), QIcon::Normal, QIcon::Off);
+    ui->lFileType->setIcon(icon);
+    ui->lFileType->setIconSize(QSize(20, 22));
 }
 
 void ActiveTransfer::setProgress(long long completedSize, long long totalSize, bool cancellable)
@@ -47,10 +51,10 @@ void ActiveTransfer::setProgress(long long completedSize, long long totalSize, b
 
     active = true;
     regular = cancellable;
-    ui->pProgress->setProgress(permil, cancellable);
-    ui->lPercentage->setText(QString::number((permil + 5) / 10) + QString::fromAscii("%"));
+    ui->pProgress->setValue(permil);
     ui->pProgress->show();
-    ui->lType->show();
+    ui->lTransferType->show();
+    ui->lFileType->show();
     show();
 }
 
@@ -60,20 +64,23 @@ void ActiveTransfer::setType(int type)
     QIcon icon;
     if (type)
     {
-        icon.addFile(QString::fromUtf8(":/images/tray_upload_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-        ui->lPercentage->setStyleSheet(QString::fromAscii("color: rgb(119, 186, 216);"));
+        icon.addFile(QString::fromUtf8(":/images/upload_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+        ui->pProgress->setStyleSheet(QString::fromUtf8("QProgressBar#pProgress{background-color: #ececec;}"
+                                                        "QProgressBar#pProgress::chunk {background-color: #2ba6de;}"));
+
     }
     else
     {
-        icon.addFile(QString::fromUtf8(":/images/tray_download_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-        ui->lPercentage->setStyleSheet(QString::fromAscii("color: rgb(122, 177, 72);"));
+        icon.addFile(QString::fromUtf8(":/images/download_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+        ui->pProgress->setStyleSheet(QString::fromUtf8("QProgressBar#pProgress{background-color: #ececec;}"
+                                                        "QProgressBar#pProgress::chunk {background-color: #31b500;}"));
     }
 
 #ifndef Q_OS_LINUX
-    ui->lType->setIcon(icon);
-    ui->lType->setIconSize(QSize(24, 24));
+    ui->lTransferType->setIcon(icon);
+    ui->lTransferType->setIconSize(QSize(12, 12));
 #else
-    ui->lType->setPixmap(icon.pixmap(QSize(24, 24)));
+    ui->lTransferType->setPixmap(icon.pixmap(QSize(12, 12)));
 #endif
 }
 
@@ -81,9 +88,9 @@ void ActiveTransfer::hideTransfer()
 {
     active = false;
     ui->lFileName->setText(QString::fromAscii(""));
-    ui->lPercentage->setText(QString::fromAscii(""));
     ui->pProgress->hide();
-    ui->lType->hide();
+    ui->lTransferType->hide();
+    ui->lFileType->hide();
     hide();
 }
 
@@ -100,10 +107,4 @@ void ActiveTransfer::mouseReleaseEvent(QMouseEvent *event)
     }
 
     emit cancel(event->x(), event->y());
-}
-
-void ActiveTransfer::onCancelClicked(int x, int y)
-{
-    emit cancel(ui->pProgress->pos().x() + x,
-                ui->pProgress->pos().y() + y);
 }

@@ -320,6 +320,18 @@ QString Utilities::getExtensionPixmapMedium(QString fileName)
     return getExtensionPixmap(fileName, QString::fromAscii(":/images/drag_"));
 }
 
+QString Utilities::getAvatarPath(QString email)
+{
+    if (!email.size())
+    {
+        return QString();
+    }
+
+    QString avatarsPath = QString::fromUtf8("%1/avatars/%2.jpg")
+            .arg(Preferences::instance()->getDataPath()).arg(email);
+    return QDir::toNativeSeparators(avatarsPath);
+}
+
 bool Utilities::removeRecursively(QString path)
 {
     if (!path.size())
@@ -618,4 +630,20 @@ QString Utilities::getDefaultBasePath()
         return rootPath;
     }
     return QString();
+}
+
+QChar Utilities::getAvatarLetter()
+{
+    QString fullname = (Preferences::instance()->firstName() + Preferences::instance()->lastName()).trimmed();
+    if (fullname.isEmpty())
+    {
+        QString email = Preferences::instance()->email();
+        if (email.size())
+        {
+            return email.at(0).toUpper();
+        }
+        return QChar::fromAscii(' ');
+    }
+
+    return fullname.at(0).toUpper();
 }

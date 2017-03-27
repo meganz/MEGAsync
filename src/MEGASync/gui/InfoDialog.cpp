@@ -8,12 +8,14 @@
 #include <QSignalMapper>
 #include <QVBoxLayout>
 #include <QFileInfo>
+#include <QEvent>
 #include "InfoDialog.h"
 #include "ActiveTransfer.h"
 #include "RecentFile.h"
 #include "ui_InfoDialog.h"
 #include "control/Utilities.h"
 #include "MegaApplication.h"
+#include "MenuItemAction.h"
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -26,7 +28,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui(new Ui::InfoDialog)
 {
     ui->setupUi(this);
-
     //Set window properties
     setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
 
@@ -54,7 +55,13 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     activeDownload = NULL;
     activeUpload = NULL;
     transferMenu = NULL;
+    storageUsedMenu = NULL;
+    cloudItem = NULL;
+    inboxItem = NULL;
+    sharesItem = NULL;
+    rubbishItem = NULL;
     gWidget = NULL;
+    overQuotaState = false;
 
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
@@ -62,6 +69,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->wTransfer1->hideTransfer();
     ui->wTransfer2->setType(MegaTransfer::TYPE_UPLOAD);
     ui->wTransfer2->hideTransfer();
+
+    ui->pUsageStorage->installEventFilter(this);
 
     state = STATE_STARTING;
     megaApi = app->getMegaApi();
@@ -83,13 +92,17 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     transfersFinishedTimer.setInterval(5000);
     connect(&transfersFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllTransfersFinished()));
 
-    recentFilesTimer.setSingleShot(true);
-    recentFilesTimer.setInterval(200);
-    connect(&recentFilesTimer, SIGNAL(timeout()), this, SLOT(onUpdateRecentFiles()));
-
     ui->wDownloadDesc->hide();
     ui->wUploadDesc->hide();
     ui->lBlockedItem->setText(QString::fromUtf8(""));
+    ui->bDotUsedQuota->hide();
+    ui->bDotUsedStorage->hide();
+    ui->sUsedData->setCurrentWidget(ui->pStorage);
+
+    ui->lDescDisabled->setText(QString::fromUtf8("<p style=\" line-height: 140%;\"><span style=\"font-size:14px;\">")
+                               + ui->lDescDisabled->text().replace(QString::fromUtf8("[A]"), QString::fromUtf8("<font color=\"#d90007\"> "))
+                                                          .replace(QString::fromUtf8("[/A]"), QString::fromUtf8(" </font>"))
+                                                                   + QString::fromUtf8("</span></p>"));
 
 #ifdef __APPLE__
     arrow = new QPushButton(this);
@@ -113,20 +126,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     overlay->setStyleSheet(QString::fromAscii("background-color: rgba(247, 247, 247, 200); "
                                               "border: none; "));
 
-#ifdef __APPLE__
-    minHeightAnimation = new QPropertyAnimation();
-    maxHeightAnimation = new QPropertyAnimation();
-    animationGroup = new QParallelAnimationGroup();
-
-    minHeightAnimation->setTargetObject(this);
-    maxHeightAnimation->setTargetObject(this);
-    minHeightAnimation->setPropertyName("minimumHeight");
-    maxHeightAnimation->setPropertyName("maximumHeight");
-    animationGroup->addAnimation(minHeightAnimation);
-    animationGroup->addAnimation(maxHeightAnimation);
-    connect(animationGroup, SIGNAL(finished()), this, SLOT(onAnimationFinished()));
-#endif
-
     ui->wTransfer1->hide();
     ui->wTransfer1->hide();
     overlay->resize(ui->wTransfers->minimumSize());
@@ -140,15 +139,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
     connect(ui->wTransfer1, SIGNAL(cancel(int, int)), this, SLOT(onTransfer1Cancel(int, int)));
     connect(ui->wTransfer2, SIGNAL(cancel(int, int)), this, SLOT(onTransfer2Cancel(int, int)));
-
-#ifdef __APPLE__
-    ui->wRecentlyUpdated->hide();
-    ui->wRecent1->hide();
-    ui->wRecent2->hide();
-    ui->wRecent3->hide();
-    setMinimumHeight(377);
-    setMaximumHeight(377);
-#endif
 
     if (preferences->logged())
     {
@@ -170,21 +160,80 @@ InfoDialog::~InfoDialog()
     delete activeUpload;
 }
 
-void InfoDialog::setUsage()
+void InfoDialog::setUserName()
 {
-    if (!preferences->totalStorage())
+    QString first = preferences->firstName();
+    QString last = preferences->lastName();
+    if (first.isNull() || last.isNull())
     {
         return;
     }
+    QString pattern(QString::fromUtf8("%1 %2").arg(preferences->firstName()).arg(preferences->lastName()));
+    ui->lName->setText(pattern);
+}
 
-    int percentage = ceil((100 * preferences->usedStorage()) / (double)preferences->totalStorage());
-    ui->pUsage->setProgress(preferences->cloudDriveStorage(), preferences->rubbishStorage(),
-                            preferences->inShareStorage(), preferences->inboxStorage(),
-                            preferences->totalStorage(), preferences->usedStorage());
-    QString used = tr("%1 of %2").arg(QString::number(percentage).append(QString::fromAscii("%")))
-            .arg(Utilities::getSizeString(preferences->totalStorage()));
-    ui->lPercentageUsed->setText(used);
-    ui->lTotalUsed->setText(tr("Usage: %1").arg(Utilities::getSizeString(preferences->usedStorage())));
+void InfoDialog::setAvatar()
+{
+    const char *email = megaApi->getMyEmail();
+    if (email)
+    {
+        drawAvatar(QString::fromUtf8(email));
+        delete [] email;
+    }
+}
+
+void InfoDialog::setUsage()
+{
+    if (preferences->accountType() == 0)
+    {
+        ui->bDotUsedQuota->hide();
+        ui->bDotUsedStorage->hide();
+    }
+    else
+    {
+        ui->bDotUsedQuota->show();
+        ui->bDotUsedStorage->show();
+    }
+
+    on_bDotUsedStorage_clicked();
+
+    if (preferences->totalStorage() == 0)
+    {
+        ui->pUsageStorage->setValue(0);
+        ui->lPercentageUsedStorage->setText(QString::fromUtf8(""));
+        ui->lTotalUsedStorage->setText(tr("USED SPACE %1").arg(tr("Data temporarily unavailable")));
+    }
+    else
+    {
+        int percentage = ceil((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
+        ui->pUsageStorage->setValue((percentage < 100) ? percentage : 100);
+        QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1&nbsp;</span>")
+                                     .arg(QString::number(percentage).append(QString::fromAscii("%"))))
+                                     .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
+                                     .arg(Utilities::getSizeString(preferences->totalStorage())));
+        ui->lPercentageUsedStorage->setText(used);
+        ui->lTotalUsedStorage->setText(tr("USED SPACE %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
+                                       .arg(Utilities::getSizeString(preferences->usedStorage()))));
+    }
+
+    if (preferences->totalBandwidth() == 0)
+    {
+        ui->pUsageQuota->setValue(0);
+        ui->lPercentageUsedQuota->setText(QString::fromUtf8(""));
+        ui->lTotalUsedQuota->setText(tr("USED BANDWIDTH %1").arg(tr("Data temporarily unavailable")));
+    }
+    else
+    {
+        int percentage = ceil(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+        ui->pUsageQuota->setValue((percentage < 100) ? percentage : 100);
+        QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1&nbsp;</span>")
+                                     .arg(QString::number(percentage).append(QString::fromAscii("%"))))
+                                     .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
+                                     .arg(Utilities::getSizeString(preferences->totalBandwidth())));
+        ui->lPercentageUsedQuota->setText(used);
+        ui->lTotalUsedQuota->setText(tr("USED BANDWIDTH %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
+                                                              .arg(Utilities::getSizeString(preferences->usedBandwidth()))));
+    }
 }
 
 void InfoDialog::setTransfer(MegaTransfer *transfer)
@@ -241,40 +290,6 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
     wTransfer->setProgress(completedSize, totalSize, !transfer->isSyncTransfer());
 }
 
-void InfoDialog::addRecentFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey)
-{
-    RecentFileInfo info1 = ui->wRecent1->getFileInfo();
-    RecentFileInfo info2 = ui->wRecent2->getFileInfo();
-    ui->wRecent3->setFileInfo(info2);
-    ui->wRecent2->setFileInfo(info1);
-    ui->wRecent1->setFile(fileName, fileHandle, localPath, nodeKey, QDateTime::currentDateTime().toMSecsSinceEpoch());
-
-#ifdef __APPLE__
-    if (!ui->wRecentlyUpdated->isVisible())
-    {
-        showRecentList();
-    }
-#endif
-    updateRecentFiles();
-}
-
-void InfoDialog::clearRecentFiles()
-{
-    ui->wRecent1->clear();
-    ui->wRecent2->clear();
-    ui->wRecent3->clear();
-    updateRecentFiles();
-
-#ifdef __APPLE__
-    ui->wRecentlyUpdated->hide();
-    ui->wRecent1->hide();
-    ui->wRecent2->hide();
-    ui->wRecent3->hide();
-    setMinimumHeight(377);
-    setMaximumHeight(377);
-#endif
-}
-
 void InfoDialog::updateTransfers()
 {
     remainingUploads = megaApi->getNumPendingUploads();
@@ -300,36 +315,28 @@ void InfoDialog::updateTransfers()
         if (remainingDownloads)
         {
             int totalRemainingSeconds = meanDownloadSpeed ? remainingDownloadBytes / meanDownloadSpeed : 0;
-            int remainingHours = totalRemainingSeconds/3600;
-            if ((remainingHours<0) || (remainingHours>99))
-            {
-                totalRemainingSeconds = 0;
-            }
 
-            int remainingMinutes = (totalRemainingSeconds%3600)/60;
-            int remainingSeconds =  (totalRemainingSeconds%60);
             QString remainingTime;
             if (totalRemainingSeconds)
             {
-                remainingTime = QString::fromAscii("%1:%2:%3").arg(remainingHours, 2, 10, QChar::fromAscii('0'))
-                    .arg(remainingMinutes, 2, 10, QChar::fromAscii('0'))
-                    .arg(remainingSeconds, 2, 10, QChar::fromAscii('0'));
+                if (totalRemainingSeconds < 60)
+                {
+                    remainingTime = QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(QString::fromUtf8("&lt; 1"));
+                }
+                else
+                {
+                    remainingTime = Utilities::getTimeString(totalRemainingSeconds, false);
+                }
             }
             else
             {
-                remainingTime = QString::fromAscii("--:--:--");
+                remainingTime = QString::fromAscii("");
             }
 
             !preferences->logged() ? gWidget->setRemainingTime(remainingTime)
                       : ui->lRemainingTimeD->setText(remainingTime);
             ui->wDownloadDesc->show();
-            QString fullPattern = QString::fromAscii("<span style=\"color: rgb(120, 178, 66); \">%1</span>%2");
-            QString operation = tr("Downloading ");
-            if (operation.size() && operation[operation.size() - 1] != QChar::fromAscii(' '))
-            {
-                operation.append(QChar::fromAscii(' '));
-            }
-
+            QString fullPattern = QString::fromAscii("%1");
             QString pattern(tr("%1 of %2 (%3/s)"));
             QString pausedPattern(tr("%1 of %2 (paused)"));
             QString invalidSpeedPattern(tr("%1 of %2"));
@@ -360,7 +367,7 @@ void InfoDialog::updateTransfers()
 
             if (preferences->logged())
             {
-                ui->lDownloads->setText(fullPattern.arg(operation).arg(downloadString));
+                ui->lDownloads->setText(fullPattern.arg(downloadString));
                 if (!ui->wTransfer1->isActive())
                 {
                     ui->wDownloadDesc->hide();
@@ -372,7 +379,7 @@ void InfoDialog::updateTransfers()
             }
             else
             {
-                gWidget->setDownloadLabel(fullPattern.arg(operation).arg(downloadString));
+                gWidget->setDownloadLabel(fullPattern.arg(downloadString));
                 if (!gWidget->getTransfer()->isActive())
                 {
                     gWidget->hideDownloads();
@@ -387,35 +394,27 @@ void InfoDialog::updateTransfers()
         if (remainingUploads)
         {
             int totalRemainingSeconds = meanUploadSpeed ? remainingUploadBytes / meanUploadSpeed : 0;
-            int remainingHours = totalRemainingSeconds/3600;
-            if ((remainingHours < 0) || (remainingHours > 99))
-            {
-                totalRemainingSeconds = 0;
-            }
 
-            int remainingMinutes = (totalRemainingSeconds%3600)/60;
-            int remainingSeconds =  (totalRemainingSeconds%60);
             QString remainingTime;
             if (totalRemainingSeconds)
             {
-                remainingTime = QString::fromAscii("%1:%2:%3").arg(remainingHours, 2, 10, QChar::fromAscii('0'))
-                    .arg(remainingMinutes, 2, 10, QChar::fromAscii('0'))
-                    .arg(remainingSeconds, 2, 10, QChar::fromAscii('0'));
+                if (totalRemainingSeconds < 60)
+                {
+                    remainingTime = QString::fromUtf8("%1 <span style=\"color:#777777; text-decoration:none;\">m</span>").arg(QString::fromUtf8("&lt; 1"));
+                }
+                else
+                {
+                    remainingTime = Utilities::getTimeString(totalRemainingSeconds, false);
+                }
             }
             else
             {
-                remainingTime = QString::fromAscii("--:--:--");
+                remainingTime = QString::fromAscii("");
             }
 
             ui->lRemainingTimeU->setText(remainingTime);
             ui->wUploadDesc->show();
-            QString fullPattern = QString::fromAscii("<span style=\"color: rgb(119, 185, 217); \">%1</span>%2");
-            QString operation = tr("Uploading ");
-            if (operation.size() && operation[operation.size() - 1] != QChar::fromAscii(' '))
-            {
-                operation.append(QChar::fromAscii(' '));
-            }
-
+            QString fullPattern = QString::fromAscii("%1");
             QString pattern(tr("%1 of %2 (%3/s)"));
             QString pausedPattern(tr("%1 of %2 (paused)"));
             QString invalidSpeedPattern(tr("%1 of %2"));
@@ -441,7 +440,7 @@ void InfoDialog::updateTransfers()
                 }
             }
 
-            ui->lUploads->setText(fullPattern.arg(operation).arg(uploadString));
+            ui->lUploads->setText(fullPattern.arg(uploadString));
 
             if (!ui->wTransfer2->isActive())
             {
@@ -590,10 +589,35 @@ void InfoDialog::increaseUsedStorage(long long bytes, bool isInShare)
     setUsage();
 }
 
+void InfoDialog::setOverQuotaMode(bool state)
+{
+    overQuotaState = state;
+    if (state)
+    {
+        ui->sActiveTransfers->setCurrentWidget(ui->pOverQuota);
+        ui->bUpgrade->setProperty("overquota", true);
+        ui->pUsageStorage->setProperty("overquota", true);
+        ui->bUpgrade->style()->unpolish(ui->bUpgrade);
+        ui->bUpgrade->style()->polish(ui->bUpgrade);
+        ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
+        ui->pUsageStorage->style()->polish(ui->pUsageStorage);
+    }
+    else
+    {
+        ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+        ui->bUpgrade->setProperty("overquota", false);
+        ui->pUsageStorage->setProperty("overquota", false);
+        ui->bUpgrade->style()->unpolish(ui->bUpgrade);
+        ui->bUpgrade->style()->polish(ui->bUpgrade);
+        ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
+        ui->pUsageStorage->style()->polish(ui->pUsageStorage);
+    }
+}
+
 void InfoDialog::updateState()
 {
     updateTransfers();
-    if (ui->bPause->isChecked())
+    if (preferences->getGlobalPaused())
     {
         if (!preferences->logged())
         {
@@ -675,7 +699,7 @@ void InfoDialog::updateState()
                 ui->lBlockedItem->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a style=\" font-size: 12px;\" href=\"local://#%1\">%2</a>")
                                                                .arg(fileBlocked.absoluteFilePath())
                                                                .arg(fileBlocked.fileName())));
-                delete blockedPath;
+                delete [] blockedPath;
             }
             else if (megaApi->areServersBusy())
             {
@@ -742,22 +766,6 @@ void InfoDialog::updateState()
     }
 }
 
-#ifdef __APPLE__
-void InfoDialog::showRecentlyUpdated(bool show)
-{
-    ui->wRecent->setVisible(show);
-    if (!show)
-    {
-        this->setMinimumHeight(377);
-        this->setMaximumHeight(377);
-    }
-    else
-    {
-        on_cRecentlyUpdated_stateChanged(0);
-    }
-}
-#endif
-
 void InfoDialog::closeSyncsMenu()
 {
 #ifdef __APPLE__
@@ -770,17 +778,7 @@ void InfoDialog::closeSyncsMenu()
     {
         transferMenu->close();
     }
-
-    ui->wRecent1->closeMenu();
-    ui->wRecent2->closeMenu();
-    ui->wRecent3->closeMenu();
 #endif
-}
-
-void InfoDialog::setPaused(bool paused)
-{
-    ui->bPause->setChecked(paused);
-    ui->bPause->setEnabled(true);
 }
 
 void InfoDialog::addSync()
@@ -859,7 +857,7 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
     transferMenu->addAction(tr("Cancel all uploads"), this, SLOT(cancelAllUploads()));
 
 #ifdef __APPLE__
-    transferMenu->exec(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
+    transferMenu->exec(ui->wTransfer2->mapToGlobal(QPoint(x, y)));
     if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
     {
         this->hide();
@@ -868,7 +866,7 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
     transferMenu->deleteLater();
     transferMenu = NULL;
 #else
-    transferMenu->popup(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
+    transferMenu->popup(ui->wTransfer2->mapToGlobal(QPoint(x, y)));
 #endif
 }
 
@@ -1007,7 +1005,7 @@ void InfoDialog::onAllTransfersFinished()
 {
     if (!remainingDownloads && !remainingUploads)
     {
-        if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
+        if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
         {
             ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
         }
@@ -1023,13 +1021,6 @@ void InfoDialog::onAllTransfersFinished()
 
         app->showNotificationMessage(tr("All transfers have been completed"));
     }
-}
-
-void InfoDialog::onUpdateRecentFiles()
-{
-    ui->wRecent1->updateWidget();
-    ui->wRecent2->updateWidget();
-    ui->wRecent3->updateWidget();
 }
 
 void InfoDialog::on_bSettings_clicked()
@@ -1055,17 +1046,6 @@ void InfoDialog::on_bSettings_clicked()
 #endif
 }
 
-void InfoDialog::on_bTransferManager_clicked()
-{
-    app->transferManagerActionClicked();
-}
-
-void InfoDialog::on_bOfficialWeb_clicked()
-{
-    QString webUrl = QString::fromAscii("https://mega.nz/");
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(webUrl));
-}
-
 void InfoDialog::on_bSyncFolder_clicked()
 {
     int num = preferences->getNumSyncedFolders();
@@ -1084,22 +1064,11 @@ void InfoDialog::on_bSyncFolder_clicked()
     else
     {
         syncsMenu = new QMenu();
-        #ifndef __APPLE__
-            syncsMenu->setStyleSheet(QString::fromAscii(
-                    "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
-                    "QMenu::item {background-color: white; color: black;} "
-                    "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
-        #else
-            syncsMenu->setStyleSheet(QString::fromAscii("QMenu {padding-left: -10px; padding-top: 4px; } "
-                    "QMenu::separator {height: 8px; margin: 0px; }"));
-        #endif
-        QAction *addSyncAction = syncsMenu->addAction(tr("Add Sync"), this, SLOT(addSync()));
-#ifdef __APPLE__
-        addSyncAction->setIcon(QIcon(QString::fromAscii("://images/tray_add_sync_ico.png")));
-#else
-        addSyncAction->setIcon(QIcon(QString::fromAscii("://images/tray_add_sync_ico2.png")));
-#endif
-        addSyncAction->setIconVisibleInMenu(true);
+        syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+
+        MenuItemAction *addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
+        connect(addSyncAction, SIGNAL(triggered()), this, SLOT(addSync()));
+        syncsMenu->addAction(addSyncAction);
         syncsMenu->addSeparator();
 
         QSignalMapper *menuSignalMapper = new QSignalMapper();
@@ -1114,13 +1083,9 @@ void InfoDialog::on_bSyncFolder_clicked()
             }
 
             activeFolders++;
-            QAction *action = syncsMenu->addAction(preferences->getSyncName(i), menuSignalMapper, SLOT(map()));
-#ifdef __APPLE__
-            action->setIcon(QIcon(QString::fromAscii("://images/tray_sync_ico.png")));
-#else
-            action->setIcon(QIcon(QString::fromAscii("://images/tray_sync_ico2.png")));
-#endif
-            action->setIconVisibleInMenu(true);
+            MenuItemAction *action = new MenuItemAction(preferences->getSyncName(i), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
+            connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()));
+            syncsMenu->addAction(action);
             menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
         }
 
@@ -1141,24 +1106,16 @@ void InfoDialog::on_bSyncFolder_clicked()
     delete rootNode;
 }
 
+void InfoDialog::on_bUpgrade_clicked()
+{
+    QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
+    QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
+    megaApi->getSessionTransferURL(url.toUtf8().constData());
+}
+
 void InfoDialog::openFolder(QString path)
 {
     QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
-}
-
-void InfoDialog::updateRecentFiles()
-{
-    if (!recentFilesTimer.isActive())
-    {
-        recentFilesTimer.start();
-    }
-}
-
-void InfoDialog::disableGetLink(bool disable)
-{
-    ui->wRecent1->disableGetLink(disable);
-    ui->wRecent2->disableGetLink(disable);
-    ui->wRecent3->disableGetLink(disable);
 }
 
 void InfoDialog::addSync(MegaHandle h)
@@ -1225,15 +1182,24 @@ void InfoDialog::moveArrow(QPoint p)
 }
 #endif
 
-void InfoDialog::on_bPause_clicked()
+void InfoDialog::on_bChats_clicked()
 {
-    app->pauseTransfers(ui->bPause->isChecked());
+
+}
+
+void InfoDialog::on_bTransferManager_clicked()
+{
+    app->transferManagerActionClicked();
 }
 
 void InfoDialog::onOverlayClicked()
 {
-    ui->bPause->setChecked(false);
-    on_bPause_clicked();
+    app->pauseTransfers();
+}
+
+void InfoDialog::clearUserAttributes()
+{
+    ui->bAvatar->clearData();
 }
 
 void InfoDialog::changeEvent(QEvent *event)
@@ -1243,6 +1209,7 @@ void InfoDialog::changeEvent(QEvent *event)
         ui->retranslateUi(this);
         if (preferences->logged())
         {
+            setUserName();
             if (preferences->totalStorage())
             {
                 setUsage();
@@ -1250,9 +1217,41 @@ void InfoDialog::changeEvent(QEvent *event)
             updateSyncsButton();
             state = STATE_STARTING;
             updateState();
+            ui->lDescDisabled->setText(QString::fromUtf8("<p style=\" line-height: 140%;\"><span style=\"font-size:14px;\">")
+                                       + ui->lDescDisabled->text().replace(QString::fromUtf8("[A]"), QString::fromUtf8("<font color=\"#d90007\"> "))
+                                                                  .replace(QString::fromUtf8("[/A]"), QString::fromUtf8(" </font>"))
+                                                                           + QString::fromUtf8("</span></p>"));
         }
     }
     QDialog::changeEvent(event);
+}
+
+bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
+{
+    if (obj != ui->pUsageStorage)
+    {
+        return false;
+    }
+
+    //Hide if InfoDialog is not visible
+    if (e->type() == QEvent::Hide)
+    {
+        if (storageUsedMenu)
+        {
+            storageUsedMenu->hide();
+        }
+    }
+
+    if (e->type() == QEvent::MouseButtonPress)
+    {
+        QMouseEvent* me = dynamic_cast<QMouseEvent*>(e);
+        createQuotaUsedMenu();
+        QPoint p = ui->pUsageStorage->mapToGlobal(me->pos());
+        QSize s = storageUsedMenu->sizeHint();
+        storageUsedMenu->exec(QPoint(p.x() - s.width() / 2, p.y() - s.height()));
+    }
+
+    return false;
 }
 
 void InfoDialog::regenerateLayout()
@@ -1277,55 +1276,36 @@ void InfoDialog::regenerateLayout()
             connect(gWidget, SIGNAL(pauseClicked()), this, SLOT(onOverlayClicked()));
         }
 
-#ifndef __APPLE__
-        ui->wRecent->hide();
-        ui->wRecentlyUpdated->hide();
-        ui->wRecent1->hide();
-        ui->wRecent2->hide();
-        ui->wRecent3->hide();
-        setMinimumHeight(365);
-        setMaximumHeight(365);
-#endif
-
-        ui->bPause->setVisible(false);
+        ui->bChats->setVisible(false);
         ui->bTransferManager->setVisible(false);
         ui->bSyncFolder->setVisible(false);
-        dialogLayout->removeWidget(ui->sActiveTransfers);
-        ui->sActiveTransfers->setVisible(false);
-        dialogLayout->removeWidget(ui->wUsage);
-        ui->wUsage->setVisible(false);
+        ui->bState->setVisible(false);
+        ui->bAvatar->setVisible(false);
+        ui->bTransferManager->setVisible(false);
+        dialogLayout->removeWidget(ui->wActiveTransfersContainer);
+        ui->wActiveTransfersContainer->setVisible(false);
+        dialogLayout->removeWidget(ui->wContainerBottom);
+        ui->wContainerBottom->setVisible(false);
         dialogLayout->addWidget(gWidget);
         gWidget->setVisible(true);
-
-        ((QVBoxLayout *)dialogLayout)->insertWidget(dialogLayout->count(), ui->wRecent);
-        ((QVBoxLayout *)dialogLayout)->insertWidget(dialogLayout->count(), ui->wBottom);
 
         overlay->setVisible(false);
     }
     else
     {
-#ifndef __APPLE__
-        ui->wRecent->show();
-        ui->wRecentlyUpdated->show();
-        ui->wRecent1->show();
-        ui->wRecent2->show();
-        ui->wRecent3->show();
-        setMaximumHeight(539);
-        setMinimumHeight(539);
-#endif
-
-        ui->bPause->setVisible(true);
+        ui->bChats->setVisible(true);
         ui->bTransferManager->setVisible(true);
         ui->bSyncFolder->setVisible(true);
+        ui->bState->setVisible(true);
+        ui->bAvatar->setVisible(true);
+        ui->bTransferManager->setVisible(true);
         dialogLayout->removeWidget(gWidget);
         gWidget->setVisible(false);
-        dialogLayout->addWidget(ui->sActiveTransfers);
-        ui->sActiveTransfers->setVisible(true);
+        dialogLayout->addWidget(ui->wActiveTransfersContainer);
+        ui->wActiveTransfersContainer->setVisible(true);
+        dialogLayout->addWidget(ui->wContainerBottom);
+        ui->wContainerBottom->setVisible(true);
 
-        ((QVBoxLayout *)dialogLayout)->insertWidget(dialogLayout->count(), ui->wRecent);
-        dialogLayout->addWidget(ui->wUsage);
-        ui->wUsage->setVisible(true);
-        ((QVBoxLayout *)dialogLayout)->insertWidget(dialogLayout->count(), ui->wBottom);
     }
 
     if (activeDownload)
@@ -1341,9 +1321,101 @@ void InfoDialog::regenerateLayout()
     app->onGlobalSyncStateChanged(NULL);
 }
 
+void InfoDialog::drawAvatar(QString email)
+{
+    QString avatarsPath = Utilities::getAvatarPath(email);
+    QFileInfo avatar(avatarsPath);
+    if (avatar.exists())
+    {
+        ui->bAvatar->setAvatarImage(Utilities::getAvatarPath(email));
+    }
+    else
+    {
+        QString color;
+        const char* userHandle = megaApi->getMyUserHandle();
+        const char* avatarColor = megaApi->getUserAvatarColor(userHandle);
+        if (avatarColor)
+        {
+            color = QString::fromUtf8(avatarColor);
+            delete [] avatarColor;
+        }
+        ui->bAvatar->setAvatarLetter(Utilities::getAvatarLetter(), color);
+        delete [] userHandle;
+    }
+}
+
+void InfoDialog::createQuotaUsedMenu()
+{
+    if (!storageUsedMenu)
+    {
+        storageUsedMenu = new DataUsageMenu(this);
+    }
+    else
+    {
+        QList<QAction *> actions = storageUsedMenu->actions();
+        for (int i = 0; i < actions.size(); i++)
+        {
+            storageUsedMenu->removeAction(actions[i]);
+        }
+    }
+
+    if (cloudItem)
+    {
+        cloudItem->deleteLater();
+        cloudItem = NULL;
+    }
+    cloudItem = new MenuItemAction(tr("Cloud Drive"), Utilities::getSizeString(preferences->cloudDriveStorage()), QIcon(QString::fromAscii("://images/get_link_ico.png")));
+
+    if (inboxItem)
+    {
+        inboxItem->deleteLater();
+        inboxItem = NULL;
+    }
+    inboxItem = new MenuItemAction(tr("Inbox"), Utilities::getSizeString(preferences->inboxStorage()), QIcon(QString::fromAscii("://images/get_link_ico.png")));
+
+    if (sharesItem)
+    {
+        sharesItem->deleteLater();
+        sharesItem = NULL;
+    }
+    sharesItem = new MenuItemAction(tr("Incoming Shares"), Utilities::getSizeString(preferences->inShareStorage()), QIcon(QString::fromAscii("://images/get_link_ico.png")));
+
+    if (rubbishItem)
+    {
+        rubbishItem->deleteLater();
+        rubbishItem = NULL;
+    }
+    rubbishItem = new MenuItemAction(tr("Rubbish bin"), Utilities::getSizeString(preferences->rubbishStorage()), QIcon(QString::fromAscii("://images/get_link_ico.png")));
+
+    storageUsedMenu->addAction(cloudItem);
+    storageUsedMenu->addAction(inboxItem);
+    storageUsedMenu->addAction(sharesItem);
+    storageUsedMenu->addAction(rubbishItem);
+}
+
 void InfoDialog::onUserAction(int action)
 {
     app->userAction(action);
+}
+
+void InfoDialog::on_bDotUsedStorage_clicked()
+{
+    ui->bDotUsedStorage->setIcon(QIcon(QString::fromAscii("://images/filled_dot.png")));
+    ui->bDotUsedStorage->setIconSize(QSize(16,16));
+    ui->bDotUsedQuota->setIcon(QIcon(QString::fromAscii("://images/empty_dot.png")));
+    ui->bDotUsedQuota->setIconSize(QSize(16,16));
+
+    ui->sUsedData->setCurrentWidget(ui->pStorage);
+}
+
+void InfoDialog::on_bDotUsedQuota_clicked()
+{
+    ui->bDotUsedStorage->setIcon(QIcon(QString::fromAscii("://images/empty_dot.png")));
+    ui->bDotUsedStorage->setIconSize(QSize(16,16));
+    ui->bDotUsedQuota->setIcon(QIcon(QString::fromAscii("://images/filled_dot.png")));
+    ui->bDotUsedQuota->setIconSize(QSize(16,16));
+
+    ui->sUsedData->setCurrentWidget(ui->pQuota);
 }
 void InfoDialog::scanningAnimationStep()
 {
@@ -1370,76 +1442,5 @@ void InfoDialog::hideEvent(QHideEvent *event)
 {
     arrow->hide();
     QDialog::hideEvent(event);
-}
-
-void InfoDialog::on_cRecentlyUpdated_stateChanged(int arg1)
-{
-    ui->wRecent1->hide();
-    ui->wRecent2->hide();
-    ui->wRecent3->hide();
-    ui->cRecentlyUpdated->setEnabled(false);
-
-    if (ui->cRecentlyUpdated->isChecked())
-    {
-        minHeightAnimation->setTargetObject(this);
-        maxHeightAnimation->setTargetObject(this);
-        minHeightAnimation->setPropertyName("minimumHeight");
-        maxHeightAnimation->setPropertyName("maximumHeight");
-        minHeightAnimation->setStartValue(minimumHeight());
-        maxHeightAnimation->setStartValue(maximumHeight());
-        minHeightAnimation->setEndValue(408);
-        maxHeightAnimation->setEndValue(408);
-        minHeightAnimation->setDuration(150);
-        maxHeightAnimation->setDuration(150);
-        animationGroup->start();
-    }
-    else
-    {
-        /*minHeightAnimation->setTargetObject(this);
-        maxHeightAnimation->setTargetObject(this);
-        minHeightAnimation->setPropertyName("minimumHeight");
-        maxHeightAnimation->setPropertyName("maximumHeight");
-        minHeightAnimation->setStartValue(minimumHeight());
-        maxHeightAnimation->setStartValue(maximumHeight());
-        minHeightAnimation->setEndValue(552);
-        maxHeightAnimation->setEndValue(552);
-        minHeightAnimation->setDuration(150);
-        maxHeightAnimation->setDuration(150);
-        animationGroup->start();*/
-
-        //this->hide();
-        this->setMaximumHeight(552);
-        this->setMinimumHeight(552);
-        onAnimationFinished();
-        //this->show();
-    }
-}
-
-void InfoDialog::onAnimationFinished()
-{
-    if (this->minimumHeight() == 552)
-    {
-        ui->wRecent1->show();
-        ui->wRecent2->show();
-        ui->wRecent3->show();
-    }
-
-    ui->lRecentlyUpdated->show();
-    ui->cRecentlyUpdated->show();
-    ui->wRecentlyUpdated->show();
-    ui->cRecentlyUpdated->setEnabled(true);
-}
-
-
-void InfoDialog::showRecentList()
-{
-    on_cRecentlyUpdated_stateChanged(0);
-}
-#endif
-
-#ifndef Q_OS_LINUX
-void InfoDialog::on_bOfficialWebIcon_clicked()
-{
-    on_bOfficialWeb_clicked();
 }
 #endif

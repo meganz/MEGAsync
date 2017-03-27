@@ -153,6 +153,8 @@ const QString Preferences::PROXY_TEST_SUBSTRING             = QString::fromUtf8(
 const QString Preferences::syncsGroupKey            = QString::fromAscii("Syncs");
 const QString Preferences::currentAccountKey        = QString::fromAscii("currentAccount");
 const QString Preferences::emailKey                 = QString::fromAscii("email");
+const QString Preferences::firstNameKey             = QString::fromAscii("firstName");
+const QString Preferences::lastNameKey              = QString::fromAscii("lastName");
 const QString Preferences::emailHashKey             = QString::fromAscii("emailHash");
 const QString Preferences::privatePwKey             = QString::fromAscii("privatePw");
 const QString Preferences::totalStorageKey          = QString::fromAscii("totalStorage");
@@ -385,6 +387,42 @@ void Preferences::setEmail(QString email)
     mutex.lock();
     login(email);
     settings->setValue(emailKey, email);
+    settings->sync();
+    mutex.unlock();
+    emit stateChanged();
+}
+
+QString Preferences::firstName()
+{
+    mutex.lock();
+    assert(logged());
+    QString value = settings->value(firstNameKey, QString()).toString();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setFirstName(QString firstName)
+{
+    mutex.lock();
+    settings->setValue(firstNameKey, firstName);
+    settings->sync();
+    mutex.unlock();
+    emit stateChanged();
+}
+
+QString Preferences::lastName()
+{
+    mutex.lock();
+    assert(logged());
+    QString value = settings->value(lastNameKey, QString()).toString();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setLastName(QString lastName)
+{
+    mutex.lock();
+    settings->setValue(lastNameKey, lastName);
     settings->sync();
     mutex.unlock();
     emit stateChanged();

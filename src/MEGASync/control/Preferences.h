@@ -35,6 +35,10 @@ public:
     bool hasEmail(QString email);
     QString email();
     void setEmail(QString email);
+    QString firstName();
+    void setFirstName(QString firstName);
+    QString lastName();
+    void setLastName(QString lastName);
     QString emailHash();
     QString privatePw();
     void setSession(QString session);
@@ -335,6 +339,8 @@ protected:
     static const QString currentAccountKey;
     static const QString syncsGroupKey;
     static const QString emailKey;
+    static const QString firstNameKey;
+    static const QString lastNameKey;
     static const QString emailHashKey;
     static const QString privatePwKey;
     static const QString totalStorageKey;
