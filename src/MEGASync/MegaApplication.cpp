@@ -631,13 +631,6 @@ void MegaApplication::initialize()
     uploader = new MegaUploader(megaApi);
     downloader = new MegaDownloader(megaApi);
 
-    //Start the HTTP server
-    httpServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
-    connect(httpServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
-    connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
-    connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
-    connect(httpServer, SIGNAL(onSyncRequested(long long)), this, SLOT(syncFolder(long long)), Qt::QueuedConnection);
-
     connectivityTimer = new QTimer(this);
     connectivityTimer->setSingleShot(true);
     connectivityTimer->setInterval(Preferences::MAX_LOGIN_TIME_MS);
@@ -1089,6 +1082,7 @@ void MegaApplication::start()
         QString language = preferences->language();
         changeLanguage(language);
 
+        initHttpsServer();
         if (updated)
         {
             megaApi->sendEvent(99510, "MEGAsync update");
@@ -1157,6 +1151,7 @@ void MegaApplication::start()
                        preferences->privatePw().toUtf8().constData());
         }
 
+        initHttpsServer();
         if (updated)
         {
             megaApi->sendEvent(99510, "MEGAsync update");
@@ -2227,6 +2222,45 @@ void MegaApplication::deleteMenu(QMenu *menu)
     }
 }
 
+void MegaApplication::startHttpServer()
+{
+    //Start the HTTP server
+    delete httpServer;
+    httpServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
+    connect(httpServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
+    connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
+    connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
+    connect(httpServer, SIGNAL(onSyncRequested(long long)), this, SLOT(syncFolder(long long)), Qt::QueuedConnection);
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTPS server started");
+}
+
+void MegaApplication::initHttpsServer()
+{
+    if (preferences->getHttpsCertExpiration() - (QDateTime::currentMSecsSinceEpoch() / 1000) < Preferences::LOCAL_HTTPS_CERT_MAX_EXPIRATION_SECS)
+    {
+        megaApi->sendEvent(99515, "Local SSL certificate about to expire");
+        megaApi->getLocalSSLCertificate();
+    }
+    else
+    {
+        startHttpServer();
+
+        ConnectivityChecker *localHttpsChecker = new ConnectivityChecker(Preferences::LOCAL_HTTPS_TEST_URL);
+        localHttpsChecker->setTestString(Preferences::LOCAL_HTTPS_TEST_SUBSTRING);
+        localHttpsChecker->setTimeout(Preferences::LOCAL_HTTPS_TEST_TIMEOUT_MS);
+        localHttpsChecker->setMethod(ConnectivityChecker::METHOD_POST);
+        localHttpsChecker->setPostData(QByteArray(Preferences::LOCAL_HTTPS_TEST_POST_DATA.toUtf8()));
+        localHttpsChecker->setHeader(QByteArray("Origin"), QByteArray("https://mega.nz"));
+
+        connect(localHttpsChecker, SIGNAL(testError()), this, SLOT(onLocalHttpsCheckError()));
+        connect(localHttpsChecker, SIGNAL(testSuccess()), this, SLOT(onLocalHttpsCheckSuccess()));
+        connect(localHttpsChecker, SIGNAL(testFinished()), localHttpsChecker, SLOT(deleteLater()));
+
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing the local HTTPS server");
+        localHttpsChecker->startCheck();
+    }
+}
+
 void MegaApplication::triggerInstallUpdate()
 {
     if (appfinished)
@@ -2344,6 +2378,17 @@ void MegaApplication::onConnectivityCheckError()
     }
 
     showErrorMessage(tr("MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall."));
+}
+
+void MegaApplication::onLocalHttpsCheckSuccess()
+{
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTPS check succeeded");
+}
+
+void MegaApplication::onLocalHttpsCheckError()
+{
+    megaApi->sendEvent(99516, "Local HTTPS check failed");
+    megaApi->getLocalSSLCertificate();
 }
 
 void MegaApplication::setupWizardFinished(int result)
@@ -4878,6 +4923,51 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             preferences->setFirstStartDone();
             start();
         }
+        break;
+    }
+    case MegaRequest::TYPE_GET_LOCAL_SSL_CERT:
+    {
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            MegaStringMap *data = request->getMegaStringMap();
+            preferences->setHttpsKey(QString::fromUtf8(data->get("key")));
+            preferences->setHttpsCert(QString::fromUtf8(data->get("cert")));
+
+            QString intermediates;
+            QString key = QString::fromUtf8("intermediate_");
+            const char *value;
+            int i = 1;
+            while ((value = data->get((key + QString::number(i)).toUtf8().constData())))
+            {
+                if (i != 1)
+                {
+                    intermediates.append(QString::fromUtf8(";"));
+                }
+                intermediates.append(QString::fromUtf8(value));
+                i++;
+            }
+
+            preferences->setHttpsCertIntermediate(intermediates);
+            preferences->setHttpsCertExpiration(request->getNumber());
+            megaApi->sendEvent(99517, "Local SSL certificate renewed");
+            startHttpServer();
+            break;
+        }
+
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Error renewing the local SSL certificate");
+        if (e->getErrorCode() == MegaError::API_EACCESS)
+        {
+            static bool retried = false;
+            if (!retried)
+            {
+                retried = true;
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Trying to renew the local SSL certificate again");
+                megaApi->getLocalSSLCertificate();
+                break;
+            }
+        }
+
+        startHttpServer();
         break;
     }
     case MegaRequest::TYPE_FETCH_NODES:

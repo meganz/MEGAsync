@@ -163,6 +163,8 @@ public slots:
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();
+    void onLocalHttpsCheckSuccess();
+    void onLocalHttpsCheckError();
     void userAction(int action);
     void changeState();
     void showUpdatedMessage();
@@ -188,6 +190,8 @@ protected:
     void closeDialogs();
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
+    void startHttpServer();
+    void initHttpsServer();
 
 #ifdef __APPLE__
     MegaSystemTrayIcon *trayIcon;
