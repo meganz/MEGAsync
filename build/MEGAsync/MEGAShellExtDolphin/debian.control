@@ -1,0 +1,11 @@
+Source: dolphin-megasync
+Section: gnome
+Priority: optional
+Maintainer: MEGA Linux Team <linux@mega.co.nz>
+Homepage: https://mega.nz/#sync
+Build-Depends: debhelper, libqt4-dev, intltool, libglib2.0-0
+
+Package: dolphin-megasync
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, megasync
+Description: Extension for KDE based file managers to interact with Megasync

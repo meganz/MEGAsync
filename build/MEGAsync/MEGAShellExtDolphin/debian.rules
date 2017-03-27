@@ -1,0 +1,58 @@
+#!/usr/bin/make -f
+
+build: build-stamp
+build-stamp:
+	dh_testdir
+	cmake -DCMAKE_INSTALL_PREFIX="`kde4-config --prefix`" .
+	make
+	touch build-stamp
+
+build2:
+	if which kf5-config >/dev/null; then dh_testdir;  rm -r CMakeFiles; rm CMakeLists.txt; mv CMakeLists_kde5.txt CMakeLists.txt; cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" .; make; touch build-stamp; fi
+
+install2: build2
+	if which kf5-config >/dev/null; then dh_auto_install --destdir=debian/dolphin-megasync; fi
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+
+install: build
+	dh_auto_install --destdir=debian/dolphin-megasync
+
+# Build architecture-independent files here.
+binary-indep: build install build2 install2
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+#	dh_installdebconf
+	dh_installdocs
+	dh_installexamples
+	dh_installmenu
+#	dh_installlogrotate
+#	dh_installemacsen
+#	dh_installpam
+#	dh_installmime
+#	dh_installinit
+	dh_installcron
+	dh_installman
+	dh_installinfo
+#	dh_undocumented
+	dh_installchangelogs
+	dh_link
+	dh_strip
+	dh_compress
+	dh_fixperms
+#	dh_makeshlibs
+	dh_installdeb
+#	dh_perl
+#	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install

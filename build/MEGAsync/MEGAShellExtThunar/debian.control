@@ -1,0 +1,11 @@
+Source: thunar-megasync
+Section: gnome
+Priority: optional
+Maintainer: MEGA Linux Team <linux@mega.co.nz>
+Homepage: https://mega.nz/#sync
+Build-Depends: debhelper, libqt4-dev, intltool, libglib2.0-0, libthunarx-2-0, libthunarx-2-dev
+
+Package: thunar-megasync
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, megasync
+Description: Extension for Thunar to interact with Megasync

@@ -168,6 +168,7 @@ static void mega_ext_on_get_link_selected(GtkAction *action, gpointer user_data)
 static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UNUSED GtkWidget *window, GList *files)
 {
     MEGAExt *mega_ext = MEGA_EXT(provider);
+
     GList *l, *l_out = NULL;
     int syncedFiles, syncedFolders, unsyncedFiles, unsyncedFolders;
     gchar *out = NULL;
@@ -177,7 +178,8 @@ static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UN
     syncedFiles = syncedFolders = unsyncedFiles = unsyncedFolders = 0;
 
     // get list of selected objects
-    for(l = files; l != NULL; l = l->next) {
+    for (l = files; l != NULL; l = l->next)
+    {
         ThunarxFileInfo *file = THUNARX_FILE_INFO(l->data);
         gchar *path;
         GFile *fp;
@@ -185,66 +187,76 @@ static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UN
 
         fp = thunarx_file_info_get_location(file);
         if (!fp)
+        {
             continue;
+        }
 
         path = g_file_get_path(fp);
         if (!path)
+        {
             continue;
+        }
 
         // avoid sending requests for files which are not in synced folders
         // but make sure we received the list of synced folders first
-        if (mega_ext->syncs_received && !mega_ext_path_in_sync(mega_ext, path)) {
+        if (mega_ext->syncs_received && !mega_ext_path_in_sync(mega_ext, path))
+        {
             state = FILE_NOTFOUND;
-        } else
+        }
+        else
+        {
             state = mega_ext_client_get_path_state(mega_ext, path);
+        }
         g_free(path);
 
         if (state == FILE_ERROR)
+        {
             continue;
+        }
 
         g_debug("State: %s", file_state_to_str(state));
 
         g_object_set_data_full((GObject*)file, "MEGAExtension::state", GINT_TO_POINTER(state), NULL);
 
         // count the number of synced / unsynced files and folders
-        if (state == FILE_SYNCED || state == FILE_SYNCING || state == FILE_PENDING) {
-            if (thunarx_file_info_is_directory(file)) {
+        if (state == FILE_SYNCED || state == FILE_SYNCING || state == FILE_PENDING) 
+        {
+            if (thunarx_file_info_is_directory(file)) 
+            {
                 syncedFolders++;
-            } else {
+            }
+            else
+            {
                 syncedFiles++;
             }
-        } else {
-            if (thunarx_file_info_is_directory(file)) {
+        }
+        else
+        {
+            if (thunarx_file_info_is_directory(file)) 
+            {
                 unsyncedFolders++;
-            } else {
+            }
+            else
+            {
                 unsyncedFiles++;
             }
         }
     }
 
     // if there any unsynced files / folders selected
-    if (unsyncedFiles || unsyncedFolders) {
+    if (unsyncedFiles || unsyncedFolders) 
+    {
         GtkWidget *action = NULL;
 
-        // cache string
-        if (mega_ext->string_upload) {
-            action = g_object_new (GTK_TYPE_ACTION,
-                "name", "MEGAExtension::upload_to_mega",
-                "icon-name", "mega",
-                "label", mega_ext->string_upload,
-                NULL
-            );
-        } else {
-            out = mega_ext_client_get_string(mega_ext, STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
-            mega_ext->string_upload = g_strdup(out);
-            g_free(out);
-            action = g_object_new (GTK_TYPE_ACTION,
-                "name", "MEGAExtension::upload_to_mega",
-                "icon-name", "mega",
-                "label", mega_ext->string_upload,
-                NULL
-            );
-        }
+        out = mega_ext_client_get_string(mega_ext, STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
+        mega_ext->string_upload = g_strdup(out);
+        g_free(out);
+        action = g_object_new (GTK_TYPE_ACTION,
+            "name", "MEGAExtension::upload_to_mega",
+            "icon-name", "mega",
+            "label", mega_ext->string_upload,
+            NULL
+        );
 
         g_signal_connect(G_OBJECT(action), "activate", G_CALLBACK(mega_ext_on_upload_selected), provider);
         g_object_set_data_full(G_OBJECT(action), "MEGAExtension::files", thunarx_file_info_list_copy(files), (GDestroyNotify)thunarx_file_info_list_free);
@@ -252,27 +264,20 @@ static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UN
     }
 
     // if there any synced files / folders selected
-    if (syncedFiles || syncedFolders) {
+    if (syncedFiles || syncedFolders)
+    {
         GtkWidget *action = NULL;
 
-        if (mega_ext->string_getlink) {
-            action = g_object_new (GTK_TYPE_ACTION,
-                "name", "MEGAExtension::get_mega_link",
-                "icon-name", "mega",
-                "label", mega_ext->string_getlink,
-                NULL
-            );
-        } else {
-            out = mega_ext_client_get_string(mega_ext, STRING_GETLINK, syncedFiles, syncedFolders);
-            mega_ext->string_getlink = g_strdup(out);
-            g_free(out);
-            action = g_object_new (GTK_TYPE_ACTION,
-                "name", "MEGAExtension::get_mega_link",
-                "icon-name", "mega",
-                "label", mega_ext->string_getlink,
-                NULL
-            );
-        }
+        out = mega_ext_client_get_string(mega_ext, STRING_GETLINK, syncedFiles, syncedFolders);
+        mega_ext->string_getlink = g_strdup(out);
+        g_free(out);
+        action = g_object_new (GTK_TYPE_ACTION,
+            "name", "MEGAExtension::get_mega_link",
+            "icon-name", "mega",
+            "label", mega_ext->string_getlink,
+            NULL
+        );
+
         g_signal_connect(G_OBJECT(action), "activate", G_CALLBACK(mega_ext_on_get_link_selected), provider);
         g_object_set_data_full(G_OBJECT(action), "MEGAExtension::files", thunarx_file_info_list_copy(files), (GDestroyNotify)thunarx_file_info_list_free);
         l_out = g_list_append(l_out, action);
@@ -284,6 +289,8 @@ static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UN
 static GList* mega_ext_get_folder_actions(ThunarxMenuProvider *provider, G_GNUC_UNUSED GtkWidget *window, ThunarxFileInfo *folder)
 {
     MEGAExt *mega_ext = MEGA_EXT(provider);
+    mega_ext->string_upload = NULL;
+
     GList *l_out = NULL;
     int syncedFolders, unsyncedFolders;
     gchar *out = NULL;
@@ -297,58 +304,62 @@ static GList* mega_ext_get_folder_actions(ThunarxMenuProvider *provider, G_GNUC_
 
     fp = thunarx_file_info_get_location(folder);
     if (!fp)
+    {
         return NULL;
+    }
 
     path = g_file_get_path(fp);
     if (!path)
+    {
         return NULL;
+    }
 
     // avoid sending requests for files which are not in synced folders
     // but make sure we received the list of synced folders first
-    if (mega_ext->syncs_received && !mega_ext_path_in_sync(mega_ext, path)) {
+    if (mega_ext->syncs_received && !mega_ext_path_in_sync(mega_ext, path)) 
+    {
         state = FILE_NOTFOUND;
-    } else
+    } 
+    else
+    {
         state = mega_ext_client_get_path_state(mega_ext, path);
+    }
     g_free(path);
 
     if (state == FILE_ERROR)
+    {
         return NULL;
+    }
 
     g_debug("State: %s", file_state_to_str(state));
 
     g_object_set_data_full((GObject*)folder, "MEGAExtension::state", GINT_TO_POINTER(state), NULL);
 
     // count the number of synced / unsynced files and folders
-    if (state == FILE_SYNCED || state == FILE_SYNCING || state == FILE_PENDING) {
+    if (state == FILE_SYNCED || state == FILE_SYNCING || state == FILE_PENDING)
+    {
         syncedFolders++;
-    } else {
+    } else
+    {
         unsyncedFolders++;
     }
 
     // if there any unsynced files / folders selected
-    if (unsyncedFolders) {
+    if (unsyncedFolders)
+    {
         GtkWidget *action = NULL;
         GList *tmp;
 
-        // cache string
-        if (mega_ext->string_upload) {
-            action = g_object_new (GTK_TYPE_ACTION,
-                "name", "MEGAExtension::upload_to_mega",
-                "icon-name", "mega",
-                "label", mega_ext->string_upload,
-                NULL
-            );
-        } else {
-            out = mega_ext_client_get_string(mega_ext, STRING_UPLOAD, 0, unsyncedFolders);
-            mega_ext->string_upload = g_strdup(out);
-            g_free(out);
-            action = g_object_new (GTK_TYPE_ACTION,
-                "name", "MEGAExtension::upload_to_mega",
-                "icon-name", "mega",
-                "label", mega_ext->string_upload,
-                NULL
-            );
-        }
+        out = mega_ext_client_get_string(mega_ext, STRING_UPLOAD, 0, unsyncedFolders);
+        mega_ext->string_upload = g_strdup(out);
+
+        g_free(out);
+        action = g_object_new (GTK_TYPE_ACTION,
+            "name", "MEGAExtension::upload_to_mega",
+            "icon-name", "mega",
+            "label", mega_ext->string_upload,
+            NULL
+        );
 
         g_signal_connect(G_OBJECT(action), "activate", G_CALLBACK(mega_ext_on_upload_selected), provider);
         tmp = g_list_append(NULL, folder);
@@ -358,28 +369,21 @@ static GList* mega_ext_get_folder_actions(ThunarxMenuProvider *provider, G_GNUC_
     }
 
     // if there any synced files / folders selected
-    if (syncedFolders) {
+    if (syncedFolders)
+    {
         GtkWidget *action = NULL;
         GList *tmp;
 
-        if (mega_ext->string_getlink) {
-            action = g_object_new (GTK_TYPE_ACTION,
-                "name", "MEGAExtension::get_mega_link",
-                "icon-name", "mega",
-                "label", mega_ext->string_getlink,
-                NULL
-            );
-        } else {
-            out = mega_ext_client_get_string(mega_ext, STRING_GETLINK, 0, syncedFolders);
-            mega_ext->string_getlink = g_strdup(out);
-            g_free(out);
-            action = g_object_new (GTK_TYPE_ACTION,
-                "name", "MEGAExtension::get_mega_link",
-                "icon-name", "mega",
-                "label", mega_ext->string_getlink,
-                NULL
-            );
-        }
+        out = mega_ext_client_get_string(mega_ext, STRING_GETLINK, 0, syncedFolders);
+        mega_ext->string_getlink = g_strdup(out);
+        g_free(out);
+        action = g_object_new (GTK_TYPE_ACTION,
+            "name", "MEGAExtension::get_mega_link",
+            "icon-name", "mega",
+            "label", mega_ext->string_getlink,
+            NULL
+        );
+
         g_signal_connect(G_OBJECT(action), "activate", G_CALLBACK(mega_ext_on_get_link_selected), provider);
         tmp = g_list_append(NULL, folder);
         g_object_set_data_full(G_OBJECT(action), "MEGAExtension::files", thunarx_file_info_list_copy(tmp), (GDestroyNotify)thunarx_file_info_list_free);

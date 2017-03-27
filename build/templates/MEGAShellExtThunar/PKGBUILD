@@ -1,13 +1,62 @@
+##
+ # @file build/MEGAsync/MEGAsync/PKGBUILD
+ # @brief script to generate package thunar-megasync for ArchLinux
+ #
+ # (c) 2013-2016 by Mega Limited, Auckland, New Zealand
+ #
+ # This file is part of the MEGA SDK - Client Access Engine.
+ #
+ # Applications using the MEGA API must present a valid application key
+ # and comply with the the rules set forth in the Terms of Service.
+ #
+ # The MEGA SDK is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ #
+ # @copyright Simplified (2-clause) BSD License.
+ #
+ # You should have received a copy of the license along with this
+ # program.
+##
+
 pkgname=thunar-megasync
 pkgver=EXT_VERSION
 pkgrel=1
-arch=('any')
-url="https://mega.nz/#sync"
-license=('Freeware')
-pkgdesc="Easy automated syncing between your computers and your MEGA cloud drive"
-depends=(
-'qt4'
-'thunar'
-'hicolor-icon-theme'
-'ca-certificates'
-)
+epoch=
+pkgdesc="Extension for Thunar to interact with Megasync"
+arch=('i686' 'x86_64')
+url="http://mega.nz/#sync"
+license=() #TODO
+depends=('thunar')
+makedepends=( 'ca-certificates' 'qt4' 'thunar')
+provides=("nautilus-megasync=${pkgver}")
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=thunarext.install
+changelog= #TODO
+source=("./${pkgname}_$pkgver.tar.gz")
+noextract=()
+md5sums=('MD5SUM')
+validpgpkeys=()
+
+prepare() {
+	cd "$pkgname-$pkgver"
+}
+
+build() {
+	cd "$pkgname-$pkgver"
+	qmake || qmake-qt4 #qmake would fail when qt4 installed (due to some path missconfigurations)	
+	make
+}
+
+check() {
+	cd "$pkgname-$pkgver"
+}
+
+package() {
+	cd "$pkgname-$pkgver"
+	for i in libMEGAShellExtThunar.so*; do install -D $i $pkgdir`pkg-config --variable=extensionsdir thunarx-2`/$i; done
+}
+
