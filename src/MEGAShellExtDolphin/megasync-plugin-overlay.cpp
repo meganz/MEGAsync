@@ -13,6 +13,8 @@
 
 #include <QtNetwork/QLocalSocket>
 #include <QDir>
+#include <QMetaEnum>
+#include <QtNetwork/QAbstractSocket>
 
 typedef enum {
     FILE_ERROR = 0,
@@ -44,23 +46,43 @@ class MegasyncDolphinOverlayPlugin : public KOverlayIconPlugin
     QLocalSocket sockExtServer;
     QString sockPathExtServer;
 
-    //TODO: delete the following
-    void printinFile(QString what)
+private slots:
+
+    void sockNotifyServer_connected()
     {
-        QFile f("/tmp/dbgoverlay.txt");
-        if (f.open(QIODevice::WriteOnly | QIODevice::Append)) {
-            f.write("-->");
-            f.write(what.toStdString().c_str());
-            f.write("\n");
-            f.close();
-        }
+        qDebug("MEGASYNCOVERLAYPLUGIN: connected to Notify Server");
     }
 
-private slots:
+    void sockNotifyServer_disconnected()
+    {
+        qDebug("MEGASYNCOVERLAYPLUGIN: disconnected from Notify Server");
+    }
+
+    void sockNotifyServer_error(QLocalSocket::LocalSocketError err)
+    {
+        QMetaEnum metaEnum = QMetaEnum::fromType<QAbstractSocket::SocketError>();
+        qCritical("MEGASYNCOVERLAYPLUGIN: error in connection to notify server: %s", metaEnum.valueToKey(err));
+    }
+
+    void sockExtServer_connected()
+    {
+        qDebug("MEGASYNCOVERLAYPLUGIN: connected to Ext Server");
+    }
+
+    void sockExtServer_disconnected()
+    {
+        qDebug("MEGASYNCOVERLAYPLUGIN: disconnected from Ext Server");
+    }
+
+    void sockExtServer_error(QLocalSocket::LocalSocketError err)
+    {
+        QMetaEnum metaEnum = QMetaEnum::fromType<QAbstractSocket::SocketError>();
+        qCritical("MEGASYNCOVERLAYPLUGIN: error in connection to ext server: %s", metaEnum.valueToKey(err));
+    }
+
     void notifiedfromServer()
     {
-        qDebug("at notifiedfromServer");
-        printinFile("at notifiedfromServer");
+        qDebug("MEGASYNCOVERLAYPLUGIN: notifiedfromServer");
 
         while(sockNotifyServer.canReadLine())
         {
@@ -68,35 +90,27 @@ private slots:
             char type[1];
             sockNotifyServer.read(type, 1); //TODO: control errors
 
-            printinFile(type);
+            QString action="unknown";
 
             switch(*type) {
             case 'P': // item state changed
-                printinFile("item state changed: ");
-                //                mega_ext_on_item_changed(mega_ext, p);
+                action="item state changed";
                 break;
             case 'A': // sync folder added
-                //                mega_ext_on_sync_add(mega_ext, p);
-                //                mega_ext->syncs_received = TRUE;
+                action="sync folder added";
                 break;
             case 'D': // sync folder deleted
-                //                mega_ext_on_sync_del(mega_ext, p);
+                action="sync folder deleted";
                 break;
             default:
-                //                g_warning("Failed to read data!");
-                //                g_free(in_line);
-                //                mega_notify_client_destroy(mega_ext);
-                //                // start connection timer
-                //                mega_notify_client_timer_start(mega_ext);
-                //                return FALSE;
+                qCritical("MEGASYNCOVERLAYPLUGIN: unexpected read from notifyServer. type=%s", type);
                 break;
             }
+
             QString url = sockNotifyServer.readLine();
             while(url.endsWith('\n')) url.chop(1);
 
-            printinFile("at notifiedfromServer. url:");
-            printinFile(url);
-            qDebug("%s",url.toStdString().c_str());
+            qDebug("MEGASYNCOVERLAYPLUGIN: Server notified <%s>: %s",action.toStdString().c_str(), url.toStdString().c_str());
 
             emit overlaysChanged(QUrl::fromLocalFile(url), getOverlays(QUrl::fromLocalFile(url)));
         }
@@ -106,28 +120,28 @@ public:
 
     MegasyncDolphinOverlayPlugin()
     {
-        printinFile("at MegasyncDolphinOverlayPlugin 0001");
+        qDebug("MEGASYNCOVERLAYPLUGIN: Loading plugin ... ");
+
+        connect(&sockNotifyServer, SIGNAL(connected()), this, SLOT(sockNotifyServer_connected()));
+        connect(&sockNotifyServer, SIGNAL(disconnected()), this, SLOT(sockNotifyServer_disconnected()));
+
+        connect(&sockNotifyServer, SIGNAL(readyRead()), this, SLOT(notifiedfromServer()));
+        connect(&sockNotifyServer, SIGNAL(error(QLocalSocket::LocalSocketError)),
+                this, SLOT(sockNotifyServer_error(QLocalSocket::LocalSocketError)));
+
+        connect(&sockExtServer, SIGNAL(connected()), this, SLOT(sockExtServer_connected()));
+        connect(&sockExtServer, SIGNAL(disconnected()), this, SLOT(sockExtServer_disconnected()));
+        connect(&sockExtServer, SIGNAL(error(QLocalSocket::LocalSocketError)),
+                this, SLOT(sockExtServer_error(QLocalSocket::LocalSocketError)));
 
         sockPathNofityServer = QDir::home().path();
         sockPathNofityServer.append(QDir::separator()).append(".local/share/data/Mega Limited/MEGAsync/notify.socket");
         sockNotifyServer.connectToServer(sockPathNofityServer);
-        printinFile("at MegasyncDolphinOverlayPlugin 0010");
 
         sockPathExtServer = QDir::home().path();
         sockPathExtServer.append(QDir::separator()).append(".local/share/data/Mega Limited/MEGAsync/mega.socket");
         sockExtServer.connectToServer(sockPathExtServer);
-
-//        connect(m_socket, SIGNAL(connected()), this, SLOT(socket_connected()));
-//        connect(m_socket, SIGNAL(disconnected()), this, SLOT(socket_disconnected()));
-
-        connect(&sockNotifyServer, SIGNAL(readyRead()), this, SLOT(notifiedfromServer()));
-        connect(&sockNotifyServer, SIGNAL(error(QLocalSocket::LocalSocketError)),
-                this, SLOT(socket_error(QLocalSocket::LocalSocketError)));
-
-        printinFile("at MegasyncDolphinOverlayPlugin 0020");
     }
-
-
 
     ~MegasyncDolphinOverlayPlugin()
     {
@@ -137,19 +151,14 @@ public:
     QStringList getOverlays(const QUrl& url) override
     {
         if (!url.isLocalFile())
+        {
             return QStringList();
+        }
         QDir localPath(url.toLocalFile());
-        const QByteArray localFile = localPath.canonicalPath().toUtf8();
-
-//        helper->sendCommand(QByteArray("RETRIEVE_FILE_STATUS:" + localFile + "\n"));
-
-        printinFile(QStringLiteral("at getOverlays 0020: %1").arg(url.toLocalFile()));
 
         QStringList r;
 
         int state = getState(url.toLocalFile());
-
-        printinFile(QStringLiteral("at getOverlays 0030: %1 state: %2").arg(url.toLocalFile()).arg(state));
 
         switch (state)
         {
@@ -168,7 +177,6 @@ public:
 
         return r;
 
-        printinFile(url.toString());
         return QStringList();
     }
 
@@ -185,7 +193,8 @@ private:
     // Return newly-allocated response string
     QString sendRequest(char type, QString command)
     {
-        int waitTime = -1; //this makes dolphin hang until the location for an upload is selected. Otherwise megayns segafaults accesing slient socket
+        int waitTime = -1; // This (instead of a timeout) makes dolphin hang until the location for an upload is selected (will be corrected in megasync>3.0.1).
+                           // Otherwise megaync segafaults accesing client socket
         QString req;
 
         if(!sockExtServer.isOpen()) {

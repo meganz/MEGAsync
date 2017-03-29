@@ -212,9 +212,9 @@ QString MEGASyncPlugin::getString(int type, int numFiles,int numFolders)
 // Return newly-allocated response string
 QString MEGASyncPlugin::sendRequest(char type, QString command)
 {
-    int waitTime = -1; //this makes dolphin hang until the location for an upload is selected. Otherwise megayns segafaults accesing slient socket
+    int waitTime = -1; // This (instead of a timeout) makes dolphin hang until the location for an upload is selected (will be corrected in megasync>3.0.1).
+                       // Otherwise megaync segafaults accesing client socket
     QString req;
-    QString out;
 
     if(!sock.isOpen()) {
         sock.connectToServer(sockPath);
