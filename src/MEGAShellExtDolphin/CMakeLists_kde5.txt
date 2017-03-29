@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 2.8.12)
 include(FeatureSummary)
 set(QT_MIN_VERSION "5.0.0")
 set(KF5_MIN_VERSION "5.0.0")
+#set(KF5_MIN_VERSION "5.16.0")//for overlays
 
 find_package(Qt5 ${QT_MIN_VERSION} CONFIG REQUIRED COMPONENTS Core Network)
 
@@ -28,9 +29,19 @@ include(GenerateExportHeader)
 
 set(CMAKE_AUTOMOC ON)
 
+
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 add_definitions(-DWITH_KF5)
+
+
+#---OVERLAY PLUGIN---
+set(MEGASYNCDOLPHINOVERLAYPLUGIN megasyncdolphinoverlayplugin)
+kcoreaddons_add_plugin(${MEGASYNCDOLPHINOVERLAYPLUGIN} INSTALL_NAMESPACE "kf5/overlayicon"
+                       JSON megasync-plugin-overlay.json SOURCES megasync-plugin-overlay.cpp)
+#target_link_libraries(${MEGASYNCDOLPHINOVERLAYPLUGIN} KF5::CoreAddons KF5::KIOCore KF5::KIOWidgets ${MEGASYNCDOLPHINHELPER})
+target_link_libraries(${MEGASYNCDOLPHINOVERLAYPLUGIN} KF5::CoreAddons KF5::KIOCore KF5::KIOWidgets)
+
 
 #---ACTION PLUGIN---
 set(MEGASYNCPLUGIN megasyncplugin)
