@@ -169,8 +169,9 @@ void MEGASyncPlugin::getLink()
 
 void MEGASyncPlugin::getLinks()
 {
-    for(QString &path : selectedFilePaths)
+    for(int i = 0; i<selectedFilePaths.size(); i++)
     {
+        QString path = selectedFilePaths.at(i);
         if (sendRequest(OP_LINK, path).size())
         {
         }
@@ -188,8 +189,9 @@ void MEGASyncPlugin::uploadFile()
 
 void MEGASyncPlugin::uploadFiles()
 {
-    for(QString &path : selectedFilePaths)
+    for(int i = 0; i<selectedFilePaths.size(); i++)
     {
+        QString path = selectedFilePaths.at(i);
         if (sendRequest(OP_UPLOAD, path).size())
         {
         }
