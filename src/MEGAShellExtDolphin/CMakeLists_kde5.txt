@@ -29,19 +29,30 @@ include(GenerateExportHeader)
 
 set(CMAKE_AUTOMOC ON)
 
-
 include_directories(${CMAKE_CURRENT_BINARY_DIR})
 add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
 add_definitions(-DWITH_KF5)
 
 
 #---OVERLAY PLUGIN---
-set(MEGASYNCDOLPHINOVERLAYPLUGIN megasyncdolphinoverlayplugin)
-kcoreaddons_add_plugin(${MEGASYNCDOLPHINOVERLAYPLUGIN} INSTALL_NAMESPACE "kf5/overlayicon"
-                       JSON megasync-plugin-overlay.json SOURCES megasync-plugin-overlay.cpp)
-#target_link_libraries(${MEGASYNCDOLPHINOVERLAYPLUGIN} KF5::CoreAddons KF5::KIOCore KF5::KIOWidgets ${MEGASYNCDOLPHINHELPER})
-target_link_libraries(${MEGASYNCDOLPHINOVERLAYPLUGIN} KF5::CoreAddons KF5::KIOCore KF5::KIOWidgets)
+if (KF5_VERSION)
+	if (NOT KF5_VERSION VERSION_LESS 5.16.0)
+		set(MEGASYNCDOLPHINOVERLAYPLUGIN megasyncdolphinoverlayplugin)
+		set(PLUGIN_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR}/qt5/plugins) #so that kcoreaddons install in the right path (see https://github.com/KDE/kcoreaddons/blob/master/KF5CoreAddonsMacros.cmake)
+		kcoreaddons_add_plugin(${MEGASYNCDOLPHINOVERLAYPLUGIN} INSTALL_NAMESPACE "kf5/overlayicon"
+							   JSON megasync-plugin-overlay.json SOURCES megasync-plugin-overlay.cpp)
+		#target_link_libraries(${MEGASYNCDOLPHINOVERLAYPLUGIN} KF5::CoreAddons KF5::KIOCore KF5::KIOWidgets ${MEGASYNCDOLPHINHELPER})
+		target_link_libraries(${MEGASYNCDOLPHINOVERLAYPLUGIN} KF5::CoreAddons KF5::KIOCore KF5::KIOWidgets)
+		#target_link_libraries(${MEGASYNCDOLPHINOVERLAYPLUGIN} KF5::CoreAddons KF5::KIOCore KF5::KIOCore KF5::KIOFileWidgets KF5::KIOWidgets KF5::KIONTLM)
 
+		#---- ICONS ---- 
+		set(HICOLOR_INSTALL_DIR ${KDE_INSTALL_FULL_ICONDIR}/hicolor)
+		file(GLOB_RECURSE FILES32 "data/emblems/32x32/*")
+		file(GLOB_RECURSE FILES64 "data/emblems/64x64/*")
+		install( FILES ${FILES32} DESTINATION ${HICOLOR_INSTALL_DIR}/32x32/emblems)
+		install( FILES ${FILES64} DESTINATION ${HICOLOR_INSTALL_DIR}/64x64/emblems)		
+	endif()
+endif()
 
 #---ACTION PLUGIN---
 set(MEGASYNCPLUGIN megasyncplugin)
@@ -51,3 +62,4 @@ target_link_libraries(${MEGASYNCPLUGIN} KF5::CoreAddons KF5::KIOCore KF5::KIOWid
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/megasync-plugin.desktop DESTINATION ${KDE_INSTALL_KSERVICES5DIR})
 install(TARGETS ${MEGASYNCPLUGIN} DESTINATION ${CMAKE_INSTALL_LIBDIR}/qt5/plugins)
+

@@ -163,13 +163,13 @@ public:
         switch (state)
         {
             case FILE_SYNCED:
-                r << "mega-synced";
+                r << "mega-dolphin-synced";
                 break;
             case FILE_PENDING:
-                r << "mega-pending";
+                r << "mega-dolphin-pending";
                 break;
             case FILE_SYNCING:
-                r << "mega-syncing";
+                r << "mega-dolphin-syncing";
                 break;
             default:
                 break;
