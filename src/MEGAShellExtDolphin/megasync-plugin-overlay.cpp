@@ -154,7 +154,6 @@ public:
         {
             return QStringList();
         }
-        QDir localPath(url.toLocalFile());
 
         QStringList r;
 
@@ -164,14 +163,18 @@ public:
         {
             case FILE_SYNCED:
                 r << "mega-dolphin-synced";
+                qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-synced",url.toLocalFile().toStdString().c_str());
                 break;
             case FILE_PENDING:
                 r << "mega-dolphin-pending";
+                qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-pending",url.toLocalFile().toStdString().c_str());
                 break;
             case FILE_SYNCING:
                 r << "mega-dolphin-syncing";
+                qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-syncing",url.toLocalFile().toStdString().c_str());
                 break;
             default:
+                qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: %d",url.toLocalFile().toStdString().c_str(),state);
                 break;
         }
 
@@ -218,7 +221,6 @@ private:
 
         return reply;
     }
-
 };
 
 #include "megasync-plugin-overlay.moc"
