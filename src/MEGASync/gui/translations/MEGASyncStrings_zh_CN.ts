@@ -2623,7 +2623,7 @@ when the application starts again</source>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>不争取的邮箱和密码</translation>
+        <translation>不正确的邮箱或密码</translation>
     </message>
     <message>
         <source>Have you verified your account?</source>
