@@ -1,0 +1,6 @@
+dolphin-megasync_*.tar.gz
+#generated files
+*.dsc
+dolphin-megasync.spec
+PKGBUILD
+debian.copyright

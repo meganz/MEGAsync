@@ -2,7 +2,11 @@
 #ifndef _MEGA_SYNC_PLUGIN_H_
 #define _MEGA_SYNC_PLUGIN_H_
 
+#ifndef WITH_KF5
 #include <kabstractfileitemactionplugin.h>
+#else
+#include <KIOWidgets/kabstractfileitemactionplugin.h>
+#endif
 #include <QLocalSocket>
 
 class MEGASyncPlugin: public KAbstractFileItemActionPlugin

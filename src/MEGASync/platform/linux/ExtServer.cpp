@@ -10,8 +10,8 @@ using namespace std;
 ExtServer::ExtServer(MegaApplication *app): QObject(),
     m_localServer(0)
 {
-    connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), app, SLOT(shellUpload(QQueue<QString>)));
-    connect(this, SIGNAL(newExportQueue(QQueue<QString>)), app, SLOT(shellExport(QQueue<QString>)));
+    connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), app, SLOT(shellUpload(QQueue<QString>)),Qt::QueuedConnection);
+    connect(this, SIGNAL(newExportQueue(QQueue<QString>)), app, SLOT(shellExport(QQueue<QString>)),Qt::QueuedConnection);
 
     // construct local socket path
     sockPath = MegaApplication::applicationDataPath() + QDir::separator() + QString::fromAscii("mega.socket");
@@ -30,7 +30,7 @@ ExtServer::ExtServer(MegaApplication *app): QObject(),
         return;
     }
 
-    connect(m_localServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
+    connect(m_localServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()),Qt::QueuedConnection);
 }
 
 ExtServer::~ExtServer()

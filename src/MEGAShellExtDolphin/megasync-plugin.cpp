@@ -1,14 +1,30 @@
-#include <kaction.h>
 #include <kactionmenu.h>
-#include <kdemacros.h>
 #include <kfileitem.h>
 #include <kfileitemlistproperties.h>
 #include <QDir>
 #include <QFileInfo>
 #include <QString>
 
+#ifndef WITH_KF5
+#include <kaction.h>
+#include <kdemacros.h>
 #include <KDE/KPluginFactory>
 #include <KDE/KPluginLoader>
+#else
+#include <KPluginFactory>
+#include <KPluginLoader>
+#include <KIOWidgets/kabstractfileitemactionplugin.h>
+#include <QtNetwork/QLocalSocket>
+#include <KIOCore/kfileitem.h>
+#include <KIOCore/KFileItemListProperties>
+#include <QtWidgets/QAction>
+#include <QtCore/QDir>
+#include <QtCore/QTimer>
+
+#define KAction QAction
+#define KIcon QIcon
+
+#endif
 
 #include "megasync-plugin.h"
 
@@ -32,17 +48,18 @@ const char OP_SHARE       = 'S'; //Share folder
 const char OP_SEND        = 'C'; //Copy to user
 const char OP_STRING      = 'T'; //Get Translated String
 
-MEGASyncPlugin::MEGASyncPlugin(QObject* parent, const QVariantList & args):
+MEGASyncPlugin::MEGASyncPlugin(QObject* parent, const QList<QVariant> & args):
     KAbstractFileItemActionPlugin(parent)
 {
     Q_UNUSED(args);
     sockPath = QDir::home().path();
-    sockPath.append(QDir::separator()).append(".local/share/data/Mega Limited/MEGAsync");
+    sockPath.append(QDir::separator()).append(".local/share/data/Mega Limited/MEGAsync/mega.socket");
     sock.connectToServer(sockPath);
 }
 
 MEGASyncPlugin::~MEGASyncPlugin()
 {
+    sock.close();
 }
 
 QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItemInfos, QWidget * parentWidget)
@@ -110,19 +127,25 @@ int MEGASyncPlugin::getState()
 
 void MEGASyncPlugin::getLink()
 {
-    sendRequest(OP_LINK, selectedFilePath);
+    if (sendRequest(OP_LINK, selectedFilePath).size())
+    {
+        sendRequest(OP_END, " ");
+    }
 }
 
 void MEGASyncPlugin::uploadFile()
 {
-    sendRequest(OP_UPLOAD, selectedFilePath);
+    if (sendRequest(OP_UPLOAD, selectedFilePath).size())
+    {
+        sendRequest(OP_END, " ");
+    }
 }
 
 // send request and receive response from Extension server
 // Return newly-allocated response string
 QString MEGASyncPlugin::sendRequest(char type, QString command)
 {
-    int waitTime = 500;
+    int waitTime = -1; //this makes dolphin hang until the location for an upload is selected. Otherwise megayns segafaults accesing slient socket
     QString req;
     QString out;
 
@@ -147,3 +170,5 @@ QString MEGASyncPlugin::sendRequest(char type, QString command)
 
     return reply;
 }
+
+#include "megasync-plugin.moc"

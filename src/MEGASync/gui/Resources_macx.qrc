@@ -527,5 +527,7 @@
         <file>images/tray_transfer_manager_ico_over@2x.png</file>
         <file>images/tray_transfer_manager_ico.png</file>
         <file>images/tray_transfer_manager_ico@2x.png</file>
+        <file>images/Lite.png</file>
+        <file>images/Lite@2x.png</file>
     </qresource>
 </RCC>

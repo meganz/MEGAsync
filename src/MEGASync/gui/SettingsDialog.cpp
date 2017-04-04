@@ -889,9 +889,13 @@ void SettingsDialog::loadSettings()
                 icon.addFile(QString::fromUtf8(":/images/Pro_III.png"), QSize(), QIcon::Normal, QIcon::Off);
                 ui->lAccountType->setText(tr("PRO III"));
                 break;
+            case Preferences::ACCOUNT_TYPE_LITE:
+                icon.addFile(QString::fromUtf8(":/images/Lite.png"), QSize(), QIcon::Normal, QIcon::Off);
+                ui->lAccountType->setText(tr("PRO Lite"));
+                break;
             default:
                 icon.addFile(QString::fromUtf8(":/images/Pro_I.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->lAccountType->setText(tr("PRO lite"));
+                ui->lAccountType->setText(QString());
                 break;
         }
 
@@ -1894,10 +1898,11 @@ void SettingsDialog::changeEvent(QEvent *event)
         ui->retranslateUi(this);
 
 #ifdef __APPLE__
-       setWindowTitle(tr("Preferences - MEGAsync"));
-       ui->cStartOnStartup->setText(tr("Open at login"));
-       ui->cOverlayIcons->hide();
+        setWindowTitle(tr("Preferences - MEGAsync"));
+        ui->cStartOnStartup->setText(tr("Open at login"));
+        ui->cOverlayIcons->hide();
 #endif
+        ui->cProxyType->addItem(QString::fromUtf8("SOCKS5H"));
 
         loadSettings();
         onCacheSizeAvailable();

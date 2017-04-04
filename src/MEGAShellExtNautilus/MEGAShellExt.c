@@ -263,18 +263,10 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
     {
         NautilusMenuItem *item;
 
-        // cache string
-        if (mega_ext->string_upload)
-        {
-            item = nautilus_menu_item_new("MEGAExtension::upload_to_mega", mega_ext->string_upload, "Upload files to you MEGA account", "mega");
-        }
-        else
-        {
-            out = mega_ext_client_get_string(mega_ext, STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
-            item = nautilus_menu_item_new("MEGAExtension::upload_to_mega", out, "Upload files to you MEGA account", "mega");
-            mega_ext->string_upload = g_strdup(out);
-            g_free(out);
-        }
+        out = mega_ext_client_get_string(mega_ext, STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
+        item = nautilus_menu_item_new("MEGAExtension::upload_to_mega", out, "Upload files to you MEGA account", "mega");
+        mega_ext->string_upload = g_strdup(out);
+        g_free(out);
 
         g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_upload_selected), provider);
         g_object_set_data_full((GObject*)item, "MEGAExtension::files", nautilus_file_info_list_copy(files), (GDestroyNotify)nautilus_file_info_list_free);
@@ -286,17 +278,11 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
     {
         NautilusMenuItem *item;
 
-        if (mega_ext->string_getlink)
-        {
-            item = nautilus_menu_item_new("MEGAExtension::get_mega_link", mega_ext->string_getlink, "Get MEGA link", "mega");
-        }
-        else
-        {
-            out = mega_ext_client_get_string(mega_ext, STRING_GETLINK, syncedFiles, syncedFolders);
-            item = nautilus_menu_item_new("MEGAExtension::get_mega_link", out, "Get MEGA link", "mega");
-            mega_ext->string_getlink = g_strdup(out);
-            g_free(out);
-        }
+        out = mega_ext_client_get_string(mega_ext, STRING_GETLINK, syncedFiles, syncedFolders);
+        item = nautilus_menu_item_new("MEGAExtension::get_mega_link", out, "Get MEGA link", "mega");
+        mega_ext->string_getlink = g_strdup(out);
+        g_free(out);
+
         g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_get_link_selected), provider);
         g_object_set_data_full((GObject*)item, "MEGAExtension::files", nautilus_file_info_list_copy(files), (GDestroyNotify)nautilus_file_info_list_free);
         l_out = g_list_append(l_out, item);
