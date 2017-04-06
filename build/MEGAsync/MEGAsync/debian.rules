@@ -7,6 +7,7 @@ build-stamp:
 	qmake-qt5 || qmake || /usr/lib/*/qt5/bin/qmake
 	lrelease-qt5 MEGASync/MEGASync.pro || lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt5/bin/lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt4/bin/lrelease MEGASync/MEGASync.pro
 	make
+	echo "fs.inotify.max_user_watches = 524288" > 100-megasync-inotify-limit.conf
 	touch build-stamp
 
 clean:
