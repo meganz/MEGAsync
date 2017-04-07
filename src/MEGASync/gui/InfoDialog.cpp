@@ -63,6 +63,12 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     gWidget = NULL;
     overQuotaState = false;
 
+    //Initialize header dialog and disable chat features
+    ui->sIconHeader->setCurrentWidget(ui->pAvatar);
+    ui->wHeader->setStyleSheet(QString::fromUtf8("#wHeader {border: none;}"));
+    ui->bState->setVisible(false);
+    ui->bChats->setVisible(false);
+
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
     ui->wTransfer1->setType(MegaTransfer::TYPE_DOWNLOAD);
@@ -107,16 +113,11 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 #ifdef __APPLE__
     arrow = new QPushButton(this);
     arrow->setIcon(QIcon(QString::fromAscii("://images/top_arrow.png")));
-    arrow->setIconSize(QSize(22,11));
-    arrow->setStyleSheet(QString::fromAscii("border: none; padding-bottom: -1px; "));
-    arrow->resize(22,11);
+    arrow->setIconSize(QSize(30,10));
+    arrow->setStyleSheet(QString::fromAscii("border: none;"));
+    arrow->resize(30,10);
     arrow->hide();
 #endif
-
-    if (gWidget)
-    {
-        gWidget->hideDownloads();
-    }
 
     //Create the overlay widget with a semi-transparent background
     //that will be shown over the transfers when they are paused
@@ -148,7 +149,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     else
     {
         regenerateLayout();
-        gWidget->hideDownloads();
     }
 }
 
@@ -169,7 +169,10 @@ void InfoDialog::setUserName()
         return;
     }
     QString pattern(QString::fromUtf8("%1 %2").arg(preferences->firstName()).arg(preferences->lastName()));
-    ui->lName->setText(pattern);
+
+    QFont f = ui->lName->font();
+    QFontMetrics fm = QFontMetrics(f);
+    ui->lName->setText(fm.elidedText(pattern, Qt::ElideRight,ui->lName->maximumWidth()));
 }
 
 void InfoDialog::setAvatar()
@@ -201,7 +204,7 @@ void InfoDialog::setUsage()
     {
         ui->pUsageStorage->setValue(0);
         ui->lPercentageUsedStorage->setText(QString::fromUtf8(""));
-        ui->lTotalUsedStorage->setText(tr("USED SPACE %1").arg(tr("Data temporarily unavailable")));
+        ui->lTotalUsedStorage->setText(tr("USED STORAGE %1").arg(tr("Data temporarily unavailable")));
     }
     else
     {
@@ -212,7 +215,7 @@ void InfoDialog::setUsage()
                                      .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(preferences->totalStorage())));
         ui->lPercentageUsedStorage->setText(used);
-        ui->lTotalUsedStorage->setText(tr("USED SPACE %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
+        ui->lTotalUsedStorage->setText(tr("USED STORAGE %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
                                        .arg(Utilities::getSizeString(preferences->usedStorage()))));
     }
 
@@ -260,7 +263,7 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
             downloadSpeed = speed;
         }
 
-        wTransfer = !preferences->logged() ? gWidget->getTransfer() : ui->wTransfer1;
+        wTransfer = ui->wTransfer1;
         if (!activeDownload || activeDownload->getTag() != transfer->getTag())
         {
             delete activeDownload;
@@ -333,8 +336,7 @@ void InfoDialog::updateTransfers()
                 remainingTime = QString::fromAscii("");
             }
 
-            !preferences->logged() ? gWidget->setRemainingTime(remainingTime)
-                      : ui->lRemainingTimeD->setText(remainingTime);
+            ui->lRemainingTimeD->setText(remainingTime);
             ui->wDownloadDesc->show();
             QString fullPattern = QString::fromAscii("%1");
             QString pattern(tr("%1 of %2 (%3/s)"));
@@ -375,18 +377,6 @@ void InfoDialog::updateTransfers()
                 else
                 {
                     ui->wDownloadDesc->show();
-                }
-            }
-            else
-            {
-                gWidget->setDownloadLabel(fullPattern.arg(downloadString));
-                if (!gWidget->getTransfer()->isActive())
-                {
-                    gWidget->hideDownloads();
-                }
-                else
-                {
-                    gWidget->showDownloads();
                 }
             }
         }
@@ -454,11 +444,7 @@ void InfoDialog::updateTransfers()
 
         if (remainingUploads || remainingDownloads)
         {
-            if (!preferences->logged() && gWidget->getTransfer()->isActive())
-            {
-                gWidget->setIdleState(false);
-            }
-            else if (ui->wTransfer1->isActive() || ui->wTransfer2->isActive())
+            if (ui->wTransfer1->isActive() || ui->wTransfer2->isActive())
             {
                 ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
             }
@@ -511,8 +497,7 @@ void InfoDialog::transferFinished(int error)
 
     if (!remainingDownloads
             && !remainingUploads
-            &&  (ui->sActiveTransfers->currentWidget() != ui->pUpdated
-                 || (!preferences->logged() && !gWidget->idleState())))
+            &&  (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
     {
         if (!transfersFinishedTimer.isActive())
         {
@@ -621,17 +606,6 @@ void InfoDialog::updateState()
     {
         if (!preferences->logged())
         {
-            if (gWidget)
-            {
-                if (!gWidget->idleState())
-                {
-                    gWidget->setPauseState(true);
-                }
-                else
-                {
-                    gWidget->setPauseState(false);
-                }
-            }
             return;
         }
 
@@ -645,12 +619,12 @@ void InfoDialog::updateState()
                 scanningTimer.stop();
             }
 
-            ui->lSyncUpdated->setText(tr("File transfers paused"));
+            ui->lSyncUpdated->setText(tr("Paused"));
             QIcon icon;
             icon.addFile(QString::fromUtf8(":/images/tray_paused_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
 
             ui->label->setIcon(icon);
-            ui->label->setIconSize(QSize(64, 64));
+            ui->label->setIconSize(QSize(36, 36));
         }
 
         if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
@@ -666,14 +640,6 @@ void InfoDialog::updateState()
     {
         if (!preferences->logged())
         {
-            if (gWidget)
-            {
-                gWidget->setPauseState(false);
-                if (!gWidget->getTransfer()->isActive())
-                {
-                    gWidget->setIdleState(true);
-                }
-            }
             return;
         }
         overlay->setVisible(false);
@@ -719,12 +685,12 @@ void InfoDialog::updateState()
                     scanningTimer.stop();
                 }
 
-                ui->lSyncUpdated->setText(tr("MEGAsync is waiting"));
+                ui->lSyncUpdated->setText(tr("Waiting"));
                 QIcon icon;
                 icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
 
                 ui->label->setIcon(icon);
-                ui->label->setIconSize(QSize(64, 64));
+                ui->label->setIconSize(QSize(36, 36));
             }
         }
         else if (indexing)
@@ -738,12 +704,12 @@ void InfoDialog::updateState()
                     scanningTimer.start();
                 }
 
-                ui->lSyncUpdated->setText(tr("MEGAsync is scanning"));
+                ui->lSyncUpdated->setText(tr("Scanning..."));
 
                 QIcon icon;
                 icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
                 ui->label->setIcon(icon);
-                ui->label->setIconSize(QSize(64, 64));
+                ui->label->setIconSize(QSize(36, 36));
             }
         }
         else
@@ -756,11 +722,11 @@ void InfoDialog::updateState()
                     scanningTimer.stop();
                 }
 
-                ui->lSyncUpdated->setText(tr("MEGAsync is up to date"));
+                ui->lSyncUpdated->setText(tr("Up to date"));
                 QIcon icon;
-                icon.addFile(QString::fromUtf8(":/images/tray_updated_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+                icon.addFile(QString::fromUtf8(":/images/empty_upToDate.png"), QSize(), QIcon::Normal, QIcon::Off);
                 ui->label->setIcon(icon);
-                ui->label->setIconSize(QSize(64, 64));
+                ui->label->setIconSize(QSize(36, 36));
             }
         }
     }
@@ -980,18 +946,11 @@ void InfoDialog::onAllDownloadsFinished()
     remainingDownloads = megaApi->getNumPendingDownloads();
     if (!remainingDownloads)
     {
-        if (!preferences->logged())
-        {
-            gWidget->getTransfer()->hideTransfer();
-            gWidget->setDownloadLabel(QString::fromAscii(""));
-            gWidget->hideDownloads();
-        }
-        else
-        {
-            ui->wTransfer1->hideTransfer();
-            ui->lDownloads->setText(QString::fromAscii(""));
-            ui->wDownloadDesc->hide();
-        }
+
+        ui->wTransfer1->hideTransfer();
+        ui->lDownloads->setText(QString::fromAscii(""));
+        ui->wDownloadDesc->hide();
+
         downloadSpeed = 0;
         currentDownload = 0;
         totalDownloads = 0;
@@ -1009,10 +968,6 @@ void InfoDialog::onAllTransfersFinished()
         {
             ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
         }
-        else if (!preferences->logged() && !gWidget->idleState())
-        {
-            gWidget->setIdleState(true);
-        }
 
         if (preferences->logged())
         {
@@ -1024,7 +979,7 @@ void InfoDialog::onAllTransfersFinished()
 }
 
 void InfoDialog::on_bSettings_clicked()
-{   
+{
     QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width()-6, ui->bSettings->height()));
 
 #ifdef __APPLE__
@@ -1066,14 +1021,15 @@ void InfoDialog::on_bSyncFolder_clicked()
         syncsMenu = new QMenu();
         syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 
-        MenuItemAction *addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
+        MenuItemAction *addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_add_sync.png")),
+                                                           QIcon(QString::fromAscii("://images/ico_add_sync.png")));
         connect(addSyncAction, SIGNAL(triggered()), this, SLOT(addSync()));
         syncsMenu->addAction(addSyncAction);
         syncsMenu->addSeparator();
 
         QSignalMapper *menuSignalMapper = new QSignalMapper();
         connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
-        
+
         int activeFolders = 0;
         for (int i = 0; i < num; i++)
         {
@@ -1083,7 +1039,8 @@ void InfoDialog::on_bSyncFolder_clicked()
             }
 
             activeFolders++;
-            MenuItemAction *action = new MenuItemAction(preferences->getSyncName(i), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
+            MenuItemAction *action = new MenuItemAction(preferences->getSyncName(i), QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")),
+                                                        QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")));
             connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()));
             syncsMenu->addAction(action);
             menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
@@ -1184,7 +1141,9 @@ void InfoDialog::moveArrow(QPoint p)
 
 void InfoDialog::on_bChats_clicked()
 {
-
+    QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
+    QString url = QString::fromUtf8("").arg(userAgent);
+    megaApi->getSessionTransferURL(url.toUtf8().constData());
 }
 
 void InfoDialog::on_bTransferManager_clicked()
@@ -1281,9 +1240,10 @@ void InfoDialog::regenerateLayout()
         ui->bSyncFolder->setVisible(false);
         ui->bState->setVisible(false);
         ui->bAvatar->setVisible(false);
+        ui->sIconHeader->setCurrentWidget(ui->pMEGAheader);
         ui->bTransferManager->setVisible(false);
-        dialogLayout->removeWidget(ui->wActiveTransfersContainer);
-        ui->wActiveTransfersContainer->setVisible(false);
+        dialogLayout->removeWidget(ui->wContainerHeader);
+        ui->wContainerHeader->setVisible(false);
         dialogLayout->removeWidget(ui->wContainerBottom);
         ui->wContainerBottom->setVisible(false);
         dialogLayout->addWidget(gWidget);
@@ -1298,19 +1258,19 @@ void InfoDialog::regenerateLayout()
         ui->bSyncFolder->setVisible(true);
         ui->bState->setVisible(true);
         ui->bAvatar->setVisible(true);
+        ui->sIconHeader->setCurrentWidget(ui->pAvatar);
         ui->bTransferManager->setVisible(true);
         dialogLayout->removeWidget(gWidget);
         gWidget->setVisible(false);
-        dialogLayout->addWidget(ui->wActiveTransfersContainer);
-        ui->wActiveTransfersContainer->setVisible(true);
+        dialogLayout->addWidget(ui->wContainerHeader);
+        ui->wContainerHeader->setVisible(true);
         dialogLayout->addWidget(ui->wContainerBottom);
         ui->wContainerBottom->setVisible(true);
-
     }
 
     if (activeDownload)
     {
-        ActiveTransfer *wTransfer = !preferences->logged() ? gWidget->getTransfer() : ui->wTransfer1;
+        ActiveTransfer *wTransfer = ui->wTransfer1;
         wTransfer->setFileName(QString::fromUtf8(activeDownload->getFileName()));
         wTransfer->setProgress(activeDownload->getTotalBytes() - remainingDownloadBytes,
                                activeDownload->getTotalBytes(),
@@ -1400,20 +1360,20 @@ void InfoDialog::onUserAction(int action)
 
 void InfoDialog::on_bDotUsedStorage_clicked()
 {
-    ui->bDotUsedStorage->setIcon(QIcon(QString::fromAscii("://images/filled_dot.png")));
-    ui->bDotUsedStorage->setIconSize(QSize(16,16));
-    ui->bDotUsedQuota->setIcon(QIcon(QString::fromAscii("://images/empty_dot.png")));
-    ui->bDotUsedQuota->setIconSize(QSize(16,16));
+    ui->bDotUsedStorage->setIcon(QIcon(QString::fromAscii("://images/Nav_Dot_active.png")));
+    ui->bDotUsedStorage->setIconSize(QSize(6,6));
+    ui->bDotUsedQuota->setIcon(QIcon(QString::fromAscii("://images/Nav_Dot_inactive.png")));
+    ui->bDotUsedQuota->setIconSize(QSize(6,6));
 
     ui->sUsedData->setCurrentWidget(ui->pStorage);
 }
 
 void InfoDialog::on_bDotUsedQuota_clicked()
 {
-    ui->bDotUsedStorage->setIcon(QIcon(QString::fromAscii("://images/empty_dot.png")));
-    ui->bDotUsedStorage->setIconSize(QSize(16,16));
-    ui->bDotUsedQuota->setIcon(QIcon(QString::fromAscii("://images/filled_dot.png")));
-    ui->bDotUsedQuota->setIconSize(QSize(16,16));
+    ui->bDotUsedStorage->setIcon(QIcon(QString::fromAscii("://images/Nav_Dot_inactive.png")));
+    ui->bDotUsedStorage->setIconSize(QSize(6,6));
+    ui->bDotUsedQuota->setIcon(QIcon(QString::fromAscii("://images/Nav_Dot_active.png")));
+    ui->bDotUsedQuota->setIconSize(QSize(6,6));
 
     ui->sUsedData->setCurrentWidget(ui->pQuota);
 }
@@ -1426,7 +1386,7 @@ void InfoDialog::scanningAnimationStep()
                  QString::number(scanningAnimationIndex) + QString::fromUtf8(".png") , QSize(), QIcon::Normal, QIcon::Off);
 
     ui->label->setIcon(icon);
-    ui->label->setIconSize(QSize(64, 64));
+    ui->label->setIconSize(QSize(36, 36));
 }
 
 #ifdef __APPLE__
