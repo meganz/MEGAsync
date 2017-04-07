@@ -337,14 +337,14 @@ void InfoDialog::updateTransfers()
             ui->wDownloadDesc->show();
             QString fullPattern = QString::fromAscii("%1");
             QString pattern(tr("%1 of %2 (%3/s)"));
-            QString pausedPattern(tr("%1 of %2 (paused)"));
+            QString pausedPattern(tr("%1 of %2"));
             QString invalidSpeedPattern(tr("%1 of %2"));
             QString downloadString;
 
 
             if (activeDownloadState == MegaTransfer::STATE_PAUSED || preferences->getDownloadsPaused())
             {
-                downloadString = pausedPattern.arg(currentDownload).arg(totalDownloads);
+                downloadString = pausedPattern.arg(currentDownload).arg(totalDownloads) + QString::fromUtf8(" ") + tr("PAUSED");
             }
             else
             {
@@ -360,7 +360,7 @@ void InfoDialog::updateTransfers()
                 }
                 else
                 {
-                    downloadString = pausedPattern.arg(currentDownload).arg(totalDownloads);
+                    downloadString = pausedPattern.arg(currentDownload).arg(totalDownloads) + QString::fromUtf8(" ") + tr("PAUSED");
                 }
             }
 
@@ -403,13 +403,13 @@ void InfoDialog::updateTransfers()
             ui->wUploadDesc->show();
             QString fullPattern = QString::fromAscii("%1");
             QString pattern(tr("%1 of %2 (%3/s)"));
-            QString pausedPattern(tr("%1 of %2 (paused)"));
+            QString pausedPattern(tr("%1 of %2"));
             QString invalidSpeedPattern(tr("%1 of %2"));
             QString uploadString;
 
             if (activeUploadState == MegaTransfer::STATE_PAUSED || preferences->getUploadsPaused())
             {
-                uploadString = pausedPattern.arg(currentUpload).arg(totalUploads);
+                uploadString = pausedPattern.arg(currentUpload).arg(totalUploads) + QString::fromUtf8(" ") + tr("PAUSED");
             }
             else
             {
@@ -423,7 +423,7 @@ void InfoDialog::updateTransfers()
                 }
                 else
                 {
-                    uploadString = pausedPattern.arg(currentUpload).arg(totalUploads);
+                    uploadString = pausedPattern.arg(currentUpload).arg(totalUploads) + QString::fromUtf8(" ") + tr("PAUSED");
                 }
             }
 
