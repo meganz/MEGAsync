@@ -18,7 +18,7 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>400</width>
+    <width>402</width>
     <height>385</height>
    </size>
   </property>
@@ -26,7 +26,7 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#bAvatar, #bState, #bDotUsedQuota, #bDotUsedStorage
+   <string notr="true">#bAvatar, #bState, #bDotUsedQuota, #bDotUsedStorage, #bMEGAheader
 {
 	border: none;
 }
@@ -42,21 +42,16 @@ QPushButton#bTransferManager:hover
 
 #wHeader
 {
-  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #FCFCFC, stop: 1 #FAFAFA);
-}
-
-#wHeader
-{
 border-top-left-radius: 2px;
 border-top-right-radius: 2px;
 }
 
 #lSyncUpdated
 {
-color:  rgb(166, 166, 166);
+font-family: &quot;Source Sans Pro&quot;;
 font-size: 16px;
-font-weight: bold;
+color: rgba(51, 51, 51, 70%);
+padding-bottom: 25px;
 }
 
 #sActiveTransfers
@@ -127,15 +122,18 @@ background-color: transparent;
 #wContainerBottom
 {
 background-color: white;
+border-top: 1px solid rgba(0, 0, 0, 5%);
 }
 
 #pUsageStorage, #pUsageQuota
 {
-	border: none;
+border: 1px solid transparent;
+border-radius: 2px;
 }
 QProgressBar#pUsageStorage
 {
 background-color: #EEEEEE;
+border-radius: 2px;
 }
 
 QProgressBar#pUsageStorage[overquota=true]
@@ -145,27 +143,36 @@ background-color: #EB4444;
                                                             
 QProgressBar#pUsageStorage::chunk {
 background-color: #666666;
+border-top-left-radius: 2px;
+border-bottom-left-radius: 2px;
+
 }
 
 QProgressBar#pUsageStorage::chunk[overquota=true] {
 background-color: #EB4444;
+border-radius: 2px;
 }
 
 QProgressBar#pUsageQuota
 {
 background-color: #EEEEEE;
+border-radius: 2px;
 }
 
 QProgressBar#pUsageQuota[overquota=true]
 {
 background-color: #EB4444;
+border-radius: 2px;
 }
                                                             
 QProgressBar#pUsageQuota::chunk {
 background-color: #666666;
+border-top-left-radius: 2px;
+border-bottom-left-radius: 2px;
 }
 QProgressBar#pUsageQuota::chunk[overquota=true] {
 background-color: #EB4444;
+border-radius: 2px;
 }
 
 #lHeader
@@ -173,10 +180,10 @@ background-color: #EB4444;
 	padding-top: 2px;
 }
 
-#lUsername
+#lName
 {
     font-family: &quot;Source Sans Pro&quot;;
-    font-size: 12px;
+    font-size: 14px;
     color: #666666;
     border: none;
 }
@@ -213,7 +220,7 @@ background-color: #EB4444;
                                       stop: 0 #ffffff, stop: 1 #fafafa);
  border-radius: 3px;
  border: 1px solid rgba(0, 0, 0, 5%);
- padding: 7px 12px 7px 6px;
+ padding: 7px 12px 7px 12px;
  font-family: &quot;Source Sans Pro&quot;;
  font-size: 13px;
  color: #777777;
@@ -291,7 +298,13 @@ color: #999999;
      <property name="minimumSize">
       <size>
        <width>400</width>
-       <height>13</height>
+       <height>12</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>12</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -301,6 +314,13 @@ color: #999999;
    </item>
    <item>
     <widget class="QWidget" name="wContainerHeader" native="true">
+     <property name="styleSheet">
+      <string notr="true">#wContainerHeader
+{
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                    stop: 0 #FCFCFC, stop: 1 #F7F7F7);
+}</string>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout_5">
       <property name="spacing">
        <number>0</number>
@@ -322,16 +342,22 @@ color: #999999;
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>57</height>
+          <height>60</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>57</height>
+          <height>60</height>
          </size>
         </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
+         <property name="spacing">
+          <number>20</number>
+         </property>
          <property name="leftMargin">
           <number>18</number>
          </property>
@@ -339,7 +365,7 @@ color: #999999;
           <number>10</number>
          </property>
          <item>
-          <widget class="AvatarWidget" name="bAvatar" native="true">
+          <widget class="QStackedWidget" name="sIconHeader">
            <property name="minimumSize">
             <size>
              <width>30</width>
@@ -352,6 +378,92 @@ color: #999999;
              <height>30</height>
             </size>
            </property>
+           <property name="currentIndex">
+            <number>1</number>
+           </property>
+           <widget class="QWidget" name="pAvatar">
+            <layout class="QHBoxLayout" name="horizontalLayout_10">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="AvatarWidget" name="bAvatar" native="true">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="pMEGAheader">
+            <layout class="QHBoxLayout" name="horizontalLayout_9">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="bMEGAheader">
+               <property name="minimumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="icon">
+                <iconset resource="../Resources_linux.qrc">
+                 <normaloff>:/images/MEGA_header.png</normaloff>:/images/MEGA_header.png</iconset>
+               </property>
+               <property name="iconSize">
+                <size>
+                 <width>24</width>
+                 <height>24</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
           </widget>
          </item>
          <item>
@@ -371,10 +483,6 @@ color: #999999;
            <property name="text">
             <string/>
            </property>
-           <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
-             <normaloff>:/images/streaming_on_icon.png</normaloff>:/images/streaming_on_icon.png</iconset>
-           </property>
            <property name="iconSize">
             <size>
              <width>8</width>
@@ -385,6 +493,12 @@ color: #999999;
          </item>
          <item>
           <widget class="QLabel" name="lName">
+           <property name="maximumSize">
+            <size>
+             <width>200</width>
+             <height>16777215</height>
+            </size>
+           </property>
            <property name="text">
             <string/>
            </property>
@@ -405,6 +519,9 @@ color: #999999;
          </item>
          <item>
           <widget class="QPushButton" name="bChats">
+           <property name="enabled">
+            <bool>true</bool>
+           </property>
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
              <horstretch>0</horstretch>
@@ -413,30 +530,31 @@ color: #999999;
            </property>
            <property name="minimumSize">
             <size>
-             <width>0</width>
-             <height>0</height>
+             <width>24</width>
+             <height>24</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>16777215</width>
-             <height>16777215</height>
+             <width>24</width>
+             <height>24</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true">border: none;
-margin-top:-1px;
-
-
 </string>
            </property>
            <property name="text">
             <string/>
            </property>
+           <property name="icon">
+            <iconset resource="../Resources_linux.qrc">
+             <normaloff>:/images/ico_chat_button.png</normaloff>:/images/ico_chat_button.png</iconset>
+           </property>
            <property name="iconSize">
             <size>
-             <width>24</width>
-             <height>24</height>
+             <width>22</width>
+             <height>16</height>
             </size>
            </property>
            <property name="flat">
@@ -454,28 +572,28 @@ margin-top:-1px;
            </property>
            <property name="minimumSize">
             <size>
-             <width>0</width>
-             <height>0</height>
+             <width>24</width>
+             <height>24</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>16777215</width>
-             <height>16777215</height>
+             <width>24</width>
+             <height>24</height>
             </size>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="styleSheet">
             <string notr="true">border: none;
-margin-top:-1px;
-
-
 </string>
            </property>
            <property name="text">
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/tray_transfer_manager_ico.png</normaloff>:/images/tray_transfer_manager_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -499,28 +617,29 @@ margin-top:-1px;
            </property>
            <property name="minimumSize">
             <size>
-             <width>0</width>
-             <height>0</height>
+             <width>24</width>
+             <height>24</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>16777215</width>
-             <height>16777215</height>
+             <width>24</width>
+             <height>24</height>
             </size>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="styleSheet">
             <string notr="true">border: none;
-margin-top:-1px;
-
-
+margin-top: -1px;
 </string>
            </property>
            <property name="text">
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -540,8 +659,7 @@ margin-top:-1px;
       <item>
        <widget class="QWidget" name="wActiveTransfersContainer" native="true">
         <property name="styleSheet">
-         <string notr="true">background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #FAFAFA, stop: 1 #F7F7F7);</string>
+         <string notr="true"/>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_8">
          <property name="spacing">
@@ -577,7 +695,7 @@ margin-top:-1px;
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>2</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="pUpdated">
             <property name="minimumSize">
@@ -630,13 +748,13 @@ border: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
-                 <normaloff>:/images/tray_updated_large_ico.png</normaloff>:/images/tray_updated_large_ico.png</iconset>
+                <iconset resource="../Resources_linux.qrc">
+                 <normaloff>:/images/empty_upToDate.png</normaloff>:/images/empty_upToDate.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
-                 <width>64</width>
-                 <height>64</height>
+                 <width>36</width>
+                 <height>36</height>
                 </size>
                </property>
                <property name="default">
@@ -667,23 +785,8 @@ border: none;</string>
                  <height>50</height>
                 </size>
                </property>
-               <property name="font">
-                <font>
-                 <pointsize>-1</pointsize>
-                 <weight>50</weight>
-                 <italic>false</italic>
-                 <bold>false</bold>
-                </font>
-               </property>
                <property name="styleSheet">
-                <string notr="true">#lSyncUpdated
-{
-font: &quot;Helvetica&quot;;
-font-size: 20px;
-font-weight: normal;
-color: #999999;
-padding-bottom: 25px;
-}</string>
+                <string notr="true"/>
                </property>
                <property name="text">
                 <string>MEGAsync is starting</string>
@@ -876,7 +979,7 @@ padding-bottom: 25px;
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Resources_macx.qrc">
+                    <iconset resource="../Resources_linux.qrc">
                      <normaloff>:/images/clock_ico.png</normaloff>:/images/clock_ico.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -992,7 +1095,7 @@ padding-bottom: 25px;
                     <string/>
                    </property>
                    <property name="icon">
-                    <iconset resource="../Resources_macx.qrc">
+                    <iconset resource="../Resources_linux.qrc">
                      <normaloff>:/images/clock_ico.png</normaloff>:/images/clock_ico.png</iconset>
                    </property>
                    <property name="iconSize">
@@ -1038,6 +1141,18 @@ padding-bottom: 25px;
             </layout>
            </widget>
            <widget class="QWidget" name="pOverQuota">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>190</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>190</height>
+             </size>
+            </property>
             <layout class="QVBoxLayout" name="verticalLayout_12">
              <property name="leftMargin">
               <number>0</number>
@@ -1131,13 +1246,13 @@ padding-bottom: 25px;
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>122</height>
+       <height>127</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>122</height>
+       <height>127</height>
       </size>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -1161,18 +1276,18 @@ padding-bottom: 25px;
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>20</height>
+          <height>10</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>20</height>
+          <height>10</height>
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <property name="spacing">
-          <number>5</number>
+          <number>6</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -1203,22 +1318,35 @@ padding-bottom: 25px;
           <widget class="QPushButton" name="bDotUsedStorage">
            <property name="minimumSize">
             <size>
-             <width>16</width>
-             <height>16</height>
+             <width>6</width>
+             <height>6</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>16</width>
-             <height>16</height>
+             <width>6</width>
+             <height>6</height>
             </size>
            </property>
            <property name="text">
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
-             <normaloff>:/images/empty_dot.png</normaloff>:/images/empty_dot.png</iconset>
+            <iconset resource="../Resources_linux.qrc">
+             <normaloff>:/images/Nav_Dot_inactive.png</normaloff>
+             <normalon>:/images/Nav_Dot_inactive.png</normalon>
+             <disabledoff>:/images/Nav_Dot_inactive.png</disabledoff>
+             <disabledon>:/images/Nav_Dot_inactive.png</disabledon>
+             <activeoff>:/images/Nav_Dot_inactive.png</activeoff>
+             <activeon>:/images/Nav_Dot_inactive.png</activeon>
+             <selectedoff>:/images/Nav_Dot_inactive.png</selectedoff>
+             <selectedon>:/images/Nav_Dot_inactive.png</selectedon>:/images/Nav_Dot_inactive.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>6</width>
+             <height>6</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -1226,22 +1354,28 @@ padding-bottom: 25px;
           <widget class="QPushButton" name="bDotUsedQuota">
            <property name="minimumSize">
             <size>
-             <width>16</width>
-             <height>16</height>
+             <width>6</width>
+             <height>6</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>16</width>
-             <height>16</height>
+             <width>6</width>
+             <height>6</height>
             </size>
            </property>
            <property name="text">
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
-             <normaloff>:/images/empty_dot.png</normaloff>:/images/empty_dot.png</iconset>
+            <iconset resource="../Resources_linux.qrc">
+             <normaloff>:/images/Nav_Dot_inactive.png</normaloff>:/images/Nav_Dot_inactive.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>6</width>
+             <height>6</height>
+            </size>
            </property>
           </widget>
          </item>
@@ -1350,16 +1484,16 @@ padding-bottom: 25px;
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_3">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>2</number>
                 </property>
                 <property name="leftMargin">
-                 <number>19</number>
+                 <number>16</number>
                 </property>
                 <property name="topMargin">
                  <number>0</number>
                 </property>
                 <property name="rightMargin">
-                 <number>19</number>
+                 <number>16</number>
                 </property>
                 <property name="bottomMargin">
                  <number>0</number>
@@ -1374,13 +1508,13 @@ padding-bottom: 25px;
                   </property>
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
+                    <width>368</width>
                     <height>20</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>362</width>
+                    <width>368</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -1395,7 +1529,7 @@ padding-bottom: 25px;
                     <number>0</number>
                    </property>
                    <property name="rightMargin">
-                    <number>1</number>
+                    <number>0</number>
                    </property>
                    <property name="bottomMargin">
                     <number>0</number>
@@ -1481,15 +1615,21 @@ padding-bottom: 25px;
                   </property>
                   <property name="minimumSize">
                    <size>
-                    <width>362</width>
+                    <width>368</width>
                     <height>8</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>362</width>
+                    <width>368</width>
                     <height>8</height>
                    </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
                   </property>
                   <property name="value">
                    <number>18</number>
@@ -1546,16 +1686,16 @@ padding-bottom: 25px;
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_7">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>2</number>
                 </property>
                 <property name="leftMargin">
-                 <number>19</number>
+                 <number>16</number>
                 </property>
                 <property name="topMargin">
                  <number>0</number>
                 </property>
                 <property name="rightMargin">
-                 <number>19</number>
+                 <number>16</number>
                 </property>
                 <property name="bottomMargin">
                  <number>0</number>
@@ -1570,13 +1710,13 @@ padding-bottom: 25px;
                   </property>
                   <property name="minimumSize">
                    <size>
-                    <width>0</width>
+                    <width>368</width>
                     <height>20</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>362</width>
+                    <width>368</width>
                     <height>20</height>
                    </size>
                   </property>
@@ -1591,7 +1731,7 @@ padding-bottom: 25px;
                     <number>0</number>
                    </property>
                    <property name="rightMargin">
-                    <number>1</number>
+                    <number>0</number>
                    </property>
                    <property name="bottomMargin">
                     <number>0</number>
@@ -1690,13 +1830,13 @@ color: #333333;
                   </property>
                   <property name="minimumSize">
                    <size>
-                    <width>362</width>
+                    <width>368</width>
                     <height>8</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>362</width>
+                    <width>368</width>
                     <height>8</height>
                    </size>
                   </property>
@@ -1743,7 +1883,7 @@ color: #333333;
           <number>0</number>
          </property>
          <property name="rightMargin">
-          <number>19</number>
+          <number>17</number>
          </property>
          <property name="bottomMargin">
           <number>0</number>
@@ -1762,6 +1902,12 @@ color: #333333;
              <height>32</height>
             </size>
            </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="mouseTracking">
+            <bool>false</bool>
+           </property>
            <property name="styleSheet">
             <string notr="true"/>
            </property>
@@ -1769,13 +1915,13 @@ color: #333333;
             <string>Syncs</string>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
-             <normaloff>:/images/sync_item_ico.png</normaloff>:/images/sync_item_ico.png</iconset>
+            <iconset resource="../Resources_linux.qrc">
+             <normaloff>:/images/ico_syncs.png</normaloff>:/images/ico_syncs.png</iconset>
            </property>
            <property name="iconSize">
             <size>
-             <width>32</width>
-             <height>32</height>
+             <width>18</width>
+             <height>16</height>
             </size>
            </property>
            <property name="flat">
@@ -1809,6 +1955,12 @@ color: #333333;
              <width>16777215</width>
              <height>32</height>
             </size>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="mouseTracking">
+            <bool>false</bool>
            </property>
            <property name="styleSheet">
             <string notr="true"/>
@@ -1852,7 +2004,7 @@ color: #333333;
   <tabstop>label</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>
