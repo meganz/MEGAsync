@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>375</height>
+    <height>373</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,14 +18,14 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>400</width>
-    <height>375</height>
+    <width>398</width>
+    <height>373</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>400</width>
-    <height>375</height>
+    <height>373</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -183,7 +183,7 @@ QPushButton#bSettings:hover
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/MEGA_header.png</normaloff>:/images/MEGA_header.png</iconset>
         </property>
         <property name="iconSize">
@@ -229,7 +229,7 @@ margin-top: -1px;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/settings_ico.png</normaloff>:/images/settings_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -318,7 +318,7 @@ margin-top: -1px;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/non_logged_graphic.png</normaloff>:/images/non_logged_graphic.png</iconset>
            </property>
            <property name="iconSize">
@@ -470,7 +470,7 @@ background-color: white;
   <tabstop>bCreateAccount</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -66,8 +66,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     //Initialize header dialog and disable chat features
     ui->sIconHeader->setCurrentWidget(ui->pAvatar);
     ui->wHeader->setStyleSheet(QString::fromUtf8("#wHeader {border: none;}"));
-    ui->bState->setVisible(false);
-    ui->bChats->setVisible(false);
 
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
@@ -1232,10 +1230,8 @@ void InfoDialog::regenerateLayout()
             connect(gWidget, SIGNAL(actionButtonClicked(int)), this, SLOT(onUserAction(int)));
         }
 
-        ui->bChats->setVisible(false);
         ui->bTransferManager->setVisible(false);
         ui->bSyncFolder->setVisible(false);
-        ui->bState->setVisible(false);
         ui->bAvatar->setVisible(false);
         ui->sIconHeader->setCurrentWidget(ui->pMEGAheader);
         ui->bTransferManager->setVisible(false);
@@ -1250,10 +1246,8 @@ void InfoDialog::regenerateLayout()
     }
     else
     {
-        ui->bChats->setVisible(true);
         ui->bTransferManager->setVisible(true);
         ui->bSyncFolder->setVisible(true);
-        ui->bState->setVisible(true);
         ui->bAvatar->setVisible(true);
         ui->sIconHeader->setCurrentWidget(ui->pAvatar);
         ui->bTransferManager->setVisible(true);
