@@ -529,5 +529,61 @@
         <file>images/tray_transfer_manager_ico@2x.png</file>
         <file>images/Lite.png</file>
         <file>images/Lite@2x.png</file>
+        <file>images/ico_chat_button.png</file>
+        <file>images/ico_chat_button@2x.png</file>
+        <file>images/Nav_Dot_active.png</file>
+        <file>images/Nav_Dot_active@2x.png</file>
+        <file>images/Nav_Dot_inactive.png</file>
+        <file>images/Nav_Dot_inactive@2x.png</file>
+        <file>images/ico_syncs.png</file>
+        <file>images/ico_syncs@2x.png</file>
+        <file>images/ico_away.png</file>
+        <file>images/ico_away@2x.png</file>
+        <file>images/ico_busy.png</file>
+        <file>images/ico_busy@2x.png</file>
+        <file>images/ico_offline.png</file>
+        <file>images/ico_offline@2x.png</file>
+        <file>images/ico_online.png</file>
+        <file>images/ico_online@2x.png</file>
+        <file>images/empty_upToDate.png</file>
+        <file>images/empty_upToDate@2x.png</file>
+        <file>images/ico_add_sync.png</file>
+        <file>images/ico_add_sync@2x.png</file>
+        <file>images/ico_drop_synched_folder.png</file>
+        <file>images/ico_drop_synched_folder@2x.png</file>
+        <file>images/ico_about_MEGA_out.png</file>
+        <file>images/ico_about_MEGA_out@2x.png</file>
+        <file>images/ico_about_MEGA_over.png</file>
+        <file>images/ico_about_MEGA_over@2x.png</file>
+        <file>images/ico_download_out.png</file>
+        <file>images/ico_download_out@2x.png</file>
+        <file>images/ico_download_over.png</file>
+        <file>images/ico_download_over@2x.png</file>
+        <file>images/ico_MEGA_website_out.png</file>
+        <file>images/ico_MEGA_website_out@2x.png</file>
+        <file>images/ico_MEGA_website_over.png</file>
+        <file>images/ico_MEGA_website_over@2x.png</file>
+        <file>images/ico_pause_transfers_over.png</file>
+        <file>images/ico_pause_transfers_over@2x.png</file>
+        <file>images/ico_pause_transfers.png</file>
+        <file>images/ico_pause_transfers@2x.png</file>
+        <file>images/ico_preferences_out.png</file>
+        <file>images/ico_preferences_out@2x.png</file>
+        <file>images/ico_preferences_over.png</file>
+        <file>images/ico_preferences_over@2x.png</file>
+        <file>images/ico_quit_out.png</file>
+        <file>images/ico_quit_out@2x.png</file>
+        <file>images/ico_quit_over.png</file>
+        <file>images/ico_quit_over@2x.png</file>
+        <file>images/ico_stream_out.png</file>
+        <file>images/ico_stream_out@2x.png</file>
+        <file>images/ico_stream_over.png</file>
+        <file>images/ico_stream_over@2x.png</file>
+        <file>images/ico_upload_out.png</file>
+        <file>images/ico_upload_out@2x.png</file>
+        <file>images/ico_upload_over.png</file>
+        <file>images/ico_upload_over@2x.png</file>
+        <file>images/MEGA_header.png</file>
+        <file>images/MEGA_header@2x.png</file>
     </qresource>
 </RCC>

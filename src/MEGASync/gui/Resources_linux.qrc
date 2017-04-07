@@ -267,5 +267,33 @@
         <file>images/tray_transfer_manager_ico_over.png</file>
         <file>images/tray_transfer_manager_ico.png</file>
         <file>images/Lite.png</file>
+        <file>images/ico_chat_button.png</file>
+        <file>images/Nav_Dot_active.png</file>
+        <file>images/Nav_Dot_inactive.png</file>
+        <file>images/ico_syncs.png</file>
+        <file>images/ico_away.png</file>
+        <file>images/ico_busy.png</file>
+        <file>images/ico_offline.png</file>
+        <file>images/ico_online.png</file>
+        <file>images/empty_upToDate.png</file>
+        <file>images/ico_add_sync.png</file>
+        <file>images/ico_drop_synched_folder.png</file>
+        <file>images/ico_about_MEGA_out.png</file>
+        <file>images/ico_about_MEGA_over.png</file>
+        <file>images/ico_download_out.png</file>
+        <file>images/ico_download_over.png</file>
+        <file>images/ico_MEGA_website_out.png</file>
+        <file>images/ico_MEGA_website_over.png</file>
+        <file>images/ico_pause_transfers_over.png</file>
+        <file>images/ico_pause_transfers.png</file>
+        <file>images/ico_preferences_out.png</file>
+        <file>images/ico_preferences_over.png</file>
+        <file>images/ico_quit_out.png</file>
+        <file>images/ico_quit_over.png</file>
+        <file>images/ico_stream_out.png</file>
+        <file>images/ico_stream_over.png</file>
+        <file>images/ico_upload_out.png</file>
+        <file>images/ico_upload_over.png</file>
+        <file>images/MEGA_header.png</file>
     </qresource>
 </RCC>
