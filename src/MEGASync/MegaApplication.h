@@ -230,7 +230,6 @@ protected:
     MenuItemAction *updateAction;
     QAction *showStatusAction;
 
-    MenuItemAction *logoutActionOverquota;
     MenuItemAction *settingsActionOverquota;
     MenuItemAction *exitActionOverquota;
     MenuItemAction *updateActionOverquota;
@@ -239,7 +238,6 @@ protected:
     MenuItemAction *exitActionGuest;
     MenuItemAction *settingsActionGuest;
     MenuItemAction *updateActionGuest;
-    MenuItemAction *loginActionGuest;
 
 #ifdef __APPLE__
     QTimer *scanningTimer;
