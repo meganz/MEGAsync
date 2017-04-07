@@ -4353,7 +4353,7 @@ void MegaApplication::createTrayMenu()
     }
 
 #ifndef __APPLE__
-    exitAction = new serAction(tr("Exit"), QIcon(QString::fromAscii("://images/ico_quit_out.png")), QIcon(QString::fromAscii("://images/ico_quit_over.png")));
+    exitAction = new MenuItemAction(tr("Exit"), QIcon(QString::fromAscii("://images/ico_quit_out.png")), QIcon(QString::fromAscii("://images/ico_quit_over.png")));
 #else
     exitAction = new MenuItemAction(tr("Quit"), QIcon(QString::fromAscii("://images/ico_quit_out.png")), QIcon(QString::fromAscii("://images/ico_quit_over.png")));
 #endif
