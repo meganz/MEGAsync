@@ -1230,9 +1230,6 @@ void InfoDialog::regenerateLayout()
         {
             gWidget = new GuestWidget();
             connect(gWidget, SIGNAL(actionButtonClicked(int)), this, SLOT(onUserAction(int)));
-            connect(gWidget, SIGNAL(cancelCurrentDownload()), this, SLOT(cancelCurrentDownload()));
-            connect(gWidget, SIGNAL(cancelAllDownloads()), this, SLOT(cancelAllDownloads()));
-            connect(gWidget, SIGNAL(pauseClicked()), this, SLOT(onOverlayClicked()));
         }
 
         ui->bChats->setVisible(false);
