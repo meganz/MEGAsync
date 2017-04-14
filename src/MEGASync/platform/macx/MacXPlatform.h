@@ -3,6 +3,7 @@
 
 #include "MacXFunctions.h"
 #include "MacXSystemServiceTask.h"
+#include "MacXExtServer.h"
 
 #include <QApplication>
 #include <QString>
@@ -20,6 +21,7 @@ private:
     MacXPlatform() {}
     static bool enableSetuidBit();
     static MacXSystemServiceTask *systemServiceTask;
+    static MacXExtServer *extServer;
 
 public:
     static void initialize(int argc, char *argv[]);

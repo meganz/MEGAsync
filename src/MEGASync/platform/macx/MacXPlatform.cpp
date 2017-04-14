@@ -2,6 +2,7 @@
 
 int MacXPlatform::fd = -1;
 MacXSystemServiceTask* MacXPlatform::systemServiceTask = NULL;
+MacXExtServer *MacXPlatform::extServer = NULL;
 
 void MacXPlatform::initialize(int argc, char *argv[])
 {
@@ -55,7 +56,10 @@ bool MacXPlatform::enableTrayIcon(QString executable)
 
 void MacXPlatform::notifyItemChange(QString path)
 {
-
+    if (extServer)
+    {
+        extServer->notifyItemChange(path);
+    }
 }
 
 bool MacXPlatform::startOnStartup(bool value)
@@ -82,12 +86,15 @@ void MacXPlatform::showInFolder(QString pathIn)
 
 void MacXPlatform::startShellDispatcher(MegaApplication *receiver)
 {
-    if (systemServiceTask)
+    if (!systemServiceTask)
     {
-        return;
+        systemServiceTask = new MacXSystemServiceTask(receiver);
     }
 
-    systemServiceTask = new MacXSystemServiceTask(receiver);
+    if (!extServer)
+    {
+        extServer = new MacXExtServer(receiver);
+    }
 }
 
 void MacXPlatform::stopShellDispatcher()
@@ -99,12 +106,22 @@ void MacXPlatform::syncFolderAdded(QString syncPath, QString syncName)
 {
     addPathToPlaces(syncPath,syncName);
     setFolderIcon(syncPath);
+
+    if (extServer)
+    {
+        extServer->notifySyncAdd(syncPath, syncName);
+    }
 }
 
 void MacXPlatform::syncFolderRemoved(QString syncPath, QString syncName)
 {
     removePathFromPlaces(syncPath);
     unSetFolderIcon(syncPath);
+
+    if (extServer)
+    {
+        extServer->notifySyncDel(syncPath, syncName);
+    }
 }
 
 QByteArray MacXPlatform::encrypt(QByteArray data, QByteArray key)
@@ -138,7 +155,7 @@ bool MacXPlatform::enableSetuidBit()
     char *response = runWithRootPrivileges((char *)command.toStdString().c_str());
     if (!response)
     {
-        return NULL;
+        return false;
     }
     bool result = strlen(response) >= 4 && !strncmp(response, "true", 4);
     delete response;

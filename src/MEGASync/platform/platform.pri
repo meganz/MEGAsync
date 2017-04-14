@@ -93,15 +93,30 @@ macx {
         $$PWD/macx/macnotificationhandler.h \
         $$PWD/macx/NotificationDelegate.h \
         $$PWD/macx/MacXSystemServiceTask.h  \
-        $$PWD/macx/MEGAService.h
+        $$PWD/macx/MEGAService.h \
+        $$PWD/macx/ClientSide.h \
+        $$PWD/macx/ServerSide.h \
+        $$PWD/macx/MacXExtServer.h \
+        $$PWD/macx/MacXLocalServer.h \
+        $$PWD/macx/MacXLocalServerPrivate.h \
+        $$PWD/macx/MacXLocalSocket.h \
+        $$PWD/macx/MacXLocalSocketPrivate.h \
+        $$PWD/macx/Protocol.h
+
 
     OBJECTIVE_SOURCES += \
             $$PWD/macx/MacXFunctions.mm \
             $$PWD/macx/macnotificationhandler.mm \
             $$PWD/macx/NotificationDelegate.mm \
             $$PWD/macx/MacXSystemServiceTask.mm \
-            $$PWD/macx/MEGAService.mm
-
+            $$PWD/macx/MEGAService.mm \
+            $$PWD/macx/ClientSide.mm \
+            $$PWD/macx/ServerSide.mm \
+            $$PWD/macx/MacXExtServer.mm \
+            $$PWD/macx/MacXLocalServer.mm \
+            $$PWD/macx/MacXLocalServerPrivate.mm \
+            $$PWD/macx/MacXLocalSocket.mm \
+            $$PWD/macx/MacXLocalSocketPrivate.mm
 
     LIBS += -framework Cocoa
     LIBS += -framework Security

@@ -5755,7 +5755,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
         return;
     }
 
-    bool externalNodes = 0;
+    bool externalNodes = false;
     bool nodesRemoved = false;
     long long usedStorage = preferences->usedStorage();
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("%1 updated files/folders").arg(nodes->size()).toUtf8().constData());
@@ -5810,7 +5810,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                 && !node->isSyncDeleted()
                 && ((lastExit / 1000) < node->getCreationTime()))
         {
-            externalNodes++;
+            externalNodes = true;
         }
 
         if (node->isRemoved() && (node->getType() == MegaNode::TYPE_FILE))

@@ -13,7 +13,7 @@
     <key>CFBundleExecutable</key>
     <string>MEGAsync</string>
     <key>CFBundleIdentifier</key>
-    <string>mega.mac</string>
+    <string>mega.mac.megasync</string>
     <key>LSUIElement</key>
     <string>1</string>
     <key>NSHighResolutionCapable</key>
