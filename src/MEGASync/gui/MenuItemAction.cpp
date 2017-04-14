@@ -1,7 +1,7 @@
 #include "MenuItemAction.h"
 #include <QKeyEvent>
 
-MenuItemAction::MenuItemAction(const QString title, const QIcon icon)
+MenuItemAction::MenuItemAction(const QString title, const QIcon icon, QSize iconSize)
     : QWidgetAction(NULL)
 {
     this->title = new QLabel(title);
@@ -11,11 +11,11 @@ MenuItemAction::MenuItemAction(const QString title, const QIcon icon)
     container = new QWidget(NULL);
     container->setObjectName(QString::fromUtf8("wContainer"));
     container->installEventFilter(this);
-    setupActionWidget();
+    setupActionWidget(iconSize);
     setDefaultWidget(container);
 }
 
-MenuItemAction::MenuItemAction(const QString title, const QString value, const QIcon icon)
+MenuItemAction::MenuItemAction(const QString title, const QString value, const QIcon icon, QSize iconSize)
     : QWidgetAction(NULL)
 {
     this->title = new QLabel(title);
@@ -25,11 +25,11 @@ MenuItemAction::MenuItemAction(const QString title, const QString value, const Q
     container = new QWidget(NULL);
     container->setObjectName(QString::fromUtf8("wContainer"));
     container->installEventFilter(this);
-    setupActionWidget();
+    setupActionWidget(iconSize);
     setDefaultWidget(container);
 }
 
-MenuItemAction::MenuItemAction(const QString title, const QIcon icon, const QIcon hoverIcon)
+MenuItemAction::MenuItemAction(const QString title, const QIcon icon, const QIcon hoverIcon, QSize iconSize)
     : QWidgetAction(NULL)
 {
     this->title = new QLabel(title);
@@ -39,7 +39,7 @@ MenuItemAction::MenuItemAction(const QString title, const QIcon icon, const QIco
     container = new QWidget (NULL);
     container->setObjectName(QString::fromUtf8("wContainer"));
     container->installEventFilter(this);
-    setupActionWidget();
+    setupActionWidget(iconSize);
     setDefaultWidget(container);
 }
 
@@ -59,7 +59,7 @@ MenuItemAction::~MenuItemAction()
     delete container;
 }
 
-void MenuItemAction::setupActionWidget()
+void MenuItemAction::setupActionWidget(QSize iconSize)
 {
     container->setMinimumHeight(32);
     container->setMaximumHeight(32);
@@ -68,9 +68,9 @@ void MenuItemAction::setupActionWidget()
     iconButton = new QPushButton();
     iconButton->setAttribute(Qt::WA_TransparentForMouseEvents, true);
     iconButton->setText(QString::fromUtf8(""));
-    iconButton->setMinimumSize(QSize(24, 24));
-    iconButton->setMaximumSize(QSize(24, 24));
-    iconButton->setIconSize(QSize(24, 24));
+    iconButton->setMinimumSize(iconSize);
+    iconButton->setMaximumSize(iconSize);
+    iconButton->setIconSize(icon->availableSizes().at(0));
     iconButton->setIcon(*icon);
     iconButton->setFlat(true);
 

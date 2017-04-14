@@ -1898,10 +1898,11 @@ void SettingsDialog::changeEvent(QEvent *event)
         ui->retranslateUi(this);
 
 #ifdef __APPLE__
-       setWindowTitle(tr("Preferences - MEGAsync"));
-       ui->cStartOnStartup->setText(tr("Open at login"));
-       ui->cOverlayIcons->hide();
+        setWindowTitle(tr("Preferences - MEGAsync"));
+        ui->cStartOnStartup->setText(tr("Open at login"));
+        ui->cOverlayIcons->hide();
 #endif
+        ui->cProxyType->addItem(QString::fromUtf8("SOCKS5H"));
 
         loadSettings();
         onCacheSizeAvailable();

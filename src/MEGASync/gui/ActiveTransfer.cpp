@@ -76,12 +76,8 @@ void ActiveTransfer::setType(int type)
                                                         "QProgressBar#pProgress::chunk {background-color: #31b500;}"));
     }
 
-#ifndef Q_OS_LINUX
     ui->lTransferType->setIcon(icon);
     ui->lTransferType->setIconSize(QSize(12, 12));
-#else
-    ui->lTransferType->setPixmap(icon.pixmap(QSize(12, 12)));
-#endif
 }
 
 void ActiveTransfer::hideTransfer()
