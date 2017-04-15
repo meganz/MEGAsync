@@ -6,7 +6,7 @@
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>T9RH74Y7L9.mega.mac.megasync</string>
+		<string>T9RH74Y7L9.mega.mac</string>
 	</array>
 </dict>
 </plist>

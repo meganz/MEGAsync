@@ -21,7 +21,7 @@
     [[FIFinderSyncController defaultController] setBadgeImage:iconSYNCING label:@"" forBadgeIdentifier:@"syncing"];
     
     // Server name should contain developer id
-    NSString *serverName = @"T9RH74Y7L9.mega.mac.megasync.socket";
+    NSString *serverName = @"T9RH74Y7L9.mega.mac.socket";
     _ext = [[ShellExt alloc] initWithServerName:serverName delegate:self];
     _directories = [[NSMutableSet alloc] init];
     _syncNames   = [[NSMutableArray alloc] init];

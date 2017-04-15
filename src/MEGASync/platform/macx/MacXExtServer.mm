@@ -8,7 +8,7 @@ using namespace mega;
 
 MacXExtServer::MacXExtServer(MegaApplication *app)
 {
-    sockPath = QString::fromUtf8("T9RH74Y7L9.mega.mac.megasync.socket");
+    sockPath = QString::fromUtf8("T9RH74Y7L9.mega.mac.socket");
     m_localServer = new MacXLocalServer();
     if (!m_localServer->listen(sockPath))
     {
