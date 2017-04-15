@@ -1,0 +1,461 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7724ACEE1E76C54D00A5F0CC /* ShellExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 7724ACED1E76C54D00A5F0CC /* ShellExt.m */; };
+		773B0EC41E8D371100331475 /* app.icns in Resources */ = {isa = PBXBuildFile; fileRef = 773B0EC31E8D371100331475 /* app.icns */; };
+		7743FC2A1E72B2D4005E42F9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7743FC291E72B2D4005E42F9 /* main.m */; };
+		7743FC401E72C6B7005E42F9 /* FinderSync.m in Sources */ = {isa = PBXBuildFile; fileRef = 7743FC3F1E72C6B7005E42F9 /* FinderSync.m */; };
+		7743FC441E72C6B7005E42F9 /* MEGAShellExtFinder.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7743FC3A1E72C6B7005E42F9 /* MEGAShellExtFinder.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		77C807921E82E30D00064263 /* error.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 77C8078C1E82E30D00064263 /* error.iconset */; };
+		77C807941E82E30E00064263 /* ok.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 77C8078E1E82E30D00064263 /* ok.iconset */; };
+		77C807961E82E30E00064263 /* sync.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 77C807901E82E30D00064263 /* sync.iconset */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7743FC421E72C6B7005E42F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7743FC1A1E72B2D4005E42F9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7743FC391E72C6B7005E42F9;
+			remoteInfo = MEGAShellExtFinder;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7743FC481E72C6B7005E42F9 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				7743FC441E72C6B7005E42F9 /* MEGAShellExtFinder.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		7710EA7E1E770C3B00B4E00F /* Interfaces.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Interfaces.h; sourceTree = "<group>"; };
+		7724ACEC1E76C54D00A5F0CC /* ShellExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShellExt.h; sourceTree = "<group>"; };
+		7724ACED1E76C54D00A5F0CC /* ShellExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShellExt.m; sourceTree = "<group>"; };
+		773B0EC31E8D371100331475 /* app.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = app.icns; path = ../../MEGASync/app.icns; sourceTree = "<group>"; };
+		7743FC221E72B2D4005E42F9 /* megasync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = megasync.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7743FC291E72B2D4005E42F9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7743FC301E72B2D4005E42F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7743FC3A1E72C6B7005E42F9 /* MEGAShellExtFinder.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAShellExtFinder.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		7743FC3D1E72C6B7005E42F9 /* MEGAShellExtFinder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MEGAShellExtFinder.entitlements; sourceTree = "<group>"; };
+		7743FC3E1E72C6B7005E42F9 /* FinderSync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FinderSync.h; sourceTree = "<group>"; };
+		7743FC3F1E72C6B7005E42F9 /* FinderSync.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FinderSync.m; sourceTree = "<group>"; };
+		7743FC411E72C6B7005E42F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		77C8078C1E82E30D00064263 /* error.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = error.iconset; path = icons/error.iconset; sourceTree = "<group>"; };
+		77C8078E1E82E30D00064263 /* ok.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = ok.iconset; path = icons/ok.iconset; sourceTree = "<group>"; };
+		77C807901E82E30D00064263 /* sync.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = sync.iconset; path = icons/sync.iconset; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7743FC1F1E72B2D4005E42F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7743FC371E72C6B7005E42F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7724ACEB1E76C51C00A5F0CC /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				7724ACEC1E76C54D00A5F0CC /* ShellExt.h */,
+				7724ACED1E76C54D00A5F0CC /* ShellExt.m */,
+				7710EA7E1E770C3B00B4E00F /* Interfaces.h */,
+			);
+			name = utils;
+			sourceTree = "<group>";
+		};
+		7743FC191E72B2D4005E42F9 = {
+			isa = PBXGroup;
+			children = (
+				7743FC241E72B2D4005E42F9 /* megaextension */,
+				7743FC3B1E72C6B7005E42F9 /* MEGAShellExtFinder */,
+				7743FC231E72B2D4005E42F9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7743FC231E72B2D4005E42F9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7743FC221E72B2D4005E42F9 /* megasync.app */,
+				7743FC3A1E72C6B7005E42F9 /* MEGAShellExtFinder.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7743FC241E72B2D4005E42F9 /* megaextension */ = {
+			isa = PBXGroup;
+			children = (
+				7743FC281E72B2D4005E42F9 /* Supporting Files */,
+			);
+			path = megaextension;
+			sourceTree = "<group>";
+		};
+		7743FC281E72B2D4005E42F9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7743FC301E72B2D4005E42F9 /* Info.plist */,
+				7743FC291E72B2D4005E42F9 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7743FC3B1E72C6B7005E42F9 /* MEGAShellExtFinder */ = {
+			isa = PBXGroup;
+			children = (
+				7724ACEB1E76C51C00A5F0CC /* utils */,
+				7743FC3E1E72C6B7005E42F9 /* FinderSync.h */,
+				7743FC3F1E72C6B7005E42F9 /* FinderSync.m */,
+				7743FC411E72C6B7005E42F9 /* Info.plist */,
+				7743FC3C1E72C6B7005E42F9 /* Supporting Files */,
+			);
+			path = MEGAShellExtFinder;
+			sourceTree = "<group>";
+		};
+		7743FC3C1E72C6B7005E42F9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				773B0EC31E8D371100331475 /* app.icns */,
+				77C8078C1E82E30D00064263 /* error.iconset */,
+				77C8078E1E82E30D00064263 /* ok.iconset */,
+				77C807901E82E30D00064263 /* sync.iconset */,
+				7743FC3D1E72C6B7005E42F9 /* MEGAShellExtFinder.entitlements */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7743FC211E72B2D4005E42F9 /* megasync */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7743FC331E72B2D4005E42F9 /* Build configuration list for PBXNativeTarget "megasync" */;
+			buildPhases = (
+				7743FC1E1E72B2D4005E42F9 /* Sources */,
+				7743FC1F1E72B2D4005E42F9 /* Frameworks */,
+				7743FC201E72B2D4005E42F9 /* Resources */,
+				7743FC481E72C6B7005E42F9 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7743FC431E72C6B7005E42F9 /* PBXTargetDependency */,
+			);
+			name = megasync;
+			productName = megaextension;
+			productReference = 7743FC221E72B2D4005E42F9 /* megasync.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7743FC391E72C6B7005E42F9 /* MEGAShellExtFinder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7743FC451E72C6B7005E42F9 /* Build configuration list for PBXNativeTarget "MEGAShellExtFinder" */;
+			buildPhases = (
+				7743FC361E72C6B7005E42F9 /* Sources */,
+				7743FC371E72C6B7005E42F9 /* Frameworks */,
+				7743FC381E72C6B7005E42F9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MEGAShellExtFinder;
+			productName = MEGAShellExtFinder;
+			productReference = 7743FC3A1E72C6B7005E42F9 /* MEGAShellExtFinder.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7743FC1A1E72B2D4005E42F9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Mega Ltd";
+				TargetAttributes = {
+					7743FC211E72B2D4005E42F9 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = T9RH74Y7L9;
+						ProvisioningStyle = Manual;
+					};
+					7743FC391E72C6B7005E42F9 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = T9RH74Y7L9;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 7743FC1D1E72B2D4005E42F9 /* Build configuration list for PBXProject "MEGAFinderSync" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 7743FC191E72B2D4005E42F9;
+			productRefGroup = 7743FC231E72B2D4005E42F9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7743FC211E72B2D4005E42F9 /* megasync */,
+				7743FC391E72C6B7005E42F9 /* MEGAShellExtFinder */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7743FC201E72B2D4005E42F9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7743FC381E72C6B7005E42F9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				773B0EC41E8D371100331475 /* app.icns in Resources */,
+				77C807941E82E30E00064263 /* ok.iconset in Resources */,
+				77C807921E82E30D00064263 /* error.iconset in Resources */,
+				77C807961E82E30E00064263 /* sync.iconset in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7743FC1E1E72B2D4005E42F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7743FC2A1E72B2D4005E42F9 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7743FC361E72C6B7005E42F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7724ACEE1E76C54D00A5F0CC /* ShellExt.m in Sources */,
+				7743FC401E72C6B7005E42F9 /* FinderSync.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7743FC431E72C6B7005E42F9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7743FC391E72C6B7005E42F9 /* MEGAShellExtFinder */;
+			targetProxy = 7743FC421E72C6B7005E42F9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		7743FC311E72B2D4005E42F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		7743FC321E72B2D4005E42F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		7743FC341E72B2D4005E42F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				INFOPLIST_FILE = megaextension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mega.mac.megasync;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7743FC351E72B2D4005E42F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				INFOPLIST_FILE = megaextension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mega.mac.megasync;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		7743FC461E72C6B7005E42F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MEGAShellExtFinder/MEGAShellExtFinder.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				INFOPLIST_FILE = MEGAShellExtFinder/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.mac.megasync.MEGAShellExtFinder;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		7743FC471E72C6B7005E42F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MEGAShellExtFinder/MEGAShellExtFinder.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				INFOPLIST_FILE = MEGAShellExtFinder/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.mac.megasync.MEGAShellExtFinder;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7743FC1D1E72B2D4005E42F9 /* Build configuration list for PBXProject "MEGAFinderSync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7743FC311E72B2D4005E42F9 /* Debug */,
+				7743FC321E72B2D4005E42F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7743FC331E72B2D4005E42F9 /* Build configuration list for PBXNativeTarget "megasync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7743FC341E72B2D4005E42F9 /* Debug */,
+				7743FC351E72B2D4005E42F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7743FC451E72C6B7005E42F9 /* Build configuration list for PBXNativeTarget "MEGAShellExtFinder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7743FC461E72C6B7005E42F9 /* Debug */,
+				7743FC471E72C6B7005E42F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7743FC1A1E72B2D4005E42F9 /* Project object */;
+}
