@@ -6,32 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>404</width>
-    <height>379</height>
+    <width>400</width>
+    <height>385</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>404</width>
-    <height>379</height>
+    <width>400</width>
+    <height>385</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>404</width>
-    <height>379</height>
+    <width>402</width>
+    <height>385</height>
    </size>
   </property>
   <property name="windowTitle">
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#InfoDialog
-{
-    border: 1px solid  rgb(100, 100, 100);
-}
-
-#bAvatar, #bState, #bDotUsedQuota, #bDotUsedStorage, #bMEGAheader
+   <string notr="true">#bAvatar, #bState, #bDotUsedQuota, #bDotUsedStorage, #bMEGAheader
 {
 	border: none;
 }
@@ -102,14 +97,11 @@ font-size: 12px;
 font-size: 12px;
 }
 
-#lRemainingTimeD
+#lRemainingTimeD, #lRemainingTimeU
 {
-font-weight: bold;
-}
-
-#lRemainingTimeU
-{
-font-weight: bold;
+font-family: &quot;Source Sans Pro&quot;;
+font-size: 16px;
+color: #333333;
 }
 
 #lPercentageUsed
@@ -281,17 +273,42 @@ color: #999999;
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
+   <item>
+    <widget class="QWidget" name="wArrow" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>12</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>12</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+   </item>
    <item>
     <widget class="QWidget" name="wContainerHeader" native="true">
      <property name="styleSheet">
@@ -348,14 +365,14 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
           <widget class="AvatarWidget" name="bAvatar" native="true">
            <property name="minimumSize">
             <size>
-             <width>34</width>
-             <height>34</height>
+             <width>30</width>
+             <height>30</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>34</width>
-             <height>34</height>
+             <width>30</width>
+             <height>30</height>
             </size>
            </property>
           </widget>
@@ -519,7 +536,7 @@ margin-top: -1px;
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="pUpdated">
             <property name="minimumSize">
@@ -748,16 +765,16 @@ border: none;</string>
                     <number>10</number>
                    </property>
                    <property name="leftMargin">
-                    <number>20</number>
+                    <number>15</number>
                    </property>
                    <property name="topMargin">
                     <number>0</number>
                    </property>
                    <property name="rightMargin">
-                    <number>15</number>
+                    <number>20</number>
                    </property>
                    <property name="bottomMargin">
-                    <number>0</number>
+                    <number>15</number>
                    </property>
                    <item>
                     <widget class="QLabel" name="lDownloads">
@@ -827,7 +844,7 @@ border: none;</string>
                     <widget class="QLabel" name="lRemainingTimeD">
                      <property name="minimumSize">
                       <size>
-                       <width>60</width>
+                       <width>65</width>
                        <height>0</height>
                       </size>
                      </property>
@@ -836,6 +853,9 @@ border: none;</string>
                        <width>60</width>
                        <height>16777215</height>
                       </size>
+                     </property>
+                     <property name="layoutDirection">
+                      <enum>Qt::RightToLeft</enum>
                      </property>
                      <property name="styleSheet">
                       <string notr="true"/>
@@ -886,16 +906,16 @@ border: none;</string>
                     <number>10</number>
                    </property>
                    <property name="leftMargin">
-                    <number>20</number>
+                    <number>15</number>
                    </property>
                    <property name="topMargin">
                     <number>0</number>
                    </property>
                    <property name="rightMargin">
-                    <number>15</number>
+                    <number>20</number>
                    </property>
                    <property name="bottomMargin">
-                    <number>0</number>
+                    <number>15</number>
                    </property>
                    <item>
                     <widget class="QLabel" name="lUploads">
@@ -965,7 +985,7 @@ border: none;</string>
                     <widget class="QLabel" name="lRemainingTimeU">
                      <property name="minimumSize">
                       <size>
-                       <width>60</width>
+                       <width>65</width>
                        <height>0</height>
                       </size>
                      </property>
@@ -974,6 +994,9 @@ border: none;</string>
                        <width>60</width>
                        <height>16777215</height>
                       </size>
+                     </property>
+                     <property name="layoutDirection">
+                      <enum>Qt::RightToLeft</enum>
                      </property>
                      <property name="styleSheet">
                       <string notr="true"/>
