@@ -312,6 +312,8 @@ void InfoDialog::updateTransfers()
 
     if (isVisible())
     {
+        QString formattedValue(QString::fromUtf8("<span style=\"color:#333333; text-decoration:none;\">%1</span>"));
+
         if (remainingDownloads)
         {
             int totalRemainingSeconds = meanDownloadSpeed ? remainingDownloadBytes / meanDownloadSpeed : 0;
@@ -344,23 +346,23 @@ void InfoDialog::updateTransfers()
 
             if (activeDownloadState == MegaTransfer::STATE_PAUSED || preferences->getDownloadsPaused())
             {
-                downloadString = pausedPattern.arg(currentDownload).arg(totalDownloads) + QString::fromUtf8(" ") + tr("PAUSED");
+                downloadString = pausedPattern.arg(formattedValue.arg(currentDownload)).arg(formattedValue.arg(totalDownloads)) + QString::fromUtf8(" ") + tr("PAUSED");
             }
             else
             {
                 if (downloadSpeed >= 20000)
                 {
-                    downloadString = pattern.arg(currentDownload)
-                            .arg(totalDownloads)
+                    downloadString = pattern.arg(formattedValue.arg(currentDownload))
+                            .arg(formattedValue.arg(totalDownloads))
                             .arg(Utilities::getSizeString(downloadSpeed));
                 }
                 else if (downloadSpeed >= 0)
                 {
-                    downloadString = invalidSpeedPattern.arg(currentDownload).arg(totalDownloads);
+                    downloadString = invalidSpeedPattern.arg(formattedValue.arg(currentDownload)).arg(formattedValue.arg(totalDownloads));
                 }
                 else
                 {
-                    downloadString = pausedPattern.arg(currentDownload).arg(totalDownloads) + QString::fromUtf8(" ") + tr("PAUSED");
+                    downloadString = pausedPattern.arg(formattedValue.arg(currentDownload)).arg(formattedValue.arg(totalDownloads)) + QString::fromUtf8(" ") + tr("PAUSED");
                 }
             }
 
@@ -409,21 +411,21 @@ void InfoDialog::updateTransfers()
 
             if (activeUploadState == MegaTransfer::STATE_PAUSED || preferences->getUploadsPaused())
             {
-                uploadString = pausedPattern.arg(currentUpload).arg(totalUploads) + QString::fromUtf8(" ") + tr("PAUSED");
+                uploadString = pausedPattern.arg(formattedValue.arg(currentUpload)).arg(formattedValue.arg(totalUploads)) + QString::fromUtf8(" ") + tr("PAUSED");
             }
             else
             {
                 if (uploadSpeed >= 20000)
                 {
-                    uploadString = pattern.arg(currentUpload).arg(totalUploads).arg(Utilities::getSizeString(uploadSpeed));
+                    uploadString = pattern.arg(formattedValue.arg(currentUpload)).arg(formattedValue.arg(totalUploads)).arg(Utilities::getSizeString(uploadSpeed));
                 }
                 else if (uploadSpeed >= 0)
                 {
-                    uploadString = invalidSpeedPattern.arg(currentUpload).arg(totalUploads);
+                    uploadString = invalidSpeedPattern.arg(formattedValue.arg(currentUpload)).arg(formattedValue.arg(totalUploads));
                 }
                 else
                 {
-                    uploadString = pausedPattern.arg(currentUpload).arg(totalUploads) + QString::fromUtf8(" ") + tr("PAUSED");
+                    uploadString = pausedPattern.arg(formattedValue.arg(currentUpload)).arg(formattedValue.arg(totalUploads)) + QString::fromUtf8(" ") + tr("PAUSED");
                 }
             }
 

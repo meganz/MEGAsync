@@ -14,6 +14,8 @@ ActiveTransfer::ActiveTransfer(QWidget *parent) :
     ui->lFileType->hide();
     regular = false;
     active = false;
+
+    ui->lFileName->setTextInteractionFlags(Qt::NoTextInteraction);
 }
 
 ActiveTransfer::~ActiveTransfer()
