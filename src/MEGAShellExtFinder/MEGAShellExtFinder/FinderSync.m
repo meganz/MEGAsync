@@ -35,87 +35,89 @@
 
 - (void)beginObservingDirectoryAtURL:(NSURL *)url {
     
-    NSLog(@"beginObservingDirectoryAtURL:%@", url.filePathURL);
+    //NSLog(@"beginObservingDirectoryAtURL:%@", url.filePathURL);
 }
 
 
 - (void)endObservingDirectoryAtURL:(NSURL *)url {
 
-    NSLog(@"endObservingDirectoryAtURL:%@", url.filePathURL);
+    //NSLog(@"endObservingDirectoryAtURL:%@", url.filePathURL);
 }
 
 - (void)requestBadgeIdentifierForURL:(NSURL *)url {
     
-    NSLog(@"requestBadgeIdentifierForURL:%@", url.filePathURL);
+    //NSLog(@"requestBadgeIdentifierForURL:%@", url.filePathURL);
     [_ext sendRequest:[url path] type:@"P"];
 }
 
 #pragma mark - Menu and toolbar item support
 
-- (NSString *)toolbarItemName {
-    return @"MEGAsync Finder Extension";
-}
+// Disable menu and toolbar options
 
-- (NSString *)toolbarItemToolTip {
-    return @"MEGAsync Finder Extension: Click the toolbar item for a menu.";
-}
-
-- (NSImage *)toolbarItemImage {
-    return [[NSBundle mainBundle] imageForResource:@"app.icns"];
-}
-
-- (NSMenu *)menuForMenuKind:(FIMenuKind)whichMenu {
-    
-    if (whichMenu == FIMenuKindContextualMenuForSidebar)
-    {
-        return nil;
-    }
-    
-    NSLog(@"Context menu viewed directory: %@", [[FIFinderSyncController defaultController] targetedURL]);
-    NSLog(@"Context menu selected items: %@", [[FIFinderSyncController defaultController] selectedItemURLs]);
-    
-    NSMenu *menu = [[NSMenu alloc] initWithTitle:@""];
-    
-    if (![_syncNames count])
-    {
-        NSMenuItem *defaultitem = [[NSMenuItem alloc] initWithTitle:@"No options available" action:nil keyEquivalent:@""];
-        [menu setAutoenablesItems:NO];
-        [defaultitem setEnabled:NO];
-        [menu addItem:defaultitem];
-        return menu;
-    }
-        
-    [_syncNames enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            
-        NSMenuItem *item = [[NSMenuItem alloc] init];
-        [item setTitle:[NSString stringWithFormat:@"Open %@",obj]];
-        [item setTag:idx];
-        [item setAction:@selector(openFinderWithPath:)];
-        [menu addItem:item];
-        }];
-
-    return menu;
-}
-
-
-- (void)openFinderWithPath:(id)sender{
-    
-    NSInteger idx = [sender tag];
-    if (idx < [_syncPaths count]) {
-        [_ext sendRequest:[_syncPaths objectAtIndex:idx] type:@"O"];
-    }
-}
-
-- (IBAction)sampleAction:(id)sender {
-    
-    NSURL* target = [[FIFinderSyncController defaultController] targetedURL];
-    NSArray* items = [[FIFinderSyncController defaultController] selectedItemURLs];
-
-    NSLog(@"sampleAction: menu item: %@, target = %@, items = ", [sender title], [target filePathURL]);
-    [items enumerateObjectsUsingBlock: ^(id obj, NSUInteger idx, BOOL *stop) {
-        NSLog(@"    %@", [obj filePathURL]);
-    }];
-}
+//- (NSString *)toolbarItemName {
+//    return @"MEGAsync Finder Extension";
+//}
+//
+//- (NSString *)toolbarItemToolTip {
+//    return @"MEGAsync Finder Extension: Click the toolbar item for a menu.";
+//}
+//
+//- (NSImage *)toolbarItemImage {
+//    return [[NSBundle mainBundle] imageForResource:@"app.icns"];
+//}
+//
+//- (NSMenu *)menuForMenuKind:(FIMenuKind)whichMenu {
+//    
+//    if (whichMenu == FIMenuKindContextualMenuForSidebar)
+//    {
+//        return nil;
+//    }
+//    
+//    NSLog(@"Context menu viewed directory: %@", [[FIFinderSyncController defaultController] targetedURL]);
+//    NSLog(@"Context menu selected items: %@", [[FIFinderSyncController defaultController] selectedItemURLs]);
+//    
+//    NSMenu *menu = [[NSMenu alloc] initWithTitle:@""];
+//    
+//    if (![_syncNames count])
+//    {
+//        NSMenuItem *defaultitem = [[NSMenuItem alloc] initWithTitle:@"No options available" action:nil keyEquivalent:@""];
+//        [menu setAutoenablesItems:NO];
+//        [defaultitem setEnabled:NO];
+//        [menu addItem:defaultitem];
+//        return menu;
+//    }
+//        
+//    [_syncNames enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//            
+//        NSMenuItem *item = [[NSMenuItem alloc] init];
+//        [item setTitle:[NSString stringWithFormat:@"Open %@",obj]];
+//        [item setTag:idx];
+//        [item setAction:@selector(openFinderWithPath:)];
+//        [menu addItem:item];
+//        }];
+//
+//    return menu;
+//}
+//
+//
+//- (void)openFinderWithPath:(id)sender{
+//    
+//    NSInteger idx = [sender tag];
+//    if (idx < [_syncPaths count]) {
+//        [_ext sendRequest:[_syncPaths objectAtIndex:idx] type:@"O"];
+//    }
+//}
+//
+//- (IBAction)sampleAction:(id)sender {
+//    
+//    NSURL* target = [[FIFinderSyncController defaultController] targetedURL];
+//    NSArray* items = [[FIFinderSyncController defaultController] selectedItemURLs];
+//
+//    NSLog(@"sampleAction: menu item: %@, target = %@, items = ", [sender title], [target filePathURL]);
+//    [items enumerateObjectsUsingBlock: ^(id obj, NSUInteger idx, BOOL *stop) {
+//        NSLog(@"    %@", [obj filePathURL]);
+//    }];
+//}
 
 #pragma mark - Sync notifications
 
@@ -143,7 +145,7 @@
 
 - (void)onItemChanged:(NSString *)path withState:(int)state {
     
-    NSLog(@"settingBadge:%i for path:%@", state, path);
+    //NSLog(@"settingBadge:%i for path:%@", state, path);
     [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:state] forURL:[NSURL fileURLWithPath:path]];
 }
 

@@ -60,7 +60,7 @@
 - (void)send:(NSData *)msg
 {
     NSString *command = [[NSString alloc] initWithData:msg encoding:NSUTF8StringEncoding];
-    NSLog(@"Command received: %@", command);
+    //NSLog(@"Command received: %@", command);
     
     NSArray *strings = [command componentsSeparatedByString:@":"];
     if (strings == nil || ![strings count]) {
