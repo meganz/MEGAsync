@@ -45,7 +45,7 @@
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>17</number>
+    <number>15</number>
    </property>
    <property name="topMargin">
     <number>9</number>
@@ -63,10 +63,10 @@
        <number>4</number>
       </property>
       <property name="leftMargin">
-       <number>3</number>
+       <number>1</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>6</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -141,13 +141,13 @@
         <property name="minimumSize">
          <size>
           <width>230</width>
-          <height>0</height>
+          <height>35</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>230</width>
-          <height>16777215</height>
+          <height>35</height>
          </size>
         </property>
         <property name="font">
