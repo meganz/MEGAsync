@@ -95,13 +95,13 @@ void MacXPlatform::stopShellDispatcher()
 
 }
 
-void MacXPlatform::syncFolderAdded(QString syncPath, QString syncName)
+void MacXPlatform::syncFolderAdded(QString syncPath, QString syncName, QString syncID)
 {
     addPathToPlaces(syncPath,syncName);
     setFolderIcon(syncPath);
 }
 
-void MacXPlatform::syncFolderRemoved(QString syncPath, QString syncName)
+void MacXPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString syncID)
 {
     removePathFromPlaces(syncPath);
     unSetFolderIcon(syncPath);
@@ -146,6 +146,11 @@ bool MacXPlatform::enableSetuidBit()
 }
 
 void MacXPlatform::activateBackgroundWindow(QDialog *)
+{
+
+}
+
+void MacXPlatform::uninstall()
 {
 
 }

@@ -25,7 +25,8 @@ public:
            STRING_UPLOAD = 0,
            STRING_GETLINK = 1,
            STRING_SHARE = 2,
-           STRING_SEND = 3
+           STRING_SEND = 3,
+           STRING_REMOVE_FROM_LEFT_PANE = 4
     } StringID;
 
     static FileState getPathState(PCWSTR filePath, bool overlayIcons = true);

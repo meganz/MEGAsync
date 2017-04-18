@@ -214,6 +214,7 @@ const QString Preferences::proxyRequiresAuthKey     = QString::fromAscii("proxyR
 const QString Preferences::proxyUsernameKey         = QString::fromAscii("proxyUsername");
 const QString Preferences::proxyPasswordKey         = QString::fromAscii("proxyPassword");
 const QString Preferences::syncNameKey              = QString::fromAscii("syncName");
+const QString Preferences::syncIdKey                = QString::fromAscii("syncId");
 const QString Preferences::localFolderKey           = QString::fromAscii("localFolder");
 const QString Preferences::megaFolderKey            = QString::fromAscii("megaFolder");
 const QString Preferences::megaFolderHandleKey      = QString::fromAscii("megaFolderHandle");
@@ -257,6 +258,7 @@ const QString Preferences::useHttpsOnlyKey          = QString::fromAscii("useHtt
 const QString Preferences::SSLcertificateExceptionKey  = QString::fromAscii("SSLcertificateException");
 const QString Preferences::maxMemoryUsageKey        = QString::fromAscii("maxMemoryUsage");
 const QString Preferences::maxMemoryReportTimeKey   = QString::fromAscii("maxMemoryReportTime");
+const QString Preferences::oneTimeActionDoneKey     = QString::fromAscii("oneTimeActionDone");
 const QString Preferences::httpsKeyKey              = QString::fromAscii("httpsKey");
 const QString Preferences::httpsCertKey             = QString::fromAscii("httpsCert");
 const QString Preferences::httpsCertIntermediateKey = QString::fromAscii("httpsCertIntermediate");
@@ -1634,6 +1636,20 @@ QString Preferences::getSyncName(int num)
     return value;
 }
 
+QString Preferences::getSyncID(int num)
+{
+    mutex.lock();
+    assert(logged() && (syncIDs.size() > num));
+    if (num >= syncIDs.size())
+    {
+        mutex.unlock();
+        return QString();
+    }
+    QString value = syncIDs.at(num);
+    mutex.unlock();
+    return value;
+}
+
 QString Preferences::getLocalFolder(int num)
 {
     mutex.lock();
@@ -1751,14 +1767,62 @@ void Preferences::setSyncState(int num, bool enabled, bool temporaryDisabled)
 
     if (enabled)
     {
-        Platform::syncFolderAdded(localFolders[num], syncNames[num]);
+        Platform::syncFolderAdded(localFolders[num], syncNames[num], syncIDs[num]);
     }
+}
+
+bool Preferences::isOneTimeActionDone(int action)
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    bool value = settings->value(oneTimeActionDoneKey + QString::number(action), false).toBool();
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setOneTimeActionDone(int action, bool done)
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    settings->setValue(oneTimeActionDoneKey + QString::number(action), done);
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+    settings->sync();
+    mutex.unlock();
 }
 
 QStringList Preferences::getSyncNames()
 {
     mutex.lock();
     QStringList value = syncNames;
+    mutex.unlock();
+    return value;
+}
+
+QStringList Preferences::getSyncIDs()
+{
+    mutex.lock();
+    QStringList value = syncIDs;
     mutex.unlock();
     return value;
 }
@@ -1807,6 +1871,8 @@ void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega:
 
     localFolder = QDir::toNativeSeparators(localFolderInfo.canonicalFilePath());
     syncNames.append(syncName);
+    QString syncID = QUuid::createUuid().toString().toUpper();
+    syncIDs.append(syncID);
     localFolders.append(localFolder);
     megaFolders.append(megaFolder);
     megaFolderHandles.append(megaFolderHandle);
@@ -1815,7 +1881,7 @@ void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega:
     localFingerprints.append(0);
     writeFolders();
     mutex.unlock();
-    Platform::syncFolderAdded(localFolder, syncName);
+    Platform::syncFolderAdded(localFolder, syncName, syncID);
 }
 
 void Preferences::setMegaFolderHandle(int num, MegaHandle handle)
@@ -1836,6 +1902,7 @@ void Preferences::removeSyncedFolder(int num)
     mutex.lock();
     assert(logged());
     syncNames.removeAt(num);
+    syncIDs.removeAt(num);
     localFolders.removeAt(num);
     megaFolders.removeAt(num);
     megaFolderHandles.removeAt(num);
@@ -1853,10 +1920,11 @@ void Preferences::removeAllFolders()
 
     for (int i = 0; i < localFolders.size(); i++)
     {
-        Platform::syncFolderRemoved(localFolders[i], syncNames[i]);
+        Platform::syncFolderRemoved(localFolders[i], syncNames[i], syncIDs[i]);
     }
 
     syncNames.clear();
+    syncIDs.clear();
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
@@ -2218,6 +2286,7 @@ void Preferences::leaveUser()
 
     clearTemporalBandwidth();
     syncNames.clear();
+    syncIDs.clear();
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
@@ -2239,6 +2308,7 @@ void Preferences::unlink()
     settings->remove(currentAccountKey);
     clearTemporalBandwidth();
     syncNames.clear();
+    syncIDs.clear();
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
@@ -2442,6 +2512,7 @@ void Preferences::logout()
     }
     clearTemporalBandwidth();
     syncNames.clear();
+    syncIDs.clear();
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
@@ -2493,6 +2564,7 @@ void Preferences::readFolders()
     mutex.lock();
     assert(logged());
     syncNames.clear();
+    syncIDs.clear();
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
@@ -2507,6 +2579,7 @@ void Preferences::readFolders()
         settings->beginGroup(QString::number(i));
 
         syncNames.append(settings->value(syncNameKey).toString());
+        syncIDs.append(settings->value(syncIdKey, QUuid::createUuid().toString()).toString());
         localFolders.append(settings->value(localFolderKey).toString());
         megaFolders.append(settings->value(megaFolderKey).toString());
         megaFolderHandles.append(settings->value(megaFolderHandleKey).toLongLong());
@@ -2533,6 +2606,7 @@ void Preferences::writeFolders()
         settings->beginGroup(QString::number(i));
 
         settings->setValue(syncNameKey, syncNames[i]);
+        settings->setValue(syncIdKey, syncIDs[i]);
         settings->setValue(localFolderKey, localFolders[i]);
         settings->setValue(megaFolderKey, megaFolders[i]);
         settings->setValue(megaFolderHandleKey, megaFolderHandles[i]);
