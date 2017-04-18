@@ -220,6 +220,15 @@ public:
     long long getLastExit();
     void setLastExit(long long value);
 
+    QString getHttpsKey();
+    void setHttpsKey(QString key);
+    QString getHttpsCert();
+    void setHttpsCert(QString cert);
+    QString getHttpsCertIntermediate();
+    void setHttpsCertIntermediate(QString intermediate);
+    long long getHttpsCertExpiration();
+    void setHttpsCertExpiration(long long expiration);
+
     int getNumUsers();
     void enterUser(int i);
     void leaveUser();
@@ -295,6 +304,11 @@ public:
     static const QString PROXY_TEST_URL;
     static const QString PROXY_TEST_SUBSTRING;
     static const unsigned int PROXY_TEST_TIMEOUT_MS;
+    static const QString LOCAL_HTTPS_TEST_URL;
+    static const QString LOCAL_HTTPS_TEST_POST_DATA;
+    static const QString LOCAL_HTTPS_TEST_SUBSTRING;
+    static const unsigned int LOCAL_HTTPS_TEST_TIMEOUT_MS;
+    static const long long LOCAL_HTTPS_CERT_MAX_EXPIRATION_SECS;
     static const unsigned int MAX_IDLE_TIME_MS;
     static const char UPDATE_PUBLIC_KEY[];
     static const long long MIN_REBOOT_INTERVAL_MS;
@@ -309,9 +323,7 @@ public:
     static const QString TRANSLATION_FOLDER;
     static const QString TRANSLATION_PREFIX;
     static const qint16 HTTPS_PORT;
-    static const QString HTTPS_KEY;
-    static const QString HTTPS_CERT;
-    static const QString HTTPS_CERT_INTERMEDIATE;
+
     static QStringList HTTPS_ALLOWED_ORIGINS;
     static bool HTTPS_ORIGIN_CHECK_ENABLED;
     static const unsigned int MAX_COMPLETED_ITEMS;
@@ -437,6 +449,10 @@ protected:
     static const QString maxMemoryUsageKey;
     static const QString maxMemoryReportTimeKey;
     static const QString oneTimeActionDoneKey;
+    static const QString httpsKeyKey;
+    static const QString httpsCertKey;
+    static const QString httpsCertIntermediateKey;
+    static const QString httpsCertExpirationKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
@@ -464,6 +480,10 @@ protected:
     static const int defaultFilePermissions;
     static const bool defaultUseHttpsOnly;
     static const bool defaultSSLcertificateException;
+    static const QString defaultHttpsKey;
+    static const QString defaultHttpsCert;
+    static const QString defaultHttpsCertIntermediate;
+    static const long long defaultHttpsCertExpiration;
 };
 
 #endif // PREFERENCES_H
