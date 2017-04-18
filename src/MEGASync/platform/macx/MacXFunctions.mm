@@ -3,6 +3,7 @@
 #include <QFileInfo>
 #include <QCoreApplication>
 #include <QWidget>
+#include "control/Preferences.h"
 #import <objc/runtime.h>
 
 #ifndef kCFCoreFoundationVersionNumber10_9
@@ -529,4 +530,12 @@ void enableBlurForWindow(QWidget *window)
         //[self addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
         [nsview addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
     }
+}
+
+bool enableFinderIntegration(bool value)
+{
+    QString command = value ? QString::fromUtf8("pluginkit -e use -i ").append(Preferences::instance()->FINDER_EXT_BUNDLE_ID)
+                            : QString::fromUtf8("pluginkit -e ignore -i ").append(Preferences::instance()->FINDER_EXT_BUNDLE_ID);
+    system(command.toStdString().c_str());
+    return true;
 }

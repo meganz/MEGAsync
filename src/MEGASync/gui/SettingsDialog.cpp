@@ -157,7 +157,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 #ifdef __APPLE__
     this->setWindowTitle(tr("Preferences - MEGAsync"));
     ui->cStartOnStartup->setText(tr("Open at login"));
-    ui->cOverlayIcons->hide();
 
     CocoaHelpButton *helpButton = new CocoaHelpButton(this);
     ui->layoutBottom->insertWidget(0, helpButton);
@@ -1900,7 +1899,6 @@ void SettingsDialog::changeEvent(QEvent *event)
 #ifdef __APPLE__
         setWindowTitle(tr("Preferences - MEGAsync"));
         ui->cStartOnStartup->setText(tr("Open at login"));
-        ui->cOverlayIcons->hide();
 #endif
         ui->cProxyType->addItem(QString::fromUtf8("SOCKS5H"));
 

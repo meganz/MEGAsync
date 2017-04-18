@@ -135,6 +135,7 @@ const QString Preferences::HTTPS_CERT_INTERMEDIATE = QString::fromUtf8(
             "-----END CERTIFICATE-----\n"
             );
 
+const QString Preferences::FINDER_EXT_BUNDLE_ID = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
 QStringList Preferences::HTTPS_ALLOWED_ORIGINS;
 bool Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
 

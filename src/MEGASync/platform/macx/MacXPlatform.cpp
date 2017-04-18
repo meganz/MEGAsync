@@ -72,6 +72,11 @@ bool MacXPlatform::isStartOnStartupActive()
     return isStartAtLoginActive();
 }
 
+bool MacXPlatform::setFinderIntegration(bool value)
+{
+    return enableFinderIntegration(value);
+}
+
 void MacXPlatform::showInFolder(QString pathIn)
 {
     QStringList scriptArgs;
@@ -99,7 +104,17 @@ void MacXPlatform::startShellDispatcher(MegaApplication *receiver)
 
 void MacXPlatform::stopShellDispatcher()
 {
+    if (systemServiceTask)
+    {
+        delete systemServiceTask;
+        systemServiceTask = NULL;
+    }
 
+    if (extServer)
+    {
+        delete extServer;
+        extServer = NULL;
+    }
 }
 
 void MacXPlatform::syncFolderAdded(QString syncPath, QString syncName)

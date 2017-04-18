@@ -30,6 +30,7 @@ public:
     static void notifyItemChange(QString path);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
+    static bool setFinderIntegration(bool value);
     static void showInFolder(QString pathIn);
     static void startShellDispatcher(MegaApplication *receiver);
     static void stopShellDispatcher();

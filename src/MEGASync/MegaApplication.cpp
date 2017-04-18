@@ -1118,6 +1118,7 @@ void MegaApplication::start()
         if (!preferences->isFirstStartDone())
         {
             megaApi->sendEvent(99500, "MEGAsync first start");
+            Platform::setFinderIntegration(true);
             openInfoWizard();
         }
 

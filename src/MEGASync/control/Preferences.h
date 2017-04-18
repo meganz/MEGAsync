@@ -310,6 +310,7 @@ public:
     static QStringList HTTPS_ALLOWED_ORIGINS;
     static bool HTTPS_ORIGIN_CHECK_ENABLED;
     static const unsigned int MAX_COMPLETED_ITEMS;
+    static const QString FINDER_EXT_BUNDLE_ID;
 
 protected:
     QMutex mutex;
