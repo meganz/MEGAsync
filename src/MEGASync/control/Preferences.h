@@ -187,6 +187,7 @@ public:
 
     int getNumSyncedFolders();
     QString getSyncName(int num);
+    QString getSyncID(int num);
     QString getLocalFolder(int num);
     QString getMegaFolder(int num);
     long long getLocalFingerprint(int num);
@@ -196,7 +197,11 @@ public:
     bool isTemporaryInactiveFolder(int num);
     void setSyncState(int num, bool enabled, bool temporaryDisabled = false);
 
+    bool isOneTimeActionDone(int action);
+    void setOneTimeActionDone(int action, bool done);
+
     QStringList getSyncNames();
+    QStringList getSyncIDs();
     QStringList getMegaFolders();
     QStringList getLocalFolders();
     QList<long long> getMegaFolderHandles();
@@ -277,6 +282,10 @@ public:
         ACCOUNT_TYPE_LITE = 4
     };
 
+    enum {
+        ONE_TIME_ACTION_DEPRECATED_OPERATING_SYSTEM = 0
+    };
+
     static const int MAX_FILES_IN_NEW_SYNC_FOLDER;
     static const int MAX_FOLDERS_IN_NEW_SYNC_FOLDER;
     static const long long MIN_UPDATE_STATS_INTERVAL;
@@ -330,6 +339,7 @@ protected:
 
     EncryptedSettings *settings;
     QStringList syncNames;
+    QStringList syncIDs;
     QStringList megaFolders;
     QStringList localFolders;
     QList<long long> megaFolderHandles;
@@ -391,6 +401,7 @@ protected:
     static const QString proxyUsernameKey;
     static const QString proxyPasswordKey;
     static const QString syncNameKey;
+    static const QString syncIdKey;
     static const QString localFolderKey;
     static const QString megaFolderKey;
     static const QString megaFolderHandleKey;
@@ -437,6 +448,7 @@ protected:
     static const QString SSLcertificateExceptionKey;
     static const QString maxMemoryUsageKey;
     static const QString maxMemoryReportTimeKey;
+    static const QString oneTimeActionDoneKey;
     static const QString httpsKeyKey;
     static const QString httpsCertKey;
     static const QString httpsCertIntermediateKey;

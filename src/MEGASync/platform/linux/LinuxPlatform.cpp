@@ -113,7 +113,7 @@ void LinuxPlatform::stopShellDispatcher()
     }
 }
 
-void LinuxPlatform::syncFolderAdded(QString syncPath, QString syncName)
+void LinuxPlatform::syncFolderAdded(QString syncPath, QString syncName, QString syncID)
 {
     if (QFile(custom_icon).exists())
     {
@@ -132,7 +132,7 @@ void LinuxPlatform::syncFolderAdded(QString syncPath, QString syncName)
     }
 }
 
-void LinuxPlatform::syncFolderRemoved(QString syncPath, QString syncName)
+void LinuxPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString syncID)
 {
     QFile *folder = new QFile(syncPath);
     if (folder->exists())
@@ -231,6 +231,11 @@ void LinuxPlatform::enableDialogBlur(QDialog *dialog)
 }
 
 void LinuxPlatform::activateBackgroundWindow(QDialog *)
+{
+
+}
+
+void LinuxPlatform::uninstall()
 {
 
 }
