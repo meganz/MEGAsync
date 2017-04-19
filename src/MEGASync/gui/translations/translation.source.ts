@@ -1271,6 +1271,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Please consider updating your operating system.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2906,6 +2914,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 (%2)</source>
         <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
         <translation>%1 (%2)</translation>
+    </message>
+    <message>
+        <source>Remove from left pane</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
