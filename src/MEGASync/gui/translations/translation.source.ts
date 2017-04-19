@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="[LANG]" sourcelanguage="en">
+<TS version="2.1" language="[LANG]" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -2382,11 +2382,6 @@ Do you want to restart MEGAsync now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>PRO lite</source>
-        <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
@@ -2478,6 +2473,10 @@ when the application starts again</source>
     <message>
         <source>Uploads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PRO Lite</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
