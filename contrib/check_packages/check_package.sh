@@ -52,7 +52,9 @@ display_help() {
 remove_megasync=0
 quit_machine=1
 require_change=0
-pathXMLdir=/mnt/DATA/datos/assets/check_packages
+
+thisscriptpath=$(readlink -f "$0")
+pathXMLdir=$(dirname "$thisscriptpath")
 
 while getopts ":ikcp:x:" opt; do
   case $opt in
@@ -140,6 +142,10 @@ echo " could ssh into GUEST. retrying in 2 sec ..."
 sleep 2
 done
  
+echo "quering VM info:"
+$sshpasscommand ssh root@$IP_GUEST cat /etc/issue
+$sshpasscommand ssh root@$IP_GUEST uname -a
+
 
 echo " deleting testing file ..."
 $sshpasscommand ssh root@$IP_GUEST rm /home/mega/testFile.txt #Notice: filename comes from the shared file
@@ -205,7 +211,7 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	#Doing stderr checking will give false FAILS, since zypper outputs non failure stuff in stderr
 	#if [ -s tmp$VMNAME ]; then resultINSTALL=$(expr 1000 + $resultINSTALL); cat tmp$VMNAME; fi; rm tmp$VMNAME;	
 	AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
-	resultINSTALL=$(($? + 0$resultINSTALL))
+	resultINSTALL=$(expr $? + 0$resultINSTALL)
 	echo "BEFOREINSTALL = $BEFOREINSTALL"
 	echo "AFTERINSTALL = $AFTERINSTALL"
 	if [ $require_change -eq 1 ]; then
@@ -256,7 +262,7 @@ elif [[ $1 == *"DEBIAN"* ]] || [[ $1 == *"UBUNTU"* ]] || [[ $1 == *"LINUXMINT"* 
 	$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y install megasync
 	resultINSTALL=$?
 	AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST dpkg -l megasync`
-	resultINSTALL=$(($? + 0$resultINSTALL))
+	resultINSTALL=$(expr $? + 0$resultINSTALL)
 	echo "BEFOREINSTALL = $BEFOREINSTALL"
 	echo "AFTERINSTALL = $AFTERINSTALL"
 	if [ $require_change -eq 1 ]; then
@@ -270,7 +276,7 @@ elif [[ $1 == *"DEBIAN"* ]] || [[ $1 == *"UBUNTU"* ]] || [[ $1 == *"LINUXMINT"* 
 		$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y install megasync
 		resultINSTALL=$?
 		AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST dpkg -l megasync`
-		resultINSTALL=$(($? + 0$resultINSTALL))
+		resultINSTALL=$(expr $? + 0$resultINSTALL)
 		echo "BEFOREINSTALL = $BEFOREINSTALL"
 		echo "AFTERINSTALL = $AFTERINSTALL"
 		if [ $require_change -eq 1 ]; then
@@ -305,10 +311,10 @@ Server = $REPO/\$arch
 ###END REPO for MEGA###
 EOF
 	
-	$sshpasscommand ssh root@$IP_GUEST pacman -Sy --noconfirm 2> tmp$VMNAME
+	$sshpasscommand ssh root@$IP_GUEST pacman -Syy --noconfirm 2> tmp$VMNAME
 	resultMODREPO=$?
 	#notice: in case pacman reports 0 as status even though it "failed", we do stderr checking
-	if cat tmp$VMNAME | grep $REPO; then
+	if cat tmp$VMNAME | grep "$REPO\|error"; then
 	 resultMODREPO=$(expr 1000 + 0$resultMODREPO); cat tmp$VMNAME; 
 	#~ else
 	 #~ resultMODREPO=0 #we discard any other failure
@@ -323,7 +329,7 @@ EOF
 	resultINSTALL=$?
 	
 	AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST pacman -Q megasync`
-	resultINSTALL=$(($? + 0$resultINSTALL))
+	resultINSTALL=$(expr $? + 0$resultINSTALL)
 	echo "BEFOREINSTALL = $BEFOREINSTALL"
 	echo "AFTERINSTALL = $AFTERINSTALL"
 	if [ $require_change -eq 1 ]; then
@@ -339,7 +345,7 @@ EOF
 		resultINSTALL=$?
 		
 		AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST pacman -Q megasync`
-		resultINSTALL=$(($? + 0$resultINSTALL))
+		resultINSTALL=$(expr $? + 0$resultINSTALL)
 		echo "BEFOREINSTALL = $BEFOREINSTALL"
 		echo "AFTERINSTALL = $AFTERINSTALL"
 		if [ $require_change -eq 1 ]; then
@@ -396,14 +402,14 @@ else
 	echo " reinstalling/updating megasync ..."
 	BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
 	$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit install megasync  2> tmp$VMNAME
-	resultINSTALL=$(($? + 0$resultINSTALL)) #TODO: yum might fail and still say "IT IS OK!"
+	resultINSTALL=$(expr $? + 0$resultINSTALL) #TODO: yum might fail and still say "IT IS OK!"
 	#Doing simple stderr checking will give false FAILS, since yum outputs non failure stuff in stderr
 	if cat tmp$VMNAME | grep $REPO; then
 	 resultINSTALL=$(expr 1000 + 0$resultINSTALL); cat tmp$VMNAME; 
 	fi; rm tmp$VMNAME;	
 	
 	AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
-	resultINSTALL=$(($? + 0$resultINSTALL))
+	resultINSTALL=$(expr $? + 0$resultINSTALL)
 	echo "BEFOREINSTALL = $BEFOREINSTALL"
 	echo "AFTERINSTALL = $AFTERINSTALL"
 	if [ $require_change -eq 1 ]; then
@@ -416,14 +422,14 @@ else
 		echo " reinstalling/updating megasync ... attempts left="$attempts
 		BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
 		$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit install megasync  2> tmp$VMNAME
-		resultINSTALL=$(($? + 0$resultINSTALL)) #TODO: yum might fail and still say "IT IS OK!"
+		resultINSTALL=$(expr $? + 0$resultINSTALL) #TODO: yum might fail and still say "IT IS OK!"
 		#Doing simple stderr checking will give false FAILS, since yum outputs non failure stuff in stderr
 		if cat tmp$VMNAME | grep $REPO; then
 		 resultINSTALL=$(expr 1000 + 0$resultINSTALL); cat tmp$VMNAME; 
-		fi; rm tmp$VMNAME;	
+		fi; rm tmp$VMNAME;
 		
 		AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
-		resultINSTALL=$(($? + 0$resultINSTALL))
+		resultINSTALL=$(expr $? + 0$resultINSTALL)
 		echo "BEFOREINSTALL = $BEFOREINSTALL"
 		echo "AFTERINSTALL = $AFTERINSTALL"
 		if [ $require_change -eq 1 ]; then
