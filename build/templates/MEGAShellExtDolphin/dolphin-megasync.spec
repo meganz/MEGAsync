@@ -75,6 +75,14 @@ make install DESTDIR=%{buildroot}
 
 echo %(kf5-config --path services | awk -NF ":" '{print $NF}')/megasync-plugin.desktop >> %{EXTRA_FILES}
 echo %(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/megasyncplugin.so >> %{EXTRA_FILES}
+
+if [ -d %{buildroot}/%(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/kf5/overlayicon ]; then
+echo %(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/kf5/overlayicon/megasyncdolphinoverlayplugin.so >> %{EXTRA_FILES}
+echo %(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/kf5/overlayicon >> %{EXTRA_FILES}
+echo %(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/kf5 >> %{EXTRA_FILES}
+echo %{_datadir}/icons/hicolor/*/*/mega-*.png >> %{EXTRA_FILES}
+fi
+
 fi
 
 %if 0%{?centos_version}

@@ -31,6 +31,14 @@
 K_PLUGIN_FACTORY(MEGASyncPluginFactory, registerPlugin<MEGASyncPlugin>();)
 K_EXPORT_PLUGIN(MEGASyncPluginFactory("megasync-plugin"))
 
+
+typedef enum {
+    STRING_UPLOAD = 0,
+    STRING_GETLINK = 1,
+    STRING_SHARE = 2,
+    STRING_SEND = 3
+} StringID;
+
 enum {
     FILE_ERROR = 0,
     FILE_SYNCED = 1,
@@ -68,25 +76,41 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
     QList<QAction*> actions;
     int state;
 
-    // multiple selection is not supported
-    if (fileItemInfos.items().count() != 1) {
-        return actions;
-    }
+    int syncedFiles, syncedFolders, unsyncedFiles, unsyncedFolders;
+    syncedFiles = syncedFolders = unsyncedFiles = unsyncedFolders = 0;
 
-    // get the first item
-    KFileItem item = fileItemInfos.items().first();
-    selectedFilePath = item.localPath();
-    QFileInfo itemFileInfo = QFileInfo(selectedFilePath);
+    for( int i = 0; i < fileItemInfos.items().count(); i++)
+    {
+        KFileItem item = fileItemInfos.items().at(i);
+        selectedFilePath = item.localPath();
+        selectedFilePaths << selectedFilePath;
 
-    // skip non local file
-    if (!item.isLocalFile()) {
-        return actions;
-    }
+        // get the state of selected file
+        state = getState();
 
-    // get the state of selected file
-    state = getState();
-    if (state == FILE_ERROR) {
-        return actions;
+        // count the number of synced / unsynced files and folders
+        if (state == FILE_SYNCED || state == FILE_SYNCING || state == FILE_PENDING)
+        {
+            if (item.isDir())
+            {
+                syncedFolders++;
+            }
+            else
+            {
+                syncedFiles++;
+            }
+        }
+        else
+        {
+            if (item.isDir())
+            {
+                unsyncedFolders++;
+            }
+            else
+            {
+                unsyncedFiles++;
+            }
+        }
     }
 
     // populate Menu
@@ -94,12 +118,27 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
     menuAction->setText("MEGA");
     actions << menuAction;
 
-    if (state == FILE_SYNCED || state == FILE_SYNCING || state == FILE_PENDING) {
+    // if there any unsynced files / folders selected
+    if (unsyncedFiles || unsyncedFolders)
+    {
         QAction *act = new KAction(this);
-        act->setText("Get MEGA link");
+        QString actionText = getString(STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
+        act->setText(actionText);
+
+        menuAction->addAction(act);
+        connect(act, SIGNAL(triggered()), this, SLOT(uploadFiles()));
+    }
+
+    // if there any synced files / folders selected
+    if (syncedFiles || syncedFolders)
+    {
+        QAction *act = new KAction(this);
+        QString actionText = getString(STRING_GETLINK, syncedFiles, syncedFolders);
+        act->setText(actionText);
+
         menuAction->addAction(act);
 
-        // set menu icon
+        // set menu icon //TODO: state refers to the last file. Does it make any sense??
         if (state == FILE_SYNCED)
             act->setIcon(KIcon("mega-synced"));
         else if (state == FILE_PENDING)
@@ -107,12 +146,7 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
         else if (state == FILE_SYNCING)
             act->setIcon(KIcon("mega-syncing"));
 
-        connect(act, SIGNAL(triggered()), this, SLOT(getLink()));
-    } else {
-        QAction *act = new KAction(this);
-        act->setText("Upload files to you MEGA account");
-        menuAction->addAction(act);
-        connect(act, SIGNAL(triggered()), this, SLOT(uploadFile()));
+        connect(act, SIGNAL(triggered()), this, SLOT(getLinks()));
     }
 
     return actions;
@@ -133,6 +167,18 @@ void MEGASyncPlugin::getLink()
     }
 }
 
+void MEGASyncPlugin::getLinks()
+{
+    for(int i = 0; i<selectedFilePaths.size(); i++)
+    {
+        QString path = selectedFilePaths.at(i);
+        if (sendRequest(OP_LINK, path).size())
+        {
+        }
+    }
+    sendRequest(OP_END, " ");
+}
+
 void MEGASyncPlugin::uploadFile()
 {
     if (sendRequest(OP_UPLOAD, selectedFilePath).size())
@@ -141,13 +187,36 @@ void MEGASyncPlugin::uploadFile()
     }
 }
 
+void MEGASyncPlugin::uploadFiles()
+{
+    for(int i = 0; i<selectedFilePaths.size(); i++)
+    {
+        QString path = selectedFilePaths.at(i);
+        if (sendRequest(OP_UPLOAD, path).size())
+        {
+        }
+    }
+    sendRequest(OP_END, " ");
+}
+
+QString MEGASyncPlugin::getString(int type, int numFiles,int numFolders)
+{
+    QString res;
+    QString queryString = "";
+    queryString.sprintf("%d:%d:%d", type, numFiles, numFolders);
+
+    res = sendRequest(OP_STRING, queryString);
+    return res;
+}
+
+
 // send request and receive response from Extension server
 // Return newly-allocated response string
 QString MEGASyncPlugin::sendRequest(char type, QString command)
 {
-    int waitTime = -1; //this makes dolphin hang until the location for an upload is selected. Otherwise megayns segafaults accesing slient socket
+    int waitTime = -1; // This (instead of a timeout) makes dolphin hang until the location for an upload is selected (will be corrected in megasync>3.0.1).
+                       // Otherwise megaync segafaults accesing client socket
     QString req;
-    QString out;
 
     if(!sock.isOpen()) {
         sock.connectToServer(sockPath);
