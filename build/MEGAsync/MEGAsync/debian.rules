@@ -18,6 +18,7 @@ clean:
 install: build
 	dh_auto_install --destdir=debian/megasync
 	dh_install MEGASync/megasync /usr/bin/
+	dh_install 100-megasync-inotify-limit.conf /etc/sysctl.d/
 
 # Build architecture-independent files here.
 binary-indep: build install
