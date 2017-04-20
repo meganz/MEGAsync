@@ -132,7 +132,6 @@ echo " could not get guest IP. retrying in 2 sec ..."
 sleep 2
 IP_GUEST=$( sudo arp -n | grep `sudo virsh domiflist $VMNAME  | grep vnet | awk '{print $NF}'` | awk '{print $1}' )
 done
-
 echo " obtained IP guest = $IP_GUEST"
 
 echo " sshing to save host into the known hosts ...."
@@ -140,6 +139,13 @@ echo " sshing to save host into the known hosts ...."
 while ! $sshpasscommand ssh  -oStrictHostKeyChecking=no root@$IP_GUEST hostname ; do 
 echo " could ssh into GUEST. retrying in 2 sec ..."
 sleep 2
+IP_GUEST=$( sudo arp -n | grep `sudo virsh domiflist $VMNAME  | grep vnet | awk '{print $NF}'` | awk '{print $1}' )
+while [ -z $IP_GUEST ]; do
+echo " could not get new guest IP. retrying in 2 sec ..."
+sleep 2
+IP_GUEST=$( sudo arp -n | grep `sudo virsh domiflist $VMNAME  | grep vnet | awk '{print $NF}'` | awk '{print $1}' )
+done
+echo " obtained new IP guest = $IP_GUEST"
 done
  
 echo "quering VM info:"
@@ -170,8 +176,17 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 
 	if [ $remove_megasync -eq 1 ]; then
 		echo " removing megasync ..."
+		attempts=10
 		$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive remove megasync
-		logLastComandResult "removing megasync ..."
+		resultREMOVE=$?
+		while [[ $attempts -ge 0 && $resultREMOVE -ne 0 ]]; do
+			sleep $((5*(10-$attempts)))
+			echo " removing megasync ... attempts left="$attempts
+			$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive remove megasync
+			resultREMOVE=$?
+			attempts=$(($attempts - 1))
+		done
+		logOperationResult "removing megasync ..." $resultREMOVE
 	fi
 	
 	$sshpasscommand ssh root@$IP_GUEST "cat > /etc/zypp/repos.d/megasync.repo" <<-EOF
@@ -203,6 +218,7 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	resultINSTALL=$?
 	while [[ $attempts -ge 0 && $resultINSTALL -ne 0 ]]; do
 		sleep $((5*(10-$attempts)))
+		echo " reinstalling/updating megasync ... attempts left="$attempts
 		$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive install -f megasync 
 		resultINSTALL=$?
 		attempts=$(($attempts - 1))
@@ -225,8 +241,17 @@ elif [[ $1 == *"DEBIAN"* ]] || [[ $1 == *"UBUNTU"* ]] || [[ $1 == *"LINUXMINT"* 
 
 	if [ $remove_megasync -eq 1 ]; then
 		echo " removing megasync ..."
+		attempts=10
 		$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y remove megasync
-		logLastComandResult "removing megasync ..."
+		resultREMOVE=$?
+		while [[ $attempts -ge 0 && $resultREMOVE -ne 0 ]]; do
+			sleep $((5*(10-$attempts)))
+			echo " removing megasync ... attempts left="$attempts
+			$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y remove megasync
+			resultREMOVE=$?
+			attempts=$(($attempts - 1))
+		done
+		logOperationResult "removing megasync ..." $resultREMOVE
 	fi
 	sleep 1
 
@@ -255,8 +280,6 @@ elif [[ $1 == *"DEBIAN"* ]] || [[ $1 == *"UBUNTU"* ]] || [[ $1 == *"LINUXMINT"* 
 	logOperationResult "modifying repos ..." $resultMODREPO
 	$sshpasscommand ssh root@$IP_GUEST cat /etc/apt/sources.list.d/megasync.list
 
-	
-	
 	echo " reinstalling/updating megasync ..."
 	BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST dpkg -l megasync`
 	$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y install megasync
@@ -354,7 +377,7 @@ EOF
 		attempts=$(($attempts - 1))
 	done
 	
-	logOperationResult "reinstalling/updating megasync ..." $resultINSTALL	
+	logOperationResult "reinstalling/updating megasync ..." $resultINSTALL
 	VERSIONINSTALLEDAFTER=`echo $AFTERINSTALL	| grep megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
 	logSth "installed megasync ..." "$VERSIONINSTALLEDAFTER"
 
@@ -373,8 +396,17 @@ else
 
 	if [ $remove_megasync -eq 1 ]; then
 		echo " removing megasync ..."
+		attempts=10
 		$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit remove megasync
-		logLastComandResult "removing megasync ..."
+		resultREMOVE=$?
+		while [[ $attempts -ge 0 && $resultREMOVE -ne 0 ]]; do
+			sleep $((5*(10-$attempts)))
+			echo " removing megasync ... attempts left="$attempts
+		$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit remove megasync
+			resultREMOVE=$?
+			attempts=$(($attempts - 1))
+		done
+		logOperationResult "removing megasync ..." $resultREMOVE
 	fi
 	sleep 1
 	
@@ -402,7 +434,7 @@ else
 	echo " reinstalling/updating megasync ..."
 	BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
 	$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit install megasync  2> tmp$VMNAME
-	resultINSTALL=$(expr $? + 0$resultINSTALL) #TODO: yum might fail and still say "IT IS OK!"
+	resultINSTALL=$? #TODO: yum might fail and still say "IT IS OK!"
 	#Doing simple stderr checking will give false FAILS, since yum outputs non failure stuff in stderr
 	if cat tmp$VMNAME | grep $REPO; then
 	 resultINSTALL=$(expr 1000 + 0$resultINSTALL); cat tmp$VMNAME; 
@@ -422,7 +454,7 @@ else
 		echo " reinstalling/updating megasync ... attempts left="$attempts
 		BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
 		$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit install megasync  2> tmp$VMNAME
-		resultINSTALL=$(expr $? + 0$resultINSTALL) #TODO: yum might fail and still say "IT IS OK!"
+		resultINSTALL=$? #TODO: yum might fail and still say "IT IS OK!"
 		#Doing simple stderr checking will give false FAILS, since yum outputs non failure stuff in stderr
 		if cat tmp$VMNAME | grep $REPO; then
 		 resultINSTALL=$(expr 1000 + 0$resultINSTALL); cat tmp$VMNAME; 
@@ -437,7 +469,6 @@ else
 		fi
 		attempts=$(($attempts - 1))
 	done
-	
 	
 	logOperationResult "reinstalling/updating megasync ..." $resultINSTALL
 	VERSIONINSTALLEDAFTER=`echo $AFTERINSTALL	| grep megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
