@@ -358,6 +358,45 @@ int main(int argc, char *argv[])
 #endif
 }
 
+void MegaApplication::printLinuxCmdHelp()
+{
+    QTextStream(stdout) << "Usage:" << endl;
+    QTextStream(stdout) << "  megasync [Options...]" << endl << endl;
+    QTextStream(stdout) << "Options:" << endl;
+    QTextStream(stdout) << "  --monochrome-light" << "\t\t For bright desktop themes." << endl;
+    QTextStream(stdout) << "  --monochrome-dark" << "\t\t For dark desktop themes." << endl;
+    QTextStream(stdout) << "  --debug" << endl;
+    QTextStream(stdout) << "  --help,-h" << endl;
+}
+
+void MegaApplication::systrayIconPathsLinux(int iconTheme)
+{
+  if (iconTheme == 0)
+  {
+        IconPathLoggin = "://images/22_loggin.png";
+        IconPathSyncin = "://images/22_synching.png";
+        IconPathSynced = "://images/22_uptodate.png";
+        IconPathPaused = "://images/22_paused.png";
+        IconPathWarnin = "://images/22_warning.png";
+  }
+  else if (iconTheme == 1)
+  {
+        IconPathLoggin = "://images/22_loggin_white.png";
+        IconPathSyncin = "://images/22_synching_white.png";
+        IconPathSynced = "://images/22_uptodate_white.png";
+        IconPathPaused = "://images/22_paused_white.png";
+        IconPathWarnin = "://images/22_warning_white.png";
+  }
+  else if (iconTheme == 2)
+  {
+        IconPathLoggin = "://images/22_loggin_dark.png";
+        IconPathSyncin = "://images/22_synching_dark.png";
+        IconPathSynced = "://images/22_uptodate_dark.png";
+        IconPathPaused = "://images/22_paused_dark.png";
+        IconPathWarnin = "://images/22_warning_dark.png";
+  }
+}
+
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
@@ -383,19 +422,49 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 #endif
 
 #ifdef Q_OS_LINUX
-    if (argc == 2)
+    if (argc == 1)
     {
-         if (!strcmp("--debug", argv[1]))
-         {
-             logger->sendLogsToStdout(true);
-             MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
-         }
-         else if (!strcmp("--version", argv[1]))
-         {
+        systrayIconPathsLinux(0);
+    }
+    else if (argc == 2)
+    {
+        if (!strcmp("--debug", argv[1]))
+        {
+            logger->sendLogsToStdout(true);
+            MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
+        }
+        else if (!strcmp("--version", argv[1]))
+        {
             QTextStream(stdout) << "MEGAsync" << " v" << Preferences::VERSION_STRING << " (" << Preferences::SDK_ID << ")" << endl;
             ::exit(0);
-         }
+        }
+        else if (!strcmp("--monochrome-light", argv[1]))
+        {
+            systrayIconPathsLinux(2);
+        }
+        else if (!strcmp("--monochrome-dark", argv[1]))
+        {
+            systrayIconPathsLinux(1);
+        }
+        else if (!strcmp("--help", argv[1])+!strcmp("-h", argv[1]))
+        {
+            printLinuxCmdHelp();
+            ::exit(0);
+        }
+        else
+        {
+            QTextStream(stdout) << "Option unknown." << endl << endl;
+            printLinuxCmdHelp();
+            ::exit(1);
+        }
+    } 
+    else 
+    {
+      QTextStream(stdout) << "Invalid number of args." << endl << endl;
+      printLinuxCmdHelp();
+      ::exit(0);
     }
+  
 #endif
 
     MegaApi::setLoggerObject(logger);
@@ -782,7 +851,7 @@ void MegaApplication::updateTrayIcon()
     #ifdef _WIN32
         icon = QString::fromUtf8("://images/warning_ico.ico");
     #else
-        icon = QString::fromUtf8("://images/22_warning.png");
+        icon = QString::fromUtf8(IconPathWarnin);
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_overquota_mac.png");
@@ -808,7 +877,7 @@ void MegaApplication::updateTrayIcon()
         #ifdef _WIN32
             icon = QString::fromUtf8("://images/tray_sync.ico");
         #else
-            icon = QString::fromUtf8("://images/22_synching.png");
+            icon = QString::fromUtf8(IconPathSyncin);
         #endif
     #else
             icon = QString::fromUtf8("://images/icon_syncing_mac.png");
@@ -833,7 +902,7 @@ void MegaApplication::updateTrayIcon()
         #ifdef _WIN32
             icon = QString::fromUtf8("://images/app_ico.ico");
         #else
-            icon = QString::fromUtf8("://images/22_uptodate.png");
+            icon = QString::fromUtf8(IconPathSynced);
         #endif
     #else
             icon = QString::fromUtf8("://images/icon_synced_mac.png");
@@ -858,7 +927,7 @@ void MegaApplication::updateTrayIcon()
     #ifdef _WIN32
         icon = QString::fromUtf8("://images/tray_sync.ico");
     #else
-        icon = QString::fromUtf8("://images/22_synching.png");
+        icon = QString::fromUtf8(IconPathSyncin);
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_syncing_mac.png");
@@ -883,7 +952,7 @@ void MegaApplication::updateTrayIcon()
     #ifdef _WIN32
         icon = QString::fromUtf8("://images/tray_pause.ico");
     #else
-        icon = QString::fromUtf8("://images/22_paused.png");
+        icon = QString::fromUtf8(IconPathPaused);
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_paused_mac.png");
@@ -928,7 +997,7 @@ void MegaApplication::updateTrayIcon()
     #ifdef _WIN32
         icon = QString::fromUtf8("://images/tray_sync.ico");
     #else
-        icon = QString::fromUtf8("://images/22_synching.png");
+        icon = QString::fromUtf8(IconPathSyncin);
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_syncing_mac.png");
@@ -953,7 +1022,7 @@ void MegaApplication::updateTrayIcon()
     #ifdef _WIN32
         icon = QString::fromUtf8("://images/app_ico.ico");
     #else
-        icon = QString::fromUtf8("://images/22_uptodate.png");
+        icon = QString::fromUtf8(IconPathSynced);
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_synced_mac.png");
@@ -983,7 +1052,7 @@ void MegaApplication::updateTrayIcon()
     #ifdef _WIN32
         icon = QString::fromUtf8("://images/login_ico.ico");
     #else
-        icon = QString::fromUtf8("://images/22_logging.png");
+        icon = QString::fromUtf8(IconPathLoggin);
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_logging_mac.png");
@@ -1041,7 +1110,7 @@ void MegaApplication::start()
     #ifdef _WIN32
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
     #else
-        trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
+        trayIcon->setIcon(QIcon(QString::fromAscii(IconPathSyncin)));
     #endif
 #else
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),
@@ -3371,7 +3440,7 @@ void MegaApplication::createTrayIcon()
     #ifdef _WIN32
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
     #else
-        trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
+        trayIcon->setIcon(QIcon(QString::fromAscii(IconPathSyncin)));
     #endif
 #else
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),

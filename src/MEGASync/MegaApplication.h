@@ -188,6 +188,16 @@ protected:
     void closeDialogs();
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
+    void printLinuxCmdHelp();
+    void systrayIconPathsLinux(int iconTheme);
+
+#ifdef Q_OS_LINUX
+           const char* IconPathLoggin;
+           const char* IconPathSyncin;
+           const char* IconPathSynced;
+           const char* IconPathPaused;
+           const char* IconPathWarnin;
+#endif
 
 #ifdef __APPLE__
     MegaSystemTrayIcon *trayIcon;

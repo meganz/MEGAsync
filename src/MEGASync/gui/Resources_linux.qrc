@@ -165,12 +165,22 @@
         <file>images/22_paused.png</file>
         <file>images/22_synching.png</file>
         <file>images/22_uptodate.png</file>
+        <file>images/22_logging_white.png</file>
+        <file>images/22_paused_white.png</file>
+        <file>images/22_synching_white.png</file>
+        <file>images/22_uptodate_white.png</file>
+        <file>images/22_logging_dark.png</file>
+        <file>images/22_paused_dark.png</file>
+        <file>images/22_synching_dark.png</file>
+        <file>images/22_uptodate_dark.png</file>
         <file>images/tray_pause_over_ico.png</file>
         <file>images/tray_play_over_ico.png</file>
         <file>images/tray_preferences_over_ico.png</file>
         <file>images/tray_share_over_ico.png</file>
         <file>images/drag_dmg.png</file>
         <file>images/22_warning.png</file>
+        <file>images/22_warning_white.png</file>
+        <file>images/22_warning_dark.png</file>
         <file>images/tray_warning_ico.png</file>
         <file>images/small_dmg.png</file>
         <file>images/app_64.png</file>
