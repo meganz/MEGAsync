@@ -2467,7 +2467,7 @@ void Preferences::login(QString account)
     {
         if ((lastVersion != 0) && (lastVersion < Preferences::VERSION_CODE))
         {
-            emit updated();
+            emit updated(lastVersion);
         }
         settings->setValue(lastVersionKey, Preferences::VERSION_CODE);
     }

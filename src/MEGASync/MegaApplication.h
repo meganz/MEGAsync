@@ -167,13 +167,14 @@ public slots:
     void onLocalHttpsCheckError();
     void userAction(int action);
     void changeState();
-    void showUpdatedMessage();
+    void showUpdatedMessage(int lastVersion);
     void handleMEGAurl(const QUrl &url);
     void handleLocalPath(const QUrl &url);
     void clearViewedTransfers();
     void onCompletedTransfersTabActive(bool active);
     void checkFirstTransfer();
     void onDeprecatedOperatingSystem();
+    int getPrevVersion();
 
 protected:
     void createTrayIcon();
@@ -327,13 +328,17 @@ protected:
     bool networkConnectivity;
     int nUnviewedTransfers;
     bool completedTabActive;
+    int prevVersion;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener
 {
 public:
-    MEGASyncDelegateListener(mega::MegaApi *megaApi, mega::MegaListener *parent=NULL);
+    MEGASyncDelegateListener(mega::MegaApi *megaApi, mega::MegaListener *parent = NULL, MegaApplication *app = NULL);
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
+
+protected:
+    MegaApplication *app;
 };
 
 #endif // MEGAAPPLICATION_H

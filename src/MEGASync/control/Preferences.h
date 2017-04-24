@@ -18,7 +18,7 @@ class Preferences : public QObject
 
 signals:
     void stateChanged();
-    void updated();
+    void updated(int lastVersion);
 
 private:
     static Preferences *preferences;

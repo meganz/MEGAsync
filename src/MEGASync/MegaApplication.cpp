@@ -527,6 +527,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     maxMemoryUsage = 0;
     nUnviewedTransfers = 0;
     completedTabActive = false;
+    prevVersion = 0;
 
 #ifdef __APPLE__
     scanningTimer = NULL;
@@ -578,7 +579,7 @@ void MegaApplication::initialize()
 
     preferences = Preferences::instance();
     connect(preferences, SIGNAL(stateChanged()), this, SLOT(changeState()));
-    connect(preferences, SIGNAL(updated()), this, SLOT(showUpdatedMessage()));
+    connect(preferences, SIGNAL(updated(int)), this, SLOT(showUpdatedMessage(int)));
     preferences->initialize(dataPath);
     if (preferences->error())
     {
@@ -629,7 +630,7 @@ void MegaApplication::initialize()
     megaApi->retrySSLerrors(true);
     megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
 
-    delegateListener = new MEGASyncDelegateListener(megaApi, this);
+    delegateListener = new MEGASyncDelegateListener(megaApi, this, this);
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi);
     downloader = new MegaDownloader(megaApi);
@@ -2793,9 +2794,10 @@ void MegaApplication::applyProxySettings()
     megaApiFolders->retryPendingConnections(true, true);
 }
 
-void MegaApplication::showUpdatedMessage()
+void MegaApplication::showUpdatedMessage(int lastVersion)
 {
     updated = true;
+    prevVersion = lastVersion;
 }
 
 void MegaApplication::handleMEGAurl(const QUrl &url)
@@ -2872,6 +2874,11 @@ void MegaApplication::onDeprecatedOperatingSystem()
         preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_DEPRECATED_OPERATING_SYSTEM, true);
     }
 #endif
+}
+
+int MegaApplication::getPrevVersion()
+{
+    return prevVersion;
 }
 
 void MegaApplication::updateUserStats()
@@ -5979,9 +5986,11 @@ void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, const char *
     Platform::notifyItemChange(localPath);
 }
 
-MEGASyncDelegateListener::MEGASyncDelegateListener(MegaApi *megaApi, MegaListener *parent)
+MEGASyncDelegateListener::MEGASyncDelegateListener(MegaApi *megaApi, MegaListener *parent, MegaApplication *app)
     : QTMegaListener(megaApi, parent)
-{ }
+{
+    this->app = app;
+}
 
 void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
 {
@@ -5997,6 +6006,14 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
     Preferences *preferences = Preferences::instance();
     if (preferences->logged() && !api->getNumActiveSyncs())
     {
+#ifdef _WIN32
+        bool addToLeftPane = false;
+        if (app && app->getPrevVersion() && app->getPrevVersion() <= 3001)
+        {
+            addToLeftPane = true;
+        }
+#endif
+
         //Start syncs
         for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
         {
@@ -6013,6 +6030,16 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
             }
 
             QString localFolder = preferences->getLocalFolder(i);
+
+#ifdef _WIN32
+            if (addToLeftPane)
+            {
+                QString name = preferences->getSyncName(i);
+                QString uuid = preferences->getSyncID(i);
+                Platform::addSyncToLeftPane(localFolder, name, uuid);
+            }
+#endif
+
             api->resumeSync(localFolder.toUtf8().constData(), node, preferences->getLocalFingerprint(i));
             delete node;
         }
