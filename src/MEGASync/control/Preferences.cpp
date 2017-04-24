@@ -2579,7 +2579,7 @@ void Preferences::readFolders()
         settings->beginGroup(QString::number(i));
 
         syncNames.append(settings->value(syncNameKey).toString());
-        syncIDs.append(settings->value(syncIdKey, QUuid::createUuid().toString()).toString());
+        syncIDs.append(settings->value(syncIdKey, QUuid::createUuid().toString().toUpper()).toString());
         localFolders.append(settings->value(localFolderKey).toString());
         megaFolders.append(settings->value(megaFolderKey).toString());
         megaFolderHandles.append(settings->value(megaFolderHandleKey).toLongLong());

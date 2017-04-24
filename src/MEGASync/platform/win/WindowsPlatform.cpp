@@ -243,7 +243,7 @@ LPFN_ISWOW64PROCESS fnIsWow64Process;
 
 BOOL IsWow64()
 {
-    BOOL bIsWow64 = FALSE;
+    BOOL bIsWow64 = TRUE;
     fnIsWow64Process = (LPFN_ISWOW64PROCESS) GetProcAddress(
         GetModuleHandle(TEXT("kernel32")),"IsWow64Process");
     if (fnIsWow64Process)
@@ -311,7 +311,7 @@ bool CheckLeftPaneIcon(wchar_t *path, bool remove)
                     }
                 }
 
-                if (found)
+                if (!found)
                 {
                     swprintf_s(subKeyPath, MAX_PATH, L"Software\\Classes\\CLSID\\%s\\Instance\\InitPropertyBag", uuid);
                     result = RegOpenKeyEx(HKEY_CURRENT_USER, subKeyPath, 0, KEY_WOW64_64KEY | KEY_READ, &hSubKey);
@@ -457,10 +457,10 @@ void WindowsPlatform::removeSyncFromLeftPane(QString, QString, QString uuid)
     }
 
     key = QString::fromUtf8("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Desktop\\NameSpace\\%1").arg(uuid);
-    DeleteRegKey(HKEY_CURRENT_USER, (LPTSTR)key.utf16(), samDesired);
+    DeleteRegKey(HKEY_CURRENT_USER, (LPTSTR)key.utf16(), 0);
 
     key = QString::fromUtf8("Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\HideDesktopIcons\\NewStartPanel");
-    DeleteRegValue(HKEY_CURRENT_USER, (LPTSTR)key.utf16(), (LPTSTR)uuid.utf16(), samDesired);
+    DeleteRegValue(HKEY_CURRENT_USER, (LPTSTR)key.utf16(), (LPTSTR)uuid.utf16(), 0);
 }
 
 bool WindowsPlatform::startOnStartup(bool value)
