@@ -29,7 +29,7 @@ then
 		elif [ "nautilus-megasync" == "$package" ]; then
 			reponame=MEGAShellExtNautilus
 		else
-			reponame=package
+			reponame=$package
 		fi
 	fi
 else
@@ -39,6 +39,7 @@ fi
 
 
 if [ ! -d $DLfolder ]; then
+  echo "downloading current repositories to $DLfolder"
   (mkdir $DLfolder; cd $DLfolder; sudo wget -r --no-parent --reject "index.html*" https://mega.nz/linux/MEGAsync/)
 fi
 

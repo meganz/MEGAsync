@@ -49,3 +49,20 @@ Makefile
 
 # osc files
 .osc
+
+
+#build stuff
+/src/MEGAShellExtDolphin/megasync-plugin-overlay.moc
+build-MEGA-*
+
+CMakeFiles
+CMakeCache.txt
+CTestTestfile.cmake
+cmake_install.cmake
+*automoc*
+
+*.pro.user.*
+ecm_uninstall.cmake
+install_manifest.txt
+
+*.orig

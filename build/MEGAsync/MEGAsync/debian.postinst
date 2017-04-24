@@ -137,3 +137,6 @@ URYSLAw5e33Za+vKMGF/hifuJ1V0GYkUig==
 =FzpN
 -----END PGP PUBLIC KEY BLOCK-----
 KEY
+
+sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf
+

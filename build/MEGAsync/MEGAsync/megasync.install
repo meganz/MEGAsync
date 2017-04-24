@@ -80,8 +80,13 @@ URYSLAw5e33Za+vKMGF/hifuJ1V0GYkUig==
 -----END PGP PUBLIC KEY BLOCK-----
 KEY
 
+sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf
 }
 
 post_remove() {
 sed -n '1h;1!H;${g;s/###REPO for MEGA###\n.*###END REPO for MEGA###//;p;}' -i /etc/pacman.conf 
+}
+
+post_upgrade() {
+sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf
 }
