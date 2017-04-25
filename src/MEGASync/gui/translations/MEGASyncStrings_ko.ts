@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ko" sourcelanguage="en">
+<TS version="2.1" language="ko" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -46,7 +46,7 @@
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>확인</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -155,7 +155,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>확인</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -288,7 +288,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>확인</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -443,7 +443,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>확인</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1265,6 +1265,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
         <translation type="unfinished">당신은 지금 FAT 파일시스템으로 포맷된 로컬 폴더와 동기화를 하고 있습니다. 해당 파일시스템은 큰 파일과 수정 시간을 관리하는데에 결함이 있어, 동기화 문제를 야기할 수 있습니다 (예를 들어, 일광 절약 시간이 변경될 때), 그러므로 파일을 NTFS처럼 더 믿을만한 파일시스템으로 포맷된 폴더와 동기화할 것을 강력히 권장합니다 (더 많은 정보는 [A]여기[/A]에서).</translation>
     </message>
+    <message>
+        <source>Please consider updating your operating system.</source>
+        <translatorcomment>Message shown to the user to inform about updating the operating system to be compatible with latest versions of MEGAsync</translatorcomment>
+        <translation type="unfinished">Please consider updating your operating system.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
+        <translatorcomment>Message shown to the user to inform that MEGAsync no longer work with prior versions to OS X Mavericks</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1508,7 +1518,7 @@ Are you sure?</source>
     <message>
         <source>OK</source>
         <translatorcomment>Label for OK button.</translatorcomment>
-        <translation type="unfinished">확인</translation>
+        <translation type="unfinished">OK</translation>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
@@ -1541,7 +1551,7 @@ Are you sure?</source>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>확인</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1790,7 +1800,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">확인</translation>
+        <translation type="unfinished">OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1914,7 +1924,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>확인</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2156,7 +2166,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation>동기화에서 제외할 이름을 입력하세요. (와일드카드 * 와 ? 가 가능합니다):</translation>
+        <translation>동기화에서 제외할 이름을 입력하세요. (와일드카드 * 와? 가 가능합니다):</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2368,11 +2378,6 @@ Do you want to restart MEGAsync now?</source>
         <translation type="unfinished">용량으로 제외</translation>
     </message>
     <message>
-        <source>PRO lite</source>
-        <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO LITE</translation>
-    </message>
-    <message>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
@@ -2465,6 +2470,10 @@ when the application starts again</source>
         <source>Uploads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
         <translation type="unfinished">업로드</translation>
+    </message>
+    <message>
+        <source>PRO Lite</source>
+        <translation type="unfinished">프로 라이트</translation>
     </message>
 </context>
 <context>
@@ -2892,6 +2901,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
         <translation>%1 (%2)</translation>
     </message>
+    <message>
+        <source>Remove from left pane</source>
+        <translation type="unfinished">Remove from left pane</translation>
+    </message>
 </context>
 <context>
     <name>SizeLimitDialog</name>
@@ -2918,7 +2931,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation type="unfinished">확인</translation>
+        <translation type="unfinished">OK</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3218,11 +3231,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">IP 주소에 해당된 무료 전송 허용량을 초과하기 때문에 다운로드를 진행할 수 없습니다. 이 제한은 역동적이고 우리가 가진 미사용 대역폭량에 따라 다릅니다.</translation>
+        <translation type="unfinished">IP 주소에 해당된 무료 전송 한도를 초과하기 때문에 다운로드를 진행할 수 없습니다. 이 제한은 역동적이고 이용가능한 미사용 대역폭량에 따라 다릅니다.                </translation>
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">%1의 데이터를 지난 6시간 동안 사용하였고, 이는 우리의 제한을 초과할 수 있습니다. 제한을 피하려면, 당신만의 대역폭 패키지와 추가 저장 공간을 얻을 수 있는 [A]프로로 업그레이드[/A]할 수 있습니다.</translation>
+        <translation type="unfinished">이 IP 주소는 지난 6시간 동안 %1 의 데이터를 전송하였으며, 이는 우리의 한도를 초과합니다. 이 한도를 제거하려면, 당신만의 전송 할당량 패키지와 추가 저장 공간을 주는, [A]PRO로 업그레이드[/A]하세요.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
@@ -3264,7 +3277,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>확인</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>

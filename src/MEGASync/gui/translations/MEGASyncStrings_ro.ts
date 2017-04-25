@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ro" sourcelanguage="en">
+<TS version="2.1" language="ro" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -739,7 +739,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Beneficiază de 50GB spaţiu de stocare în cloud cu un cont gratuit şi fii capabil să îţi criptezi toate fişierele cu [A]planurile noastre PRO[/A] generoase.</translation>
+        <translation type="unfinished">Beneficiază de 50GB spaţiu de stocare în cloud cu criptare capăt-la-capăt securizată controlată de utilizatori şi înregistrează-te pentru un cont gratuit sau unul dintre [A]planurile noastre PRO[/A].</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
@@ -1264,6 +1264,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
         <translation type="unfinished">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
+    </message>
+    <message>
+        <source>Please consider updating your operating system.</source>
+        <translatorcomment>Message shown to the user to inform about updating the operating system to be compatible with latest versions of MEGAsync</translatorcomment>
+        <translation type="unfinished">Please consider updating your operating system.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
+        <translatorcomment>Message shown to the user to inform that MEGAsync no longer work with prior versions to OS X Mavericks</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
     </message>
 </context>
 <context>
@@ -2156,7 +2166,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation>Introdu un nume pentru a exclude de la sincronizare. (caracterele wildcard * şi ? sunt permise):</translation>
+        <translation>Introdu un nume pentru a exclude de la sincronizare. (caracterele wildcard * şi? sunt permise):</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2368,11 +2378,6 @@ Do you want to restart MEGAsync now?</source>
         <translation type="unfinished">Exclude după mărime</translation>
     </message>
     <message>
-        <source>PRO lite</source>
-        <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO LITE</translation>
-    </message>
-    <message>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
@@ -2465,6 +2470,10 @@ when the application starts again</source>
         <source>Uploads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
         <translation type="unfinished">Încărcări</translation>
+    </message>
+    <message>
+        <source>PRO Lite</source>
+        <translation type="unfinished">PRO Lite</translation>
     </message>
 </context>
 <context>
@@ -2892,6 +2901,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
         <translation>%1 (%2)</translation>
     </message>
+    <message>
+        <source>Remove from left pane</source>
+        <translation type="unfinished">Remove from left pane</translation>
+    </message>
 </context>
 <context>
     <name>SizeLimitDialog</name>
@@ -3214,15 +3227,15 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UpgradeDialog</name>
     <message>
         <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">Cota depăşită pentru lăţimea de bandă Pro</translation>
+        <translation type="unfinished">Cota gratuită de transfer depăşită</translation>
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">Descărcarea nu poate continua, deoarece ar depăşi cota actuală pentru transferuri gratuite pentru adresa ta IP. Această limită este dinamică şi depinde de cantiatea de lăţime de bandă nefolosită pe care o avem disponibilă.</translation>
+        <translation type="unfinished">Descărcarea nu poate continua, deoarece ar depăşi cota actuală de transferuri gratuite pentru adresa ta IP. Această limită este dinamică şi depinde de cantitatea de lăţime de bandă nefolosită pe care o avem disponibilă.</translation>
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Ai utilizat %1 din transferul de date în ultimele 6 ore care a depăşit limita noastră actuală. Pentru a ocoli această limită, poţi [A]upgrada la PRO[/A] care îţi  va oferi propriul pachet cu bandă de lăţime şi, de asemenea, spaţiu de stocare extra vast.</translation>
+        <translation type="unfinished">Adresa IP pe care o foloseşti a utilizat %1 din transferul de date în ultimele 6 ore, care a depăşit limita noastră actuală. Pentru elimina această limită, poţi [A]upgrada la PRO[/A] care îţi va oferi propriul pachet cu cotă de transfer şi, de asemenea, spaţiu de stocare extra vast.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
