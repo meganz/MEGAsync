@@ -619,6 +619,8 @@ void MegaApplication::initialize()
     megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGAsync is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
              .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
 
+    megaApi->setLanguage(language.toUtf8().constData());
+    megaApiFolders->setLanguage(language.toUtf8().constData());
     megaApi->setDownloadMethod(preferences->transferDownloadMethod());
     megaApi->setUploadMethod(preferences->transferUploadMethod());
     setMaxConnections(MegaTransfer::TYPE_UPLOAD,   preferences->parallelUploadConnections());
@@ -732,9 +734,32 @@ void MegaApplication::changeLanguage(QString languageCode)
                             + Preferences::TRANSLATION_PREFIX
                             + languageCode))
     {
-        translator.load(Preferences::TRANSLATION_FOLDER
+        if (translator.load(Preferences::TRANSLATION_FOLDER
                                    + Preferences::TRANSLATION_PREFIX
-                                   + QString::fromUtf8("en"));
+                                   + QString::fromUtf8("en")))
+        {
+            if (megaApi)
+            {
+                megaApi->setLanguage("en");
+            }
+
+            if (megaApiFolders)
+            {
+                megaApi->setLanguage("en");
+            }
+        }
+    }
+    else
+    {
+        if (megaApi)
+        {
+            megaApi->setLanguage(languageCode.toUtf8().constData());
+        }
+
+        if (megaApiFolders)
+        {
+            megaApi->setLanguage(languageCode.toUtf8().constData());
+        }
     }
 
     createTrayIcon();
