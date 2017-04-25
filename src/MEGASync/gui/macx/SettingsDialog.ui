@@ -2642,19 +2642,46 @@ border: none;</string>
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="cbUseHttps">
+        <widget class="QWidget" name="widget_8" native="true">
          <property name="minimumSize">
           <size>
            <width>0</width>
            <height>20</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">padding-left : 27px;</string>
-         </property>
-         <property name="text">
-          <string>Don't use HTTP</string>
-         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_22">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>27</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QCheckBox" name="cbUseHttps">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
+            <property name="text">
+             <string>Don't use HTTP</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
