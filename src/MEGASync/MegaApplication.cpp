@@ -1124,10 +1124,14 @@ void MegaApplication::start()
             infoDialog = new InfoDialog(this);
             if (!QSystemTrayIcon::isSystemTrayAvailable())
             {
-                QMessageBox::warning(NULL, tr("MEGAsync"),
-                                     tr("Could not find a system tray to place MEGAsync tray icon. "
-                                        "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
-                                        "If you want to open the interface, just try to open MEGAsync again."));
+                if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE))
+                {
+                    QMessageBox::warning(NULL, tr("MEGAsync"),
+                                         tr("Could not find a system tray to place MEGAsync tray icon. "
+                                            "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
+                                            "If you want to open the interface, just try to open MEGAsync again."));
+                    preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
+                }
             }
         }
 
