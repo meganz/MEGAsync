@@ -1863,6 +1863,12 @@ border: none;</string>
        </property>
        <item>
         <widget class="QGroupBox" name="gBandwidthQuota">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>79</height>
+          </size>
+         </property>
          <property name="title">
           <string/>
          </property>
