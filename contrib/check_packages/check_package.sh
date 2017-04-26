@@ -207,7 +207,7 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	else
 	 resultMODREPO=0 #we discard any other failure
 	fi; rm tmp$VMNAME;	
-	#~ if [ -s tmp$VMNAME ]; then resultMODREPO=$(expr 1000 + $resultMODREPO); cat tmp$VMNAME; fi; rm tmp$VMNAME;	
+	# if [ -s tmp$VMNAME ]; then resultMODREPO=$(expr 1000 + $resultMODREPO); cat tmp$VMNAME; fi; rm tmp$VMNAME;
 	logOperationResult "modifying repos ..." $resultMODREPO
 	cat /etc/zypp/repos.d/megasync.repo
 	
@@ -237,7 +237,7 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	VERSIONINSTALLEDAFTER=`echo $AFTERINSTALL	| grep megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
 	logSth "installed megasync ..." "$VERSIONINSTALLEDAFTER"
 		
-elif [[ $1 == *"DEBIAN"* ]] || [[ $1 == *"UBUNTU"* ]] || [[ $1 == *"LINUXMINT"* ]]; then
+elif [[ $VMNAME == *"DEBIAN"* ]] || [[ $VMNAME == *"UBUNTU"* ]] || [[ $VMNAME == *"LINUXMINT"* ]]; then
 
 	if [ $remove_megasync -eq 1 ]; then
 		echo " removing megasync ..."
@@ -274,8 +274,8 @@ elif [[ $1 == *"DEBIAN"* ]] || [[ $1 == *"UBUNTU"* ]] || [[ $1 == *"LINUXMINT"* 
 	#notice: zypper will report 0 as status even though it "failed", we do stderr checking
 	if cat tmp$VMNAME | grep $REPO; then
 	 resultMODREPO=$(expr 1000 + 0$resultMODREPO); cat tmp$VMNAME; 
-	#~ else
-	 #~ resultMODREPO=0 #we discard any other failure
+	#else
+	 #resultMODREPO=0 #we discard any other failure
 	fi; rm tmp$VMNAME;	
 	logOperationResult "modifying repos ..." $resultMODREPO
 	$sshpasscommand ssh root@$IP_GUEST cat /etc/apt/sources.list.d/megasync.list
@@ -311,7 +311,7 @@ elif [[ $1 == *"DEBIAN"* ]] || [[ $1 == *"UBUNTU"* ]] || [[ $1 == *"LINUXMINT"* 
 	VERSIONINSTALLEDAFTER=`echo $AFTERINSTALL	| grep megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
 	logSth "installed megasync ..." "$VERSIONINSTALLEDAFTER"
 
-elif [[ $1 == *"ARCHLINUX"* ]]; then
+elif [[ $VMNAME == *"ARCHLINUX"* ]]; then
 
 	if [ $remove_megasync -eq 1 ]; then
 		echo " removing megasync ..."
@@ -339,8 +339,8 @@ EOF
 	#notice: in case pacman reports 0 as status even though it "failed", we do stderr checking
 	if cat tmp$VMNAME | grep "$REPO\|error"; then
 	 resultMODREPO=$(expr 1000 + 0$resultMODREPO); cat tmp$VMNAME; 
-	#~ else
-	 #~ resultMODREPO=0 #we discard any other failure
+	#else
+	 #resultMODREPO=0 #we discard any other failure
 	fi; rm tmp$VMNAME;	
 	logOperationResult "modifying repos ..." $resultMODREPO
 	$sshpasscommand ssh root@$IP_GUEST "cat /etc/pacman.conf | grep 'REPO for MEGA' -A 5"
@@ -505,19 +505,94 @@ done
 
 logOperationResult "check file dl correctly ..." $resultDL
 
+
+
+echo " checking repo set ok ..."
+$sshpasscommand ssh root@$IP_GUEST  "cat /usr/share/doc/megasync/{distro,version}"
+
+## CHECKING REPO SET OK ##
+if [[ $VMNAME == *"OPENSUSE"* ]]; then
+	distroDir="openSUSE"
+	ver=$($sshpasscommand ssh root@$IP_GUEST lsb_release -rs)
+	if [ x$ver == "x20160920" ]; then ver="Tumbleweed"; fi
+	if [[ x$ver == "x42"* ]]; then ver="Leap_$ver"; fi
+	expected="baseurl=https://mega.nz/linux/MEGAsync/${distroDir}_$ver"
+	resultRepoConfiguredOk=0
+	if ! $sshpasscommand ssh root@$IP_GUEST cat /etc/zypp/repos.d/megasync.repo | grep "$expected" > /dev/null; then
+		echo "WRONG repo configured. Read: <$($sshpasscommand ssh root@$IP_GUEST "cat /etc/zypp/repos.d/megasync.repo" | grep baseurl)>"
+		echo "Expected: <$expected>"
+		resultRepoConfiguredOk=1
+	fi
+	logOperationResult "check repo configured correctly ..." $resultRepoConfiguredOk
+
+elif [[ $VMNAME == *"DEBIAN"* ]] || [[ $VMNAME == *"UBUNTU"* ]] || [[ $VMNAME == *"LINUXMINT"* ]]; then
+	distro=$($sshpasscommand ssh root@$IP_GUEST lsb_release -ds)
+	distroDir=$distro
+	if [[ $distroDir == "Ubuntu"* ]]; then distroDir="xUbuntu"; fi
+	ver=$($sshpasscommand ssh root@$IP_GUEST lsb_release -rs)
+	if [[ $distroDir == "Debian"* ]]; then 
+		distroDir="Debian" 
+		if [[ x$ver == "x8"* ]]; then ver="8.0"; fi
+		if [[ x$ver == "x7"* ]]; then ver="7.0"; fi
+		if [[ x$ver == "x9"* ]]; then ver="9.0"; fi
+		if [[ x$ver == "xtesting"* ]]; then ver="9.0"; fi
+	fi
+	
+	if [[ $distroDir == "Linux Mint 17"* ]]; then distroDir="xUbuntu"; ver="14.04"; fi
+	if [[ $distroDir == "Linux Mint 18"* ]]; then distroDir="xUbuntu"; ver="16.04"; fi
+	
+	resultRepoConfiguredOk=0
+	expected="deb https://mega.nz/linux/MEGAsync/${distroDir}_$ver/ ./"
+	if [ "x$expected" != "x$($sshpasscommand ssh root@$IP_GUEST "cat /etc/apt/sources.list.d/megasync.list")" ]; then
+		echo "WRONG repo configured. Read: <$($sshpasscommand ssh root@$IP_GUEST "cat /etc/apt/sources.list.d/megasync.list")>"
+		echo "Expected: <$expected>"
+		resultRepoConfiguredOk=1
+	fi
+	
+	logOperationResult "check repo configured correctly ..." $resultRepoConfiguredOk
+
+elif [[ $VMNAME == *"ARCHLINUX"* ]]; then
+	resultRepoConfiguredOk=0
+	distroDir="Arch_Extra"
+	ver=""
+	expected="^Server = https://mega.nz/linux/MEGAsync/Arch_Extra/\$arch"
+	
+	resultRepoConfiguredOk=0
+	if ! $sshpasscommand ssh root@$IP_GUEST cat /etc/pacman.conf | grep "$expected" > /dev/null; then
+		echo "WRONG repo configured. Read: <$($sshpasscommand ssh root@$IP_GUEST "cat /etc/pacman.conf" | grep baseurl)>"
+		echo "Expected: <$expected>"
+		resultRepoConfiguredOk=1
+	fi
+	logOperationResult "check repo configured correctly ..." $resultRepoConfiguredOk
+else #FEDORA | CENTOS...
+	distroDir=$($sshpasscommand ssh root@$IP_GUEST cat /etc/system-release | awk '{print $1}')
+	if [[ $distroDir == "Scientific"* ]]; then distroDir="ScientificLinux"; fi
+	ver=$($sshpasscommand ssh root@$IP_GUEST cat /etc/system-release | awk -F"release "  '{print $2}' | awk '{print $1}')
+	if [[ x$ver == "x7"* ]]; then ver="7"; fi #centos7
+
+	expected="baseurl=https://mega.nz/linux/MEGAsync/${distroDir}_$ver"
+	resultRepoConfiguredOk=0
+	if ! $sshpasscommand ssh root@$IP_GUEST cat /etc/yum.repos.d/megasync.repo | grep "$expected" > /dev/null; then
+		echo "WRONG repo configured. Read: <$($sshpasscommand ssh root@$IP_GUEST "cat /etc/yum.repos.d/megasync.repo" | grep baseurl)>"
+		echo "Expected: <$expected>"
+		resultRepoConfiguredOk=1
+	fi
+	logOperationResult "check repo configured correctly ..." $resultRepoConfiguredOk
+fi
+
+
+
 if [ $resultDL -eq 0 ] && [ $resultRunning -eq 0 ] \
-&& [ $resultMODREPO -eq 0 ] && [ $resultINSTALL -eq 0 ]; then
+&& [ $resultMODREPO -eq 0 ] && [ $resultINSTALL -eq 0 ] \
+&& [ $resultRepoConfiguredOk -eq 0 ]; then
 	echo " megasync working smoothly" 
 	touch ${VMNAME}_OK
 else
-	echo "MEGASYNC FAILED: $resultDL $resultRunning $resultMODREPO $resultINSTALL"
+	echo "MEGASYNC FAILED: $resultDL $resultRunning $resultMODREPO $resultINSTALL $resultRepoConfiguredOk"
 	#cat result_$VMNAME.log
 	touch ${VMNAME}_FAIL
 fi
 
-echo " check repo set ok ..."
-$sshpasscommand ssh root@$IP_GUEST  "cat /usr/share/doc/megasync/{distro,version}" 
-$sshpasscommand ssh root@$IP_GUEST  "cat /etc/apt/sources.list.d/megasync.list" 
 
 	
 if [ $quit_machine -eq 1 ]; then
