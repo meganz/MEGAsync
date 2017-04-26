@@ -386,7 +386,7 @@ void SettingsDialog::onCacheSizeAvailable()
 
         if (cacheSize)
         {
-            ui->lCacheSize->setText(ui->lCacheSize->text().arg(Utilities::getSizeString(cacheSize)));
+            ui->lCacheSize->setText(QString::fromUtf8(MEGA_DEBRIS_FOLDER) + QString::fromUtf8(": %1").arg(Utilities::getSizeString(cacheSize)));
         }
         else
         {
@@ -396,7 +396,7 @@ void SettingsDialog::onCacheSizeAvailable()
 
         if (remoteCacheSize)
         {
-            ui->lRemoteCacheSize->setText(ui->lRemoteCacheSize->text().arg(Utilities::getSizeString(remoteCacheSize)));
+            ui->lRemoteCacheSize->setText(QString::fromUtf8("SyncDebris: %1").arg(Utilities::getSizeString(remoteCacheSize)));
         }
         else
         {
