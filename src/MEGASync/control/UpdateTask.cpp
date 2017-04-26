@@ -97,9 +97,9 @@ void UpdateTask::tryUpdate()
     if (os)
     {
         QString osversion = QString::fromUtf8(os).trimmed();
-        if (osversion.startsWith(QString::fromUtf8("Darwin Kernel Version ")))
+        if (osversion.startsWith(QString::fromUtf8("Darwin ")))
         {
-            QStringList parts = osversion.mid(22).split(QString::fromUtf8("."));
+            QStringList parts = osversion.mid(7).split(QString::fromUtf8("."));
             if (parts.size())
             {
                 bool ok = false;
