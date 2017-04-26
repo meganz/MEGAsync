@@ -360,6 +360,36 @@ bool CheckLeftPaneIcon(wchar_t *path, bool remove)
 
 void WindowsPlatform::addSyncToLeftPane(QString syncPath, QString syncName, QString uuid)
 {
+    typedef LONG MEGANTSTATUS;
+    typedef struct _MEGAOSVERSIONINFOW {
+        DWORD dwOSVersionInfoSize;
+        DWORD dwMajorVersion;
+        DWORD dwMinorVersion;
+        DWORD dwBuildNumber;
+        DWORD dwPlatformId;
+        WCHAR  szCSDVersion[ 128 ];     // Maintenance string for PSS usage
+    } MEGARTL_OSVERSIONINFOW, *PMEGARTL_OSVERSIONINFOW;
+
+    typedef MEGANTSTATUS (WINAPI* RtlGetVersionPtr)(PMEGARTL_OSVERSIONINFOW);
+    MEGARTL_OSVERSIONINFOW version = { 0 };
+    HMODULE hMod = GetModuleHandleW(L"ntdll.dll");
+    if (!hMod)
+    {
+        return;
+    }
+
+    RtlGetVersionPtr RtlGetVersion = (RtlGetVersionPtr)GetProcAddress(hMod, "RtlGetVersion");
+    if (!RtlGetVersion)
+    {
+        return;
+    }
+
+    RtlGetVersion(&version);
+    if (version.dwMajorVersion < 10)
+    {
+        return;
+    }
+
     DWORD value;
     QString sValue;
     QString key = QString::fromUtf8("Software\\Classes\\CLSID\\%1").arg(uuid);
