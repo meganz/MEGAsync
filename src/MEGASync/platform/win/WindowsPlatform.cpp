@@ -161,13 +161,30 @@ HRESULT WindowsPlatform::CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, L
     return hres;
 }
 
+DWORD MEGARegDeleteKeyEx(HKEY hKey, LPCWSTR lpSubKey, REGSAM samDesired, DWORD Reserved)
+{
+    typedef DWORD (WINAPI *RegDeleteKeyExWPtr)(HKEY hKey,
+                                                     LPCWSTR lpSubKey,
+                                                     REGSAM samDesired,
+                                                     DWORD Reserved);
+
+    RegDeleteKeyExWPtr RegDeleteKeyExWFunc;
+    HMODULE hMod = GetModuleHandleW(L"advapi32.dll");
+    if (!hMod || !(RegDeleteKeyExWFunc = (RegDeleteKeyExWPtr)GetProcAddress(hMod, "RegDeleteKeyExW")))
+    {
+        return RegDeleteKey(hKey, lpSubKey);
+    }
+
+    return RegDeleteKeyExWFunc(hKey, lpSubKey, samDesired, Reserved);
+}
+
 bool DeleteRegKey(HKEY key, LPTSTR subkey, REGSAM samDesired)
 {
     TCHAR keyPath[MAX_PATH];
     DWORD maxSize;
     HKEY hKey;
 
-    LONG result = RegDeleteKeyEx(key, subkey, samDesired, 0);
+    LONG result = MEGARegDeleteKeyEx(key, subkey, samDesired, 0);
     if (result == ERROR_SUCCESS)
     {
         return true;
@@ -201,7 +218,7 @@ bool DeleteRegKey(HKEY key, LPTSTR subkey, REGSAM samDesired)
              && DeleteRegKey(key, keyPath, samDesired));
 
     RegCloseKey(hKey);
-    return (RegDeleteKeyEx(key, subkey, samDesired, 0) == ERROR_SUCCESS);
+    return (MEGARegDeleteKeyEx(key, subkey, samDesired, 0) == ERROR_SUCCESS);
 }
 
 bool DeleteRegValue(HKEY key, LPTSTR subkey, LPTSTR value, REGSAM samDesired)
