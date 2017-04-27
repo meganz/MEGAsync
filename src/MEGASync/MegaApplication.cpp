@@ -619,8 +619,18 @@ void MegaApplication::initialize()
     megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGAsync is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
              .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
 
-    megaApi->setLanguage(language.toUtf8().constData());
-    megaApiFolders->setLanguage(language.toUtf8().constData());
+    QString languageCode = language;
+    while (languageCode.size() && !Utilities::languageCodeToString(languageCode).size())
+    {
+        languageCode.resize(languageCode.size() - 1);
+    }
+
+    if (languageCode.size())
+    {
+        megaApi->setLanguage(languageCode.toUtf8().constData());
+        megaApiFolders->setLanguage(languageCode.toUtf8().constData());
+    }
+
     megaApi->setDownloadMethod(preferences->transferDownloadMethod());
     megaApi->setUploadMethod(preferences->transferUploadMethod());
     setMaxConnections(MegaTransfer::TYPE_UPLOAD,   preferences->parallelUploadConnections());
@@ -745,20 +755,28 @@ void MegaApplication::changeLanguage(QString languageCode)
 
             if (megaApiFolders)
             {
-                megaApi->setLanguage("en");
+                megaApiFolders->setLanguage("en");
             }
         }
     }
     else
-    {
-        if (megaApi)
+    {        
+        while (languageCode.size() && !Utilities::languageCodeToString(languageCode).size())
         {
-            megaApi->setLanguage(languageCode.toUtf8().constData());
+            languageCode.resize(languageCode.size() - 1);
         }
 
-        if (megaApiFolders)
+        if (languageCode.size())
         {
-            megaApi->setLanguage(languageCode.toUtf8().constData());
+            if (megaApi)
+            {
+                megaApi->setLanguage(languageCode.toUtf8().constData());
+            }
+
+            if (megaApiFolders)
+            {
+                megaApiFolders->setLanguage(languageCode.toUtf8().constData());
+            }
         }
     }
 
