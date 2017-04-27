@@ -11,18 +11,16 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/3.0.1.0";
-const int Preferences::VERSION_CODE = 3001;
+const char Preferences::USER_AGENT[] = "MEGAsync/3.1.0.0";
+const int Preferences::VERSION_CODE = 3100;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("3.0.1");
-const QString Preferences::SDK_ID = QString::fromAscii("bba566");
+const QString Preferences::VERSION_STRING = QString::fromAscii("3.1.0");
+const QString Preferences::SDK_ID = QString::fromAscii("facbef");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- Transfer manager\n"
-            "- Transfer speed control\n"
-            "- Configurable number of connections per transfer\n"
-            "- Improved the transfer speed\n"
-            "- Reduced CPU usage during synchronization\n"
+            "- Better integration with Windows 10\n"
+            "- Updated SSL certificate for communications with the web\n"
+            "- Deprecated OS X versions prior to Mavericks\n"
             "- Bug fixes");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
@@ -42,11 +40,13 @@ const unsigned int Preferences::UPDATE_RETRY_INTERVAL_SECS          = 7200;
 const unsigned int Preferences::UPDATE_TIMEOUT_SECS                 = 600;
 const unsigned int Preferences::MAX_LOGIN_TIME_MS                   = 40000;
 const unsigned int Preferences::PROXY_TEST_TIMEOUT_MS               = 10000;
+const unsigned int Preferences::LOCAL_HTTPS_TEST_TIMEOUT_MS         = 10000;
 const unsigned int Preferences::MAX_IDLE_TIME_MS                    = 600000;
 const unsigned int Preferences::MAX_COMPLETED_ITEMS                 = 1000;
 
 const qint16 Preferences::HTTPS_PORT = 6342;
-const QString Preferences::HTTPS_KEY = QString::fromUtf8(
+
+const QString Preferences::defaultHttpsKey = QString::fromUtf8(
             "-----BEGIN PRIVATE KEY-----\n"
             "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxk9BUskgy2dHN\n"
             "udvrzqsj3614UniXjAw3skMP+xUULBgaTcGgQkYRMM6I7ro/9Ropq5ypK5p8cmUq\n"
@@ -76,64 +76,69 @@ const QString Preferences::HTTPS_KEY = QString::fromUtf8(
             "xs+OLGD+kjzh+HkpkzYSDp4=\n"
             "-----END PRIVATE KEY-----\n");
 
-const QString Preferences::HTTPS_CERT = QString::fromUtf8(
+const QString Preferences::defaultHttpsCert = QString::fromUtf8(
             "-----BEGIN CERTIFICATE-----\n"
-            "MIIExzCCA6+gAwIBAgIDBNq6MA0GCSqGSIb3DQEBCwUAMEcxCzAJBgNVBAYTAlVT\n"
-            "MRYwFAYDVQQKEw1HZW9UcnVzdCBJbmMuMSAwHgYDVQQDExdSYXBpZFNTTCBTSEEy\n"
-            "NTYgQ0EgLSBHMzAeFw0xNTA2MDQwMTI0MDhaFw0xNzA2MDYwNTA5MjNaMIGmMRMw\n"
-            "EQYDVQQLEwpHVDgxODYxMTEyMTEwLwYDVQQLEyhTZWUgd3d3LnJhcGlkc3NsLmNv\n"
-            "bS9yZXNvdXJjZXMvY3BzIChjKTE1MS8wLQYDVQQLEyZEb21haW4gQ29udHJvbCBW\n"
-            "YWxpZGF0ZWQgLSBSYXBpZFNTTChSKTErMCkGA1UEAxMibG9jYWxob3N0Lm1lZ2Fz\n"
-            "eW5jbG9vcGJhY2subWVnYS5uejCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoC\n"
-            "ggEBALGT0FSySDLZ0c252+vOqyPfrXhSeJeMDDeyQw/7FRQsGBpNwaBCRhEwzoju\n"
-            "uj/1GimrnKkrmnxyZSpNiG7/1nhE/9qwcMgwLuUioi+ChldBZ0kcCEn0oGCdiL6N\n"
-            "A3RDohAFp31ZH90oxy6Wc3SgzKfzas72jBXjt1hXN1Cc8TWTXPUerMrKqsGMe8Z9\n"
-            "JDIwDZgK5KXUrcTNBjw0Vhd67dmPAUI++4OZGkuqSAoGu/Ac+7TNpA3taWI0HP7w\n"
-            "mcG3o9Q029NnTL+JhRFPeThIeWGL/Fd1X2OqMA3jfdEwisYhakWcGgmlpMVtOxTf\n"
-            "Po2PkFT9NhCloE6J6JN87bVpyXsCAwEAAaOCAVowggFWMB8GA1UdIwQYMBaAFMOc\n"
-            "8/zTRgg0u85Gf6B8W/PiCMtZMFcGCCsGAQUFBwEBBEswSTAfBggrBgEFBQcwAYYT\n"
-            "aHR0cDovL2d2LnN5bWNkLmNvbTAmBggrBgEFBQcwAoYaaHR0cDovL2d2LnN5bWNi\n"
-            "LmNvbS9ndi5jcnQwDgYDVR0PAQH/BAQDAgWgMB0GA1UdJQQWMBQGCCsGAQUFBwMB\n"
-            "BggrBgEFBQcDAjAtBgNVHREEJjAkgiJsb2NhbGhvc3QubWVnYXN5bmNsb29wYmFj\n"
-            "ay5tZWdhLm56MCsGA1UdHwQkMCIwIKAeoByGGmh0dHA6Ly9ndi5zeW1jYi5jb20v\n"
-            "Z3YuY3JsMAwGA1UdEwEB/wQCMAAwQQYDVR0gBDowODA2BgZngQwBAgEwLDAqBggr\n"
-            "BgEFBQcCARYeaHR0cHM6Ly93d3cucmFwaWRzc2wuY29tL2xlZ2FsMA0GCSqGSIb3\n"
-            "DQEBCwUAA4IBAQCvAb4RMjcYdP3BxZ5i4jH5+PSkI1Z8mYvvhA14ovUhQ6UWWNa3\n"
-            "sYF4zm4rdUjMq/e50J9JM756Y4Zx72AA1RKPf0Drin/d7RrXeXMDBoFYZvxIYvVL\n"
-            "7kB0CA1QQ2aDRUrafxmyMwhYzUN2E8yP7CbzEA7RcWvsbso8A+a6N7SvqvZftPp8\n"
-            "45pgKmyUqQ04helAJicvg0ZYdB2h/Hhq19+wuxTcNG2X310uuZDFixdRQbAYiu8f\n"
-            "p8OT4JuRITJYjdanbssvCFIsTIGjaXsUzq1yN/lvKmNx3DqBPij8i6mnPK6Gey+f\n"
-            "G9o0Zsj+Lm4txzqbB0/o6hnZEgkrsMrTcZYy\n"
-            "-----END CERTIFICATE-----\n"
-            );
+            "MIIGADCCBOigAwIBAgIQL41amoCH4B2agSUpD8Wd2DANBgkqhkiG9w0BAQsFADBC\n"
+            "MQswCQYDVQQGEwJVUzEWMBQGA1UEChMNR2VvVHJ1c3QgSW5jLjEbMBkGA1UEAxMS\n"
+            "UmFwaWRTU0wgU0hBMjU2IENBMB4XDTE3MDQwNTAwMDAwMFoXDTE5MDcwNTIzNTk1\n"
+            "OVowLTErMCkGA1UEAwwibG9jYWxob3N0Lm1lZ2FzeW5jbG9vcGJhY2subWVnYS5u\n"
+            "ejCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALGT0FSySDLZ0c252+vO\n"
+            "qyPfrXhSeJeMDDeyQw/7FRQsGBpNwaBCRhEwzojuuj/1GimrnKkrmnxyZSpNiG7/\n"
+            "1nhE/9qwcMgwLuUioi+ChldBZ0kcCEn0oGCdiL6NA3RDohAFp31ZH90oxy6Wc3Sg\n"
+            "zKfzas72jBXjt1hXN1Cc8TWTXPUerMrKqsGMe8Z9JDIwDZgK5KXUrcTNBjw0Vhd6\n"
+            "7dmPAUI++4OZGkuqSAoGu/Ac+7TNpA3taWI0HP7wmcG3o9Q029NnTL+JhRFPeThI\n"
+            "eWGL/Fd1X2OqMA3jfdEwisYhakWcGgmlpMVtOxTfPo2PkFT9NhCloE6J6JN87bVp\n"
+            "yXsCAwEAAaOCAwUwggMBMC0GA1UdEQQmMCSCImxvY2FsaG9zdC5tZWdhc3luY2xv\n"
+            "b3BiYWNrLm1lZ2EubnowCQYDVR0TBAIwADArBgNVHR8EJDAiMCCgHqAchhpodHRw\n"
+            "Oi8vZ3Auc3ltY2IuY29tL2dwLmNybDBvBgNVHSAEaDBmMGQGBmeBDAECATBaMCoG\n"
+            "CCsGAQUFBwIBFh5odHRwczovL3d3dy5yYXBpZHNzbC5jb20vbGVnYWwwLAYIKwYB\n"
+            "BQUHAgIwIAweaHR0cHM6Ly93d3cucmFwaWRzc2wuY29tL2xlZ2FsMB8GA1UdIwQY\n"
+            "MBaAFJfCJ1CewsnsDIgyyHyt4qYBT9pvMA4GA1UdDwEB/wQEAwIFoDAdBgNVHSUE\n"
+            "FjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwVwYIKwYBBQUHAQEESzBJMB8GCCsGAQUF\n"
+            "BzABhhNodHRwOi8vZ3Auc3ltY2QuY29tMCYGCCsGAQUFBzAChhpodHRwOi8vZ3Au\n"
+            "c3ltY2IuY29tL2dwLmNydDCCAXwGCisGAQQB1nkCBAIEggFsBIIBaAFmAHUA3esd\n"
+            "K3oNT6Ygi4GtgWhwfi6OnQHVXIiNPRHEzbbsvswAAAFbO+z6WwAABAMARjBEAiBy\n"
+            "3jqWJoo6+o4nXCv1R1vSrXwOub7i4zSnjzKQmNuAXAIgF8Fmvm1EB48X9g1qfx+k\n"
+            "sZsdKJRwGcJEFf55onTQlkgAdQCkuQmQtBhYFIe7E6LMZ3AKPDWYBPkb37jjd80O\n"
+            "yA3cEAAAAVs77PqaAAAEAwBGMEQCID/pb8/gqDng+2dJex8pHY2qxCyen3u4Su7d\n"
+            "zPkeHKVFAiBYpUot0v/eWwy6yTODgT9FdDPe6TJfkaounob/gDBTZgB2AO5Lvbd1\n"
+            "zmC64UJpH6vhnmajD35fsHLYgwDEe4l6qP3LAAABWzvs/FoAAAQDAEcwRQIgKHq8\n"
+            "JFAOYbf912dJdbP7h1KkahVBQqOOMJgra1HY6b4CIQD5ybPjzCdqla5srDUIwvpm\n"
+            "B2dPoTqSNx70+pVrmAI60zANBgkqhkiG9w0BAQsFAAOCAQEAeeqe3o38ZcVaOiSM\n"
+            "sv8o1aHJN25jYRVtvm04wlrXRJg90CmfNiaLD+7UeuDtZxcvYmkNA6Vz4NVj5s8b\n"
+            "kRexf64UIhb1fWUr+kgI/gWWcsGAwqn9i3Hs6CIAMvic9bhedCBesef01hTqD1sq\n"
+            "8cN+YZy2fLRcx3NIQ9UpCsSUDkf+1bCjCVbBtUqhJ8zUG6l/TwLEsnXR0GQcBzc1\n"
+            "Elav7ka8GpvbJTuivY4e537WWqM4RAmO5xI+uk9ANwkPFRy7awRSuF2mJTz49GOg\n"
+            "MGA+fCc/TGwZF1syej90ZTKYbRRkyrkSHjehfXW8fr23Y9/OW9u8nV8jm7WPKjYX\n"
+            "Nf2RSQ==\n"
+            "-----END CERTIFICATE-----\n");
 
-const QString Preferences::HTTPS_CERT_INTERMEDIATE = QString::fromUtf8(
+const QString Preferences::defaultHttpsCertIntermediate = QString::fromUtf8(
             "-----BEGIN CERTIFICATE-----\n"
-            "MIIEJTCCAw2gAwIBAgIDAjp3MA0GCSqGSIb3DQEBCwUAMEIxCzAJBgNVBAYTAlVT\n"
-            "MRYwFAYDVQQKEw1HZW9UcnVzdCBJbmMuMRswGQYDVQQDExJHZW9UcnVzdCBHbG9i\n"
-            "YWwgQ0EwHhcNMTQwODI5MjEzOTMyWhcNMjIwNTIwMjEzOTMyWjBHMQswCQYDVQQG\n"
-            "EwJVUzEWMBQGA1UEChMNR2VvVHJ1c3QgSW5jLjEgMB4GA1UEAxMXUmFwaWRTU0wg\n"
-            "U0hBMjU2IENBIC0gRzMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCv\n"
-            "VJvZWF0eLFbG1eh/9H0WA//Qi1rkjqfdVC7UBMBdmJyNkA+8EGVf2prWRHzAn7Xp\n"
-            "SowLBkMEu/SW4ib2YQGRZjEiwzQ0Xz8/kS9EX9zHFLYDn4ZLDqP/oIACg8PTH2lS\n"
-            "1p1kD8mD5xvEcKyU58Okaiy9uJ5p2L4KjxZjWmhxgHsw3hUEv8zTvz5IBVV6s9cQ\n"
-            "DAP8m/0Ip4yM26eO8R5j3LMBL3+vV8M8SKeDaCGnL+enP/C1DPz1hNFTvA5yT2AM\n"
-            "QriYrRmIV9cE7Ie/fodOoyH5U/02mEiN1vi7SPIpyGTRzFRIU4uvt2UevykzKdkp\n"
-            "YEj4/5G8V1jlNS67abZZAgMBAAGjggEdMIIBGTAfBgNVHSMEGDAWgBTAephojYn7\n"
-            "qwVkDBF9qn1luMrMTjAdBgNVHQ4EFgQUw5zz/NNGCDS7zkZ/oHxb8+IIy1kwEgYD\n"
-            "VR0TAQH/BAgwBgEB/wIBADAOBgNVHQ8BAf8EBAMCAQYwNQYDVR0fBC4wLDAqoCig\n"
-            "JoYkaHR0cDovL2cuc3ltY2IuY29tL2NybHMvZ3RnbG9iYWwuY3JsMC4GCCsGAQUF\n"
-            "BwEBBCIwIDAeBggrBgEFBQcwAYYSaHR0cDovL2cuc3ltY2QuY29tMEwGA1UdIARF\n"
-            "MEMwQQYKYIZIAYb4RQEHNjAzMDEGCCsGAQUFBwIBFiVodHRwOi8vd3d3Lmdlb3Ry\n"
-            "dXN0LmNvbS9yZXNvdXJjZXMvY3BzMA0GCSqGSIb3DQEBCwUAA4IBAQCjWB7GQzKs\n"
-            "rC+TeLfqrlRARy1+eI1Q9vhmrNZPc9ZE768LzFvB9E+aj0l+YK/CJ8cW8fuTgZCp\n"
-            "fO9vfm5FlBaEvexJ8cQO9K8EWYOHDyw7l8NaEpt7BDV7o5UzCHuTcSJCs6nZb0+B\n"
-            "kvwHtnm8hEqddwnxxYny8LScVKoSew26T++TGezvfU5ho452nFnPjJSxhJf3GrkH\n"
-            "uLLGTxN5279PURt/aQ1RKsHWFf83UTRlUfQevjhq7A6rvz17OQV79PP7GqHQyH5O\n"
-            "ZI3NjGFVkP46yl0lD/gdo0p0Vk8aVUBwdSWmMy66S6VdU5oNMOGNX2Esr8zvsJmh\n"
-            "gP8L8mJMcCaY\n"
-            "-----END CERTIFICATE-----\n"
-            );
+            "MIIETTCCAzWgAwIBAgIDAjpxMA0GCSqGSIb3DQEBCwUAMEIxCzAJBgNVBAYTAlVTMRYwFAYDVQQK\n"
+            "Ew1HZW9UcnVzdCBJbmMuMRswGQYDVQQDExJHZW9UcnVzdCBHbG9iYWwgQ0EwHhcNMTMxMjExMjM0\n"
+            "NTUxWhcNMjIwNTIwMjM0NTUxWjBCMQswCQYDVQQGEwJVUzEWMBQGA1UEChMNR2VvVHJ1c3QgSW5j\n"
+            "LjEbMBkGA1UEAxMSUmFwaWRTU0wgU0hBMjU2IENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIB\n"
+            "CgKCAQEAu1jBEgEul9h9GKrIwuWF4hdsYC7JjTEFORoGmFbdVNcRjFlbPbFUrkshhTIWX1SG5tmx\n"
+            "2GCJa1i+ctqgAEJ2sSdZTM3jutRc2aZ/uyt11UZEvexAXFm33Vmf8Wr3BvzWLxmKlRK6msrVMNI4\n"
+            "/Bk7WxU7NtBDTdFlodSLwWBBs9ZwF8w5wJwMoD23ESJOztmpetIqYpygC04q18NhWoXdXBC5VD0t\n"
+            "A/hJ8LySt7ecMcfpuKqCCwW5Mc0IW7siC/acjopVHHZDdvDibvDfqCl158ikh4tq8bsIyTYYZe5Q\n"
+            "Q7hdctUoOeFTPiUs2itP3YqeUFDgb5rE1RkmiQF1cwmbOwIDAQABo4IBSjCCAUYwHwYDVR0jBBgw\n"
+            "FoAUwHqYaI2J+6sFZAwRfap9ZbjKzE4wHQYDVR0OBBYEFJfCJ1CewsnsDIgyyHyt4qYBT9pvMBIG\n"
+            "A1UdEwEB/wQIMAYBAf8CAQAwDgYDVR0PAQH/BAQDAgEGMDYGA1UdHwQvMC0wK6ApoCeGJWh0dHA6\n"
+            "Ly9nMS5zeW1jYi5jb20vY3Jscy9ndGdsb2JhbC5jcmwwLwYIKwYBBQUHAQEEIzAhMB8GCCsGAQUF\n"
+            "BzABhhNodHRwOi8vZzIuc3ltY2IuY29tMEwGA1UdIARFMEMwQQYKYIZIAYb4RQEHNjAzMDEGCCsG\n"
+            "AQUFBwIBFiVodHRwOi8vd3d3Lmdlb3RydXN0LmNvbS9yZXNvdXJjZXMvY3BzMCkGA1UdEQQiMCCk\n"
+            "HjAcMRowGAYDVQQDExFTeW1hbnRlY1BLSS0xLTU2OTANBgkqhkiG9w0BAQsFAAOCAQEANevhiyBW\n"
+            "lLp6vXmp9uP+bji0MsGj21hWID59xzqxZ2nVeRQb9vrsYPJ5zQoMYIp0TKOTKqDwUX/N6fmS/Zar\n"
+            "RfViPT9gRlATPSATGC6URq7VIf5Dockj/lPEvxrYrDrK3maXI67T30pNcx9vMaJRBBZqAOv5jUOB\n"
+            "8FChH6bKOvMoPF9RrNcKRXdLDlJiG9g4UaCSLT+Qbsh+QJ8gRhVd4FB84XavXu0R0y8TubglpK9Y\n"
+            "Ca81tGJUheNI3rzSkHp6pIQNo0LyUcDUrVNlXWz4Px8G8k/Ll6BKWcZ40egDuYVtLLrhX7atKz4l\n"
+            "ecWLVtXjCYDqwSfC2Q7sRwrp0Mr82A==\n"
+            "-----END CERTIFICATE----- \n");
+
+const long long Preferences::defaultHttpsCertExpiration = 1562378399;
+const long long Preferences::LOCAL_HTTPS_CERT_MAX_EXPIRATION_SECS = 3888000; // 45 days
 
 QStringList Preferences::HTTPS_ALLOWED_ORIGINS;
 bool Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
@@ -150,6 +155,9 @@ const QString Preferences::UPDATE_FOLDER_NAME               = QString::fromAscii
 const QString Preferences::UPDATE_BACKUP_FOLDER_NAME        = QString::fromAscii("backup");
 const QString Preferences::PROXY_TEST_URL                   = QString::fromUtf8("http://eu.static.mega.co.nz/?");
 const QString Preferences::PROXY_TEST_SUBSTRING             = QString::fromUtf8("<title>MEGA</title>");
+const QString Preferences::LOCAL_HTTPS_TEST_URL             = QString::fromUtf8("https://localhost.megasyncloopback.mega.nz:") + QString::number(Preferences::HTTPS_PORT);
+const QString Preferences::LOCAL_HTTPS_TEST_SUBSTRING       = Preferences::VERSION_STRING;
+const QString Preferences::LOCAL_HTTPS_TEST_POST_DATA       = QString::fromUtf8("{\"a\":\"v\"}");
 const QString Preferences::syncsGroupKey            = QString::fromAscii("Syncs");
 const QString Preferences::currentAccountKey        = QString::fromAscii("currentAccount");
 const QString Preferences::emailKey                 = QString::fromAscii("email");
@@ -204,6 +212,7 @@ const QString Preferences::proxyRequiresAuthKey     = QString::fromAscii("proxyR
 const QString Preferences::proxyUsernameKey         = QString::fromAscii("proxyUsername");
 const QString Preferences::proxyPasswordKey         = QString::fromAscii("proxyPassword");
 const QString Preferences::syncNameKey              = QString::fromAscii("syncName");
+const QString Preferences::syncIdKey                = QString::fromAscii("syncId");
 const QString Preferences::localFolderKey           = QString::fromAscii("localFolder");
 const QString Preferences::megaFolderKey            = QString::fromAscii("megaFolder");
 const QString Preferences::megaFolderHandleKey      = QString::fromAscii("megaFolderHandle");
@@ -247,6 +256,11 @@ const QString Preferences::useHttpsOnlyKey          = QString::fromAscii("useHtt
 const QString Preferences::SSLcertificateExceptionKey  = QString::fromAscii("SSLcertificateException");
 const QString Preferences::maxMemoryUsageKey        = QString::fromAscii("maxMemoryUsage");
 const QString Preferences::maxMemoryReportTimeKey   = QString::fromAscii("maxMemoryReportTime");
+const QString Preferences::oneTimeActionDoneKey     = QString::fromAscii("oneTimeActionDone");
+const QString Preferences::httpsKeyKey              = QString::fromAscii("httpsKey");
+const QString Preferences::httpsCertKey             = QString::fromAscii("httpsCert");
+const QString Preferences::httpsCertIntermediateKey = QString::fromAscii("httpsCertIntermediate");
+const QString Preferences::httpsCertExpirationKey   = QString::fromAscii("httpsCertExpiration");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -1620,6 +1634,20 @@ QString Preferences::getSyncName(int num)
     return value;
 }
 
+QString Preferences::getSyncID(int num)
+{
+    mutex.lock();
+    assert(logged() && (syncIDs.size() > num));
+    if (num >= syncIDs.size())
+    {
+        mutex.unlock();
+        return QString();
+    }
+    QString value = syncIDs.at(num);
+    mutex.unlock();
+    return value;
+}
+
 QString Preferences::getLocalFolder(int num)
 {
     mutex.lock();
@@ -1737,14 +1765,62 @@ void Preferences::setSyncState(int num, bool enabled, bool temporaryDisabled)
 
     if (enabled)
     {
-        Platform::syncFolderAdded(localFolders[num], syncNames[num]);
+        Platform::syncFolderAdded(localFolders[num], syncNames[num], syncIDs[num]);
     }
+}
+
+bool Preferences::isOneTimeActionDone(int action)
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    bool value = settings->value(oneTimeActionDoneKey + QString::number(action), false).toBool();
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setOneTimeActionDone(int action, bool done)
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    settings->setValue(oneTimeActionDoneKey + QString::number(action), done);
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+    settings->sync();
+    mutex.unlock();
 }
 
 QStringList Preferences::getSyncNames()
 {
     mutex.lock();
     QStringList value = syncNames;
+    mutex.unlock();
+    return value;
+}
+
+QStringList Preferences::getSyncIDs()
+{
+    mutex.lock();
+    QStringList value = syncIDs;
     mutex.unlock();
     return value;
 }
@@ -1793,6 +1869,8 @@ void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega:
 
     localFolder = QDir::toNativeSeparators(localFolderInfo.canonicalFilePath());
     syncNames.append(syncName);
+    QString syncID = QUuid::createUuid().toString().toUpper();
+    syncIDs.append(syncID);
     localFolders.append(localFolder);
     megaFolders.append(megaFolder);
     megaFolderHandles.append(megaFolderHandle);
@@ -1801,7 +1879,7 @@ void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega:
     localFingerprints.append(0);
     writeFolders();
     mutex.unlock();
-    Platform::syncFolderAdded(localFolder, syncName);
+    Platform::syncFolderAdded(localFolder, syncName, syncID);
 }
 
 void Preferences::setMegaFolderHandle(int num, MegaHandle handle)
@@ -1822,6 +1900,7 @@ void Preferences::removeSyncedFolder(int num)
     mutex.lock();
     assert(logged());
     syncNames.removeAt(num);
+    syncIDs.removeAt(num);
     localFolders.removeAt(num);
     megaFolders.removeAt(num);
     megaFolderHandles.removeAt(num);
@@ -1839,10 +1918,11 @@ void Preferences::removeAllFolders()
 
     for (int i = 0; i < localFolders.size(); i++)
     {
-        Platform::syncFolderRemoved(localFolders[i], syncNames[i]);
+        Platform::syncFolderRemoved(localFolders[i], syncNames[i], syncIDs[i]);
     }
 
     syncNames.clear();
+    syncIDs.clear();
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
@@ -2012,6 +2092,166 @@ void Preferences::setLastExit(long long value)
     mutex.unlock();
 }
 
+QString Preferences::getHttpsKey()
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    QString value = settings->value(httpsKeyKey, defaultHttpsKey).toString();
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setHttpsKey(QString key)
+{
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    settings->setValue(httpsKeyKey, key);
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+
+    settings->sync();
+}
+
+QString Preferences::getHttpsCert()
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    QString value = settings->value(httpsCertKey, defaultHttpsCert).toString();
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setHttpsCert(QString cert)
+{
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    settings->setValue(httpsCertKey, cert);
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+
+    settings->sync();
+}
+
+QString Preferences::getHttpsCertIntermediate()
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    QString value = settings->value(httpsCertIntermediateKey, defaultHttpsCertIntermediate).toString();
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setHttpsCertIntermediate(QString intermediate)
+{
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    settings->setValue(httpsCertIntermediateKey, intermediate);
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+
+    settings->sync();
+}
+
+long long Preferences::getHttpsCertExpiration()
+{
+    mutex.lock();
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    long long value = settings->value(httpsCertExpirationKey, defaultHttpsCertExpiration).toLongLong();
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setHttpsCertExpiration(long long expiration)
+{
+    QString currentAccount;
+    if (logged())
+    {
+        settings->endGroup();
+        currentAccount = settings->value(currentAccountKey).toString();
+    }
+
+    settings->setValue(httpsCertExpirationKey, expiration);
+
+    if (!currentAccount.isEmpty())
+    {
+        settings->beginGroup(currentAccount);
+    }
+
+    settings->sync();
+}
+
 int Preferences::getNumUsers()
 {
     mutex.lock();
@@ -2044,6 +2284,7 @@ void Preferences::leaveUser()
 
     clearTemporalBandwidth();
     syncNames.clear();
+    syncIDs.clear();
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
@@ -2065,6 +2306,7 @@ void Preferences::unlink()
     settings->remove(currentAccountKey);
     clearTemporalBandwidth();
     syncNames.clear();
+    syncIDs.clear();
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
@@ -2223,7 +2465,7 @@ void Preferences::login(QString account)
     {
         if ((lastVersion != 0) && (lastVersion < Preferences::VERSION_CODE))
         {
-            emit updated();
+            emit updated(lastVersion);
         }
         settings->setValue(lastVersionKey, Preferences::VERSION_CODE);
     }
@@ -2268,6 +2510,7 @@ void Preferences::logout()
     }
     clearTemporalBandwidth();
     syncNames.clear();
+    syncIDs.clear();
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
@@ -2319,6 +2562,7 @@ void Preferences::readFolders()
     mutex.lock();
     assert(logged());
     syncNames.clear();
+    syncIDs.clear();
     localFolders.clear();
     megaFolders.clear();
     megaFolderHandles.clear();
@@ -2333,6 +2577,7 @@ void Preferences::readFolders()
         settings->beginGroup(QString::number(i));
 
         syncNames.append(settings->value(syncNameKey).toString());
+        syncIDs.append(settings->value(syncIdKey, QUuid::createUuid().toString().toUpper()).toString());
         localFolders.append(settings->value(localFolderKey).toString());
         megaFolders.append(settings->value(megaFolderKey).toString());
         megaFolderHandles.append(settings->value(megaFolderHandleKey).toLongLong());
@@ -2359,6 +2604,7 @@ void Preferences::writeFolders()
         settings->beginGroup(QString::number(i));
 
         settings->setValue(syncNameKey, syncNames[i]);
+        settings->setValue(syncIdKey, syncIDs[i]);
         settings->setValue(localFolderKey, localFolders[i]);
         settings->setValue(megaFolderKey, megaFolders[i]);
         settings->setValue(megaFolderHandleKey, megaFolderHandles[i]);

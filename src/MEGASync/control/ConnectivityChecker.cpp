@@ -4,7 +4,7 @@
 using namespace mega;
 
 ConnectivityChecker::ConnectivityChecker(QString testURL, QObject *parent) :
-    QObject(parent)
+    QObject(parent) , testRequest(testURL)
 {
     networkAccess = new QNetworkAccessManager(this);
     timer = new QTimer(this);
@@ -16,6 +16,7 @@ ConnectivityChecker::ConnectivityChecker(QString testURL, QObject *parent) :
     connect(networkAccess, SIGNAL(proxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)),
             this, SLOT(onProxyAuthenticationRequired(const QNetworkProxy&, QAuthenticator*)));
 
+    this->method = METHOD_GET;
     this->testURL = testURL;
     this->reply = NULL;
     timeoutms = 10000;
@@ -36,16 +37,39 @@ void ConnectivityChecker::setTestString(QString testString)
     this->testString = testString;
 }
 
+void ConnectivityChecker::setMethod(int method)
+{
+    this->method = method;
+}
+
+void ConnectivityChecker::setHeader(QByteArray header, QByteArray value)
+{
+    testRequest.setRawHeader(header, value);
+}
+
+void ConnectivityChecker::setPostData(QByteArray postData)
+{
+    this->postData = postData;
+}
+
 void ConnectivityChecker::startCheck()
 {    
     timer->stop();
 
-    QNetworkRequest proxyTestRequest(testURL);
-    proxyTestRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QVariant( int(QNetworkRequest::AlwaysNetwork)));
+    testRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
     networkAccess->setProxy(proxy);
 
     timer->start(timeoutms);
-    reply = networkAccess->get(proxyTestRequest);
+    if (method == METHOD_POST)
+    {
+        testRequest.setHeader(QNetworkRequest::ContentTypeHeader,
+                              QByteArray("application/x-www-form-urlencoded"));
+        reply = networkAccess->post(testRequest, postData);
+    }
+    else
+    {
+        reply = networkAccess->get(testRequest);
+    }
 }
 
 void ConnectivityChecker::onTestFinished(QNetworkReply *reply)

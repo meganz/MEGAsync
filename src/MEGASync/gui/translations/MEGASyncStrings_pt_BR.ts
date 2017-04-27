@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="pt_BR" sourcelanguage="en">
+<TS version="2.1" language="pt_BR" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -1265,6 +1265,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
         <translation type="unfinished">Você está sincronizando uma pasta local formatada com um sistema de arquivos FAT. Esse sistema de arquivos possui deficiências ao gerenciar grandes arquivos e tempos de modificação que podem causar problemas de sincronização (por exemplo, quando houver alterações de horário de verão), portanto, é altamente recomendável que você sincronize somente pastas formatadas com sistemas de arquivos mais confiáveis como NTFS (mais informações [A]aqui[/A]).</translation>
     </message>
+    <message>
+        <source>Please consider updating your operating system.</source>
+        <translatorcomment>Message shown to the user to inform about updating the operating system to be compatible with latest versions of MEGAsync</translatorcomment>
+        <translation type="unfinished">Please consider updating your operating system.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
+        <translatorcomment>Message shown to the user to inform that MEGAsync no longer work with prior versions to OS X Mavericks</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2156,7 +2166,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation>Digite um nome para excluir da sincronização. (filtros como * e ? são permitidos):</translation>
+        <translation>Digite um nome para excluir da sincronização. (filtros como * e? são permitidos):</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2368,11 +2378,6 @@ Do you want to restart MEGAsync now?</source>
         <translation type="unfinished">Excluir pelo tamanho</translation>
     </message>
     <message>
-        <source>PRO lite</source>
-        <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO LITE</translation>
-    </message>
-    <message>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
@@ -2465,6 +2470,10 @@ when the application starts again</source>
         <source>Uploads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
         <translation type="unfinished">Envios</translation>
+    </message>
+    <message>
+        <source>PRO Lite</source>
+        <translation type="unfinished">PRO Lite</translation>
     </message>
 </context>
 <context>
@@ -2892,6 +2901,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
         <translation>%1 (%2)</translation>
     </message>
+    <message>
+        <source>Remove from left pane</source>
+        <translation type="unfinished">Remove from left pane</translation>
+    </message>
 </context>
 <context>
     <name>SizeLimitDialog</name>
@@ -3189,7 +3202,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Active Transfers</source>
         <translatorcomment>Label of tab to access all active transfers</translatorcomment>
-        <translation type="unfinished">Ativar as transferências</translation>
+        <translation type="unfinished">Transferências ativas</translation>
     </message>
 </context>
 <context>
@@ -3222,7 +3235,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Você utilizou %1 de transferência de dados nas últimas 6 horas, o que fez sua conta ultrapassar os limites permitidos. Para aumentar este limite, você pode [A]assinar uma conta PRO[/A], o que permitirá ter sua própria banda de dados e ampliar seu limite de armazenamento.</translation>
+        <translation type="unfinished">O seu endereço IP já utilizou %1 da transferência de dados nas últimas 6 horas, que levou você a ultrapassar o nosso limite atual. Para remover esse limite, você pode [A]atualizar para PRO[/A], que lhe dará o seu próprio pacote de quota de transferência e também amplo espaço de armazenamento extra.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>

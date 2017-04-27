@@ -91,6 +91,30 @@ void UpdateTask::tryUpdate()
     {
         randomSequence += QChar::fromAscii('A'+(rand() % 26));
     }
+
+#ifdef __APPLE__
+    char *os = megaApi->getOperatingSystemVersion();
+    if (os)
+    {
+        QString osversion = QString::fromUtf8(os).trimmed();
+        if (osversion.startsWith(QString::fromUtf8("Darwin ")))
+        {
+            QStringList parts = osversion.mid(7).split(QString::fromUtf8("."));
+            if (parts.size())
+            {
+                bool ok = false;
+                osversion = parts.at(0);
+                int versionNumber = osversion.toInt(&ok);
+                if (ok && versionNumber && versionNumber < 13) // Mavericks
+                {
+                    emit deprecatedOperatingSystem();
+                }
+            }
+        }
+        delete [] os;
+    }
+#endif
+
     downloadFile(Preferences::UPDATE_CHECK_URL + randomSequence);
 }
 

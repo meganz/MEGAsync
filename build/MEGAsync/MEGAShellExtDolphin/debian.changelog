@@ -1,0 +1,11 @@
+dolphin-megasync (3.0.1-2.1) beta; urgency=low
+
+  * Included support for overlay icons for distros with KF5 >= 5.16
+
+ -- MEGA Team <linux@mega.co.nz>  Tue, 18 Apr 2017 17:45:10 +0200
+
+dolphin-megasync (3.0.1) beta; urgency=low
+
+  * First public version
+
+ -- MEGA Team <linux@mega.co.nz>  Mon, 20 Feb 2017 12:55:58 +0100

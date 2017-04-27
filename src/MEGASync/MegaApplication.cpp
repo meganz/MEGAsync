@@ -209,7 +209,9 @@ int main(int argc, char *argv[])
                 preferences->enterUser(i);
                 for (int j = 0; j < preferences->getNumSyncedFolders(); j++)
                 {
-                    Platform::syncFolderRemoved(preferences->getLocalFolder(j), preferences->getSyncName(j));
+                    Platform::syncFolderRemoved(preferences->getLocalFolder(j),
+                                                preferences->getSyncName(j),
+                                                preferences->getSyncID(j));
 
                     #ifdef WIN32
                         QString debrisPath = QDir::toNativeSeparators(preferences->getLocalFolder(j) +
@@ -239,6 +241,7 @@ int main(int argc, char *argv[])
         }
 
         Utilities::removeRecursively(MegaApplication::applicationDataPath());
+        Platform::uninstall();
 
 #ifdef WIN32
         if (preferences->installationTime() != -1)
@@ -524,6 +527,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     maxMemoryUsage = 0;
     nUnviewedTransfers = 0;
     completedTabActive = false;
+    prevVersion = 0;
 
 #ifdef __APPLE__
     scanningTimer = NULL;
@@ -575,7 +579,7 @@ void MegaApplication::initialize()
 
     preferences = Preferences::instance();
     connect(preferences, SIGNAL(stateChanged()), this, SLOT(changeState()));
-    connect(preferences, SIGNAL(updated()), this, SLOT(showUpdatedMessage()));
+    connect(preferences, SIGNAL(updated(int)), this, SLOT(showUpdatedMessage(int)));
     preferences->initialize(dataPath);
     if (preferences->error())
     {
@@ -615,6 +619,8 @@ void MegaApplication::initialize()
     megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGAsync is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
              .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
 
+    megaApi->setLanguage(language.toUtf8().constData());
+    megaApiFolders->setLanguage(language.toUtf8().constData());
     megaApi->setDownloadMethod(preferences->transferDownloadMethod());
     megaApi->setUploadMethod(preferences->transferUploadMethod());
     setMaxConnections(MegaTransfer::TYPE_UPLOAD,   preferences->parallelUploadConnections());
@@ -626,17 +632,10 @@ void MegaApplication::initialize()
     megaApi->retrySSLerrors(true);
     megaApi->setPublicKeyPinning(!preferences->SSLcertificateException());
 
-    delegateListener = new MEGASyncDelegateListener(megaApi, this);
+    delegateListener = new MEGASyncDelegateListener(megaApi, this, this);
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi);
     downloader = new MegaDownloader(megaApi);
-
-    //Start the HTTP server
-    httpServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
-    connect(httpServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
-    connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
-    connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
-    connect(httpServer, SIGNAL(onSyncRequested(long long)), this, SLOT(syncFolder(long long)), Qt::QueuedConnection);
 
     connectivityTimer = new QTimer(this);
     connectivityTimer->setSingleShot(true);
@@ -735,9 +734,32 @@ void MegaApplication::changeLanguage(QString languageCode)
                             + Preferences::TRANSLATION_PREFIX
                             + languageCode))
     {
-        translator.load(Preferences::TRANSLATION_FOLDER
+        if (translator.load(Preferences::TRANSLATION_FOLDER
                                    + Preferences::TRANSLATION_PREFIX
-                                   + QString::fromUtf8("en"));
+                                   + QString::fromUtf8("en")))
+        {
+            if (megaApi)
+            {
+                megaApi->setLanguage("en");
+            }
+
+            if (megaApiFolders)
+            {
+                megaApi->setLanguage("en");
+            }
+        }
+    }
+    else
+    {
+        if (megaApi)
+        {
+            megaApi->setLanguage(languageCode.toUtf8().constData());
+        }
+
+        if (megaApiFolders)
+        {
+            megaApi->setLanguage(languageCode.toUtf8().constData());
+        }
     }
 
     createTrayIcon();
@@ -1089,6 +1111,7 @@ void MegaApplication::start()
         QString language = preferences->language();
         changeLanguage(language);
 
+        initHttpsServer();
         if (updated)
         {
             megaApi->sendEvent(99510, "MEGAsync update");
@@ -1101,10 +1124,14 @@ void MegaApplication::start()
             infoDialog = new InfoDialog(this);
             if (!QSystemTrayIcon::isSystemTrayAvailable())
             {
-                QMessageBox::warning(NULL, tr("MEGAsync"),
-                                     tr("Could not find a system tray to place MEGAsync tray icon. "
-                                        "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
-                                        "If you want to open the interface, just try to open MEGAsync again."));
+                if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE))
+                {
+                    QMessageBox::warning(NULL, tr("MEGAsync"),
+                                         tr("Could not find a system tray to place MEGAsync tray icon. "
+                                            "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
+                                            "If you want to open the interface, just try to open MEGAsync again."));
+                    preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
+                }
             }
         }
 
@@ -1157,6 +1184,7 @@ void MegaApplication::start()
                        preferences->privatePw().toUtf8().constData());
         }
 
+        initHttpsServer();
         if (updated)
         {
             megaApi->sendEvent(99510, "MEGAsync update");
@@ -1396,7 +1424,9 @@ void MegaApplication::disableSyncs()
            continue;
        }
 
-       Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+       Platform::syncFolderRemoved(preferences->getLocalFolder(i),
+                                   preferences->getSyncName(i),
+                                   preferences->getSyncID(i));
        Platform::notifyItemChange(preferences->getLocalFolder(i));
        preferences->setSyncState(i, false, true);
        MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
@@ -2227,6 +2257,45 @@ void MegaApplication::deleteMenu(QMenu *menu)
     }
 }
 
+void MegaApplication::startHttpServer()
+{
+    //Start the HTTP server
+    delete httpServer;
+    httpServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
+    connect(httpServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
+    connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
+    connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
+    connect(httpServer, SIGNAL(onSyncRequested(long long)), this, SLOT(syncFolder(long long)), Qt::QueuedConnection);
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTPS server started");
+}
+
+void MegaApplication::initHttpsServer()
+{
+    if (preferences->getHttpsCertExpiration() - (QDateTime::currentMSecsSinceEpoch() / 1000) < Preferences::LOCAL_HTTPS_CERT_MAX_EXPIRATION_SECS)
+    {
+        megaApi->sendEvent(99515, "Local SSL certificate about to expire");
+        megaApi->getLocalSSLCertificate();
+    }
+    else
+    {
+        startHttpServer();
+
+        ConnectivityChecker *localHttpsChecker = new ConnectivityChecker(Preferences::LOCAL_HTTPS_TEST_URL);
+        localHttpsChecker->setTestString(Preferences::LOCAL_HTTPS_TEST_SUBSTRING);
+        localHttpsChecker->setTimeout(Preferences::LOCAL_HTTPS_TEST_TIMEOUT_MS);
+        localHttpsChecker->setMethod(ConnectivityChecker::METHOD_POST);
+        localHttpsChecker->setPostData(QByteArray(Preferences::LOCAL_HTTPS_TEST_POST_DATA.toUtf8()));
+        localHttpsChecker->setHeader(QByteArray("Origin"), QByteArray("https://mega.nz"));
+
+        connect(localHttpsChecker, SIGNAL(testError()), this, SLOT(onLocalHttpsCheckError()));
+        connect(localHttpsChecker, SIGNAL(testSuccess()), this, SLOT(onLocalHttpsCheckSuccess()));
+        connect(localHttpsChecker, SIGNAL(testFinished()), localHttpsChecker, SLOT(deleteLater()));
+
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing the local HTTPS server");
+        localHttpsChecker->startCheck();
+    }
+}
+
 void MegaApplication::triggerInstallUpdate()
 {
     if (appfinished)
@@ -2344,6 +2413,17 @@ void MegaApplication::onConnectivityCheckError()
     }
 
     showErrorMessage(tr("MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall."));
+}
+
+void MegaApplication::onLocalHttpsCheckSuccess()
+{
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTPS check succeeded");
+}
+
+void MegaApplication::onLocalHttpsCheckError()
+{
+    megaApi->sendEvent(99516, "Local HTTPS check failed");
+    megaApi->getLocalSSLCertificate();
 }
 
 void MegaApplication::setupWizardFinished(int result)
@@ -2653,6 +2733,7 @@ void MegaApplication::startUpdateTask()
         connect(updateTask, SIGNAL(installingUpdate(bool)), this, SLOT(onInstallingUpdate(bool)), Qt::UniqueConnection);
         connect(updateTask, SIGNAL(updateNotFound(bool)), this, SLOT(onUpdateNotFound(bool)), Qt::UniqueConnection);
         connect(updateTask, SIGNAL(updateError()), this, SLOT(onUpdateError()), Qt::UniqueConnection);
+        connect(updateTask, SIGNAL(deprecatedOperatingSystem()), this, SLOT(onDeprecatedOperatingSystem()), Qt::UniqueConnection);
 
         connect(updateThread, SIGNAL(finished()), updateTask, SLOT(deleteLater()), Qt::UniqueConnection);
         connect(updateThread, SIGNAL(finished()), updateThread, SLOT(deleteLater()), Qt::UniqueConnection);
@@ -2742,9 +2823,10 @@ void MegaApplication::applyProxySettings()
     megaApiFolders->retryPendingConnections(true, true);
 }
 
-void MegaApplication::showUpdatedMessage()
+void MegaApplication::showUpdatedMessage(int lastVersion)
 {
     updated = true;
+    prevVersion = lastVersion;
 }
 
 void MegaApplication::handleMEGAurl(const QUrl &url)
@@ -2807,6 +2889,25 @@ void MegaApplication::checkFirstTransfer()
             delete nextTransfer;
         }
     }
+}
+
+void MegaApplication::onDeprecatedOperatingSystem()
+{
+#ifdef __APPLE__
+    if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_DEPRECATED_OPERATING_SYSTEM))
+    {
+        QMegaMessageBox::warning(NULL, tr("MEGAsync"),
+                             tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
+                             + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon."),
+                             Utilities::getDevicePixelRatio());
+        preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_DEPRECATED_OPERATING_SYSTEM, true);
+    }
+#endif
+}
+
+int MegaApplication::getPrevVersion()
+{
+    return prevVersion;
 }
 
 void MegaApplication::updateUserStats()
@@ -4880,6 +4981,51 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         }
         break;
     }
+    case MegaRequest::TYPE_GET_LOCAL_SSL_CERT:
+    {
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            MegaStringMap *data = request->getMegaStringMap();
+            preferences->setHttpsKey(QString::fromUtf8(data->get("key")));
+            preferences->setHttpsCert(QString::fromUtf8(data->get("cert")));
+
+            QString intermediates;
+            QString key = QString::fromUtf8("intermediate_");
+            const char *value;
+            int i = 1;
+            while ((value = data->get((key + QString::number(i)).toUtf8().constData())))
+            {
+                if (i != 1)
+                {
+                    intermediates.append(QString::fromUtf8(";"));
+                }
+                intermediates.append(QString::fromUtf8(value));
+                i++;
+            }
+
+            preferences->setHttpsCertIntermediate(intermediates);
+            preferences->setHttpsCertExpiration(request->getNumber());
+            megaApi->sendEvent(99517, "Local SSL certificate renewed");
+            startHttpServer();
+            break;
+        }
+
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Error renewing the local SSL certificate");
+        if (e->getErrorCode() == MegaError::API_EACCESS)
+        {
+            static bool retried = false;
+            if (!retried)
+            {
+                retried = true;
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Trying to renew the local SSL certificate again");
+                megaApi->getLocalSSLCertificate();
+                break;
+            }
+        }
+
+        startHttpServer();
+        break;
+    }
     case MegaRequest::TYPE_FETCH_NODES:
     {
         //This prevents to handle node requests in the initial setup wizard
@@ -5166,7 +5312,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     delete[] nodePath;
 
                     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error adding sync");
-                    Platform::syncFolderRemoved(localFolder, preferences->getSyncName(i));
+                    Platform::syncFolderRemoved(localFolder,
+                                                preferences->getSyncName(i),
+                                                preferences->getSyncID(i));
                     preferences->setSyncState(i, false);
                     openSettings(SettingsDialog::SYNCS_TAB);
                     if (settingsDialog)
@@ -5717,7 +5865,9 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                         showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder doesn't exist")
                                          .arg(preferences->getSyncName(i)));
                     }
-                    Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                    Platform::syncFolderRemoved(preferences->getLocalFolder(i),
+                                                preferences->getSyncName(i),
+                                                preferences->getSyncID(i));
                     Platform::notifyItemChange(preferences->getLocalFolder(i));
                     MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
                     megaApi->removeSync(node);
@@ -5865,9 +6015,11 @@ void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, const char *
     Platform::notifyItemChange(localPath);
 }
 
-MEGASyncDelegateListener::MEGASyncDelegateListener(MegaApi *megaApi, MegaListener *parent)
+MEGASyncDelegateListener::MEGASyncDelegateListener(MegaApi *megaApi, MegaListener *parent, MegaApplication *app)
     : QTMegaListener(megaApi, parent)
-{ }
+{
+    this->app = app;
+}
 
 void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
 {
@@ -5883,6 +6035,14 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
     Preferences *preferences = Preferences::instance();
     if (preferences->logged() && !api->getNumActiveSyncs())
     {
+#ifdef _WIN32
+        bool addToLeftPane = false;
+        if (app && app->getPrevVersion() && app->getPrevVersion() <= 3001)
+        {
+            addToLeftPane = true;
+        }
+#endif
+
         //Start syncs
         for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
         {
@@ -5899,6 +6059,16 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
             }
 
             QString localFolder = preferences->getLocalFolder(i);
+
+#ifdef _WIN32
+            if (addToLeftPane)
+            {
+                QString name = preferences->getSyncName(i);
+                QString uuid = preferences->getSyncID(i);
+                Platform::addSyncToLeftPane(localFolder, name, uuid);
+            }
+#endif
+
             api->resumeSync(localFolder.toUtf8().constData(), node, preferences->getLocalFingerprint(i));
             delete node;
         }

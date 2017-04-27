@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="nl" sourcelanguage="en">
+<TS version="2.1" language="nl" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -11,7 +11,7 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">Cloud Drive</translation>
+        <translation type="obsolete">Cloud Schijf</translation>
     </message>
     <message>
         <source>Inbox</source>
@@ -64,12 +64,12 @@
     <message>
         <source>Remaining Downloads</source>
         <translatorcomment>Label to indicate the number of remaining downloads</translatorcomment>
-        <translation type="unfinished">Remaining Downloads</translation>
+        <translation type="unfinished">Resterende Downloads</translation>
     </message>
     <message>
         <source>download speed</source>
         <translatorcomment>Label to indicate the actual current download speed</translatorcomment>
-        <translation type="unfinished">download speed</translation>
+        <translation type="unfinished">download snelheid  </translation>
     </message>
     <message>
         <source>No Downloads</source>
@@ -79,12 +79,12 @@
     <message>
         <source>Remaining Uploads</source>
         <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
-        <translation type="unfinished">Remaining Uploads</translation>
+        <translation type="unfinished">Resterende Uploads</translation>
     </message>
     <message>
         <source>upload speed</source>
         <translatorcomment>Label to indicate the actual current upload speed</translatorcomment>
-        <translation type="unfinished">upload speed</translation>
+        <translation type="unfinished">upload snelheid</translation>
     </message>
     <message>
         <source>No Uploads</source>
@@ -94,7 +94,7 @@
     <message>
         <source>PAUSED</source>
         <translatorcomment>Label to indicate a global Pause state for all active transfers</translatorcomment>
-        <translation type="unfinished">PAUSED</translation>
+        <translation type="unfinished">GEPAUZEERD</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
@@ -184,7 +184,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">gebruikersvoorwaarden</translation>
+        <translation type="unfinished">Gebruikersvoorwaarden</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
@@ -232,7 +232,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">U staat op het punt om een optie in te schakelen wat het onderscheppen van uw communicatie mogelijk kan maken. Uw gegevens zijn nog steeds onbereikbaar voor de aanvallers dankzij onze end-to-end encryptie, maar ze kunnen blindelings uw bestanden en mappen verplaatsen in MEGA, verwijderen of u uw toegang tot uw account ontzeggen.</translation>
+        <translation type="unfinished">U staat op het punt om een optie in te schakelen wat het onderscheppen van uw communicatie mogelijk kan maken. Uw gegevens zijn nog steeds onbereikbaar voor de aanvallers dankzij onze eind-naar-eind encryptie, maar ze kunnen blindelings uw bestanden en mappen verplaatsen in MEGA, verwijderen of u uw toegang tot uw account ontzeggen.</translation>
     </message>
 </context>
 <context>
@@ -245,12 +245,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>MEGAsync heeft een fout gedetecteerd. Dit zijn de details:</translation>
+        <translation>MEGAsynchronisatie heeft een fout gedetecteerd. Dit zijn de details:</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&#039;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Je kan ons helpen om MEGAsync te verbeteren door dit foutenrapport te verzenden. Het bevat geen persoonlijke informatie. Als je ons meer details wilt geven, schrijf ze dan hieronder:</translation>
+        <translation>U kunt ons helpen om MEGAsynchronisatie te verbeteren door dit foutenrapport te verzenden. Het bevat geen persoonlijke informatie. Als u ons meer details wilt geven, schrijf ze dan hieronder:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -438,7 +438,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Import to my cloud drive</source>
         <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
-        <translation>Importeer naar mijn cloud drive</translation>
+        <translation>Importeer naar mijn cloud schijf</translation>
     </message>
     <message>
         <source>OK</source>
@@ -511,7 +511,7 @@ Are you sure?</source>
     <message>
         <source>MEGAsync is up to date</source>
         <translatorcomment>Label to indicate that MEGAsync is at state of up-to-date (String as short as possible)</translatorcomment>
-        <translation>MEGAsync is bijgewerkt</translation>
+        <translation>MEGAsynchronisatie is bijgewerkt</translation>
     </message>
     <message>
         <source>RECENTLY UPDATED</source>
@@ -561,7 +561,7 @@ Are you sure?</source>
     <message>
         <source>MEGAsync is scanning</source>
         <translatorcomment>Label to indicate that MEGAsync is at state of scanning inside synced folders (String as short as possible)</translatorcomment>
-        <translation>MEGAsync is aan het scannen</translation>
+        <translation>MEGAsynchronisatie is aan het scannen</translation>
     </message>
     <message>
         <source>All transfers have been completed</source>
@@ -626,12 +626,12 @@ Are you sure?</source>
     <message>
         <source>MEGAsync is waiting</source>
         <translatorcomment>Label to indicate that MEGAsync is at a wait state (String as short as possible)</translatorcomment>
-        <translation>MEGAsync is aan het wachten</translation>
+        <translation>MEGAsynchronisatie is aan het wachten</translation>
     </message>
     <message>
         <source>MEGAsync is starting</source>
         <translatorcomment>Label to indicate that MEGAsync is at start state (String as short as possible)</translatorcomment>
-        <translation>MEGAsync opstarten</translation>
+        <translation>MEGAsynchronisatie opstarten</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -644,37 +644,37 @@ Are you sure?</source>
     <message>
         <source>Resume downloads</source>
         <translatorcomment>Label to resume the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume downloads</translation>
+        <translation type="unfinished">Hervat downloads</translation>
     </message>
     <message>
         <source>Pause downloads</source>
         <translatorcomment>Label to pause the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Pause downloads</translation>
+        <translation type="unfinished">Pauzeer downloads</translation>
     </message>
     <message>
         <source>Resume uploads</source>
         <translatorcomment>Label to resume the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume uploads</translation>
+        <translation type="unfinished">Hervat uploads</translation>
     </message>
     <message>
         <source>Pause uploads</source>
         <translatorcomment>Label to pause the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Pause uploads</translation>
+        <translation type="unfinished">Pauzeer uploads</translation>
     </message>
     <message>
         <source>Resume download</source>
         <translatorcomment>Label to resume the current download. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume download</translation>
+        <translation type="unfinished">Hervat download</translation>
     </message>
     <message>
         <source>Resume upload</source>
         <translatorcomment>Label to resume the current upload. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume upload</translation>
+        <translation type="unfinished">Hervat upload</translation>
     </message>
     <message>
         <source>Blocked file: %1</source>
         <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
-        <translation type="unfinished">Blocked file: %1</translation>
+        <translation type="unfinished">Geblokkeerd bestand: %1</translation>
     </message>
     <message>
         <source>Servers are too busy. Please wait...</source>
@@ -691,7 +691,7 @@ Are you sure?</source>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
         <translatorcomment>Label to inform the user that is over quota and let him to upgrade his account. Keep [A] [/A] codes, will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">Uw account heeft zijn toegestane ruimte quota overschreden. [A]Upgrade[/ A] en blijf genieten van veilige, end-to-end versleutelde opslag.</translation>
+        <translation type="unfinished">Uw account heeft zijn toegestane opslagtegoed overschreden. [A]Upgrade[/A] en blijf genieten van veilige, eind-to-eind versleutelde opslag.</translation>
     </message>
     <message>
         <source>Upgrade your account</source>
@@ -735,7 +735,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
-        <translation type="unfinished">S]Flexibel:[/ S] Synchroniseer een map van uw pc naar een map in de cloud. Synchroniseer een aantal mappen tegelijkertijd.</translation>
+        <translation type="unfinished">S]Flexibel:[/S] Synchroniseer een map van uw pc naar een map in de cloud. Synchroniseer een aantal mappen tegelijkertijd.</translation>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
@@ -806,7 +806,7 @@ Are you sure?</source>
     <name>MegaApplication</name>
     <message>
         <source>MEGAsync</source>
-        <translation>MEGAsync</translation>
+        <translation>MEGAsynchronisatie</translation>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
@@ -835,7 +835,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&#039;t exist</source>
-        <translation type="obsolete">Je synchronisatie &quot;%1&quot; is gestopt omdat de lokale map niet bestaat</translation>
+        <translation type="obsolete">Uw synchronisatie &quot;%1&quot; is gestopt omdat de lokale map niet bestaat</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -860,12 +860,12 @@ Exit anyway?</source>
     <message>
         <source>About MEGAsync</source>
         <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-        <translation type="unfinished">Over MEGAsync</translation>
+        <translation type="unfinished">Over MEGAsynchronisatie</translation>
     </message>
     <message>
         <source>MEGAsync version code %1</source>
         <translatorcomment>Label to indicate the version code of MEGAsync installed. Preserve &quot;%1&quot; code because is used to indicate the version code at runtime.</translatorcomment>
-        <translation type="obsolete">MEGAsync versie %1</translation>
+        <translation type="obsolete">MEGAsynchronisatie versie %1</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -938,12 +938,12 @@ Exit anyway?</source>
     <message>
         <source>You have new or updated files in your account</source>
         <translatorcomment>Notification message launched when new or updated files have been added or modified to the current MEGA account.</translatorcomment>
-        <translation>Je hebt nieuwe of geüpdatete bestanden in je account </translation>
+        <translation>U heeft nieuwe of geüpdatete bestanden in uw account </translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
         <translatorcomment>Notification message launched when an update has been succesfully applied.</translatorcomment>
-        <translation>MEGAsync is geüpdatet</translation>
+        <translation>MEGAsynchronisatie is geüpdatet</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -997,7 +997,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Thank you for your collaboration!</source>
         <translatorcomment>Message displayed to thank when a user send a crash report report to MEGA.</translatorcomment>
-        <translation>Bedankt voor je medewerking!</translation>
+        <translation>Bedankt voor uw medewerking!</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
@@ -1094,7 +1094,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&#039;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Je synchronisatie &quot;%1&quot; is gestopt omdat de externe map niet bestaat</translation>
+        <translation type="unfinished">Uw synchronisatie &quot;%1&quot; is gestopt omdat de externe map niet bestaat</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&#039;t exist</source>
@@ -1124,7 +1124,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Je synchronisatie &quot;%1&quot; is gestopt omdat de externe map in de prullenbak zit</translation>
+        <translation type="unfinished">Uw synchronisatie &quot;%1&quot; is gestopt omdat de externe map in de prullenbak zit</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -1139,7 +1139,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Over quota</source>
         <translatorcomment>Label to indicate a state of over quota</translatorcomment>
-        <translation type="unfinished">Over quota</translation>
+        <translation type="unfinished">Over tegoed</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -1197,7 +1197,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="unfinished">Tijdelijke fout, opnieuw proberen.</translation>
+        <translation type="unfinished">Tijdelijke fout, nieuwe poging</translation>
     </message>
     <message>
         <source>Stream from MEGA</source>
@@ -1224,7 +1224,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Are you sure you want to exit?</source>
-        <translation type="unfinished">Weet u zeker dat u MEGAsync wilt afsluiten?</translation>
+        <translation type="unfinished">Weet u zeker dat u MEGAsynchronisatie wilt afsluiten?</translation>
     </message>
     <message>
         <source>Transfer manager</source>
@@ -1233,7 +1233,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation type="unfinished">Een systeemvak om het MEGAsync pictogram in het systeemvak in te plaatsen kon niet worden gevonden. MEGAsync is bedoeld om gebruikt te worden met een pictogram in een systeemvak, maar kan ook prima werken zonder. Als je de interface wilt openen, probeer gewoon MEGAsync opnieuw te openen.</translation>
+        <translation type="unfinished">Een systeemvak om het MEGAsync pictogram in het systeemvak in te plaatsen kon niet worden gevonden. MEGAsync is bedoeld om gebruikt te worden met een pictogram in een systeemvak, maar kan ook prima werken zonder. Als u de interface wilt openen, probeer gewoon MEGAsync opnieuw te openen.</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -1248,7 +1248,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation type="unfinished">De link kan niet worden gegenereerd, omdat het bestand in een binnenkomend gedeelde folder zit of in je prullenbak.</translation>
+        <translation type="unfinished">De link kan niet worden gegenereerd, omdat het bestand in een binnenkomend gedeelde folder zit of in uw prullenbak.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -1263,7 +1263,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
-        <translation type="unfinished">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
+        <translation type="unfinished">U synchroniseert een lokale map met een FAT bestandssysteem. Dit bestandssysteem moeite met grote bestanden en wijzigingstijden die synchronisatie problemen kunnen veroorzaken (bijvoorbeeld: wanneer de zomertijd ingaat), dus het wordt sterk aanbevolen dat u alleen mappen synchroniseert geformatteerd met meer betrouwbare bestandssystemen zoals NTFS (meer informatie [A]hier[/A].</translation>
+    </message>
+    <message>
+        <source>Please consider updating your operating system.</source>
+        <translatorcomment>Message shown to the user to inform about updating the operating system to be compatible with latest versions of MEGAsync</translatorcomment>
+        <translation type="unfinished">Overweeg het updaten van uw besturingssysteem.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
+        <translatorcomment>Message shown to the user to inform that MEGAsync no longer work with prior versions to OS X Mavericks</translatorcomment>
+        <translation type="unfinished">MEGAsynchronisatie blijft doorgaan, hoewel binnenkort updates niet langer ondersteund worden voor versies jonger dan OS X Mavericks.</translation>
     </message>
 </context>
 <context>
@@ -1356,7 +1366,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Over quota</source>
         <translatorcomment>Label to show that an error related with an over quota occurs during a SDK operation.</translatorcomment>
-        <translation>Over quota</translation>
+        <translation>Over tegoed</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
@@ -1366,7 +1376,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Connection overflow</source>
         <translatorcomment>Label to show that an error related with too many connections occurs during a SDK operation.</translatorcomment>
-        <translation>Connection overflow</translation>
+        <translation>Connectie overfloop</translation>
     </message>
     <message>
         <source>Write error</source>
@@ -1551,7 +1561,7 @@ Are you sure?</source>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
-        <translation type="obsolete">Cloud Drive</translation>
+        <translation type="obsolete">Cloud Schijf</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
@@ -1949,7 +1959,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>English</source>
         <translatorcomment>Label for English language.</translatorcomment>
-        <translation type="obsolete">App taal</translation>
+        <translation type="obsolete">Nederlands</translation>
     </message>
     <message>
         <source>Details</source>
@@ -2033,7 +2043,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Bandwidth quota</source>
         <translatorcomment>Label to indicatte the actual use of Bandwidth quota.</translatorcomment>
-        <translation>Bandbreedte quota</translation>
+        <translation>Bandbreedte tegoed</translation>
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
@@ -2135,7 +2145,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive.</source>
-        <translation type="obsolete">U bent al uw hele Cloud Drive aan het synchroniseren.</translation>
+        <translation type="obsolete">U bent al uw hele Cloud Schijf aan het synchroniseren.</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -2145,7 +2155,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Label to ask for confirmation to the user.</translatorcomment>
-        <translation>Weet je het zeker?</translation>
+        <translation>Weet u het zeker?</translation>
     </message>
     <message>
         <source>Excluded name</source>
@@ -2156,7 +2166,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation>Voer in de naam om van de synchronisatie uit te sluiten.(wildcards * en ? zijn toegestaan):</translation>
+        <translation>Voer in de naam om van de synchronisatie uit te sluiten.(wildcards * en? zijn toegestaan):</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2195,7 +2205,7 @@ when the application starts again.</source>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&#039;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
-        <translation>Je proxy instellingen zijn ongeldig of de proxy reageert niet</translation>
+        <translation>Uw proxy instellingen zijn ongeldig of de proxy reageert niet</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -2225,7 +2235,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Disabling full account sync will allow you to set up selective folder syncing</source>
-        <translation type="obsolete">Het uitschakelen van volledige accountsynchronisatie zal je de mogelijkheid geven om selectieve mappen te synchroniseren</translation>
+        <translation type="obsolete">Het uitschakelen van volledige accountsynchronisatie zal u de mogelijkheid geven om selectieve mappen te synchroniseren</translation>
     </message>
     <message>
         <source>Disable full account sync</source>
@@ -2311,7 +2321,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>This sync can&#039;t be enabled because the local folder doesn&#039;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
-        <translation>De sync kan niet worden geactiveerd want de lokale map bestaat niet</translation>
+        <translation>De synchronisatie kan niet worden geactiveerd want de lokale map bestaat niet</translation>
     </message>
     <message>
         <source>This sync can&#039;t be enabled because the remote folder doesn&#039;t exist</source>
@@ -2355,7 +2365,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Exporteer de coderingssleutel en bewaar het op een veilige plaats, zodat u een nieuw wachtwoord kan instellen zonder verlies van gegevens.</translation>
+        <translation type="unfinished">Exporteer de Herstel Sleutel en bewaar het op een veilige plaats, zodat u een nieuw wachtwoord kan instellen zonder verlies van gegevens.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
@@ -2366,11 +2376,6 @@ Do you want to restart MEGAsync now?</source>
         <source>Exclude by size</source>
         <translatorcomment>Button label to let the user exclude files from being synced by its size. String as short as possible.</translatorcomment>
         <translation type="unfinished">Uitsluiten op grootte</translation>
-    </message>
-    <message>
-        <source>PRO lite</source>
-        <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO LITE</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2410,7 +2415,7 @@ when the application starts again</source>
     <message>
         <source>Permissions</source>
         <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Permissies</translation>
+        <translation type="unfinished">Toestemmingen</translation>
     </message>
     <message>
         <source>Don&#039;t use HTTP</source>
@@ -2420,7 +2425,7 @@ when the application starts again</source>
     <message>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">Schakel deze optie alleen in als je transfers niet starten. In normale omstandigheden is HTTP voldoende als alle transfers al zijn gecodeerd.</translation>
+        <translation type="unfinished">Schakel deze optie alleen in als uw transfers niet starten. In normale omstandigheden is HTTP voldoende als alle transfers al zijn gecodeerd.</translation>
     </message>
     <message>
         <source>Local backup: %1</source>
@@ -2449,12 +2454,12 @@ when the application starts again</source>
     <message>
         <source>Download rate limit</source>
         <translatorcomment>Label to indicate the actual bandwidth limit for downloads.</translatorcomment>
-        <translation type="unfinished">Download rate limit</translation>
+        <translation type="unfinished">Limiet downloadsnelheid</translation>
     </message>
     <message>
         <source>Number of parallel TCP connections per transfer:</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used by MEGAsync. Keep colon.</translatorcomment>
-        <translation type="unfinished">Number of parallel TCP connections per transfer:</translation>
+        <translation type="unfinished">Aantal gelijktijdige TCP verbindingen per overdracht:</translation>
     </message>
     <message>
         <source>Downloads</source>
@@ -2465,6 +2470,10 @@ when the application starts again</source>
         <source>Uploads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
         <translation type="unfinished">Uploads</translation>
+    </message>
+    <message>
+        <source>PRO Lite</source>
+        <translation type="unfinished">PRO Lite</translation>
     </message>
 </context>
 <context>
@@ -2517,12 +2526,12 @@ when the application starts again</source>
     <message>
         <source>Login to your MEGA account</source>
         <translatorcomment>Label to let the user login with his credentials.</translatorcomment>
-        <translation>Inloggen op je MEGA account</translation>
+        <translation>Inloggen op uw MEGA account</translation>
     </message>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Verifieer je account door te klikken op de bevestigingslink die we naar je e-mailadres hebben gestuurd</translation>
+        <translation>Verifieer uw account door te klikken op de bevestigingslink die we naar uw e-mailadres hebben gestuurd</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -2537,7 +2546,7 @@ when the application starts again</source>
     <message>
         <source> Sync your entire cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Synchroniseer je volledige cloud drive</translation>
+        <translation>Synchroniseer uw volledige cloud schijf</translation>
     </message>
     <message>
         <source>Full account sync</source>
@@ -2551,7 +2560,7 @@ when the application starts again</source>
     <message>
         <source> Sync specific folders in your cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Selective  sync (Sync specific folders)</translatorcomment>
-        <translation>Synchroniseer specifieke mappen in je cloud drive</translation>
+        <translation>Synchroniseer specifieke mappen in uw cloud schijf</translation>
     </message>
     <message>
         <source>The following folders will be automatically synchronized:</source>
@@ -2580,11 +2589,11 @@ when the application starts again</source>
     </message>
     <message>
         <source>Your local folder:</source>
-        <translation type="obsolete">Je lokale map:</translation>
+        <translation type="obsolete">Uw lokale map:</translation>
     </message>
     <message>
         <source>and your MEGA folder:</source>
-        <translation type="obsolete">en je MEGA map:</translation>
+        <translation type="obsolete">en uw MEGA map:</translation>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
@@ -2628,7 +2637,7 @@ when the application starts again</source>
     <message>
         <source>Have you verified your account?</source>
         <translatorcomment>Label displayed to inform the user about the need of verify the created account.</translatorcomment>
-        <translation>Heb je je account geverifieerd?</translation>
+        <translation>Heeft u uw account geverifieerd?</translation>
     </message>
     <message>
         <source>MEGA folder doesn&#039;t exist</source>
@@ -2673,7 +2682,7 @@ when the application starts again</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Je moet onze gebruikersvoorwaarden accepteren</translation>
+        <translation>U moet onze gebruikersvoorwaarden accepteren</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -2688,11 +2697,11 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">U heeft %1 in uw Cloud Drive.Weet u zeker dat u uw complete Cloud Drive wilt synchroniseren?</translation>
+        <translation type="obsolete">U heeft %1 in uw Cloud Schijf.Weet u zeker dat u uw complete Cloud Schijf wilt synchroniseren?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
-        <translation type="obsolete">en je MEGA Cloud Drive</translation>
+        <translation type="obsolete">en uw MEGA Cloud Schijf</translation>
     </message>
     <message>
         <source>Please, select a local folder</source>
@@ -2745,17 +2754,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Full sync</source>
         <translatorcomment>Label displayed to show Full sync mode. Max 18 characters.</translatorcomment>
-        <translation>Volledige sync</translation>
+        <translation>Volledige synchronisatie</translation>
     </message>
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>Uw lokale map en uw MEGA Cloud Drive zullen automatisch worden gesynchroniseerd</translation>
+        <translation>Uw lokale map en uw MEGA Cloud Schijf zullen automatisch worden gesynchroniseerd</translation>
     </message>
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
         <translatorcomment>Label to inform the user wich local folder will be synchronized with the cloud drive. Keep colon.</translatorcomment>
-        <translation>Uw Cloud Drive zal gesynchroniseerd worden met deze map:</translation>
+        <translation>Uw Cloud Schijf zal gesynchroniseerd worden met deze map:</translation>
     </message>
     <message>
         <source>You don&#039;t have write permissions in this local folder.</source>
@@ -2779,7 +2788,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync</source>
-        <translation type="unfinished">MEGAsync</translation>
+        <translation type="unfinished">MEGAsynchronisatie</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
@@ -2828,16 +2837,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation type="unfinished">Controleer a.u.b. uw e-mail en klik op de bevestigingslink om uw account te activeren.</translation>
+        <translation type="unfinished">Check uw email en klik op de link in het berichtje om uw account te bevestigen.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translation type="unfinished">Je hebt te vaak geprobeerd om in te loggen. [BR] Wacht alstublieft tot%1 en probeer het opnieuw.</translation>
+        <translation type="unfinished">U heeft te vaak geprobeerd om in te loggen. [BR] Wacht alstublieft tot%1 en probeer het opnieuw.</translation>
     </message>
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation type="unfinished">When you finish this assistant, you will be able to sync additional folders using the settings dialog.</translation>
+        <translation type="unfinished">Wanneer u deze assistent voltooid, kunt u aanvullende folders synchroniseren door het instellingen dialoog te gebruiken.</translation>
     </message>
 </context>
 <context>
@@ -2891,6 +2900,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 (%2)</source>
         <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
         <translation>%1 (%2)</translation>
+    </message>
+    <message>
+        <source>Remove from left pane</source>
+        <translation type="unfinished">Verwijder van linker paneel</translation>
     </message>
 </context>
 <context>
@@ -2946,7 +2959,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation type="unfinished">Cloud Drive</translation>
+        <translation type="unfinished">Cloud Schijf</translation>
     </message>
     <message>
         <source>Public link</source>
@@ -3189,7 +3202,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Active Transfers</source>
         <translatorcomment>Label of tab to access all active transfers</translatorcomment>
-        <translation type="unfinished">Active Transfers</translation>
+        <translation type="unfinished">Actieve Overdrachten</translation>
     </message>
 </context>
 <context>
@@ -3214,15 +3227,15 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UpgradeDialog</name>
     <message>
         <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">Gratis overdracht quota overschreden</translation>
+        <translation type="unfinished">Gratis overdracht tegoed overschreden</translation>
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">Uw download kan niet verder gaan omdat u daarmee over de huidige, gratis transfer limiet voor uw IP-adres gaat. Deze limiet is dynamisch en afhankelijk van de hoeveelheid ongebruikte bandbreedte die we beschikbaar hebben.</translation>
+        <translation type="unfinished">Uw download kon niet verdergaan omdat het de huidige gratis overdracht vergoeding overschrijdt voor uw IP adres.Dit limiet is dynamisch en is afhankelijk van het aantal ongebruikte bandbreedte die we beschikbaar hebben.</translation>
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">U hebt %1 van de gegevensoverdracht gebruikt in de laatste 6 uur waarmee u over onze huidige limiet bent. Om deze limiet te omzeilen, kunt u [A]upgraden naar PRO[/ A] wat u uw eigen bandbreedte pakket geeft en ook voldoende extra bergruimte biedt.</translation>
+        <translation type="unfinished">Het IP adres die u gebruikt heeft %1 aan gegevensoverdacht benut in de laatste 6 uur, die u over ons limiet bracht. Om dit limiet te verwijderen, kunt u [A]upgraden naar PRO[/A], die geeft uw eigen bandbreedte en ook ruim extra opslagruimte.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
@@ -3289,7 +3302,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">Cloud Drive</translation>
+        <translation type="unfinished">Cloud Schijf</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -3300,7 +3313,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageWidget</name>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">Cloud Drive</translation>
+        <translation type="unfinished">Cloud Schijf</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>

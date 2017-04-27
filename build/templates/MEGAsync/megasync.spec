@@ -145,6 +145,9 @@ desktop-file-install \
 %{buildroot}%{_datadir}/applications/%{name}.desktop
 %endif
 
+mkdir -p  %{buildroot}/etc/sysctl.d/
+echo "fs.inotify.max_user_watches = 524288" > %{buildroot}/etc/sysctl.d/100-megasync-inotify-limit.conf
+
 %post
 %if 0%{?suse_version} >= 1140
 %desktop_database_post
@@ -453,6 +456,8 @@ rm $KEYFILE || :
 fi
 fi
 
+sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf
+
 ### END of POSTINST
 
 
@@ -486,5 +491,6 @@ killall megasync 2> /dev/null || true
 %{_datadir}/icons/hicolor/*/*/mega.png
 %{_datadir}/doc/megasync
 %{_datadir}/doc/megasync/*
+/etc/sysctl.d/100-megasync-inotify-limit.conf
 
 %changelog

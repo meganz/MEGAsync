@@ -24,6 +24,8 @@
 set -euo pipefail
 IFS=$'\n\t'
 
+
+
 # make sure the source tree is in "clean" state
 cwd=$(pwd)
 cd ../src
@@ -55,7 +57,7 @@ rm -fr MEGAsync/MEGAsync/megasync*.dsc
 
 # fix version number in template files and copy to appropriate directories
 sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.spec > MEGAsync/MEGAsync/megasync.spec
-for dist in xUbuntu_1{2,3,4,5,6}.{04,10} Debian_{7,8,9}.0; do
+for dist in xUbuntu_1{2,3,4,5,6,7}.{04,10} Debian_{7,8,9}.0; do
 if [ -f templates/MEGAsync/megasync-$dist.dsc ]; then
 	sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync-$dist.dsc > MEGAsync/MEGAsync/megasync-$dist.dsc
 else
@@ -73,6 +75,9 @@ echo "Files: *" >> MEGAsync/MEGAsync/debian.copyright
 echo "Copyright: 2013, Mega Limited" >> MEGAsync/MEGAsync/debian.copyright
 echo -n "License:" >> MEGAsync/MEGAsync/debian.copyright # Some software (e.g: gnome-software) would only recognized these licenses: http://spdx.org/licenses/
 cat ../LICENCE.md | sed 's#^\s*$#\.#g' | sed 's#^# #' >> MEGAsync/MEGAsync/debian.copyright
+cat ../LICENCE.md | sed 's#^\s*$#\.#g' | sed 's#^# #' >> MEGAsync/MEGAShellExtDolphin/debian.copyright
+cat ../LICENCE.md | sed 's#^\s*$#\.#g' | sed 's#^# #' >> MEGAsync/MEGAShellExtNautilus/debian.copyright
+cat ../LICENCE.md | sed 's#^\s*$#\.#g' | sed 's#^# #' >> MEGAsync/MEGAShellExtThunar/debian.copyright
 
 # read the last generated ChangeLog version
 version_file="version"
@@ -135,8 +140,6 @@ MD5SUM=`md5sum MEGAsync/MEGAsync/megasync_$MEGASYNC_VERSION.tar.gz | awk '{print
 sed "s/MD5SUM/$MD5SUM/g"  -i MEGAsync/MEGAsync/PKGBUILD
 
 
-# create archive for debug
-
 
 #
 # Nautilus
@@ -174,6 +177,8 @@ ln -s ../../src/MEGAShellExtNautilus/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
 ln -s ../../src/MEGAShellExtNautilus/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
 ln -s ../../src/MEGAShellExtNautilus/MEGAShellExtNautilus.pro $EXT_NAME/MEGAShellExtNautilus.pro
 ln -s ../../src/MEGAShellExtNautilus/data $EXT_NAME/data
+ln -s ../MEGAsync/MEGAsync/debian.copyright $EXT_NAME/debian.copyright
+
 export GZIP=-9
 tar czfh $EXT_NAME.tar.gz --exclude Makefile --exclude '*.o' $EXT_NAME
 rm -rf $EXT_NAME
@@ -218,6 +223,8 @@ ln -s ../../src/MEGAShellExtThunar/mega_ext_client.h $EXT_NAME/mega_ext_client.h
 ln -s ../../src/MEGAShellExtThunar/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
 ln -s ../../src/MEGAShellExtThunar/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
 ln -s ../../src/MEGAShellExtThunar/MEGAShellExtThunar.pro $EXT_NAME/MEGAShellExtThunar.pro
+ln -s ../MEGAsync/MEGAsync/debian.copyright $EXT_NAME/debian.copyright
+
 export GZIP=-9
 tar czfh $EXT_NAME.tar.gz --exclude Makefile --exclude '*.o' $EXT_NAME
 rm -rf $EXT_NAME
@@ -227,5 +234,76 @@ rm -fr MEGAsync/MEGAShellExtThunar/thunar-megasync_*.tar.gz
 # transform arch name, to satisfy Debian requirements
 mv $EXT_NAME.tar.gz MEGAsync/MEGAShellExtThunar/thunar-megasync_$EXT_VERSION.tar.gz
 
+#get md5sum and replace in PKGBUILD
+MD5SUM=`md5sum MEGAsync/MEGAShellExtThunar/thunar-megasync_$EXT_VERSION.tar.gz | awk '{print $1}'`
+sed "s/MD5SUM/$MD5SUM/g"  -i MEGAsync/MEGAShellExtThunar/PKGBUILD
+
+rm -fr $archives
+
+
+
+
+#
+# Dolphin
+#
+
+# make sure the source tree is in "clean" state
+cd ../src/MEGAShellExtDolphin/
+make distclean 2> /dev/null || true
+cd ../../build
+
+# extension uses the same version number as MEGASync app
+export EXT_VERSION=$MEGASYNC_VERSION
+export EXT_NAME=dolphin-megasync-$EXT_VERSION
+rm -rf $EXT_NAME.tar.gz
+rm -rf $EXT_NAME
+
+# delete previously generated files
+rm -fr MEGAsync/MEGAShellExtDolphin/dolphin-megasync_*.dsc
+
+# fix version number in template files and copy to appropriate directories
+sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.spec > MEGAsync/MEGAShellExtDolphin/dolphin-megasync.spec
+#sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.dsc > MEGAsync/MEGAShellExtDolphin/dolphin-megasync_$EXT_VERSION.dsc
+
+for dist in xUbuntu_1{2,3,4,5,6,7}.{04,10} Debian_{7,8,9}.0; do
+if [ -f templates/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc ]; then
+	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync-$dist.dsc > MEGAsync/MEGAShellExtDolphin/MEGAShellExtDolphin-$dist.dsc
+else
+	sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/dolphin-megasync.dsc > MEGAsync/MEGAShellExtDolphin/MEGAShellExtDolphin-$dist.dsc
+fi
+done
+
+
+
+sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtDolphin/PKGBUILD > MEGAsync/MEGAShellExtDolphin/PKGBUILD
+
+# create archive
+mkdir $EXT_NAME
+ln -s ../MEGAsync/MEGAShellExtDolphin/dolphin-megasync.spec $EXT_NAME/dolphin-megasync.spec
+ln -s ../../src/MEGAShellExtDolphin/megasync-plugin.cpp $EXT_NAME/megasync-plugin.cpp
+ln -s ../../src/MEGAShellExtDolphin/megasync-plugin-overlay.cpp $EXT_NAME/megasync-plugin-overlay.cpp
+ln -s ../../src/MEGAShellExtDolphin/megasync-plugin-overlay.json $EXT_NAME/megasync-plugin-overlay.json
+touch $EXT_NAME/megasync-plugin-overlay.moc
+touch $EXT_NAME/megasync-plugin.moc
+ln -s ../../src/MEGAShellExtDolphin/data $EXT_NAME/data
+ln -s ../../src/MEGAShellExtDolphin/CMakeLists.txt $EXT_NAME/CMakeLists.txt
+ln -s ../../src/MEGAShellExtDolphin/CMakeLists_kde5.txt $EXT_NAME/CMakeLists_kde5.txt
+ln -s ../../src/MEGAShellExtDolphin/megasync-plugin.h $EXT_NAME/megasync-plugin.h
+ln -s ../../src/MEGAShellExtDolphin/megasync-plugin.desktop $EXT_NAME/megasync-plugin.desktop
+ln -s ../../src/MEGAShellExtDolphin/MEGAShellExtDolphin.pro $EXT_NAME/MEGAShellExtDolphin.pro
+ln -s ../MEGAsync/MEGAsync/debian.copyright $EXT_NAME/debian.copyright
+
+export GZIP=-9
+tar czfh $EXT_NAME.tar.gz --exclude Makefile --exclude '*.o' $EXT_NAME
+rm -rf $EXT_NAME
+
+# delete any previous archive
+rm -fr MEGAsync/MEGAShellExtDolphin/dolphin-megasync_*.tar.gz
+# transform arch name, to satisfy Debian requirements
+mv $EXT_NAME.tar.gz MEGAsync/MEGAShellExtDolphin/dolphin-megasync_$EXT_VERSION.tar.gz
+
+#get md5sum and replace in PKGBUILD
+MD5SUM=`md5sum MEGAsync/MEGAShellExtDolphin/dolphin-megasync_$EXT_VERSION.tar.gz | awk '{print $1}'`
+sed "s/MD5SUM/$MD5SUM/g"  -i MEGAsync/MEGAShellExtDolphin/PKGBUILD
 
 rm -fr $archives

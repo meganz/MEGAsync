@@ -1,13 +1,21 @@
 #!/bin/bash
 
-#distro=$(lsb_release -ds)
 distro=$(cat /usr/share/doc/megasync/distro)
-#ver=$(lsb_release -rs)
+if [ "x$distro" == "x" ]; then
+	distro=$(lsb_release -ds)
+fi
+
 ver=$(cat /usr/share/doc/megasync/version)
+if [ "x$ver" == "x" ]; then
+	ver=$(lsb_release -rs)
+fi
+
 
 if [[ $distro = "Raspbian GNU/Linux 8.0 (jessie)" ]]; then
     str="Raspbian_8.0"
 # Ubuntu
+elif [[ $ver = "17.04" ]]; then
+    str="xUbuntu_17.04"
 elif [[ $ver = "16.10" ]]; then
     str="xUbuntu_16.10"
 elif [[ $ver = "16.04" ]]; then
@@ -129,3 +137,6 @@ URYSLAw5e33Za+vKMGF/hifuJ1V0GYkUig==
 =FzpN
 -----END PGP PUBLIC KEY BLOCK-----
 KEY
+
+sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf
+

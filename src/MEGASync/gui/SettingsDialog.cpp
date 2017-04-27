@@ -386,7 +386,7 @@ void SettingsDialog::onCacheSizeAvailable()
 
         if (cacheSize)
         {
-            ui->lCacheSize->setText(ui->lCacheSize->text().arg(Utilities::getSizeString(cacheSize)));
+            ui->lCacheSize->setText(QString::fromUtf8(MEGA_DEBRIS_FOLDER) + QString::fromUtf8(": %1").arg(Utilities::getSizeString(cacheSize)));
         }
         else
         {
@@ -396,7 +396,7 @@ void SettingsDialog::onCacheSizeAvailable()
 
         if (remoteCacheSize)
         {
-            ui->lRemoteCacheSize->setText(ui->lRemoteCacheSize->text().arg(Utilities::getSizeString(remoteCacheSize)));
+            ui->lRemoteCacheSize->setText(QString::fromUtf8("SyncDebris: %1").arg(Utilities::getSizeString(remoteCacheSize)));
         }
         else
         {
@@ -889,9 +889,13 @@ void SettingsDialog::loadSettings()
                 icon.addFile(QString::fromUtf8(":/images/Pro_III.png"), QSize(), QIcon::Normal, QIcon::Off);
                 ui->lAccountType->setText(tr("PRO III"));
                 break;
+            case Preferences::ACCOUNT_TYPE_LITE:
+                icon.addFile(QString::fromUtf8(":/images/Lite.png"), QSize(), QIcon::Normal, QIcon::Off);
+                ui->lAccountType->setText(tr("PRO Lite"));
+                break;
             default:
                 icon.addFile(QString::fromUtf8(":/images/Pro_I.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->lAccountType->setText(tr("PRO lite"));
+                ui->lAccountType->setText(QString());
                 break;
         }
 
@@ -1154,7 +1158,9 @@ bool SettingsDialog::saveSettings()
                     {
                         if (!enabled && preferences->isFolderActive(i) != enabled)
                         {
-                            Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                            Platform::syncFolderRemoved(preferences->getLocalFolder(i),
+                                                        preferences->getSyncName(i),
+                                                        preferences->getSyncID(i));
                             preferences->setSyncState(i, enabled);
 
                             MegaNode *node = megaApi->getNodeByHandle(megaHandle);
@@ -1172,7 +1178,9 @@ bool SettingsDialog::saveSettings()
                     MegaNode *node = megaApi->getNodeByHandle(megaHandle);
                     if (active)
                     {
-                        Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                        Platform::syncFolderRemoved(preferences->getLocalFolder(i),
+                                                    preferences->getSyncName(i),
+                                                    preferences->getSyncID(i));
                         megaApi->removeSync(node);
                     }
                     Utilities::removeRecursively(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));

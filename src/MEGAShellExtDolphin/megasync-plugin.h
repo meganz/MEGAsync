@@ -2,7 +2,11 @@
 #ifndef _MEGA_SYNC_PLUGIN_H_
 #define _MEGA_SYNC_PLUGIN_H_
 
+#ifndef WITH_KF5
 #include <kabstractfileitemactionplugin.h>
+#else
+#include <KIOWidgets/kabstractfileitemactionplugin.h>
+#endif
 #include <QLocalSocket>
 
 class MEGASyncPlugin: public KAbstractFileItemActionPlugin
@@ -12,6 +16,7 @@ private:
     QLocalSocket sock;
     QString sockPath;
     QString selectedFilePath;
+    QVector<QString> selectedFilePaths;
     int getState();
     QString sendRequest(char type, QString command);
 public:
@@ -21,7 +26,10 @@ public:
 
 private slots:
     void getLink();
+    void getLinks();
     void uploadFile();
+    void uploadFiles();
+    QString getString(int type, int numFiles,int numFolders);
 };
 
 #endif

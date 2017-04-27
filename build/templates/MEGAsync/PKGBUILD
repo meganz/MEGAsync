@@ -70,4 +70,6 @@ package() {
 
 	cd "$pkgname-$pkgver"
 	make install TARGET=$_bindir/megasync INSTALL_ROOT=$pkgdir
+	mkdir -p $pkgdir/etc/sysctl.d/
+	echo "fs.inotify.max_user_watches = 524288" > $pkgdir/etc/sysctl.d/100-megasync-inotify-limit.conf
 }

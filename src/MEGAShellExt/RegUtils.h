@@ -3,6 +3,10 @@
 
 #include <windows.h>
 
+BOOL IsWow64();
+
+bool CheckLeftPaneIcon(wchar_t *path, bool remove);
+
 HRESULT SetRegistryKeyAndValue(HKEY  hkey, PCWSTR pszSubKey, PCWSTR pszValueName,
     PCWSTR pszData);
 

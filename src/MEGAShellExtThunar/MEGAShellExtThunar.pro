@@ -10,7 +10,7 @@ HEADERS += MEGAShellExt.h \
     mega_ext_client.h
 
 CONFIG += link_pkgconfig
-PKGCONFIG += thunarx-2
+PKGCONFIG+=thunarx-2 glib-2.0
 
 # library
 target.path = $$system(pkg-config --variable=extensionsdir thunarx-2)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="es" sourcelanguage="en">
+<TS version="2.1" language="es" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -1265,6 +1265,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
         <translation type="unfinished">Estás sincronizando una carpeta local formateada con un sistema de archivos FAT. Este sistema de archivos tiene problemas al manejar archivos grandes y tiempos de modificación, lo que puede causar problemas de sincronización (por ejemplo, cuando cambia el horario de verano), por lo que te recomendamos encarecidamente que sólo sincronices carpetas formateadas con sistemas de archivos más fiables, como NTFS (más información [A]aquí[/A]).</translation>
     </message>
+    <message>
+        <source>Please consider updating your operating system.</source>
+        <translatorcomment>Message shown to the user to inform about updating the operating system to be compatible with latest versions of MEGAsync</translatorcomment>
+        <translation type="unfinished">Por favor, considera la posibilidad de actualizar tu sistema operativo.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
+        <translatorcomment>Message shown to the user to inform that MEGAsync no longer work with prior versions to OS X Mavericks</translatorcomment>
+        <translation type="unfinished">MEGAsync seguirá funcionando, sin embargo las actualizaciones pronto dejarán de ser compatibles con versiones anteriores a OS X Mavericks.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2156,7 +2166,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation>Escribe un nombre para excluirlo de la sincronización. (comodines * y ? permitidos):</translation>
+        <translation>Escribe un nombre para excluirlo de la sincronización. (comodines * y? permitidos):</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2368,11 +2378,6 @@ Do you want to restart MEGAsync now?</source>
         <translation type="unfinished">Excluir por tamaño</translation>
     </message>
     <message>
-        <source>PRO lite</source>
-        <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">LITE</translation>
-    </message>
-    <message>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
@@ -2465,6 +2470,10 @@ when the application starts again</source>
         <source>Uploads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
         <translation type="unfinished">Subidas</translation>
+    </message>
+    <message>
+        <source>PRO Lite</source>
+        <translation type="unfinished">PRO Lite</translation>
     </message>
 </context>
 <context>
@@ -2892,6 +2901,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
         <translation>%1 (%2)</translation>
     </message>
+    <message>
+        <source>Remove from left pane</source>
+        <translation type="unfinished">Eliminar del panel izquierdo</translation>
+    </message>
 </context>
 <context>
     <name>SizeLimitDialog</name>
@@ -3218,11 +3231,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">Tu descarga no se ha podido procesar porque te llevaría por encima de la actual transferencia permitida para tu IP. Este límite es dinámico y depende de la cantidad de ancho de banda no utilizado que tengamos disponible.</translation>
+        <translation type="unfinished">Tu descarga no pudo continuar porque te llevaría sobre la asignación de transferencia gratuita actual para tu dirección IP. Este límite es dinámico y depende de la cantidad de ancho de banda no utilizado que tenemos disponible.</translation>
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">La dirección de IP que estás usando ha utilizado %1 de transferencia en las últimas 6 horas, lo que te ha llevado por encima de nuestro límite actual. Para eliminar esta limitación,  [A]hazte PRO[/A], para tener tu propio paquete de transferencia y además almacenaje extra. </translation>
+        <translation type="unfinished">La dirección IP que está utilizando ha utilizado %1 de transferencia de datos en las últimas 6 horas, lo que le llevó sobre nuestro límite actual. Para eliminar este límite, puede [A]actualizar a PRO[/A], que le proporcionará tu propio paquete de cuotas de transferencia y también un amplio espacio de almacenamiento adicional.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
