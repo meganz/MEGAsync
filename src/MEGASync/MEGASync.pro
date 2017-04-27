@@ -24,10 +24,15 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 unix:!macx {
-TARGET = megasync
+    TARGET = megasync
+    isEmpty(PREFIX) {
+        PREFIX = /usr
+    }
+    target.path = $$PREFIX/bin
+    INSTALLS += target
 }
 else {
-TARGET = MEGAsync
+    TARGET = MEGAsync
 }
 
 TEMPLATE = app
