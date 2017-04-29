@@ -2298,19 +2298,27 @@ void MegaApplication::initHttpsServer()
     {
         startHttpServer();
 
-        ConnectivityChecker *localHttpsChecker = new ConnectivityChecker(Preferences::LOCAL_HTTPS_TEST_URL);
-        localHttpsChecker->setTestString(Preferences::LOCAL_HTTPS_TEST_SUBSTRING);
-        localHttpsChecker->setTimeout(Preferences::LOCAL_HTTPS_TEST_TIMEOUT_MS);
-        localHttpsChecker->setMethod(ConnectivityChecker::METHOD_POST);
-        localHttpsChecker->setPostData(QByteArray(Preferences::LOCAL_HTTPS_TEST_POST_DATA.toUtf8()));
-        localHttpsChecker->setHeader(QByteArray("Origin"), QByteArray("https://mega.nz"));
+        char *os = megaApi->getOperatingSystemVersion();
+        if (os)
+        {
+            if (!QString::fromUtf8(os).startsWith(QString::fromUtf8("Windows 5.")))
+            {
+                ConnectivityChecker *localHttpsChecker = new ConnectivityChecker(Preferences::LOCAL_HTTPS_TEST_URL);
+                localHttpsChecker->setTestString(Preferences::LOCAL_HTTPS_TEST_SUBSTRING);
+                localHttpsChecker->setTimeout(Preferences::LOCAL_HTTPS_TEST_TIMEOUT_MS);
+                localHttpsChecker->setMethod(ConnectivityChecker::METHOD_POST);
+                localHttpsChecker->setPostData(QByteArray(Preferences::LOCAL_HTTPS_TEST_POST_DATA.toUtf8()));
+                localHttpsChecker->setHeader(QByteArray("Origin"), QByteArray("https://mega.nz"));
 
-        connect(localHttpsChecker, SIGNAL(testError()), this, SLOT(onLocalHttpsCheckError()));
-        connect(localHttpsChecker, SIGNAL(testSuccess()), this, SLOT(onLocalHttpsCheckSuccess()));
-        connect(localHttpsChecker, SIGNAL(testFinished()), localHttpsChecker, SLOT(deleteLater()));
+                connect(localHttpsChecker, SIGNAL(testError()), this, SLOT(onLocalHttpsCheckError()));
+                connect(localHttpsChecker, SIGNAL(testSuccess()), this, SLOT(onLocalHttpsCheckSuccess()));
+                connect(localHttpsChecker, SIGNAL(testFinished()), localHttpsChecker, SLOT(deleteLater()));
 
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing the local HTTPS server");
-        localHttpsChecker->startCheck();
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing the local HTTPS server");
+                localHttpsChecker->startCheck();
+            }
+            delete [] os;
+        }
     }
 }
 
