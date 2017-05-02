@@ -294,6 +294,14 @@ int main(int argc, char *argv[])
         #endif
     }
 
+    QString appVersionPath = dataDir.filePath(QString::fromAscii("megasync.version"));
+    QFile fappVersionPath(appVersionPath);
+    if (fappVersionPath.open(QIODevice::WriteOnly))
+    {
+        fappVersionPath.write(QString::number(Preferences::VERSION_CODE).toUtf8());
+        fappVersionPath.close();
+    }
+
     if (alreadyStarted)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "MEGAsync is already started");
