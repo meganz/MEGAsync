@@ -585,5 +585,17 @@
         <file>images/ico_upload_over@2x.png</file>
         <file>images/MEGA_header.png</file>
         <file>images/MEGA_header@2x.png</file>
+        <file>images/ico_drop_add_sync_over.png</file>
+        <file>images/ico_drop_add_sync_over@2x.png</file>
+        <file>images/ico_drop_synched_folder_over.png</file>
+        <file>images/ico_drop_synched_folder_over@2x.png</file>
+        <file>images/ic_small_cloud_drive.png</file>
+        <file>images/ic_small_cloud_drive@2x.png</file>
+        <file>images/ic_small_inbox.png</file>
+        <file>images/ic_small_inbox@2x.png</file>
+        <file>images/ic_small_rubbish.png</file>
+        <file>images/ic_small_rubbish@2x.png</file>
+        <file>images/ic_small_shares.png</file>
+        <file>images/ic_small_shares@2x.png</file>
     </qresource>
 </RCC>
