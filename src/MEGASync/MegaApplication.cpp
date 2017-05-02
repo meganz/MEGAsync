@@ -286,6 +286,17 @@ int main(int argc, char *argv[])
                  fappShowInterfacePath.close();
              }
         }
+#ifdef __APPLE__
+        else if (i == 5)
+        {
+            QString appVersionPath = dataDir.filePath(QString::fromAscii("megasync.version"));
+            QFile fappVersionPath(appVersionPath);
+            if (!fappVersionPath.exists())
+            {
+                QProcess::startDetached(QString::fromUtf8("/bin/bash -c \"lsof ~/Library/Application\\ Support/Mega\\ Limited/MEGAsync/megasync.lock 2>/dev/null | grep MEGAclien | cut -d' ' -f2 | xargs kill\""));
+            }
+        }
+#endif
 
         #ifdef WIN32
             Sleep(1000);
