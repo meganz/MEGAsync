@@ -286,12 +286,31 @@ int main(int argc, char *argv[])
                  fappShowInterfacePath.close();
              }
         }
+#ifdef __APPLE__
+        else if (i == 5)
+        {
+            QString appVersionPath = dataDir.filePath(QString::fromAscii("megasync.version"));
+            QFile fappVersionPath(appVersionPath);
+            if (!fappVersionPath.exists())
+            {
+                QProcess::startDetached(QString::fromUtf8("/bin/bash -c \"lsof ~/Library/Application\\ Support/Mega\\ Limited/MEGAsync/megasync.lock 2>/dev/null | grep MEGAclien | cut -d' ' -f2 | xargs kill\""));
+            }
+        }
+#endif
 
         #ifdef WIN32
             Sleep(1000);
         #else
             sleep(1);
         #endif
+    }
+
+    QString appVersionPath = dataDir.filePath(QString::fromAscii("megasync.version"));
+    QFile fappVersionPath(appVersionPath);
+    if (fappVersionPath.open(QIODevice::WriteOnly))
+    {
+        fappVersionPath.write(QString::number(Preferences::VERSION_CODE).toUtf8());
+        fappVersionPath.close();
     }
 
     if (alreadyStarted)
@@ -610,12 +629,11 @@ void MegaApplication::initialize()
     QString basePath = QDir::toNativeSeparators(dataPath + QString::fromAscii("/"));
 #ifndef __APPLE__
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
-    megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
 #else
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT, MacXPlatform::fd);
-    megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT, MacXPlatform::fd);
 #endif
 
+    megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
     megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGAsync is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
              .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
 
