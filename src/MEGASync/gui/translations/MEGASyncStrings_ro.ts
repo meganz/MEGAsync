@@ -1268,7 +1268,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please consider updating your operating system.</source>
         <translatorcomment>Message shown to the user to inform about updating the operating system to be compatible with latest versions of MEGAsync</translatorcomment>
-        <translation type="unfinished">Please consider updating your operating system.</translation>
+        <translation type="unfinished">Te rugăm să iei în considerare actualizarea sistemului de operare.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
@@ -2903,7 +2903,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Remove from left pane</source>
-        <translation type="unfinished">Remove from left pane</translation>
+        <translation type="unfinished">Elimină din panoul stâng</translation>
     </message>
 </context>
 <context>
