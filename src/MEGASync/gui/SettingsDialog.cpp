@@ -318,7 +318,7 @@ void SettingsDialog::syncStateChanged(int state)
 {
     if (state)
     {
-        QCheckBox *c = ((QCheckBox *)QObject::sender());
+        QPointer<QCheckBox> c = ((QCheckBox *)QObject::sender());
         for (int j = 0; j < ui->tSyncs->rowCount(); j++)
         {
             if (ui->tSyncs->cellWidget(j, 2) == c)
@@ -329,6 +329,11 @@ void SettingsDialog::syncStateChanged(int state)
                 {
                     QMessageBox::critical(this, tr("Error"),
                        tr("This sync can't be enabled because the local folder doesn't exist"));
+
+                    if (!c)
+                    {
+                        return;
+                    }
                     c->setCheckState(Qt::Unchecked);
                     return;
                 }
@@ -339,6 +344,11 @@ void SettingsDialog::syncStateChanged(int state)
                 {
                     QMessageBox::critical(this, tr("Error"),
                        tr("This sync can't be enabled because the remote folder doesn't exist"));
+
+                    if (!c)
+                    {
+                        return;
+                    }
                     c->setCheckState(Qt::Unchecked);
                     return;
                 }
