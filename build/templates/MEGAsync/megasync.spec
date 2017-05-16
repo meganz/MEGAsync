@@ -182,7 +182,7 @@ enabled=1
 DATA
 %endif
 
-%if 0%{?sc} == 700
+%if 0%{?centos_version} == 700
 # CentOS 7
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
