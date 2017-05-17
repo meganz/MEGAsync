@@ -151,6 +151,8 @@ done
 echo "quering VM info:"
 $sshpasscommand ssh root@$IP_GUEST cat /etc/issue
 $sshpasscommand ssh root@$IP_GUEST uname -a
+echo -n " Inotify max watchers initial: "
+$sshpasscommand ssh root@$IP_GUEST sysctl fs.inotify.max_user_watches
 
 
 echo " deleting testing file ..."
@@ -491,6 +493,7 @@ resultRunning=$?
 logOperationResult "checking new megasync running ..." $resultRunning
 
 echo " forcing POST to dl test file ..."
+# https://mega.nz/#!FQ5miCCB!WkMOvzgPWhBtvE7tYQQv8urhwuYmuS74C3HnhboDE-I
 $sshpasscommand ssh root@$IP_GUEST "curl 'https://127.0.0.1:6342/' -H 'Origin: https://mega.nz' --data-binary '{\"a\":\"l\",\"h\":\"FQ5miCCB\",\"k\":\"WkMOvzgPWhBtvE7tYQQv8urhwuYmuS74C3HnhboDE-I\"}' --compressed --insecure"
 
 resultDL=27
@@ -580,6 +583,8 @@ else #FEDORA | CENTOS...
 	logOperationResult "check repo configured correctly ..." $resultRepoConfiguredOk
 fi
 
+echo -n " Inotify max watchers final: "
+$sshpasscommand ssh root@$IP_GUEST sysctl fs.inotify.max_user_watches
 
 
 if [ $resultDL -eq 0 ] && [ $resultRunning -eq 0 ] \
