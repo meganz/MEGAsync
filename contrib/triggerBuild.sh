@@ -6,9 +6,9 @@
  #     suppossing project with tarball built at $PROJECT_PATH/    
  #     suposing oscrc configured with apiurl correctly:           
  #      nano ~/.oscrc                                             
- #	     apiurl=https://linux
+ #	    apiurl=https://linux
  #
- # (c) 2013-2016 by Mega Limited, Auckland, New Zealand
+ # (c) 2013-2017 by Mega Limited, Auckland, New Zealand
  #
  # This file is part of the MEGA SDK - Client Access Engine.
  #
@@ -25,50 +25,110 @@
  # program.
 ##
 
+set -e
+
+defaultpackages="MEGAShellExtNautilus MEGAsync MEGAShellExtThunar MEGAShellExtDolphin"
+
+function printusage {
+	echo "$0 [--home] [package=PACKAGE] [user@remoteobsserver] [PROJECTPATH [OSCFOLDER]]"
+	echo "This scripts triggers recompilation of OBS packages using PROJECTPATH as the folder to look for files to deploy. "
+	echo "Notice that the tarball must be created before calling this script (with create_tarball.sh)"
+	echo " Use --home to only update home:Admin project. Otherwise DEB and RPM projects will be updated" 
+	echo " Use package=PACKAGE to build only a particular package. Otherwise all the packages will be added: $defaultpackages" 
+}
+
+if [[ $1 == "--help" ]]; then
+	printusage
+	exit 1
+fi
+
+if [[ $1 == "--home" ]]; then
+	onlyhomeproject=1;
+	shift
+fi
+
+if [[ "$1" == "package="* ]]; then
+	packages="${1/package=/}"
+	shift
+else
+	packages=$defaultpackages
+fi
+
+sshpasscommand=""
+if [[ $1 == *@* ]]; then
+remote=$1
+shift
+echo -n $remote Password: 
+read -s password
+sshpasscommand="sshpass -p $password ssh $remote"
+echo
+fi
+
 PROJECT_PATH=$1
 NEWOSCFOLDER_PATH=$2
+shift
 if [ -z "$PROJECT_PATH" ]; then
-	PROJECT_PATH=/mnt/DATA/datos/assets/local_project/desktop
+	PROJECT_PATH=/assets/local_project/desktop
 	echo "using default PROJECT_PATH: $PROJECT_PATH"
 fi
 if [ -z "$NEWOSCFOLDER_PATH" ]; then
-	NEWOSCFOLDER_PATH=/mnt/DATA/datos/building/osc_projects/`date +%Y%m%d%H%M%S`
+	NEWOSCFOLDER_PATH=/datos/building/osc_projects/`date +%Y%m%d%H%M%S`
 	echo "using default NEWOSCFOLDER_PATH: $NEWOSCFOLDER_PATH"
 fi
 
 export EDITOR=nano
 
+function copy
+{
+	if [ "$sshpasscommand" ]; then
+		sshpass -p $password scp $1 $remote:$2
+	else #linking will be enough
+		ln -sf $1 $2
+	fi
+}
+
 echo "creating folder with OBS projects..."
-mkdir $NEWOSCFOLDER_PATH
-cd $NEWOSCFOLDER_PATH
+$sshpasscommand mkdir $NEWOSCFOLDER_PATH
+$sshpasscommand cd $NEWOSCFOLDER_PATH
 
 echo "checking out existing OBS projects..."
-osc co RPM
-osc co DEB
+if [ "$onlyhomeproject" ]; then
+	$sshpasscommand "cd $NEWOSCFOLDER_PATH && osc co home:Admin "
+else
+	$sshpasscommand "cd $NEWOSCFOLDER_PATH && osc co RPM "
+	$sshpasscommand "cd $NEWOSCFOLDER_PATH && osc co DEB "
+fi
 
-for package in MEGAShellExtNautilus MEGAsync MEGAShellExtThunar MEGAShellExtDolphin; do
-	oldver=`cat $NEWOSCFOLDER_PATH/DEB/$package/PKGBUILD | grep  pkgver= | cut -d "=" -f2`
-	oldrelease=`cat $NEWOSCFOLDER_PATH/DEB/$package/PKGBUILD | grep pkgrel= | cut -d "=" -f2`
-	
-	echo "deleting old files for package $package ... : "$NEWOSCFOLDER_PATH/{DEB,RPM}/$package/*
-	rm $NEWOSCFOLDER_PATH/{DEB,RPM}/$package/*
-	
-	cp $NEWOSCFOLDER_PATH/DEB/$package/{,old}PKGBUILD
 
-	echo "replacing files with newly generated  (traball, specs, dsc and so for) for package $package ..."
-	ln -sf $PROJECT_PATH/build/MEGAsync/$package/*.spec $NEWOSCFOLDER_PATH/RPM/$package/
-	ln -sf $PROJECT_PATH/build/MEGAsync/$package/*tar.gz $NEWOSCFOLDER_PATH/RPM/$package/
+for package in $packages; do
+	oldver=`$sshpasscommand cat $NEWOSCFOLDER_PATH/DEB/$package/PKGBUILD | grep  pkgver= | cut -d "=" -f2`
+	oldrelease=`$sshpasscommand cat $NEWOSCFOLDER_PATH/DEB/$package/PKGBUILD | grep pkgrel= | cut -d "=" -f2`
+	
+	echo "deleting old files for package $package ... "
+	
+	$sshpasscommand rm $NEWOSCFOLDER_PATH/{DEB,RPM,home:Admin}/$package/* || :
+	$sshpasscommand mkdir -p $NEWOSCFOLDER_PATH/{DEB,RPM,home:Admin}/$package || :
+	
+	$sshpasscommand cp $NEWOSCFOLDER_PATH/DEB/$package/{,old}PKGBUILD || :
+
+	echo "replacing files with newly generated  (tarball, specs, dsc and so on) for package $package ..."
+	
+	copy $PROJECT_PATH/build/MEGAsync/$package/*.spec $NEWOSCFOLDER_PATH/RPM/$package/
+	copy $PROJECT_PATH/build/MEGAsync/$package/*tar.gz $NEWOSCFOLDER_PATH/RPM/$package/
+	
 	if ls $PROJECT_PATH/build/MEGAsync/$package/*changes 2>&1 > /dev/null ; then 
-		ln -sf $PROJECT_PATH/build/MEGAsync/$package/*changes $NEWOSCFOLDER_PATH/RPM/$package/; 
+		copy $PROJECT_PATH/build/MEGAsync/$package/*changes $NEWOSCFOLDER_PATH/RPM/$package/; 
 	fi
-	for i in $PROJECT_PATH/build/MEGAsync/$package/{PKGBUILD,*.install,*.dsc,*.tar.gz,debian.changelog,debian.control,debian.postinst,debian.postrm,debian.rules,debian.compat,debian.copyright} ; do 
+	for i in $PROJECT_PATH/build/MEGAsync/$package/{PKGBUILD,*.install,*.dsc,debian.changelog,debian.control,debian.postinst,debian.postrm,debian.rules,debian.compat,debian.copyright} ; do 
 		if [ -e $i ]; then
-			ln -sf $i $NEWOSCFOLDER_PATH/DEB/$package/; 
+			copy $i $NEWOSCFOLDER_PATH/DEB/$package/; 
 		fi
 	done
+	#link tar.gz from RPM into DEB
+	$sshpasscommand ln -sf $NEWOSCFOLDER_PATH/RPM/$package/*tar.gz $NEWOSCFOLDER_PATH/DEB/$package/
 	
-	newver=`cat $NEWOSCFOLDER_PATH/DEB/$package/PKGBUILD | grep  pkgver= | cut -d "=" -f2`
-	fixedrelease=`cat $NEWOSCFOLDER_PATH/DEB/$package/PKGBUILD | grep pkgrel= | cut -d "=" -f2`
+	newver=`$sshpasscommand cat $NEWOSCFOLDER_PATH/DEB/$package/PKGBUILD | grep  pkgver= | cut -d "=" -f2`
+	fixedrelease=`$sshpasscommand cat $NEWOSCFOLDER_PATH/DEB/$package/PKGBUILD | grep pkgrel= | cut -d "=" -f2`
 	if [ "$newver" = "$oldver" ]; then
 		((newrelease=oldrelease+1))
 	else
@@ -76,16 +136,30 @@ for package in MEGAShellExtNautilus MEGAsync MEGAShellExtThunar MEGAShellExtDolp
 	fi
 	
 	echo testing difference in PKGBUILD
-	if ! cmp $NEWOSCFOLDER_PATH/DEB/$package/{,old}PKGBUILD >/dev/null 2>&1; then
-		sed -i "s#pkgrel=$fixedrelease#pkgrel=$newrelease#g" $NEWOSCFOLDER_PATH/DEB/$package/PKGBUILD
+	if ! $sshpasscommand cmp $NEWOSCFOLDER_PATH/DEB/$package/{,old}PKGBUILD >/dev/null 2>&1; then
+		$sshpasscommand sed -i "s#pkgrel=$fixedrelease#pkgrel=$newrelease#g" $NEWOSCFOLDER_PATH/DEB/$package/PKGBUILD
 	fi
-	rm $PROJECT_PATH/build/MEGAsync/$package/oldPKGBUILD
+	$sshpasscommand rm $NEWOSCFOLDER_PATH/DEB/$package/oldPKGBUILD || :
+	
+	#link everything on RPM & DEB projects into home:Admin project
+	$sshpasscommand ln -sf $NEWOSCFOLDER_PATH/{RPM,DEB}/$package/* $NEWOSCFOLDER_PATH/home:Admin/$package/
 done
 
 echo "modifying files included/excluded in projects (to respond to e.g. tar.gz version changes)"
-osc addremove -r $NEWOSCFOLDER_PATH/DEB
-osc addremove -r $NEWOSCFOLDER_PATH/RPM 
+if [ "$onlyhomeproject" ]; then
+$sshpasscommand osc addremove -r $NEWOSCFOLDER_PATH/home:Admin
+else
+$sshpasscommand osc addremove -r $NEWOSCFOLDER_PATH/DEB
+$sshpasscommand osc addremove -r $NEWOSCFOLDER_PATH/RPM 
+fi
 
 echo "updating changed files and hence triggering rebuild in the OBS platform ...."
-osc ci -n $NEWOSCFOLDER_PATH/DEB
-osc ci -n $NEWOSCFOLDER_PATH/RPM
+if [ "$onlyhomeproject" ]; then
+	$sshpasscommand osc ci -n "$NEWOSCFOLDER_PATH/home:Admin"
+else
+	$sshpasscommand osc ci -n $NEWOSCFOLDER_PATH/DEB
+	$sshpasscommand osc ci -n $NEWOSCFOLDER_PATH/RPM
+fi
+
+
+echo "All good: rebuild triggered"
