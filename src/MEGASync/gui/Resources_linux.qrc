@@ -161,16 +161,16 @@
         <file>images/menu_header.png</file>
         <file>images/menu_selected.png</file>
         <file>images/separator line.png</file>
-        <file>images/22_logging.png</file>
-        <file>images/22_paused.png</file>
-        <file>images/22_synching.png</file>
-        <file>images/22_uptodate.png</file>
+        <file>images/logging.svg</file>
+        <file>images/paused.svg</file>
+        <file>images/synching.svg</file>
+        <file>images/uptodate.svg</file>
         <file>images/tray_pause_over_ico.png</file>
         <file>images/tray_play_over_ico.png</file>
         <file>images/tray_preferences_over_ico.png</file>
         <file>images/tray_share_over_ico.png</file>
         <file>images/drag_dmg.png</file>
-        <file>images/22_warning.png</file>
+        <file>images/warning.svg</file>
         <file>images/tray_warning_ico.png</file>
         <file>images/small_dmg.png</file>
         <file>images/app_64.png</file>
