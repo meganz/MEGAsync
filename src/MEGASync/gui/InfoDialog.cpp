@@ -73,6 +73,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->wTransfer2->setType(MegaTransfer::TYPE_UPLOAD);
     ui->wTransfer2->hideTransfer();
 
+    ui->bTransferManager->setToolTip(tr("Open Transfer Manager"));
+    ui->bSettings->setToolTip(tr("Access your MEGAsync settings"));
+
     ui->pUsageStorage->installEventFilter(this);
 
     state = STATE_STARTING;
@@ -1021,7 +1024,7 @@ void InfoDialog::on_bSyncFolder_clicked()
         syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 
         MenuItemAction *addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_add_sync.png")),
-                                                           QIcon(QString::fromAscii("://images/ico_add_sync.png")));
+                                                           QIcon(QString::fromAscii("://images/ico_drop_add_sync_over.png")));
         connect(addSyncAction, SIGNAL(triggered()), this, SLOT(addSync()));
         syncsMenu->addAction(addSyncAction);
         syncsMenu->addSeparator();
@@ -1039,7 +1042,7 @@ void InfoDialog::on_bSyncFolder_clicked()
 
             activeFolders++;
             MenuItemAction *action = new MenuItemAction(preferences->getSyncName(i), QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")),
-                                                        QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")));
+                                                        QIcon(QString::fromAscii("://images/ico_drop_synched_folder_over.png")));
             connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()));
             syncsMenu->addAction(action);
             menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
@@ -1314,28 +1317,28 @@ void InfoDialog::createQuotaUsedMenu()
         cloudItem->deleteLater();
         cloudItem = NULL;
     }
-    cloudItem = new MenuItemAction(tr("Cloud Drive"), Utilities::getSizeString(preferences->cloudDriveStorage()), QIcon(QString::fromAscii("://images/get_link_ico.png")));
+    cloudItem = new MenuItemAction(tr("Cloud Drive"), Utilities::getSizeString(preferences->cloudDriveStorage()), QIcon(QString::fromAscii("://images/ic_small_cloud_drive.png")), QSize(16,16));
 
     if (inboxItem)
     {
         inboxItem->deleteLater();
         inboxItem = NULL;
     }
-    inboxItem = new MenuItemAction(tr("Inbox"), Utilities::getSizeString(preferences->inboxStorage()), QIcon(QString::fromAscii("://images/get_link_ico.png")));
+    inboxItem = new MenuItemAction(tr("Inbox"), Utilities::getSizeString(preferences->inboxStorage()), QIcon(QString::fromAscii("://images/ic_small_inbox.png")), QSize(16,16));
 
     if (sharesItem)
     {
         sharesItem->deleteLater();
         sharesItem = NULL;
     }
-    sharesItem = new MenuItemAction(tr("Incoming Shares"), Utilities::getSizeString(preferences->inShareStorage()), QIcon(QString::fromAscii("://images/get_link_ico.png")));
+    sharesItem = new MenuItemAction(tr("Incoming Shares"), Utilities::getSizeString(preferences->inShareStorage()), QIcon(QString::fromAscii("://images/ic_small_shares.png")), QSize(16,16));
 
     if (rubbishItem)
     {
         rubbishItem->deleteLater();
         rubbishItem = NULL;
     }
-    rubbishItem = new MenuItemAction(tr("Rubbish bin"), Utilities::getSizeString(preferences->rubbishStorage()), QIcon(QString::fromAscii("://images/get_link_ico.png")));
+    rubbishItem = new MenuItemAction(tr("Rubbish bin"), Utilities::getSizeString(preferences->rubbishStorage()), QIcon(QString::fromAscii("://images/ic_small_rubbish.png")), QSize(16,16));
 
     storageUsedMenu->addAction(cloudItem);
     storageUsedMenu->addAction(inboxItem);

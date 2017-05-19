@@ -301,5 +301,11 @@
         <file>images/ico_upload_out.png</file>
         <file>images/ico_upload_over.png</file>
         <file>images/MEGA_header.png</file>
+        <file>images/ico_drop_add_sync_over.png</file>
+        <file>images/ico_drop_synched_folder_over.png</file>
+        <file>images/ic_small_cloud_drive.png</file>
+        <file>images/ic_small_inbox.png</file>
+        <file>images/ic_small_rubbish.png</file>
+        <file>images/ic_small_shares.png</file>
     </qresource>
 </RCC>
