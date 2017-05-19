@@ -73,6 +73,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->wTransfer2->setType(MegaTransfer::TYPE_UPLOAD);
     ui->wTransfer2->hideTransfer();
 
+    ui->bTransferManager->setToolTip(tr("Open Transfer Manager"));
+    ui->bSettings->setToolTip(tr("Access your MEGAsync settings"));
+
     ui->pUsageStorage->installEventFilter(this);
 
     state = STATE_STARTING;
