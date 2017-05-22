@@ -165,15 +165,19 @@ public slots:
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();
+    void onLocalHttpsCheckSuccess();
+    void onLocalHttpsCheckError();
     void userAction(int action);
     void changeState();
-    void showUpdatedMessage();
+    void showUpdatedMessage(int lastVersion);
     void handleMEGAurl(const QUrl &url);
     void handleLocalPath(const QUrl &url);
     void clearUserAttributes();
     void clearViewedTransfers();
     void onCompletedTransfersTabActive(bool active);
     void checkFirstTransfer();
+    void onDeprecatedOperatingSystem();
+    int getPrevVersion();
 
 protected:
     void createTrayIcon();
@@ -191,6 +195,8 @@ protected:
     void closeDialogs();
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
+    void startHttpServer();
+    void initHttpsServer();
 
 #ifdef __APPLE__
     MegaSystemTrayIcon *trayIcon;
@@ -325,13 +331,17 @@ protected:
     bool networkConnectivity;
     int nUnviewedTransfers;
     bool completedTabActive;
+    int prevVersion;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener
 {
 public:
-    MEGASyncDelegateListener(mega::MegaApi *megaApi, mega::MegaListener *parent=NULL);
+    MEGASyncDelegateListener(mega::MegaApi *megaApi, mega::MegaListener *parent = NULL, MegaApplication *app = NULL);
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
+
+protected:
+    MegaApplication *app;
 };
 
 #endif // MEGAAPPLICATION_H

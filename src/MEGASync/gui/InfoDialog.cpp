@@ -1218,12 +1218,13 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 void InfoDialog::regenerateLayout()
 {
     static bool loggedInMode = true;
+    bool logged = preferences->logged();
 
-    if (loggedInMode == preferences->logged())
+    if (loggedInMode == logged)
     {
         return;
     }
-    loggedInMode = preferences->logged();
+    loggedInMode = logged;
 
     QLayout *dialogLayout = layout();
     if (!loggedInMode)

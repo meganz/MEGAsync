@@ -52,7 +52,9 @@ display_help() {
 remove_megasync=0
 quit_machine=1
 require_change=0
-pathXMLdir=/mnt/DATA/datos/assets/check_packages
+
+thisscriptpath=$(readlink -f "$0")
+pathXMLdir=$(dirname "$thisscriptpath")
 
 while getopts ":ikcp:x:" opt; do
   case $opt in
@@ -130,7 +132,6 @@ echo " could not get guest IP. retrying in 2 sec ..."
 sleep 2
 IP_GUEST=$( sudo arp -n | grep `sudo virsh domiflist $VMNAME  | grep vnet | awk '{print $NF}'` | awk '{print $1}' )
 done
-
 echo " obtained IP guest = $IP_GUEST"
 
 echo " sshing to save host into the known hosts ...."
@@ -138,8 +139,19 @@ echo " sshing to save host into the known hosts ...."
 while ! $sshpasscommand ssh  -oStrictHostKeyChecking=no root@$IP_GUEST hostname ; do 
 echo " could ssh into GUEST. retrying in 2 sec ..."
 sleep 2
+IP_GUEST=$( sudo arp -n | grep `sudo virsh domiflist $VMNAME  | grep vnet | awk '{print $NF}'` | awk '{print $1}' )
+while [ -z $IP_GUEST ]; do
+echo " could not get new guest IP. retrying in 2 sec ..."
+sleep 2
+IP_GUEST=$( sudo arp -n | grep `sudo virsh domiflist $VMNAME  | grep vnet | awk '{print $NF}'` | awk '{print $1}' )
+done
+echo " obtained new IP guest = $IP_GUEST"
 done
  
+echo "quering VM info:"
+$sshpasscommand ssh root@$IP_GUEST cat /etc/issue
+$sshpasscommand ssh root@$IP_GUEST uname -a
+
 
 echo " deleting testing file ..."
 $sshpasscommand ssh root@$IP_GUEST rm /home/mega/testFile.txt #Notice: filename comes from the shared file
@@ -164,8 +176,17 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 
 	if [ $remove_megasync -eq 1 ]; then
 		echo " removing megasync ..."
+		attempts=10
 		$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive remove megasync
-		logLastComandResult "removing megasync ..."
+		resultREMOVE=$?
+		while [[ $attempts -ge 0 && $resultREMOVE -ne 0 ]]; do
+			sleep $((5*(10-$attempts)))
+			echo " removing megasync ... attempts left="$attempts
+			$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive remove megasync
+			resultREMOVE=$?
+			attempts=$(($attempts - 1))
+		done
+		logOperationResult "removing megasync ..." $resultREMOVE
 	fi
 	
 	$sshpasscommand ssh root@$IP_GUEST "cat > /etc/zypp/repos.d/megasync.repo" <<-EOF
@@ -186,7 +207,7 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	else
 	 resultMODREPO=0 #we discard any other failure
 	fi; rm tmp$VMNAME;	
-	#~ if [ -s tmp$VMNAME ]; then resultMODREPO=$(expr 1000 + $resultMODREPO); cat tmp$VMNAME; fi; rm tmp$VMNAME;	
+	# if [ -s tmp$VMNAME ]; then resultMODREPO=$(expr 1000 + $resultMODREPO); cat tmp$VMNAME; fi; rm tmp$VMNAME;
 	logOperationResult "modifying repos ..." $resultMODREPO
 	cat /etc/zypp/repos.d/megasync.repo
 	
@@ -197,6 +218,7 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	resultINSTALL=$?
 	while [[ $attempts -ge 0 && $resultINSTALL -ne 0 ]]; do
 		sleep $((5*(10-$attempts)))
+		echo " reinstalling/updating megasync ... attempts left="$attempts
 		$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive install -f megasync 
 		resultINSTALL=$?
 		attempts=$(($attempts - 1))
@@ -205,7 +227,7 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	#Doing stderr checking will give false FAILS, since zypper outputs non failure stuff in stderr
 	#if [ -s tmp$VMNAME ]; then resultINSTALL=$(expr 1000 + $resultINSTALL); cat tmp$VMNAME; fi; rm tmp$VMNAME;	
 	AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
-	resultINSTALL=$(($? + 0$resultINSTALL))
+	resultINSTALL=$(expr $? + 0$resultINSTALL)
 	echo "BEFOREINSTALL = $BEFOREINSTALL"
 	echo "AFTERINSTALL = $AFTERINSTALL"
 	if [ $require_change -eq 1 ]; then
@@ -215,12 +237,21 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	VERSIONINSTALLEDAFTER=`echo $AFTERINSTALL	| grep megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
 	logSth "installed megasync ..." "$VERSIONINSTALLEDAFTER"
 		
-elif [[ $1 == *"DEBIAN"* ]] || [[ $1 == *"UBUNTU"* ]] || [[ $1 == *"LINUXMINT"* ]]; then
+elif [[ $VMNAME == *"DEBIAN"* ]] || [[ $VMNAME == *"UBUNTU"* ]] || [[ $VMNAME == *"LINUXMINT"* ]]; then
 
 	if [ $remove_megasync -eq 1 ]; then
 		echo " removing megasync ..."
+		attempts=10
 		$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y remove megasync
-		logLastComandResult "removing megasync ..."
+		resultREMOVE=$?
+		while [[ $attempts -ge 0 && $resultREMOVE -ne 0 ]]; do
+			sleep $((5*(10-$attempts)))
+			echo " removing megasync ... attempts left="$attempts
+			$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y remove megasync
+			resultREMOVE=$?
+			attempts=$(($attempts - 1))
+		done
+		logOperationResult "removing megasync ..." $resultREMOVE
 	fi
 	sleep 1
 
@@ -243,20 +274,18 @@ elif [[ $1 == *"DEBIAN"* ]] || [[ $1 == *"UBUNTU"* ]] || [[ $1 == *"LINUXMINT"* 
 	#notice: zypper will report 0 as status even though it "failed", we do stderr checking
 	if cat tmp$VMNAME | grep $REPO; then
 	 resultMODREPO=$(expr 1000 + 0$resultMODREPO); cat tmp$VMNAME; 
-	#~ else
-	 #~ resultMODREPO=0 #we discard any other failure
+	#else
+	 #resultMODREPO=0 #we discard any other failure
 	fi; rm tmp$VMNAME;	
 	logOperationResult "modifying repos ..." $resultMODREPO
 	$sshpasscommand ssh root@$IP_GUEST cat /etc/apt/sources.list.d/megasync.list
 
-	
-	
 	echo " reinstalling/updating megasync ..."
 	BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST dpkg -l megasync`
 	$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y install megasync
 	resultINSTALL=$?
 	AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST dpkg -l megasync`
-	resultINSTALL=$(($? + 0$resultINSTALL))
+	resultINSTALL=$(expr $? + 0$resultINSTALL)
 	echo "BEFOREINSTALL = $BEFOREINSTALL"
 	echo "AFTERINSTALL = $AFTERINSTALL"
 	if [ $require_change -eq 1 ]; then
@@ -270,7 +299,7 @@ elif [[ $1 == *"DEBIAN"* ]] || [[ $1 == *"UBUNTU"* ]] || [[ $1 == *"LINUXMINT"* 
 		$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y install megasync
 		resultINSTALL=$?
 		AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST dpkg -l megasync`
-		resultINSTALL=$(($? + 0$resultINSTALL))
+		resultINSTALL=$(expr $? + 0$resultINSTALL)
 		echo "BEFOREINSTALL = $BEFOREINSTALL"
 		echo "AFTERINSTALL = $AFTERINSTALL"
 		if [ $require_change -eq 1 ]; then
@@ -282,7 +311,7 @@ elif [[ $1 == *"DEBIAN"* ]] || [[ $1 == *"UBUNTU"* ]] || [[ $1 == *"LINUXMINT"* 
 	VERSIONINSTALLEDAFTER=`echo $AFTERINSTALL	| grep megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
 	logSth "installed megasync ..." "$VERSIONINSTALLEDAFTER"
 
-elif [[ $1 == *"ARCHLINUX"* ]]; then
+elif [[ $VMNAME == *"ARCHLINUX"* ]]; then
 
 	if [ $remove_megasync -eq 1 ]; then
 		echo " removing megasync ..."
@@ -305,13 +334,13 @@ Server = $REPO/\$arch
 ###END REPO for MEGA###
 EOF
 	
-	$sshpasscommand ssh root@$IP_GUEST pacman -Sy --noconfirm 2> tmp$VMNAME
+	$sshpasscommand ssh root@$IP_GUEST pacman -Syy --noconfirm 2> tmp$VMNAME
 	resultMODREPO=$?
 	#notice: in case pacman reports 0 as status even though it "failed", we do stderr checking
-	if cat tmp$VMNAME | grep $REPO; then
+	if cat tmp$VMNAME | grep "$REPO\|error"; then
 	 resultMODREPO=$(expr 1000 + 0$resultMODREPO); cat tmp$VMNAME; 
-	#~ else
-	 #~ resultMODREPO=0 #we discard any other failure
+	#else
+	 #resultMODREPO=0 #we discard any other failure
 	fi; rm tmp$VMNAME;	
 	logOperationResult "modifying repos ..." $resultMODREPO
 	$sshpasscommand ssh root@$IP_GUEST "cat /etc/pacman.conf | grep 'REPO for MEGA' -A 5"
@@ -323,7 +352,7 @@ EOF
 	resultINSTALL=$?
 	
 	AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST pacman -Q megasync`
-	resultINSTALL=$(($? + 0$resultINSTALL))
+	resultINSTALL=$(expr $? + 0$resultINSTALL)
 	echo "BEFOREINSTALL = $BEFOREINSTALL"
 	echo "AFTERINSTALL = $AFTERINSTALL"
 	if [ $require_change -eq 1 ]; then
@@ -339,7 +368,7 @@ EOF
 		resultINSTALL=$?
 		
 		AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST pacman -Q megasync`
-		resultINSTALL=$(($? + 0$resultINSTALL))
+		resultINSTALL=$(expr $? + 0$resultINSTALL)
 		echo "BEFOREINSTALL = $BEFOREINSTALL"
 		echo "AFTERINSTALL = $AFTERINSTALL"
 		if [ $require_change -eq 1 ]; then
@@ -348,7 +377,7 @@ EOF
 		attempts=$(($attempts - 1))
 	done
 	
-	logOperationResult "reinstalling/updating megasync ..." $resultINSTALL	
+	logOperationResult "reinstalling/updating megasync ..." $resultINSTALL
 	VERSIONINSTALLEDAFTER=`echo $AFTERINSTALL	| grep megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
 	logSth "installed megasync ..." "$VERSIONINSTALLEDAFTER"
 
@@ -367,8 +396,17 @@ else
 
 	if [ $remove_megasync -eq 1 ]; then
 		echo " removing megasync ..."
+		attempts=10
 		$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit remove megasync
-		logLastComandResult "removing megasync ..."
+		resultREMOVE=$?
+		while [[ $attempts -ge 0 && $resultREMOVE -ne 0 ]]; do
+			sleep $((5*(10-$attempts)))
+			echo " removing megasync ... attempts left="$attempts
+		$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit remove megasync
+			resultREMOVE=$?
+			attempts=$(($attempts - 1))
+		done
+		logOperationResult "removing megasync ..." $resultREMOVE
 	fi
 	sleep 1
 	
@@ -396,14 +434,14 @@ else
 	echo " reinstalling/updating megasync ..."
 	BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
 	$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit install megasync  2> tmp$VMNAME
-	resultINSTALL=$(($? + 0$resultINSTALL)) #TODO: yum might fail and still say "IT IS OK!"
+	resultINSTALL=$? #TODO: yum might fail and still say "IT IS OK!"
 	#Doing simple stderr checking will give false FAILS, since yum outputs non failure stuff in stderr
 	if cat tmp$VMNAME | grep $REPO; then
 	 resultINSTALL=$(expr 1000 + 0$resultINSTALL); cat tmp$VMNAME; 
 	fi; rm tmp$VMNAME;	
 	
 	AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
-	resultINSTALL=$(($? + 0$resultINSTALL))
+	resultINSTALL=$(expr $? + 0$resultINSTALL)
 	echo "BEFOREINSTALL = $BEFOREINSTALL"
 	echo "AFTERINSTALL = $AFTERINSTALL"
 	if [ $require_change -eq 1 ]; then
@@ -416,14 +454,14 @@ else
 		echo " reinstalling/updating megasync ... attempts left="$attempts
 		BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
 		$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit install megasync  2> tmp$VMNAME
-		resultINSTALL=$(($? + 0$resultINSTALL)) #TODO: yum might fail and still say "IT IS OK!"
+		resultINSTALL=$? #TODO: yum might fail and still say "IT IS OK!"
 		#Doing simple stderr checking will give false FAILS, since yum outputs non failure stuff in stderr
 		if cat tmp$VMNAME | grep $REPO; then
 		 resultINSTALL=$(expr 1000 + 0$resultINSTALL); cat tmp$VMNAME; 
-		fi; rm tmp$VMNAME;	
+		fi; rm tmp$VMNAME;
 		
 		AFTERINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
-		resultINSTALL=$(($? + 0$resultINSTALL))
+		resultINSTALL=$(expr $? + 0$resultINSTALL)
 		echo "BEFOREINSTALL = $BEFOREINSTALL"
 		echo "AFTERINSTALL = $AFTERINSTALL"
 		if [ $require_change -eq 1 ]; then
@@ -431,7 +469,6 @@ else
 		fi
 		attempts=$(($attempts - 1))
 	done
-	
 	
 	logOperationResult "reinstalling/updating megasync ..." $resultINSTALL
 	VERSIONINSTALLEDAFTER=`echo $AFTERINSTALL	| grep megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
@@ -468,19 +505,94 @@ done
 
 logOperationResult "check file dl correctly ..." $resultDL
 
+
+
+echo " checking repo set ok ..."
+$sshpasscommand ssh root@$IP_GUEST  "cat /usr/share/doc/megasync/{distro,version}"
+
+## CHECKING REPO SET OK ##
+if [[ $VMNAME == *"OPENSUSE"* ]]; then
+	distroDir="openSUSE"
+	ver=$($sshpasscommand ssh root@$IP_GUEST lsb_release -rs)
+	if [ x$ver == "x20160920" ]; then ver="Tumbleweed"; fi
+	if [[ x$ver == "x42"* ]]; then ver="Leap_$ver"; fi
+	expected="baseurl=https://mega.nz/linux/MEGAsync/${distroDir}_$ver"
+	resultRepoConfiguredOk=0
+	if ! $sshpasscommand ssh root@$IP_GUEST cat /etc/zypp/repos.d/megasync.repo | grep "$expected" > /dev/null; then
+		echo "WRONG repo configured. Read: <$($sshpasscommand ssh root@$IP_GUEST "cat /etc/zypp/repos.d/megasync.repo" | grep baseurl)>"
+		echo "Expected: <$expected>"
+		resultRepoConfiguredOk=1
+	fi
+	logOperationResult "check repo configured correctly ..." $resultRepoConfiguredOk
+
+elif [[ $VMNAME == *"DEBIAN"* ]] || [[ $VMNAME == *"UBUNTU"* ]] || [[ $VMNAME == *"LINUXMINT"* ]]; then
+	distro=$($sshpasscommand ssh root@$IP_GUEST lsb_release -ds)
+	distroDir=$distro
+	if [[ $distroDir == "Ubuntu"* ]]; then distroDir="xUbuntu"; fi
+	ver=$($sshpasscommand ssh root@$IP_GUEST lsb_release -rs)
+	if [[ $distroDir == "Debian"* ]]; then 
+		distroDir="Debian" 
+		if [[ x$ver == "x8"* ]]; then ver="8.0"; fi
+		if [[ x$ver == "x7"* ]]; then ver="7.0"; fi
+		if [[ x$ver == "x9"* ]]; then ver="9.0"; fi
+		if [[ x$ver == "xtesting"* ]]; then ver="9.0"; fi
+	fi
+	
+	if [[ $distroDir == "Linux Mint 17"* ]]; then distroDir="xUbuntu"; ver="14.04"; fi
+	if [[ $distroDir == "Linux Mint 18"* ]]; then distroDir="xUbuntu"; ver="16.04"; fi
+	
+	resultRepoConfiguredOk=0
+	expected="deb https://mega.nz/linux/MEGAsync/${distroDir}_$ver/ ./"
+	if [ "x$expected" != "x$($sshpasscommand ssh root@$IP_GUEST "cat /etc/apt/sources.list.d/megasync.list")" ]; then
+		echo "WRONG repo configured. Read: <$($sshpasscommand ssh root@$IP_GUEST "cat /etc/apt/sources.list.d/megasync.list")>"
+		echo "Expected: <$expected>"
+		resultRepoConfiguredOk=1
+	fi
+	
+	logOperationResult "check repo configured correctly ..." $resultRepoConfiguredOk
+
+elif [[ $VMNAME == *"ARCHLINUX"* ]]; then
+	resultRepoConfiguredOk=0
+	distroDir="Arch_Extra"
+	ver=""
+	expected="^Server = https://mega.nz/linux/MEGAsync/Arch_Extra/\$arch"
+	
+	resultRepoConfiguredOk=0
+	if ! $sshpasscommand ssh root@$IP_GUEST cat /etc/pacman.conf | grep "$expected" > /dev/null; then
+		echo "WRONG repo configured. Read: <$($sshpasscommand ssh root@$IP_GUEST "cat /etc/pacman.conf" | grep baseurl)>"
+		echo "Expected: <$expected>"
+		resultRepoConfiguredOk=1
+	fi
+	logOperationResult "check repo configured correctly ..." $resultRepoConfiguredOk
+else #FEDORA | CENTOS...
+	distroDir=$($sshpasscommand ssh root@$IP_GUEST cat /etc/system-release | awk '{print $1}')
+	if [[ $distroDir == "Scientific"* ]]; then distroDir="ScientificLinux"; fi
+	ver=$($sshpasscommand ssh root@$IP_GUEST cat /etc/system-release | awk -F"release "  '{print $2}' | awk '{print $1}')
+	if [[ x$ver == "x7"* ]]; then ver="7"; fi #centos7
+
+	expected="baseurl=https://mega.nz/linux/MEGAsync/${distroDir}_$ver"
+	resultRepoConfiguredOk=0
+	if ! $sshpasscommand ssh root@$IP_GUEST cat /etc/yum.repos.d/megasync.repo | grep "$expected" > /dev/null; then
+		echo "WRONG repo configured. Read: <$($sshpasscommand ssh root@$IP_GUEST "cat /etc/yum.repos.d/megasync.repo" | grep baseurl)>"
+		echo "Expected: <$expected>"
+		resultRepoConfiguredOk=1
+	fi
+	logOperationResult "check repo configured correctly ..." $resultRepoConfiguredOk
+fi
+
+
+
 if [ $resultDL -eq 0 ] && [ $resultRunning -eq 0 ] \
-&& [ $resultMODREPO -eq 0 ] && [ $resultINSTALL -eq 0 ]; then
+&& [ $resultMODREPO -eq 0 ] && [ $resultINSTALL -eq 0 ] \
+&& [ $resultRepoConfiguredOk -eq 0 ]; then
 	echo " megasync working smoothly" 
 	touch ${VMNAME}_OK
 else
-	echo "MEGASYNC FAILED: $resultDL $resultRunning $resultMODREPO $resultINSTALL"
+	echo "MEGASYNC FAILED: $resultDL $resultRunning $resultMODREPO $resultINSTALL $resultRepoConfiguredOk"
 	#cat result_$VMNAME.log
 	touch ${VMNAME}_FAIL
 fi
 
-echo " check repo set ok ..."
-$sshpasscommand ssh root@$IP_GUEST  "cat /usr/share/doc/megasync/{distro,version}" 
-$sshpasscommand ssh root@$IP_GUEST  "cat /etc/apt/sources.list.d/megasync.list" 
 
 	
 if [ $quit_machine -eq 1 ]; then

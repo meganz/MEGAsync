@@ -7,6 +7,7 @@ build-stamp:
 	qmake-qt5 || qmake || /usr/lib/*/qt5/bin/qmake
 	lrelease-qt5 MEGASync/MEGASync.pro || lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt5/bin/lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt4/bin/lrelease MEGASync/MEGASync.pro
 	make
+	echo "fs.inotify.max_user_watches = 524288" > 100-megasync-inotify-limit.conf
 	touch build-stamp
 
 clean:
@@ -15,8 +16,9 @@ clean:
 	rm -f build-stamp
 
 install: build
-	dh_auto_install --destdir=debian/megasync
+	dh_auto_install --destdir=debian/megasync -- INSTALL_ROOT=$(CURDIR)/debian/megasync
 	dh_install MEGASync/megasync /usr/bin/
+	dh_install 100-megasync-inotify-limit.conf /etc/sysctl.d/
 
 # Build architecture-independent files here.
 binary-indep: build install

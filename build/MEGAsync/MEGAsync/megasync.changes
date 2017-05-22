@@ -1,3 +1,11 @@
+Fri May 12 12:42:51 CEST 2017 - linux@mega.co.nz
+- Update to version 3.1.2:
+  * Better integration with Windows 10
+  * Updated SSL certificate for communications with the web
+  * Deprecated OS X versions prior to Mavericks
+  * Bug fixes
+
+-------------------------------------------------------------------
 Mon Feb 6 12:07:29 CET 2017 - linux@mega.co.nz
 - Update to version 3.0.1:
   * Transfer manager

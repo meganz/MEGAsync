@@ -1,0 +1,8 @@
+{
+    "KPlugin": {
+        "Description": "Overlay icons for megasync",
+        "ServiceTypes": [
+            "KOverlayIconPlugin"
+        ]
+    }
+}

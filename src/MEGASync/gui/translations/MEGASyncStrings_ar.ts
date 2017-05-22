@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ar" sourcelanguage="en">
+<TS version="2.1" language="ar" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -1265,6 +1265,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
         <translation type="unfinished">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
     </message>
+    <message>
+        <source>Please consider updating your operating system.</source>
+        <translatorcomment>Message shown to the user to inform about updating the operating system to be compatible with latest versions of MEGAsync</translatorcomment>
+        <translation type="unfinished">Please consider updating your operating system.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
+        <translatorcomment>Message shown to the user to inform that MEGAsync no longer work with prior versions to OS X Mavericks</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2368,11 +2378,6 @@ Do you want to restart MEGAsync now?</source>
         <translation type="unfinished">Exclude by size</translation>
     </message>
     <message>
-        <source>PRO lite</source>
-        <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">برو لايت</translation>
-    </message>
-    <message>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
@@ -2465,6 +2470,10 @@ when the application starts again</source>
         <source>Uploads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
         <translation type="unfinished">الملفات المرفوعه</translation>
+    </message>
+    <message>
+        <source>PRO Lite</source>
+        <translation type="unfinished">برو لايت</translation>
     </message>
 </context>
 <context>
@@ -2892,6 +2901,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
         <translation>%1 (%2)</translation>
     </message>
+    <message>
+        <source>Remove from left pane</source>
+        <translation type="unfinished">Remove from left pane</translation>
+    </message>
 </context>
 <context>
     <name>SizeLimitDialog</name>
@@ -3218,11 +3231,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">لا يمكن الاستمرار في التحميل بسبب تجاوز الحد المسموح لعنوان ال ip الخاص بك. هذا الحد متغير علي حسب مقدار كمية نقل البيانات الغير مستخدمة المتاحة.</translation>
+        <translation type="unfinished">تعذر متابعة عملية التنزيل لأنها ستأخذ فوق كمية النقل المجانية  لعنوان IP الخاص بك. هذا الحد هو ديناميكي ويعتمد على كمية النطاق الترددي غير المستخدم لدينا.</translation>
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">You have utilized %1 of data transfer in the last 6 hours which took you over our current limit. To circumvent this limit, you can [A]upgrade to PRO[/A], which will give you your own bandwidth package and also ample extra storage space. </translation>
+        <translation type="unfinished">عنوان IP الذي استخدمته خلال 6 ساعات الماضية لنقل %1 البيانات قد استهلكت الحد كاملا، لإزالة هذا الحد، يمكنك [A]الترقية إلى برو[/A]، والتي سوف تعطيك حزمة حصص نقل خاصة بك وأيضا مساحة تخزين إضافية وافرة.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>

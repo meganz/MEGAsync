@@ -69,6 +69,7 @@ signals:
    void updateNotFound(bool requested);
    void installingUpdate(bool requested);
    void updateError();
+   void deprecatedOperatingSystem();
 
 private slots:
    void downloadFinished(QNetworkReply* reply);

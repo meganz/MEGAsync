@@ -410,17 +410,18 @@ void TransferManager::on_bPause_clicked()
 void TransferManager::on_bClearAll_clicked()
 {
     QWidget *w = ui->wTransfers->currentWidget();
+    QPointer<TransferManager> dialog = QPointer<TransferManager>(this);
 
     if (w != ui->wCompleted)
     {
-        if(QMegaMessageBox::warning(this,
+        if (QMegaMessageBox::warning(NULL,
                                  QString::fromUtf8("MEGAsync"),
                                  tr("Are you sure you want to cancel all transfers?"),
-                                 Utilities::getDevicePixelRatio(), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::No)
+                                 Utilities::getDevicePixelRatio(), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
+                || !dialog)
         {
             return;
         }
-
     }
 
     if (w == ui->wActiveTransfers)
