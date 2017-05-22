@@ -292,20 +292,20 @@ QString Utilities::languageCodeToString(QString code)
 
 
         // Currently unsupported
-        languageNames[QString::fromAscii("mi")] = QString::fromUtf8("Māori");
-        languageNames[QString::fromAscii("ca")] = QString::fromUtf8("Català");
-        languageNames[QString::fromAscii("eu")] = QString::fromUtf8("Euskara");
-        languageNames[QString::fromAscii("af")] = QString::fromUtf8("Afrikaans");
-        languageNames[QString::fromAscii("no")] = QString::fromUtf8("Norsk");
-        languageNames[QString::fromAscii("bs")] = QString::fromUtf8("Bosanski");
-        languageNames[QString::fromAscii("da")] = QString::fromUtf8("Dansk");
-        languageNames[QString::fromAscii("el")] = QString::fromUtf8("ελληνικά");
-        languageNames[QString::fromAscii("lt")] = QString::fromUtf8("Lietuvos");
-        languageNames[QString::fromAscii("lv")] = QString::fromUtf8("Latviešu");
-        languageNames[QString::fromAscii("mk")] = QString::fromUtf8("македонски");
-        languageNames[QString::fromAscii("hi")] = QString::fromUtf8("हिंदी");
-        languageNames[QString::fromAscii("ms")] = QString::fromUtf8("Bahasa Malaysia");
-        languageNames[QString::fromAscii("cy")] = QString::fromUtf8("Cymraeg");
+        // languageNames[QString::fromAscii("mi")] = QString::fromUtf8("Māori");
+        // languageNames[QString::fromAscii("ca")] = QString::fromUtf8("Català");
+        // languageNames[QString::fromAscii("eu")] = QString::fromUtf8("Euskara");
+        // languageNames[QString::fromAscii("af")] = QString::fromUtf8("Afrikaans");
+        // languageNames[QString::fromAscii("no")] = QString::fromUtf8("Norsk");
+        // languageNames[QString::fromAscii("bs")] = QString::fromUtf8("Bosanski");
+        // languageNames[QString::fromAscii("da")] = QString::fromUtf8("Dansk");
+        // languageNames[QString::fromAscii("el")] = QString::fromUtf8("ελληνικά");
+        // languageNames[QString::fromAscii("lt")] = QString::fromUtf8("Lietuvos");
+        // languageNames[QString::fromAscii("lv")] = QString::fromUtf8("Latviešu");
+        // languageNames[QString::fromAscii("mk")] = QString::fromUtf8("македонски");
+        // languageNames[QString::fromAscii("hi")] = QString::fromUtf8("हिंदी");
+        // languageNames[QString::fromAscii("ms")] = QString::fromUtf8("Bahasa Malaysia");
+        // languageNames[QString::fromAscii("cy")] = QString::fromUtf8("Cymraeg");
     }
     return languageNames.value(code);
 }

@@ -286,12 +286,31 @@ int main(int argc, char *argv[])
                  fappShowInterfacePath.close();
              }
         }
+#ifdef __APPLE__
+        else if (i == 5)
+        {
+            QString appVersionPath = dataDir.filePath(QString::fromAscii("megasync.version"));
+            QFile fappVersionPath(appVersionPath);
+            if (!fappVersionPath.exists())
+            {
+                QProcess::startDetached(QString::fromUtf8("/bin/bash -c \"lsof ~/Library/Application\\ Support/Mega\\ Limited/MEGAsync/megasync.lock 2>/dev/null | grep MEGAclien | cut -d' ' -f2 | xargs kill\""));
+            }
+        }
+#endif
 
         #ifdef WIN32
             Sleep(1000);
         #else
             sleep(1);
         #endif
+    }
+
+    QString appVersionPath = dataDir.filePath(QString::fromAscii("megasync.version"));
+    QFile fappVersionPath(appVersionPath);
+    if (fappVersionPath.open(QIODevice::WriteOnly))
+    {
+        fappVersionPath.write(QString::number(Preferences::VERSION_CODE).toUtf8());
+        fappVersionPath.close();
     }
 
     if (alreadyStarted)
@@ -610,17 +629,26 @@ void MegaApplication::initialize()
     QString basePath = QDir::toNativeSeparators(dataPath + QString::fromAscii("/"));
 #ifndef __APPLE__
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
-    megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
 #else
     megaApi = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT, MacXPlatform::fd);
-    megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT, MacXPlatform::fd);
 #endif
 
+    megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
     megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGAsync is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
              .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
 
-    megaApi->setLanguage(language.toUtf8().constData());
-    megaApiFolders->setLanguage(language.toUtf8().constData());
+    QString languageCode = language;
+    while (languageCode.size() && !Utilities::languageCodeToString(languageCode).size())
+    {
+        languageCode.resize(languageCode.size() - 1);
+    }
+
+    if (languageCode.size())
+    {
+        megaApi->setLanguage(languageCode.toUtf8().constData());
+        megaApiFolders->setLanguage(languageCode.toUtf8().constData());
+    }
+
     megaApi->setDownloadMethod(preferences->transferDownloadMethod());
     megaApi->setUploadMethod(preferences->transferUploadMethod());
     setMaxConnections(MegaTransfer::TYPE_UPLOAD,   preferences->parallelUploadConnections());
@@ -745,20 +773,28 @@ void MegaApplication::changeLanguage(QString languageCode)
 
             if (megaApiFolders)
             {
-                megaApi->setLanguage("en");
+                megaApiFolders->setLanguage("en");
             }
         }
     }
     else
-    {
-        if (megaApi)
+    {        
+        while (languageCode.size() && !Utilities::languageCodeToString(languageCode).size())
         {
-            megaApi->setLanguage(languageCode.toUtf8().constData());
+            languageCode.resize(languageCode.size() - 1);
         }
 
-        if (megaApiFolders)
+        if (languageCode.size())
         {
-            megaApi->setLanguage(languageCode.toUtf8().constData());
+            if (megaApi)
+            {
+                megaApi->setLanguage(languageCode.toUtf8().constData());
+            }
+
+            if (megaApiFolders)
+            {
+                megaApiFolders->setLanguage(languageCode.toUtf8().constData());
+            }
         }
     }
 
@@ -2280,19 +2316,27 @@ void MegaApplication::initHttpsServer()
     {
         startHttpServer();
 
-        ConnectivityChecker *localHttpsChecker = new ConnectivityChecker(Preferences::LOCAL_HTTPS_TEST_URL);
-        localHttpsChecker->setTestString(Preferences::LOCAL_HTTPS_TEST_SUBSTRING);
-        localHttpsChecker->setTimeout(Preferences::LOCAL_HTTPS_TEST_TIMEOUT_MS);
-        localHttpsChecker->setMethod(ConnectivityChecker::METHOD_POST);
-        localHttpsChecker->setPostData(QByteArray(Preferences::LOCAL_HTTPS_TEST_POST_DATA.toUtf8()));
-        localHttpsChecker->setHeader(QByteArray("Origin"), QByteArray("https://mega.nz"));
+        char *os = megaApi->getOperatingSystemVersion();
+        if (os)
+        {
+            if (!QString::fromUtf8(os).startsWith(QString::fromUtf8("Windows 5.")))
+            {
+                ConnectivityChecker *localHttpsChecker = new ConnectivityChecker(Preferences::LOCAL_HTTPS_TEST_URL);
+                localHttpsChecker->setTestString(Preferences::LOCAL_HTTPS_TEST_SUBSTRING);
+                localHttpsChecker->setTimeout(Preferences::LOCAL_HTTPS_TEST_TIMEOUT_MS);
+                localHttpsChecker->setMethod(ConnectivityChecker::METHOD_POST);
+                localHttpsChecker->setPostData(QByteArray(Preferences::LOCAL_HTTPS_TEST_POST_DATA.toUtf8()));
+                localHttpsChecker->setHeader(QByteArray("Origin"), QByteArray("https://mega.nz"));
 
-        connect(localHttpsChecker, SIGNAL(testError()), this, SLOT(onLocalHttpsCheckError()));
-        connect(localHttpsChecker, SIGNAL(testSuccess()), this, SLOT(onLocalHttpsCheckSuccess()));
-        connect(localHttpsChecker, SIGNAL(testFinished()), localHttpsChecker, SLOT(deleteLater()));
+                connect(localHttpsChecker, SIGNAL(testError()), this, SLOT(onLocalHttpsCheckError()));
+                connect(localHttpsChecker, SIGNAL(testSuccess()), this, SLOT(onLocalHttpsCheckSuccess()));
+                connect(localHttpsChecker, SIGNAL(testFinished()), localHttpsChecker, SLOT(deleteLater()));
 
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing the local HTTPS server");
-        localHttpsChecker->startCheck();
+                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing the local HTTPS server");
+                localHttpsChecker->startCheck();
+            }
+            delete [] os;
+        }
     }
 }
 
