@@ -55,15 +55,18 @@ remove_megasync=0
 quit_machine=1
 
 
-while getopts ":ikcp:x:" opt; do
+while getopts ":ikcnp:x:" opt; do
   case $opt in
     i)
 		remove_megasync=1
 		flag_remove_megasync="-$opt"
       ;;
+	n)
+		flag_nogpgcheck="-$opt"
+	;;
 	c)
 		flag_require_change="-$opt"
-	;;
+	;;	
 	p)
 		arg_passwd="-$opt $OPTARG"
 	;;
@@ -174,8 +177,8 @@ for i in `shuf -e $PAIRSVMNAMEREPOURL`; do
 	DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 	
 	rm ${VMNAME}_{OK,FAIL} 2> /dev/null
-	echo $DIR/check_package.sh $arg_passwd $flagXMLdir $flag_require_change $flag_remove_megasync $flag_quit_machine $VMNAME $REPO 
-	( $DIR/check_package.sh $arg_passwd $flagXMLdir $flag_require_change $flag_remove_megasync $flag_quit_machine $VMNAME $REPO 2>&1 ) > output_check_package_${VMNAME}.log &
+	echo $DIR/check_package.sh $arg_passwd $flagXMLdir $flag_require_change $flag_remove_megasync $flag_quit_machine $flag_nogpgcheck $VMNAME $REPO 
+	( $DIR/check_package.sh $arg_passwd $flagXMLdir $flag_require_change $flag_remove_megasync $flag_quit_machine $flag_nogpgcheck $VMNAME $REPO 2>&1 ) > output_check_package_${VMNAME}.log &
 	
 	sleep 1
 	
