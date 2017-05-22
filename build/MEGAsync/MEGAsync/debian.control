@@ -17,7 +17,7 @@ Build-Depends:  debhelper,
 
 Package: megasync
 Architecture: any
-Depends: ${shlibs:Depends}, libc-ares2, apt-transport-https
+Depends: ${shlibs:Depends}, libc-ares2, apt-transport-https, libqt4-svg | libqt5svg5
 Description: Easy automated syncing between your computers and your MEGA cloud drive
  Secure:
  Your data is encrypted end to end. Nobody can intercept it while in storage or in transit.
