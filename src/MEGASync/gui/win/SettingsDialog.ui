@@ -2019,7 +2019,7 @@ border: none;</string>
              <string notr="true"/>
             </property>
             <property name="text">
-             <string>Bandwidth quota</string>
+             <string>Transfer quota</string>
             </property>
             <property name="margin">
              <number>0</number>
