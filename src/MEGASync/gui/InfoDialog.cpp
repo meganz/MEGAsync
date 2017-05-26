@@ -223,7 +223,7 @@ void InfoDialog::setUsage()
     {
         ui->pUsageQuota->setValue(0);
         ui->lPercentageUsedQuota->setText(QString::fromUtf8(""));
-        ui->lTotalUsedQuota->setText(tr("USED BANDWIDTH %1").arg(tr("Data temporarily unavailable")));
+        ui->lTotalUsedQuota->setText(tr("USED TRANSFERS %1").arg(tr("Data temporarily unavailable")));
     }
     else
     {
@@ -234,7 +234,7 @@ void InfoDialog::setUsage()
                                      .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(preferences->totalBandwidth())));
         ui->lPercentageUsedQuota->setText(used);
-        ui->lTotalUsedQuota->setText(tr("USED BANDWIDTH %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
+        ui->lTotalUsedQuota->setText(tr("USED TRANSFERS %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
                                                               .arg(Utilities::getSizeString(preferences->usedBandwidth()))));
     }
 }
