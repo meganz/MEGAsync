@@ -3805,6 +3805,29 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
     exportOps++;
 }
 
+void MegaApplication::shellViewOnMega(QString localPath)
+{
+    MegaNode *node = NULL;
+    std::string tmpPath(localPath.toStdString());
+
+    node = megaApi->getSyncedNode(&tmpPath);
+    if (!node)
+    {
+        const char *fpLocal = megaApi->getFingerprint(tmpPath.c_str());
+        node = megaApi->getNodeByFingerprint(fpLocal);
+        delete [] fpLocal;
+        if (!node)
+        {
+            return;
+        }
+    }
+
+    QString url = QString::fromUtf8("fm/%1").arg(QString::fromUtf8(node->getBase64Handle()));
+    megaApi->getSessionTransferURL(url.toUtf8().constData());
+
+    delete node;
+}
+
 void MegaApplication::exportNodes(QList<MegaHandle> exportList, QStringList extraLinks)
 {
     if (appfinished || !megaApi->isLoggedIn())
