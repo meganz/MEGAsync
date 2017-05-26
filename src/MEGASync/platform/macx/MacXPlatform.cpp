@@ -4,6 +4,9 @@ int MacXPlatform::fd = -1;
 MacXSystemServiceTask* MacXPlatform::systemServiceTask = NULL;
 MacXExtServer *MacXPlatform::extServer = NULL;
 
+static const QString kFinderSyncBundleId = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
+static const QString kFinderSyncPath = QString::fromUtf8("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/");
+
 void MacXPlatform::initialize(int argc, char *argv[])
 {
 #ifdef QT_DEBUG
@@ -72,9 +75,82 @@ bool MacXPlatform::isStartOnStartupActive()
     return isStartAtLoginActive();
 }
 
-bool MacXPlatform::setFinderIntegration(bool value)
+int MacXPlatform::addFinderExtensionToSystem()
 {
-    return enableFinderIntegration(value);
+    QStringList scriptArgs;
+    scriptArgs << QString::fromUtf8("-a")
+               << kFinderSyncPath;
+
+    QProcess p;
+    p.start(QString::fromAscii("pluginkit"), scriptArgs);
+    if (!p.waitForFinished(2000))
+    {
+        return false;
+    }
+
+    return p.exitCode();
+}
+
+bool MacXPlatform::isFinderExtensionEnabled()
+{
+    QStringList scriptArgs;
+    scriptArgs << QString::fromUtf8("-m")
+               << QString::fromUtf8("-i")
+               << kFinderSyncBundleId;
+
+    QProcess p;
+    p.start(QString::fromAscii("pluginkit"), scriptArgs);
+    if (!p.waitForFinished(2000))
+    {
+        return false;
+    }
+
+    QString out = QString::fromUtf8(p.readAllStandardOutput().trimmed());
+    if (out.isEmpty())
+    {
+        return false;
+    }
+
+    if (out.at(0) != QChar::fromAscii('?') && out.at(0) != QChar::fromAscii('+'))
+    {
+        return false;
+    }
+
+    return true;
+}
+
+int MacXPlatform::reinstallFinderExtension()
+{
+    QStringList scriptArgs;
+    scriptArgs << QString::fromUtf8("-r")
+               << kFinderSyncPath;
+
+    QProcess p;
+    p.start(QString::fromAscii("pluginkit"), scriptArgs);
+    if (!p.waitForFinished(2000))
+    {
+        return false;
+    }
+
+    return p.exitCode();
+}
+
+int MacXPlatform::enableFinderExtension(bool value)
+{
+    QStringList scriptArgs;
+    scriptArgs << QString::fromUtf8("-e")
+               << (value ? QString::fromUtf8("use") : QString::fromUtf8("ignore")) //Enable or disable extension plugin
+               << QString::fromUtf8("-i")
+               << kFinderSyncBundleId;
+
+    QProcess p;
+    p.start(QString::fromAscii("pluginkit"), scriptArgs);
+    if (!p.waitForFinished(2000))
+    {
+        return false;
+    }
+
+    return p.exitCode();
 }
 
 void MacXPlatform::showInFolder(QString pathIn)

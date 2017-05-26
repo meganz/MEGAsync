@@ -531,18 +531,3 @@ void enableBlurForWindow(QWidget *window)
         [nsview addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
     }
 }
-
-bool enableFinderIntegration(bool value)
-{
-    QString command = value ? QString::fromUtf8("pluginkit -e use -i ").append(Preferences::instance()->FINDER_EXT_BUNDLE_ID)
-                            : QString::fromUtf8("pluginkit -e ignore -i ").append(Preferences::instance()->FINDER_EXT_BUNDLE_ID);
-
-    if (value) //Add FinderSync ext to plugin database. Fixed possible undetected issues during auto-updates
-    {
-        system(QString::fromUtf8("pluginkit -a /Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/").toStdString().c_str());
-    }
-
-    // Enable/Disable FinderSync ext
-    system(command.toStdString().c_str());
-    return true;
-}
