@@ -1153,6 +1153,17 @@ void MegaApplication::start()
 
     applyProxySettings();
     Platform::startShellDispatcher(this);
+#ifdef Q_OS_MACX
+    if (QSysInfo::MacintoshVersion > QSysInfo::MV_10_9) //FinderSync API support from 10.10+
+    {
+        if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_ACTIVE_FINDER_EXT))
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "MEGA Finder Sync added to system database and enabled");
+            Platform::addFinderExtensionToSystem();
+            QTimer::singleShot(5000, this, SLOT(enableFinderExt()));
+        }
+    }
+#endif
 
     //Start the initial setup wizard if needed
     if (!preferences->logged())
@@ -1193,7 +1204,6 @@ void MegaApplication::start()
         if (!preferences->isFirstStartDone())
         {
             megaApi->sendEvent(99500, "MEGAsync first start");
-            Platform::setFinderIntegration(true);
             openInfoWizard();
         }
 
@@ -2966,6 +2976,15 @@ int MegaApplication::getPrevVersion()
 {
     return prevVersion;
 }
+
+#ifdef __APPLE__
+void MegaApplication::enableFinderExt()
+{
+    // We need to wait from OS X El capitan to reload system db before enable the extension
+    Platform::enableFinderExtension(true);
+    preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_ACTIVE_FINDER_EXT, true);
+}
+#endif
 
 void MegaApplication::updateUserStats()
 {

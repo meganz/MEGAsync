@@ -179,6 +179,9 @@ public slots:
     void checkFirstTransfer();
     void onDeprecatedOperatingSystem();
     int getPrevVersion();
+#ifdef __APPLE__
+    void enableFinderExt();
+#endif
 
 protected:
     void createTrayIcon();
