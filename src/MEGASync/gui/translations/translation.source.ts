@@ -317,6 +317,57 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>FinderExtensionApp</name>
+    <message>
+        <source>Get MEGA link</source>
+        <translatorcomment>Finder context menu option to generate a public MEGA link</translatorcomment>
+        <translation type="unfinished">[$1698]</translation>
+    </message>
+    <message>
+        <source>View on MEGA</source>
+        <translatorcomment>Finder context menu option to view a synced file through web browser within your MEGA account</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No options available</source>
+        <translatorcomment>Finder context menu label when no option is available for selected items</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click the toolbar item for a menu.</source>
+        <translatorcomment>Tooltip for MEGA finder toolbar button</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 file</source>
+        <translatorcomment>Context menu option label to indicate the user has selected a file</translatorcomment>
+        <translation type="unfinished">[$1806]</translation>
+    </message>
+    <message>
+        <source>%i files</source>
+        <translatorcomment>Context menu option label to indicate the user has selected %i number of files</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1 folder</source>
+        <translatorcomment>Context menu option label to indicate the user has selected a folder</translatorcomment>
+        <translation type="unfinished">[$1808]</translation>
+    </message>
+    <message>
+        <source>%i folders</source>
+        <translatorcomment>Context menu option label to indicate the user has selected %i number of folders</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>FinderExtensionBundle</name>
+    <message>
+        <source>MEGA Finder Sync</source>
+        <translatorcomment>Identifying name for MEGA finder extension on macOS systems</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -392,19 +443,24 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Create an account</source>
-        <translatorcomment>Button label to start the Create Account process. (String as short as possible)</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Label to cancel all pending downloads.(String as short as possible)</translatorcomment>
-        <translation type="unfinished">[$1614]</translation>
+        <translation type="obsolete">[$1614]</translation>
     </message>
     <message>
         <source>Cancel download</source>
         <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
-        <translation type="unfinished">[$1615]</translation>
+        <translation type="obsolete">[$1615]</translation>
+    </message>
+    <message>
+        <source>[A]Login[/A] or [A]Create an account[/A] to fully experience MEGA</source>
+        <translatorcomment>Label to inform a user that needs to login or create an account in order to use MEGAsync. Keeps [A][/A] codes.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Create account</source>
+        <translatorcomment>Button label to start the creation of an account process. (String as short as possible)</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -511,17 +567,17 @@ Are you sure?</source>
     <message>
         <source>MEGAsync is up to date</source>
         <translatorcomment>Label to indicate that MEGAsync is at state of up-to-date (String as short as possible)</translatorcomment>
-        <translation>[$1602]</translation>
+        <translation type="vanished">[$1602]</translation>
     </message>
     <message>
         <source>RECENTLY UPDATED</source>
         <translatorcomment>Label to indicate the files recently updated. Keep capital letters.</translatorcomment>
-        <translation>[$1603]</translation>
+        <translation type="vanished">[$1603]</translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data of the account is temporarily unavailable (String as short as possible)</translatorcomment>
-        <translation>[$1604]</translation>
+        <translation type="vanished">[$1604]</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -531,7 +587,7 @@ Are you sure?</source>
     <message>
         <source>MEGA website</source>
         <translatorcomment>Label with an URL link to MEGA website</translatorcomment>
-        <translation>[$1606]</translation>
+        <translation type="vanished">[$1606]</translation>
     </message>
     <message>
         <source>%1 of %2</source>
@@ -541,7 +597,7 @@ Are you sure?</source>
     <message>
         <source>Usage: %1</source>
         <translatorcomment>Label to indicate the actual usage of the current account. Preserve %1 code beacuse is used to include the amount of space utilized.</translatorcomment>
-        <translation>[$1608]</translation>
+        <translation type="vanished">[$1608]</translation>
     </message>
     <message>
         <source>%1 of %2 (%3/s)</source>
@@ -551,17 +607,17 @@ Are you sure?</source>
     <message>
         <source>%1 of %2 (paused)</source>
         <translatorcomment>Label to keep the count of pending and total files. Preserve %1 and %2 codes beacuse they are used to include the number of pending and total files.</translatorcomment>
-        <translation>[$1610]</translation>
+        <translation type="vanished">[$1610]</translation>
     </message>
     <message>
         <source>File transfers paused</source>
         <translatorcomment>Label to indicate that the state of transfers is actually paused.</translatorcomment>
-        <translation>[$1611]</translation>
+        <translation type="vanished">[$1611]</translation>
     </message>
     <message>
         <source>MEGAsync is scanning</source>
         <translatorcomment>Label to indicate that MEGAsync is at state of scanning inside synced folders (String as short as possible)</translatorcomment>
-        <translation>[$1612]</translation>
+        <translation type="vanished">[$1612]</translation>
     </message>
     <message>
         <source>All transfers have been completed</source>
@@ -616,17 +672,17 @@ Are you sure?</source>
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>[$1624] </translation>
+        <translation type="vanished">[$1624] </translation>
     </message>
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>[$1625] </translation>
+        <translation type="vanished">[$1625] </translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
         <translatorcomment>Label to indicate that MEGAsync is at a wait state (String as short as possible)</translatorcomment>
-        <translation>[$1818]</translation>
+        <translation type="vanished">[$1818]</translation>
     </message>
     <message>
         <source>MEGAsync is starting</source>
@@ -635,11 +691,11 @@ Are you sure?</source>
     </message>
     <message>
         <source>Pause</source>
-        <translation type="unfinished">[$1647]</translation>
+        <translation type="obsolete">[$1647]</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">[$1646]</translation>
+        <translation type="obsolete">[$1646]</translation>
     </message>
     <message>
         <source>Resume downloads</source>
@@ -678,6 +734,91 @@ Are you sure?</source>
     </message>
     <message>
         <source>Servers are too busy. Please wait...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MEGAsync is currently disabled</source>
+        <translatorcomment>Label to inform a user that MEGAsync is actually disabled due to the account is overquota (storage and/or transfer)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
+        <translatorcomment>Label to inform the user that his account is overquota and needs to upgrade to keep using it.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upgrade to PRO</source>
+        <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open Transfer Manager</source>
+        <translatorcomment>Tooltip for the button that open transfer manager dialog</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Access your MEGAsync settings</source>
+        <translatorcomment>Tooltip for the button that open MEGAsync settings dialog</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USED STORAGE %1</source>
+        <translatorcomment>Label to indicate the total used storage.quota</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data temporarily unavailable</source>
+        <translatorcomment>Label to indicate the usage data is temporarely unavailable due to a transient error</translatorcomment>
+        <translation type="unfinished">[$1752]</translation>
+    </message>
+    <message>
+        <source>USED TRANSFERS %1</source>
+        <translatorcomment>Label to indicate the total used transfer quota</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PAUSED</source>
+        <translatorcomment>Label to indicate that the current transfer is paused. Keep capital letters.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translatorcomment>Label to indicate that MEGAsync is at pause state</translatorcomment>
+        <translation type="unfinished">[$1651]</translation>
+    </message>
+    <message>
+        <source>Waiting</source>
+        <translatorcomment>Label to indicate that MEGAsync is at waiting state</translatorcomment>
+        <translation type="unfinished">[$1329]</translation>
+    </message>
+    <message>
+        <source>Scanning...</source>
+        <translatorcomment>Label to indicate that MEGAsync is at scanning state</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Up to date</source>
+        <translatorcomment>Label to indicate that MEGAsync is at up-to-date state</translatorcomment>
+        <translation type="unfinished">[$1650]</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
+        <translation type="unfinished">[$1687]</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
+        <translation type="unfinished">[$166]</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rubbish bin</source>
+        <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1070,7 +1211,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to upload file/folder to MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">[$1803]</translation>
+        <translation type="obsolete">[$1803]</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -1085,7 +1226,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to download file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">[$2037]</translation>
+        <translation type="obsolete">[$2037]</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -1193,21 +1334,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Login</source>
-        <translatorcomment>Label to indicate Login action</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Fetching file list...</source>
         <translation type="unfinished">[$1784]...</translation>
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stream from MEGA</source>
-        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1278,6 +1409,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resume Transfers</source>
+        <translatorcomment>Label of main menu option to resume transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause Transfers</source>
+        <translatorcomment>Label of main menu option to pause transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stream</source>
+        <translatorcomment>Label and title of the dialog displayed when a user wants to stream a file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MEGA website</source>
+        <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">[$1606]</translation>
     </message>
 </context>
 <context>
@@ -2049,7 +2200,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Bandwidth quota</source>
         <translatorcomment>Label to indicatte the actual use of Bandwidth quota.</translatorcomment>
-        <translation>[$1739]</translation>
+        <translation type="vanished">[$1739]</translation>
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
@@ -2485,6 +2636,11 @@ when the application starts again</source>
     </message>
     <message>
         <source>PRO Lite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Transfer quota</source>
+        <translatorcomment>Label to indicate the transfer quota usage of current logged account</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
