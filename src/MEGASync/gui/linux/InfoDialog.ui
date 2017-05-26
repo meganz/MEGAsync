@@ -1451,7 +1451,7 @@ border: none;</string>
                       <string notr="true"/>
                      </property>
                      <property name="text">
-                      <string>USED SPACE: Data temporarily unavailable</string>
+                      <string/>
                      </property>
                      <property name="alignment">
                       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
@@ -1659,7 +1659,7 @@ color: #333333;
 }</string>
                      </property>
                      <property name="text">
-                      <string>USED BANDWIDTH: Data temporarily unavailable</string>
+                      <string/>
                      </property>
                      <property name="alignment">
                       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
