@@ -19,6 +19,9 @@ MacXExtServer::MacXExtServer(MegaApplication *app)
     }
 
     connect(this, SIGNAL(sendToAll(QString )), this, SLOT(doSendToAll(QString)));
+    connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), app, SLOT(shellUpload(QQueue<QString>)),Qt::QueuedConnection);
+    connect(this, SIGNAL(newExportQueue(QQueue<QString>)), app, SLOT(shellExport(QQueue<QString>)),Qt::QueuedConnection);
+    connect(this, SIGNAL(viewOnMega(QString)), app, SLOT(shellViewOnMega(QString)),Qt::QueuedConnection);
     connect(m_localServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
 }
 
@@ -52,7 +55,7 @@ void MacXExtServer::acceptConnection()
                 continue;
             }
 
-            QString message = QString::fromUtf8("A:") + syncPath
+            QString message = QString::fromUtf8("A:") + syncPath + QDir::separator()
                     + QChar::fromAscii(':') + preferences->getSyncName(i);
             client->writeData(message.toUtf8().constData(), message.length());
         }        
@@ -241,6 +244,12 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
             }
 
             std::string tmpPath(content);
+
+            if (!tmpPath.empty() && tmpPath[tmpPath.length() - 1] == '/')
+            {
+                tmpPath.erase(tmpPath.length() - 1, 1);
+            }
+
             int state = ((MegaApplication *)qApp)->getMegaApi()->syncPathState(&tmpPath);
             switch(state)
             {
@@ -275,13 +284,23 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
             }
             return false;
         }
-        case 'O':
+        case 'O': // Open local path
         {
             QString filePath = QString::fromUtf8(content);
             QFileInfo file(filePath);
             if (file.exists())
             {
                 QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(filePath));
+            }
+            return false;
+        }
+        case 'V': // View node at MEGA cloud
+        {
+            QString filePath = QString::fromUtf8(content);
+            QFileInfo file(filePath);
+            if (file.exists())
+            {
+                emit viewOnMega(filePath);
             }
             return false;
         }
@@ -308,6 +327,11 @@ void MacXExtServer::notifyItemChange(QString path)
     QByteArray response;
     QString command = QString::fromUtf8("P:") + path;
 
+    if(QDir(path).exists())
+    {
+        command += QDir::separator();
+    }
+
     bool shouldRespond = GetAnswerToRequest(command.toStdString().c_str(), &response);
     if (shouldRespond)
     {
@@ -319,6 +343,11 @@ void MacXExtServer::notifyItemChange(QString path)
 
 void MacXExtServer::notifySyncAdd(QString path, QString syncName)
 {
+    if(QDir(path).exists())
+    {
+        path += QDir::separator();
+    }
+
     emit sendToAll(QString::fromUtf8("A:")
                    + path
                    + QChar::fromAscii(':')
