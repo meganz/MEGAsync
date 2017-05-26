@@ -1,0 +1,15 @@
+/* 
+  Localizable.strings
+  MEGAFinderSync
+
+  Copyright © 2017 Mega Ltd. All rights reserved.
+*/
+"Get MEGA link" = "Obtener enlace de MEGA";
+"View on MEGA"  = "Visualizar en MEGA";
+"No options available" = "Ninguna opción disponible";
+"MEGA Finder Sync" = "Integración de MEGA en Finder";
+"Click the toolbar item for a menu." = "Haga click en el ítem de la barra de herramientas para mostrar opciones.";
+"1 file" = "1 archivo";
+"%i files" = "%i archivos";
+"1 folder" = "1 carpeta";
+"%i folders" = "%i carpetas";

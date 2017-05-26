@@ -117,7 +117,7 @@
         [_serverConnection send:query];
     }
     @catch (NSException *exception) {
-        NSLog(@"Caught exception %@", exception);
+        NSLog(@"ERROR - Caught exception %@", exception);
         [self connectionDidDie];
     }
 }

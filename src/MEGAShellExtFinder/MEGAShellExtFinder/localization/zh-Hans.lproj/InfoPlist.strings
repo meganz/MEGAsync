@@ -1,0 +1,8 @@
+/* 
+  InfoPlist.strings
+  MEGAFinderSync
+
+  Copyright © 2017 Mega Ltd. All rights reserved.
+*/
+
+"CFBundleDisplayName" = "MEGA Finder Sync";

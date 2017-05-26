@@ -9,11 +9,11 @@
 #import "ShellExt.h"
 
 typedef enum {
-    FILE_ERROR    = 0,
+    FILE_NONE    = 0,
     FILE_SYNCED   = 1,
     FILE_PENDING  = 2,
     FILE_SYNCING  = 3,
-    FILE_NOTFOUND = 9,
+    FILE_IGNORED = 4,
 } FileState;
 
 const NSString* OP_PATH_STATE = @"P";
