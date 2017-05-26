@@ -384,6 +384,18 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaError", "Read error");
     QT_TRANSLATE_NOOP("MegaError", "Invalid application key");
     QT_TRANSLATE_NOOP("MegaError", "Unknown error");
+
+    QT_TRANSLATE_NOOP("FinderExtensionBundle", "MEGA Finder Sync");
+
+    QT_TRANSLATE_NOOP("FinderExtensionApp", "Get MEGA link");
+    QT_TRANSLATE_NOOP("FinderExtensionApp", "View on MEGA");
+    QT_TRANSLATE_NOOP("FinderExtensionApp", "No options available");
+    QT_TRANSLATE_NOOP("FinderExtensionApp", "Click the toolbar item for a menu.");
+    QT_TRANSLATE_NOOP("FinderExtensionApp", "1 file");
+    QT_TRANSLATE_NOOP("FinderExtensionApp", "%i files");
+    QT_TRANSLATE_NOOP("FinderExtensionApp", "1 folder");
+    QT_TRANSLATE_NOOP("FinderExtensionApp", "%i folders");
+
 #endif
 }
 
