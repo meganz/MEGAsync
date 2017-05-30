@@ -122,52 +122,30 @@ background-color: white;
 border-top: 1px solid rgba(0, 0, 0, 5%);
 }
 
-#pUsageStorage, #pUsageQuota
-{
-border: 1px solid transparent;
-border-radius: 2px;
-}
-QProgressBar#pUsageStorage
+QProgressBar#pUsageStorage, QProgressBar#pUsageQuota
 {
 background-color: #EEEEEE;
 border-radius: 2px;
 }
 
-QProgressBar#pUsageStorage[overquota=true]
-{
-background-color: #EB4444;
-}
-                                                            
-QProgressBar#pUsageStorage::chunk {
-background-color: #666666;
-border-top-left-radius: 2px;
-border-bottom-left-radius: 2px;
-
-}
-
-QProgressBar#pUsageStorage::chunk[overquota=true] {
-background-color: #EB4444;
-border-radius: 2px;
-}
-
-QProgressBar#pUsageQuota
-{
-background-color: #EEEEEE;
-border-radius: 2px;
-}
-
-QProgressBar#pUsageQuota[overquota=true]
+QProgressBar#pUsageStorage[overquota=true], QProgressBar#pUsageQuota[overquota=true]
 {
 background-color: #EB4444;
 border-radius: 2px;
 }
                                                             
-QProgressBar#pUsageQuota::chunk {
+QProgressBar#pUsageStorage::chunk, QProgressBar#pUsageQuota::chunk{
 background-color: #666666;
 border-top-left-radius: 2px;
 border-bottom-left-radius: 2px;
 }
-QProgressBar#pUsageQuota::chunk[overquota=true] {
+
+QProgressBar#pUsageStorage::chunk[crossedge=true] , QProgressBar#pUsageQuota::chunk[crossedge=true]{
+background-color: #666666;
+border-radius: 2px;
+}
+
+QProgressBar#pUsageStorage::chunk[overquota=true] , QProgressBar#pUsageQuota::chunk[overquota=true]{
 background-color: #EB4444;
 border-radius: 2px;
 }
