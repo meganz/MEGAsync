@@ -189,7 +189,7 @@ void cleanItemsOfFolder(std::string dirPath)
     [getLinkItem setAction:@selector(getMEGAlinks:)];
     [menu addItem:getLinkItem];
     
-    if (numFolders + numFiles == 1) // If only one option is selected
+    if ((selectedItemURLs.count == 1) && (numFolders + numFiles == 1)) // If only one item is selected and already synced.
     {
         NSMenuItem *viewOnMEGAItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"View on MEGA", nil) action:nil keyEquivalent:@""];
         [menu setAutoenablesItems:NO];
