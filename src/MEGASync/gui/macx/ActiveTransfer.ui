@@ -140,13 +140,13 @@
        <widget class="QLabel" name="lFileName">
         <property name="minimumSize">
          <size>
-          <width>230</width>
+          <width>300</width>
           <height>35</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>230</width>
+          <width>300</width>
           <height>35</height>
          </size>
         </property>
