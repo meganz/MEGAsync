@@ -1,15 +1,16 @@
-/* 
-  Localizable.strings
-  MEGAFinderSync
-
-  Copyright © 2017 Mega Ltd. All rights reserved.
-*/
-"Get MEGA link" = "Get MEGA link";
-"View on MEGA"  = "View on MEGA";
+/* Finder context menu option to generate a public MEGA link */
+"Get MEGA link" = "Dapatkan link MEGA";
+/* Finder context menu option to view a synced file through web browser within your MEGA account */
+"View on MEGA" = "View on MEGA";
+/* Finder context menu label when no option is available for selected items */
 "No options available" = "No options available";
-"MEGA Finder Extension" = "MEGA Finder Extension";
+/* Tooltip for MEGA finder toolbar button */
 "Click the toolbar item for a menu." = "Click the toolbar item for a menu.";
+/* Context menu option label to indicate the user has selected a file */
 "1 file" = "1 file";
+/* Context menu option label to indicate the user has selected %i number of files */
 "%i files" = "%i files";
+/* Context menu option label to indicate the user has selected a folder */
 "1 folder" = "1 folder";
+/* Context menu option label to indicate the user has selected %i number of folders */
 "%i folders" = "%i folders";

@@ -1,15 +1,16 @@
-/* 
-  Localizable.strings
-  MEGAFinderSync
-
-  Copyright © 2017 Mega Ltd. All rights reserved.
-*/
-"Get MEGA link" = "Get MEGA link";
-"View on MEGA"  = "View on MEGA";
-"No options available" = "No options available";
-"MEGA Finder Extension" = "MEGA Finder Extension";
-"Click the toolbar item for a menu." = "Click the toolbar item for a menu.";
-"1 file" = "1 file";
-"%i files" = "%i files";
-"1 folder" = "1 folder";
-"%i folders" = "%i folders";
+/* Finder context menu option to generate a public MEGA link */
+"Get MEGA link" = "MEGA 링크 얻기";
+/* Finder context menu option to view a synced file through web browser within your MEGA account */
+"View on MEGA" = "MEGA에서 보기";
+/* Finder context menu label when no option is available for selected items */
+"No options available" = "사용 가능한 옵션 없음";
+/* Tooltip for MEGA finder toolbar button */
+"Click the toolbar item for a menu." = "메뉴를 보려면 툴바 항목을 클릭하세요";
+/* Context menu option label to indicate the user has selected a file */
+"1 file" = "1개의 파일";
+/* Context menu option label to indicate the user has selected %i number of files */
+"%i files" = "파일 %i개";
+/* Context menu option label to indicate the user has selected a folder */
+"1 folder" = "1개의 폴더";
+/* Context menu option label to indicate the user has selected %i number of folders */
+"%i folders" = "폴더 %i개";
