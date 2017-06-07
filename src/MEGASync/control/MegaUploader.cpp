@@ -31,7 +31,21 @@ void MegaUploader::upload(QString path, MegaNode *parent)
 void MegaUploader::upload(QFileInfo info, MegaNode *parent)
 {
     QApplication::processEvents();
-    QByteArray utf8name = info.fileName().toUtf8();
+    QString fileName = info.fileName();
+    if (fileName.isEmpty() && info.isRoot())
+    {
+        fileName = QDir::toNativeSeparators(info.absoluteFilePath())
+                .replace(QString::fromUtf8("\\"), QString::fromUtf8(""))
+                .replace(QString::fromUtf8("/"), QString::fromUtf8(""))
+                .replace(QString::fromUtf8(":"), QString::fromUtf8(""));
+
+        if (fileName.isEmpty())
+        {
+            fileName = QString::fromUtf8("Drive");
+        }
+    }
+
+    QByteArray utf8name = fileName.toUtf8();
     QString currentPath = QDir::toNativeSeparators(info.absoluteFilePath());
     if (info.isDir())
     {
@@ -51,16 +65,16 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
     }
 
     string localPath = megaApi->getLocalPath(parent);
-    if (localPath.size() && megaApi->isSyncable(info.fileName().toUtf8().constData()))
+    if (localPath.size() && megaApi->isSyncable(utf8name.constData()))
     {
 #ifdef WIN32
-        QString destPath = QDir::toNativeSeparators(QString::fromWCharArray((const wchar_t *)localPath.data()) + QDir::separator() + info.fileName());
+        QString destPath = QDir::toNativeSeparators(QString::fromWCharArray((const wchar_t *)localPath.data()) + QDir::separator() + fileName);
         if (destPath.startsWith(QString::fromAscii("\\\\?\\")))
         {
             destPath = destPath.mid(4);
         }
 #else
-        QString destPath = QDir::toNativeSeparators(QString::fromUtf8(localPath.data()) + QDir::separator() + info.fileName());
+        QString destPath = QDir::toNativeSeparators(QString::fromUtf8(localPath.data()) + QDir::separator() + fileName);
 #endif
         megaApi->moveToLocalDebris(destPath.toUtf8().constData());
         QtConcurrent::run(Utilities::copyRecursively, currentPath, destPath);
@@ -72,7 +86,7 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
     else if (info.isDir())
     {
         folders.enqueue(info);
-        megaApi->createFolder(info.fileName().toUtf8().constData(), parent, delegateListener);
+        megaApi->createFolder(utf8name.constData(), parent, delegateListener);
     }
 }
 
