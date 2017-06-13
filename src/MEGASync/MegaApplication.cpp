@@ -2206,6 +2206,19 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
     QDesktopWidget *desktop = QApplication::desktop();
     int screenIndex = desktop->screenNumber(position);
     screenGeometry = desktop->availableGeometry(screenIndex);
+    if (!screenGeometry.isValid())
+    {
+        screenGeometry = desktop->screenGeometry(screenIndex);
+        if (screenGeometry.isValid())
+        {
+            screenGeometry.setTop(28);
+        }
+        else
+        {
+            screenGeometry = dialog->rect();
+        }
+    }
+
 
     #ifdef __APPLE__
         if (positionTrayIcon.x() || positionTrayIcon.y())
