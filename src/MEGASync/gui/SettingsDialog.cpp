@@ -151,6 +151,35 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->cAutoUpdate->hide();
     ui->bUpdate->hide();
     #endif
+#else
+    connect(ui->cDisableIcons, SIGNAL(clicked()), this, SLOT(stateChanged()));
+    ui->cDisableIcons->hide();
+
+    typedef LONG MEGANTSTATUS;
+    typedef struct _MEGAOSVERSIONINFOW {
+        DWORD dwOSVersionInfoSize;
+        DWORD dwMajorVersion;
+        DWORD dwMinorVersion;
+        DWORD dwBuildNumber;
+        DWORD dwPlatformId;
+        WCHAR  szCSDVersion[ 128 ];     // Maintenance string for PSS usage
+    } MEGARTL_OSVERSIONINFOW, *PMEGARTL_OSVERSIONINFOW;
+
+    typedef MEGANTSTATUS (WINAPI* RtlGetVersionPtr)(PMEGARTL_OSVERSIONINFOW);
+    MEGARTL_OSVERSIONINFOW version = { 0 };
+    HMODULE hMod = GetModuleHandleW(L"ntdll.dll");
+    if (hMod)
+    {
+        RtlGetVersionPtr RtlGetVersion = (RtlGetVersionPtr)GetProcAddress(hMod, "RtlGetVersion");
+        if (RtlGetVersion)
+        {
+            RtlGetVersion(&version);
+            if (version.dwMajorVersion >= 10)
+            {
+                ui->cDisableIcons->show();
+            }
+        }
+    }
 #endif
     ui->cProxyType->addItem(QString::fromUtf8("SOCKS5H"));
 
@@ -936,6 +965,7 @@ void SettingsDialog::loadSettings()
 
         //Syncs
         loadSyncSettings();
+        ui->cDisableIcons->setChecked(preferences->leftPaneIconsDisabled());
 
         //Bandwidth
         ui->rUploadAutoLimit->setChecked(preferences->uploadLimitKB()<0);
@@ -1260,6 +1290,26 @@ bool SettingsDialog::saveSettings()
 
             syncsChanged = false;
         }
+
+        bool iconsDisabled = ui->cDisableIcons->isChecked();
+        if (preferences->leftPaneIconsDisabled() != iconsDisabled)
+        {
+            if (iconsDisabled)
+            {
+                Platform::removeAllSyncsFromLeftPane();
+            }
+            else
+            {
+                for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+                {
+                    Platform::addSyncToLeftPane(preferences->getLocalFolder(i),
+                                                preferences->getSyncName(i),
+                                                preferences->getSyncID(i));
+                }
+            }
+            preferences->disableLeftPaneIcons(iconsDisabled);
+        }
+
 #ifndef WIN32
         if (permissionsChanged)
         {
