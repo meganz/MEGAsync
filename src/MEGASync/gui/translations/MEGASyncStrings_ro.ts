@@ -184,7 +184,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">termenii serviciului</translation>
+        <translation type="unfinished">Termenii de utilizare a serviciului</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
@@ -1267,12 +1267,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
-        <translatorcomment>Message shown to the user to inform about updating the operating system to be compatible with latest versions of MEGAsync</translatorcomment>
         <translation type="unfinished">Te rugăm să iei în considerare actualizarea sistemului de operare.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
-        <translatorcomment>Message shown to the user to inform that MEGAsync no longer work with prior versions to OS X Mavericks</translatorcomment>
         <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
     </message>
 </context>
@@ -2475,6 +2473,11 @@ when the application starts again</source>
         <source>PRO Lite</source>
         <translation type="unfinished">PRO Lite</translation>
     </message>
+    <message>
+        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
+        <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
+        <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -2521,7 +2524,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Sunt de acord cu &lt;a href=&quot;https://mega.nz/#terms&quot;&gt;termenii serviciului&lt;/a&gt; MEGA</translation>
+        <translation>Sunt de acord cu &lt;a href=&quot;https://mega.nz/#terms&quot;&gt;termenii de utilizare a serviciului&lt;/a&gt; MEGA</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -2682,7 +2685,7 @@ when the application starts again</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Trebuie să accepţi termenii serviciului nostru</translation>
+        <translation>Trebuie să accepţi termenii de utilizare a serviciului nostru</translation>
     </message>
     <message>
         <source>Creating account...</source>

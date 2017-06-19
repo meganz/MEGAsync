@@ -1039,7 +1039,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGAsync تعمل الآن. انقر فوق رمز أدوات النظام لفتح نافذة الحالة</translation>
+        <translation>MEGAsync تعمل الآن. انقر فوق أيقونة أدوات النظام لفتح نافذة الحالة</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
@@ -1233,7 +1233,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation type="unfinished">A system tray to place MEGAsync tray icon could not found. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translation type="unfinished">أدوات النظام التي ستحل محل أيقونة أدوات MEGAsync لايمكن إيجادها MEGAsync صممت لتستخدم مع أيقونة أدوات النظام لكن تستطيع العمل بدون تلك الأيقونة بشكل رائع! إن أردت فتح الواجهة، حاول فقط فتح MEGAsync مرة أخرى</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -1267,12 +1267,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
-        <translatorcomment>Message shown to the user to inform about updating the operating system to be compatible with latest versions of MEGAsync</translatorcomment>
-        <translation type="unfinished">Please consider updating your operating system.</translation>
+        <translation type="unfinished">الرجاء تحديث جهاز التشغيل الخاص بك</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
-        <translatorcomment>Message shown to the user to inform that MEGAsync no longer work with prior versions to OS X Mavericks</translatorcomment>
         <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
     </message>
 </context>
@@ -2475,6 +2473,11 @@ when the application starts again</source>
         <source>PRO Lite</source>
         <translation type="unfinished">برو لايت</translation>
     </message>
+    <message>
+        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
+        <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
+        <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -2903,7 +2906,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Remove from left pane</source>
-        <translation type="unfinished">Remove from left pane</translation>
+        <translation type="unfinished">احذف من الجزء اليساري</translation>
     </message>
 </context>
 <context>

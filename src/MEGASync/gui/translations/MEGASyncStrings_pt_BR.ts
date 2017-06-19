@@ -1267,13 +1267,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
-        <translatorcomment>Message shown to the user to inform about updating the operating system to be compatible with latest versions of MEGAsync</translatorcomment>
-        <translation type="unfinished">Please consider updating your operating system.</translation>
+        <translation type="unfinished">Considere atualizar seu sistema operacional.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
-        <translatorcomment>Message shown to the user to inform that MEGAsync no longer work with prior versions to OS X Mavericks</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
+        <translation type="unfinished">MEGAsync continuará a funcionar, no entanto, as atualizações não serão mais suportadas para versões anteriores aos OS X Mavericks em breve.</translation>
     </message>
 </context>
 <context>
@@ -2475,6 +2473,11 @@ when the application starts again</source>
         <source>PRO Lite</source>
         <translation type="unfinished">PRO Lite</translation>
     </message>
+    <message>
+        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
+        <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
+        <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -2903,7 +2906,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Remove from left pane</source>
-        <translation type="unfinished">Remove from left pane</translation>
+        <translation type="unfinished">Remover do painel esquerdo</translation>
     </message>
 </context>
 <context>
