@@ -241,6 +241,7 @@ const QString Preferences::previousCrashesKey       = QString::fromAscii("previo
 const QString Preferences::lastRebootKey            = QString::fromAscii("lastReboot");
 const QString Preferences::lastExitKey              = QString::fromAscii("lastExit");
 const QString Preferences::disableOverlayIconsKey   = QString::fromAscii("disableOverlayIcons");
+const QString Preferences::disableLeftPaneIconsKey  = QString::fromAscii("disableLeftPaneIcons");
 const QString Preferences::sessionKey               = QString::fromAscii("session");
 const QString Preferences::firstStartDoneKey        = QString::fromAscii("firstStartDone");
 const QString Preferences::firstSyncDoneKey         = QString::fromAscii("firstSyncDone");
@@ -2408,6 +2409,22 @@ void Preferences::disableOverlayIcons(bool value)
 {
     mutex.lock();
     settings->setValue(disableOverlayIconsKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::leftPaneIconsDisabled()
+{
+    mutex.lock();
+    bool result = settings->value(disableLeftPaneIconsKey, false).toBool();
+    mutex.unlock();
+    return result;
+}
+
+void Preferences::disableLeftPaneIcons(bool value)
+{
+    mutex.lock();
+    settings->setValue(disableLeftPaneIconsKey, value);
     settings->sync();
     mutex.unlock();
 }

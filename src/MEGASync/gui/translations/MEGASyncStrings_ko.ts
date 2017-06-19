@@ -1267,12 +1267,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
-        <translatorcomment>Message shown to the user to inform about updating the operating system to be compatible with latest versions of MEGAsync</translatorcomment>
         <translation type="unfinished">운영 체제 업데이트를 고려하세요.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
-        <translatorcomment>Message shown to the user to inform that MEGAsync no longer work with prior versions to OS X Mavericks</translatorcomment>
         <translation type="unfinished">MEGAsync가 계속 작동할 것이지만, 업데이트는 더이상 OS X Mavericks 이전 버전을 지원하지 않을 것입니다.</translation>
     </message>
 </context>
@@ -2474,6 +2472,11 @@ when the application starts again</source>
     <message>
         <source>PRO Lite</source>
         <translation type="unfinished">프로 라이트</translation>
+    </message>
+    <message>
+        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
+        <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
+        <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
     </message>
 </context>
 <context>
