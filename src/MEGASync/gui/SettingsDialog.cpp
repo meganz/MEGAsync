@@ -965,7 +965,9 @@ void SettingsDialog::loadSettings()
 
         //Syncs
         loadSyncSettings();
+#ifdef _WIN32
         ui->cDisableIcons->setChecked(preferences->leftPaneIconsDisabled());
+#endif
 
         //Bandwidth
         ui->rUploadAutoLimit->setChecked(preferences->uploadLimitKB()<0);
@@ -1290,7 +1292,7 @@ bool SettingsDialog::saveSettings()
 
             syncsChanged = false;
         }
-
+#ifdef _WIN32
         bool iconsDisabled = ui->cDisableIcons->isChecked();
         if (preferences->leftPaneIconsDisabled() != iconsDisabled)
         {
@@ -1309,6 +1311,7 @@ bool SettingsDialog::saveSettings()
             }
             preferences->disableLeftPaneIcons(iconsDisabled);
         }
+#endif
 
 #ifndef WIN32
         if (permissionsChanged)
