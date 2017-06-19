@@ -19,7 +19,7 @@ const QString Preferences::VERSION_STRING = QString::fromAscii("3.1.4");
 const QString Preferences::SDK_ID = QString::fromAscii("82c965");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- Support for Apple File System (macOS High Sierra)\n"
-            "- Updated translations"
+            "- Updated translations\n"
             "- Bug fixes");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
