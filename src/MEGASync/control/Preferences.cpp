@@ -16,9 +16,10 @@ const int Preferences::VERSION_CODE = 3103;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("3.1.3");
-const QString Preferences::SDK_ID = QString::fromAscii("3264af");
+const QString Preferences::SDK_ID = QString::fromAscii("82c965");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- Support for Apple File System (macOS High Sierra)\n"
+            "- Updated translations"
             "- Bug fixes");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
