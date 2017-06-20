@@ -48,6 +48,15 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     delete firstUpload;
     delete firstDownload;
 
+    if (((MegaApplication *)qApp)->getFinishedTransfers().size() > 0)
+    {
+        ui->wCompletedTab->setVisible(true);
+    }
+    else
+    {
+        ui->wCompletedTab->setVisible(false);
+    }
+
     ui->wCompleted->setupFinishedTransfers(((MegaApplication *)qApp)->getFinishedTransfers());
     updateNumberOfCompletedTransfers(((MegaApplication *)qApp)->getNumUnviewedTransfers());
     delete transferData;
@@ -88,6 +97,7 @@ void TransferManager::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
     }
 
     ui->wCompleted->getModel()->onTransferFinish(api, transfer, e);
+    ui->wCompletedTab->setVisible(true);
     if (!transfer->getPriority() || notificationNumber >= transfer->getNotificationNumber())
     {
         return;
