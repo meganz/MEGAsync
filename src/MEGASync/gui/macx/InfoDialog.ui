@@ -40,7 +40,7 @@ QPushButton#bTransferManager:hover
 	image: url(://images/tray_transfer_manager_ico_over.png);
 }
 
-#wHeader
+#wContainerHeader
 {
 border-top-left-radius: 2px;
 border-top-right-radius: 2px;
@@ -116,10 +116,16 @@ border-bottom-right-radius: 5px;
 background-color: transparent;
 }
 
+#wSeparator
+{
+background-color:  rgba(0, 0, 0, 5%);
+}
+
 #wContainerBottom
 {
 background-color: white;
-border-top: 1px solid rgba(0, 0, 0, 5%);
+border-bottom-left-radius: 2px;
+border-bottom-right-radius: 2px;
 }
 
 QProgressBar#pUsageStorage, QProgressBar#pUsageQuota
@@ -289,6 +295,18 @@ color: #999999;
    </item>
    <item>
     <widget class="QWidget" name="wContainerHeader" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>248</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>248</height>
+      </size>
+     </property>
      <property name="styleSheet">
       <string notr="true">#wContainerHeader
 {
@@ -1107,6 +1125,22 @@ border: none;</string>
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="wSeparator" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>1</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>1</height>
+      </size>
+     </property>
     </widget>
    </item>
    <item>
