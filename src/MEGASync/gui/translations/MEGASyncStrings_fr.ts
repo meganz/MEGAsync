@@ -2049,7 +2049,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation type="obsolete">Dossier des téléversements à partir de l&#039;explorateur Windows</translation>
+        <translation type="obsolete">Dossier des téléversements de l&#039;explorateur de Windows</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -2476,7 +2476,7 @@ when the application starts again</source>
     <message>
         <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
         <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
-        <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
+        <translation type="unfinished">Ne pas afficher les icônes dans le volet de gauche de l&#039;explorateur de Windows</translation>
     </message>
 </context>
 <context>

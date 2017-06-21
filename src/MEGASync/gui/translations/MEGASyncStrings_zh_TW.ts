@@ -2476,7 +2476,7 @@ when the application starts again</source>
     <message>
         <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
         <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
-        <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
+        <translation type="unfinished">不要在Windows瀏覽器的左方面板上顯示圖示</translation>
     </message>
 </context>
 <context>
