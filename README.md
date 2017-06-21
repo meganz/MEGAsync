@@ -81,7 +81,7 @@ sudo apt-get install libnautilus-extension-dev
 
 Addition: for RPM based (e.g: Fedora): 
 ```
-sudo dnf libtool install gcc-c++ c-ares-devel cryptopp-devel openssl-devel qt-devel sqlite-devel zlib-devel
+sudo dnf install libtool gcc-c++ c-ares-devel cryptopp-devel openssl-devel qt-devel sqlite-devel zlib-devel
 ```
 
 Building:
