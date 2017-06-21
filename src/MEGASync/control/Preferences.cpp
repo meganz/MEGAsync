@@ -19,7 +19,7 @@ const QString Preferences::VERSION_STRING = QString::fromAscii("3.1.4");
 const QString Preferences::SDK_ID = QString::fromAscii("0065d1");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- Support for Apple File System (macOS High Sierra)\n"
-            "- Allow to disable left pane icons in settings (Windows 10)"
+            "- Allow to disable left pane icons in settings (Windows 10)\n"
             "- Updated translations\n"
             "- Bug fixes");
 
