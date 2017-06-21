@@ -1263,12 +1263,15 @@ void InfoDialog::regenerateLayout()
         ui->bTransferManager->setVisible(false);
         dialogLayout->removeWidget(ui->wContainerHeader);
         ui->wContainerHeader->setVisible(false);
+        dialogLayout->removeWidget(ui->wSeparator);
+        ui->wSeparator->setVisible(false);
         dialogLayout->removeWidget(ui->wContainerBottom);
         ui->wContainerBottom->setVisible(false);
         dialogLayout->addWidget(gWidget);
         gWidget->setVisible(true);
 
         overlay->setVisible(false);
+
     }
     else
     {
@@ -1280,6 +1283,8 @@ void InfoDialog::regenerateLayout()
         gWidget->setVisible(false);
         dialogLayout->addWidget(ui->wContainerHeader);
         ui->wContainerHeader->setVisible(true);
+        dialogLayout->addWidget(ui->wSeparator);
+        ui->wSeparator->setVisible(true);
         dialogLayout->addWidget(ui->wContainerBottom);
         ui->wContainerBottom->setVisible(true);
     }

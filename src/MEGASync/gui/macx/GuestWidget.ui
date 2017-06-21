@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>375</height>
+    <height>373</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,13 +19,13 @@
   <property name="minimumSize">
    <size>
     <width>400</width>
-    <height>375</height>
+    <height>373</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>400</width>
-    <height>375</height>
+    <height>373</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -36,7 +36,8 @@
 {
  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #FCFCFC, stop: 1 #F7F7F7);
- border-bottom: 1px solid rgba(0, 0, 0, 10%);
+ border-top-left-radius: 2px;
+ border-top-right-radius: 2px;
 }
 #bMEGA, #bNonLogged
 {
@@ -270,7 +271,11 @@ margin-top: -1px;</string>
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: white;</string>
+      <string notr="true">#wContainer
+{
+background-color: white;
+border-top:  1px solid rgba(0, 0, 0, 5%);
+}</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <property name="spacing">
@@ -403,6 +408,8 @@ margin-top: -1px;</string>
       <string notr="true">#wButtons
 {
 background-color: white;
+border-bottom-left-radius: 2px;
+border-bottom-right-radius: 2px;
 }</string>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
