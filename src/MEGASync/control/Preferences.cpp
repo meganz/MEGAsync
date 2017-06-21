@@ -16,9 +16,10 @@ const int Preferences::VERSION_CODE = 3104;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("3.1.4");
-const QString Preferences::SDK_ID = QString::fromAscii("82c965");
+const QString Preferences::SDK_ID = QString::fromAscii("0065d1");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- Support for Apple File System (macOS High Sierra)\n"
+            "- Allow to disable left pane icons in settings (Windows 10)"
             "- Updated translations\n"
             "- Bug fixes");
 
