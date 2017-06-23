@@ -213,8 +213,9 @@ void StreamingFromMegaDialog::on_bOpenOther_clicked()
     defaultPath = QDir::toNativeSeparators(defaultPath);
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Result: %1").arg(defaultPath).toUtf8().constData());
 
-    QString path =  QFileDialog::getOpenFileName(0, tr("Choose application"), defaultPath);
-    if (path.length() && !streamURL.isEmpty())
+    QPointer<StreamingFromMegaDialog> dialog(this);
+    QString path = QDir::toNativeSeparators(QFileDialog::getOpenFileName(0, tr("Choose application"), defaultPath));
+    if (dialog && path.length() && !streamURL.isEmpty())
     {
         QFileInfo info(path);
         if (!info.exists())
