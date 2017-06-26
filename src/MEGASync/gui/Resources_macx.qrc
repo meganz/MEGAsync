@@ -597,5 +597,9 @@
         <file>images/ic_small_rubbish@2x.png</file>
         <file>images/ic_small_shares.png</file>
         <file>images/ic_small_shares@2x.png</file>
+        <file>images/ico_resume_transfers_over.png</file>
+        <file>images/ico_resume_transfers_over@2x.png</file>
+        <file>images/ico_resume_transfers.png</file>
+        <file>images/ico_resume_transfers@2x.png</file>
     </qresource>
 </RCC>

@@ -48,6 +48,19 @@ void MenuItemAction::setLabelText(QString title)
     this->title->setText(title);
 }
 
+void MenuItemAction::setIcon(const QIcon icon)
+{
+    delete this->icon;
+    this->icon = new QIcon(icon);
+    iconButton->setIcon(*(this->icon));
+}
+
+void MenuItemAction::setHoverIcon(const QIcon icon)
+{
+    delete this->hoverIcon;
+    this->hoverIcon = new QIcon(icon);
+}
+
 MenuItemAction::~MenuItemAction()
 {
     delete title;

@@ -3062,8 +3062,18 @@ void MegaApplication::showTrayMenu(QPoint *point)
 
         QPoint p = point ? (*point) - QPoint(trayMenu->sizeHint().width(), 0)
                          : QCursor::pos();
-        pauseTransfersAction->setLabelText(preferences->getGlobalPaused()
-                                      ? tr("Resume Transfers") : tr("Pause Transfers"));
+        if (preferences->getGlobalPaused())
+        {
+            pauseTransfersAction->setLabelText(tr("Resume Transfers"));
+            pauseTransfersAction->setIcon(QIcon(QString::fromAscii("://images/ico_resume_transfers.png")));
+            pauseTransfersAction->setHoverIcon(QIcon(QString::fromAscii("://images/ico_resume_transfers_over.png")));
+        }
+        else
+        {
+            pauseTransfersAction->setLabelText(tr("Pause Transfers"));
+            pauseTransfersAction->setIcon(QIcon(QString::fromAscii("://images/ico_pause_transfers.png")));
+            pauseTransfersAction->setHoverIcon(QIcon(QString::fromAscii("://images/ico_pause_transfers_over.png")));
+        }
 
 #ifdef __APPLE__
         trayMenu->exec(p);

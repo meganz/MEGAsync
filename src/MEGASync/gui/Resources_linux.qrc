@@ -301,5 +301,7 @@
         <file>images/ic_small_inbox.png</file>
         <file>images/ic_small_rubbish.png</file>
         <file>images/ic_small_shares.png</file>
+        <file>images/ico_resume_transfers_over.png</file>
+        <file>images/ico_resume_transfers.png</file>
     </qresource>
 </RCC>
