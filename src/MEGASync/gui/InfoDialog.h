@@ -88,6 +88,8 @@ private slots:
     void on_bDotUsedStorage_clicked();
     void on_bDotUsedQuota_clicked();
 
+    void hideUsageBalloon();
+
 private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;

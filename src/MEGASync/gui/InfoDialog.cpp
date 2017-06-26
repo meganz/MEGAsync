@@ -77,6 +77,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->bSettings->setToolTip(tr("Access your MEGAsync settings"));
 
     ui->pUsageStorage->installEventFilter(this);
+    ui->pUsageStorage->setMouseTracking(true);
 
     state = STATE_STARTING;
     megaApi = app->getMegaApi();
@@ -1216,25 +1217,40 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
         return false;
     }
 
-    //Hide if InfoDialog is not visible
-    if (e->type() == QEvent::Hide)
+    QPoint mousePos;
+    switch (e->type())
     {
-        if (storageUsedMenu)
-        {
-            storageUsedMenu->hide();
-        }
+    case QEvent::Hide:
+    case QEvent::Enter:
+         hideUsageBalloon();
+         break;
+
+    case QEvent::MouseButtonPress:
+    {
+         QMouseEvent *me = dynamic_cast<QMouseEvent*>(e);
+         mousePos = me->pos();
+         break;
+    }
+    case QEvent::ToolTip:
+    {
+         QHelpEvent *me = static_cast<QHelpEvent*>(e);
+         mousePos = me->pos();
+         break;
+    }
+    default:
+         break;
+
     }
 
-    if (e->type() == QEvent::MouseButtonPress)
+    if (!mousePos.isNull())
     {
-        QMouseEvent* me = dynamic_cast<QMouseEvent*>(e);
         createQuotaUsedMenu();
-        QPoint p = ui->pUsageStorage->mapToGlobal(me->pos());
+        QPoint p = ui->pUsageStorage->mapToGlobal(mousePos);
         QSize s = storageUsedMenu->sizeHint();
         storageUsedMenu->exec(QPoint(p.x() - s.width() / 2, p.y() - s.height()));
     }
 
-    return false;
+    return QDialog::eventFilter(obj, e);
 }
 
 void InfoDialog::regenerateLayout()
@@ -1398,6 +1414,15 @@ void InfoDialog::on_bDotUsedQuota_clicked()
 
     ui->sUsedData->setCurrentWidget(ui->pQuota);
 }
+
+void InfoDialog::hideUsageBalloon()
+{
+    if (storageUsedMenu)
+    {
+        storageUsedMenu->hide();
+    }
+}
+
 void InfoDialog::scanningAnimationStep()
 {
     scanningAnimationIndex = scanningAnimationIndex%18;
