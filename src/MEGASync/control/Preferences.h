@@ -249,6 +249,8 @@ public:
 
     bool overlayIconsDisabled();
     void disableOverlayIcons(bool value);
+    bool leftPaneIconsDisabled();
+    void disableLeftPaneIcons(bool value);
     bool error();
 
     QString getDataPath();
@@ -433,6 +435,7 @@ protected:
     static const QString lastRebootKey;
     static const QString lastExitKey;
     static const QString disableOverlayIconsKey;
+    static const QString disableLeftPaneIconsKey;
     static const QString sessionKey;
     static const QString firstStartDoneKey;
     static const QString firstSyncDoneKey;

@@ -2487,6 +2487,11 @@ when the application starts again</source>
         <source>PRO Lite</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Don&apos;t show icons on the left pane of Windows Explorer</source>
+        <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>

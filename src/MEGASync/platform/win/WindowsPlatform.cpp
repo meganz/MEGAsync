@@ -510,6 +510,15 @@ void WindowsPlatform::removeSyncFromLeftPane(QString, QString, QString uuid)
     DeleteRegValue(HKEY_CURRENT_USER, (LPTSTR)key.utf16(), (LPTSTR)uuid.utf16(), 0);
 }
 
+void WindowsPlatform::removeAllSyncsFromLeftPane()
+{
+    bool deleted = true;
+    while (deleted)
+    {
+        deleted &= CheckLeftPaneIcon(NULL, true);
+    }
+}
+
 bool WindowsPlatform::startOnStartup(bool value)
 {
     WCHAR path[MAX_PATH];
@@ -621,7 +630,10 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName, QStrin
         return;
     }
 
-    addSyncToLeftPane(syncPath, syncName, syncID);
+    if (!Preferences::instance()->leftPaneIconsDisabled())
+    {
+        addSyncToLeftPane(syncPath, syncName, syncID);
+    }
 
     DWORD dwVersion = GetVersion();
     DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(dwVersion)));
@@ -922,9 +934,5 @@ void WindowsPlatform::activateBackgroundWindow(QDialog *window)
 
 void WindowsPlatform::uninstall()
 {
-    bool deleted = true;
-    while (deleted)
-    {
-        deleted &= CheckLeftPaneIcon(NULL, true);
-    }
+    removeAllSyncsFromLeftPane();
 }
