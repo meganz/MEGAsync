@@ -5246,7 +5246,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         preferences->setTotalStorage(details->getStorageMax());
         preferences->setUsedStorage(details->getStorageUsed());
         preferences->setTotalBandwidth(details->getTransferMax());
-        preferences->setUsedBandwidth(details->getTransferOwnUsed());
+        preferences->setBandwidthInterval(details->getTemporalBandwidthInterval());
+        preferences->setUsedBandwidth(details->getProLevel() ? details->getTransferOwnUsed() : details->getTemporalBandwidth());
 
         MegaHandle rootHandle = root->getHandle();
         preferences->setCloudDriveStorage(details->getStorageUsed(rootHandle));

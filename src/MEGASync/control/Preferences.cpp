@@ -181,6 +181,7 @@ const QString Preferences::inboxFoldersKey          = QString::fromAscii("inboxF
 const QString Preferences::rubbishFoldersKey        = QString::fromAscii("rubbishFolders");
 const QString Preferences::inShareFoldersKey        = QString::fromAscii("inShareFolders");
 const QString Preferences::totalBandwidthKey        = QString::fromAscii("totalBandwidth");
+const QString Preferences::usedBandwidthIntervalKey        = QString::fromAscii("usedBandwidthInterval");
 const QString Preferences::usedBandwidthKey         = QString::fromAscii("usedBandwidth");
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
 const QString Preferences::showNotificationsKey     = QString::fromAscii("showNotifications");
@@ -738,6 +739,23 @@ void Preferences::setTotalBandwidth(long long value)
     mutex.lock();
     assert(logged());
     settings->setValue(totalBandwidthKey, value);
+    mutex.unlock();
+}
+
+int Preferences::bandwidthInterval()
+{
+    mutex.lock();
+    assert(logged());
+    int value = settings->value(usedBandwidthIntervalKey).toInt();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setBandwidthInterval(int value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(usedBandwidthIntervalKey, value);
     mutex.unlock();
 }
 

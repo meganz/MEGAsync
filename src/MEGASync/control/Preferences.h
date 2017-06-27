@@ -77,6 +77,8 @@ public:
 
     long long totalBandwidth();
     void setTotalBandwidth(long long value);
+    int bandwidthInterval();
+    void setBandwidthInterval(int value);
     bool isTemporalBandwidthValid();
     long long getMsDiffTimeWithSDK();
     void setDsDiffTimeWithSDK(long long diffTime);
@@ -384,6 +386,7 @@ protected:
     static const QString inShareFoldersKey;
     static const QString totalBandwidthKey;
     static const QString usedBandwidthKey;
+    static const QString usedBandwidthIntervalKey;
     static const QString accountTypeKey;
     static const QString setupWizardCompletedKey;
     static const QString showNotificationsKey;
