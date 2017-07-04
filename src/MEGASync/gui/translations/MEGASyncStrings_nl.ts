@@ -232,7 +232,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">U staat op het punt om een optie in te schakelen wat het onderscheppen van uw communicatie mogelijk kan maken. Uw gegevens zijn nog steeds onbereikbaar voor de aanvallers dankzij onze eind-naar-eind encryptie, maar ze kunnen blindelings uw bestanden en mappen verplaatsen in MEGA, verwijderen of u uw toegang tot uw account ontzeggen.</translation>
+        <translation type="unfinished">U staat op het punt om een optie in te schakelen wat het onderscheppen van uw communicatie mogelijk kan maken. Uw gegevens zijn nog steeds onbereikbaar voor de aanvallers dankzij onze eind-tot-eind encryptie, maar ze kunnen blindelings uw bestanden en mappen verplaatsen in MEGA, verwijderen of u uw toegang tot uw account ontzeggen.</translation>
     </message>
 </context>
 <context>
@@ -245,12 +245,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
         <translatorcomment>Label to indicate that a crash has occured and the detailed stacktrace of the problem.</translatorcomment>
-        <translation>MEGAsynchronisatie heeft een fout gedetecteerd. Dit zijn de details:</translation>
+        <translation>MEGAsync heeft een fout gedetecteerd. Dit zijn de details:</translation>
     </message>
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&#039;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>U kunt ons helpen om MEGAsynchronisatie te verbeteren door dit foutenrapport te verzenden. Het bevat geen persoonlijke informatie. Als u ons meer details wilt geven, schrijf ze dan hieronder:</translation>
+        <translation>U kunt ons helpen om MEGAsync te verbeteren door dit foutenrapport te verzenden. Het bevat geen persoonlijke informatie. Als u ons meer details wilt geven, schrijf ze dan hieronder:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -428,7 +428,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Import links</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to import MEGA links .(MAX 20 characters)</translatorcomment>
-        <translation>Importeer links</translation>
+        <translation>Importeer koppelingen</translation>
     </message>
     <message>
         <source>Download to my computer</source>
@@ -511,7 +511,7 @@ Are you sure?</source>
     <message>
         <source>MEGAsync is up to date</source>
         <translatorcomment>Label to indicate that MEGAsync is at state of up-to-date (String as short as possible)</translatorcomment>
-        <translation>MEGAsynchronisatie is bijgewerkt</translation>
+        <translation>MEGAsync is bijgewerkt</translation>
     </message>
     <message>
         <source>RECENTLY UPDATED</source>
@@ -561,7 +561,7 @@ Are you sure?</source>
     <message>
         <source>MEGAsync is scanning</source>
         <translatorcomment>Label to indicate that MEGAsync is at state of scanning inside synced folders (String as short as possible)</translatorcomment>
-        <translation>MEGAsynchronisatie is aan het scannen</translation>
+        <translation>MEGAsync</translation>
     </message>
     <message>
         <source>All transfers have been completed</source>
@@ -626,12 +626,12 @@ Are you sure?</source>
     <message>
         <source>MEGAsync is waiting</source>
         <translatorcomment>Label to indicate that MEGAsync is at a wait state (String as short as possible)</translatorcomment>
-        <translation>MEGAsynchronisatie is aan het wachten</translation>
+        <translation>MEGAsync is aan het wachten</translation>
     </message>
     <message>
         <source>MEGAsync is starting</source>
         <translatorcomment>Label to indicate that MEGAsync is at start state (String as short as possible)</translatorcomment>
-        <translation>MEGAsynchronisatie opstarten</translation>
+        <translation>MEGAsync opstarten</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -691,7 +691,7 @@ Are you sure?</source>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
         <translatorcomment>Label to inform the user that is over quota and let him to upgrade his account. Keep [A] [/A] codes, will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">Uw account heeft zijn toegestane opslagtegoed overschreden. [A]Upgrade[/A] en blijf genieten van veilige, eind-to-eind versleutelde opslag.</translation>
+        <translation type="unfinished">Uw account heeft zijn toegestane opslagtegoed overschreden. [A]Upgrade[/A] en blijf genieten van veilige, eind-tot-eind gecodeerde opslag.</translation>
     </message>
     <message>
         <source>Upgrade your account</source>
@@ -739,7 +739,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Maak gebruik van 50 GB cloud opslag met veilige gebruikers-gecontroleerde end-to-end encryptie en registreer voor een GRATIS account of voor eens van onze [A]PRO abonnementen[/A].</translation>
+        <translation type="unfinished">Maak gebruik van 50 GB cloud opslag met veilige gebruikers-gecontroleerde eind-tot-eind encryptie en registreer voor een GRATIS account of voor eens van onze [A]PRO abonnementen[/A].</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
@@ -755,7 +755,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
-        <translation type="unfinished">Laat MEGA&#039;s end-to-end encryptie-algoritmen rechtstreeks op uw machine lopen zonder een beroep te doen op tragere browsers.</translation>
+        <translation type="unfinished">Laat MEGA&#039;s eind-tot-eind encryptie-algoritmen rechtstreeks op uw machine lopen zonder een beroep te doen op tragere browsers.</translation>
     </message>
     <message>
         <source>Unlimited file size</source>
@@ -806,7 +806,7 @@ Are you sure?</source>
     <name>MegaApplication</name>
     <message>
         <source>MEGAsync</source>
-        <translation>MEGAsynchronisatie</translation>
+        <translation>MEGAsync</translation>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
@@ -860,22 +860,22 @@ Exit anyway?</source>
     <message>
         <source>About MEGAsync</source>
         <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-        <translation type="unfinished">Over MEGAsynchronisatie</translation>
+        <translation type="unfinished">Over MEGAsync</translation>
     </message>
     <message>
         <source>MEGAsync version code %1</source>
         <translatorcomment>Label to indicate the version code of MEGAsync installed. Preserve &quot;%1&quot; code because is used to indicate the version code at runtime.</translatorcomment>
-        <translation type="obsolete">MEGAsynchronisatie versie %1</translation>
+        <translation type="obsolete">MEGAsync versie code %1</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Notification message launched when a link to a file has been copied succesfully to the clipboard.</translatorcomment>
-        <translation>De link is gekopieerd naar het klembord</translation>
+        <translation>De koppeling is gekopieerd naar het klembord</translation>
     </message>
     <message>
         <source>The links have been copied to the clipboard</source>
         <translatorcomment>Notification message launched when some links have been copied succesfully to the clipboard.</translatorcomment>
-        <translation>De links zijn gekopieerd naar het klembord</translation>
+        <translation>De koppelingen zijn gekopieerd naar het klembord</translation>
     </message>
     <message>
         <source>Logging in...</source>
@@ -908,7 +908,7 @@ Exit anyway?</source>
     <message>
         <source>Import links</source>
         <translatorcomment>Label to indicate the Import links option for the application (MAX 20 characters)</translatorcomment>
-        <translation>Importeer links</translation>
+        <translation>Importeer koppelingen</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -943,7 +943,7 @@ Exit anyway?</source>
     <message>
         <source>MEGAsync has been updated</source>
         <translatorcomment>Notification message launched when an update has been succesfully applied.</translatorcomment>
-        <translation>MEGAsynchronisatie is geüpdatet</translation>
+        <translation>MEGAsync is geüpdatet</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -1084,7 +1084,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting link: </source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Keep colon.</translatorcomment>
-        <translation>Fout tijdens het verkrijgen van de link:</translation>
+        <translation>Fout tijdens het verkrijgen van de koppeling:</translation>
     </message>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
@@ -1159,7 +1159,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting link information</source>
         <translatorcomment>Notification  error message shown while getting information from a public link.</translatorcomment>
-        <translation type="unfinished">Fout bij het verkrijgen van link informatie</translation>
+        <translation type="unfinished">Fout bij het verkrijgen van koppeling informatie</translation>
     </message>
     <message>
         <source>DEBUG mode disabled</source>
@@ -1224,7 +1224,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Are you sure you want to exit?</source>
-        <translation type="unfinished">Weet u zeker dat u MEGAsynchronisatie wilt afsluiten?</translation>
+        <translation type="unfinished">Weet u zeker dat u MEGAsync wilt afsluiten?</translation>
     </message>
     <message>
         <source>Transfer manager</source>
@@ -1238,7 +1238,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting link:</source>
         <translatorcomment>Notification message shown when an error occurs while getting a public link .</translatorcomment>
-        <translation type="unfinished">Fout tijdens het verkrijgen van de link:</translation>
+        <translation type="unfinished">Fout tijdens het verkrijgen van de koppeling:</translation>
     </message>
     <message>
         <source>File not found</source>
@@ -1248,7 +1248,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation type="unfinished">De link kan niet worden gegenereerd, omdat het bestand in een binnenkomend gedeelde folder zit of in uw prullenbak.</translation>
+        <translation type="unfinished">De koppeling kan niet worden gegenereerd, omdat het bestand in een binnenkomend gedeelde folder zit of in uw prullenbak.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -1267,13 +1267,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
-        <translatorcomment>Message shown to the user to inform about updating the operating system to be compatible with latest versions of MEGAsync</translatorcomment>
         <translation type="unfinished">Overweeg het updaten van uw besturingssysteem.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
-        <translatorcomment>Message shown to the user to inform that MEGAsync no longer work with prior versions to OS X Mavericks</translatorcomment>
-        <translation type="unfinished">MEGAsynchronisatie blijft doorgaan, hoewel binnenkort updates niet langer ondersteund worden voor versies jonger dan OS X Mavericks.</translation>
+        <translation type="unfinished">MEGAsync blijft doorgaan, hoewel binnenkort updates niet langer ondersteund worden voor versies jonger dan OS X Mavericks.</translation>
     </message>
 </context>
 <context>
@@ -1451,7 +1449,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label of context menu option to generate a public link of selected completed transfer</translatorcomment>
-        <translation type="unfinished">Bekijk link</translation>
+        <translation type="unfinished">Bekijk koppeling</translation>
     </message>
     <message>
         <source>Open</source>
@@ -1638,7 +1636,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     </message>
     <message>
         <source>Get MEGA link</source>
-        <translation type="unfinished">Bekijk link</translation>
+        <translation type="unfinished">Bekijk koppeling</translation>
     </message>
 </context>
 <context>
@@ -1646,12 +1644,12 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Import links</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to import public MEGA links.(MAX 20 characters)</translatorcomment>
-        <translation>Importeer links</translation>
+        <translation>Importeer koppelingen</translation>
     </message>
     <message>
         <source>Enter one or multiple MEGA file links</source>
         <translatorcomment>Label to indicate the user to write down the links to be imported. String as short as possible.</translatorcomment>
-        <translation>Vul één of meerdere links naar MEGA bestanden in</translation>
+        <translation>Vul één of meerdere MEGA bestandskoppelingen in</translation>
     </message>
     <message>
         <source>Submit</source>
@@ -1671,17 +1669,17 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>Vul één of meer links naar MEGA bestanden in</translation>
+        <translation>Vul één of meer MEGA bestandskoppelingen in</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation type="obsolete">Geen geldige MEGA links gevonden. (Folder links worden nog niet ondersteund)</translation>
+        <translation type="obsolete">Geen geldige MEGA koppelingen gevonden. (Mapkoppelingen worden nog niet ondersteund)</translation>
     </message>
     <message>
         <source>Invalid MEGA Link</source>
         <translatorcomment>Label to indicate that MEGA link processed is invalid/incorrect </translatorcomment>
-        <translation type="unfinished">Ongeldige MEGA Link</translation>
+        <translation type="unfinished">Ongeldige MEGA Koppeling</translation>
     </message>
 </context>
 <context>
@@ -1817,7 +1815,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Button tooltip to generate a public link for a specific file. Keep capital letters.</translatorcomment>
-        <translation>Bekijk link</translation>
+        <translation>Bekijk koppeling</translation>
     </message>
     <message>
         <source>just now</source>
@@ -2401,7 +2399,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backup-versies van eerder gesynchroniseerde bestanden op uw computer zullen permanent worden verwijderd. Controleer alstublieft uw back-up mappen om te zien of het nodig is dat u iets redt voordat u verder gaat.</translation>
+        <translation type="unfinished">reservekopie-versies van eerder gesynchroniseerde bestanden op uw computer zullen permanent worden verwijderd. Controleer alstublieft uw reservekopie mappen om te zien of het nodig is dat u iets redt voordat u verder gaat.</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
@@ -2429,27 +2427,27 @@ when the application starts again</source>
     </message>
     <message>
         <source>Local backup: %1</source>
-        <translation type="unfinished">Lokale back-up: %1</translation>
+        <translation type="unfinished">Lokale reservekopie: %1</translation>
     </message>
     <message>
         <source>Remote backup: %1</source>
-        <translation type="unfinished">Online back-up: %1</translation>
+        <translation type="unfinished">Online reservekopie: %1</translation>
     </message>
     <message>
         <source>Clear local backup</source>
-        <translation type="unfinished">Wis lokale back-up</translation>
+        <translation type="unfinished">Wis lokale reservekopie</translation>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">Weet u zeker dat u uw lokale back-up nu wilt verwijderen?</translation>
+        <translation type="unfinished">Weet u zeker dat u uw lokale reservekopie nu wilt verwijderen?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
-        <translation type="unfinished">Wis online back-up</translation>
+        <translation type="unfinished">Wis online reservekopie</translation>
     </message>
     <message>
         <source>Do you want to delete your remote backup now?</source>
-        <translation type="unfinished">Weet u zeker dat u uw online back-up nu wilt verwijderen?</translation>
+        <translation type="unfinished">Weet u zeker dat u uw online reservekopie nu wilt verwijderen?</translation>
     </message>
     <message>
         <source>Download rate limit</source>
@@ -2474,6 +2472,11 @@ when the application starts again</source>
     <message>
         <source>PRO Lite</source>
         <translation type="unfinished">PRO Lite</translation>
+    </message>
+    <message>
+        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
+        <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
+        <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
     </message>
 </context>
 <context>
@@ -2531,7 +2534,7 @@ when the application starts again</source>
     <message>
         <source>Please verify your account using the confirmation link that we have sent to your email account</source>
         <translatorcomment>Label displayed at last step of creation account process to inform the user to verify the new created account.</translatorcomment>
-        <translation>Verifieer uw account door te klikken op de bevestigingslink die we naar uw e-mailadres hebben gestuurd</translation>
+        <translation>Verifieer uw account door te klikken op de bevestigingskoppeling die we naar uw e-mailadres hebben gestuurd</translation>
     </message>
     <message>
         <source>Logging in ...</source>
@@ -2788,7 +2791,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync</source>
-        <translation type="unfinished">MEGAsynchronisatie</translation>
+        <translation type="unfinished">MEGAsync</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
@@ -2837,7 +2840,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation type="unfinished">Check uw email en klik op de link in het berichtje om uw account te bevestigen.</translation>
+        <translation type="unfinished">Check uw email en klik op de koppeling in het bericht om uw account te bevestigen.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
@@ -2859,7 +2862,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label displayed when a user is trying to get public link of a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
-        <translation>Bekijk link</translation>
+        <translation>Bekijk koppeling</translation>
     </message>
     <message>
         <source>Share with a MEGA user</source>
@@ -2964,7 +2967,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Public link</source>
         <translatorcomment>Text of the button to select a file from a public link for streaming</translatorcomment>
-        <translation type="unfinished">Publieke link</translation>
+        <translation type="unfinished">Publieke koppeling</translation>
     </message>
     <message>
         <source>File info:</source>
@@ -3014,22 +3017,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open link</source>
         <translatorcomment>Title of the dialog to enter a MEGA file link for streaming</translatorcomment>
-        <translation type="unfinished">Open link</translation>
+        <translation type="unfinished">Open koppeling</translation>
     </message>
     <message>
         <source>Enter a MEGA file link:</source>
         <translatorcomment>Text of the dialog to enter a MEGA file link for streaming</translatorcomment>
-        <translation type="unfinished">Voer een MEGA bestandslink in:</translation>
+        <translation type="unfinished">Voer een MEGA bestands-koppeling in:</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Text shown when a streaming link has been copied to the clipboard</translatorcomment>
-        <translation type="unfinished">De link is gekopieerd naar het klembord</translation>
+        <translation type="unfinished">De koppeling is gekopieerd naar het klembord</translation>
     </message>
     <message>
         <source>Error generating streaming link</source>
         <translatorcomment>Text shown when there is an error generating an streaming link</translatorcomment>
-        <translation type="unfinished">Fout bij genereren streaming link</translation>
+        <translation type="unfinished">Fout bij genereren streamende koppeling</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3039,7 +3042,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting link information</source>
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
-        <translation type="unfinished">Fout bij het verkrijgen van link informatie</translation>
+        <translation type="unfinished">Fout bij het verkrijgen van koppeling informatie</translation>
     </message>
 </context>
 <context>
@@ -3163,7 +3166,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Import links</source>
         <translatorcomment>Label to indicate the Import link option from transfer manager dialog</translatorcomment>
-        <translation type="unfinished">Importeer links</translation>
+        <translation type="unfinished">Importeer koppelingen</translation>
     </message>
     <message>
         <source>Upload to MEGA</source>

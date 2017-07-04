@@ -1646,7 +1646,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="obsolete">[$1680]</translation>
     </message>
     <message>
-        <source>The destination folder is synced and you already have a file 
+        <source>The destination folder is synced and you already have a file
 inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
@@ -2641,6 +2641,15 @@ when the application starts again</source>
     <message>
         <source>Transfer quota</source>
         <translatorcomment>Label to indicate the transfer quota usage of current logged account</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Don&apos;t show icons on the left pane of Windows Explorer</source>
+        <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Used quota for the last %1 hours: %2</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

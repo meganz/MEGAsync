@@ -6220,7 +6220,7 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
     {
 #ifdef _WIN32
         bool addToLeftPane = false;
-        if (app && app->getPrevVersion() && app->getPrevVersion() <= 3001)
+        if (app && app->getPrevVersion() && app->getPrevVersion() <= 3001 && !preferences->leftPaneIconsDisabled())
         {
             addToLeftPane = true;
         }

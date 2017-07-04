@@ -644,22 +644,22 @@ Are you sure?</source>
     <message>
         <source>Resume downloads</source>
         <translatorcomment>Label to resume the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume downloads</translation>
+        <translation type="unfinished">Wznów pobieranie</translation>
     </message>
     <message>
         <source>Pause downloads</source>
         <translatorcomment>Label to pause the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Pause downloads</translation>
+        <translation type="unfinished">Wstrzymaj pobieranie</translation>
     </message>
     <message>
         <source>Resume uploads</source>
         <translatorcomment>Label to resume the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume uploads</translation>
+        <translation type="unfinished">Wznów wgrywanie</translation>
     </message>
     <message>
         <source>Pause uploads</source>
         <translatorcomment>Label to pause the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Pause uploads</translation>
+        <translation type="unfinished">Wstrzymaj wgrywanie</translation>
     </message>
     <message>
         <source>Resume download</source>
@@ -674,7 +674,7 @@ Are you sure?</source>
     <message>
         <source>Blocked file: %1</source>
         <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
-        <translation type="unfinished">Blocked file: %1</translation>
+        <translation type="unfinished">Zablokowany plik: %1</translation>
     </message>
     <message>
         <source>Servers are too busy. Please wait...</source>
@@ -1267,13 +1267,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
-        <translatorcomment>Message shown to the user to inform about updating the operating system to be compatible with latest versions of MEGAsync</translatorcomment>
-        <translation type="unfinished">Please consider updating your operating system.</translation>
+        <translation type="unfinished">Zalecamy aktualizację systemu operacyjnego</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
-        <translatorcomment>Message shown to the user to inform that MEGAsync no longer work with prior versions to OS X Mavericks</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
+        <translation type="unfinished">MEGAsync nadal będzie działać, jednak nie będą udostępniane aktualizacje dla systemów starszych od OS X Mavericks.</translation>
     </message>
 </context>
 <context>
@@ -2475,6 +2473,11 @@ when the application starts again</source>
         <source>PRO Lite</source>
         <translation type="unfinished">PRO Lite</translation>
     </message>
+    <message>
+        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
+        <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
+        <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -2903,7 +2906,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Remove from left pane</source>
-        <translation type="unfinished">Remove from left pane</translation>
+        <translation type="unfinished">Usuń z lewgo panela</translation>
     </message>
 </context>
 <context>
@@ -3231,11 +3234,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">Pobieranie nie może być kontynuowane, ponieważ przekroczono dostępny limit na ten adres IP. </translation>
+        <translation type="unfinished">Pobieranie nie może być kontynuowane, ponieważ przekroczono dostępny limit na ten adres IP. Limit jest dynamiczny i uzależnony od aktualnej dostępności.                </translation>
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Zużyłeś już %1  swojego dostępnego transferu w ostatnich 6 godzinach. Aby wyłączyć takie ograniczenia, [A]wybierz konto PRO[/A] które nie ma ograniczeń na przesyłanie danych.</translation>
+        <translation type="unfinished">Zużyłeś już %1  swojego dostępnego transferu w ostatnich 6 godzinach. Aby wyłączyć takie ograniczenia, [A]wybierz konto PRO[/A] które nie ma ograniczeń na przesyłanie danych oraz otrzymasz więcej miejsca na swoje pliki.                </translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>

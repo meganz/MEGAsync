@@ -1267,13 +1267,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
-        <translatorcomment>Message shown to the user to inform about updating the operating system to be compatible with latest versions of MEGAsync</translatorcomment>
-        <translation type="unfinished">Please consider updating your operating system.</translation>
+        <translation type="unfinished">Будь ласка, поміркуйте над оновленням операційної системи.</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
-        <translatorcomment>Message shown to the user to inform that MEGAsync no longer work with prior versions to OS X Mavericks</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
+        <translation type="unfinished">MEGAsync продовжить працювати, але невдовзі припинить оновлюватися на версіях до OS X Mavericks.</translation>
     </message>
 </context>
 <context>
@@ -2475,6 +2473,11 @@ when the application starts again</source>
         <source>PRO Lite</source>
         <translation type="unfinished">PRO Lite</translation>
     </message>
+    <message>
+        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
+        <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
+        <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -2903,7 +2906,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Remove from left pane</source>
-        <translation type="unfinished">Remove from left pane</translation>
+        <translation type="unfinished">Видалити з лівої панелі</translation>
     </message>
 </context>
 <context>
@@ -3231,11 +3234,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">Не можливо продовжувати ваше завантаження тому що воно виходить за межі поточного безкоштовного тарифу для вашої IP адреси. Це динамічне обмеження, воно залежить від кількості неспожитої пропускної здатності, що ми маємо доступною.</translation>
+        <translation type="unfinished">Не можливо продовжувати завантаження, тому що воно виходить за межі поточного безкоштовного тарифу для вашої IP адреси. Це динамічне обмеження, воно залежить від кількості неспожитої пропускної здатності, що ми маємо доступною.</translation>
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Ви використали %1 передачі даних за останні 6 годин, що ставить вас під тимчасове обмеження. Щоб обійти його, ви можете [A]покращити до PRO[/A] свій акаунт, що надасть вам велику кількість пропускної здатності та додатковий простір зберігання.</translation>
+        <translation type="unfinished">Ви використали %1 передачі даних за останні 6 годин, що ставить вас під тимчасове обмеження. Щоб обійти його, ви можете [A]покращити до PRO[/A] свій акаунт, що надасть вам більше трафіку та додатковий простір зберігання.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
