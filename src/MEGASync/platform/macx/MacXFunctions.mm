@@ -3,6 +3,7 @@
 #include <QFileInfo>
 #include <QCoreApplication>
 #include <QWidget>
+#include <QProcess>
 #import <objc/runtime.h>
 
 #ifndef kCFCoreFoundationVersionNumber10_9
@@ -529,4 +530,34 @@ void enableBlurForWindow(QWidget *window)
         //[self addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
         [nsview addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
     }
+}
+
+void registerUpdateDaemon()
+{
+    NSDictionary *plistd = @{
+            @"Label": @"mega.mac.megaupdater",
+            @"ProgramArguments": @[@"/Applications/MEGAsync.app/Contents/MacOS/MEGAUpdater"],
+            @"StartInterval": @3600,
+            @"RunAtLoad": @true,
+            @"StandardErrorPath": @"/dev/null",
+            @"StandardOutPath": @"/dev/null",
+     };
+
+
+    const char* home = getenv("HOME");
+    if (!home)
+    {
+        return;
+    }
+
+    NSString *homepath = [NSString stringWithUTF8String:home];
+    NSString *fullpath = [homepath stringByAppendingString:@"/Library/LaunchAgents/mega.mac.megaupdater.plist"];
+    [plistd writeToFile:fullpath atomically:YES];
+
+    QStringList scriptArgs;
+    scriptArgs << QString::fromUtf8("load")
+               << QString::fromUtf8([fullpath UTF8String]);
+
+    QProcess p;
+    p.startDetached(QString::fromAscii("launchctl"), scriptArgs);
 }

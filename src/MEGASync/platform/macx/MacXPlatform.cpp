@@ -150,6 +150,11 @@ void MacXPlatform::activateBackgroundWindow(QDialog *)
 
 }
 
+void MacXPlatform::registerUpdateJob()
+{
+    registerUpdateDaemon();
+}
+
 void MacXPlatform::uninstall()
 {
 
