@@ -360,14 +360,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
-    <name>FinderExtensionBundle</name>
-    <message>
-        <source>MEGA Finder Sync</source>
-        <translatorcomment>Identifying name for MEGA finder extension on macOS systems</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>

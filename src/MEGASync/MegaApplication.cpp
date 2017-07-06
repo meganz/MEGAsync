@@ -385,8 +385,6 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaError", "Invalid application key");
     QT_TRANSLATE_NOOP("MegaError", "Unknown error");
 
-    QT_TRANSLATE_NOOP("FinderExtensionBundle", "MEGA Finder Sync");
-
     QT_TRANSLATE_NOOP("FinderExtensionApp", "Get MEGA link");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "View on MEGA");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "No options available");
