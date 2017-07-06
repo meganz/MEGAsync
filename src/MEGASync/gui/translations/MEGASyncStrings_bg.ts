@@ -317,6 +317,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>FinderExtensionApp</name>
+    <message>
+        <source>Get MEGA link</source>
+        <translatorcomment>Finder context menu option to generate a public MEGA link</translatorcomment>
+        <translation type="unfinished">Вземи MEGA линк</translation>
+    </message>
+    <message>
+        <source>View on MEGA</source>
+        <translatorcomment>Finder context menu option to view a synced file through web browser within your MEGA account</translatorcomment>
+        <translation type="unfinished">View on MEGA</translation>
+    </message>
+    <message>
+        <source>No options available</source>
+        <translatorcomment>Finder context menu label when no option is available for selected items</translatorcomment>
+        <translation type="unfinished">No options available</translation>
+    </message>
+    <message>
+        <source>Click the toolbar item for a menu.</source>
+        <translatorcomment>Tooltip for MEGA finder toolbar button</translatorcomment>
+        <translation type="unfinished">Click the toolbar item for a menu.</translation>
+    </message>
+    <message>
+        <source>1 file</source>
+        <translatorcomment>Context menu option label to indicate the user has selected a file</translatorcomment>
+        <translation type="unfinished">1 файл</translation>
+    </message>
+    <message>
+        <source>%i files</source>
+        <translatorcomment>Context menu option label to indicate the user has selected %i number of files</translatorcomment>
+        <translation type="unfinished">%i files</translation>
+    </message>
+    <message>
+        <source>1 folder</source>
+        <translatorcomment>Context menu option label to indicate the user has selected a folder</translatorcomment>
+        <translation type="unfinished">1 папка</translation>
+    </message>
+    <message>
+        <source>%i folders</source>
+        <translatorcomment>Context menu option label to indicate the user has selected %i number of folders</translatorcomment>
+        <translation type="unfinished">%i folders</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -392,19 +435,24 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">Вход</translation>
     </message>
     <message>
-        <source>Create an account</source>
-        <translatorcomment>Button label to start the Create Account process. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Създаване на профил</translation>
-    </message>
-    <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Label to cancel all pending downloads.(String as short as possible)</translatorcomment>
-        <translation type="unfinished">Отмени всички изтегляния</translation>
+        <translation type="obsolete">Отмени всички изтегляния</translation>
     </message>
     <message>
         <source>Cancel download</source>
         <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
-        <translation type="unfinished">Отмени изтегляне</translation>
+        <translation type="obsolete">Отмени изтегляне</translation>
+    </message>
+    <message>
+        <source>[A]Login[/A] or [A]Create an account[/A] to fully experience MEGA</source>
+        <translatorcomment>Label to inform a user that needs to login or create an account in order to use MEGAsync. Keeps [A][/A] codes.</translatorcomment>
+        <translation type="unfinished">[A]Login[/A] or [A]Create an account[/A] to fully experience MEGA</translation>
+    </message>
+    <message>
+        <source>Create account</source>
+        <translatorcomment>Button label to start the creation of an account process. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Създай профил</translation>
     </message>
 </context>
 <context>
@@ -511,17 +559,17 @@ Are you sure?</source>
     <message>
         <source>MEGAsync is up to date</source>
         <translatorcomment>Label to indicate that MEGAsync is at state of up-to-date (String as short as possible)</translatorcomment>
-        <translation>MEGAsync е актуален</translation>
+        <translation type="vanished">MEGAsync е актуален</translation>
     </message>
     <message>
         <source>RECENTLY UPDATED</source>
         <translatorcomment>Label to indicate the files recently updated. Keep capital letters.</translatorcomment>
-        <translation>НАСКОРО АКТУАЛИЗИРАНИ</translation>
+        <translation type="vanished">НАСКОРО АКТУАЛИЗИРАНИ</translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data of the account is temporarily unavailable (String as short as possible)</translatorcomment>
-        <translation>Употреба: Данните са временно недостъпни</translation>
+        <translation type="vanished">Употреба: Данните са временно недостъпни</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -531,7 +579,7 @@ Are you sure?</source>
     <message>
         <source>MEGA website</source>
         <translatorcomment>Label with an URL link to MEGA website</translatorcomment>
-        <translation>MEGA уебсайт</translation>
+        <translation type="vanished">MEGA уебсайт</translation>
     </message>
     <message>
         <source>%1 of %2</source>
@@ -541,7 +589,7 @@ Are you sure?</source>
     <message>
         <source>Usage: %1</source>
         <translatorcomment>Label to indicate the actual usage of the current account. Preserve %1 code beacuse is used to include the amount of space utilized.</translatorcomment>
-        <translation>Употреба: %1</translation>
+        <translation type="vanished">Употреба: %1</translation>
     </message>
     <message>
         <source>%1 of %2 (%3/s)</source>
@@ -551,17 +599,17 @@ Are you sure?</source>
     <message>
         <source>%1 of %2 (paused)</source>
         <translatorcomment>Label to keep the count of pending and total files. Preserve %1 and %2 codes beacuse they are used to include the number of pending and total files.</translatorcomment>
-        <translation>%1 от %2 (на пауза)</translation>
+        <translation type="vanished">%1 от %2 (на пауза)</translation>
     </message>
     <message>
         <source>File transfers paused</source>
         <translatorcomment>Label to indicate that the state of transfers is actually paused.</translatorcomment>
-        <translation>Файловите трансфери са на пауза</translation>
+        <translation type="vanished">Файловите трансфери са на пауза</translation>
     </message>
     <message>
         <source>MEGAsync is scanning</source>
         <translatorcomment>Label to indicate that MEGAsync is at state of scanning inside synced folders (String as short as possible)</translatorcomment>
-        <translation>MEGAsync сканира</translation>
+        <translation type="vanished">MEGAsync сканира</translation>
     </message>
     <message>
         <source>All transfers have been completed</source>
@@ -616,17 +664,17 @@ Are you sure?</source>
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Изтегляне</translation>
+        <translation type="vanished">Изтегляне</translation>
     </message>
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>Качване</translation>
+        <translation type="vanished">Качване</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
         <translatorcomment>Label to indicate that MEGAsync is at a wait state (String as short as possible)</translatorcomment>
-        <translation>MEGAsync е в изчакване</translation>
+        <translation type="vanished">MEGAsync е в изчакване</translation>
     </message>
     <message>
         <source>MEGAsync is starting</source>
@@ -635,11 +683,11 @@ Are you sure?</source>
     </message>
     <message>
         <source>Pause</source>
-        <translation type="unfinished">Пауза</translation>
+        <translation type="obsolete">Пауза</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Настройки</translation>
+        <translation type="obsolete">Настройки</translation>
     </message>
     <message>
         <source>Resume downloads</source>
@@ -679,6 +727,91 @@ Are you sure?</source>
     <message>
         <source>Servers are too busy. Please wait...</source>
         <translation type="unfinished">Сървърите са твърде заети. Моля, изчакайте...</translation>
+    </message>
+    <message>
+        <source>MEGAsync is currently disabled</source>
+        <translatorcomment>Label to inform a user that MEGAsync is actually disabled due to the account is overquota (storage and/or transfer)</translatorcomment>
+        <translation type="unfinished">В момента MEGAsync е деактивиран</translation>
+    </message>
+    <message>
+        <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
+        <translatorcomment>Label to inform the user that his account is overquota and needs to upgrade to keep using it.</translatorcomment>
+        <translation type="unfinished">Вашият профил е превишил своето налично пространство. [A]Надстройте[/A] и продължете да се наслаждавате на защитено, от край до край криптирано съхранение на данни.</translation>
+    </message>
+    <message>
+        <source>Upgrade to PRO</source>
+        <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
+        <translation type="unfinished">Ъпгрейд до PRO</translation>
+    </message>
+    <message>
+        <source>Open Transfer Manager</source>
+        <translatorcomment>Tooltip for the button that open transfer manager dialog</translatorcomment>
+        <translation type="unfinished">Open Transfer Manager</translation>
+    </message>
+    <message>
+        <source>Access your MEGAsync settings</source>
+        <translatorcomment>Tooltip for the button that open MEGAsync settings dialog</translatorcomment>
+        <translation type="unfinished">Access your MEGAsync settings</translation>
+    </message>
+    <message>
+        <source>USED STORAGE %1</source>
+        <translatorcomment>Label to indicate the total used storage.quota</translatorcomment>
+        <translation type="unfinished">USED STORAGE %1</translation>
+    </message>
+    <message>
+        <source>Data temporarily unavailable</source>
+        <translatorcomment>Label to indicate the usage data is temporarely unavailable due to a transient error</translatorcomment>
+        <translation type="unfinished">Данните са временно недостъпни</translation>
+    </message>
+    <message>
+        <source>USED TRANSFERS %1</source>
+        <translatorcomment>Label to indicate the total used transfer quota</translatorcomment>
+        <translation type="unfinished">USED TRANSFERS %1</translation>
+    </message>
+    <message>
+        <source>PAUSED</source>
+        <translatorcomment>Label to indicate that the current transfer is paused. Keep capital letters.</translatorcomment>
+        <translation type="unfinished">НА ПАУЗА</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translatorcomment>Label to indicate that MEGAsync is at pause state</translatorcomment>
+        <translation type="unfinished">На пауза</translation>
+    </message>
+    <message>
+        <source>Waiting</source>
+        <translatorcomment>Label to indicate that MEGAsync is at waiting state</translatorcomment>
+        <translation type="unfinished">Изчакване</translation>
+    </message>
+    <message>
+        <source>Scanning...</source>
+        <translatorcomment>Label to indicate that MEGAsync is at scanning state</translatorcomment>
+        <translation type="unfinished">Scanning...</translation>
+    </message>
+    <message>
+        <source>Up to date</source>
+        <translatorcomment>Label to indicate that MEGAsync is at up-to-date state</translatorcomment>
+        <translation type="unfinished">Актуализиран</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
+        <translation type="unfinished">Cloud Диск</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
+        <translation type="unfinished">Входяща кутия</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
+        <translation type="unfinished">Входящи Споделяния</translation>
+    </message>
+    <message>
+        <source>Rubbish bin</source>
+        <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
+        <translation type="unfinished">Кошче</translation>
     </message>
 </context>
 <context>
@@ -1064,7 +1197,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to upload file/folder to MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Качване в MEGA</translation>
+        <translation type="obsolete">Качване в MEGA</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -1079,7 +1212,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to download file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Изтегли от MEGA</translation>
+        <translation type="obsolete">Изтегли от MEGA</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -1187,22 +1320,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Няма Интернет връзка</translation>
     </message>
     <message>
-        <source>Login</source>
-        <translatorcomment>Label to indicate Login action</translatorcomment>
-        <translation type="unfinished">Вход</translation>
-    </message>
-    <message>
         <source>Fetching file list...</source>
         <translation type="unfinished">Извличането на списъка с файлове...</translation>
     </message>
     <message>
         <source>Temporary error, retrying.</source>
         <translation type="unfinished">Временна грешка, прави се нов опит.</translation>
-    </message>
-    <message>
-        <source>Stream from MEGA</source>
-        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Стрийм от MEGA</translation>
     </message>
     <message>
         <source>I don&#039;t care</source>
@@ -1272,6 +1395,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
         <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
+    </message>
+    <message>
+        <source>Resume Transfers</source>
+        <translatorcomment>Label of main menu option to resume transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">Resume Transfers</translation>
+    </message>
+    <message>
+        <source>Pause Transfers</source>
+        <translatorcomment>Label of main menu option to pause transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">Pause Transfers</translation>
+    </message>
+    <message>
+        <source>Stream</source>
+        <translatorcomment>Label and title of the dialog displayed when a user wants to stream a file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
+        <translation type="unfinished">Stream</translation>
+    </message>
+    <message>
+        <source>MEGA website</source>
+        <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">MEGA уебсайт</translation>
     </message>
 </context>
 <context>
@@ -1489,12 +1632,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="obsolete">Внимание</translation>
     </message>
     <message>
-        <source>The destination folder is synced and you already have a file 
+        <source>The destination folder is synced and you already have a file
 inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
         <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
-        <translation type="obsolete">Целевата папка е синхронизирана и вече имате файл вътре в нея със същото име (%1).Ако продължите качването, предишният файл ще бъде презаписан.</translation>
+        <translation type="obsolete">[$16665]</translation>
     </message>
 </context>
 <context>
@@ -2041,7 +2184,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Bandwidth quota</source>
         <translatorcomment>Label to indicatte the actual use of Bandwidth quota.</translatorcomment>
-        <translation>Квота на трафика</translation>
+        <translation type="vanished">Квота на трафика</translation>
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
@@ -2474,9 +2617,18 @@ when the application starts again</source>
         <translation type="unfinished">PRO Lite</translation>
     </message>
     <message>
+        <source>Transfer quota</source>
+        <translatorcomment>Label to indicate the transfer quota usage of current logged account</translatorcomment>
+        <translation type="unfinished">Трафик</translation>
+    </message>
+    <message>
         <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
         <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
         <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
+    </message>
+    <message>
+        <source>Used quota for the last %1 hours: %2</source>
+        <translation type="unfinished">[$16666]</translation>
     </message>
 </context>
 <context>

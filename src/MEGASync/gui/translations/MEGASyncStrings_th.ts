@@ -317,6 +317,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>FinderExtensionApp</name>
+    <message>
+        <source>Get MEGA link</source>
+        <translatorcomment>Finder context menu option to generate a public MEGA link</translatorcomment>
+        <translation type="unfinished">รับลิงก์ MEGA</translation>
+    </message>
+    <message>
+        <source>View on MEGA</source>
+        <translatorcomment>Finder context menu option to view a synced file through web browser within your MEGA account</translatorcomment>
+        <translation type="unfinished">View on MEGA</translation>
+    </message>
+    <message>
+        <source>No options available</source>
+        <translatorcomment>Finder context menu label when no option is available for selected items</translatorcomment>
+        <translation type="unfinished">No options available</translation>
+    </message>
+    <message>
+        <source>Click the toolbar item for a menu.</source>
+        <translatorcomment>Tooltip for MEGA finder toolbar button</translatorcomment>
+        <translation type="unfinished">Click the toolbar item for a menu.</translation>
+    </message>
+    <message>
+        <source>1 file</source>
+        <translatorcomment>Context menu option label to indicate the user has selected a file</translatorcomment>
+        <translation type="unfinished">1 ไฟล์</translation>
+    </message>
+    <message>
+        <source>%i files</source>
+        <translatorcomment>Context menu option label to indicate the user has selected %i number of files</translatorcomment>
+        <translation type="unfinished">%i files</translation>
+    </message>
+    <message>
+        <source>1 folder</source>
+        <translatorcomment>Context menu option label to indicate the user has selected a folder</translatorcomment>
+        <translation type="unfinished">1 โฟลเดอร์</translation>
+    </message>
+    <message>
+        <source>%i folders</source>
+        <translatorcomment>Context menu option label to indicate the user has selected %i number of folders</translatorcomment>
+        <translation type="unfinished">%i folders</translation>
+    </message>
+</context>
+<context>
     <name>FolderBinder</name>
     <message>
         <source>Local folder:</source>
@@ -392,19 +435,24 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">เข้าสู่ระบบ</translation>
     </message>
     <message>
-        <source>Create an account</source>
-        <translatorcomment>Button label to start the Create Account process. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">สร้างบัญชีใหม่</translation>
-    </message>
-    <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Label to cancel all pending downloads.(String as short as possible)</translatorcomment>
-        <translation type="unfinished">ยกเลิกดาวน์โหลดทั้งหมด</translation>
+        <translation type="obsolete">ยกเลิกดาวน์โหลดทั้งหมด</translation>
     </message>
     <message>
         <source>Cancel download</source>
         <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
-        <translation type="unfinished">ยกเลิกดาวน์โหลด</translation>
+        <translation type="obsolete">ยกเลิกดาวน์โหลด</translation>
+    </message>
+    <message>
+        <source>[A]Login[/A] or [A]Create an account[/A] to fully experience MEGA</source>
+        <translatorcomment>Label to inform a user that needs to login or create an account in order to use MEGAsync. Keeps [A][/A] codes.</translatorcomment>
+        <translation type="unfinished">[A]Login[/A] or [A]Create an account[/A] to fully experience MEGA</translation>
+    </message>
+    <message>
+        <source>Create account</source>
+        <translatorcomment>Button label to start the creation of an account process. (String as short as possible)</translatorcomment>
+        <translation type="unfinished">สร้างบัญชี</translation>
     </message>
 </context>
 <context>
@@ -511,17 +559,17 @@ Are you sure?</source>
     <message>
         <source>MEGAsync is up to date</source>
         <translatorcomment>Label to indicate that MEGAsync is at state of up-to-date (String as short as possible)</translatorcomment>
-        <translation>MEGAsync ล่าสุดแล้วในขณะนี้</translation>
+        <translation type="vanished">MEGAsync ล่าสุดแล้วในขณะนี้</translation>
     </message>
     <message>
         <source>RECENTLY UPDATED</source>
         <translatorcomment>Label to indicate the files recently updated. Keep capital letters.</translatorcomment>
-        <translation>อัปเดตเมื่อเร็วๆ นี้</translation>
+        <translation type="vanished">อัปเดตเมื่อเร็วๆ นี้</translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
         <translatorcomment>Label to indicate that the usage data of the account is temporarily unavailable (String as short as possible)</translatorcomment>
-        <translation>การใช้งาน: ข้อมูลยังไม่พร้อมใช้งานชั่วคราว</translation>
+        <translation type="vanished">การใช้งาน: ข้อมูลยังไม่พร้อมใช้งานชั่วคราว</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -531,7 +579,7 @@ Are you sure?</source>
     <message>
         <source>MEGA website</source>
         <translatorcomment>Label with an URL link to MEGA website</translatorcomment>
-        <translation>เว็บไซต์ MEGA</translation>
+        <translation type="vanished">เว็บไซต์ MEGA</translation>
     </message>
     <message>
         <source>%1 of %2</source>
@@ -541,7 +589,7 @@ Are you sure?</source>
     <message>
         <source>Usage: %1</source>
         <translatorcomment>Label to indicate the actual usage of the current account. Preserve %1 code beacuse is used to include the amount of space utilized.</translatorcomment>
-        <translation>การใช้งาน: %1</translation>
+        <translation type="vanished">การใช้งาน: %1</translation>
     </message>
     <message>
         <source>%1 of %2 (%3/s)</source>
@@ -551,17 +599,17 @@ Are you sure?</source>
     <message>
         <source>%1 of %2 (paused)</source>
         <translatorcomment>Label to keep the count of pending and total files. Preserve %1 and %2 codes beacuse they are used to include the number of pending and total files.</translatorcomment>
-        <translation>%1 จาก %2 (หยุดชั่วคราว)</translation>
+        <translation type="vanished">%1 จาก %2 (หยุดชั่วคราว)</translation>
     </message>
     <message>
         <source>File transfers paused</source>
         <translatorcomment>Label to indicate that the state of transfers is actually paused.</translatorcomment>
-        <translation>หยุดการโอนย้ายไฟล์ชั่วคราว</translation>
+        <translation type="vanished">หยุดการโอนย้ายไฟล์ชั่วคราว</translation>
     </message>
     <message>
         <source>MEGAsync is scanning</source>
         <translatorcomment>Label to indicate that MEGAsync is at state of scanning inside synced folders (String as short as possible)</translatorcomment>
-        <translation>MEGAsync กำลังสแกน</translation>
+        <translation type="vanished">MEGAsync กำลังสแกน</translation>
     </message>
     <message>
         <source>All transfers have been completed</source>
@@ -616,17 +664,17 @@ Are you sure?</source>
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>กำลังดาวน์โหลด</translation>
+        <translation type="vanished">กำลังดาวน์โหลด</translation>
     </message>
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation>กำลังอัปโหลด</translation>
+        <translation type="vanished">กำลังอัปโหลด</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
         <translatorcomment>Label to indicate that MEGAsync is at a wait state (String as short as possible)</translatorcomment>
-        <translation>MEGAsync กำลังรอ</translation>
+        <translation type="vanished">MEGAsync กำลังรอ</translation>
     </message>
     <message>
         <source>MEGAsync is starting</source>
@@ -635,11 +683,11 @@ Are you sure?</source>
     </message>
     <message>
         <source>Pause</source>
-        <translation type="unfinished">พัก</translation>
+        <translation type="obsolete">พัก</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">ตั้งค่า</translation>
+        <translation type="obsolete">ตั้งค่า</translation>
     </message>
     <message>
         <source>Resume downloads</source>
@@ -679,6 +727,91 @@ Are you sure?</source>
     <message>
         <source>Servers are too busy. Please wait...</source>
         <translation type="unfinished">เซิร์ฟเวอร์ไม่ว่าง กรุณารอสักครู่</translation>
+    </message>
+    <message>
+        <source>MEGAsync is currently disabled</source>
+        <translatorcomment>Label to inform a user that MEGAsync is actually disabled due to the account is overquota (storage and/or transfer)</translatorcomment>
+        <translation type="unfinished">MEGAsync ถูกปิดใช้งาน</translation>
+    </message>
+    <message>
+        <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
+        <translatorcomment>Label to inform the user that his account is overquota and needs to upgrade to keep using it.</translatorcomment>
+        <translation type="unfinished">บัญชีของคุณมีการใช้พื้นที่เกินโควต้าที่อนุญาต [A]อัปเกรด[/A]และเพลิดเพลินไปกับการเข้ารหัสตั้งแต่ต้นทางถึงปลายทาง</translation>
+    </message>
+    <message>
+        <source>Upgrade to PRO</source>
+        <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
+        <translation type="unfinished">อัปเกรดเป็น PRO</translation>
+    </message>
+    <message>
+        <source>Open Transfer Manager</source>
+        <translatorcomment>Tooltip for the button that open transfer manager dialog</translatorcomment>
+        <translation type="unfinished">Open Transfer Manager</translation>
+    </message>
+    <message>
+        <source>Access your MEGAsync settings</source>
+        <translatorcomment>Tooltip for the button that open MEGAsync settings dialog</translatorcomment>
+        <translation type="unfinished">Access your MEGAsync settings</translation>
+    </message>
+    <message>
+        <source>USED STORAGE %1</source>
+        <translatorcomment>Label to indicate the total used storage.quota</translatorcomment>
+        <translation type="unfinished">USED STORAGE %1</translation>
+    </message>
+    <message>
+        <source>Data temporarily unavailable</source>
+        <translatorcomment>Label to indicate the usage data is temporarely unavailable due to a transient error</translatorcomment>
+        <translation type="unfinished">ข้อมูลยังไม่พร้อมใช้งานชั่วคราว</translation>
+    </message>
+    <message>
+        <source>USED TRANSFERS %1</source>
+        <translatorcomment>Label to indicate the total used transfer quota</translatorcomment>
+        <translation type="unfinished">USED TRANSFERS %1</translation>
+    </message>
+    <message>
+        <source>PAUSED</source>
+        <translatorcomment>Label to indicate that the current transfer is paused. Keep capital letters.</translatorcomment>
+        <translation type="unfinished">PAUSED</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translatorcomment>Label to indicate that MEGAsync is at pause state</translatorcomment>
+        <translation type="unfinished">พักแล้ว</translation>
+    </message>
+    <message>
+        <source>Waiting</source>
+        <translatorcomment>Label to indicate that MEGAsync is at waiting state</translatorcomment>
+        <translation type="unfinished">กำลังรอ</translation>
+    </message>
+    <message>
+        <source>Scanning...</source>
+        <translatorcomment>Label to indicate that MEGAsync is at scanning state</translatorcomment>
+        <translation type="unfinished">Scanning...</translation>
+    </message>
+    <message>
+        <source>Up to date</source>
+        <translatorcomment>Label to indicate that MEGAsync is at up-to-date state</translatorcomment>
+        <translation type="unfinished">ล่าสุดแล้ว</translation>
+    </message>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
+        <translation type="unfinished">คลาวด์ไดรฟ์</translation>
+    </message>
+    <message>
+        <source>Inbox</source>
+        <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
+        <translation type="unfinished">กล่องขาเข้า</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
+        <translation type="unfinished">แชร์ขาเข้า</translation>
+    </message>
+    <message>
+        <source>Rubbish bin</source>
+        <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
+        <translation type="unfinished">ถังขยะ</translation>
     </message>
 </context>
 <context>
@@ -1064,7 +1197,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to upload file/folder to MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">อัปโหลดไปยัง MEGA</translation>
+        <translation type="obsolete">อัปโหลดไปยัง MEGA</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -1079,7 +1212,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to download file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">ดาวน์โหลดจาก MEGA</translation>
+        <translation type="obsolete">ดาวน์โหลดจาก MEGA</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -1187,22 +1320,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">ไม่มีการเชื่อมต่ออินเทอร์เน็ต</translation>
     </message>
     <message>
-        <source>Login</source>
-        <translatorcomment>Label to indicate Login action</translatorcomment>
-        <translation type="unfinished">เข้าสู่ระบบ</translation>
-    </message>
-    <message>
         <source>Fetching file list...</source>
         <translation type="unfinished">กำลังดึงรายการแฟ้ม...</translation>
     </message>
     <message>
         <source>Temporary error, retrying.</source>
         <translation type="unfinished">มีข้อผิดพลาดชั่วคราว กรุณาลองใหม่</translation>
-    </message>
-    <message>
-        <source>Stream from MEGA</source>
-        <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">สตรีมมิ่งจาก MEGA</translation>
     </message>
     <message>
         <source>I don&#039;t care</source>
@@ -1272,6 +1395,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
         <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
+    </message>
+    <message>
+        <source>Resume Transfers</source>
+        <translatorcomment>Label of main menu option to resume transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">Resume Transfers</translation>
+    </message>
+    <message>
+        <source>Pause Transfers</source>
+        <translatorcomment>Label of main menu option to pause transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">Pause Transfers</translation>
+    </message>
+    <message>
+        <source>Stream</source>
+        <translatorcomment>Label and title of the dialog displayed when a user wants to stream a file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
+        <translation type="unfinished">Stream</translation>
+    </message>
+    <message>
+        <source>MEGA website</source>
+        <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">เว็บไซต์ MEGA</translation>
     </message>
 </context>
 <context>
@@ -1489,12 +1632,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="obsolete">คำเตือน</translation>
     </message>
     <message>
-        <source>The destination folder is synced and you already have a file 
+        <source>The destination folder is synced and you already have a file
 inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
         <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
-        <translation type="obsolete">โฟลเดอร์ปลายทางมีการซิงค์และคุณมีไฟล์อยู่ข้างในด้วยชื่อเดียวกันอยู่แล้ว (%1)ถ้าคุณทำการอัปโหลด ไฟล์ก่อนหน้านี้จะถูกเขียนทับคุณแน่ใจหรือไม่</translation>
+        <translation type="obsolete">[$16665]</translation>
     </message>
 </context>
 <context>
@@ -2041,7 +2184,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Bandwidth quota</source>
         <translatorcomment>Label to indicatte the actual use of Bandwidth quota.</translatorcomment>
-        <translation>โควต้าแบนด์วิดธ์</translation>
+        <translation type="vanished">โควต้าแบนด์วิดธ์</translation>
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
@@ -2474,9 +2617,18 @@ when the application starts again</source>
         <translation type="unfinished">PRO Lite</translation>
     </message>
     <message>
+        <source>Transfer quota</source>
+        <translatorcomment>Label to indicate the transfer quota usage of current logged account</translatorcomment>
+        <translation type="unfinished">โควต้าการโอนย้าย</translation>
+    </message>
+    <message>
         <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
         <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
         <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
+    </message>
+    <message>
+        <source>Used quota for the last %1 hours: %2</source>
+        <translation type="unfinished">[$16666]</translation>
     </message>
 </context>
 <context>
