@@ -1,3 +1,5 @@
+CONFIG -= qt
+
 CONFIG(debug, debug|release) {
     CONFIG -= debug release
     CONFIG += debug
@@ -7,47 +9,41 @@ CONFIG(release, debug|release) {
     CONFIG += release
 }
 
-TARGET = MEGAupdater
+TARGET = MEGAUpdater
 TEMPLATE = app
 CONFIG += console
+CONFIG += USE_MEGAAPI
 
-SOURCES += ../MEGASync/mega/src/crypto/cryptopp.cpp \
-            ../MEGASync/mega/src/base64.cpp \
-            ../MEGASync/mega/src/utils.cpp \
-            ../MEGAsync/mega/src/logging.cpp
+HEADERS += UpdateTask.h \
+    Preferences.h \
 
-LIBS += -lcryptopp
+SOURCES += MEGAUpdater.cpp \
+    UpdateTask.cpp
 
-win32 {
-    release {
-        LIBS += -L"$$_PRO_FILE_PWD_/../MEGAsync/mega/bindings/qt/3rdparty/libs/x32"
-    }
-    else {
-        LIBS += -L"$$_PRO_FILE_PWD_/../MEGAsync/mega/bindings/qt/3rdparty/libs/x32d"
-    }
+include(../MEGASync/mega/bindings/qt/sdk.pri)
+DEFINES -= MEGA_QT_LOGGING
+DEFINES -= USE_QT
 
-    INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
-    LIBS += -lws2_32
-    DEFINES += USE_CURL
-}
+LIBS += -lpthread
+
+SOURCES += src/thread/posixthread.cpp
+SOURCES -= src/gfx/qt.cpp
+SOURCES -= src/thread/qtthread.cpp
+SOURCES -= bindings/qt/QTMegaRequestListener.cpp
+SOURCES -= bindings/qt/QTMegaTransferListener.cpp
+SOURCES -= bindings/qt/QTMegaGlobalListener.cpp
+SOURCES -= bindings/qt/QTMegaSyncListener.cpp
+SOURCES -= bindings/qt/QTMegaListener.cpp
+SOURCES -= bindings/qt/QTMegaEvent.cpp
 
 macx {
-   LIBS += -L$$_PRO_FILE_PWD_/../MEGAsync/mega/bindings/qt/3rdparty/libs
+
+    DEFINES += USE_PTHREAD
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
+    QMAKE_CXXFLAGS -= -stdlib=libc++
+    QMAKE_LFLAGS -= -stdlib=libc++
+    CONFIG -= c++11
+    LIBS += -framework Cocoa -framework SystemConfiguration -framework CoreFoundation -framework Foundation -framework Security
+    QMAKE_CXXFLAGS += -g
 }
 
-DEFINES += USE_CRYPTOPP
-DEPENDPATH += $$PWD
-INCLUDEPATH += $$PWD ../MEGASync/mega/bindings/qt/3rdparty/include \
-                ../MEGASync/mega/bindings/qt/3rdparty/include/cryptopp \
-                ../MEGASync/mega/bindings/qt/3rdparty/include/cares \
-                ../MEGASync/mega/include/
-
-win32 {
-    INCLUDEPATH += ../MEGASync/mega/include/mega/wincurl
-}
-
-unix {
-    INCLUDEPATH += ../MEGASync/mega/include/mega/posix
-}
-
-SOURCES += MegaUpdater.cpp

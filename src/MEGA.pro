@@ -1,6 +1,7 @@
 TEMPLATE = subdirs
 
-SUBDIRS += MEGASync
+SUBDIRS += MEGASync \
+           MEGAUpdater
 
 CONFIG(debug, debug|release) {
     #SUBDIRS += MEGALogger
@@ -27,7 +28,7 @@ macx {
 }
 
 CONFIG(with_updater) {
-    SUBDIRS += MEGAUpdater
+    SUBDIRS += MEGAUpdateGenerator
 }
 
 CONFIG(with_tools) {
