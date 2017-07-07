@@ -1,16 +1,16 @@
 /* Finder context menu option to generate a public MEGA link */
 "Get MEGA link" = "MEGA-Link exportieren";
 /* Finder context menu option to view a synced file through web browser within your MEGA account */
-"View on MEGA" = "View on MEGA";
+"View on MEGA" = "Auf MEGA ansehen";
 /* Finder context menu label when no option is available for selected items */
-"No options available" = "No options available";
+"No options available" = "Keine Optionen verfügbar";
 /* Tooltip for MEGA finder toolbar button */
-"Click the toolbar item for a menu." = "Click the toolbar item for a menu.";
+"Click the toolbar item for a menu." = "Menü öffnen";
 /* Context menu option label to indicate the user has selected a file */
 "1 file" = "1 Datei";
 /* Context menu option label to indicate the user has selected %i number of files */
-"%i files" = "%i files";
+"%i files" = "%i Dateien";
 /* Context menu option label to indicate the user has selected a folder */
 "1 folder" = "1 Ordner";
 /* Context menu option label to indicate the user has selected %i number of folders */
-"%i folders" = "%i folders";
+"%i folders" = "%i Ordner";

@@ -1,16 +1,16 @@
 /* Finder context menu option to generate a public MEGA link */
-"Get MEGA link" = "得到MEGA链接";
+"Get MEGA link" = "取得MEGA链接";
 /* Finder context menu option to view a synced file through web browser within your MEGA account */
-"View on MEGA" = "View on MEGA";
+"View on MEGA" = "在MEGA上阅览";
 /* Finder context menu label when no option is available for selected items */
-"No options available" = "No options available";
+"No options available" = "没有可用的选项";
 /* Tooltip for MEGA finder toolbar button */
-"Click the toolbar item for a menu." = "Click the toolbar item for a menu.";
+"Click the toolbar item for a menu." = "点击主选项的工具列项目。";
 /* Context menu option label to indicate the user has selected a file */
-"1 file" = "1个文件";
+"1 file" = "一个文件";
 /* Context menu option label to indicate the user has selected %i number of files */
-"%i files" = "%i files";
+"%i files" = "%i个文件";
 /* Context menu option label to indicate the user has selected a folder */
-"1 folder" = "1个文件夹";
+"1 folder" = "一个文件夹";
 /* Context menu option label to indicate the user has selected %i number of folders */
-"%i folders" = "%i folders";
+"%i folders" = "%i个文件夹";
