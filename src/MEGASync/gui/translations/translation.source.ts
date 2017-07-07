@@ -2642,6 +2642,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Used quota for the last %1 hours: %2</source>
+        <translatorcomment>Label to indicate the usage quota in the last gap of time for free users. Keep %1 and %2 place holders. Will be replaced at runtime</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

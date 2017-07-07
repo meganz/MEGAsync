@@ -751,7 +751,7 @@ Are you sure?</source>
     <message>
         <source>Access your MEGAsync settings</source>
         <translatorcomment>Tooltip for the button that open MEGAsync settings dialog</translatorcomment>
-        <translation type="unfinished">Access your MEGAsync settings</translation>
+        <translation type="unfinished">Truy cập vào các thiết đặt cho trình MEGAsync</translation>
     </message>
     <message>
         <source>USED STORAGE %1</source>
@@ -2628,6 +2628,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Used quota for the last %1 hours: %2</source>
+        <translatorcomment>Label to indicate the usage quota in the last gap of time for free users. Keep %1 and %2 place holders. Will be replaced at runtime</translatorcomment>
         <translation type="unfinished">[$16666]</translation>
     </message>
 </context>
