@@ -14,8 +14,10 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
     setAttribute(Qt::WA_DeleteOnClose, true);
+#ifndef __APPLE__
     Qt::WindowFlags flags =  Qt::Window | Qt::FramelessWindowHint;
     this->setWindowFlags(flags);
+#endif
     preferences = Preferences::instance();
 
     refreshTransferTime = new QTimer(this);

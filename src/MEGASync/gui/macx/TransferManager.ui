@@ -281,7 +281,7 @@
                <string>Add...</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+               <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/add_ico.png</normaloff>:/images/add_ico.png</iconset>
               </property>
               <property name="iconSize">
@@ -715,16 +715,16 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <property name="spacing">
-       <number>6</number>
+       <number>19</number>
       </property>
       <property name="leftMargin">
-       <number>7</number>
+       <number>13</number>
       </property>
       <property name="topMargin">
        <number>7</number>
       </property>
       <property name="rightMargin">
-       <number>7</number>
+       <number>13</number>
       </property>
       <property name="bottomMargin">
        <number>4</number>
@@ -750,7 +750,7 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
          <string>Pause</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/pause_ico.png</normaloff>:/images/pause_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -785,7 +785,7 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
          <string>Clear all</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -861,7 +861,7 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
   <tabstop>bClose</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
