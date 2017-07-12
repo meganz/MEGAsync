@@ -18,18 +18,23 @@ void cleanItemsOfFolder(std::string dirPath)
         std::string tempPath = it->first;
         if (strncmp(dirPath.c_str(),tempPath.c_str(), dirPath.size()) != 0)
         {
-            ++it;
+            it++;
             continue;
         }
         
-        std::string item = it->first.substr(dirPath.size(), it->first.size() - dirPath.size());
-        if (!item.empty())
+        std::string::size_type pos = tempPath.find(dirPath);
+        if (pos != std::string::npos)
         {
-            it = pathStatus.erase(it);
+            tempPath.erase(pos, dirPath.length());
+        }
+        
+        if (!tempPath.empty())
+        {
+            pathStatus.erase(it++);
         }
         else
         {
-            ++it;
+            it++;
         }
     }
 }
