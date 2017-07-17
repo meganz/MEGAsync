@@ -16,6 +16,10 @@
 #include <QNetworkProxy>
 #include <assert.h>
 
+#ifdef Q_OS_LINUX
+    #include <QSvgRenderer>
+#endif
+
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
 #endif
@@ -840,7 +844,7 @@ void MegaApplication::updateTrayIcon()
     #ifdef _WIN32
         icon = QString::fromUtf8("://images/warning_ico.ico");
     #else
-        icon = QString::fromUtf8("://images/22_warning.png");
+        icon = QString::fromUtf8("://images/warning.svg");
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_overquota_mac.png");
@@ -866,7 +870,7 @@ void MegaApplication::updateTrayIcon()
         #ifdef _WIN32
             icon = QString::fromUtf8("://images/tray_sync.ico");
         #else
-            icon = QString::fromUtf8("://images/22_synching.png");
+            icon = QString::fromUtf8("://images/synching.svg");
         #endif
     #else
             icon = QString::fromUtf8("://images/icon_syncing_mac.png");
@@ -891,7 +895,7 @@ void MegaApplication::updateTrayIcon()
         #ifdef _WIN32
             icon = QString::fromUtf8("://images/app_ico.ico");
         #else
-            icon = QString::fromUtf8("://images/22_uptodate.png");
+            icon = QString::fromUtf8("://images/uptodate.svg");
         #endif
     #else
             icon = QString::fromUtf8("://images/icon_synced_mac.png");
@@ -916,7 +920,7 @@ void MegaApplication::updateTrayIcon()
     #ifdef _WIN32
         icon = QString::fromUtf8("://images/tray_sync.ico");
     #else
-        icon = QString::fromUtf8("://images/22_synching.png");
+        icon = QString::fromUtf8("://images/synching.svg");
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_syncing_mac.png");
@@ -941,7 +945,7 @@ void MegaApplication::updateTrayIcon()
     #ifdef _WIN32
         icon = QString::fromUtf8("://images/tray_pause.ico");
     #else
-        icon = QString::fromUtf8("://images/22_paused.png");
+        icon = QString::fromUtf8("://images/paused.svg");
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_paused_mac.png");
@@ -986,7 +990,7 @@ void MegaApplication::updateTrayIcon()
     #ifdef _WIN32
         icon = QString::fromUtf8("://images/tray_sync.ico");
     #else
-        icon = QString::fromUtf8("://images/22_synching.png");
+        icon = QString::fromUtf8("://images/synching.svg");
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_syncing_mac.png");
@@ -1011,7 +1015,7 @@ void MegaApplication::updateTrayIcon()
     #ifdef _WIN32
         icon = QString::fromUtf8("://images/app_ico.ico");
     #else
-        icon = QString::fromUtf8("://images/22_uptodate.png");
+        icon = QString::fromUtf8("://images/uptodate.svg");
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_synced_mac.png");
@@ -1041,7 +1045,7 @@ void MegaApplication::updateTrayIcon()
     #ifdef _WIN32
         icon = QString::fromUtf8("://images/login_ico.ico");
     #else
-        icon = QString::fromUtf8("://images/22_logging.png");
+        icon = QString::fromUtf8("://images/logging.svg");
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_logging_mac.png");
@@ -1072,6 +1076,11 @@ void MegaApplication::updateTrayIcon()
 
 void MegaApplication::start()
 {
+#ifdef Q_OS_LINUX
+    QSvgRenderer qsr; //to have svg library linked
+#endif
+
+
     if (appfinished)
     {
         return;
@@ -1099,7 +1108,7 @@ void MegaApplication::start()
     #ifdef _WIN32
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
     #else
-        trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
+        trayIcon->setIcon(QIcon(QString::fromAscii("://images/synching.svg")));
     #endif
 #else
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),
@@ -3516,7 +3525,7 @@ void MegaApplication::createTrayIcon()
     #ifdef _WIN32
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
     #else
-        trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
+        trayIcon->setIcon(QIcon(QString::fromAscii("://images/synching.svg")));
     #endif
 #else
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),

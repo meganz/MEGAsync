@@ -7,7 +7,7 @@ Version: MEGASYNC_VERSION
 DEBTRANSFORM-RELEASE: 1
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
 Homepage: https://mega.nz/#sync
-Build-Depends: debhelper, qtbase5-dev, qt5-qmake, qt4-linguist-tools, libqt5dbus5, libcrypto++-dev, libc-ares-dev, libssl-dev, libsqlite3-dev, zlib1g-dev, wget, dh-autoreconf, cdbs, unzip, wget, libtool-bin (>= 2.4.2-1.10) | libtool (<< 2.4.2-1.10)
+Build-Depends: debhelper, qtbase5-dev, qt5-qmake, qt4-linguist-tools, libqt5dbus5, libqt5svg5-dev, libcrypto++-dev, libc-ares-dev, libssl-dev, libsqlite3-dev, zlib1g-dev, wget, dh-autoreconf, cdbs, unzip, wget, libtool-bin (>= 2.4.2-1.10) | libtool (<< 2.4.2-1.10)
 Package-List:
  megasync deb gnome optional
 Files:

@@ -24,6 +24,7 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 unix:!macx {
+    QT += svg
     TARGET = megasync
     isEmpty(PREFIX) {
         PREFIX = /usr
