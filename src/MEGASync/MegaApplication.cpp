@@ -16,6 +16,10 @@
 #include <QNetworkProxy>
 #include <assert.h>
 
+#ifdef Q_OS_LINUX
+    #include <QSvgRenderer>
+#endif
+
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
 #endif
@@ -1014,6 +1018,11 @@ void MegaApplication::updateTrayIcon()
 
 void MegaApplication::start()
 {
+#ifdef Q_OS_LINUX
+    QSvgRenderer qsr; //to have svg library linked
+#endif
+
+
     if (appfinished)
     {
         return;
