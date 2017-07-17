@@ -17,7 +17,7 @@ BuildRequires: libcares-devel
 BuildRequires: update-desktop-files
  
 %if 0%{?sle_version} == 120200 || 0%{?suse_version} > 1320
-BuildRequires: libqt5-qtbase-devel >= 5.6, libqt5-linguist
+BuildRequires: libqt5-qtbase-devel >= 5.6, libqt5-linguist, libqt5-qtsvg-devel
 Requires: libQt5Core5 >= 5.6
 %else
 BuildRequires: libqt4-devel, qt-devel
@@ -39,7 +39,7 @@ BuildRequires: libcryptopp-devel
 %if 0%{?fedora_version} >= 23
 BuildRequires: c-ares-devel, cryptopp-devel
 BuildRequires: desktop-file-utils
-BuildRequires: qt5-qtbase-devel qt5-qttools-devel
+BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel
 Requires: qt5-qtbase >= 5.6, qt5-qtsvg
 BuildRequires: terminus-fonts, fontpackages-filesystem
 %else
