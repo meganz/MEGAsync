@@ -1002,10 +1002,31 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
     oss << "Module name: " << &(moduleName[nameIndex]) << "\n";
   }
 
-  DWORD dwVersion = GetVersion();
+  typedef LONG MEGANTSTATUS;
+  typedef struct _MEGAOSVERSIONINFOW {
+      DWORD dwOSVersionInfoSize;
+      DWORD dwMajorVersion;
+      DWORD dwMinorVersion;
+      DWORD dwBuildNumber;
+      DWORD dwPlatformId;
+      WCHAR  szCSDVersion[ 128 ];     // Maintenance string for PSS usage
+  } MEGARTL_OSVERSIONINFOW, *PMEGARTL_OSVERSIONINFOW;
+
+  typedef MEGANTSTATUS (WINAPI* RtlGetVersionPtr)(PMEGARTL_OSVERSIONINFOW);
+  MEGARTL_OSVERSIONINFOW version = { 0 };
+  HMODULE hMod = GetModuleHandleW(L"ntdll.dll");
+  if (hMod)
+  {
+      RtlGetVersionPtr RtlGetVersion = (RtlGetVersionPtr)GetProcAddress(hMod, "RtlGetVersion");
+      if (RtlGetVersion)
+      {
+          RtlGetVersion(&version);
+      }
+  }
+
   oss << "Operating system: Windows "
-      << (int)(LOBYTE(LOWORD(dwVersion))) << "."
-      << (int)(HIBYTE(LOWORD(dwVersion))) << "\n";
+      << version.dwMajorVersion << "."
+      << version.dwMinorVersion << "\n";
   oss << "Error info:\n";
 
   DWORD64 offset;

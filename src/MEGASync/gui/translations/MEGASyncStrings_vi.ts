@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="vi" sourcelanguage="en">
+<TS version="2.1" language="vi" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -16,7 +16,7 @@
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">Hộp thư đến</translation>
+        <translation type="obsolete">Hộp Thư</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -189,7 +189,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished">Chính sách Riêng tư</translation>
+        <translation type="unfinished">Chính sách riêng tư</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -644,22 +644,22 @@ Are you sure?</source>
     <message>
         <source>Resume downloads</source>
         <translatorcomment>Label to resume the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume downloads</translation>
+        <translation type="unfinished">Tiếp tục tải xuống</translation>
     </message>
     <message>
         <source>Pause downloads</source>
         <translatorcomment>Label to pause the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Pause downloads</translation>
+        <translation type="unfinished">Tạm dừng tải xuống</translation>
     </message>
     <message>
         <source>Resume uploads</source>
         <translatorcomment>Label to resume the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume uploads</translation>
+        <translation type="unfinished">Tiếp tục tải lên</translation>
     </message>
     <message>
         <source>Pause uploads</source>
         <translatorcomment>Label to pause the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Pause uploads</translation>
+        <translation type="unfinished">Tạm dừng tải lên</translation>
     </message>
     <message>
         <source>Resume download</source>
@@ -674,7 +674,7 @@ Are you sure?</source>
     <message>
         <source>Blocked file: %1</source>
         <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
-        <translation type="unfinished">Blocked file: %1</translation>
+        <translation type="unfinished">Tệp tin bị chặn: %1</translation>
     </message>
     <message>
         <source>Servers are too busy. Please wait...</source>
@@ -806,7 +806,7 @@ Are you sure?</source>
     <name>MegaApplication</name>
     <message>
         <source>MEGAsync</source>
-        <translation>MEGAsync - Trình Đồng bộ hóa</translation>
+        <translation>MEGAsync - Trình Đồng Bộ Hóa</translation>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
@@ -1265,6 +1265,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
         <translation type="unfinished">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
     </message>
+    <message>
+        <source>Please consider updating your operating system.</source>
+        <translation type="unfinished">Please consider updating your operating system.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
+        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1441,7 +1449,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label of context menu option to generate a public link of selected completed transfer</translatorcomment>
-        <translation type="unfinished">Tạo đường dẫn liên kết MEGA</translation>
+        <translation type="unfinished">Lấy đường liên kết MEGA</translation>
     </message>
     <message>
         <source>Open</source>
@@ -1628,7 +1636,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     </message>
     <message>
         <source>Get MEGA link</source>
-        <translation type="unfinished">Tạo đường dẫn liên kết MEGA</translation>
+        <translation type="unfinished">Lấy đường liên kết MEGA</translation>
     </message>
 </context>
 <context>
@@ -1699,7 +1707,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Public permissions:</source>
         <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Các quyền hạn cho công khai:</translation>
+        <translation type="unfinished">Quyền hạn công cộng:</translation>
     </message>
     <message>
         <source>Files</source>
@@ -1807,7 +1815,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Button tooltip to generate a public link for a specific file. Keep capital letters.</translatorcomment>
-        <translation>Tạo đường dẫn liên kết MEGA</translation>
+        <translation>Lấy đường liên kết MEGA</translation>
     </message>
     <message>
         <source>just now</source>
@@ -1949,7 +1957,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>English</source>
         <translatorcomment>Label for English language.</translatorcomment>
-        <translation type="obsolete">English</translation>
+        <translation type="obsolete">English (Anh)</translation>
     </message>
     <message>
         <source>Details</source>
@@ -2156,7 +2164,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation>Nhập mẫu tên mà bạn muốn lọc khỏi quá trình đồng bộ hóa. (dấu * và ? đều được cho phép):</translation>
+        <translation>Nhập mẫu tên mà bạn muốn lọc khỏi quá trình đồng bộ hóa. (dấu * và? đều được cho phép):</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2368,11 +2376,6 @@ Do you want to restart MEGAsync now?</source>
         <translation type="unfinished">Lọc theo kích thước</translation>
     </message>
     <message>
-        <source>PRO lite</source>
-        <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO LITE</translation>
-    </message>
-    <message>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
@@ -2465,6 +2468,15 @@ when the application starts again</source>
         <source>Uploads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
         <translation type="unfinished">Phiên Tải Lên</translation>
+    </message>
+    <message>
+        <source>PRO Lite</source>
+        <translation type="unfinished">PRO Lite</translation>
+    </message>
+    <message>
+        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
+        <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
+        <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
     </message>
 </context>
 <context>
@@ -2779,7 +2791,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync</source>
-        <translation type="unfinished">MEGAsync - Trình Đồng bộ hóa</translation>
+        <translation type="unfinished">MEGAsync - Trình Đồng Bộ Hóa</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
@@ -2850,7 +2862,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label displayed when a user is trying to get public link of a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
-        <translation>Tạo đường dẫn liên kết MEGA</translation>
+        <translation>Lấy đường liên kết MEGA</translation>
     </message>
     <message>
         <source>Share with a MEGA user</source>
@@ -2891,6 +2903,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 (%2)</source>
         <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
         <translation>%1 (%2)</translation>
+    </message>
+    <message>
+        <source>Remove from left pane</source>
+        <translation type="unfinished">Xóa khỏi khung bên trái</translation>
     </message>
 </context>
 <context>
@@ -2951,7 +2967,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Public link</source>
         <translatorcomment>Text of the button to select a file from a public link for streaming</translatorcomment>
-        <translation type="unfinished">Đường dẫn liên kết công khai</translation>
+        <translation type="unfinished">Đường liên kết công khai</translation>
     </message>
     <message>
         <source>File info:</source>
@@ -3189,7 +3205,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Active Transfers</source>
         <translatorcomment>Label of tab to access all active transfers</translatorcomment>
-        <translation type="unfinished">Active Transfers</translation>
+        <translation type="unfinished">Các Phiên Đang Hoạt Động</translation>
     </message>
 </context>
 <context>
@@ -3218,11 +3234,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">Phiên tải xuống này không thể thực hiện được vì nó sẽ chiếm hết toàn bộ băng thông cho phép của IP nhà bạn. Giới hạn này có thể linh động và cũng tùy thuộc vào số lượng băng thông chưa sử dụng hiện ta có.</translation>
+        <translation type="unfinished">Phiên tải xuống này không thể thực hiện được vì nó sẽ chiếm hết toàn bộ băng thông cho phép của IP này. Giới hạn này có thể linh động và cũng tùy thuộc vào số lượng băng thông không được sử dụng từ máy chủ.                </translation>
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Bạn vừa sử dụng %1 dữ liệu trong vòng 6 giờ qua, đồng nghĩa là bạn đã vượt quá giới hạn cho phép đối với hạng tài khoản của bạn. Để tránh khỏi giới hạn này, bạn có thể [A]nâng cấp lên hạng PRO[/A], để lấy băng thông riêng và thên không gian dự trữ.</translation>
+        <translation type="unfinished">Địa chỉ IP đang sử dụng đã tiêu hao %1 băng thông truyền tải trong vòng 6 giờ qua, đồng nghĩa là bạn đã vượt quá giới hạn cho phép đối với hạng tài khoản của bạn. [A]Nâng cấp lên hạng PRO[/A], để lấy thêm băng thông riêng và thêm không gian để lưu trữ.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
@@ -3281,7 +3297,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">Hộp thư đến</translation>
+        <translation type="unfinished">Hộp Thư</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -3312,7 +3328,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">Hộp thư đến</translation>
+        <translation type="unfinished">Hộp Thư</translation>
     </message>
     <message>
         <source>Used</source>
@@ -3320,7 +3336,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Còn lại (mạng)</translation>
+        <translation type="unfinished">Còn Trống (trên mạng)</translation>
     </message>
 </context>
 <context>

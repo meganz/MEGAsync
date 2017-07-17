@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="uk" sourcelanguage="en">
+<TS version="2.1" language="uk" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -1265,6 +1265,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
         <translation type="unfinished">Ви синхронізуєте локальну теку, з файлової системи FAT. Ця файлова система має деякі недоліки керування великими файлами і часом змін файлів, що може призводити до помилок синхронізації (наприклад під час збереження ресурсів), тому ми наполегливо рекомендуємо синхронізувати теки з більш надійних файлових систем, таких як NTFS ([A]тут[/A] більше детальної інформації).</translation>
     </message>
+    <message>
+        <source>Please consider updating your operating system.</source>
+        <translation type="unfinished">Будь ласка, поміркуйте над оновленням операційної системи.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
+        <translation type="unfinished">MEGAsync продовжить працювати, але невдовзі припинить оновлюватися на версіях до OS X Mavericks.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2156,7 +2164,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation>Введіть назву виключення з синхронізації.(символи * та ? дозволені):</translation>
+        <translation>Введіть назву виключення з синхронізації.(символи * та? дозволені):</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2368,11 +2376,6 @@ Do you want to restart MEGAsync now?</source>
         <translation type="unfinished">Виключити за розміром</translation>
     </message>
     <message>
-        <source>PRO lite</source>
-        <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO LITE</translation>
-    </message>
-    <message>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
@@ -2465,6 +2468,15 @@ when the application starts again</source>
         <source>Uploads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
         <translation type="unfinished">Відвантаження</translation>
+    </message>
+    <message>
+        <source>PRO Lite</source>
+        <translation type="unfinished">PRO Lite</translation>
+    </message>
+    <message>
+        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
+        <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
+        <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
     </message>
 </context>
 <context>
@@ -2892,6 +2904,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
         <translation>%1 (%2)</translation>
     </message>
+    <message>
+        <source>Remove from left pane</source>
+        <translation type="unfinished">Видалити з лівої панелі</translation>
+    </message>
 </context>
 <context>
     <name>SizeLimitDialog</name>
@@ -3218,11 +3234,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">Не можливо продовжувати ваше завантаження тому що воно виходить за межі поточного безкоштовного тарифу для вашої IP адреси. Це динамічне обмеження, воно залежить від кількості неспожитої пропускної здатності, що ми маємо доступною.</translation>
+        <translation type="unfinished">Не можливо продовжувати завантаження, тому що воно виходить за межі поточного безкоштовного тарифу для вашої IP адреси. Це динамічне обмеження, воно залежить від кількості неспожитої пропускної здатності, що ми маємо доступною.</translation>
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Ви використали %1 передачі даних за останні 6 годин, що ставить вас під тимчасове обмеження. Щоб обійти його, ви можете [A]покращити до PRO[/A] свій акаунт, що надасть вам велику кількість пропускної здатності та додатковий простір зберігання.</translation>
+        <translation type="unfinished">Ви використали %1 передачі даних за останні 6 годин, що ставить вас під тимчасове обмеження. Щоб обійти його, ви можете [A]покращити до PRO[/A] свій акаунт, що надасть вам більше трафіку та додатковий простір зберігання.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>

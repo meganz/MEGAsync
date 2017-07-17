@@ -24,6 +24,10 @@ private:
     static WinShellDispatcherTask *shellDispatcherTask;
 
 public:
+    static void addSyncToLeftPane(QString syncPath, QString syncName, QString uuid);
+    static void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);
+    static void removeAllSyncsFromLeftPane();
+
     static void initialize(int argc, char *argv[]);
     static bool enableTrayIcon(QString executable);
     static void notifyItemChange(QString path);
@@ -32,14 +36,15 @@ public:
     static void showInFolder(QString pathIn);
     static void startShellDispatcher(MegaApplication *receiver);
     static void stopShellDispatcher();
-    static void syncFolderAdded(QString syncPath, QString syncName);
-    static void syncFolderRemoved(QString syncPath, QString syncName);
+    static void syncFolderAdded(QString syncPath, QString syncName, QString syncID);
+    static void syncFolderRemoved(QString syncPath, QString syncName, QString syncID);
     static QByteArray encrypt(QByteArray data, QByteArray key);
     static QByteArray decrypt(QByteArray data, QByteArray key);
     static QByteArray getLocalStorageKey();
     static QString getDefaultOpenApp(QString extension);
     static void enableDialogBlur(QDialog *dialog);
     static void activateBackgroundWindow(QDialog *window);
+    static void uninstall();
 };
 
 #endif // WINDOWSPLATFORM_H

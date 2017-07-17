@@ -151,6 +151,35 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->cAutoUpdate->hide();
     ui->bUpdate->hide();
     #endif
+#else
+    connect(ui->cDisableIcons, SIGNAL(clicked()), this, SLOT(stateChanged()));
+    ui->cDisableIcons->hide();
+
+    typedef LONG MEGANTSTATUS;
+    typedef struct _MEGAOSVERSIONINFOW {
+        DWORD dwOSVersionInfoSize;
+        DWORD dwMajorVersion;
+        DWORD dwMinorVersion;
+        DWORD dwBuildNumber;
+        DWORD dwPlatformId;
+        WCHAR  szCSDVersion[ 128 ];     // Maintenance string for PSS usage
+    } MEGARTL_OSVERSIONINFOW, *PMEGARTL_OSVERSIONINFOW;
+
+    typedef MEGANTSTATUS (WINAPI* RtlGetVersionPtr)(PMEGARTL_OSVERSIONINFOW);
+    MEGARTL_OSVERSIONINFOW version = { 0 };
+    HMODULE hMod = GetModuleHandleW(L"ntdll.dll");
+    if (hMod)
+    {
+        RtlGetVersionPtr RtlGetVersion = (RtlGetVersionPtr)GetProcAddress(hMod, "RtlGetVersion");
+        if (RtlGetVersion)
+        {
+            RtlGetVersion(&version);
+            if (version.dwMajorVersion >= 10)
+            {
+                ui->cDisableIcons->show();
+            }
+        }
+    }
 #endif
     ui->cProxyType->addItem(QString::fromUtf8("SOCKS5H"));
 
@@ -386,7 +415,7 @@ void SettingsDialog::onCacheSizeAvailable()
 
         if (cacheSize)
         {
-            ui->lCacheSize->setText(ui->lCacheSize->text().arg(Utilities::getSizeString(cacheSize)));
+            ui->lCacheSize->setText(QString::fromUtf8(MEGA_DEBRIS_FOLDER) + QString::fromUtf8(": %1").arg(Utilities::getSizeString(cacheSize)));
         }
         else
         {
@@ -396,7 +425,7 @@ void SettingsDialog::onCacheSizeAvailable()
 
         if (remoteCacheSize)
         {
-            ui->lRemoteCacheSize->setText(ui->lRemoteCacheSize->text().arg(Utilities::getSizeString(remoteCacheSize)));
+            ui->lRemoteCacheSize->setText(QString::fromUtf8("SyncDebris: %1").arg(Utilities::getSizeString(remoteCacheSize)));
         }
         else
         {
@@ -936,6 +965,9 @@ void SettingsDialog::loadSettings()
 
         //Syncs
         loadSyncSettings();
+#ifdef _WIN32
+        ui->cDisableIcons->setChecked(preferences->leftPaneIconsDisabled());
+#endif
 
         //Bandwidth
         ui->rUploadAutoLimit->setChecked(preferences->uploadLimitKB()<0);
@@ -1158,7 +1190,9 @@ bool SettingsDialog::saveSettings()
                     {
                         if (!enabled && preferences->isFolderActive(i) != enabled)
                         {
-                            Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                            Platform::syncFolderRemoved(preferences->getLocalFolder(i),
+                                                        preferences->getSyncName(i),
+                                                        preferences->getSyncID(i));
                             preferences->setSyncState(i, enabled);
 
                             MegaNode *node = megaApi->getNodeByHandle(megaHandle);
@@ -1176,7 +1210,9 @@ bool SettingsDialog::saveSettings()
                     MegaNode *node = megaApi->getNodeByHandle(megaHandle);
                     if (active)
                     {
-                        Platform::syncFolderRemoved(preferences->getLocalFolder(i), preferences->getSyncName(i));
+                        Platform::syncFolderRemoved(preferences->getLocalFolder(i),
+                                                    preferences->getSyncName(i),
+                                                    preferences->getSyncID(i));
                         megaApi->removeSync(node);
                     }
                     Utilities::removeRecursively(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
@@ -1256,6 +1292,27 @@ bool SettingsDialog::saveSettings()
 
             syncsChanged = false;
         }
+#ifdef _WIN32
+        bool iconsDisabled = ui->cDisableIcons->isChecked();
+        if (preferences->leftPaneIconsDisabled() != iconsDisabled)
+        {
+            if (iconsDisabled)
+            {
+                Platform::removeAllSyncsFromLeftPane();
+            }
+            else
+            {
+                for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+                {
+                    Platform::addSyncToLeftPane(preferences->getLocalFolder(i),
+                                                preferences->getSyncName(i),
+                                                preferences->getSyncID(i));
+                }
+            }
+            preferences->disableLeftPaneIcons(iconsDisabled);
+        }
+#endif
+
 #ifndef WIN32
         if (permissionsChanged)
         {
@@ -1898,10 +1955,11 @@ void SettingsDialog::changeEvent(QEvent *event)
         ui->retranslateUi(this);
 
 #ifdef __APPLE__
-       setWindowTitle(tr("Preferences - MEGAsync"));
-       ui->cStartOnStartup->setText(tr("Open at login"));
-       ui->cOverlayIcons->hide();
+        setWindowTitle(tr("Preferences - MEGAsync"));
+        ui->cStartOnStartup->setText(tr("Open at login"));
+        ui->cOverlayIcons->hide();
 #endif
+        ui->cProxyType->addItem(QString::fromUtf8("SOCKS5H"));
 
         loadSettings();
         onCacheSizeAvailable();

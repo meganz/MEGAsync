@@ -1,3 +1,19 @@
+Fri Jun 23 12:43:22 CEST 2017 - linux@mega.co.nz
+- Update to version 3.1.4:
+  * Support for Apple File System (macOS High Sierra)
+  * Allow to disable left pane icons in settings (Windows 10)
+  * Updated translations
+  * Bug fixes
+
+-------------------------------------------------------------------
+Fri May 12 12:42:51 CEST 2017 - linux@mega.co.nz
+- Update to version 3.1.2:
+  * Better integration with Windows 10
+  * Updated SSL certificate for communications with the web
+  * Deprecated OS X versions prior to Mavericks
+  * Bug fixes
+
+-------------------------------------------------------------------
 Mon Feb 6 12:07:29 CET 2017 - linux@mega.co.nz
 - Update to version 3.0.1:
   * Transfer manager

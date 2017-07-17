@@ -56,10 +56,14 @@ require_change=0
 thisscriptpath=$(readlink -f "$0")
 pathXMLdir=$(dirname "$thisscriptpath")
 
-while getopts ":ikcp:x:" opt; do
+while getopts ":ikcnp:x:" opt; do
   case $opt in
     i)
 		remove_megasync=1
+      ;;
+    n)
+		nogpgchecksSUSE=--no-gpg-checks
+		nogpgchecksYUM=--nogpgcheck
       ;;
 	c)
 		require_change=1
@@ -151,6 +155,8 @@ done
 echo "quering VM info:"
 $sshpasscommand ssh root@$IP_GUEST cat /etc/issue
 $sshpasscommand ssh root@$IP_GUEST uname -a
+echo -n " Inotify max watchers initial: "
+$sshpasscommand ssh root@$IP_GUEST sysctl fs.inotify.max_user_watches
 
 
 echo " deleting testing file ..."
@@ -189,6 +195,7 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 		logOperationResult "removing megasync ..." $resultREMOVE
 	fi
 	
+	echo " modifying repos ..."
 	$sshpasscommand ssh root@$IP_GUEST "cat > /etc/zypp/repos.d/megasync.repo" <<-EOF
 	[MEGAsync]
 	name=MEGAsync
@@ -199,7 +206,7 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	autorefresh=1
 	enabled=1
 	EOF
-	$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive refresh 2> tmp$VMNAME
+	$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive $nogpgchecksSUSE refresh 2> tmp$VMNAME
 	resultMODREPO=$?
 	#notice: zypper will report 0 as status even though it "failed", we do stderr checking
 	if cat tmp$VMNAME | grep $REPO; then
@@ -214,12 +221,12 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	echo " reinstalling/updating megasync ..."
 	BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
 	attempts=10
-	$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive install -f megasync 
+	$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive $nogpgchecksSUSE install -f megasync 
 	resultINSTALL=$?
 	while [[ $attempts -ge 0 && $resultINSTALL -ne 0 ]]; do
 		sleep $((5*(10-$attempts)))
 		echo " reinstalling/updating megasync ... attempts left="$attempts
-		$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive install -f megasync 
+		$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive $nogpgchecksSUSE install -f megasync 
 		resultINSTALL=$?
 		attempts=$(($attempts - 1))
 	done
@@ -433,7 +440,7 @@ else
 	
 	echo " reinstalling/updating megasync ..."
 	BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
-	$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit install megasync  2> tmp$VMNAME
+	$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit $nogpgchecksYUM install megasync  2> tmp$VMNAME
 	resultINSTALL=$? #TODO: yum might fail and still say "IT IS OK!"
 	#Doing simple stderr checking will give false FAILS, since yum outputs non failure stuff in stderr
 	if cat tmp$VMNAME | grep $REPO; then
@@ -453,7 +460,7 @@ else
 		sleep $((5*(10-$attempts)))
 		echo " reinstalling/updating megasync ... attempts left="$attempts
 		BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
-		$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit install megasync  2> tmp$VMNAME
+		$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit $nogpgchecksYUM install megasync  2> tmp$VMNAME
 		resultINSTALL=$? #TODO: yum might fail and still say "IT IS OK!"
 		#Doing simple stderr checking will give false FAILS, since yum outputs non failure stuff in stderr
 		if cat tmp$VMNAME | grep $REPO; then
@@ -491,17 +498,21 @@ resultRunning=$?
 logOperationResult "checking new megasync running ..." $resultRunning
 
 echo " forcing POST to dl test file ..."
+# https://mega.nz/#!FQ5miCCB!WkMOvzgPWhBtvE7tYQQv8urhwuYmuS74C3HnhboDE-I
 $sshpasscommand ssh root@$IP_GUEST "curl 'https://127.0.0.1:6342/' -H 'Origin: https://mega.nz' --data-binary '{\"a\":\"l\",\"h\":\"FQ5miCCB\",\"k\":\"WkMOvzgPWhBtvE7tYQQv8urhwuYmuS74C3HnhboDE-I\"}' --compressed --insecure"
 
-resultDL=27
-attempts=10
-while [[ $attempts -ge 0 && $resultDL -ne 0 ]]; do
-	sleep $((5*(10-$attempts)))
-	echo " check file dl correctly ... attempts left="$attempts
-	$sshpasscommand ssh root@$IP_GUEST cat /home/mega/testFile.txt >/dev/null  #TODO: do hash file comparation
-	resultDL=$?
-	attempts=$(($attempts - 1))
-done
+resultDL=$?
+if [ $resultDL -eq 0 ]; then
+	resultDL=27
+	attempts=10
+	while [[ $attempts -ge 0 && $resultDL -ne 0 ]]; do
+		sleep $((5*(10-$attempts)))
+		echo " check file dl correctly ... attempts left="$attempts
+		$sshpasscommand ssh root@$IP_GUEST cat /home/mega/testFile.txt >/dev/null  #TODO: do hash file comparation
+		resultDL=$?
+		attempts=$(($attempts - 1))
+	done
+fi
 
 logOperationResult "check file dl correctly ..." $resultDL
 
@@ -580,6 +591,8 @@ else #FEDORA | CENTOS...
 	logOperationResult "check repo configured correctly ..." $resultRepoConfiguredOk
 fi
 
+echo -n " Inotify max watchers final: "
+$sshpasscommand ssh root@$IP_GUEST sysctl fs.inotify.max_user_watches
 
 
 if [ $resultDL -eq 0 ] && [ $resultRunning -eq 0 ] \

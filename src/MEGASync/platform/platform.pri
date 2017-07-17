@@ -14,7 +14,7 @@ win32 {
 		$$PWD/win/WinTrayReceiver.h
 
     LIBS += -lole32 -lShell32 -lcrypt32
-    DEFINES += UNICODE NTDDI_VERSION=0x05010000 _WIN32_WINNT=0x0501
+    DEFINES += UNICODE _UNICODE NTDDI_VERSION=0x05010000 _WIN32_WINNT=0x0501
 }
 
 unix:!macx {
