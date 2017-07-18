@@ -1,4 +1,5 @@
 #include "MacXPlatform.h"
+#include <unistd.h>
 
 int MacXPlatform::fd = -1;
 MacXSystemServiceTask* MacXPlatform::systemServiceTask = NULL;

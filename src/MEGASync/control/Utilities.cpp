@@ -15,6 +15,7 @@
 #endif
 
 using namespace std;
+using namespace mega;
 
 QHash<QString, QString> Utilities::extensionIcons;
 QHash<QString, QString> Utilities::languageNames;
@@ -342,7 +343,7 @@ bool Utilities::removeRecursively(QString path)
     QDir dir(path);
     bool success = false;
     QString qpath = QDir::toNativeSeparators(dir.absolutePath());
-    mega::MegaApi::removeRecursively(qpath.toUtf8().constData());
+    MegaApi::removeRecursively(qpath.toUtf8().constData());
     success = dir.rmdir(dir.absolutePath());
     return success;
 }

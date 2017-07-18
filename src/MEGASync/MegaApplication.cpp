@@ -1424,7 +1424,7 @@ void MegaApplication::startSyncs()
 
 //This function is called to upload all files in the uploadQueue field
 //to the Mega node that is passed as parameter
-void MegaApplication::processUploadQueue(mega::MegaHandle nodeHandle)
+void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
 {
     if (appfinished)
     {
@@ -3398,7 +3398,7 @@ void MegaApplication::downloadActionClicked()
     downloadNodeSelector = NULL;
     if (!selectedNode)
     {
-        selectedMegaFolderHandle = mega::INVALID_HANDLE;
+        selectedMegaFolderHandle = INVALID_HANDLE;
         return;
     }
 
@@ -3614,7 +3614,7 @@ void MegaApplication::processUploads()
         if (path && !strncmp(path, QString::fromUtf8("//bin/").toStdString().c_str(), 6))
         {
             preferences->setHasDefaultUploadFolder(false);
-            preferences->setUploadFolder(mega::INVALID_HANDLE);
+            preferences->setUploadFolder(INVALID_HANDLE);
         }
 
         if (preferences->hasDefaultUploadFolder())

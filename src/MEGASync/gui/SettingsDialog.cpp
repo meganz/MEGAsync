@@ -39,7 +39,7 @@ long long calculateCacheSize()
         QString syncPath = preferences->getLocalFolder(i);
         if (!syncPath.isEmpty())
         {
-            Utilities::getFolderSize(syncPath + QDir::separator() + QString::fromAscii(mega::MEGA_DEBRIS_FOLDER), &cacheSize);
+            Utilities::getFolderSize(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER), &cacheSize);
         }
     }
     return cacheSize;
@@ -53,7 +53,7 @@ void deleteCache()
         QString syncPath = preferences->getLocalFolder(i);
         if (!syncPath.isEmpty())
         {
-            Utilities::removeRecursively(syncPath + QDir::separator() + QString::fromAscii(mega::MEGA_DEBRIS_FOLDER));
+            Utilities::removeRecursively(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
         }
     }
 }
@@ -2006,7 +2006,7 @@ void SettingsDialog::on_bClearCache_clicked()
     int numFolders = preferences->getNumSyncedFolders();
     for (int i = 0; i < numFolders; i++)
     {
-        QFileInfo fi(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(mega::MEGA_DEBRIS_FOLDER));
+        QFileInfo fi(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
         if (fi.exists() && fi.isDir())
         {
             syncs += QString::fromUtf8("<br/><a href=\"local://#%1\">%2</a>").arg(fi.absoluteFilePath()).arg(preferences->getSyncName(i));
