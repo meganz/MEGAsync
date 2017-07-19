@@ -4,7 +4,7 @@ MEGA Sync Client
 Easy automated syncing between your computers and your MEGA cloud drive.
 
 This repository contains all the development history of the official sync client of MEGA:
-https://mega.nz/#sync
+https://mega.nz/sync
 
 #### Supported Platforms
 
