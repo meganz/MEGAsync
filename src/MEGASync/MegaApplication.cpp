@@ -437,7 +437,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     }
 #endif
 
-    MegaApi::setLoggerObject(logger);
+    MegaApi::addLoggerObject(logger);
 
     //Set QApplication fields
     setOrganizationName(QString::fromAscii("Mega Limited"));
@@ -828,10 +828,6 @@ void MegaApplication::updateTrayIcon()
     QString tooltip;
     QString icon;
 
-#ifdef __APPLE__
-    QString icon_white;
-#endif
-
     if (infoOverQuota)
     {
         if (preferences->usedStorage() < preferences->totalStorage())
@@ -861,7 +857,6 @@ void MegaApplication::updateTrayIcon()
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_overquota_mac.png");
-        icon_white = QString::fromUtf8("://images/icon_overquota_mac_white.png");
 
         if (scanningTimer->isActive())
         {
@@ -887,7 +882,6 @@ void MegaApplication::updateTrayIcon()
         #endif
     #else
             icon = QString::fromUtf8("://images/icon_syncing_mac.png");
-            icon_white = QString::fromUtf8("://images/icon_syncing_mac_white.png");
 
             if (!scanningTimer->isActive())
             {
@@ -912,7 +906,6 @@ void MegaApplication::updateTrayIcon()
         #endif
     #else
             icon = QString::fromUtf8("://images/icon_synced_mac.png");
-            icon_white = QString::fromUtf8("://images/icon_synced_mac_white.png");
 
             if (scanningTimer->isActive())
             {
@@ -937,7 +930,6 @@ void MegaApplication::updateTrayIcon()
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_syncing_mac.png");
-        icon_white = QString::fromUtf8("://images/icon_syncing_mac_white.png");
 
         if (!scanningTimer->isActive())
         {
@@ -962,7 +954,6 @@ void MegaApplication::updateTrayIcon()
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_paused_mac.png");
-        icon_white = QString::fromUtf8("://images/icon_paused_mac_white.png");
 
         if (scanningTimer->isActive())
         {
@@ -1007,7 +998,6 @@ void MegaApplication::updateTrayIcon()
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_syncing_mac.png");
-        icon_white = QString::fromUtf8("://images/icon_syncing_mac_white.png");
 
         if (!scanningTimer->isActive())
         {
@@ -1032,7 +1022,6 @@ void MegaApplication::updateTrayIcon()
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_synced_mac.png");
-        icon_white = QString::fromUtf8("://images/icon_synced_mac_white.png");
 
         if (scanningTimer->isActive())
         {
@@ -1062,7 +1051,6 @@ void MegaApplication::updateTrayIcon()
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_logging_mac.png");
-        icon_white = QString::fromUtf8("://images/icon_logging_mac_white.png");
 #endif
     }
 
@@ -1074,11 +1062,11 @@ void MegaApplication::updateTrayIcon()
 
     if (!icon.isEmpty())
     {
-#ifndef __APPLE__
-        trayIcon->setIcon(QIcon(icon));
-#else
-        trayIcon->setIcon(QIcon(icon), QIcon(icon_white));
+        QIcon ic = QIcon(icon);
+#ifdef __APPLE__
+        ic.setIsMask(true);
 #endif
+        trayIcon->setIcon(ic);
     }
 
     if (!tooltip.isEmpty())
@@ -1119,8 +1107,9 @@ void MegaApplication::start()
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
     #endif
 #else
-    trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),
-                      QIcon(QString::fromAscii("://images/icon_syncing_mac_white.png")));
+    QIcon ic = QIcon(QString::fromAscii("://images/icon_syncing_mac.png"));
+    ic.setIsMask(true);
+    trayIcon->setIcon(ic);
 
     if (!scanningTimer->isActive())
     {
@@ -2055,7 +2044,7 @@ void MegaApplication::cleanAll()
     trayIcon->deleteLater();
     trayIcon = NULL;
 
-    MegaApi::setLoggerObject(NULL);
+    MegaApi::removeLoggerObject(NULL);
     delete logger;
     logger = NULL;
 
@@ -2166,7 +2155,7 @@ void MegaApplication::showInfoDialog()
             infoDialog->move(posx, posy);
 
             #ifdef __APPLE__
-                QPoint positionTrayIcon = trayIcon->getPosition();
+                QPoint positionTrayIcon = trayIcon->geometry().topLeft();
                 QPoint globalCoordinates(positionTrayIcon.x() + trayIcon->geometry().width()/2, posy);
 
                 //Work-Around to paint the arrow correctly
@@ -2211,7 +2200,7 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
     QRect screenGeometry;
 
     #ifdef __APPLE__
-        positionTrayIcon = trayIcon->getPosition();
+        positionTrayIcon = trayIcon->geometry().topLeft();
     #endif
 
     position = QCursor::pos();
@@ -2371,13 +2360,10 @@ void MegaApplication::scanningAnimationStep()
 
     scanningAnimationIndex = scanningAnimationIndex%4;
     scanningAnimationIndex++;
-    trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac") +
-                            QString::number(scanningAnimationIndex) + QString::fromAscii(".png"))
-#ifdef __APPLE__
-    , QIcon(QString::fromAscii("://images/icon_syncing_mac_white") + QString::number(scanningAnimationIndex) + QString::fromAscii(".png")));
-#else
-    );
-#endif
+    QIcon ic = QIcon(QString::fromAscii("://images/icon_syncing_mac") +
+                     QString::number(scanningAnimationIndex) + QString::fromAscii(".png"));
+    ic.setIsMask(true);
+    trayIcon->setIcon(ic);
 }
 
 void MegaApplication::runConnectivityCheck()
@@ -3512,11 +3498,7 @@ void MegaApplication::createTrayIcon()
 
     if (!trayIcon)
     {
-    #ifdef __APPLE__
-        trayIcon = new MegaSystemTrayIcon();
-    #else
         trayIcon = new QSystemTrayIcon();
-    #endif
 
         connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(onMessageClicked()));
         connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
@@ -3568,8 +3550,9 @@ void MegaApplication::createTrayIcon()
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
     #endif
 #else
-    trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),
-                      QIcon(QString::fromAscii("://images/icon_syncing_mac_white.png")));
+    QIcon ic = QIcon(QString::fromAscii("://images/icon_syncing_mac.png"));
+    ic.setIsMask(true);
+    trayIcon->setIcon(ic);
 
     if (!scanningTimer->isActive())
     {

@@ -202,11 +202,7 @@ protected:
     void startHttpServer();
     void initHttpsServer();
 
-#ifdef __APPLE__
-    MegaSystemTrayIcon *trayIcon;
-#else
     QSystemTrayIcon *trayIcon;
-#endif
 
     QAction *changeProxyAction;
     QAction *initialExitAction;
