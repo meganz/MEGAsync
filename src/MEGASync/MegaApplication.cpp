@@ -140,6 +140,15 @@ int main(int argc, char *argv[])
     {
        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Error setting QT_HARFBUZZ vble");
     }
+
+    // From QT (5.9) documentation:
+    // Secure Transport SSL backend on macOS may update the default keychain (the default is probably your login keychain) by importing your local certificates and keys.
+    // This can also result in system dialogs showing up and asking for permission when your application is using these private keys.
+    // If such behavior is undesired, set the QT_SSL_USE_TEMPORARY_KEYCHAIN environment variable to a non-zero value this will prompt QSslSocket to use its own temporary keychain.
+    if (!qputenv("QT_SSL_USE_TEMPORARY_KEYCHAIN","1"))
+    {
+       MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Error setting QT_SSL_USE_TEMPORARY_KEYCHAIN vble");
+    }
 #endif
 
 #ifdef Q_OS_LINUX
