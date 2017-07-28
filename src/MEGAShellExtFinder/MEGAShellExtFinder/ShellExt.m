@@ -103,7 +103,7 @@
 - (void)sendRequest:(NSString*)command type:(NSString*)type {
     
     char separator = ':';
-    int commandLength = (int)[command length];
+    int commandLength = (int)[command lengthOfBytesUsingEncoding: NSUTF8StringEncoding];
     NSData *headerLength = [NSData dataWithBytes:&commandLength length:sizeof(int)];
     
     NSMutableData *query = [NSMutableData data];
