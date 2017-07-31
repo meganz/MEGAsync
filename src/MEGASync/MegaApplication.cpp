@@ -3931,22 +3931,23 @@ void MegaApplication::onUpdateCompleted()
                               QFile::ExeOther | QFile::ReadOther);
 #endif
 
+    updateAvailable = false;
+
     if (trayMenu)
     {
-        updateAction->setText(tr("About MEGAsync"));
+        createTrayIcon();
     }
 
     if (trayOverQuotaMenu)
     {
-        updateActionOverquota->setText(tr("About MEGAsync"));
+        createOverQuotaMenu();
     }
 
     if (trayGuestMenu)
     {
-        updateActionGuest->setText(tr("About MEGAsync"));
+        createGuestMenu();
     }
 
-    updateAvailable = false;
     rebootApplication();
 }
 
@@ -3961,17 +3962,17 @@ void MegaApplication::onUpdateAvailable(bool requested)
 
     if (trayMenu)
     {
-        updateAction->setText(tr("Install update"));
+        createTrayIcon();
     }
 
     if (trayOverQuotaMenu)
     {
-        updateActionOverquota->setText(tr("Install update"));
+        createOverQuotaMenu();
     }
 
     if (trayGuestMenu)
     {
-        updateActionGuest->setText(tr("Install update"));
+        createGuestMenu();
     }
 
     if (settingsDialog)
