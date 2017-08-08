@@ -27,6 +27,7 @@ public:
     static void addSyncToLeftPane(QString syncPath, QString syncName, QString uuid);
     static void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);
     static void removeAllSyncsFromLeftPane();
+    static bool makePubliclyReadable(LPTSTR fileName);
 
     static void initialize(int argc, char *argv[]);
     static bool enableTrayIcon(QString executable);

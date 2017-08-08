@@ -496,6 +496,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     importLinksAction = NULL;
     importLinksActionGuest = NULL;
     initialMenu = NULL;
+    isPublic = false;
+    prevVersion = 0;
+
 #ifdef _WIN32
     windowsMenu = NULL;
     windowsExitAction = NULL;
@@ -506,6 +509,31 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     windowsStreamAction = NULL;
     windowsTransferManagerAction = NULL;
     windowsSettingsAction = NULL;
+
+    WCHAR commonPath[MAX_PATH + 1];
+    if (SHGetSpecialFolderPathW(NULL, commonPath, CSIDL_COMMON_APPDATA, FALSE))
+    {
+        int len = lstrlen(commonPath);
+        if (!memcmp(commonPath, (WCHAR *)appDirPath.utf16(), len * sizeof(WCHAR))
+                && appDirPath.size() > len && appDirPath[len] == QChar::fromAscii('\\'))
+        {
+            isPublic = true;
+
+            int intVersion = 0;
+            QDir dataDir(dataPath);
+            QString appVersionPath = dataDir.filePath(QString::fromAscii("megasync.version"));
+            QFile f(appVersionPath);
+            if (f.open(QFile::ReadOnly | QFile::Text))
+            {
+                QTextStream in(&f);
+                QString version = in.readAll();
+                intVersion = version.toInt();
+            }
+
+            prevVersion = intVersion;
+        }
+    }
+
 #endif
     changeProxyAction = NULL;
     initialExitAction = NULL;
@@ -550,7 +578,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     maxMemoryUsage = 0;
     nUnviewedTransfers = 0;
     completedTabActive = false;
-    prevVersion = 0;
 
 #ifdef __APPLE__
     scanningTimer = NULL;
@@ -673,6 +700,18 @@ void MegaApplication::initialize()
     connectivityTimer->setSingleShot(true);
     connectivityTimer->setInterval(Preferences::MAX_LOGIN_TIME_MS);
     connect(connectivityTimer, SIGNAL(timeout()), this, SLOT(runConnectivityCheck()));
+
+#ifdef _WIN32
+    if (isPublic && prevVersion <= 3104 && preferences->canUpdate(appPath))
+    {
+        megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Fixing permissions for other users in the computer").toUtf8().constData());
+        QDirIterator it (appDirPath, QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+        while (it.hasNext())
+        {
+            Platform::makePubliclyReadable((LPTSTR)QDir::toNativeSeparators(it.next()).utf16());
+        }
+    }
+#endif
 
     if (preferences->isCrashed())
     {
@@ -2774,7 +2813,7 @@ void MegaApplication::startUpdateTask()
     if (!updateThread && preferences->canUpdate(MegaApplication::applicationFilePath()))
     {
         updateThread = new QThread();
-        updateTask = new UpdateTask(megaApi, MegaApplication::applicationDirPath());
+        updateTask = new UpdateTask(megaApi, MegaApplication::applicationDirPath(), isPublic);
         updateTask->moveToThread(updateThread);
 
         connect(this, SIGNAL(startUpdaterThread()), updateTask, SLOT(startUpdateThread()), Qt::UniqueConnection);

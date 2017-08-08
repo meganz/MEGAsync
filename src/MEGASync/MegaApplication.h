@@ -329,6 +329,7 @@ protected:
     int nUnviewedTransfers;
     bool completedTabActive;
     int prevVersion;
+    bool isPublic;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener
