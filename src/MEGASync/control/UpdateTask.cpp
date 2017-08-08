@@ -393,7 +393,16 @@ bool UpdateTask::performUpdate()
 
         QFileInfo dstInfo(appFolder.absoluteFilePath(file));
         QDir dstDir = dstInfo.dir();
-        dstDir.mkpath(QString::fromUtf8("."));
+        if (!dstDir.exists())
+        {
+            dstDir.mkpath(QString::fromUtf8("."));
+#ifdef _WIN32
+            if (isPublic)
+            {
+                Platform::makePubliclyReadable((LPTSTR)QDir::toNativeSeparators(dstDir.absolutePath()).utf16());
+            }
+#endif
+        }
 
         appFolder.rename(file, backupFolder.absoluteFilePath(file));
         if (!updateFolder.rename(file, appFolder.absoluteFilePath(file)))
