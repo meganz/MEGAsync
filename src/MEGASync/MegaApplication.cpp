@@ -424,7 +424,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     }
 #endif
 
-    MegaApi::setLoggerObject(logger);
+    MegaApi::addLoggerObject(logger);
 
     //Set QApplication fields
     setOrganizationName(QString::fromAscii("Mega Limited"));
@@ -586,6 +586,12 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 MegaApplication::~MegaApplication()
 {
+    if (logger)
+    {
+        MegaApi::removeLoggerObject(logger);
+        delete logger;
+    }
+
     if (!translator.isEmpty())
     {
         removeTranslator(&translator);
@@ -2038,6 +2044,8 @@ void MegaApplication::cleanAll()
     downloader = NULL;
     delete delegateListener;
     delegateListener = NULL;
+    delete pricing;
+    pricing = NULL;
 
     // Delete menus and menu items
     deleteMenu(initialMenu);
@@ -2068,7 +2076,7 @@ void MegaApplication::cleanAll()
     trayIcon->deleteLater();
     trayIcon = NULL;
 
-    MegaApi::setLoggerObject(NULL);
+    MegaApi::removeLoggerObject(logger);
     delete logger;
     logger = NULL;
 
