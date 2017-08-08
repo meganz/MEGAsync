@@ -60,6 +60,7 @@ public:
     static QString applicationFilePath();
     static QString applicationDirPath();
     static QString applicationDataPath();
+    QString getCurrentLanguageCode();
     void changeLanguage(QString languageCode);
     void updateTrayIcon();
 
@@ -291,6 +292,7 @@ protected:
     NodeSelector *downloadNodeSelector;
     QString lastTrayMessage;
     QStringList extraLinks;
+    QString currentLanguageCode;
 
     static QString appPath;
     static QString appDirPath;
