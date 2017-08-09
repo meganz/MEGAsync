@@ -2216,6 +2216,8 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
         else
         {
             screenGeometry = dialog->rect();
+            screenGeometry.setBottom(screenGeometry.bottom() + 4);
+            screenGeometry.setRight(screenGeometry.right() + 4);
         }
     }
 
