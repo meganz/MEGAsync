@@ -98,7 +98,7 @@ void StreamingFromMegaDialog::on_bFromCloud_clicked()
     MegaNode *node = megaApi->getNodeByHandle(nodeSelector->getSelectedFolderHandle());
     if (!node)
     {
-        QMessageBox::warning(this, tr("Error"), tr("File not found"), QMessageBox::Ok);
+        QMessageBox::warning(NULL, tr("Error"), tr("File not found"), QMessageBox::Ok);
         return;
     }
 
@@ -151,13 +151,16 @@ void StreamingFromMegaDialog::on_bClose_clicked()
         return;
     }
 
-    if (QMessageBox::question(this,
+    QPointer<StreamingFromMegaDialog> currentDialog = this;
+    if (QMessageBox::question(NULL,
                              tr("Stream from MEGA"),
                              tr("Are you sure that you want to stop the streaming?"),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
     {
-
-        done(QDialog::Accepted);
+        if (currentDialog)
+        {
+            done(QDialog::Accepted);
+        }
     }
 }
 
@@ -236,7 +239,7 @@ bool StreamingFromMegaDialog::generateStreamURL()
     char *link = megaApi->httpServerGetLocalLink(selectedMegaNode);
     if (!link)
     {
-        QMessageBox::warning(this, tr("Error"), tr("Error generating streaming link"), QMessageBox::Ok);
+        QMessageBox::warning(NULL, tr("Error"), tr("Error generating streaming link"), QMessageBox::Ok);
         return false;
     }
     streamURL = QString::fromUtf8(link);
@@ -330,7 +333,7 @@ void StreamingFromMegaDialog::onRequestFinish(MegaApi *api, MegaRequest *request
     case MegaRequest::TYPE_GET_PUBLIC_NODE:
         if (e->getErrorCode() != MegaError::API_OK)
         {
-            QMessageBox::warning(this, tr("Error"), tr("Error getting link information"), QMessageBox::Ok);
+            QMessageBox::warning(NULL, tr("Error"), tr("Error getting link information"), QMessageBox::Ok);
         }
         else
         {
