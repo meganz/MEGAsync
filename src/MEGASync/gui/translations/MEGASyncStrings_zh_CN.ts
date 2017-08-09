@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="zh_CN" sourcelanguage="en">
+<TS version="2.1" language="zh_CN" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -64,12 +64,12 @@
     <message>
         <source>Remaining Downloads</source>
         <translatorcomment>Label to indicate the number of remaining downloads</translatorcomment>
-        <translation type="unfinished">Remaining Downloads</translation>
+        <translation type="unfinished">剩余的下载</translation>
     </message>
     <message>
         <source>download speed</source>
         <translatorcomment>Label to indicate the actual current download speed</translatorcomment>
-        <translation type="unfinished">download speed</translation>
+        <translation type="unfinished">下载速度</translation>
     </message>
     <message>
         <source>No Downloads</source>
@@ -79,12 +79,12 @@
     <message>
         <source>Remaining Uploads</source>
         <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
-        <translation type="unfinished">Remaining Uploads</translation>
+        <translation type="unfinished">剩余上传</translation>
     </message>
     <message>
         <source>upload speed</source>
         <translatorcomment>Label to indicate the actual current upload speed</translatorcomment>
-        <translation type="unfinished">upload speed</translation>
+        <translation type="unfinished">上传速度</translation>
     </message>
     <message>
         <source>No Uploads</source>
@@ -94,12 +94,12 @@
     <message>
         <source>PAUSED</source>
         <translatorcomment>Label to indicate a global Pause state for all active transfers</translatorcomment>
-        <translation type="unfinished">PAUSED</translation>
+        <translation type="unfinished">暂停</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
         <translatorcomment>Warning message shown when an user try to cancel the selected transfer</translatorcomment>
-        <translation type="unfinished">Are you sure you want to cancel this transfer?</translation>
+        <translation type="unfinished">你确定你想删除这个传输？</translation>
     </message>
 </context>
 <context>
@@ -170,13 +170,13 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files.Please, select another folder.</translation>
+        <translation type="obsolete">本地文件夹太大（这个版本限制是%1文件夹或者%2文件），请选择另一个文件夹</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="obsolete">You are trying to sync an extremely large folder.To prevent the syncing of entire boot volumes, which is inefficient and dangerous,we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation type="obsolete">你正在尝试同步一个非常大的文件夹。为了阻止同步整个启动卷，此操作效率差且危险，我们要求你从小文件夹开始且当MEGA同步正在运行时增加更多数据</translation>
     </message>
 </context>
 <context>
@@ -217,7 +217,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Remember my decision and don&#039;t ask me again</source>
         <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Remember my decision and don&#039;t ask me again</translation>
+        <translation type="unfinished">记住我的决定并且不再再次询问</translation>
     </message>
     <message>
         <source>No</source>
@@ -232,7 +232,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">You are about to enable an option that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
+        <translation type="unfinished">您即将启用一个可以允许拦截通信的选项。 由于我们的端到端加密，您的数据仍然无法访问攻击者，但他们可能会盲目移动你的MEGA中的文件和文件夹，删除它们或拒绝您访问您的帐户。</translation>
     </message>
 </context>
 <context>
@@ -367,7 +367,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>You are trying to sync an extremely large folder.To prevent the syncing of entire boot volumes, which is inefficient and dangerous,we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>你正在尝试同步一个非常大的文件夹。为了阻止同步整个启动卷，此操作效率差且危险，我们要求你从小文件夹开始且当MEGA同步正在运行时增加更多数据</translation>
     </message>
     <message>
         <source>Error</source>
@@ -483,13 +483,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>You are about to import this file to a synced folder.
 If you enable downloading, the file will be duplicated on your computer.
 Are you sure?</source>
-        <translation>You are about to import this file to a synced folder.If you enable downloading, the file will be duplicated on your computer.Are you sure?</translation>
+        <translation>你正要将这个文件导入同步文件夹中。如果你激活下载，这个文件将在你的电脑中被复制，你确定吗？</translation>
     </message>
     <message>
         <source>You are about to import these files to a synced folder.
 If you enable downloading, the files will be duplicated on your computer.
 Are you sure?</source>
-        <translation>You are about to import these files to a synced folder.If you enable downloading, the files will be duplicated on your computer.Are you sure?</translation>
+        <translation>你正导出这些文件到一个同步文件夹中。如果你激活下载功能，这些文件将被复制到你的电脑，你确定吗？</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -644,37 +644,37 @@ Are you sure?</source>
     <message>
         <source>Resume downloads</source>
         <translatorcomment>Label to resume the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume downloads</translation>
+        <translation type="unfinished">重启下载</translation>
     </message>
     <message>
         <source>Pause downloads</source>
         <translatorcomment>Label to pause the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Pause downloads</translation>
+        <translation type="unfinished">暂停下载</translation>
     </message>
     <message>
         <source>Resume uploads</source>
         <translatorcomment>Label to resume the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume uploads</translation>
+        <translation type="unfinished">继续上传</translation>
     </message>
     <message>
         <source>Pause uploads</source>
         <translatorcomment>Label to pause the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Pause uploads</translation>
+        <translation type="unfinished">暂停上传</translation>
     </message>
     <message>
         <source>Resume download</source>
         <translatorcomment>Label to resume the current download. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume download</translation>
+        <translation type="unfinished">重新下载</translation>
     </message>
     <message>
         <source>Resume upload</source>
         <translatorcomment>Label to resume the current upload. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume upload</translation>
+        <translation type="unfinished">继续上传</translation>
     </message>
     <message>
         <source>Blocked file: %1</source>
         <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
-        <translation type="unfinished">Blocked file: %1</translation>
+        <translation type="unfinished">屏蔽文件%1</translation>
     </message>
     <message>
         <source>Servers are too busy. Please wait...</source>
@@ -691,7 +691,7 @@ Are you sure?</source>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
         <translatorcomment>Label to inform the user that is over quota and let him to upgrade his account. Keep [A] [/A] codes, will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</translation>
+        <translation type="unfinished">你的账户已经超过被允许的使用空间量。[A]升级[/A]且继续享用安全的端对端的加密存储</translation>
     </message>
     <message>
         <source>Upgrade your account</source>
@@ -731,15 +731,15 @@ Are you sure?</source>
     </message>
     <message>
         <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
-        <translation type="unfinished">[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</translation>
+        <translation type="unfinished">[S]MEGA同步[/S]在你的电脑与你的Mega云驱动之间轻易完成自动同步</translation>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
-        <translation type="unfinished">[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</translation>
+        <translation type="unfinished">[S]灵活的:[/S]将你电脑任何一个文件夹同步至云端任何文件夹。并行同步任意数量的文件夹</translation>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</translation>
+        <translation type="unfinished">利用安全的用户控制的端对端加密的50GB云存储空间且注册获得免费账户或者任一个我们的[A]PRO套餐[/A]</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
@@ -747,15 +747,15 @@ Are you sure?</source>
     </message>
     <message>
         <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
-        <translation type="unfinished">MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</translation>
+        <translation type="unfinished">MEGA同步充分利用MEGA高性能结构及多连接传输</translation>
     </message>
     <message>
         <source>Lean &amp; mean resource usage</source>
-        <translation type="unfinished">Lean &amp; mean resource usage</translation>
+        <translation type="unfinished">快捷资源使用</translation>
     </message>
     <message>
         <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
-        <translation type="unfinished">Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</translation>
+        <translation type="unfinished">在你的机器上无需依赖缓慢的浏览器就能运行MEGA端对端加密算法</translation>
     </message>
     <message>
         <source>Unlimited file size</source>
@@ -763,7 +763,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
-        <translation type="unfinished">While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</translation>
+        <translation type="unfinished">浏览器技术可以限制你传输的文件大小，但是你确定能使用MEGA同步上传或下载任何文件</translation>
     </message>
     <message>
         <source>Login</source>
@@ -789,7 +789,7 @@ Are you sure?</source>
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
         <translatorcomment>Label to indicate the type of installation. Preserve $(^NameDA)  and $(^ClickNext) codes.</translatorcomment>
-        <translation>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</translation>
+        <translation>选择是否想只为自己或本台电脑所有用户安装$(^NameDA)。$(^ClickNext)</translation>
     </message>
     <message>
         <source>Install for anyone using this computer</source>
@@ -810,7 +810,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</translation>
+        <translation type="obsolete">感谢测试MEGA同步。&lt;br&gt;这个测试版本不再是最新版本且已经过期.&lt;br&gt;请在Twitter上使用这个链接&lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -830,7 +830,7 @@ because the remote folder doesn&#039;t exist</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabledbecause the remote folder is in the rubbish bin</translation>
+        <translation type="obsolete">由于远程文件夹在垃圾箱中，你的同步&quot;%1&quot; 无效</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -844,18 +844,18 @@ because the local folder doesn&#039;t exist</source>
     </message>
     <message>
         <source>The folder (%1) wasn&#039;t uploaded because it&#039;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">The folder (%1) wasn&#039;t uploaded because it&#039;s too large (this beta is limited to %2 folders or %3 files.</translation>
+        <translation type="obsolete">文件夹 (%1)不能被上传由于太大（这个版本的限制是%2文件夹或%3文件）</translation>
     </message>
     <message>
         <source>%1 folders weren&#039;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 folders weren&#039;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
+        <translation type="obsolete">由于太大%1 文件夹不能被上传（这个版本的限制是%2文件夹或者%3文件）</translation>
     </message>
     <message>
         <source>Synchronization will stop.
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">Synchronization will stop.Deletions that occur while it is not running will not be propagated.Exit anyway?</translation>
+        <translation type="obsolete">同步将停止。不运行时发生的删除将不会被影响无论如何退出吗？</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -992,7 +992,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>There was a problem installing the update. Please try again later or download the last version from:https://mega.nz/#sync</translation>
+        <translation>安装更新时出现问题，请稍后尝试或者从https://mega.nz/#sync下载上一个版本</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1089,7 +1089,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation type="unfinished">MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</translation>
+        <translation type="unfinished">MEGA同步不能连接。请检查你的网络连接及本地防火墙配置。注意大部分防毒软件包含防火墙</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&#039;t exist</source>
@@ -1134,7 +1134,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&#039;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&#039;t have full access</translation>
+        <translation type="unfinished">您的同步“%1”已经失效，远程文件夹（或部分文件夹）无法完全访问</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -1144,7 +1144,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</translation>
+        <translation type="unfinished">你同步的&quot;%1&quot;已经失效，由于文件系统的缺陷不支持VirtualBox 共享文件夹同步</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1179,7 +1179,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please temporarily disable your antivirus software and try again.</translation>
+        <translation type="unfinished">我们的SSL密钥无法验证。 您可能受到中间人攻击，或您的防病毒软件可能会拦截您的通信并导致此问题。 请暂时停用防病毒软件，然后再次尝试。</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -1202,7 +1202,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Label for the menu item that opens the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Stream from MEGA</translation>
+        <translation type="unfinished">来自Mega的文件</translation>
     </message>
     <message>
         <source>I don&#039;t care</source>
@@ -1224,16 +1224,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Are you sure you want to exit?</source>
-        <translation type="unfinished">Are you sure you want to exit?</translation>
+        <translation type="unfinished">确定要退出？</translation>
     </message>
     <message>
         <source>Transfer manager</source>
-        <translation type="unfinished">Transfer manager</translation>
+        <translation type="unfinished">传输管理器</translation>
     </message>
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation type="unfinished">A system tray to place MEGAsync tray icon could not found. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translation type="unfinished">存放MEGA同步托盘的系统托盘找不到。MEGA同步打算与系统托盘图标一起使用但是没有它依然可以工作。如果你想打开这个接口，只需尝试再次打开MEGA同步</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -1248,7 +1248,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation type="unfinished">The link can&#039;t be generated because the file is inside an incoming shared folder or your Rubbish Bin.</translation>
+        <translation type="unfinished">由于文件在一个正导入的共享文件夹或者垃圾箱里面链接无法生成</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -1263,7 +1263,15 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
-        <translation type="unfinished">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
+        <translation type="unfinished">您正在同步使用FAT文件系统格式化的本地文件夹。 该文件系统有管理大文件和修改时间的缺陷，可能导致同步问题（例如，当夏令时更改），因此强烈建议您只同步文件夹格式化与更可靠的文件系统，如NTFS（更多信息[A]这里[/A]）。</translation>
+    </message>
+    <message>
+        <source>Please consider updating your operating system.</source>
+        <translation type="unfinished">请考虑更新您的操作系统。</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
+        <translation type="unfinished">MEGAsync将继续运行，但很快OS X Mavericks之前的版本将不再支持更新。</translation>
     </message>
 </context>
 <context>
@@ -1398,7 +1406,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
         <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation type="unfinished">Are you sure you want to cancel this transfer?</translation>
+        <translation type="unfinished">你确定你想删除这个传输？</translation>
     </message>
     <message>
         <source>paused</source>
@@ -1411,12 +1419,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Pause Transfer</source>
         <translatorcomment>Label of context menu option to pause selected transfer</translatorcomment>
-        <translation type="unfinished">Pause Transfer</translation>
+        <translation type="unfinished">暂停传输</translation>
     </message>
     <message>
         <source>Move to top</source>
         <translatorcomment>Label of context menu option to move selected transfer to top of the list and give it highest priority</translatorcomment>
-        <translation type="unfinished">Move to top</translation>
+        <translation type="unfinished">移至顶端</translation>
     </message>
     <message>
         <source>Move up</source>
@@ -1426,12 +1434,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Move down</source>
         <translatorcomment>Label of context menu option to move selected transfer one step down of the list and give it less priority</translatorcomment>
-        <translation type="unfinished">Move down</translation>
+        <translation type="unfinished">向下移</translation>
     </message>
     <message>
         <source>Move to bottom</source>
         <translatorcomment>Label of context menu option to move selected transfer to the bottom of the list and give it lowest priority</translatorcomment>
-        <translation type="unfinished">Move to bottom</translation>
+        <translation type="unfinished">移至底端</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1461,16 +1469,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Clear All</source>
         <translatorcomment>Label of context menu option to clear all transfer items of completed view</translatorcomment>
-        <translation type="unfinished">Clear All</translation>
+        <translation type="unfinished">全部清除</translation>
     </message>
     <message>
         <source>Resume Transfer</source>
         <translatorcomment>Label of context menu option to resume selected transfer</translatorcomment>
-        <translation type="unfinished">Resume Transfer</translation>
+        <translation type="unfinished">重新传送</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
-        <translation type="unfinished">Are you sure you want to cancel this transfer?</translation>
+        <translation type="unfinished">你确定你想删除这个传输？</translation>
     </message>
 </context>
 <context>
@@ -1513,7 +1521,7 @@ Are you sure?</source>
     <message>
         <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
         <translatorcomment>Warning message shown during synchronization scenario</translatorcomment>
-        <translation type="unfinished">The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</translation>
+        <translation type="unfinished">目标文件夹已被同步且在里面你已经有一个同名文件。如果你想继续上传，之前文件将被覆盖，你确定吗</translation>
     </message>
 </context>
 <context>
@@ -1583,7 +1591,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#039; or &#039;:&#039; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &#039;\\&#039; &#039;/&#039; and &#039;:&#039; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization.Please, ensure that you don&#039;t use characters like &#039;&#039; &#039;/&#039; or &#039;:&#039; in your folder names.</translation>
+        <translation>无效的文件夹同步。请确保你在你的文件夹名称中没有使用以下字符 ，如&#039;&#039; &#039;/&#039; or &#039;:&#039; </translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1616,7 +1624,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished">Only files can be used for streaming.</translation>
+        <translation type="unfinished">只有文件能被用做流处理</translation>
     </message>
     <message>
         <source>Select items</source>
@@ -1679,7 +1687,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Permissions for new folders and files</source>
         <translatorcomment>Title of the dialog that allows to change the default permissions for new files and folders created by MEGAsync.</translatorcomment>
-        <translation type="unfinished">Permissions for new folders and files</translation>
+        <translation type="unfinished">新的文件及文件夹权限</translation>
     </message>
     <message>
         <source>Folders</source>
@@ -1699,7 +1707,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Public permissions:</source>
         <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Public permissions:</translation>
+        <translation type="unfinished">共用权限</translation>
     </message>
     <message>
         <source>Files</source>
@@ -1709,12 +1717,12 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them on the default permissions for security reasons.</translation>
+        <translation type="unfinished">文件和文件夹具有所有者且属于一组用户。 使用此对话框，您可以向属于同一组的用户和计算机中的其他用户授予对MEGA同步创建的新文件和文件夹的不同访问权限。 如果您不需要更改它们，出于安全原因请将其保留为默认权限。</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
         <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Owner permissions:</translation>
+        <translation type="unfinished">所有者权限</translation>
     </message>
 </context>
 <context>
@@ -2156,7 +2164,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation>Enter a name to exclude from synchronization.(wildcards * and ? are allowed):</translation>
+        <translation>输入一个名字从同步中排除（允许使用通配符*及？）</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2171,7 +2179,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation type="obsolete">The new excluded file names will be taken into accountwhen the application starts again.</translation>
+        <translation type="obsolete">当应用重启后，新的文件名将有效</translation>
     </message>
     <message>
         <source>Cache</source>
@@ -2255,7 +2263,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">MEGAsync will perform a full scan of your synced folderswhen it starts.Do you want to restart MEGAsync now?</translation>
+        <translation type="obsolete">当启动时MEGA同步将全面扫描你的同步文件夹，你想现在重启MEGA同步吗？</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2286,7 +2294,7 @@ Do you want to restart MEGAsync now?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync will perform a full scan of your synced folders when it starts.Do you want to restart MEGAsync now?</translation>
+        <translation>当启动时MEGA同步将全面扫描你的同步文件夹，你想现在重启MEGA同步吗？</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -2345,7 +2353,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Backup Recovery Key</translation>
+        <translation type="unfinished">备份恢复密钥</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2355,12 +2363,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Exporting the Recovery Key and keeping it in a secure location enables you to set a new password without data loss.</translation>
+        <translation type="unfinished">导出恢复密钥并且保存到安全的地方可以使你无损地重设密码</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Always keep physical control of your Recovery Key (e.g. on a client device, external storage, or print).</translation>
+        <translation type="unfinished">总是物理上控制你的密钥（如在客户端设备，外部存储或者打印）</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2368,20 +2376,15 @@ Do you want to restart MEGAsync now?</source>
         <translation type="unfinished">按大小排除</translation>
     </message>
     <message>
-        <source>PRO lite</source>
-        <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">LITE计划</translation>
-    </message>
-    <message>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
-        <translation type="unfinished">The new excluded file names will be taken into accountwhen the application starts again</translation>
+        <translation type="unfinished">当应用重启后，新的文件名将有效</translation>
     </message>
     <message>
         <source>The new excluded file sizes will be taken into account when the application starts again.</source>
         <translatorcomment>Message displayed to inform the user that the new file size exclusion changes will be applied on next startup.</translatorcomment>
-        <translation type="unfinished">The new excluded file sizes will be taken into account when the application starts again.</translation>
+        <translation type="unfinished">当应用重启后，新的文件大小将有效</translation>
     </message>
     <message>
         <source>Disabled</source>
@@ -2396,12 +2399,12 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
         <translatorcomment>Message shown to inform the user about the deletion of the local cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</translation>
+        <translation type="unfinished">在你电脑中被同步文件之前的版本副本将被永久删除。请查看你的备份文件夹去看下是否再继续前你需要挽救一些内容</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</translation>
+        <translation type="unfinished">你在MEGA上的同步文件的以前版本的备份将永远删除。请检查你MEGA账户垃圾箱里的[A] 文件夹看看是否在继续前需要恢复一些内容</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
@@ -2420,41 +2423,41 @@ when the application starts again</source>
     <message>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</translation>
+        <translation type="unfinished">只有当你的传输未开始时才能激活这个选项。在正常情况下由于所有的传输已经被加密HTTP已经足够满足要求</translation>
     </message>
     <message>
         <source>Local backup: %1</source>
-        <translation type="unfinished">Local backup: %1</translation>
+        <translation type="unfinished">本地备份%1</translation>
     </message>
     <message>
         <source>Remote backup: %1</source>
-        <translation type="unfinished">Remote backup: %1</translation>
+        <translation type="unfinished">远程备份%1</translation>
     </message>
     <message>
         <source>Clear local backup</source>
-        <translation type="unfinished">Clear local backup</translation>
+        <translation type="unfinished">清楚本地备份</translation>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">Do you want to delete your local backup now?</translation>
+        <translation type="unfinished">你想现在删除本地备份？</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
-        <translation type="unfinished">Clear remote backup</translation>
+        <translation type="unfinished">清除远程备份</translation>
     </message>
     <message>
         <source>Do you want to delete your remote backup now?</source>
-        <translation type="unfinished">Do you want to delete your remote backup now?</translation>
+        <translation type="unfinished">你现在想删除你的远程备份吗？</translation>
     </message>
     <message>
         <source>Download rate limit</source>
         <translatorcomment>Label to indicate the actual bandwidth limit for downloads.</translatorcomment>
-        <translation type="unfinished">Download rate limit</translation>
+        <translation type="unfinished">下载带宽限额</translation>
     </message>
     <message>
         <source>Number of parallel TCP connections per transfer:</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used by MEGAsync. Keep colon.</translatorcomment>
-        <translation type="unfinished">Number of parallel TCP connections per transfer:</translation>
+        <translation type="unfinished">每个传输的并行TCP连接数</translation>
     </message>
     <message>
         <source>Downloads</source>
@@ -2465,6 +2468,15 @@ when the application starts again</source>
         <source>Uploads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
         <translation type="unfinished">上传</translation>
+    </message>
+    <message>
+        <source>PRO Lite</source>
+        <translation type="unfinished">PRO LITE</translation>
+    </message>
+    <message>
+        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
+        <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
+        <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
     </message>
 </context>
 <context>
@@ -2623,7 +2635,7 @@ when the application starts again</source>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>不争取的邮箱和密码</translation>
+        <translation>不正确的邮箱或密码</translation>
     </message>
     <message>
         <source>Have you verified your account?</source>
@@ -2688,7 +2700,7 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">You have %1 in your Cloud Drive.Are you sure you want to sync your entire Cloud Drive?</translation>
+        <translation type="obsolete">你有%1在你的云驱动中。你确定想同步整个云驱动？</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -2707,7 +2719,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files.Please, select another folder.</translation>
+        <translation type="obsolete">本地文件夹太大（这个版本限制是%1文件夹或者%2文件），请选择另一个文件夹</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -2724,7 +2736,7 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation>You are trying to sync an extremely large folder.To prevent the syncing of entire boot volumes, which is inefficient and dangerous,we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>你正在尝试同步一个非常大的文件夹。为了阻止同步整个启动卷，此操作效率差且危险，我们要求你从小文件夹开始且当MEGA同步正在运行时增加更多数据</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
@@ -2832,12 +2844,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translation type="unfinished">You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
+        <translation type="unfinished">您已经尝试太多次登录。[BR]请等待%1且继续尝试</translation>
     </message>
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation type="unfinished">When you finish this assistant, you will be able to sync additional folders using the settings dialog.</translation>
+        <translation type="unfinished">当你结束这项帮助，你将可以使用设置对话框同步其他文件夹</translation>
     </message>
 </context>
 <context>
@@ -2892,6 +2904,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
         <translation>%1 (%2)</translation>
     </message>
+    <message>
+        <source>Remove from left pane</source>
+        <translation type="unfinished">从左窗格中删除</translation>
+    </message>
 </context>
 <context>
     <name>SizeLimitDialog</name>
@@ -2936,12 +2952,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Stream from MEGA</translation>
+        <translation type="unfinished">来自Mega的文件</translation>
     </message>
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation type="unfinished">Select media from...</translation>
+        <translation type="unfinished">从……中选择媒体文件</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -2986,7 +3002,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation type="unfinished">Are you sure that you want to stop the streaming?</translation>
+        <translation type="unfinished">您确定你想关闭这个流吗？</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3016,7 +3032,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error generating streaming link</source>
         <translatorcomment>Text shown when there is an error generating an streaming link</translatorcomment>
-        <translation type="unfinished">Error generating streaming link</translation>
+        <translation type="unfinished">生成流链接错误</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3044,12 +3060,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>retrying</source>
         <translatorcomment>Label to indicate a state or retrying for a transfer item (upload/download)</translatorcomment>
-        <translation type="unfinished">retrying</translation>
+        <translation type="unfinished">重试中</translation>
     </message>
     <message>
         <source>completing</source>
         <translatorcomment>Label to indicate a completing state for a transfer item (upload/download)</translatorcomment>
-        <translation type="unfinished">completing</translation>
+        <translation type="unfinished">完成中</translation>
     </message>
     <message>
         <source>just now</source>
@@ -3110,7 +3126,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transfer Manager</source>
         <translatorcomment>Title of the dialog of Transfer Manager</translatorcomment>
-        <translation type="unfinished">Transfer Manager</translation>
+        <translation type="unfinished">传输管理器</translation>
     </message>
     <message>
         <source>Add...</source>
@@ -3140,7 +3156,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Clear all</source>
         <translatorcomment>Button label to clear all items of completed transfers view</translatorcomment>
-        <translation type="unfinished">Clear all</translation>
+        <translation type="unfinished">全部清除</translation>
     </message>
     <message>
         <source>Close</source>
@@ -3175,12 +3191,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel all</source>
         <translatorcomment>Button label to cancel all items of active transfers view</translatorcomment>
-        <translation type="unfinished">Cancel all</translation>
+        <translation type="unfinished">全部取消</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel all transfers?</source>
         <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation type="unfinished">Are you sure you want to cancel all transfers?</translation>
+        <translation type="unfinished">你确定你想删除所有传输</translation>
     </message>
     <message>
         <source>Resume</source>
@@ -3189,7 +3205,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Active Transfers</source>
         <translatorcomment>Label of tab to access all active transfers</translatorcomment>
-        <translation type="unfinished">Active Transfers</translation>
+        <translation type="unfinished">显示全部传输</translation>
     </message>
 </context>
 <context>
@@ -3207,22 +3223,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Paused Transfers</source>
         <translatorcomment>Label to indicate that active transfers are paused</translatorcomment>
-        <translation type="unfinished">Paused Transfers</translation>
+        <translation type="unfinished">已暂停的传输</translation>
     </message>
 </context>
 <context>
     <name>UpgradeDialog</name>
     <message>
         <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">免费带宽配额已超</translation>
+        <translation type="unfinished">已增加免费传输量</translation>
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</translation>
+        <translation type="unfinished">您的下载无法进行，因为它会使您超过您的IP地址的当前免费传输份额。 这个限制是动态的，取决于我们可用的未使用带宽量。</translation>
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own bandwidth package and also ample extra storage space. </translation>
+        <translation type="unfinished">您使用的IP地址在过去6小时内已使用%1的数据传输，这超出了我们当前的限制。 要删除此限制，您可以[A]升级到PRO [/A]，这将给您自己的传输配额包，还有充足的额外存储空间。</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>

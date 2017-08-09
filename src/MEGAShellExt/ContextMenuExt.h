@@ -73,6 +73,7 @@ private:
 
     // The name of the selected file.
     //wchar_t m_szSelectedFile[MAX_PATH];
+    std::string inLeftPane;
     std::vector<std::string> selectedFiles;
     std::vector<int> pathStates;
     std::vector<int> pathTypes;
@@ -82,6 +83,7 @@ private:
     // The method that handles the "display" verb.
     void requestUpload();
     void requestGetLinks();
+    void removeFromLeftPane();
     HBITMAP getBitmap(HICON icon);
     HBITMAP getBitmapLegacy(HICON hIcon);
     bool legacyIcon;
@@ -108,6 +110,14 @@ private:
     PCWSTR m_pwszGetLinkVerbCanonicalName;
     PCSTR m_pszGetLinkVerbHelpText;
     PCWSTR m_pwszGetLinkVerbHelpText;
+
+    PCWSTR m_pszRemoveFromLeftPaneMenuText;
+    PCSTR m_pszRemoveFromLeftPaneVerb;
+    PCWSTR m_pwszRemoveFromLeftPaneVerb;
+    PCSTR m_pszRemoveFromLeftPaneVerbCanonicalName;
+    PCWSTR m_pwszRemoveFromLeftPaneVerbCanonicalName;
+    PCSTR m_pszRemoveFromLeftPaneVerbHelpText;
+    PCWSTR m_pwszRemoveFromLeftPaneVerbHelpText;
 };
 
 #endif

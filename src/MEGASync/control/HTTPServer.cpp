@@ -28,6 +28,7 @@ void HTTPServer::incomingConnection(int socket)
         return;
     }
 
+    Preferences *preferences = Preferences::instance();
     QTcpSocket* s = NULL;
     QSslSocket *sslSocket = NULL;
 
@@ -54,7 +55,7 @@ void HTTPServer::incomingConnection(int socket)
     {
         sslSocket->setPeerVerifyMode(QSslSocket::VerifyNone);
 
-        QSslKey key(Preferences::HTTPS_KEY.toUtf8(), QSsl::Rsa, QSsl::Pem, QSsl::PrivateKey);
+        QSslKey key(preferences->getHttpsKey().toUtf8(), QSsl::Rsa, QSsl::Pem, QSsl::PrivateKey);
         if (key.isNull())
         {
             s->disconnectFromHost();
@@ -63,11 +64,15 @@ void HTTPServer::incomingConnection(int socket)
 
 #if QT_VERSION >= 0x050100
         QList<QSslCertificate> certificates;
-        certificates.append(QSslCertificate(Preferences::HTTPS_CERT.toUtf8(), QSsl::Pem));
-        certificates.append(QSslCertificate(Preferences::HTTPS_CERT_INTERMEDIATE.toUtf8(), QSsl::Pem));
+        certificates.append(QSslCertificate(preferences->getHttpsCert().toUtf8(), QSsl::Pem));
+        QStringList intermediates = preferences->getHttpsCertIntermediate().split(QString::fromUtf8(";"), QString::SkipEmptyParts);
+        for (int i = 0; i < intermediates.size(); i++)
+        {
+            certificates.append(QSslCertificate(intermediates.at(i).toUtf8(), QSsl::Pem));
+        }
         sslSocket->setLocalCertificateChain(certificates);
 #else
-        sslSocket->setLocalCertificate(QSslCertificate(Preferences::HTTPS_CERT.toUtf8(), QSsl::Pem));
+        sslSocket->setLocalCertificate(QSslCertificate(preferences->getHttpsCert().toUtf8(), QSsl::Pem));
 #endif
         sslSocket->setPrivateKey(key);
         sslSocket->startServerEncryption();

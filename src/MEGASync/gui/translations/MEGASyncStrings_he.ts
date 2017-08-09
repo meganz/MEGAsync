@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="he" sourcelanguage="en">
+<TS version="2.1" language="he" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -1265,6 +1265,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
         <translation type="unfinished">הינך מסנכרן תיקייה אשר בפורמט מערכת קבצים FAT. קיימות בעיות ידועות עם מערכת קבצים זו כגון, בעיות עם קבצים גדולים ובעיות עם תאריכי שינוי אחרונים (למשל, כאשר שעון חורף משתנה לשעון קיץ). אנו ממליצים לסנכרן רק תיקיות אשר במערכת קבצים יותר אמינה כמו NTFS (למידע נוסף [A]לחץ כאן[/A]).</translation>
     </message>
+    <message>
+        <source>Please consider updating your operating system.</source>
+        <translation type="unfinished">אנא שקול שדרוג מערכת ההפעלה.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
+        <translation type="unfinished">MEGAsync עדיין תעבוד, אבל עדכונים לא יתמכו יותר בגרסאות קודמות ל-OS X Mavericks בקרוב.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2368,11 +2376,6 @@ Do you want to restart MEGAsync now?</source>
         <translation type="unfinished">אי הכללה על פי גודל</translation>
     </message>
     <message>
-        <source>PRO lite</source>
-        <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO LITE</translation>
-    </message>
-    <message>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
@@ -2465,6 +2468,15 @@ when the application starts again</source>
         <source>Uploads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
         <translation type="unfinished">העלאות</translation>
+    </message>
+    <message>
+        <source>PRO Lite</source>
+        <translation type="unfinished">PRO Lite</translation>
+    </message>
+    <message>
+        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
+        <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
+        <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
     </message>
 </context>
 <context>
@@ -2892,6 +2904,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
         <translation>%1 (%2)</translation>
     </message>
+    <message>
+        <source>Remove from left pane</source>
+        <translation type="unfinished">מחק מפאנל שמאלי</translation>
+    </message>
 </context>
 <context>
     <name>SizeLimitDialog</name>
@@ -3218,11 +3234,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">ההורדה שלך לא יכולה להמשיך מכיוון והיא תגרום לך לעבור את מגבלת העברת הקבצים החינמית עבור כתובת ה-IP הנוכחית. מגבלה זו דינמית והיא תלויה בכמות רוחב הפס הפנוי שיש לנו.</translation>
+        <translation type="unfinished">ההורדה לא יכולה להמשיך מכיוון והיא תגרום לך לעבור את מכסת התעבורה החינמית עבור כתובת ה-IP הנוכחית. מגבלה זו הינה דינמית והיא תלויה ברוחב הפס הפנוי שיש לנו.</translation>
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">השתמשת ב%1 של העברת מידע בשש השעות האחרונות וייתכן כי עברת את מגבלת העברת המידע שלך. על מנת לעקוף מגבלה זו, אתה יכול [A]לשדרג לחשבון PRO[/A] ותקבל חבילת רוחב פס משלך וגם יותר מקום אחסון.</translation>
+        <translation type="unfinished">השתמשת ב-%1 של העברת מידע בשש השעות האחרונות וייתכן כי עברת את מגבלת העברת המידע שלך. על מנת לעקוף מגבלה זו, אתה יכול [A]לשדרג לחשבון PRO[/A] ותקבל חבילת רוחב פס משלך וגם יותר מקום אחסון.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>

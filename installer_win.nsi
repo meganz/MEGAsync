@@ -25,10 +25,10 @@ VIAddVersionKey "LegalCopyright" "MEGA Limited 2017"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 ; Version info
-VIProductVersion "3.0.1.0"
-VIAddVersionKey "FileVersion" "3.0.1.0"
-VIAddVersionKey "ProductVersion" "3.0.1.0"
-!define PRODUCT_VERSION "3.0.1"
+VIProductVersion "3.1.4.0"
+VIAddVersionKey "FileVersion" "3.1.4.0"
+VIAddVersionKey "ProductVersion" "3.1.4.0"
+!define PRODUCT_VERSION "3.1.4"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.nz"
@@ -79,6 +79,7 @@ VIAddVersionKey "ProductVersion" "3.0.1.0"
 !include "UAC.nsh"
 !include "MultiUser.nsh"
 !include "x64.nsh"
+!include "CPUFeatures.nsh"
 
 ; MUI Settings
 !define MUI_ABORTWARNING
@@ -247,6 +248,12 @@ Function .onInit
   ;    MessageBox mb_IconInformation|mb_TopMost|mb_SetForeground "Thank you for testing MEGAsync.$\r$\nThis beta version is no longer current and has expired.$\r$\nPlease follow @MEGAprivacy on Twitter for updates."
   ;    abort
   ;${EndIf}
+
+  ${CPUFeatures.CheckFeature} "SSE2" $0
+  StrCmp $0 "no" 0 sse2supported
+    MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "CPU not compatible. SSE2 is required to run this version of MEGAsync"
+    Quit
+sse2supported:
 
   UAC::RunElevated
   ${Switch} $0

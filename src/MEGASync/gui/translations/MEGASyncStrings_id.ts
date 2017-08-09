@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="id" sourcelanguage="en">
+<TS version="2.1" language="id" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -64,12 +64,12 @@
     <message>
         <source>Remaining Downloads</source>
         <translatorcomment>Label to indicate the number of remaining downloads</translatorcomment>
-        <translation type="unfinished">Remaining Downloads</translation>
+        <translation type="unfinished">Download Tersisa</translation>
     </message>
     <message>
         <source>download speed</source>
         <translatorcomment>Label to indicate the actual current download speed</translatorcomment>
-        <translation type="unfinished">download speed</translation>
+        <translation type="unfinished">kecepatan download</translation>
     </message>
     <message>
         <source>No Downloads</source>
@@ -79,12 +79,12 @@
     <message>
         <source>Remaining Uploads</source>
         <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
-        <translation type="unfinished">Remaining Uploads</translation>
+        <translation type="unfinished">Upload tersisa</translation>
     </message>
     <message>
         <source>upload speed</source>
         <translatorcomment>Label to indicate the actual current upload speed</translatorcomment>
-        <translation type="unfinished">upload speed</translation>
+        <translation type="unfinished">kecepatan upload</translation>
     </message>
     <message>
         <source>No Uploads</source>
@@ -94,7 +94,7 @@
     <message>
         <source>PAUSED</source>
         <translatorcomment>Label to indicate a global Pause state for all active transfers</translatorcomment>
-        <translation type="unfinished">PAUSED</translation>
+        <translation type="unfinished">JEDA</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
@@ -644,37 +644,37 @@ Are you sure?</source>
     <message>
         <source>Resume downloads</source>
         <translatorcomment>Label to resume the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume downloads</translation>
+        <translation type="unfinished">Lanjutkan download</translation>
     </message>
     <message>
         <source>Pause downloads</source>
         <translatorcomment>Label to pause the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Pause downloads</translation>
+        <translation type="unfinished">Jeda download</translation>
     </message>
     <message>
         <source>Resume uploads</source>
         <translatorcomment>Label to resume the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume uploads</translation>
+        <translation type="unfinished">Lanjutkan upload</translation>
     </message>
     <message>
         <source>Pause uploads</source>
         <translatorcomment>Label to pause the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Pause uploads</translation>
+        <translation type="unfinished">Jeda upload</translation>
     </message>
     <message>
         <source>Resume download</source>
         <translatorcomment>Label to resume the current download. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume download</translation>
+        <translation type="unfinished">Lanjutkan download</translation>
     </message>
     <message>
         <source>Resume upload</source>
         <translatorcomment>Label to resume the current upload. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume upload</translation>
+        <translation type="unfinished">Lanjutkan upload</translation>
     </message>
     <message>
         <source>Blocked file: %1</source>
         <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
-        <translation type="unfinished">Blocked file: %1</translation>
+        <translation type="unfinished">File terblok: %1</translation>
     </message>
     <message>
         <source>Servers are too busy. Please wait...</source>
@@ -1263,7 +1263,15 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
-        <translation type="unfinished">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
+        <translation type="unfinished">Anda men-sync folder lokal yang di format dengan filesystem FAT. Filesystem tersebut memiliki kekurangan dalam mengatur file besar dan modifikasi yang dapat membuat masalah sinkronisasi (contoh: ketika pergantian daylight saving), jadi sangat disarankan bahwa anda hanya men-sync folder yang di format dengan filesystem yang bisa diandalkan seperti NTFS (informasi selanjutnya [A]disini[/A]).</translation>
+    </message>
+    <message>
+        <source>Please consider updating your operating system.</source>
+        <translation type="unfinished">Harap update operating system anda.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
+        <translation type="unfinished">MEGAsync akan terus berjalan, namun update tidak akan didukung oleh versi sebelumnya sebelum OS X Mavericks.</translation>
     </message>
 </context>
 <context>
@@ -2156,7 +2164,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation>Masukan nama untuk dikecualikan dari sinkronisasi. (wildcards * and ? boleh dipakai):</translation>
+        <translation>Masukan nama untuk dikecualikan dari sinkronisasi. (wildcards * and? boleh dipakai):</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2368,11 +2376,6 @@ Do you want to restart MEGAsync now?</source>
         <translation type="unfinished">Kecualikan berdasarkan ukuran</translation>
     </message>
     <message>
-        <source>PRO lite</source>
-        <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">PRO LITE</translation>
-    </message>
-    <message>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
@@ -2449,12 +2452,12 @@ when the application starts again</source>
     <message>
         <source>Download rate limit</source>
         <translatorcomment>Label to indicate the actual bandwidth limit for downloads.</translatorcomment>
-        <translation type="unfinished">Download rate limit</translation>
+        <translation type="unfinished">Batas kecepatan download</translation>
     </message>
     <message>
         <source>Number of parallel TCP connections per transfer:</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used by MEGAsync. Keep colon.</translatorcomment>
-        <translation type="unfinished">Number of parallel TCP connections per transfer:</translation>
+        <translation type="unfinished">Jumlah koneksi TCP parallel per transfer:</translation>
     </message>
     <message>
         <source>Downloads</source>
@@ -2465,6 +2468,15 @@ when the application starts again</source>
         <source>Uploads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
         <translation type="unfinished">Upload</translation>
+    </message>
+    <message>
+        <source>PRO Lite</source>
+        <translation type="unfinished">PRO Lite</translation>
+    </message>
+    <message>
+        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
+        <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
+        <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
     </message>
 </context>
 <context>
@@ -2837,7 +2849,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation type="unfinished">When you finish this assistant, you will be able to sync additional folders using the settings dialog.</translation>
+        <translation type="unfinished">Saat anda menyelesaikan bantuan ini, anda akan dapat men-sync folder selebihnya menggunakan dialog pengaturan.</translation>
     </message>
 </context>
 <context>
@@ -2891,6 +2903,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 (%2)</source>
         <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
         <translation>%1 (%2)</translation>
+    </message>
+    <message>
+        <source>Remove from left pane</source>
+        <translation type="unfinished">Hilangkan dari panel kiri</translation>
     </message>
 </context>
 <context>
@@ -3189,7 +3205,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Active Transfers</source>
         <translatorcomment>Label of tab to access all active transfers</translatorcomment>
-        <translation type="unfinished">Active Transfers</translation>
+        <translation type="unfinished">Transfer aktif</translation>
     </message>
 </context>
 <context>
@@ -3218,11 +3234,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">Download anda tidak dapat dilanjutkan karena anda akan melewati batas free transfer yang diizinkan untuk alamat IP anda. Batas ini dinamik dan berdasarkan jumlah bandwidth yang tidak terpakai yang kami punyai.</translation>
+        <translation type="unfinished">Download anda tidak dapat berlanjut karena itu akan membawa anda melebihi quota transfer gratis untuk alamat IP anda. Batasan ini dinamis dan bergantung pada jumlah bandwidth tidak terpakai yang kami punya.</translation>
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Anda telah memakai %1 dari data transfer dalam 6 jam terakhir yang mana membuat anda melampaui batas. Untuk menambah batas, anda dapat [A]upgrade ke PRO[/A], yang mana akan memberikan anda paket bandwidth dan juga extra storage yang mencukupi.</translation>
+        <translation type="unfinished">Alamat IP yang anda gunakan telah menggunakan %1 data transfer dalam 6 jam yang lalu, yang membawa anda melebihi limit kami. Untuk menghapus limit ini, anda dapat [A]upgrade ke PRO[/A], yang mana akan memberi paket transfer quota anda sendiri dan extra storage space.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>

@@ -32,6 +32,7 @@ WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.
 #include <strsafe.h>
 #include <Shlwapi.h>
 
+#include "RegUtils.h"
 #include "MEGAinterface.h"
 
 #pragma comment(lib, "shlwapi.lib")
@@ -41,6 +42,7 @@ extern long g_cDllRef;
 
 #define IDM_UPLOAD             0  // The command's identifier offset
 #define IDM_GETLINK            1
+#define IDM_REMOVEFROMLEFTPANE 2
 
 ContextMenuExt::ContextMenuExt(void) : m_cRef(1),
     m_pszUploadMenuText(L"&Upload to MEGA"),
@@ -56,7 +58,14 @@ ContextMenuExt::ContextMenuExt(void) : m_cRef(1),
     m_pszGetLinkVerbCanonicalName("GetMEGALink"),
     m_pwszGetLinkVerbCanonicalName(L"GetMEGALink"),
     m_pszGetLinkVerbHelpText("Get MEGA link"),
-    m_pwszGetLinkVerbHelpText(L"Get MEGA link")
+    m_pwszGetLinkVerbHelpText(L"Get MEGA link"),
+    m_pszRemoveFromLeftPaneMenuText(L"&Remove from left pane"),
+    m_pszRemoveFromLeftPaneVerb("RemoveFromLeftPane"),
+    m_pwszRemoveFromLeftPaneVerb(L"RemoveFromLeftPane"),
+    m_pszRemoveFromLeftPaneVerbCanonicalName("RemoveFromLeftPane"),
+    m_pwszRemoveFromLeftPaneVerbCanonicalName(L"RemoveFromLeftPane"),
+    m_pszRemoveFromLeftPaneVerbHelpText("Remove from left pane"),
+    m_pwszRemoveFromLeftPaneVerbHelpText(L"Remove from left pane")
 {
     hIcon = NULL;
     m_hMenuBmp = NULL;
@@ -272,6 +281,14 @@ void ContextMenuExt::processFile(HDROP hDrop, int i)
                     unsyncedUnknowns++;
                 }
             }
+
+            if (type == MegaInterface::TYPE_FOLDER && !inLeftPane.size())
+            {
+                if (CheckLeftPaneIcon((wchar_t *)buffer.data(), false))
+                {
+                    inLeftPane = buffer;
+                }
+            }
         }
     }
 }
@@ -298,6 +315,15 @@ void ContextMenuExt::requestGetLinks()
     }
 }
 
+void ContextMenuExt::removeFromLeftPane()
+{
+    if (!inLeftPane.size())
+    {
+        return;
+    }
+
+    CheckLeftPaneIcon((wchar_t *)inLeftPane.data(), true);
+}
 
 #pragma region IUnknown
 
@@ -398,6 +424,7 @@ IFACEMETHODIMP ContextMenuExt::Initialize(
         selectedFiles.clear();
         pathStates.clear();
         pathTypes.clear();
+        inLeftPane.clear();
         syncedFolders = syncedFiles = syncedUnknowns = 0;
         unsyncedFolders = unsyncedFiles = unsyncedUnknowns = 0;
         if (SUCCEEDED(pDataObj->GetData(&fe, &stm)))
@@ -518,6 +545,30 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
             lastItem = IDM_GETLINK;
         }
 
+        if (inLeftPane.size())
+        {
+            LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_REMOVE_FROM_LEFT_PANE, 0, 0);
+            if (!menuText)
+            {
+                return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
+            }
+
+            MENUITEMINFO mii = { sizeof(mii) };
+            mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
+            mii.wID = idCmdFirst + IDM_REMOVEFROMLEFTPANE;
+            mii.fType = MFT_STRING;
+            mii.dwTypeData = menuText;
+            mii.fState = MFS_ENABLED;
+            mii.hbmpItem = (legacyIcon || !m_hMenuBmp) ? HBMMENU_CALLBACK : m_hMenuBmp;
+            if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
+            {
+                delete menuText;
+                return HRESULT_FROM_WIN32(GetLastError());
+            }
+            delete menuText;
+            lastItem = IDM_REMOVEFROMLEFTPANE;
+        }
+
         // Add a separator.
         MENUITEMINFO sep = { sizeof(sep) };
         sep.fMask = MIIM_TYPE;
@@ -595,6 +646,10 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
             {
                 requestGetLinks();
             }
+            else if (!StrCmpIA(pici->lpVerb, m_pszRemoveFromLeftPaneVerb))
+            {
+                removeFromLeftPane();
+            }
             else
             {
                 // If the verb is not recognized by the context menu handler, it
@@ -616,6 +671,10 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
             else if (!StrCmpIW(((CMINVOKECOMMANDINFOEX*)pici)->lpVerbW, m_pwszGetLinkVerb))
             {
                 requestGetLinks();
+            }
+            else if (!StrCmpIW(((CMINVOKECOMMANDINFOEX*)pici)->lpVerbW, m_pwszRemoveFromLeftPaneVerb))
+            {
+                removeFromLeftPane();
             }
             else
             {
@@ -639,6 +698,10 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
             else if (LOWORD(pici->lpVerb) == IDM_GETLINK)
             {
                 requestGetLinks();
+            }
+            else if (LOWORD(pici->lpVerb) == IDM_REMOVEFROMLEFTPANE)
+            {
+                removeFromLeftPane();
             }
             else
             {
@@ -721,6 +784,29 @@ IFACEMETHODIMP ContextMenuExt::GetCommandString(UINT_PTR idCommand,
                 // idCommand.
                 hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
                     m_pwszGetLinkVerbCanonicalName);
+                break;
+
+            default:
+                hr = S_OK;
+            }
+        }
+        else if (idCommand == IDM_REMOVEFROMLEFTPANE)
+        {
+            switch (uFlags)
+            {
+            case GCS_HELPTEXTW:
+                // Only useful for pre-Vista versions of Windows that have a
+                // Status bar.
+                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
+                    m_pwszRemoveFromLeftPaneVerbHelpText);
+                break;
+
+            case GCS_VERBW:
+                // GCS_VERBW is an optional feature that enables a caller to
+                // discover the canonical name for the verb passed in through
+                // idCommand.
+                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
+                    m_pwszRemoveFromLeftPaneVerbCanonicalName);
                 break;
 
             default:

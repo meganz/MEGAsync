@@ -22,7 +22,7 @@ class UpdateTask : public QObject
     Q_OBJECT
 
 public:
-    explicit UpdateTask(mega::MegaApi *megaApi, QString appFolder, QObject *parent = 0);
+    explicit UpdateTask(mega::MegaApi *megaApi, QString appFolder, bool isPublic = false, QObject *parent = 0);
     ~UpdateTask();
 
 protected:
@@ -61,6 +61,7 @@ protected:
    bool forceInstall;
    bool running;
    bool forceCheck;
+   bool isPublic;
    mega::MegaApi *megaApi;
 
 signals:
@@ -69,6 +70,7 @@ signals:
    void updateNotFound(bool requested);
    void installingUpdate(bool requested);
    void updateError();
+   void deprecatedOperatingSystem();
 
 private slots:
    void downloadFinished(QNetworkReply* reply);

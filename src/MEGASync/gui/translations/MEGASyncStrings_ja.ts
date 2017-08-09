@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ja" sourcelanguage="en">
+<TS version="2.1" language="ja" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -194,7 +194,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>New in this version:</source>
         <translatorcomment>Label for indicate new features/fixes of current MEGAsync version. Keep colon.</translatorcomment>
-        <translation type="unfinished">New in this version:</translation>
+        <translation type="unfinished">このバージョンでは新しい機能:</translation>
     </message>
     <message>
         <source>Credits</source>
@@ -384,7 +384,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is on guest mode</source>
         <translatorcomment>Label to inform a user that MEGAsync is running on Guest Mode</translatorcomment>
-        <translation type="unfinished">MEGAsync is in guest mode</translation>
+        <translation type="unfinished">MEGAsyncはゲストモードに実行しています。</translation>
     </message>
     <message>
         <source>Login</source>
@@ -649,7 +649,7 @@ Are you sure?</source>
     <message>
         <source>Pause downloads</source>
         <translatorcomment>Label to pause the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Pause downloads</translation>
+        <translation type="unfinished">ダウンロードを停止</translation>
     </message>
     <message>
         <source>Resume uploads</source>
@@ -674,7 +674,7 @@ Are you sure?</source>
     <message>
         <source>Blocked file: %1</source>
         <translatorcomment>Label to show the blocked file that has stopped the synchronization engine</translatorcomment>
-        <translation type="unfinished">Blocked file: %1</translation>
+        <translation type="unfinished">ブロックされているファイル: %1</translation>
     </message>
     <message>
         <source>Servers are too busy. Please wait...</source>
@@ -743,7 +743,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Faster transfer speeds</source>
-        <translation type="unfinished">Faster transfer speeds</translation>
+        <translation type="unfinished">もっと早い転送速度</translation>
     </message>
     <message>
         <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
@@ -1164,7 +1164,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>DEBUG mode disabled</source>
         <translatorcomment>Notification message shown when the DEBUG mode is disabled.</translatorcomment>
-        <translation type="unfinished">DEBUG mode disabled</translation>
+        <translation type="unfinished">デバッグモードを無効にしました。</translation>
     </message>
     <message>
         <source>DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)</source>
@@ -1207,7 +1207,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>I don&#039;t care</source>
         <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
-        <translation type="unfinished">I don&#039;t care</translation>
+        <translation type="unfinished">かまいません</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -1264,6 +1264,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
         <translation type="unfinished">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
+    </message>
+    <message>
+        <source>Please consider updating your operating system.</source>
+        <translation type="unfinished">Please consider updating your operating system.</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
+        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
     </message>
 </context>
 <context>
@@ -1431,7 +1439,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Move to bottom</source>
         <translatorcomment>Label of context menu option to move selected transfer to the bottom of the list and give it lowest priority</translatorcomment>
-        <translation type="unfinished">Move to bottom</translation>
+        <translation type="unfinished">一番下に移動する</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1661,7 +1669,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Enter one or more MEGA file links</source>
         <translatorcomment>Message displayed when a user tries to import some links but the field is empty.</translatorcomment>
-        <translation>MEGAファイルのリンクを入力する</translation>
+        <translation>MEGAファイルのリンクを入力してください</translation>
     </message>
     <message>
         <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
@@ -1689,7 +1697,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Numeric value:</source>
         <translatorcomment>Numeric value that represents the permissions that will be applied to new files and folders.</translatorcomment>
-        <translation type="unfinished">Numeric value:</translation>
+        <translation type="unfinished">数字:</translation>
     </message>
     <message>
         <source>Group permissions:</source>
@@ -1714,7 +1722,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Owner permissions:</source>
         <translatorcomment>Label just before the new owner permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Owner permissions:</translation>
+        <translation type="unfinished">所有者の許可:</translation>
     </message>
 </context>
 <context>
@@ -2360,17 +2368,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Always keep physical control of your Recovery Key (e.g. on a client device, external storage, or print).</translation>
+        <translation type="unfinished">安全のためにリカバリーキーをデバイスや外部記憶やプリントなど物質的な方法でコントロールした方がいいです。</translation>
     </message>
     <message>
         <source>Exclude by size</source>
         <translatorcomment>Button label to let the user exclude files from being synced by its size. String as short as possible.</translatorcomment>
         <translation type="unfinished">サイズによっては除外する</translation>
-    </message>
-    <message>
-        <source>PRO lite</source>
-        <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">プロ・ライト</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2415,7 +2418,7 @@ when the application starts again</source>
     <message>
         <source>Don&#039;t use HTTP</source>
         <translatorcomment>Text next to a checkbox that allows to disable the HTTP protocol for transfers</translatorcomment>
-        <translation type="unfinished">Don&#039;t use HTTP</translation>
+        <translation type="unfinished">HTTPを使用しない</translation>
     </message>
     <message>
         <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
@@ -2449,7 +2452,7 @@ when the application starts again</source>
     <message>
         <source>Download rate limit</source>
         <translatorcomment>Label to indicate the actual bandwidth limit for downloads.</translatorcomment>
-        <translation type="unfinished">Download rate limit</translation>
+        <translation type="unfinished">ダウンロード帯域制限</translation>
     </message>
     <message>
         <source>Number of parallel TCP connections per transfer:</source>
@@ -2465,6 +2468,15 @@ when the application starts again</source>
         <source>Uploads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
         <translation type="unfinished">アップロード</translation>
+    </message>
+    <message>
+        <source>PRO Lite</source>
+        <translation type="unfinished">プロライト</translation>
+    </message>
+    <message>
+        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
+        <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
+        <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
     </message>
 </context>
 <context>
@@ -2892,6 +2904,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
         <translation>%1 (%2)</translation>
     </message>
+    <message>
+        <source>Remove from left pane</source>
+        <translation type="unfinished">Remove from left pane</translation>
+    </message>
 </context>
 <context>
     <name>SizeLimitDialog</name>
@@ -2941,7 +2957,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation type="unfinished">Select media from...</translation>
+        <translation type="unfinished">位置からメディアを選択</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -2961,12 +2977,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Nothing selected</source>
         <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
-        <translation type="unfinished">Nothing selected</translation>
+        <translation type="unfinished">選択項目がありません</translation>
     </message>
     <message>
         <source>Open with:</source>
         <translatorcomment>Text above the buttons to open a streaming link</translatorcomment>
-        <translation type="unfinished">Open with:</translation>
+        <translation type="unfinished">プログラムで開く</translation>
     </message>
     <message>
         <source>Default application</source>
@@ -2986,7 +3002,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation type="unfinished">Are you sure that you want to stop the streaming?</translation>
+        <translation type="unfinished">ストリームを止めてよろしいですか</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3006,7 +3022,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enter a MEGA file link:</source>
         <translatorcomment>Text of the dialog to enter a MEGA file link for streaming</translatorcomment>
-        <translation type="unfinished">Enter a MEGA file link:</translation>
+        <translation type="unfinished">MEGAファイルリンクを入力:</translation>
     </message>
     <message>
         <source>The link has been copied to the clipboard</source>
@@ -3016,7 +3032,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error generating streaming link</source>
         <translatorcomment>Text shown when there is an error generating an streaming link</translatorcomment>
-        <translation type="unfinished">Error generating streaming link</translation>
+        <translation type="unfinished">ストリーム・リンク作成エラー</translation>
     </message>
     <message>
         <source>Decryption error</source>
@@ -3049,7 +3065,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>completing</source>
         <translatorcomment>Label to indicate a completing state for a transfer item (upload/download)</translatorcomment>
-        <translation type="unfinished">completing</translation>
+        <translation type="unfinished">完了中</translation>
     </message>
     <message>
         <source>just now</source>
@@ -3214,7 +3230,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UpgradeDialog</name>
     <message>
         <source>Free bandwidth quota exceeded</source>
-        <translation type="unfinished">無料バンド幅クオータ超過</translation>
+        <translation type="unfinished">無料転送容量制限を超しました</translation>
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>

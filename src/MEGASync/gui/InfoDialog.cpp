@@ -158,7 +158,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     else
     {
         regenerateLayout();
-        gWidget->hideDownloads();
+        if (gWidget)
+        {
+            gWidget->hideDownloads();
+        }
     }
 }
 
@@ -1258,12 +1261,13 @@ void InfoDialog::changeEvent(QEvent *event)
 void InfoDialog::regenerateLayout()
 {
     static bool loggedInMode = true;
+    bool logged = preferences->logged();
 
-    if (loggedInMode == preferences->logged())
+    if (loggedInMode == logged)
     {
         return;
     }
-    loggedInMode = preferences->logged();
+    loggedInMode = logged;
 
     QLayout *dialogLayout = layout();
     if (!loggedInMode)
@@ -1330,7 +1334,7 @@ void InfoDialog::regenerateLayout()
 
     if (activeDownload)
     {
-        ActiveTransfer *wTransfer = !preferences->logged() ? gWidget->getTransfer() : ui->wTransfer1;
+        ActiveTransfer *wTransfer = !logged ? gWidget->getTransfer() : ui->wTransfer1;
         wTransfer->setFileName(QString::fromUtf8(activeDownload->getFileName()));
         wTransfer->setProgress(activeDownload->getTotalBytes() - remainingDownloadBytes,
                                activeDownload->getTotalBytes(),

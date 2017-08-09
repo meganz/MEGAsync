@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ar" sourcelanguage="en">
+<TS version="2.1" language="ar" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -1039,7 +1039,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGAsync تعمل الآن. انقر فوق رمز أدوات النظام لفتح نافذة الحالة</translation>
+        <translation>MEGAsync تعمل الآن. انقر فوق أيقونة أدوات النظام لفتح نافذة الحالة</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
@@ -1233,7 +1233,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation type="unfinished">A system tray to place MEGAsync tray icon could not found. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translation type="unfinished">أدوات النظام التي ستحل محل أيقونة أدوات MEGAsync لايمكن إيجادها MEGAsync صممت لتستخدم مع أيقونة أدوات النظام لكن تستطيع العمل بدون تلك الأيقونة بشكل رائع! إن أردت فتح الواجهة، حاول فقط فتح MEGAsync مرة أخرى</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -1264,6 +1264,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
         <translation type="unfinished">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
+    </message>
+    <message>
+        <source>Please consider updating your operating system.</source>
+        <translation type="unfinished">الرجاء تحديث جهاز التشغيل الخاص بك</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
+        <translation type="unfinished">MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</translation>
     </message>
 </context>
 <context>
@@ -2368,11 +2376,6 @@ Do you want to restart MEGAsync now?</source>
         <translation type="unfinished">Exclude by size</translation>
     </message>
     <message>
-        <source>PRO lite</source>
-        <translatorcomment>Label to indicate that the current user has a PRO Iite account.</translatorcomment>
-        <translation type="unfinished">برو لايت</translation>
-    </message>
-    <message>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
@@ -2465,6 +2468,15 @@ when the application starts again</source>
         <source>Uploads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
         <translation type="unfinished">الملفات المرفوعه</translation>
+    </message>
+    <message>
+        <source>PRO Lite</source>
+        <translation type="unfinished">برو لايت</translation>
+    </message>
+    <message>
+        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
+        <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
+        <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
     </message>
 </context>
 <context>
@@ -2892,6 +2904,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Keep %1 (%2) code because it will be filled with the number of folders at runtime. It will generate strings like: Upload to MEGA (5 files)</translatorcomment>
         <translation>%1 (%2)</translation>
     </message>
+    <message>
+        <source>Remove from left pane</source>
+        <translation type="unfinished">احذف من الجزء اليساري</translation>
+    </message>
 </context>
 <context>
     <name>SizeLimitDialog</name>
@@ -3218,11 +3234,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">لا يمكن الاستمرار في التحميل بسبب تجاوز الحد المسموح لعنوان ال ip الخاص بك. هذا الحد متغير علي حسب مقدار كمية نقل البيانات الغير مستخدمة المتاحة.</translation>
+        <translation type="unfinished">تعذر متابعة عملية التنزيل لأنها ستأخذ فوق كمية النقل المجانية  لعنوان IP الخاص بك. هذا الحد هو ديناميكي ويعتمد على كمية النطاق الترددي غير المستخدم لدينا.</translation>
     </message>
     <message>
         <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">You have utilized %1 of data transfer in the last 6 hours which took you over our current limit. To circumvent this limit, you can [A]upgrade to PRO[/A], which will give you your own bandwidth package and also ample extra storage space. </translation>
+        <translation type="unfinished">عنوان IP الذي استخدمته خلال 6 ساعات الماضية لنقل %1 البيانات قد استهلكت الحد كاملا، لإزالة هذا الحد، يمكنك [A]الترقية إلى برو[/A]، والتي سوف تعطيك حزمة حصص نقل خاصة بك وأيضا مساحة تخزين إضافية وافرة.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>

@@ -14,7 +14,8 @@ typedef enum {
        STRING_UPLOAD = 0,
        STRING_GETLINK = 1,
        STRING_SHARE = 2,
-       STRING_SEND = 3
+       STRING_SEND = 3,
+       STRING_REMOVE_FROM_LEFT_PANE = 4
 } StringID;
 
 WinShellDispatcherTask::WinShellDispatcherTask(MegaApplication *receiver) : QThread()
@@ -378,6 +379,9 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                     break;
                 case STRING_SEND:
                     actionString = QCoreApplication::translate("ShellExtension", "Send to a MEGA user");
+                    break;
+                case STRING_REMOVE_FROM_LEFT_PANE:
+                    actionString = QCoreApplication::translate("ShellExtension", "Remove from left pane");
                     break;
             }
 

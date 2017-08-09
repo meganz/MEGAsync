@@ -17,7 +17,7 @@ BuildRequires: libcares-devel
 BuildRequires: update-desktop-files
  
 %if 0%{?sle_version} == 120200 || 0%{?suse_version} > 1320
-BuildRequires: libqt5-qtbase-devel >= 5.6, libqt5-linguist
+BuildRequires: libqt5-qtbase-devel >= 5.6, libqt5-linguist, libqt5-qtsvg-devel
 Requires: libQt5Core5 >= 5.6
 %else
 BuildRequires: libqt4-devel, qt-devel
@@ -39,8 +39,8 @@ BuildRequires: libcryptopp-devel
 %if 0%{?fedora_version} >= 23
 BuildRequires: c-ares-devel, cryptopp-devel
 BuildRequires: desktop-file-utils
-BuildRequires: qt5-qtbase-devel qt5-qttools-devel
-Requires: qt5-qtbase >= 5.6
+BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel
+Requires: qt5-qtbase >= 5.6, qt5-qtsvg
 BuildRequires: terminus-fonts, fontpackages-filesystem
 %else
 BuildRequires: c-ares-devel, cryptopp-devel
@@ -182,7 +182,7 @@ enabled=1
 DATA
 %endif
 
-%if 0%{?sc} == 700
+%if 0%{?centos_version} == 700
 # CentOS 7
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
@@ -190,6 +190,19 @@ cat > "$YUM_FILE" << DATA
 name=MEGAsync
 baseurl=https://mega.nz/linux/MEGAsync/CentOS_7/
 gpgkey=https://mega.nz/linux/MEGAsync/CentOS_7/repodata/repomd.xml.key
+gpgcheck=1
+enabled=1
+DATA
+%endif
+
+%if 0%{?fedora_version} == 26
+# Fedora 26
+YUM_FILE="/etc/yum.repos.d/megasync.repo"
+cat > "$YUM_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+baseurl=https://mega.nz/linux/MEGAsync/Fedora_26/
+gpgkey=https://mega.nz/linux/MEGAsync/Fedora_26/repodata/repomd.xml.key
 gpgcheck=1
 enabled=1
 DATA
