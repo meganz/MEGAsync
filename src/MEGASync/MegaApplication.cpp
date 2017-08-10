@@ -805,6 +805,12 @@ void MegaApplication::changeLanguage(QString languageCode)
     createTrayIcon();
 }
 
+void MegaApplication::setTryIconFromTheme(QString icon)
+{
+    QString name = icon.replace(QString::fromAscii("://images/"),QString::fromAscii("mega")).replace(QString::fromAscii(".svg"),QString::fromAscii(""));
+    trayIcon->setIcon(QIcon::fromTheme(name,QIcon(icon)));
+}
+
 void MegaApplication::updateTrayIcon()
 {
     if (appfinished || !trayIcon)
@@ -1062,7 +1068,7 @@ void MegaApplication::updateTrayIcon()
     if (!icon.isEmpty())
     {
 #ifndef __APPLE__
-        trayIcon->setIcon(QIcon(icon));
+        setTryIconFromTheme(icon);
 #else
         trayIcon->setIcon(QIcon(icon), QIcon(icon_white));
 #endif
@@ -1108,7 +1114,8 @@ void MegaApplication::start()
     #ifdef _WIN32
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
     #else
-        trayIcon->setIcon(QIcon(QString::fromAscii("://images/synching.svg")));
+        setTryIconFromTheme(QString::fromAscii("://images/synching.svg"));
+
     #endif
 #else
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),
@@ -3525,7 +3532,7 @@ void MegaApplication::createTrayIcon()
     #ifdef _WIN32
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
     #else
-        trayIcon->setIcon(QIcon(QString::fromAscii("://images/synching.svg")));
+        setTryIconFromTheme(QString::fromAscii("://images/synching.svg"));
     #endif
 #else
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),
