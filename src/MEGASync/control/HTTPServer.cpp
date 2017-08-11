@@ -205,8 +205,14 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
     QString response;
     QString openLinkRequestStart(QString::fromUtf8("{\"a\":\"l\","));
     QString externalDownloadRequestStart = QString::fromUtf8("{\"a\":\"d\",");
+    QString externalFileUploadRequestStart = QString::fromUtf8("{\"a\":\"ufi\",");
+    QString externalFolderUploadRequestStart = QString::fromUtf8("{\"a\":\"ufo\",");
+    QString externalFolderSyncRequestStart = QString::fromUtf8("{\"a\":\"s\",");
+    QString externalTransferQueryProgressStart = QString::fromUtf8("{\"a\":\"t\",");
+
     QPointer<QAbstractSocket> safeSocket = socket;
 
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("HTTP request received: %1").arg(request.data).toUtf8().constData());
     if (request.data == QString::fromUtf8("{\"a\":\"v\"}"))
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "GetVersion command received from the webclient");
@@ -384,11 +390,105 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
             }
         }
     }
+    else if (request.data.startsWith(externalFileUploadRequestStart))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "UploadFile command received from the webclient");
+        QString targetHandle = Utilities::extractJSONString(request.data, QString::fromUtf8("h"));
+        MegaHandle handle = ::mega::INVALID_HANDLE;
+        if (targetHandle.size())
+        {
+            handle = MegaApi::base64ToHandle(targetHandle.toUtf8().constData());
+        }
+
+        emit onExternalFileUploadRequested(handle);
+        response = QString::fromUtf8("0");
+    }
+    else if (request.data.startsWith(externalFolderUploadRequestStart))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "UploadFolder command received from the webclient");
+        QString targetHandle = Utilities::extractJSONString(request.data, QString::fromUtf8("h"));
+        MegaHandle handle = ::mega::INVALID_HANDLE;
+        if (targetHandle.size())
+        {
+            handle = MegaApi::base64ToHandle(targetHandle.toUtf8().constData());
+        }
+
+        emit onExternalFolderUploadRequested(handle);
+        response = QString::fromUtf8("0");
+    }
+    else if (request.data.startsWith(externalFolderSyncRequestStart))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Sync command received from the webclient");
+        QString targetHandle = Utilities::extractJSONString(request.data, QString::fromUtf8("h"));
+        MegaHandle handle = ::mega::INVALID_HANDLE;
+        if (targetHandle.size())
+        {
+            handle = MegaApi::base64ToHandle(targetHandle.toUtf8().constData());
+        }
+
+        emit onExternalFolderSyncRequested(handle);
+        response = QString::fromUtf8("0");
+    }
+    else if (request.data.startsWith(externalTransferQueryProgressStart))
+    {
+        QString targetHandle = Utilities::extractJSONString(request.data, QString::fromUtf8("h"));
+        MegaHandle handle = ::mega::INVALID_HANDLE;
+        if (targetHandle.size())
+        {
+            handle = MegaApi::base64ToHandle(targetHandle.toUtf8().constData());
+        }
+
+        if (handle == ::mega::INVALID_HANDLE)
+        {
+            response = QString::fromUtf8("-2");
+        }
+        else
+        {
+            MegaTransfer *transfer;
+            int tag = ((MegaApplication *)qApp)->getTrackedDownloadTag(handle);
+            if (tag <= 0)
+            {
+                response = QString::fromUtf8("-9");
+            }
+            else
+            {
+                transfer = megaApi->getTransferByTag(tag);
+                if (transfer)
+                {
+                    response = QString::fromUtf8("{\"s\":%1,\"p\":%2,\"t\":%3,\"v\":%4}")
+                            .arg(transfer->getState())
+                            .arg(transfer->getTransferredBytes())
+                            .arg(transfer->getTotalBytes())
+                            .arg(transfer->getSpeed());
+                    delete transfer;
+                }
+                else
+                {
+                    transfer = ((MegaApplication *)qApp)->getFinishedTransferByTag(tag);
+                    if (transfer)
+                    {
+                        response = QString::fromUtf8("{\"s\":%1,\"p\":%2,\"t\":%3,\"v\":0}")
+                                .arg(transfer->getState())
+                                .arg(transfer->getTransferredBytes())
+                                .arg(transfer->getTotalBytes());
+                    }
+                    else
+                    {
+                        response = QString::fromUtf8("-9");
+                    }
+                }
+            }
+        }
+    }
 
     if (!response.size())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Invalid webclient request: %1").arg(request.data).toUtf8().constData());
         response = QString::fromUtf8("-2");
+    }
+    else
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Response to HTTP request: %1").arg(response).toUtf8().constData());
     }
 
     QString fullResponse = QString::fromUtf8("HTTP/1.0 200 Ok\r\n"

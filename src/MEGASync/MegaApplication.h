@@ -138,8 +138,11 @@ public slots:
     void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
     void externalDownload(QQueue<mega::MegaNode *> newDownloadQueue);
     void externalDownload(QString megaLink, QString auth);
+    int getTrackedDownloadTag(::mega::MegaHandle handle);
+    void externalFileUpload(qlonglong targetFolder);
+    void externalFolderUpload(qlonglong targetFolder);
+    void externalFolderSync(qlonglong targetFolder);
     void internalDownload(long long handle);
-    void syncFolder(long long handle);
     void onLinkImportFinished();
     void onRequestLinksFinished();
     void onUpdateCompleted();
@@ -260,6 +263,10 @@ protected:
     HTTPServer *httpServer;
     UploadToMegaDialog *uploadFolderSelector;
     DownloadFromMegaDialog *downloadFolderSelector;
+    mega::MegaHandle fileUploadTarget;
+    QFileDialog *fileUploadSelector;
+    mega::MegaHandle folderUploadTarget;
+    QFileDialog *folderUploadSelector;
     QPointer<StreamingFromMegaDialog> streamSelector;
     MultiQFileDialog *multiUploadFileDialog;
     QQueue<QString> uploadQueue;
@@ -305,6 +312,7 @@ protected:
     QNetworkConfigurationManager networkConfigurationManager;
     QList<QNetworkInterface> activeNetworkInterfaces;
     QMap<QString, QString> pendingLinks;
+    QMap<::mega::MegaHandle, int> trackedDownloads;
     MegaSyncLogger *logger;
     QPointer<TransferManager> transferManager;
     QMap<int, mega::MegaTransfer*> finishedTransfers;

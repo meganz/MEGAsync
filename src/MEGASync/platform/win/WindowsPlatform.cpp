@@ -973,6 +973,27 @@ void WindowsPlatform::activateBackgroundWindow(QDialog *window)
     }
 }
 
+void WindowsPlatform::execBackgroundWindow(QDialog *window)
+{
+    DWORD currentThreadId = GetCurrentThreadId();
+    DWORD foregroundThreadId;
+    HWND foregroundWindow;
+    bool threadAttached = false;
+
+    if (QGuiApplication::applicationState() != Qt::ApplicationActive
+        && (foregroundWindow = GetForegroundWindow())
+        && (foregroundThreadId = GetWindowThreadProcessId(foregroundWindow, NULL))
+        && (foregroundThreadId != currentThreadId))
+    {
+        threadAttached = AttachThreadInput(foregroundThreadId, currentThreadId, TRUE);
+    }
+    window->exec();
+    if (threadAttached)
+    {
+        AttachThreadInput(foregroundThreadId, currentThreadId, FALSE);
+    }
+}
+
 void WindowsPlatform::uninstall()
 {
     removeAllSyncsFromLeftPane();

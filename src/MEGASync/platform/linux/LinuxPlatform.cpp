@@ -235,6 +235,11 @@ void LinuxPlatform::activateBackgroundWindow(QDialog *)
 
 }
 
+void LinuxPlatform::execBackgroundWindow(QDialog *window)
+{
+    window->exec();
+}
+
 void LinuxPlatform::uninstall()
 {
 

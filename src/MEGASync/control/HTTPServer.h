@@ -36,11 +36,13 @@ class HTTPServer: public QTcpServer
 
     signals:
         void onLinkReceived(QString link, QString auth);
-        void onSyncRequested(long long handle);
         void onExternalDownloadRequested(QQueue<mega::MegaNode*> files);
         void onExternalDownloadRequestFinished();
+        void onExternalFileUploadRequested(qlonglong targetHandle);
+        void onExternalFolderUploadRequested(qlonglong targetHandle);
+        void onExternalFolderSyncRequested(qlonglong targetHandle);
 
-    private slots:
+    public slots:
         void readClient();
         void discardClient();
         void rejectRequest(QAbstractSocket *socket, QString response = QString::fromUtf8("403 Forbidden"));
