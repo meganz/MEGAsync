@@ -51,7 +51,7 @@ class MegaApplication : public QApplication, public mega::MegaListener
 {
     Q_OBJECT
 
-    void setTryIconFromTheme(QString icon);
+    void setTrayIconFromTheme(QString icon);
 
 public:
 
