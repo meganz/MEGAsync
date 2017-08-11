@@ -27,7 +27,7 @@ unix:!macx {
     QT += svg
     TARGET = megasync
 
-#    TARGET = megasync
+#    Uncomment the following if "make install" doesn't copy megasync in /usr/bin directory
 #    isEmpty(PREFIX) {
 #        PREFIX = /usr
 #    }
