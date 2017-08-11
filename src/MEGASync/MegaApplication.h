@@ -51,6 +51,8 @@ class MegaApplication : public QApplication, public mega::MegaListener
 {
     Q_OBJECT
 
+    void setTryIconFromTheme(QString icon);
+
 public:
 
     explicit MegaApplication(int &argc, char **argv);

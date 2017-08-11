@@ -154,6 +154,7 @@ echo "fs.inotify.max_user_watches = 524288" > %{buildroot}/etc/sysctl.d/100-mega
 %icon_theme_cache_post
 %else
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+/bin/touch --no-create %{_datadir}/icons/ubuntu-mono-dark &>/dev/null || :
 %endif
 
 %if 0%{?rhel_version} == 700
@@ -480,8 +481,9 @@ sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf
 %icon_theme_cache_postun
 %else
 if [ $1 -eq 0 ] ; then
-    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
-    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+    /bin/touch --no-create %{_datadir}/icons/ubuntu-mono-dark &>/dev/null || :
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/* &>/dev/null || :
 fi
 %endif
 # kill running MEGAsync instance
@@ -490,7 +492,9 @@ killall megasync 2> /dev/null || true
 
 %if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
 %posttrans
-/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+/bin/touch --no-create %{_datadir}/icons/ubuntu-mono-dark &>/dev/null || :
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/* &>/dev/null || :
 %endif
 
 %clean
@@ -502,6 +506,8 @@ killall megasync 2> /dev/null || true
 %{_datadir}/applications/megasync.desktop
 #%{_datadir}/icons/hicolor/*/apps/mega.png
 %{_datadir}/icons/hicolor/*/*/mega.png
+%{_datadir}/icons/hicolor/*/*/*
+%{_datadir}/icons/*/*/*/*
 %{_datadir}/doc/megasync
 %{_datadir}/doc/megasync/*
 /etc/sysctl.d/100-megasync-inotify-limit.conf
