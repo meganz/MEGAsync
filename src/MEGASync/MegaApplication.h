@@ -51,7 +51,9 @@ class MegaApplication : public QApplication, public mega::MegaListener
 {
     Q_OBJECT
 
+#ifdef Q_OS_LINUX
     void setTrayIconFromTheme(QString icon);
+#endif
 
 public:
 
@@ -312,7 +314,7 @@ protected:
     QNetworkConfigurationManager networkConfigurationManager;
     QList<QNetworkInterface> activeNetworkInterfaces;
     QMap<QString, QString> pendingLinks;
-    QMap<::mega::MegaHandle, int> trackedDownloads;
+    QMap<mega::MegaHandle, int> trackedDownloads;
     MegaSyncLogger *logger;
     QPointer<TransferManager> transferManager;
     QMap<int, mega::MegaTransfer*> finishedTransfers;
