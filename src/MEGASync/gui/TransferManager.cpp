@@ -62,6 +62,25 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     Platform::enableDialogBlur(this);
 }
 
+void TransferManager::setActiveTab(int t)
+{
+    switch (t)
+    {
+        case DOWNLOADS_TAB:
+            on_tDownloads_clicked();
+            break;
+        case UPLOADS_TAB:
+            on_tUploads_clicked();
+            break;
+        case COMPLETED_TAB:
+            on_tCompleted_clicked();
+            break;
+        default:
+            on_tAllTransfers_clicked();
+            break;
+    }
+}
+
 TransferManager::~TransferManager()
 {
     delete ui;
