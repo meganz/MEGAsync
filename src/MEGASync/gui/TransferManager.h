@@ -23,7 +23,7 @@ public:
         ALL_TRANSFERS_TAB = 0,
         DOWNLOADS_TAB   = 1,
         UPLOADS_TAB = 2,
-        COMPLETED_TAB
+        COMPLETED_TAB = 3
     };
 
     static const int COMPLETED_ITEMS_LIMIT = 999;

@@ -13,6 +13,22 @@ bool ts_comparator(RequestData* i, RequestData *j)
     return i->ts < j->ts;
 }
 
+RequestData::RequestData()
+{
+    files = -1;
+    folders = -1;
+    ts = QDateTime::currentMSecsSinceEpoch() / 1000;
+    status = STATE_OPEN;
+}
+
+RequestTransferData::RequestTransferData()
+{
+    state = MegaTransfer::STATE_NONE;
+    progress = 0;
+    size = 0;
+    speed = 0;
+}
+
 HTTPServer::HTTPServer(MegaApi *megaApi, quint16 port, bool sslEnabled)
     : QTcpServer(), disabled(false)
 {
@@ -504,14 +520,17 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                     response.append(i == 0 ? QString::fromUtf8("[") : QString::fromUtf8(","));
                     if (values.at(i)->status == RequestData::STATE_OK)
                     {
-                        response.append(QString::fromUtf8("{\"ts\":%1,\"files\":%2,\"folders\":%3}")
+                        response.append(QString::fromUtf8("{\"s\":%1,\"ts\":%2,\"fi\":%3,\"fo\":%4}")
+                                .arg(values.at(i)->status)
                                 .arg(values.at(i)->ts)
                                 .arg(values.at(i)->files)
                                 .arg(values.at(i)->folders));
                     }
                     else
                     {
-                        response.append(QString::number(values.at(i)->status));
+                        response.append(QString::fromUtf8("{\"s\":%1,\"ts\":%2}")
+                                .arg(values.at(i)->status)
+                                .arg(values.at(i)->ts));
                     }
                 }
                 response.append(QString::fromUtf8("]"));
@@ -591,9 +610,9 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
             else
             {
                 RequestTransferData* tData = webTransferStateRequests.value(handle);
-                if (tData->state == RequestTransferData::STATE_NONE)
+                if (tData->state == MegaTransfer::STATE_NONE)
                 {
-                    response = QString::number(MegaError::API_ENOENT);
+                    response = QString::fromUtf8("{\"s\":%1}").arg(tData->state);
                 }
                 else
                 {

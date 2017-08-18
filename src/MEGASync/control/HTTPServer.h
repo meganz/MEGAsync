@@ -16,12 +16,12 @@ class RequestData
 public:
     enum
     {
-        STATE_OK   = 0,          ///< Everything OK
-        STATE_OPEN = -201,       ///< Selection dialog is still open.
-        STATE_CANCELLED = -202,  ///< Selection dialog cancelled by user.
+        STATE_OPEN = 0,       ///< Selection dialog is still open.
+        STATE_OK   = 1,       ///< Everything OK
+        STATE_CANCELLED = 2,  ///< Selection dialog cancelled by user.
     };
 
-    RequestData() : files(-1), folders(-1), ts(QDateTime::currentMSecsSinceEpoch()), status(STATE_OPEN) {}
+    RequestData();
     int files;
     int folders;
     long long ts;
@@ -31,21 +31,7 @@ public:
 class RequestTransferData
 {
 public:
-    enum
-    {
-        STATE_NONE = 0,
-        STATE_QUEUED = 1,
-        STATE_ACTIVE = 2,
-        STATE_PAUSED = 3,
-        STATE_RETRYING = 4,
-        STATE_COMPLETING = 5,
-        STATE_COMPLETED = 6,
-        STATE_CANCELLED = 7,
-        STATE_FAILED = 8
-    };
-
-    RequestTransferData()
-        : state(STATE_NONE), progress(0), size(0), speed(0) {}
+    RequestTransferData();
     int state;
     long long progress;
     long long size;

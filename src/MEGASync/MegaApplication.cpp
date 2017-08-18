@@ -3952,6 +3952,13 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
         return;
     }
 
+    if (folderUploadSelector)
+    {
+        folderUploadSelector->activateWindow();
+        folderUploadSelector->raise();
+        return;
+    }
+
     fileUploadTarget = targetFolder;
     if (fileUploadSelector)
     {
@@ -4008,6 +4015,13 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     if (!preferences->logged())
     {
         openInfoWizard();
+        return;
+    }
+
+    if (fileUploadSelector)
+    {
+        fileUploadSelector->activateWindow();
+        fileUploadSelector->raise();
         return;
     }
 
