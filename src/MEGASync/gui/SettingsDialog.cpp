@@ -16,6 +16,7 @@
 #include "ui_SettingsDialog.h"
 #include "control/Utilities.h"
 #include "platform/Platform.h"
+#include "gui/AddExclusionDialog.h"
 
 #ifdef __APPLE__
     #include "gui/CocoaHelpButton.h"
@@ -1016,6 +1017,12 @@ void SettingsDialog::loadSettings()
             ui->lExcludedNames->addItem(excludedNames[i]);
         }
 
+        QStringList excludedPaths = preferences->getExcludedSyncPaths();
+        for (int i = 0; i < excludedPaths.size(); i++)
+        {
+            ui->lExcludedNames->addItem(excludedPaths[i]);
+        }
+
         loadSizeLimits();
         ui->cOverlayIcons->setChecked(preferences->overlayIconsDisabled());
     }
@@ -1379,32 +1386,6 @@ bool SettingsDialog::saveSettings()
         preferences->setUseHttpsOnly(ui->cbUseHttps->isChecked());
         app->setUseHttpsOnly(preferences->usingHttpsOnly());
 
-        //Advanced
-        if (excludedNamesChanged)
-        {
-            QStringList excludedNames;
-            for (int i = 0; i < ui->lExcludedNames->count(); i++)
-            {
-                excludedNames.append(ui->lExcludedNames->item(i)->text());
-            }
-            preferences->setExcludedSyncNames(excludedNames);
-
-            vector<string> vExclusions;
-            for (int i = 0; i < excludedNames.size(); i++)
-            {
-                vExclusions.push_back(excludedNames[i].toUtf8().constData());
-            }
-            megaApi->setExcludedNames(&vExclusions);
-
-            QMegaMessageBox::information(this, tr("Warning"), tr("The new excluded file names will be taken into account\n"
-                                                                            "when the application starts again"),
-                                         Utilities::getDevicePixelRatio(), QMessageBox::Ok);
-            excludedNamesChanged = false;
-            preferences->setCrashed(true);
-
-            QT_TR_NOOP("Do you want to restart MEGAsync now?");
-        }
-
         if (sizeLimitsChanged)
         {
             preferences->setUpperSizeLimit(hasUpperLimit);
@@ -1527,6 +1508,64 @@ bool SettingsDialog::saveSettings()
 
         connectivityChecker->startCheck();
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing proxy settings...");        
+    }
+
+    //Advanced
+    if (excludedNamesChanged)
+    {
+        QStringList excludedNames;
+        QStringList excludedPaths;
+        for (int i = 0; i < ui->lExcludedNames->count(); i++)
+        {
+            if (ui->lExcludedNames->item(i)->text().startsWith(QChar::fromAscii('/'))) // Path exclusion
+            {
+                excludedPaths.append(ui->lExcludedNames->item(i)->text());
+            }
+            else
+            {
+                excludedNames.append(ui->lExcludedNames->item(i)->text()); // File name exclusion
+            }
+        }
+        preferences->setExcludedSyncNames(excludedNames);
+        preferences->setExcludedSyncPaths(excludedPaths);
+
+        vector<string> vExclusions;
+        for (int i = 0; i < excludedNames.size(); i++)
+        {
+            vExclusions.push_back(excludedNames[i].toUtf8().constData());
+        }
+        megaApi->setExcludedNames(&vExclusions);
+
+        vector<string> vExclusionPaths;
+        for (int i = 0; i < excludedPaths.size(); i++)
+        {
+            vExclusionPaths.push_back(excludedPaths[i].toUtf8().constData());
+        }
+        megaApi->setExcludedPaths(&vExclusionPaths);
+
+        QMessageBox* info = new QMessageBox(QMessageBox::Warning, QString::fromAscii("MEGAsync"),
+                                            tr("The new excluded file names will be taken into account\n"
+                                               "when the application starts again"),
+                                            QMessageBox::Cancel | QMessageBox::Ok);
+        info->setButtonText(QMessageBox::Cancel, trUtf8("Restart"));
+        int result = info->exec();
+        if (!info)
+        {
+            return false;
+        }
+
+        excludedNamesChanged = false;
+        preferences->setCrashed(true);
+
+        if (result == QMessageBox::Cancel)
+        {
+            // Restart MEGAsync
+            delete info;
+            info = NULL;
+            ((MegaApplication*)qApp)->rebootApplication(false);
+        }
+
+        QT_TR_NOOP("Do you want to restart MEGAsync now?");
     }
 
     ui->bApply->setEnabled(false);
@@ -1848,29 +1887,19 @@ void SettingsDialog::on_bDownloadFolder_clicked()
 
 void SettingsDialog::on_bAddName_clicked()
 {
-    QPointer<QInputDialog> id = new QInputDialog(this);
-    id->setWindowTitle(tr("Excluded name"));
-    id->setLabelText(tr("Enter a name to exclude from synchronization.\n(wildcards * and ? are allowed):"));
-    int result = id->exec();
-
-    if (!id || !result)
+    QPointer<AddExclusionDialog> add = new AddExclusionDialog(this);
+    int result = add->exec();
+    if (!add || !result)
     {
-      delete id;
+      delete add;
       return;
     }
 
-    QString text = id->textValue();
-    delete id;
+    QString text = add->textValue();
+    delete add;
     text = text.trimmed();
     if (text.isEmpty())
     {
-        return;
-    }
-
-    QRegExp regExp(text, Qt::CaseInsensitive, QRegExp::Wildcard);
-    if (!regExp.isValid())
-    {
-        QMessageBox::warning(this, tr("Error"), QString::fromUtf8("You have entered an invalid file name or expression."), QMessageBox::Ok);
         return;
     }
 

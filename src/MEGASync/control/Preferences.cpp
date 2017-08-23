@@ -239,6 +239,7 @@ const QString Preferences::wasUploadsPausedKey      = QString::fromAscii("wasUpl
 const QString Preferences::wasDownloadsPausedKey    = QString::fromAscii("wasDownloadsPaused");
 const QString Preferences::lastExecutionTimeKey     = QString::fromAscii("lastExecutionTime");
 const QString Preferences::excludedSyncNamesKey     = QString::fromAscii("excludedSyncNames");
+const QString Preferences::excludedSyncPathsKey     = QString::fromAscii("excludedSyncPaths");
 const QString Preferences::lastVersionKey           = QString::fromAscii("lastVersion");
 const QString Preferences::lastStatsRequestKey      = QString::fromAscii("lastStatsRequest");
 const QString Preferences::lastUpdateTimeKey        = QString::fromAscii("lastUpdateTime");
@@ -2018,6 +2019,33 @@ void Preferences::setExcludedSyncNames(QStringList names)
     mutex.unlock();
 }
 
+QStringList Preferences::getExcludedSyncPaths()
+{
+    mutex.lock();
+    assert(logged());
+    QStringList value = excludedSyncPaths;
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setExcludedSyncPaths(QStringList paths)
+{
+    mutex.lock();
+    assert(logged());
+    excludedSyncPaths = paths;
+    if (!excludedSyncPaths.size())
+    {
+        settings->remove(excludedSyncPathsKey);
+    }
+    else
+    {
+        settings->setValue(excludedSyncPathsKey, excludedSyncPaths.join(QString::fromAscii("\n")));
+    }
+
+    settings->sync();
+    mutex.unlock();
+}
+
 QStringList Preferences::getPreviousCrashes()
 {
     mutex.lock();
@@ -2603,6 +2631,7 @@ void Preferences::loadExcludedSyncNames()
 {
     mutex.lock();
     excludedSyncNames = settings->value(excludedSyncNamesKey).toString().split(QString::fromAscii("\n", QString::SkipEmptyParts));
+    excludedSyncPaths = settings->value(excludedSyncPathsKey).toString().split(QString::fromAscii("\n", QString::SkipEmptyParts));
     if (excludedSyncNames.size()==1 && excludedSyncNames.at(0).isEmpty())
     {
         excludedSyncNames.clear();
@@ -2627,7 +2656,12 @@ void Preferences::loadExcludedSyncNames()
     excludedSyncNames = excludedSyncNamesSet.toList();
     qSort(excludedSyncNames.begin(), excludedSyncNames.end(), caseInsensitiveLessThan);
 
+    QSet<QString> excludedSyncPathsSet = QSet<QString>::fromList(excludedSyncPaths);
+    excludedSyncPaths = excludedSyncPathsSet.toList();
+    qSort(excludedSyncPaths.begin(), excludedSyncPaths.end(), caseInsensitiveLessThan);
+
     setExcludedSyncNames(excludedSyncNames);
+    setExcludedSyncPaths(excludedSyncPaths);
     mutex.unlock();
 }
 

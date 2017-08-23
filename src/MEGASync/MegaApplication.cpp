@@ -437,7 +437,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     }
 #endif
 
-    MegaApi::setLoggerObject(logger);
+    MegaApi::addLoggerObject(logger);
 
     //Set QApplication fields
     setOrganizationName(QString::fromAscii("Mega Limited"));
@@ -1217,6 +1217,14 @@ void MegaApplication::start()
             vExclusions.push_back(exclusions[i].toUtf8().constData());
         }
         megaApi->setExcludedNames(&vExclusions);
+
+        QStringList exclusionPaths = preferences->getExcludedSyncPaths();
+        vector<string> vExclusionPaths;
+        for (int i = 0; i < exclusionPaths.size(); i++)
+        {
+            vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
+        }
+        megaApi->setExcludedPaths(&vExclusionPaths);
 
         if (preferences->lowerSizeLimit())
         {
@@ -2055,7 +2063,7 @@ void MegaApplication::cleanAll()
     trayIcon->deleteLater();
     trayIcon = NULL;
 
-    MegaApi::setLoggerObject(NULL);
+    MegaApi::removeLoggerObject(logger);
     delete logger;
     logger = NULL;
 
@@ -2514,6 +2522,14 @@ void MegaApplication::setupWizardFinished(int result)
         vExclusions.push_back(exclusions[i].toUtf8().constData());
     }
     megaApi->setExcludedNames(&vExclusions);
+
+    QStringList exclusionPaths = preferences->getExcludedSyncPaths();
+    vector<string> vExclusionPaths;
+    for (int i = 0; i < exclusionPaths.size(); i++)
+    {
+        vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
+    }
+    megaApi->setExcludedPaths(&vExclusionPaths);
 
     if (preferences->lowerSizeLimit())
     {
