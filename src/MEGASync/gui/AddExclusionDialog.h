@@ -14,6 +14,14 @@ class AddExclusionDialog : public QDialog
 public:
     explicit AddExclusionDialog(QWidget *parent = 0);
     ~AddExclusionDialog();
+    QString textValue();
+
+private slots:
+    void on_bOk_clicked();
+    void on_bChoose_clicked();
+
+protected:
+    void changeEvent(QEvent * event);
 
 private:
     Ui::AddExclusionDialog *ui;
