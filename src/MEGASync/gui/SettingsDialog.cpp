@@ -689,11 +689,11 @@ void SettingsDialog::on_bOk_clicked()
         saved = saveSettings();
     }
 
-    if (saved)
+    if (saved == 1)
     {
         this->close();
     }
-    else
+    else if (!saved)
     {
         shouldClose = true;
     }
@@ -1113,7 +1113,7 @@ void SettingsDialog::refreshAccountDetails()
     }
 }
 
-bool SettingsDialog::saveSettings()
+int SettingsDialog::saveSettings()
 {
     modifyingSettings++;
     if (!proxyOnly)
@@ -1430,7 +1430,7 @@ bool SettingsDialog::saveSettings()
         }
     }
 
-    bool proxyChanged = false;
+    int proxyChanged = 0;
     //Proxies
     if (!proxyTestProgressDialog && ((ui->rNoProxy->isChecked() && (preferences->proxyType() != Preferences::PROXY_TYPE_NONE))       ||
         (ui->rProxyAuto->isChecked() &&  (preferences->proxyType() != Preferences::PROXY_TYPE_AUTO))    ||
@@ -1442,7 +1442,7 @@ bool SettingsDialog::saveSettings()
         (preferences->getProxyUsername() != ui->eProxyUsername->text())                                 ||
         (preferences->getProxyPassword() != ui->eProxyPassword->text())))
     {
-        proxyChanged = true;
+        proxyChanged = 1;
         QNetworkProxy proxy;
         proxy.setType(QNetworkProxy::NoProxy);
         if (ui->rProxyManual->isChecked())
@@ -1563,6 +1563,7 @@ bool SettingsDialog::saveSettings()
             delete info;
             info = NULL;
             ((MegaApplication*)qApp)->rebootApplication(false);
+            return 2;
         }
 
         QT_TR_NOOP("Do you want to restart MEGAsync now?");
