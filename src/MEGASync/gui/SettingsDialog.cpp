@@ -1517,7 +1517,7 @@ bool SettingsDialog::saveSettings()
         QStringList excludedPaths;
         for (int i = 0; i < ui->lExcludedNames->count(); i++)
         {
-            if (ui->lExcludedNames->item(i)->text().startsWith(QChar::fromAscii('/'))) // Path exclusion
+            if (ui->lExcludedNames->item(i)->text().contains(QDir::separator())) // Path exclusion
             {
                 excludedPaths.append(ui->lExcludedNames->item(i)->text());
             }

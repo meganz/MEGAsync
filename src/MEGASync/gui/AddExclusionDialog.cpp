@@ -18,13 +18,13 @@ AddExclusionDialog::~AddExclusionDialog()
 
 QString AddExclusionDialog::textValue()
 {
-    return ui->eExclusionItem->text();
+    return QDir::toNativeSeparators(ui->eExclusionItem->text());
 }
 
 void AddExclusionDialog::on_bOk_clicked()
 {
     QString text = ui->eExclusionItem->text();
-    text = text.trimmed();
+    text = QDir::toNativeSeparators(text.trimmed());
     if (text.isEmpty())
     {
         QMessageBox::warning(this, tr("Warning"), tr("Please enter a valid file name, path or expression."));
@@ -59,7 +59,7 @@ void AddExclusionDialog::on_bChoose_clicked()
     QString fPath = dialog->selectedFiles().value(0);
     delete dialog;
 #else
-    QString fPath = QFileDialog::getExistingDirectory(0,  tr("Select local exclusion item"), ui->eFolderPath->text());
+    QString fPath = QFileDialog::getExistingDirectory(0,  tr("Select local exclusion item"), QDir::home().path());
 #endif
 
     if (!fPath.size())
@@ -67,7 +67,7 @@ void AddExclusionDialog::on_bChoose_clicked()
         return;
     }
 
-    ui->eExclusionItem->setText(fPath);
+    ui->eExclusionItem->setText(QDir::toNativeSeparators(fPath));
 }
 
 void AddExclusionDialog::changeEvent(QEvent *event)
