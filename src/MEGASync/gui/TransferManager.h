@@ -5,7 +5,7 @@
 #include <QMenu>
 #include "megaapi.h"
 #include "Preferences.h"
-#include "TransferMenuItemAction.h"
+#include "MenuItemAction.h"
 #include <QGraphicsEffect>
 #include <QTimer>
 #include "QTMegaTransferListener.h"
@@ -40,10 +40,10 @@ private:
     Ui::TransferManager *ui;
     mega::MegaApi *megaApi;
     QMenu *addMenu;
-    TransferMenuItemAction *settingsAction;
-    TransferMenuItemAction *importLinksAction;
-    TransferMenuItemAction *uploadAction;
-    TransferMenuItemAction *downloadAction;
+    MenuItemAction *settingsAction;
+    MenuItemAction *importLinksAction;
+    MenuItemAction *uploadAction;
+    MenuItemAction *downloadAction;
     Preferences *preferences;
     QPoint dragPosition;
     long long notificationNumber;

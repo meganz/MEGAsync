@@ -10,6 +10,7 @@ namespace Ui {
 class GuestWidget;
 }
 
+class MegaApplication;
 class GuestWidget : public QWidget
 {
     Q_OBJECT
@@ -21,36 +22,20 @@ public:
     };
 
     explicit GuestWidget(QWidget *parent = 0);
-    ActiveTransfer* getTransfer();
-    void setDownloadLabel(QString dString);
-    void setRemainingTime(QString time);
-    void hideDownloads();
-    void showDownloads();
-    void setIdleState(bool state);
-    bool idleState();
-    void setPauseState(bool state);
-    bool pauseState();
-
     ~GuestWidget();
 
 signals:
     void actionButtonClicked(int button);
-    void cancelCurrentDownload();
-    void cancelAllDownloads();
-    void pauseClicked();
-
-public slots:
-    void onTransferCancel(int x, int y);
 
 private slots:
     void on_bLogin_clicked();
     void on_bCreateAccount_clicked();
+    void on_bSettings_clicked();
 
 private:
     Ui::GuestWidget *ui;
-    QMenu *transferMenu;
     QPushButton *overlayIdle, *overlayPaused;
-    bool isIdle;
+    MegaApplication *app;
 };
 
 #endif // GUESWIDGET_H

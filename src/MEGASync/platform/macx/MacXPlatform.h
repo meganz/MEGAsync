@@ -3,6 +3,7 @@
 
 #include "MacXFunctions.h"
 #include "MacXSystemServiceTask.h"
+#include "MacXExtServer.h"
 
 #include <QApplication>
 #include <QString>
@@ -20,6 +21,7 @@ private:
     MacXPlatform() {}
     static bool enableSetuidBit();
     static MacXSystemServiceTask *systemServiceTask;
+    static MacXExtServer *extServer;
 
 public:
     static void initialize(int argc, char *argv[]);
@@ -28,6 +30,10 @@ public:
     static void notifyItemChange(QString path);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
+    static int addFinderExtensionToSystem();
+    static bool isFinderExtensionEnabled();
+    static int reinstallFinderExtension();
+    static int enableFinderExtension(bool value);
     static void showInFolder(QString pathIn);
     static void startShellDispatcher(MegaApplication *receiver);
     static void stopShellDispatcher();

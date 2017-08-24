@@ -39,7 +39,7 @@ long long calculateCacheSize()
         QString syncPath = preferences->getLocalFolder(i);
         if (!syncPath.isEmpty())
         {
-            Utilities::getFolderSize(syncPath + QDir::separator() + QString::fromAscii(mega::MEGA_DEBRIS_FOLDER), &cacheSize);
+            Utilities::getFolderSize(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER), &cacheSize);
         }
     }
     return cacheSize;
@@ -53,7 +53,7 @@ void deleteCache()
         QString syncPath = preferences->getLocalFolder(i);
         if (!syncPath.isEmpty())
         {
-            Utilities::removeRecursively(syncPath + QDir::separator() + QString::fromAscii(mega::MEGA_DEBRIS_FOLDER));
+            Utilities::removeRecursively(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
         }
     }
 }
@@ -186,7 +186,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 #ifdef __APPLE__
     this->setWindowTitle(tr("Preferences - MEGAsync"));
     ui->cStartOnStartup->setText(tr("Open at login"));
-    ui->cOverlayIcons->hide();
 
     CocoaHelpButton *helpButton = new CocoaHelpButton(this);
     ui->layoutBottom->insertWidget(0, helpButton);
@@ -566,18 +565,9 @@ void SettingsDialog::on_bBandwidth_clicked()
     ui->pSyncs->hide();
 
     int bwHeight;
-    if (preferences->accountType() == 0)
-    {
-        ui->gBandwidthQuota->hide();
-        ui->bSeparatorBandwidth->hide();
-        bwHeight = 440;
-    }
-    else
-    {
-        ui->gBandwidthQuota->show();
-        ui->bSeparatorBandwidth->show();
-        bwHeight = 540;
-    }
+    ui->gBandwidthQuota->show();
+    ui->bSeparatorBandwidth->show();
+    bwHeight = 540;
 
     minHeightAnimation->setTargetObject(this);
     maxHeightAnimation->setTargetObject(this);
@@ -986,24 +976,36 @@ void SettingsDialog::loadSettings()
 
         ui->cbUseHttps->setChecked(preferences->usingHttpsOnly());
 
-        double totalBandwidth = preferences->totalBandwidth();
-        if (totalBandwidth == 0)
-        {
-            ui->gBandwidthQuota->hide();
-            ui->bSeparatorBandwidth->hide();
-            ui->pUsedBandwidth->setValue(0);
-            ui->lBandwidth->setText(tr("Data temporarily unavailable"));
-        }
-        else
+        if (preferences->accountType() == 0) //Free user
         {
             ui->gBandwidthQuota->show();
             ui->bSeparatorBandwidth->show();
-            int bandwidthPercentage = ceil(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
-            ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
-            ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
-                    .arg(Utilities::getSizeString(preferences->usedBandwidth()))
-                    .arg(QString::number(bandwidthPercentage))
-                    .arg(Utilities::getSizeString(preferences->totalBandwidth())));
+            ui->pUsedBandwidth->setValue(0);
+            ui->lBandwidth->setText(tr("Used quota for the last %1 hours: %2")
+                    .arg(preferences->bandwidthInterval())
+                    .arg(Utilities::getSizeString(preferences->usedBandwidth())));
+        }
+        else
+        {
+            double totalBandwidth = preferences->totalBandwidth();
+            if (totalBandwidth == 0)
+            {
+                ui->gBandwidthQuota->hide();
+                ui->bSeparatorBandwidth->hide();
+                ui->pUsedBandwidth->setValue(0);
+                ui->lBandwidth->setText(tr("Data temporarily unavailable"));
+            }
+            else
+            {
+                ui->gBandwidthQuota->show();
+                ui->bSeparatorBandwidth->show();
+                int bandwidthPercentage = ceil(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+                ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
+                ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
+                        .arg(Utilities::getSizeString(preferences->usedBandwidth()))
+                        .arg(QString::number(bandwidthPercentage))
+                        .arg(Utilities::getSizeString(preferences->totalBandwidth())));
+            }
         }
 
         //Advanced
@@ -1957,7 +1959,6 @@ void SettingsDialog::changeEvent(QEvent *event)
 #ifdef __APPLE__
         setWindowTitle(tr("Preferences - MEGAsync"));
         ui->cStartOnStartup->setText(tr("Open at login"));
-        ui->cOverlayIcons->hide();
 #endif
         ui->cProxyType->addItem(QString::fromUtf8("SOCKS5H"));
 
@@ -2005,7 +2006,7 @@ void SettingsDialog::on_bClearCache_clicked()
     int numFolders = preferences->getNumSyncedFolders();
     for (int i = 0; i < numFolders; i++)
     {
-        QFileInfo fi(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(mega::MEGA_DEBRIS_FOLDER));
+        QFileInfo fi(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
         if (fi.exists() && fi.isDir())
         {
             syncs += QString::fromUtf8("<br/><a href=\"local://#%1\">%2</a>").arg(fi.absoluteFilePath()).arg(preferences->getSyncName(i));

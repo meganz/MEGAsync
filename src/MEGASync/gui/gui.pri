@@ -41,10 +41,12 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaTransferDelegate.cpp \
     $$PWD/MegaTransferView.cpp \
     $$PWD/QMegaMessageBox.cpp \
-    $$PWD/TransferMenuItemAction.cpp \
     $$PWD/TransfersStateInfoWidget.cpp \
     $$PWD/MegaSpeedGraph.cpp \
-    $$PWD/ActiveTransfersWidget.cpp
+    $$PWD/ActiveTransfersWidget.cpp \
+    $$PWD/AvatarWidget.cpp \
+    $$PWD/MenuItemAction.cpp \
+    $$PWD/DataUsageMenu.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -87,10 +89,12 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MegaTransferDelegate.h \
     $$PWD/MegaTransferView.h \
     $$PWD/QMegaMessageBox.h \
-    $$PWD/TransferMenuItemAction.h \
     $$PWD/TransfersStateInfoWidget.h \
     $$PWD/MegaSpeedGraph.h \
-    $$PWD/ActiveTransfersWidget.h
+    $$PWD/ActiveTransfersWidget.h \
+    $$PWD/AvatarWidget.h \
+    $$PWD/MenuItemAction.h \
+    $$PWD/DataUsageMenu.h
 
 INCLUDEPATH += $$PWD
 

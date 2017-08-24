@@ -35,6 +35,10 @@ public:
     bool hasEmail(QString email);
     QString email();
     void setEmail(QString email);
+    QString firstName();
+    void setFirstName(QString firstName);
+    QString lastName();
+    void setLastName(QString lastName);
     QString emailHash();
     QString privatePw();
     void setSession(QString session);
@@ -73,6 +77,8 @@ public:
 
     long long totalBandwidth();
     void setTotalBandwidth(long long value);
+    int bandwidthInterval();
+    void setBandwidthInterval(int value);
     bool isTemporalBandwidthValid();
     long long getMsDiffTimeWithSDK();
     void setDsDiffTimeWithSDK(long long diffTime);
@@ -286,7 +292,8 @@ public:
 
     enum {
         ONE_TIME_ACTION_DEPRECATED_OPERATING_SYSTEM = 0,
-        ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE = 1
+        ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE = 1,
+        ONE_TIME_ACTION_ACTIVE_FINDER_EXT = 2
     };
 
     static const int MAX_FILES_IN_NEW_SYNC_FOLDER;
@@ -330,6 +337,7 @@ public:
     static QStringList HTTPS_ALLOWED_ORIGINS;
     static bool HTTPS_ORIGIN_CHECK_ENABLED;
     static const unsigned int MAX_COMPLETED_ITEMS;
+    static const QString FINDER_EXT_BUNDLE_ID;
 
 protected:
     QMutex mutex;
@@ -360,6 +368,8 @@ protected:
     static const QString currentAccountKey;
     static const QString syncsGroupKey;
     static const QString emailKey;
+    static const QString firstNameKey;
+    static const QString lastNameKey;
     static const QString emailHashKey;
     static const QString privatePwKey;
     static const QString totalStorageKey;
@@ -378,6 +388,7 @@ protected:
     static const QString inShareFoldersKey;
     static const QString totalBandwidthKey;
     static const QString usedBandwidthKey;
+    static const QString usedBandwidthIntervalKey;
     static const QString accountTypeKey;
     static const QString setupWizardCompletedKey;
     static const QString showNotificationsKey;

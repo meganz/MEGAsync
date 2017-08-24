@@ -1,3 +1,12 @@
+megasync (3.1.4) stable; urgency=low
+
+  * Support for Apple File System (macOS High Sierra)
+  * Allow to disable left pane icons in settings (Windows 10)
+  * Updated translations
+  * Bug fixes
+
+ -- MEGA Team <linux@mega.co.nz>  Fri, 23 Jun 2017 12:43:22 +0200
+
 megasync (3.1.2) stable; urgency=low
 
   * Better integration with Windows 10
