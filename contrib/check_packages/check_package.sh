@@ -25,7 +25,7 @@ display_help() {
     local app=$(basename "$0")
     echo ""
     echo "Usage:"
-    echo " $app [-c] [-i] [-k] [-p pass] [-x pathXMLdir] VMNAME URL_REPO"
+    echo " $app [-c] [-i] [-k] [-p pass] VMNAME URL_REPO"
     echo ""
     echo "This script will check the correctness of a package using a virtual machine."
     echo " It sill receive the machine name and the repository that will be used to download" 
@@ -45,7 +45,6 @@ display_help() {
     echo " -i : install anew (removes previous megasync package)"
     echo " -k : keep VM running after completion"
     echo " -p pass : password for VM (both user mega & root)"
-    echo " -x pathXMLdir : path for the xml files describing the VMs"
     echo ""
 }
 
@@ -53,10 +52,7 @@ remove_megasync=0
 quit_machine=1
 require_change=0
 
-thisscriptpath=$(readlink -f "$0")
-pathXMLdir=$(dirname "$thisscriptpath")
-
-while getopts ":ikcnp:x:" opt; do
+while getopts ":ikcnp:" opt; do
   case $opt in
     i)
 		remove_megasync=1
@@ -74,10 +70,7 @@ while getopts ":ikcnp:x:" opt; do
 	;;	
     k)
 		quit_machine=0
-      ;;
-    x)
-		pathXMLdir="$OPTARG"
-      ;;      
+      ;;    
     \?)
 		echo "Invalid option: -$OPTARG" >&2
 		display_help $0
