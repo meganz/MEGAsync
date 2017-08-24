@@ -1904,6 +1904,12 @@ void SettingsDialog::on_bAddName_clicked()
         return;
     }
 
+    //Remove possible trailing '/'
+    if (text.contains(QDir::separator()) && text.size() > 1 && text.at(text.size() - 1) == QDir::separator())
+    {
+        text.chop(1);
+    }
+
     for (int i = 0; i < ui->lExcludedNames->count(); i++)
     {
         if (ui->lExcludedNames->item(i)->text() == text)
