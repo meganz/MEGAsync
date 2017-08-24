@@ -127,7 +127,7 @@ logSth(){
 
 
 echo " running machine $VMNAME ..."
-sudo virsh create $pathXMLdir/$VMNAME.xml 
+sudo virsh create /etc/libvirt/qemu/$VMNAME.xml 
 
 #sudo virsh domiflist $VMNAME 
 IP_GUEST=$( sudo arp -n | grep `sudo virsh domiflist $VMNAME  | grep vnet | awk '{print $NF}'` | awk '{print $1}' )
@@ -216,7 +216,7 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	fi; rm tmp$VMNAME;	
 	# if [ -s tmp$VMNAME ]; then resultMODREPO=$(expr 1000 + $resultMODREPO); cat tmp$VMNAME; fi; rm tmp$VMNAME;
 	logOperationResult "modifying repos ..." $resultMODREPO
-	cat /etc/zypp/repos.d/megasync.repo
+	$sshpasscommand ssh root@$IP_GUEST cat /etc/zypp/repos.d/megasync.repo
 	
 	echo " reinstalling/updating megasync ..."
 	BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
@@ -251,7 +251,7 @@ elif [[ $VMNAME == *"DEBIAN"* ]] || [[ $VMNAME == *"UBUNTU"* ]] || [[ $VMNAME ==
 		attempts=10
 		$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y remove megasync
 		resultREMOVE=$?
-		while [[ $attempts -ge 0 && $resultREMOVE -ne 0 ]]; do
+		while [[ $attempts -ge 0 && $resultREMOVE -ne 0 && $resultREMOVE -ne 100 ]]; do
 			sleep $((5*(10-$attempts)))
 			echo " removing megasync ... attempts left="$attempts
 			$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y remove megasync
@@ -285,7 +285,7 @@ elif [[ $VMNAME == *"DEBIAN"* ]] || [[ $VMNAME == *"UBUNTU"* ]] || [[ $VMNAME ==
 	 #resultMODREPO=0 #we discard any other failure
 	fi; rm tmp$VMNAME;	
 	logOperationResult "modifying repos ..." $resultMODREPO
-	$sshpasscommand ssh root@$IP_GUEST cat /etc/apt/sources.list.d/megasync.list
+	$sshpasscommand ssh root@$IP_GUEST "cat /etc/apt/sources.list.d/megasync.list"
 
 	echo " reinstalling/updating megasync ..."
 	BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST dpkg -l megasync`
@@ -406,7 +406,7 @@ else
 		attempts=10
 		$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit remove megasync
 		resultREMOVE=$?
-		while [[ $attempts -ge 0 && $resultREMOVE -ne 0 ]]; do
+		while [[ $attempts -ge 0 && $resultREMOVE -ne 0 && $resultREMOVE -ne 1 ]]; do
 			sleep $((5*(10-$attempts)))
 			echo " removing megasync ... attempts left="$attempts
 		$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit remove megasync
@@ -433,8 +433,7 @@ else
 	cat tmp$VMNAME | grep -v "FutureWarning: split() requires a non-empty pattern match\|return _compile(pattern, flags).split(stri" > tmp$VMNAME
 	if [ -s tmp$VMNAME ]; then resultMODREPO=$(expr 1000 + $resultMODREPO); cat tmp$VMNAME; fi; rm tmp$VMNAME; 
 	logOperationResult "modifying repos ..." $resultMODREPO
-	
-	cat /etc/yum.repos.d/megasync.repo
+	$sshpasscommand ssh root@$IP_GUEST "cat /etc/yum.repos.d/megasync.repo"
 	sleep 1
 	
 	
@@ -504,9 +503,9 @@ $sshpasscommand ssh root@$IP_GUEST "curl 'https://127.0.0.1:6342/' -H 'Origin: h
 resultDL=$?
 if [ $resultDL -eq 0 ]; then
 	resultDL=27
-	attempts=10
+	attempts=13
 	while [[ $attempts -ge 0 && $resultDL -ne 0 ]]; do
-		sleep $((5*(10-$attempts)))
+		sleep $((5*(13-$attempts)))
 		echo " check file dl correctly ... attempts left="$attempts
 		$sshpasscommand ssh root@$IP_GUEST cat /home/mega/testFile.txt >/dev/null  #TODO: do hash file comparation
 		resultDL=$?
