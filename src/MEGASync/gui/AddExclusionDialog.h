@@ -20,6 +20,10 @@ private slots:
     void on_bOk_clicked();
     void on_bChoose_clicked();
 
+#ifndef __APPLE__
+    void on_bChooseFile_clicked();
+#endif
+
 protected:
     void changeEvent(QEvent * event);
 

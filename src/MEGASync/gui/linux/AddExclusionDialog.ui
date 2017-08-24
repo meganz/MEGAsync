@@ -33,16 +33,16 @@ font-size: 11px;
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="leftMargin">
-    <number>10</number>
+    <number>12</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>12</number>
    </property>
    <property name="rightMargin">
     <number>12</number>
    </property>
    <property name="bottomMargin">
-    <number>11</number>
+    <number>0</number>
    </property>
    <item>
     <widget class="QLabel" name="label">
@@ -70,30 +70,7 @@ font-size: 11px;
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <property name="spacing">
-      <number>13</number>
-     </property>
-     <property name="leftMargin">
-      <number>10</number>
-     </property>
-     <item>
-      <widget class="QLineEdit" name="eExclusionItem"/>
-     </item>
-     <item>
-      <widget class="QPushButton" name="bChoose">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>16</height>
-        </size>
-       </property>
-       <property name="text">
-        <string>Choose</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QLineEdit" name="eExclusionItem"/>
    </item>
    <item>
     <widget class="QWidget" name="widget" native="true">
@@ -110,6 +87,32 @@ font-size: 11px;
       <property name="bottomMargin">
        <number>0</number>
       </property>
+      <item>
+       <widget class="QPushButton" name="bChoose">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Choose Folder</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="bChooseFile">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Choose File</string>
+        </property>
+       </widget>
+      </item>
       <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
@@ -153,8 +156,8 @@ font-size: 11px;
      <zorder>horizontalSpacer</zorder>
      <zorder>bCancel</zorder>
      <zorder>bOk</zorder>
-     <zorder>bCancel</zorder>
-     <zorder>bOk</zorder>
+     <zorder>bChoose</zorder>
+     <zorder>bChooseFile</zorder>
     </widget>
    </item>
   </layout>

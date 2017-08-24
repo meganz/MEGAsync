@@ -70,6 +70,19 @@ void AddExclusionDialog::on_bChoose_clicked()
     ui->eExclusionItem->setText(QDir::toNativeSeparators(fPath));
 }
 
+#ifndef __APPLE__
+void AddExclusionDialog::on_bChooseFile_clicked()
+{
+    QString fPath = QFileDialog::getOpenFileName(0,  tr("Select local exclusion item"), QDir::home().path());
+    if (!fPath.size())
+    {
+        return;
+    }
+
+    ui->eExclusionItem->setText(QDir::toNativeSeparators(fPath));
+}
+#endif
+
 void AddExclusionDialog::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
