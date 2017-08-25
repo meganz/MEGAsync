@@ -79,9 +79,15 @@ int mkdir_p(const char *path)
 UpdateTask::UpdateTask(MegaApi *megaApi)
 {
     this->megaApi = megaApi;
-    updateFolder = getAppDataDir() + UPDATE_FOLDER_NAME;
+    string appData = getAppDataDir();
+    if (appData.empty())
+    {
+        return;
+    }
+
+    updateFolder = appData + UPDATE_FOLDER_NAME;
     updateFolder += separator();
-    backupFolder = getAppDataDir() + BACKUP_FOLDER_NAME;
+    backupFolder = appData + BACKUP_FOLDER_NAME;
     backupFolder += separator();
     currentFile = -1;
     signatureChecker = new MegaHashSignature((const char *)UPDATE_PUBLIC_KEY);
@@ -106,7 +112,13 @@ void UpdateTask::checkForUpdates()
         randomSec += char('A'+(rand() % 26));
     }
 
-    string updateFile = getAppDataDir().append(UPDATE_FILENAME);
+    string appData = getAppDataDir();
+    if (appData.empty())
+    {
+        return;
+    }
+
+    string updateFile = appData.append(UPDATE_FILENAME);
     if (downloadFile((char *)((string(UPDATE_CHECK_URL) + randomSec).c_str()), updateFile.c_str()))
     {
         FILE * pFile;
@@ -470,13 +482,14 @@ int UpdateTask::readVersion()
 }
 
 string UpdateTask::getAppDataDir()
-{
-    string dir;
+{   
     const char* home = getenv("HOME");
     if (home)
     {
+        string dir;
         dir.append(home);
         dir.append("/Library/Application\ Support/Mega\ Limited/MEGAsync/");
         return dir;
     }
+    return string();
 }
