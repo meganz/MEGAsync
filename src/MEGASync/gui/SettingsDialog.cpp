@@ -1529,20 +1529,6 @@ int SettingsDialog::saveSettings()
         preferences->setExcludedSyncNames(excludedNames);
         preferences->setExcludedSyncPaths(excludedPaths);
 
-        vector<string> vExclusions;
-        for (int i = 0; i < excludedNames.size(); i++)
-        {
-            vExclusions.push_back(excludedNames[i].toUtf8().constData());
-        }
-        megaApi->setExcludedNames(&vExclusions);
-
-        vector<string> vExclusionPaths;
-        for (int i = 0; i < excludedPaths.size(); i++)
-        {
-            vExclusionPaths.push_back(excludedPaths[i].toUtf8().constData());
-        }
-        megaApi->setExcludedPaths(&vExclusionPaths);
-
         QMessageBox* info = new QMessageBox(QMessageBox::Warning, QString::fromAscii("MEGAsync"),
                                             tr("The new excluded file names will be taken into account\n"
                                                "when the application starts again"),
