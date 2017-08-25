@@ -45,11 +45,11 @@ void PasteMegaLinksDialog::on_bSubmit_clicked()
     {
         if (!text.trimmed().size())
         {
-            QMessageBox::warning(this, tr("Warning"), tr("Enter one or more MEGA file links"));
+            QMessageBox::warning(NULL, tr("Warning"), tr("Enter one or more MEGA file links"));
         }
         else
         {
-            QMessageBox::warning(this, tr("Warning"), tr("Invalid MEGA Link"));
+            QMessageBox::warning(NULL, tr("Warning"), tr("Invalid MEGA Link"));
         }
         return;
     }

@@ -1166,7 +1166,7 @@ void InfoDialog::disableGetLink(bool disable)
 
 void InfoDialog::addSync(MegaHandle h)
 {
-    static BindFolderDialog *dialog = NULL;
+    static QPointer<BindFolderDialog> dialog = NULL;
     if (dialog)
     {
         if (h != mega::INVALID_HANDLE)
@@ -1186,8 +1186,8 @@ void InfoDialog::addSync(MegaHandle h)
         dialog->setMegaFolder(h);
     }
 
-    int result = dialog->exec();
-    if (result != QDialog::Accepted)
+    int result = dialog->exec();    
+    if (!dialog || !result)
     {
         delete dialog;
         dialog = NULL;
