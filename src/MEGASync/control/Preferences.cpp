@@ -2631,10 +2631,15 @@ void Preferences::loadExcludedSyncNames()
 {
     mutex.lock();
     excludedSyncNames = settings->value(excludedSyncNamesKey).toString().split(QString::fromAscii("\n", QString::SkipEmptyParts));
-    excludedSyncPaths = settings->value(excludedSyncPathsKey).toString().split(QString::fromAscii("\n", QString::SkipEmptyParts));
     if (excludedSyncNames.size()==1 && excludedSyncNames.at(0).isEmpty())
     {
         excludedSyncNames.clear();
+    }
+
+    excludedSyncPaths = settings->value(excludedSyncPathsKey).toString().split(QString::fromAscii("\n", QString::SkipEmptyParts));
+    if (excludedSyncPaths.size()==1 && excludedSyncPaths.at(0).isEmpty())
+    {
+        excludedSyncPaths.clear();
     }
 
     if (settings->value(lastVersionKey).toInt() < 108)
