@@ -20,5 +20,7 @@ int main(int argc, char *argv[])
     updater->checkForUpdates();
     printf ("\n\nProcess finishes at %ju\n\n", (uintmax_t)time(0));
 
+    delete updater;
+    delete megaApi;
     return 0;
 }
