@@ -3771,6 +3771,15 @@ void MegaApplication::processDownloads()
     }
     else
     {
+        if (httpServer)
+        {
+            QQueue<mega::MegaNode *>::iterator it;
+            for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
+            {
+                httpServer->onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+            }
+        }
+
         //If the dialog is rejected, cancel uploads
         qDeleteAll(downloadQueue);
         downloadQueue.clear();
