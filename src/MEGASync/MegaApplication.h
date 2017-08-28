@@ -51,6 +51,10 @@ class MegaApplication : public QApplication, public mega::MegaListener
 {
     Q_OBJECT
 
+#ifdef Q_OS_LINUX
+    void setTrayIconFromTheme(QString icon);
+#endif
+
 public:
 
     explicit MegaApplication(int &argc, char **argv);
@@ -336,6 +340,7 @@ protected:
     int nUnviewedTransfers;
     bool completedTabActive;
     int prevVersion;
+    bool isPublic;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener

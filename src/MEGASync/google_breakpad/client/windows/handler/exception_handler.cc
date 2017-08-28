@@ -1026,7 +1026,9 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
 
   oss << "Operating system: Windows "
       << version.dwMajorVersion << "."
-      << version.dwMinorVersion << "\n";
+      << version.dwMinorVersion << "."
+      << version.dwBuildNumber << "\n";
+
   oss << "Error info:\n";
 
   DWORD64 offset;

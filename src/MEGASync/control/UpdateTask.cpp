@@ -1,5 +1,6 @@
 #include "UpdateTask.h"
 #include "control/Utilities.h"
+#include "platform/Platform.h"
 #include <iostream>
 #include <QAuthenticator>
 #include <QDesktopServices>
@@ -7,7 +8,7 @@
 using namespace mega;
 using namespace std;
 
-UpdateTask::UpdateTask(MegaApi *megaApi, QString appFolder, QObject *parent) :
+UpdateTask::UpdateTask(MegaApi *megaApi, QString appFolder, bool isPublic, QObject *parent) :
     QObject(parent)
 {
     m_WebCtrl = NULL;
@@ -19,6 +20,7 @@ UpdateTask::UpdateTask(MegaApi *megaApi, QString appFolder, QObject *parent) :
     timeoutTimer = NULL;
     this->megaApi = megaApi;
     this->appFolder = QDir(appFolder);
+    this->isPublic = isPublic;
 }
 
 UpdateTask::~UpdateTask()
@@ -362,6 +364,13 @@ bool UpdateTask::processFile(QNetworkReply *reply)
     }
     localFile.close();
 
+#ifdef _WIN32
+    if (isPublic)
+    {
+        Platform::makePubliclyReadable((LPTSTR)QDir::toNativeSeparators(localFile.fileName()).utf16());
+    }
+#endif
+
     return true;
 }
 
@@ -384,7 +393,16 @@ bool UpdateTask::performUpdate()
 
         QFileInfo dstInfo(appFolder.absoluteFilePath(file));
         QDir dstDir = dstInfo.dir();
-        dstDir.mkpath(QString::fromUtf8("."));
+        if (!dstDir.exists())
+        {
+            dstDir.mkpath(QString::fromUtf8("."));
+#ifdef _WIN32
+            if (isPublic)
+            {
+                Platform::makePubliclyReadable((LPTSTR)QDir::toNativeSeparators(dstDir.absolutePath()).utf16());
+            }
+#endif
+        }
 
         appFolder.rename(file, backupFolder.absoluteFilePath(file));
         if (!updateFolder.rename(file, appFolder.absoluteFilePath(file)))

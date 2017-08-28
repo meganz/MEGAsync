@@ -24,10 +24,18 @@ QT       += core gui
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 unix:!macx {
-TARGET = megasync
+    QT += svg
+    TARGET = megasync
+
+#    Uncomment the following if "make install" doesn't copy megasync in /usr/bin directory
+#    isEmpty(PREFIX) {
+#        PREFIX = /usr
+#    }
+#    target.path = $$PREFIX/bin
+#    INSTALLS += target
 }
 else {
-TARGET = MEGAsync
+    TARGET = MEGAsync
 }
 
 TEMPLATE = app

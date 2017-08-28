@@ -170,28 +170,33 @@ void ImportMegaLinksDialog::on_cDownload_clicked()
             if (megaApi->isSynced(parent))
             {
                 int result;
+                delete parent;
+                QPointer<ImportMegaLinksDialog> currentDialog = this;
                 if (linkProcessor->size() == 1)
                 {
-                    result = QMessageBox::warning(this, tr("Warning"),
+                    result = QMessageBox::warning(NULL, tr("Warning"),
                         tr("You are about to import this file to a synced folder.\n"
                             "If you enable downloading, the file will be duplicated on your computer.\n"
                             "Are you sure?"), QMessageBox::Yes, QMessageBox::No);
                 }
                 else
                 {
-                    result = QMessageBox::warning(this, tr("Warning"),
+                    result = QMessageBox::warning(NULL, tr("Warning"),
                         tr("You are about to import these files to a synced folder.\n"
                             "If you enable downloading, the files will be duplicated on your computer.\n"
                             "Are you sure?"), QMessageBox::Yes, QMessageBox::No);
                 }
 
+                if (!currentDialog)
+                {
+                    return;
+                }
+
                 if (result != QMessageBox::Yes)
                 {
                     ui->cDownload->setChecked(false);
-                    delete parent;
                     return;
                 }
-                delete parent;
                 break;
             }
             nImportFolder = parent;
@@ -270,7 +275,7 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
         QTemporaryFile test(path + QDir::separator());
         if (!test.open())
         {
-            QMessageBox::critical(window(), tr("Error"), tr("You don't have write permissions in this local folder."));
+            QMessageBox::critical(NULL, tr("Error"), tr("You don't have write permissions in this local folder."));
             return;
         }
 

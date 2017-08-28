@@ -16,6 +16,10 @@
 #include <QNetworkProxy>
 #include <assert.h>
 
+#ifdef Q_OS_LINUX
+    #include <QSvgRenderer>
+#endif
+
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
 #endif
@@ -437,7 +441,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     }
 #endif
 
-    MegaApi::setLoggerObject(logger);
+    MegaApi::addLoggerObject(logger);
 
     //Set QApplication fields
     setOrganizationName(QString::fromAscii("Mega Limited"));
@@ -509,6 +513,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     importLinksAction = NULL;
     importLinksActionGuest = NULL;
     initialMenu = NULL;
+    isPublic = false;
+    prevVersion = 0;
+
 #ifdef _WIN32
     windowsMenu = NULL;
     windowsExitAction = NULL;
@@ -519,6 +526,31 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     windowsStreamAction = NULL;
     windowsTransferManagerAction = NULL;
     windowsSettingsAction = NULL;
+
+    WCHAR commonPath[MAX_PATH + 1];
+    if (SHGetSpecialFolderPathW(NULL, commonPath, CSIDL_COMMON_APPDATA, FALSE))
+    {
+        int len = lstrlen(commonPath);
+        if (!memcmp(commonPath, (WCHAR *)appDirPath.utf16(), len * sizeof(WCHAR))
+                && appDirPath.size() > len && appDirPath[len] == QChar::fromAscii('\\'))
+        {
+            isPublic = true;
+
+            int intVersion = 0;
+            QDir dataDir(dataPath);
+            QString appVersionPath = dataDir.filePath(QString::fromAscii("megasync.version"));
+            QFile f(appVersionPath);
+            if (f.open(QFile::ReadOnly | QFile::Text))
+            {
+                QTextStream in(&f);
+                QString version = in.readAll();
+                intVersion = version.toInt();
+            }
+
+            prevVersion = intVersion;
+        }
+    }
+
 #endif
     changeProxyAction = NULL;
     initialExitAction = NULL;
@@ -563,7 +595,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     maxMemoryUsage = 0;
     nUnviewedTransfers = 0;
     completedTabActive = false;
-    prevVersion = 0;
 
 #ifdef __APPLE__
     scanningTimer = NULL;
@@ -572,6 +603,12 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 MegaApplication::~MegaApplication()
 {
+    if (logger)
+    {
+        MegaApi::removeLoggerObject(logger);
+        delete logger;
+    }
+
     if (!translator.isEmpty())
     {
         removeTranslator(&translator);
@@ -686,6 +723,18 @@ void MegaApplication::initialize()
     connectivityTimer->setSingleShot(true);
     connectivityTimer->setInterval(Preferences::MAX_LOGIN_TIME_MS);
     connect(connectivityTimer, SIGNAL(timeout()), this, SLOT(runConnectivityCheck()));
+
+#ifdef _WIN32
+    if (isPublic && prevVersion <= 3104 && preferences->canUpdate(appPath))
+    {
+        megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Fixing permissions for other users in the computer").toUtf8().constData());
+        QDirIterator it (appDirPath, QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
+        while (it.hasNext())
+        {
+            Platform::makePubliclyReadable((LPTSTR)QDir::toNativeSeparators(it.next()).utf16());
+        }
+    }
+#endif
 
     if (preferences->isCrashed())
     {
@@ -818,6 +867,14 @@ void MegaApplication::changeLanguage(QString languageCode)
     createTrayIcon();
 }
 
+#ifdef Q_OS_LINUX
+void MegaApplication::setTrayIconFromTheme(QString icon)
+{
+    QString name = icon.replace(QString::fromAscii("://images/"),QString::fromAscii("mega")).replace(QString::fromAscii(".svg"),QString::fromAscii(""));
+    trayIcon->setIcon(QIcon::fromTheme(name,QIcon(icon)));
+}
+#endif
+
 void MegaApplication::updateTrayIcon()
 {
     if (appfinished || !trayIcon)
@@ -857,7 +914,7 @@ void MegaApplication::updateTrayIcon()
     #ifdef _WIN32
         icon = QString::fromUtf8("://images/warning_ico.ico");
     #else
-        icon = QString::fromUtf8("://images/22_warning.png");
+        icon = QString::fromUtf8("://images/warning.svg");
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_overquota_mac.png");
@@ -883,7 +940,7 @@ void MegaApplication::updateTrayIcon()
         #ifdef _WIN32
             icon = QString::fromUtf8("://images/tray_sync.ico");
         #else
-            icon = QString::fromUtf8("://images/22_synching.png");
+            icon = QString::fromUtf8("://images/synching.svg");
         #endif
     #else
             icon = QString::fromUtf8("://images/icon_syncing_mac.png");
@@ -908,7 +965,7 @@ void MegaApplication::updateTrayIcon()
         #ifdef _WIN32
             icon = QString::fromUtf8("://images/app_ico.ico");
         #else
-            icon = QString::fromUtf8("://images/22_uptodate.png");
+            icon = QString::fromUtf8("://images/uptodate.svg");
         #endif
     #else
             icon = QString::fromUtf8("://images/icon_synced_mac.png");
@@ -933,7 +990,7 @@ void MegaApplication::updateTrayIcon()
     #ifdef _WIN32
         icon = QString::fromUtf8("://images/tray_sync.ico");
     #else
-        icon = QString::fromUtf8("://images/22_synching.png");
+        icon = QString::fromUtf8("://images/synching.svg");
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_syncing_mac.png");
@@ -958,7 +1015,7 @@ void MegaApplication::updateTrayIcon()
     #ifdef _WIN32
         icon = QString::fromUtf8("://images/tray_pause.ico");
     #else
-        icon = QString::fromUtf8("://images/22_paused.png");
+        icon = QString::fromUtf8("://images/paused.svg");
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_paused_mac.png");
@@ -1003,7 +1060,7 @@ void MegaApplication::updateTrayIcon()
     #ifdef _WIN32
         icon = QString::fromUtf8("://images/tray_sync.ico");
     #else
-        icon = QString::fromUtf8("://images/22_synching.png");
+        icon = QString::fromUtf8("://images/synching.svg");
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_syncing_mac.png");
@@ -1028,7 +1085,7 @@ void MegaApplication::updateTrayIcon()
     #ifdef _WIN32
         icon = QString::fromUtf8("://images/app_ico.ico");
     #else
-        icon = QString::fromUtf8("://images/22_uptodate.png");
+        icon = QString::fromUtf8("://images/uptodate.svg");
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_synced_mac.png");
@@ -1058,7 +1115,7 @@ void MegaApplication::updateTrayIcon()
     #ifdef _WIN32
         icon = QString::fromUtf8("://images/login_ico.ico");
     #else
-        icon = QString::fromUtf8("://images/22_logging.png");
+        icon = QString::fromUtf8("://images/logging.svg");
     #endif
 #else
         icon = QString::fromUtf8("://images/icon_logging_mac.png");
@@ -1075,7 +1132,11 @@ void MegaApplication::updateTrayIcon()
     if (!icon.isEmpty())
     {
 #ifndef __APPLE__
+    #ifdef _WIN32
         trayIcon->setIcon(QIcon(icon));
+    #else
+        setTrayIconFromTheme(icon);
+    #endif
 #else
         trayIcon->setIcon(QIcon(icon), QIcon(icon_white));
 #endif
@@ -1089,6 +1150,11 @@ void MegaApplication::updateTrayIcon()
 
 void MegaApplication::start()
 {
+#ifdef Q_OS_LINUX
+    QSvgRenderer qsr; //to have svg library linked
+#endif
+
+
     if (appfinished)
     {
         return;
@@ -1116,7 +1182,7 @@ void MegaApplication::start()
     #ifdef _WIN32
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
     #else
-        trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
+        setTrayIconFromTheme(QString::fromAscii("://images/synching.svg"));
     #endif
 #else
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),
@@ -2025,6 +2091,8 @@ void MegaApplication::cleanAll()
     downloader = NULL;
     delete delegateListener;
     delegateListener = NULL;
+    delete pricing;
+    pricing = NULL;
 
     // Delete menus and menu items
     deleteMenu(initialMenu);
@@ -2055,7 +2123,7 @@ void MegaApplication::cleanAll()
     trayIcon->deleteLater();
     trayIcon = NULL;
 
-    MegaApi::setLoggerObject(NULL);
+    MegaApi::removeLoggerObject(logger);
     delete logger;
     logger = NULL;
 
@@ -2218,6 +2286,21 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
     QDesktopWidget *desktop = QApplication::desktop();
     int screenIndex = desktop->screenNumber(position);
     screenGeometry = desktop->availableGeometry(screenIndex);
+    if (!screenGeometry.isValid())
+    {
+        screenGeometry = desktop->screenGeometry(screenIndex);
+        if (screenGeometry.isValid())
+        {
+            screenGeometry.setTop(28);
+        }
+        else
+        {
+            screenGeometry = dialog->rect();
+            screenGeometry.setBottom(screenGeometry.bottom() + 4);
+            screenGeometry.setRight(screenGeometry.right() + 4);
+        }
+    }
+
 
     #ifdef __APPLE__
         if (positionTrayIcon.x() || positionTrayIcon.y())
@@ -2772,7 +2855,7 @@ void MegaApplication::startUpdateTask()
     if (!updateThread && preferences->canUpdate(MegaApplication::applicationFilePath()))
     {
         updateThread = new QThread();
-        updateTask = new UpdateTask(megaApi, MegaApplication::applicationDirPath());
+        updateTask = new UpdateTask(megaApi, MegaApplication::applicationDirPath(), isPublic);
         updateTask->moveToThread(updateThread);
 
         connect(this, SIGNAL(startUpdaterThread()), updateTask, SLOT(startUpdateThread()), Qt::UniqueConnection);
@@ -3565,7 +3648,7 @@ void MegaApplication::createTrayIcon()
     #ifdef _WIN32
         trayIcon->setIcon(QIcon(QString::fromAscii("://images/tray_sync.ico")));
     #else
-        trayIcon->setIcon(QIcon(QString::fromAscii("://images/22_synching.png")));
+        setTrayIconFromTheme(QString::fromAscii("://images/synching.svg"));
     #endif
 #else
     trayIcon->setIcon(QIcon(QString::fromAscii("://images/icon_syncing_mac.png")),
@@ -3986,22 +4069,23 @@ void MegaApplication::onUpdateCompleted()
                               QFile::ExeOther | QFile::ReadOther);
 #endif
 
+    updateAvailable = false;
+
     if (trayMenu)
     {
-        updateAction->setLabelText(tr("About MEGAsync"));
+        createTrayIcon();
     }
 
     if (trayOverQuotaMenu)
     {
-        updateActionOverquota->setLabelText(tr("About MEGAsync"));
+        createOverQuotaMenu();
     }
 
     if (trayGuestMenu)
     {
-        updateActionGuest->setLabelText(tr("About MEGAsync"));
+        createGuestMenu();
     }
 
-    updateAvailable = false;
     rebootApplication();
 }
 
@@ -4016,17 +4100,17 @@ void MegaApplication::onUpdateAvailable(bool requested)
 
     if (trayMenu)
     {
-        updateAction->setLabelText(tr("Install update"));
+        createTrayIcon();
     }
 
     if (trayOverQuotaMenu)
     {
-        updateActionOverquota->setLabelText(tr("Install update"));
+        createOverQuotaMenu();
     }
 
     if (trayGuestMenu)
     {
-        updateActionGuest->setLabelText(tr("Install update"));
+        createGuestMenu();
     }
 
     if (settingsDialog)
