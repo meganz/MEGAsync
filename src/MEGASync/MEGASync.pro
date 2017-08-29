@@ -75,19 +75,15 @@ TRANSLATIONS = \
     gui/translations/MEGASyncStrings_bg.ts \
     gui/translations/MEGASyncStrings_cs.ts \
     gui/translations/MEGASyncStrings_de.ts \
-    gui/translations/MEGASyncStrings_ee.ts \
     gui/translations/MEGASyncStrings_en.ts \
     gui/translations/MEGASyncStrings_es.ts \
-    gui/translations/MEGASyncStrings_fa.ts \
     gui/translations/MEGASyncStrings_fi.ts \
     gui/translations/MEGASyncStrings_fr.ts \
     gui/translations/MEGASyncStrings_he.ts \
-    gui/translations/MEGASyncStrings_hr.ts \
     gui/translations/MEGASyncStrings_hu.ts \
     gui/translations/MEGASyncStrings_id.ts \
     gui/translations/MEGASyncStrings_it.ts \
     gui/translations/MEGASyncStrings_ja.ts \
-    gui/translations/MEGASyncStrings_ka.ts \
     gui/translations/MEGASyncStrings_ko.ts \
     gui/translations/MEGASyncStrings_nl.ts \
     gui/translations/MEGASyncStrings_pl.ts \
