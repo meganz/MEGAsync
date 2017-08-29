@@ -4308,7 +4308,8 @@ void MegaApplication::onUpdateError()
     }
 
     showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from:\nhttps://mega.co.nz/#sync")
-                    .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz")));
+                    .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz"))
+                    .replace(QString::fromUtf8("#sync"), QString::fromUtf8("sync")));
 }
 
 //Called when users click in the tray icon
