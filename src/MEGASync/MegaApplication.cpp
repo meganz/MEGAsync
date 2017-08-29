@@ -1991,6 +1991,11 @@ void MegaApplication::periodicTasks()
     {
         if (!(++counter % 6))
         {
+            if (httpServer)
+            {
+                httpServer->checkAndPurgeRequests();
+            }
+
             if (checkupdate)
             {
                 checkupdate = false;

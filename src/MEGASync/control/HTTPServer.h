@@ -24,7 +24,8 @@ public:
     RequestData();
     int files;
     int folders;
-    long long ts;
+    long long tsStart;
+    long long tsEnd;
     int status;
 };
 
@@ -36,6 +37,8 @@ public:
     long long progress;
     long long size;
     long long speed;
+    long long tsStart;
+    long long tsEnd;
 };
 
 class HTTPRequest
@@ -52,6 +55,8 @@ class HTTPServer: public QTcpServer
     Q_OBJECT
 
     public:
+        const unsigned int MAX_REQUEST_TIME_SECS = 1800;
+
         HTTPServer(mega::MegaApi *megaApi, quint16 port, bool sslEnabled);
         ~HTTPServer();
 #if QT_VERSION >= 0x050000
@@ -62,9 +67,9 @@ class HTTPServer: public QTcpServer
         void pause();
         void resume();
 
+        void checkAndPurgeRequests();
         void onUploadSelectionAccepted(int files, int folders);
         void onUploadSelectionDiscarded();
-
         void onTransferDataUpdate(mega::MegaHandle handle, int state, long long progress, long long size, long long speed);
 
     signals:

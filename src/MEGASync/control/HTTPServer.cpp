@@ -10,14 +10,15 @@ using namespace mega;
 
 bool ts_comparator(RequestData* i, RequestData *j)
 {
-    return i->ts < j->ts;
+    return i->tsStart < j->tsStart;
 }
 
 RequestData::RequestData()
 {
     files = -1;
     folders = -1;
-    ts = QDateTime::currentMSecsSinceEpoch() / 1000;
+    tsStart = QDateTime::currentMSecsSinceEpoch() / 1000;
+    tsEnd = -1;
     status = STATE_OPEN;
 }
 
@@ -27,6 +28,8 @@ RequestTransferData::RequestTransferData()
     progress = 0;
     size = 0;
     speed = 0;
+    tsStart = QDateTime::currentMSecsSinceEpoch() / 1000;
+    tsEnd = -1;
 }
 
 HTTPServer::HTTPServer(MegaApi *megaApi, quint16 port, bool sslEnabled)
@@ -118,6 +121,37 @@ void HTTPServer::resume()
     disabled = false;
 }
 
+void HTTPServer::checkAndPurgeRequests()
+{
+    for (QMultiMap<QString, RequestData*>::iterator it = webDataRequests.begin() ; it != webDataRequests.end();)
+    {
+        if ((it.value()->status == RequestData::STATE_OK || it.value()->status == RequestData::STATE_CANCELLED)
+                && (((QDateTime::currentMSecsSinceEpoch() / 1000) - it.value()->tsEnd) > MAX_REQUEST_TIME_SECS))
+        {
+            webDataRequests.erase(it++);
+        }
+        else
+        {
+            it++;
+        }
+    }
+
+    for (QMap<mega::MegaHandle, RequestTransferData*>::iterator it = webTransferStateRequests.begin() ; it != webTransferStateRequests.end();)
+    {
+        if ((it.value()->state == MegaTransfer::STATE_CANCELLED
+             || it.value()->state == MegaTransfer::STATE_COMPLETED
+             || it.value()->state == MegaTransfer::STATE_FAILED)
+                && (((QDateTime::currentMSecsSinceEpoch() / 1000) - it.value()->tsEnd) > MAX_REQUEST_TIME_SECS))
+        {
+            webTransferStateRequests.erase(it++);
+        }
+        else
+        {
+            it++;
+        }
+    }
+}
+
 void HTTPServer::onUploadSelectionAccepted(int files, int folders)
 {
     for (QMultiMap<QString, RequestData*>::iterator it = webDataRequests.begin() ; it != webDataRequests.end(); it++)
@@ -127,6 +161,7 @@ void HTTPServer::onUploadSelectionAccepted(int files, int folders)
             it.value()->status = RequestData::STATE_OK;
             it.value()->files = files;
             it.value()->folders = folders;
+            it.value()->tsEnd = QDateTime::currentMSecsSinceEpoch() / 1000;
         }
     }
 }
@@ -138,6 +173,7 @@ void HTTPServer::onUploadSelectionDiscarded()
         if (it.value()->status == RequestData::STATE_OPEN)
         {
             it.value()->status = RequestData::STATE_CANCELLED;
+            it.value()->tsEnd  = QDateTime::currentMSecsSinceEpoch() / 1000;
         }
     }
 }
@@ -154,6 +190,12 @@ void HTTPServer::onTransferDataUpdate(MegaHandle handle, int state, long long pr
     tData->progress = progress;
     tData->size = size;
     tData->speed = speed;
+    if (state == MegaTransfer::STATE_CANCELLED
+            || state == MegaTransfer::STATE_COMPLETED
+            || state == MegaTransfer::STATE_FAILED)
+    {
+        tData->tsEnd = QDateTime::currentMSecsSinceEpoch() / 1000;
+    }
 }
 
 void HTTPServer::readClient()
@@ -522,7 +564,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                     {
                         response.append(QString::fromUtf8("{\"s\":%1,\"ts\":%2,\"fi\":%3,\"fo\":%4}")
                                 .arg(values.at(i)->status)
-                                .arg(values.at(i)->ts)
+                                .arg(values.at(i)->tsStart)
                                 .arg(values.at(i)->files)
                                 .arg(values.at(i)->folders));
                     }
@@ -530,7 +572,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                     {
                         response.append(QString::fromUtf8("{\"s\":%1,\"ts\":%2}")
                                 .arg(values.at(i)->status)
-                                .arg(values.at(i)->ts));
+                                .arg(values.at(i)->tsStart));
                     }
                 }
                 response.append(QString::fromUtf8("]"));
