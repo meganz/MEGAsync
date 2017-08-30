@@ -104,12 +104,11 @@
     
     char separator = ':';
     int commandLength = (int)[command lengthOfBytesUsingEncoding: NSUTF8StringEncoding];
-    NSData *headerLength = [NSData dataWithBytes:&commandLength length:sizeof(int)];
     
     NSMutableData *query = [NSMutableData data];
     [query appendData:[type dataUsingEncoding:NSUTF8StringEncoding]];
     [query appendBytes:&separator length:sizeof(char)];
-    [query appendData:headerLength];
+    [query appendBytes:&commandLength length:sizeof(int)];
     [query appendBytes:&separator length:sizeof(char)];
     [query appendData:[command dataUsingEncoding:NSUTF8StringEncoding]];
      
