@@ -636,10 +636,11 @@ QString Utilities::getDefaultBasePath()
 
 QChar Utilities::getAvatarLetter()
 {
-    QString fullname = (Preferences::instance()->firstName() + Preferences::instance()->lastName()).trimmed();
+    Preferences *preferences = Preferences::instance();
+    QString fullname = (preferences->firstName() + preferences->lastName()).trimmed();
     if (fullname.isEmpty())
     {
-        QString email = Preferences::instance()->email();
+        QString email = preferences->email();
         if (email.size())
         {
             return email.at(0).toUpper();

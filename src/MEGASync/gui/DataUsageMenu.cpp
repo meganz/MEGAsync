@@ -4,8 +4,8 @@
 DataUsageMenu::DataUsageMenu(QWidget *parent) :
     QMenu(parent)
 {
-    setStyleSheet(QString::fromAscii("QMenu { background: transparent; padding-top: 8px; }"));
     setAttribute(Qt::WA_TranslucentBackground);
+    setStyleSheet(QString::fromAscii("QMenu { background: transparent; padding-top: 8px; }"));
 }
 
 DataUsageMenu::~DataUsageMenu()
@@ -19,6 +19,7 @@ void DataUsageMenu::paintEvent(QPaintEvent *event)
     float w = width()  - 0.5;
     float h = height() - 0.5;
 
+#ifdef __APPLE__
     points << QPointF(0, 0)
            << QPointF(w, 0)
            << QPointF(w, h * 0.96)
@@ -26,6 +27,12 @@ void DataUsageMenu::paintEvent(QPaintEvent *event)
            << QPointF(w * 0.50, h)
            << QPointF(w * 0.47, h * 0.96)
            << QPointF(0, h * 0.96);
+#else
+    points << QPointF(0, 0)
+           << QPointF(w, 0)
+           << QPointF(w, h)
+           << QPointF(0, h);
+#endif
 
     polygon = QPolygonF(points);
 

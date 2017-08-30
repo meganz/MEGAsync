@@ -327,7 +327,7 @@ void MacXExtServer::notifyItemChange(QString path)
     QByteArray response;
     QString command = QString::fromUtf8("P:") + path;
 
-    if(QDir(path).exists())
+    if (QDir(path).exists())
     {
         command += QDir::separator();
     }
@@ -343,7 +343,7 @@ void MacXExtServer::notifyItemChange(QString path)
 
 void MacXExtServer::notifySyncAdd(QString path, QString syncName)
 {
-    if(QDir(path).exists())
+    if (QDir(path).exists())
     {
         path += QDir::separator();
     }

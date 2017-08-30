@@ -169,7 +169,7 @@ void InfoDialog::setUserName()
     {
         return;
     }
-    QString pattern(QString::fromUtf8("%1 %2").arg(preferences->firstName()).arg(preferences->lastName()));
+    QString pattern(QString::fromUtf8("%1 %2").arg(first).arg(last));
 
     QFont f = ui->lName->font();
     QFontMetrics fm = QFontMetrics(f);
@@ -971,7 +971,6 @@ void InfoDialog::onAllDownloadsFinished()
     remainingDownloads = megaApi->getNumPendingDownloads();
     if (!remainingDownloads)
     {
-
         ui->wTransfer1->hideTransfer();
         ui->lDownloads->setText(QString::fromAscii(""));
         ui->wDownloadDesc->hide();
@@ -1287,7 +1286,6 @@ void InfoDialog::regenerateLayout()
         gWidget->setVisible(true);
 
         overlay->setVisible(false);
-
     }
     else
     {

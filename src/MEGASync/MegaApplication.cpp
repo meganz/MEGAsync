@@ -3918,23 +3918,28 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
 void MegaApplication::shellViewOnMega(QString localPath)
 {
     MegaNode *node = NULL;
-    std::string tmpPath(localPath.toStdString());
+
+#ifdef WIN32
+    if (!localPath.startsWith(QString::fromAscii("\\\\")))
+    {
+        localPath.insert(0, QString::fromAscii("\\\\?\\"));
+    }
+
+    string tmpPath((const char*)localPath.utf16(), localPath.size() * sizeof(wchar_t));
+#else
+    string tmpPath((const char*)localPath.toUtf8().constData());
+#endif
 
     node = megaApi->getSyncedNode(&tmpPath);
     if (!node)
     {
-        const char *fpLocal = megaApi->getFingerprint(tmpPath.c_str());
-        node = megaApi->getNodeByFingerprint(fpLocal);
-        delete [] fpLocal;
-        if (!node)
-        {
-            return;
-        }
+        return;
     }
 
-    QString url = QString::fromUtf8("fm/%1").arg(QString::fromUtf8(node->getBase64Handle()));
+    char *base64handle = node->getBase64Handle();
+    QString url = QString::fromUtf8("fm/") + QString::fromUtf8(base64handle);
     megaApi->getSessionTransferURL(url.toUtf8().constData());
-
+    delete [] base64handle;
     delete node;
 }
 
@@ -5039,7 +5044,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (request->getParamType() == MegaApi::USER_ATTR_FIRSTNAME)
         {
             QString firstname(QString::fromUtf8(""));
-            if (e->getErrorCode() == MegaError::API_OK)
+            if (e->getErrorCode() == MegaError::API_OK && request->getText())
             {
                 firstname = QString::fromUtf8(request->getText());
             }
@@ -5048,7 +5053,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         else if (request->getParamType() == MegaApi::USER_ATTR_LASTNAME)
         {
             QString lastName(QString::fromUtf8(""));
-            if (e->getErrorCode() == MegaError::API_OK)
+            if (e->getErrorCode() == MegaError::API_OK && request->getText())
             {
                 lastName = QString::fromUtf8(request->getText());
             }
