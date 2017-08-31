@@ -106,6 +106,8 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
     const char *content = buf+2;
     static char out[BUFSIZE];
 
+    strncpy(out, RESPONSE_DEFAULT, BUFSIZE);
+
     switch(c)
     {
         // send translated string
