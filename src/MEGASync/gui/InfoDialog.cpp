@@ -1177,7 +1177,7 @@ void InfoDialog::on_bTransferManager_clicked()
 
 void InfoDialog::onOverlayClicked()
 {
-    app->pauseTransfers();
+    app->pauseTransfers(false);
 }
 
 void InfoDialog::clearUserAttributes()

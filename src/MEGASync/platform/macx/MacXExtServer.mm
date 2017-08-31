@@ -143,13 +143,18 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
             }
 
             int numFiles = parameters[1].toInt(&ok);
-            if (!ok || numFiles <= 0)
+            if (!ok || numFiles < 0)
             {
                 break;
             }
 
             int numFolders = parameters[2].toInt(&ok);
-            if (!ok || numFolders <= 0)
+            if (!ok || numFolders < 0)
+            {
+                break;
+            }
+
+            if (!numFiles && !numFolders)
             {
                 break;
             }
@@ -356,6 +361,11 @@ void MacXExtServer::notifySyncAdd(QString path, QString syncName)
 
 void MacXExtServer::notifySyncDel(QString path, QString syncName)
 {
+    if (QDir(path).exists())
+    {
+        path += QDir::separator();
+    }
+
     emit sendToAll(QString::fromUtf8("D:")
                    + path
                    + QChar::fromAscii(':')

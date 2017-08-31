@@ -5006,11 +5006,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             showErrorMessage(tr("Error getting link: ") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", e->getErrorString()));
         }
 
-        if (transferManager)
-        {
-            transferManager->disableGetLink(false);
-        }
-
         break;
     }
     case MegaRequest::TYPE_GET_PRICING:

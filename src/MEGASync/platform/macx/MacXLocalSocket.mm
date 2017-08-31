@@ -76,8 +76,8 @@ qint64 MacXLocalSocket::readCommand(QByteArray *data)
         return -1;
     }
 
-    data->append(socketPrivate->buf.mid(currentPos, commandLength + 1));
-    socketPrivate->buf.remove(0, commandLength + 3 + sizeof(int));
+    data->append(socketPrivate->buf.mid(currentPos, commandLength + 1)); // + 1 is to copy the ':' character from the source string
+    socketPrivate->buf.remove(0, commandLength + 3 + sizeof(int)); // 3 = opCommand + 2 ':' separator characters
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Command from shell ext: %1")
                  .arg(QString::fromUtf8(data->constData(), data->size())).toUtf8().constData());
@@ -87,6 +87,12 @@ qint64 MacXLocalSocket::readCommand(QByteArray *data)
 
 qint64 MacXLocalSocket::writeData(const char *data, qint64 len)
 {
+    if (!len)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Skipping write of zero bytes");
+        return -1;
+    }
+
     @try
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Sending data to shell ext: %1")
