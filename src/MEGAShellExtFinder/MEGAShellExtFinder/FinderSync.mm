@@ -16,13 +16,13 @@ void cleanItemsOfFolder(std::string dirPath)
     std::map<std::string, FileState>::iterator it = pathStatus.lower_bound(dirPath);
     while (it != pathStatus.end())
     {
-        std::string &tempPath = it->first;
+        const std::string &tempPath = it->first;
         if (tempPath.size() < dirPath.size() || strncmp(dirPath.c_str(), tempPath.c_str(), dirPath.size()))
         {
             return;
         }
 
-        int pos;
+        size_t pos;
         if (tempPath.size() == dirPath.size()
                 || (((pos = tempPath.find('/', dirPath.size())) != std::string::npos)
                     && (pos != (tempPath.size() - 1))))
@@ -54,9 +54,9 @@ void cleanItemsOfFolder(std::string dirPath)
     // Server name should contain developer id
     NSString *serverName = @"T9RH74Y7L9.mega.mac.socket";
     _ext = [[ShellExt alloc] initWithServerName:serverName delegate:self];
-    _directories = [[NSMutableSet alloc] init];
+    _syncPaths = [[NSMutableSet alloc] init];
     _syncNames = [[NSMutableArray alloc] init];
-    _syncPaths = [[NSMutableArray alloc] init];
+    _directories = [[NSMutableArray alloc] init];
     
     NSLog(@"INFO - MEGA Finder Extension launched");
     [_ext start];
@@ -68,6 +68,12 @@ void cleanItemsOfFolder(std::string dirPath)
 - (void)beginObservingDirectoryAtURL:(NSURL *)url {
     
     NSLog(@"INFO - beginObservingDirectoryAtURL:%@", url.filePathURL);
+    
+    NSString *path = url.path;
+    if (![_directories containsObject:path])
+    {
+        [_directories addObject:path];
+    }
 }
 
 
@@ -75,13 +81,19 @@ void cleanItemsOfFolder(std::string dirPath)
 
     NSLog(@"INFO - endObservingDirectoryAtURL:%@", url.filePathURL);
     
-    std::string path = url.path.precomposedStringWithCanonicalMapping.UTF8String;
-    if (path.back() != '/')
+    NSString *path = url.path;
+    if ([_directories containsObject:path])
     {
-        path.push_back('/');
+        [_directories removeObject:path];
     }
     
-    cleanItemsOfFolder(path);
+    std::string localPath = path.precomposedStringWithCanonicalMapping.UTF8String;
+    if (localPath.back() != '/')
+    {
+        localPath.push_back('/');
+    }
+    
+    cleanItemsOfFolder(localPath);
 }
 
 - (void)requestBadgeIdentifierForURL:(NSURL *)url {
@@ -92,9 +104,9 @@ void cleanItemsOfFolder(std::string dirPath)
     {
         [path appendString:@"/"];
     }
-    
-    [_ext sendRequest:path type:@"P"];
+
     pathStatus.emplace(path.precomposedStringWithCanonicalMapping.UTF8String, FileState::FILE_NONE);
+    [_ext sendRequest:path type:@"P"];
 }
 
 #pragma mark - Menu and toolbar item support
@@ -224,23 +236,21 @@ void cleanItemsOfFolder(std::string dirPath)
 - (void)onSyncAdd:(NSString *)path withSyncName:(NSString*)syncName{
     
     NSLog(@"INFO - adding sync folder path:%@", path);
-    [_directories addObject:[NSURL fileURLWithPath:path]];
+    [_syncPaths addObject:[NSURL fileURLWithPath:path]];
     
     if (![_syncNames containsObject:syncName])
     {
         [_syncNames addObject:syncName];
-        [_syncPaths addObject:path];
     }
-    [FIFinderSyncController defaultController].directoryURLs = _directories;
+    [FIFinderSyncController defaultController].directoryURLs = _syncPaths;
 }
 
 - (void)onSyncDel:(NSString *)path withSyncName:(NSString*)syncName{
     
     NSLog(@"INFO - removing sync folder path:%@", path);
-    [_directories removeObject:[NSURL fileURLWithPath:path]];
+    [_syncPaths removeObject:[NSURL fileURLWithPath:path]];
     [_syncNames removeObject:syncName];
-    [_syncPaths removeObject:path];
-    [FIFinderSyncController defaultController].directoryURLs = _directories;
+    [FIFinderSyncController defaultController].directoryURLs = _syncPaths;
 }
 
 - (void)onItemChanged:(NSString *)urlPath withState:(int)state {
@@ -252,6 +262,14 @@ void cleanItemsOfFolder(std::string dirPath)
     if (it != pathStatus.end())
     {
         it->second = (FileState)state;
+        [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:state] forURL:[NSURL fileURLWithPath:urlPath]];
+        return;
+    }
+    
+    NSString *basePath = [urlPath stringByDeletingLastPathComponent];
+    if ([_directories containsObject:basePath])
+    {
+        pathStatus.emplace(path, (FileState)state);
         [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:state] forURL:[NSURL fileURLWithPath:urlPath]];
     }
 }
@@ -278,9 +296,8 @@ void cleanItemsOfFolder(std::string dirPath)
 
 - (void) cleanAll {
     
-    [_directories removeAllObjects];
-    [_syncNames removeAllObjects];
     [_syncPaths removeAllObjects];
+    [_syncNames removeAllObjects];
     [FIFinderSyncController defaultController].directoryURLs = nil;
 }
 

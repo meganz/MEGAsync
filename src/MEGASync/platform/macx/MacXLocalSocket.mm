@@ -49,17 +49,17 @@ qint64 MacXLocalSocket::readCommand(QByteArray *data)
     ptr += sizeof(char);
     currentPos += sizeof(char);
 
-    if (ptr + sizeof(int) > end)
+    if (ptr + sizeof(uint32_t) > end)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error reading command from shell ext: Not command length");
         socketPrivate->buf.remove(0, socketPrivate->buf.size());
         return -1;
     }
 
-    int commandLength;
-    memcpy(&commandLength, ptr, sizeof(int));
-    ptr += sizeof(int);
-    currentPos += sizeof(int);
+    uint32_t commandLength;
+    memcpy(&commandLength, ptr, sizeof(uint32_t));
+    ptr += sizeof(uint32_t);
+    currentPos += sizeof(uint32_t);
 
     if (ptr + sizeof(char) > end || *ptr != ':')
     {
@@ -77,7 +77,7 @@ qint64 MacXLocalSocket::readCommand(QByteArray *data)
     }
 
     data->append(socketPrivate->buf.mid(currentPos, commandLength + 1)); // + 1 is to copy the ':' character from the source string
-    socketPrivate->buf.remove(0, commandLength + 3 + sizeof(int)); // 3 = opCommand + 2 ':' separator characters
+    socketPrivate->buf.remove(0, commandLength + 3 + sizeof(uint32_t)); // 3 = opCommand + 2 ':' separator characters
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Command from shell ext: %1")
                  .arg(QString::fromUtf8(data->constData(), data->size())).toUtf8().constData());

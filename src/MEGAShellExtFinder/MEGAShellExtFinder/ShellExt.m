@@ -103,12 +103,12 @@
 - (void)sendRequest:(NSString*)command type:(NSString*)type {
     
     char separator = ':';
-    int commandLength = (int)[command lengthOfBytesUsingEncoding: NSUTF8StringEncoding];
+    uint32_t commandLength = (uint32_t)[command lengthOfBytesUsingEncoding: NSUTF8StringEncoding];
     
     NSMutableData *query = [NSMutableData data];
     [query appendData:[type dataUsingEncoding:NSUTF8StringEncoding]];
     [query appendBytes:&separator length:sizeof(char)];
-    [query appendBytes:&commandLength length:sizeof(int)];
+    [query appendBytes:&commandLength length:sizeof(uint32_t)];
     [query appendBytes:&separator length:sizeof(char)];
     [query appendData:[command dataUsingEncoding:NSUTF8StringEncoding]];
      

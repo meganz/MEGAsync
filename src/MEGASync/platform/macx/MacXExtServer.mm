@@ -337,7 +337,7 @@ void MacXExtServer::notifyItemChange(QString path)
         command += QDir::separator();
     }
 
-    bool shouldRespond = GetAnswerToRequest(command.toStdString().c_str(), &response);
+    bool shouldRespond = GetAnswerToRequest(command.toUtf8().constData(), &response);
     if (shouldRespond)
     {
         command.append(QChar::fromAscii(':'));
