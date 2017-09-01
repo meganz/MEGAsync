@@ -1444,7 +1444,7 @@ bool SettingsDialog::saveSettings()
             preferences->disableOverlayIcons(ui->cOverlayIcons->isChecked());
             for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
             {
-                Platform::notifyItemChange(preferences->getLocalFolder(i));
+                app->notifyItemChange(preferences->getLocalFolder(i));
             }
         }
     }
