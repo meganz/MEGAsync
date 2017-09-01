@@ -2318,7 +2318,8 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
                 APPBARDATA pabd;
                 pabd.cbSize = sizeof(APPBARDATA);
                 pabd.hWnd = FindWindow(L"Shell_TrayWnd", NULL);
-                if (pabd.hWnd && SHAppBarMessage(ABM_GETTASKBARPOS, &pabd))
+                if (pabd.hWnd && SHAppBarMessage(ABM_GETTASKBARPOS, &pabd)
+                        && pabd.rc.right != pabd.rc.left && pabd.rc.bottom != pabd.rc.top)
                 {
                     int size;
                     switch (pabd.uEdge)
