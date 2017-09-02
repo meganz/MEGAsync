@@ -15,6 +15,7 @@ https://mega.nz/#sync
 #### Get the source
 ```
 git clone https://github.com/meganz/MEGAsync.git
+cd MEGAsync
 git submodule update --init --recursive
 ```
 
@@ -75,7 +76,8 @@ Preparation:
 
 First install dependencies. e.g., for a debian/ubuntu:
 ```
-sudo apt-get install build-essential autoconf automake m4 libtool libtool-bin qt4-qmake make libqt4-dev libcrypto++-dev libsqlite3-dev libc-ares-dev
+sudo apt-get install build-essential autoconf automake m4 libtool libtool-bin qt4-qmake make libqt4-dev libcrypto++-dev libsqlite3-dev libc-ares-dev libcurl4-openssl-dev libssl-dev
+# Optional, recommended for Nautilus users:
 sudo apt-get install libnautilus-extension-dev
 ```
 
