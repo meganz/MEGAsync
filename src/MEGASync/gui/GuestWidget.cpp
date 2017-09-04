@@ -13,9 +13,11 @@ GuestWidget::GuestWidget(QWidget *parent) :
 
     app = (MegaApplication *)qApp;
 
+    connect(ui->lDescLogin, SIGNAL(linkActivated(QString)), this, SLOT(on_descLogin_linkActivated(QString)));
+
     ui->lDescLogin->setText(QString::fromUtf8("<p style=\" line-height: 140%;\"><span style=\"font-size:13px;\">")
-                               + ui->lDescLogin->text().replace(QString::fromUtf8("[A]"), QString::fromUtf8("<font color=\"#d90007\"> "))
-                                                          .replace(QString::fromUtf8("[/A]"), QString::fromUtf8(" </font>"))
+                               + ui->lDescLogin->text().replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"#setup_wizard\" style=\"text-decoration:none;\"><font color=\"#d90007\"> "))
+                                                          .replace(QString::fromUtf8("[/A]"), QString::fromUtf8(" </font></a>"))
                                                                    + QString::fromUtf8("</span></p>"));
 
 }
@@ -56,4 +58,13 @@ void GuestWidget::on_bSettings_clicked()
         this->hide();
     }
 #endif
+}
+
+void GuestWidget::on_descLogin_linkActivated(const QString &link)
+{
+    if (link == QString::fromUtf8("#setup_wizard"))
+    {
+      emit actionButtonClicked(INITIAL_CLICKED);
+    }
+
 }
