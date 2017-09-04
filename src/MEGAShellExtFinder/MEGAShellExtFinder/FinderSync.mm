@@ -99,13 +99,17 @@ void cleanItemsOfFolder(std::string dirPath)
 - (void)requestBadgeIdentifierForURL:(NSURL *)url {
     
     //NSLog(@"requestBadgeIdentifierForURL:%@", url.filePathURL);
-    NSMutableString *path = [[NSMutableString alloc] initWithString:[url path]];
+    NSString *path = [[NSString alloc] initWithString:[url path]];
     if ([self isDirectory:url])
     {
-        [path appendString:@"/"];
+        NSString* folderPath = [path stringByAppendingString:@"/"];
+        pathStatus.emplace(folderPath.precomposedStringWithCanonicalMapping.UTF8String, FileState::FILE_NONE);
     }
-
-    pathStatus.emplace(path.precomposedStringWithCanonicalMapping.UTF8String, FileState::FILE_NONE);
+    else
+    {
+        pathStatus.emplace(path.precomposedStringWithCanonicalMapping.UTF8String, FileState::FILE_NONE);
+    }
+    
     [_ext sendRequest:path type:@"P"];
 }
 
@@ -256,6 +260,11 @@ void cleanItemsOfFolder(std::string dirPath)
 - (void)onItemChanged:(NSString *)urlPath withState:(int)state {
     
 //    NSLog(@"settingBadge: %i for path:%@", state, urlPath);
+    
+    if ([self isDirectory:[NSURL URLWithString:urlPath]])
+    {
+        urlPath = [urlPath stringByAppendingString:@"/"];
+    }
     
     std::string path = urlPath.precomposedStringWithCanonicalMapping.UTF8String;
     std::map<std::string, FileState>::iterator it = pathStatus.find(path);

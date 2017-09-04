@@ -250,12 +250,6 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
             }
 
             std::string tmpPath(content);
-
-            if (!tmpPath.empty() && tmpPath[tmpPath.length() - 1] == '/')
-            {
-                tmpPath.erase(tmpPath.length() - 1, 1);
-            }
-
             int state = ((MegaApplication *)qApp)->getMegaApi()->syncPathState(&tmpPath);
             switch(state)
             {
@@ -333,11 +327,6 @@ void MacXExtServer::notifyItemChange(string *localPath, int newState)
     QByteArray response;
     string command = "P:";
     command += *localPath;
-
-    if (QDir(QString::fromUtf8(localPath->c_str())).exists())
-    {
-        command += "/";
-    }
 
     if (newState == MegaApi::STATE_PENDING
             || newState == MegaApi::STATE_SYNCED
