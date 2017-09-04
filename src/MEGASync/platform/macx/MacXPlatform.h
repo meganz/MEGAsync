@@ -30,10 +30,10 @@ public:
     static void notifyItemChange(QString path);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
-    static int addFinderExtensionToSystem();
+    static void addFinderExtensionToSystem();
     static bool isFinderExtensionEnabled();
-    static int reinstallFinderExtension();
-    static int enableFinderExtension(bool value);
+    static void reinstallFinderExtension();
+    static void enableFinderExtension(bool value);
     static void showInFolder(QString pathIn);
     static void startShellDispatcher(MegaApplication *receiver);
     static void stopShellDispatcher();
