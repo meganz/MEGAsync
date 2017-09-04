@@ -389,7 +389,7 @@ border-top:  1px solid rgba(0, 0, 0, 5%);
       <item>
        <widget class="QLabel" name="lDescLogin">
         <property name="text">
-         <string>[A]Login[/A] or [A]Create an account[/A] to fully experience MEGA</string>
+         <string>[A]Login[/A] or [B]Create an account[/B] to fully experience MEGA</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

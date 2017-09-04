@@ -384,7 +384,7 @@ margin-top: -1px;</string>
       <item>
        <widget class="QLabel" name="lDescLogin">
         <property name="text">
-         <string>[A]Login[/A] or [A]Create an account[/A] to fully experience MEGA</string>
+         <string>[A]Login[/A] or [B]Create an account[/B] to fully experience MEGA</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
