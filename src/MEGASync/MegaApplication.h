@@ -80,7 +80,7 @@ public:
     virtual void onReloadNeeded(mega::MegaApi* api);
     virtual void onGlobalSyncStateChanged(mega::MegaApi *api);
     virtual void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync);
-    virtual void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, const char *filePath, int newState);
+    virtual void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState);
 
 
     mega::MegaApi *getMegaApi() { return megaApi; }
@@ -182,6 +182,7 @@ public slots:
     void onCompletedTransfersTabActive(bool active);
     void checkFirstTransfer();
     void onDeprecatedOperatingSystem();
+    void notifyItemChange(QString path, int newState);
     int getPrevVersion();
 #ifdef __APPLE__
     void enableFinderExt();

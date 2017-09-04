@@ -19,7 +19,7 @@ class MacXExtServer : public QObject
 public:
     MacXExtServer(MegaApplication *app);
     virtual ~MacXExtServer();
-    void notifyItemChange(QString path);
+    void notifyItemChange(std::string *localPath, int newState);
     void notifySyncAdd(QString path, QString syncName);
     void notifySyncDel(QString path, QString syncName);
 
@@ -33,7 +33,7 @@ public slots:
    void onClientData();
    void onClientDisconnected();
 
-   void doSendToAll(QString str);
+   void doSendToAll(QByteArray str);
 
 private:
    QString sockPath;
@@ -44,7 +44,7 @@ signals:
    void newUploadQueue(QQueue<QString> uploadQueue);
    void newExportQueue(QQueue<QString> exportQueue);
    void viewOnMega(QString localPath);
-   void sendToAll(QString str);
+   void sendToAll(QByteArray str);
 };
 
 #endif // MACXEXTSERVER_H

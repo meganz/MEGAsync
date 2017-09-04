@@ -1566,7 +1566,7 @@ void MegaApplication::disableSyncs()
        Platform::syncFolderRemoved(preferences->getLocalFolder(i),
                                    preferences->getSyncName(i),
                                    preferences->getSyncID(i));
-       Platform::notifyItemChange(preferences->getLocalFolder(i));
+       notifyItemChange(preferences->getLocalFolder(i), MegaApi::STATE_NONE);
        preferences->setSyncState(i, false, true);
        MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
        megaApi->disableSync(node);
@@ -1608,7 +1608,6 @@ void MegaApplication::restoreSyncs()
        preferences->setSyncState(i, true, false);
        megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
        delete node;
-       //Platform::notifyItemChange(preferences->getLocalFolder(i));
     }
 }
 
@@ -2070,7 +2069,7 @@ void MegaApplication::cleanAll()
     Platform::stopShellDispatcher();
     for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
     {
-        Platform::notifyItemChange(preferences->getLocalFolder(i));
+        notifyItemChange(preferences->getLocalFolder(i), MegaApi::STATE_NONE);
     }
 
     closeDialogs();
@@ -3051,6 +3050,17 @@ void MegaApplication::onDeprecatedOperatingSystem()
         preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_DEPRECATED_OPERATING_SYSTEM, true);
     }
 #endif
+}
+
+void MegaApplication::notifyItemChange(QString path, int newState)
+{
+    string localPath;
+#ifdef _WIN32
+    localPath.assign((const char *)path.utf16(), path.size() * sizeof(wchar_t));
+#else
+    localPath = path.toStdString();
+#endif
+    Platform::notifyItemChange(&localPath, newState);
 }
 
 int MegaApplication::getPrevVersion()
@@ -5620,7 +5630,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
             #endif
 
-            Platform::notifyItemChange(syncPath);
+            notifyItemChange(syncPath, MegaApi::STATE_NONE);
         }
 
         if (infoDialog)
@@ -6135,7 +6145,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                     Platform::syncFolderRemoved(preferences->getLocalFolder(i),
                                                 preferences->getSyncName(i),
                                                 preferences->getSyncID(i));
-                    Platform::notifyItemChange(preferences->getLocalFolder(i));
+                    notifyItemChange(preferences->getLocalFolder(i), MegaApi::STATE_NONE);
                     MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
                     megaApi->removeSync(node);
                     delete node;
@@ -6269,15 +6279,14 @@ void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *)
     onGlobalSyncStateChanged(api);
 }
 
-void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, const char *filePath, int)
+void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, string *localPath, int newState)
 {
     if (appfinished)
     {
         return;
     }
 
-    QString localPath = QString::fromUtf8(filePath);
-    Platform::notifyItemChange(localPath);
+    Platform::notifyItemChange(localPath, newState);
 }
 
 MEGASyncDelegateListener::MEGASyncDelegateListener(MegaApi *megaApi, MegaListener *parent, MegaApplication *app)

@@ -1,6 +1,8 @@
 #include "MacXPlatform.h"
 #include <unistd.h>
 
+using namespace std;
+
 int MacXPlatform::fd = -1;
 MacXSystemServiceTask* MacXPlatform::systemServiceTask = NULL;
 MacXExtServer *MacXPlatform::extServer = NULL;
@@ -58,11 +60,11 @@ bool MacXPlatform::enableTrayIcon(QString executable)
     return false;
 }
 
-void MacXPlatform::notifyItemChange(QString path)
+void MacXPlatform::notifyItemChange(string *localPath, int newState)
 {
-    if (extServer)
+    if (extServer && localPath && localPath->size())
     {
-        extServer->notifyItemChange(path);
+        extServer->notifyItemChange(localPath, newState);
     }
 }
 

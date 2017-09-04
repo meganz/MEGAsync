@@ -105,25 +105,26 @@ bool WindowsPlatform::enableTrayIcon(QString executable)
     return true;
 }
 
-void WindowsPlatform::notifyItemChange(QString path)
+void WindowsPlatform::notifyItemChange(std::string *localPath, int)
 {
-    if (path.isEmpty())
+    if (!localPath || !localPath->size())
     {
         return;
     }
 
-    if (path.startsWith(QString::fromAscii("\\\\?\\")))
+    std::string path = *localPath;
+    if (!memcmp(path.data(), L"\\\\?\\", 8))
     {
-        path = path.mid(4);
+        path = path.substr(8);
     }
 
+    path.append("", 1);
     if (path.length() >= MAX_PATH)
     {
         return;
     }
 
-    WCHAR *windowsPath = (WCHAR *)path.utf16();
-    SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, windowsPath, NULL);
+    SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, path.data(), NULL);
 }
 
 //From http://msdn.microsoft.com/en-us/library/windows/desktop/bb776891.aspx
