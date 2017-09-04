@@ -105,7 +105,7 @@ bool WindowsPlatform::enableTrayIcon(QString executable)
     return true;
 }
 
-void WindowsPlatform::notifyItemChange(std::string *localPath)
+void WindowsPlatform::notifyItemChange(std::string *localPath, int)
 {
     if (!localPath || !localPath->size())
     {

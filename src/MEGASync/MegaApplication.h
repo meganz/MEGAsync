@@ -182,7 +182,7 @@ public slots:
     void onCompletedTransfersTabActive(bool active);
     void checkFirstTransfer();
     void onDeprecatedOperatingSystem();
-    void notifyItemChange(QString path);
+    void notifyItemChange(QString path, int newState);
     int getPrevVersion();
 #ifdef __APPLE__
     void enableFinderExt();

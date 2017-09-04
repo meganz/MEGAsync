@@ -19,7 +19,7 @@ class MacXExtServer : public QObject
 public:
     MacXExtServer(MegaApplication *app);
     virtual ~MacXExtServer();
-    void notifyItemChange(std::string *localPath);
+    void notifyItemChange(std::string *localPath, int newState);
     void notifySyncAdd(QString path, QString syncName);
     void notifySyncDel(QString path, QString syncName);
 

@@ -328,7 +328,7 @@ void MacXExtServer::doSendToAll(QByteArray str)
     }
 }
 
-void MacXExtServer::notifyItemChange(string *localPath)
+void MacXExtServer::notifyItemChange(string *localPath, int newState)
 {
     QByteArray response;
     string command = "P:";
@@ -339,11 +339,12 @@ void MacXExtServer::notifyItemChange(string *localPath)
         command += "/";
     }
 
-    bool shouldRespond = GetAnswerToRequest(command.data(), &response);
-    if (shouldRespond)
+    if (newState == MegaApi::STATE_PENDING
+            || newState == MegaApi::STATE_SYNCED
+            || newState == MegaApi::STATE_SYNCED)
     {
         command.append(":");
-        command.append(response.data());
+        command.append(QString::number(MegaApi::STATE_PENDING).toUtf8().constData());
         emit sendToAll(QByteArray(command.data(), command.size()));
     }
 }

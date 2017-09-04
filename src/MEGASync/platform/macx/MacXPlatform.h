@@ -27,7 +27,7 @@ public:
     static void initialize(int argc, char *argv[]);
     static QStringList multipleUpload(QString uploadTitle);
     static bool enableTrayIcon(QString executable);
-    static void notifyItemChange(std::string *localPath);
+    static void notifyItemChange(std::string *localPath, int newState);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
     static int addFinderExtensionToSystem();

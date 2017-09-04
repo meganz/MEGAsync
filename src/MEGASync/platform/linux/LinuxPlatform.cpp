@@ -22,7 +22,7 @@ bool LinuxPlatform::enableTrayIcon(QString executable)
     return false;
 }
 
-void LinuxPlatform::notifyItemChange(string *localPath)
+void LinuxPlatform::notifyItemChange(string *localPath, int)
 {
     if (notify_server && localPath && localPath->size()
             && !Preferences::instance()->overlayIconsDisabled())

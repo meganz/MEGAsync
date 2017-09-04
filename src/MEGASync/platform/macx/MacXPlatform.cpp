@@ -60,11 +60,11 @@ bool MacXPlatform::enableTrayIcon(QString executable)
     return false;
 }
 
-void MacXPlatform::notifyItemChange(string *localPath)
+void MacXPlatform::notifyItemChange(string *localPath, int newState)
 {
     if (extServer && localPath && localPath->size())
     {
-        extServer->notifyItemChange(localPath);
+        extServer->notifyItemChange(localPath, newState);
     }
 }
 
