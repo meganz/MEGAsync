@@ -341,10 +341,10 @@ void MacXExtServer::notifyItemChange(string *localPath, int newState)
 
     if (newState == MegaApi::STATE_PENDING
             || newState == MegaApi::STATE_SYNCED
-            || newState == MegaApi::STATE_SYNCED)
+            || newState == MegaApi::STATE_SYNCING)
     {
         command.append(":");
-        command.append(QString::number(MegaApi::STATE_PENDING).toUtf8().constData());
+        command.append(QString::number(newState).toUtf8().constData());
         emit sendToAll(QByteArray(command.data(), command.size()));
     }
 }
