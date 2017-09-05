@@ -331,14 +331,13 @@ int main(int argc, char *argv[])
     }
     Platform::initialize(argc, argv);
 
-#ifndef WIN32
-#ifndef __APPLE__
+#if !defined(__APPLE__) && !defined (_WIN32)
     QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/OpenSans-Regular.ttf"));
     QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/OpenSans-Semibold.ttf"));
 
     QFont font(QString::fromAscii("Open Sans"), 8);
     app.setFont(font);
-#endif
+#else
     QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/SourceSansPro-Light.ttf"));
     QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/SourceSansPro-Bold.ttf"));
     QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/SourceSansPro-Regular.ttf"));
