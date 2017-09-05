@@ -1043,14 +1043,11 @@ void InfoDialog::on_bSyncFolder_clicked()
     else
     {
         syncsMenu = new QMenu();
+#ifdef __APPLE__
         syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
-
-        MenuItemAction *addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_add_sync.png")),
-                                                           QIcon(QString::fromAscii("://images/ico_drop_add_sync_over.png")));
-        connect(addSyncAction, SIGNAL(triggered()), this, SLOT(addSync()));
-        syncsMenu->addAction(addSyncAction);
-        syncsMenu->addSeparator();
-
+#else
+        syncsMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+#endif
         QSignalMapper *menuSignalMapper = new QSignalMapper();
         connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
 
@@ -1073,6 +1070,15 @@ void InfoDialog::on_bSyncFolder_clicked()
         connect(syncsMenu, SIGNAL(aboutToHide()), syncsMenu, SLOT(deleteLater()));
         connect(syncsMenu, SIGNAL(destroyed(QObject*)), menuSignalMapper, SLOT(deleteLater()));
 
+        MenuItemAction *addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_add_sync.png")),
+                                                           QIcon(QString::fromAscii("://images/ico_drop_add_sync_over.png")));
+        connect(addSyncAction, SIGNAL(triggered()), this, SLOT(addSync()));
+        if (activeFolders)
+        {
+            syncsMenu->addSeparator();
+        }
+        syncsMenu->addAction(addSyncAction);
+
 #ifdef __APPLE__
         syncsMenu->exec(this->mapToGlobal(QPoint(20, this->height() - (activeFolders + 1) * 28 - (activeFolders ? 16 : 8))));
         if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
@@ -1080,7 +1086,7 @@ void InfoDialog::on_bSyncFolder_clicked()
             this->hide();
         }
 #else
-        syncsMenu->popup(ui->bSyncFolder->mapToGlobal(QPoint(0, -activeFolders*35)));
+        syncsMenu->popup(ui->bSyncFolder->mapToGlobal(QPoint(-5, (activeFolders ? -21 : -12) - activeFolders * 32)));
 #endif
         syncsMenu = NULL;
     }
