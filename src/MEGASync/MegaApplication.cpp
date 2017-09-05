@@ -2330,21 +2330,31 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
                 APPBARDATA pabd;
                 pabd.cbSize = sizeof(APPBARDATA);
                 pabd.hWnd = FindWindow(L"Shell_TrayWnd", NULL);
-                if (pabd.hWnd && SHAppBarMessage(ABM_GETTASKBARPOS, &pabd))
+                if (pabd.hWnd && SHAppBarMessage(ABM_GETTASKBARPOS, &pabd)
+                        && pabd.rc.right != pabd.rc.left && pabd.rc.bottom != pabd.rc.top)
                 {
+                    int size;
                     switch (pabd.uEdge)
                     {
                         case ABE_LEFT:
-                            screenGeometry.setLeft(pabd.rc.right+1);
+                            size = pabd.rc.right - pabd.rc.left;
+                            size = size * screenGeometry.height() / (pabd.rc.bottom - pabd.rc.top);
+                            screenGeometry.setLeft(screenGeometry.left() + size);
                             break;
                         case ABE_RIGHT:
-                            screenGeometry.setRight(pabd.rc.left-1);
+                            size = pabd.rc.right - pabd.rc.left;
+                            size = size * screenGeometry.height() / (pabd.rc.bottom - pabd.rc.top);
+                            screenGeometry.setRight(screenGeometry.right() - size);
                             break;
                         case ABE_TOP:
-                            screenGeometry.setTop(pabd.rc.bottom+1);
+                            size = pabd.rc.bottom - pabd.rc.top;
+                            size = size * screenGeometry.width() / (pabd.rc.right - pabd.rc.left);
+                            screenGeometry.setTop(screenGeometry.top() + size);
                             break;
                         case ABE_BOTTOM:
-                            screenGeometry.setBottom(pabd.rc.top-1);
+                            size = pabd.rc.bottom - pabd.rc.top;
+                            size = size * screenGeometry.width() / (pabd.rc.right - pabd.rc.left);
+                            screenGeometry.setBottom(screenGeometry.bottom() - size);
                             break;
                     }
                 }
