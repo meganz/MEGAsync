@@ -869,8 +869,8 @@ void MegaApplication::changeLanguage(QString languageCode)
 #ifdef Q_OS_LINUX
 void MegaApplication::setTrayIconFromTheme(QString icon)
 {
-    QString name = icon.replace(QString::fromAscii("://images/"),QString::fromAscii("mega")).replace(QString::fromAscii(".svg"),QString::fromAscii(""));
-    trayIcon->setIcon(QIcon::fromTheme(name,QIcon(icon)));
+    QString name = QString(icon).replace(QString::fromAscii("://images/"), QString::fromAscii("mega")).replace(QString::fromAscii(".svg"),QString::fromAscii(""));
+    trayIcon->setIcon(QIcon::fromTheme(name, QIcon(icon)));
 }
 #endif
 
