@@ -1004,7 +1004,7 @@ void InfoDialog::onAllTransfersFinished()
 
 void InfoDialog::on_bSettings_clicked()
 {
-    QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width()-6, ui->bSettings->height()));
+    QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width() - 2, ui->bSettings->height()));
 
 #ifdef __APPLE__
     QPointer<InfoDialog> iod = this;

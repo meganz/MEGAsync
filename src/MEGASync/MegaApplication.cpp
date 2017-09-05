@@ -4640,8 +4640,11 @@ void MegaApplication::createTrayMenu()
     if (!trayMenu)
     {
         trayMenu = new QMenu();
+#ifdef __APPLE__
         trayMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
-
+#else
+        trayMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
+#endif
     }
     else
     {
@@ -4856,12 +4859,11 @@ void MegaApplication::createGuestMenu()
     if (!trayGuestMenu)
     {
         trayGuestMenu = new QMenu();
+
+#ifdef __APPLE__
         trayGuestMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
-#ifndef __APPLE__
-        trayGuestMenu->setStyleSheet(QString::fromAscii(
-            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
-            "QMenu::item {background-color: white; color: black;} "
-            "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
+#else
+        trayGuestMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
 #endif
     }
     else
