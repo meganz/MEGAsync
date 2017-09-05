@@ -337,12 +337,11 @@ int main(int argc, char *argv[])
 
     QFont font(QString::fromAscii("Open Sans"), 8);
     app.setFont(font);
-#else
+#endif
     QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/SourceSansPro-Light.ttf"));
     QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/SourceSansPro-Bold.ttf"));
     QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/SourceSansPro-Regular.ttf"));
     QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/SourceSansPro-Semibold.ttf"));
-#endif
 
     app.initialize();
     app.start();
