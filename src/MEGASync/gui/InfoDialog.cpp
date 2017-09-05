@@ -790,9 +790,9 @@ void InfoDialog::onTransfer1Cancel(int x, int y)
     }
 
     transferMenu = new QMenu();
-#ifndef __APPLE__
+#ifndef __APPLE__    
     transferMenu->setStyleSheet(QString::fromAscii(
-            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
+            "QMenu {background-color: white; border: 1px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
             "QMenu::item {background-color: white; color: black;} "
             "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
 #endif
@@ -834,7 +834,7 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
     transferMenu = new QMenu();
 #ifndef __APPLE__
     transferMenu->setStyleSheet(QString::fromAscii(
-            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
+            "QMenu {background-color: white; border: 1px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
             "QMenu::item {background-color: white; color: black;} "
             "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
 #endif

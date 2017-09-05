@@ -4778,12 +4778,10 @@ void MegaApplication::createOverQuotaMenu()
     if (!trayOverQuotaMenu)
     {
         trayOverQuotaMenu = new QMenu();
+#ifdef __APPLE__
         trayOverQuotaMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
-#ifndef __APPLE__
-        trayOverQuotaMenu->setStyleSheet(QString::fromAscii(
-            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
-            "QMenu::item {background-color: white; color: black;} "
-            "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
+#else
+        trayOverQuotaMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
 #endif
     }
     else

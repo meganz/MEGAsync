@@ -4,8 +4,12 @@
 DataUsageMenu::DataUsageMenu(QWidget *parent) :
     QMenu(parent)
 {
+#ifdef __APPLE__
     setAttribute(Qt::WA_TranslucentBackground);
     setStyleSheet(QString::fromAscii("QMenu { background: transparent; padding-top: 8px; }"));
+#else
+    setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px; padding-right: 50px; } "));
+#endif
 }
 
 DataUsageMenu::~DataUsageMenu()
@@ -15,11 +19,11 @@ DataUsageMenu::~DataUsageMenu()
 
 void DataUsageMenu::paintEvent(QPaintEvent *event)
 {
+#ifdef __APPLE__
     QVector<QPointF> points;
     float w = width()  - 0.5;
     float h = height() - 0.5;
 
-#ifdef __APPLE__
     points << QPointF(0, 0)
            << QPointF(w, 0)
            << QPointF(w, h * 0.96)
@@ -27,12 +31,6 @@ void DataUsageMenu::paintEvent(QPaintEvent *event)
            << QPointF(w * 0.50, h)
            << QPointF(w * 0.47, h * 0.96)
            << QPointF(0, h * 0.96);
-#else
-    points << QPointF(0, 0)
-           << QPointF(w, 0)
-           << QPointF(w, h)
-           << QPointF(0, h);
-#endif
 
     polygon = QPolygonF(points);
 
@@ -52,4 +50,7 @@ void DataUsageMenu::paintEvent(QPaintEvent *event)
                            | QPainter::HighQualityAntialiasing);
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
     painter.drawPixmap(QRect(0, 0, width(), height()), QPixmap::fromImage(imageMask));
+#else
+    QMenu::paintEvent(event);
+#endif
 }
