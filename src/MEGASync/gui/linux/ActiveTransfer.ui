@@ -48,13 +48,13 @@
     <number>15</number>
    </property>
    <property name="topMargin">
-    <number>9</number>
+    <number>8</number>
    </property>
    <property name="rightMargin">
     <number>15</number>
    </property>
    <property name="bottomMargin">
-    <number>9</number>
+    <number>3</number>
    </property>
    <item>
     <widget class="QWidget" name="widget" native="true">
@@ -66,7 +66,7 @@
        <number>1</number>
       </property>
       <property name="topMargin">
-       <number>6</number>
+       <number>4</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -141,13 +141,13 @@
         <property name="minimumSize">
          <size>
           <width>300</width>
-          <height>25</height>
+          <height>32</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>300</width>
-          <height>25</height>
+          <height>32</height>
          </size>
         </property>
         <property name="font">

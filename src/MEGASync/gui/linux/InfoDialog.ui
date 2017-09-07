@@ -278,13 +278,13 @@ color: #999999;
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>248</height>
+       <height>250</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>248</height>
+       <height>250</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -727,13 +727,13 @@ border: none;</string>
                   <property name="minimumSize">
                    <size>
                     <width>400</width>
-                    <height>44</height>
+                    <height>43</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
                     <width>400</width>
-                    <height>44</height>
+                    <height>43</height>
                    </size>
                   </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="1,0,0,0">
@@ -744,7 +744,7 @@ border: none;</string>
                     <number>15</number>
                    </property>
                    <property name="topMargin">
-                    <number>0</number>
+                    <number>4</number>
                    </property>
                    <property name="rightMargin">
                     <number>20</number>
@@ -852,13 +852,13 @@ border: none;</string>
                   <property name="minimumSize">
                    <size>
                     <width>400</width>
-                    <height>51</height>
+                    <height>52</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
                     <width>400</width>
-                    <height>51</height>
+                    <height>52</height>
                    </size>
                   </property>
                  </widget>
@@ -868,13 +868,13 @@ border: none;</string>
                   <property name="minimumSize">
                    <size>
                     <width>400</width>
-                    <height>44</height>
+                    <height>43</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
                     <width>400</width>
-                    <height>44</height>
+                    <height>43</height>
                    </size>
                   </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="1,0,0,0">
@@ -885,7 +885,7 @@ border: none;</string>
                     <number>15</number>
                    </property>
                    <property name="topMargin">
-                    <number>0</number>
+                    <number>4</number>
                    </property>
                    <property name="rightMargin">
                     <number>20</number>
@@ -1128,16 +1128,16 @@ border: none;</string>
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>123</height>
+       <height>122</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>123</height>
+       <height>122</height>
       </size>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="verticalLayout" stretch="0,0,0">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -1158,24 +1158,24 @@ border: none;</string>
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>10</height>
+          <height>18</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>10</height>
+          <height>18</height>
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <property name="spacing">
-          <number>6</number>
+          <number>8</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>4</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -1282,14 +1282,17 @@ border: none;</string>
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>40</height>
+          <height>49</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>40</height>
+          <height>49</height>
          </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_11">
          <property name="spacing">
@@ -1312,17 +1315,20 @@ border: none;</string>
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>40</height>
+             <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
              <width>16777215</width>
-             <height>40</height>
+             <height>16777215</height>
             </size>
            </property>
+           <property name="styleSheet">
+            <string notr="true"/>
+           </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="pStorage">
             <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -1352,13 +1358,13 @@ border: none;</string>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>40</height>
+                 <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>40</height>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="styleSheet">
@@ -1378,7 +1384,7 @@ border: none;</string>
                  <number>16</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>0</number>
+                 <number>9</number>
                 </property>
                 <item>
                  <widget class="QWidget" name="widget_8" native="true">
@@ -1391,13 +1397,13 @@ border: none;</string>
                   <property name="minimumSize">
                    <size>
                     <width>368</width>
-                    <height>20</height>
+                    <height>25</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
                     <width>368</width>
-                    <height>20</height>
+                    <height>25</height>
                    </size>
                   </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -1427,13 +1433,13 @@ border: none;</string>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>20</height>
+                       <height>0</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>20</height>
+                       <height>16777215</height>
                       </size>
                      </property>
                      <property name="focusPolicy">
@@ -1461,13 +1467,13 @@ border: none;</string>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>20</height>
+                       <height>0</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>20</height>
+                       <height>16777215</height>
                       </size>
                      </property>
                      <property name="focusPolicy">
@@ -1554,13 +1560,13 @@ border: none;</string>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>40</height>
+                 <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>40</height>
+                 <height>16777215</height>
                 </size>
                </property>
                <property name="styleSheet">
@@ -1580,7 +1586,7 @@ border: none;</string>
                  <number>16</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>0</number>
+                 <number>9</number>
                 </property>
                 <item>
                  <widget class="QWidget" name="widget_9" native="true">
@@ -1593,13 +1599,13 @@ border: none;</string>
                   <property name="minimumSize">
                    <size>
                     <width>368</width>
-                    <height>20</height>
+                    <height>25</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
                     <width>368</width>
-                    <height>20</height>
+                    <height>25</height>
                    </size>
                   </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -1629,13 +1635,13 @@ border: none;</string>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>20</height>
+                       <height>0</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>20</height>
+                       <height>16777215</height>
                       </size>
                      </property>
                      <property name="focusPolicy">
@@ -1669,13 +1675,13 @@ color: #333333;
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>20</height>
+                       <height>0</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>20</height>
+                       <height>16777215</height>
                       </size>
                      </property>
                      <property name="focusPolicy">
@@ -1745,13 +1751,13 @@ color: #333333;
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>45</height>
+          <height>55</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>45</height>
+          <height>55</height>
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -1768,7 +1774,7 @@ color: #333333;
           <number>17</number>
          </property>
          <property name="bottomMargin">
-          <number>0</number>
+          <number>8</number>
          </property>
          <item>
           <widget class="QPushButton" name="bSyncFolder">
