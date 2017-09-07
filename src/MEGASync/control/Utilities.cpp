@@ -15,6 +15,7 @@
 #endif
 
 using namespace std;
+using namespace mega;
 
 QHash<QString, QString> Utilities::extensionIcons;
 QHash<QString, QString> Utilities::languageNames;
@@ -321,6 +322,18 @@ QString Utilities::getExtensionPixmapMedium(QString fileName)
     return getExtensionPixmap(fileName, QString::fromAscii(":/images/drag_"));
 }
 
+QString Utilities::getAvatarPath(QString email)
+{
+    if (!email.size())
+    {
+        return QString();
+    }
+
+    QString avatarsPath = QString::fromUtf8("%1/avatars/%2.jpg")
+            .arg(Preferences::instance()->getDataPath()).arg(email);
+    return QDir::toNativeSeparators(avatarsPath);
+}
+
 bool Utilities::removeRecursively(QString path)
 {
     if (!path.size())
@@ -331,7 +344,7 @@ bool Utilities::removeRecursively(QString path)
     QDir dir(path);
     bool success = false;
     QString qpath = QDir::toNativeSeparators(dir.absolutePath());
-    mega::MegaApi::removeRecursively(qpath.toUtf8().constData());
+    MegaApi::removeRecursively(qpath.toUtf8().constData());
     success = dir.rmdir(dir.absolutePath());
     return success;
 }
@@ -619,4 +632,21 @@ QString Utilities::getDefaultBasePath()
         return rootPath;
     }
     return QString();
+}
+
+QChar Utilities::getAvatarLetter()
+{
+    Preferences *preferences = Preferences::instance();
+    QString fullname = (preferences->firstName() + preferences->lastName()).trimmed();
+    if (fullname.isEmpty())
+    {
+        QString email = preferences->email();
+        if (email.size())
+        {
+            return email.at(0).toUpper();
+        }
+        return QChar::fromAscii(' ');
+    }
+
+    return fullname.at(0).toUpper();
 }

@@ -3,6 +3,7 @@
 #include <QFileInfo>
 #include <QCoreApplication>
 #include <QWidget>
+#include "control/Preferences.h"
 #import <objc/runtime.h>
 
 #ifndef kCFCoreFoundationVersionNumber10_9
@@ -514,7 +515,7 @@ void enableBlurForWindow(QWidget *window)
         static const NSRect frameRect = {
         { 0.0, 0.0 }
         ,
-        { window->width(), window->height() }
+        { static_cast<float>(window->width()), static_cast<float>(window->height()) }
         };
 
         auto vibrant = [[vibrantClass alloc] initWithFrame:frameRect];
@@ -523,7 +524,7 @@ void enableBlurForWindow(QWidget *window)
 
         if ([vibrant respondsToSelector:@selector(setBlendingMode:)])
         {
-              [vibrant setBlendingMode:0];
+              [vibrant setBlendingMode:(NSVisualEffectBlendingMode)0];
         }
 
         //[self addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
