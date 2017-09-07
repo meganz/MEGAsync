@@ -129,12 +129,20 @@ QString PasteMegaLinksDialog::checkLink(QString link)
     // Folder link
     if (link.at(27) == QChar::fromAscii('!'))
     {
-        if (link.length() < FOLDER_LINK_SIZE)
+        if (link.length() >= FOLDER_LINK_WITH_SUBFOLDER_SIZE && link.count(QChar::fromAscii('!')) == 3)
         {
-            return QString();
+            link.truncate(FOLDER_LINK_WITH_SUBFOLDER_SIZE);
+        }
+        else
+        {
+            if (link.length() < FOLDER_LINK_SIZE)
+            {
+                return QString();
+            }
+
+            link.truncate(FOLDER_LINK_SIZE);
         }
 
-        link.truncate(FOLDER_LINK_SIZE);
         return link;
     }
 
