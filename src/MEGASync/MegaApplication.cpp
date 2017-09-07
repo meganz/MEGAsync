@@ -2141,6 +2141,12 @@ void MegaApplication::cleanAll()
         args.append(QString::fromAscii("-n"));
         args.append(appPath.absolutePath());
         QProcess::startDetached(launchCommand, args);
+
+        // Reboot finder extension keeping previous state
+        bool finderExtEnabled = Platform::isFinderExtensionEnabled();
+        Platform::reinstallFinderExtension();
+        Platform::addFinderExtensionToSystem();
+        Platform::enableFinderExtension(finderExtEnabled);
 #endif
 
 #ifdef WIN32
