@@ -4,8 +4,12 @@
 DataUsageMenu::DataUsageMenu(QWidget *parent) :
     QMenu(parent)
 {
-    setStyleSheet(QString::fromAscii("QMenu { background: transparent; padding-top: 8px; }"));
+#ifdef __APPLE__
     setAttribute(Qt::WA_TranslucentBackground);
+    setStyleSheet(QString::fromAscii("QMenu { background: transparent; padding-top: 8px; }"));
+#else
+    setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px; padding-right: 50px; } "));
+#endif
 }
 
 DataUsageMenu::~DataUsageMenu()
@@ -15,6 +19,7 @@ DataUsageMenu::~DataUsageMenu()
 
 void DataUsageMenu::paintEvent(QPaintEvent *event)
 {
+#ifdef __APPLE__
     QVector<QPointF> points;
     float w = width()  - 0.5;
     float h = height() - 0.5;
@@ -45,4 +50,7 @@ void DataUsageMenu::paintEvent(QPaintEvent *event)
                            | QPainter::HighQualityAntialiasing);
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
     painter.drawPixmap(QRect(0, 0, width(), height()), QPixmap::fromImage(imageMask));
+#else
+    QMenu::paintEvent(event);
+#endif
 }

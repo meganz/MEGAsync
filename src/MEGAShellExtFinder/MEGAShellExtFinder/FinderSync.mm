@@ -5,36 +5,33 @@
 
 #import "FinderSync.h"
 #include <string>
-#include <unordered_map>
+#include <map>
 #include <iostream>
 
-static std::unordered_map<std::string , FileState> pathStatus;
+static std::map<std::string , FileState> pathStatus;
 
+// dirPath is the path of a folder, with a trailing '/'
 void cleanItemsOfFolder(std::string dirPath)
 {
-    std::unordered_map<std::string, FileState>::iterator it = pathStatus.begin();
+    std::map<std::string, FileState>::iterator it = pathStatus.lower_bound(dirPath);
     while (it != pathStatus.end())
     {
-        std::string tempPath = it->first;
-        if (strncmp(dirPath.c_str(),tempPath.c_str(), dirPath.size()) != 0)
+        const std::string &tempPath = it->first;
+        if (tempPath.size() < dirPath.size() || strncmp(dirPath.c_str(), tempPath.c_str(), dirPath.size()))
+        {
+            return;
+        }
+
+        size_t pos;
+        if (tempPath.size() == dirPath.size()
+                || (((pos = tempPath.find('/', dirPath.size())) != std::string::npos)
+                    && (pos != (tempPath.size() - 1))))
         {
             it++;
-            continue;
-        }
-        
-        std::string::size_type pos = tempPath.find(dirPath);
-        if (pos != std::string::npos)
-        {
-            tempPath.erase(pos, dirPath.length());
-        }
-        
-        if (!tempPath.empty())
-        {
-            pathStatus.erase(it++);
         }
         else
         {
-            it++;
+            pathStatus.erase(it++);
         }
     }
 }
@@ -45,9 +42,9 @@ void cleanItemsOfFolder(std::string dirPath)
     
     self = [super init];
 
-    NSImage * iconSYNCED    = [[NSBundle mainBundle] imageForResource:@"ok.icns" ];
-    NSImage * iconERROR = [[NSBundle mainBundle] imageForResource:@"error.icns"];
-    NSImage * iconSYNCING  = [[NSBundle mainBundle] imageForResource:@"sync.icns"];
+    NSImage *iconSYNCED = [[NSBundle mainBundle] imageForResource:@"ok.icns" ];
+    NSImage *iconERROR = [[NSBundle mainBundle] imageForResource:@"error.icns"];
+    NSImage *iconSYNCING = [[NSBundle mainBundle] imageForResource:@"sync.icns"];
 
     // Set up images for our badge identifiers.
     [[FIFinderSyncController defaultController] setBadgeImage:iconSYNCED label:@"" forBadgeIdentifier:@"synced"];
@@ -57,9 +54,9 @@ void cleanItemsOfFolder(std::string dirPath)
     // Server name should contain developer id
     NSString *serverName = @"T9RH74Y7L9.mega.mac.socket";
     _ext = [[ShellExt alloc] initWithServerName:serverName delegate:self];
-    _directories = [[NSMutableSet alloc] init];
-    _syncNames   = [[NSMutableArray alloc] init];
-    _syncPaths   = [[NSMutableArray alloc] init];
+    _syncPaths = [[NSMutableSet alloc] init];
+    _syncNames = [[NSMutableArray alloc] init];
+    _directories = [[NSMutableArray alloc] init];
     
     NSLog(@"INFO - MEGA Finder Extension launched");
     [_ext start];
@@ -72,18 +69,11 @@ void cleanItemsOfFolder(std::string dirPath)
     
     NSLog(@"INFO - beginObservingDirectoryAtURL:%@", url.filePathURL);
     
-    std::string path = url.path.precomposedStringWithCanonicalMapping.UTF8String;
-    if (path.back() != '/')
+    NSString *path = url.path;
+    if (![_directories containsObject:path])
     {
-        path.push_back('/');
+        [_directories addObject:path];
     }
-    
-    if (pathStatus.find(path) != pathStatus.end())
-    {
-        return;
-    }
-    
-    pathStatus.emplace(path, FileState::FILE_NONE);
 }
 
 
@@ -91,26 +81,36 @@ void cleanItemsOfFolder(std::string dirPath)
 
     NSLog(@"INFO - endObservingDirectoryAtURL:%@", url.filePathURL);
     
-    std::string path = url.path.precomposedStringWithCanonicalMapping.UTF8String;
-    if (path.back() != '/')
+    NSString *path = url.path;
+    if ([_directories containsObject:path])
     {
-        path.push_back('/');
+        [_directories removeObject:path];
     }
     
-    cleanItemsOfFolder(path);
+    std::string localPath = path.precomposedStringWithCanonicalMapping.UTF8String;
+    if (localPath.back() != '/')
+    {
+        localPath.push_back('/');
+    }
+    
+    cleanItemsOfFolder(localPath);
 }
 
 - (void)requestBadgeIdentifierForURL:(NSURL *)url {
     
     //NSLog(@"requestBadgeIdentifierForURL:%@", url.filePathURL);
-    NSMutableString *path = [[NSMutableString alloc] initWithString:[url path]];
+    NSString *path = [[NSString alloc] initWithString:[url path]];
     if ([self isDirectory:url])
     {
-        [path appendString:@"/"];
+        NSString* folderPath = [path stringByAppendingString:@"/"];
+        pathStatus.emplace(folderPath.precomposedStringWithCanonicalMapping.UTF8String, FileState::FILE_NONE);
+    }
+    else
+    {
+        pathStatus.emplace(path.precomposedStringWithCanonicalMapping.UTF8String, FileState::FILE_NONE);
     }
     
     [_ext sendRequest:path type:@"P"];
-    pathStatus.emplace(path.precomposedStringWithCanonicalMapping.UTF8String, FileState::FILE_NONE);
 }
 
 #pragma mark - Menu and toolbar item support
@@ -153,15 +153,16 @@ void cleanItemsOfFolder(std::string dirPath)
     for (NSURL *url in selectedItemURLs)
     {
         NSMutableString *path = [[NSMutableString alloc] initWithString:[url path]];
-        if ([self isDirectory:url])
+        bool urlIsDirectory = [self isDirectory:url];
+        if (urlIsDirectory)
         {
             [path appendString:@"/"];
         }
         
-        std::unordered_map<std::string, FileState>::iterator it = pathStatus.find(path.precomposedStringWithCanonicalMapping.UTF8String);
+        std::map<std::string, FileState>::iterator it = pathStatus.find(path.precomposedStringWithCanonicalMapping.UTF8String);
         if (it != pathStatus.end() && it->second == FileState::FILE_SYNCED)
         {
-            if ([self isDirectory:url])
+            if (urlIsDirectory)
             {
                 numFolders++;
             }
@@ -169,7 +170,6 @@ void cleanItemsOfFolder(std::string dirPath)
             {
                 numFiles++;
             }
-
         }
     }
     
@@ -240,41 +240,47 @@ void cleanItemsOfFolder(std::string dirPath)
 - (void)onSyncAdd:(NSString *)path withSyncName:(NSString*)syncName{
     
     NSLog(@"INFO - adding sync folder path:%@", path);
-    [_directories addObject:[NSURL fileURLWithPath:path]];
+    [_syncPaths addObject:[NSURL fileURLWithPath:path]];
     
     if (![_syncNames containsObject:syncName])
     {
         [_syncNames addObject:syncName];
-        [_syncPaths addObject:path];
     }
-    [FIFinderSyncController defaultController].directoryURLs = _directories;
+    [FIFinderSyncController defaultController].directoryURLs = _syncPaths;
 }
 
 - (void)onSyncDel:(NSString *)path withSyncName:(NSString*)syncName{
     
     NSLog(@"INFO - removing sync folder path:%@", path);
-    [_directories removeObject:[NSURL fileURLWithPath:path]];
+    [_syncPaths removeObject:[NSURL fileURLWithPath:path]];
     [_syncNames removeObject:syncName];
-    [_syncPaths removeObject:path];
-    [FIFinderSyncController defaultController].directoryURLs = _directories;
+    [FIFinderSyncController defaultController].directoryURLs = _syncPaths;
 }
 
 - (void)onItemChanged:(NSString *)urlPath withState:(int)state {
     
 //    NSLog(@"settingBadge: %i for path:%@", state, urlPath);
     
-    std::string path = urlPath.precomposedStringWithCanonicalMapping.UTF8String;
-    std::unordered_map<std::string, FileState>::iterator it = pathStatus.find(path);
-    if (it == pathStatus.end())
+    if ([self isDirectory:[NSURL URLWithString:urlPath]])
     {
-        pathStatus.emplace(path, (FileState)state);
-    }
-    else
-    {
-        it->second = (FileState)state;
+        urlPath = [urlPath stringByAppendingString:@"/"];
     }
     
-    [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:state] forURL:[NSURL fileURLWithPath:urlPath]];
+    std::string path = urlPath.precomposedStringWithCanonicalMapping.UTF8String;
+    std::map<std::string, FileState>::iterator it = pathStatus.find(path);
+    if (it != pathStatus.end())
+    {
+        it->second = (FileState)state;
+        [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:state] forURL:[NSURL fileURLWithPath:urlPath]];
+        return;
+    }
+    
+    NSString *basePath = [urlPath stringByDeletingLastPathComponent];
+    if ([_directories containsObject:basePath])
+    {
+        pathStatus.emplace(path, (FileState)state);
+        [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:state] forURL:[NSURL fileURLWithPath:urlPath]];
+    }
 }
 
 #pragma mark - Private methods
@@ -299,9 +305,8 @@ void cleanItemsOfFolder(std::string dirPath)
 
 - (void) cleanAll {
     
-    [_directories removeAllObjects];
-    [_syncNames removeAllObjects];
     [_syncPaths removeAllObjects];
+    [_syncNames removeAllObjects];
     [FIFinderSyncController defaultController].directoryURLs = nil;
 }
 

@@ -141,7 +141,11 @@ void TransferManager::createAddMenu()
     if (!addMenu)
     {
         addMenu = new QMenu(this);
+#ifdef __APPLE__
         addMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+#else
+        addMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
+#endif
     }
     else
     {

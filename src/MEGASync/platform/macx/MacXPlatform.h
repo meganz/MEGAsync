@@ -27,13 +27,13 @@ public:
     static void initialize(int argc, char *argv[]);
     static QStringList multipleUpload(QString uploadTitle);
     static bool enableTrayIcon(QString executable);
-    static void notifyItemChange(QString path);
+    static void notifyItemChange(std::string *localPath, int newState);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
-    static int addFinderExtensionToSystem();
+    static void addFinderExtensionToSystem();
     static bool isFinderExtensionEnabled();
-    static int reinstallFinderExtension();
-    static int enableFinderExtension(bool value);
+    static void reinstallFinderExtension();
+    static void enableFinderExtension(bool value);
     static void showInFolder(QString pathIn);
     static void startShellDispatcher(MegaApplication *receiver);
     static void stopShellDispatcher();

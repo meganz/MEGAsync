@@ -5,6 +5,7 @@
 #endif
 
 using namespace mega;
+using namespace std;
 
 MacXExtServer::MacXExtServer(MegaApplication *app)
 {
@@ -18,7 +19,7 @@ MacXExtServer::MacXExtServer(MegaApplication *app)
         return;
     }
 
-    connect(this, SIGNAL(sendToAll(QString )), this, SLOT(doSendToAll(QString)));
+    connect(this, SIGNAL(sendToAll(QByteArray)), this, SLOT(doSendToAll(QByteArray)));
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), app, SLOT(shellUpload(QQueue<QString>)),Qt::QueuedConnection);
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), app, SLOT(shellExport(QQueue<QString>)),Qt::QueuedConnection);
     connect(this, SIGNAL(viewOnMega(QString)), app, SLOT(shellViewOnMega(QString)),Qt::QueuedConnection);
@@ -143,13 +144,18 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
             }
 
             int numFiles = parameters[1].toInt(&ok);
-            if (!ok || numFiles <= 0)
+            if (!ok || numFiles < 0)
             {
                 break;
             }
 
             int numFolders = parameters[2].toInt(&ok);
-            if (!ok || numFolders <= 0)
+            if (!ok || numFolders < 0)
+            {
+                break;
+            }
+
+            if (!numFiles && !numFolders)
             {
                 break;
             }
@@ -244,12 +250,6 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
             }
 
             std::string tmpPath(content);
-
-            if (!tmpPath.empty() && tmpPath[tmpPath.length() - 1] == '/')
-            {
-                tmpPath.erase(tmpPath.length() - 1, 1);
-            }
-
             int state = ((MegaApplication *)qApp)->getMegaApi()->syncPathState(&tmpPath);
             switch(state)
             {
@@ -310,54 +310,56 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
     return false;
 }
 
-void MacXExtServer::doSendToAll(QString str)
+void MacXExtServer::doSendToAll(QByteArray str)
 {
     for (int i = 0; i < m_clients.size(); i++)
     {
         MacXLocalSocket *socket = m_clients[i];
         if (socket)
         {
-            socket->writeData(str.toUtf8().constData(), str.length());
+            socket->writeData(str.constData(), str.size());
         }
     }
 }
 
-void MacXExtServer::notifyItemChange(QString path)
+void MacXExtServer::notifyItemChange(string *localPath, int newState)
 {
     QByteArray response;
-    QString command = QString::fromUtf8("P:") + path;
+    string command = "P:";
+    command += *localPath;
 
-    if(QDir(path).exists())
+    if (newState == MegaApi::STATE_PENDING
+            || newState == MegaApi::STATE_SYNCED
+            || newState == MegaApi::STATE_SYNCING)
     {
-        command += QDir::separator();
-    }
-
-    bool shouldRespond = GetAnswerToRequest(command.toStdString().c_str(), &response);
-    if (shouldRespond)
-    {
-        command.append(QChar::fromAscii(':'));
-        command.append(QString::fromUtf8(response.data()));
-        emit sendToAll(command);
+        command.append(":");
+        command.append(QString::number(newState).toUtf8().constData());
+        emit sendToAll(QByteArray(command.data(), command.size()));
     }
 }
 
 void MacXExtServer::notifySyncAdd(QString path, QString syncName)
 {
-    if(QDir(path).exists())
+    if (QDir(path).exists())
     {
         path += QDir::separator();
     }
 
-    emit sendToAll(QString::fromUtf8("A:")
+    emit sendToAll((QString::fromUtf8("A:")
                    + path
                    + QChar::fromAscii(':')
-                   + syncName);
+                   + syncName).toUtf8());
 }
 
 void MacXExtServer::notifySyncDel(QString path, QString syncName)
 {
-    emit sendToAll(QString::fromUtf8("D:")
+    if (QDir(path).exists())
+    {
+        path += QDir::separator();
+    }
+
+    emit sendToAll((QString::fromUtf8("D:")
                    + path
                    + QChar::fromAscii(':')
-                   + syncName);
+                   + syncName).toUtf8());
 }

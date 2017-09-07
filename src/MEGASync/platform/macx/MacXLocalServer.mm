@@ -5,6 +5,8 @@
 #include "megaapi.h"
 #import <Cocoa/Cocoa.h>
 
+using namespace mega;
+
 MacXLocalServer::MacXLocalServer()
     :serverPrivate(new MacXLocalServerPrivate())
 {
@@ -19,11 +21,11 @@ bool MacXLocalServer::listen(QString name)
 {
     if ([serverPrivate->connection registerName:name.toNSString()] == YES)
     {
-        mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_INFO, "Shell ext server started");
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Shell ext server started");
         return true;
     }
 
-    mega::MegaApi::log(mega::MegaApi::LOG_LEVEL_ERROR, "Error opening shell ext server");
+    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error opening shell ext server");
     return false;
 }
 

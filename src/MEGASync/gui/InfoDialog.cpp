@@ -74,7 +74,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->wTransfer2->hideTransfer();
 
     ui->bTransferManager->setToolTip(tr("Open Transfer Manager"));
-    ui->bSettings->setToolTip(tr("Access your MEGAsync settings"));
+    ui->bSettings->setToolTip(tr("Show MEGAsync options"));
 
     ui->pUsageStorage->installEventFilter(this);
     ui->pUsageStorage->setMouseTracking(true);
@@ -169,7 +169,7 @@ void InfoDialog::setUserName()
     {
         return;
     }
-    QString pattern(QString::fromUtf8("%1 %2").arg(preferences->firstName()).arg(preferences->lastName()));
+    QString pattern(QString::fromUtf8("%1 %2").arg(first).arg(last));
 
     QFont f = ui->lName->font();
     QFontMetrics fm = QFontMetrics(f);
@@ -790,9 +790,9 @@ void InfoDialog::onTransfer1Cancel(int x, int y)
     }
 
     transferMenu = new QMenu();
-#ifndef __APPLE__
+#ifndef __APPLE__    
     transferMenu->setStyleSheet(QString::fromAscii(
-            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
+            "QMenu {background-color: white; border: 1px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
             "QMenu::item {background-color: white; color: black;} "
             "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
 #endif
@@ -834,7 +834,7 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
     transferMenu = new QMenu();
 #ifndef __APPLE__
     transferMenu->setStyleSheet(QString::fromAscii(
-            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
+            "QMenu {background-color: white; border: 1px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
             "QMenu::item {background-color: white; color: black;} "
             "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
 #endif
@@ -971,7 +971,6 @@ void InfoDialog::onAllDownloadsFinished()
     remainingDownloads = megaApi->getNumPendingDownloads();
     if (!remainingDownloads)
     {
-
         ui->wTransfer1->hideTransfer();
         ui->lDownloads->setText(QString::fromAscii(""));
         ui->wDownloadDesc->hide();
@@ -1005,7 +1004,7 @@ void InfoDialog::onAllTransfersFinished()
 
 void InfoDialog::on_bSettings_clicked()
 {
-    QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width()-6, ui->bSettings->height()));
+    QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width() - 2, ui->bSettings->height()));
 
 #ifdef __APPLE__
     QPointer<InfoDialog> iod = this;
@@ -1044,14 +1043,11 @@ void InfoDialog::on_bSyncFolder_clicked()
     else
     {
         syncsMenu = new QMenu();
+#ifdef __APPLE__
         syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
-
-        MenuItemAction *addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_add_sync.png")),
-                                                           QIcon(QString::fromAscii("://images/ico_drop_add_sync_over.png")));
-        connect(addSyncAction, SIGNAL(triggered()), this, SLOT(addSync()));
-        syncsMenu->addAction(addSyncAction);
-        syncsMenu->addSeparator();
-
+#else
+        syncsMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+#endif
         QSignalMapper *menuSignalMapper = new QSignalMapper();
         connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
 
@@ -1074,6 +1070,15 @@ void InfoDialog::on_bSyncFolder_clicked()
         connect(syncsMenu, SIGNAL(aboutToHide()), syncsMenu, SLOT(deleteLater()));
         connect(syncsMenu, SIGNAL(destroyed(QObject*)), menuSignalMapper, SLOT(deleteLater()));
 
+        MenuItemAction *addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_add_sync.png")),
+                                                           QIcon(QString::fromAscii("://images/ico_drop_add_sync_over.png")));
+        connect(addSyncAction, SIGNAL(triggered()), this, SLOT(addSync()));
+        if (activeFolders)
+        {
+            syncsMenu->addSeparator();
+        }
+        syncsMenu->addAction(addSyncAction);
+
 #ifdef __APPLE__
         syncsMenu->exec(this->mapToGlobal(QPoint(20, this->height() - (activeFolders + 1) * 28 - (activeFolders ? 16 : 8))));
         if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
@@ -1081,7 +1086,7 @@ void InfoDialog::on_bSyncFolder_clicked()
             this->hide();
         }
 #else
-        syncsMenu->popup(ui->bSyncFolder->mapToGlobal(QPoint(0, -activeFolders*35)));
+        syncsMenu->popup(ui->bSyncFolder->mapToGlobal(QPoint(-5, (activeFolders ? -21 : -12) - activeFolders * 32)));
 #endif
         syncsMenu = NULL;
     }
@@ -1102,7 +1107,7 @@ void InfoDialog::openFolder(QString path)
 
 void InfoDialog::addSync(MegaHandle h)
 {
-    static BindFolderDialog *dialog = NULL;
+    static QPointer<BindFolderDialog> dialog = NULL;
     if (dialog)
     {
         if (h != mega::INVALID_HANDLE)
@@ -1122,8 +1127,8 @@ void InfoDialog::addSync(MegaHandle h)
         dialog->setMegaFolder(h);
     }
 
-    int result = dialog->exec();
-    if (result != QDialog::Accepted)
+    int result = dialog->exec();    
+    if (!dialog || !result)
     {
         delete dialog;
         dialog = NULL;
@@ -1178,7 +1183,7 @@ void InfoDialog::on_bTransferManager_clicked()
 
 void InfoDialog::onOverlayClicked()
 {
-    app->pauseTransfers();
+    app->pauseTransfers(false);
 }
 
 void InfoDialog::clearUserAttributes()
@@ -1287,7 +1292,6 @@ void InfoDialog::regenerateLayout()
         gWidget->setVisible(true);
 
         overlay->setVisible(false);
-
     }
     else
     {

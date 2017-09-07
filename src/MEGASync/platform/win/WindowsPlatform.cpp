@@ -2,6 +2,8 @@
 #include <Shlobj.h>
 #include <Shlwapi.h>
 #include <tchar.h>
+#include <Aclapi.h>
+#include <AccCtrl.h>
 
 #if QT_VERSION >= 0x050200
 #include <QtWin>
@@ -103,25 +105,26 @@ bool WindowsPlatform::enableTrayIcon(QString executable)
     return true;
 }
 
-void WindowsPlatform::notifyItemChange(QString path)
+void WindowsPlatform::notifyItemChange(std::string *localPath, int)
 {
-    if (path.isEmpty())
+    if (!localPath || !localPath->size())
     {
         return;
     }
 
-    if (path.startsWith(QString::fromAscii("\\\\?\\")))
+    std::string path = *localPath;
+    if (!memcmp(path.data(), L"\\\\?\\", 8))
     {
-        path = path.mid(4);
+        path = path.substr(8);
     }
 
+    path.append("", 1);
     if (path.length() >= MAX_PATH)
     {
         return;
     }
 
-    WCHAR *windowsPath = (WCHAR *)path.utf16();
-    SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, windowsPath, NULL);
+    SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, path.data(), NULL);
 }
 
 //From http://msdn.microsoft.com/en-us/library/windows/desktop/bb776891.aspx
@@ -517,6 +520,45 @@ void WindowsPlatform::removeAllSyncsFromLeftPane()
     {
         deleted &= CheckLeftPaneIcon(NULL, true);
     }
+}
+
+bool WindowsPlatform::makePubliclyReadable(LPTSTR fileName)
+{
+    bool result = false;
+    PACL pOldDACL = NULL, pNewDACL = NULL;
+    PSECURITY_DESCRIPTOR pSD = NULL;
+    DWORD sidSize = SECURITY_MAX_SID_SIZE;
+    EXPLICIT_ACCESS ea;
+
+    ZeroMemory(&ea, sizeof(EXPLICIT_ACCESS));
+    ea.grfAccessPermissions = GENERIC_READ | GENERIC_EXECUTE;
+    ea.grfAccessMode = GRANT_ACCESS;
+    ea.grfInheritance = NO_INHERITANCE;
+    ea.Trustee.TrusteeForm = TRUSTEE_IS_SID;
+    ea.Trustee.TrusteeType = TRUSTEE_IS_WELL_KNOWN_GROUP;
+    if (fileName
+            && (GetNamedSecurityInfo(fileName, SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL, &pOldDACL, NULL, &pSD) == ERROR_SUCCESS)
+            && (ea.Trustee.ptstrName = (LPWSTR)LocalAlloc(LMEM_FIXED, sidSize))
+            && CreateWellKnownSid(WinBuiltinUsersSid, NULL, ea.Trustee.ptstrName, &sidSize)
+            && (SetEntriesInAcl(1, &ea, pOldDACL, &pNewDACL) == ERROR_SUCCESS)
+            && (SetNamedSecurityInfo(fileName, SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL, pNewDACL, NULL) == ERROR_SUCCESS))
+    {
+        result = true;
+    }
+
+    if (ea.Trustee.ptstrName != NULL)
+    {
+        LocalFree(ea.Trustee.ptstrName);
+    }
+    if(pSD != NULL)
+    {
+        LocalFree((HLOCAL) pSD);
+    }
+    if(pNewDACL != NULL)
+    {
+        LocalFree((HLOCAL) pNewDACL);
+    }
+    return result;
 }
 
 bool WindowsPlatform::startOnStartup(bool value)

@@ -24,9 +24,9 @@ const NSString* OP_STRING     = @"T";
 
 @interface FinderSync : FIFinderSync <ShellProtocolDelegate>
 
-@property NSMutableSet *directories;
+@property NSMutableSet *syncPaths;
 @property NSMutableArray *syncNames;
-@property NSMutableArray *syncPaths;
+@property NSMutableArray *directories;
 @property ShellExt *ext;
 
 @end
