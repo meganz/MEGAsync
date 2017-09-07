@@ -346,7 +346,7 @@ void SettingsDialog::syncStateChanged(int state)
 {
     if (state)
     {
-        QCheckBox *c = ((QCheckBox *)QObject::sender());
+        QPointer<QCheckBox> c = ((QCheckBox *)QObject::sender());
         for (int j = 0; j < ui->tSyncs->rowCount(); j++)
         {
             if (ui->tSyncs->cellWidget(j, 2) == c)
@@ -355,9 +355,9 @@ void SettingsDialog::syncStateChanged(int state)
                 QFileInfo fi(newLocalPath);
                 if (!fi.exists() || !fi.isDir())
                 {
-                    QMessageBox::critical(this, tr("Error"),
-                       tr("This sync can't be enabled because the local folder doesn't exist"));
                     c->setCheckState(Qt::Unchecked);
+                    QMessageBox::critical(NULL, tr("Error"),
+                       tr("This sync can't be enabled because the local folder doesn't exist"));
                     return;
                 }
 
@@ -365,9 +365,9 @@ void SettingsDialog::syncStateChanged(int state)
                 MegaNode *n = megaApi->getNodeByPath(newMegaPath.toUtf8().constData());
                 if (!n)
                 {
-                    QMessageBox::critical(this, tr("Error"),
-                       tr("This sync can't be enabled because the remote folder doesn't exist"));
                     c->setCheckState(Qt::Unchecked);
+                    QMessageBox::critical(NULL, tr("Error"),
+                       tr("This sync can't be enabled because the remote folder doesn't exist"));
                     return;
                 }
                 delete n;
@@ -1217,7 +1217,6 @@ bool SettingsDialog::saveSettings()
                                                     preferences->getSyncID(i));
                         megaApi->removeSync(node);
                     }
-                    Utilities::removeRecursively(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
                     preferences->removeSyncedFolder(i);
                     delete node;
                     i--;
@@ -1444,7 +1443,7 @@ bool SettingsDialog::saveSettings()
             preferences->disableOverlayIcons(ui->cOverlayIcons->isChecked());
             for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
             {
-                Platform::notifyItemChange(preferences->getLocalFolder(i));
+                app->notifyItemChange(preferences->getLocalFolder(i), MegaApi::STATE_NONE);
             }
         }
     }
@@ -1696,12 +1695,16 @@ void SettingsDialog::on_bApply_clicked()
 
 void SettingsDialog::on_bUnlink_clicked()
 {
-    if (QMessageBox::question(this, tr("Logout"),
+    QPointer<SettingsDialog> currentDialog = this;
+    if (QMessageBox::question(NULL, tr("Logout"),
             tr("Synchronization will stop working.") + QString::fromAscii(" ") + tr("Are you sure?"),
             QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
     {
-        this->close();
-        app->unlink();
+        if (currentDialog)
+        {
+            close();
+            app->unlink();
+        }
     }
 }
 
@@ -1834,7 +1837,7 @@ void SettingsDialog::on_bDownloadFolder_clicked()
         QTemporaryFile test(fPath + QDir::separator());
         if (!test.open())
         {
-            QMessageBox::critical(window(), tr("Error"), tr("You don't have write permissions in this local folder."));
+            QMessageBox::critical(NULL, tr("Error"), tr("You don't have write permissions in this local folder."));
             return;
         }
 
@@ -1870,7 +1873,7 @@ void SettingsDialog::on_bAddName_clicked()
     QRegExp regExp(text, Qt::CaseInsensitive, QRegExp::Wildcard);
     if (!regExp.isValid())
     {
-        QMessageBox::warning(this, tr("Error"), QString::fromUtf8("You have entered an invalid file name or expression."), QMessageBox::Ok);
+        QMessageBox::warning(NULL, tr("Error"), QString::fromUtf8("You have entered an invalid file name or expression."), QMessageBox::Ok);
         return;
     }
 
@@ -2131,7 +2134,7 @@ void SettingsDialog::onProxyTestError()
         delete proxyTestProgressDialog;
         proxyTestProgressDialog = NULL;
         ui->bApply->setEnabled(true);
-        QMessageBox::critical(this, tr("Error"), tr("Your proxy settings are invalid or the proxy doesn't respond"));
+        QMessageBox::critical(NULL, tr("Error"), tr("Your proxy settings are invalid or the proxy doesn't respond"));
     }
 
     shouldClose = false;
@@ -2192,10 +2195,14 @@ void SettingsDialog::on_bUpdate_clicked()
 void SettingsDialog::on_bFullCheck_clicked()
 {
     preferences->setCrashed(true);
-    if (QMessageBox::warning(this, tr("Full scan"), tr("MEGAsync will perform a full scan of your synced folders when it starts.\n\nDo you want to restart MEGAsync now?"),
+    QPointer<SettingsDialog> currentDialog = this;
+    if (QMessageBox::warning(NULL, tr("Full scan"), tr("MEGAsync will perform a full scan of your synced folders when it starts.\n\nDo you want to restart MEGAsync now?"),
                          QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
     {
-        app->rebootApplication(false);
+        if (currentDialog)
+        {
+            app->rebootApplication(false);
+        }
     }
 }
 

@@ -258,20 +258,16 @@ QString Utilities::languageCodeToString(QString code)
         languageNames[QString::fromAscii("ar")] = QString::fromUtf8("العربية");
         languageNames[QString::fromAscii("bg")] = QString::fromUtf8("български");
         languageNames[QString::fromAscii("cs")] = QString::fromUtf8("Čeština");
-        languageNames[QString::fromAscii("de")] = QString::fromUtf8("Deutsch");
-        languageNames[QString::fromAscii("ee")] = QString::fromUtf8("Eesti");
+        languageNames[QString::fromAscii("de")] = QString::fromUtf8("Deutsch");  
         languageNames[QString::fromAscii("en")] = QString::fromUtf8("English");
         languageNames[QString::fromAscii("es")] = QString::fromUtf8("Español");
-        languageNames[QString::fromAscii("fa")] = QString::fromUtf8("فارسی");
         languageNames[QString::fromAscii("fi")] = QString::fromUtf8("Suomi");
         languageNames[QString::fromAscii("fr")] = QString::fromUtf8("Français");
         languageNames[QString::fromAscii("he")] = QString::fromUtf8("עברית");
-        languageNames[QString::fromAscii("hr")] = QString::fromUtf8("Hrvatski");
         languageNames[QString::fromAscii("hu")] = QString::fromUtf8("Magyar");
         languageNames[QString::fromAscii("id")] = QString::fromUtf8("Bahasa Indonesia");
         languageNames[QString::fromAscii("it")] = QString::fromUtf8("Italiano");
         languageNames[QString::fromAscii("ja")] = QString::fromUtf8("日本語");
-        languageNames[QString::fromAscii("ka")] = QString::fromUtf8("ქართული");
         languageNames[QString::fromAscii("ko")] = QString::fromUtf8("한국어");
         languageNames[QString::fromAscii("nl")] = QString::fromUtf8("Nederlands");
         languageNames[QString::fromAscii("pl")] = QString::fromUtf8("Polski");
@@ -307,6 +303,11 @@ QString Utilities::languageCodeToString(QString code)
         // languageNames[QString::fromAscii("hi")] = QString::fromUtf8("हिंदी");
         // languageNames[QString::fromAscii("ms")] = QString::fromUtf8("Bahasa Malaysia");
         // languageNames[QString::fromAscii("cy")] = QString::fromUtf8("Cymraeg");
+        // languageNames[QString::fromAscii("ee")] = QString::fromUtf8("Eesti");
+        // languageNames[QString::fromAscii("fa")] = QString::fromUtf8("فارسی");
+        // languageNames[QString::fromAscii("hr")] = QString::fromUtf8("Hrvatski");
+        // languageNames[QString::fromAscii("ka")] = QString::fromUtf8("ქართული");
+
     }
     return languageNames.value(code);
 }
@@ -635,10 +636,11 @@ QString Utilities::getDefaultBasePath()
 
 QChar Utilities::getAvatarLetter()
 {
-    QString fullname = (Preferences::instance()->firstName() + Preferences::instance()->lastName()).trimmed();
+    Preferences *preferences = Preferences::instance();
+    QString fullname = (preferences->firstName() + preferences->lastName()).trimmed();
     if (fullname.isEmpty())
     {
-        QString email = Preferences::instance()->email();
+        QString email = preferences->email();
         if (email.size())
         {
             return email.at(0).toUpper();

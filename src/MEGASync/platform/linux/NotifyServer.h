@@ -12,7 +12,7 @@ class NotifyServer: public QObject
  public:
     NotifyServer();
     virtual ~NotifyServer();
-    void notifyItemChange(QString path);
+    void notifyItemChange(std::string *localPath);
     void notifySyncAdd(QString path);
     void notifySyncDel(QString path);
 
@@ -22,7 +22,7 @@ class NotifyServer: public QObject
  public Q_SLOTS:
     void acceptConnection();
     void onClientDisconnected();
-    void doSendToAll(const char *type, QString str);
+    void doSendToAll(const char *type, QByteArray str);
 
  private:
     MegaApplication *app;
@@ -30,7 +30,7 @@ class NotifyServer: public QObject
     QList<QLocalSocket *> m_clients;
 
 signals:
-    void sendToAll(const char *type, QString str);
+    void sendToAll(const char *type, QByteArray str);
 
 };
 

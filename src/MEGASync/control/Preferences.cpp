@@ -424,7 +424,6 @@ void Preferences::setFirstName(QString firstName)
     settings->setValue(firstNameKey, firstName);
     settings->sync();
     mutex.unlock();
-    emit stateChanged();
 }
 
 QString Preferences::lastName()
@@ -442,7 +441,6 @@ void Preferences::setLastName(QString lastName)
     settings->setValue(lastNameKey, lastName);
     settings->sync();
     mutex.unlock();
-    emit stateChanged();
 }
 
 QString Preferences::emailHash()

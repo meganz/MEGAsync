@@ -27,10 +27,11 @@ public:
     static void addSyncToLeftPane(QString syncPath, QString syncName, QString uuid);
     static void removeSyncFromLeftPane(QString syncPath, QString syncName, QString uuid);
     static void removeAllSyncsFromLeftPane();
+    static bool makePubliclyReadable(LPTSTR fileName);
 
     static void initialize(int argc, char *argv[]);
     static bool enableTrayIcon(QString executable);
-    static void notifyItemChange(QString path);
+    static void notifyItemChange(std::string *localPath, int newState);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
     static void showInFolder(QString pathIn);

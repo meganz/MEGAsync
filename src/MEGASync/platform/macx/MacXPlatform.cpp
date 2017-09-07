@@ -1,6 +1,8 @@
 #include "MacXPlatform.h"
 #include <unistd.h>
 
+using namespace std;
+
 int MacXPlatform::fd = -1;
 MacXSystemServiceTask* MacXPlatform::systemServiceTask = NULL;
 MacXExtServer *MacXPlatform::extServer = NULL;
@@ -58,11 +60,11 @@ bool MacXPlatform::enableTrayIcon(QString executable)
     return false;
 }
 
-void MacXPlatform::notifyItemChange(QString path)
+void MacXPlatform::notifyItemChange(string *localPath, int newState)
 {
-    if (extServer)
+    if (extServer && localPath && localPath->size())
     {
-        extServer->notifyItemChange(path);
+        extServer->notifyItemChange(localPath, newState);
     }
 }
 
@@ -76,20 +78,13 @@ bool MacXPlatform::isStartOnStartupActive()
     return isStartAtLoginActive();
 }
 
-int MacXPlatform::addFinderExtensionToSystem()
+void MacXPlatform::addFinderExtensionToSystem()
 {
     QStringList scriptArgs;
     scriptArgs << QString::fromUtf8("-a")
                << kFinderSyncPath;
 
-    QProcess p;
-    p.start(QString::fromAscii("pluginkit"), scriptArgs);
-    if (!p.waitForFinished(2000))
-    {
-        return false;
-    }
-
-    return p.exitCode();
+    QProcess::startDetached(QString::fromUtf8("pluginkit"), scriptArgs);
 }
 
 bool MacXPlatform::isFinderExtensionEnabled()
@@ -120,23 +115,16 @@ bool MacXPlatform::isFinderExtensionEnabled()
     return true;
 }
 
-int MacXPlatform::reinstallFinderExtension()
+void MacXPlatform::reinstallFinderExtension()
 {
     QStringList scriptArgs;
     scriptArgs << QString::fromUtf8("-r")
                << kFinderSyncPath;
 
-    QProcess p;
-    p.start(QString::fromAscii("pluginkit"), scriptArgs);
-    if (!p.waitForFinished(2000))
-    {
-        return false;
-    }
-
-    return p.exitCode();
+    QProcess::startDetached(QString::fromUtf8("pluginkit"), scriptArgs);
 }
 
-int MacXPlatform::enableFinderExtension(bool value)
+void MacXPlatform::enableFinderExtension(bool value)
 {
     QStringList scriptArgs;
     scriptArgs << QString::fromUtf8("-e")
@@ -144,14 +132,7 @@ int MacXPlatform::enableFinderExtension(bool value)
                << QString::fromUtf8("-i")
                << kFinderSyncBundleId;
 
-    QProcess p;
-    p.start(QString::fromAscii("pluginkit"), scriptArgs);
-    if (!p.waitForFinished(2000))
-    {
-        return false;
-    }
-
-    return p.exitCode();
+    QProcess::startDetached(QString::fromUtf8("pluginkit"), scriptArgs);
 }
 
 void MacXPlatform::showInFolder(QString pathIn)

@@ -55,15 +55,18 @@ remove_megasync=0
 quit_machine=1
 
 
-while getopts ":ikcp:x:" opt; do
+while getopts ":ikcnp:x:" opt; do
   case $opt in
     i)
 		remove_megasync=1
 		flag_remove_megasync="-$opt"
       ;;
+	n)
+		flag_nogpgcheck="-$opt"
+	;;
 	c)
 		flag_require_change="-$opt"
-	;;
+	;;	
 	p)
 		arg_passwd="-$opt $OPTARG"
 	;;
@@ -94,17 +97,14 @@ sudo date
 
 # notice: use http://linux.deve.... instead of https://linu...
 BASEURL=$1
-BASEURLDEB9=$1
 BASEURLDEB=$BASEURL
 BASEURLRPM=$BASEURL
 BASEURLARCH=$BASEURL
-URLDEB9=$BASEURL/Debian_9.0
 if [ -z $BASEURL ]; then
  BASEURL=http://192.168.122.1:8000
  BASEURLDEB=$BASEURL/DEB
  BASEURLRPM=$BASEURL/RPM
  BASEURLARCH=$BASEURL/DEB  #they belong to the same OBS project named 'DEB'
- URLDEB9=http://192.168.122.1:8001
 fi
 
 PAIRSVMNAMEREPOURL=""
@@ -139,8 +139,8 @@ PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL LINUXMINT_18;$BASEURLDEB/xUbuntu_16.04"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_7.8.0;$BASEURLDEB/Debian_7.0"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_8;$BASEURLDEB/Debian_8.0"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_8.6;$BASEURLDEB/Debian_8.0"
-PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_9_CLEAN_testing;$URLDEB9" #NOTICE: using other repo
-PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_9_i386_T;$URLDEB9" #NOTICE: using other repo
+PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_9_CLEAN_testing;$BASEURLDEB/Debian_9.0" #NOTICE: using other repo
+PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_9_i386_T;$BASEURLDEB/Debian_9.0" #NOTICE: using other repo
 
 #existing,but failing VMs
 ##Opensuse 13.1 -> no network interface!!
@@ -174,8 +174,8 @@ for i in `shuf -e $PAIRSVMNAMEREPOURL`; do
 	DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 	
 	rm ${VMNAME}_{OK,FAIL} 2> /dev/null
-	echo $DIR/check_package.sh $arg_passwd $flagXMLdir $flag_require_change $flag_remove_megasync $flag_quit_machine $VMNAME $REPO 
-	( $DIR/check_package.sh $arg_passwd $flagXMLdir $flag_require_change $flag_remove_megasync $flag_quit_machine $VMNAME $REPO 2>&1 ) > output_check_package_${VMNAME}.log &
+	echo $DIR/check_package.sh $arg_passwd $flagXMLdir $flag_require_change $flag_remove_megasync $flag_quit_machine $flag_nogpgcheck $VMNAME $REPO 
+	( $DIR/check_package.sh $arg_passwd $flagXMLdir $flag_require_change $flag_remove_megasync $flag_quit_machine $flag_nogpgcheck $VMNAME $REPO 2>&1 ) > output_check_package_${VMNAME}.log &
 	
 	sleep 1
 	

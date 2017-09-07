@@ -14,6 +14,7 @@ class PasteMegaLinksDialog : public QDialog
 public:
     static const int FILE_LINK_SIZE = 70;
     static const int FOLDER_LINK_SIZE = 50;
+    static const int FOLDER_LINK_WITH_SUBFOLDER_SIZE = 59;
 
     explicit PasteMegaLinksDialog(QWidget *parent = 0);
     ~PasteMegaLinksDialog();
