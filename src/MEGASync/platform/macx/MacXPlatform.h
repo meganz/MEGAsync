@@ -3,6 +3,7 @@
 
 #include "MacXFunctions.h"
 #include "MacXSystemServiceTask.h"
+#include "MacXExtServer.h"
 
 #include <QApplication>
 #include <QString>
@@ -20,14 +21,19 @@ private:
     MacXPlatform() {}
     static bool enableSetuidBit();
     static MacXSystemServiceTask *systemServiceTask;
+    static MacXExtServer *extServer;
 
 public:
     static void initialize(int argc, char *argv[]);
     static QStringList multipleUpload(QString uploadTitle);
     static bool enableTrayIcon(QString executable);
-    static void notifyItemChange(QString path);
+    static void notifyItemChange(std::string *localPath, int newState);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
+    static void addFinderExtensionToSystem();
+    static bool isFinderExtensionEnabled();
+    static void reinstallFinderExtension();
+    static void enableFinderExtension(bool value);
     static void showInFolder(QString pathIn);
     static void startShellDispatcher(MegaApplication *receiver);
     static void stopShellDispatcher();

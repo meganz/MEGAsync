@@ -38,8 +38,8 @@ bool FolderBinder::setSelectedMegaFolder(MegaHandle handle)
     if (megaApi->getAccess(selectedFolder) < MegaShare::ACCESS_FULL)
     {
         selectedMegaFolderHandle = mega::INVALID_HANDLE;
-        QMessageBox::warning(this, tr("Error"), tr("You can not sync a shared folder without Full Access permissions"), QMessageBox::Ok);
         delete selectedFolder;
+        QMessageBox::warning(NULL, tr("Error"), tr("You can not sync a shared folder without Full Access permissions"), QMessageBox::Ok);
         return false;
     }
 
@@ -109,13 +109,12 @@ void FolderBinder::on_bLocalFolder_clicked()
         path = QDir::toNativeSeparators(path);
         if (!Utilities::verifySyncedFolderLimits(path))
         {
-            QMessageBox::warning(this, tr("Warning"), tr("You are trying to sync an extremely large folder.\nTo prevent the syncing of entire boot volumes, which is inefficient and dangerous,\nwe ask you to start with a smaller folder and add more data while MEGAsync is running."), QMessageBox::Ok);
+            QMessageBox::warning(NULL, tr("Warning"), tr("You are trying to sync an extremely large folder.\nTo prevent the syncing of entire boot volumes, which is inefficient and dangerous,\nwe ask you to start with a smaller folder and add more data while MEGAsync is running."), QMessageBox::Ok);
             return;
         }
 
         QTemporaryFile test(path + QDir::separator());
-        if (test.open()
-                || QMessageBox::warning(window(),
+        if (test.open()|| QMessageBox::warning(NULL,
                                         tr("Warning"),
                                         tr("You don't have write permissions in this local folder.")
                                         + QString::fromUtf8("\n") + tr("MEGAsync won't be able to download anything here.")

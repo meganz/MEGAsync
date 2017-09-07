@@ -34,9 +34,6 @@ protected:
     int type;
     bool regular;
     bool active;
-
-public slots:
-    void onCancelClicked(int x, int y);
 };
 
 #endif // ACTIVETRANSFER_H

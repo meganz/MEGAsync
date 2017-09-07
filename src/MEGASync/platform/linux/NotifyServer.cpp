@@ -5,6 +5,7 @@
 #include "control/Utilities.h"
 
 using namespace mega;
+using namespace std;
 
 NotifyServer::NotifyServer(): QObject(),
     m_localServer(0)
@@ -26,7 +27,7 @@ NotifyServer::NotifyServer(): QObject(),
         return;
     }
 
-    connect(this, SIGNAL(sendToAll(const char *, QString )), this, SLOT(doSendToAll(const char *, QString)));
+    connect(this, SIGNAL(sendToAll(const char *, QByteArray)), this, SLOT(doSendToAll(const char *, QByteArray)));
     connect(m_localServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
 }
 
@@ -94,29 +95,29 @@ void NotifyServer::onClientDisconnected()
 }
 
 // send string to all connected clients
-void NotifyServer::doSendToAll(const char *type, QString str)
+void NotifyServer::doSendToAll(const char *type, QByteArray str)
 {
     foreach(QLocalSocket *socket, m_clients)
         if (socket && socket->state() == QLocalSocket::ConnectedState) {
             socket->write(type);
-            socket->write(str.toUtf8().constData());
+            socket->write(str.constData(), str.size());
             socket->write("\n");
             socket->flush();
         }
 }
 
-void NotifyServer::notifyItemChange(QString path)
+void NotifyServer::notifyItemChange(string *localPath)
 {
-    emit sendToAll("P", path);
+    emit sendToAll("P", QByteArray(localPath->data(), localPath->size()));
 }
 
 void NotifyServer::notifySyncAdd(QString path)
 {
-    emit sendToAll("A", path);
+    emit sendToAll("A", path.toUtf8());
 }
 
 void NotifyServer::notifySyncDel(QString path)
 {
-    emit sendToAll("D", path);
+    emit sendToAll("D", path.toUtf8());
 }
 
