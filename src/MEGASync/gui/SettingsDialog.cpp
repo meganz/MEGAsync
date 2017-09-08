@@ -1773,6 +1773,8 @@ void SettingsDialog::on_bExportMasterKey_clicked()
 
     file.close();
 
+    megaApi->masterKeyExported();
+
     QMegaMessageBox::information(this, tr("Warning"),
                                  tr("Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.") + QString::fromUtf8("\n")
                                  + tr("Always keep physical control of your master key (e.g. on a client device, external storage, or print)."),
