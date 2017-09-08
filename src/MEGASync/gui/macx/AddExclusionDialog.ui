@@ -62,7 +62,7 @@ font-size: 11px;
       <string notr="true">font-style: normal;</string>
      </property>
      <property name="text">
-      <string>Enter a name (wildcards * and ? are allowed) or choose which file or folder you want to exclude for the synchronizations </string>
+      <string>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -151,8 +151,6 @@ font-size: 11px;
       </item>
      </layout>
      <zorder>horizontalSpacer</zorder>
-     <zorder>bCancel</zorder>
-     <zorder>bOk</zorder>
      <zorder>bCancel</zorder>
      <zorder>bOk</zorder>
     </widget>

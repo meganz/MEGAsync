@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>490</width>
-    <height>140</height>
+    <height>150</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>490</width>
-    <height>140</height>
+    <height>150</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>490</width>
-    <height>140</height>
+    <height>150</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -42,7 +42,7 @@ font-size: 11px;
     <number>12</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>12</number>
    </property>
    <item>
     <widget class="QLabel" name="label">
@@ -62,7 +62,7 @@ font-size: 11px;
       <string notr="true">font-style: normal;</string>
      </property>
      <property name="text">
-      <string>Enter a name (wildcards * and ? are allowed) or choose which file or folder you want to exclude for the synchronizations </string>
+      <string>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
@@ -88,19 +88,6 @@ font-size: 11px;
        <number>0</number>
       </property>
       <item>
-       <widget class="QPushButton" name="bChoose">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>16</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Choose Folder</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QPushButton" name="bChooseFile">
         <property name="minimumSize">
          <size>
@@ -110,6 +97,19 @@ font-size: 11px;
         </property>
         <property name="text">
          <string>Choose File</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="bChoose">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>16</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Choose Folder</string>
         </property>
        </widget>
       </item>

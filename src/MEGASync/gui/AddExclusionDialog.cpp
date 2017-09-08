@@ -9,6 +9,7 @@ AddExclusionDialog::AddExclusionDialog(QWidget *parent) :
     ui(new Ui::AddExclusionDialog)
 {
     ui->setupUi(this);
+    ui->bOk->setDefault(true);
 }
 
 AddExclusionDialog::~AddExclusionDialog()
@@ -18,27 +19,24 @@ AddExclusionDialog::~AddExclusionDialog()
 
 QString AddExclusionDialog::textValue()
 {
-    return QDir::toNativeSeparators(ui->eExclusionItem->text());
+    QString text = QDir::toNativeSeparators(ui->eExclusionItem->text().trimmed());
+
+    //Remove possible trailing separators
+    while (text.endsWith(QDir::separator()))
+    {
+        text.chop(1);
+    }
+
+    return text;
 }
 
 void AddExclusionDialog::on_bOk_clicked()
 {
-    QString text = ui->eExclusionItem->text();
-    text = QDir::toNativeSeparators(text.trimmed());
-    if (text.isEmpty())
+    QString text = textValue();
+    if (text.isEmpty() || !QRegExp(text, Qt::CaseInsensitive, QRegExp::Wildcard).isValid())
     {
-        QMessageBox::warning(this, tr("Warning"), tr("Please enter a valid file name, path or expression."));
+        QMessageBox::warning(this, tr("Warning"), tr("Please enter a valid file name or absolute path."));
         return;
-    }
-
-    if (!text.contains(QDir::separator())) // Not candidate local path, check if regexp is valid
-    {
-        QRegExp regExp(text, Qt::CaseInsensitive, QRegExp::Wildcard);
-        if (!regExp.isValid())
-        {
-            QMessageBox::warning(this, tr("Error"), QString::fromUtf8("You have entered an invalid file name or expression."), QMessageBox::Ok);
-            return;
-        }
     }
 
     accept();
@@ -46,9 +44,9 @@ void AddExclusionDialog::on_bOk_clicked()
 
 void AddExclusionDialog::on_bChoose_clicked()
 {
-
-#ifndef _WIN32
-    QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select local exclusion item"), QDir::home().path(), false);
+    QPointer<AddExclusionDialog> currentDialog = this;
+#ifdef __APPLE__
+    QPointer<MultiQFileDialog> dialog = new MultiQFileDialog(0,  tr("Select the file or folder you want to exclude"), QDir::home().path(), false);
     dialog->setOptions(QFileDialog::DontResolveSymlinks);
     int result = dialog->exec();
     if (!dialog || result != QDialog::Accepted || dialog->selectedFiles().isEmpty())
@@ -59,10 +57,10 @@ void AddExclusionDialog::on_bChoose_clicked()
     QString fPath = dialog->selectedFiles().value(0);
     delete dialog;
 #else
-    QString fPath = QFileDialog::getExistingDirectory(0,  tr("Select local exclusion item"), QDir::home().path());
+    QString fPath = QFileDialog::getExistingDirectory(0,  tr("Select the folder you want to exclude"), QDir::home().path());
 #endif
 
-    if (!fPath.size())
+    if (!currentDialog || !fPath.size())
     {
         return;
     }
@@ -73,8 +71,9 @@ void AddExclusionDialog::on_bChoose_clicked()
 #ifndef __APPLE__
 void AddExclusionDialog::on_bChooseFile_clicked()
 {
-    QString fPath = QFileDialog::getOpenFileName(0,  tr("Select local exclusion item"), QDir::home().path());
-    if (!fPath.size())
+    QPointer<AddExclusionDialog> currentDialog = this;
+    QString fPath = QFileDialog::getOpenFileName(0,  tr("Select the file you want to exclude"), QDir::home().path());
+    if (!currentDialog || !fPath.size())
     {
         return;
     }

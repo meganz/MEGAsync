@@ -683,7 +683,7 @@ void SettingsDialog::on_bCancel_clicked()
 
 void SettingsDialog::on_bOk_clicked()
 {
-    bool saved = true;
+    bool saved = 1;
     if (ui->bApply->isEnabled())
     {
         saved = saveSettings();
@@ -1525,28 +1525,31 @@ int SettingsDialog::saveSettings()
                 excludedNames.append(ui->lExcludedNames->item(i)->text()); // File name exclusion
             }
         }
+
         preferences->setExcludedSyncNames(excludedNames);
         preferences->setExcludedSyncPaths(excludedPaths);
+        preferences->setCrashed(true);
+        excludedNamesChanged = false;
 
         QMessageBox* info = new QMessageBox(QMessageBox::Warning, QString::fromAscii("MEGAsync"),
                                             tr("The new excluded file names will be taken into account\n"
-                                               "when the application starts again"),
-                                            QMessageBox::Cancel | QMessageBox::Ok);
-        info->setButtonText(QMessageBox::Cancel, trUtf8("Restart"));
-        int result = info->exec();
-        if (!info)
+                                               "when the application starts again"));
+        info->setStandardButtons(QMessageBox::Ok | QMessageBox::Yes);
+        info->setButtonText(QMessageBox::Yes, tr("Restart"));
+        info->setDefaultButton(QMessageBox::Ok);
+
+        QPointer<SettingsDialog> currentDialog = this;
+        info->exec();
+        int result = info->result();
+        delete info;
+        if (!currentDialog)
         {
-            return false;
+            return 2;
         }
 
-        excludedNamesChanged = false;
-        preferences->setCrashed(true);
-
-        if (result == QMessageBox::Cancel)
+        if (result == QMessageBox::Yes)
         {
             // Restart MEGAsync
-            delete info;
-            info = NULL;
             ((MegaApplication*)qApp)->rebootApplication(false);
             return 2;
         }
@@ -1879,30 +1882,17 @@ void SettingsDialog::on_bAddName_clicked()
 {
     QPointer<AddExclusionDialog> add = new AddExclusionDialog(this);
     int result = add->exec();
-    if (!add || !result)
+    if (!add || result != QDialog::Accepted)
     {
-      delete add;
-      return;
+        delete add;
+        return;
     }
 
     QString text = add->textValue();
     delete add;
-    text = text.trimmed();
+
     if (text.isEmpty())
     {
-        return;
-    }
-
-    //Remove possible trailing '/'
-    if (text.contains(QDir::separator()) && text.size() > 1 && text.at(text.size() - 1) == QDir::separator())
-    {
-        text.chop(1);
-    }
-
-    QRegExp regExp(text, Qt::CaseInsensitive, QRegExp::Wildcard);
-    if (!regExp.isValid())
-    {
-        QMessageBox::warning(NULL, tr("Error"), QString::fromUtf8("You have entered an invalid file name or expression."), QMessageBox::Ok);
         return;
     }
 
@@ -1912,7 +1902,7 @@ void SettingsDialog::on_bAddName_clicked()
         {
             return;
         }
-        else if (ui->lExcludedNames->item(i)->text().compare(text, Qt::CaseInsensitive)>0)
+        else if (ui->lExcludedNames->item(i)->text().compare(text, Qt::CaseInsensitive) > 0)
         {
             ui->lExcludedNames->insertItem(i, text);
             excludedNamesChanged = true;
