@@ -219,6 +219,9 @@ public:
 
     QStringList getExcludedSyncNames();
     void setExcludedSyncNames(QStringList names);
+    QStringList getExcludedSyncPaths();
+    void setExcludedSyncPaths(QStringList paths);
+
     QStringList getPreviousCrashes();
     void setPreviousCrashes(QStringList crashes);
     long long getLastReboot();
@@ -358,6 +361,7 @@ protected:
     QList<bool> activeFolders;
     QList<bool> temporaryInactiveFolders;
     QStringList excludedSyncNames;
+    QStringList excludedSyncPaths;
     bool errorFlag;
     long long tempBandwidth;
     int tempBandwidthInterval;
@@ -434,6 +438,7 @@ protected:
     static const QString fileTimeKey;
     static const QString lastExecutionTimeKey;
     static const QString excludedSyncNamesKey;
+    static const QString excludedSyncPathsKey;
     static const QString lastVersionKey;
     static const QString isCrashedKey;
     static const QString lastStatsRequestKey;

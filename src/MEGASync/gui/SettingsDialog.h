@@ -166,7 +166,7 @@ private:
 
     void loadSyncSettings();
     void loadSizeLimits();
-    bool saveSettings();
+    int saveSettings();
     void onCacheSizeAvailable();
     void onClearCache();
 };

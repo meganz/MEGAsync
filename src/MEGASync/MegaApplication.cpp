@@ -1282,6 +1282,14 @@ void MegaApplication::start()
         }
         megaApi->setExcludedNames(&vExclusions);
 
+        QStringList exclusionPaths = preferences->getExcludedSyncPaths();
+        vector<string> vExclusionPaths;
+        for (int i = 0; i < exclusionPaths.size(); i++)
+        {
+            vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
+        }
+        megaApi->setExcludedPaths(&vExclusionPaths);
+
         if (preferences->lowerSizeLimit())
         {
             megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
@@ -2604,6 +2612,14 @@ void MegaApplication::setupWizardFinished(int result)
         vExclusions.push_back(exclusions[i].toUtf8().constData());
     }
     megaApi->setExcludedNames(&vExclusions);
+
+    QStringList exclusionPaths = preferences->getExcludedSyncPaths();
+    vector<string> vExclusionPaths;
+    for (int i = 0; i < exclusionPaths.size(); i++)
+    {
+        vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
+    }
+    megaApi->setExcludedPaths(&vExclusionPaths);
 
     if (preferences->lowerSizeLimit())
     {
