@@ -689,18 +689,8 @@ void MegaApplication::initialize()
     megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGAsync is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
              .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
 
-    QString languageCode = language;
-    while (languageCode.size() && !Utilities::languageCodeToString(languageCode).size())
-    {
-        languageCode.resize(languageCode.size() - 1);
-    }
-
-    if (languageCode.size())
-    {
-        megaApi->setLanguage(languageCode.toUtf8().constData());
-        megaApiFolders->setLanguage(languageCode.toUtf8().constData());
-    }
-
+    megaApi->setLanguage(currentLanguageCode.toUtf8().constData());
+    megaApiFolders->setLanguage(currentLanguageCode.toUtf8().constData());
     megaApi->setDownloadMethod(preferences->transferDownloadMethod());
     megaApi->setUploadMethod(preferences->transferUploadMethod());
     setMaxConnections(MegaTransfer::TYPE_UPLOAD,   preferences->parallelUploadConnections());
@@ -815,6 +805,11 @@ QString MegaApplication::applicationDataPath()
     return dataPath;
 }
 
+QString MegaApplication::getCurrentLanguageCode()
+{
+    return currentLanguageCode;
+}
+
 void MegaApplication::changeLanguage(QString languageCode)
 {
     if (appfinished)
@@ -826,40 +821,14 @@ void MegaApplication::changeLanguage(QString languageCode)
                             + Preferences::TRANSLATION_PREFIX
                             + languageCode))
     {
-        if (translator.load(Preferences::TRANSLATION_FOLDER
+        translator.load(Preferences::TRANSLATION_FOLDER
                                    + Preferences::TRANSLATION_PREFIX
-                                   + QString::fromUtf8("en")))
-        {
-            if (megaApi)
-            {
-                megaApi->setLanguage("en");
-            }
-
-            if (megaApiFolders)
-            {
-                megaApiFolders->setLanguage("en");
-            }
-        }
+                                   + QString::fromUtf8("en"));
+        currentLanguageCode = QString::fromUtf8("en");
     }
     else
-    {        
-        while (languageCode.size() && !Utilities::languageCodeToString(languageCode).size())
-        {
-            languageCode.resize(languageCode.size() - 1);
-        }
-
-        if (languageCode.size())
-        {
-            if (megaApi)
-            {
-                megaApi->setLanguage(languageCode.toUtf8().constData());
-            }
-
-            if (megaApiFolders)
-            {
-                megaApiFolders->setLanguage(languageCode.toUtf8().constData());
-            }
-        }
+    {
+        currentLanguageCode = languageCode;
     }
 
     createTrayIcon();
@@ -1281,6 +1250,14 @@ void MegaApplication::start()
             vExclusions.push_back(exclusions[i].toUtf8().constData());
         }
         megaApi->setExcludedNames(&vExclusions);
+
+        QStringList exclusionPaths = preferences->getExcludedSyncPaths();
+        vector<string> vExclusionPaths;
+        for (int i = 0; i < exclusionPaths.size(); i++)
+        {
+            vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
+        }
+        megaApi->setExcludedPaths(&vExclusionPaths);
 
         if (preferences->lowerSizeLimit())
         {
@@ -2604,6 +2581,14 @@ void MegaApplication::setupWizardFinished(int result)
         vExclusions.push_back(exclusions[i].toUtf8().constData());
     }
     megaApi->setExcludedNames(&vExclusions);
+
+    QStringList exclusionPaths = preferences->getExcludedSyncPaths();
+    vector<string> vExclusionPaths;
+    for (int i = 0; i < exclusionPaths.size(); i++)
+    {
+        vExclusionPaths.push_back(exclusionPaths[i].toUtf8().constData());
+    }
+    megaApi->setExcludedPaths(&vExclusionPaths);
 
     if (preferences->lowerSizeLimit())
     {

@@ -16,6 +16,7 @@
 #include "ui_SettingsDialog.h"
 #include "control/Utilities.h"
 #include "platform/Platform.h"
+#include "gui/AddExclusionDialog.h"
 
 #ifdef __APPLE__
     #include "gui/CocoaHelpButton.h"
@@ -682,17 +683,17 @@ void SettingsDialog::on_bCancel_clicked()
 
 void SettingsDialog::on_bOk_clicked()
 {
-    bool saved = true;
+    bool saved = 1;
     if (ui->bApply->isEnabled())
     {
         saved = saveSettings();
     }
 
-    if (saved)
+    if (saved == 1)
     {
         this->close();
     }
-    else
+    else if (!saved)
     {
         shouldClose = true;
     }
@@ -1016,6 +1017,12 @@ void SettingsDialog::loadSettings()
             ui->lExcludedNames->addItem(excludedNames[i]);
         }
 
+        QStringList excludedPaths = preferences->getExcludedSyncPaths();
+        for (int i = 0; i < excludedPaths.size(); i++)
+        {
+            ui->lExcludedNames->addItem(excludedPaths[i]);
+        }
+
         loadSizeLimits();
         ui->cOverlayIcons->setChecked(preferences->overlayIconsDisabled());
     }
@@ -1106,7 +1113,7 @@ void SettingsDialog::refreshAccountDetails()
     }
 }
 
-bool SettingsDialog::saveSettings()
+int SettingsDialog::saveSettings()
 {
     modifyingSettings++;
     if (!proxyOnly)
@@ -1146,6 +1153,9 @@ bool SettingsDialog::saveSettings()
         {
             preferences->setLanguage(selectedLanguageCode);
             app->changeLanguage(selectedLanguageCode);
+            QString currentLanguageCode = app->getCurrentLanguageCode();
+            megaApi->setLanguage(currentLanguageCode.toUtf8().constData());
+            megaApi->setLanguagePreference(currentLanguageCode.toUtf8().constData());
         }
 
         //Account
@@ -1378,32 +1388,6 @@ bool SettingsDialog::saveSettings()
         preferences->setUseHttpsOnly(ui->cbUseHttps->isChecked());
         app->setUseHttpsOnly(preferences->usingHttpsOnly());
 
-        //Advanced
-        if (excludedNamesChanged)
-        {
-            QStringList excludedNames;
-            for (int i = 0; i < ui->lExcludedNames->count(); i++)
-            {
-                excludedNames.append(ui->lExcludedNames->item(i)->text());
-            }
-            preferences->setExcludedSyncNames(excludedNames);
-
-            vector<string> vExclusions;
-            for (int i = 0; i < excludedNames.size(); i++)
-            {
-                vExclusions.push_back(excludedNames[i].toUtf8().constData());
-            }
-            megaApi->setExcludedNames(&vExclusions);
-
-            QMegaMessageBox::information(this, tr("Warning"), tr("The new excluded file names will be taken into account\n"
-                                                                            "when the application starts again"),
-                                         Utilities::getDevicePixelRatio(), QMessageBox::Ok);
-            excludedNamesChanged = false;
-            preferences->setCrashed(true);
-
-            QT_TR_NOOP("Do you want to restart MEGAsync now?");
-        }
-
         if (sizeLimitsChanged)
         {
             preferences->setUpperSizeLimit(hasUpperLimit);
@@ -1448,7 +1432,7 @@ bool SettingsDialog::saveSettings()
         }
     }
 
-    bool proxyChanged = false;
+    int proxyChanged = 0;
     //Proxies
     if (!proxyTestProgressDialog && ((ui->rNoProxy->isChecked() && (preferences->proxyType() != Preferences::PROXY_TYPE_NONE))       ||
         (ui->rProxyAuto->isChecked() &&  (preferences->proxyType() != Preferences::PROXY_TYPE_AUTO))    ||
@@ -1460,7 +1444,7 @@ bool SettingsDialog::saveSettings()
         (preferences->getProxyUsername() != ui->eProxyUsername->text())                                 ||
         (preferences->getProxyPassword() != ui->eProxyPassword->text())))
     {
-        proxyChanged = true;
+        proxyChanged = 1;
         QNetworkProxy proxy;
         proxy.setType(QNetworkProxy::NoProxy);
         if (ui->rProxyManual->isChecked())
@@ -1526,6 +1510,54 @@ bool SettingsDialog::saveSettings()
 
         connectivityChecker->startCheck();
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing proxy settings...");        
+    }
+
+    //Advanced
+    if (excludedNamesChanged)
+    {
+        QStringList excludedNames;
+        QStringList excludedPaths;
+        for (int i = 0; i < ui->lExcludedNames->count(); i++)
+        {
+            if (ui->lExcludedNames->item(i)->text().contains(QDir::separator())) // Path exclusion
+            {
+                excludedPaths.append(ui->lExcludedNames->item(i)->text());
+            }
+            else
+            {
+                excludedNames.append(ui->lExcludedNames->item(i)->text()); // File name exclusion
+            }
+        }
+
+        preferences->setExcludedSyncNames(excludedNames);
+        preferences->setExcludedSyncPaths(excludedPaths);
+        preferences->setCrashed(true);
+        excludedNamesChanged = false;
+
+        QMessageBox* info = new QMessageBox(QMessageBox::Warning, QString::fromAscii("MEGAsync"),
+                                            tr("The new excluded file names will be taken into account\n"
+                                               "when the application starts again"));
+        info->setStandardButtons(QMessageBox::Ok | QMessageBox::Yes);
+        info->setButtonText(QMessageBox::Yes, tr("Restart"));
+        info->setDefaultButton(QMessageBox::Ok);
+
+        QPointer<SettingsDialog> currentDialog = this;
+        info->exec();
+        int result = info->result();
+        delete info;
+        if (!currentDialog)
+        {
+            return 2;
+        }
+
+        if (result == QMessageBox::Yes)
+        {
+            // Restart MEGAsync
+            ((MegaApplication*)qApp)->rebootApplication(false);
+            return 2;
+        }
+
+        QT_TR_NOOP("Do you want to restart MEGAsync now?");
     }
 
     ui->bApply->setEnabled(false);
@@ -1741,6 +1773,8 @@ void SettingsDialog::on_bExportMasterKey_clicked()
 
     file.close();
 
+    megaApi->masterKeyExported();
+
     QMegaMessageBox::information(this, tr("Warning"),
                                  tr("Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.") + QString::fromUtf8("\n")
                                  + tr("Always keep physical control of your master key (e.g. on a client device, external storage, or print)."),
@@ -1851,29 +1885,19 @@ void SettingsDialog::on_bDownloadFolder_clicked()
 
 void SettingsDialog::on_bAddName_clicked()
 {
-    QPointer<QInputDialog> id = new QInputDialog(this);
-    id->setWindowTitle(tr("Excluded name"));
-    id->setLabelText(tr("Enter a name to exclude from synchronization.\n(wildcards * and ? are allowed):"));
-    int result = id->exec();
-
-    if (!id || !result)
+    QPointer<AddExclusionDialog> add = new AddExclusionDialog(this);
+    int result = add->exec();
+    if (!add || result != QDialog::Accepted)
     {
-      delete id;
-      return;
-    }
-
-    QString text = id->textValue();
-    delete id;
-    text = text.trimmed();
-    if (text.isEmpty())
-    {
+        delete add;
         return;
     }
 
-    QRegExp regExp(text, Qt::CaseInsensitive, QRegExp::Wildcard);
-    if (!regExp.isValid())
+    QString text = add->textValue();
+    delete add;
+
+    if (text.isEmpty())
     {
-        QMessageBox::warning(NULL, tr("Error"), QString::fromUtf8("You have entered an invalid file name or expression."), QMessageBox::Ok);
         return;
     }
 
@@ -1883,7 +1907,7 @@ void SettingsDialog::on_bAddName_clicked()
         {
             return;
         }
-        else if (ui->lExcludedNames->item(i)->text().compare(text, Qt::CaseInsensitive)>0)
+        else if (ui->lExcludedNames->item(i)->text().compare(text, Qt::CaseInsensitive) > 0)
         {
             ui->lExcludedNames->insertItem(i, text);
             excludedNamesChanged = true;
