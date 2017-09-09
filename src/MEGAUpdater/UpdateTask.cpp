@@ -7,6 +7,20 @@
 #include <ctime>
 #include <sstream>
 #include <cstdio>
+#include <stdlib.h>
+#include <stdio.h>
+
+#ifdef _WIN32
+#include <Windows.h>
+#include <Shlwapi.h>
+#include <direct.h>
+#include <io.h>
+#include <algorithm>
+
+#ifndef PATH_MAX
+    #define PATH_MAX _MAX_PATH
+#endif
+#endif
 
 using namespace mega;
 using namespace std;
@@ -14,7 +28,7 @@ using namespace std;
 char separator()
 {
 #ifdef _WIN32
-    return '\\')
+    return '\\';
 #else
     return '/';
 #endif
@@ -48,12 +62,16 @@ int mkdir_p(const char *path)
     /* Iterate the string */
     for (p = _path + 1; *p; p++)
     {
-        if (*p == '/')
+        if (*p == '\\' || *p == '/')
         {
             /* Temporarily truncate */
             *p = '\0';
 
+#ifdef _WIN32
+            if (_mkdir(_path) != 0)
+#else
             if (mkdir(_path, S_IRWXU) != 0)
+#endif
             {
                 if (errno != EEXIST)
                 {
@@ -61,11 +79,15 @@ int mkdir_p(const char *path)
                 }
             }
 
-            *p = '/';
+            *p = separator();
         }
     }
 
+#ifdef _WIN32
+    if (_mkdir(_path) != 0)
+#else
     if (mkdir(_path, S_IRWXU) != 0)
+#endif
     {
         if (errno != EEXIST)
         {
@@ -79,19 +101,24 @@ int mkdir_p(const char *path)
 UpdateTask::UpdateTask(MegaApi *megaApi)
 {
     this->megaApi = megaApi;
-    string appData = getAppDataDir();
-    if (appData.empty())
+    signatureChecker = new MegaHashSignature((const char *)UPDATE_PUBLIC_KEY);
+    delegateListener = new SynchronousRequestListener();
+    currentFile = -1;
+
+    appDataFolder = getAppDataDir();
+    if (appDataFolder.empty())
     {
         return;
     }
 
-    updateFolder = appData + UPDATE_FOLDER_NAME;
-    updateFolder += separator();
-    backupFolder = appData + BACKUP_FOLDER_NAME;
-    backupFolder += separator();
-    currentFile = -1;
-    signatureChecker = new MegaHashSignature((const char *)UPDATE_PUBLIC_KEY);
-    delegateListener = new SynchronousRequestListener();
+#ifdef _WIN32
+    appFolder = appDataFolder;
+#else
+    appFolder = APP_DIR_BUNDLE;
+#endif
+
+    updateFolder = appDataFolder + UPDATE_FOLDER_NAME + separator();
+    backupFolder = appDataFolder + BACKUP_FOLDER_NAME + separator();
 }
 
 UpdateTask::~UpdateTask()
@@ -112,7 +139,7 @@ void UpdateTask::checkForUpdates()
         randomSec += char('A'+(rand() % 26));
     }
 
-    string appData = getAppDataDir();
+    string appData = appDataFolder;
     if (appData.empty())
     {
         return;
@@ -154,6 +181,16 @@ void UpdateTask::checkForUpdates()
                 //Download file to specific folder
                 if (downloadFile(downloadURLs[currentFile], localFile))
                 {
+                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "File downloaded OK:");
+                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, localPaths[currentFile].c_str());
+                    if (!alreadyDownloaded(localPaths[currentFile], fileSignatures[currentFile]))
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Signature of downloaded file doesn't match:");
+                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, localPaths[currentFile].c_str());
+                        return;
+                    }
+
+                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "File signature OK");
                     currentFile++;
                     continue;
                 }
@@ -182,7 +219,7 @@ void UpdateTask::checkForUpdates()
 
 bool UpdateTask::downloadFile(string url, string dstPath)
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Downloading updated file from:");
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Downloading updated file from:");
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, url.c_str());
 
     megaApi->downloadFile((char*)url.c_str(), (char*)dstPath.c_str(), delegateListener);
@@ -257,8 +294,12 @@ bool UpdateTask::processUpdateFile(FILE *fd)
         addToSignature(localPath.data(), localPath.length());
         addToSignature(fileSignature.data(), fileSignature.length());
 
+#ifdef _WIN32
+        std::replace(localPath.begin(), localPath.end(), '/', '\\');
+#endif
         if (alreadyInstalled(localPath, fileSignature))
         {
+            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "File already installed:");
             MegaApi::log(MegaApi::LOG_LEVEL_INFO, localPath.c_str());
             continue;
         }
@@ -285,7 +326,11 @@ bool UpdateTask::processUpdateFile(FILE *fd)
 
 bool UpdateTask::fileExist(const char *path)
 {
-    if(access(path, F_OK) != -1 )
+#ifdef _WIN32
+    if (_access(path, 0) != -1)
+#else
+    if (access(path, F_OK) != -1)
+#endif
     {
         return true;
     }
@@ -327,24 +372,38 @@ bool UpdateTask::performUpdate()
 
     for (int i = 0; i < localPaths.size(); i++)
     {
-
         string file = backupFolder + localPaths[i];
         if (mkdir_p(base_path(file).c_str()) == -1)
         {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error creating backup folder for: ");
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, file.c_str());
+            rollbackUpdate(i);
             return false;
         }
 
-        string origFile = APP_DIR_BUNDLE + localPaths[i];
-        int result = rename(origFile.c_str() , file.c_str());
-        if (result == 0)
+        string origFile = appFolder + localPaths[i];
+        if (rename(origFile.c_str(), file.c_str()) && errno != ENOENT)
         {
-            int error =  errno;
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error creating backup of file: ");
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, origFile.c_str());
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, file.c_str());
+            rollbackUpdate(i);
+            return false;
+        }
+
+        if (mkdir_p(base_path(origFile).c_str()) == -1)
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error creating target folder for: ");
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, origFile.c_str());
+            rollbackUpdate(i);
+            return false;
         }
 
         string update = updateFolder + localPaths[i];
-        if (rename(update.c_str(), origFile.c_str()) != 0)
+        if (rename(update.c_str(), origFile.c_str()))
         {
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error installing file: ");
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, update.c_str());
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, origFile.c_str());
             rollbackUpdate(i);
             return false;
@@ -352,7 +411,6 @@ bool UpdateTask::performUpdate()
 
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "File installed: ");
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, localPaths[i].c_str());
-
     }
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Update successfully installed");
@@ -364,7 +422,7 @@ void UpdateTask::rollbackUpdate(int fileNum)
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Uninstalling update...");
     for (int i = fileNum; i >= 0; i--)
     {
-        string origFile = APP_DIR_BUNDLE + localPaths[i];
+        string origFile = appFolder + localPaths[i];
         rename(origFile.c_str(), (updateFolder + localPaths[i]).c_str());
         rename((backupFolder + localPaths[i]).c_str(), origFile.c_str());
 
@@ -377,15 +435,16 @@ void UpdateTask::rollbackUpdate(int fileNum)
 
 void UpdateTask::initialCleanup()
 {
-    removeRecursively(updateFolder);
     removeRecursively(backupFolder);
 }
 
 void UpdateTask::finalCleanup()
 {
     initialCleanup();
-    remove(getAppDataDir().append(UPDATE_FILENAME).c_str());
+    remove(appDataFolder.append(UPDATE_FILENAME).c_str());
+#ifndef _WIN32
     chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAclient", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
+#endif
 }
 
 bool UpdateTask::removeRecursively(string path)
@@ -403,7 +462,7 @@ bool UpdateTask::removeRecursively(string path)
 
 bool UpdateTask::alreadyInstalled(string relativePath, string fileSignature)
 {
-    return alreadyExists(APP_DIR_BUNDLE + relativePath, fileSignature);
+    return alreadyExists(appFolder + relativePath, fileSignature);
 }
 
 bool UpdateTask::alreadyDownloaded(string relativePath, string fileSignature)
@@ -419,7 +478,7 @@ bool UpdateTask::alreadyExists(string absolutePath, string fileSignature)
     long fileLength;
 
     FILE * pFile;
-    pFile = fopen(absolutePath.c_str(), "r");
+    pFile = fopen(absolutePath.c_str(), "rb");
     if (pFile == NULL)
     {
         return false;
@@ -461,16 +520,14 @@ string UpdateTask::readNextLine(FILE *fd)
 
     line[strcspn(line, "\n")] = '\0';
     string qLine(line);
-
-    return qLine; //Fix me. Trim me both sides ><
-
+    return qLine;
 }
 
 
 int UpdateTask::readVersion()
 {
     int version = -1;
-    FILE *fp = fopen(getAppDataDir().append(VERSION_FILE_NAME).c_str(), "r");
+    FILE *fp = fopen(appDataFolder.append(VERSION_FILE_NAME).c_str(), "r");
     if (fp == NULL)
     {
         return version;
@@ -483,13 +540,22 @@ int UpdateTask::readVersion()
 
 string UpdateTask::getAppDataDir()
 {   
+    string path;
+#ifdef _WIN32
+    TCHAR szPath[MAX_PATH];
+    if (SUCCEEDED(GetModuleFileName(NULL, szPath , MAX_PATH))
+            && SUCCEEDED(PathRemoveFileSpec(szPath)))
+    {
+        MegaApi::utf16ToUtf8(szPath, lstrlen(szPath), &path);
+        path.append("\\");
+    }
+#elif defined(__APPLE__)
     const char* home = getenv("HOME");
     if (home)
     {
-        string dir;
-        dir.append(home);
-        dir.append("/Library/Application\ Support/Mega\ Limited/MEGAsync/");
-        return dir;
+        path.append(home);
+        path.append("/Library/Application\ Support/Mega\ Limited/MEGAsync/");
     }
-    return string();
+#endif
+    return path;
 }

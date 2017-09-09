@@ -24,9 +24,6 @@ include(../MEGASync/mega/bindings/qt/sdk.pri)
 DEFINES -= MEGA_QT_LOGGING
 DEFINES -= USE_QT
 
-LIBS += -lpthread
-
-SOURCES += src/thread/posixthread.cpp
 SOURCES -= src/gfx/qt.cpp
 SOURCES -= src/thread/qtthread.cpp
 SOURCES -= bindings/qt/QTMegaRequestListener.cpp
@@ -37,8 +34,10 @@ SOURCES -= bindings/qt/QTMegaListener.cpp
 SOURCES -= bindings/qt/QTMegaEvent.cpp
 
 macx {
-
+    SOURCES += src/thread/posixthread.cpp
     DEFINES += USE_PTHREAD
+    LIBS += -lpthread
+
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
     QMAKE_CXXFLAGS -= -stdlib=libc++
     QMAKE_LFLAGS -= -stdlib=libc++
@@ -47,3 +46,6 @@ macx {
     QMAKE_CXXFLAGS += -g
 }
 
+win32 {
+    SOURCES += src/thread/win32thread.cpp
+}

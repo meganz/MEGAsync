@@ -5,13 +5,9 @@
 
 class UpdateTask
 {
-
 public:
-
     explicit UpdateTask(mega::MegaApi *megaApi);
     ~UpdateTask();
-
-public:
     void checkForUpdates();
 
 protected:
@@ -31,9 +27,10 @@ protected:
     bool removeRecursively(std::string path);
     int readVersion();
     std::string getAppDataDir();
-
     std::string readNextLine(FILE *fd);
 
+    std::string appFolder;
+    std::string appDataFolder;
     std::string updateFolder;
     std::string backupFolder;
     mega::MegaHashSignature *signatureChecker;
