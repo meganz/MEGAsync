@@ -26,7 +26,9 @@ public:
            STRING_GETLINK = 1,
            STRING_SHARE = 2,
            STRING_SEND = 3,
-           STRING_REMOVE_FROM_LEFT_PANE = 4
+           STRING_REMOVE_FROM_LEFT_PANE = 4,
+           STRING_VIEW_ON_MEGA = 5,
+           STRING_VIEW_VERSIONS = 6
     } StringID;
 
     static FileState getPathState(PCWSTR filePath, bool overlayIcons = true);
@@ -35,6 +37,9 @@ public:
     static bool send(PCWSTR path);
     static bool pasteLink(PCWSTR path);
     static bool shareFolder(PCWSTR path);
+    static bool hasVersions(PCWSTR path);
+    static bool viewOnMEGA(PCWSTR path);
+    static bool viewVersions(PCWSTR path);
     static bool startRequest();
     static bool endRequest();
 
@@ -48,6 +53,9 @@ private:
     static WCHAR OP_SHARE;
     static WCHAR OP_SEND;
     static WCHAR OP_STRING;
+    static WCHAR OP_VIEW;
+    static WCHAR OP_VERSIONS;
+    static WCHAR OP_HASVERSIONS;
     static int sendRequest(WCHAR type, PCWSTR content, PCWSTR response, int responseLen);
     MegaInterface() {}
 };

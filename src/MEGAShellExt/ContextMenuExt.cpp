@@ -43,6 +43,8 @@ extern long g_cDllRef;
 #define IDM_UPLOAD             0  // The command's identifier offset
 #define IDM_GETLINK            1
 #define IDM_REMOVEFROMLEFTPANE 2
+#define IDM_VIEWONMEGA         3
+#define IDM_VIEWVERSIONS       4
 
 ContextMenuExt::ContextMenuExt(void) : m_cRef(1),
     m_pszUploadMenuText(L"&Upload to MEGA"),
@@ -65,7 +67,19 @@ ContextMenuExt::ContextMenuExt(void) : m_cRef(1),
     m_pszRemoveFromLeftPaneVerbCanonicalName("RemoveFromLeftPane"),
     m_pwszRemoveFromLeftPaneVerbCanonicalName(L"RemoveFromLeftPane"),
     m_pszRemoveFromLeftPaneVerbHelpText("Remove from left pane"),
-    m_pwszRemoveFromLeftPaneVerbHelpText(L"Remove from left pane")
+    m_pwszRemoveFromLeftPaneVerbHelpText(L"Remove from left pane"),
+    m_pszViewOnMEGAVerb("ViewOnMEGA"),
+    m_pwszViewOnMEGAVerb(L"ViewOnMEGA"),
+    m_pszViewOnMEGAVerbCanonicalName("ViewOnMEGA"),
+    m_pwszViewOnMEGAVerbCanonicalName(L"ViewOnMEGA"),
+    m_pszViewOnMEGAVerbHelpText("View on MEGA"),
+    m_pwszViewOnMEGAVerbHelpText(L"View on MEGA"),
+    m_pszViewVersionsVerb("ViewVersions"),
+    m_pwszViewVersionsVerb(L"ViewVersions"),
+    m_pszViewVersionsVerbCanonicalName("ViewVersions"),
+    m_pwszViewVersionsVerbCanonicalName(L"ViewVersions"),
+    m_pszViewVersionsVerbHelpText("View previous versions"),
+    m_pwszViewVersionsVerbHelpText(L"View previous versions")
 {
     hIcon = NULL;
     m_hMenuBmp = NULL;
@@ -325,6 +339,22 @@ void ContextMenuExt::removeFromLeftPane()
     CheckLeftPaneIcon((wchar_t *)inLeftPane.data(), true);
 }
 
+void ContextMenuExt::viewOnMEGA()
+{
+    if (selectedFiles.size())
+    {
+        MegaInterface::viewOnMEGA((PCWSTR)selectedFiles[0].data());
+    }
+}
+
+void ContextMenuExt::viewVersions()
+{
+    if (selectedFiles.size())
+    {
+        MegaInterface::viewVersions((PCWSTR)selectedFiles[0].data());
+    }
+}
+
 #pragma region IUnknown
 
 // Query to the interface the component supported.
@@ -569,6 +599,61 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
             lastItem = IDM_REMOVEFROMLEFTPANE;
         }
 
+        if (!unsyncedFiles && !unsyncedFolders && !unsyncedUnknowns && !syncedUnknowns
+                && selectedFiles.size() == 1
+                && (syncedFiles + syncedFolders) == 1)
+        {
+            // One synced file or folder selected
+            LPWSTR versionsText = NULL;
+            if (syncedFolders || !MegaInterface::hasVersions((PCWSTR)selectedFiles[0].data())
+                    || !(versionsText = MegaInterface::getString(MegaInterface::STRING_VIEW_VERSIONS, syncedFiles, syncedFolders)))
+            {
+                LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_VIEW_ON_MEGA, syncedFiles, syncedFolders);
+                if (!menuText)
+                {
+                    return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
+                }
+
+                MENUITEMINFO mii = { sizeof(mii) };
+                mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
+                mii.wID = idCmdFirst + IDM_VIEWONMEGA;
+                mii.fType = MFT_STRING;
+                mii.dwTypeData = menuText;
+                mii.fState = MFS_ENABLED;
+                mii.hbmpItem = (legacyIcon || !m_hMenuBmp) ? HBMMENU_CALLBACK : m_hMenuBmp;
+                if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
+                {
+                    delete menuText;
+                    return HRESULT_FROM_WIN32(GetLastError());
+                }
+                delete menuText;
+                lastItem = IDM_VIEWONMEGA;
+            }
+            else
+            {
+                LPWSTR menuText = versionsText;
+                if (!menuText)
+                {
+                    return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
+                }
+
+                MENUITEMINFO mii = { sizeof(mii) };
+                mii.fMask = MIIM_BITMAP | MIIM_STRING | MIIM_FTYPE | MIIM_ID | MIIM_STATE;
+                mii.wID = idCmdFirst + IDM_VIEWVERSIONS;
+                mii.fType = MFT_STRING;
+                mii.dwTypeData = menuText;
+                mii.fState = MFS_ENABLED;
+                mii.hbmpItem = (legacyIcon || !m_hMenuBmp) ? HBMMENU_CALLBACK : m_hMenuBmp;
+                if (!InsertMenuItem(hMenu, indexMenu++, TRUE, &mii))
+                {
+                    delete menuText;
+                    return HRESULT_FROM_WIN32(GetLastError());
+                }
+                delete menuText;
+                lastItem = IDM_VIEWVERSIONS;
+            }
+        }
+
         // Add a separator.
         MENUITEMINFO sep = { sizeof(sep) };
         sep.fMask = MIIM_TYPE;
@@ -650,6 +735,14 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
             {
                 removeFromLeftPane();
             }
+            else if (!StrCmpIA(pici->lpVerb, m_pszViewOnMEGAVerb))
+            {
+                viewOnMEGA();
+            }
+            else if (!StrCmpIA(pici->lpVerb, m_pszViewVersionsVerb))
+            {
+                viewVersions();
+            }
             else
             {
                 // If the verb is not recognized by the context menu handler, it
@@ -675,6 +768,14 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
             else if (!StrCmpIW(((CMINVOKECOMMANDINFOEX*)pici)->lpVerbW, m_pwszRemoveFromLeftPaneVerb))
             {
                 removeFromLeftPane();
+            }
+            else if (!StrCmpIW(((CMINVOKECOMMANDINFOEX*)pici)->lpVerbW, m_pwszViewOnMEGAVerb))
+            {
+                viewOnMEGA();
+            }
+            else if (!StrCmpIW(((CMINVOKECOMMANDINFOEX*)pici)->lpVerbW, m_pwszViewVersionsVerb))
+            {
+                viewVersions();
             }
             else
             {
@@ -702,6 +803,14 @@ IFACEMETHODIMP ContextMenuExt::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
             else if (LOWORD(pici->lpVerb) == IDM_REMOVEFROMLEFTPANE)
             {
                 removeFromLeftPane();
+            }
+            else if (LOWORD(pici->lpVerb) == IDM_VIEWONMEGA)
+            {
+                viewOnMEGA();
+            }
+            else if (LOWORD(pici->lpVerb) == IDM_VIEWVERSIONS)
+            {
+                viewVersions();
             }
             else
             {
@@ -807,6 +916,52 @@ IFACEMETHODIMP ContextMenuExt::GetCommandString(UINT_PTR idCommand,
                 // idCommand.
                 hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
                     m_pwszRemoveFromLeftPaneVerbCanonicalName);
+                break;
+
+            default:
+                hr = S_OK;
+            }
+        }
+        else if (idCommand == IDM_VIEWONMEGA)
+        {
+            switch (uFlags)
+            {
+            case GCS_HELPTEXTW:
+                // Only useful for pre-Vista versions of Windows that have a
+                // Status bar.
+                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
+                    m_pwszViewOnMEGAVerbHelpText);
+                break;
+
+            case GCS_VERBW:
+                // GCS_VERBW is an optional feature that enables a caller to
+                // discover the canonical name for the verb passed in through
+                // idCommand.
+                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
+                    m_pwszViewOnMEGAVerbCanonicalName);
+                break;
+
+            default:
+                hr = S_OK;
+            }
+        }
+        else if (idCommand == IDM_VIEWVERSIONS)
+        {
+            switch (uFlags)
+            {
+            case GCS_HELPTEXTW:
+                // Only useful for pre-Vista versions of Windows that have a
+                // Status bar.
+                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
+                    m_pwszViewVersionsVerbHelpText);
+                break;
+
+            case GCS_VERBW:
+                // GCS_VERBW is an optional feature that enables a caller to
+                // discover the canonical name for the verb passed in through
+                // idCommand.
+                hr = StringCchCopy(reinterpret_cast<PWSTR>(pszName), cchMax,
+                    m_pwszViewVersionsVerbCanonicalName);
                 break;
 
             default:

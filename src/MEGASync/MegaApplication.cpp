@@ -3918,19 +3918,19 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
     exportOps++;
 }
 
-void MegaApplication::shellViewOnMega(QString localPath)
+void MegaApplication::shellViewOnMega(QByteArray localPath)
 {
     MegaNode *node = NULL;
 
-#ifdef WIN32
-    if (!localPath.startsWith(QString::fromAscii("\\\\")))
+#ifdef WIN32   
+    if (!localPath.startsWith(QByteArray((const char *)L"\\\\", 4)))
     {
-        localPath.insert(0, QString::fromAscii("\\\\?\\"));
+        localPath.insert(0, QByteArray((const char *)L"\\\\?\\", 8));
     }
 
-    string tmpPath((const char*)localPath.utf16(), localPath.size() * sizeof(wchar_t));
+    string tmpPath((const char*)localPath.constData(), localPath.size() - 2);
 #else
-    string tmpPath((const char*)localPath.toUtf8().constData());
+    string tmpPath((const char*)localPath.constData());
 #endif
 
     node = megaApi->getSyncedNode(&tmpPath);

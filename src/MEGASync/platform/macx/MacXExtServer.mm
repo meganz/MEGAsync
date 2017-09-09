@@ -22,7 +22,7 @@ MacXExtServer::MacXExtServer(MegaApplication *app)
     connect(this, SIGNAL(sendToAll(QByteArray)), this, SLOT(doSendToAll(QByteArray)));
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), app, SLOT(shellUpload(QQueue<QString>)),Qt::QueuedConnection);
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), app, SLOT(shellExport(QQueue<QString>)),Qt::QueuedConnection);
-    connect(this, SIGNAL(viewOnMega(QString)), app, SLOT(shellViewOnMega(QString)),Qt::QueuedConnection);
+    connect(this, SIGNAL(viewOnMega(QByteArray)), app, SLOT(shellViewOnMega(QByteArray)),Qt::QueuedConnection);
     connect(m_localServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
 }
 
@@ -296,8 +296,8 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
         }
         case 'V': // View node at MEGA cloud
         {
-            QString filePath = QString::fromUtf8(content);
-            QFileInfo file(filePath);
+            QByteArray filePath = QByteArray(content, strlen(content) + 1);
+            QFileInfo file(QString::fromUtf8(content));
             if (file.exists())
             {
                 emit viewOnMega(filePath);

@@ -61,6 +61,7 @@ class WinShellDispatcherTask : public QThread
  signals:
     void newUploadQueue(QQueue<QString> uploadQueue);
     void newExportQueue(QQueue<QString> exportQueue);
+    void viewOnMega(QByteArray path);
 
  protected:
    virtual void run();

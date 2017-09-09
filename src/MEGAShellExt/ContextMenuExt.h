@@ -84,6 +84,8 @@ private:
     void requestUpload();
     void requestGetLinks();
     void removeFromLeftPane();
+    void viewOnMEGA();
+    void viewVersions();
     HBITMAP getBitmap(HICON icon);
     HBITMAP getBitmapLegacy(HICON hIcon);
     bool legacyIcon;
@@ -118,6 +120,22 @@ private:
     PCWSTR m_pwszRemoveFromLeftPaneVerbCanonicalName;
     PCSTR m_pszRemoveFromLeftPaneVerbHelpText;
     PCWSTR m_pwszRemoveFromLeftPaneVerbHelpText;
+
+    PCWSTR m_pszViewOnMEGAMenuText;
+    PCSTR m_pszViewOnMEGAVerb;
+    PCWSTR m_pwszViewOnMEGAVerb;
+    PCSTR m_pszViewOnMEGAVerbCanonicalName;
+    PCWSTR m_pwszViewOnMEGAVerbCanonicalName;
+    PCSTR m_pszViewOnMEGAVerbHelpText;
+    PCWSTR m_pwszViewOnMEGAVerbHelpText;
+
+    PCWSTR m_pszViewVersionsMenuText;
+    PCSTR m_pszViewVersionsVerb;
+    PCWSTR m_pwszViewVersionsVerb;
+    PCSTR m_pszViewVersionsVerbCanonicalName;
+    PCWSTR m_pwszViewVersionsVerbCanonicalName;
+    PCSTR m_pszViewVersionsVerbHelpText;
+    PCWSTR m_pwszViewVersionsVerbHelpText;
 };
 
 #endif
