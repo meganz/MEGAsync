@@ -25,14 +25,14 @@ int main(int argc, char *argv[])
 
     char log_message[MAX_LOG_SIZE];
     time_t currentTime = time(NULL);
-    sprintf_s(log_message, MAX_LOG_SIZE, "Process started at %s", ctime(&currentTime));
+    snprintf(log_message, MAX_LOG_SIZE, "Process started at %s", ctime(&currentTime));
     log_message[strlen(log_message) - 1] = '\0';
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, log_message);
     MegaApi megaApi(CLIENT_KEY, (const char*)NULL, USER_AGENT);
     UpdateTask updater(&megaApi);
     updater.checkForUpdates();
     currentTime = time(NULL);
-    sprintf_s(log_message, MAX_LOG_SIZE, "Process finished at %s", ctime(&currentTime));
+    snprintf(log_message, MAX_LOG_SIZE, "Process finished at %s", ctime(&currentTime));
     log_message[strlen(log_message) - 1] = '\0';
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, log_message);
     return 0;

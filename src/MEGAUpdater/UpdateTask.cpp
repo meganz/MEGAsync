@@ -47,7 +47,7 @@ string UpdateTask::getAppDataDir()
 
 #else
 
-#define MEGA_SEPARATOR '\'
+#define MEGA_SEPARATOR '/'
 #define mega_mkdir(x) mkdir(x, S_IRWXU)
 #define mega_access(x) access(x, F_OK)
 
@@ -73,7 +73,7 @@ string UpdateTask::getAppDataDir()
 
 #define MAX_LOG_SIZE 1024
 char log_message[MAX_LOG_SIZE];
-#define LOG(logLevel, format, ...) sprintf_s(log_message, MAX_LOG_SIZE, format, __VA_ARGS__); \
+#define LOG(logLevel, ...) snprintf(log_message, MAX_LOG_SIZE, __VA_ARGS__); \
                                    MegaApi::log(logLevel, log_message);
 int mkdir_p(const char *path)
 {
