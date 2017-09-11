@@ -10,6 +10,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+using namespace mega;
+using namespace std;
+
 #ifdef _WIN32
 #include <Windows.h>
 #include <Shlwapi.h>
@@ -20,30 +23,58 @@
 #ifndef PATH_MAX
     #define PATH_MAX _MAX_PATH
 #endif
-#endif
 
-using namespace mega;
-using namespace std;
+#define MEGA_SEPARATOR '\\'
+#define mega_mkdir(x) _mkdir(x)
+#define mega_access(x) _access(x, 0)
 
-char separator()
+string UpdateTask::getAppDataDir()
 {
-#ifdef _WIN32
-    return '\\';
+    string path;
+    TCHAR szPath[MAX_PATH];
+    if (SUCCEEDED(GetModuleFileName(NULL, szPath , MAX_PATH))
+            && SUCCEEDED(PathRemoveFileSpec(szPath)))
+    {
+        MegaApi::utf16ToUtf8(szPath, lstrlen(szPath), &path);
+        path.append("\\");
+    }
+    return path;
+}
+
+#define MEGA_DATA_FOLDER appDataFolder
+#define MEGA_TO_NATIVE_SEPARATORS(x) std::replace(x.begin(), x.end(), '/', '\\');
+#define MEGA_SET_PERMISSIONS
+
 #else
-    return '/';
+
+#define MEGA_SEPARATOR '\'
+#define mega_mkdir(x) mkdir(x, S_IRWXU)
+#define mega_access(x) access(x, F_OK)
+
+string UpdateTask::getAppDataDir()
+{
+    string path;
+    const char* home = getenv("HOME");
+    if (home)
+    {
+        path.append(home);
+        path.append("/Library/Application\ Support/Mega\ Limited/MEGAsync/");
+    }
+    return path;
+}
+
+#define MEGA_DATA_FOLDER APP_DIR_BUNDLE
+#define MEGA_TO_NATIVE_SEPARATORS(x) std::replace(x.begin(), x.end(), '\\', '/');
+#define MEGA_SET_PERMISSIONS chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAclient", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
+
 #endif
-}
 
-std::string base_name(std::string const & path)
-{
-    return path.substr(path.find_last_of("/\\") + 1);
-}
+#define mega_base_path(x) x.substr(0, x.find_last_of("/\\") + 1)
 
-std::string base_path(std::string const & path)
-{
-    return path.substr(0, path.find_last_of("/\\") + 1);
-}
-
+#define MAX_LOG_SIZE 1024
+char log_message[MAX_LOG_SIZE];
+#define LOG(logLevel, format, ...) sprintf_s(log_message, MAX_LOG_SIZE, format, __VA_ARGS__); \
+                                   MegaApi::log(logLevel, log_message);
 int mkdir_p(const char *path)
 {
     /* Adapted from http://stackoverflow.com/a/2336245/119527 */
@@ -53,7 +84,7 @@ int mkdir_p(const char *path)
     errno = 0;
 
     /* Copy string so its mutable */
-    if (len > sizeof(_path)-1)
+    if (len > sizeof(_path) - 1)
     {
         return -1;
     }
@@ -66,35 +97,18 @@ int mkdir_p(const char *path)
         {
             /* Temporarily truncate */
             *p = '\0';
-
-#ifdef _WIN32
-            if (_mkdir(_path) != 0)
-#else
-            if (mkdir(_path, S_IRWXU) != 0)
-#endif
+            if (mega_mkdir(_path) != 0 && errno != EEXIST)
             {
-                if (errno != EEXIST)
-                {
-                    return -1;
-                }
+                return -1;
             }
-
-            *p = separator();
+            *p = MEGA_SEPARATOR;
         }
     }
 
-#ifdef _WIN32
-    if (_mkdir(_path) != 0)
-#else
-    if (mkdir(_path, S_IRWXU) != 0)
-#endif
+    if (mega_mkdir(_path) != 0 && errno != EEXIST)
     {
-        if (errno != EEXIST)
-        {
-            return -1;
-        }
+        return -1;
     }
-
     return 0;
 }
 
@@ -104,21 +118,10 @@ UpdateTask::UpdateTask(MegaApi *megaApi)
     signatureChecker = new MegaHashSignature((const char *)UPDATE_PUBLIC_KEY);
     delegateListener = new SynchronousRequestListener();
     currentFile = -1;
-
     appDataFolder = getAppDataDir();
-    if (appDataFolder.empty())
-    {
-        return;
-    }
-
-#ifdef _WIN32
-    appFolder = appDataFolder;
-#else
-    appFolder = APP_DIR_BUNDLE;
-#endif
-
-    updateFolder = appDataFolder + UPDATE_FOLDER_NAME + separator();
-    backupFolder = appDataFolder + BACKUP_FOLDER_NAME + separator();
+    appFolder = MEGA_DATA_FOLDER;
+    updateFolder = appDataFolder + UPDATE_FOLDER_NAME + MEGA_SEPARATOR;
+    backupFolder = appDataFolder + BACKUP_FOLDER_NAME + MEGA_SEPARATOR;
 }
 
 UpdateTask::~UpdateTask()
@@ -129,46 +132,43 @@ UpdateTask::~UpdateTask()
 
 void UpdateTask::checkForUpdates()
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Starting update check");
+    LOG(MegaApi::LOG_LEVEL_INFO, "Starting update check");
     initialCleanup();
 
     // Create random sequence for http request
     string randomSec("?");
     for (int i = 0; i < 10; i++)
     {
-        randomSec += char('A'+(rand() % 26));
+        randomSec += char('A'+ (rand() % 26));
     }
 
     string appData = appDataFolder;
-    if (appData.empty())
-    {
-        return;
-    }
-
     string updateFile = appData.append(UPDATE_FILENAME);
     if (downloadFile((char *)((string(UPDATE_CHECK_URL) + randomSec).c_str()), updateFile.c_str()))
     {
         FILE * pFile;
         pFile = fopen(updateFile.c_str(), "r");
-        if (pFile == NULL)
+        if (!pFile)
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Error opening update file");
+            LOG(MegaApi::LOG_LEVEL_ERROR, "Error opening update file");
             return;
         }
+
         if (!processUpdateFile(pFile))
         {
             return;
         }
 
         currentFile++;
-        while (currentFile < downloadURLs.size())
+        while ((size_t)currentFile < downloadURLs.size())
         {
             if (!alreadyDownloaded(localPaths[currentFile], fileSignatures[currentFile]))
             {
                 //Create the folder for the new file
                 string localFile = updateFolder + localPaths[currentFile];
-                if (mkdir_p(base_path(localFile).c_str()) == -1)
+                if (mkdir_p(mega_base_path(localFile).c_str()) == -1)
                 {
+                    LOG(MegaApi::LOG_LEVEL_INFO, "Unable to create folder for file: %s", localFile.c_str());
                     return;
                 }
 
@@ -181,26 +181,23 @@ void UpdateTask::checkForUpdates()
                 //Download file to specific folder
                 if (downloadFile(downloadURLs[currentFile], localFile))
                 {
-                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "File downloaded OK:");
-                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, localPaths[currentFile].c_str());
+                    LOG(MegaApi::LOG_LEVEL_INFO, "File downloaded OK: %s", localPaths[currentFile].c_str());
                     if (!alreadyDownloaded(localPaths[currentFile], fileSignatures[currentFile]))
                     {
-                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Signature of downloaded file doesn't match:");
-                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, localPaths[currentFile].c_str());
+                        LOG(MegaApi::LOG_LEVEL_ERROR, "Signature of downloaded file doesn't match: %s",  localPaths[currentFile].c_str());
                         return;
                     }
-
-                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "File signature OK");
+                    LOG(MegaApi::LOG_LEVEL_INFO, "File signature OK: %s",  localPaths[currentFile].c_str());
                     currentFile++;
                     continue;
                 }
                 return;
             }
 
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "File already downloaded:");
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, localPaths[currentFile].c_str());
+            LOG(MegaApi::LOG_LEVEL_INFO, "File already downloaded: %s",  localPaths[currentFile].c_str());
             currentFile++;
         }
+
         //All files have been processed. Apply update
         if (!performUpdate())
         {
@@ -219,18 +216,18 @@ void UpdateTask::checkForUpdates()
 
 bool UpdateTask::downloadFile(string url, string dstPath)
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Downloading updated file from:");
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, url.c_str());
-
+    LOG(MegaApi::LOG_LEVEL_INFO, "Downloading updated file from: %s",  url.c_str());
     megaApi->downloadFile((char*)url.c_str(), (char*)dstPath.c_str(), delegateListener);
     delegateListener->wait();
-    if (delegateListener->getError()->getErrorCode() == MegaError::API_OK)
+
+    int errorCode = delegateListener->getError()->getErrorCode();
+    if (errorCode != MegaError::API_OK)
     {
+        LOG(MegaApi::LOG_LEVEL_ERROR, "Unable to download file. Error code: %d", errorCode);
         return true;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Unable to download file");
-    return false;
+    return true;
 }
 
 bool UpdateTask::processUpdateFile(FILE *fd)
@@ -242,7 +239,6 @@ bool UpdateTask::processUpdateFile(FILE *fd)
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Invalid update info");
         return false;
     }
-
 
     int currentVersion = readVersion();
     if (currentVersion == -1)
@@ -294,13 +290,10 @@ bool UpdateTask::processUpdateFile(FILE *fd)
         addToSignature(localPath.data(), localPath.length());
         addToSignature(fileSignature.data(), fileSignature.length());
 
-#ifdef _WIN32
-        std::replace(localPath.begin(), localPath.end(), '/', '\\');
-#endif
+        MEGA_TO_NATIVE_SEPARATORS(localPath);
         if (alreadyInstalled(localPath, fileSignature))
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "File already installed:");
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, localPath.c_str());
+            LOG(MegaApi::LOG_LEVEL_INFO, "File already installed: %s",  localPath.c_str());
             continue;
         }
 
@@ -321,20 +314,13 @@ bool UpdateTask::processUpdateFile(FILE *fd)
         return false;
     }
 
+    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Update needed");
     return true;
 }
 
 bool UpdateTask::fileExist(const char *path)
 {
-#ifdef _WIN32
-    if (_access(path, 0) != -1)
-#else
-    if (access(path, F_OK) != -1)
-#endif
-    {
-        return true;
-    }
-    return false;
+    return (mega_access(path) != -1);
 }
 
 void UpdateTask::addToSignature(const char* bytes, int length)
@@ -349,7 +335,7 @@ void UpdateTask::initSignature()
 
 bool UpdateTask::checkSignature(string value)
 {
-    int result = signatureChecker->checkSignature(value.c_str());
+    bool result = signatureChecker->checkSignature(value.c_str());
     if (!result)
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Invalid signature");
@@ -361,22 +347,12 @@ bool UpdateTask::checkSignature(string value)
 bool UpdateTask::performUpdate()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Applying update...");
-
-    time_t now = time(0);
-    tm *timeData = localtime(&now);
-    ostringstream oss;
-    oss <<  timeData->tm_mday << "_" << 1 + timeData->tm_mon << "_" << 1900 + timeData->tm_year;
-    oss <<  timeData->tm_hour << "_" << timeData->tm_min << "_" << timeData->tm_sec;
-    oss << separator();
-    backupFolder += oss.str();
-
-    for (int i = 0; i < localPaths.size(); i++)
+    for (vector<string>::size_type i = 0; i < localPaths.size(); i++)
     {
         string file = backupFolder + localPaths[i];
-        if (mkdir_p(base_path(file).c_str()) == -1)
+        if (mkdir_p(mega_base_path(file).c_str()) == -1)
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error creating backup folder for: ");
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, file.c_str());
+            LOG(MegaApi::LOG_LEVEL_ERROR, "Error creating backup folder for: %s",  file.c_str());
             rollbackUpdate(i);
             return false;
         }
@@ -384,17 +360,14 @@ bool UpdateTask::performUpdate()
         string origFile = appFolder + localPaths[i];
         if (rename(origFile.c_str(), file.c_str()) && errno != ENOENT)
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error creating backup of file: ");
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, origFile.c_str());
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, file.c_str());
+            LOG(MegaApi::LOG_LEVEL_ERROR, "Error creating backup of file %s to %s",  origFile.c_str(), file.c_str());
             rollbackUpdate(i);
             return false;
         }
 
-        if (mkdir_p(base_path(origFile).c_str()) == -1)
+        if (mkdir_p(mega_base_path(origFile).c_str()) == -1)
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error creating target folder for: ");
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, origFile.c_str());
+            LOG(MegaApi::LOG_LEVEL_ERROR, "Error creating target folder for: %s",  origFile.c_str());
             rollbackUpdate(i);
             return false;
         }
@@ -402,15 +375,12 @@ bool UpdateTask::performUpdate()
         string update = updateFolder + localPaths[i];
         if (rename(update.c_str(), origFile.c_str()))
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error installing file: ");
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, update.c_str());
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, origFile.c_str());
+            LOG(MegaApi::LOG_LEVEL_ERROR, "Error installing file %s in %s",  update.c_str(), origFile.c_str());
             rollbackUpdate(i);
             return false;
         }
 
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "File installed: ");
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, localPaths[i].c_str());
+        LOG(MegaApi::LOG_LEVEL_INFO, "File correctly installed: %s",  localPaths[i].c_str());
     }
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Update successfully installed");
@@ -425,13 +395,10 @@ void UpdateTask::rollbackUpdate(int fileNum)
         string origFile = appFolder + localPaths[i];
         rename(origFile.c_str(), (updateFolder + localPaths[i]).c_str());
         rename((backupFolder + localPaths[i]).c_str(), origFile.c_str());
-
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "File restored: ");
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO, localPaths[i].c_str());
+        LOG(MegaApi::LOG_LEVEL_INFO, "File restored: %s",  localPaths[i].c_str());
     }
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Update uninstalled");
 }
-
 
 void UpdateTask::initialCleanup()
 {
@@ -442,22 +409,13 @@ void UpdateTask::finalCleanup()
 {
     initialCleanup();
     remove(appDataFolder.append(UPDATE_FILENAME).c_str());
-#ifndef _WIN32
-    chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAclient", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
-#endif
+    MEGA_SET_PERMISSIONS;
 }
 
 bool UpdateTask::removeRecursively(string path)
 {
-    if (path.empty())
-    {
-        return false;
-    }
-
-    bool success = false;
-    mega::MegaApi::removeRecursively(path.c_str());
-    success = rmdir(path.c_str());
-    return !success;
+    MegaApi::removeRecursively(path.c_str());
+    return !rmdir(path.c_str());
 }
 
 bool UpdateTask::alreadyInstalled(string relativePath, string fileSignature)
@@ -473,12 +431,9 @@ bool UpdateTask::alreadyDownloaded(string relativePath, string fileSignature)
 bool UpdateTask::alreadyExists(string absolutePath, string fileSignature)
 {
     MegaHashSignature tmpHash((const char *)UPDATE_PUBLIC_KEY);
-
     char *buffer;
     long fileLength;
-
-    FILE * pFile;
-    pFile = fopen(absolutePath.c_str(), "rb");
+    FILE * pFile = fopen(absolutePath.c_str(), "rb");
     if (pFile == NULL)
     {
         return false;
@@ -489,7 +444,7 @@ bool UpdateTask::alreadyExists(string absolutePath, string fileSignature)
     fileLength = ftell(pFile);
     rewind(pFile);
 
-    buffer = (char *) malloc ((fileLength) * sizeof(char));
+    buffer = (char *)malloc(fileLength);
     if (buffer == NULL)
     {
         return false;
@@ -502,12 +457,10 @@ bool UpdateTask::alreadyExists(string absolutePath, string fileSignature)
     }
 
     tmpHash.add(buffer, sizeRead);
-    bool check = tmpHash.checkSignature(fileSignature.data());
-
     fclose(pFile);
     free(buffer);
 
-    return check;
+    return tmpHash.checkSignature(fileSignature.data());
 }
 
 string UpdateTask::readNextLine(FILE *fd)
@@ -519,10 +472,8 @@ string UpdateTask::readNextLine(FILE *fd)
     }
 
     line[strcspn(line, "\n")] = '\0';
-    string qLine(line);
-    return qLine;
+    return string(line);
 }
-
 
 int UpdateTask::readVersion()
 {
@@ -536,26 +487,4 @@ int UpdateTask::readVersion()
     fscanf(fp, "%d", &version);
     fclose(fp);
     return version;
-}
-
-string UpdateTask::getAppDataDir()
-{   
-    string path;
-#ifdef _WIN32
-    TCHAR szPath[MAX_PATH];
-    if (SUCCEEDED(GetModuleFileName(NULL, szPath , MAX_PATH))
-            && SUCCEEDED(PathRemoveFileSpec(szPath)))
-    {
-        MegaApi::utf16ToUtf8(szPath, lstrlen(szPath), &path);
-        path.append("\\");
-    }
-#elif defined(__APPLE__)
-    const char* home = getenv("HOME");
-    if (home)
-    {
-        path.append(home);
-        path.append("/Library/Application\ Support/Mega\ Limited/MEGAsync/");
-    }
-#endif
-    return path;
 }

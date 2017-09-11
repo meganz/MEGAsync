@@ -10,8 +10,12 @@
 using namespace std;
 using namespace mega;
 
+#define MAX_LOG_SIZE 4096
 int main(int argc, char *argv[])
 {
+    (void)argc;
+    (void)argv;
+
 #ifdef DEBUG
     MegaApi::setLogLevel(mega::MegaApi::LOG_LEVEL_INFO);
     MegaApi::setLogToConsole(true);
@@ -19,23 +23,17 @@ int main(int argc, char *argv[])
     MegaApi::setLogLevel(mega::MegaApi::LOG_LEVEL_WARNING);
 #endif
 
-    ostringstream oss;
-    oss  << "Process started at " << time(0);
-    string msg = oss.str();
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, msg.c_str());
-
-    MegaApi *megaApi = new MegaApi(CLIENT_KEY, (const char*)NULL, USER_AGENT);
-
-    UpdateTask *updater = new UpdateTask(megaApi);
-    updater->checkForUpdates();
-
-    oss.clear();
-    oss.seekp(0);
-    oss  << "Process finished at " << time(0) << ends;
-    msg = oss.str();
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, msg.c_str());
-
-    delete updater;
-    delete megaApi;
+    char log_message[MAX_LOG_SIZE];
+    time_t currentTime = time(NULL);
+    sprintf_s(log_message, MAX_LOG_SIZE, "Process started at %s", ctime(&currentTime));
+    log_message[strlen(log_message) - 1] = '\0';
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, log_message);
+    MegaApi megaApi(CLIENT_KEY, (const char*)NULL, USER_AGENT);
+    UpdateTask updater(&megaApi);
+    updater.checkForUpdates();
+    currentTime = time(NULL);
+    sprintf_s(log_message, MAX_LOG_SIZE, "Process finished at %s", ctime(&currentTime));
+    log_message[strlen(log_message) - 1] = '\0';
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, log_message);
     return 0;
 }
