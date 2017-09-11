@@ -25,7 +25,7 @@ display_help() {
     local app=$(basename "$0")
     echo ""
     echo "Usage:"
-    echo " $app [-c] [-i] [-k] [-p pass] [-x pathXMLdir] BASEREPOURL"
+    echo " $app [-c] [-i] [-k] [-p pass] BASEREPOURL"
     echo ""
     echo "This script will check the correctness of all packages using virtual machines."
     echo "It will choose the specific repo corresponding to all the configured VM, using"
@@ -46,7 +46,6 @@ display_help() {
     echo " -i : install anew (removes previous megasync package)"
     echo " -k : keep VMs running after completion"
     echo " -p pass : password for VMs (both user mega & root)"
-    echo " -x pathXMLdir : path for the xml files describing the VMs"
     echo ""
 }
 
@@ -55,7 +54,7 @@ remove_megasync=0
 quit_machine=1
 
 
-while getopts ":ikcnp:x:" opt; do
+while getopts ":ikcnp:" opt; do
   case $opt in
     i)
 		remove_megasync=1
@@ -69,10 +68,7 @@ while getopts ":ikcnp:x:" opt; do
 	;;	
 	p)
 		arg_passwd="-$opt $OPTARG"
-	;;
-	x)
-		flagXMLdir="-$opt $OPTARG"
-      ;;     		
+	;;     		
     k)
 		quit_machine=0
 		flag_quit_machine="-$opt"
@@ -117,13 +113,16 @@ PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_21;$BASEURLRPM/Fedora_21"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_22;$BASEURLRPM/Fedora_22"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_23;$BASEURLRPM/Fedora_23"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_24;$BASEURLRPM/Fedora_24"
-PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_25;$BASEURLRPM/Fedora_25" #NOTICE: using other repo
-PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_25_i386;$BASEURLRPM/Fedora_25" #NOTICE: using other repo
+PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_25;$BASEURLRPM/Fedora_25"
+PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_25_i386;$BASEURLRPM/Fedora_25"
+PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_26;$BASEURLARCH/Fedora_26"
+PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_26_i386;$BASEURLARCH/Fedora_26"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL OPENSUSE_12.2;$BASEURLRPM/openSUSE_12.2"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL OPENSUSE_12.3;$BASEURLRPM/openSUSE_12.3"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL OPENSUSE_13.2;$BASEURLRPM/openSUSE_13.2"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL OPENSUSE_LEAP_42.1;$BASEURLRPM/openSUSE_Leap_42.1"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL OPENSUSE_LEAP_42.2;$BASEURLRPM/openSUSE_Leap_42.2"
+PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL OPENSUSE_LEAP_42.3;$BASEURLRPM/openSUSE_Leap_42.3"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL OPENSUSE_TUMBLEWEED;$BASEURLRPM/openSUSE_Tumbleweed"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL UBUNTU_12.04;$BASEURLDEB/xUbuntu_12.04"	
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL UBUNTU_13.10;$BASEURLDEB/xUbuntu_13.10"
@@ -174,8 +173,8 @@ for i in `shuf -e $PAIRSVMNAMEREPOURL`; do
 	DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 	
 	rm ${VMNAME}_{OK,FAIL} 2> /dev/null
-	echo $DIR/check_package.sh $arg_passwd $flagXMLdir $flag_require_change $flag_remove_megasync $flag_quit_machine $flag_nogpgcheck $VMNAME $REPO 
-	( $DIR/check_package.sh $arg_passwd $flagXMLdir $flag_require_change $flag_remove_megasync $flag_quit_machine $flag_nogpgcheck $VMNAME $REPO 2>&1 ) > output_check_package_${VMNAME}.log &
+	echo $DIR/check_package.sh $arg_passwd $flag_require_change $flag_remove_megasync $flag_quit_machine $flag_nogpgcheck $VMNAME $REPO 
+	( $DIR/check_package.sh $arg_passwd $flag_require_change $flag_remove_megasync $flag_quit_machine $flag_nogpgcheck $VMNAME $REPO 2>&1 ) > output_check_package_${VMNAME}.log &
 	
 	sleep 1
 	
