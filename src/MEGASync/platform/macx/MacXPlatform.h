@@ -33,6 +33,7 @@ public:
     static void addFinderExtensionToSystem();
     static bool isFinderExtensionEnabled();
     static void reinstallFinderExtension();
+    static void reloadFinderExtension();
     static void enableFinderExtension(bool value);
     static void showInFolder(QString pathIn);
     static void startShellDispatcher(MegaApplication *receiver);
