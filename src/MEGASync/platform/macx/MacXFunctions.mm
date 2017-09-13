@@ -538,7 +538,7 @@ bool registerUpdateDaemon()
 {
     NSDictionary *plistd = @{
             @"Label": @"mega.mac.megaupdater",
-            @"ProgramArguments": @[@"/Applications/MEGAsync.app/Contents/MacOS/MEGAUpdater"],
+            @"ProgramArguments": @[@"/Applications/MEGAsync.app/Contents/MacOS/MEGAupdater"],
             @"StartInterval": @7200,
             @"RunAtLoad": @true,
             @"StandardErrorPath": @"/dev/null",
