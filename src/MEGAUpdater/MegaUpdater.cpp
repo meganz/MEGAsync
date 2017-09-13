@@ -27,12 +27,8 @@ int CALLBACK WinMain(
 int main(int argc, char *argv[])
 #endif
 {
-#ifdef DEBUG
     MegaApi::setLogLevel(mega::MegaApi::LOG_LEVEL_INFO);
     MegaApi::setLogToConsole(true);
-#else
-    MegaApi::setLogLevel(mega::MegaApi::LOG_LEVEL_WARNING);
-#endif
 
     char log_message[MAX_LOG_SIZE];
     time_t currentTime = time(NULL);
