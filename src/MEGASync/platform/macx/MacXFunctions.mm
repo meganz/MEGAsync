@@ -539,12 +539,11 @@ bool registerUpdateDaemon()
     NSDictionary *plistd = @{
             @"Label": @"mega.mac.megaupdater",
             @"ProgramArguments": @[@"/Applications/MEGAsync.app/Contents/MacOS/MEGAUpdater"],
-            @"StartInterval": @3600,
+            @"StartInterval": @7200,
             @"RunAtLoad": @true,
             @"StandardErrorPath": @"/dev/null",
             @"StandardOutPath": @"/dev/null",
      };
-
 
     const char* home = getenv("HOME");
     if (!home)
@@ -557,10 +556,15 @@ bool registerUpdateDaemon()
     [plistd writeToFile:fullpath atomically:YES];
 
     QStringList scriptArgs;
-    scriptArgs << QString::fromUtf8("load")
-               << QString::fromUtf8([fullpath UTF8String]);
+    scriptArgs << QString::fromUtf8("-c")
+               << QString::fromUtf8("launchctl unload %1 && launchctl load %1").arg(QString::fromUtf8([fullpath UTF8String]));
 
     QProcess p;
-    p.startDetached(QString::fromAscii("launchctl"), scriptArgs);
-    return true;
+    p.start(QString::fromAscii("bash"), scriptArgs);
+    if (!p.waitForFinished(2000))
+    {
+        return false;
+    }
+
+    return p.exitCode();
 }
