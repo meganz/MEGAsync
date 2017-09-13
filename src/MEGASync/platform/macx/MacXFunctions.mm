@@ -534,7 +534,7 @@ void enableBlurForWindow(QWidget *window)
     }
 }
 
-void registerUpdateDaemon()
+bool registerUpdateDaemon()
 {
     NSDictionary *plistd = @{
             @"Label": @"mega.mac.megaupdater",
@@ -549,7 +549,7 @@ void registerUpdateDaemon()
     const char* home = getenv("HOME");
     if (!home)
     {
-        return;
+        return false;
     }
 
     NSString *homepath = [NSString stringWithUTF8String:home];
@@ -562,4 +562,5 @@ void registerUpdateDaemon()
 
     QProcess p;
     p.startDetached(QString::fromAscii("launchctl"), scriptArgs);
+    return true;
 }

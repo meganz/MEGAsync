@@ -45,7 +45,7 @@ public:
     static QString getDefaultOpenApp(QString extension);
     static void enableDialogBlur(QDialog *dialog);
     static void activateBackgroundWindow(QDialog *window);
-    static void registerUpdateJob();
+    static bool registerUpdateJob();
     static void uninstall();
 
     static int fd;

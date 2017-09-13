@@ -9,9 +9,8 @@ CONFIG(release, debug|release) {
     CONFIG += release
 }
 
-TARGET = MEGAUpdater
+TARGET = MEGAupdater
 TEMPLATE = app
-CONFIG += console
 CONFIG += USE_MEGAAPI
 
 HEADERS += UpdateTask.h \
