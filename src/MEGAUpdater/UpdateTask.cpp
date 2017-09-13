@@ -151,11 +151,13 @@ void UpdateTask::checkForUpdates()
         if (!pFile)
         {
             LOG(MegaApi::LOG_LEVEL_ERROR, "Error opening update file");
+            remove(updateFile.c_str());
             return;
         }
 
         if (!processUpdateFile(pFile))
         {
+            remove(updateFile.c_str());
             return;
         }
 
@@ -403,12 +405,13 @@ void UpdateTask::rollbackUpdate(int fileNum)
 void UpdateTask::initialCleanup()
 {
     removeRecursively(backupFolder);
+    removeRecursively(updateFolder);
 }
 
 void UpdateTask::finalCleanup()
 {
     initialCleanup();
-    remove(appDataFolder.append(UPDATE_FILENAME).c_str());
+    remove((appDataFolder + UPDATE_FILENAME).c_str());
     MEGA_SET_PERMISSIONS;
 }
 
@@ -478,7 +481,7 @@ string UpdateTask::readNextLine(FILE *fd)
 int UpdateTask::readVersion()
 {
     int version = -1;
-    FILE *fp = fopen(appDataFolder.append(VERSION_FILE_NAME).c_str(), "r");
+    FILE *fp = fopen((appDataFolder + VERSION_FILE_NAME).c_str(), "r");
     if (fp == NULL)
     {
         return version;
