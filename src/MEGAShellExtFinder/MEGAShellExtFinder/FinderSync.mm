@@ -312,9 +312,8 @@ void cleanItemsOfFolder(std::string dirPath)
 
 - (bool) isDirectory:(NSURL *)url
 {
-    NSNumber *isDirectory;
-    BOOL success = [url getResourceValue:&isDirectory forKey:NSURLIsDirectoryKey error:nil];
-    if (success && [isDirectory boolValue])
+    BOOL isDir = NO;
+    if([[NSFileManager defaultManager]fileExistsAtPath:url.path isDirectory:&isDir] && isDir)
     {
         return true;
     }
