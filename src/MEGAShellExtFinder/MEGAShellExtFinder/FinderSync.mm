@@ -225,14 +225,14 @@ void cleanItemsOfFolder(std::string dirPath)
 }
 
 - (void)viewOnMEGA:(id)sender {
-    
-    NSURL *target = [[FIFinderSyncController defaultController] targetedURL];
-    if (!target)
+       
+    NSArray *items = [[FIFinderSyncController defaultController] selectedItemURLs];
+    if (!items)
     {
         return;
     }
     
-    [_ext sendRequest:target.path type:@"V"];
+    [_ext sendRequest:[[items firstObject] path] type:@"V"];
 }
 
 #pragma mark - Sync notifications
