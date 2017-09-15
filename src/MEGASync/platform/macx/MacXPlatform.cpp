@@ -265,6 +265,11 @@ void MacXPlatform::activateBackgroundWindow(QDialog *)
 
 }
 
+void MacXPlatform::execBackgroundWindow(QDialog *window)
+{
+    window->exec();
+}
+
 void MacXPlatform::uninstall()
 {
 
