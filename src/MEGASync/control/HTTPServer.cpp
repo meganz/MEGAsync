@@ -125,10 +125,12 @@ void HTTPServer::checkAndPurgeRequests()
 {
     for (QMultiMap<QString, RequestData*>::iterator it = webDataRequests.begin() ; it != webDataRequests.end();)
     {
-        if ((it.value()->status == RequestData::STATE_OK || it.value()->status == RequestData::STATE_CANCELLED)
-                && (((QDateTime::currentMSecsSinceEpoch() / 1000) - it.value()->tsEnd) > MAX_REQUEST_TIME_SECS))
+        RequestData *requestData = it.value();
+        if ((requestData->status == RequestData::STATE_OK || requestData->status == RequestData::STATE_CANCELLED)
+                && (((QDateTime::currentMSecsSinceEpoch() / 1000) - requestData->tsEnd) > MAX_REQUEST_TIME_SECS))
         {
             webDataRequests.erase(it++);
+            delete requestData;
         }
         else
         {
@@ -138,12 +140,14 @@ void HTTPServer::checkAndPurgeRequests()
 
     for (QMap<mega::MegaHandle, RequestTransferData*>::iterator it = webTransferStateRequests.begin() ; it != webTransferStateRequests.end();)
     {
-        if ((it.value()->state == MegaTransfer::STATE_CANCELLED
-             || it.value()->state == MegaTransfer::STATE_COMPLETED
-             || it.value()->state == MegaTransfer::STATE_FAILED)
-                && (((QDateTime::currentMSecsSinceEpoch() / 1000) - it.value()->tsEnd) > MAX_REQUEST_TIME_SECS))
+        RequestTransferData *transferData = it.value();
+        if ((transferData->state == MegaTransfer::STATE_CANCELLED
+             || transferData->state == MegaTransfer::STATE_COMPLETED
+             || transferData->state == MegaTransfer::STATE_FAILED)
+                && (((QDateTime::currentMSecsSinceEpoch() / 1000) - transferData->tsEnd) > MAX_REQUEST_TIME_SECS))
         {
             webTransferStateRequests.erase(it++);
+            delete transferData;
         }
         else
         {
