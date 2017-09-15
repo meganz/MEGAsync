@@ -16,7 +16,7 @@ const int Preferences::VERSION_CODE = 3104;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("3.1.4");
-const QString Preferences::SDK_ID = QString::fromAscii("WebclientCommands");
+const QString Preferences::SDK_ID = QString::fromAscii("13f844");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- Support for Apple File System (macOS High Sierra)\n"
             "- Allow to disable left pane icons in settings (Windows 10)\n"
@@ -142,7 +142,7 @@ const long long Preferences::LOCAL_HTTPS_CERT_MAX_EXPIRATION_SECS = 3888000; // 
 
 const QString Preferences::FINDER_EXT_BUNDLE_ID = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
 QStringList Preferences::HTTPS_ALLOWED_ORIGINS;
-bool Preferences::HTTPS_ORIGIN_CHECK_ENABLED = false;
+bool Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
 
 #ifdef WIN32
     const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");
