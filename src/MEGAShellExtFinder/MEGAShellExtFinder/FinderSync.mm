@@ -206,15 +206,17 @@ void cleanItemsOfFolder(std::string dirPath)
             [menu addItem:viewOnMEGAItem];
         }
         
-        if (numFiles == 1) // If only one file is selected and already synced.
-        {
-            NSMenuItem *viewPrevVersions = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"View previous versions", nil) action:nil keyEquivalent:@""];
-            [menu setAutoenablesItems:NO];
-            [viewPrevVersions setEnabled:YES];
-            [viewPrevVersions setImage:(whichMenu == FIMenuKindContextualMenuForItems) ? icon : nil];
-            [viewPrevVersions setAction:@selector(viewPrevVersions:)];
-            [menu addItem:viewPrevVersions];
-        }
+//        Disable support for "View previous versions" until server enable it
+//        
+//        if (numFiles == 1) // If only one file is selected and already synced.
+//        {
+//            NSMenuItem *viewPrevVersions = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"View previous versions", nil) action:nil keyEquivalent:@""];
+//            [menu setAutoenablesItems:NO];
+//            [viewPrevVersions setEnabled:YES];
+//            [viewPrevVersions setImage:(whichMenu == FIMenuKindContextualMenuForItems) ? icon : nil];
+//            [viewPrevVersions setAction:@selector(viewPrevVersions:)];
+//            [menu addItem:viewPrevVersions];
+//        }
         
     }
     
@@ -241,7 +243,7 @@ void cleanItemsOfFolder(std::string dirPath)
 - (void)viewOnMEGA:(id)sender {
     
     NSArray *items = [[FIFinderSyncController defaultController] selectedItemURLs];
-    if (!items)
+    if (!items || [items count] == 0)
     {
         return;
     }
@@ -252,7 +254,7 @@ void cleanItemsOfFolder(std::string dirPath)
 - (void)viewPrevVersions:(id)sender {
     
     NSArray *items = [[FIFinderSyncController defaultController] selectedItemURLs];
-    if (!items)
+    if (!items || [items count] == 0)
     {
         return;
     }
