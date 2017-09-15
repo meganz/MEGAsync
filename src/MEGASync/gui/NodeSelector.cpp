@@ -209,8 +209,8 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
 
     if (e->getErrorCode() != MegaError::API_OK)
     {
-        QMessageBox::critical(this, QString::fromUtf8("MEGAsync"), tr("Error") + QString::fromUtf8(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
         ui->tMegaFolders->setEnabled(true);
+        QMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"), tr("Error") + QString::fromUtf8(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
         return;
     }
 
@@ -229,7 +229,9 @@ void NodeSelector::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e
         }
         else
         {
-            QMessageBox::critical(this, QString::fromUtf8("MEGAsync"), tr("Error") + QString::fromUtf8(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+            ui->tMegaFolders->setEnabled(true);
+            QMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"), tr("Error") + QString::fromUtf8(": ") + QCoreApplication::translate("MegaError", e->getErrorString()));
+            return;
         }
     }
     else if (request->getType() == MegaRequest::TYPE_REMOVE || request->getType() == MegaRequest::TYPE_MOVE)
@@ -289,12 +291,19 @@ void NodeSelector::onDeleteClicked()
         return;
     }
 
+    QPointer<NodeSelector> currentDialog = this;
     if (QMessageBox::question(this,
                              QString::fromUtf8("MEGAsync"),
                              tr("Are you sure that you want to delete \"%1\"?")
                                 .arg(QString::fromUtf8(node->getName())),
                              QMessageBox::Yes | QMessageBox::No, QMessageBox::No) == QMessageBox::Yes)
     {
+        if (!currentDialog)
+        {
+            delete node;
+            return;
+        }
+
         ui->tMegaFolders->setEnabled(false);
         ui->bNewFolder->setEnabled(false);
         ui->bOk->setEnabled(false);
@@ -421,7 +430,11 @@ void NodeSelector::on_bNewFolder_clicked()
     }
     else
     {
-        QMessageBox::critical(this, QString::fromUtf8("MEGAsync"), tr("Please enter a valid folder name"));
+        QMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"), tr("Please enter a valid folder name"));
+        if (!id)
+        {
+            return;
+        }
     }
     delete id;
 }
@@ -438,21 +451,21 @@ void NodeSelector::on_bOk_clicked()
     int access = megaApi->getAccess(node);
     if ((selectMode == NodeSelector::UPLOAD_SELECT) && ((access < MegaShare::ACCESS_READWRITE)))
     {
-        QMessageBox::warning(this, tr("Error"), tr("You need Read & Write or Full access rights to be able to upload to the selected folder."), QMessageBox::Ok);
         delete node;
+        QMessageBox::warning(NULL, tr("Error"), tr("You need Read & Write or Full access rights to be able to upload to the selected folder."), QMessageBox::Ok);
         return;
 
     }
     else if ((selectMode == NodeSelector::SYNC_SELECT) && (access < MegaShare::ACCESS_FULL))
     {
-        QMessageBox::warning(this, tr("Error"), tr("You need Full access right to be able to sync the selected folder."), QMessageBox::Ok);
         delete node;
+        QMessageBox::warning(NULL, tr("Error"), tr("You need Full access right to be able to sync the selected folder."), QMessageBox::Ok);
         return;
     }
     else if ((selectMode == NodeSelector::STREAM_SELECT) && node->isFolder())
     {
-        QMessageBox::warning(this, tr("Error"), tr("Only files can be used for streaming."), QMessageBox::Ok);
         delete node;
+        QMessageBox::warning(NULL, tr("Error"), tr("Only files can be used for streaming."), QMessageBox::Ok);
         return;
     }
 
@@ -463,10 +476,10 @@ void NodeSelector::on_bOk_clicked()
         delete [] path;
         if (!check)
         {
-            QMessageBox::warning(this, tr("Warning"), tr("Invalid folder for synchronization.\n"
+            delete node;
+            QMessageBox::warning(NULL, tr("Warning"), tr("Invalid folder for synchronization.\n"
                                                          "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names."),
                                  QMessageBox::Ok);
-            delete node;
             return;
         }
         delete check;

@@ -106,6 +106,8 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
     const char *content = buf+2;
     static char out[BUFSIZE];
 
+    strncpy(out, RESPONSE_DEFAULT, BUFSIZE);
+
     switch(c)
     {
         // send translated string
@@ -131,13 +133,18 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
             }
 
             int numFiles = parameters[1].toInt(&ok);
-            if (!ok)
+            if (!ok || numFiles < 0)
             {
                 break;
             }
 
             int numFolders = parameters[2].toInt(&ok);
-            if (!ok)
+            if (!ok || numFolders < 0)
+            {
+                break;
+            }
+
+            if (!numFiles && !numFolders)
             {
                 break;
             }

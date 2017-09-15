@@ -74,8 +74,8 @@ void BindFolderDialog::on_bOK_clicked()
     MegaNode *node = megaApi->getNodeByHandle(handle);
     if (!localFolderPath.length() || !node)
     {
-        QMessageBox::warning(this, tr("Error"), tr("Please select a local folder and a MEGA folder"), QMessageBox::Ok);
         delete node;
+        QMessageBox::warning(NULL, tr("Error"), tr("Please select a local folder and a MEGA folder"), QMessageBox::Ok);
         return;
     }
 
@@ -98,15 +98,15 @@ void BindFolderDialog::on_bOK_clicked()
                 && ((c.size() == localFolderPath.size())
                     || (localFolderPath[c.size()] == QDir::separator())))
         {
-            QMessageBox::warning(this, tr("Error"), tr("The selected local folder is already synced"), QMessageBox::Ok);
             delete node;
+            QMessageBox::warning(NULL, tr("Error"), tr("The selected local folder is already synced"), QMessageBox::Ok);
             return;
         }
         else if (c.startsWith(localFolderPath)
                  && c[localFolderPath.size()] == QDir::separator())
         {
-            QMessageBox::warning(this, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
             delete node;
+            QMessageBox::warning(NULL, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
             return;
         }
     }
@@ -138,16 +138,16 @@ void BindFolderDialog::on_bOK_clicked()
 
             if (megaPath.startsWith(p) && ((p.size() == megaPath.size()) || p.size() == 1 || megaPath[p.size()] == QChar::fromAscii('/')))
             {
-                QMessageBox::warning(this, tr("Error"), tr("The selected MEGA folder is already synced"), QMessageBox::Ok);
                 delete n;
                 delete node;
+                QMessageBox::warning(NULL, tr("Error"), tr("The selected MEGA folder is already synced"), QMessageBox::Ok);
                 return;
             }
             else if (p.startsWith(megaPath) && ((p.size() == megaPath.size()) || megaPath.size() == 1 || p[megaPath.size()] == QChar::fromAscii('/')))
             {
-                QMessageBox::warning(this, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
                 delete n;
                 delete node;
+                QMessageBox::warning(NULL, tr("Error"), tr("A synced folder cannot be inside another synced folder"), QMessageBox::Ok);
                 return;
             }
             delete n;

@@ -64,6 +64,7 @@ public:
     static QString applicationFilePath();
     static QString applicationDirPath();
     static QString applicationDataPath();
+    QString getCurrentLanguageCode();
     void changeLanguage(QString languageCode);
     void updateTrayIcon();
 
@@ -80,7 +81,7 @@ public:
     virtual void onReloadNeeded(mega::MegaApi* api);
     virtual void onGlobalSyncStateChanged(mega::MegaApi *api);
     virtual void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync);
-    virtual void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, const char *filePath, int newState);
+    virtual void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState);
 
 
     mega::MegaApi *getMegaApi() { return megaApi; }
@@ -125,6 +126,8 @@ public slots:
     void openBwOverquotaDialog();
     void changeProxy();
     void importLinks();
+    void officialWeb();
+    void pauseTransfers();
     void showChangeLog();
     void uploadActionClicked();
     void loginActionClicked();
@@ -137,6 +140,7 @@ public slots:
     void processUploads();
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
+    void shellViewOnMega(QByteArray localPath);
     void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
     void externalDownload(QQueue<mega::MegaNode *> newDownloadQueue);
     void externalDownload(QString megaLink, QString auth);
@@ -177,11 +181,16 @@ public slots:
     void showUpdatedMessage(int lastVersion);
     void handleMEGAurl(const QUrl &url);
     void handleLocalPath(const QUrl &url);
+    void clearUserAttributes();
     void clearViewedTransfers();
     void onCompletedTransfersTabActive(bool active);
     void checkFirstTransfer();
     void onDeprecatedOperatingSystem();
+    void notifyItemChange(QString path, int newState);
     int getPrevVersion();
+#ifdef __APPLE__
+    void enableFinderExt();
+#endif
 
 protected:
     void createTrayIcon();
@@ -228,26 +237,26 @@ protected:
     QMenu *trayOverQuotaMenu;
     QMenu *trayGuestMenu;
     QMenu emptyMenu;
-    QAction *exitAction;
-    QAction *settingsAction;
-    QAction *importLinksAction;
-    QAction *uploadAction;
-    QAction *downloadAction;
-    QAction *streamAction;
+    MenuItemAction *exitAction;
+    MenuItemAction *settingsAction;
+    MenuItemAction *importLinksAction;
+    MenuItemAction *uploadAction;
+    MenuItemAction *downloadAction;
+    MenuItemAction *streamAction;
+    MenuItemAction *webAction;
+    MenuItemAction *pauseTransfersAction;
 
-    QAction *updateAction;
+    MenuItemAction *updateAction;
     QAction *showStatusAction;
 
-    QAction *logoutActionOverquota;
-    QAction *settingsActionOverquota;
-    QAction *exitActionOverquota;
-    QAction *updateActionOverquota;
+    MenuItemAction *settingsActionOverquota;
+    MenuItemAction *exitActionOverquota;
+    MenuItemAction *updateActionOverquota;
 
-    QAction *importLinksActionGuest;
-    QAction *exitActionGuest;
-    QAction *settingsActionGuest;
-    QAction *updateActionGuest;
-    QAction *loginActionGuest;
+    MenuItemAction *importLinksActionGuest;
+    MenuItemAction *exitActionGuest;
+    MenuItemAction *settingsActionGuest;
+    MenuItemAction *updateActionGuest;
 
 #ifdef __APPLE__
     QTimer *scanningTimer;
@@ -258,7 +267,7 @@ protected:
     SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
     InfoDialog *infoDialog;
-    InfoOverQuotaDialog *infoOverQuota;
+    bool infoOverQuota;
     Preferences *preferences;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
@@ -302,6 +311,7 @@ protected:
     NodeSelector *downloadNodeSelector;
     QString lastTrayMessage;
     QStringList extraLinks;
+    QString currentLanguageCode;
 
     static QString appPath;
     static QString appDirPath;

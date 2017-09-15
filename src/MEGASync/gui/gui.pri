@@ -41,10 +41,13 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MegaTransferDelegate.cpp \
     $$PWD/MegaTransferView.cpp \
     $$PWD/QMegaMessageBox.cpp \
-    $$PWD/TransferMenuItemAction.cpp \
     $$PWD/TransfersStateInfoWidget.cpp \
     $$PWD/MegaSpeedGraph.cpp \
-    $$PWD/ActiveTransfersWidget.cpp
+    $$PWD/ActiveTransfersWidget.cpp \
+    $$PWD/AvatarWidget.cpp \
+    $$PWD/MenuItemAction.cpp \
+    $$PWD/DataUsageMenu.cpp \
+    $$PWD/AddExclusionDialog.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -87,10 +90,13 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MegaTransferDelegate.h \
     $$PWD/MegaTransferView.h \
     $$PWD/QMegaMessageBox.h \
-    $$PWD/TransferMenuItemAction.h \
     $$PWD/TransfersStateInfoWidget.h \
     $$PWD/MegaSpeedGraph.h \
-    $$PWD/ActiveTransfersWidget.h
+    $$PWD/ActiveTransfersWidget.h \
+    $$PWD/AvatarWidget.h \
+    $$PWD/MenuItemAction.h \
+    $$PWD/DataUsageMenu.h \
+    $$PWD/AddExclusionDialog.h
 
 INCLUDEPATH += $$PWD
 
@@ -133,7 +139,8 @@ win32 {
                 $$PWD/win/TransfersWidget.ui \
                 $$PWD/win/TransfersStateInfoWidget.ui \
                 $$PWD/win/MegaSpeedGraph.ui \
-                $$PWD/win/ActiveTransfersWidget.ui
+                $$PWD/win/ActiveTransfersWidget.ui \
+                $$PWD/win/AddExclusionDialog.ui
 }
 
 macx {
@@ -173,7 +180,8 @@ macx {
                 $$PWD/macx/TransfersWidget.ui \
                 $$PWD/macx/TransfersStateInfoWidget.ui \
                 $$PWD/macx/MegaSpeedGraph.ui \
-                $$PWD/macx/ActiveTransfersWidget.ui
+                $$PWD/macx/ActiveTransfersWidget.ui \
+                $$PWD/macx/AddExclusionDialog.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -222,10 +230,11 @@ unix:!macx {
                 $$PWD/linux/TransfersWidget.ui \
                 $$PWD/linux/TransfersStateInfoWidget.ui \
                 $$PWD/linux/MegaSpeedGraph.ui \
-                $$PWD/linux/ActiveTransfersWidget.ui
+                $$PWD/linux/ActiveTransfersWidget.ui \
+                $$PWD/linux/AddExclusionDialog.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
-}    
+}

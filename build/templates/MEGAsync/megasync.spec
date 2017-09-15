@@ -16,7 +16,7 @@ BuildRequires: hicolor-icon-theme, unzip, wget
 BuildRequires: libcares-devel
 BuildRequires: update-desktop-files
  
-%if 0%{?sle_version} == 120200 || 0%{?suse_version} > 1320
+%if 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
 BuildRequires: libqt5-qtbase-devel >= 5.6, libqt5-linguist, libqt5-qtsvg-devel
 Requires: libQt5Core5 >= 5.6
 %else
@@ -108,9 +108,9 @@ export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
-%if 0%{?fedora} || 0%{?sle_version} == 120200 || 0%{?suse_version} > 1320
+%if 0%{?fedora} || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
 
-%if 0%{?fedora_version} >= 23 || 0%{?sle_version} == 120200 || 0%{?suse_version} > 1320
+%if 0%{?fedora_version} >= 23 || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
 qmake-qt5 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot}
 lrelease-qt5  MEGASync/MEGASync.pro
 %else
@@ -300,6 +300,24 @@ enabled=1
 DATA
 %endif
 
+%if 0%{?sle_version} == 120300
+# openSUSE Leap 42.3
+if [ -d "/etc/zypp/repos.d/" ]; then
+ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
+cat > "$ZYPP_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+type=rpm-md
+baseurl=https://mega.nz/linux/MEGAsync/openSUSE_Leap_42.3/
+gpgcheck=1
+autorefresh=1
+gpgkey=https://mega.nz/linux/MEGAsync/openSUSE_Leap_42.3/repodata/repomd.xml.key
+enabled=1
+DATA
+fi
+%endif
+
+
 %if 0%{?sle_version} == 120200
 # openSUSE Leap 42.2
 if [ -d "/etc/zypp/repos.d/" ]; then
@@ -316,7 +334,6 @@ enabled=1
 DATA
 fi
 %endif
-
 
 %if 0%{?sle_version} == 120100
 # openSUSE Leap 42.1

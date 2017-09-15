@@ -140,6 +140,7 @@ const QString Preferences::defaultHttpsCertIntermediate = QString::fromUtf8(
 const long long Preferences::defaultHttpsCertExpiration = 1562378399;
 const long long Preferences::LOCAL_HTTPS_CERT_MAX_EXPIRATION_SECS = 3888000; // 45 days
 
+const QString Preferences::FINDER_EXT_BUNDLE_ID = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
 QStringList Preferences::HTTPS_ALLOWED_ORIGINS;
 bool Preferences::HTTPS_ORIGIN_CHECK_ENABLED = false;
 
@@ -161,6 +162,8 @@ const QString Preferences::LOCAL_HTTPS_TEST_POST_DATA       = QString::fromUtf8(
 const QString Preferences::syncsGroupKey            = QString::fromAscii("Syncs");
 const QString Preferences::currentAccountKey        = QString::fromAscii("currentAccount");
 const QString Preferences::emailKey                 = QString::fromAscii("email");
+const QString Preferences::firstNameKey             = QString::fromAscii("firstName");
+const QString Preferences::lastNameKey              = QString::fromAscii("lastName");
 const QString Preferences::emailHashKey             = QString::fromAscii("emailHash");
 const QString Preferences::privatePwKey             = QString::fromAscii("privatePw");
 const QString Preferences::totalStorageKey          = QString::fromAscii("totalStorage");
@@ -178,6 +181,7 @@ const QString Preferences::inboxFoldersKey          = QString::fromAscii("inboxF
 const QString Preferences::rubbishFoldersKey        = QString::fromAscii("rubbishFolders");
 const QString Preferences::inShareFoldersKey        = QString::fromAscii("inShareFolders");
 const QString Preferences::totalBandwidthKey        = QString::fromAscii("totalBandwidth");
+const QString Preferences::usedBandwidthIntervalKey        = QString::fromAscii("usedBandwidthInterval");
 const QString Preferences::usedBandwidthKey         = QString::fromAscii("usedBandwidth");
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
 const QString Preferences::showNotificationsKey     = QString::fromAscii("showNotifications");
@@ -235,6 +239,7 @@ const QString Preferences::wasUploadsPausedKey      = QString::fromAscii("wasUpl
 const QString Preferences::wasDownloadsPausedKey    = QString::fromAscii("wasDownloadsPaused");
 const QString Preferences::lastExecutionTimeKey     = QString::fromAscii("lastExecutionTime");
 const QString Preferences::excludedSyncNamesKey     = QString::fromAscii("excludedSyncNames");
+const QString Preferences::excludedSyncPathsKey     = QString::fromAscii("excludedSyncPaths");
 const QString Preferences::lastVersionKey           = QString::fromAscii("lastVersion");
 const QString Preferences::lastStatsRequestKey      = QString::fromAscii("lastStatsRequest");
 const QString Preferences::lastUpdateTimeKey        = QString::fromAscii("lastUpdateTime");
@@ -403,6 +408,40 @@ void Preferences::setEmail(QString email)
     settings->sync();
     mutex.unlock();
     emit stateChanged();
+}
+
+QString Preferences::firstName()
+{
+    mutex.lock();
+    assert(logged());
+    QString value = settings->value(firstNameKey, QString()).toString();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setFirstName(QString firstName)
+{
+    mutex.lock();
+    settings->setValue(firstNameKey, firstName);
+    settings->sync();
+    mutex.unlock();
+}
+
+QString Preferences::lastName()
+{
+    mutex.lock();
+    assert(logged());
+    QString value = settings->value(lastNameKey, QString()).toString();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setLastName(QString lastName)
+{
+    mutex.lock();
+    settings->setValue(lastNameKey, lastName);
+    settings->sync();
+    mutex.unlock();
 }
 
 QString Preferences::emailHash()
@@ -700,6 +739,23 @@ void Preferences::setTotalBandwidth(long long value)
     mutex.lock();
     assert(logged());
     settings->setValue(totalBandwidthKey, value);
+    mutex.unlock();
+}
+
+int Preferences::bandwidthInterval()
+{
+    mutex.lock();
+    assert(logged());
+    int value = settings->value(usedBandwidthIntervalKey).toInt();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setBandwidthInterval(int value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(usedBandwidthIntervalKey, value);
     mutex.unlock();
 }
 
@@ -1961,6 +2017,33 @@ void Preferences::setExcludedSyncNames(QStringList names)
     mutex.unlock();
 }
 
+QStringList Preferences::getExcludedSyncPaths()
+{
+    mutex.lock();
+    assert(logged());
+    QStringList value = excludedSyncPaths;
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setExcludedSyncPaths(QStringList paths)
+{
+    mutex.lock();
+    assert(logged());
+    excludedSyncPaths = paths;
+    if (!excludedSyncPaths.size())
+    {
+        settings->remove(excludedSyncPathsKey);
+    }
+    else
+    {
+        settings->setValue(excludedSyncPathsKey, excludedSyncPaths.join(QString::fromAscii("\n")));
+    }
+
+    settings->sync();
+    mutex.unlock();
+}
+
 QStringList Preferences::getPreviousCrashes()
 {
     mutex.lock();
@@ -2551,6 +2634,12 @@ void Preferences::loadExcludedSyncNames()
         excludedSyncNames.clear();
     }
 
+    excludedSyncPaths = settings->value(excludedSyncPathsKey).toString().split(QString::fromAscii("\n", QString::SkipEmptyParts));
+    if (excludedSyncPaths.size()==1 && excludedSyncPaths.at(0).isEmpty())
+    {
+        excludedSyncPaths.clear();
+    }
+
     if (settings->value(lastVersionKey).toInt() < 108)
     {
         excludedSyncNames.clear();
@@ -2570,7 +2659,12 @@ void Preferences::loadExcludedSyncNames()
     excludedSyncNames = excludedSyncNamesSet.toList();
     qSort(excludedSyncNames.begin(), excludedSyncNames.end(), caseInsensitiveLessThan);
 
+    QSet<QString> excludedSyncPathsSet = QSet<QString>::fromList(excludedSyncPaths);
+    excludedSyncPaths = excludedSyncPathsSet.toList();
+    qSort(excludedSyncPaths.begin(), excludedSyncPaths.end(), caseInsensitiveLessThan);
+
     setExcludedSyncNames(excludedSyncNames);
+    setExcludedSyncPaths(excludedSyncPaths);
     mutex.unlock();
 }
 

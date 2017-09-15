@@ -66,6 +66,9 @@ echo %(kde4-config --path services | awk -NF ":" '{print $NF}')/megasync-plugin.
 echo %(kde4-config --path module | awk -NF ":" '{print $NF}')/megasyncplugin.so >> %{EXTRA_FILES}
 
 if which kf5-config >/dev/null; then
+%if 0%{?fedora_version} >= 26
+rm megasync-plugin.moc
+%endif
 rm -r CMakeFiles
 rm CMakeLists.txt
 mv CMakeLists_kde5.txt CMakeLists.txt
