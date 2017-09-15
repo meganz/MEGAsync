@@ -726,6 +726,12 @@ void MegaApplication::initialize()
     }
 #endif
 
+    if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_REGISTER_UPDATE_TASK))
+    {
+        Platform::registerUpdateJob();
+        preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_REGISTER_UPDATE_TASK, true);
+    }
+
     if (preferences->isCrashed())
     {
         preferences->setCrashed(false);

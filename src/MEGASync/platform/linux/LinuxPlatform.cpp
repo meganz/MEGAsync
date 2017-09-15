@@ -241,6 +241,11 @@ void LinuxPlatform::execBackgroundWindow(QDialog *window)
     window->exec();
 }
 
+bool LinuxPlatform::registerUpdateJob()
+{
+    return true;
+}
+
 void LinuxPlatform::uninstall()
 {
 
