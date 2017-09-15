@@ -620,8 +620,17 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
             handle = MegaApi::base64ToHandle(targetHandle.toUtf8().constData());
         }
 
-        emit onExternalFolderSyncRequested(handle);
-        response = QString::number(MegaError::API_OK);
+        MegaNode *targetNode = megaApi->getNodeByHandle(handle);
+        if (!targetNode)
+        {
+            response = QString::number(MegaError::API_ENOENT);
+        }
+        else
+        {
+            delete targetNode;
+            emit onExternalFolderSyncRequested(handle);
+            response = QString::number(MegaError::API_OK);
+        }
     }
     else if (request.data.startsWith(externalFolderSyncCheckStart))
     {
@@ -631,8 +640,17 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
         if (targetHandle.size())
         {
             handle = MegaApi::base64ToHandle(targetHandle.toUtf8().constData());
-            int result = megaApi->isNodeSyncable(megaApi->getNodeByHandle(handle));
-            response = QString::number(result);
+            MegaNode *targetNode = megaApi->getNodeByHandle(handle);
+            if (!targetNode)
+            {
+                response = QString::number(MegaError::API_ENOENT);
+            }
+            else
+            {
+                int result = megaApi->isNodeSyncable(targetNode);
+                response = QString::number(result);
+                delete targetNode;
+            }
         }
         else
         {
