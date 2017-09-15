@@ -4386,6 +4386,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         return;
     }
 
+    // Code temporarily preserved here for testing
     /*if (httpServer)
     {
         HTTPRequest request;
