@@ -4007,14 +4007,6 @@ void MegaApplication::externalDownload(QString megaLink, QString auth)
         return;
     }
 
-    QStringList parts = megaLink.split(QString::fromUtf8("!"));
-    MegaHandle handle = ::mega::INVALID_HANDLE;
-    if (parts.size() > 1)
-    {
-        QString b64handle = parts.at(1);
-        handle = MegaApi::base64ToHandle(b64handle.toUtf8().constData());
-    }
-
     pendingLinks.insert(megaLink, auth);
 
     if (preferences->logged())
