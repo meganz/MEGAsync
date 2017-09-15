@@ -19,9 +19,17 @@ class TransferManager : public QDialog, public mega::MegaTransferListener
     Q_OBJECT
 
 public:
+    enum {
+        ALL_TRANSFERS_TAB = 0,
+        DOWNLOADS_TAB   = 1,
+        UPLOADS_TAB = 2,
+        COMPLETED_TAB = 3
+    };
+
     static const int COMPLETED_ITEMS_LIMIT = 999;
 
     explicit TransferManager(mega::MegaApi *megaApi, QWidget *parent = 0);
+    void setActiveTab(int t);
     void updatePauseState();
     void disableGetLink(bool disable);
     void updateNumberOfCompletedTransfers(int num);

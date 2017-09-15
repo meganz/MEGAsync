@@ -15,7 +15,9 @@ typedef enum {
        STRING_GETLINK = 1,
        STRING_SHARE = 2,
        STRING_SEND = 3,
-       STRING_REMOVE_FROM_LEFT_PANE = 4
+       STRING_REMOVE_FROM_LEFT_PANE = 4,
+       STRING_VIEW_ON_MEGA = 5,
+       STRING_VIEW_VERSIONS = 6
 } StringID;
 
 WinShellDispatcherTask::WinShellDispatcherTask(MegaApplication *receiver) : QThread()
@@ -31,8 +33,9 @@ WinShellDispatcherTask::~WinShellDispatcherTask()
 void WinShellDispatcherTask::run()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Shell dispatcher starting...");
-    connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), receiver, SLOT(shellUpload(QQueue<QString>)));
-    connect(this, SIGNAL(newExportQueue(QQueue<QString>)), receiver, SLOT(shellExport(QQueue<QString>)));
+    connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), receiver, SLOT(shellUpload(QQueue<QString>)), Qt::QueuedConnection);
+    connect(this, SIGNAL(newExportQueue(QQueue<QString>)), receiver, SLOT(shellExport(QQueue<QString>)), Qt::QueuedConnection);
+    connect(this, SIGNAL(viewOnMega(QByteArray)), receiver, SLOT(shellViewOnMega(QByteArray)), Qt::QueuedConnection);
     dispatchPipe();
 }
 
@@ -383,6 +386,12 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                 case STRING_REMOVE_FROM_LEFT_PANE:
                     actionString = QCoreApplication::translate("ShellExtension", "Remove from left pane");
                     break;
+                case STRING_VIEW_ON_MEGA:
+                    actionString = QCoreApplication::translate("ShellExtension", "View on MEGA");
+                    break;
+                case STRING_VIEW_VERSIONS:
+                    actionString = QCoreApplication::translate("ShellExtension", "View previous versions");
+                    break;
             }
 
             wcscpy_s( pipe->chReply, BUFSIZE, (const wchar_t *)actionString.utf16());
@@ -508,6 +517,36 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                 emit newExportQueue(exportQueue);
                 exportQueue.clear();
             }
+            break;
+        }
+        case L'V': //View on MEGA
+        {
+            if (lstrlen(pipe->chRequest) < 3)
+            {
+                break;
+            }
+
+            QByteArray filePath = QByteArray((const char *)content, lstrlen(content) * 2 + 2);
+            if (filePath.startsWith(QByteArray((const char *)L"\\\\?\\", 8)))
+            {
+                filePath = filePath.mid(8);
+            }
+
+            QFileInfo file(QString::fromWCharArray((const wchar_t *)filePath.constData()));
+            if (file.exists())
+            {
+                emit viewOnMega(filePath);
+            }
+            break;
+        }
+        case L'R': //Open pRevious versions (still unsupported)
+        {
+            break;
+        }
+        case L'H': //Has previous versions? (still unsupported)
+        {
+            wcscpy_s(pipe->chReply, BUFSIZE, L"0");
+            break;
         }
         case L'I':
         default:;

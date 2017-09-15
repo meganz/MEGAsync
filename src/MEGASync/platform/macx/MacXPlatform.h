@@ -33,6 +33,7 @@ public:
     static void addFinderExtensionToSystem();
     static bool isFinderExtensionEnabled();
     static void reinstallFinderExtension();
+    static void reloadFinderExtension();
     static void enableFinderExtension(bool value);
     static void showInFolder(QString pathIn);
     static void startShellDispatcher(MegaApplication *receiver);
@@ -46,6 +47,7 @@ public:
     static void enableDialogBlur(QDialog *dialog);
     static void activateBackgroundWindow(QDialog *window);
     static bool registerUpdateJob();
+    static void execBackgroundWindow(QDialog *window);
     static void uninstall();
 
     static int fd;

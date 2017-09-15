@@ -124,6 +124,31 @@ void MacXPlatform::reinstallFinderExtension()
     QProcess::startDetached(QString::fromUtf8("pluginkit"), scriptArgs);
 }
 
+void MacXPlatform::reloadFinderExtension()
+{
+    bool finderExtEnabled = isFinderExtensionEnabled();
+    if (!finderExtEnabled) // No need to reload, extension is currenctly disabled and next time user enable it, it will launch updated version
+    {
+        return;
+    }
+
+    QStringList scriptArgs;
+    scriptArgs << QString::fromUtf8("-e")
+               << QString::fromUtf8("tell application \"MEGAShellExtFinder\" to quit");
+
+    QProcess p;
+    p.start(QString::fromAscii("osascript"), scriptArgs);
+    if (!p.waitForFinished(2000))
+    {
+        return;
+    }
+
+    scriptArgs.clear();
+    scriptArgs << QString::fromUtf8("-c")
+               << QString::fromUtf8("pluginkit -e ignore -i mega.mac.MEGAShellExtFinder && pluginkit -e use -i mega.mac.MEGAShellExtFinder");
+    QProcess::startDetached(QString::fromUtf8("bash"), scriptArgs);
+}
+
 void MacXPlatform::enableFinderExtension(bool value)
 {
     QStringList scriptArgs;
@@ -243,6 +268,11 @@ void MacXPlatform::activateBackgroundWindow(QDialog *)
 bool MacXPlatform::registerUpdateJob()
 {
     return registerUpdateDaemon();
+}
+
+void MacXPlatform::execBackgroundWindow(QDialog *window)
+{
+    window->exec();
 }
 
 void MacXPlatform::uninstall()
