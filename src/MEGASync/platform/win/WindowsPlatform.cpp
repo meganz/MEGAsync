@@ -776,6 +776,16 @@ void WindowsPlatform::syncFolderRemoved(QString syncPath, QString syncName, QStr
     SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH | SHCNF_FLUSHNOWAIT, syncPath.utf16(), NULL);
 }
 
+void WindowsPlatform::notifyAllSyncFoldersAdded()
+{
+
+}
+
+void WindowsPlatform::notifyAllSyncFoldersRemoved()
+{
+
+}
+
 QByteArray WindowsPlatform::encrypt(QByteArray data, QByteArray key)
 {
     DATA_BLOB dataIn;

@@ -35,7 +35,7 @@ void WinShellDispatcherTask::run()
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Shell dispatcher starting...");
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), receiver, SLOT(shellUpload(QQueue<QString>)), Qt::QueuedConnection);
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), receiver, SLOT(shellExport(QQueue<QString>)), Qt::QueuedConnection);
-    connect(this, SIGNAL(viewOnMega(QByteArray)), receiver, SLOT(shellViewOnMega(QByteArray)), Qt::QueuedConnection);
+    connect(this, SIGNAL(viewOnMega(QByteArray, bool)), receiver, SLOT(shellViewOnMega(QByteArray, bool)), Qt::QueuedConnection);
     dispatchPipe();
 }
 
@@ -535,12 +535,28 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             QFileInfo file(QString::fromWCharArray((const wchar_t *)filePath.constData()));
             if (file.exists())
             {
-                emit viewOnMega(filePath);
+                emit viewOnMega(filePath, false);
             }
             break;
         }
-        case L'R': //Open pRevious versions (still unsupported)
+        case L'R': //Open pRevious versions
         {
+            if (lstrlen(pipe->chRequest) < 3)
+            {
+                break;
+            }
+
+            QByteArray filePath = QByteArray((const char *)content, lstrlen(content) * 2 + 2);
+            if (filePath.startsWith(QByteArray((const char *)L"\\\\?\\", 8)))
+            {
+                filePath = filePath.mid(8);
+            }
+
+            QFileInfo file(QString::fromWCharArray((const wchar_t *)filePath.constData()));
+            if (file.exists())
+            {
+                emit viewOnMega(filePath, true);
+            }
             break;
         }
         case L'H': //Has previous versions? (still unsupported)
