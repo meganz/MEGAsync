@@ -373,3 +373,34 @@ void MacXExtServer::notifySyncDel(QString path, QString syncName)
                    + QChar::fromAscii(':')
                    + syncName).toUtf8());
 }
+
+void MacXExtServer::notifyAllClients(int op)
+{
+    // send the list of current synced folders to all connected clients
+    // This is needed once MEGAsync switches from non-logged to logged state and vice-versa
+
+    QString command;
+    if (op == NOTIFY_ADD_SYNCS)
+    {
+        command = QString::fromUtf8("A:");
+    }
+    else if (op == NOTIFY_DEL_SYNCS)
+    {
+        command = QString::fromUtf8("D:");
+    }
+
+    Preferences *preferences = Preferences::instance();
+    for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+    {
+        QString syncPath = QDir::toNativeSeparators(QDir(preferences->getLocalFolder(i)).canonicalPath());
+        if (!syncPath.size() || !preferences->isFolderActive(i))
+        {
+            continue;
+        }
+
+        QString message = command + syncPath + QDir::separator()
+                + QChar::fromAscii(':') + preferences->getSyncName(i);
+
+        emit sendToAll(message.toUtf8());
+    }
+}

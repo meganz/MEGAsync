@@ -197,6 +197,22 @@ void MacXPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString
     }
 }
 
+void MacXPlatform::notifyAllSyncFoldersAdded()
+{
+    if (extServer)
+    {
+        extServer->notifyAllClients(MacXExtServer::NOTIFY_ADD_SYNCS);
+    }
+}
+
+void MacXPlatform::notifyAllSyncFoldersRemoved()
+{
+    if (extServer)
+    {
+        extServer->notifyAllClients(MacXExtServer::NOTIFY_DEL_SYNCS);
+    }
+}
+
 QByteArray MacXPlatform::encrypt(QByteArray data, QByteArray key)
 {
     return data;
