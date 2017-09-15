@@ -4130,6 +4130,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
         int folders = 0;
         for (int i = 0; i < paths.size(); i++)
         {
+            folders++;
             QDirIterator it (paths[i], QDir::AllEntries | QDir::Hidden | QDir::System | QDir::NoDotAndDotDot, QDirIterator::Subdirectories);
             while (it.hasNext())
             {
