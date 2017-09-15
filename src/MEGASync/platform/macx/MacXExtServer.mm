@@ -22,7 +22,7 @@ MacXExtServer::MacXExtServer(MegaApplication *app)
     connect(this, SIGNAL(sendToAll(QByteArray)), this, SLOT(doSendToAll(QByteArray)));
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), app, SLOT(shellUpload(QQueue<QString>)),Qt::QueuedConnection);
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), app, SLOT(shellExport(QQueue<QString>)),Qt::QueuedConnection);
-    connect(this, SIGNAL(viewOnMega(QByteArray)), app, SLOT(shellViewOnMega(QByteArray)),Qt::QueuedConnection);
+    connect(this, SIGNAL(viewOnMega(QByteArray, bool)), app, SLOT(shellViewOnMega(QByteArray, bool)),Qt::QueuedConnection);
     connect(m_localServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
 }
 
@@ -56,7 +56,7 @@ void MacXExtServer::acceptConnection()
                 continue;
             }
 
-            QString message = QString::fromUtf8("A:") + syncPath + QDir::separator()
+            QString message = QString::fromUtf8("A:") + syncPath
                     + QChar::fromAscii(':') + preferences->getSyncName(i);
             client->writeData(message.toUtf8().constData(), message.length());
         }        
@@ -301,6 +301,16 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
             if (file.exists())
             {
                 emit viewOnMega(filePath);
+            }
+            return false;
+        }
+        case 'R': // Open previous versions
+        {
+            QByteArray filePath = QByteArray(content, strlen(content) + 1);
+            QFileInfo file(QString::fromUtf8(content));
+            if (file.exists())
+            {
+                emit viewOnMega(filePath, true);
             }
             return false;
         }
