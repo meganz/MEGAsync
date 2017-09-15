@@ -4141,7 +4141,6 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
                 {
                     files++;
                 }
-
             }
             megaApi->startUpload(QDir::toNativeSeparators(paths[i]).toUtf8().constData(), target);
         }
