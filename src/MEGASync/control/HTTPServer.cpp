@@ -138,7 +138,7 @@ void HTTPServer::checkAndPurgeRequests()
         }
     }
 
-    for (QMap<mega::MegaHandle, RequestTransferData*>::iterator it = webTransferStateRequests.begin() ; it != webTransferStateRequests.end();)
+    for (QMap<MegaHandle, RequestTransferData*>::iterator it = webTransferStateRequests.begin() ; it != webTransferStateRequests.end();)
     {
         RequestTransferData *transferData = it.value();
         if ((transferData->state == MegaTransfer::STATE_CANCELLED
@@ -184,7 +184,7 @@ void HTTPServer::onUploadSelectionDiscarded()
 
 void HTTPServer::onTransferDataUpdate(MegaHandle handle, int state, long long progress, long long size, long long speed)
 {
-    QMap<mega::MegaHandle, RequestTransferData*>::iterator it = webTransferStateRequests.find(handle);
+    QMap<MegaHandle, RequestTransferData*>::iterator it = webTransferStateRequests.find(handle);
     if (it == webTransferStateRequests.end())
     {
         return;
@@ -408,7 +408,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 
             if (privateAuth.size() || publicAuth.size())
             {
-                QQueue<mega::MegaNode *> downloadQueue;
+                QQueue<MegaNode *> downloadQueue;
                 int end;
                 bool firstnode = true;
 
