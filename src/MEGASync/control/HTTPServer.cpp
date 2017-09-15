@@ -518,16 +518,25 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
             handle = MegaApi::base64ToHandle(targetHandle.toUtf8().constData());
         }
 
-        QString bid = Utilities::extractJSONString(request.data, QString::fromUtf8("bid"));
-        if (!bid.isEmpty())
+        MegaNode *targetNode = megaApi->getNodeByHandle(handle);
+        if (!targetNode)
         {
-            webDataRequests.insert(bid, new RequestData());
-            emit onExternalFileUploadRequested(handle);
-            response = QString::number(MegaError::API_OK);
+            response = QString::number(MegaError::API_ENOENT);
         }
         else
         {
-            response = QString::number(MegaError::API_EARGS);
+            delete targetNode;
+            QString bid = Utilities::extractJSONString(request.data, QString::fromUtf8("bid"));
+            if (!bid.isEmpty())
+            {
+                webDataRequests.insert(bid, new RequestData());
+                emit onExternalFileUploadRequested(handle);
+                response = QString::number(MegaError::API_OK);
+            }
+            else
+            {
+                response = QString::number(MegaError::API_EARGS);
+            }
         }
     }
     else if (request.data.startsWith(externalFolderUploadRequestStart))
@@ -540,16 +549,25 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
             handle = MegaApi::base64ToHandle(targetHandle.toUtf8().constData());
         }
 
-        QString bid = Utilities::extractJSONString(request.data, QString::fromUtf8("bid"));
-        if (!bid.isEmpty())
+        MegaNode *targetNode = megaApi->getNodeByHandle(handle);
+        if (!targetNode)
         {
-            webDataRequests.insert(bid, new RequestData());
-            emit onExternalFolderUploadRequested(handle);
-            response = QString::number(MegaError::API_OK);
+            response = QString::number(MegaError::API_ENOENT);
         }
         else
         {
-            response = QString::number(MegaError::API_EARGS);
+            delete targetNode;
+            QString bid = Utilities::extractJSONString(request.data, QString::fromUtf8("bid"));
+            if (!bid.isEmpty())
+            {
+                webDataRequests.insert(bid, new RequestData());
+                emit onExternalFolderUploadRequested(handle);
+                response = QString::number(MegaError::API_OK);
+            }
+            else
+            {
+                response = QString::number(MegaError::API_EARGS);
+            }
         }
     }
     else if (request.data.startsWith(externalUploadSelectionStatusStart))
