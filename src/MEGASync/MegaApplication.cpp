@@ -3210,7 +3210,7 @@ void MegaApplication::toggleLogging()
 
     if (logger->isLogToFileEnabled() || logger->isLogToStdoutEnabled())
     {
-        Preferences::HTTPS_ORIGIN_CHECK_ENABLED = false;
+        Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
         logger->sendLogsToFile(false);
         logger->sendLogsToStdout(false);
         MegaApi::setLogLevel(MegaApi::LOG_LEVEL_WARNING);
