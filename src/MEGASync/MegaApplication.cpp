@@ -2662,6 +2662,7 @@ void MegaApplication::unlink()
     qDeleteAll(downloadQueue);
     downloadQueue.clear();
     megaApi->logout();
+    Platform::notifyAllSyncFoldersRemoved();
 }
 
 void MegaApplication::showInfoMessage(QString message, QString title)
@@ -4963,6 +4964,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         //Cancel pending uploads and disable syncs
         disableSyncs();
+        Platform::notifyAllSyncFoldersRemoved();
         if (!infoOverQuota)
         {
             infoOverQuota = true;
@@ -5282,6 +5284,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     //If we have got the filesystem, start the app
                     loggedIn();
                     restoreSyncs();
+                    Platform::notifyAllSyncFoldersAdded();
                 }
                 else
                 {
@@ -5393,6 +5396,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
 
             restoreSyncs();
+            Platform::notifyAllSyncFoldersAdded();
             onGlobalSyncStateChanged(megaApi);
         }
 
@@ -5816,6 +5820,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     {
         //Cancel pending uploads and disable syncs
         disableSyncs();
+        Platform::notifyAllSyncFoldersRemoved();
         if (!infoOverQuota)
         {
             infoOverQuota = true;
