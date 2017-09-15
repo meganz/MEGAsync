@@ -247,6 +247,7 @@ void TransferManager::on_tCompleted_clicked()
     updateState();
     updatePauseState();
     ui->wCompleted->refreshTransferItems();
+    ui->wCompletedTab->setVisible(true);
 }
 
 void TransferManager::on_tDownloads_clicked()
