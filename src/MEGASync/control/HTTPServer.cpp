@@ -190,7 +190,7 @@ void HTTPServer::onTransferDataUpdate(MegaHandle handle, int state, long long pr
         return;
     }
 
-    RequestTransferData* tData = *it;
+    RequestTransferData* tData = it.value();
     tData->state = state;
     tData->progress = progress;
     tData->size = size;
