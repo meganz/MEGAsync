@@ -184,12 +184,13 @@ void HTTPServer::onUploadSelectionDiscarded()
 
 void HTTPServer::onTransferDataUpdate(MegaHandle handle, int state, long long progress, long long size, long long speed)
 {
-    if (!webTransferStateRequests.contains(handle))
+    QMap<mega::MegaHandle, RequestTransferData*>::iterator it = webTransferStateRequests.find(handle);
+    if (it == webTransferStateRequests.end())
     {
         return;
     }
 
-    RequestTransferData* tData = webTransferStateRequests.value(handle);
+    RequestTransferData* tData = *it;
     tData->state = state;
     tData->progress = progress;
     tData->size = size;
