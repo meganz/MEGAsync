@@ -4133,7 +4133,7 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     if (folderUploadSelector->result() == QDialog::Accepted)
     {
         QStringList paths = folderUploadSelector->selectedFiles();
-        MegaNode *target = megaApi->getNodeByHandle(fileUploadTarget);
+        MegaNode *target = megaApi->getNodeByHandle(folderUploadTarget);
         int files = 0;
         int folders = 0;
         for (int i = 0; i < paths.size(); i++)
