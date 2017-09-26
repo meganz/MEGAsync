@@ -4361,8 +4361,9 @@ void MegaApplication::onUpdateNotFound(bool requested)
         }
         else
         {
-            showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from:\nhttps://mega.co.nz/sync")
-                            .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz")));
+            showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from:\nhttps://mega.co.nz/#sync")
+                            .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz"))
+                            .replace(QString::fromUtf8("#sync"), QString::fromUtf8("sync")));
         }
     }
 }
@@ -4374,7 +4375,7 @@ void MegaApplication::onUpdateError()
         return;
     }
 
-    showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from:\nhttps://mega.co.nz/sync")
+    showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from:\nhttps://mega.co.nz/#sync")
                     .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz"))
                     .replace(QString::fromUtf8("#sync"), QString::fromUtf8("sync")));
 }
