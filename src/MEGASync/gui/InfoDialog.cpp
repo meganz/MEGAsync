@@ -68,10 +68,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
-    ui->wTransfer1->setType(MegaTransfer::TYPE_DOWNLOAD);
-    ui->wTransfer1->hideTransfer();
-    ui->wTransfer2->setType(MegaTransfer::TYPE_UPLOAD);
-    ui->wTransfer2->hideTransfer();
+    ui->wTransferDown->setType(MegaTransfer::TYPE_DOWNLOAD);
+    ui->wTransferDown->hideTransfer();
+    ui->wTransferUp->setType(MegaTransfer::TYPE_UPLOAD);
+    ui->wTransferUp->hideTransfer();
 
     ui->bTransferManager->setToolTip(tr("Open Transfer Manager"));
     ui->bSettings->setToolTip(tr("Show MEGAsync options"));
@@ -128,8 +128,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     overlay->setStyleSheet(QString::fromAscii("background-color: rgba(247, 247, 247, 200); "
                                               "border: none; "));
 
-    ui->wTransfer1->hide();
-    ui->wTransfer1->hide();
+    ui->wTransferDown->hide();
+    ui->wTransferUp->hide();
     overlay->resize(ui->wTransfers->minimumSize());
 #ifdef __APPLE__
     overlay->move(1, 72);
@@ -139,8 +139,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 #endif
     overlay->hide();
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
-    connect(ui->wTransfer1, SIGNAL(cancel(QPoint, bool)), this, SLOT(onTransfer1Cancel(QPoint, bool)));
-    connect(ui->wTransfer2, SIGNAL(cancel(QPoint, bool)), this, SLOT(onTransfer2Cancel(QPoint, bool)));
+    connect(ui->wTransferDown, SIGNAL(showContextMenu(QPoint, bool)), this, SLOT(onContextDownloadMenu(QPoint, bool)));
+    connect(ui->wTransferUp, SIGNAL(showContextMenu(QPoint, bool)), this, SLOT(onContextUploadMenu(QPoint, bool)));
 
     if (preferences->logged())
     {
@@ -286,7 +286,7 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
             downloadSpeed = speed;
         }
 
-        wTransfer = ui->wTransfer1;
+        wTransfer = ui->wTransferDown;
         if (!activeDownload || activeDownload->getTag() != transfer->getTag())
         {
             delete activeDownload;
@@ -305,7 +305,7 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
             uploadSpeed = speed;
         }
 
-        wTransfer = ui->wTransfer2;
+        wTransfer = ui->wTransferUp;
         if (!activeUpload || activeUpload->getTag() != transfer->getTag())
         {
             delete activeUpload;
@@ -395,7 +395,7 @@ void InfoDialog::updateTransfers()
             if (preferences->logged())
             {
                 ui->lDownloads->setText(fullPattern.arg(downloadString));
-                if (!ui->wTransfer1->isActive())
+                if (!ui->wTransferDown->isActive())
                 {
                     ui->wDownloadDesc->hide();
                 }
@@ -457,7 +457,7 @@ void InfoDialog::updateTransfers()
 
             ui->lUploads->setText(fullPattern.arg(uploadString));
 
-            if (!ui->wTransfer2->isActive())
+            if (!ui->wTransferUp->isActive())
             {
                 ui->wUploadDesc->hide();
             }
@@ -469,7 +469,7 @@ void InfoDialog::updateTransfers()
 
         if (remainingUploads || remainingDownloads)
         {
-            if (ui->wTransfer1->isActive() || ui->wTransfer2->isActive())
+            if (ui->wTransferDown->isActive() || ui->wTransferUp->isActive())
             {
                 ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
             }
@@ -482,7 +482,7 @@ void InfoDialog::transferFinished(int error)
     remainingUploads = megaApi->getNumPendingUploads();
     remainingDownloads = megaApi->getNumPendingDownloads();
 
-    if (!remainingDownloads && ui->wTransfer1->isActive())
+    if (!remainingDownloads && ui->wTransferDown->isActive())
     {
         if (!downloadsFinishedTimer.isActive())
         {
@@ -501,7 +501,7 @@ void InfoDialog::transferFinished(int error)
         downloadsFinishedTimer.stop();
     }
 
-    if (!remainingUploads && ui->wTransfer2->isActive())
+    if (!remainingUploads && ui->wTransferUp->isActive())
     {
         if (!uploadsFinishedTimer.isActive())
         {
@@ -777,7 +777,7 @@ void InfoDialog::addSync()
     addSync(INVALID_HANDLE);
 }
 
-void InfoDialog::onTransfer1Cancel(QPoint pos, bool regular)
+void InfoDialog::onContextDownloadMenu(QPoint pos, bool regular)
 {
     if (transferMenu)
     {
@@ -810,7 +810,7 @@ void InfoDialog::onTransfer1Cancel(QPoint pos, bool regular)
     }
 
 #ifdef __APPLE__
-    transferMenu->exec(ui->wTransfer1->mapToGlobal(pos));
+    transferMenu->exec(ui->wTransferDown->mapToGlobal(pos));
     if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
     {
         this->hide();
@@ -819,11 +819,11 @@ void InfoDialog::onTransfer1Cancel(QPoint pos, bool regular)
     transferMenu->deleteLater();
     transferMenu = NULL;
 #else
-    transferMenu->popup(ui->wTransfer1->mapToGlobal(pos));
+    transferMenu->popup(ui->wTransferDown->mapToGlobal(pos));
 #endif
 }
 
-void InfoDialog::onTransfer2Cancel(QPoint pos, bool regular)
+void InfoDialog::onContextUploadMenu(QPoint pos, bool regular)
 {
     if (transferMenu)
     {
@@ -856,7 +856,7 @@ void InfoDialog::onTransfer2Cancel(QPoint pos, bool regular)
     }
 
 #ifdef __APPLE__
-    transferMenu->exec(ui->wTransfer2->mapToGlobal(pos));
+    transferMenu->exec(ui->wTransferUp->mapToGlobal(pos));
     if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
     {
         this->hide();
@@ -865,7 +865,7 @@ void InfoDialog::onTransfer2Cancel(QPoint pos, bool regular)
     transferMenu->deleteLater();
     transferMenu = NULL;
 #else
-    transferMenu->popup(ui->wTransfer2->mapToGlobal(pos));
+    transferMenu->popup(ui->wTransferUp->mapToGlobal(pos));
 #endif
 }
 
@@ -962,7 +962,7 @@ void InfoDialog::onAllUploadsFinished()
     remainingUploads = megaApi->getNumPendingUploads();
     if (!remainingUploads)
     {
-        ui->wTransfer2->hideTransfer();
+        ui->wTransferUp->hideTransfer();
         ui->lUploads->setText(QString::fromAscii(""));
         ui->wUploadDesc->hide();
         uploadSpeed = 0;
@@ -979,7 +979,7 @@ void InfoDialog::onAllDownloadsFinished()
     remainingDownloads = megaApi->getNumPendingDownloads();
     if (!remainingDownloads)
     {
-        ui->wTransfer1->hideTransfer();
+        ui->wTransferDown->hideTransfer();
         ui->lDownloads->setText(QString::fromAscii(""));
         ui->wDownloadDesc->hide();
 
@@ -1319,7 +1319,7 @@ void InfoDialog::regenerateLayout()
 
     if (activeDownload)
     {
-        ActiveTransfer *wTransfer = ui->wTransfer1;
+        ActiveTransfer *wTransfer = ui->wTransferDown;
         wTransfer->setFileName(QString::fromUtf8(activeDownload->getFileName()));
         wTransfer->setProgress(activeDownload->getTotalBytes() - remainingDownloadBytes,
                                activeDownload->getTotalBytes(),

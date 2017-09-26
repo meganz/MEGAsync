@@ -103,5 +103,5 @@ void ActiveTransfer::mouseReleaseEvent(QMouseEvent *event)
         return;
     }
 
-    emit cancel(QPoint(event->x(), event->y()), regular);
+    emit showContextMenu(QPoint(event->x(), event->y()), regular);
 }

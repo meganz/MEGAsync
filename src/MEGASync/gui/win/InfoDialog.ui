@@ -707,7 +707,7 @@ border: none;</string>
                  </spacer>
                 </item>
                 <item>
-                 <widget class="ActiveTransfer" name="wTransfer1" native="true">
+                 <widget class="ActiveTransfer" name="wTransferDown" native="true">
                   <property name="minimumSize">
                    <size>
                     <width>400</width>
@@ -848,7 +848,7 @@ border: none;</string>
                  </widget>
                 </item>
                 <item>
-                 <widget class="ActiveTransfer" name="wTransfer2" native="true">
+                 <widget class="ActiveTransfer" name="wTransferUp" native="true">
                   <property name="minimumSize">
                    <size>
                     <width>400</width>
