@@ -555,9 +555,12 @@ bool registerUpdateDaemon()
     NSString *fullpath = [homepath stringByAppendingString:@"/Library/LaunchAgents/mega.mac.megaupdater.plist"];
     [plistd writeToFile:fullpath atomically:YES];
 
+    QString path = QString::fromUtf8([fullpath UTF8String]);
+    QFile(path).setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadGroup | QFileDevice::ReadOther);
+
     QStringList scriptArgs;
     scriptArgs << QString::fromUtf8("-c")
-               << QString::fromUtf8("launchctl unload %1 && launchctl load %1").arg(QString::fromUtf8([fullpath UTF8String]));
+               << QString::fromUtf8("launchctl unload %1 && launchctl load %1").arg(path);
 
     QProcess p;
     p.start(QString::fromAscii("bash"), scriptArgs);
