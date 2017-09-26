@@ -98,10 +98,10 @@ bool ActiveTransfer::isActive()
 
 void ActiveTransfer::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (!regular || !(event->button() == Qt::RightButton))
+    if (!(event->button() == Qt::RightButton))
     {
         return;
     }
 
-    emit cancel(event->x(), event->y());
+    emit cancel(QPoint(event->x(), event->y()), regular);
 }

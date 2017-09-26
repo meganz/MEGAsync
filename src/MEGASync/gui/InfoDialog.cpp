@@ -139,8 +139,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 #endif
     overlay->hide();
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
-    connect(ui->wTransfer1, SIGNAL(cancel(int, int)), this, SLOT(onTransfer1Cancel(int, int)));
-    connect(ui->wTransfer2, SIGNAL(cancel(int, int)), this, SLOT(onTransfer2Cancel(int, int)));
+    connect(ui->wTransfer1, SIGNAL(cancel(QPoint, bool)), this, SLOT(onTransfer1Cancel(QPoint, bool)));
+    connect(ui->wTransfer2, SIGNAL(cancel(QPoint, bool)), this, SLOT(onTransfer2Cancel(QPoint, bool)));
 
     if (preferences->logged())
     {
@@ -777,7 +777,7 @@ void InfoDialog::addSync()
     addSync(INVALID_HANDLE);
 }
 
-void InfoDialog::onTransfer1Cancel(int x, int y)
+void InfoDialog::onTransfer1Cancel(QPoint pos, bool regular)
 {
     if (transferMenu)
     {
@@ -802,11 +802,15 @@ void InfoDialog::onTransfer1Cancel(int x, int y)
         transferMenu->addAction(tr("Resume download"), this, SLOT(downloadState()));
     }
     transferMenu->addAction(megaApi->areTransfersPaused(MegaTransfer::TYPE_DOWNLOAD) ? tr("Resume downloads") : tr("Pause downloads"), this, SLOT(globalDownloadState()));
-    transferMenu->addAction(tr("Cancel download"), this, SLOT(cancelCurrentDownload()));
-    transferMenu->addAction(tr("Cancel all downloads"), this, SLOT(cancelAllDownloads()));
+
+    if (regular)
+    {
+        transferMenu->addAction(tr("Cancel download"), this, SLOT(cancelCurrentDownload()));
+        transferMenu->addAction(tr("Cancel all downloads"), this, SLOT(cancelAllDownloads()));
+    }
 
 #ifdef __APPLE__
-    transferMenu->exec(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
+    transferMenu->exec(ui->wTransfer1->mapToGlobal(pos));
     if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
     {
         this->hide();
@@ -815,11 +819,11 @@ void InfoDialog::onTransfer1Cancel(int x, int y)
     transferMenu->deleteLater();
     transferMenu = NULL;
 #else
-    transferMenu->popup(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
+    transferMenu->popup(ui->wTransfer1->mapToGlobal(pos));
 #endif
 }
 
-void InfoDialog::onTransfer2Cancel(int x, int y)
+void InfoDialog::onTransfer2Cancel(QPoint pos, bool regular)
 {
     if (transferMenu)
     {
@@ -844,11 +848,15 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
         transferMenu->addAction(tr("Resume upload"), this, SLOT(uploadState()));
     }
     transferMenu->addAction(megaApi->areTransfersPaused(MegaTransfer::TYPE_UPLOAD) ? tr("Resume uploads") : tr("Pause uploads"), this, SLOT(globalUploadState()));
-    transferMenu->addAction(tr("Cancel upload"), this, SLOT(cancelCurrentUpload()));
-    transferMenu->addAction(tr("Cancel all uploads"), this, SLOT(cancelAllUploads()));
+
+    if (regular)
+    {
+        transferMenu->addAction(tr("Cancel upload"), this, SLOT(cancelCurrentUpload()));
+        transferMenu->addAction(tr("Cancel all uploads"), this, SLOT(cancelAllUploads()));
+    }
 
 #ifdef __APPLE__
-    transferMenu->exec(ui->wTransfer2->mapToGlobal(QPoint(x, y)));
+    transferMenu->exec(ui->wTransfer2->mapToGlobal(pos));
     if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
     {
         this->hide();
@@ -857,7 +865,7 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
     transferMenu->deleteLater();
     transferMenu = NULL;
 #else
-    transferMenu->popup(ui->wTransfer2->mapToGlobal(QPoint(x, y)));
+    transferMenu->popup(ui->wTransfer2->mapToGlobal(pos));
 #endif
 }
 

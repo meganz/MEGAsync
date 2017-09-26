@@ -22,7 +22,7 @@ public:
     bool isActive();
 
 signals:
-    void cancel(int x, int y);
+    void cancel(QPoint pos, bool regular);
 
 private:
     Ui::ActiveTransfer *ui;
