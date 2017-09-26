@@ -32,6 +32,7 @@ public:
 
     void finishTransfer();
     void updateTransfer();
+    void updateAnimation();
     void updateFinishedTime();
     void mouseHoverTransfer(bool isHover);
     void loadDefaultTransferIcon();
@@ -61,9 +62,6 @@ private:
 
 private slots:
     void frameChanged(int);
-
-private:
-    void updateAnimation();
 
 protected:
     QString fileName;

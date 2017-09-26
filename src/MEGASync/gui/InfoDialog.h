@@ -60,8 +60,8 @@ private:
 
 public slots:
    void addSync();
-   void onTransfer1Cancel(int x, int y);
-   void onTransfer2Cancel(int x, int y);
+   void onContextDownloadMenu(QPoint pos, bool regular);
+   void onContextUploadMenu(QPoint pos, bool regular);
    void globalDownloadState();
    void downloadState();
    void globalUploadState();

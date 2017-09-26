@@ -81,6 +81,10 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 ti->setStateLabel(tr("paused"));
                 ti->loadDefaultTransferIcon();
             }
+            else
+            {
+                ti->updateAnimation();
+            }
         }
 
         painter->save();
