@@ -148,6 +148,11 @@ void LinuxPlatform::syncFolderRemoved(QString syncPath, QString syncName, QStrin
     }
 }
 
+void LinuxPlatform::notifyRestartSyncFolders()
+{
+
+}
+
 void LinuxPlatform::notifyAllSyncFoldersAdded()
 {
 

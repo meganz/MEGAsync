@@ -222,6 +222,12 @@ void MacXPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString
     }
 }
 
+void MacXPlatform::notifyRestartSyncFolders()
+{
+    notifyAllSyncFoldersRemoved();
+    notifyAllSyncFoldersAdded();
+}
+
 void MacXPlatform::notifyAllSyncFoldersAdded()
 {
     if (extServer)

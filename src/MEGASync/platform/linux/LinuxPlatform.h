@@ -37,6 +37,7 @@ public:
     static void stopShellDispatcher();
     static void syncFolderAdded(QString syncPath, QString syncName, QString syncID);
     static void syncFolderRemoved(QString syncPath, QString syncName, QString syncID);
+    static void notifyRestartSyncFolders();
     static void notifyAllSyncFoldersAdded();
     static void notifyAllSyncFoldersRemoved();
     static QByteArray encrypt(QByteArray data, QByteArray key);

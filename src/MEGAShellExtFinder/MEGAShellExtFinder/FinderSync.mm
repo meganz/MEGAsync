@@ -98,7 +98,7 @@ void cleanItemsOfFolder(std::string dirPath)
 
 - (void)requestBadgeIdentifierForURL:(NSURL *)url {
     
-    //NSLog(@"requestBadgeIdentifierForURL:%@", url.filePathURL);
+    NSLog(@"requestBadgeIdentifierForURL:%@", url.filePathURL);
     NSString *path = [[NSString alloc] initWithString:[url path]];
     if ([self isDirectory:url])
     {
@@ -284,9 +284,9 @@ void cleanItemsOfFolder(std::string dirPath)
     [FIFinderSyncController defaultController].directoryURLs = _syncPaths;
 }
 
-- (void)onItemChanged:(NSString *)urlPath withState:(int)state {
+- (void)onItemChanged:(NSString *)urlPath withState:(int)state shouldShowBadges:(int)badge{
     
-//    NSLog(@"settingBadge: %i for path:%@", state, urlPath);
+    //NSLog(@"state: %i for path: %@ showBadge: %i", state, urlPath, badge);
     
     if ([self isDirectory:[NSURL URLWithString:urlPath]])
     {
@@ -298,7 +298,11 @@ void cleanItemsOfFolder(std::string dirPath)
     if (it != pathStatus.end())
     {
         it->second = (FileState)state;
-        [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:state] forURL:[NSURL fileURLWithPath:urlPath]];
+        if (badge)
+        {
+            [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:state] forURL:[NSURL fileURLWithPath:urlPath]];
+        }
+        
         return;
     }
     
@@ -306,7 +310,10 @@ void cleanItemsOfFolder(std::string dirPath)
     if ([_directories containsObject:basePath])
     {
         pathStatus.emplace(path, (FileState)state);
-        [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:state] forURL:[NSURL fileURLWithPath:urlPath]];
+        if (badge)
+        {
+            [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:state] forURL:[NSURL fileURLWithPath:urlPath]];
+        }
     }
 }
 

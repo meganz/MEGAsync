@@ -244,11 +244,6 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
         // get the state of an object
         case 'P':
         {
-            if (Preferences::instance()->overlayIconsDisabled())
-            {
-                return false;
-            }
-
             std::string tmpPath(content);
             int state = ((MegaApplication *)qApp)->getMegaApi()->syncPathState(&tmpPath);
             switch(state)
@@ -267,6 +262,17 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
                 default:
                     return false;
             }
+
+            response->append(":");
+            if (Preferences::instance()->overlayIconsDisabled()) // Respond to extension to not show badges
+            {
+                response->append("0");
+            }
+            else // Respond to extension to show badges
+            {
+                response->append("1");
+            }
+
             return true;
         }
         case 'E':

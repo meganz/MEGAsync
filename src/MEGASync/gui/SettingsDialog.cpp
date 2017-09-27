@@ -1427,7 +1427,11 @@ int SettingsDialog::saveSettings()
             preferences->disableOverlayIcons(ui->cOverlayIcons->isChecked());
             for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
             {
+            #ifdef Q_OS_MACX
+                Platform::notifyRestartSyncFolders();
+            #else
                 app->notifyItemChange(preferences->getLocalFolder(i), MegaApi::STATE_NONE);
+            #endif
             }
         }
     }
