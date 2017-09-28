@@ -350,6 +350,15 @@ void MacXExtServer::notifyItemChange(string *localPath, int newState)
     {
         command.append(":");
         command.append(QString::number(newState).toUtf8().constData());
+        command.append(":");
+        if (Preferences::instance()->overlayIconsDisabled()) // Respond to extension to not show badges
+        {
+            command.append("0");
+        }
+        else // Respond to extension to show badges
+        {
+            command.append("1");
+        }
         emit sendToAll(QByteArray(command.data(), command.size()));
     }
 }
