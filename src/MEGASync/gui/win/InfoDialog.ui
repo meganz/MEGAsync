@@ -31,7 +31,7 @@
  border: 1px solid  rgb(100, 100, 100);
 }
 
-#bAvatar, #bState, #bDotUsedQuota, #bDotUsedStorage, #bMEGAheader
+#bAvatar, #bState, #bDotUsedQuota, #bDotUsedStorage, #bMEGAheader, #bClockDown, #bClockUp
 {
 	border: none;
 }
