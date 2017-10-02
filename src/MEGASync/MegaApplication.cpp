@@ -5141,6 +5141,14 @@ void MegaApplication::createGuestMenu()
     trayGuestMenu->addAction(exitActionGuest);
 }
 
+void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
+{
+    if (event->getType() == MegaEvent::EVENT_CHANGE_TO_HTTPS)
+    {
+        preferences->setUseHttpsOnly(true);
+    }
+}
+
 //Called when a request is about to start
 void MegaApplication::onRequestStart(MegaApi* , MegaRequest *request)
 {
