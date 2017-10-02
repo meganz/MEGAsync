@@ -57,6 +57,7 @@ build-MEGA-*
 
 CMakeFiles
 CMakeCache.txt
+CMakeTmp
 CTestTestfile.cmake
 cmake_install.cmake
 *automoc*
