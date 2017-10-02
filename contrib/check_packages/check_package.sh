@@ -44,6 +44,7 @@ display_help() {
     echo " -c : check megasync package has changed (updated or newly installed)"
     echo " -i : install anew (removes previous megasync package)"
     echo " -k : keep VM running after completion"
+    echo " -n : disable GPG checks"
     echo " -p pass : password for VM (both user mega & root)"
     echo ""
 }
