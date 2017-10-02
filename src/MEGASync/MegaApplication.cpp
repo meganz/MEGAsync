@@ -5764,7 +5764,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     Platform::syncFolderRemoved(localFolder,
                                                 preferences->getSyncName(i),
                                                 preferences->getSyncID(i));
-                    preferences->setSyncState(i, false);
+
+                    if (preferences->isFolderActive(i))
+                    {
+                        preferences->setSyncState(i, false);
+                    }
+
                     openSettings(SettingsDialog::SYNCS_TAB);
                     if (settingsDialog)
                     {

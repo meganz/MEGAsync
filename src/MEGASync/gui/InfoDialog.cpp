@@ -611,6 +611,7 @@ void InfoDialog::setOverQuotaMode(bool state)
         ui->bUpgrade->style()->polish(ui->bUpgrade);
         ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
+        ui->bSyncFolder->setVisible(false);
     }
     else
     {
@@ -621,6 +622,7 @@ void InfoDialog::setOverQuotaMode(bool state)
         ui->bUpgrade->style()->polish(ui->bUpgrade);
         ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
+        ui->bSyncFolder->setVisible(true);
     }
 }
 
