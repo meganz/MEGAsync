@@ -56,6 +56,8 @@ public:
     void setRubbishStorage(long long value);
     long long inShareStorage();
     void setInShareStorage(long long value);
+    long long versionsStorage();
+    void setVersionsStorage(long long value);
 
     long long cloudDriveFiles();
     void setCloudDriveFiles(long long value);
@@ -382,6 +384,7 @@ protected:
     static const QString inboxStorageKey;
     static const QString rubbishStorageKey;
     static const QString inShareStorageKey;
+    static const QString versionsStorageKey;
     static const QString cloudDriveFilesKey;
     static const QString inboxFilesKey;
     static const QString rubbishFilesKey;

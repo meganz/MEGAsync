@@ -19,12 +19,10 @@ public:
     ~AccountDetailsDialog();
     void refresh(Preferences *details);
 
-private slots:
-    void on_bRefresh_clicked();
-
 private:
     Ui::AccountDetailsDialog *ui;
     mega::MegaApi *megaApi;
+
 };
 
 #endif // ACCOUNTDETAILSDIALOG_H

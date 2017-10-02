@@ -172,6 +172,7 @@ const QString Preferences::cloudDriveStorageKey     = QString::fromAscii("cloudD
 const QString Preferences::inboxStorageKey          = QString::fromAscii("inboxStorage");
 const QString Preferences::rubbishStorageKey        = QString::fromAscii("rubbishStorage");
 const QString Preferences::inShareStorageKey        = QString::fromAscii("inShareStorage");
+const QString Preferences::versionsStorageKey        = QString::fromAscii("versionsStorage");
 const QString Preferences::cloudDriveFilesKey       = QString::fromAscii("cloudDriveFiles");
 const QString Preferences::inboxFilesKey            = QString::fromAscii("inboxFiles");
 const QString Preferences::rubbishFilesKey          = QString::fromAscii("rubbishFiles");
@@ -586,6 +587,23 @@ void Preferences::setInShareStorage(long long value)
     mutex.lock();
     assert(logged());
     settings->setValue(inShareStorageKey, value);
+    mutex.unlock();
+}
+
+long long Preferences::versionsStorage()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(versionsStorageKey).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setVersionsStorage(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(versionsStorageKey, value);
     mutex.unlock();
 }
 
