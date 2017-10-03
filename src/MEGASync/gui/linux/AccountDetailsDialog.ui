@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>425</width>
-    <height>280</height>
+    <width>480</width>
+    <height>320</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>425</width>
-    <height>280</height>
+    <width>480</width>
+    <height>320</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>425</width>
-    <height>280</height>
+    <width>480</width>
+    <height>320</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -29,6 +29,20 @@
    <string notr="true">#AccountDetailsDialog
 {
 background-color: white;
+}
+
+#lCloudDrive, #lInbox, #lShares, #lRubbish, #lAvailable
+{
+color: #333333;	
+font-family: &quot;Source Sans Pro&quot;;
+font-size: 14px;	
+}
+
+#lUsedCloudDrive, #lUsedInbox, #lUsedShares, #lUsedRubbish, #lSpaceAvailable, #lUsedByVersions
+{
+color: #777777;	
+font-family: &quot;Source Sans Pro&quot;;
+font-size: 18px;	
 }
 
 #bCloudDrive, #bInbox, #bShares, #bRubbish, #bAvailable, #bVersions
@@ -77,25 +91,29 @@ color: #999999;
 
 #wSizeVersions
 {
-background-color: #EEEEEE;
-border-radius: 5px;
-margin-left: 15px;
-margin-right: 15px;
+background-color: #F2F2F2;
+border-radius: 4px;
+margin-left: 24px;
+margin-right: 24px;
 }
 #lVersions
 {
+color: #777777;	
+font-family: &quot;Source Sans Pro&quot;;	
+font-size: 14px;
 font-style: italic;
-}</string>
+}
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
-    <number>3</number>
+    <number>4</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>3</number>
    </property>
    <property name="rightMargin">
     <number>0</number>
@@ -128,16 +146,16 @@ font-style: italic;
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <property name="spacing">
-       <number>2</number>
+       <number>3</number>
       </property>
       <property name="leftMargin">
-       <number>25</number>
+       <number>32</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>25</number>
+       <number>32</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -152,13 +170,13 @@ font-style: italic;
         </property>
         <property name="minimumSize">
          <size>
-          <width>375</width>
+          <width>416</width>
           <height>20</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>375</width>
+          <width>416</width>
           <height>20</height>
          </size>
         </property>
@@ -259,13 +277,13 @@ font-style: italic;
         </property>
         <property name="minimumSize">
          <size>
-          <width>375</width>
+          <width>416</width>
           <height>8</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>375</width>
+          <width>416</width>
           <height>8</height>
          </size>
         </property>
@@ -291,13 +309,13 @@ font-style: italic;
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>125</height>
+       <height>150</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>125</height>
+       <height>150</height>
       </size>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -305,13 +323,13 @@ font-style: italic;
        <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>25</number>
+       <number>32</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>25</number>
+       <number>32</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -320,14 +338,14 @@ font-style: italic;
        <widget class="QWidget" name="wCloudDrive" native="true">
         <property name="minimumSize">
          <size>
-          <width>0</width>
-          <height>25</height>
+          <width>416</width>
+          <height>30</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
-          <height>25</height>
+          <width>416</width>
+          <height>30</height>
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout">
@@ -393,7 +411,7 @@ font-style: italic;
          <item>
           <widget class="QLabel" name="lUsedCloudDrive">
            <property name="text">
-            <string notr="true">10 GB</string>
+            <string notr="true"/>
            </property>
           </widget>
          </item>
@@ -401,17 +419,17 @@ font-style: italic;
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="wCloudDrive_2" native="true">
+       <widget class="QWidget" name="wInbox" native="true">
         <property name="minimumSize">
          <size>
-          <width>0</width>
-          <height>25</height>
+          <width>416</width>
+          <height>30</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
-          <height>25</height>
+          <width>416</width>
+          <height>30</height>
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -477,7 +495,7 @@ font-style: italic;
          <item>
           <widget class="QLabel" name="lUsedInbox">
            <property name="text">
-            <string notr="true">10 GB</string>
+            <string notr="true"/>
            </property>
           </widget>
          </item>
@@ -485,17 +503,17 @@ font-style: italic;
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="wCloudDrive_4" native="true">
+       <widget class="QWidget" name="wShares" native="true">
         <property name="minimumSize">
          <size>
-          <width>0</width>
-          <height>25</height>
+          <width>416</width>
+          <height>30</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
-          <height>25</height>
+          <width>416</width>
+          <height>30</height>
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -561,7 +579,7 @@ font-style: italic;
          <item>
           <widget class="QLabel" name="lUsedShares">
            <property name="text">
-            <string notr="true">10 GB</string>
+            <string notr="true"/>
            </property>
           </widget>
          </item>
@@ -569,17 +587,17 @@ font-style: italic;
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="wCloudDrive_6" native="true">
+       <widget class="QWidget" name="wRubbish" native="true">
         <property name="minimumSize">
          <size>
-          <width>0</width>
-          <height>25</height>
+          <width>416</width>
+          <height>30</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
-          <height>25</height>
+          <width>416</width>
+          <height>30</height>
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -645,7 +663,7 @@ font-style: italic;
          <item>
           <widget class="QLabel" name="lUsedRubbish">
            <property name="text">
-            <string notr="true">10 GB</string>
+            <string notr="true"/>
            </property>
           </widget>
          </item>
@@ -653,17 +671,17 @@ font-style: italic;
        </widget>
       </item>
       <item>
-       <widget class="QWidget" name="wCloudDrive_3" native="true">
+       <widget class="QWidget" name="wAvailable" native="true">
         <property name="minimumSize">
          <size>
-          <width>0</width>
-          <height>25</height>
+          <width>416</width>
+          <height>30</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
-          <height>25</height>
+          <width>416</width>
+          <height>30</height>
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -701,13 +719,13 @@ font-style: italic;
            </property>
            <property name="icon">
             <iconset>
-             <normalon>:/images/ic_small_rubbish.png</normalon>
+             <normalon>:/images/ic_small_available.png</normalon>
             </iconset>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="lAvailable_2">
+          <widget class="QLabel" name="lAvailable">
            <property name="text">
             <string>Available</string>
            </property>
@@ -727,9 +745,9 @@ font-style: italic;
           </spacer>
          </item>
          <item>
-          <widget class="QLabel" name="lAvailable">
+          <widget class="QLabel" name="lSpaceAvailable">
            <property name="text">
-            <string notr="true">10 GB</string>
+            <string notr="true"/>
            </property>
           </widget>
          </item>
@@ -744,13 +762,13 @@ font-style: italic;
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>30</height>
+       <height>32</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>30</height>
+       <height>32</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -761,13 +779,13 @@ font-style: italic;
        <number>6</number>
       </property>
       <property name="leftMargin">
-       <number>25</number>
+       <number>32</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>25</number>
+       <number>32</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -791,7 +809,7 @@ font-style: italic;
         </property>
         <property name="icon">
          <iconset>
-          <normalon>:/images/ic_small_rubbish.png</normalon>
+          <normalon>:/images/ic_small_versions.png</normalon>
          </iconset>
         </property>
        </widget>
@@ -819,7 +837,7 @@ font-style: italic;
       <item>
        <widget class="QLabel" name="lUsedByVersions">
         <property name="text">
-         <string notr="true">10 GB</string>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

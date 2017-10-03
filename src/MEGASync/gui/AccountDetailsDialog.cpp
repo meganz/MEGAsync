@@ -47,12 +47,12 @@ void AccountDetailsDialog::refresh(Preferences *preferences)
         ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
 
-        QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1&nbsp;</span>")
+        QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 18px; text-decoration:none;\">%1&nbsp;</span>")
                                      .arg(QString::number(percentage).append(QString::fromAscii(" %"))))
-                                     .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
+                                     .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 18px; text-decoration:none;\">&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(preferences->totalStorage())));
         ui->lPercentageUsedStorage->setText(used);
-        ui->lTotalUsedStorage->setText(tr("USED STORAGE %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
+        ui->lTotalUsedStorage->setText(tr("USED STORAGE %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 18px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
                                        .arg(Utilities::getSizeString(preferences->usedStorage()))));
     }
 
@@ -72,7 +72,7 @@ void AccountDetailsDialog::refresh(Preferences *preferences)
     ui->lUsedInbox->setText(Utilities::getSizeString(preferences->inboxStorage()));
     ui->lUsedShares->setText(Utilities::getSizeString(preferences->inShareStorage()));
     ui->lUsedRubbish->setText(Utilities::getSizeString(preferences->rubbishStorage()));
-    ui->lAvailable->setText(Utilities::getSizeString(preferences->totalStorage() - preferences->usedStorage()));
+    ui->lSpaceAvailable->setText(Utilities::getSizeString(preferences->totalStorage() - preferences->usedStorage()));
     ui->lUsedByVersions->setText(Utilities::getSizeString(preferences->versionsStorage()));
 
 }
