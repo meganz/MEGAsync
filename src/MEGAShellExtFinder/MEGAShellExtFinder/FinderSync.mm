@@ -198,7 +198,7 @@ void cleanItemsOfFolder(std::string dirPath)
     
     if (selectedItemURLs.count == 1)
     {
-        if ((numFolders + numFiles) == 1) // If only one item is selected and already synced.
+        if (numFolders  == 1) // If only one item is selected and is a folder synced.
         {
             NSMenuItem *viewOnMEGAItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"View on MEGA", nil) action:nil keyEquivalent:@""];
             [menu setAutoenablesItems:NO];
@@ -208,17 +208,16 @@ void cleanItemsOfFolder(std::string dirPath)
             [menu addItem:viewOnMEGAItem];
         }
         
-//        Disable support for "View previous versions" until server enable it
-//        
-//        if (numFiles == 1) // If only one file is selected and already synced.
-//        {
-//            NSMenuItem *viewPrevVersions = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"View previous versions", nil) action:nil keyEquivalent:@""];
-//            [menu setAutoenablesItems:NO];
-//            [viewPrevVersions setEnabled:YES];
-//            [viewPrevVersions setImage:(whichMenu == FIMenuKindContextualMenuForItems) ? icon : nil];
-//            [viewPrevVersions setAction:@selector(viewPrevVersions:)];
-//            [menu addItem:viewPrevVersions];
-//        }
+        // Disable support for "View previous versions" until server enable it
+        if (numFiles == 1) // If only one file is selected and already synced.
+        {
+            NSMenuItem *viewPrevVersions = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"View previous versions", nil) action:nil keyEquivalent:@""];
+            [menu setAutoenablesItems:NO];
+            [viewPrevVersions setEnabled:YES];
+            [viewPrevVersions setImage:(whichMenu == FIMenuKindContextualMenuForItems) ? icon : nil];
+            [viewPrevVersions setAction:@selector(viewPrevVersions:)];
+            [menu addItem:viewPrevVersions];
+        }
         
     }
     
