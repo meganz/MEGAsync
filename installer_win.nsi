@@ -43,12 +43,12 @@ VIAddVersionKey "ProductVersion" "3.1.4.0"
 ; To be defined depending on your working environment
 
 !ifdef BUILD_X64_VERSION
-!define QT_PATH "C:\Qt\qt-4.8.7-x64-msvc2010\qt-4.8.7-x64-msvc2010\"
+!define QT_PATH "C:\Qt\Qt5.6.3_x64\5.6.3\msvc2015_64"
 !else
 !ifndef ENABLE_QT5
 !define QT_PATH "C:\Qt\4.8.6.0\"
 !else
-!define QT_PATH "C:\Qt\Qt5.6.2\5.6\msvc2015"
+!define QT_PATH "C:\Qt\Qt5.6.3\5.6.3\msvc2015"
 !endif
 !endif
 
@@ -695,13 +695,9 @@ modeselected:
   AccessControl::GrantOnFile "$INSTDIR\Qt5Concurrent.dll" "$USERNAME" "GenericRead + GenericWrite"
   
   SetOutPath "$INSTDIR\imageformats"
-  File "${QT_PATH}\plugins\imageformats\qdds.dll"
+  File "${QT_PATH}\plugins\imageformats\qgif.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats" "$USERNAME" "GenericRead + GenericWrite"
-  AccessControl::SetFileOwner "$INSTDIR\imageformats\qdds.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\imageformats\qdds.dll" "$USERNAME" "GenericRead + GenericWrite"
-
-  File "${QT_PATH}\plugins\imageformats\qgif.dll"
   AccessControl::SetFileOwner "$INSTDIR\imageformats\qgif.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\imageformats\qgif.dll" "$USERNAME" "GenericRead + GenericWrite"
 
