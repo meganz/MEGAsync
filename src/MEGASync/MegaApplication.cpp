@@ -4368,7 +4368,8 @@ void MegaApplication::onUpdateNotFound(bool requested)
         else
         {
             showInfoMessage(tr("There was a problem installing the update. Please try again later or download the last version from:\nhttps://mega.co.nz/#sync")
-                            .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz")));
+                            .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz"))
+                            .replace(QString::fromUtf8("#sync"), QString::fromUtf8("sync")));
         }
     }
 }
@@ -5146,6 +5147,14 @@ void MegaApplication::createGuestMenu()
     trayGuestMenu->addAction(exitActionGuest);
 }
 
+void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
+{
+    if (event->getType() == MegaEvent::EVENT_CHANGE_TO_HTTPS)
+    {
+        preferences->setUseHttpsOnly(true);
+    }
+}
+
 //Called when a request is about to start
 void MegaApplication::onRequestStart(MegaApi* , MegaRequest *request)
 {
@@ -5769,7 +5778,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     Platform::syncFolderRemoved(localFolder,
                                                 preferences->getSyncName(i),
                                                 preferences->getSyncID(i));
-                    preferences->setSyncState(i, false);
+
+                    if (preferences->isFolderActive(i))
+                    {
+                        preferences->setSyncState(i, false);
+                    }
+
                     openSettings(SettingsDialog::SYNCS_TAB);
                     if (settingsDialog)
                     {
