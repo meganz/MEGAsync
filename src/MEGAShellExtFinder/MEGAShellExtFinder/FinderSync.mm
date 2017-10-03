@@ -126,7 +126,9 @@ void cleanItemsOfFolder(std::string dirPath)
 }
 
 - (NSImage *)toolbarItemImage {
-    return [[NSBundle mainBundle] imageForResource:@"toolbar-icon.icns"];
+    NSImage *im = [[NSBundle mainBundle] imageForResource:@"toolbar-mega-icon"];
+    [im setTemplate:YES];
+    return im;
 }
 
 - (NSMenu *)menuForMenuKind:(FIMenuKind)whichMenu {

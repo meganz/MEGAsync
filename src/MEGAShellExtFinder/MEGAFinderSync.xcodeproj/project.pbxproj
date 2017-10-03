@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		771DF54D1EBC6DB400F35195 /* toolbar-icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 771DF54C1EBC6DB400F35195 /* toolbar-icon.icns */; };
 		7724ACEE1E76C54D00A5F0CC /* ShellExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 7724ACED1E76C54D00A5F0CC /* ShellExt.m */; };
 		7730A99E1EC22C8A003F1B80 /* context-ico.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7730A99D1EC22C8A003F1B80 /* context-ico.icns */; };
 		7743FC2A1E72B2D4005E42F9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7743FC291E72B2D4005E42F9 /* main.m */; };
 		7743FC401E72C6B7005E42F9 /* FinderSync.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7743FC3F1E72C6B7005E42F9 /* FinderSync.mm */; };
 		7743FC441E72C6B7005E42F9 /* MEGAShellExtFinder.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7743FC3A1E72C6B7005E42F9 /* MEGAShellExtFinder.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		77AEE0881EC5D78E00393191 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7720E8361EC489CB00D86B75 /* Localizable.strings */; };
+		77C44D501F796D1F004308C6 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77C44D4F1F796D1F004308C6 /* Media.xcassets */; };
 		77C807921E82E30D00064263 /* error.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 77C8078C1E82E30D00064263 /* error.iconset */; };
 		77C807941E82E30E00064263 /* ok.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 77C8078E1E82E30D00064263 /* ok.iconset */; };
 		77C807961E82E30E00064263 /* sync.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 77C807901E82E30D00064263 /* sync.iconset */; };
@@ -45,7 +45,6 @@
 
 /* Begin PBXFileReference section */
 		7710EA7E1E770C3B00B4E00F /* Interfaces.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Interfaces.h; sourceTree = "<group>"; };
-		771DF54C1EBC6DB400F35195 /* toolbar-icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "toolbar-icon.icns"; path = "icons/toolbar-icon.icns"; sourceTree = "<group>"; };
 		7720E8351EC489CB00D86B75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7720E83C1EC48CEE00D86B75 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7724ACEC1E76C54D00A5F0CC /* ShellExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShellExt.h; sourceTree = "<group>"; };
@@ -87,6 +86,7 @@
 		776013381ED734C80030686E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		7760133A1ED734D50030686E /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		7760133C1ED734F20030686E /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		77C44D4F1F796D1F004308C6 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = icons/Media.xcassets; sourceTree = "<group>"; };
 		77C8078C1E82E30D00064263 /* error.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = error.iconset; path = icons/error.iconset; sourceTree = "<group>"; };
 		77C8078E1E82E30D00064263 /* ok.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = ok.iconset; path = icons/ok.iconset; sourceTree = "<group>"; };
 		77C807901E82E30D00064263 /* sync.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = sync.iconset; path = icons/sync.iconset; sourceTree = "<group>"; };
@@ -172,11 +172,11 @@
 			isa = PBXGroup;
 			children = (
 				7730A99D1EC22C8A003F1B80 /* context-ico.icns */,
-				771DF54C1EBC6DB400F35195 /* toolbar-icon.icns */,
 				77C8078C1E82E30D00064263 /* error.iconset */,
 				77C8078E1E82E30D00064263 /* ok.iconset */,
 				77C807901E82E30D00064263 /* sync.iconset */,
 				7743FC3D1E72C6B7005E42F9 /* MEGAShellExtFinder.entitlements */,
+				77C44D4F1F796D1F004308C6 /* Media.xcassets */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -308,9 +308,9 @@
 			files = (
 				77C807941E82E30E00064263 /* ok.iconset in Resources */,
 				77AEE0881EC5D78E00393191 /* Localizable.strings in Resources */,
+				77C44D501F796D1F004308C6 /* Media.xcassets in Resources */,
 				77C807921E82E30D00064263 /* error.iconset in Resources */,
 				7730A99E1EC22C8A003F1B80 /* context-ico.icns in Resources */,
-				771DF54D1EBC6DB400F35195 /* toolbar-icon.icns in Resources */,
 				77C807961E82E30E00064263 /* sync.iconset in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -68,6 +68,7 @@ public:
     void changeLanguage(QString languageCode);
     void updateTrayIcon();
 
+    virtual void onEvent(mega::MegaApi *api, mega::MegaEvent *event);
     virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request);
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
     virtual void onRequestTemporaryError(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError* e);
