@@ -3972,7 +3972,7 @@ void MegaApplication::shellViewOnMega(QByteArray localPath, bool versions)
 
     char *base64handle = node->getBase64Handle();
     QString url = QString::fromUtf8("fm%1/%2").arg(versions ? QString::fromUtf8("/versions") : QString::fromUtf8(""))
-                                              .arg(QString::fromUtf8(node->getBase64Handle()));
+                                              .arg(QString::fromUtf8(base64handle));
     megaApi->getSessionTransferURL(url.toUtf8().constData());
     delete [] base64handle;
     delete node;
