@@ -31,9 +31,12 @@ void AccountDetailsDialog::refresh(Preferences *preferences)
     {
         ui->pUsageStorage->setValue(0);
         ui->lTotalUsedStorage->setText(tr("USED STORAGE %1").arg(tr("Data temporarily unavailable")));
+        ui->sHeader->setCurrentWidget(ui->pLoading);
+        usageDataAvailable(false);
     }
     else
     {
+        ui->sHeader->setCurrentWidget(ui->pUsedData);
         int percentage = ceil((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
         ui->pUsageStorage->setValue((percentage < 100) ? percentage : 100);
         if (percentage > 100)
@@ -54,25 +57,37 @@ void AccountDetailsDialog::refresh(Preferences *preferences)
         ui->lPercentageUsedStorage->setText(used);
         ui->lTotalUsedStorage->setText(tr("USED STORAGE %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 18px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
                                        .arg(Utilities::getSizeString(preferences->usedStorage()))));
+
+
+        if (preferences->usedStorage() > preferences->totalStorage())
+        {
+            ui->pUsageStorage->setProperty("overquota", true);
+        }
+        else
+        {
+            ui->pUsageStorage->setProperty("overquota", false);
+        }
+
+        ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
+        ui->pUsageStorage->style()->polish(ui->pUsageStorage);
+
+        usageDataAvailable(true);
+        ui->lUsedCloudDrive->setText(Utilities::getSizeString(preferences->cloudDriveStorage()));
+        ui->lUsedInbox->setText(Utilities::getSizeString(preferences->inboxStorage()));
+        ui->lUsedShares->setText(Utilities::getSizeString(preferences->inShareStorage()));
+        ui->lUsedRubbish->setText(Utilities::getSizeString(preferences->rubbishStorage()));
+        ui->lSpaceAvailable->setText(Utilities::getSizeString(preferences->totalStorage() - preferences->usedStorage()));
+        ui->lUsedByVersions->setText(Utilities::getSizeString(preferences->versionsStorage()));
     }
 
-    if (preferences->usedStorage() > preferences->totalStorage())
-    {
-        ui->pUsageStorage->setProperty("overquota", true);
-    }
-    else
-    {
-        ui->pUsageStorage->setProperty("overquota", false);
-    }
+}
 
-    ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
-    ui->pUsageStorage->style()->polish(ui->pUsageStorage);
-
-    ui->lUsedCloudDrive->setText(Utilities::getSizeString(preferences->cloudDriveStorage()));
-    ui->lUsedInbox->setText(Utilities::getSizeString(preferences->inboxStorage()));
-    ui->lUsedShares->setText(Utilities::getSizeString(preferences->inShareStorage()));
-    ui->lUsedRubbish->setText(Utilities::getSizeString(preferences->rubbishStorage()));
-    ui->lSpaceAvailable->setText(Utilities::getSizeString(preferences->totalStorage() - preferences->usedStorage()));
-    ui->lUsedByVersions->setText(Utilities::getSizeString(preferences->versionsStorage()));
-
+void AccountDetailsDialog::usageDataAvailable(bool isAvailable)
+{
+    ui->lUsedCloudDrive->setVisible(isAvailable);
+    ui->lUsedInbox->setVisible(isAvailable);
+    ui->lUsedShares->setVisible(isAvailable);
+    ui->lUsedRubbish->setVisible(isAvailable);
+    ui->lSpaceAvailable->setVisible(isAvailable);
+    ui->lUsedByVersions->setVisible(isAvailable);
 }

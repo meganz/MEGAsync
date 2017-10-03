@@ -23,6 +23,9 @@ private:
     Ui::AccountDetailsDialog *ui;
     mega::MegaApi *megaApi;
 
+private:
+    void usageDataAvailable(bool isAvailable);
+
 };
 
 #endif // ACCOUNTDETAILSDIALOG_H
