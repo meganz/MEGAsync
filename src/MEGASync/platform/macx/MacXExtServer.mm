@@ -1,4 +1,5 @@
 #include "MacXExtServer.h"
+#include <assert.h>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -393,6 +394,8 @@ void MacXExtServer::notifyAllClients(int op)
 {
     // send the list of current synced folders to all connected clients
     // This is needed once MEGAsync switches from non-logged to logged state and vice-versa
+    Preferences *preferences = Preferences::instance();
+    assert(preferences->logged());
 
     QString command;
     if (op == NOTIFY_ADD_SYNCS)
@@ -404,7 +407,6 @@ void MacXExtServer::notifyAllClients(int op)
         command = QString::fromUtf8("D:");
     }
 
-    Preferences *preferences = Preferences::instance();
     for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
     {
         QString syncPath = QDir::toNativeSeparators(QDir(preferences->getLocalFolder(i)).canonicalPath());
