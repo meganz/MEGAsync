@@ -529,7 +529,8 @@ long long Preferences::availableStorage()
     long long total = settings->value(totalStorageKey).toLongLong();
     long long used = settings->value(usedStorageKey).toLongLong();
     mutex.unlock();
-    return total - used;
+    long long available = total - used;
+    return available >= 0 ? available : 0;
 }
 
 long long Preferences::cloudDriveStorage()

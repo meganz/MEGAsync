@@ -76,10 +76,9 @@ void AccountDetailsDialog::refresh(Preferences *preferences)
         ui->lUsedInbox->setText(Utilities::getSizeString(preferences->inboxStorage()));
         ui->lUsedShares->setText(Utilities::getSizeString(preferences->inShareStorage()));
         ui->lUsedRubbish->setText(Utilities::getSizeString(preferences->rubbishStorage()));
-        ui->lSpaceAvailable->setText(Utilities::getSizeString((preferences->availableStorage() < 0)  ? 0 : preferences->availableStorage()));
+        ui->lSpaceAvailable->setText(Utilities::getSizeString(preferences->availableStorage()));
         ui->lUsedByVersions->setText(Utilities::getSizeString(preferences->versionsStorage()));
     }
-
 }
 
 void AccountDetailsDialog::usageDataAvailable(bool isAvailable)
