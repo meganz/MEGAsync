@@ -68,6 +68,7 @@ public:
     void changeLanguage(QString languageCode);
     void updateTrayIcon();
 
+    virtual void onEvent(mega::MegaApi *api, mega::MegaEvent *event);
     virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request);
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
     virtual void onRequestTemporaryError(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError* e);
@@ -140,7 +141,7 @@ public slots:
     void processUploads();
     void shellUpload(QQueue<QString> newUploadQueue);
     void shellExport(QQueue<QString> newExportQueue);
-    void shellViewOnMega(QByteArray localPath);
+    void shellViewOnMega(QByteArray localPath, bool versions);
     void exportNodes(QList<mega::MegaHandle> exportList, QStringList extraLinks = QStringList());
     void externalDownload(QQueue<mega::MegaNode *> newDownloadQueue);
     void externalDownload(QString megaLink, QString auth);
