@@ -47,6 +47,7 @@ public:
     void setTotalStorage(long long value);
     long long usedStorage();
     void setUsedStorage(long long value);
+    long long availableStorage();
 
     long long cloudDriveStorage();
     void setCloudDriveStorage(long long value);

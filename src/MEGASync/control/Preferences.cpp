@@ -522,6 +522,16 @@ void Preferences::setUsedStorage(long long value)
     mutex.unlock();
 }
 
+long long Preferences::availableStorage()
+{
+    mutex.lock();
+    assert(logged());
+    long long total = settings->value(totalStorageKey).toLongLong();
+    long long used = settings->value(usedStorageKey).toLongLong();
+    mutex.unlock();
+    return total - used;
+}
+
 long long Preferences::cloudDriveStorage()
 {
     mutex.lock();
