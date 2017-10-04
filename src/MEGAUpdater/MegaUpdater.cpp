@@ -27,7 +27,7 @@ int CALLBACK WinMain(
 int main(int argc, char *argv[])
 #endif
 {
-    MegaApi::setLogLevel(mega::MegaApi::LOG_LEVEL_INFO);
+    MegaApi::setLogLevel(MegaApi::LOG_LEVEL_INFO);
     MegaApi::setLogToConsole(true);
 
     char log_message[MAX_LOG_SIZE];

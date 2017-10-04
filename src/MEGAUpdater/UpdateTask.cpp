@@ -6,19 +6,26 @@
 #include <errno.h>
 #include <ctime>
 #include <sstream>
+#include <iostream>
 #include <cstdio>
 #include <stdlib.h>
 #include <stdio.h>
-
-using namespace mega;
-using namespace std;
+#include <assert.h>
 
 #ifdef _WIN32
 #include <Windows.h>
 #include <Shlwapi.h>
+#include <urlmon.h>
 #include <direct.h>
 #include <io.h>
 #include <algorithm>
+#endif
+
+using namespace mega;
+using namespace std;
+using namespace CryptoPP;
+
+#ifdef _WIN32
 
 #ifndef PATH_MAX
     #define PATH_MAX _MAX_PATH
@@ -74,7 +81,8 @@ string UpdateTask::getAppDataDir()
 #define MAX_LOG_SIZE 1024
 char log_message[MAX_LOG_SIZE];
 #define LOG(logLevel, ...) snprintf(log_message, MAX_LOG_SIZE, __VA_ARGS__); \
-                                   MegaApi::log(logLevel, log_message);
+                                   cout << log_message << endl;
+
 int mkdir_p(const char *path)
 {
     /* Adapted from http://stackoverflow.com/a/2336245/119527 */
@@ -115,7 +123,7 @@ int mkdir_p(const char *path)
 UpdateTask::UpdateTask(MegaApi *megaApi)
 {
     this->megaApi = megaApi;
-    signatureChecker = new MegaHashSignature((const char *)UPDATE_PUBLIC_KEY);
+    signatureChecker = new SignatureChecker((const char *)UPDATE_PUBLIC_KEY);
     delegateListener = new SynchronousRequestListener();
     currentFile = -1;
     appDataFolder = getAppDataDir();
@@ -219,6 +227,15 @@ void UpdateTask::checkForUpdates()
 bool UpdateTask::downloadFile(string url, string dstPath)
 {
     LOG(MegaApi::LOG_LEVEL_INFO, "Downloading updated file from: %s",  url.c_str());
+
+#ifdef _WIN32
+    HRESULT res = URLDownloadToFileA(NULL, url.c_str(), dstPath.c_str(), 0, NULL);
+    if (res != S_OK)
+    {
+       LOG(MegaApi::LOG_LEVEL_ERROR, "Unable to download file. Error code: %d", res);
+       return false;
+    }
+#else
     megaApi->downloadFile((char*)url.c_str(), (char*)dstPath.c_str(), delegateListener);
     delegateListener->wait();
 
@@ -226,8 +243,9 @@ bool UpdateTask::downloadFile(string url, string dstPath)
     if (errorCode != MegaError::API_OK)
     {
         LOG(MegaApi::LOG_LEVEL_ERROR, "Unable to download file. Error code: %d", errorCode);
-        return true;
+        return false;
     }
+#endif
 
     return true;
 }
@@ -252,7 +270,7 @@ bool UpdateTask::processUpdateFile(FILE *fd)
     updateVersion = atoi(version.c_str());
     if (updateVersion <= currentVersion)
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO,"Update not needed");
+        LOG(MegaApi::LOG_LEVEL_INFO, "Update not needed. Last version: %d - Current version: %d", updateVersion, currentVersion);
         return false;
     }
 
@@ -433,7 +451,7 @@ bool UpdateTask::alreadyDownloaded(string relativePath, string fileSignature)
 
 bool UpdateTask::alreadyExists(string absolutePath, string fileSignature)
 {
-    MegaHashSignature tmpHash((const char *)UPDATE_PUBLIC_KEY);
+    SignatureChecker tmpHash((const char *)UPDATE_PUBLIC_KEY);
     char *buffer;
     long fileLength;
     FILE * pFile = fopen(absolutePath.c_str(), "rb");
@@ -491,3 +509,258 @@ int UpdateTask::readVersion()
     fclose(fp);
     return version;
 }
+
+SignatureChecker::SignatureChecker(const char *base64Key)
+{
+    string pubks;
+    int len = strlen(base64Key)/4*3+3;
+    pubks.resize(len);
+    pubks.resize(Base64::atob(base64Key, (byte *)pubks.data(), len));
+
+
+    byte *data = (byte*)pubks.data();
+    int datalen = pubks.size();
+
+    int p, i, n;
+    p = 0;
+
+    for (i = 0; i < 2; i++)
+    {
+        if (p + 2 > datalen)
+        {
+            break;
+        }
+
+        n = ((data[p] << 8) + data[p + 1] + 7) >> 3;
+
+        p += 2;
+        if (p + n > datalen)
+        {
+            break;
+        }
+
+        key[i] = Integer(data + p, n);
+
+        p += n;
+    }
+
+    assert(i == 2 && len - p < 16);
+}
+
+SignatureChecker::~SignatureChecker()
+{
+
+}
+
+void SignatureChecker::init()
+{
+    string out;
+    out.resize(hash.DigestSize());
+    hash.Final((byte*)out.data());
+}
+
+void SignatureChecker::add(const char *data, unsigned size)
+{
+    hash.Update((const byte *)data, size);
+}
+
+bool SignatureChecker::checkSignature(const char *base64Signature)
+{
+    byte signature[512];
+    int l = Base64::atob(base64Signature, signature, sizeof(signature));
+    if (l != sizeof(signature))
+        return false;
+
+    string h, s;
+    unsigned size;
+
+    h.resize(hash.DigestSize());
+    hash.Final((byte*)h.data());
+
+    s.resize(h.size());
+    byte* buf = (byte *)s.data();
+
+
+    Integer t (signature, sizeof(signature));
+    t = a_exp_b_mod_c(t, key[1], key[0]);
+    int i = t.ByteCount();
+    if (i > s.size())
+    {
+        return 0;
+    }
+
+    while (i--)
+    {
+        *buf++ = t.GetByte(i);
+    }
+
+    size = t.ByteCount();
+    if (!size)
+    {
+        return 0;
+    }
+
+    if (size < h.size())
+    {
+        // left-pad with 0
+        s.insert(0, h.size() - size, 0);
+        s.resize(h.size());
+    }
+
+    return s == h;
+}
+
+unsigned char Base64::to64(byte c)
+{
+    c &= 63;
+
+    if (c < 26)
+    {
+        return c + 'A';
+    }
+
+    if (c < 52)
+    {
+        return c - 26 + 'a';
+    }
+
+    if (c < 62)
+    {
+        return c - 52 + '0';
+    }
+
+    if (c == 62)
+    {
+        return '-';
+    }
+
+    return '_';
+}
+
+unsigned char Base64::from64(byte c)
+{
+    if ((c >= 'A') && (c <= 'Z'))
+    {
+        return c - 'A';
+    }
+
+    if ((c >= 'a') && (c <= 'z'))
+    {
+        return c - 'a' + 26;
+    }
+
+    if ((c >= '0') && (c <= '9'))
+    {
+        return c - '0' + 52;
+    }
+
+    if (c == '-' || c == '+')
+    {
+        return 62;
+    }
+
+    if (c == '_' || c == '/')
+    {
+        return 63;
+    }
+
+    return 255;
+}
+
+
+int Base64::atob(const string &in, string &out)
+{
+    out.resize(in.size() * 3 / 4 + 3);
+    out.resize(Base64::atob(in.data(), (byte *) out.data(), out.size()));
+
+    return out.size();
+}
+
+int Base64::atob(const char* a, byte* b, int blen)
+{
+    byte c[4];
+    int i;
+    int p = 0;
+
+    c[3] = 0;
+
+    for (;;)
+    {
+        for (i = 0; i < 4; i++)
+        {
+            if ((c[i] = from64(*a++)) == 255)
+            {
+                break;
+            }
+        }
+
+        if ((p >= blen) || !i)
+        {
+            return p;
+        }
+
+        b[p++] = (c[0] << 2) | ((c[1] & 0x30) >> 4);
+
+        if ((p >= blen) || (i < 3))
+        {
+            return p;
+        }
+
+        b[p++] = (c[1] << 4) | ((c[2] & 0x3c) >> 2);
+
+        if ((p >= blen) || (i < 4))
+        {
+            return p;
+        }
+
+        b[p++] = (c[2] << 6) | c[3];
+    }
+
+    return p;
+}
+
+int Base64::btoa(const string &in, string &out)
+{
+    out.resize(in.size() * 4 / 3 + 4);
+    out.resize(Base64::btoa((const byte*) in.data(), in.size(), (char *) out.data()));
+
+    return out.size();
+}
+
+int Base64::btoa(const byte* b, int blen, char* a)
+{
+    int p = 0;
+
+    for (;;)
+    {
+        if (blen <= 0)
+        {
+            break;
+        }
+
+        a[p++] = to64(*b >> 2);
+        a[p++] = to64((*b << 4) | (((blen > 1) ? b[1] : 0) >> 4));
+
+        if (blen < 2)
+        {
+            break;
+        }
+
+        a[p++] = to64(b[1] << 2 | (((blen > 2) ? b[2] : 0) >> 6));
+
+        if (blen < 3)
+        {
+            break;
+        }
+
+        a[p++] = to64(b[2]);
+
+        blen -= 3;
+        b += 3;
+    }
+
+    a[p] = 0;
+
+    return p;
+}
+

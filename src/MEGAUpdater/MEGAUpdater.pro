@@ -47,4 +47,6 @@ macx {
 
 win32 {
     SOURCES += src/thread/win32thread.cpp
+    DEFINES += UNICODE _UNICODE NTDDI_VERSION=0x05010000 _WIN32_WINNT=0x0501
+    LIBS += -lurlmon
 }
