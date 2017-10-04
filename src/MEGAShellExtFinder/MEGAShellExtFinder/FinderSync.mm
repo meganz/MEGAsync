@@ -98,7 +98,7 @@ void cleanItemsOfFolder(std::string dirPath)
 
 - (void)requestBadgeIdentifierForURL:(NSURL *)url {
     
-    NSLog(@"requestBadgeIdentifierForURL:%@", url.filePathURL);
+    //NSLog(@"requestBadgeIdentifierForURL:%@", url.filePathURL);
     NSString *path = [[NSString alloc] initWithString:[url path]];
     if ([self isDirectory:url])
     {
@@ -208,7 +208,6 @@ void cleanItemsOfFolder(std::string dirPath)
             [menu addItem:viewOnMEGAItem];
         }
         
-        // Disable support for "View previous versions" until server enable it
         if (numFiles == 1) // If only one file is selected and already synced.
         {
             NSMenuItem *viewPrevVersions = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"View previous versions", nil) action:nil keyEquivalent:@""];
@@ -218,7 +217,6 @@ void cleanItemsOfFolder(std::string dirPath)
             [viewPrevVersions setAction:@selector(viewPrevVersions:)];
             [menu addItem:viewPrevVersions];
         }
-        
     }
     
     return menu;
