@@ -50,7 +50,7 @@ private:
 signals:
    void newUploadQueue(QQueue<QString> uploadQueue);
    void newExportQueue(QQueue<QString> exportQueue);
-   void viewOnMega(QByteArray localPath, bool versions = false);
+   void viewOnMega(QByteArray localPath, bool versions);
    void sendToAll(QByteArray str);
 };
 

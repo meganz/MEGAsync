@@ -307,7 +307,7 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
             QFileInfo file(QString::fromUtf8(content));
             if (file.exists())
             {
-                emit viewOnMega(filePath);
+                emit viewOnMega(filePath, false);
             }
             return false;
         }
@@ -366,11 +366,6 @@ void MacXExtServer::notifyItemChange(string *localPath, int newState)
 
 void MacXExtServer::notifySyncAdd(QString path, QString syncName)
 {
-    if (QDir(path).exists())
-    {
-        path += QDir::separator();
-    }
-
     emit sendToAll((QString::fromUtf8("A:")
                    + path
                    + QChar::fromAscii(':')
@@ -379,11 +374,6 @@ void MacXExtServer::notifySyncAdd(QString path, QString syncName)
 
 void MacXExtServer::notifySyncDel(QString path, QString syncName)
 {
-    if (QDir(path).exists())
-    {
-        path += QDir::separator();
-    }
-
     emit sendToAll((QString::fromUtf8("D:")
                    + path
                    + QChar::fromAscii(':')
@@ -415,8 +405,7 @@ void MacXExtServer::notifyAllClients(int op)
             continue;
         }
 
-        QString message = command + syncPath + QDir::separator()
-                + QChar::fromAscii(':') + preferences->getSyncName(i);
+        QString message = command + syncPath + QChar::fromAscii(':') + preferences->getSyncName(i);
 
         emit sendToAll(message.toUtf8());
     }
