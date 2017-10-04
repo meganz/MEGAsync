@@ -148,6 +148,21 @@ void LinuxPlatform::syncFolderRemoved(QString syncPath, QString syncName, QStrin
     }
 }
 
+void LinuxPlatform::notifyRestartSyncFolders()
+{
+
+}
+
+void LinuxPlatform::notifyAllSyncFoldersAdded()
+{
+
+}
+
+void LinuxPlatform::notifyAllSyncFoldersRemoved()
+{
+
+}
+
 QByteArray LinuxPlatform::encrypt(QByteArray data, QByteArray key)
 {
     return data;

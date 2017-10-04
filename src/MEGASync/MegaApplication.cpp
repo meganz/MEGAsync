@@ -395,7 +395,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("FinderExtensionApp", "%i files");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "1 folder");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "%i folders");
-
+    QT_TRANSLATE_NOOP("FinderExtensionApp", "View previous versions");
 #endif
 }
 
@@ -1386,15 +1386,20 @@ void MegaApplication::loggedIn()
     QString language = preferences->language();
     changeLanguage(language);
     updated = false;
+
     if (!infoDialog)
     {
         infoDialog = new InfoDialog(this);
         if (!QSystemTrayIcon::isSystemTrayAvailable())
         {
-            QMessageBox::warning(NULL, tr("MEGAsync"),
-                                 tr("Could not find a system tray to place MEGAsync tray icon. "
-                                    "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
-                                    "If you want to open the interface, just try to open MEGAsync again."));
+            if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE))
+            {
+                QMessageBox::warning(NULL, tr("MEGAsync"),
+                                     tr("Could not find a system tray to place MEGAsync tray icon. "
+                                        "MEGAsync is intended to be used with a system tray icon but it can work fine without it. "
+                                        "If you want to open the interface, just try to open MEGAsync again."));
+                preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
+            }
         }
     }
 
@@ -1592,6 +1597,7 @@ void MegaApplication::restoreSyncs()
        megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
        delete node;
     }
+    Platform::notifyAllSyncFoldersAdded();
 }
 
 void MegaApplication::closeDialogs()
@@ -2687,6 +2693,7 @@ void MegaApplication::unlink()
     qDeleteAll(downloadQueue);
     downloadQueue.clear();
     megaApi->logout();
+    Platform::notifyAllSyncFoldersRemoved();
 }
 
 void MegaApplication::showInfoMessage(QString message, QString title)
@@ -3954,7 +3961,7 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
     exportOps++;
 }
 
-void MegaApplication::shellViewOnMega(QByteArray localPath)
+void MegaApplication::shellViewOnMega(QByteArray localPath, bool versions)
 {
     MegaNode *node = NULL;
 
@@ -3976,7 +3983,8 @@ void MegaApplication::shellViewOnMega(QByteArray localPath)
     }
 
     char *base64handle = node->getBase64Handle();
-    QString url = QString::fromUtf8("fm/") + QString::fromUtf8(base64handle);
+    QString url = QString::fromUtf8("fm%1/%2").arg(versions ? QString::fromUtf8("/versions") : QString::fromUtf8(""))
+                                              .arg(QString::fromUtf8(base64handle));
     megaApi->getSessionTransferURL(url.toUtf8().constData());
     delete [] base64handle;
     delete node;

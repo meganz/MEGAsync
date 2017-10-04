@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##
- # @file build/generate_changelog_entry.sh
+ # @file build/generate_deb_changelog_entry.sh
  # @brief Processes the input file and prints DEB ChangeLog entry
  #
  # (c) 2013-2014 by Mega Limited, Auckland, New Zealand
@@ -29,7 +29,7 @@ fi
 in_file="$2"
 out1=$(awk 'f; /\);/{f=0} /const QString Preferences::CHANGELOG = QString::fromUtf8/{f=1}' $in_file)
 # remove ");
-out2=$(awk -F'");' '{print $1}' <<< "$out1")
+out2=$(awk -F'"\);' '{print $1}' <<< "$out1")
 # remove leading and trailing space, tabs and quote marks
 out3=$(awk '{ gsub(/^[ \t"]+|[ \t"\n]+$/, ""); print }' <<< "$out2")
 # remove trailing "\n"

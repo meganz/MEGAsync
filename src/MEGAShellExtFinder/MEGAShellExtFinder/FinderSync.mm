@@ -196,14 +196,27 @@ void cleanItemsOfFolder(std::string dirPath)
     [getLinkItem setAction:@selector(getMEGAlinks:)];
     [menu addItem:getLinkItem];
     
-    if ((selectedItemURLs.count == 1) && (numFolders + numFiles == 1)) // If only one item is selected and already synced.
+    if (selectedItemURLs.count == 1)
     {
-        NSMenuItem *viewOnMEGAItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"View on MEGA", nil) action:nil keyEquivalent:@""];
-        [menu setAutoenablesItems:NO];
-        [viewOnMEGAItem setEnabled:YES];
-        [viewOnMEGAItem setImage:(whichMenu == FIMenuKindContextualMenuForItems) ? icon : nil];
-        [viewOnMEGAItem setAction:@selector(viewOnMEGA:)];
-        [menu addItem:viewOnMEGAItem];
+        if (numFolders  == 1) // If only one item is selected and is a folder synced.
+        {
+            NSMenuItem *viewOnMEGAItem = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"View on MEGA", nil) action:nil keyEquivalent:@""];
+            [menu setAutoenablesItems:NO];
+            [viewOnMEGAItem setEnabled:YES];
+            [viewOnMEGAItem setImage:(whichMenu == FIMenuKindContextualMenuForItems) ? icon : nil];
+            [viewOnMEGAItem setAction:@selector(viewOnMEGA:)];
+            [menu addItem:viewOnMEGAItem];
+        }
+        
+        if (numFiles == 1) // If only one file is selected and already synced.
+        {
+            NSMenuItem *viewPrevVersions = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"View previous versions", nil) action:nil keyEquivalent:@""];
+            [menu setAutoenablesItems:NO];
+            [viewPrevVersions setEnabled:YES];
+            [viewPrevVersions setImage:(whichMenu == FIMenuKindContextualMenuForItems) ? icon : nil];
+            [viewPrevVersions setAction:@selector(viewPrevVersions:)];
+            [menu addItem:viewPrevVersions];
+        }
     }
     
     return menu;
@@ -227,14 +240,25 @@ void cleanItemsOfFolder(std::string dirPath)
 }
 
 - (void)viewOnMEGA:(id)sender {
-       
+    
     NSArray *items = [[FIFinderSyncController defaultController] selectedItemURLs];
-    if (!items)
+    if (!items || [items count] == 0)
     {
         return;
     }
     
     [_ext sendRequest:[[items firstObject] path] type:@"V"];
+}
+
+- (void)viewPrevVersions:(id)sender {
+    
+    NSArray *items = [[FIFinderSyncController defaultController] selectedItemURLs];
+    if (!items || [items count] == 0)
+    {
+        return;
+    }
+    
+    [_ext sendRequest:[[items firstObject] path] type:@"R"];
 }
 
 #pragma mark - Sync notifications
@@ -259,9 +283,9 @@ void cleanItemsOfFolder(std::string dirPath)
     [FIFinderSyncController defaultController].directoryURLs = _syncPaths;
 }
 
-- (void)onItemChanged:(NSString *)urlPath withState:(int)state {
+- (void)onItemChanged:(NSString *)urlPath withState:(int)state shouldShowBadges:(int)badge{
     
-//    NSLog(@"settingBadge: %i for path:%@", state, urlPath);
+    //NSLog(@"state: %i for path: %@ showBadge: %i", state, urlPath, badge);
     
     if ([self isDirectory:[NSURL URLWithString:urlPath]])
     {
@@ -273,7 +297,11 @@ void cleanItemsOfFolder(std::string dirPath)
     if (it != pathStatus.end())
     {
         it->second = (FileState)state;
-        [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:state] forURL:[NSURL fileURLWithPath:urlPath]];
+        if (badge)
+        {
+            [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:state] forURL:[NSURL fileURLWithPath:urlPath]];
+        }
+        
         return;
     }
     
@@ -281,7 +309,10 @@ void cleanItemsOfFolder(std::string dirPath)
     if ([_directories containsObject:basePath])
     {
         pathStatus.emplace(path, (FileState)state);
-        [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:state] forURL:[NSURL fileURLWithPath:urlPath]];
+        if (badge)
+        {
+            [[FIFinderSyncController defaultController] setBadgeIdentifier:[self badgeIdentifierFromCode:state] forURL:[NSURL fileURLWithPath:urlPath]];
+        }
     }
 }
 

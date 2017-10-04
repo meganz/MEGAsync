@@ -1,4 +1,5 @@
 #include "MacXExtServer.h"
+#include <assert.h>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -22,7 +23,7 @@ MacXExtServer::MacXExtServer(MegaApplication *app)
     connect(this, SIGNAL(sendToAll(QByteArray)), this, SLOT(doSendToAll(QByteArray)));
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), app, SLOT(shellUpload(QQueue<QString>)),Qt::QueuedConnection);
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), app, SLOT(shellExport(QQueue<QString>)),Qt::QueuedConnection);
-    connect(this, SIGNAL(viewOnMega(QByteArray)), app, SLOT(shellViewOnMega(QByteArray)),Qt::QueuedConnection);
+    connect(this, SIGNAL(viewOnMega(QByteArray, bool)), app, SLOT(shellViewOnMega(QByteArray, bool)),Qt::QueuedConnection);
     connect(m_localServer, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
 }
 
@@ -56,7 +57,7 @@ void MacXExtServer::acceptConnection()
                 continue;
             }
 
-            QString message = QString::fromUtf8("A:") + syncPath + QDir::separator()
+            QString message = QString::fromUtf8("A:") + syncPath
                     + QChar::fromAscii(':') + preferences->getSyncName(i);
             client->writeData(message.toUtf8().constData(), message.length());
         }        
@@ -244,11 +245,6 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
         // get the state of an object
         case 'P':
         {
-            if (Preferences::instance()->overlayIconsDisabled())
-            {
-                return false;
-            }
-
             std::string tmpPath(content);
             int state = ((MegaApplication *)qApp)->getMegaApi()->syncPathState(&tmpPath);
             switch(state)
@@ -267,6 +263,17 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
                 default:
                     return false;
             }
+
+            response->append(":");
+            if (Preferences::instance()->overlayIconsDisabled()) // Respond to extension to not show badges
+            {
+                response->append("0");
+            }
+            else // Respond to extension to show badges
+            {
+                response->append("1");
+            }
+
             return true;
         }
         case 'E':
@@ -300,7 +307,17 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
             QFileInfo file(QString::fromUtf8(content));
             if (file.exists())
             {
-                emit viewOnMega(filePath);
+                emit viewOnMega(filePath, false);
+            }
+            return false;
+        }
+        case 'R': // Open previous versions
+        {
+            QByteArray filePath = QByteArray(content, strlen(content) + 1);
+            QFileInfo file(QString::fromUtf8(content));
+            if (file.exists())
+            {
+                emit viewOnMega(filePath, true);
             }
             return false;
         }
@@ -334,17 +351,21 @@ void MacXExtServer::notifyItemChange(string *localPath, int newState)
     {
         command.append(":");
         command.append(QString::number(newState).toUtf8().constData());
+        command.append(":");
+        if (Preferences::instance()->overlayIconsDisabled()) // Respond to extension to not show badges
+        {
+            command.append("0");
+        }
+        else // Respond to extension to show badges
+        {
+            command.append("1");
+        }
         emit sendToAll(QByteArray(command.data(), command.size()));
     }
 }
 
 void MacXExtServer::notifySyncAdd(QString path, QString syncName)
 {
-    if (QDir(path).exists())
-    {
-        path += QDir::separator();
-    }
-
     emit sendToAll((QString::fromUtf8("A:")
                    + path
                    + QChar::fromAscii(':')
@@ -353,13 +374,39 @@ void MacXExtServer::notifySyncAdd(QString path, QString syncName)
 
 void MacXExtServer::notifySyncDel(QString path, QString syncName)
 {
-    if (QDir(path).exists())
-    {
-        path += QDir::separator();
-    }
-
     emit sendToAll((QString::fromUtf8("D:")
                    + path
                    + QChar::fromAscii(':')
                    + syncName).toUtf8());
+}
+
+void MacXExtServer::notifyAllClients(int op)
+{
+    // send the list of current synced folders to all connected clients
+    // This is needed once MEGAsync switches from non-logged to logged state and vice-versa
+    Preferences *preferences = Preferences::instance();
+    assert(preferences->logged());
+
+    QString command;
+    if (op == NOTIFY_ADD_SYNCS)
+    {
+        command = QString::fromUtf8("A:");
+    }
+    else if (op == NOTIFY_DEL_SYNCS)
+    {
+        command = QString::fromUtf8("D:");
+    }
+
+    for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+    {
+        QString syncPath = QDir::toNativeSeparators(QDir(preferences->getLocalFolder(i)).canonicalPath());
+        if (!syncPath.size() || !preferences->isFolderActive(i))
+        {
+            continue;
+        }
+
+        QString message = command + syncPath + QChar::fromAscii(':') + preferences->getSyncName(i);
+
+        emit sendToAll(message.toUtf8());
+    }
 }

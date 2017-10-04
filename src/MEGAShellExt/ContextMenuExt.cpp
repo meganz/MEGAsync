@@ -604,9 +604,7 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
                 && (syncedFiles + syncedFolders) == 1)
         {
             // One synced file or folder selected
-            LPWSTR versionsText = NULL;
-            if (syncedFolders || !MegaInterface::hasVersions((PCWSTR)selectedFiles[0].data())
-                    || !(versionsText = MegaInterface::getString(MegaInterface::STRING_VIEW_VERSIONS, syncedFiles, syncedFolders)))
+            if (syncedFolders)
             {
                 LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_VIEW_ON_MEGA, syncedFiles, syncedFolders);
                 if (!menuText)
@@ -631,7 +629,7 @@ IFACEMETHODIMP ContextMenuExt::QueryContextMenu(
             }
             else
             {
-                LPWSTR menuText = versionsText;
+                LPWSTR menuText = MegaInterface::getString(MegaInterface::STRING_VIEW_VERSIONS, syncedFiles, syncedFolders);
                 if (!menuText)
                 {
                     return MAKE_HRESULT(SEVERITY_SUCCESS, 0, USHORT(0));
