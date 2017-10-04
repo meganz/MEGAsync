@@ -68,13 +68,13 @@
     }
     
     NSString *firstChar = [strings objectAtIndex:0];
-    if ([firstChar isEqualToString:@"P"]) //Format: <op-code>:<path-file>:<state-code>
+    if ([firstChar isEqualToString:@"P"]) //Format: <op-code>:<path-file>:<state-code>:<show-badges>
     {
         if ([strings count] < 3)
         {
             return;
         }
-        [_delegate onItemChanged:[strings objectAtIndex:1]  withState:[[strings objectAtIndex:2] intValue]];
+        [_delegate onItemChanged:[strings objectAtIndex:1]  withState:[[strings objectAtIndex:2] intValue] shouldShowBadges:[[strings objectAtIndex:3] intValue]];
     }
     else if ([firstChar isEqualToString:@"A"]) //Format: <op-code>:<path-file>:<sync-name>
     {

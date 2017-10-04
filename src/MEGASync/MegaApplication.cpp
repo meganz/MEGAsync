@@ -395,7 +395,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("FinderExtensionApp", "%i files");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "1 folder");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "%i folders");
-
+    QT_TRANSLATE_NOOP("FinderExtensionApp", "View previous versions");
 #endif
 }
 
@@ -1586,6 +1586,7 @@ void MegaApplication::restoreSyncs()
        megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
        delete node;
     }
+    Platform::notifyAllSyncFoldersAdded();
 }
 
 void MegaApplication::closeDialogs()
@@ -2681,6 +2682,7 @@ void MegaApplication::unlink()
     qDeleteAll(downloadQueue);
     downloadQueue.clear();
     megaApi->logout();
+    Platform::notifyAllSyncFoldersRemoved();
 }
 
 void MegaApplication::showInfoMessage(QString message, QString title)
@@ -3948,7 +3950,7 @@ void MegaApplication::shellExport(QQueue<QString> newExportQueue)
     exportOps++;
 }
 
-void MegaApplication::shellViewOnMega(QByteArray localPath)
+void MegaApplication::shellViewOnMega(QByteArray localPath, bool versions)
 {
     MegaNode *node = NULL;
 
@@ -3970,7 +3972,8 @@ void MegaApplication::shellViewOnMega(QByteArray localPath)
     }
 
     char *base64handle = node->getBase64Handle();
-    QString url = QString::fromUtf8("fm/") + QString::fromUtf8(base64handle);
+    QString url = QString::fromUtf8("fm%1/%2").arg(versions ? QString::fromUtf8("/versions") : QString::fromUtf8(""))
+                                              .arg(QString::fromUtf8(base64handle));
     megaApi->getSessionTransferURL(url.toUtf8().constData());
     delete [] base64handle;
     delete node;

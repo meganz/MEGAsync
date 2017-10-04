@@ -4,6 +4,7 @@
 #include "MegaApplication.h"
 #include "control/Utilities.h"
 #include "gui/MultiQFileDialog.h"
+#include "platform/Platform.h"
 
 using namespace mega;
 
@@ -213,6 +214,8 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 preferences->setProxyRequiresAuth(proxyAuth);
                 preferences->setProxyUsername(proxyUsername);
                 preferences->setProxyPassword(proxyPassword);
+
+                Platform::notifyAllSyncFoldersAdded();
 
                 done(QDialog::Accepted);
                 break;
