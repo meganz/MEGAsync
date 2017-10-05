@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include "UpdateTask.h"
-#include "megaapi.h"
 #include "Preferences.h"
 
 #include <iostream>
@@ -12,7 +11,6 @@
 #include <time.h>
 
 using namespace std;
-using namespace mega;
 
 #define MAX_LOG_SIZE 4096
 
@@ -27,20 +25,16 @@ int CALLBACK WinMain(
 int main(int argc, char *argv[])
 #endif
 {
-    MegaApi::setLogLevel(MegaApi::LOG_LEVEL_INFO);
-    MegaApi::setLogToConsole(true);
-
     char log_message[MAX_LOG_SIZE];
     time_t currentTime = time(NULL);
     snprintf(log_message, MAX_LOG_SIZE, "Process started at %s", ctime(&currentTime));
     log_message[strlen(log_message) - 1] = '\0';
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, log_message);
-    MegaApi megaApi(CLIENT_KEY, (const char*)NULL, USER_AGENT);
-    UpdateTask updater(&megaApi);
+    cout << log_message << endl;
+    UpdateTask updater;
     updater.checkForUpdates();
     currentTime = time(NULL);
     snprintf(log_message, MAX_LOG_SIZE, "Process finished at %s", ctime(&currentTime));
     log_message[strlen(log_message) - 1] = '\0';
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, log_message);
+    cout << log_message << endl;
     return 0;
 }

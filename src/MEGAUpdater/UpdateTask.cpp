@@ -22,7 +22,6 @@
 #include <algorithm>
 #endif
 
-using namespace mega;
 using namespace std;
 using namespace CryptoPP;
 
@@ -39,11 +38,11 @@ using namespace CryptoPP;
 string UpdateTask::getAppDataDir()
 {
     string path;
-    TCHAR szPath[MAX_PATH];
-    if (SUCCEEDED(GetModuleFileName(NULL, szPath , MAX_PATH))
-            && SUCCEEDED(PathRemoveFileSpec(szPath)))
+    char szPath[MAX_PATH];
+    if (SUCCEEDED(GetModuleFileNameA(NULL, szPath , MAX_PATH))
+            && SUCCEEDED(PathRemoveFileSpecA(szPath)))
     {
-        MegaApi::utf16ToUtf8(szPath, lstrlen(szPath), &path);
+        path = szPath;
         path.append("\\");
     }
     return path;
@@ -52,6 +51,33 @@ string UpdateTask::getAppDataDir()
 #define MEGA_DATA_FOLDER appDataFolder
 #define MEGA_TO_NATIVE_SEPARATORS(x) std::replace(x.begin(), x.end(), '/', '\\');
 #define MEGA_SET_PERMISSIONS
+
+void utf8ToUtf16(const char* utf8data, string* utf16string)
+{
+    if(!utf8data)
+    {
+        utf16string->clear();
+        utf16string->append("", 1);
+        return;
+    }
+
+    int size = strlen(utf8data) + 1;
+
+    // make space for the worst case
+    utf16string->resize(size * sizeof(wchar_t));
+
+    // resize to actual result
+    utf16string->resize(sizeof(wchar_t) * MultiByteToWideChar(CP_UTF8, 0, utf8data, size, (wchar_t*)utf16string->data(),
+                                                              utf16string->size() / sizeof(wchar_t) + 1));
+    if (utf16string->size())
+    {
+        utf16string->resize(utf16string->size() - 1);
+    }
+    else
+    {
+        utf16string->append("", 1);
+    }
+}
 
 #else
 
@@ -121,11 +147,9 @@ int mkdir_p(const char *path)
     return 0;
 }
 
-UpdateTask::UpdateTask(MegaApi *megaApi)
+UpdateTask::UpdateTask()
 {
-    this->megaApi = megaApi;
     signatureChecker = new SignatureChecker((const char *)UPDATE_PUBLIC_KEY);
-    delegateListener = new SynchronousRequestListener();
     currentFile = -1;
     appDataFolder = getAppDataDir();
     appFolder = MEGA_DATA_FOLDER;
@@ -135,13 +159,12 @@ UpdateTask::UpdateTask(MegaApi *megaApi)
 
 UpdateTask::~UpdateTask()
 {
-    delete delegateListener;
     delete signatureChecker;
 }
 
 void UpdateTask::checkForUpdates()
 {
-    LOG(MegaApi::LOG_LEVEL_INFO, "Starting update check");
+    LOG(LOG_LEVEL_INFO, "Starting update check");
     initialCleanup();
 
     // Create random sequence for http request
@@ -159,7 +182,7 @@ void UpdateTask::checkForUpdates()
         pFile = fopen(updateFile.c_str(), "r");
         if (!pFile)
         {
-            LOG(MegaApi::LOG_LEVEL_ERROR, "Error opening update file");
+            LOG(LOG_LEVEL_ERROR, "Error opening update file");
             remove(updateFile.c_str());
             return;
         }
@@ -179,7 +202,7 @@ void UpdateTask::checkForUpdates()
                 string localFile = updateFolder + localPaths[currentFile];
                 if (mkdir_p(mega_base_path(localFile).c_str()) == -1)
                 {
-                    LOG(MegaApi::LOG_LEVEL_INFO, "Unable to create folder for file: %s", localFile.c_str());
+                    LOG(LOG_LEVEL_INFO, "Unable to create folder for file: %s", localFile.c_str());
                     return;
                 }
 
@@ -192,27 +215,27 @@ void UpdateTask::checkForUpdates()
                 //Download file to specific folder
                 if (downloadFile(downloadURLs[currentFile], localFile))
                 {
-                    LOG(MegaApi::LOG_LEVEL_INFO, "File downloaded OK: %s", localPaths[currentFile].c_str());
+                    LOG(LOG_LEVEL_INFO, "File downloaded OK: %s", localPaths[currentFile].c_str());
                     if (!alreadyDownloaded(localPaths[currentFile], fileSignatures[currentFile]))
                     {
-                        LOG(MegaApi::LOG_LEVEL_ERROR, "Signature of downloaded file doesn't match: %s",  localPaths[currentFile].c_str());
+                        LOG(LOG_LEVEL_ERROR, "Signature of downloaded file doesn't match: %s",  localPaths[currentFile].c_str());
                         return;
                     }
-                    LOG(MegaApi::LOG_LEVEL_INFO, "File signature OK: %s",  localPaths[currentFile].c_str());
+                    LOG(LOG_LEVEL_INFO, "File signature OK: %s",  localPaths[currentFile].c_str());
                     currentFile++;
                     continue;
                 }
                 return;
             }
 
-            LOG(MegaApi::LOG_LEVEL_INFO, "File already downloaded: %s",  localPaths[currentFile].c_str());
+            LOG(LOG_LEVEL_INFO, "File already downloaded: %s",  localPaths[currentFile].c_str());
             currentFile++;
         }
 
         //All files have been processed. Apply update
         if (!performUpdate())
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Error applying update");
+            LOG(LOG_LEVEL_INFO, "Error applying update");
             return;
         }
 
@@ -220,20 +243,20 @@ void UpdateTask::checkForUpdates()
     }
     else
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Unable to download file");
+        LOG(LOG_LEVEL_ERROR, "Unable to download file");
         return;
     }
 }
 
 bool UpdateTask::downloadFile(string url, string dstPath)
 {
-    LOG(MegaApi::LOG_LEVEL_INFO, "Downloading updated file from: %s",  url.c_str());
+    LOG(LOG_LEVEL_INFO, "Downloading updated file from: %s",  url.c_str());
 
 #ifdef _WIN32
     HRESULT res = URLDownloadToFileA(NULL, url.c_str(), dstPath.c_str(), 0, NULL);
     if (res != S_OK)
     {
-       LOG(MegaApi::LOG_LEVEL_ERROR, "Unable to download file. Error code: %d", res);
+       LOG(LOG_LEVEL_ERROR, "Unable to download file. Error code: %d", res);
        return false;
     }
 #else
@@ -250,32 +273,32 @@ bool UpdateTask::downloadFile(string url, string dstPath)
 
 bool UpdateTask::processUpdateFile(FILE *fd)
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Reading update info");
+    LOG(LOG_LEVEL_DEBUG, "Reading update info");
     string version = readNextLine(fd);
     if (version.empty())
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Invalid update info");
+        LOG(LOG_LEVEL_WARNING, "Invalid update info");
         return false;
     }
 
     int currentVersion = readVersion();
     if (currentVersion == -1)
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_INFO,"Error reading file version (megasync.version)");
+        LOG(LOG_LEVEL_INFO,"Error reading file version (megasync.version)");
         return false;
     }
 
     updateVersion = atoi(version.c_str());
     if (updateVersion <= currentVersion)
     {
-        LOG(MegaApi::LOG_LEVEL_INFO, "Update not needed. Last version: %d - Current version: %d", updateVersion, currentVersion);
+        LOG(LOG_LEVEL_INFO, "Update not needed. Last version: %d - Current version: %d", updateVersion, currentVersion);
         return false;
     }
 
     string updateSignature = readNextLine(fd);
     if (updateSignature.empty())
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,"Invalid update info (empty info signature)");
+        LOG(LOG_LEVEL_ERROR,"Invalid update info (empty info signature)");
         return false;
     }
 
@@ -293,14 +316,14 @@ bool UpdateTask::processUpdateFile(FILE *fd)
         string localPath = readNextLine(fd);
         if (localPath.empty())
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,"Invalid update info (empty path)");
+            LOG(LOG_LEVEL_ERROR,"Invalid update info (empty path)");
             return false;
         }
 
         string fileSignature = readNextLine(fd);
         if (fileSignature.empty())
         {
-            MegaApi::log(MegaApi::LOG_LEVEL_ERROR,"Invalid update info (empty file signature)");
+            LOG(LOG_LEVEL_ERROR,"Invalid update info (empty file signature)");
             return false;
         }
 
@@ -311,7 +334,7 @@ bool UpdateTask::processUpdateFile(FILE *fd)
         MEGA_TO_NATIVE_SEPARATORS(localPath);
         if (alreadyInstalled(localPath, fileSignature))
         {
-            LOG(MegaApi::LOG_LEVEL_INFO, "File already installed: %s",  localPath.c_str());
+            LOG(LOG_LEVEL_INFO, "File already installed: %s",  localPath.c_str());
             continue;
         }
 
@@ -322,17 +345,17 @@ bool UpdateTask::processUpdateFile(FILE *fd)
 
     if (!downloadURLs.size())
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "All files are up to date");
+        LOG(LOG_LEVEL_WARNING, "All files are up to date");
         return false;
     }
 
     if (!checkSignature(updateSignature))
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,"Invalid update info (invalid signature)");
+        LOG(LOG_LEVEL_ERROR,"Invalid update info (invalid signature)");
         return false;
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Update needed");
+    LOG(LOG_LEVEL_WARNING, "Update needed");
     return true;
 }
 
@@ -356,7 +379,7 @@ bool UpdateTask::checkSignature(string value)
     bool result = signatureChecker->checkSignature(value.c_str());
     if (!result)
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Invalid signature");
+        LOG(LOG_LEVEL_ERROR, "Invalid signature");
     }
 
     return result;
@@ -364,13 +387,13 @@ bool UpdateTask::checkSignature(string value)
 
 bool UpdateTask::performUpdate()
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Applying update...");
+    LOG(LOG_LEVEL_INFO, "Applying update...");
     for (vector<string>::size_type i = 0; i < localPaths.size(); i++)
     {
         string file = backupFolder + localPaths[i];
         if (mkdir_p(mega_base_path(file).c_str()) == -1)
         {
-            LOG(MegaApi::LOG_LEVEL_ERROR, "Error creating backup folder for: %s",  file.c_str());
+            LOG(LOG_LEVEL_ERROR, "Error creating backup folder for: %s",  file.c_str());
             rollbackUpdate(i);
             return false;
         }
@@ -378,14 +401,14 @@ bool UpdateTask::performUpdate()
         string origFile = appFolder + localPaths[i];
         if (rename(origFile.c_str(), file.c_str()) && errno != ENOENT)
         {
-            LOG(MegaApi::LOG_LEVEL_ERROR, "Error creating backup of file %s to %s",  origFile.c_str(), file.c_str());
+            LOG(LOG_LEVEL_ERROR, "Error creating backup of file %s to %s",  origFile.c_str(), file.c_str());
             rollbackUpdate(i);
             return false;
         }
 
         if (mkdir_p(mega_base_path(origFile).c_str()) == -1)
         {
-            LOG(MegaApi::LOG_LEVEL_ERROR, "Error creating target folder for: %s",  origFile.c_str());
+            LOG(LOG_LEVEL_ERROR, "Error creating target folder for: %s",  origFile.c_str());
             rollbackUpdate(i);
             return false;
         }
@@ -393,29 +416,29 @@ bool UpdateTask::performUpdate()
         string update = updateFolder + localPaths[i];
         if (rename(update.c_str(), origFile.c_str()))
         {
-            LOG(MegaApi::LOG_LEVEL_ERROR, "Error installing file %s in %s",  update.c_str(), origFile.c_str());
+            LOG(LOG_LEVEL_ERROR, "Error installing file %s in %s",  update.c_str(), origFile.c_str());
             rollbackUpdate(i);
             return false;
         }
 
-        LOG(MegaApi::LOG_LEVEL_INFO, "File correctly installed: %s",  localPaths[i].c_str());
+        LOG(LOG_LEVEL_INFO, "File correctly installed: %s",  localPaths[i].c_str());
     }
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Update successfully installed");
+    LOG(LOG_LEVEL_INFO, "Update successfully installed");
     return true;
 }
 
 void UpdateTask::rollbackUpdate(int fileNum)
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Uninstalling update...");
+    LOG(LOG_LEVEL_INFO, "Uninstalling update...");
     for (int i = fileNum; i >= 0; i--)
     {
         string origFile = appFolder + localPaths[i];
         rename(origFile.c_str(), (updateFolder + localPaths[i]).c_str());
         rename((backupFolder + localPaths[i]).c_str(), origFile.c_str());
-        LOG(MegaApi::LOG_LEVEL_INFO, "File restored: %s",  localPaths[i].c_str());
+        LOG(LOG_LEVEL_INFO, "File restored: %s",  localPaths[i].c_str());
     }
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Update uninstalled");
+    LOG(LOG_LEVEL_INFO, "Update uninstalled");
 }
 
 void UpdateTask::initialCleanup()
@@ -433,7 +456,19 @@ void UpdateTask::finalCleanup()
 
 bool UpdateTask::removeRecursively(string path)
 {
-    MegaApi::removeRecursively(path.c_str());
+#ifndef _WIN32
+    string spath = path;
+    emptydirlocal(&spath);
+#else
+    string utf16path;
+    utf8ToUtf16(path.c_str(), &utf16path);
+    if (utf16path.size() > 1)
+    {
+        utf16path.resize(utf16path.size() - 1);
+        emptydirlocal(&utf16path);
+    }
+#endif
+
     return !rmdir(path.c_str());
 }
 
@@ -508,6 +543,203 @@ int UpdateTask::readVersion()
     return version;
 }
 
+#ifdef _WIN32
+// delete all files and folders contained in the specified folder
+// (does not recurse into mounted devices)
+void UpdateTask::emptydirlocal(string* name, dev_t basedev)
+{
+    HANDLE hDirectory, hFind;
+    dev_t currentdev;
+
+    int added = 0;
+    if (name->size() > sizeof(wchar_t) && !memcmp(name->data() + name->size() - sizeof(wchar_t), (char*)L":", sizeof(wchar_t)))
+    {
+        name->append((char*)L"\\", sizeof(wchar_t));
+        added = sizeof(wchar_t);
+    }
+
+    name->append("", 1);
+
+    WIN32_FILE_ATTRIBUTE_DATA fad;
+    if (!GetFileAttributesExW((LPCWSTR)name->data(), GetFileExInfoStandard, (LPVOID)&fad)
+        || !(fad.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+        || fad.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT)
+    {
+        // discard files and resparse points (links, etc.)
+        name->resize(name->size() - added - 1);
+        return;
+    }
+
+#ifdef WINDOWS_PHONE
+    CREATEFILE2_EXTENDED_PARAMETERS ex = { 0 };
+    ex.dwSize = sizeof(ex);
+    ex.dwFileFlags = FILE_FLAG_BACKUP_SEMANTICS;
+    hDirectory = CreateFile2((LPCWSTR)name->data(), GENERIC_READ, FILE_SHARE_WRITE | FILE_SHARE_READ,
+                        OPEN_EXISTING, &ex);
+#else
+    hDirectory = CreateFileW((LPCWSTR)name->data(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE,
+                             NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
+#endif
+    name->resize(name->size() - added - 1);
+    if (hDirectory == INVALID_HANDLE_VALUE)
+    {
+        // discard not accessible folders
+        return;
+    }
+
+#ifdef WINDOWS_PHONE
+    FILE_ID_INFO fi = { 0 };
+    if(!GetFileInformationByHandleEx(hDirectory, FileIdInfo, &fi, sizeof(fi)))
+#else
+    BY_HANDLE_FILE_INFORMATION fi;
+    if (!GetFileInformationByHandle(hDirectory, &fi))
+#endif
+    {
+        currentdev = 0;
+    }
+    else
+    {
+    #ifdef WINDOWS_PHONE
+        currentdev = fi.VolumeSerialNumber + 1;
+    #else
+        currentdev = fi.dwVolumeSerialNumber + 1;
+    #endif
+    }
+    CloseHandle(hDirectory);
+    if (basedev && currentdev != basedev)
+    {
+        // discard folders on different devices
+        return;
+    }
+
+    bool removed;
+    for (;;)
+    {
+        // iterate over children and delete
+        removed = false;
+        name->append((char*)L"\\*", 5);
+        WIN32_FIND_DATAW ffd;
+    #ifdef WINDOWS_PHONE
+        hFind = FindFirstFileExW((LPCWSTR)name->data(), FindExInfoBasic, &ffd, FindExSearchNameMatch, NULL, 0);
+    #else
+        hFind = FindFirstFileW((LPCWSTR)name->data(), &ffd);
+    #endif
+        name->resize(name->size() - 5);
+        if (hFind == INVALID_HANDLE_VALUE)
+        {
+            break;
+        }
+
+        bool morefiles = true;
+        while (morefiles)
+        {
+            if (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_REPARSE_POINT)
+                && (!(ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+                    || *ffd.cFileName != '.'
+                    || (ffd.cFileName[1] && ((ffd.cFileName[1] != '.')
+                    || ffd.cFileName[2]))))
+            {
+                string childname = *name;
+                childname.append((char*)L"\\", 2);
+                childname.append((char*)ffd.cFileName, sizeof(wchar_t) * wcslen(ffd.cFileName));
+                if (ffd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+                {
+                    emptydirlocal(&childname , currentdev);
+                    childname.append("", 1);
+                    removed |= !!RemoveDirectoryW((LPCWSTR)childname.data());
+                }
+                else
+                {
+                    childname.append("", 1);
+                    removed |= !!DeleteFileW((LPCWSTR)childname.data());
+                }
+            }
+            morefiles = FindNextFileW(hFind, &ffd);
+        }
+
+        FindClose(hFind);
+        if (!removed)
+        {
+            break;
+        }
+    }
+}
+#else
+// delete all files, folders and symlinks contained in the specified folder
+// (does not recurse into mounted devices)
+void UpdateTask::emptydirlocal(string* name, dev_t basedev)
+{
+#ifdef USE_IOS
+    string absolutename;
+    if (appbasepath)
+    {
+        if (name->size() && name->at(0) != '/')
+        {
+            absolutename = appbasepath;
+            absolutename.append(*name);
+            name = &absolutename;
+        }
+    }
+#endif
+
+    DIR* dp;
+    dirent* d;
+    int removed;
+    struct stat statbuf;
+    int t;
+
+    if (!basedev)
+    {
+        if (lstat(name->c_str(), &statbuf) || !S_ISDIR(statbuf.st_mode) || S_ISLNK(statbuf.st_mode)) return;
+        basedev = statbuf.st_dev;
+    }
+
+    if ((dp = opendir(name->c_str())))
+    {
+        for (;;)
+        {
+            removed = 0;
+
+            while ((d = readdir(dp)))
+            {
+                if (d->d_type != DT_DIR
+                 || *d->d_name != '.'
+                 || (d->d_name[1] && (d->d_name[1] != '.' || d->d_name[2])))
+                {
+                    t = name->size();
+                    name->append("/");
+                    name->append(d->d_name);
+
+                    if (!lstat(name->c_str(), &statbuf))
+                    {
+                        if (!S_ISLNK(statbuf.st_mode) && S_ISDIR(statbuf.st_mode) && statbuf.st_dev == basedev)
+                        {
+                            emptydirlocal(name, basedev);
+                            removed |= !rmdir(name->c_str());
+                        }
+                        else
+                        {
+                            removed |= !unlink(name->c_str());
+                        }
+                    }
+
+                    name->resize(t);
+                }
+            }
+
+            if (!removed)
+            {
+                break;
+            }
+
+            rewinddir(dp);
+        }
+
+        closedir(dp);
+    }
+}
+#endif
+
 SignatureChecker::SignatureChecker(const char *base64Key)
 {
     string pubks;
@@ -581,7 +813,7 @@ bool SignatureChecker::checkSignature(const char *base64Signature)
 
     Integer t (signature, sizeof(signature));
     t = a_exp_b_mod_c(t, key[1], key[0]);
-    int i = t.ByteCount();
+    unsigned int i = t.ByteCount();
     if (i > s.size())
     {
         return 0;
@@ -761,4 +993,3 @@ int Base64::btoa(const byte* b, int blen, char* a)
 
     return p;
 }
-

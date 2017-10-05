@@ -1,4 +1,5 @@
 CONFIG -= qt
+MEGASDK_BASE_PATH = $$PWD/../MEGASync/mega
 
 CONFIG(debug, debug|release) {
     CONFIG -= debug release
@@ -11,7 +12,6 @@ CONFIG(release, debug|release) {
 
 TARGET = MEGAupdater
 TEMPLATE = app
-CONFIG += USE_MEGAAPI
 
 HEADERS += UpdateTask.h \
     Preferences.h \
@@ -20,25 +20,12 @@ HEADERS += UpdateTask.h \
 SOURCES += MEGAUpdater.cpp \
     UpdateTask.cpp
 
-include(../MEGASync/mega/bindings/qt/sdk.pri)
-DEFINES -= MEGA_QT_LOGGING
-DEFINES -= USE_QT
+INCLUDEPATH += $$MEGASDK_BASE_PATH/bindings/qt/3rdparty/include
+LIBS += -lcryptopp
 
-SOURCES -= src/gfx/qt.cpp
-SOURCES -= src/thread/qtthread.cpp
-SOURCES -= bindings/qt/QTMegaRequestListener.cpp
-SOURCES -= bindings/qt/QTMegaTransferListener.cpp
-SOURCES -= bindings/qt/QTMegaGlobalListener.cpp
-SOURCES -= bindings/qt/QTMegaSyncListener.cpp
-SOURCES -= bindings/qt/QTMegaListener.cpp
-SOURCES -= bindings/qt/QTMegaEvent.cpp
-
-macx {
-    SOURCES += src/thread/posixthread.cpp
+macx {    
     OBJECTIVE_SOURCES +=  MacUtils.mm
-    DEFINES += USE_PTHREAD
-    LIBS += -lpthread
-
+    DEFINES += _DARWIN_FEATURE_64_BIT_INODE USE_OPENSSL CRYPTOPP_DISABLE_ASM
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
     QMAKE_CXXFLAGS -= -stdlib=libc++
     QMAKE_LFLAGS -= -stdlib=libc++
@@ -48,7 +35,24 @@ macx {
 }
 
 win32 {
-    SOURCES += src/thread/win32thread.cpp
+    contains(CONFIG, BUILDX64) {
+       release {
+            LIBS += -L"$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/x64"
+        }
+        else {
+            LIBS += -L"$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/x64d"
+        }
+    }
+
+    !contains(CONFIG, BUILDX64) {
+        release {
+            LIBS += -L"$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/x32"
+        }
+        else {
+            LIBS += -L"$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/x32d"
+        }
+    }
+
     DEFINES += UNICODE _UNICODE NTDDI_VERSION=0x05010000 _WIN32_WINNT=0x0501
-    LIBS += -lurlmon
+    LIBS += -lurlmon -lShlwapi
 }

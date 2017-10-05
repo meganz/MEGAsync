@@ -1,8 +1,6 @@
 #ifndef UPDATETASK_H
 #define UPDATETASK_H
 
-#include "megaapi.h"
-
 #include <cryptopp/cryptlib.h>
 #include <cryptopp/modes.h>
 #include <cryptopp/ccm.h>
@@ -48,7 +46,7 @@ protected:
 class UpdateTask
 {
 public:
-    explicit UpdateTask(mega::MegaApi *megaApi);
+    explicit UpdateTask();
     ~UpdateTask();
     void checkForUpdates();
 
@@ -70,14 +68,13 @@ protected:
     int readVersion();
     std::string getAppDataDir();
     std::string readNextLine(FILE *fd);
+    void emptydirlocal(std::string* name, dev_t basedev = 0);
 
     std::string appFolder;
     std::string appDataFolder;
     std::string updateFolder;
     std::string backupFolder;
     SignatureChecker *signatureChecker;
-    mega::MegaApi *megaApi;
-    mega::SynchronousRequestListener *delegateListener;
     int currentFile;
     int updateVersion;
     std::vector<std::string> downloadURLs;
