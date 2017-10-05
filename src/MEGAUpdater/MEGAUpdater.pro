@@ -15,6 +15,7 @@ CONFIG += USE_MEGAAPI
 
 HEADERS += UpdateTask.h \
     Preferences.h \
+    MacUtils.h
 
 SOURCES += MEGAUpdater.cpp \
     UpdateTask.cpp
@@ -34,6 +35,7 @@ SOURCES -= bindings/qt/QTMegaEvent.cpp
 
 macx {
     SOURCES += src/thread/posixthread.cpp
+    OBJECTIVE_SOURCES +=  MacUtils.mm
     DEFINES += USE_PTHREAD
     LIBS += -lpthread
 

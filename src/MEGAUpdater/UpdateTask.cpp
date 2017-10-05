@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include "MacUtils.h"
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -236,13 +237,10 @@ bool UpdateTask::downloadFile(string url, string dstPath)
        return false;
     }
 #else
-    megaApi->downloadFile((char*)url.c_str(), (char*)dstPath.c_str(), delegateListener);
-    delegateListener->wait();
-
-    int errorCode = delegateListener->getError()->getErrorCode();
-    if (errorCode != MegaError::API_OK)
+    bool success = downloadFileSynchronously(url, dstPath);
+    if (!success)
     {
-        LOG(MegaApi::LOG_LEVEL_ERROR, "Unable to download file. Error code: %d", errorCode);
+        LOG(MegaApi::LOG_LEVEL_ERROR, "Unable to download file.");
         return false;
     }
 #endif
