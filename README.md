@@ -77,7 +77,7 @@ Preparation:
 First install dependencies. e.g., for a debian/ubuntu:
 ```
 sudo apt-get install build-essential autoconf automake m4 libtool libtool-bin qt4-qmake make libqt4-dev libcrypto++-dev libsqlite3-dev libc-ares-dev libcurl4-openssl-dev libssl-dev
-# Optional, recommended for Nautilus users:
+# Optional, if you wish to build nautilus extension:
 sudo apt-get install libnautilus-extension-dev
 ```
 
