@@ -21,7 +21,6 @@ SOURCES += MEGAUpdater.cpp \
     UpdateTask.cpp
 
 INCLUDEPATH += $$MEGASDK_BASE_PATH/bindings/qt/3rdparty/include
-LIBS += -lcryptopp
 
 macx {    
     OBJECTIVE_SOURCES +=  MacUtils.mm
@@ -32,6 +31,7 @@ macx {
     CONFIG -= c++11
     LIBS += -framework Cocoa -framework SystemConfiguration -framework CoreFoundation -framework Foundation -framework Security
     QMAKE_CXXFLAGS += -g
+    LIBS += -lcryptopp
 }
 
 win32 {
@@ -54,5 +54,11 @@ win32 {
     }
 
     DEFINES += UNICODE _UNICODE NTDDI_VERSION=0x05010000 _WIN32_WINNT=0x0501
-    LIBS += -lurlmon -lShlwapi -lShell32
+    LIBS += -lurlmon -lShlwapi -lShell32 -lcryptoppmt
+
+    QMAKE_CXXFLAGS_RELEASE += -MT
+    QMAKE_CXXFLAGS_DEBUG += -MTd
+
+    QMAKE_CXXFLAGS_RELEASE -= -MD
+    QMAKE_CXXFLAGS_DEBUG -= -MDd
 }
