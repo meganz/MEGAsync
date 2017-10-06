@@ -61,4 +61,6 @@ win32 {
 
     QMAKE_CXXFLAGS_RELEASE -= -MD
     QMAKE_CXXFLAGS_DEBUG -= -MDd
+
+    RC_FILE = icon.rc
 }
