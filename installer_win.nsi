@@ -58,9 +58,11 @@ VIAddVersionKey "ProductVersion" "3.1.4.0"
 !ifdef BUILD_X64_VERSION
 !define SRCDIR_MEGASYNC "${BUILDPATH_X64}\MEGAsync\release"
 !define SRCDIR_LOGGER "${BUILDPATH_X64}\MEGALogger\release"
+!define SRCDIR_UPDATER "${BUILDPATH_X64}\MEGAUpdater\release"
 !else
 !define SRCDIR_MEGASYNC "${BUILDPATH_X86}\MEGAsync\release"
 !define SRCDIR_LOGGER "${BUILDPATH_X86}\MEGALogger\release"
+!define SRCDIR_UPDATER "${BUILDPATH_X86}\MEGAUpdater\release"
 !endif
 
 !define SRCDIR_MEGASHELLEXT_X32 "${BUILDPATH_X86}\MEGAShellExt\release"
@@ -764,6 +766,10 @@ modeselected:
   AccessControl::GrantOnFile "$INSTDIR\MEGAlogger.exe" "$USERNAME" "GenericRead + GenericWrite"
 !endif
 
+  File "${SRCDIR_UPDATER}\MEGAupdater.exe"
+  AccessControl::SetFileOwner "$INSTDIR\MEGAupdater.exe" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\MEGAupdater.exe" "$USERNAME" "GenericRead + GenericWrite"
+
   File "${SRCDIR_MEGASYNC}\libeay32.dll"
   AccessControl::SetFileOwner "$INSTDIR\libeay32.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\libeay32.dll" "$USERNAME" "GenericRead + GenericWrite"
@@ -1045,6 +1051,7 @@ Section Uninstall
   ;Common files
   Delete "$INSTDIR\MEGAsync.exe"
   Delete "$INSTDIR\MEGAlogger.exe"
+  Delete "$INSTDIR\MEGAupdater.exe"
   Delete "$INSTDIR\libeay32.dll"
   Delete "$INSTDIR\ssleay32.dll"
   Delete "$INSTDIR\libcurl.dll"
