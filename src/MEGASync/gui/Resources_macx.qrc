@@ -597,5 +597,9 @@
         <file>images/ico_resume_transfers_over@2x.png</file>
         <file>images/ico_resume_transfers.png</file>
         <file>images/ico_resume_transfers@2x.png</file>
+        <file>images/ic_small_available.png</file>
+        <file>images/ic_small_available@2x.png</file>
+        <file>images/ic_small_versions.png</file>
+        <file>images/ic_small_versions@2x.png</file>
     </qresource>
 </RCC>

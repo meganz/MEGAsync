@@ -311,5 +311,7 @@
         <file>fonts/SourceSansPro-Light.ttf</file>
         <file>fonts/SourceSansPro-Regular.ttf</file>
         <file>fonts/SourceSansPro-Semibold.ttf</file>
+        <file>images/ic_small_available.png</file>
+        <file>images/ic_small_versions.png</file>
     </qresource>
 </RCC>
