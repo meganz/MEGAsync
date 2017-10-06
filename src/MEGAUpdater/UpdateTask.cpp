@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
+#include <Shlobj.h>
 #include "MacUtils.h"
 
 #ifdef _WIN32
@@ -36,6 +37,20 @@ using namespace CryptoPP;
 #define mega_access(x) _access(x, 0)
 
 string UpdateTask::getAppDataDir()
+{
+    string path;
+    char szPath[MAX_PATH];
+
+    if (SHGetSpecialFolderPathA(NULL, szPath, CSIDL_LOCAL_APPDATA, FALSE))
+    {
+        path = szPath;
+        path.append("\\Mega Limited\\MEGAsync\\");
+    }
+
+    return path;
+}
+
+string UpdateTask::getAppDir()
 {
     string path;
     char szPath[MAX_PATH];
@@ -101,6 +116,11 @@ string UpdateTask::getAppDataDir()
 #define MEGA_TO_NATIVE_SEPARATORS(x) std::replace(x.begin(), x.end(), '\\', '/');
 #define MEGA_SET_PERMISSIONS chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAclient", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
 
+string UpdateTask::getAppDir()
+{
+    return MEGA_DATA_FOLDER;
+}
+
 #endif
 
 #define mega_base_path(x) x.substr(0, x.find_last_of("/\\") + 1)
@@ -152,7 +172,7 @@ UpdateTask::UpdateTask()
     signatureChecker = new SignatureChecker((const char *)UPDATE_PUBLIC_KEY);
     currentFile = -1;
     appDataFolder = getAppDataDir();
-    appFolder = MEGA_DATA_FOLDER;
+    appFolder = getAppDir();
     updateFolder = appDataFolder + UPDATE_FOLDER_NAME + MEGA_SEPARATOR;
     backupFolder = appDataFolder + BACKUP_FOLDER_NAME + MEGA_SEPARATOR;
 }

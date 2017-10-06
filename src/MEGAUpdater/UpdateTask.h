@@ -67,6 +67,7 @@ protected:
     bool removeRecursively(std::string path);
     int readVersion();
     std::string getAppDataDir();
+    std::string getAppDir();
     std::string readNextLine(FILE *fd);
     void emptydirlocal(std::string* name, dev_t basedev = 0);
 
