@@ -29,6 +29,7 @@ macx {
     QMAKE_CXXFLAGS -= -stdlib=libc++
     QMAKE_LFLAGS -= -stdlib=libc++
     CONFIG -= c++11
+    LIBS += -L$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/
     LIBS += -framework Cocoa -framework SystemConfiguration -framework CoreFoundation -framework Foundation -framework Security
     QMAKE_CXXFLAGS += -g
     LIBS += -lcryptopp

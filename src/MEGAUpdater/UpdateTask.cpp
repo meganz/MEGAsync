@@ -11,7 +11,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
-#include <Shlobj.h>
 #include "MacUtils.h"
 
 #ifdef _WIN32
@@ -21,6 +20,10 @@
 #include <direct.h>
 #include <io.h>
 #include <algorithm>
+#include <Shlobj.h>
+#else
+#include <sys/types.h>
+#include <dirent.h>
 #endif
 
 using namespace std;
