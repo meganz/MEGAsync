@@ -3725,7 +3725,7 @@ void MegaApplication::processUploads()
     if (node)
     {
         const char *path = megaApi->getNodePath(node);
-        if (path && !strncmp(path, QString::fromUtf8("//bin/").toUtf8().constData(), 6))
+        if (path && !strncmp(path, "//bin/", 6))
         {
             preferences->setHasDefaultUploadFolder(false);
             preferences->setUploadFolder(INVALID_HANDLE);
