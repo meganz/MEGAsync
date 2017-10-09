@@ -154,57 +154,6 @@ QString ImportMegaLinksDialog::getDownloadPath()
 
 void ImportMegaLinksDialog::on_cDownload_clicked()
 {
-    if (ui->cImport->isChecked() && ui->cDownload->isChecked())
-    {
-        QString importFolder = ui->eMegaFolder->text();
-        MegaNode *nImportFolder = megaApi->getNodeByPath(importFolder.toUtf8().constData());
-        MegaNode *parent = nImportFolder;
-
-        if (!parent)
-        {
-            parent = megaApi->getRootNode();
-        }
-
-        while (parent)
-        {
-            if (megaApi->isSynced(parent))
-            {
-                int result;
-                delete parent;
-                QPointer<ImportMegaLinksDialog> currentDialog = this;
-                if (linkProcessor->size() == 1)
-                {
-                    result = QMessageBox::warning(NULL, tr("Warning"),
-                        tr("You are about to import this file to a synced folder.\n"
-                            "If you enable downloading, the file will be duplicated on your computer.\n"
-                            "Are you sure?"), QMessageBox::Yes, QMessageBox::No);
-                }
-                else
-                {
-                    result = QMessageBox::warning(NULL, tr("Warning"),
-                        tr("You are about to import these files to a synced folder.\n"
-                            "If you enable downloading, the files will be duplicated on your computer.\n"
-                            "Are you sure?"), QMessageBox::Yes, QMessageBox::No);
-                }
-
-                if (!currentDialog)
-                {
-                    return;
-                }
-
-                if (result != QMessageBox::Yes)
-                {
-                    ui->cDownload->setChecked(false);
-                    return;
-                }
-                break;
-            }
-            nImportFolder = parent;
-            parent = megaApi->getParentNode(nImportFolder);
-            delete nImportFolder;
-        }
-    }
-
     if (finished && (ui->cDownload->isChecked() || ui->cImport->isChecked()))
     {
         ui->bOk->setEnabled(true);
