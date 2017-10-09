@@ -272,7 +272,7 @@ void MacXPlatform::enableDialogBlur(QDialog *dialog)
 bool MacXPlatform::enableSetuidBit()
 {
     QString command = QString::fromUtf8("do shell script \"chown root /Applications/MEGAsync.app/Contents/MacOS/MEGAsync && chmod 4755 /Applications/MEGAsync.app/Contents/MacOS/MEGAsync && echo true\"");
-    char *response = runWithRootPrivileges((char *)command.toStdString().c_str());
+    char *response = runWithRootPrivileges((char *)command.toUtf8().constData());
     if (!response)
     {
         return false;

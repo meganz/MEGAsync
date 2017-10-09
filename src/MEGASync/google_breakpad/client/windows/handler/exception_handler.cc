@@ -981,9 +981,9 @@ bool ExceptionHandler::WriteMinidumpWithExceptionForProcess(
   oss << "MEGAprivate ERROR DUMP\n";
   int frame_number=0;
 
-  oss << "Application: " << QApplication::applicationName().toStdString() << "\n";
-  oss << "Version code: " << QString::number(Preferences::VERSION_CODE).toStdString() <<
-         "." << QString::number(Preferences::BUILD_ID).toStdString() << "\n";
+  oss << "Application: " << QApplication::applicationName().toUtf8().constData() << "\n";
+  oss << "Version code: " << QString::number(Preferences::VERSION_CODE).toUtf8().constData() <<
+         "." << QString::number(Preferences::BUILD_ID).toUtf8().constData() << "\n";
   HMODULE module = GetModuleHandle(NULL);
   char moduleName[256];
   int nameSize = GetModuleFileNameA(module, moduleName, sizeof(moduleName));

@@ -109,7 +109,7 @@ void MegaSyncLogger::log(const char *time, int loglevel, const char *source, con
         oss << message;
         if (fileName.size())
         {
-            oss << " ("<< fileName.toStdString() << ")";
+            oss << " ("<< fileName.toUtf8().constData() << ")";
         }
 
         if (logToStdout)

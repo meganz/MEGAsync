@@ -70,7 +70,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
         if (testNode)
         {
             const char *tPath = megaApi->getNodePath(testNode);
-            if (tPath && strncmp(tPath, QString::fromUtf8("//bin/").toStdString().c_str(), 6))
+            if (tPath && strncmp(tPath, "//bin/", 6))
             {   
                 ui->eMegaFolder->setText(QString::fromUtf8(tPath));
                 delete [] tPath;
