@@ -224,7 +224,7 @@ QString MEGASyncPlugin::sendRequest(char type, QString command)
             return QString();
     }
 
-    req.sprintf("%c:%s", type, command.toStdString().c_str());
+    req.sprintf("%c:%s", type, command.toUtf8().constData());
 
     sock.write(req.toUtf8());
     sock.flush();
