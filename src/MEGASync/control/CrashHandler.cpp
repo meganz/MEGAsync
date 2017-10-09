@@ -231,7 +231,7 @@ void CrashHandlerPrivate::InitCrashHandler(const QString& dumpPath)
 
         char name[37];
         sprintf(name, "%08x-%04x-%04x-%08x-%08x", data1, data2, data3, data4, data5);
-        std::string(dump_path = dumpPath.toUtf8().constData()) + "/" + name + ".dmp";
+        dump_path = std::string(dumpPath.toUtf8().constData()) + "/" + name + ".dmp";
 
         /* Install our signal handler */
         struct sigaction sa;
