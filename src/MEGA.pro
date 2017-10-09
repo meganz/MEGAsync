@@ -2,8 +2,6 @@ TEMPLATE = subdirs
 
 SUBDIRS += MEGASync
 
-
-
 CONFIG(debug, debug|release) {
     #SUBDIRS += MEGALogger
 }
