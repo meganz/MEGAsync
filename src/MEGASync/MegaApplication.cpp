@@ -4235,6 +4235,7 @@ void MegaApplication::onLinkImportFinished()
     LinkProcessor *linkProcessor = ((LinkProcessor *)QObject::sender());
     preferences->setImportFolder(linkProcessor->getImportParentFolder());
     linkProcessor->deleteLater();
+    updateUserStats();
 }
 
 void MegaApplication::onRequestLinksFinished()
@@ -5937,8 +5938,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 //Called when a transfer is about to start
 void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
 {
-    if (appfinished || transfer->isStreamingTransfer() || transfer->isFolderTransfer()
-            || !transfer->getPriority()) // Skipped transfer
+    if (appfinished || transfer->isStreamingTransfer() || transfer->isFolderTransfer())
     {
         return;
     }
@@ -6062,12 +6062,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath, publicKey);
     }
 
-    if (!transfer->getPriority())
-    {
-        // Skipped transfer
-        return;
-    }
-
     if (e->getErrorCode() == MegaError::API_EOVERQUOTA && !e->getValue())
     {
         //Cancel pending uploads and disable syncs
@@ -6154,7 +6148,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                     isShare = true;
                 }
 
-                infoDialog->increaseUsedStorage(transfer->getTotalBytes(), isShare);
+                infoDialog->increaseUsedStorage(transfer->getTransferredBytes(), isShare);
 
                 delete node;
                 delete [] path;
@@ -6192,8 +6186,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 //Called when a transfer has been updated
 void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
 {
-    if (appfinished || transfer->isStreamingTransfer() || transfer->isFolderTransfer()
-            || !transfer->getPriority()) // Skipped transfer
+    if (appfinished || transfer->isStreamingTransfer() || transfer->isFolderTransfer())
     {
         return;
     }
@@ -6220,14 +6213,17 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     if (priority <= activeTransferPriority[type]
             || activeTransferState[type] == MegaTransfer::STATE_PAUSED)
     {
-        activeTransferPriority[type] = priority;
-        activeTransferState[type] = transfer->getState();
-        activeTransferTag[type] = transfer->getTag();
-
-        if (infoDialog)
+        if (priority || !activeTransferTag[type])
         {
-            infoDialog->setTransfer(transfer);
-            infoDialog->updateTransfers();
+            activeTransferPriority[type] = priority;
+            activeTransferState[type] = transfer->getState();
+            activeTransferTag[type] = transfer->getTag();
+
+            if (infoDialog)
+            {
+                infoDialog->setTransfer(transfer);
+                infoDialog->updateTransfers();
+            }
         }
     }
     else if (activeTransferTag[type] == transfer->getTag())

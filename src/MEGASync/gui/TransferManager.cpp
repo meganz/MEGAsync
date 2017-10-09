@@ -99,15 +99,21 @@ TransferManager::~TransferManager()
 
 void TransferManager::onTransferStart(MegaApi *api, MegaTransfer *transfer)
 {
-    if (!transfer->getPriority() || transfer->isStreamingTransfer()
+    if (transfer->isStreamingTransfer()
             || transfer->isFolderTransfer() || notificationNumber >= transfer->getNotificationNumber())
+    {
+        return;
+    }
+
+    ui->wActiveTransfers->onTransferStart(api, transfer);
+
+    if (!transfer->getPriority())
     {
         return;
     }
 
     ui->wUploads->getModel()->onTransferStart(api, transfer);
     ui->wDownloads->getModel()->onTransferStart(api, transfer);
-    ui->wActiveTransfers->onTransferStart(api, transfer);
 }
 
 void TransferManager::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *e)
@@ -119,40 +125,59 @@ void TransferManager::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
 
     ui->wCompleted->getModel()->onTransferFinish(api, transfer, e);
     ui->wCompletedTab->setVisible(true);
-    if (!transfer->getPriority() || notificationNumber >= transfer->getNotificationNumber())
+
+    if (notificationNumber >= transfer->getNotificationNumber())
+    {
+        return;
+    }
+
+    ui->wActiveTransfers->onTransferFinish(api, transfer, e);
+
+    if (!transfer->getPriority())
     {
         return;
     }
 
     ui->wUploads->getModel()->onTransferFinish(api, transfer, e);
     ui->wDownloads->getModel()->onTransferFinish(api, transfer, e);
-    ui->wActiveTransfers->onTransferFinish(api, transfer, e);
 }
 
 void TransferManager::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
 {
-    if (!transfer->getPriority() || transfer->isStreamingTransfer()
+    if (transfer->isStreamingTransfer()
             || transfer->isFolderTransfer() || notificationNumber >= transfer->getNotificationNumber())
+    {
+        return;
+    }
+
+    ui->wActiveTransfers->onTransferUpdate(api, transfer);
+
+    if (!transfer->getPriority())
     {
         return;
     }
 
     ui->wUploads->getModel()->onTransferUpdate(api, transfer);
     ui->wDownloads->getModel()->onTransferUpdate(api, transfer);
-    ui->wActiveTransfers->onTransferUpdate(api, transfer);
 }
 
 void TransferManager::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError *e)
 {
-    if (!transfer->getPriority() || transfer->isStreamingTransfer()
+    if (transfer->isStreamingTransfer()
             || transfer->isFolderTransfer() || notificationNumber >= transfer->getNotificationNumber())
+    {
+        return;
+    }
+
+    ui->wActiveTransfers->onTransferTemporaryError(api, transfer, e);
+
+    if (!transfer->getPriority())
     {
         return;
     }
 
     ui->wUploads->getModel()->onTransferTemporaryError(api, transfer, e);
     ui->wDownloads->getModel()->onTransferTemporaryError(api, transfer, e);
-    ui->wActiveTransfers->onTransferTemporaryError(api, transfer, e);
 }
 
 void TransferManager::createAddMenu()

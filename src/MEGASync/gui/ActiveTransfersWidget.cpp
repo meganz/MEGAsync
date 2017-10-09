@@ -114,10 +114,12 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
     }
 
     int type = transfer->getType();
+    unsigned long long priority = transfer->getPriority();
     if (type == MegaTransfer::TYPE_DOWNLOAD)
     {
-        if (transfer->getPriority() > activeDownload.priority
+        if ((priority > activeDownload.priority
                 && !(activeDownload.transferState == MegaTransfer::STATE_PAUSED))
+            || (!priority && activeDownload.tag))
         {
             if (activeDownload.tag == transfer->getTag())
             {
@@ -151,8 +153,9 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
     }
     else
     {
-        if (transfer->getPriority() > activeUpload.priority
+        if ((priority > activeUpload.priority
                 && !(activeUpload.transferState == MegaTransfer::STATE_PAUSED))
+                || (!priority && activeUpload.tag))
         {
             if (activeUpload.tag == transfer->getTag())
             {
