@@ -78,7 +78,7 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
         if (!dir.exists())
         {
 #ifndef WIN32
-            if (!megaApi->createLocalFolder(dir.toNativeSeparators(destPath).toStdString().c_str()))
+            if (!megaApi->createLocalFolder(dir.toNativeSeparators(destPath).toUtf8().constData()))
 #else
             if (!dir.mkpath(QString::fromAscii(".")))
 #endif

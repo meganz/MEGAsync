@@ -38,9 +38,9 @@ using namespace std;
 
         std::ostringstream oss;
         oss << "MEGAprivate ERROR DUMP\n";
-        oss << "Application: " << QApplication::applicationName().toStdString() << "\n";
-        oss << "Version code: " << QString::number(Preferences::VERSION_CODE).toStdString() <<
-               "." << QString::number(Preferences::BUILD_ID).toStdString() << "\n";
+        oss << "Application: " << QApplication::applicationName().toUtf8().constData() << "\n";
+        oss << "Version code: " << QString::number(Preferences::VERSION_CODE).toUtf8().constData() <<
+               "." << QString::number(Preferences::BUILD_ID).toUtf8().constData() << "\n";
         oss << "Module name: " << "megasync" << "\n";
 
         struct utsname osData;
@@ -199,7 +199,7 @@ void CrashHandlerPrivate::InitCrashHandler(const QString& dumpPath)
 #else
     #ifdef CREATE_COMPATIBLE_MINIDUMPS
         #if defined(Q_OS_LINUX)
-            std::string pathAsStr = dumpPath.toStdString();
+            std::string pathAsStr = dumpPath.toUtf8().constData();
             google_breakpad::MinidumpDescriptor md(pathAsStr);
             pHandler = new google_breakpad::ExceptionHandler(
                 md,
@@ -210,7 +210,7 @@ void CrashHandlerPrivate::InitCrashHandler(const QString& dumpPath)
                 -1
                 );
         #elif defined(Q_OS_MAC)
-            std::string pathAsStr = dumpPath.toStdString();
+            std::string pathAsStr = dumpPath.toUtf8().constData();
             pHandler = new google_breakpad::ExceptionHandler(
                 pathAsStr,
                 /*FilterCallback*/ 0,
@@ -231,7 +231,7 @@ void CrashHandlerPrivate::InitCrashHandler(const QString& dumpPath)
 
         char name[37];
         sprintf(name, "%08x-%04x-%04x-%08x-%08x", data1, data2, data3, data4, data5);
-        dump_path = dumpPath.toStdString() + "/" + name + ".dmp";
+        dump_path = std::string(dumpPath.toUtf8().constData()) + "/" + name + ".dmp";
 
         /* Install our signal handler */
         struct sigaction sa;

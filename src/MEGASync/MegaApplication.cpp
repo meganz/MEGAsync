@@ -3086,7 +3086,7 @@ void MegaApplication::notifyItemChange(QString path, int newState)
 #ifdef _WIN32
     localPath.assign((const char *)path.utf16(), path.size() * sizeof(wchar_t));
 #else
-    localPath = path.toStdString();
+    localPath = path.toUtf8().constData();
 #endif
     Platform::notifyItemChange(&localPath, newState);
 }
@@ -3734,7 +3734,7 @@ void MegaApplication::processUploads()
     if (node)
     {
         const char *path = megaApi->getNodePath(node);
-        if (path && !strncmp(path, QString::fromUtf8("//bin/").toStdString().c_str(), 6))
+        if (path && !strncmp(path, "//bin/", 6))
         {
             preferences->setHasDefaultUploadFolder(false);
             preferences->setUploadFolder(INVALID_HANDLE);

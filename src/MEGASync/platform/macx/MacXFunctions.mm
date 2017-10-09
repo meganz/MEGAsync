@@ -20,7 +20,7 @@ void setMacXActivationPolicy()
 
 NSString* fromQString(QString string)
 {
-    NSString *convertedString = [[NSString  alloc] initWithUTF8String:(char *)string.toStdString().c_str()];
+    NSString *convertedString = [[NSString  alloc] initWithUTF8String:(char *)string.toUtf8().constData()];
     return convertedString;
 }
 QString fromNSString(const NSString *string)
