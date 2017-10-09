@@ -1,13 +1,15 @@
 TEMPLATE = subdirs
 
-SUBDIRS += MEGASync \
-           MEGAUpdater
+SUBDIRS += MEGASync
+
+
 
 CONFIG(debug, debug|release) {
     #SUBDIRS += MEGALogger
 }
 
 win32 {
+    SUBDIRS += MEGAUpdater
     SUBDIRS += MEGACrashAnalyzer
     CONFIG(with_ext) {
         SUBDIRS += MEGAShellExt
@@ -24,6 +26,7 @@ unix:!macx {
 }
 
 macx {
+    SUBDIRS += MEGAUpdater
     SUBDIRS += MEGALoader
 }
 
