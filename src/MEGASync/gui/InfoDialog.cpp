@@ -120,6 +120,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     arrow->hide();
 #endif
 
+    on_bDotUsedStorage_clicked();
+
     //Create the overlay widget with a semi-transparent background
     //that will be shown over the transfers when they are paused
     overlay = new QPushButton(this);
@@ -198,8 +200,6 @@ void InfoDialog::setUsage()
         ui->bDotUsedQuota->show();
         ui->bDotUsedStorage->show();
     }
-
-    on_bDotUsedStorage_clicked();
 
     if (preferences->totalStorage() == 0)
     {
