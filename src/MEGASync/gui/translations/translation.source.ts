@@ -842,11 +842,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">[$1752]</translation>
     </message>
     <message>
-        <source>USED TRANSFERS %1</source>
-        <translatorcomment>Label to indicate the total used transfer quota</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>PAUSED</source>
         <translatorcomment>Label to indicate that the current transfer is paused. Keep capital letters.</translatorcomment>
         <translation type="unfinished"></translation>
@@ -894,6 +889,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USED BANDWIDTH %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
