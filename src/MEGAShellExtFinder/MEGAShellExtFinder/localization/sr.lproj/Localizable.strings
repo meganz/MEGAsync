@@ -11,6 +11,8 @@
 /* Context menu option label to indicate the user has selected %i number of files */
 "%i files" = "%i files";
 /* Context menu option label to indicate the user has selected a folder */
-"1 folder" = "1 фасцикла";
+"1 folder" = "1 директоријум";
 /* Context menu option label to indicate the user has selected %i number of folders */
 "%i folders" = "%i folders";
+/*  */
+"View previous versions" = "View previous versions";
