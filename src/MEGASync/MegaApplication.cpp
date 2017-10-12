@@ -6106,9 +6106,13 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     }
 
     int type = transfer->getType();
-    unsigned long long priority = transfer->getPriority();
-
     numTransfers[type]--;
+
+    unsigned long long priority = transfer->getPriority();
+    if (!priority)
+    {
+        priority = 0xFFFFFFFFFFFFFFFFULL;
+    }
     if (priority <= activeTransferPriority[type]
             || activeTransferState[type] == MegaTransfer::STATE_PAUSED
             || transfer->getTag() == activeTransferTag[type])
@@ -6209,21 +6213,22 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
         }
     }
 
-    unsigned long long priority = transfer->getPriority();    
-    if (priority <= activeTransferPriority[type]
+    unsigned long long priority = transfer->getPriority();
+    if (!priority)
+    {
+        priority = 0xFFFFFFFFFFFFFFFFULL;
+    }
+    if ((priority <= activeTransferPriority[type])
             || activeTransferState[type] == MegaTransfer::STATE_PAUSED)
     {
-        if (priority || !activeTransferTag[type])
-        {
-            activeTransferPriority[type] = priority;
-            activeTransferState[type] = transfer->getState();
-            activeTransferTag[type] = transfer->getTag();
+        activeTransferPriority[type] = priority;
+        activeTransferState[type] = transfer->getState();
+        activeTransferTag[type] = transfer->getTag();
 
-            if (infoDialog)
-            {
-                infoDialog->setTransfer(transfer);
-                infoDialog->updateTransfers();
-            }
+        if (infoDialog)
+        {
+            infoDialog->setTransfer(transfer);
+            infoDialog->updateTransfers();
         }
     }
     else if (activeTransferTag[type] == transfer->getTag())
