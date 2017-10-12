@@ -76,7 +76,7 @@ protected:
     std::string updateFolder;
     std::string backupFolder;
     SignatureChecker *signatureChecker;
-    int currentFile;
+    unsigned int currentFile;
     int updateVersion;
     std::vector<std::string> downloadURLs;
     std::vector<std::string> localPaths;

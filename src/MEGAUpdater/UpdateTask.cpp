@@ -1,5 +1,3 @@
-#include "UpdateTask.h"
-#include "Preferences.h"
 #include <stdlib.h>
 #include <limits.h>
 #include <sys/stat.h>
@@ -11,7 +9,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
-#include "MacUtils.h"
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -26,6 +23,10 @@
 #include <dirent.h>
 #endif
 
+#include "UpdateTask.h"
+#include "Preferences.h"
+#include "MacUtils.h"
+
 using namespace std;
 using namespace CryptoPP;
 
@@ -36,39 +37,6 @@ using namespace CryptoPP;
 #endif
 
 #define MEGA_SEPARATOR '\\'
-#define mega_mkdir(x) _mkdir(x)
-#define mega_access(x) _access(x, 0)
-
-string UpdateTask::getAppDataDir()
-{
-    string path;
-    char szPath[MAX_PATH];
-
-    if (SHGetSpecialFolderPathA(NULL, szPath, CSIDL_LOCAL_APPDATA, FALSE))
-    {
-        path = szPath;
-        path.append("\\Mega Limited\\MEGAsync\\");
-    }
-
-    return path;
-}
-
-string UpdateTask::getAppDir()
-{
-    string path;
-    char szPath[MAX_PATH];
-    if (SUCCEEDED(GetModuleFileNameA(NULL, szPath , MAX_PATH))
-            && SUCCEEDED(PathRemoveFileSpecA(szPath)))
-    {
-        path = szPath;
-        path.append("\\");
-    }
-    return path;
-}
-
-#define MEGA_DATA_FOLDER appDataFolder
-#define MEGA_TO_NATIVE_SEPARATORS(x) std::replace(x.begin(), x.end(), '/', '\\');
-#define MEGA_SET_PERMISSIONS
 
 void utf8ToUtf16(const char* utf8data, string* utf16string)
 {
@@ -97,11 +65,110 @@ void utf8ToUtf16(const char* utf8data, string* utf16string)
     }
 }
 
+void utf16ToUtf8(const wchar_t* utf16data, int utf16size, string* utf8string)
+{
+    if(!utf16size)
+    {
+        utf8string->clear();
+        return;
+    }
+
+    utf8string->resize((utf16size + 1) * 4);
+
+    utf8string->resize(WideCharToMultiByte(CP_UTF8, 0, utf16data,
+        utf16size,
+        (char*)utf8string->data(),
+        utf8string->size() + 1,
+        NULL, NULL));
+}
+
+int mega_mkdir(const char *path)
+{
+    string wpath;
+    utf8ToUtf16(path, &wpath);
+    wpath.append("", 1);
+    return _wmkdir((LPCWSTR)wpath.data());
+}
+
+int mega_access(const char *path)
+{
+    string wpath;
+    utf8ToUtf16(path, &wpath);
+    wpath.append("", 1);
+    return _waccess((LPCWSTR)wpath.data(), 0);
+}
+
+FILE *mega_fopen(const char *path, const char *mode)
+{
+    string wpath;
+    utf8ToUtf16(path, &wpath);
+    wpath.append("", 1);
+
+    string wmode;
+    utf8ToUtf16(mode, &wmode);
+    wmode.append("", 1);
+    return _wfopen((LPCWSTR)wpath.data(), (LPCWSTR)wmode.data());
+}
+
+int mega_remove(const char *path)
+{
+    string wpath;
+    utf8ToUtf16(path, &wpath);
+    wpath.append("", 1);
+    return _wremove((LPCWSTR)wpath.data());
+}
+
+int mega_rename(const char *srcpath, const char *dstpath)
+{
+    string wsrcpath;
+    utf8ToUtf16(srcpath, &wsrcpath);
+    wsrcpath.append("", 1);
+
+    string wdstpath;
+    utf8ToUtf16(dstpath, &wdstpath);
+    wdstpath.append("", 1);
+
+    return _wrename((LPCWSTR)wsrcpath.data(),(LPCWSTR)wdstpath.data());
+}
+
+string UpdateTask::getAppDataDir()
+{
+    string path;
+    string wpath;
+    wpath.resize(MAX_PATH * sizeof (wchar_t));
+    if (SHGetSpecialFolderPathW(NULL, (LPWSTR)wpath.data(), CSIDL_LOCAL_APPDATA, FALSE))
+    {
+        utf16ToUtf8((LPWSTR)wpath.data(), lstrlen((LPCWSTR)wpath.data()), &path);
+        path.append("\\Mega Limited\\MEGAsync\\");
+    }
+    return path;
+}
+
+string UpdateTask::getAppDir()
+{
+    string path;
+    string wpath;
+    wpath.resize(MAX_PATH * sizeof (wchar_t));
+    if (SUCCEEDED(GetModuleFileNameW(NULL, (LPWSTR)wpath.data() , MAX_PATH))
+            && SUCCEEDED(PathRemoveFileSpecW((LPWSTR)wpath.data())))
+    {
+        utf16ToUtf8((LPWSTR)wpath.data(), lstrlen((LPCWSTR)wpath.data()), &path);
+        path.append("\\");
+    }
+    return path;
+}
+
+#define MEGA_TO_NATIVE_SEPARATORS(x) std::replace(x.begin(), x.end(), '/', '\\');
+#define MEGA_SET_PERMISSIONS
+
 #else
 
 #define MEGA_SEPARATOR '/'
 #define mega_mkdir(x) mkdir(x, S_IRWXU)
 #define mega_access(x) access(x, F_OK)
+#define mega_fopen fopen
+#define mega_remove remove
+#define mega_rename rename
 
 string UpdateTask::getAppDataDir()
 {
@@ -115,18 +182,26 @@ string UpdateTask::getAppDataDir()
     return path;
 }
 
-#define MEGA_DATA_FOLDER APP_DIR_BUNDLE
 #define MEGA_TO_NATIVE_SEPARATORS(x) std::replace(x.begin(), x.end(), '\\', '/');
 #define MEGA_SET_PERMISSIONS chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAclient", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
 
 string UpdateTask::getAppDir()
 {
-    return MEGA_DATA_FOLDER;
+    return APP_DIR_BUNDLE;
 }
 
 #endif
 
 #define mega_base_path(x) x.substr(0, x.find_last_of("/\\") + 1)
+
+enum {
+    LOG_LEVEL_FATAL = 0,   // Very severe error event that will presumably lead the application to abort.
+    LOG_LEVEL_ERROR,   // Error information but will continue application to keep running.
+    LOG_LEVEL_WARNING, // Information representing errors in application but application will keep running
+    LOG_LEVEL_INFO,    // Mainly useful to represent current progress of application.
+    LOG_LEVEL_DEBUG,   // Informational logs, that are useful for developers. Only applicable if DEBUG is defined.
+    LOG_LEVEL_MAX
+};
 
 #define MAX_LOG_SIZE 1024
 char log_message[MAX_LOG_SIZE];
@@ -173,7 +248,7 @@ int mkdir_p(const char *path)
 UpdateTask::UpdateTask()
 {
     signatureChecker = new SignatureChecker((const char *)UPDATE_PUBLIC_KEY);
-    currentFile = -1;
+    currentFile = 0;
     appDataFolder = getAppDataDir();
     appFolder = getAppDir();
     updateFolder = appDataFolder + UPDATE_FOLDER_NAME + MEGA_SEPARATOR;
@@ -197,27 +272,35 @@ void UpdateTask::checkForUpdates()
         randomSec += char('A'+ (rand() % 26));
     }
 
+    if (!appFolder.size() || !appDataFolder.size())
+    {
+        LOG(LOG_LEVEL_ERROR, "No app or data folder set");
+        return;
+    }
+
     string appData = appDataFolder;
     string updateFile = appData.append(UPDATE_FILENAME);
     if (downloadFile((char *)((string(UPDATE_CHECK_URL) + randomSec).c_str()), updateFile.c_str()))
     {
         FILE * pFile;
-        pFile = fopen(updateFile.c_str(), "r");
+        pFile = mega_fopen(updateFile.c_str(), "r");
         if (!pFile)
         {
             LOG(LOG_LEVEL_ERROR, "Error opening update file");
-            remove(updateFile.c_str());
+            mega_remove(updateFile.c_str());
             return;
         }
 
         if (!processUpdateFile(pFile))
         {
-            remove(updateFile.c_str());
+            mega_remove(updateFile.c_str());
             return;
         }
+        fclose(pFile);
+        mega_remove(updateFile.c_str());
 
-        currentFile++;
-        while ((size_t)currentFile < downloadURLs.size())
+        currentFile = 0;
+        while (currentFile < downloadURLs.size())
         {
             if (!alreadyDownloaded(localPaths[currentFile], fileSignatures[currentFile]))
             {
@@ -232,7 +315,7 @@ void UpdateTask::checkForUpdates()
                 //Delete the file if exists
                 if (fileExist(localFile.c_str()))
                 {
-                    unlink(localFile.c_str());
+                    mega_remove(localFile.c_str());
                 }
 
                 //Download file to specific folder
@@ -276,7 +359,18 @@ bool UpdateTask::downloadFile(string url, string dstPath)
     LOG(LOG_LEVEL_INFO, "Downloading updated file from: %s",  url.c_str());
 
 #ifdef _WIN32
-    HRESULT res = URLDownloadToFileA(NULL, url.c_str(), dstPath.c_str(), 0, NULL);
+    string wurl;
+    string wdstPath;
+
+    wurl.resize((url.size() + 1) * 4);
+    utf8ToUtf16(url.c_str(), &wurl);
+    wurl.append("", 1);
+
+    wdstPath.resize((url.size() + 1) * 4);
+    utf8ToUtf16(dstPath.c_str(), &wdstPath);
+    wdstPath.append("", 1);
+
+    HRESULT res = URLDownloadToFileW(NULL, (LPCWSTR)wurl.data(), (LPCWSTR)wdstPath.data(), 0, NULL);
     if (res != S_OK)
     {
        LOG(LOG_LEVEL_ERROR, "Unable to download file. Error code: %d", res);
@@ -286,11 +380,12 @@ bool UpdateTask::downloadFile(string url, string dstPath)
     bool success = downloadFileSynchronously(url, dstPath);
     if (!success)
     {
-        LOG(MegaApi::LOG_LEVEL_ERROR, "Unable to download file.");
+        LOG(LOG_LEVEL_ERROR, "Unable to download file.");
         return false;
     }
 #endif
 
+    LOG(LOG_LEVEL_INFO, "File downloaded OK");
     return true;
 }
 
@@ -422,7 +517,7 @@ bool UpdateTask::performUpdate()
         }
 
         string origFile = appFolder + localPaths[i];
-        if (rename(origFile.c_str(), file.c_str()) && errno != ENOENT)
+        if (mega_rename(origFile.c_str(), file.c_str()) && errno != ENOENT)
         {
             LOG(LOG_LEVEL_ERROR, "Error creating backup of file %s to %s",  origFile.c_str(), file.c_str());
             rollbackUpdate(i);
@@ -437,7 +532,7 @@ bool UpdateTask::performUpdate()
         }
 
         string update = updateFolder + localPaths[i];
-        if (rename(update.c_str(), origFile.c_str()))
+        if (mega_rename(update.c_str(), origFile.c_str()))
         {
             LOG(LOG_LEVEL_ERROR, "Error installing file %s in %s",  update.c_str(), origFile.c_str());
             rollbackUpdate(i);
@@ -457,8 +552,8 @@ void UpdateTask::rollbackUpdate(int fileNum)
     for (int i = fileNum; i >= 0; i--)
     {
         string origFile = appFolder + localPaths[i];
-        rename(origFile.c_str(), (updateFolder + localPaths[i]).c_str());
-        rename((backupFolder + localPaths[i]).c_str(), origFile.c_str());
+        mega_rename(origFile.c_str(), (updateFolder + localPaths[i]).c_str());
+        mega_rename((backupFolder + localPaths[i]).c_str(), origFile.c_str());
         LOG(LOG_LEVEL_INFO, "File restored: %s",  localPaths[i].c_str());
     }
     LOG(LOG_LEVEL_INFO, "Update uninstalled");
@@ -467,13 +562,12 @@ void UpdateTask::rollbackUpdate(int fileNum)
 void UpdateTask::initialCleanup()
 {
     removeRecursively(backupFolder);
-    removeRecursively(updateFolder);
 }
 
 void UpdateTask::finalCleanup()
 {
     initialCleanup();
-    remove((appDataFolder + UPDATE_FILENAME).c_str());
+    removeRecursively(updateFolder);
     MEGA_SET_PERMISSIONS;
 }
 
@@ -510,7 +604,7 @@ bool UpdateTask::alreadyExists(string absolutePath, string fileSignature)
     SignatureChecker tmpHash((const char *)UPDATE_PUBLIC_KEY);
     char *buffer;
     long fileLength;
-    FILE * pFile = fopen(absolutePath.c_str(), "rb");
+    FILE * pFile = mega_fopen(absolutePath.c_str(), "rb");
     if (pFile == NULL)
     {
         return false;
@@ -555,7 +649,7 @@ string UpdateTask::readNextLine(FILE *fd)
 int UpdateTask::readVersion()
 {
     int version = -1;
-    FILE *fp = fopen((appDataFolder + VERSION_FILE_NAME).c_str(), "r");
+    FILE *fp = mega_fopen((appDataFolder + VERSION_FILE_NAME).c_str(), "r");
     if (fp == NULL)
     {
         return version;
