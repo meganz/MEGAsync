@@ -148,7 +148,7 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
         }
 
         activeDownload.transferState = transfer->getState();
-        activeDownload.priority = transfer->getPriority();
+        activeDownload.priority = priority;
         activeDownload.meanTransferSpeed = transfer->getMeanSpeed();
         setSpeed(&activeDownload, transfer->getSpeed());
         setTransferredBytes(&activeDownload, transfer->getTransferredBytes());
@@ -183,7 +183,7 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
         }
 
         activeUpload.transferState = transfer->getState();
-        activeUpload.priority = transfer->getPriority();
+        activeUpload.priority = priority;
         activeUpload.meanTransferSpeed = transfer->getMeanSpeed();
         setSpeed(&activeUpload, transfer->getSpeed());
         setTransferredBytes(&activeUpload, transfer->getTransferredBytes());

@@ -6218,7 +6218,7 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     {
         priority = 0xFFFFFFFFFFFFFFFFULL;
     }
-    if ((priority <= activeTransferPriority[type])
+    if (priority <= activeTransferPriority[type]
             || activeTransferState[type] == MegaTransfer::STATE_PAUSED)
     {
         activeTransferPriority[type] = priority;
