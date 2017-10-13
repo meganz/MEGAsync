@@ -131,6 +131,14 @@ int mega_rename(const char *srcpath, const char *dstpath)
     return _wrename((LPCWSTR)wsrcpath.data(),(LPCWSTR)wdstpath.data());
 }
 
+int mega_rmdir(const char *path)
+{
+    string wpath;
+    utf8ToUtf16(path, &wpath);
+    wpath.append("", 1);
+    return _wrmdir((LPCWSTR)wpath.data());
+}
+
 string UpdateTask::getAppDataDir()
 {
     string path;
@@ -169,6 +177,7 @@ string UpdateTask::getAppDir()
 #define mega_fopen fopen
 #define mega_remove remove
 #define mega_rename rename
+#define mega_rmdir rmdir
 
 string UpdateTask::getAppDataDir()
 {
@@ -321,7 +330,7 @@ void UpdateTask::checkForUpdates()
                 //Download file to specific folder
                 if (downloadFile(downloadURLs[currentFile], localFile))
                 {
-                    LOG(LOG_LEVEL_INFO, "File downloaded OK: %s", localPaths[currentFile].c_str());
+                    LOG(LOG_LEVEL_INFO, "File ready: %s", localPaths[currentFile].c_str());
                     if (!alreadyDownloaded(localPaths[currentFile], fileSignatures[currentFile]))
                     {
                         LOG(LOG_LEVEL_ERROR, "Signature of downloaded file doesn't match: %s",  localPaths[currentFile].c_str());
@@ -412,6 +421,7 @@ bool UpdateTask::processUpdateFile(FILE *fd)
         LOG(LOG_LEVEL_INFO, "Update not needed. Last version: %d - Current version: %d", updateVersion, currentVersion);
         return false;
     }
+    LOG(LOG_LEVEL_WARNING, "Update needed");
 
     string updateSignature = readNextLine(fd);
     if (updateSignature.empty())
@@ -473,7 +483,6 @@ bool UpdateTask::processUpdateFile(FILE *fd)
         return false;
     }
 
-    LOG(LOG_LEVEL_WARNING, "Update needed");
     return true;
 }
 
@@ -586,7 +595,7 @@ bool UpdateTask::removeRecursively(string path)
     }
 #endif
 
-    return !rmdir(path.c_str());
+    return !mega_rmdir(path.c_str());
 }
 
 bool UpdateTask::alreadyInstalled(string relativePath, string fileSignature)
