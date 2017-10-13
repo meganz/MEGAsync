@@ -55,7 +55,7 @@ win32 {
     }
 
     DEFINES += UNICODE _UNICODE NTDDI_VERSION=0x05010000 _WIN32_WINNT=0x0501
-    LIBS += -lurlmon -lShlwapi -lShell32 -lcryptoppmt
+    LIBS += -lurlmon -lShlwapi -lShell32 -lAdvapi32 -lcryptoppmt
 
     QMAKE_CXXFLAGS_RELEASE += -MT
     QMAKE_CXXFLAGS_DEBUG += -MTd

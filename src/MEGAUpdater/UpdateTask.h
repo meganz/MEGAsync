@@ -64,8 +64,10 @@ protected:
     void rollbackUpdate(int fileNum);
     void initialCleanup();
     void finalCleanup();
+    bool setPermissions(const char *path);
     bool removeRecursively(std::string path);
     int readVersion();
+    void writeVersion();
     std::string getAppDataDir();
     std::string getAppDir();
     std::string readNextLine(FILE *fd);
@@ -75,6 +77,7 @@ protected:
     std::string appDataFolder;
     std::string updateFolder;
     std::string backupFolder;
+    bool isPublic;
     SignatureChecker *signatureChecker;
     unsigned int currentFile;
     int updateVersion;

@@ -13,6 +13,8 @@
 #ifdef _WIN32
 #include <Windows.h>
 #include <Shlwapi.h>
+#include <AccCtrl.h>
+#include <Aclapi.h>
 #include <urlmon.h>
 #include <direct.h>
 #include <io.h>
@@ -256,12 +258,30 @@ int mkdir_p(const char *path)
 
 UpdateTask::UpdateTask()
 {
+    isPublic = false;
     signatureChecker = new SignatureChecker((const char *)UPDATE_PUBLIC_KEY);
     currentFile = 0;
     appDataFolder = getAppDataDir();
     appFolder = getAppDir();
     updateFolder = appDataFolder + UPDATE_FOLDER_NAME + MEGA_SEPARATOR;
     backupFolder = appDataFolder + BACKUP_FOLDER_NAME + MEGA_SEPARATOR;
+
+#ifdef _WIN32
+    WCHAR commonPath[MAX_PATH + 1];
+    if (SHGetSpecialFolderPathW(NULL, commonPath, CSIDL_COMMON_APPDATA, FALSE))
+    {
+        string wappFolder;
+        int len = lstrlen(commonPath);
+        utf8ToUtf16(appFolder.c_str(), &wappFolder);
+        if (!memcmp(commonPath, (WCHAR *)wappFolder.data(), len * sizeof(WCHAR))
+                && wappFolder.size() > (len * sizeof(WCHAR))
+                && *((WCHAR *)(wappFolder.data() + (len * sizeof(WCHAR)))) == L'\\')
+        {
+            isPublic = true;
+            LOG(LOG_LEVEL_INFO, "The installation is public");
+        }
+    }
+#endif
 }
 
 UpdateTask::~UpdateTask()
@@ -302,6 +322,7 @@ void UpdateTask::checkForUpdates()
 
         if (!processUpdateFile(pFile))
         {
+            fclose(pFile);
             mega_remove(updateFile.c_str());
             return;
         }
@@ -539,6 +560,7 @@ bool UpdateTask::performUpdate()
             rollbackUpdate(i);
             return false;
         }
+        setPermissions(mega_base_path(origFile).c_str());
 
         string update = updateFolder + localPaths[i];
         if (mega_rename(update.c_str(), origFile.c_str()))
@@ -547,6 +569,7 @@ bool UpdateTask::performUpdate()
             rollbackUpdate(i);
             return false;
         }
+        setPermissions(origFile.c_str());
 
         LOG(LOG_LEVEL_INFO, "File correctly installed: %s",  localPaths[i].c_str());
     }
@@ -578,6 +601,59 @@ void UpdateTask::finalCleanup()
     initialCleanup();
     removeRecursively(updateFolder);
     MEGA_SET_PERMISSIONS;
+    writeVersion();
+}
+
+bool UpdateTask::setPermissions(const char *path)
+{
+#ifndef _WIN32
+    return true;
+#else
+    if (!isPublic)
+    {
+        return true;
+    }
+
+    string wfileName;
+    utf8ToUtf16(path, &wfileName);
+    wfileName.append("", 1);
+
+    bool result = false;
+    PACL pOldDACL = NULL, pNewDACL = NULL;
+    PSECURITY_DESCRIPTOR pSD = NULL;
+    DWORD sidSize = SECURITY_MAX_SID_SIZE;
+    EXPLICIT_ACCESS ea;
+
+    ZeroMemory(&ea, sizeof(EXPLICIT_ACCESS));
+    ea.grfAccessPermissions = GENERIC_READ | GENERIC_EXECUTE;
+    ea.grfAccessMode = GRANT_ACCESS;
+    ea.grfInheritance = NO_INHERITANCE;
+    ea.Trustee.TrusteeForm = TRUSTEE_IS_SID;
+    ea.Trustee.TrusteeType = TRUSTEE_IS_WELL_KNOWN_GROUP;
+    if ((GetNamedSecurityInfo((LPCWSTR)wfileName.data(), SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL, &pOldDACL, NULL, &pSD) == ERROR_SUCCESS)
+            && (ea.Trustee.ptstrName = (LPWSTR)LocalAlloc(LMEM_FIXED, sidSize))
+            && CreateWellKnownSid(WinBuiltinUsersSid, NULL, ea.Trustee.ptstrName, &sidSize)
+            && (SetEntriesInAcl(1, &ea, pOldDACL, &pNewDACL) == ERROR_SUCCESS)
+            && (SetNamedSecurityInfo((LPWSTR)wfileName.data(), SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL, pNewDACL, NULL) == ERROR_SUCCESS))
+    {
+        result = true;
+        LOG(LOG_LEVEL_INFO, "Permissions updated");
+    }
+
+    if (ea.Trustee.ptstrName != NULL)
+    {
+        LocalFree(ea.Trustee.ptstrName);
+    }
+    if(pSD != NULL)
+    {
+        LocalFree((HLOCAL) pSD);
+    }
+    if(pNewDACL != NULL)
+    {
+        LocalFree((HLOCAL) pNewDACL);
+    }
+    return result;
+#endif
 }
 
 bool UpdateTask::removeRecursively(string path)
@@ -667,6 +743,19 @@ int UpdateTask::readVersion()
     fscanf(fp, "%d", &version);
     fclose(fp);
     return version;
+}
+
+void UpdateTask::writeVersion()
+{
+    FILE *fp = mega_fopen((appDataFolder + VERSION_FILE_NAME).c_str(), "w");
+    if (fp == NULL)
+    {
+        return;
+    }
+
+    fprintf(fp, "%d", updateVersion);
+    fclose(fp);
+    LOG(LOG_LEVEL_INFO, "Version code updated to %d", updateVersion);
 }
 
 #ifdef _WIN32
