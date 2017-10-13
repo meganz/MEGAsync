@@ -5,9 +5,9 @@ const char CLIENT_KEY[] = "FhMgXbqb";
 const char USER_AGENT[] = "MEGA/MEGAUpdaterTask";
 
 #ifdef _WIN32
-const char UPDATE_CHECK_URL[]  = "http://g.static.mega.co.nz/upd/wsync/v.txt";
+const char UPDATE_CHECK_URL[]  = "http://g.static.mega.co.nz/eupd/wsync/v.txt";
 #else
-const char UPDATE_CHECK_URL[]  = "http://g.static.mega.co.nz/upd/msync/v.txt";
+const char UPDATE_CHECK_URL[]  = "http://g.static.mega.co.nz/eupd/msync/v.txt";
 const char APP_DIR_BUNDLE[] = "/Applications/MEGAsync.app/";
 #endif
 
