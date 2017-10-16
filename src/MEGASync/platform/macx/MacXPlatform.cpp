@@ -287,6 +287,11 @@ void MacXPlatform::activateBackgroundWindow(QDialog *)
 
 }
 
+bool MacXPlatform::registerUpdateJob()
+{
+    return registerUpdateDaemon();
+}
+
 void MacXPlatform::execBackgroundWindow(QDialog *window)
 {
     window->exec();

@@ -13,7 +13,7 @@ win32 {
 		$$PWD/win/WinShellDispatcherTask.h \
 		$$PWD/win/WinTrayReceiver.h
 
-    LIBS += -lole32 -lShell32 -lcrypt32
+    LIBS += -lole32 -lShell32 -lcrypt32 -ltaskschd
     DEFINES += UNICODE _UNICODE NTDDI_VERSION=0x05010000 _WIN32_WINNT=0x0501
 }
 

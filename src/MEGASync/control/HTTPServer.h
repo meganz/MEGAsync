@@ -44,10 +44,10 @@ public:
 class HTTPRequest
 {
 public:
-    HTTPRequest() : contentLength(0), origin(-1) {}
+    HTTPRequest() : contentLength(0), origin(QString::fromUtf8("*")) {}
     QString data;
     int contentLength;
-    int origin;
+    QString origin;
 };
 
 class HTTPServer: public QTcpServer

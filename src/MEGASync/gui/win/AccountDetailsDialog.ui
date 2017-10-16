@@ -375,7 +375,7 @@ font-size: 13px;
           </size>
          </property>
          <property name="text">
-          <string>LOADING...</string>
+          <string>Loading...</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>

@@ -120,6 +120,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     arrow->hide();
 #endif
 
+    on_bDotUsedStorage_clicked();
+
     //Create the overlay widget with a semi-transparent background
     //that will be shown over the transfers when they are paused
     overlay = new QPushButton(this);
@@ -199,8 +201,6 @@ void InfoDialog::setUsage()
         ui->bDotUsedStorage->show();
     }
 
-    on_bDotUsedStorage_clicked();
-
     if (preferences->totalStorage() == 0)
     {
         ui->pUsageStorage->setValue(0);
@@ -235,7 +235,7 @@ void InfoDialog::setUsage()
     {
         ui->pUsageQuota->setValue(0);
         ui->lPercentageUsedQuota->setText(QString::fromUtf8(""));
-        ui->lTotalUsedQuota->setText(tr("USED TRANSFERS %1").arg(tr("Data temporarily unavailable")));
+        ui->lTotalUsedQuota->setText(tr("USED BANDWIDTH %1").arg(tr("Data temporarily unavailable")));
     }
     else
     {
@@ -257,7 +257,7 @@ void InfoDialog::setUsage()
                                      .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(preferences->totalBandwidth())));
         ui->lPercentageUsedQuota->setText(used);
-        ui->lTotalUsedQuota->setText(tr("USED TRANSFERS %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
+        ui->lTotalUsedQuota->setText(tr("USED BANDWIDTH %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
                                                               .arg(Utilities::getSizeString(preferences->usedBandwidth()))));
     }
 }

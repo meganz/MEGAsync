@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="tl" sourcelanguage="en">
+<TS version="2.1" language="fil" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -11,12 +11,12 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">Cloud Drive</translation>
+        <translation type="unfinished">Cloud Drive</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">Inbox</translation>
+        <translation type="unfinished">Inbox</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -41,17 +41,45 @@
     <message>
         <source>Refresh</source>
         <translatorcomment>Label for Refresh button. Used to retrieve all usage account details from the server.</translatorcomment>
-        <translation>I-refresh</translation>
+        <translation type="vanished">I-refresh</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>SIGE</translation>
+        <translation type="vanished">OK</translation>
     </message>
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation type="unfinished">Nag-loload...</translation>
+        <translation type="unfinished">Nagloload...</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translation type="unfinished">Padating na mga Shares</translation>
+    </message>
+    <message>
+        <source>Rubbish bin</source>
+        <translation type="unfinished">Basurahan</translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished">Available</translation>
+    </message>
+    <message>
+        <source>Total size taken up by file versions:</source>
+        <translation type="unfinished">Buong size na nakuha ng file versions:</translation>
+    </message>
+    <message>
+        <source>USED STORAGE %1</source>
+        <translation type="unfinished">USED NA STORAGE %1</translation>
+    </message>
+    <message>
+        <source>Data temporarily unavailable</source>
+        <translation type="unfinished">Ang datos ay pansamantalang hindi available</translation>
+    </message>
+    <message>
+        <source>%1 of %2</source>
+        <translation type="unfinished">%1 ng %2</translation>
     </message>
 </context>
 <context>
@@ -103,6 +131,69 @@
     </message>
 </context>
 <context>
+    <name>AddExclusionDialog</name>
+    <message>
+        <source>Add exclusion</source>
+        <translatorcomment>Title of the dialog displayed when an user is adding a new exclusion rule for the synchronizations.</translatorcomment>
+        <translation type="unfinished">Add exclusion</translation>
+    </message>
+    <message>
+        <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
+        <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
+        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization</translation>
+    </message>
+    <message>
+        <source>Choose File</source>
+        <translatorcomment>Label of button that pop up a selection dialog to choose a file to be excluded for the synchonization</translatorcomment>
+        <translation type="unfinished">Choose File</translation>
+    </message>
+    <message>
+        <source>Choose Folder</source>
+        <translatorcomment>Label of button that pop up a selection dialog to choose a folder to be excluded for the synchonization</translatorcomment>
+        <translation type="unfinished">Choose Folder</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
+        <translation type="unfinished">Kanselahin</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for confirmation button.</translatorcomment>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Label of button that pop up a selection dialog to choose a file or a folder to be excluded for the synchonization</translatorcomment>
+        <translation type="unfinished">Pumili</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Label to indicate a waring during the process of setting a exclusion for the synchronizations.</translatorcomment>
+        <translation type="unfinished">Babala</translation>
+    </message>
+    <message>
+        <source>Please enter a valid file name or absolute path.</source>
+        <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
+        <translation type="unfinished">Please enter a valid file name or absolute path.</translation>
+    </message>
+    <message>
+        <source>Select the file or folder you want to exclude</source>
+        <translatorcomment>Caption of dialog to select a file or folder to exclude for the synchronizations</translatorcomment>
+        <translation type="unfinished">Select the file or folder you want to exclude</translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Caption of dialog to select a folder to exclude for the synchronizations</translatorcomment>
+        <translation type="unfinished">Select the folder you want to exclude</translation>
+    </message>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Caption of dialog to select a file to exclude for the synchronizations</translatorcomment>
+        <translation type="unfinished">Select the file you want to exclude</translation>
+    </message>
+</context>
+<context>
     <name>BindFolderDialog</name>
     <message>
         <source>Add synchronized folder</source>
@@ -110,7 +201,7 @@
         <translation>Isama ang na-sychronized na folder</translation>
     </message>
     <message>
-        <source/>
+        <source></source>
         <translation></translation>
     </message>
     <message>
@@ -155,7 +246,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>SIGE</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -165,7 +256,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label for status of an error performing an operation.</translatorcomment>
-        <translation>Mali</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
@@ -215,7 +306,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">Gusto mo bang magpatuloy?</translation>
     </message>
     <message>
-        <source>Remember my decision and don&#039;t ask me again</source>
+        <source>Remember my decision and don&apos;t ask me again</source>
         <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
         <translation type="unfinished">Tandaan ang aking desisyon at huwag na akong tanungin muli pa</translation>
     </message>
@@ -232,7 +323,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">Papaganahin mo ang option na maaaring ma-intercept ng iba ang communication. Dahil naman sa end-to-end encryption, hindi pa rin ma-aaccess ng attackers ang inyong data pero, maaari pa rin nilang magalaw ang files at folders sa MEGA, burahin ito o tanggalan ka ng access sa account mo.</translation>
+        <translation type="unfinished">You are about to allow a setting that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
     </message>
 </context>
 <context>
@@ -248,7 +339,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Ang MEGAsync ay may nakitang problema. Ito ang mga detalye:</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&#039;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
         <translation>Pwede mo kaming tulungang mapabuti ang MEGAsync sa pamamagitan ng pagbibigay ng error report. Ito ay hindi maglalaman ng anumang personal na impormasyon. Kung gusto mong magbigay ng higit pang detalye, mangyaring sumulat sa ibaba:</translation>
     </message>
@@ -288,7 +379,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>SIGE</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -308,11 +399,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Error</source>
         <translatorcomment>Title of dialog if an error occurs selecting the download local folder.</translatorcomment>
-        <translation>Mali</translation>
+        <translation>Error</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&#039;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Wala kang pahintulot para sa local folder na ito</translation>
     </message>
 </context>
@@ -358,6 +449,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Context menu option label to indicate the user has selected %i number of folders</translatorcomment>
         <translation type="unfinished">%i na folders</translation>
     </message>
+    <message>
+        <source>View previous versions</source>
+        <translation type="unfinished">View previous versions</translation>
+    </message>
 </context>
 <context>
     <name>FolderBinder</name>
@@ -387,12 +482,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Babala</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this folder.</source>
+        <source>You don&apos;t have write permissions in this folder.</source>
         <translation type="obsolete">Wala kang pahintulot para sa folder na ito</translation>
     </message>
     <message>
-        <source>MEGAsync won&#039;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&#039;t be able to download anything due to the user doesn&#039;t have writhe permissions on the local selected folder.</translatorcomment>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
         <translation>Walang maidownload ang MEGAsync dito.</translation>
     </message>
     <message>
@@ -401,8 +496,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Gusto mo pa bang magpatuloy?</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&#039;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
         <translation>Wala kang pahintulot para sa local folder na ito</translation>
     </message>
     <message>
@@ -414,7 +509,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Mali</translation>
+        <translation type="unfinished">Error</translation>
     </message>
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
@@ -442,17 +537,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel download</source>
         <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
-        <translation type="obsolete">Itigil ang pagdodownload</translation>
-    </message>
-    <message>
-        <source>[A]Login[/A] or [A]Create an account[/A] to fully experience MEGA</source>
-        <translatorcomment>Label to inform a user that needs to login or create an account in order to use MEGAsync. Keeps [A][/A] codes.</translatorcomment>
-        <translation type="unfinished">Mag-[A]Login[/A] o [A]Gumawa ng bagong account[/A] para masubukan ang MEGA</translation>
+        <translation type="obsolete">Kanselahin ang pagdodownload</translation>
     </message>
     <message>
         <source>Create account</source>
         <translatorcomment>Button label to start the creation of an account process. (String as short as possible)</translatorcomment>
         <translation type="unfinished">Gumawa ng account</translation>
+    </message>
+    <message>
+        <source>[A]Login[/A] or [B]Create an account[/B] to fully experience MEGA</source>
+        <translatorcomment>Label shown at startup of MEGAsync to offer the user the options to login or create and account. Keep [A][B][/A][/B] place holders</translatorcomment>
+        <translation type="unfinished">[A]Login[/A] or [B]Create an account[/B] to fully experience MEGA</translation>
     </message>
 </context>
 <context>
@@ -491,7 +586,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>SIGE</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -519,25 +614,13 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&#039;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
         <translation>Hindi makita</translation>
     </message>
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a warning during the process of importing a MEGA link.</translatorcomment>
-        <translation>Babala</translation>
-    </message>
-    <message>
-        <source>You are about to import this file to a synced folder.
-If you enable downloading, the file will be duplicated on your computer.
-Are you sure?</source>
-        <translation>Ikaw ay mag-iimport ng file sa isang synced folder. Kung pinagana mo ang downloading, ang file na ito ay madodoble sa inyong computer. Sigurado ka ba?</translation>
-    </message>
-    <message>
-        <source>You are about to import these files to a synced folder.
-If you enable downloading, the files will be duplicated on your computer.
-Are you sure?</source>
-        <translation>Ikaw ay mag-iimport ng mga files sa isang synced folder. Kung pinagana mo ang downloading, ang files na ito ay madodoble sa inyong computer. Sigurado ka ba?</translation>
+        <translation type="vanished">Babala</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -546,10 +629,10 @@ Are you sure?</source>
     </message>
     <message>
         <source>Error</source>
-        <translation>Mali</translation>
+        <translation>Error</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>Wala kang pahintulot para sa local folder na ito</translation>
     </message>
@@ -624,7 +707,7 @@ Are you sure?</source>
     <message>
         <source>Cancel download</source>
         <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
-        <translation>Itigil ang pagdodownload</translation>
+        <translation>Kanselahin ang pagdodownload</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
@@ -664,12 +747,12 @@ Are you sure?</source>
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">Nag-dodownload</translation>
+        <translation type="vanished">Nag-dadownload</translation>
     </message>
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">Uploading</translation>
+        <translation type="vanished">Nag-uupload</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
@@ -749,11 +832,6 @@ Are you sure?</source>
         <translation type="unfinished">Buksan ang Transfer Manager</translation>
     </message>
     <message>
-        <source>Access your MEGAsync settings</source>
-        <translatorcomment>Tooltip for the button that open MEGAsync settings dialog</translatorcomment>
-        <translation type="unfinished">I-access ang inyong MEGAsync settings</translation>
-    </message>
-    <message>
         <source>USED STORAGE %1</source>
         <translatorcomment>Label to indicate the total used storage.quota</translatorcomment>
         <translation type="unfinished">USED NA STORAGE %1</translation>
@@ -762,11 +840,6 @@ Are you sure?</source>
         <source>Data temporarily unavailable</source>
         <translatorcomment>Label to indicate the usage data is temporarely unavailable due to a transient error</translatorcomment>
         <translation type="unfinished">Ang datos ay pansamantalang hindi available</translation>
-    </message>
-    <message>
-        <source>USED TRANSFERS %1</source>
-        <translatorcomment>Label to indicate the total used transfer quota</translatorcomment>
-        <translation type="unfinished">NAGAMIT NA TRANSFERS %1</translation>
     </message>
     <message>
         <source>PAUSED</source>
@@ -812,6 +885,15 @@ Are you sure?</source>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
         <translation type="unfinished">Basurahan</translation>
+    </message>
+    <message>
+        <source>Show MEGAsync options</source>
+        <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
+        <translation type="unfinished">Show MEGAsync options</translation>
+    </message>
+    <message>
+        <source>USED BANDWIDTH %1</source>
+        <translation type="unfinished">USED NA BANDWIDTH %1</translation>
     </message>
 </context>
 <context>
@@ -872,14 +954,14 @@ Are you sure?</source>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Gamitin ang 50 GB na cloud storage na may secure user-controlled at end-to-end na encryption at mag-sign up para sa LIBRENG account o para sa isang [A]PRO plans[/A].</translation>
+        <translation type="unfinished">Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
         <translation type="unfinished">Mabilisang paglilipat</translation>
     </message>
     <message>
-        <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
+        <source>MEGAsync takes full advantage of MEGA&apos;s high-powered infrastructure and multi-connection transfers.</source>
         <translation type="unfinished">Gamit ng buong-buo ng MEGAsync ang malakasang imprastraktura at multi-connection transfers.</translation>
     </message>
     <message>
@@ -887,7 +969,7 @@ Are you sure?</source>
         <translation type="unfinished">Handa at mainam na paggamit ng resource</translation>
     </message>
     <message>
-        <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
+        <source>Run MEGA&apos;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
         <translation type="unfinished">Patakbuhin ang end-to-end encryption algorithms sa inyong machine ng hindi umaasa sa mababagal na mga browser.</translation>
     </message>
     <message>
@@ -948,7 +1030,7 @@ Are you sure?</source>
     <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Nag-lolog na</translation>
+        <translation>Naglolog-in na</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
@@ -957,7 +1039,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the remote folder doesn&#039;t exist</source>
+because the remote folder doesn&apos;t exist</source>
         <translation type="obsolete">Ang inyong &quot;%1&quot; ay ipinatigil dahil ang remote folder ay hindi matagpuan</translation>
     </message>
     <message>
@@ -967,7 +1049,7 @@ because the remote folder is in the rubbish bin</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the local folder doesn&#039;t exist</source>
+because the local folder doesn&apos;t exist</source>
         <translation type="obsolete">Ang sync na &quot;%1&quot; ay tinanggal dahil walang local folder na ganun</translation>
     </message>
     <message>
@@ -976,11 +1058,11 @@ because the local folder doesn&#039;t exist</source>
         <translation>Mali: Maling pupuntahang folder. Ang upload ay kinansela na</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&#039;t uploaded because it&#039;s too large (this beta is limited to %2 folders or %3 files.</source>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
         <translation type="obsolete">Ang folder (%1) ay hindi na-upload dahil masyado itong malaki (ang betang ito ay limitado %2 folders o %3 files.</translation>
     </message>
     <message>
-        <source>%1 folders weren&#039;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
+        <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
         <translation type="obsolete">%1 folders ang hindi na-upload dahil masyado itong malaki (ang betang ito ay limitado sa %2 folders o %3 files.</translation>
     </message>
     <message>
@@ -1023,7 +1105,7 @@ Exit anyway?</source>
     <message>
         <source>About</source>
         <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
-        <translation type="unfinished">Tungkol</translation>
+        <translation type="unfinished">Tungkol sa</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1045,7 +1127,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&#039;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>Up to date</translation>
     </message>
     <message>
@@ -1084,11 +1166,11 @@ Exit anyway?</source>
         <translation>Naghihintay</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&#039;t uploaded because it&#039;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">Ang folder na (%1) ay hindi na-upload dahil masyado itong malaki. Ginagawa namin itong pagsisiyasat na ito para maiwasan ang pag-uupload ng buong boot volumes, na masyadong mabagal at delikado.</translation>
     </message>
     <message>
-        <source>%1 folders weren&#039;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">%1 folders ay hindi nailagay dahil masyadong malaki ang laman. Ginagawa namin ang sisiyasat na ito upang maiwasan ang paglalagay ng buong boot volumes, na masyadong mabagal at delikado.</translation>
     </message>
     <message>
@@ -1125,7 +1207,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>May problema sa pag-iinstall ng update. Subukang muli mamamaya o mag-download ng pinakabagong version dito: https://mega.nz/#sync</translation>
+        <translation>There was a problem installing the update. Please try again later or download the last version from:https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1145,7 +1227,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
-        <translation>Mali</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -1225,19 +1307,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Ang MEGAsync ay hindi maka-connect. Tingnan ang inyong Internet connectivity at ang inyong local firewall configuration. Tandaan na halos lahat ng antivirus software ay may kasamang firewall.</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&#039;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">Ang sync na &quot;%1&quot; ay tinanggal dahil walang remote folder na ganun</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&#039;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">Ang inyong &quot;%1&quot; na sync ay tinanggal dahil wala namang local folder na nandito</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Ang iyong account ni-block. Kontakin ang support@mega.nz</translation>
+        <translation type="unfinished">Hinarangan ang iyong account. I-contact ang support@mega.co.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -1265,7 +1347,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Ang inyong &quot;%1&quot; na sync ay tinanggal dahil may binago sa local folder</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&#039;t have full access</source>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
         <translation type="unfinished">Ang inyong sync na &quot;%1&quot; ay ipinatigil muna. Ang remote folder na (ang anumang parte nito) ay walang access</translation>
     </message>
@@ -1310,9 +1392,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Mali: Saliwang pupuntahan ng folder. Ang inyong download ay itinigil.</translation>
     </message>
     <message>
-        <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Ang aming SSL key ay hindi maberipika. Maaaring ikaw ay naaapektuhan ng isang man-in-the-middle attack o ang iyong antivirus na software ay hinahangarang ang iyong pakikipagtalastasan at gumagawa nito. Subukang patayin muna ang iyong antivirus software at muling atuhan.</translation>
+        <translation type="unfinished">Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -1328,8 +1410,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Pansamantalang error, sinusubukan muli.</translation>
     </message>
     <message>
-        <source>I don&#039;t care</source>
-        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
+        <source>I don&apos;t care</source>
+        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&apos;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
         <translation type="unfinished">Lampake</translation>
     </message>
     <message>
@@ -1356,7 +1438,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation type="unfinished">Hindi makita ang system tray sa paglalagyan ng MEGAsync tray icon. Ang MEGAsync ay dapat ginagamit na may system tray icon, pero gagana pa rin ito kahit walang system tray. Kung gusto buksan ang interface, buksan na lang muli ang MEGAsync.</translation>
+        <translation type="unfinished">Could not find a system tray to place the MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -1369,7 +1451,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Hindi makita ang file</translation>
     </message>
     <message>
-        <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
+        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
         <translation type="unfinished">Hindi magawa ang link dahil ang file ay nasa loob ng isang padating na binahaging folder o sa iyong Basurahan.</translation>
     </message>
@@ -1384,9 +1466,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">I-download</translation>
     </message>
     <message>
-        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
+        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
-        <translation type="unfinished">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
+        <translation type="unfinished">You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</translation>
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
@@ -1541,7 +1623,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Error</source>
-        <translation type="obsolete">Mali</translation>
+        <translation type="obsolete">Error</translation>
     </message>
 </context>
 <context>
@@ -1637,7 +1719,7 @@ inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
         <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
-        <translation type="obsolete">[$16665]</translation>
+        <translation type="obsolete">Ang pupuntahang folder ay naka-sync na at mayroon ka ng folder dito na may katulad na pangalan (%1). Kung magpapatuloy kang mag-upload, ang naunang file ay mapapatungan. Gusto mo ba magpatuloy?</translation>
     </message>
 </context>
 <context>
@@ -1659,7 +1741,7 @@ Are you sure?</source>
     <message>
         <source>OK</source>
         <translatorcomment>Label for OK button.</translatorcomment>
-        <translation type="unfinished">SIGE</translation>
+        <translation type="unfinished">OK</translation>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
@@ -1692,7 +1774,7 @@ Are you sure?</source>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>SIGE</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1712,10 +1794,10 @@ Are you sure?</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an Error</translatorcomment>
-        <translation>Mali</translation>
+        <translation>Error</translation>
     </message>
     <message>
-        <source>The root folder can&#039;t be synced.
+        <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
         <translation type="obsolete">Ang root folder ay hindi mai-sync. Pakiusap, pumili ulit ng subfolder.</translation>
@@ -1732,9 +1814,9 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>Invalid folder for synchronization.
-Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#039; or &#039;:&#039; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &#039;\\&#039; &#039;/&#039; and &#039;:&#039; codes.</translatorcomment>
-        <translation>Maling folder para sa synchronization.Siguradohing hindi gumagamit ng mga characters na &#039;&#039; &#039;/&#039; or &#039;:&#039; sa inyong folder names.</translation>
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
+        <translation>Maling folder para sa synchronization.Siguradohing hindi gumagamit ng mga characters na &apos;&apos; &apos;/&apos; or &apos;:&apos; sa inyong folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1749,7 +1831,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation type="unfinished">Kailangan mo ng Full access right para makapag-sync sa napiling folder.</translation>
+        <translation type="unfinished">You need Full access rights to be able to sync the selected folder.</translation>
     </message>
     <message>
         <source>Please enter a valid folder name</source>
@@ -1762,7 +1844,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Burahin</translation>
+        <translation type="unfinished">Pahiin</translation>
     </message>
     <message>
         <source>Only files can be used for streaming.</source>
@@ -1815,7 +1897,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translation>Maglagay ng isa o maraming MEGA file links</translation>
     </message>
     <message>
-        <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
+        <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
         <translation type="obsolete">Walang valid na MEGA links na nakita. (Hindi pa suportado ang folder links)</translation>
     </message>
@@ -1858,9 +1940,9 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translation type="unfinished">Files</translation>
     </message>
     <message>
-        <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
+        <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished">Ang files at folders ay nasa pagmamay-ari ng isang grupo ng users. Gamit ang dialogong ito, pupwedeng mong pahintulotan ng access para sa mga bagong files at folders na mabubo ng MEGAsync users na nasa iisang grupo at para sa iba pang users sa iyong computer. Kung hindi mo kailangan itong baguhin, iwan mo ito sa default permissions para sa rasong pangseguridad.</translation>
+        <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog, you can grant different access permissions for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them on the default settings for security reasons.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -1941,7 +2023,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">SIGE</translation>
+        <translation type="unfinished">OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1973,7 +2055,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
-        <translation>isang minuto na ang nakalipas</translation>
+        <translation>1 minutong nakalipas</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -1983,12 +2065,12 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
-        <translation>isang oras na ang nakalipas</translation>
+        <translation>1 oras na nakalipas</translation>
     </message>
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
-        <translation>isang araw na ang nakalipas</translation>
+        <translation>1 araw na nakalipas</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -2065,7 +2147,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>SIGE</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2110,7 +2192,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>LIBRE</translation>
+        <translation>Libre</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -2125,7 +2207,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
-        <translation>I-upgrade</translation>
+        <translation>Upgrade</translation>
     </message>
     <message>
         <source>Synced folders</source>
@@ -2134,12 +2216,12 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Delete</source>
         <translatorcomment>Button lable to delete a synchronization. String as short as possible.</translatorcomment>
-        <translation>Burahin</translation>
+        <translation>Pahiin</translation>
     </message>
     <message>
         <source>Add</source>
         <translatorcomment>Button lable to add a synchronization. String as short as possible.</translatorcomment>
-        <translation>Idagdag</translation>
+        <translation>Magdagdag</translation>
     </message>
     <message>
         <source>Local Folder</source>
@@ -2157,7 +2239,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translation>Rate limit ng pag-uupload</translation>
     </message>
     <message>
-        <source>Don&#039;t limit</source>
+        <source>Don&apos;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
         <translation>Huwag limitahan</translation>
     </message>
@@ -2296,23 +2378,23 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Label to ask for confirmation to the user.</translatorcomment>
-        <translation>Sigurado ka ba?</translation>
+        <translation>Sigurado ka?</translation>
     </message>
     <message>
         <source>Excluded name</source>
         <translatorcomment>Title of the dialog to add new excluded file name for the synchronizations.</translatorcomment>
-        <translation>Excluded name</translation>
+        <translation type="vanished">Excluded name</translation>
     </message>
     <message>
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation>Ilagay ang pangalan na hindi isasama sa synchronization. (pwede ang * at?):</translation>
+        <translation type="vanished">Ilagay ang pangalan na hindi isasama sa synchronization. (pwede ang * at?):</translation>
     </message>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an Error message. Keep capital letter.</translatorcomment>
-        <translation>Mali</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Transfers</source>
@@ -2344,7 +2426,7 @@ when the application starts again.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&#039;t respond</source>
+        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
         <translation>Ang inyong proxy settings ay mali o ang proxy ay hindi nagrerespond</translation>
     </message>
@@ -2460,12 +2542,12 @@ Do you want to restart MEGAsync now?</source>
         <translation>Downloads:</translation>
     </message>
     <message>
-        <source>This sync can&#039;t be enabled because the local folder doesn&#039;t exist</source>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
         <translation>Ang sync na ito ay hininto dahil walang nag-eexist na local folder</translation>
     </message>
     <message>
-        <source>This sync can&#039;t be enabled because the remote folder doesn&#039;t exist</source>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
         <translation>Ang sync ay hindi ma-enable dahil wala namang remote folder</translation>
     </message>
@@ -2484,19 +2566,19 @@ Do you want to restart MEGAsync now?</source>
         <translation type="obsolete">Pumili ng local folder</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
         <translation>Wala kang pahintulot para sa local folder na ito</translation>
     </message>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Susi ng Backup</translation>
+        <translation type="unfinished">Export Key</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Backup na Recovery Key</translation>
+        <translation type="unfinished">I-export ang Recovery Key</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2506,7 +2588,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Ang pag-eexport sa Recovery Key at ang pagtatabi nito sa isang maingat na lokasyon ay magbibigay daan upang makabuo ka ng bagong password ng walang data loss.</translation>
+        <translation type="unfinished">Ang paglalabas ng Master Key at paglalagay nito sa isang ligtas na lugar ay magbibigay daan para makapag-set ka ng bagong password ng walang anumang nalalagas na data.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
@@ -2522,7 +2604,7 @@ Do you want to restart MEGAsync now?</source>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
-        <translation type="unfinished">Ang mga bagong hindi isinamang file names ay tatangalin kapag nagsimula muli ang application</translation>
+        <translation type="unfinished">Ang mga bagong inihiwalay na file names ay ihihiwalay sa susunod na pagsisimula muli ng application.</translation>
     </message>
     <message>
         <source>The new excluded file sizes will be taken into account when the application starts again.</source>
@@ -2559,12 +2641,12 @@ when the application starts again</source>
         <translation type="unfinished">Mga Pahintulot</translation>
     </message>
     <message>
-        <source>Don&#039;t use HTTP</source>
+        <source>Don&apos;t use HTTP</source>
         <translatorcomment>Text next to a checkbox that allows to disable the HTTP protocol for transfers</translatorcomment>
         <translation type="unfinished">Huwag gumamit ng HTTP</translation>
     </message>
     <message>
-        <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
+        <source>Enable this option only if your transfers don&apos;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
         <translation type="unfinished">Paganahin ang option na ito kung hindi magsimula ang paglilipat. Kadalasan, sapat na ang HTTP sapagkat ang paglilipat dito ay encrypted na.</translation>
     </message>
@@ -2622,14 +2704,19 @@ when the application starts again</source>
         <translation type="unfinished">Transfer quota</translation>
     </message>
     <message>
-        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
+        <source>Don&apos;t show icons on the left pane of Windows Explorer</source>
         <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
         <translation type="unfinished">Wag ipakita ang icons sa kaliwang bahagi ng Windows Explorer</translation>
     </message>
     <message>
         <source>Used quota for the last %1 hours: %2</source>
         <translatorcomment>Label to indicate the usage quota in the last gap of time for free users. Keep %1 and %2 place holders. Will be replaced at runtime</translatorcomment>
-        <translation type="unfinished">[$16666]</translation>
+        <translation type="unfinished">Ginamit na quota sa huling %1 oras: %2</translation>
+    </message>
+    <message>
+        <source>Restart</source>
+        <translatorcomment>Label for restart button.to relaunch MEGAsync</translatorcomment>
+        <translation type="unfinished">Restart</translation>
     </message>
 </context>
 <context>
@@ -2645,8 +2732,8 @@ when the application starts again</source>
         <translation>Meron akong MEGA account</translation>
     </message>
     <message>
-        <source>I don&#039;t have a MEGA account</source>
-        <translatorcomment>Label to indicate if the user hasn&#039;t already a MEGA account with a checkbox.</translatorcomment>
+        <source>I don&apos;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>Wala akong MEGA account</translation>
     </message>
     <message>
@@ -2763,7 +2850,7 @@ when the application starts again</source>
     <message>
         <source>Next</source>
         <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>Kasunod</translation>
+        <translation>Susunod</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2773,7 +2860,7 @@ when the application starts again</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label of error.</translatorcomment>
-        <translation>Mali</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>User already exists</source>
@@ -2796,7 +2883,7 @@ when the application starts again</source>
         <translation>Na-verify mo na ba iyong account?</translation>
     </message>
     <message>
-        <source>MEGA folder doesn&#039;t exist</source>
+        <source>MEGA folder doesn&apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>Walang ganyang MEGA folder</translation>
     </message>
@@ -2831,7 +2918,7 @@ when the application starts again</source>
         <translation>Maglagay ng mas malakas na password</translation>
     </message>
     <message>
-        <source>The entered passwords don&#039;t match</source>
+        <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
         <translation>Ang mga password ay di tugma</translation>
     </message>
@@ -2923,12 +3010,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Ang inyong Cloud Drive ay isisyncronize sa folder na ito:</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>Wala kang pahintulot para sa local folder na ito</translation>
     </message>
     <message>
-        <source>MEGAsync won&#039;t be able to download anything here.</source>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>Walang maidownload ang MEGAsync dito.</translation>
     </message>
@@ -2940,7 +3027,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Ang iyong account ni-block. Kontakin ang support@mega.nz</translation>
+        <translation type="unfinished">Hinarangan ang iyong account. I-contact ang support@mega.co.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -3002,7 +3089,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation type="unfinished">When you finish this assistant, you will be able to sync additional folders using the settings dialog.</translation>
+        <translation type="unfinished">When you finish this assistant, you will be able to sync additional folders using the settings dialog</translation>
     </message>
 </context>
 <context>
@@ -3059,7 +3146,18 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Remove from left pane</source>
+        <translatorcomment>Context menu option to remove MEGA item from explorer left pane</translatorcomment>
         <translation type="unfinished">Tanggalin sa kaliwang bahagi</translation>
+    </message>
+    <message>
+        <source>View on MEGA</source>
+        <translatorcomment>Context menu option to view a file or folder through web browser within your MEGA account</translatorcomment>
+        <translation type="unfinished">Tingnan sa MEGA</translation>
+    </message>
+    <message>
+        <source>View previous versions</source>
+        <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
+        <translation type="unfinished">View previous versions</translation>
     </message>
 </context>
 <context>
@@ -3087,7 +3185,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation type="unfinished">SIGE</translation>
+        <translation type="unfinished">OK</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3160,7 +3258,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error</source>
         <translatorcomment>Title for dialogs with error messages</translatorcomment>
-        <translation type="unfinished">Mali</translation>
+        <translation type="unfinished">Error</translation>
     </message>
     <message>
         <source>File not found</source>
@@ -3230,7 +3328,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 minute ago</source>
-        <translation type="unfinished">isang minuto na ang nakalipas</translation>
+        <translation type="unfinished">1 minutong nakalipas</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -3238,7 +3336,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 hour ago</source>
-        <translation type="unfinished">isang oras na ang nakalipas</translation>
+        <translation type="unfinished">1 oras na nakalipas</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
@@ -3246,7 +3344,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="unfinished">isang araw na ang nakalipas</translation>
+        <translation type="unfinished">1 araw na nakalipas</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -3324,12 +3422,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label to indicate the file upload option from transfer manager dialog</translatorcomment>
-        <translation type="unfinished">I-upload sa MEGA</translation>
+        <translation type="obsolete">I-upload sa MEGA</translation>
     </message>
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label to indicate the file download option from transfer manager dialog</translatorcomment>
-        <translation type="unfinished">I-download galing MEGA</translation>
+        <translation type="obsolete">I-download galing MEGA</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -3359,6 +3457,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Active Transfers</source>
         <translatorcomment>Label of tab to access all active transfers</translatorcomment>
         <translation type="unfinished">Aktibong Transfers</translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translation type="unfinished">I-upload</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation type="unfinished">I-download</translation>
     </message>
 </context>
 <context>
@@ -3390,12 +3496,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Ang inyong download ay hindi makapagpatuloy dahil kukunin nito ang kasalukuyang libreng transfer allowance para sa inyong IP address. Ang limitasyong ito ay nagbabago at depende sa hindi pa nagagamit na bandwidth na meron.</translation>
     </message>
     <message>
-        <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Nagamit mo ang %1 ng data transfer sa loob ng anim na oras na kumuha sa inyong kasalukuyang hangganan. Para matanggal ang hangganang ito, pwede kang [A]Mag-upgrade sa PRO[/A], na kung saan ay magbibigay sa iyo ng inyong bandwidth package at karagdagang storage space.</translation>
-    </message>
-    <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
         <translation type="unfinished">Mag-upgrade sa PRO para magpatuloy kaagad o maghintay ng %1 para magpatuloy ng libre.</translation>
+    </message>
+    <message>
+        <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
+        <translation type="unfinished">Nagamit mo ang %1 ng data transfer sa loob ng anim na oras na kumuha sa inyong kasalukuyang hangganan. Para matanggal ang hangganang ito, pwede kang [A]Mag-upgrade sa PRO[/A], na kung saan ay magbibigay sa iyo ng inyong bandwidth package at karagdagang storage space.</translation>
     </message>
 </context>
 <context>
@@ -3433,7 +3539,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>SIGE</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>

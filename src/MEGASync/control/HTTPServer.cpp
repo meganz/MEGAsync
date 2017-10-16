@@ -229,12 +229,13 @@ void HTTPServer::readClient()
             bool found = false;
             for (int i = 0; i < Preferences::HTTPS_ALLOWED_ORIGINS.size(); i++)
             {                
-                QString check = QString::fromUtf8("Origin: %1").arg(Preferences::HTTPS_ALLOWED_ORIGINS.at(i));
+                QRegExp check = QRegExp(QString::fromUtf8("Origin: %1").arg(Preferences::HTTPS_ALLOWED_ORIGINS.at(i)),
+                                        Qt::CaseSensitive, QRegExp::Wildcard);
                 for (int j = 0; j < headers.size(); j++)
                 {
-                    if (!headers[j].compare(check, Qt::CaseInsensitive))
+                    if (check.exactMatch(headers[j]))
                     {
-                       request->origin = i;
+                       request->origin = headers[j].mid(8);
                        found = true;
                        break;
                     }
@@ -724,12 +725,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                                              "Content-Type: text/html; charset=\"utf-8\"\r\n"
                                              "Content-Length: %2\r\n"
                                              "\r\n"
-                                             "%3")
-            .arg((request.origin < 0 || request.origin >= Preferences::HTTPS_ALLOWED_ORIGINS.size())
-                 ? QString::fromUtf8("*") : Preferences::HTTPS_ALLOWED_ORIGINS.at(request.origin))
-            .arg(response.size())
-            .arg(response);
-
+                                             "%3").arg(request.origin).arg(response.size()).arg(response);
     if (safeSocket)
     {
         safeSocket->write(fullResponse.toUtf8());

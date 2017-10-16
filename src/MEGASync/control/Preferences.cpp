@@ -11,12 +11,12 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/3.1.4.0";
+const char Preferences::USER_AGENT[] = "MEGAsync/3.1.4.22";
 const int Preferences::VERSION_CODE = 3104;
-const int Preferences::BUILD_ID = 0;
+const int Preferences::BUILD_ID = 22;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("3.1.4");
-const QString Preferences::SDK_ID = QString::fromAscii("13f844");
+const QString Preferences::VERSION_STRING = QString::fromAscii("3.5");
+const QString Preferences::SDK_ID = QString::fromAscii("RELEASE_CANDIDATE_3");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- Support for Apple File System (macOS High Sierra)\n"
             "- Allow to disable left pane icons in settings (Windows 10)\n"
@@ -308,8 +308,9 @@ Preferences *Preferences::instance()
     {
         Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("https://mega.nz"));
         Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("https://mega.co.nz"));
-        Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("chrome-extension://kpgogfgfingilcbkpahnggpfdabapnol"));
-        Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("chrome-extension://bigefpfhnfcobdlfbedofhhaibnlghod"));
+        Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("chrome-extension://*"));
+        Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("moz-extension://*"));
+        Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("edge-extension://*"));
 
         preferences = new Preferences();
     }

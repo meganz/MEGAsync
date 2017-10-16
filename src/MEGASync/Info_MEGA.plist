@@ -18,6 +18,11 @@
     <string>1</string>
     <key>NSHighResolutionCapable</key>
     <string>True</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
     <key>NSServices</key>
     <array>
         <dict>

@@ -11,12 +11,12 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">[$1687]</translation>
+        <translation type="unfinished">[$1687]</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">[$166]</translation>
+        <translation type="unfinished">[$166]</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -41,17 +41,45 @@
     <message>
         <source>Refresh</source>
         <translatorcomment>Label for Refresh button. Used to retrieve all usage account details from the server.</translatorcomment>
-        <translation>[$2036]</translation>
+        <translation type="vanished">[$2036]</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>[$81]</translation>
+        <translation type="vanished">[$81]</translation>
     </message>
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rubbish bin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Total size taken up by file versions:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USED STORAGE %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Data temporarily unavailable</source>
+        <translation type="unfinished">[$1752]</translation>
+    </message>
+    <message>
+        <source>%1 of %2</source>
+        <translation type="unfinished">[$1607]</translation>
     </message>
 </context>
 <context>
@@ -592,19 +620,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a warning during the process of importing a MEGA link.</translatorcomment>
-        <translation>[$1680]</translation>
-    </message>
-    <message>
-        <source>You are about to import this file to a synced folder.
-If you enable downloading, the file will be duplicated on your computer.
-Are you sure?</source>
-        <translation>[$1814] [$1815]</translation>
-    </message>
-    <message>
-        <source>You are about to import these files to a synced folder.
-If you enable downloading, the files will be duplicated on your computer.
-Are you sure?</source>
-        <translation>[$1816] [$1815]</translation>
+        <translation type="vanished">[$1680]</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -826,11 +842,6 @@ Are you sure?</source>
         <translation type="unfinished">[$1752]</translation>
     </message>
     <message>
-        <source>USED TRANSFERS %1</source>
-        <translatorcomment>Label to indicate the total used transfer quota</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>PAUSED</source>
         <translatorcomment>Label to indicate that the current transfer is paused. Keep capital letters.</translatorcomment>
         <translation type="unfinished"></translation>
@@ -878,6 +889,10 @@ Are you sure?</source>
     <message>
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>USED BANDWIDTH %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3423,12 +3438,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label to indicate the file upload option from transfer manager dialog</translatorcomment>
-        <translation type="unfinished">[$1803]</translation>
+        <translation type="obsolete">[$1803]</translation>
     </message>
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label to indicate the file download option from transfer manager dialog</translatorcomment>
-        <translation type="unfinished">[$2037]</translation>
+        <translation type="obsolete">[$2037]</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -3457,6 +3472,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Active Transfers</source>
         <translatorcomment>Label of tab to access all active transfers</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Download</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3489,11 +3512,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
+        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
+        <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

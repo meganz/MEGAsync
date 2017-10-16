@@ -39,8 +39,11 @@ dsymutil MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync -o MEGAsync.app.dSYM
 strip MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
 dsymutil MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader -o MEGAloader.dSYM
 strip MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader
+dsymutil MEGAUpdater/MEGAupdater.app/Contents/MacOS/MEGAupdater -o MEGAupdater.dSYM
+strip MEGAUpdater/MEGAupdater.app/Contents/MacOS/MEGAupdater
 mv MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
 mv MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
+mv MEGAUpdater/MEGAupdater.app/Contents/MacOS/MEGAupdater MEGASync/MEGAsync.app/Contents/MacOS/MEGAupdater
 mv MEGAsync/MEGAsync.app ./
 
 #Attach shell extension
@@ -92,5 +95,6 @@ fi
 echo "Cleaning"
 rm -rf MEGAsync
 rm -rf MEGALoader
+rm -rf MEGAUpdater
 
 echo "DONE"

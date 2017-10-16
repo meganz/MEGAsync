@@ -16,6 +16,7 @@ AccountDetailsDialog::AccountDetailsDialog(MegaApi *megaApi, QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     this->megaApi = megaApi;
+    ui->lLoading->setText(ui->lLoading->text().toUpper());
     refresh(Preferences::instance());
     megaApi->getAccountDetails();
 }

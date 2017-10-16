@@ -21,6 +21,7 @@ private:
 
     static HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, LPCWSTR pszIconfile=NULL, int iIconindex=0);
     static void countFilesAndFolders(QString path, long *numFiles, long *numFolders, long fileLimit, long folderLimit);
+    static LPTSTR getCurrentSid();
     static WinShellDispatcherTask *shellDispatcherTask;
 
 public:
@@ -48,6 +49,7 @@ public:
     static QString getDefaultOpenApp(QString extension);
     static void enableDialogBlur(QDialog *dialog);
     static void activateBackgroundWindow(QDialog *window);
+    static bool registerUpdateJob();
     static void execBackgroundWindow(QDialog *window);
     static void uninstall();
 };

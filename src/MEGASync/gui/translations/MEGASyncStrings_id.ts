@@ -11,12 +11,12 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">Cloud Drive</translation>
+        <translation type="unfinished">Cloud Drive</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">Kotak masuk</translation>
+        <translation type="unfinished">Kotak masuk</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -41,17 +41,45 @@
     <message>
         <source>Refresh</source>
         <translatorcomment>Label for Refresh button. Used to retrieve all usage account details from the server.</translatorcomment>
-        <translation>Refresh</translation>
+        <translation type="vanished">Refresh</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>OK</translation>
+        <translation type="vanished">OK</translation>
     </message>
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation type="unfinished">Memuat...</translation>
+        <translation type="unfinished">Sedang memuat. . .</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translation type="unfinished">Incoming Shares</translation>
+    </message>
+    <message>
+        <source>Rubbish bin</source>
+        <translation type="unfinished">Sampah</translation>
+    </message>
+    <message>
+        <source>Available</source>
+        <translation type="unfinished">Tersedia</translation>
+    </message>
+    <message>
+        <source>Total size taken up by file versions:</source>
+        <translation type="unfinished">Ukuran total diambil oleh versi file:</translation>
+    </message>
+    <message>
+        <source>USED STORAGE %1</source>
+        <translation type="unfinished">STORAGE TERPAKAI %1</translation>
+    </message>
+    <message>
+        <source>Data temporarily unavailable</source>
+        <translation type="unfinished">Data sementara tidak tersedia</translation>
+    </message>
+    <message>
+        <source>%1 of %2</source>
+        <translation type="unfinished">%1 dari %2</translation>
     </message>
 </context>
 <context>
@@ -103,6 +131,69 @@
     </message>
 </context>
 <context>
+    <name>AddExclusionDialog</name>
+    <message>
+        <source>Add exclusion</source>
+        <translatorcomment>Title of the dialog displayed when an user is adding a new exclusion rule for the synchronizations.</translatorcomment>
+        <translation type="unfinished">Tambahkan pengecualian</translation>
+    </message>
+    <message>
+        <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
+        <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
+        <translation type="unfinished">Masukkan nama, path absolut (wildcard * dan? Diizinkan) atau pilih file atau folder yang ingin Anda kecualikan dari sinkronisasi</translation>
+    </message>
+    <message>
+        <source>Choose File</source>
+        <translatorcomment>Label of button that pop up a selection dialog to choose a file to be excluded for the synchonization</translatorcomment>
+        <translation type="unfinished">Pilih File</translation>
+    </message>
+    <message>
+        <source>Choose Folder</source>
+        <translatorcomment>Label of button that pop up a selection dialog to choose a folder to be excluded for the synchonization</translatorcomment>
+        <translation type="unfinished">Pilih Folder</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for cancel button.</translatorcomment>
+        <translation type="unfinished">Batal</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for confirmation button.</translatorcomment>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translatorcomment>Label of button that pop up a selection dialog to choose a file or a folder to be excluded for the synchonization</translatorcomment>
+        <translation type="unfinished">Pilih</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Label to indicate a waring during the process of setting a exclusion for the synchronizations.</translatorcomment>
+        <translation type="unfinished">Peringatan</translation>
+    </message>
+    <message>
+        <source>Please enter a valid file name or absolute path.</source>
+        <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
+        <translation type="unfinished">Harap masukkan nama file yang valid atau path absolut.</translation>
+    </message>
+    <message>
+        <source>Select the file or folder you want to exclude</source>
+        <translatorcomment>Caption of dialog to select a file or folder to exclude for the synchronizations</translatorcomment>
+        <translation type="unfinished">Pilih file atau folder yang ingin Anda kecualikan</translation>
+    </message>
+    <message>
+        <source>Select the folder you want to exclude</source>
+        <translatorcomment>Caption of dialog to select a folder to exclude for the synchronizations</translatorcomment>
+        <translation type="unfinished">Pilih folder yang ingin Anda kecualikan</translation>
+    </message>
+    <message>
+        <source>Select the file you want to exclude</source>
+        <translatorcomment>Caption of dialog to select a file to exclude for the synchronizations</translatorcomment>
+        <translation type="unfinished">Pilih file yang ingin Anda kecualikan</translation>
+    </message>
+</context>
+<context>
     <name>BindFolderDialog</name>
     <message>
         <source>Add synchronized folder</source>
@@ -110,7 +201,7 @@
         <translation>Tambahkan folder yang telah disinkronisasikan</translation>
     </message>
     <message>
-        <source/>
+        <source></source>
         <translation></translation>
     </message>
     <message>
@@ -184,7 +275,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">persyaratan layanan</translation>
+        <translation type="unfinished">Peraturan Pelayanan</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
@@ -215,7 +306,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">Anda yakin ingin melanjutkan?</translation>
     </message>
     <message>
-        <source>Remember my decision and don&#039;t ask me again</source>
+        <source>Remember my decision and don&apos;t ask me again</source>
         <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
         <translation type="unfinished">Ingat keputusan saya dan jangan tanya lagi</translation>
     </message>
@@ -232,7 +323,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">Anda sedang akan menyalakan opsi yang dapat membuat komunikasi anda dapat di intersepsi. Data anda akan tetap tidak tersedia untuk penyerang karena enkripsi menyeluruh kami, namun mereka dapat memindahkan file dan folder anda di MEGA, hapus atau  menggagalkan akses ke akun anda.</translation>
+        <translation type="unfinished">Anda akan mengizinkan sebuah setting yang memungkinkan komunikasi Anda dicegat. Data Anda akan tetap tidak dapat diakses oleh penyerang karena enkripsi end-to-end kami, namun mereka dapat secara membabi buta memindahkan file dan folder Anda di MEGA, menghapusnya atau menolak akses ke akun Anda.</translation>
     </message>
 </context>
 <context>
@@ -248,7 +339,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>MEGAsync menemukan sebuah masalah. Berikut adalah detilnya:</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&#039;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
         <translation>Anda dapat membantu kami untuk meningkatkan MEGAsync dengan mengirimkan laporan error. Kami tidak akan menanyakan informasi pribadi, jika anda berkenan, silahkan tuliskan dibawah ini:</translation>
     </message>
@@ -311,8 +402,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Error</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&#039;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Anda tidak mempunyai write permission dalam folder lokal ini.</translation>
     </message>
 </context>
@@ -326,17 +417,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>View on MEGA</source>
         <translatorcomment>Finder context menu option to view a synced file through web browser within your MEGA account</translatorcomment>
-        <translation type="unfinished">View on MEGA</translation>
+        <translation type="unfinished">Lihat di MEGA</translation>
     </message>
     <message>
         <source>No options available</source>
         <translatorcomment>Finder context menu label when no option is available for selected items</translatorcomment>
-        <translation type="unfinished">No options available</translation>
+        <translation type="unfinished">Lihat di MEGA</translation>
     </message>
     <message>
         <source>Click the toolbar item for a menu.</source>
         <translatorcomment>Tooltip for MEGA finder toolbar button</translatorcomment>
-        <translation type="unfinished">Click the toolbar item for a menu.</translation>
+        <translation type="unfinished">Klik item toolbar untuk sebuah menu.</translation>
     </message>
     <message>
         <source>1 file</source>
@@ -357,6 +448,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>%i folders</source>
         <translatorcomment>Context menu option label to indicate the user has selected %i number of folders</translatorcomment>
         <translation type="unfinished">%i folders</translation>
+    </message>
+    <message>
+        <source>View previous versions</source>
+        <translation type="unfinished">Lihat versi sebelumnya</translation>
     </message>
 </context>
 <context>
@@ -387,12 +482,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Peringatan</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this folder.</source>
+        <source>You don&apos;t have write permissions in this folder.</source>
         <translation type="obsolete">Anda tidak memiliki write permission dalam folder ini.</translation>
     </message>
     <message>
-        <source>MEGAsync won&#039;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&#039;t be able to download anything due to the user doesn&#039;t have writhe permissions on the local selected folder.</translatorcomment>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
         <translation>MEGAsync tidak akan dapat mendownload apapun disini.</translation>
     </message>
     <message>
@@ -401,8 +496,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Apakah anda ingin melanjutkan?</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&#039;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
         <translation>Anda tidak mempunyai write permission dalam folder lokal ini.</translation>
     </message>
     <message>
@@ -445,14 +540,14 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="obsolete">Batalkan download</translation>
     </message>
     <message>
-        <source>[A]Login[/A] or [A]Create an account[/A] to fully experience MEGA</source>
-        <translatorcomment>Label to inform a user that needs to login or create an account in order to use MEGAsync. Keeps [A][/A] codes.</translatorcomment>
-        <translation type="unfinished">[A]Login[/A] or [A]Create an account[/A] to fully experience MEGA</translation>
-    </message>
-    <message>
         <source>Create account</source>
         <translatorcomment>Button label to start the creation of an account process. (String as short as possible)</translatorcomment>
         <translation type="unfinished">Buat akun</translation>
+    </message>
+    <message>
+        <source>[A]Login[/A] or [B]Create an account[/B] to fully experience MEGA</source>
+        <translatorcomment>Label shown at startup of MEGAsync to offer the user the options to login or create and account. Keep [A][B][/A][/B] place holders</translatorcomment>
+        <translation type="unfinished">[A]Login[/A] atau [B]Buat akun[/B] untuk sepenuhnya memakai MEGA</translation>
     </message>
 </context>
 <context>
@@ -515,29 +610,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Decryption error</translation>
+        <translation>Kesalahan men-dekripsi</translation>
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&#039;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
         <translation>Tidak dapat ditemukan</translation>
     </message>
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a warning during the process of importing a MEGA link.</translatorcomment>
-        <translation>Peringatan</translation>
-    </message>
-    <message>
-        <source>You are about to import this file to a synced folder.
-If you enable downloading, the file will be duplicated on your computer.
-Are you sure?</source>
-        <translation>Anda seang akan meng-import file ini ke folder yang ter-sinkronisasi. Jika anda membolehkan downloading, file akan di duplikat pada komputer anda. Apakah anda yakin?</translation>
-    </message>
-    <message>
-        <source>You are about to import these files to a synced folder.
-If you enable downloading, the files will be duplicated on your computer.
-Are you sure?</source>
-        <translation>Anda sedang akan meng-import file ini ke folder berbagi. Jika anda membolehkan download, file ini akan di duplikat pada komputer anda. Apakah anda yakin?</translation>
+        <translation type="vanished">Peringatan</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -549,7 +632,7 @@ Are you sure?</source>
         <translation>Error</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>Anda tidak mempunyai write permission dalam folder lokal ini.</translation>
     </message>
@@ -664,12 +747,12 @@ Are you sure?</source>
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">Mengunduh</translation>
+        <translation type="vanished">Sedang mengunduh</translation>
     </message>
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">Uploading</translation>
+        <translation type="vanished">Mengunggah</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
@@ -746,12 +829,7 @@ Are you sure?</source>
     <message>
         <source>Open Transfer Manager</source>
         <translatorcomment>Tooltip for the button that open transfer manager dialog</translatorcomment>
-        <translation type="unfinished">Open Transfer Manager</translation>
-    </message>
-    <message>
-        <source>Access your MEGAsync settings</source>
-        <translatorcomment>Tooltip for the button that open MEGAsync settings dialog</translatorcomment>
-        <translation type="unfinished">Access your MEGAsync settings</translation>
+        <translation type="unfinished">Buka Transfer Manager</translation>
     </message>
     <message>
         <source>USED STORAGE %1</source>
@@ -762,11 +840,6 @@ Are you sure?</source>
         <source>Data temporarily unavailable</source>
         <translatorcomment>Label to indicate the usage data is temporarely unavailable due to a transient error</translatorcomment>
         <translation type="unfinished">Data sementara tidak tersedia</translation>
-    </message>
-    <message>
-        <source>USED TRANSFERS %1</source>
-        <translatorcomment>Label to indicate the total used transfer quota</translatorcomment>
-        <translation type="unfinished">USED TRANSFERS %1</translation>
     </message>
     <message>
         <source>PAUSED</source>
@@ -812,6 +885,15 @@ Are you sure?</source>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
         <translation type="unfinished">Sampah</translation>
+    </message>
+    <message>
+        <source>Show MEGAsync options</source>
+        <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
+        <translation type="unfinished">Tampilkan opsi MEGAsync</translation>
+    </message>
+    <message>
+        <source>USED BANDWIDTH %1</source>
+        <translation type="unfinished">BANDWIDTH TERPAKAI %1</translation>
     </message>
 </context>
 <context>
@@ -872,14 +954,14 @@ Are you sure?</source>
     </message>
     <message>
         <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Manfaatkan 50 GB cloud storage dengan user-controlled end-to-end encryption yang aman dan daftar untuk akun GRATIS atau salah satu dari [A]PRO plan[/A] kami.</translation>
+        <translation type="unfinished">Manfaatkan penyimpanan awan sebesar 50GB dengan akun gratis dan dapat mengenkripsi semua file Anda dengan plan [A]PRO kami yang murah hati[/A].</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
         <translation type="unfinished">Transfer yang lebih cepat</translation>
     </message>
     <message>
-        <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
+        <source>MEGAsync takes full advantage of MEGA&apos;s high-powered infrastructure and multi-connection transfers.</source>
         <translation type="unfinished">MEGAsync memanfaatkan infrastrukter canggih MEGA dan transfer multi-koneksi.</translation>
     </message>
     <message>
@@ -887,7 +969,7 @@ Are you sure?</source>
         <translation type="unfinished">Pengunaan resource sedikit &amp; sendiri</translation>
     </message>
     <message>
-        <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
+        <source>Run MEGA&apos;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
         <translation type="unfinished">Jalankan algoritma enkripsi MEGA pada mesin anda tanpa mengandalkan browser yang lebih lambat.</translation>
     </message>
     <message>
@@ -948,7 +1030,7 @@ Are you sure?</source>
     <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Memasukkan</translation>
+        <translation>Logging in</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
@@ -957,7 +1039,7 @@ Are you sure?</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the remote folder doesn&#039;t exist</source>
+because the remote folder doesn&apos;t exist</source>
         <translation type="obsolete">Sync anda &quot;%1&quot; telah dibatalkan karena remote folder tidak tersedia.</translation>
     </message>
     <message>
@@ -967,7 +1049,7 @@ because the remote folder is in the rubbish bin</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the local folder doesn&#039;t exist</source>
+because the local folder doesn&apos;t exist</source>
         <translation type="obsolete">Sync &quot;%1&quot; anda telah di non-aktifkan karena folder lokal tidak ditemukan</translation>
     </message>
     <message>
@@ -976,11 +1058,11 @@ because the local folder doesn&#039;t exist</source>
         <translation>Error: Folder tujuan salah. Upload telah dibatalkan</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&#039;t uploaded because it&#039;s too large (this beta is limited to %2 folders or %3 files.</source>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
         <translation type="obsolete">Folder (%1) tidak diupload karena terlalu besar (beta ini dibatasi sampai %2 folder atau %3 file.</translation>
     </message>
     <message>
-        <source>%1 folders weren&#039;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
+        <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
         <translation type="obsolete">%1 folder tidak berhasil di-upload karena mereka terlalu besar (beta ini terbatasi sampai %2 folder atau %3 file.</translation>
     </message>
     <message>
@@ -1023,7 +1105,7 @@ Exit anyway?</source>
     <message>
         <source>About</source>
         <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
-        <translation type="unfinished">Tentang</translation>
+        <translation type="unfinished">Perihal</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1045,7 +1127,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&#039;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>Terkini</translation>
     </message>
     <message>
@@ -1084,11 +1166,11 @@ Exit anyway?</source>
         <translation>Menunggu</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&#039;t uploaded because it&#039;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">Folder (%1) gagal diupload karena folder terlalu besar. Hal ini kami larang untuk menghindari pengguna meng-upload seluruh volume boot, yang mana sangat tidak efisien dan berbahaya.</translation>
     </message>
     <message>
-        <source>%1 folders weren&#039;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">%1 folder gagal diupload karena terlalu besar. Hal ini kami larang untuk mencegah pengguna meng-upload seluruh volume boot, yang mana tidak efisien dan berbahaya.</translation>
     </message>
     <message>
@@ -1125,7 +1207,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Ada kesalahan meng-install update. Harap coba kembali beberapa saat lagi atau download versi terakhir dari: https://mega.nz/#sync</translation>
+        <translation>Terjadi kesalahan saat menginstal pembaruan. Silakan coba lagi nanti atau download versi terakhir dari:https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1225,19 +1307,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGAsync tidak dapat menghubungkan. Harap cek saluran internet anda dan konfigurasi firewall lokal. Harap perhatikan kebanyakan software antivirus memiliki firewall.</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&#039;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">Sync &quot;%1&quot; anda telah dinon-aktifkan karena remote folder tidak tersedia</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&#039;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">Sync &quot;%1&quot; anda telah di non-aktifkan karena folder lokal tidak ditemukan</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Akun anda telah di-blok. Harap kontak support@mega.nz</translation>
+        <translation type="unfinished">Kontak anda telah diblok. Harap hubungi support@mega.co.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -1265,7 +1347,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Sync &quot;%1&quot; anda telah di non-aktifkan karena folder lokal telah berubah</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&#039;t have full access</source>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
         <translation type="unfinished">Sync &quot;%1&quot; anda telah berhasil di non-aktifkan. Remote folder (atau sebagian dari itu) tidak memiliki akses penuh</translation>
     </message>
@@ -1310,9 +1392,9 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Error: Folder tujuan tidak sah. Download telah dibatalkan.</translation>
     </message>
     <message>
-        <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">SSL key kami tidak bisa diverifikasi. Anda mungkin terpengaruh dengan serangan man-in-the-middle atau software antivirus anda dapat memotong komunikasi anda dan menyebabkan masalah ini. Harap matikan software antivirus anda sementara dan coba kembali.</translation>
+        <translation type="unfinished">Kunci SSL kami tidak dapat diverifikasi. Anda bisa terpengaruh oleh serangan man-in-the-middle atau perangkat lunak antivirus Anda bisa mencegat komunikasi Anda dan menyebabkan masalah ini. Nonaktifkan dan coba lagi.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -1328,8 +1410,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Pengguna sementara, mencoba kembali.</translation>
     </message>
     <message>
-        <source>I don&#039;t care</source>
-        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
+        <source>I don&apos;t care</source>
+        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&apos;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
         <translation type="unfinished">Abaikan</translation>
     </message>
     <message>
@@ -1356,7 +1438,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation type="unfinished">System tray untuk menempatkan ikon MEGAsync tray tidak dapat ditemukan. MEGAsync dimaksudkan untuk digunakan dengan ikon system tray namun itu dapat berjalan dengan baik tanpanya. Jika anda ingin membuka interface itu, coba untuk membuka MEGAsync kembali.</translation>
+        <translation type="unfinished">Tidak dapat menemukan system tray untuk menempatkan tray icon MEGAsync. MEGAsync dimaksudkan untuk digunakan dengan system tray icon tapi bisa berfungsi dengan baik tanpa itu. Jika ingin membuka interface, coba buka MEGAsync lagi.</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -1369,7 +1451,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">File tidak ditemukan</translation>
     </message>
     <message>
-        <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
+        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
         <translation type="unfinished">Link tidak dapat diciptakan karena file ada di dalam folder berbagi masuk atau pada Sampah anda.</translation>
     </message>
@@ -1384,7 +1466,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Unduh</translation>
     </message>
     <message>
-        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
+        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
         <translation type="unfinished">Anda men-sync folder lokal yang di format dengan filesystem FAT. Filesystem tersebut memiliki kekurangan dalam mengatur file besar dan modifikasi yang dapat membuat masalah sinkronisasi (contoh: ketika pergantian daylight saving), jadi sangat disarankan bahwa anda hanya men-sync folder yang di format dengan filesystem yang bisa diandalkan seperti NTFS (informasi selanjutnya [A]disini[/A]).</translation>
     </message>
@@ -1597,7 +1679,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open</source>
         <translatorcomment>Label of context menu option to open selected completed transfer</translatorcomment>
-        <translation type="unfinished">Bukan</translation>
+        <translation type="unfinished">Buka</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -1637,7 +1719,7 @@ inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
         <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
-        <translation type="obsolete">[$16665]</translation>
+        <translation type="obsolete">Folder tujuan disinkronkan dan Anda sudah memiliki file di dalamnya dengan nama yang sama (%1). Jika Anda melanjutkan upload, file sebelumnya akan ditimpa. Apakah kamu yakin?</translation>
     </message>
 </context>
 <context>
@@ -1715,7 +1797,7 @@ Are you sure?</source>
         <translation>Error</translation>
     </message>
     <message>
-        <source>The root folder can&#039;t be synced.
+        <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
         <translation type="obsolete">Root folder tidak dapat di sync. Harap, pilih satu subfolder.</translation>
@@ -1732,9 +1814,9 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>Invalid folder for synchronization.
-Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#039; or &#039;:&#039; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &#039;\\&#039; &#039;/&#039; and &#039;:&#039; codes.</translatorcomment>
-        <translation>Folder untuk sinkronisasi salah. Harap, pastikan anda tidak menggunakan karakter seperti &quot; &#039;/&#039; atau &#039;:&#039; dalam nama folder anda.</translation>
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
+        <translation>Folder untuk sinkronisasi salah. Harap, pastikan anda tidak menggunakan karakter seperti &quot; &apos;/&apos; atau &apos;:&apos; dalam nama folder anda.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1749,7 +1831,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation type="unfinished">Anda butuh akses penuh untuk dapat men-sync folder terpilih</translation>
+        <translation type="unfinished">Anda memerlukan hak akses penuh untuk dapat mensync folder yang dipilih.</translation>
     </message>
     <message>
         <source>Please enter a valid folder name</source>
@@ -1815,7 +1897,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translation>Masukkan satu atau beberapa link file MEGA</translation>
     </message>
     <message>
-        <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
+        <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
         <translation type="obsolete">Tidak ada link MEGA yang valid ditemukan. (Folder links belum didukung)</translation>
     </message>
@@ -1858,9 +1940,9 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translation type="unfinished">File</translation>
     </message>
     <message>
-        <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
+        <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished">File dan folder memiliki pemilik dan dimiliki oleh grup pengguna. Dengan dialog ini, anda dapat memberikan izin akses berbeda untuk file dan folder baru yang dibuat oleh MEGAsync untuk pengguna dari grup yang sama dan pengguna komputer lainnya. Jika anda tidak ingin mengganti mereka, harap tinggalkan pada izin default untuk alasan keamanan.</translation>
+        <translation type="unfinished">File dan folder memiliki pemilik dan termasuk dalam kelompok pengguna. Dengan menggunakan dialog ini, Anda dapat memberikan izin akses yang berbeda untuk file dan folder baru yang dibuat oleh MEGAsync kepada pengguna yang termasuk dalam grup yang sama dan pengguna komputer lainnya. Jika Anda tidak perlu mengubahnya, tinggalkan mereka di setelan default karena alasan keamanan.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -2018,7 +2100,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Open</source>
         <translatorcomment>Label to let the user open the selected file.String as short as possible.</translatorcomment>
-        <translation>Bukan</translation>
+        <translation>Buka</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -2125,7 +2207,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
-        <translation>Upgrade</translation>
+        <translation>Tingkatkan</translation>
     </message>
     <message>
         <source>Synced folders</source>
@@ -2157,7 +2239,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translation>Batas kecepatan upload</translation>
     </message>
     <message>
-        <source>Don&#039;t limit</source>
+        <source>Don&apos;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
         <translation>Jangan batasi</translation>
     </message>
@@ -2296,18 +2378,18 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Label to ask for confirmation to the user.</translatorcomment>
-        <translation>Anda yakin?</translation>
+        <translation>Apakah anda yakin?</translation>
     </message>
     <message>
         <source>Excluded name</source>
         <translatorcomment>Title of the dialog to add new excluded file name for the synchronizations.</translatorcomment>
-        <translation>Nama yang disingkirkan</translation>
+        <translation type="vanished">Nama yang disingkirkan</translation>
     </message>
     <message>
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation>Masukan nama untuk dikecualikan dari sinkronisasi. (wildcards * and? boleh dipakai):</translation>
+        <translation type="vanished">Masukan nama untuk dikecualikan dari sinkronisasi. (wildcards * and? boleh dipakai):</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2322,7 +2404,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation type="obsolete">Nama file baru yang tidak termasuk akan tetap diperhatikan saat aplikasi dimulai kembali.</translation>
+        <translation type="obsolete">Nama file baru yang tidak termasuk akan tetap diperhatikan saat aplikasi dimulai kembali.                </translation>
     </message>
     <message>
         <source>Cache</source>
@@ -2344,7 +2426,7 @@ when the application starts again.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&#039;t respond</source>
+        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
         <translation>Pengaturan proxy anda salah atau proxy tidak merespon</translation>
     </message>
@@ -2460,12 +2542,12 @@ Do you want to restart MEGAsync now?</source>
         <translation>Download:</translation>
     </message>
     <message>
-        <source>This sync can&#039;t be enabled because the local folder doesn&#039;t exist</source>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
         <translation>Sync ini tidak dapat diaktifkan karena lokal folder tidak dapat ditemukan</translation>
     </message>
     <message>
-        <source>This sync can&#039;t be enabled because the remote folder doesn&#039;t exist</source>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
         <translation>Sync ini tidak dapat diizinkan karena folder remote tidak ada</translation>
     </message>
@@ -2484,19 +2566,19 @@ Do you want to restart MEGAsync now?</source>
         <translation type="obsolete">Pilih folder lokal</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
         <translation>Anda tidak mempunyai write permission dalam folder lokal ini.</translation>
     </message>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Backup Key</translation>
+        <translation type="unfinished">Export Key</translation>
     </message>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Backup Recovery Key</translation>
+        <translation type="unfinished">Export recovery key</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2506,7 +2588,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Mengekspor Recovery Key dan menyimpan dalam lokasi yang aman membolehkan anda mengatur password baru tanpa kehilangan data.</translation>
+        <translation type="unfinished">Meng-ekspor Master Key dan menyimpan nya dalam tempat yang aman;  membolehkan anda untuk mengganti password tanpa kehilangan data</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
@@ -2522,7 +2604,7 @@ Do you want to restart MEGAsync now?</source>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
-        <translation type="unfinished">Nama file yang baru dikecualikan akan tetap dihitung saat applikasi dimulai kembali</translation>
+        <translation type="unfinished">Nama file baru yang tidak termasuk akan tetap diperhatikan saat aplikasi dimulai kembali.                </translation>
     </message>
     <message>
         <source>The new excluded file sizes will be taken into account when the application starts again.</source>
@@ -2559,12 +2641,12 @@ when the application starts again</source>
         <translation type="unfinished">Hak Akses</translation>
     </message>
     <message>
-        <source>Don&#039;t use HTTP</source>
+        <source>Don&apos;t use HTTP</source>
         <translatorcomment>Text next to a checkbox that allows to disable the HTTP protocol for transfers</translatorcomment>
         <translation type="unfinished">Jangan gunakan HTTP</translation>
     </message>
     <message>
-        <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
+        <source>Enable this option only if your transfers don&apos;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
         <translation type="unfinished">Aktifkan pilihan ini jika transfer anda tidak dimulai. Dalam keadaan normal, HTTP cukup memuaskan karena seluruh transfer telah di-enkripsi.</translation>
     </message>
@@ -2622,14 +2704,19 @@ when the application starts again</source>
         <translation type="unfinished">Transfer quota</translation>
     </message>
     <message>
-        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
+        <source>Don&apos;t show icons on the left pane of Windows Explorer</source>
         <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
-        <translation type="unfinished">Don&#039;t show icons on the left pane of Windows Explorer</translation>
+        <translation type="unfinished">Jangan tampilkan ikon pada panel kiri Windows Explorer</translation>
     </message>
     <message>
         <source>Used quota for the last %1 hours: %2</source>
         <translatorcomment>Label to indicate the usage quota in the last gap of time for free users. Keep %1 and %2 place holders. Will be replaced at runtime</translatorcomment>
-        <translation type="unfinished">[$16666]</translation>
+        <translation type="unfinished">Kuota yang digunakan untuk %1 jam terakhir: %2</translation>
+    </message>
+    <message>
+        <source>Restart</source>
+        <translatorcomment>Label for restart button.to relaunch MEGAsync</translatorcomment>
+        <translation type="unfinished">Restart</translation>
     </message>
 </context>
 <context>
@@ -2645,8 +2732,8 @@ when the application starts again</source>
         <translation>Saya sudah punya akun MEGA</translation>
     </message>
     <message>
-        <source>I don&#039;t have a MEGA account</source>
-        <translatorcomment>Label to indicate if the user hasn&#039;t already a MEGA account with a checkbox.</translatorcomment>
+        <source>I don&apos;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>Saya tidak punya akun MEGA</translation>
     </message>
     <message>
@@ -2796,7 +2883,7 @@ when the application starts again</source>
         <translation>Sudahkah anda memverifikasi akun anda?</translation>
     </message>
     <message>
-        <source>MEGA folder doesn&#039;t exist</source>
+        <source>MEGA folder doesn&apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>Folder MEGA tidak ditemukan</translation>
     </message>
@@ -2831,7 +2918,7 @@ when the application starts again</source>
         <translation>Harap, masukan password yang lebih kuat</translation>
     </message>
     <message>
-        <source>The entered passwords don&#039;t match</source>
+        <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
         <translation>Password tidak sama</translation>
     </message>
@@ -2923,12 +3010,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Cloud Drive anda akan disinkronisasikan dengan folder berikut:</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>Anda tidak mempunyai write permission dalam folder lokal ini.</translation>
     </message>
     <message>
-        <source>MEGAsync won&#039;t be able to download anything here.</source>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>MEGAsync tidak akan dapat mendownload apapun disini.</translation>
     </message>
@@ -2940,7 +3027,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Akun anda telah di-blok. Harap kontak support@mega.nz</translation>
+        <translation type="unfinished">Kontak anda telah diblok. Harap hubungi support@mega.co.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -3002,7 +3089,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation type="unfinished">Saat anda menyelesaikan bantuan ini, anda akan dapat men-sync folder selebihnya menggunakan dialog pengaturan.</translation>
+        <translation type="unfinished">Saat Anda menyelesaikan asisten ini, Anda dapat menyinkronkan folder tambahan menggunakan dialog pengaturan</translation>
     </message>
 </context>
 <context>
@@ -3059,7 +3146,18 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Remove from left pane</source>
+        <translatorcomment>Context menu option to remove MEGA item from explorer left pane</translatorcomment>
         <translation type="unfinished">Hilangkan dari panel kiri</translation>
+    </message>
+    <message>
+        <source>View on MEGA</source>
+        <translatorcomment>Context menu option to view a file or folder through web browser within your MEGA account</translatorcomment>
+        <translation type="unfinished">Lihat di MEGA</translation>
+    </message>
+    <message>
+        <source>View previous versions</source>
+        <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
+        <translation type="unfinished">Lihat versi sebelumnya</translation>
     </message>
 </context>
 <context>
@@ -3190,7 +3288,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">Decryption error</translation>
+        <translation type="unfinished">Kesalahan men-dekripsi</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3324,12 +3422,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label to indicate the file upload option from transfer manager dialog</translatorcomment>
-        <translation type="unfinished">Upload ke MEGA</translation>
+        <translation type="obsolete">Upload ke MEGA</translation>
     </message>
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label to indicate the file download option from transfer manager dialog</translatorcomment>
-        <translation type="unfinished">Download dari MEGA</translation>
+        <translation type="obsolete">Download dari MEGA</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -3359,6 +3457,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Active Transfers</source>
         <translatorcomment>Label of tab to access all active transfers</translatorcomment>
         <translation type="unfinished">Transfer aktif</translation>
+    </message>
+    <message>
+        <source>Upload</source>
+        <translation type="unfinished">Unggah</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation type="unfinished">Unduh</translation>
     </message>
 </context>
 <context>
@@ -3390,12 +3496,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Download anda tidak dapat berlanjut karena itu akan membawa anda melebihi quota transfer gratis untuk alamat IP anda. Batasan ini dinamis dan bergantung pada jumlah bandwidth tidak terpakai yang kami punya.</translation>
     </message>
     <message>
-        <source>You have utilized %1 of data transfer in the last 6 hours, which took you over our current limit. To circumvent this limit, you can [A]upgrade to Pro[/A], which will give you your own bandwidth package and also ample extra storage space. </source>
-        <translation type="unfinished">Alamat IP yang anda gunakan telah menggunakan %1 data transfer dalam 6 jam yang lalu, yang membawa anda melebihi limit kami. Untuk menghapus limit ini, anda dapat [A]upgrade ke PRO[/A], yang mana akan memberi paket transfer quota anda sendiri dan extra storage space.</translation>
-    </message>
-    <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
         <translation type="unfinished">Harap upgrade ke PRO untuk melanjutkan, atau tunggu %1 untuk melanjutkan dengan gratis.</translation>
+    </message>
+    <message>
+        <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
+        <translation type="unfinished">Alamat IP yang anda gunakan telah menggunakan %1 data transfer dalam 6 jam yang lalu, yang membawa anda melebihi limit kami. Untuk menghapus limit ini, anda dapat [A]upgrade ke PRO[/A], yang mana akan memberi paket transfer quota anda sendiri dan extra storage space.</translation>
     </message>
 </context>
 <context>

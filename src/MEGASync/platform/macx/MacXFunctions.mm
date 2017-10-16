@@ -3,7 +3,9 @@
 #include <QFileInfo>
 #include <QCoreApplication>
 #include <QWidget>
+#include <QProcess>
 #include "control/Preferences.h"
+
 #import <objc/runtime.h>
 
 #ifndef kCFCoreFoundationVersionNumber10_9
@@ -530,4 +532,42 @@ void enableBlurForWindow(QWidget *window)
         //[self addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
         [nsview addSubview:vibrant positioned:NSWindowBelow relativeTo:nil];
     }
+}
+
+bool registerUpdateDaemon()
+{
+    NSDictionary *plistd = @{
+            @"Label": @"mega.mac.megaupdater",
+            @"ProgramArguments": @[@"/Applications/MEGAsync.app/Contents/MacOS/MEGAupdater"],
+            @"StartInterval": @7200,
+            @"RunAtLoad": @true,
+            @"StandardErrorPath": @"/dev/null",
+            @"StandardOutPath": @"/dev/null",
+     };
+
+    const char* home = getenv("HOME");
+    if (!home)
+    {
+        return false;
+    }
+
+    NSString *homepath = [NSString stringWithUTF8String:home];
+    NSString *fullpath = [homepath stringByAppendingString:@"/Library/LaunchAgents/mega.mac.megaupdater.plist"];
+    [plistd writeToFile:fullpath atomically:YES];
+
+    QString path = QString::fromUtf8([fullpath UTF8String]);
+    QFile(path).setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ReadGroup | QFileDevice::ReadOther);
+
+    QStringList scriptArgs;
+    scriptArgs << QString::fromUtf8("-c")
+               << QString::fromUtf8("launchctl unload %1 && launchctl load %1").arg(path);
+
+    QProcess p;
+    p.start(QString::fromAscii("bash"), scriptArgs);
+    if (!p.waitForFinished(2000))
+    {
+        return false;
+    }
+
+    return p.exitCode();
 }
