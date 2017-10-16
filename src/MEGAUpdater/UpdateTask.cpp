@@ -292,7 +292,6 @@ UpdateTask::~UpdateTask()
 void UpdateTask::checkForUpdates()
 {
     LOG(LOG_LEVEL_INFO, "Starting update check");
-    initialCleanup();
 
     // Create random sequence for http request
     string randomSec("?");
@@ -326,6 +325,7 @@ void UpdateTask::checkForUpdates()
             mega_remove(updateFile.c_str());
             return;
         }
+        initialCleanup();
         fclose(pFile);
         mega_remove(updateFile.c_str());
 
@@ -598,7 +598,6 @@ void UpdateTask::initialCleanup()
 
 void UpdateTask::finalCleanup()
 {
-    initialCleanup();
     removeRecursively(updateFolder);
     MEGA_SET_PERMISSIONS;
     writeVersion();
@@ -703,12 +702,14 @@ bool UpdateTask::alreadyExists(string absolutePath, string fileSignature)
     buffer = (char *)malloc(fileLength);
     if (buffer == NULL)
     {
+        fclose(pFile);
         return false;
     }
 
     size_t sizeRead = fread(buffer, 1, fileLength, pFile);
     if (sizeRead != fileLength)
     {
+        fclose(pFile);
         return false;
     }
 
