@@ -29,13 +29,15 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 {
     ui->setupUi(this);
     //Set window properties
-    if (QSystemTrayIcon::isSystemTrayAvailable())
-    {
-        setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
-    }
-    else
+#ifdef Q_OS_LINUX
+    if (!QSystemTrayIcon::isSystemTrayAvailable())
     {
         setWindowFlags(Qt::FramelessWindowHint);
+    }
+    else
+#endif
+    {
+        setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
     }
 
 #ifdef __APPLE__
