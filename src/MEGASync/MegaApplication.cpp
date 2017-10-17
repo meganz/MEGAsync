@@ -1403,6 +1403,7 @@ void MegaApplication::loggedIn()
                                         "If you want to open the interface, just try to open MEGAsync again."));
                 preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
             }
+            showInfoDialog();
         }
     }
 

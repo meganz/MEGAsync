@@ -29,7 +29,14 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 {
     ui->setupUi(this);
     //Set window properties
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    if (QSystemTrayIcon::isSystemTrayAvailable())
+    {
+        setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    }
+    else
+    {
+        setWindowFlags(Qt::FramelessWindowHint);
+    }
 
 #ifdef __APPLE__
     setAttribute(Qt::WA_TranslucentBackground);
