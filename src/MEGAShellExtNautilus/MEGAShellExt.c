@@ -381,7 +381,7 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
         {
             if (syncedFolders)
             {
-                out = mega_ext_client_get_string(mega_ext, STRING_VIEW_ON_MEGA, syncedFiles, syncedFolders);
+                out = mega_ext_client_get_string(mega_ext, STRING_VIEW_ON_MEGA, 0, 0);
                 item = nautilus_menu_item_new("MEGAExtension::view_on_mega", out, "View on MEGA", "mega");
                 mega_ext->string_viewonmega = g_strdup(out);
                 g_free(out);
@@ -392,7 +392,7 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
             }
             else
             {
-                out = mega_ext_client_get_string(mega_ext, STRING_VIEW_VERSIONS, syncedFiles, syncedFolders);
+                out = mega_ext_client_get_string(mega_ext, STRING_VIEW_VERSIONS, 0, 0);
                 item = nautilus_menu_item_new("MEGAExtension::view_previous_versions", out, "View previous versions", "mega");
                 mega_ext->string_viewprevious = g_strdup(out);
                 g_free(out);

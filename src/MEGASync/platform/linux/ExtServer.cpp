@@ -146,11 +146,6 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
                 break;
             }
 
-            if (!numFiles && !numFolders)
-            {
-                break;
-            }
-
             QString actionString;
             switch (stringId)
             {
@@ -209,6 +204,11 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
             {
                 fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)")
                         .arg(actionString).arg(sNumFolders);
+            }
+            else
+            {
+                fullString = QCoreApplication::translate("ShellExtension", "%1")
+                        .arg(actionString);
             }
 
             strncpy(out, fullString.toUtf8().constData(), BUFSIZE);
