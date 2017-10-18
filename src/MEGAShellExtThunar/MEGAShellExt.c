@@ -65,6 +65,8 @@ static void mega_ext_init(MEGAExt *mega_ext)
     mega_ext->num_retries = 2;
     mega_ext->h_syncs = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
     mega_ext->string_getlink = NULL;
+    mega_ext->string_viewonmega = NULL;
+    mega_ext->string_viewprevious = NULL;
     mega_ext->string_upload = NULL;
     mega_ext->syncs_received = FALSE;
 
@@ -165,6 +167,80 @@ static void mega_ext_on_get_link_selected(GtkAction *action, gpointer user_data)
         mega_ext_client_end_request(mega_ext);
 }
 
+// user clicked on "View on MEGA" menu item
+static void mega_ext_on_view_on_mega_selected(GtkAction *action, gpointer user_data)
+{
+    MEGAExt *mega_ext = MEGA_EXT(user_data);
+    GList *l;
+    GList *files;
+    gboolean flag = FALSE;
+
+    files = g_object_get_data(G_OBJECT(action), "MEGAExtension::files");
+    for (l = files; l != NULL; l = l->next) {
+        ThunarxFileInfo *file = THUNARX_FILE_INFO(l->data);
+        FileState state;
+        gchar *path;
+        GFile *fp;
+
+        fp = thunarx_file_info_get_location(file);
+        if (!fp)
+            continue;
+
+        path = g_file_get_path(fp);
+        if (!path)
+            continue;
+
+        state = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(file), "MEGAExtension::state"));
+
+        if (state == FILE_SYNCED) {
+            if (mega_ext_client_open_link(mega_ext, path))
+                flag = TRUE;
+        }
+        g_free(path);
+    }
+
+    if (flag)
+        mega_ext_client_end_request(mega_ext);
+}
+
+// user clicked on "View previous versions" menu item
+static void mega_ext_on_open_previous_selected(GtkAction *action, gpointer user_data)
+{
+    MEGAExt *mega_ext = MEGA_EXT(user_data);
+    GList *l;
+    GList *files;
+    gboolean flag = FALSE;
+
+    files = g_object_get_data(G_OBJECT(action), "MEGAExtension::files");
+    for (l = files; l != NULL; l = l->next) {
+        ThunarxFileInfo *file = THUNARX_FILE_INFO(l->data);
+        FileState state;
+        gchar *path;
+        GFile *fp;
+
+        fp = thunarx_file_info_get_location(file);
+        if (!fp)
+            continue;
+
+        path = g_file_get_path(fp);
+        if (!path)
+            continue;
+
+        state = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(file), "MEGAExtension::state"));
+
+        if (state == FILE_SYNCED) {
+            if (mega_ext_client_open_previous(mega_ext, path))
+                flag = TRUE;
+        }
+        g_free(path);
+    }
+
+    if (flag)
+        mega_ext_client_end_request(mega_ext);
+}
+
+
+
 static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UNUSED GtkWidget *window, GList *files)
 {
     MEGAExt *mega_ext = MEGA_EXT(provider);
@@ -242,9 +318,8 @@ static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UN
             }
         }
     }
-
     // if there any unsynced files / folders selected
-    if (unsyncedFiles || unsyncedFolders) 
+    if (unsyncedFiles || unsyncedFolders)
     {
         GtkWidget *action = NULL;
 
@@ -252,11 +327,11 @@ static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UN
         mega_ext->string_upload = g_strdup(out);
         g_free(out);
         action = g_object_new (GTK_TYPE_ACTION,
-            "name", "MEGAExtension::upload_to_mega",
-            "icon-name", "mega",
-            "label", mega_ext->string_upload,
-            NULL
-        );
+                               "name", "MEGAExtension::upload_to_mega",
+                               "icon-name", "mega",
+                               "label", mega_ext->string_upload,
+                               NULL
+                               );
 
         g_signal_connect(G_OBJECT(action), "activate", G_CALLBACK(mega_ext_on_upload_selected), provider);
         g_object_set_data_full(G_OBJECT(action), "MEGAExtension::files", thunarx_file_info_list_copy(files), (GDestroyNotify)thunarx_file_info_list_free);
@@ -271,16 +346,41 @@ static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UN
         out = mega_ext_client_get_string(mega_ext, STRING_GETLINK, syncedFiles, syncedFolders);
         mega_ext->string_getlink = g_strdup(out);
         g_free(out);
-        action = g_object_new (GTK_TYPE_ACTION,
-            "name", "MEGAExtension::get_mega_link",
-            "icon-name", "mega",
-            "label", mega_ext->string_getlink,
-            NULL
-        );
+        action = g_object_new (GTK_TYPE_ACTION,"name", "MEGAExtension::get_mega_link","icon-name", "mega","label", mega_ext->string_getlink,NULL);
 
         g_signal_connect(G_OBJECT(action), "activate", G_CALLBACK(mega_ext_on_get_link_selected), provider);
         g_object_set_data_full(G_OBJECT(action), "MEGAExtension::files", thunarx_file_info_list_copy(files), (GDestroyNotify)thunarx_file_info_list_free);
         l_out = g_list_append(l_out, action);
+
+
+        if ( ((syncedFiles + syncedFolders) == 1 ) && ( (unsyncedFiles+unsyncedFolders) == 0  ) )
+        {
+            if (syncedFolders)
+            {
+                GtkWidget *action = NULL;
+                out = mega_ext_client_get_string(mega_ext, STRING_VIEW_ON_MEGA, 0, 0);
+                mega_ext->string_viewonmega = g_strdup(out);
+                g_free(out);
+                action = g_object_new (GTK_TYPE_ACTION,"name", "MEGAExtension::view_on_mega","icon-name", "mega", "label", mega_ext->string_viewonmega, NULL);
+
+                g_signal_connect(G_OBJECT(action), "activate", G_CALLBACK(mega_ext_on_view_on_mega_selected), provider);
+                g_object_set_data_full(G_OBJECT(action), "MEGAExtension::files", thunarx_file_info_list_copy(files), (GDestroyNotify)thunarx_file_info_list_free);
+                l_out = g_list_append(l_out, action);
+            }
+            else
+            {
+                GtkWidget *action = NULL;
+                out = mega_ext_client_get_string(mega_ext, STRING_VIEW_VERSIONS, 0, 0);
+                mega_ext->string_viewprevious = g_strdup(out);
+                g_free(out);
+                action = g_object_new (GTK_TYPE_ACTION,"name", "MEGAExtension::view_previous_versions","icon-name", "mega", "label", mega_ext->string_viewprevious, NULL);
+
+
+                g_signal_connect(G_OBJECT(action), "activate", G_CALLBACK(mega_ext_on_open_previous_selected), provider);
+                g_object_set_data_full(G_OBJECT(action), "MEGAExtension::files", thunarx_file_info_list_copy(files), (GDestroyNotify)thunarx_file_info_list_free);
+                l_out = g_list_append(l_out, action);
+            }
+        }
     }
 
     return l_out;
