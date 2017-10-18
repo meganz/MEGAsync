@@ -18,7 +18,7 @@ BuildRequires:  glib2-devel, libthunarx-2-0, thunar-devel
 BuildRequires:  Thunar-devel
 %endif
 
-Requires:       thunar, megasync
+Requires:       thunar, megasync >= 3.5.0
 
 %description
 Secure:
