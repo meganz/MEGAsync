@@ -340,13 +340,9 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
                                                 "MEGA",
                                                 "Select MEGA action",
                                                 "mega");
-
-    l_out = g_list_append(l_out, root_menu_item);
-
     NautilusMenu *subMenu = nautilus_menu_new();
 
     nautilus_menu_item_set_submenu(root_menu_item, subMenu); //Connect submenu to root menu item
-
 
     // if there any unsynced files / folders selected
     if (unsyncedFiles || unsyncedFolders)
@@ -361,6 +357,7 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
         g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_upload_selected), provider);
         g_object_set_data_full((GObject*)item, "MEGAExtension::files", nautilus_file_info_list_copy(files), (GDestroyNotify)nautilus_file_info_list_free);
         nautilus_menu_append_item(subMenu, item);
+        g_object_unref(item);
      }
 
     // if there any synced files / folders selected
@@ -376,6 +373,7 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
         g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_get_link_selected), provider);
         g_object_set_data_full((GObject*)item, "MEGAExtension::files", nautilus_file_info_list_copy(files), (GDestroyNotify)nautilus_file_info_list_free);
         nautilus_menu_append_item(subMenu, item);
+        g_object_unref(item);
 
         if ( ((syncedFiles + syncedFolders) == 1 ) && ( (unsyncedFiles+unsyncedFolders) == 0  ) )
         {
@@ -389,6 +387,7 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
                 g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_view_on_mega_selected), provider);
                 g_object_set_data_full((GObject*)item, "MEGAExtension::files", nautilus_file_info_list_copy(files), (GDestroyNotify)nautilus_file_info_list_free);
                 nautilus_menu_append_item(subMenu, item);
+                g_object_unref(item);
             }
             else
             {
@@ -400,14 +399,21 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
                 g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_open_previous_selected), provider);
                 g_object_set_data_full((GObject*)item, "MEGAExtension::files", nautilus_file_info_list_copy(files), (GDestroyNotify)nautilus_file_info_list_free);
                 nautilus_menu_append_item(subMenu, item);
+                g_object_unref(item);
             }
         }
     }
 
     GList *submenus = nautilus_menu_get_items(subMenu);
-    nautilus_menu_item_list_free(submenus);
+    if (submenus)
+    {
+        if (g_list_length(submenus))
+        {
+            l_out = g_list_append(l_out, root_menu_item);
+        }
+        nautilus_menu_item_list_free(submenus);
+    }
     g_object_unref(subMenu);
-
     return l_out;
 }
 
