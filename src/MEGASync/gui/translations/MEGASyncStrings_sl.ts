@@ -953,10 +953,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">[S]Fleksibilen:[/S] Sihronizirajte katero koli mapo s svojega PC v katero koli mapo v oblaku. Sinhronizirajte vzporedno kolikor koli map.</translation>
     </message>
     <message>
-        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</translation>
-    </message>
-    <message>
         <source>Faster transfer speeds</source>
         <translation type="unfinished">Hitrejše hitrosti prenosa</translation>
     </message>
@@ -987,6 +983,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Create Account</source>
         <translation type="unfinished">Naredi račun</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
+        <translation type="unfinished">Izkoristite 50 GB prostora za shranjevanje v oblaku z varno, uporabniško nadzorovano enkripcijo od prve do zadnje točke in si izdelajte BREZPLAČEN račun ali izkoristite enega od naših [A]PRO planov[/A].</translation>
     </message>
 </context>
 <context>

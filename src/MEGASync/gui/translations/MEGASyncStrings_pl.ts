@@ -953,10 +953,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">[S]Elastyczność:[/S] Synchronizuj dodolne katalogi na swoim PC do dowolnego katalogu w chmurze. Bez ograniczeń synchronizuj w tym samym czasie.</translation>
     </message>
     <message>
-        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Skorzystaj z naszej oferty 50GB za darmo i zabezpiecz swoje pliki korzystając z oferty [A]kont PRO[/A].</translation>
-    </message>
-    <message>
         <source>Faster transfer speeds</source>
         <translation type="unfinished">Większa szykość wgrywania</translation>
     </message>
@@ -987,6 +983,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Create Account</source>
         <translation type="unfinished">Utwórz konto</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
+        <translation type="unfinished">Odbierz 50 GB na pliki z bezpiecznym szyfrowaniem,  zarejestruj się za DARMO lub wybierz jedno z naszych [A]planów PRO[/A].</translation>
     </message>
 </context>
 <context>

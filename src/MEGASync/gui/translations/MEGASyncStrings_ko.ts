@@ -953,10 +953,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">[S]유연성:[/S]PC의 아무 폴더를 클라우드의 아무 폴더에 동기화하세요. 어떠한 수의 폴더를 병렬로 동기화하세요.</translation>
     </message>
     <message>
-        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">50GB의 무료 클라우드 저장소 혜택을 받고 저렴한 [A]PRO 요금제[/A]로 모든 파일을 암호화할 수 있습니다.</translation>
-    </message>
-    <message>
         <source>Faster transfer speeds</source>
         <translation type="unfinished">더 빠른 전송 속도</translation>
     </message>
@@ -987,6 +983,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Create Account</source>
         <translation type="unfinished">계정 만들기</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
+        <translation type="unfinished">안전한 이용자 통제 종단간 암호화를 갖춘 50 GB 클라우드 저장소를 얻고 무료 계정이나 우리의 [A]PRO 요금제[/A]에 가입하세요.</translation>
     </message>
 </context>
 <context>

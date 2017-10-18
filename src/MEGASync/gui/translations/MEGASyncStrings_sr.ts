@@ -953,10 +953,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">[S]Флексибилност:[/S] Синхронизујте било који документ са Вашег рачунара у облак. Паралелно синхронизујте било који број директоријума.</translation>
     </message>
     <message>
-        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</translation>
-    </message>
-    <message>
         <source>Faster transfer speeds</source>
         <translation type="unfinished">Бржи трансфери.</translation>
     </message>
@@ -987,6 +983,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Create Account</source>
         <translation type="unfinished">Креирајте налог</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
+        <translation type="unfinished">Искористите предност 50GB простора у облаку са бесплатним налогом и будите у могућности да енкриптујете све Ваше документе са нашим повољним [A]PRO плановима[/A].</translation>
     </message>
 </context>
 <context>

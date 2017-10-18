@@ -67,7 +67,7 @@
     </message>
     <message>
         <source>Total size taken up by file versions:</source>
-        <translation type="unfinished">Total size taken up by file versions:</translation>
+        <translation type="unfinished">Platzverbrauch älterer Dateiversionen:</translation>
     </message>
     <message>
         <source>USED STORAGE %1</source>
@@ -135,22 +135,22 @@
     <message>
         <source>Add exclusion</source>
         <translatorcomment>Title of the dialog displayed when an user is adding a new exclusion rule for the synchronizations.</translatorcomment>
-        <translation type="unfinished">Add exclusion</translation>
+        <translation type="unfinished">Synchronisierungsausnahme hinzufügen</translation>
     </message>
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization</translation>
+        <translation type="unfinished">Geben Sie einen Namen oder einen absoluten Pfad (mit den Wildcards * und?) ein oder wählen Sie die Datei oder den Ordner, die nicht synchronisiert werden sollen</translation>
     </message>
     <message>
         <source>Choose File</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a file to be excluded for the synchonization</translatorcomment>
-        <translation type="unfinished">Choose File</translation>
+        <translation type="unfinished">Datei auswählen</translation>
     </message>
     <message>
         <source>Choose Folder</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a folder to be excluded for the synchonization</translatorcomment>
-        <translation type="unfinished">Choose Folder</translation>
+        <translation type="unfinished">Ordner auswählen</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -175,22 +175,22 @@
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation type="unfinished">Please enter a valid file name or absolute path.</translation>
+        <translation type="unfinished">Bitte geben Sie einen gültigen Dateinamen oder absoluten Pfad ein</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
         <translatorcomment>Caption of dialog to select a file or folder to exclude for the synchronizations</translatorcomment>
-        <translation type="unfinished">Select the file or folder you want to exclude</translation>
+        <translation type="unfinished">Wählen Sie die Datei oder den Ordner, die nicht synchronisiert werden sollen</translation>
     </message>
     <message>
         <source>Select the folder you want to exclude</source>
         <translatorcomment>Caption of dialog to select a folder to exclude for the synchronizations</translatorcomment>
-        <translation type="unfinished">Select the folder you want to exclude</translation>
+        <translation type="unfinished">Wählen Sie den Ordner, der nicht synchronisiert werden soll</translation>
     </message>
     <message>
         <source>Select the file you want to exclude</source>
         <translatorcomment>Caption of dialog to select a file to exclude for the synchronizations</translatorcomment>
-        <translation type="unfinished">Select the file you want to exclude</translation>
+        <translation type="unfinished">Wählen Sie die Datei, die nicht synchronisiert werden soll</translation>
     </message>
 </context>
 <context>
@@ -323,7 +323,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">You are about to allow a setting that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
+        <translation type="unfinished">Durch diese Einstellung besteht die Gefahr, dass Dritte sich in Ihre Kommunikation mit unseren Servern einklinken. Ihre Daten wären dann zwar immer noch unlesbar (wegen der Ende-zu-Ende-Verschlüsselung), aber der Angreifer könnte sie löschen, verschieben oder Sie ganz aus Ihrem Account aussperren.</translation>
     </message>
 </context>
 <context>
@@ -451,7 +451,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>View previous versions</source>
-        <translation type="unfinished">View previous versions</translation>
+        <translation type="unfinished">Ältere Versionen</translation>
     </message>
 </context>
 <context>
@@ -859,7 +859,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Scanning...</source>
         <translatorcomment>Label to indicate that MEGAsync is at scanning state</translatorcomment>
-        <translation type="unfinished">Scanning...</translation>
+        <translation type="unfinished">Scan läuft...</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -889,11 +889,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
-        <translation type="unfinished">Show MEGAsync options</translation>
+        <translation type="unfinished">MEGAsync-Optionen</translation>
     </message>
     <message>
         <source>USED BANDWIDTH %1</source>
-        <translation type="unfinished">USED BANDWIDTH %1</translation>
+        <translation type="unfinished">GENUTZTES TRANSFERVOLUMEN %1</translation>
     </message>
 </context>
 <context>
@@ -953,10 +953,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">[S]Flexibel:[/S] Synchronisieren Sie beliebig viele lokale Ordner mit beliebigen Zielordnern in Ihrem Cloud Drive!</translation>
     </message>
     <message>
-        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</translation>
-    </message>
-    <message>
         <source>Faster transfer speeds</source>
         <translation type="unfinished">Schnellere Transfers</translation>
     </message>
@@ -987,6 +983,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Create Account</source>
         <translation type="unfinished">Account erstellen</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
+        <translation type="unfinished">Sie erhalten 50 GB kostenlosen Cloud-Speicherplatz mit sicherer Ende-zu-Ende-Verschlüsselung, wenn Sie sich jetzt kostenlos anmelden oder sich für den erweiterten [A]PRO-Status[/A] entscheiden.</translation>
     </message>
 </context>
 <context>
@@ -1207,7 +1207,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>There was a problem installing the update. Please try again later or download the last version from:https://mega.co.nz/#sync</translation>
+        <translation>Das Update konnte nicht installiert werden. Bitte versuchen Sie es später noch einmal oder reinstallieren Sie MEGAsync von https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1438,7 +1438,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation type="unfinished">Could not find a system tray to place the MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translation type="unfinished">Es ist kein System Tray für das MEGAsync-Icon vorhanden. Um die MEGAsync-Benutzeroberfläche zu erreichen, öffnen Sie MEGAsync selbst.</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -1481,17 +1481,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Resume Transfers</source>
         <translatorcomment>Label of main menu option to resume transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="unfinished">Resume Transfers</translation>
+        <translation type="unfinished">Angehaltene Transfers fortsetzen</translation>
     </message>
     <message>
         <source>Pause Transfers</source>
         <translatorcomment>Label of main menu option to pause transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="unfinished">Pause Transfers</translation>
+        <translation type="unfinished">Transfers vorübergehend anhalten</translation>
     </message>
     <message>
         <source>Stream</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to stream a file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Stream</translation>
+        <translation type="unfinished">Streamen</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -1719,7 +1719,7 @@ inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
         <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
-        <translation type="obsolete">The destination folder is synced and you already have a file inside it with the same name (%1). If you continue the upload, the previous file will be overwritten. Are you sure?</translation>
+        <translation type="obsolete">Das Zielverzeichnis ist synchronisiert und enthält bereits eine Datei desselben Namens (%1). Durch den Upload wird die Datei überschrieben. Sind Sie sicher?</translation>
     </message>
 </context>
 <context>
@@ -1831,7 +1831,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation type="unfinished">You need Full access rights to be able to sync the selected folder.</translation>
+        <translation type="unfinished">Die Synchronisierung einer Ordnerfreigabe erfordert Vollzugriff.</translation>
     </message>
     <message>
         <source>Please enter a valid folder name</source>
@@ -1942,7 +1942,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog, you can grant different access permissions for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them on the default settings for security reasons.</translation>
+        <translation type="unfinished">Dateien und Ordner haben einen Eigentümer und gehören zu einer Benutzergruppe. Mit diesem Dialog können Sie die Zugriffspermissions für neue von MEGAsync erzeugte Dateien und Ordner konfigurieren. Sollten Sie keinen Änderungsbedarf haben, ist es am sichersten, die Einstellungen so zu belassen, wie sie sind.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -2573,7 +2573,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Export Key</translation>
+        <translation type="unfinished">Schlüssel exportieren</translation>
     </message>
     <message>
         <source>Export Master key</source>
@@ -2706,17 +2706,17 @@ when the application starts again</source>
     <message>
         <source>Don&apos;t show icons on the left pane of Windows Explorer</source>
         <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
-        <translation type="unfinished">Don&apos;t show icons on the left pane of Windows Explorer</translation>
+        <translation type="unfinished">Keine Icons auf der linken Seite von Explorer-Fenstern anzeigen</translation>
     </message>
     <message>
         <source>Used quota for the last %1 hours: %2</source>
         <translatorcomment>Label to indicate the usage quota in the last gap of time for free users. Keep %1 and %2 place holders. Will be replaced at runtime</translatorcomment>
-        <translation type="unfinished">Used quota for the last %1 hours: %2</translation>
+        <translation type="unfinished">Genutztes Volumen der letzten %1 Stunden: %2</translation>
     </message>
     <message>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync</translatorcomment>
-        <translation type="unfinished">Restart</translation>
+        <translation type="unfinished">Neustart</translation>
     </message>
 </context>
 <context>
@@ -3089,7 +3089,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
-        <translation type="unfinished">When you finish this assistant, you will be able to sync additional folders using the settings dialog</translation>
+        <translation type="unfinished">Sie können in den Einstellungen weitere Ordnerpaare zur Synchronisierung konfigurieren</translation>
     </message>
 </context>
 <context>
@@ -3147,7 +3147,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Remove from left pane</source>
         <translatorcomment>Context menu option to remove MEGA item from explorer left pane</translatorcomment>
-        <translation type="unfinished">Remove from left pane</translation>
+        <translation type="unfinished">Von der linken Seite des Explorer-Fensters entfernen</translation>
     </message>
     <message>
         <source>View on MEGA</source>
@@ -3157,7 +3157,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
-        <translation type="unfinished">View previous versions</translation>
+        <translation type="unfinished">Ältere Versionen</translation>
     </message>
 </context>
 <context>

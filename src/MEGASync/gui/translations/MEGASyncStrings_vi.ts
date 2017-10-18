@@ -953,10 +953,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">[S]Linh Động:[/S] Đồng bộ bất kì thư mục nào từ PC của bạn đến thư mục trong ổ mây. Đồng bộ tất cả số lượng thư mục đồng loạt cùng một lúc.</translation>
     </message>
     <message>
-        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Nhận ngay ưu đãi tới 50 GB không gian lưu trữ miễn phí và bảo mật an toàn, cùng vớI các lựa chọn nâng cấp lên [A]hạng PRO[/A] với hạn mức khổng lồ.</translation>
-    </message>
-    <message>
         <source>Faster transfer speeds</source>
         <translation type="unfinished">Vận tốc tải nhanh hơn</translation>
     </message>
@@ -987,6 +983,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Create Account</source>
         <translation type="unfinished">Tạo Tài khoản</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
+        <translation type="unfinished">Hưởng quyền lợi từ 50 GB không gian lưu trữ trên mây với thuật toán bảo mật người dùng cuối và dễ dàng làm chủ, đăng ký ngay để nhận ngay một tài khoản MIỄN PHÍ hay chọn một [A]gói PRO[/A] bạn thích.</translation>
     </message>
 </context>
 <context>

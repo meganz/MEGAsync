@@ -953,10 +953,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">[S]Flessibile:[/S] Sincronizza ogni cartella dal tuo PC ad ogni cartella sul cloud. Sincronizza ogni numero di cartelle in parallelo.</translation>
     </message>
     <message>
-        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Approfitta di 50 GB di spazio di archiviazione cloud con un account gratuito e la caratteristica di criptare tutti i tuoi file grazie ai nostri abbondanti [A]piani PRO[/A].</translation>
-    </message>
-    <message>
         <source>Faster transfer speeds</source>
         <translation type="unfinished">Velocità  di trasferimento maggiore</translation>
     </message>
@@ -987,6 +983,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Create Account</source>
         <translation type="unfinished">Crea Account</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
+        <translation type="unfinished">Prendi vantaggio dai tuoi 50GB di spazio di archiviazione cloud con criptazione end-to-end sicura controllata dall&apos;utente e crea un account FREE o scegli uno dei nostri [A]piani PRO[/A].</translation>
     </message>
 </context>
 <context>

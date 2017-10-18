@@ -953,10 +953,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">[S]المرونة:[/S] زامن مع أي مجلد من كمبيوترك إلى أي مجلد في السحابة. زامن أي عدد من المجلدات بشكل متواز</translation>
     </message>
     <message>
-        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">استفد من 50GB مجانية على سحابة التخزين إن فتحت حساب مجاني واستمتع  بتشفير جميع الملفات الخاصة بك مع [A]باقات برو[/A]. السخية</translation>
-    </message>
-    <message>
         <source>Faster transfer speeds</source>
         <translation type="unfinished">تسريع عملية النقل</translation>
     </message>
@@ -987,6 +983,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Create Account</source>
         <translation type="unfinished">إنشاء حساب</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
+        <translation type="unfinished">للاستفادة من 50 غيغابايت كتخزين سحابي مع التشفير من النهاية إلى النهاية والتسجيل للحصول على حساب مجاني أو الاستفادة من [A]باقات الPRO[/A].</translation>
     </message>
 </context>
 <context>

@@ -953,10 +953,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">[S]ยืดหยุ่น:[/S] ซิงค์โฟลเดอร์ใดๆ จากเครื่องคอมพิวเตอร์ของคุณไปยังโฟลเดอร์ใดๆ ในระบบคลาวด์ และซิงค์โฟลเดอร์ได้พร้อมกัน</translation>
     </message>
     <message>
-        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</translation>
-    </message>
-    <message>
         <source>Faster transfer speeds</source>
         <translation type="unfinished">โอนย้ายได้อย่างเต็มสปีด</translation>
     </message>
@@ -987,6 +983,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Create Account</source>
         <translation type="unfinished">สร้างบัญชี</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
+        <translation type="unfinished">ใช้ประโยชน์จากการจัดเก็บในระบบคลาวด์ด้วยบัญชีฟรี 50GB จะสามารถเข้ารหัสลับไฟล์ทั้งหมดของคุณได้ด้วย[A]แผนแบบ PRO[/A]</translation>
     </message>
 </context>
 <context>

@@ -953,10 +953,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">[S]充滿彈性的：[/S] 同步您電腦中的資料夾至雲端硬碟。亦可同時同步無限多個資料夾。</translation>
     </message>
     <message>
-        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">使用免費帳戶提供的50GB雲端儲存空間，並可以升級為高階[A] PRO專業版 [/A]以加密所有檔案。</translation>
-    </message>
-    <message>
         <source>Faster transfer speeds</source>
         <translation type="unfinished">更快的傳輸速度</translation>
     </message>
@@ -987,6 +983,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Create Account</source>
         <translation type="unfinished">建立帳號</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
+        <translation type="unfinished">享受50GB雲端空間與由用戶控制的安全端對端加密，並註冊一個免費帳戶或使用我們的[A]PRO方案[/A]。</translation>
     </message>
 </context>
 <context>
