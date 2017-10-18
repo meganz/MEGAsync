@@ -953,10 +953,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">[S]柔軟：[/S]PCのフォルダをクラウド内のフォルダに同期させます。複数のフォルダを並行して同期します。</translation>
     </message>
     <message>
-        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">無料のアカウントで50GBのクラウドストレージを活用し、当社の寛大な[A] PROプラン[/A]を使用し、あなたのファイルすべてを暗号化できます。</translation>
-    </message>
-    <message>
         <source>Faster transfer speeds</source>
         <translation type="unfinished">もっと早い転送速度</translation>
     </message>
@@ -987,6 +983,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Create Account</source>
         <translation type="unfinished">アカウント作成</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
+        <translation type="unfinished">安全なユーザー制御のエンドツーエンド暗号化を使用した、50 GBのクラウドストレージをご利用ください。無料アカウントのご登録や当社の[A]PROプラン[/A]をご利用ください。</translation>
     </message>
 </context>
 <context>

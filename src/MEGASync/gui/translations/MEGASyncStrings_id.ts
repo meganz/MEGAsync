@@ -953,10 +953,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">[S]Flexible:[/S] Sync folder apapun dari PC ke folder apapun di cloud. Sync berapa banyak pun folder secara paralel.</translation>
     </message>
     <message>
-        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Manfaatkan penyimpanan awan sebesar 50GB dengan akun gratis dan dapat mengenkripsi semua file Anda dengan plan [A]PRO kami yang murah hati[/A].</translation>
-    </message>
-    <message>
         <source>Faster transfer speeds</source>
         <translation type="unfinished">Transfer yang lebih cepat</translation>
     </message>
@@ -987,6 +983,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Create Account</source>
         <translation type="unfinished">Buat Akun</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
+        <translation type="unfinished">Manfaatkan 50 GB cloud storage dengan user-controlled end-to-end encryption yang aman dan daftar untuk akun GRATIS atau salah satu dari [A]PRO plan[/A] kami.</translation>
     </message>
 </context>
 <context>

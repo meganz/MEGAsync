@@ -953,10 +953,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">[S]充满弹性的：[/S] 同步您电脑中的文件夹至云盘。亦可同时同步无限多个文件夹。</translation>
     </message>
     <message>
-        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">注册帐户即可获得50GB免费空间，升级[A]PRO 帐户[/A]使您所有资料得到加密保护。</translation>
-    </message>
-    <message>
         <source>Faster transfer speeds</source>
         <translation type="unfinished">更快的传输速度</translation>
     </message>
@@ -987,6 +983,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Create Account</source>
         <translation type="unfinished">建立帐号</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
+        <translation type="unfinished">享受50GB云端空间与由用户控制的安全端对端加密，并注册一个免费帐户或使用我们的[A]PRO方案[/A]。</translation>
     </message>
 </context>
 <context>

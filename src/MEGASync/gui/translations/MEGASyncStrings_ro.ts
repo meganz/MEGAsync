@@ -451,7 +451,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>View previous versions</source>
-        <translation type="unfinished">View previous versions</translation>
+        <translation type="unfinished">Vezi versiunile anterioare</translation>
     </message>
 </context>
 <context>
@@ -953,10 +953,6 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">[S]Flexibil:[/S] Sincronizează orice folder de pe PC pe orice folder din unitatea cloud. Sincronizează orice număr de foldere în paralel.</translation>
     </message>
     <message>
-        <source>Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</source>
-        <translation type="unfinished">Take advantage of 50GB of cloud storage with a free  account and be able to encrypt all your files with our generous [A]PRO plans[/A].</translation>
-    </message>
-    <message>
         <source>Faster transfer speeds</source>
         <translation type="unfinished">Viteze mai rapide de transfer</translation>
     </message>
@@ -987,6 +983,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Create Account</source>
         <translation type="unfinished">Creează cont</translation>
+    </message>
+    <message>
+        <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
+        <translation type="unfinished">Beneficiază de 50GB spaţiu de stocare în cloud cu criptare capăt-la-capăt securizată controlată de utilizatori şi înregistrează-te pentru un cont gratuit sau unul dintre [A]planurile noastre PRO[/A].</translation>
     </message>
 </context>
 <context>
@@ -1207,7 +1207,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>There was a problem installing the update. Please try again later or download the last version from:https://mega.co.nz/#sync</translation>
+        <translation>A apărut o problemă la instalarea actualizării. Te rugăm să încerci din nou mai târziu sau descarcă ultima versiune de la:https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -2573,7 +2573,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Key</source>
         <translatorcomment>Button label to export master key of the current user. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Export Key</translation>
+        <translation type="unfinished">Exportă cheia</translation>
     </message>
     <message>
         <source>Export Master key</source>
@@ -3157,7 +3157,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>View previous versions</source>
         <translatorcomment>Context menu option to view previous versions of a file through web browser within your MEGA account</translatorcomment>
-        <translation type="unfinished">View previous versions</translation>
+        <translation type="unfinished">Vezi versiunile anterioare</translation>
     </message>
 </context>
 <context>

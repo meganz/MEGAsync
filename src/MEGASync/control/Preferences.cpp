@@ -2679,6 +2679,13 @@ void Preferences::loadExcludedSyncNames()
         excludedSyncNames.append(QString::fromUtf8(".*"));
     }
 
+    if (settings->value(lastVersionKey).toInt() < 3400)
+    {
+        excludedSyncNames.append(QString::fromUtf8("*~.*"));
+        excludedSyncNames.append(QString::fromUtf8("*.sb-????????-??????"));
+        excludedSyncNames.append(QString::fromUtf8("*.tmp"));
+    }
+
     if (settings->value(lastVersionKey).toInt() < 2907)
     {
         //This string is no longer excluded by default since 2907
