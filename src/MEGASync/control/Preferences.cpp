@@ -11,17 +11,18 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/3.1.4.22";
-const int Preferences::VERSION_CODE = 3104;
-const int Preferences::BUILD_ID = 22;
+const char Preferences::USER_AGENT[] = "MEGAsync/3.4.0.0";
+const int Preferences::VERSION_CODE = 3400;
+const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("3.5");
-const QString Preferences::SDK_ID = QString::fromAscii("RELEASE_CANDIDATE_3");
+const QString Preferences::SDK_ID = QString::fromAscii("422aa6");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- Support for Apple File System (macOS High Sierra)\n"
-            "- Allow to disable left pane icons in settings (Windows 10)\n"
-            "- Updated translations\n"
-            "- Bug fixes");
+            "- New UI style\n"
+            "- Support to generate file versions in MEGA\n"
+            "- Integration with Finder (macOS)\n"
+            "- Allow to exclude specific files/folders\n"
+            "- Bug fixes and other minor improvements");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
