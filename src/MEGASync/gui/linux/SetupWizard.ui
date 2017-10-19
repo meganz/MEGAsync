@@ -488,10 +488,16 @@ margin-bottom: 9px;
                  <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>20</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>18</width>
-                 <height>16777215</height>
+                 <height>20</height>
                 </size>
                </property>
                <property name="accessibleName">
