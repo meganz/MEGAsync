@@ -263,64 +263,64 @@ bool startAtLogin(bool opt)
     // Get the path for the MEGAsync application and access login items list
     CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:appPath];
     LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL,kLSSharedFileListSessionLoginItems, NULL);
+    if (loginItems == nil)
+    {
+        return false;
+    }
 
     //Enable start at login time
-    if(opt)
+    if (opt)
     {
-        if (loginItems) {
+        UInt32 seed;
+        NSArray *items = (NSArray *)LSSharedFileListCopySnapshot(loginItems, &seed);
 
-            UInt32 seed;
-            NSArray *items = (NSArray *)LSSharedFileListCopySnapshot(loginItems, &seed);
+        // Remove duplicates called "MEGAsync"
+        for (id item in items)
+        {
+            LSSharedFileListItemRef itemRef = (LSSharedFileListItemRef)item;
+            CFStringRef itemName = LSSharedFileListItemCopyDisplayName(itemRef);
 
-            // Remove duplicates called "MEGAsync"
-            for (id item in items) {
-                LSSharedFileListItemRef itemRef = (LSSharedFileListItemRef)item;
-                CFStringRef itemName = LSSharedFileListItemCopyDisplayName(itemRef);
-
-                if ([(NSString *)itemName isEqualToString:@"MEGAsync"]) {
-                    OSStatus error = LSSharedFileListItemRemove(loginItems, itemRef);
-                    if (error != noErr)
-                        NSLog(@"Failed to remove App from Session Login Items");
-                }
-                CFRelease(itemName);
+            if ([(NSString *)itemName isEqualToString:@"MEGAsync"])
+            {
+                OSStatus error = LSSharedFileListItemRemove(loginItems, itemRef);
+                if (error != noErr)
+                    NSLog(@"Failed to remove App from Session Login Items");
             }
-
-            //Insert an item to the login list.
-            LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(loginItems,
-                                                                         kLSSharedFileListItemLast, NULL, NULL,
-                                                                         url, NULL, NULL);
-            if (item){
-                CFRelease(item);
-                CFRelease(loginItems);
-                return true;
-            }
+            CFRelease(itemName);
         }
 
-    }else //disable start at login time
-    {
-        if (loginItems)
+        //Insert an item to the login list.
+        LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(loginItems,
+                                                                     kLSSharedFileListItemLast, NULL, NULL,
+                                                                     url, NULL, NULL);
+        if (item)
         {
-            UInt32 seed = 0U;
-            NSArray *currentLoginItems = [NSMakeCollectable(LSSharedFileListCopySnapshot(loginItems, &seed)) autorelease];
-            for (id itemObject in currentLoginItems)
-            {
-                LSSharedFileListItemRef item = (LSSharedFileListItemRef)itemObject;
-
-                //Resolve the item with URL
-                if (LSSharedFileListItemResolve(item, 0, (CFURLRef*) &url, NULL) == noErr)
-                {
-                    NSString * urlPath = [(__bridge NSURL*)url path];
-                    if ([urlPath compare:appPath] == NSOrderedSame)
-                    {
-                        LSSharedFileListItemRemove(loginItems,item);
-                        CFRelease(loginItems);
-
-                    }
-                }
-            }
+            CFRelease(item);
+            CFRelease(loginItems);
             return true;
         }
+    }
+    else //disable start at login time
+    {
+        UInt32 seed = 0U;
+        NSArray *currentLoginItems = [NSMakeCollectable(LSSharedFileListCopySnapshot(loginItems, &seed)) autorelease];
+        for (id itemObject in currentLoginItems)
+        {
+            LSSharedFileListItemRef item = (LSSharedFileListItemRef)itemObject;
 
+            //Resolve the item with URL
+            if (LSSharedFileListItemResolve(item, 0, (CFURLRef*) &url, NULL) == noErr)
+            {
+                NSString * urlPath = [(__bridge NSURL*)url path];
+                if ([urlPath compare:appPath] == NSOrderedSame)
+                {
+                    LSSharedFileListItemRemove(loginItems,item);
+                    CFRelease(loginItems);
+
+                }
+            }
+        }
+        return true;
     }
 
     CFRelease(loginItems);
@@ -329,33 +329,33 @@ bool startAtLogin(bool opt)
 
 bool isStartAtLoginActive()
 {
-
-    Boolean foundIt=false;
+    Boolean foundIt = false;
     LSSharedFileListRef loginItems = LSSharedFileListCreate(NULL,kLSSharedFileListSessionLoginItems, NULL);
-
-    if (loginItems)
+    if (loginItems == nil)
     {
-            // This will get the path for the application
-            NSURL *itemURL=[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
-            UInt32 seed = 0U;
-            NSArray *currentLoginItems = [NSMakeCollectable(LSSharedFileListCopySnapshot(loginItems, &seed)) autorelease];
-            for (id itemObject in currentLoginItems)
-            {
-                LSSharedFileListItemRef item = (LSSharedFileListItemRef)itemObject;
+        return false;
+    }
 
-                UInt32 resolutionFlags = kLSSharedFileListNoUserInteraction | kLSSharedFileListDoNotMountVolumes;
-                CFURLRef URL = NULL;
-                OSStatus err = LSSharedFileListItemResolve(item, resolutionFlags, &URL, /*outRef*/ NULL);
-                if (err == noErr)
-                {
-                    foundIt = CFEqual(URL, itemURL);
-                    CFRelease(URL);
+    // This will get the path for the application
+    NSURL *itemURL=[NSURL fileURLWithPath:[[NSBundle mainBundle] bundlePath]];
+    UInt32 seed = 0U;
+    NSArray *currentLoginItems = [NSMakeCollectable(LSSharedFileListCopySnapshot(loginItems, &seed)) autorelease];
+    for (id itemObject in currentLoginItems)
+    {
+        LSSharedFileListItemRef item = (LSSharedFileListItemRef)itemObject;
 
-                    if (foundIt)
-                        break;
-                }
-            }
+        UInt32 resolutionFlags = kLSSharedFileListNoUserInteraction | kLSSharedFileListDoNotMountVolumes;
+        CFURLRef URL = NULL;
+        OSStatus err = LSSharedFileListItemResolve(item, resolutionFlags, &URL, /*outRef*/ NULL);
+        if (err == noErr)
+        {
+            foundIt = CFEqual(URL, itemURL);
+            CFRelease(URL);
+
+            if (foundIt)
+                break;
         }
+    }
 
     CFRelease(loginItems);
     return (BOOL)foundIt;
@@ -363,8 +363,8 @@ bool isStartAtLoginActive()
 
 void addPathToPlaces(QString path, QString pathName)
 {
-    if(path.isEmpty()) return;
-    if(!QFileInfo(path).exists()) return;
+    if (path.isEmpty()) return;
+    if (!QFileInfo(path).exists()) return;
 
     IconRef iconRef;
     FSRef fref;
@@ -374,6 +374,10 @@ void addPathToPlaces(QString path, QString pathName)
 
     //Does not work propertly
     CFStringRef pnString = CFStringCreateWithCharacters(0, (UniChar *)pathName.unicode(), pathName.length());
+    if (pnString == nil)
+    {
+        return;
+    }
 
     CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:folderPath];
 
@@ -384,14 +388,19 @@ void addPathToPlaces(QString path, QString pathName)
     // Create a reference to the shared file list.
     LSSharedFileListRef favoriteItems = LSSharedFileListCreate(NULL,
                                                             kLSSharedFileListFavoriteItems, NULL);
-    if (favoriteItems) {
-        //Insert an item to the list.
-        LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(favoriteItems,
-                                                                     kLSSharedFileListItemLast, pnString, iconRef/*NULL*/,
-                                                                     url, NULL, NULL);
-        if (item){
-            CFRelease(item);
-        }
+    if (favoriteItems == nil)
+    {
+        CFRelease(pnString);
+        return;
+    }
+
+    //Insert an item to the list.
+    LSSharedFileListItemRef item = LSSharedFileListInsertItemURL(favoriteItems,
+                                                                 kLSSharedFileListItemLast, pnString, iconRef/*NULL*/,
+                                                                 url, NULL, NULL);
+    if (item)
+    {
+        CFRelease(item);
     }
 
     CFRelease(favoriteItems);
@@ -402,8 +411,8 @@ void addPathToPlaces(QString path, QString pathName)
 
 void removePathFromPlaces(QString path)
 {
-    if(path.isEmpty()) return;
-    if(!QFileInfo(path).exists()) return;
+    if (path.isEmpty()) return;
+    if (!QFileInfo(path).exists()) return;
 
     NSString *folderPath = [[NSString alloc] initWithUTF8String:path.toUtf8().constData()];
 
@@ -413,10 +422,14 @@ void removePathFromPlaces(QString path)
     // Create a reference to the shared file list of favourite items.
     LSSharedFileListRef favoriteItems = LSSharedFileListCreate(NULL,
                                                             kLSSharedFileListFavoriteItems, NULL);
+    if (favoriteItems == nil)
+    {
+        return;
+    }
 
     // loop through the list of startup items and try to find the MEGAsync app
     CFArrayRef listSnapshot = LSSharedFileListCopySnapshot(favoriteItems, NULL);
-    for(int i = 0; i < CFArrayGetCount(listSnapshot); i++)
+    for (int i = 0; i < CFArrayGetCount(listSnapshot); i++)
     {
         LSSharedFileListItemRef item = (LSSharedFileListItemRef)CFArrayGetValueAtIndex(listSnapshot, i);
         //Avoid check special volumes (Airdrop)
@@ -435,26 +448,27 @@ void removePathFromPlaces(QString path)
         }
     }
 
-
     CFRelease(favoriteItems);
     [folderPath release];
-
-
 }
 
 void setFolderIcon(QString path)
 {
-    if(path.isEmpty()) return;
-    if(!QFileInfo(path).exists()) return;
+    if (path.isEmpty()) return;
+    if (!QFileInfo(path).exists()) return;
 
     NSString *folderPath = [[NSString alloc] initWithUTF8String:path.toUtf8().constData()];
 
     NSString * appPath = [[NSBundle mainBundle] bundlePath];
     NSImage* iconImage;
     if (floor(kCFCoreFoundationVersionNumber) > kCFCoreFoundationVersionNumber10_9)
+    {
         iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/folder_yosemite.icns"]];
+    }
     else
+    {
         iconImage = [[NSImage alloc] initWithContentsOfFile:[appPath stringByAppendingString:@"/Contents/Resources/folder.icns"]];
+    }
 
     [[NSWorkspace sharedWorkspace] setIcon:iconImage forFile:folderPath options:0];
 
@@ -480,6 +494,10 @@ QString defaultOpenApp(QString extension)
 
     ext = CFStringCreateWithCString (NULL, extension.toUtf8().constData(),
     kCFStringEncodingMacRoman);
+    if (ext == nil)
+    {
+        return QString();
+    }
 
     LSGetApplicationForInfo (kLSUnknownType,
     kLSUnknownCreator, ext, kLSRolesAll, NULL, &appURL);
@@ -491,6 +509,13 @@ QString defaultOpenApp(QString extension)
     }
     
     info = CFURLCopyFileSystemPath(appURL, kCFURLPOSIXPathStyle);
+    if (info == nil)
+    {
+        CFRelease(ext);
+        CFRelease(appURL);
+        return QString();
+    }
+
     CFIndex size = CFStringGetMaximumSizeOfFileSystemRepresentation(info);
     buffer = new char[size];
 
@@ -501,6 +526,7 @@ QString defaultOpenApp(QString extension)
 
     CFRelease(ext);
     CFRelease(info);
+    CFRelease(appURL);
 
     return defaultAppPath;
 }
