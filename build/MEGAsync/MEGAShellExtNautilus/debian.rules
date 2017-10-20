@@ -2,6 +2,11 @@
 
 export DH_VERBOSE=1
 
+vnautilus = $(shell dpkg -l libnautilus-extension-dev | tail -n 1 | awk '{print $$3}' | awk -F".is.|:|-" '{print $$2}' | awk -F "." '{FS=".";print $$1*10000+$$2*100+$$3}')
+
+common-configure-impl::; 
+	if [ 0$(vnautilus) -gt 31403 ]; then for i in data/emblems/64x64/*smaller.png; do mv $$i $$(echo $$i | sed "s#-smaller##g"); done; echo "NEWER NAUTILUS REQUIRES SMALLER OVERLAY ICONS"; else rm data/emblems/64x64/*smaller.png; echo "OLDER NAUTILUS DOES NOT REQUIRE SMALLER OVERLAY ICONS"; fi
+
 include /usr/share/cdbs/1/rules/debhelper.mk
 include /usr/share/cdbs/1/class/qmake.mk
 

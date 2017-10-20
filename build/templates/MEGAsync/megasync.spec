@@ -16,8 +16,8 @@ BuildRequires: hicolor-icon-theme, unzip, wget
 BuildRequires: libcares-devel
 BuildRequires: update-desktop-files
  
-%if 0%{?sle_version} == 120200 || 0%{?suse_version} > 1320
-BuildRequires: libqt5-qtbase-devel >= 5.6, libqt5-linguist
+%if 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
+BuildRequires: libqt5-qtbase-devel >= 5.6, libqt5-linguist, libqt5-qtsvg-devel
 Requires: libQt5Core5 >= 5.6
 %else
 BuildRequires: libqt4-devel, qt-devel
@@ -39,8 +39,8 @@ BuildRequires: libcryptopp-devel
 %if 0%{?fedora_version} >= 23
 BuildRequires: c-ares-devel, cryptopp-devel
 BuildRequires: desktop-file-utils
-BuildRequires: qt5-qtbase-devel qt5-qttools-devel
-Requires: qt5-qtbase >= 5.6
+BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel
+Requires: qt5-qtbase >= 5.6, qt5-qtsvg
 BuildRequires: terminus-fonts, fontpackages-filesystem
 %else
 BuildRequires: c-ares-devel, cryptopp-devel
@@ -108,9 +108,9 @@ export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
-%if 0%{?fedora} || 0%{?sle_version} == 120200 || 0%{?suse_version} > 1320
+%if 0%{?fedora} || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
 
-%if 0%{?fedora_version} >= 23 || 0%{?sle_version} == 120200 || 0%{?suse_version} > 1320
+%if 0%{?fedora_version} >= 23 || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
 qmake-qt5 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot}
 lrelease-qt5  MEGASync/MEGASync.pro
 %else
@@ -154,6 +154,7 @@ echo "fs.inotify.max_user_watches = 524288" > %{buildroot}/etc/sysctl.d/100-mega
 %icon_theme_cache_post
 %else
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+/bin/touch --no-create %{_datadir}/icons/ubuntu-mono-dark &>/dev/null || :
 %endif
 
 %if 0%{?rhel_version} == 700
@@ -195,109 +196,35 @@ enabled=1
 DATA
 %endif
 
-%if 0%{?fedora_version} == 26
-# Fedora 26
+%if 0%{?fedora}
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
 [MEGAsync]
 name=MEGAsync
-baseurl=https://mega.nz/linux/MEGAsync/Fedora_26/
-gpgkey=https://mega.nz/linux/MEGAsync/Fedora_26/repodata/repomd.xml.key
+baseurl=https://mega.nz/linux/MEGAsync/Fedora_$releasever/
+gpgkey=https://mega.nz/linux/MEGAsync/Fedora_$releasever/repodata/repomd.xml.key
 gpgcheck=1
 enabled=1
 DATA
 %endif
 
-%if 0%{?fedora_version} == 25
-# Fedora 25
-YUM_FILE="/etc/yum.repos.d/megasync.repo"
-cat > "$YUM_FILE" << DATA
+%if 0%{?sle_version} == 120300
+# openSUSE Leap 42.3
+if [ -d "/etc/zypp/repos.d/" ]; then
+ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
+cat > "$ZYPP_FILE" << DATA
 [MEGAsync]
 name=MEGAsync
-baseurl=https://mega.nz/linux/MEGAsync/Fedora_25/
-gpgkey=https://mega.nz/linux/MEGAsync/Fedora_25/repodata/repomd.xml.key
+type=rpm-md
+baseurl=https://mega.nz/linux/MEGAsync/openSUSE_Leap_42.3/
 gpgcheck=1
+autorefresh=1
+gpgkey=https://mega.nz/linux/MEGAsync/openSUSE_Leap_42.3/repodata/repomd.xml.key
 enabled=1
 DATA
+fi
 %endif
 
-%if 0%{?fedora_version} == 24
-# Fedora 24
-YUM_FILE="/etc/yum.repos.d/megasync.repo"
-cat > "$YUM_FILE" << DATA
-[MEGAsync]
-name=MEGAsync
-baseurl=https://mega.nz/linux/MEGAsync/Fedora_24/
-gpgkey=https://mega.nz/linux/MEGAsync/Fedora_24/repodata/repomd.xml.key
-gpgcheck=1
-enabled=1
-DATA
-%endif
-
-%if 0%{?fedora_version} == 23
-# Fedora 23
-YUM_FILE="/etc/yum.repos.d/megasync.repo"
-cat > "$YUM_FILE" << DATA
-[MEGAsync]
-name=MEGAsync
-baseurl=https://mega.nz/linux/MEGAsync/Fedora_23/
-gpgkey=https://mega.nz/linux/MEGAsync/Fedora_23/repodata/repomd.xml.key
-gpgcheck=1
-enabled=1
-DATA
-%endif
-
-%if 0%{?fedora_version} == 22
-# Fedora 22
-YUM_FILE="/etc/yum.repos.d/megasync.repo"
-cat > "$YUM_FILE" << DATA
-[MEGAsync]
-name=MEGAsync
-baseurl=https://mega.nz/linux/MEGAsync/Fedora_22/
-gpgkey=https://mega.nz/linux/MEGAsync/Fedora_22/repodata/repomd.xml.key
-gpgcheck=1
-enabled=1
-DATA
-%endif
-
-%if 0%{?fedora_version} == 21
-# Fedora 21
-YUM_FILE="/etc/yum.repos.d/megasync.repo"
-cat > "$YUM_FILE" << DATA
-[MEGAsync]
-name=MEGAsync
-baseurl=https://mega.nz/linux/MEGAsync/Fedora_21/
-gpgkey=https://mega.nz/linux/MEGAsync/Fedora_21/repodata/repomd.xml.key
-gpgcheck=1
-enabled=1
-DATA
-%endif
-
-%if 0%{?fedora_version} == 20
-# Fedora 20
-YUM_FILE="/etc/yum.repos.d/megasync.repo"
-cat > "$YUM_FILE" << DATA
-[MEGAsync]
-name=MEGAsync
-baseurl=https://mega.nz/linux/MEGAsync/Fedora_20/
-gpgkey=https://mega.nz/linux/MEGAsync/Fedora_20/repodata/repomd.xml.key
-gpgcheck=1
-enabled=1
-DATA
-%endif
-
-%if 0%{?fedora_version} == 19
-# Fedora 19
-YUM_FILE="/etc/yum.repos.d/megasync.repo"
-cat > "$YUM_FILE" << DATA
-[MEGAsync]
-name=MEGAsync
-baseurl=https://mega.nz/linux/MEGAsync/Fedora_19
-gpgkey=https://mega.nz/linux/MEGAsync/Fedora_19/repodata/repomd.xml.key
-gpgcheck=1
-enabled=1
-DATA
-%endif
 
 %if 0%{?sle_version} == 120200
 # openSUSE Leap 42.2
@@ -315,7 +242,6 @@ enabled=1
 DATA
 fi
 %endif
-
 
 %if 0%{?sle_version} == 120100
 # openSUSE Leap 42.1
@@ -480,8 +406,9 @@ sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf
 %icon_theme_cache_postun
 %else
 if [ $1 -eq 0 ] ; then
-    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null
-    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+    /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+    /bin/touch --no-create %{_datadir}/icons/ubuntu-mono-dark &>/dev/null || :
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/* &>/dev/null || :
 fi
 %endif
 # kill running MEGAsync instance
@@ -490,7 +417,9 @@ killall megasync 2> /dev/null || true
 
 %if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
 %posttrans
-/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
+/bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+/bin/touch --no-create %{_datadir}/icons/ubuntu-mono-dark &>/dev/null || :
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/* &>/dev/null || :
 %endif
 
 %clean
@@ -500,8 +429,9 @@ killall megasync 2> /dev/null || true
 %defattr(-,root,root)
 %{_bindir}/%{name}
 %{_datadir}/applications/megasync.desktop
-#%{_datadir}/icons/hicolor/*/apps/mega.png
 %{_datadir}/icons/hicolor/*/*/mega.png
+%{_datadir}/icons/hicolor/*/*/*
+%{_datadir}/icons/*/*/*/*
 %{_datadir}/doc/megasync
 %{_datadir}/doc/megasync/*
 /etc/sysctl.d/100-megasync-inotify-limit.conf

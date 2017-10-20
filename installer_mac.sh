@@ -39,14 +39,21 @@ dsymutil MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync -o MEGAsync.app.dSYM
 strip MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
 dsymutil MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader -o MEGAloader.dSYM
 strip MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader
+dsymutil MEGAUpdater/MEGAupdater.app/Contents/MacOS/MEGAupdater -o MEGAupdater.dSYM
+strip MEGAUpdater/MEGAupdater.app/Contents/MacOS/MEGAupdater
 mv MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
 mv MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
-mv MEGASync/MEGAsync.app ./
+mv MEGAUpdater/MEGAupdater.app/Contents/MacOS/MEGAupdater MEGASync/MEGAsync.app/Contents/MacOS/MEGAupdater
+mv MEGAsync/MEGAsync.app ./
+
+#Attach shell extension
+xcodebuild clean build CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO -jobs "$(sysctl -n hw.ncpu)" -configuration Release -target MEGAShellExtFinder -project ../src/MEGAShellExtFinder/MEGAFinderSync.xcodeproj/
+cp -a ../src/MEGAShellExtFinder/build/Release/MEGAShellExtFinder.appex $APP_NAME.app/Contents/Plugins/
 
 if [ "$sign" = "1" ]; then
 	cp -R $APP_NAME.app ${APP_NAME}_unsigned.app
 	echo "Signing 'APPBUNDLE'"
-	codesign --force --verify --verbose --sign "Developer ID Application: Mega Limited" --deep $APP_NAME.app
+	codesign --force --verify --verbose --preserve-metadata=entitlements --sign "Developer ID Application: Mega Limited" --deep $APP_NAME.app
 	echo "Checking signature"
 	spctl -vv -a $APP_NAME.app
 fi
@@ -62,14 +69,14 @@ if [ "$createdmg" = "1" ]; then
 	mkdir $MOUNTDIR
 	/usr/bin/hdiutil attach $APP_NAME-tmp.dmg -mountroot $MOUNTDIR >/dev/null
 
-	echo "Copying resources (3/7)" 
+	echo "Copying resources (3/7)"
 	#Copy the background, the volume icon and DS_Store files
 	unzip -d $MOUNTDIR/$APP_NAME ../$RESOURCES.zip
 	/usr/bin/SetFile -a C $MOUNTDIR/$APP_NAME
 
 	echo "Adding symlinks (4/7)"
 	#Add a symbolic link to the Applications directory
-	ln -s /Applications/ $MOUNTDIR/$APP_NAME/Applications 
+	ln -s /Applications/ $MOUNTDIR/$APP_NAME/Applications
 
 	echo "Detaching temporary Disk Image (5/7)"
 	#Detach the temporary image
@@ -88,7 +95,6 @@ fi
 echo "Cleaning"
 rm -rf MEGAsync
 rm -rf MEGALoader
+rm -rf MEGAUpdater
 
 echo "DONE"
-
-

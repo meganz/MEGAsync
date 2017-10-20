@@ -35,6 +35,10 @@ public:
     bool hasEmail(QString email);
     QString email();
     void setEmail(QString email);
+    QString firstName();
+    void setFirstName(QString firstName);
+    QString lastName();
+    void setLastName(QString lastName);
     QString emailHash();
     QString privatePw();
     void setSession(QString session);
@@ -43,6 +47,7 @@ public:
     void setTotalStorage(long long value);
     long long usedStorage();
     void setUsedStorage(long long value);
+    long long availableStorage();
 
     long long cloudDriveStorage();
     void setCloudDriveStorage(long long value);
@@ -52,6 +57,8 @@ public:
     void setRubbishStorage(long long value);
     long long inShareStorage();
     void setInShareStorage(long long value);
+    long long versionsStorage();
+    void setVersionsStorage(long long value);
 
     long long cloudDriveFiles();
     void setCloudDriveFiles(long long value);
@@ -73,6 +80,8 @@ public:
 
     long long totalBandwidth();
     void setTotalBandwidth(long long value);
+    int bandwidthInterval();
+    void setBandwidthInterval(int value);
     bool isTemporalBandwidthValid();
     long long getMsDiffTimeWithSDK();
     void setDsDiffTimeWithSDK(long long diffTime);
@@ -213,6 +222,9 @@ public:
 
     QStringList getExcludedSyncNames();
     void setExcludedSyncNames(QStringList names);
+    QStringList getExcludedSyncPaths();
+    void setExcludedSyncPaths(QStringList paths);
+
     QStringList getPreviousCrashes();
     void setPreviousCrashes(QStringList crashes);
     long long getLastReboot();
@@ -286,7 +298,9 @@ public:
 
     enum {
         ONE_TIME_ACTION_DEPRECATED_OPERATING_SYSTEM = 0,
-        ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE = 1
+        ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE = 1,
+        ONE_TIME_ACTION_ACTIVE_FINDER_EXT = 2,
+        ONE_TIME_ACTION_REGISTER_UPDATE_TASK = 3
     };
 
     static const int MAX_FILES_IN_NEW_SYNC_FOLDER;
@@ -330,6 +344,7 @@ public:
     static QStringList HTTPS_ALLOWED_ORIGINS;
     static bool HTTPS_ORIGIN_CHECK_ENABLED;
     static const unsigned int MAX_COMPLETED_ITEMS;
+    static const QString FINDER_EXT_BUNDLE_ID;
 
 protected:
     QMutex mutex;
@@ -350,6 +365,7 @@ protected:
     QList<bool> activeFolders;
     QList<bool> temporaryInactiveFolders;
     QStringList excludedSyncNames;
+    QStringList excludedSyncPaths;
     bool errorFlag;
     long long tempBandwidth;
     int tempBandwidthInterval;
@@ -360,6 +376,8 @@ protected:
     static const QString currentAccountKey;
     static const QString syncsGroupKey;
     static const QString emailKey;
+    static const QString firstNameKey;
+    static const QString lastNameKey;
     static const QString emailHashKey;
     static const QString privatePwKey;
     static const QString totalStorageKey;
@@ -368,6 +386,7 @@ protected:
     static const QString inboxStorageKey;
     static const QString rubbishStorageKey;
     static const QString inShareStorageKey;
+    static const QString versionsStorageKey;
     static const QString cloudDriveFilesKey;
     static const QString inboxFilesKey;
     static const QString rubbishFilesKey;
@@ -378,6 +397,7 @@ protected:
     static const QString inShareFoldersKey;
     static const QString totalBandwidthKey;
     static const QString usedBandwidthKey;
+    static const QString usedBandwidthIntervalKey;
     static const QString accountTypeKey;
     static const QString setupWizardCompletedKey;
     static const QString showNotificationsKey;
@@ -423,6 +443,7 @@ protected:
     static const QString fileTimeKey;
     static const QString lastExecutionTimeKey;
     static const QString excludedSyncNamesKey;
+    static const QString excludedSyncPathsKey;
     static const QString lastVersionKey;
     static const QString isCrashedKey;
     static const QString lastStatsRequestKey;

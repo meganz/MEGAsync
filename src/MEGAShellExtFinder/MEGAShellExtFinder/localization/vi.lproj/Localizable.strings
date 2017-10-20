@@ -1,0 +1,18 @@
+/* Finder context menu option to generate a public MEGA link */
+"Get MEGA link" = "Lấy đường liên kết MEGA";
+/* Finder context menu option to view a synced file through web browser within your MEGA account */
+"View on MEGA" = "Xem trên trang MEGA";
+/* Finder context menu label when no option is available for selected items */
+"No options available" = "Không có thao táo nào khả dụng";
+/* Tooltip for MEGA finder toolbar button */
+"Click the toolbar item for a menu." = "Click vào để hiện thêm menu các công cụ.";
+/* Context menu option label to indicate the user has selected a file */
+"1 file" = "1 tệp tin";
+/* Context menu option label to indicate the user has selected %i number of files */
+"%i files" = "%i tệp";
+/* Context menu option label to indicate the user has selected a folder */
+"1 folder" = "1 thư mục";
+/* Context menu option label to indicate the user has selected %i number of folders */
+"%i folders" = "%i thư mục";
+/*  */
+"View previous versions" = "Xem phiên bản trước đây";

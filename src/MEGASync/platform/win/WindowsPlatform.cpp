@@ -2,6 +2,14 @@
 #include <Shlobj.h>
 #include <Shlwapi.h>
 #include <tchar.h>
+#include <Aclapi.h>
+#include <AccCtrl.h>
+#include <comdef.h>
+#include <wincred.h>
+#include <taskschd.h>
+#include <Sddl.h>
+#include <time.h>
+#include <iostream>
 
 #if QT_VERSION >= 0x050200
 #include <QtWin>
@@ -52,9 +60,12 @@ SHSTDAPI SHGetSetFolderCustomSettings(_Inout_ LPSHFOLDERCUSTOMSETTINGS pfcs, _In
 
 WinShellDispatcherTask* WindowsPlatform::shellDispatcherTask = NULL;
 
+using namespace std;
+using namespace mega;
+
 void WindowsPlatform::initialize(int argc, char *argv[])
 {
-
+    CoInitializeEx(NULL, COINIT_MULTITHREADED);
 }
 
 bool WindowsPlatform::enableTrayIcon(QString executable)
@@ -63,7 +74,6 @@ bool WindowsPlatform::enableTrayIcon(QString executable)
     ITrayNotify *m_ITrayNotify;
     ITrayNotifyNew *m_ITrayNotifyNew;
 
-    CoInitialize(NULL);
     hr = CoCreateInstance (
           __uuidof (TrayNotify),
           NULL,
@@ -103,25 +113,26 @@ bool WindowsPlatform::enableTrayIcon(QString executable)
     return true;
 }
 
-void WindowsPlatform::notifyItemChange(QString path)
+void WindowsPlatform::notifyItemChange(std::string *localPath, int)
 {
-    if (path.isEmpty())
+    if (!localPath || !localPath->size())
     {
         return;
     }
 
-    if (path.startsWith(QString::fromAscii("\\\\?\\")))
+    std::string path = *localPath;
+    if (!memcmp(path.data(), L"\\\\?\\", 8))
     {
-        path = path.mid(4);
+        path = path.substr(8);
     }
 
+    path.append("", 1);
     if (path.length() >= MAX_PATH)
     {
         return;
     }
 
-    WCHAR *windowsPath = (WCHAR *)path.utf16();
-    SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, windowsPath, NULL);
+    SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH, path.data(), NULL);
 }
 
 //From http://msdn.microsoft.com/en-us/library/windows/desktop/bb776891.aspx
@@ -519,6 +530,45 @@ void WindowsPlatform::removeAllSyncsFromLeftPane()
     }
 }
 
+bool WindowsPlatform::makePubliclyReadable(LPTSTR fileName)
+{
+    bool result = false;
+    PACL pOldDACL = NULL, pNewDACL = NULL;
+    PSECURITY_DESCRIPTOR pSD = NULL;
+    DWORD sidSize = SECURITY_MAX_SID_SIZE;
+    EXPLICIT_ACCESS ea;
+
+    ZeroMemory(&ea, sizeof(EXPLICIT_ACCESS));
+    ea.grfAccessPermissions = GENERIC_READ | GENERIC_EXECUTE;
+    ea.grfAccessMode = GRANT_ACCESS;
+    ea.grfInheritance = NO_INHERITANCE;
+    ea.Trustee.TrusteeForm = TRUSTEE_IS_SID;
+    ea.Trustee.TrusteeType = TRUSTEE_IS_WELL_KNOWN_GROUP;
+    if (fileName
+            && (GetNamedSecurityInfo(fileName, SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL, &pOldDACL, NULL, &pSD) == ERROR_SUCCESS)
+            && (ea.Trustee.ptstrName = (LPWSTR)LocalAlloc(LMEM_FIXED, sidSize))
+            && CreateWellKnownSid(WinBuiltinUsersSid, NULL, ea.Trustee.ptstrName, &sidSize)
+            && (SetEntriesInAcl(1, &ea, pOldDACL, &pNewDACL) == ERROR_SUCCESS)
+            && (SetNamedSecurityInfo(fileName, SE_FILE_OBJECT, DACL_SECURITY_INFORMATION, NULL, NULL, pNewDACL, NULL) == ERROR_SUCCESS))
+    {
+        result = true;
+    }
+
+    if (ea.Trustee.ptstrName != NULL)
+    {
+        LocalFree(ea.Trustee.ptstrName);
+    }
+    if(pSD != NULL)
+    {
+        LocalFree((HLOCAL) pSD);
+    }
+    if(pNewDACL != NULL)
+    {
+        LocalFree((HLOCAL) pNewDACL);
+    }
+    return result;
+}
+
 bool WindowsPlatform::startOnStartup(bool value)
 {
     WCHAR path[MAX_PATH];
@@ -734,6 +784,21 @@ void WindowsPlatform::syncFolderRemoved(QString syncPath, QString syncName, QStr
     SHChangeNotify(SHCNE_UPDATEITEM, SHCNF_PATH | SHCNF_FLUSHNOWAIT, syncPath.utf16(), NULL);
 }
 
+void WindowsPlatform::notifyRestartSyncFolders()
+{
+
+}
+
+void WindowsPlatform::notifyAllSyncFoldersAdded()
+{
+
+}
+
+void WindowsPlatform::notifyAllSyncFoldersRemoved()
+{
+
+}
+
 QByteArray WindowsPlatform::encrypt(QByteArray data, QByteArray key)
 {
     DATA_BLOB dataIn;
@@ -932,7 +997,260 @@ void WindowsPlatform::activateBackgroundWindow(QDialog *window)
     }
 }
 
+LPTSTR WindowsPlatform::getCurrentSid()
+{
+    HANDLE hTok = NULL;
+    LPBYTE buf = NULL;
+    DWORD  dwSize = 0;
+    LPTSTR stringSID = NULL;
+    if (OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &hTok))
+    {
+        GetTokenInformation(hTok, TokenUser, NULL, 0, &dwSize);
+        if (dwSize)
+        {
+            buf = (LPBYTE)LocalAlloc(LPTR, dwSize);
+            if (GetTokenInformation(hTok, TokenUser, buf, dwSize, &dwSize))
+            {
+                ConvertSidToStringSid(((PTOKEN_USER)buf)->User.Sid, &stringSID);
+            }
+            LocalFree(buf);
+        }
+        CloseHandle(hTok);
+    }
+    return stringSID;
+}
+
+bool WindowsPlatform::registerUpdateJob()
+{
+    ITaskService *pService = NULL;
+    ITaskFolder *pRootFolder = NULL;
+    ITaskFolder *pMEGAFolder = NULL;
+    ITaskDefinition *pTask = NULL;
+    IRegistrationInfo *pRegInfo = NULL;
+    IPrincipal *pPrincipal = NULL;
+    ITaskSettings *pSettings = NULL;
+    IIdleSettings *pIdleSettings = NULL;
+    ITriggerCollection *pTriggerCollection = NULL;
+    ITrigger *pTrigger = NULL;
+    IDailyTrigger *pCalendarTrigger = NULL;
+    IRepetitionPattern *pRepetitionPattern = NULL;
+    IActionCollection *pActionCollection = NULL;
+    IAction *pAction = NULL;
+    IExecAction *pExecAction = NULL;
+    IRegisteredTask *pRegisteredTask = NULL;
+    time_t currentTime;
+    struct tm* currentTimeInfo;
+    WCHAR currentTimeString[128];
+    _bstr_t taskBaseName = L"MEGAsync Update Task ";
+    LPTSTR stringSID = NULL;
+    bool success = false;
+
+    stringSID = getCurrentSid();
+    if (!stringSID)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Unable to get the current SID");
+        return false;
+    }
+
+    time(&currentTime);
+    currentTimeInfo = localtime(&currentTime);
+    wcsftime(currentTimeString, 128,  L"%Y-%m-%dT%H:%M:%S", currentTimeInfo);
+    _bstr_t taskName = taskBaseName + stringSID;
+    _bstr_t userId = stringSID;
+    LocalFree(stringSID);
+    QString MEGAupdaterPath = QDir::toNativeSeparators(QDir(MegaApplication::applicationDirPath()).filePath(QString::fromUtf8("MEGAupdater.exe")));
+
+    if (SUCCEEDED(CoInitializeSecurity(NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT_PRIVACY, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, 0, NULL))
+            && SUCCEEDED(CoCreateInstance(CLSID_TaskScheduler, NULL, CLSCTX_INPROC_SERVER, IID_ITaskService, (void**)&pService))
+            && SUCCEEDED(pService->Connect(_variant_t(), _variant_t(), _variant_t(), _variant_t()))
+            && SUCCEEDED(pService->GetFolder(_bstr_t( L"\\"), &pRootFolder)))
+    {
+        if (pRootFolder->CreateFolder(_bstr_t(L"MEGA"), _variant_t(L""), &pMEGAFolder) == 0x800700b7)
+        {
+            pRootFolder->GetFolder(_bstr_t(L"MEGA"), &pMEGAFolder);
+        }
+
+        if (pMEGAFolder
+                && SUCCEEDED(pService->NewTask(0, &pTask))
+                && SUCCEEDED(pTask->get_RegistrationInfo(&pRegInfo))
+                && SUCCEEDED(pRegInfo->put_Author(_bstr_t(L"MEGA Limited")))
+                && SUCCEEDED(pTask->get_Principal(&pPrincipal))
+                && SUCCEEDED(pPrincipal->put_Id(_bstr_t(L"Principal1")))
+                && SUCCEEDED(pPrincipal->put_LogonType(TASK_LOGON_INTERACTIVE_TOKEN))
+                && SUCCEEDED(pPrincipal->put_RunLevel(TASK_RUNLEVEL_LUA))
+                && SUCCEEDED(pPrincipal->put_UserId(userId))
+                && SUCCEEDED(pTask->get_Settings(&pSettings))
+                && SUCCEEDED(pSettings->put_StartWhenAvailable(VARIANT_TRUE))
+                && SUCCEEDED(pSettings->put_DisallowStartIfOnBatteries(VARIANT_FALSE))
+                && SUCCEEDED(pSettings->get_IdleSettings(&pIdleSettings))
+                && SUCCEEDED(pIdleSettings->put_StopOnIdleEnd(VARIANT_FALSE))
+                && SUCCEEDED(pIdleSettings->put_RestartOnIdle(VARIANT_FALSE))
+                && SUCCEEDED(pIdleSettings->put_WaitTimeout(_bstr_t()))
+                && SUCCEEDED(pIdleSettings->put_IdleDuration(_bstr_t()))
+                && SUCCEEDED(pTask->get_Triggers(&pTriggerCollection))
+                && SUCCEEDED(pTriggerCollection->Create(TASK_TRIGGER_DAILY, &pTrigger))
+                && SUCCEEDED(pTrigger->QueryInterface(IID_IDailyTrigger, (void**) &pCalendarTrigger))
+                && SUCCEEDED(pCalendarTrigger->put_Id(_bstr_t(L"Trigger1")))
+                && SUCCEEDED(pCalendarTrigger->put_DaysInterval(1))
+                && SUCCEEDED(pCalendarTrigger->put_StartBoundary(_bstr_t(currentTimeString)))
+                && SUCCEEDED(pCalendarTrigger->get_Repetition(&pRepetitionPattern))
+                && SUCCEEDED(pRepetitionPattern->put_Duration(_bstr_t(L"P1D")))
+                && SUCCEEDED(pRepetitionPattern->put_Interval(_bstr_t(L"PT2H")))
+                && SUCCEEDED(pRepetitionPattern->put_StopAtDurationEnd(VARIANT_FALSE))
+                && SUCCEEDED(pTask->get_Actions(&pActionCollection))
+                && SUCCEEDED(pActionCollection->Create(TASK_ACTION_EXEC, &pAction))
+                && SUCCEEDED(pAction->QueryInterface(IID_IExecAction, (void**)&pExecAction))
+                && SUCCEEDED(pExecAction->put_Path(_bstr_t((wchar_t *)MEGAupdaterPath.utf16()))))
+        {
+            if (SUCCEEDED(pMEGAFolder->RegisterTaskDefinition(taskName, pTask,
+                    TASK_CREATE_OR_UPDATE, _variant_t(), _variant_t(),
+                    TASK_LOGON_INTERACTIVE_TOKEN, _variant_t(L""),
+                    &pRegisteredTask)))
+            {
+                success = true;
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Update task registered OK");
+            }
+            else
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error registering update task");
+            }
+        }
+        else
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error creating update task");
+        }
+    }
+    else
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error getting root task folder");
+    }
+
+    if (pRegisteredTask)
+    {
+        pRegisteredTask->Release();
+    }
+    if (pTrigger)
+    {
+        pTrigger->Release();
+    }
+    if (pTriggerCollection)
+    {
+        pTriggerCollection->Release();
+    }
+    if (pIdleSettings)
+    {
+        pIdleSettings->Release();
+    }
+    if (pSettings)
+    {
+        pSettings->Release();
+    }
+    if (pPrincipal)
+    {
+        pPrincipal->Release();
+    }
+    if (pRegInfo)
+    {
+        pRegInfo->Release();
+    }
+    if (pCalendarTrigger)
+    {
+        pCalendarTrigger->Release();
+    }
+    if (pAction)
+    {
+        pAction->Release();
+    }
+    if (pActionCollection)
+    {
+        pActionCollection->Release();
+    }
+    if (pRepetitionPattern)
+    {
+        pRepetitionPattern->Release();
+    }
+    if (pExecAction)
+    {
+        pExecAction->Release();
+    }
+    if (pTask)
+    {
+        pTask->Release();
+    }
+    if (pMEGAFolder)
+    {
+        pMEGAFolder->Release();
+    }
+    if (pRootFolder)
+    {
+        pRootFolder->Release();
+    }
+    if (pService)
+    {
+        pService->Release();
+    }
+
+    return success;
+}
+
+void WindowsPlatform::execBackgroundWindow(QDialog *window)
+{
+    DWORD currentThreadId = GetCurrentThreadId();
+    DWORD foregroundThreadId;
+    HWND foregroundWindow;
+    bool threadAttached = false;
+
+    if (QGuiApplication::applicationState() != Qt::ApplicationActive
+        && (foregroundWindow = GetForegroundWindow())
+        && (foregroundThreadId = GetWindowThreadProcessId(foregroundWindow, NULL))
+        && (foregroundThreadId != currentThreadId))
+    {
+        threadAttached = AttachThreadInput(foregroundThreadId, currentThreadId, TRUE);
+    }
+    window->exec();
+    if (threadAttached)
+    {
+        AttachThreadInput(foregroundThreadId, currentThreadId, FALSE);
+    }
+}
+
 void WindowsPlatform::uninstall()
 {
     removeAllSyncsFromLeftPane();
+
+    ITaskService *pService = NULL;
+    ITaskFolder *pRootFolder = NULL;
+    ITaskFolder *pMEGAFolder = NULL;
+    _bstr_t taskBaseName = L"MEGAsync Update Task ";
+    LPTSTR stringSID = NULL;
+
+    stringSID = getCurrentSid();
+    if (!stringSID)
+    {
+        return;
+    }
+    _bstr_t taskName = taskBaseName + stringSID;
+
+    if (SUCCEEDED(CoInitializeSecurity(NULL, -1, NULL, NULL, RPC_C_AUTHN_LEVEL_PKT_PRIVACY, RPC_C_IMP_LEVEL_IMPERSONATE, NULL, 0, NULL))
+            && SUCCEEDED(CoCreateInstance(CLSID_TaskScheduler, NULL, CLSCTX_INPROC_SERVER, IID_ITaskService, (void**)&pService))
+            && SUCCEEDED(pService->Connect(_variant_t(), _variant_t(), _variant_t(), _variant_t()))
+            && SUCCEEDED(pService->GetFolder(_bstr_t( L"\\"), &pRootFolder)))
+    {
+        if (pRootFolder->CreateFolder(_bstr_t(L"MEGA"), _variant_t(L""), &pMEGAFolder) == 0x800700b7)
+        {
+            pRootFolder->GetFolder(_bstr_t(L"MEGA"), &pMEGAFolder);
+        }
+
+        if (pMEGAFolder)
+        {
+            pMEGAFolder->DeleteTask(taskName, 0);
+            pMEGAFolder->Release();
+        }
+        pRootFolder->Release();
+    }
+
+    if (pService)
+    {
+        pService->Release();
+    }
 }

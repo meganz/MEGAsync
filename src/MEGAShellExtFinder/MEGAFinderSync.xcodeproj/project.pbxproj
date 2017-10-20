@@ -1,0 +1,570 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7724ACEE1E76C54D00A5F0CC /* ShellExt.m in Sources */ = {isa = PBXBuildFile; fileRef = 7724ACED1E76C54D00A5F0CC /* ShellExt.m */; };
+		7730A99E1EC22C8A003F1B80 /* context-ico.icns in Resources */ = {isa = PBXBuildFile; fileRef = 7730A99D1EC22C8A003F1B80 /* context-ico.icns */; };
+		7743FC2A1E72B2D4005E42F9 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7743FC291E72B2D4005E42F9 /* main.m */; };
+		7743FC401E72C6B7005E42F9 /* FinderSync.mm in Sources */ = {isa = PBXBuildFile; fileRef = 7743FC3F1E72C6B7005E42F9 /* FinderSync.mm */; };
+		7743FC441E72C6B7005E42F9 /* MEGAShellExtFinder.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 7743FC3A1E72C6B7005E42F9 /* MEGAShellExtFinder.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		77AEE0881EC5D78E00393191 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7720E8361EC489CB00D86B75 /* Localizable.strings */; };
+		77C44D501F796D1F004308C6 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 77C44D4F1F796D1F004308C6 /* Media.xcassets */; };
+		77C807921E82E30D00064263 /* error.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 77C8078C1E82E30D00064263 /* error.iconset */; };
+		77C807941E82E30E00064263 /* ok.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 77C8078E1E82E30D00064263 /* ok.iconset */; };
+		77C807961E82E30E00064263 /* sync.iconset in Resources */ = {isa = PBXBuildFile; fileRef = 77C807901E82E30D00064263 /* sync.iconset */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7743FC421E72C6B7005E42F9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7743FC1A1E72B2D4005E42F9 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7743FC391E72C6B7005E42F9;
+			remoteInfo = MEGAShellExtFinder;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7743FC481E72C6B7005E42F9 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				7743FC441E72C6B7005E42F9 /* MEGAShellExtFinder.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		7710EA7E1E770C3B00B4E00F /* Interfaces.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Interfaces.h; sourceTree = "<group>"; };
+		7720E8351EC489CB00D86B75 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7720E83C1EC48CEE00D86B75 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7724ACEC1E76C54D00A5F0CC /* ShellExt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShellExt.h; sourceTree = "<group>"; };
+		7724ACED1E76C54D00A5F0CC /* ShellExt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShellExt.m; sourceTree = "<group>"; };
+		7730A99D1EC22C8A003F1B80 /* context-ico.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "context-ico.icns"; path = "icons/context-ico.icns"; sourceTree = "<group>"; };
+		7743FC221E72B2D4005E42F9 /* megasync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = megasync.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7743FC291E72B2D4005E42F9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7743FC301E72B2D4005E42F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7743FC3A1E72C6B7005E42F9 /* MEGAShellExtFinder.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = MEGAShellExtFinder.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		7743FC3D1E72C6B7005E42F9 /* MEGAShellExtFinder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MEGAShellExtFinder.entitlements; sourceTree = "<group>"; };
+		7743FC3E1E72C6B7005E42F9 /* FinderSync.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FinderSync.h; sourceTree = "<group>"; };
+		7743FC3F1E72C6B7005E42F9 /* FinderSync.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FinderSync.mm; sourceTree = "<group>"; };
+		7743FC411E72C6B7005E42F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		776012FE1ED731AF0030686E /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
+		776013001ED731C10030686E /* bg */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = bg; path = bg.lproj/Localizable.strings; sourceTree = "<group>"; };
+		776013021ED732440030686E /* cs */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = cs; path = cs.lproj/Localizable.strings; sourceTree = "<group>"; };
+		776013041ED732540030686E /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7760130A1ED733080030686E /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7760130C1ED733100030686E /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		776013101ED733500030686E /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/Localizable.strings; sourceTree = "<group>"; };
+		776013121ED7335A0030686E /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
+		776013141ED7336A0030686E /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
+		776013161ED733790030686E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		776013181ED733810030686E /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7760131C1ED733D50030686E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7760131E1ED733DD0030686E /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		776013201ED733F50030686E /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		776013221ED734050030686E /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		776013241ED7340D0030686E /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		776013261ED7342D0030686E /* ro */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ro; path = ro.lproj/Localizable.strings; sourceTree = "<group>"; };
+		776013281ED7343F0030686E /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7760132A1ED7345E0030686E /* sl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sl; path = sl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7760132C1ED7346F0030686E /* sr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sr; path = sr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7760132E1ED734760030686E /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/Localizable.strings; sourceTree = "<group>"; };
+		776013301ED7347F0030686E /* th */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = th; path = th.lproj/Localizable.strings; sourceTree = "<group>"; };
+		776013321ED734A40030686E /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		776013341ED734AD0030686E /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		776013361ED734B60030686E /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		776013381ED734C80030686E /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		7760133A1ED734D50030686E /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		7760133C1ED734F20030686E /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		77C44D4F1F796D1F004308C6 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Media.xcassets; path = icons/Media.xcassets; sourceTree = "<group>"; };
+		77C8078C1E82E30D00064263 /* error.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = error.iconset; path = icons/error.iconset; sourceTree = "<group>"; };
+		77C8078E1E82E30D00064263 /* ok.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = ok.iconset; path = icons/ok.iconset; sourceTree = "<group>"; };
+		77C807901E82E30D00064263 /* sync.iconset */ = {isa = PBXFileReference; lastKnownFileType = folder.iconset; name = sync.iconset; path = icons/sync.iconset; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7743FC1F1E72B2D4005E42F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7743FC371E72C6B7005E42F9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		7724ACEB1E76C51C00A5F0CC /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				7724ACED1E76C54D00A5F0CC /* ShellExt.m */,
+				7724ACEC1E76C54D00A5F0CC /* ShellExt.h */,
+				7710EA7E1E770C3B00B4E00F /* Interfaces.h */,
+			);
+			name = utils;
+			sourceTree = "<group>";
+		};
+		7743FC191E72B2D4005E42F9 = {
+			isa = PBXGroup;
+			children = (
+				7743FC241E72B2D4005E42F9 /* megaextension */,
+				7743FC3B1E72C6B7005E42F9 /* MEGAShellExtFinder */,
+				7743FC231E72B2D4005E42F9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7743FC231E72B2D4005E42F9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7743FC221E72B2D4005E42F9 /* megasync.app */,
+				7743FC3A1E72C6B7005E42F9 /* MEGAShellExtFinder.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		7743FC241E72B2D4005E42F9 /* megaextension */ = {
+			isa = PBXGroup;
+			children = (
+				7743FC281E72B2D4005E42F9 /* Supporting Files */,
+			);
+			path = megaextension;
+			sourceTree = "<group>";
+		};
+		7743FC281E72B2D4005E42F9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7743FC301E72B2D4005E42F9 /* Info.plist */,
+				7743FC291E72B2D4005E42F9 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7743FC3B1E72C6B7005E42F9 /* MEGAShellExtFinder */ = {
+			isa = PBXGroup;
+			children = (
+				7724ACEB1E76C51C00A5F0CC /* utils */,
+				7743FC3E1E72C6B7005E42F9 /* FinderSync.h */,
+				7743FC3F1E72C6B7005E42F9 /* FinderSync.mm */,
+				7743FC411E72C6B7005E42F9 /* Info.plist */,
+				7720E8361EC489CB00D86B75 /* Localizable.strings */,
+				7743FC3C1E72C6B7005E42F9 /* Supporting Files */,
+			);
+			path = MEGAShellExtFinder;
+			sourceTree = "<group>";
+		};
+		7743FC3C1E72C6B7005E42F9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7730A99D1EC22C8A003F1B80 /* context-ico.icns */,
+				77C8078C1E82E30D00064263 /* error.iconset */,
+				77C8078E1E82E30D00064263 /* ok.iconset */,
+				77C807901E82E30D00064263 /* sync.iconset */,
+				7743FC3D1E72C6B7005E42F9 /* MEGAShellExtFinder.entitlements */,
+				77C44D4F1F796D1F004308C6 /* Media.xcassets */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		7743FC211E72B2D4005E42F9 /* megasync */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7743FC331E72B2D4005E42F9 /* Build configuration list for PBXNativeTarget "megasync" */;
+			buildPhases = (
+				7743FC1E1E72B2D4005E42F9 /* Sources */,
+				7743FC1F1E72B2D4005E42F9 /* Frameworks */,
+				7743FC201E72B2D4005E42F9 /* Resources */,
+				7743FC481E72C6B7005E42F9 /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7743FC431E72C6B7005E42F9 /* PBXTargetDependency */,
+			);
+			name = megasync;
+			productName = megaextension;
+			productReference = 7743FC221E72B2D4005E42F9 /* megasync.app */;
+			productType = "com.apple.product-type.application";
+		};
+		7743FC391E72C6B7005E42F9 /* MEGAShellExtFinder */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7743FC451E72C6B7005E42F9 /* Build configuration list for PBXNativeTarget "MEGAShellExtFinder" */;
+			buildPhases = (
+				7743FC361E72C6B7005E42F9 /* Sources */,
+				7743FC371E72C6B7005E42F9 /* Frameworks */,
+				7743FC381E72C6B7005E42F9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MEGAShellExtFinder;
+			productName = MEGAShellExtFinder;
+			productReference = 7743FC3A1E72C6B7005E42F9 /* MEGAShellExtFinder.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7743FC1A1E72B2D4005E42F9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Mega Ltd";
+				TargetAttributes = {
+					7743FC211E72B2D4005E42F9 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = T9RH74Y7L9;
+						ProvisioningStyle = Manual;
+					};
+					7743FC391E72C6B7005E42F9 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = T9RH74Y7L9;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 7743FC1D1E72B2D4005E42F9 /* Build configuration list for PBXProject "MEGAFinderSync" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				es,
+				ar,
+				bg,
+				cs,
+				de,
+				fi,
+				fr,
+				hu,
+				id,
+				he,
+				it,
+				ja,
+				ko,
+				nl,
+				pl,
+				"pt-BR",
+				"pt-PT",
+				ro,
+				ru,
+				sl,
+				sr,
+				sv,
+				th,
+				tr,
+				uk,
+				vi,
+				"zh-Hans",
+				"zh-Hant",
+				sk,
+			);
+			mainGroup = 7743FC191E72B2D4005E42F9;
+			productRefGroup = 7743FC231E72B2D4005E42F9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				7743FC211E72B2D4005E42F9 /* megasync */,
+				7743FC391E72C6B7005E42F9 /* MEGAShellExtFinder */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7743FC201E72B2D4005E42F9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7743FC381E72C6B7005E42F9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				77C807941E82E30E00064263 /* ok.iconset in Resources */,
+				77AEE0881EC5D78E00393191 /* Localizable.strings in Resources */,
+				77C44D501F796D1F004308C6 /* Media.xcassets in Resources */,
+				77C807921E82E30D00064263 /* error.iconset in Resources */,
+				7730A99E1EC22C8A003F1B80 /* context-ico.icns in Resources */,
+				77C807961E82E30E00064263 /* sync.iconset in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7743FC1E1E72B2D4005E42F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7743FC2A1E72B2D4005E42F9 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7743FC361E72C6B7005E42F9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7724ACEE1E76C54D00A5F0CC /* ShellExt.m in Sources */,
+				7743FC401E72C6B7005E42F9 /* FinderSync.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7743FC431E72C6B7005E42F9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7743FC391E72C6B7005E42F9 /* MEGAShellExtFinder */;
+			targetProxy = 7743FC421E72C6B7005E42F9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7720E8361EC489CB00D86B75 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7720E8351EC489CB00D86B75 /* Base */,
+				7720E83C1EC48CEE00D86B75 /* es */,
+				776012FE1ED731AF0030686E /* ar */,
+				776013001ED731C10030686E /* bg */,
+				776013021ED732440030686E /* cs */,
+				776013041ED732540030686E /* de */,
+				7760130A1ED733080030686E /* fi */,
+				7760130C1ED733100030686E /* fr */,
+				776013101ED733500030686E /* hu */,
+				776013121ED7335A0030686E /* id */,
+				776013141ED7336A0030686E /* he */,
+				776013161ED733790030686E /* it */,
+				776013181ED733810030686E /* ja */,
+				7760131C1ED733D50030686E /* ko */,
+				7760131E1ED733DD0030686E /* nl */,
+				776013201ED733F50030686E /* pl */,
+				776013221ED734050030686E /* pt-BR */,
+				776013241ED7340D0030686E /* pt-PT */,
+				776013261ED7342D0030686E /* ro */,
+				776013281ED7343F0030686E /* ru */,
+				7760132A1ED7345E0030686E /* sl */,
+				7760132C1ED7346F0030686E /* sr */,
+				7760132E1ED734760030686E /* sv */,
+				776013301ED7347F0030686E /* th */,
+				776013321ED734A40030686E /* tr */,
+				776013341ED734AD0030686E /* uk */,
+				776013361ED734B60030686E /* vi */,
+				776013381ED734C80030686E /* zh-Hans */,
+				7760133A1ED734D50030686E /* zh-Hant */,
+				7760133C1ED734F20030686E /* sk */,
+			);
+			name = Localizable.strings;
+			path = localization;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7743FC311E72B2D4005E42F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		7743FC321E72B2D4005E42F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		7743FC341E72B2D4005E42F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				INFOPLIST_FILE = megaextension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mega.mac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		7743FC351E72B2D4005E42F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				INFOPLIST_FILE = megaextension/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = mega.mac;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		7743FC461E72C6B7005E42F9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MEGAShellExtFinder/MEGAShellExtFinder.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				INFOPLIST_FILE = MEGAShellExtFinder/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.mac.MEGAShellExtFinder;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		7743FC471E72C6B7005E42F9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = MEGAShellExtFinder/MEGAShellExtFinder.entitlements;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = T9RH74Y7L9;
+				INFOPLIST_FILE = MEGAShellExtFinder/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @executable_path/../../../../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = mega.mac.MEGAShellExtFinder;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7743FC1D1E72B2D4005E42F9 /* Build configuration list for PBXProject "MEGAFinderSync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7743FC311E72B2D4005E42F9 /* Debug */,
+				7743FC321E72B2D4005E42F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7743FC331E72B2D4005E42F9 /* Build configuration list for PBXNativeTarget "megasync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7743FC341E72B2D4005E42F9 /* Debug */,
+				7743FC351E72B2D4005E42F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7743FC451E72C6B7005E42F9 /* Build configuration list for PBXNativeTarget "MEGAShellExtFinder" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7743FC461E72C6B7005E42F9 /* Debug */,
+				7743FC471E72C6B7005E42F9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7743FC1A1E72B2D4005E42F9 /* Project object */;
+}

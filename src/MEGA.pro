@@ -7,6 +7,7 @@ CONFIG(debug, debug|release) {
 }
 
 win32 {
+    SUBDIRS += MEGAUpdater
     SUBDIRS += MEGACrashAnalyzer
     CONFIG(with_ext) {
         SUBDIRS += MEGAShellExt
@@ -23,11 +24,12 @@ unix:!macx {
 }
 
 macx {
+    SUBDIRS += MEGAUpdater
     SUBDIRS += MEGALoader
 }
 
 CONFIG(with_updater) {
-    SUBDIRS += MEGAUpdater
+    SUBDIRS += MEGAUpdateGenerator
 }
 
 CONFIG(with_tools) {

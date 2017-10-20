@@ -3,6 +3,7 @@
 
 #include "MacXFunctions.h"
 #include "MacXSystemServiceTask.h"
+#include "MacXExtServer.h"
 
 #include <QApplication>
 #include <QString>
@@ -20,25 +21,36 @@ private:
     MacXPlatform() {}
     static bool enableSetuidBit();
     static MacXSystemServiceTask *systemServiceTask;
+    static MacXExtServer *extServer;
 
 public:
     static void initialize(int argc, char *argv[]);
     static QStringList multipleUpload(QString uploadTitle);
     static bool enableTrayIcon(QString executable);
-    static void notifyItemChange(QString path);
+    static void notifyItemChange(std::string *localPath, int newState);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
+    static void addFinderExtensionToSystem();
+    static bool isFinderExtensionEnabled();
+    static void reinstallFinderExtension();
+    static void reloadFinderExtension();
+    static void enableFinderExtension(bool value);
     static void showInFolder(QString pathIn);
     static void startShellDispatcher(MegaApplication *receiver);
     static void stopShellDispatcher();
     static void syncFolderAdded(QString syncPath, QString syncName, QString syncID);
     static void syncFolderRemoved(QString syncPath, QString syncName, QString syncID);
+    static void notifyRestartSyncFolders();
+    static void notifyAllSyncFoldersAdded();
+    static void notifyAllSyncFoldersRemoved();
     static QByteArray encrypt(QByteArray data, QByteArray key);
     static QByteArray decrypt(QByteArray data, QByteArray key);
     static QByteArray getLocalStorageKey();
     static QString getDefaultOpenApp(QString extension);
     static void enableDialogBlur(QDialog *dialog);
     static void activateBackgroundWindow(QDialog *window);
+    static bool registerUpdateJob();
+    static void execBackgroundWindow(QDialog *window);
     static void uninstall();
 
     static int fd;

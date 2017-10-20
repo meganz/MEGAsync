@@ -177,7 +177,7 @@ void CPUFillFromThreadInfo(MDRawContextX86 *out,
 // Juggle an x86 ucontext into minidump format
 //   out: the minidump structure
 //   info: the collection of register structures.
-void CPUFillFromUContext(MDRawContextX86 *out, const ucontext *uc,
+void CPUFillFromUContext(MDRawContextX86 *out, const ucontext_t *uc,
                          const struct _libc_fpstate* fp) {
   const greg_t* regs = uc->uc_mcontext.gregs;
 
@@ -277,7 +277,7 @@ void CPUFillFromThreadInfo(MDRawContextAMD64 *out,
   my_memcpy(&out->flt_save.xmm_registers, &info.fpregs.xmm_space, 16 * 16);
 }
 
-void CPUFillFromUContext(MDRawContextAMD64 *out, const ucontext *uc,
+void CPUFillFromUContext(MDRawContextAMD64 *out, const ucontext_t *uc,
                          const struct _libc_fpstate* fpregs) {
   const greg_t* regs = uc->uc_mcontext.gregs;
 
@@ -344,7 +344,7 @@ void CPUFillFromThreadInfo(MDRawContextARM* out,
 #endif
 }
 
-void CPUFillFromUContext(MDRawContextARM* out, const ucontext* uc,
+void CPUFillFromUContext(MDRawContextARM* out, const ucontext_t* uc,
                          const struct _libc_fpstate* fpregs) {
   out->context_flags = MD_CONTEXT_ARM_FULL;
 
@@ -405,7 +405,7 @@ static void CPUFillFromThreadInfo(MDRawContextMIPS* out,
   out->float_save.fir = info.fpregs.fir;
 }
 
-static void CPUFillFromUContext(MDRawContextMIPS* out, const ucontext* uc,
+static void CPUFillFromUContext(MDRawContextMIPS* out, const ucontext_t* uc,
                                 const struct _libc_fpstate* fpregs) {
   out->context_flags = MD_CONTEXT_MIPS_FULL;
 
@@ -1725,7 +1725,7 @@ class MinidumpWriter {
   const int fd_;  // File descriptor where the minidum should be written.
   const char* path_;  // Path to the file where the minidum should be written.
 
-  const struct ucontext* const ucontext_;  // also from the signal handler
+  const ucontext_t* const ucontext_;  // also from the signal handler
   const struct _libc_fpstate* const float_state_;  // ditto
   LinuxDumper* dumper_;
   MinidumpFileWriter minidump_writer_;

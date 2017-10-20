@@ -1,7 +1,14 @@
 #include "MacXPlatform.h"
+#include <unistd.h>
+
+using namespace std;
 
 int MacXPlatform::fd = -1;
 MacXSystemServiceTask* MacXPlatform::systemServiceTask = NULL;
+MacXExtServer *MacXPlatform::extServer = NULL;
+
+static const QString kFinderSyncBundleId = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
+static const QString kFinderSyncPath = QString::fromUtf8("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/");
 
 void MacXPlatform::initialize(int argc, char *argv[])
 {
@@ -53,9 +60,12 @@ bool MacXPlatform::enableTrayIcon(QString executable)
     return false;
 }
 
-void MacXPlatform::notifyItemChange(QString path)
+void MacXPlatform::notifyItemChange(string *localPath, int newState)
 {
-
+    if (extServer && localPath && localPath->size())
+    {
+        extServer->notifyItemChange(localPath, newState);
+    }
 }
 
 bool MacXPlatform::startOnStartup(bool value)
@@ -66,6 +76,88 @@ bool MacXPlatform::startOnStartup(bool value)
 bool MacXPlatform::isStartOnStartupActive()
 {
     return isStartAtLoginActive();
+}
+
+void MacXPlatform::addFinderExtensionToSystem()
+{
+    QStringList scriptArgs;
+    scriptArgs << QString::fromUtf8("-a")
+               << kFinderSyncPath;
+
+    QProcess::startDetached(QString::fromUtf8("pluginkit"), scriptArgs);
+}
+
+bool MacXPlatform::isFinderExtensionEnabled()
+{
+    QStringList scriptArgs;
+    scriptArgs << QString::fromUtf8("-m")
+               << QString::fromUtf8("-i")
+               << kFinderSyncBundleId;
+
+    QProcess p;
+    p.start(QString::fromAscii("pluginkit"), scriptArgs);
+    if (!p.waitForFinished(2000))
+    {
+        return false;
+    }
+
+    QString out = QString::fromUtf8(p.readAllStandardOutput().trimmed());
+    if (out.isEmpty())
+    {
+        return false;
+    }
+
+    if (out.at(0) != QChar::fromAscii('?') && out.at(0) != QChar::fromAscii('+'))
+    {
+        return false;
+    }
+
+    return true;
+}
+
+void MacXPlatform::reinstallFinderExtension()
+{
+    QStringList scriptArgs;
+    scriptArgs << QString::fromUtf8("-r")
+               << kFinderSyncPath;
+
+    QProcess::startDetached(QString::fromUtf8("pluginkit"), scriptArgs);
+}
+
+void MacXPlatform::reloadFinderExtension()
+{
+    bool finderExtEnabled = isFinderExtensionEnabled();
+    if (!finderExtEnabled) // No need to reload, extension is currenctly disabled and next time user enable it, it will launch updated version
+    {
+        return;
+    }
+
+    QStringList scriptArgs;
+    scriptArgs << QString::fromUtf8("-e")
+               << QString::fromUtf8("tell application \"MEGAShellExtFinder\" to quit");
+
+    QProcess p;
+    p.start(QString::fromAscii("osascript"), scriptArgs);
+    if (!p.waitForFinished(2000))
+    {
+        return;
+    }
+
+    scriptArgs.clear();
+    scriptArgs << QString::fromUtf8("-c")
+               << QString::fromUtf8("pluginkit -e ignore -i mega.mac.MEGAShellExtFinder && pluginkit -e use -i mega.mac.MEGAShellExtFinder");
+    QProcess::startDetached(QString::fromUtf8("bash"), scriptArgs);
+}
+
+void MacXPlatform::enableFinderExtension(bool value)
+{
+    QStringList scriptArgs;
+    scriptArgs << QString::fromUtf8("-e")
+               << (value ? QString::fromUtf8("use") : QString::fromUtf8("ignore")) //Enable or disable extension plugin
+               << QString::fromUtf8("-i")
+               << kFinderSyncBundleId;
+
+    QProcess::startDetached(QString::fromUtf8("pluginkit"), scriptArgs);
 }
 
 void MacXPlatform::showInFolder(QString pathIn)
@@ -82,29 +174,74 @@ void MacXPlatform::showInFolder(QString pathIn)
 
 void MacXPlatform::startShellDispatcher(MegaApplication *receiver)
 {
-    if (systemServiceTask)
+    if (!systemServiceTask)
     {
-        return;
+        systemServiceTask = new MacXSystemServiceTask(receiver);
     }
 
-    systemServiceTask = new MacXSystemServiceTask(receiver);
+    if (!extServer)
+    {
+        extServer = new MacXExtServer(receiver);
+    }
 }
 
 void MacXPlatform::stopShellDispatcher()
 {
+    if (systemServiceTask)
+    {
+        delete systemServiceTask;
+        systemServiceTask = NULL;
+    }
 
+    if (extServer)
+    {
+        delete extServer;
+        extServer = NULL;
+    }
 }
 
 void MacXPlatform::syncFolderAdded(QString syncPath, QString syncName, QString syncID)
 {
     addPathToPlaces(syncPath,syncName);
     setFolderIcon(syncPath);
+
+    if (extServer)
+    {
+        extServer->notifySyncAdd(syncPath, syncName);
+    }
 }
 
 void MacXPlatform::syncFolderRemoved(QString syncPath, QString syncName, QString syncID)
 {
     removePathFromPlaces(syncPath);
     unSetFolderIcon(syncPath);
+
+    if (extServer)
+    {
+        extServer->notifySyncDel(syncPath, syncName);
+    }
+}
+
+void MacXPlatform::notifyRestartSyncFolders()
+{
+    notifyAllSyncFoldersRemoved();
+    notifyAllSyncFoldersAdded();
+}
+
+void MacXPlatform::notifyAllSyncFoldersAdded()
+{
+    if (extServer)
+    {
+        extServer->notifyAllClients(MacXExtServer::NOTIFY_ADD_SYNCS);
+    }
+}
+
+void MacXPlatform::notifyAllSyncFoldersRemoved()
+{
+    if (extServer)
+    {
+        extServer->notifyAllClients(MacXExtServer::NOTIFY_DEL_SYNCS);
+    }
 }
 
 QByteArray MacXPlatform::encrypt(QByteArray data, QByteArray key)
@@ -135,10 +272,10 @@ void MacXPlatform::enableDialogBlur(QDialog *dialog)
 bool MacXPlatform::enableSetuidBit()
 {
     QString command = QString::fromUtf8("do shell script \"chown root /Applications/MEGAsync.app/Contents/MacOS/MEGAsync && chmod 4755 /Applications/MEGAsync.app/Contents/MacOS/MEGAsync && echo true\"");
-    char *response = runWithRootPrivileges((char *)command.toStdString().c_str());
+    char *response = runWithRootPrivileges((char *)command.toUtf8().constData());
     if (!response)
     {
-        return NULL;
+        return false;
     }
     bool result = strlen(response) >= 4 && !strncmp(response, "true", 4);
     delete response;
@@ -148,6 +285,16 @@ bool MacXPlatform::enableSetuidBit()
 void MacXPlatform::activateBackgroundWindow(QDialog *)
 {
 
+}
+
+bool MacXPlatform::registerUpdateJob()
+{
+    return registerUpdateDaemon();
+}
+
+void MacXPlatform::execBackgroundWindow(QDialog *window)
+{
+    window->exec();
 }
 
 void MacXPlatform::uninstall()

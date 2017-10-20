@@ -1946,13 +1946,6 @@ border: none;</string>
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="cDisableIcons">
-            <property name="text">
-             <string>Don't show icons on the left pane of Windows Explorer</string>
-            </property>
-           </widget>
-          </item>
-          <item>
            <spacer name="verticalSpacer_6">
             <property name="orientation">
              <enum>Qt::Vertical</enum>
@@ -2026,7 +2019,7 @@ border: none;</string>
              <string notr="true"/>
             </property>
             <property name="text">
-             <string>Bandwidth quota</string>
+             <string>Transfer quota</string>
             </property>
             <property name="margin">
              <number>0</number>
@@ -3656,6 +3649,16 @@ background:transparent;</string>
            </widget>
           </item>
          </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="cDisableIcons">
+         <property name="styleSheet">
+          <string notr="true">padding-left: 27px;</string>
+         </property>
+         <property name="text">
+          <string>Don't show icons on the left pane of Windows Explorer</string>
+         </property>
         </widget>
        </item>
        <item>

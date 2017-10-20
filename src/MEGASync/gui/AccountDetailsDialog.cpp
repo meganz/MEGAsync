@@ -16,7 +16,9 @@ AccountDetailsDialog::AccountDetailsDialog(MegaApi *megaApi, QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     this->megaApi = megaApi;
-    on_bRefresh_clicked();
+    ui->lLoading->setText(ui->lLoading->text().toUpper());
+    refresh(Preferences::instance());
+    megaApi->getAccountDetails();
 }
 
 AccountDetailsDialog::~AccountDetailsDialog()
@@ -26,44 +28,67 @@ AccountDetailsDialog::~AccountDetailsDialog()
 
 void AccountDetailsDialog::refresh(Preferences *preferences)
 {
-    ui->bRefresh->setText(tr("Refresh"));
-    ui->bRefresh->setEnabled(true);
 
-    if (preferences->usedStorage() > preferences->totalStorage())
+    if (preferences->totalStorage() == 0)
     {
-        ui->wUsage->setOverQuotaReached(true);
+        ui->pUsageStorage->setValue(0);
+        ui->lTotalUsedStorage->setText(tr("USED STORAGE %1").arg(tr("Data temporarily unavailable")));
+        ui->sHeader->setCurrentWidget(ui->pLoading);
+        usageDataAvailable(false);
     }
     else
     {
-        ui->wUsage->setOverQuotaReached(false);
+        ui->sHeader->setCurrentWidget(ui->pUsedData);
+        int percentage = ceil((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
+        ui->pUsageStorage->setValue((percentage < 100) ? percentage : 100);
+        if (percentage > 100)
+        {
+            ui->pUsageStorage->setProperty("crossedge", true);
+        }
+        else
+        {
+            ui->pUsageStorage->setProperty("crossedge", false);
+        }
+        ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
+        ui->pUsageStorage->style()->polish(ui->pUsageStorage);
+
+        QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 18px; text-decoration:none;\">%1&nbsp;</span>")
+                                     .arg(QString::number(percentage).append(QString::fromAscii(" %"))))
+                                     .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 18px; text-decoration:none;\">&nbsp;%1</span>")
+                                     .arg(Utilities::getSizeString(preferences->totalStorage())));
+        ui->lPercentageUsedStorage->setText(used);
+        ui->lTotalUsedStorage->setText(tr("USED STORAGE %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 18px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
+                                       .arg(Utilities::getSizeString(preferences->usedStorage()))));
+
+
+        if (preferences->usedStorage() > preferences->totalStorage())
+        {
+            ui->pUsageStorage->setProperty("overquota", true);
+        }
+        else
+        {
+            ui->pUsageStorage->setProperty("overquota", false);
+        }
+
+        ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
+        ui->pUsageStorage->style()->polish(ui->pUsageStorage);
+
+        usageDataAvailable(true);
+        ui->lUsedCloudDrive->setText(Utilities::getSizeString(preferences->cloudDriveStorage()));
+        ui->lUsedInbox->setText(Utilities::getSizeString(preferences->inboxStorage()));
+        ui->lUsedShares->setText(Utilities::getSizeString(preferences->inShareStorage()));
+        ui->lUsedRubbish->setText(Utilities::getSizeString(preferences->rubbishStorage()));
+        ui->lSpaceAvailable->setText(Utilities::getSizeString(preferences->availableStorage()));
+        ui->lUsedByVersions->setText(Utilities::getSizeString(preferences->versionsStorage()));
     }
-
-    ui->wUsage->setMaxStorage(Utilities::getSizeString(preferences->totalStorage()));
-    int pCloud = ceil(360 * preferences->cloudDriveStorage() / (double)preferences->totalStorage());
-    ui->wUsage->setCloudStorage((pCloud < 360) ? pCloud : 360);
-    int pRubbish = ceil(360 * preferences->rubbishStorage() / (double)preferences->totalStorage());
-    ui->wUsage->setRubbishStorage((pRubbish < 360) ? pRubbish : 360);
-    int pInShares = ceil(360 * preferences->inShareStorage() / (double)preferences->totalStorage());
-    ui->wUsage->setInShareStorage((pInShares < 360) ? pInShares : 360);
-    int pInbox = ceil(360 * preferences->inboxStorage() / (double)preferences->totalStorage());
-    ui->wUsage->setInboxStorage((pInbox < 360) ? pInbox : 360);
-
-    ui->wUsage->setCloudStorageLabel(Utilities::getSizeString(preferences->cloudDriveStorage()));
-    ui->wUsage->setRubbishStorageLabel(Utilities::getSizeString(preferences->rubbishStorage()));
-    ui->wUsage->setInboxStorageLabel(Utilities::getSizeString(preferences->inboxStorage()));
-
-    ui->wUsage->setInShareStorageLabel(Utilities::getSizeString(preferences->inShareStorage()));
-    ui->wUsage->setUsedStorageLabel(Utilities::getSizeString(preferences->usedStorage()));
-    ui->wUsage->setAvailableStorageLabel(Utilities::getSizeString(preferences->totalStorage()-preferences->usedStorage()));
-
-    ui->bRefresh->setText(tr("Refresh"));
-    ui->bRefresh->setEnabled(true);
 }
 
-void AccountDetailsDialog::on_bRefresh_clicked()
+void AccountDetailsDialog::usageDataAvailable(bool isAvailable)
 {
-    megaApi->getAccountDetails();
-    ui->bRefresh->setEnabled(false);
-    ui->bRefresh->setText(tr("Loading..."));
-    ui->wUsage->clearAll();
+    ui->lUsedCloudDrive->setVisible(isAvailable);
+    ui->lUsedInbox->setVisible(isAvailable);
+    ui->lUsedShares->setVisible(isAvailable);
+    ui->lUsedRubbish->setVisible(isAvailable);
+    ui->lSpaceAvailable->setVisible(isAvailable);
+    ui->lUsedByVersions->setVisible(isAvailable);
 }

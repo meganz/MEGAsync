@@ -62,13 +62,13 @@ void ChangeLogDialog::setChangeLogNotes(QString notes)
 
 void ChangeLogDialog::on_bTerms_clicked()
 {
-    QString temsUrl = QString::fromAscii("https://mega.nz/#terms");
+    QString temsUrl = QString::fromAscii("https://mega.nz/terms");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(temsUrl));
 }
 
 void ChangeLogDialog::on_bPolicy_clicked()
 {
-    QString policyUrl = QString::fromAscii("https://mega.nz/#privacy");
+    QString policyUrl = QString::fromAscii("https://mega.nz/privacy");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(policyUrl));
 }
 

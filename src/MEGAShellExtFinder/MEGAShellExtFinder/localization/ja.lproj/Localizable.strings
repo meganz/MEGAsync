@@ -1,0 +1,18 @@
+/* Finder context menu option to generate a public MEGA link */
+"Get MEGA link" = "MEGAリンクを作る";
+/* Finder context menu option to view a synced file through web browser within your MEGA account */
+"View on MEGA" = "MEGAで表示";
+/* Finder context menu label when no option is available for selected items */
+"No options available" = "利用可能なオプションはありません";
+/* Tooltip for MEGA finder toolbar button */
+"Click the toolbar item for a menu." = "メニュー用のツールバー項目をクリックします。";
+/* Context menu option label to indicate the user has selected a file */
+"1 file" = "ファイル1こ";
+/* Context menu option label to indicate the user has selected %i number of files */
+"%i files" = "%iファイル";
+/* Context menu option label to indicate the user has selected a folder */
+"1 folder" = "フォルダー1個";
+/* Context menu option label to indicate the user has selected %i number of folders */
+"%i folders" = "%iフォルダ";
+/*  */
+"View previous versions" = "以前のバージョンを表示";

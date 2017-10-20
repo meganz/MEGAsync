@@ -156,11 +156,11 @@ void UsageWidget::paintEvent(QPaintEvent *)
     painter.setBrush(QBrush(QColor(BLUE)));
     painter.drawEllipse(QRectF(70, -35, 12, 12));
     painter.setPen(QPen(QColor("#666666")));
-    painter.drawText(QRectF(90, -35, 130, 20),Qt::AlignLeft,tr("Cloud Drive"));
+    painter.drawText(QRectF(90, -35, 130, 30),Qt::AlignLeft | Qt::TextWordWrap, tr("Cloud Drive"));
     painter.setPen(QPen(QColor("#333333")));
     font.setWeight(QFont::Bold);
     painter.setFont(font);
-    painter.drawText(QRectF(210, -35, 78, 20),Qt::AlignRight,QString::fromUtf8("%1").arg(cloudLabel));
+    painter.drawText(QRectF(210, -35, 78, 30),Qt::AlignRight,QString::fromUtf8("%1").arg(cloudLabel));
 
     painter.setPen(QPen(QColor(GREEN)));
     painter.setBrush(QBrush(QColor(GREEN)));
@@ -168,11 +168,11 @@ void UsageWidget::paintEvent(QPaintEvent *)
     painter.setPen(QPen(QColor("#666666")));
     font.setWeight(QFont::Normal);
     painter.setFont(font);
-    painter.drawText(QRectF(90, -8, 130, 20),Qt::AlignLeft,tr("Rubbish Bin"));
+    painter.drawText(QRectF(90, -8, 130, 30),Qt::AlignLeft | Qt::TextWordWrap, tr("Rubbish Bin"));
     painter.setPen(QPen(QColor("#333333")));
     font.setWeight(QFont::Bold);
     painter.setFont(font);
-    painter.drawText(QRectF(210, -8, 78, 20),Qt::AlignRight,QString::fromUtf8("%1").arg(rubbishLabel));
+    painter.drawText(QRectF(210, -8, 78, 30),Qt::AlignRight,QString::fromUtf8("%1").arg(rubbishLabel));
 
     painter.setPen(QPen(QColor(YELLOW)));
     painter.setBrush(QBrush(QColor(YELLOW)));
@@ -180,11 +180,11 @@ void UsageWidget::paintEvent(QPaintEvent *)
     painter.setPen(QPen(QColor("#666666")));
     font.setWeight(QFont::Normal);
     painter.setFont(font);
-    painter.drawText(QRectF(90, 20, 130, 20),Qt::AlignLeft,tr("Incoming Shares"));
+    painter.drawText(QRectF(90, 20, 130, 30),Qt::AlignLeft | Qt::TextWordWrap, tr("Incoming Shares"));
     painter.setPen(QPen(QColor("#333333")));
     font.setWeight(QFont::Bold);
     painter.setFont(font);
-    painter.drawText(QRectF(210, 20, 78, 20),Qt::AlignRight,QString::fromUtf8("%1").arg(inShareLabel));
+    painter.drawText(QRectF(210, 20, 78, 30),Qt::AlignRight,QString::fromUtf8("%1").arg(inShareLabel));
 
     painter.setPen(QPen(QColor(ORANGE)));
     painter.setBrush(QBrush(QColor(ORANGE)));
@@ -192,11 +192,11 @@ void UsageWidget::paintEvent(QPaintEvent *)
     painter.setPen(QPen(QColor("#666666")));
     font.setWeight(QFont::Normal);
     painter.setFont(font);
-    painter.drawText(QRectF(333, -35, 130, 20),Qt::AlignLeft,tr("Inbox"));
+    painter.drawText(QRectF(333, -35, 130, 30),Qt::AlignLeft | Qt::TextWordWrap, tr("Inbox"));
     painter.setPen(QPen(QColor("#333333")));
     font.setWeight(QFont::Bold);
     painter.setFont(font);
-    painter.drawText(QRectF(450, -35, 78, 20),Qt::AlignRight,QString::fromUtf8("%1").arg(inboxLabel));
+    painter.drawText(QRectF(450, -35, 78, 30),Qt::AlignRight,QString::fromUtf8("%1").arg(inboxLabel));
 
     painter.setPen(QPen(QColor(GREY)));
     painter.setBrush(QBrush(QColor(GREY)));
@@ -204,11 +204,11 @@ void UsageWidget::paintEvent(QPaintEvent *)
     painter.setPen(QPen(QColor("#666666")));
     font.setWeight(QFont::Normal);
     painter.setFont(font);
-    painter.drawText(QRectF(333, -8, 130,20),Qt::AlignLeft,tr("Used"));
+    painter.drawText(QRectF(333, -8, 130, 30),Qt::AlignLeft | Qt::TextWordWrap, tr("Used"));
     painter.setPen(QPen(QColor("#333333")));
     font.setWeight(QFont::Bold);
     painter.setFont(font);
-    painter.drawText(QRectF(450, -8, 78, 20),Qt::AlignRight,QString::fromUtf8("%1").arg(usedLabel));
+    painter.drawText(QRectF(450, -8, 78, 30),Qt::AlignRight,QString::fromUtf8("%1").arg(usedLabel));
 
     painter.setPen(QPen(QColor(0, 0, 0, 50), 2));
     painter.setBrush(QBrush(Qt::NoBrush));
@@ -216,9 +216,9 @@ void UsageWidget::paintEvent(QPaintEvent *)
     painter.setPen(QPen(QColor("#666666")));
     font.setWeight(QFont::Normal);
     painter.setFont(font);
-    painter.drawText(QRectF(333, 20, 130, 20),Qt::AlignLeft,tr("Available"));
+    painter.drawText(QRectF(333, 20, 130, 30),Qt::AlignLeft | Qt::TextWordWrap, tr("Available"));
     painter.setPen(QPen(QColor("#333333")));
     font.setWeight(QFont::Bold);
     painter.setFont(font);
-    painter.drawText(QRectF(390, 20, 138, 20),Qt::AlignRight,QString::fromUtf8("%1").arg(availableLabel));
+    painter.drawText(QRectF(390, 20, 138, 30),Qt::AlignRight,QString::fromUtf8("%1").arg(availableLabel));
 }

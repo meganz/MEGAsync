@@ -1,0 +1,18 @@
+/* Finder context menu option to generate a public MEGA link */
+"Get MEGA link" = "Obţine linkul MEGA";
+/* Finder context menu option to view a synced file through web browser within your MEGA account */
+"View on MEGA" = "Vezi pe MEGA";
+/* Finder context menu label when no option is available for selected items */
+"No options available" = "Nicio opţiune disponibilă";
+/* Tooltip for MEGA finder toolbar button */
+"Click the toolbar item for a menu." = "Clic pe elementul din bara de instrumente pentru un meniu.";
+/* Context menu option label to indicate the user has selected a file */
+"1 file" = "1 fişier";
+/* Context menu option label to indicate the user has selected %i number of files */
+"%i files" = "%i fişiere";
+/* Context menu option label to indicate the user has selected a folder */
+"1 folder" = "1 folder";
+/* Context menu option label to indicate the user has selected %i number of folders */
+"%i folders" = "%i foldere";
+/*  */
+"View previous versions" = "View previous versions";

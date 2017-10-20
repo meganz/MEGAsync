@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>533</height>
+    <height>580</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,13 +22,13 @@
   <property name="minimumSize">
    <size>
     <width>500</width>
-    <height>533</height>
+    <height>580</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>500</width>
-    <height>533</height>
+    <height>580</height>
    </size>
   </property>
   <property name="contextMenuPolicy">
@@ -53,8 +53,8 @@ QCheckBox::indicator {
  }
 
 QRadioButton::indicator {
-     width: 16px;
-     height: 16px;
+     width: 22px;
+     height: 22px;
  }
 
 QScrollBar:horizontal {
@@ -117,6 +117,7 @@ padding-bottom: -1px;
 {
 padding-bottom: 1px;
 }
+
 #lProxyType
 {
 padding-bottom: -1px;
@@ -220,6 +221,9 @@ padding-bottom: 6px;
           <pointsize>-1</pointsize>
          </font>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="text">
          <string>Account</string>
         </property>
@@ -259,6 +263,9 @@ padding-bottom: 6px;
          <font>
           <pointsize>-1</pointsize>
          </font>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
         </property>
         <property name="styleSheet">
          <string notr="true"/>
@@ -303,6 +310,9 @@ padding-bottom: 6px;
           <pointsize>-1</pointsize>
          </font>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="text">
          <string>Bandwidth</string>
         </property>
@@ -343,6 +353,9 @@ padding-bottom: 6px;
           <pointsize>-1</pointsize>
          </font>
         </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
+        </property>
         <property name="text">
          <string>Proxy</string>
         </property>
@@ -382,6 +395,9 @@ padding-bottom: 6px;
          <font>
           <pointsize>-1</pointsize>
          </font>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::StrongFocus</enum>
         </property>
         <property name="text">
          <string>Advanced</string>
@@ -427,6 +443,9 @@ padding-bottom: 6px;
        <height>2</height>
       </size>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
      <property name="styleSheet">
       <string notr="true">border:none;
 background:transparent;</string>
@@ -451,6 +470,12 @@ background:transparent;</string>
      <property name="minimumSize">
       <size>
        <width>0</width>
+       <height>56</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
        <height>56</height>
       </size>
      </property>
@@ -577,20 +602,20 @@ background:transparent;</string>
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>400</height>
+       <height>440</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>500</width>
-       <height>400</height>
+       <height>440</height>
       </size>
      </property>
      <property name="styleSheet">
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <property name="sizePolicy">
@@ -673,6 +698,9 @@ background:transparent;</string>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true">border: none;</string>
             </property>
@@ -705,13 +733,13 @@ background:transparent;</string>
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>33</height>
+              <height>35</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>33</height>
+              <height>35</height>
              </size>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -768,6 +796,9 @@ background:transparent;</string>
                     <verstretch>0</verstretch>
                    </sizepolicy>
                   </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
+                  </property>
                   <property name="text">
                    <string>FREE</string>
                   </property>
@@ -783,12 +814,6 @@ background:transparent;</string>
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
                </property>
                <property name="styleSheet">
                 <string notr="true"/>
@@ -820,8 +845,11 @@ background:transparent;</string>
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>0</height>
+                    <height>17</height>
                    </size>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::StrongFocus</enum>
                   </property>
                   <property name="text">
                    <string notr="true">sample@email.com</string>
@@ -849,12 +877,6 @@ background:transparent;</string>
           </item>
           <item>
            <widget class="QPushButton" name="bExportMasterKey">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -893,7 +915,7 @@ background:transparent;</string>
              </size>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
+             <enum>Qt::StrongFocus</enum>
             </property>
             <property name="styleSheet">
              <string notr="true"/>
@@ -931,6 +953,9 @@ background:transparent;</string>
            <width>500</width>
            <height>2</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">background: transparent;
@@ -1001,6 +1026,9 @@ border: none;</string>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -1043,6 +1071,9 @@ border: none;</string>
                  <width>448</width>
                  <height>16777215</height>
                 </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::StrongFocus</enum>
                </property>
                <property name="styleSheet">
                 <string notr="true"/>
@@ -1111,6 +1142,9 @@ border: none;</string>
                  <height>22</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::StrongFocus</enum>
+               </property>
                <property name="styleSheet">
                 <string notr="true">margin-left: 1px;
 </string>
@@ -1167,7 +1201,7 @@ border: none;</string>
                 </size>
                </property>
                <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
+                <enum>Qt::StrongFocus</enum>
                </property>
                <property name="styleSheet">
                 <string notr="true"/>
@@ -1205,6 +1239,9 @@ border: none;</string>
            <width>500</width>
            <height>2</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">background: transparent;
@@ -1446,7 +1483,7 @@ border: none;</string>
                       </size>
                      </property>
                      <property name="focusPolicy">
-                      <enum>Qt::NoFocus</enum>
+                      <enum>Qt::StrongFocus</enum>
                      </property>
                      <property name="text">
                       <string>Check for updates</string>
@@ -1487,6 +1524,9 @@ border: none;</string>
            <width>500</width>
            <height>2</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">background: transparent;
@@ -1554,6 +1594,9 @@ border: none;</string>
           </property>
           <item>
            <widget class="QLabel" name="label_6">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -1738,13 +1781,13 @@ border: none;</string>
                 <bool>true</bool>
                </attribute>
                <attribute name="horizontalHeaderDefaultSectionSize">
-                <number>202</number>
+                <number>200</number>
                </attribute>
                <attribute name="horizontalHeaderHighlightSections">
                 <bool>true</bool>
                </attribute>
                <attribute name="horizontalHeaderMinimumSectionSize">
-                <number>202</number>
+                <number>200</number>
                </attribute>
                <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
                 <bool>false</bool>
@@ -1851,7 +1894,7 @@ border: none;</string>
                 </size>
                </property>
                <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
+                <enum>Qt::StrongFocus</enum>
                </property>
                <property name="text">
                 <string>Add</string>
@@ -1882,7 +1925,7 @@ border: none;</string>
                 </size>
                </property>
                <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
+                <enum>Qt::StrongFocus</enum>
                </property>
                <property name="text">
                 <string>Delete</string>
@@ -1921,12 +1964,12 @@ border: none;</string>
              <enum>Qt::Vertical</enum>
             </property>
             <property name="sizeType">
-             <enum>QSizePolicy::Preferred</enum>
+             <enum>QSizePolicy::Fixed</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
               <width>20</width>
-              <height>16</height>
+              <height>17</height>
              </size>
             </property>
            </spacer>
@@ -1942,7 +1985,7 @@ border: none;</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_10">
        <property name="spacing">
-        <number>0</number>
+        <number>7</number>
        </property>
        <property name="leftMargin">
         <number>0</number>
@@ -1989,7 +2032,7 @@ border: none;</string>
              <string notr="true"/>
             </property>
             <property name="text">
-             <string>Bandwidth quota</string>
+             <string>Transfer quota</string>
             </property>
             <property name="margin">
              <number>0</number>
@@ -2118,7 +2161,7 @@ border: none;</string>
           <enum>Qt::StrongFocus</enum>
          </property>
          <property name="styleSheet">
-          <string notr="true">padding-left: 27px; padding-bottom: 6px;</string>
+          <string notr="true">padding-left: 27px;</string>
          </property>
          <property name="text">
           <string>Upload rate limit</string>
@@ -2405,7 +2448,8 @@ border: none;</string>
           <enum>Qt::StrongFocus</enum>
          </property>
          <property name="styleSheet">
-          <string notr="true">padding-left: 27px; padding-bottom: 6px;</string>
+          <string notr="true">padding-left: 27px;
+        </string>
          </property>
          <property name="text">
           <string>Download rate limit</string>
@@ -2614,9 +2658,6 @@ border: none;</string>
            <height>0</height>
           </size>
          </property>
-         <property name="styleSheet">
-          <string notr="true">padding-bottom: 6px;</string>
-         </property>
          <property name="text">
           <string>Number of parallel TCP connections per transfer:</string>
          </property>
@@ -2735,7 +2776,7 @@ border: none;</string>
        <item>
         <widget class="QCheckBox" name="cbUseHttps">
          <property name="styleSheet">
-          <string notr="true">padding-left : 26px; padding-top: 10px; padding-bottom: 7px;</string>
+          <string notr="true">padding-left : 26px;</string>
          </property>
          <property name="text">
           <string>Don't use HTTP</string>
@@ -2772,7 +2813,7 @@ border: none;</string>
           <string notr="true">padding-top: -6px;
 padding-left: 23px;
 padding-right: 23px;
-background: transparent;
+background: transparent; 
 border: none;</string>
          </property>
          <property name="verticalScrollBarPolicy">
@@ -2832,6 +2873,9 @@ border: none;</string>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true">padding-left: 26px;
 padding-bottom: 3px;</string>
@@ -2860,7 +2904,7 @@ padding-bottom: 3px;</string>
            <number>29</number>
           </property>
           <property name="topMargin">
-           <number>0</number>
+           <number>5</number>
           </property>
           <property name="rightMargin">
            <number>4</number>
@@ -2891,6 +2935,9 @@ padding-bottom: 3px;</string>
              </property>
              <item>
               <widget class="QLineEdit" name="eUploadFolder">
+               <property name="accessibleName">
+                <string>Uploads:</string>
+               </property>
                <property name="readOnly">
                 <bool>true</bool>
                </property>
@@ -2944,6 +2991,9 @@ padding-bottom: 3px;</string>
              </property>
              <item>
               <widget class="QLineEdit" name="eDownloadFolder">
+               <property name="accessibleName">
+                <string>Downloads:</string>
+               </property>
                <property name="readOnly">
                 <bool>true</bool>
                </property>
@@ -2976,6 +3026,9 @@ padding-bottom: 3px;</string>
           </item>
           <item row="1" column="0">
            <widget class="QLabel" name="lUploadFolder">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Uploads:</string>
             </property>
@@ -2987,6 +3040,9 @@ padding-bottom: 3px;</string>
              <font>
               <pointsize>-1</pointsize>
              </font>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
              <string>Downloads:</string>
@@ -3015,6 +3071,9 @@ padding-bottom: 3px;</string>
            <width>500</width>
            <height>2</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">border:none;
@@ -3054,7 +3113,7 @@ background:transparent;</string>
            <number>5</number>
           </property>
           <property name="leftMargin">
-           <number>29</number>
+           <number>27</number>
           </property>
           <property name="topMargin">
            <number>7</number>
@@ -3073,6 +3132,9 @@ background:transparent;</string>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -3080,7 +3142,7 @@ background:transparent;</string>
              <string>Excluded file and folder names</string>
             </property>
             <property name="indent">
-             <number>0</number>
+             <number>1</number>
             </property>
            </widget>
           </item>
@@ -3094,19 +3156,19 @@ background:transparent;</string>
             </property>
             <property name="minimumSize">
              <size>
-              <width>441</width>
+              <width>443</width>
               <height>75</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>441</width>
+              <width>443</width>
               <height>75</height>
              </size>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_18">
              <property name="leftMargin">
-              <number>0</number>
+              <number>1</number>
              </property>
              <property name="topMargin">
               <number>12</number>
@@ -3127,13 +3189,13 @@ background:transparent;</string>
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>442</width>
+                 <width>443</width>
                  <height>64</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>442</width>
+                 <width>443</width>
                  <height>64</height>
                 </size>
                </property>
@@ -3190,6 +3252,9 @@ background:transparent;</string>
              </item>
              <item>
               <widget class="QLabel" name="lLimitsInfo">
+               <property name="focusPolicy">
+                <enum>Qt::StrongFocus</enum>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -3278,6 +3343,9 @@ background:transparent;</string>
            <height>2</height>
           </size>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
          <property name="styleSheet">
           <string notr="true">border:none;
 background:transparent;</string>
@@ -3333,7 +3401,7 @@ background:transparent;</string>
           <item>
            <widget class="QWidget" name="wLocalCache" native="true">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -3342,7 +3410,13 @@ background:transparent;</string>
              <property name="leftMargin">
               <number>0</number>
              </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
              <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
@@ -3352,6 +3426,9 @@ background:transparent;</string>
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::StrongFocus</enum>
                </property>
                <property name="text">
                 <string>Local backup: %1</string>
@@ -3371,7 +3448,7 @@ background:transparent;</string>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>0</width>
+                 <width>37</width>
                  <height>13</height>
                 </size>
                </property>
@@ -3411,7 +3488,7 @@ background:transparent;</string>
           <item>
            <widget class="QWidget" name="wRemoteCache" native="true">
             <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
@@ -3420,11 +3497,20 @@ background:transparent;</string>
              <property name="leftMargin">
               <number>0</number>
              </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
              <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
               <widget class="QLabel" name="lRemoteCacheSize">
+               <property name="focusPolicy">
+                <enum>Qt::StrongFocus</enum>
+               </property>
                <property name="text">
                 <string>Remote backup: %1</string>
                </property>
@@ -3440,7 +3526,7 @@ background:transparent;</string>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>0</width>
+                 <width>37</width>
                  <height>20</height>
                 </size>
                </property>
@@ -3448,12 +3534,6 @@ background:transparent;</string>
              </item>
              <item>
               <widget class="QPushButton" name="bClearRemoteCache">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>0</height>
-                </size>
-               </property>
                <property name="maximumSize">
                 <size>
                  <width>70</width>
@@ -3490,6 +3570,9 @@ background:transparent;</string>
            <width>500</width>
            <height>2</height>
           </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">border:none;
@@ -3532,10 +3615,10 @@ background:transparent;</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_15">
           <property name="leftMargin">
-           <number>28</number>
+           <number>27</number>
           </property>
           <property name="topMargin">
-           <number>8</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
            <number>23</number>
@@ -3582,6 +3665,16 @@ background:transparent;</string>
         </widget>
        </item>
        <item>
+        <widget class="QCheckBox" name="cDisableIcons">
+         <property name="styleSheet">
+          <string notr="true">padding-left: 27px;</string>
+         </property>
+         <property name="text">
+          <string>Don't show icons on the left pane of Windows Explorer</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="verticalSpacer_4">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -3620,6 +3713,9 @@ background:transparent;</string>
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::StrongFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">padding-left: 13px;</string>
@@ -3668,7 +3764,8 @@ background:transparent;</string>
           <item row="8" column="1">
            <widget class="QWidget" name="widget_13" native="true">
             <property name="styleSheet">
-             <string notr="true"/>
+             <string notr="true">padding-left: -1px;
+</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_19">
              <property name="spacing">
@@ -3701,7 +3798,7 @@ background:transparent;</string>
                 </size>
                </property>
                <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
+                <enum>Qt::StrongFocus</enum>
                </property>
                <property name="text">
                 <string>No proxy</string>
@@ -3723,7 +3820,7 @@ background:transparent;</string>
                 </size>
                </property>
                <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
+                <enum>Qt::StrongFocus</enum>
                </property>
                <property name="text">
                 <string>Auto-detect</string>
@@ -3748,7 +3845,7 @@ background:transparent;</string>
                 </size>
                </property>
                <property name="focusPolicy">
-                <enum>Qt::NoFocus</enum>
+                <enum>Qt::StrongFocus</enum>
                </property>
                <property name="styleSheet">
                 <string notr="true"/>
@@ -3854,6 +3951,9 @@ background:transparent;</string>
           </item>
           <item row="12" column="0">
            <widget class="QLabel" name="lProxyUsername">
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string>Username:</string>
             </property>
@@ -3866,6 +3966,9 @@ background:transparent;</string>
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="text">
              <string>Password:</string>
@@ -3889,6 +3992,9 @@ background:transparent;</string>
               <height>16777215</height>
              </size>
             </property>
+            <property name="accessibleName">
+             <string>Username:</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -3896,6 +4002,9 @@ background:transparent;</string>
           </item>
           <item row="9" column="0">
            <widget class="QLabel" name="lProxyType">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="text">
              <string>Proxy type:</string>
             </property>
@@ -3958,6 +4067,9 @@ background:transparent;</string>
               <height>16777215</height>
              </size>
             </property>
+            <property name="accessibleName">
+             <string>Password:</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -3968,6 +4080,9 @@ background:transparent;</string>
           </item>
           <item row="10" column="0">
            <widget class="QLabel" name="lProxyServer">
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="text">
              <string>Server:</string>
             </property>
@@ -3997,31 +4112,71 @@ background:transparent;</string>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>bAccount</tabstop>
   <tabstop>bSyncs</tabstop>
+  <tabstop>bAccount</tabstop>
   <tabstop>bBandwidth</tabstop>
   <tabstop>bProxies</tabstop>
   <tabstop>bAdvanced</tabstop>
+  <tabstop>lAccountType</tabstop>
+  <tabstop>lEmail</tabstop>
+  <tabstop>bExportMasterKey</tabstop>
+  <tabstop>bUnlink</tabstop>
+  <tabstop>lStorageSpace</tabstop>
+  <tabstop>pStorage</tabstop>
+  <tabstop>lStorage</tabstop>
+  <tabstop>bStorageDetails</tabstop>
   <tabstop>bUpgrade</tabstop>
   <tabstop>cShowNotifications</tabstop>
   <tabstop>cStartOnStartup</tabstop>
   <tabstop>cAutoUpdate</tabstop>
   <tabstop>bUpdate</tabstop>
+  <tabstop>label_6</tabstop>
+  <tabstop>cLanguage</tabstop>
+  <tabstop>tSyncs</tabstop>
   <tabstop>bDelete</tabstop>
   <tabstop>bAdd</tabstop>
+  <tabstop>label_10</tabstop>
+  <tabstop>rUploadAutoLimit</tabstop>
+  <tabstop>lUploadAutoLimit</tabstop>
+  <tabstop>rUploadNoLimit</tabstop>
+  <tabstop>eUploadLimit</tabstop>
+  <tabstop>lUploadLimit</tabstop>
+  <tabstop>label_9</tabstop>
   <tabstop>bUpgradeBandwidth</tabstop>
-  <tabstop>eUploadFolder</tabstop>
-  <tabstop>bUploadFolder</tabstop>
-  <tabstop>bDeleteName</tabstop>
-  <tabstop>bAddName</tabstop>
-  <tabstop>cOverlayIcons</tabstop>
-  <tabstop>bFullCheck</tabstop>
+  <tabstop>label_8</tabstop>
+  <tabstop>rNoProxy</tabstop>
+  <tabstop>rProxyAuto</tabstop>
+  <tabstop>rProxyManual</tabstop>
+  <tabstop>lProxyType</tabstop>
   <tabstop>cProxyType</tabstop>
+  <tabstop>lProxyServer</tabstop>
   <tabstop>eProxyServer</tabstop>
   <tabstop>eProxyPort</tabstop>
   <tabstop>cProxyRequiresPassword</tabstop>
+  <tabstop>lProxyUsername</tabstop>
   <tabstop>eProxyUsername</tabstop>
+  <tabstop>lProxyPassword</tabstop>
   <tabstop>eProxyPassword</tabstop>
+  <tabstop>label_11</tabstop>
+  <tabstop>lUploadFolder</tabstop>
+  <tabstop>eUploadFolder</tabstop>
+  <tabstop>bUploadFolder</tabstop>
+  <tabstop>lDownloadFolder</tabstop>
+  <tabstop>eDownloadFolder</tabstop>
+  <tabstop>bDownloadFolder</tabstop>
+  <tabstop>lExcludedFiles</tabstop>
+  <tabstop>lExcludedNames</tabstop>
+  <tabstop>bExcludeSize</tabstop>
+  <tabstop>lLimitsInfo</tabstop>
+  <tabstop>bDeleteName</tabstop>
+  <tabstop>bAddName</tabstop>
+  <tabstop>lCacheSize</tabstop>
+  <tabstop>bClearCache</tabstop>
+  <tabstop>lRemoteCacheSize</tabstop>
+  <tabstop>bClearRemoteCache</tabstop>
+  <tabstop>cOverlayIcons</tabstop>
+  <tabstop>bFullCheck</tabstop>
+  <tabstop>bHelp</tabstop>
   <tabstop>bOk</tabstop>
   <tabstop>bCancel</tabstop>
   <tabstop>bApply</tabstop>

@@ -22,7 +22,7 @@ public:
     bool isActive();
 
 signals:
-    void cancel(int x, int y);
+    void showContextMenu(QPoint pos, bool regular);
 
 private:
     Ui::ActiveTransfer *ui;
@@ -34,9 +34,6 @@ protected:
     int type;
     bool regular;
     bool active;
-
-public slots:
-    void onCancelClicked(int x, int y);
 };
 
 #endif // ACTIVETRANSFER_H

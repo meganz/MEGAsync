@@ -25,7 +25,7 @@ display_help() {
     local app=$(basename "$0")
     echo ""
     echo "Usage:"
-    echo " $app [-c] [-i] [-k] [-p pass] [-x pathXMLdir] VMNAME URL_REPO"
+    echo " $app [-c] [-i] [-k] [-p pass] VMNAME URL_REPO"
     echo ""
     echo "This script will check the correctness of a package using a virtual machine."
     echo " It sill receive the machine name and the repository that will be used to download" 
@@ -44,8 +44,8 @@ display_help() {
     echo " -c : check megasync package has changed (updated or newly installed)"
     echo " -i : install anew (removes previous megasync package)"
     echo " -k : keep VM running after completion"
+    echo " -n : disable GPG checks"
     echo " -p pass : password for VM (both user mega & root)"
-    echo " -x pathXMLdir : path for the xml files describing the VMs"
     echo ""
 }
 
@@ -53,13 +53,14 @@ remove_megasync=0
 quit_machine=1
 require_change=0
 
-thisscriptpath=$(readlink -f "$0")
-pathXMLdir=$(dirname "$thisscriptpath")
-
-while getopts ":ikcp:x:" opt; do
+while getopts ":ikcnp:" opt; do
   case $opt in
     i)
 		remove_megasync=1
+      ;;
+    n)
+		nogpgchecksSUSE=--no-gpg-checks
+		nogpgchecksYUM=--nogpgcheck
       ;;
 	c)
 		require_change=1
@@ -70,10 +71,7 @@ while getopts ":ikcp:x:" opt; do
 	;;	
     k)
 		quit_machine=0
-      ;;
-    x)
-		pathXMLdir="$OPTARG"
-      ;;      
+      ;;    
     \?)
 		echo "Invalid option: -$OPTARG" >&2
 		display_help $0
@@ -123,7 +121,7 @@ logSth(){
 
 
 echo " running machine $VMNAME ..."
-sudo virsh create $pathXMLdir/$VMNAME.xml 
+sudo virsh create /etc/libvirt/qemu/$VMNAME.xml 
 
 #sudo virsh domiflist $VMNAME 
 IP_GUEST=$( sudo arp -n | grep `sudo virsh domiflist $VMNAME  | grep vnet | awk '{print $NF}'` | awk '{print $1}' )
@@ -151,6 +149,8 @@ done
 echo "quering VM info:"
 $sshpasscommand ssh root@$IP_GUEST cat /etc/issue
 $sshpasscommand ssh root@$IP_GUEST uname -a
+echo -n " Inotify max watchers initial: "
+$sshpasscommand ssh root@$IP_GUEST sysctl fs.inotify.max_user_watches
 
 
 echo " deleting testing file ..."
@@ -189,6 +189,7 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 		logOperationResult "removing megasync ..." $resultREMOVE
 	fi
 	
+	echo " modifying repos ..."
 	$sshpasscommand ssh root@$IP_GUEST "cat > /etc/zypp/repos.d/megasync.repo" <<-EOF
 	[MEGAsync]
 	name=MEGAsync
@@ -199,7 +200,7 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	autorefresh=1
 	enabled=1
 	EOF
-	$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive refresh 2> tmp$VMNAME
+	$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive $nogpgchecksSUSE refresh 2> tmp$VMNAME
 	resultMODREPO=$?
 	#notice: zypper will report 0 as status even though it "failed", we do stderr checking
 	if cat tmp$VMNAME | grep $REPO; then
@@ -209,17 +210,17 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	fi; rm tmp$VMNAME;	
 	# if [ -s tmp$VMNAME ]; then resultMODREPO=$(expr 1000 + $resultMODREPO); cat tmp$VMNAME; fi; rm tmp$VMNAME;
 	logOperationResult "modifying repos ..." $resultMODREPO
-	cat /etc/zypp/repos.d/megasync.repo
+	$sshpasscommand ssh root@$IP_GUEST cat /etc/zypp/repos.d/megasync.repo
 	
 	echo " reinstalling/updating megasync ..."
 	BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
 	attempts=10
-	$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive install -f megasync 
+	$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive $nogpgchecksSUSE install -f megasync 
 	resultINSTALL=$?
 	while [[ $attempts -ge 0 && $resultINSTALL -ne 0 ]]; do
 		sleep $((5*(10-$attempts)))
 		echo " reinstalling/updating megasync ... attempts left="$attempts
-		$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive install -f megasync 
+		$sshpasscommand ssh root@$IP_GUEST zypper --non-interactive $nogpgchecksSUSE install -f megasync 
 		resultINSTALL=$?
 		attempts=$(($attempts - 1))
 	done
@@ -244,7 +245,7 @@ elif [[ $VMNAME == *"DEBIAN"* ]] || [[ $VMNAME == *"UBUNTU"* ]] || [[ $VMNAME ==
 		attempts=10
 		$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y remove megasync
 		resultREMOVE=$?
-		while [[ $attempts -ge 0 && $resultREMOVE -ne 0 ]]; do
+		while [[ $attempts -ge 0 && $resultREMOVE -ne 0 && $resultREMOVE -ne 100 ]]; do
 			sleep $((5*(10-$attempts)))
 			echo " removing megasync ... attempts left="$attempts
 			$sshpasscommand ssh root@$IP_GUEST DEBIAN_FRONTEND=noninteractive apt-get -y remove megasync
@@ -278,7 +279,7 @@ elif [[ $VMNAME == *"DEBIAN"* ]] || [[ $VMNAME == *"UBUNTU"* ]] || [[ $VMNAME ==
 	 #resultMODREPO=0 #we discard any other failure
 	fi; rm tmp$VMNAME;	
 	logOperationResult "modifying repos ..." $resultMODREPO
-	$sshpasscommand ssh root@$IP_GUEST cat /etc/apt/sources.list.d/megasync.list
+	$sshpasscommand ssh root@$IP_GUEST "cat /etc/apt/sources.list.d/megasync.list"
 
 	echo " reinstalling/updating megasync ..."
 	BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST dpkg -l megasync`
@@ -399,7 +400,7 @@ else
 		attempts=10
 		$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit remove megasync
 		resultREMOVE=$?
-		while [[ $attempts -ge 0 && $resultREMOVE -ne 0 ]]; do
+		while [[ $attempts -ge 0 && $resultREMOVE -ne 0 && $resultREMOVE -ne 1 ]]; do
 			sleep $((5*(10-$attempts)))
 			echo " removing megasync ... attempts left="$attempts
 		$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit remove megasync
@@ -426,14 +427,13 @@ else
 	cat tmp$VMNAME | grep -v "FutureWarning: split() requires a non-empty pattern match\|return _compile(pattern, flags).split(stri" > tmp$VMNAME
 	if [ -s tmp$VMNAME ]; then resultMODREPO=$(expr 1000 + $resultMODREPO); cat tmp$VMNAME; fi; rm tmp$VMNAME; 
 	logOperationResult "modifying repos ..." $resultMODREPO
-	
-	cat /etc/yum.repos.d/megasync.repo
+	$sshpasscommand ssh root@$IP_GUEST "cat /etc/yum.repos.d/megasync.repo"
 	sleep 1
 	
 	
 	echo " reinstalling/updating megasync ..."
 	BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
-	$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit install megasync  2> tmp$VMNAME
+	$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit $nogpgchecksYUM install megasync  2> tmp$VMNAME
 	resultINSTALL=$? #TODO: yum might fail and still say "IT IS OK!"
 	#Doing simple stderr checking will give false FAILS, since yum outputs non failure stuff in stderr
 	if cat tmp$VMNAME | grep $REPO; then
@@ -453,7 +453,7 @@ else
 		sleep $((5*(10-$attempts)))
 		echo " reinstalling/updating megasync ... attempts left="$attempts
 		BEFOREINSTALL=`$sshpasscommand ssh root@$IP_GUEST rpm -q megasync`
-		$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit install megasync  2> tmp$VMNAME
+		$sshpasscommand ssh root@$IP_GUEST $YUM -y --disableplugin=refresh-packagekit $nogpgchecksYUM install megasync  2> tmp$VMNAME
 		resultINSTALL=$? #TODO: yum might fail and still say "IT IS OK!"
 		#Doing simple stderr checking will give false FAILS, since yum outputs non failure stuff in stderr
 		if cat tmp$VMNAME | grep $REPO; then
@@ -491,17 +491,21 @@ resultRunning=$?
 logOperationResult "checking new megasync running ..." $resultRunning
 
 echo " forcing POST to dl test file ..."
+# https://mega.nz/#!FQ5miCCB!WkMOvzgPWhBtvE7tYQQv8urhwuYmuS74C3HnhboDE-I
 $sshpasscommand ssh root@$IP_GUEST "curl 'https://127.0.0.1:6342/' -H 'Origin: https://mega.nz' --data-binary '{\"a\":\"l\",\"h\":\"FQ5miCCB\",\"k\":\"WkMOvzgPWhBtvE7tYQQv8urhwuYmuS74C3HnhboDE-I\"}' --compressed --insecure"
 
-resultDL=27
-attempts=10
-while [[ $attempts -ge 0 && $resultDL -ne 0 ]]; do
-	sleep $((5*(10-$attempts)))
-	echo " check file dl correctly ... attempts left="$attempts
-	$sshpasscommand ssh root@$IP_GUEST cat /home/mega/testFile.txt >/dev/null  #TODO: do hash file comparation
-	resultDL=$?
-	attempts=$(($attempts - 1))
-done
+resultDL=$?
+if [ $resultDL -eq 0 ]; then
+	resultDL=27
+	attempts=13
+	while [[ $attempts -ge 0 && $resultDL -ne 0 ]]; do
+		sleep $((5*(13-$attempts)))
+		echo " check file dl correctly ... attempts left="$attempts
+		$sshpasscommand ssh root@$IP_GUEST cat /home/mega/testFile.txt >/dev/null  #TODO: do hash file comparation
+		resultDL=$?
+		attempts=$(($attempts - 1))
+	done
+fi
 
 logOperationResult "check file dl correctly ..." $resultDL
 
@@ -580,6 +584,8 @@ else #FEDORA | CENTOS...
 	logOperationResult "check repo configured correctly ..." $resultRepoConfiguredOk
 fi
 
+echo -n " Inotify max watchers final: "
+$sshpasscommand ssh root@$IP_GUEST sysctl fs.inotify.max_user_watches
 
 
 if [ $resultDL -eq 0 ] && [ $resultRunning -eq 0 ] \

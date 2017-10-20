@@ -161,16 +161,16 @@
         <file>images/menu_header.png</file>
         <file>images/menu_selected.png</file>
         <file>images/separator line.png</file>
-        <file>images/22_logging.png</file>
-        <file>images/22_paused.png</file>
-        <file>images/22_synching.png</file>
-        <file>images/22_uptodate.png</file>
+        <file>images/logging.svg</file>
+        <file>images/paused.svg</file>
+        <file>images/synching.svg</file>
+        <file>images/uptodate.svg</file>
         <file>images/tray_pause_over_ico.png</file>
         <file>images/tray_play_over_ico.png</file>
         <file>images/tray_preferences_over_ico.png</file>
         <file>images/tray_share_over_ico.png</file>
         <file>images/drag_dmg.png</file>
-        <file>images/22_warning.png</file>
+        <file>images/warning.svg</file>
         <file>images/tray_warning_ico.png</file>
         <file>images/small_dmg.png</file>
         <file>images/app_64.png</file>
@@ -179,19 +179,15 @@
         <file>translations/MEGASyncStrings_bg.qm</file>
         <file>translations/MEGASyncStrings_cs.qm</file>
         <file>translations/MEGASyncStrings_de.qm</file>
-        <file>translations/MEGASyncStrings_ee.qm</file>
         <file>translations/MEGASyncStrings_en.qm</file>
         <file>translations/MEGASyncStrings_es.qm</file>
-        <file>translations/MEGASyncStrings_fa.qm</file>
         <file>translations/MEGASyncStrings_fi.qm</file>
         <file>translations/MEGASyncStrings_fr.qm</file>
         <file>translations/MEGASyncStrings_he.qm</file>
-        <file>translations/MEGASyncStrings_hr.qm</file>
         <file>translations/MEGASyncStrings_hu.qm</file>
         <file>translations/MEGASyncStrings_id.qm</file>
         <file>translations/MEGASyncStrings_it.qm</file>
         <file>translations/MEGASyncStrings_ja.qm</file>
-        <file>translations/MEGASyncStrings_ka.qm</file>
         <file>translations/MEGASyncStrings_ko.qm</file>
         <file>translations/MEGASyncStrings_nl.qm</file>
         <file>translations/MEGASyncStrings_pl.qm</file>
@@ -267,5 +263,47 @@
         <file>images/tray_transfer_manager_ico_over.png</file>
         <file>images/tray_transfer_manager_ico.png</file>
         <file>images/Lite.png</file>
+        <file>images/ico_chat_button.png</file>
+        <file>images/Nav_Dot_active.png</file>
+        <file>images/Nav_Dot_inactive.png</file>
+        <file>images/ico_syncs.png</file>
+        <file>images/ico_away.png</file>
+        <file>images/ico_busy.png</file>
+        <file>images/ico_offline.png</file>
+        <file>images/ico_online.png</file>
+        <file>images/empty_upToDate.png</file>
+        <file>images/ico_add_sync.png</file>
+        <file>images/ico_drop_synched_folder.png</file>
+        <file>images/ico_about_MEGA_out.png</file>
+        <file>images/ico_about_MEGA_over.png</file>
+        <file>images/ico_download_out.png</file>
+        <file>images/ico_download_over.png</file>
+        <file>images/ico_MEGA_website_out.png</file>
+        <file>images/ico_MEGA_website_over.png</file>
+        <file>images/ico_pause_transfers_over.png</file>
+        <file>images/ico_pause_transfers.png</file>
+        <file>images/ico_preferences_out.png</file>
+        <file>images/ico_preferences_over.png</file>
+        <file>images/ico_quit_out.png</file>
+        <file>images/ico_quit_over.png</file>
+        <file>images/ico_stream_out.png</file>
+        <file>images/ico_stream_over.png</file>
+        <file>images/ico_upload_out.png</file>
+        <file>images/ico_upload_over.png</file>
+        <file>images/MEGA_header.png</file>
+        <file>images/ico_drop_add_sync_over.png</file>
+        <file>images/ico_drop_synched_folder_over.png</file>
+        <file>images/ic_small_cloud_drive.png</file>
+        <file>images/ic_small_inbox.png</file>
+        <file>images/ic_small_rubbish.png</file>
+        <file>images/ic_small_shares.png</file>
+        <file>images/ico_resume_transfers_over.png</file>
+        <file>images/ico_resume_transfers.png</file>
+        <file>fonts/SourceSansPro-Bold.ttf</file>
+        <file>fonts/SourceSansPro-Light.ttf</file>
+        <file>fonts/SourceSansPro-Regular.ttf</file>
+        <file>fonts/SourceSansPro-Semibold.ttf</file>
+        <file>images/ic_small_available.png</file>
+        <file>images/ic_small_versions.png</file>
     </qresource>
 </RCC>

@@ -192,7 +192,7 @@ void MegaSystemTrayIcon::setToolTip(const QString &toolTip)
     if (!m_sys)
         return;
 
-    NSString *convertedString = [[NSString  alloc] initWithUTF8String:(char *)toolTip.toStdString().c_str()];
+    NSString *convertedString = [[NSString  alloc] initWithUTF8String:(char *)toolTip.toUtf8().constData()];
     [[[m_sys->item item] view] setToolTip:convertedString];
 }
 

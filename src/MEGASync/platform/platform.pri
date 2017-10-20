@@ -13,7 +13,7 @@ win32 {
 		$$PWD/win/WinShellDispatcherTask.h \
 		$$PWD/win/WinTrayReceiver.h
 
-    LIBS += -lole32 -lShell32 -lcrypt32
+    LIBS += -lole32 -lShell32 -lcrypt32 -ltaskschd
     DEFINES += UNICODE _UNICODE NTDDI_VERSION=0x05010000 _WIN32_WINNT=0x0501
 }
 
@@ -80,6 +80,51 @@ unix:!macx {
         icons256.path = $${HICOLOR}/256x256/apps
         icons256.files = $${ICONS_LOC}/256x256/apps/mega.png
         INSTALLS += icons16 icons32 icons48 icons128 icons256
+
+        trayiconssynching.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/synching.svg \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megasynching.svg
+        trayiconswarning.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/warning.svg \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megawarning.svg
+        trayiconspaused.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/paused.svg \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megapaused.svg
+        trayiconslogging.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/logging.svg \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megalogging.svg
+        trayiconsuptodate.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/uptodate.svg \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megauptodate.svg
+        trayiconssynching.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/synching.svg \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megasynching.svg
+
+        trayiconssynching.path = $${HICOLOR}/scalable/status
+        trayiconswarning.path = $${HICOLOR}/scalable/status
+        trayiconspaused.path = $${HICOLOR}/scalable/status
+        trayiconslogging.path = $${HICOLOR}/scalable/status
+        trayiconsuptodate.path = $${HICOLOR}/scalable/status
+
+        trayiconssynching.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megasynching.svg
+        trayiconswarning.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megawarning.svg
+        trayiconspaused.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megapaused.svg
+        trayiconslogging.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megalogging.svg
+        trayiconsuptodate.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${HICOLOR}/scalable/status/megauptodate.svg
+
+        INSTALLS += trayiconssynching trayiconswarning trayiconspaused trayiconslogging trayiconsuptodate
+
+        MONOCOLOR = $$DESKTOP_DESTDIR/share/icons/ubuntu-mono-dark
+
+        trayiconssynchingmono.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/synching_clear.svg \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megasynching.svg
+        trayiconswarningmono.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/warning_clear.svg \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megawarning.svg
+        trayiconspausedmono.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/paused_clear.svg \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megapaused.svg
+        trayiconsloggingmono.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/logging_clear.svg \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megalogging.svg
+        trayiconsuptodatemono.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/uptodate_clear.svg \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megauptodate.svg
+        trayiconssynchingmono.extra = -\$(INSTALL_FILE) $$PWD/../gui/images/synching_clear.svg \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megasynching.svg
+
+        trayiconssynchingmono.path = $${MONOCOLOR}/status/24
+        trayiconswarningmono.path = $${MONOCOLOR}/status/24
+        trayiconspausedmono.path = $${MONOCOLOR}/status/24
+        trayiconsloggingmono.path = $${MONOCOLOR}/status/24
+        trayiconsuptodatemono.path = $${MONOCOLOR}/status/24
+
+        trayiconssynchingmono.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megasynching.svg
+        trayiconswarningmono.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megawarning.svg
+        trayiconspausedmono.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megapaused.svg
+        trayiconsloggingmono.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megalogging.svg
+        trayiconsuptodatemono.uninstall = -\$(DEL_DIR) \$(INSTALL_ROOT)$${MONOCOLOR}/status/24/megauptodate.svg
+
+        INSTALLS += trayiconssynchingmono trayiconswarningmono trayiconspausedmono trayiconsloggingmono trayiconsuptodatemono
+
     } else {
         message("Skipping desktop files installation.")
     }
@@ -93,15 +138,30 @@ macx {
         $$PWD/macx/macnotificationhandler.h \
         $$PWD/macx/NotificationDelegate.h \
         $$PWD/macx/MacXSystemServiceTask.h  \
-        $$PWD/macx/MEGAService.h
+        $$PWD/macx/MEGAService.h \
+        $$PWD/macx/ClientSide.h \
+        $$PWD/macx/ServerSide.h \
+        $$PWD/macx/MacXExtServer.h \
+        $$PWD/macx/MacXLocalServer.h \
+        $$PWD/macx/MacXLocalServerPrivate.h \
+        $$PWD/macx/MacXLocalSocket.h \
+        $$PWD/macx/MacXLocalSocketPrivate.h \
+        $$PWD/macx/Protocol.h
+
 
     OBJECTIVE_SOURCES += \
             $$PWD/macx/MacXFunctions.mm \
             $$PWD/macx/macnotificationhandler.mm \
             $$PWD/macx/NotificationDelegate.mm \
             $$PWD/macx/MacXSystemServiceTask.mm \
-            $$PWD/macx/MEGAService.mm
-
+            $$PWD/macx/MEGAService.mm \
+            $$PWD/macx/ClientSide.mm \
+            $$PWD/macx/ServerSide.mm \
+            $$PWD/macx/MacXExtServer.mm \
+            $$PWD/macx/MacXLocalServer.mm \
+            $$PWD/macx/MacXLocalServerPrivate.mm \
+            $$PWD/macx/MacXLocalSocket.mm \
+            $$PWD/macx/MacXLocalSocketPrivate.mm
 
     LIBS += -framework Cocoa
     LIBS += -framework Security

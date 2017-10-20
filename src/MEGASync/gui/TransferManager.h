@@ -5,7 +5,7 @@
 #include <QMenu>
 #include "megaapi.h"
 #include "Preferences.h"
-#include "TransferMenuItemAction.h"
+#include "MenuItemAction.h"
 #include <QGraphicsEffect>
 #include <QTimer>
 #include "QTMegaTransferListener.h"
@@ -19,9 +19,17 @@ class TransferManager : public QDialog, public mega::MegaTransferListener
     Q_OBJECT
 
 public:
+    enum {
+        ALL_TRANSFERS_TAB = 0,
+        DOWNLOADS_TAB   = 1,
+        UPLOADS_TAB = 2,
+        COMPLETED_TAB = 3
+    };
+
     static const int COMPLETED_ITEMS_LIMIT = 999;
 
     explicit TransferManager(mega::MegaApi *megaApi, QWidget *parent = 0);
+    void setActiveTab(int t);
     void updatePauseState();
     void disableGetLink(bool disable);
     void updateNumberOfCompletedTransfers(int num);
@@ -40,10 +48,10 @@ private:
     Ui::TransferManager *ui;
     mega::MegaApi *megaApi;
     QMenu *addMenu;
-    TransferMenuItemAction *settingsAction;
-    TransferMenuItemAction *importLinksAction;
-    TransferMenuItemAction *uploadAction;
-    TransferMenuItemAction *downloadAction;
+    MenuItemAction *settingsAction;
+    MenuItemAction *importLinksAction;
+    MenuItemAction *uploadAction;
+    MenuItemAction *downloadAction;
     Preferences *preferences;
     QPoint dragPosition;
     long long notificationNumber;

@@ -135,7 +135,18 @@ void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaErro
     {
         if (e->getErrorCode() == MegaError::API_OK)
         {
-            MegaNode *rootNode = megaApiFolders->getRootNode();
+            MegaNode *rootNode = NULL;
+            if (linkList[currentIndex].count(QChar::fromAscii('!')) == 3)
+            {
+                QStringList linkparts = linkList[currentIndex].split(QChar::fromAscii('!'), QString::KeepEmptyParts);
+                MegaHandle handle = MegaApi::base64ToHandle(linkparts.last().toUtf8().constData());
+                rootNode = megaApiFolders->getNodeByHandle(handle);
+            }
+            else
+            {
+                rootNode = megaApiFolders->getRootNode();
+            }
+
             linkNode[currentIndex] = megaApiFolders->authorizeNode(rootNode);
             delete rootNode;
         }

@@ -82,7 +82,12 @@ void MegaTransferView::createContextMenu()
     {
         contextInProgressMenu = new QMenu(this);
         contextInProgressMenu->setStyleSheet(QString::fromAscii(
+#ifdef __APPLE__
                                    "QMenu {background: #ffffff;}"
+#else
+                                   "QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"
+#endif
+
 #if QT_VERSION < 0x050000
                                    "QMenu::item {font-family: Source Sans Pro; margin: 5px 9px 5px 9px; color: #777777; padding: 5px 16px 5px 8px;} "
                                    "QMenu::item:selected {background: #aaaaaa; border: 1px solid #aaaaaa; border-radius: 2px; margin-left: 9px; margin-right: 9px; color: #ffffff; padding: 4px 15px 4px 7px;}"

@@ -29,7 +29,7 @@ public:
     static void initialize(int argc, char *argv[]);
     static QString desktop_file;
     static bool enableTrayIcon(QString executable);
-    static void notifyItemChange(QString path);
+    static void notifyItemChange(std::string *localPath, int newState);
     static bool startOnStartup(bool value);
     static bool isStartOnStartupActive();
     static void showInFolder(QString pathIn);
@@ -37,12 +37,17 @@ public:
     static void stopShellDispatcher();
     static void syncFolderAdded(QString syncPath, QString syncName, QString syncID);
     static void syncFolderRemoved(QString syncPath, QString syncName, QString syncID);
+    static void notifyRestartSyncFolders();
+    static void notifyAllSyncFoldersAdded();
+    static void notifyAllSyncFoldersRemoved();
     static QByteArray encrypt(QByteArray data, QByteArray key);
     static QByteArray decrypt(QByteArray data, QByteArray key);
     static QByteArray getLocalStorageKey();
     static QString getDefaultOpenApp(QString extension);
     static void enableDialogBlur(QDialog *dialog);
     static void activateBackgroundWindow(QDialog *window);
+    static void execBackgroundWindow(QDialog *window);
+    static bool registerUpdateJob();
     static void uninstall();
 };
 

@@ -14,6 +14,8 @@ fi
 if [[ $distro = "Raspbian GNU/Linux 8.0 (jessie)" ]]; then
     str="Raspbian_8.0"
 # Ubuntu
+elif [[ $ver = "17.10" ]]; then
+    str="xUbuntu_17.10"
 elif [[ $ver = "17.04" ]]; then
     str="xUbuntu_17.04"
 elif [[ $ver = "16.10" ]]; then
@@ -139,4 +141,8 @@ URYSLAw5e33Za+vKMGF/hifuJ1V0GYkUig==
 KEY
 
 sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf
+
+/bin/touch --no-create /usr/share/icons/hicolor &>/dev/null
+/bin/touch --no-create /usr/share/icons/ubuntu-mono-dark &>/dev/null
+/usr/bin/gtk-update-icon-cache /usr/share/icons/* &>/dev/null
 
