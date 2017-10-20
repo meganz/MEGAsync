@@ -16,11 +16,11 @@ const int Preferences::VERSION_CODE = 3400;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("3.5");
-const QString Preferences::SDK_ID = QString::fromAscii("422aa6");
+const QString Preferences::SDK_ID = QString::fromAscii("e14414");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- New UI style\n"
             "- Support to generate file versions in MEGA\n"
-            "- Integration with Finder (macOS)\n"
+            "- Integration with Finder (macOS 10.10+)\n"
             "- Allow to exclude specific files/folders\n"
             "- Bug fixes and other minor improvements");
 
