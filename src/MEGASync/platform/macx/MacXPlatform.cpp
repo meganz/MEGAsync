@@ -22,7 +22,7 @@ void MacXPlatform::initialize(int argc, char *argv[])
     fd = -1;
     if (argc)
     {
-        long int value = strtol(argv[argc-1], NULL, 10);
+        long int value = strtol(argv[argc - 1], NULL, 10);
         if (value > 0 && value < INT_MAX)
         {
             fd = value;
@@ -55,6 +55,7 @@ QStringList MacXPlatform::multipleUpload(QString uploadTitle)
 {
     return uploadMultipleFiles(uploadTitle);
 }
+
 bool MacXPlatform::enableTrayIcon(QString executable)
 {
     return false;
@@ -278,7 +279,7 @@ bool MacXPlatform::enableSetuidBit()
         return false;
     }
     bool result = strlen(response) >= 4 && !strncmp(response, "true", 4);
-    delete response;
+    delete [] response;
     return result;
 }
 
