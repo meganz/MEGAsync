@@ -65,7 +65,7 @@ QStringList uploadMultipleFiles(QString uploadTitle)
     if (!panel)
     {
         panel = [NSOpenPanel openPanel];
-        [panel setTitle:[NSString stringWithUTF8String:uploadTitle.toUtf8().constData()];
+        [panel setTitle:[NSString stringWithUTF8String:uploadTitle.toUtf8().constData()]];
         [panel setCanChooseFiles:YES];
         [panel setCanChooseDirectories:YES];
         [panel setAllowsMultipleSelection:YES];
@@ -88,7 +88,7 @@ QStringList uploadMultipleFiles(QString uploadTitle)
 // found in the LICENSE file.
 void SetProcessName(QString procname)
 {
-    CFStringRef process_name = CFStringCreateWithCString(NULL, procname.toUtf8().constData(), kCFStringEncodingUTF8)
+    CFStringRef process_name = CFStringCreateWithCString(NULL, procname.toUtf8().constData(), kCFStringEncodingUTF8);
     if (!process_name || CFStringGetLength(process_name) == 0)
     {
         if (process_name)
@@ -384,7 +384,7 @@ void addPathToPlaces(QString path, QString pathName)
     CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:folderPath];
     if (url == nil)
     {
-        return false;
+        return;
     }
 
     CFURLRef iconURLRef = (CFURLRef)[NSURL fileURLWithPath:[appPath stringByAppendingString:@"/Contents/Resources/app.icns"]];
@@ -405,7 +405,7 @@ void addPathToPlaces(QString path, QString pathName)
         return;
     }
 
-    CFStringRef pnString = CFStringCreateWithCString(NULL, pathName.toUtf8().constData(), kCFStringEncodingUTF8)
+    CFStringRef pnString = CFStringCreateWithCString(NULL, pathName.toUtf8().constData(), kCFStringEncodingUTF8);
     if (pnString == nil)
     {
         return;
