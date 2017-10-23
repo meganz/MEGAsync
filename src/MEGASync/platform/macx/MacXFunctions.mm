@@ -175,14 +175,14 @@ char *runWithRootPrivileges(char *command)
     NSString *appPath = [[NSBundle mainBundle] bundlePath];
     if (appPath == nil)
     {
-        return false;
+        return NULL;
     }
 
     NSString *pathToIcon = [appPath stringByAppendingString:@"/Contents/Resources/appicon32.tiff"];
     const char *icon = [pathToIcon fileSystemRepresentation];
     if (!icon)
     {
-        return false;
+        return NULL;
     }
 
     const char *prompt = "MEGAsync. ";
@@ -447,6 +447,7 @@ void removePathFromPlaces(QString path)
     NSString *folderPath = [NSString stringWithUTF8String:path.toUtf8().constData()];
     if (!folderPath)
     {
+        CFRelease(favoriteItems);
         return;
     }
 
@@ -454,6 +455,7 @@ void removePathFromPlaces(QString path)
     CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:folderPath];
     if (!url)
     {
+        CFRelease(favoriteItems);
         return;
     }
 
