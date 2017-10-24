@@ -262,14 +262,11 @@ bool startAtLogin(bool opt)
             if (itemRef)
             {
                 CFURLRef itemURL = NULL;
-                if (LSSharedFileListItemResolve(itemRef, 0, (CFURLRef*) &itemURL, NULL) == noErr && itemURL)
+                if (LSSharedFileListItemResolve(itemRef, 0, (CFURLRef*) &itemURL, NULL) == noErr && itemURL
+                        && CFEqual(url, itemURL))
                 {
                     // Remove duplicates with the same target URL
-                    if (CFEqual(url, itemURL))
-                    {
-                        LSSharedFileListItemRemove(loginItems, itemRef);
-                    }
-                    CFRelease(itemURL);
+                    LSSharedFileListItemRemove(loginItems, itemRef);
                 }
                 else
                 {
@@ -284,6 +281,12 @@ bool startAtLogin(bool opt)
                         CFRelease(itemName);
                     }
                 }
+
+                if (itemURL)
+                {
+                    CFRelease(itemURL);
+                }
+
             }
         }
         CFRelease(items);
