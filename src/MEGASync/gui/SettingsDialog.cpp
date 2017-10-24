@@ -61,11 +61,17 @@ void deleteCache()
 
 long long calculateRemoteCacheSize(MegaApi *megaApi)
 {
-    return megaApi->getSize(megaApi->getNodeByPath("//bin/SyncDebris"));
+    MegaNode *n = megaApi->getNodeByPath("//bin/SyncDebris");
+    long long toret = megaApi->getSize(n);
+    delete n;
+    return toret;
 }
+
 void deleteRemoteCache(MegaApi *megaApi)
 {
-    megaApi->remove(megaApi->getNodeByPath("//bin/SyncDebris"));
+    MegaNode *n = megaApi->getNodeByPath("//bin/SyncDebris");
+    megaApi->remove(n);
+    delete n;
 }
 
 SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *parent) :
