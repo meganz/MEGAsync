@@ -286,7 +286,6 @@ bool startAtLogin(bool opt)
                 {
                     CFRelease(itemURL);
                 }
-
             }
         }
         CFRelease(items);
