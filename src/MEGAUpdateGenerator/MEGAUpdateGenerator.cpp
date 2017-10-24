@@ -345,8 +345,8 @@ int main(int argc, char *argv[])
         cout << pubkstr << endl;
         cout << privkstr << endl;
 
-        delete pubkstr;
-        delete privkstr;
+        delete [] pubkstr;
+        delete [] privkstr;
         return 0;
     }
     else if ((argc == 6) && !strcmp(argv[1], "-s")
