@@ -10,12 +10,16 @@ using namespace mega;
 MacXLocalServer::MacXLocalServer()
     :serverPrivate(new MacXLocalServerPrivate())
 {
+    listening = false;
     serverPrivate->localServer = this;
 }
 
 MacXLocalServer::~MacXLocalServer()
 {
-    [serverPrivate->connection registerName:nil];
+    if (listening)
+    {
+        [serverPrivate->connection registerName:nil];
+    }
     qDeleteAll(pendingConnections);
     pendingConnections.clear();
     delete serverPrivate;
@@ -25,6 +29,7 @@ bool MacXLocalServer::listen(QString name)
 {
     if ([serverPrivate->connection registerName:name.toNSString()] == YES)
     {
+        listening = true;
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Shell ext server started");
         return true;
     }

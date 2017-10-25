@@ -23,6 +23,7 @@ signals:
 private:
     QList<MacXLocalSocket*> pendingConnections;
     MacXLocalServerPrivate *serverPrivate;
+    bool listening;
 };
 
 #endif // MACXLOCALSERVER_H
