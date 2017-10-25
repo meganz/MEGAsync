@@ -6,8 +6,8 @@
 using namespace mega;
 using namespace std;
 
-MacXLocalSocket::MacXLocalSocket(QObject *parent, MacXLocalSocketPrivate *clientSocketPrivate)
-    : QObject(parent), socketPrivate(clientSocketPrivate)
+MacXLocalSocket::MacXLocalSocket(MacXLocalSocketPrivate *clientSocketPrivate)
+    : socketPrivate(clientSocketPrivate)
 {
     socketPrivate->socket = this;
 }

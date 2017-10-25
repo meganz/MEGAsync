@@ -15,7 +15,7 @@
     {
         [endPoint setProtocolForProxy:@protocol(CommunicationProtocol)];
         MacXLocalSocketPrivate *clientSocketPrivate = new MacXLocalSocketPrivate(endPoint);
-        MacXLocalSocket *client = new MacXLocalSocket(_serverSocketPrivate->localServer, clientSocketPrivate);
+        MacXLocalSocket *client = new MacXLocalSocket(clientSocketPrivate);
         _serverSocketPrivate->localServer->appendPendingConnection(client);
         emit _serverSocketPrivate->localServer->newConnection();
         [endPoint registerObject:clientSocketPrivate->client];
