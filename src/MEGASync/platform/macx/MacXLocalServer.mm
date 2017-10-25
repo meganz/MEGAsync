@@ -17,6 +17,7 @@ MacXLocalServer::~MacXLocalServer()
 {
     qDeleteAll(pendingConnections);
     pendingConnections.clear();
+    delete serverPrivate;
 }
 
 bool MacXLocalServer::listen(QString name)
