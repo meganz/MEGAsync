@@ -15,6 +15,7 @@ MacXLocalServer::MacXLocalServer()
 
 MacXLocalServer::~MacXLocalServer()
 {
+    [serverPrivate->connection registerName:nil];
     qDeleteAll(pendingConnections);
     pendingConnections.clear();
     delete serverPrivate;
