@@ -15,7 +15,7 @@ public:
     bool listen(QString name);
     MacXLocalSocket* nextPendingConnection();
     bool hasPendingConnections();
-    void appenPendingConnection(MacXLocalSocket* client);
+    void appendPendingConnection(MacXLocalSocket* client);
 
 signals:
     void newConnection();

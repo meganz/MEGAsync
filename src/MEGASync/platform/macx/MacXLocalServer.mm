@@ -15,6 +15,8 @@ MacXLocalServer::MacXLocalServer()
 
 MacXLocalServer::~MacXLocalServer()
 {
+    qDeleteAll(pendingConnections);
+    pendingConnections.clear();
 }
 
 bool MacXLocalServer::listen(QString name)
@@ -44,7 +46,7 @@ bool MacXLocalServer::hasPendingConnections()
     return !pendingConnections.isEmpty();
 }
 
-void MacXLocalServer::appenPendingConnection(MacXLocalSocket *client)
+void MacXLocalServer::appendPendingConnection(MacXLocalSocket *client)
 {
     pendingConnections.append(client);
 }

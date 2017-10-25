@@ -10,4 +10,7 @@ MacXLocalServerPrivate::MacXLocalServerPrivate()
 
 MacXLocalServerPrivate::~MacXLocalServerPrivate()
 {
+    [server setServerSocketPrivate:nil];
+    [server release];
+    [connection release];
 }
