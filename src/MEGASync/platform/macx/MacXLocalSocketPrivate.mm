@@ -15,9 +15,9 @@ MacXLocalSocketPrivate::MacXLocalSocketPrivate(NSDistantObject<CommunicationProt
 
 MacXLocalSocketPrivate::~MacXLocalSocketPrivate()
 {
+    [client setSocketPrivate:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:client];
     [extClient release];
-    [client setSocketPrivate:nil];
     [client release];
 }
 
