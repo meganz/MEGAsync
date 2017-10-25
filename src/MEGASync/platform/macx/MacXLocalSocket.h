@@ -21,7 +21,7 @@ signals:
     void disconnected();
 
 private:
-    QScopedPointer<MacXLocalSocketPrivate> socketPrivate;
+    MacXLocalSocketPrivate* socketPrivate;
 };
 
 #endif // MACXLOCALSOCKET_H

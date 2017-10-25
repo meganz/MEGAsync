@@ -14,6 +14,7 @@ MacXLocalSocket::MacXLocalSocket(MacXLocalSocketPrivate *clientSocketPrivate)
 
 MacXLocalSocket::~MacXLocalSocket()
 {
+    delete socketPrivate;
 }
 
 qint64 MacXLocalSocket::readCommand(QByteArray *data)
