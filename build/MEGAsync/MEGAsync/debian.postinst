@@ -11,7 +11,9 @@ if [ "x$ver" == "x" ]; then
 fi
 
 
-if [[ $distro = "Raspbian GNU/Linux 8.0 (jessie)" ]]; then
+if [[ $distro = "Raspbian GNU/Linux 9.1 (stretch)" ]]; then
+    str="Raspbian_9.0"
+elif [[ $distro = "Raspbian GNU/Linux 8.0 (jessie)" ]]; then
     str="Raspbian_8.0"
 # Ubuntu
 elif [[ $ver = "17.10" ]]; then
