@@ -6,6 +6,8 @@
 
 @interface ClientSide : NSObject<CommunicationProtocol>
 
+@property MacXLocalSocketPrivate *socketPrivate;
+
 - (instancetype)initWithLocalSocket:(MacXLocalSocketPrivate*)lSocket;
 
 @end

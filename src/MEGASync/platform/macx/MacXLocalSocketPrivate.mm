@@ -5,6 +5,8 @@ MacXLocalSocketPrivate::MacXLocalSocketPrivate(NSDistantObject<CommunicationProt
 {
     this->extClient = extClient;
     client = [[ClientSide alloc] initWithLocalSocket:this];
+    [extClient retain];
+
     [[NSNotificationCenter defaultCenter] addObserver:client
             selector:@selector(connectionHasDied:)
             name:NSConnectionDidDieNotification
@@ -13,5 +15,9 @@ MacXLocalSocketPrivate::MacXLocalSocketPrivate(NSDistantObject<CommunicationProt
 
 MacXLocalSocketPrivate::~MacXLocalSocketPrivate()
 {
-
+    [client setSocketPrivate:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:client];
+    [extClient release];
+    [client release];
 }
+

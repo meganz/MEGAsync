@@ -15,14 +15,15 @@ public:
     bool listen(QString name);
     MacXLocalSocket* nextPendingConnection();
     bool hasPendingConnections();
-    void appenPendingConnection(MacXLocalSocket* client);
+    void appendPendingConnection(MacXLocalSocket* client);
 
 signals:
     void newConnection();
 
 private:
     QList<MacXLocalSocket*> pendingConnections;
-    QScopedPointer<MacXLocalServerPrivate> serverPrivate;
+    MacXLocalServerPrivate *serverPrivate;
+    bool listening;
 };
 
 #endif // MACXLOCALSERVER_H
