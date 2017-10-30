@@ -10,7 +10,7 @@ class MacXLocalSocket : public QObject
     Q_OBJECT
 
 public:
-    MacXLocalSocket(QObject *parent, MacXLocalSocketPrivate *clientSocketPrivate);
+    MacXLocalSocket(MacXLocalSocketPrivate *clientSocketPrivate);
     ~MacXLocalSocket();
 
     qint64 readCommand(QByteArray *data);
@@ -21,7 +21,7 @@ signals:
     void disconnected();
 
 private:
-    QScopedPointer<MacXLocalSocketPrivate> socketPrivate;
+    MacXLocalSocketPrivate* socketPrivate;
 };
 
 #endif // MACXLOCALSOCKET_H

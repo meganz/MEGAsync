@@ -1,31 +1,28 @@
 #include "ClientSide.h"
 
 @implementation ClientSide
-{
-    MacXLocalSocketPrivate *socketPrivate;
-}
 
 - (instancetype)initWithLocalSocket:(MacXLocalSocketPrivate*)lSocket
 {
     self = [super init];
-    socketPrivate = lSocket;
+    _socketPrivate = lSocket;
     return self;
 }
 
 - (void)send:(NSData *)msg
 {
-    if (socketPrivate)
+    if (_socketPrivate)
     {
-        socketPrivate->buf += QByteArray((const char *)[msg bytes], [msg length]);
-        emit socketPrivate->socket->dataReady();
+        _socketPrivate->buf += QByteArray((const char *)[msg bytes], [msg length]);
+        emit _socketPrivate->socket->dataReady();
     }
 }
 
 - (void)connectionHasDied:(NSNotification*)notification
 {
-    if (socketPrivate)
+    if (_socketPrivate)
     {
-        emit socketPrivate->socket->disconnected();
+        emit _socketPrivate->socket->disconnected();
     }
 }
 
