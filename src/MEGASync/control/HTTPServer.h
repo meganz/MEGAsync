@@ -55,7 +55,7 @@ class HTTPServer: public QTcpServer
     Q_OBJECT
 
     public:
-        const unsigned int MAX_REQUEST_TIME_SECS;
+        static const unsigned int MAX_REQUEST_TIME_SECS;
 
         HTTPServer(mega::MegaApi *megaApi, quint16 port, bool sslEnabled);
         ~HTTPServer();
