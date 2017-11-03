@@ -8,6 +8,8 @@
 
 using namespace mega;
 
+const unsigned int HTTPServer::MAX_REQUEST_TIME_SECS = 1800;
+
 bool ts_comparator(RequestData* i, RequestData *j)
 {
     return i->tsStart < j->tsStart;
