@@ -327,9 +327,13 @@ elif [[ $VMNAME == *"ARCHLINUX"* ]]; then
 	$sshpasscommand ssh root@$IP_GUEST sed -n "'1h;1!H;\${g;s/###REPO for MEGA###\n.*###END REPO for MEGA###//;p;}'" -i /etc/pacman.conf 
 
 	#include repo
+	archreponame="DEB_Arch_Extra"
+	if [[ $REPO == *"home:"* ]]; then
+		archreponame="home_Admin_Arch_Extra"
+	fi
 	$sshpasscommand ssh root@$IP_GUEST "cat >> /etc/pacman.conf" <<-EOF
 ###REPO for MEGA###
-[DEB_Arch_Extra]
+[$archreponame]
 SigLevel = Optional TrustAll
 Server = $REPO/\$arch
 ###END REPO for MEGA###
@@ -573,6 +577,8 @@ else #FEDORA | CENTOS...
 	if [[ $distroDir == "Scientific"* ]]; then distroDir="ScientificLinux"; fi
 	ver=$($sshpasscommand ssh root@$IP_GUEST cat /etc/system-release | awk -F"release "  '{print $2}' | awk '{print $1}')
 	if [[ x$ver == "x7"* ]]; then ver="7"; fi #centos7
+	if [[ $distroDir == "Fedora"* ]]; then ver="\$releasever"; fi
+
 
 	expected="baseurl=https://mega.nz/linux/MEGAsync/${distroDir}_$ver"
 	resultRepoConfiguredOk=0
