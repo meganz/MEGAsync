@@ -201,8 +201,8 @@ YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
 [MEGAsync]
 name=MEGAsync
-baseurl=https://mega.nz/linux/MEGAsync/Fedora_$releasever/
-gpgkey=https://mega.nz/linux/MEGAsync/Fedora_$releasever/repodata/repomd.xml.key
+baseurl=https://mega.nz/linux/MEGAsync/Fedora_\$releasever/
+gpgkey=https://mega.nz/linux/MEGAsync/Fedora_\$releasever/repodata/repomd.xml.key
 gpgcheck=1
 enabled=1
 DATA
