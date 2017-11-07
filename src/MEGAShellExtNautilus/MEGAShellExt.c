@@ -351,6 +351,7 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
 
         out = mega_ext_client_get_string(mega_ext, STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
         item = nautilus_menu_item_new("MEGAExtension::upload_to_mega", out, "Upload files to you MEGA account", "mega");
+        g_free(mega_ext->string_upload);
         mega_ext->string_upload = g_strdup(out);
         g_free(out);
 
@@ -367,6 +368,7 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
 
         out = mega_ext_client_get_string(mega_ext, STRING_GETLINK, syncedFiles, syncedFolders);
         item = nautilus_menu_item_new("MEGAExtension::get_mega_link", out, "Get MEGA link", "mega");
+        g_free(mega_ext->string_getlink);
         mega_ext->string_getlink = g_strdup(out);
         g_free(out);
 
@@ -381,6 +383,7 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
             {
                 out = mega_ext_client_get_string(mega_ext, STRING_VIEW_ON_MEGA, 0, 0);
                 item = nautilus_menu_item_new("MEGAExtension::view_on_mega", out, "View on MEGA", "mega");
+                g_free(mega_ext->string_viewonmega);
                 mega_ext->string_viewonmega = g_strdup(out);
                 g_free(out);
 
@@ -393,6 +396,7 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
             {
                 out = mega_ext_client_get_string(mega_ext, STRING_VIEW_VERSIONS, 0, 0);
                 item = nautilus_menu_item_new("MEGAExtension::view_previous_versions", out, "View previous versions", "mega");
+                g_free(mega_ext->string_viewprevious);
                 mega_ext->string_viewprevious = g_strdup(out);
                 g_free(out);
 

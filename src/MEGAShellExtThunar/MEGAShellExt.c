@@ -324,6 +324,7 @@ static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UN
         GtkWidget *action = NULL;
 
         out = mega_ext_client_get_string(mega_ext, STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
+        g_free(mega_ext->string_upload);
         mega_ext->string_upload = g_strdup(out);
         g_free(out);
         action = g_object_new (GTK_TYPE_ACTION,
@@ -344,6 +345,7 @@ static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UN
         GtkWidget *action = NULL;
 
         out = mega_ext_client_get_string(mega_ext, STRING_GETLINK, syncedFiles, syncedFolders);
+        g_free(mega_ext->string_getlink);
         mega_ext->string_getlink = g_strdup(out);
         g_free(out);
         action = g_object_new (GTK_TYPE_ACTION,"name", "MEGAExtension::get_mega_link","icon-name", "mega","label", mega_ext->string_getlink,NULL);
@@ -359,6 +361,7 @@ static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UN
             {
                 GtkWidget *action = NULL;
                 out = mega_ext_client_get_string(mega_ext, STRING_VIEW_ON_MEGA, 0, 0);
+                g_free(mega_ext->string_viewonmega);
                 mega_ext->string_viewonmega = g_strdup(out);
                 g_free(out);
                 action = g_object_new (GTK_TYPE_ACTION,"name", "MEGAExtension::view_on_mega","icon-name", "mega", "label", mega_ext->string_viewonmega, NULL);
@@ -371,6 +374,7 @@ static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UN
             {
                 GtkWidget *action = NULL;
                 out = mega_ext_client_get_string(mega_ext, STRING_VIEW_VERSIONS, 0, 0);
+                g_free(mega_ext->string_viewprevious);
                 mega_ext->string_viewprevious = g_strdup(out);
                 g_free(out);
                 action = g_object_new (GTK_TYPE_ACTION,"name", "MEGAExtension::view_previous_versions","icon-name", "mega", "label", mega_ext->string_viewprevious, NULL);
@@ -451,9 +455,10 @@ static GList* mega_ext_get_folder_actions(ThunarxMenuProvider *provider, G_GNUC_
         GList *tmp;
 
         out = mega_ext_client_get_string(mega_ext, STRING_UPLOAD, 0, unsyncedFolders);
+        g_free(mega_ext->string_upload);
         mega_ext->string_upload = g_strdup(out);
-
         g_free(out);
+
         action = g_object_new (GTK_TYPE_ACTION,
             "name", "MEGAExtension::upload_to_mega",
             "icon-name", "mega",
@@ -475,6 +480,7 @@ static GList* mega_ext_get_folder_actions(ThunarxMenuProvider *provider, G_GNUC_
         GList *tmp;
 
         out = mega_ext_client_get_string(mega_ext, STRING_GETLINK, 0, syncedFolders);
+        g_free(mega_ext->string_getlink);
         mega_ext->string_getlink = g_strdup(out);
         g_free(out);
         action = g_object_new (GTK_TYPE_ACTION,
