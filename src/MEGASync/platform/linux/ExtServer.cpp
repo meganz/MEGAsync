@@ -294,7 +294,7 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
             QFileInfo file(filePath);
             if (file.exists())
             {
-                emit viewOnMega(filePath.toUtf8(), false);
+                emit viewOnMega(filePath.toUtf8(), true);
 
             }
             break;
