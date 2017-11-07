@@ -155,6 +155,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 #ifndef WIN32    
     #ifndef __APPLE__
     ui->rProxyAuto->hide();
+    ui->cDisableIcons->hide();
     ui->cAutoUpdate->hide();
     ui->bUpdate->hide();
     #endif
