@@ -346,7 +346,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
             response = QString::fromUtf8("{\"v\":\"%1\",\"u\":\"%2\"}")
                     .arg(Preferences::VERSION_STRING)
                     .arg(QString::fromUtf8(myHandle));
-            delete myHandle;
+            delete [] myHandle;
         }
     }
     else if (request.data.startsWith(openLinkRequestStart))
