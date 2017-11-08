@@ -164,18 +164,17 @@ string getDistroVersion()
             string distro = getDistro();
             if (distro.size())
             {
-                distroinfo.append("<");
                 distroinfo.append(distro);
                 string distroversion = getDistroVersion();
                 if (distroversion.size())
                 {
                     distroinfo.append(" ");
                     distroinfo.append(distroversion);
-                    distroinfo.append("> ");
+                    distroinfo.append("/");
                 }
                 else
                 {
-                    distroinfo.append("> ");
+                    distroinfo.append("/");
                 }
             }
         #endif
