@@ -28,14 +28,14 @@ using namespace std;
 #ifdef __linux__
     #include <fstream>
 
-std::string &ltrimEtcProperty(std::string &s, const char &c)
+string &ltrimEtcProperty(string &s, const char &c)
 {
     size_t pos = s.find_first_not_of(c);
     s = s.substr(pos == string::npos ? s.length() : pos, s.length());
     return s;
 }
 
-std::string &rtrimEtcProperty(std::string &s, const char &c)
+string &rtrimEtcProperty(string &s, const char &c)
 {
     size_t pos = s.find_last_of(c);
     size_t last = pos == string::npos ? s.length() : pos;
@@ -51,7 +51,7 @@ std::string &rtrimEtcProperty(std::string &s, const char &c)
     return s;
 }
 
-std::string &trimEtcproperty(string &what)
+string &trimEtcproperty(string &what)
 {
     rtrimEtcProperty(what,' ');
     ltrimEtcProperty(what,' ');
@@ -66,10 +66,10 @@ std::string &trimEtcproperty(string &what)
     return what;
 }
 
-std::string getPropertyFromEtcFile(const char *configFile,const char *propertyName)
+string getPropertyFromEtcFile(const char *configFile,const char *propertyName)
 {
-    std::ifstream infile(configFile);
-    std::string line;
+    ifstream infile(configFile);
+    string line;
 
     while (getline(infile, line)) {
         if (line.length() > 0 && line[0] != '#') {
@@ -77,7 +77,7 @@ std::string getPropertyFromEtcFile(const char *configFile,const char *propertyNa
             {
                 return trimEtcproperty(line);
             }
-            std::string key, value;
+            string key, value;
             size_t pos = line.find("=");
             if (pos != string::npos && ((pos+1) < line.size()))
             {
@@ -117,7 +117,7 @@ string getDistro()
     {
         distro=distro.substr(0,20);
     }
-    std::transform(distro.begin(), distro.end(), distro.begin(), ::tolower);
+    transform(distro.begin(), distro.end(), distro.begin(), ::tolower);
     return distro;
 
 }
