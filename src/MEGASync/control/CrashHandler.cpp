@@ -37,17 +37,12 @@ string &ltrimEtcProperty(string &s, const char &c)
 
 string &rtrimEtcProperty(string &s, const char &c)
 {
-    size_t pos = s.find_last_of(c);
-    size_t last = pos == string::npos ? s.length() : pos;
-    if (last + 1 < s.length())
+    size_t pos = s.find_last_not_of(c);
+    if (pos != string::npos)
     {
-        if (s.at(last + 1) != c)
-        {
-            last = s.length();
-        }
+        pos++;
     }
-
-    s = s.substr(0, last);
+    s = s.substr(0, pos);
     return s;
 }
 
@@ -59,37 +54,38 @@ string &trimEtcproperty(string &what)
     {
         if (what[0] == '\'' || what[0] == '"')
         {
-            rtrimEtcProperty(what,what[0]);
-            ltrimEtcProperty(what,what[0]);
+            rtrimEtcProperty(what, what[0]);
+            ltrimEtcProperty(what, what[0]);
         }
     }
     return what;
 }
 
-string getPropertyFromEtcFile(const char *configFile,const char *propertyName)
+string getPropertyFromEtcFile(const char *configFile, const char *propertyName)
 {
     ifstream infile(configFile);
     string line;
 
-    while (getline(infile, line)) {
-        if (line.length() > 0 && line[0] != '#') {
+    while (getline(infile, line))
+    {
+        if (line.length() > 0 && line[0] != '#')
+        {
             if (!strlen(propertyName)) //if empty return first line
             {
                 return trimEtcproperty(line);
             }
             string key, value;
             size_t pos = line.find("=");
-            if (pos != string::npos && ((pos+1) < line.size()))
+            if (pos != string::npos && ((pos + 1) < line.size()))
             {
-                key = line.substr(0,pos);
-                rtrimEtcProperty(key,' ');
+                key = line.substr(0, pos);
+                rtrimEtcProperty(key, ' ');
 
-                if (!strcmp(key.c_str(),propertyName))
+                if (!strcmp(key.c_str(), propertyName))
                 {
-                    value = line.substr(pos+1);
+                    value = line.substr(pos + 1);
                     return trimEtcproperty(value);
                 }
-
             }
         }
     }
@@ -115,11 +111,10 @@ string getDistro()
     }
     if (distro.size() > 20)
     {
-        distro=distro.substr(0,20);
+        distro = distro.substr(0, 20);
     }
     transform(distro.begin(), distro.end(), distro.begin(), ::tolower);
     return distro;
-
 }
 
 string getDistroVersion()
@@ -130,11 +125,11 @@ string getDistroVersion()
     {
         version = getPropertyFromEtcFile("/etc/os-release", "VERSION_ID");
     }
-    std::transform(version.begin(), version.end(), version.begin(), ::tolower);
     if (version.size() > 10)
     {
-        version=version.substr(0,10);
+        version = version.substr(0, 10);
     }
+    transform(version.begin(), version.end(), version.begin(), ::tolower);
     return version;
 }
 #endif
