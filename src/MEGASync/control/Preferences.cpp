@@ -16,7 +16,7 @@ const int Preferences::VERSION_CODE = 3500;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("3.5");
-const QString Preferences::SDK_ID = QString::fromAscii("f950d4");
+const QString Preferences::SDK_ID = QString::fromAscii("e16ed2");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- New UI style\n"
             "- Support to generate file versions in MEGA\n"
