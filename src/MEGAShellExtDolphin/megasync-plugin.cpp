@@ -36,7 +36,10 @@ typedef enum {
     STRING_UPLOAD = 0,
     STRING_GETLINK = 1,
     STRING_SHARE = 2,
-    STRING_SEND = 3
+    STRING_SEND = 3,
+
+    STRING_VIEW_ON_MEGA = 5,
+    STRING_VIEW_VERSIONS = 6
 } StringID;
 
 enum {
@@ -55,6 +58,9 @@ const char OP_LINK        = 'L'; //paste Link
 const char OP_SHARE       = 'S'; //Share folder
 const char OP_SEND        = 'C'; //Copy to user
 const char OP_STRING      = 'T'; //Get Translated String
+const char OP_VIEW        = 'V'; //View on MEGA
+const char OP_PREVIOUS    = 'R'; //View previous versions
+
 
 MEGASyncPlugin::MEGASyncPlugin(QObject* parent, const QList<QVariant> & args):
     KAbstractFileItemActionPlugin(parent)
@@ -149,6 +155,29 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
         connect(act, SIGNAL(triggered()), this, SLOT(getLinks()));
     }
 
+
+    if (!unsyncedFiles && !unsyncedFolders && (syncedFiles + syncedFolders) == 1)
+    {
+        if (syncedFolders)
+        {
+            QAction *act = new KAction(this);
+            QString actionText = getString(STRING_VIEW_ON_MEGA, 0, 0);
+            act->setText(actionText);
+
+            menuAction->addAction(act);
+            connect(act, SIGNAL(triggered()), this, SLOT(viewOnMega()));
+        }
+        else
+        {
+            QAction *act = new KAction(this);
+            QString actionText = getString(STRING_VIEW_VERSIONS, 0, 0);
+            act->setText(actionText);
+
+            menuAction->addAction(act);
+            connect(act, SIGNAL(triggered()), this, SLOT(viewPreviousVersions()));
+        }
+    }
+
     return actions;
 }
 
@@ -197,6 +226,22 @@ void MEGASyncPlugin::uploadFiles()
         }
     }
     sendRequest(OP_END, " ");
+}
+
+void MEGASyncPlugin::viewOnMega()
+{
+    if (sendRequest(OP_VIEW, selectedFilePath).size())
+    {
+        sendRequest(OP_END, " ");
+    }
+}
+
+void MEGASyncPlugin::viewPreviousVersions()
+{
+    if (sendRequest(OP_PREVIOUS, selectedFilePath).size())
+    {
+        sendRequest(OP_END, " ");
+    }
 }
 
 QString MEGASyncPlugin::getString(int type, int numFiles,int numFolders)

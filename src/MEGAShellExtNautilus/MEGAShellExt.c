@@ -22,6 +22,8 @@ static void mega_ext_instance_init(MEGAExt *mega_ext)
     mega_ext->num_retries = 2;
     mega_ext->h_syncs = g_hash_table_new_full(g_str_hash, g_str_equal, g_free, NULL);
     mega_ext->string_getlink = NULL;
+    mega_ext->string_viewonmega = NULL;
+    mega_ext->string_viewprevious = NULL;
     mega_ext->string_upload = NULL;
     mega_ext->syncs_received = FALSE;
 
@@ -177,6 +179,81 @@ static void mega_ext_on_get_link_selected(NautilusMenuItem *item, gpointer user_
         mega_ext_client_end_request(mega_ext);
 }
 
+
+// user clicked on "View on MEGA" menu item
+static void mega_ext_on_view_on_mega_selected(NautilusMenuItem *item, gpointer user_data)
+{
+    MEGAExt *mega_ext = MEGA_EXT(user_data);
+    GList *l;
+    GList *files;
+    gboolean flag = FALSE;
+
+    files = g_object_get_data(G_OBJECT(item), "MEGAExtension::files");
+    for (l = files; l != NULL; l = l->next) {
+        NautilusFileInfo *file = NAUTILUS_FILE_INFO(l->data);
+        FileState state;
+        gchar *path;
+        GFile *fp;
+
+        fp = nautilus_file_info_get_location(file);
+        if (!fp)
+            continue;
+
+        path = g_file_get_path(fp);
+        if (!path)
+            continue;
+
+        state = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(file), "MEGAExtension::state"));
+
+        if (state == FILE_SYNCED) {
+            if (mega_ext_client_open_link(mega_ext, path))
+                flag = TRUE;
+        }
+        g_free(path);
+    }
+
+    if (flag)
+        mega_ext_client_end_request(mega_ext);
+}
+
+// user clicked on "View previous versions" menu item
+static void mega_ext_on_open_previous_selected(NautilusMenuItem *item, gpointer user_data)
+{
+    MEGAExt *mega_ext = MEGA_EXT(user_data);
+    GList *l;
+    GList *files;
+    gboolean flag = FALSE;
+
+    files = g_object_get_data(G_OBJECT(item), "MEGAExtension::files");
+    for (l = files; l != NULL; l = l->next) {
+        NautilusFileInfo *file = NAUTILUS_FILE_INFO(l->data);
+        FileState state;
+        gchar *path;
+        GFile *fp;
+
+        fp = nautilus_file_info_get_location(file);
+        if (!fp)
+            continue;
+
+        path = g_file_get_path(fp);
+        if (!path)
+            continue;
+
+        state = GPOINTER_TO_INT(g_object_get_data(G_OBJECT(file), "MEGAExtension::state"));
+
+        if (state == FILE_SYNCED) {
+            if (mega_ext_client_open_previous(mega_ext, path))
+                flag = TRUE;
+        }
+        g_free(path);
+    }
+
+    if (flag)
+        mega_ext_client_end_request(mega_ext);
+}
+
+
+
 // Executed on context menu for selected object(-s)
 // Check the state of the selected files
 // to show the menu item "Upload to MEGA", "Get MEGA link" or both
@@ -258,6 +335,15 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
         }
     }
 
+
+    NautilusMenuItem *root_menu_item = nautilus_menu_item_new("NautilusObj::root_menu_item",
+                                                "MEGA",
+                                                "Select MEGA action",
+                                                "mega");
+    NautilusMenu *subMenu = nautilus_menu_new();
+
+    nautilus_menu_item_set_submenu(root_menu_item, subMenu); //Connect submenu to root menu item
+
     // if there any unsynced files / folders selected
     if (unsyncedFiles || unsyncedFolders)
     {
@@ -265,13 +351,15 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
 
         out = mega_ext_client_get_string(mega_ext, STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
         item = nautilus_menu_item_new("MEGAExtension::upload_to_mega", out, "Upload files to you MEGA account", "mega");
+        g_free(mega_ext->string_upload);
         mega_ext->string_upload = g_strdup(out);
         g_free(out);
 
         g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_upload_selected), provider);
         g_object_set_data_full((GObject*)item, "MEGAExtension::files", nautilus_file_info_list_copy(files), (GDestroyNotify)nautilus_file_info_list_free);
-        l_out = g_list_append(l_out, item);
-    }
+        nautilus_menu_append_item(subMenu, item);
+        g_object_unref(item);
+     }
 
     // if there any synced files / folders selected
     if (syncedFiles || syncedFolders)
@@ -280,14 +368,56 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
 
         out = mega_ext_client_get_string(mega_ext, STRING_GETLINK, syncedFiles, syncedFolders);
         item = nautilus_menu_item_new("MEGAExtension::get_mega_link", out, "Get MEGA link", "mega");
+        g_free(mega_ext->string_getlink);
         mega_ext->string_getlink = g_strdup(out);
         g_free(out);
 
         g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_get_link_selected), provider);
         g_object_set_data_full((GObject*)item, "MEGAExtension::files", nautilus_file_info_list_copy(files), (GDestroyNotify)nautilus_file_info_list_free);
-        l_out = g_list_append(l_out, item);
+        nautilus_menu_append_item(subMenu, item);
+        g_object_unref(item);
+
+        if ( ((syncedFiles + syncedFolders) == 1 ) && ( (unsyncedFiles+unsyncedFolders) == 0  ) )
+        {
+            if (syncedFolders)
+            {
+                out = mega_ext_client_get_string(mega_ext, STRING_VIEW_ON_MEGA, 0, 0);
+                item = nautilus_menu_item_new("MEGAExtension::view_on_mega", out, "View on MEGA", "mega");
+                g_free(mega_ext->string_viewonmega);
+                mega_ext->string_viewonmega = g_strdup(out);
+                g_free(out);
+
+                g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_view_on_mega_selected), provider);
+                g_object_set_data_full((GObject*)item, "MEGAExtension::files", nautilus_file_info_list_copy(files), (GDestroyNotify)nautilus_file_info_list_free);
+                nautilus_menu_append_item(subMenu, item);
+                g_object_unref(item);
+            }
+            else
+            {
+                out = mega_ext_client_get_string(mega_ext, STRING_VIEW_VERSIONS, 0, 0);
+                item = nautilus_menu_item_new("MEGAExtension::view_previous_versions", out, "View previous versions", "mega");
+                g_free(mega_ext->string_viewprevious);
+                mega_ext->string_viewprevious = g_strdup(out);
+                g_free(out);
+
+                g_signal_connect(item, "activate", G_CALLBACK(mega_ext_on_open_previous_selected), provider);
+                g_object_set_data_full((GObject*)item, "MEGAExtension::files", nautilus_file_info_list_copy(files), (GDestroyNotify)nautilus_file_info_list_free);
+                nautilus_menu_append_item(subMenu, item);
+                g_object_unref(item);
+            }
+        }
     }
 
+    GList *submenus = nautilus_menu_get_items(subMenu);
+    if (submenus)
+    {
+        if (g_list_length(submenus))
+        {
+            l_out = g_list_append(l_out, root_menu_item);
+        }
+        nautilus_menu_item_list_free(submenus);
+    }
+    g_object_unref(subMenu);
     return l_out;
 }
 

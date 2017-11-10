@@ -7,7 +7,7 @@ Version: EXT_VERSION
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
 Homepage: https://mega.nz/#sync
 Build-Depends: debhelper, cdbs, libqt4-dev, intltool, autotools-dev, libnautilus-extension-dev (>= 2.16.0), libgtk2.0-bin, libtool-bin (>= 2.4.2-1.10) | libtool (<< 2.4.2-1.10)
-Depends: megasync
+Depends: megasync (>= 3.5.0)
 Package-List:
   nautilus-megasync deb gnome optional
 Files:

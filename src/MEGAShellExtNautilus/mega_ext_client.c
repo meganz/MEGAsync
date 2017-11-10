@@ -12,6 +12,8 @@ const gchar OP_LINK        = 'L'; //paste Link
 const gchar OP_SHARE       = 'S'; //Share folder
 const gchar OP_SEND        = 'C'; //Copy to user
 const gchar OP_STRING      = 'T'; //Get Translated String
+const gchar OP_VIEW        = 'V'; //View on MEGA
+const gchar OP_PREVIOUS    = 'R'; //View previous versions
 
 static void mega_ext_client_disconnect(MEGAExt *mega_ext);
 
@@ -209,3 +211,32 @@ gboolean mega_ext_client_end_request(MEGAExt *mega_ext)
 
     return TRUE;
 }
+
+
+gboolean mega_ext_client_open_link(MEGAExt *mega_ext, const gchar *path)
+{
+    gchar *out;
+
+    out = mega_ext_client_send_request(mega_ext, OP_VIEW, path);
+
+    if (!out)
+        return FALSE;
+    g_free(out);
+
+    return TRUE;
+}
+
+
+gboolean mega_ext_client_open_previous(MEGAExt *mega_ext, const gchar *path)
+{
+    gchar *out;
+
+    out = mega_ext_client_send_request(mega_ext, OP_PREVIOUS, path);
+
+    if (!out)
+        return FALSE;
+    g_free(out);
+
+    return TRUE;
+}
+
