@@ -14,7 +14,7 @@ CONFIG += console
 SOURCES += ../MEGASync/mega/src/crypto/cryptopp.cpp \
             ../MEGASync/mega/src/base64.cpp \
             ../MEGASync/mega/src/utils.cpp \
-            ../MEGAsync/mega/src/logging.cpp
+            ../MEGASync/mega/src/logging.cpp
 
 LIBS += -lcryptopp
 
