@@ -57,6 +57,7 @@ build() {
 	
 	if which kf5-config >/dev/null; then
 	cd forplasma
+	rm megasync-plugin.moc
 	rm CMakeLists.txt
 	mv CMakeLists_kde5.txt CMakeLists.txt
 	cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" $PWD
