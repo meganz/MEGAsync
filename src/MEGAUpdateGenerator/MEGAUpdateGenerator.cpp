@@ -384,8 +384,19 @@ unsigned signFile(const char * filePath, AsymmCipher* key, byte* signature, unsi
     unsigned signatureSize = signatureGenerator.get(key, signature, signbuflen);
     if (signatureSize < signbuflen)
     {
-        cerr << "Invalid signature size: " << signatureSize;
-        return 0;
+        int padding = signbuflen - signatureSize;
+        for (int i = signbuflen - 1; i >= 0; i--)
+        {
+            if (i >= padding)
+            {
+                signature[i] = signature[i - padding];
+            }
+            else
+            {
+                signature[i] = 0;
+            }
+        }
+        signatureSize = signbuflen;
     }
     return signatureSize;
 }
@@ -519,8 +530,19 @@ int main(int argc, char *argv[])
 
         if (signatureSize < sizeof(signature))
         {
-            cerr << "Error signing the update file: invalid signature size: " << signatureSize << endl;
-            return 7;
+            int padding = sizeof(signature) - signatureSize;
+            for (int i = sizeof(signature) - 1; i >= 0; i--)
+            {
+                if (i >= padding)
+                {
+                    signature[i] = signature[i - padding];
+                }
+                else
+                {
+                    signature[i] = 0;
+                }
+            }
+            signatureSize = sizeof(signature);
         }
 
         string updateFileSignature;
