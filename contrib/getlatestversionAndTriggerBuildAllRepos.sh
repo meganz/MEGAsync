@@ -53,9 +53,14 @@ else
 	packages=""
 fi
 
+sshpasscommand=""
 if [[ $1 == *@* ]]; then
 remote=$1
 shift
+echo -n $remote Password: 
+read -s password
+sshpasscommand="sshpass -p $password ssh $remote"
+echo
 fi
 
 while getopts ":t:" opt; do
@@ -85,13 +90,28 @@ if [ -z "$PROJECT_PATH" ]; then
 	echo "using default PROJECT_PATH: $PROJECT_PATH"
 fi
 
+function copy
+{
+	if [ "$sshpasscommand" ]; then
+		sshpass -p $password scp $1 $remote:$2
+	else #linking will be enough
+		ln -sf $1 $2
+	fi
+}
 
 #checkout master project and submodules
 echo git clone $tagtodl --recursive --depth 1 https://github.com/meganz/desktop $PROJECT_PATH
 if ! git clone $tagtodl --recursive --depth 1 https://github.com/meganz/desktop $PROJECT_PATH; then exit 1;fi
 pushd $PROJECT_PATH
 pushd build
+
 ./create_tarball.sh
+ver=`cat version`
+copy ./MEGAsync/MEGAShellExtDolphin/debian.changelog /assets/changelogs/dolphin-megasync/dolphin-megasync_${ver}.changelog
+copy ./MEGAsync/MEGAShellExtNautilus/debian.changelog /assets/changelogs/nautilus-megasync/nautilus-megasync_${ver}.changelog
+copy ./MEGAsync/MEGAShellExtThunar/debian.changelog /assets/changelogs/thunar-megasync/thunar-megasync_${ver}.changelog
+copy ./MEGAsync/MEGAsync/debian.changelog /assets/changelogs/megasync/megasync_${ver}.changelog
+
 popd
 popd
 
@@ -101,6 +121,6 @@ if [ -z "$NEWOSCFOLDER_PATH" ]; then
 	echo "using default NEWOSCFOLDER_PATH: $NEWOSCFOLDER_PATH"
 fi
 
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-$DIR/triggerBuild.sh $onlyhomeproject $packages $remote $PROJECT_PATH $NEWOSCFOLDER_PATH
+REMOTEP=$password $DIR/triggerBuild.sh $onlyhomeproject $packages $remote $PROJECT_PATH $NEWOSCFOLDER_PATH
+

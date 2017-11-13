@@ -29,7 +29,7 @@ arch=('i686' 'x86_64')
 url=""
 license=() #TODO
 groups=()
-depends=('ca-certificates' 'megasync>=3.5.0' 'nautilus')
+depends=('ca-certificates' 'megasync>=3.5' 'nautilus')
 makedepends=( 'ca-certificates' 'qt4' 'nautilus' 'libnautilus-extension')
 checkdepends=()
 optdepends=()

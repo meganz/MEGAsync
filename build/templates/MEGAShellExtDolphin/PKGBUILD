@@ -27,7 +27,7 @@ pkgdesc="Extension for KDE based file managers to interact with Megasync"
 arch=('i686' 'x86_64')
 url="http://mega.nz/#sync"
 license=() #TODO
-depends=('megasync>=3.5.0')
+depends=('megasync>=3.5')
 makedepends=('qt4' 'extra-cmake-modules' 'kdelibs' 'automoc4' 'kdelibs4support' 'rsync' 'mesa')
 provides=("dolphin-megasync=${pkgver}")
 conflicts=()
@@ -57,6 +57,7 @@ build() {
 	
 	if which kf5-config >/dev/null; then
 	cd forplasma
+	rm megasync-plugin.moc
 	rm CMakeLists.txt
 	mv CMakeLists_kde5.txt CMakeLists.txt
 	cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" $PWD
