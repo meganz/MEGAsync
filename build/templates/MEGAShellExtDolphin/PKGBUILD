@@ -27,7 +27,7 @@ pkgdesc="Extension for KDE based file managers to interact with Megasync"
 arch=('i686' 'x86_64')
 url="http://mega.nz/#sync"
 license=() #TODO
-depends=('megasync>=3.5.0')
+depends=('megasync>=3.5')
 makedepends=('qt4' 'extra-cmake-modules' 'kdelibs' 'automoc4' 'kdelibs4support' 'rsync' 'mesa')
 provides=("dolphin-megasync=${pkgver}")
 conflicts=()
