@@ -22,7 +22,7 @@ BuildRequires: fedora-logos
 BuildRequires: sl-logos, gcc-c++
 %endif
 
-Requires:       nautilus, megasync >= 3.5.0
+Requires:       nautilus, megasync >= 3.5
 
 %description
 Secure:
