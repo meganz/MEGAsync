@@ -34,7 +34,7 @@ BuildRequires: kf5-kdelibs4support-devel extra-cmake-modules
 BuildRequires: qt-devel kdelibs-devel
 %endif
 
-Requires:       megasync >= 3.5.0
+Requires:       megasync >= 3.5
 
 %description
 Secure:
