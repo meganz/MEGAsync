@@ -8,6 +8,8 @@
 
 using namespace mega;
 
+const unsigned int HTTPServer::MAX_REQUEST_TIME_SECS = 1800;
+
 bool ts_comparator(RequestData* i, RequestData *j)
 {
     return i->tsStart < j->tsStart;
@@ -344,7 +346,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
             response = QString::fromUtf8("{\"v\":\"%1\",\"u\":\"%2\"}")
                     .arg(Preferences::VERSION_STRING)
                     .arg(QString::fromUtf8(myHandle));
-            delete myHandle;
+            delete [] myHandle;
         }
     }
     else if (request.data.startsWith(openLinkRequestStart))

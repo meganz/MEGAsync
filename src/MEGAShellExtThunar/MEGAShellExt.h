@@ -35,6 +35,8 @@ struct _MEGAExt
     GHashTable *h_syncs; // table of paths of shared folders
     gchar *string_upload; // cached string
     gchar *string_getlink; // cached string
+    gchar *string_viewonmega; // cached string
+    gchar *string_viewprevious; // cached string
 };
 
 typedef enum {
@@ -49,7 +51,10 @@ typedef enum {
     STRING_UPLOAD = 0,
     STRING_GETLINK = 1,
     STRING_SHARE = 2,
-    STRING_SEND = 3
+    STRING_SEND = 3,
+
+    STRING_VIEW_ON_MEGA = 5,
+    STRING_VIEW_VERSIONS = 6
 } StringID;
 
 

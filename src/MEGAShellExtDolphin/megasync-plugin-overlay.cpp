@@ -32,6 +32,8 @@ const char OP_LINK        = 'L'; //paste Link
 const char OP_SHARE       = 'S'; //Share folder
 const char OP_SEND        = 'C'; //Copy to user
 const char OP_STRING      = 'T'; //Get Translated String
+const char OP_VIEW        = 'V'; //View on MEGA
+const char OP_PREVIOUS    = 'R'; //View previous versions
 
 class MegasyncDolphinOverlayPlugin : public KOverlayIconPlugin
 {

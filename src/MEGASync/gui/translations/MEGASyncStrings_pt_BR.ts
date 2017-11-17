@@ -412,7 +412,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Finder context menu option to generate a public MEGA link</translatorcomment>
-        <translation type="unfinished">Pegar link MEGA</translation>
+        <translation type="unfinished">Obter link MEGA</translation>
     </message>
     <message>
         <source>View on MEGA</source>
@@ -581,7 +581,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Import to my cloud drive</source>
         <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
-        <translation>Importar para minha nuvem de arquivos</translation>
+        <translation>Importar para minha Nuvem de arquivos</translation>
     </message>
     <message>
         <source>OK</source>
@@ -946,7 +946,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
-        <translation type="unfinished">[S]MEGAsync:[/S] sincronização fácil e automática entre os seus computadores e a sua nuvem de arquivos no MEGA.</translation>
+        <translation type="unfinished">[S]MEGAsync:[/S] sincronização fácil e automática entre os seus computadores e a sua Nuvem de arquivos no MEGA.</translation>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
@@ -1674,7 +1674,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label of context menu option to generate a public link of selected completed transfer</translatorcomment>
-        <translation type="unfinished">Pegar link MEGA</translation>
+        <translation type="unfinished">Obter link MEGA</translation>
     </message>
     <message>
         <source>Open</source>
@@ -1861,7 +1861,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Get MEGA link</source>
-        <translation type="unfinished">Pegar link MEGA</translation>
+        <translation type="unfinished">Obter link MEGA</translation>
     </message>
 </context>
 <context>
@@ -2040,7 +2040,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Button tooltip to generate a public link for a specific file. Keep capital letters.</translatorcomment>
-        <translation>Pegar link MEGA</translation>
+        <translation>Obter link MEGA</translation>
     </message>
     <message>
         <source>just now</source>
@@ -3102,7 +3102,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Label displayed when a user is trying to get public link of a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
-        <translation>Pegar link MEGA</translation>
+        <translation>Obter link MEGA</translation>
     </message>
     <message>
         <source>Share with a MEGA user</source>

@@ -7,6 +7,7 @@ DEBTRANSFORM-RELEASE: 1
 Maintainer: MEGA Linux Team <linux@mega.co.nz>
 Homepage: https://mega.nz/#sync
 Build-Depends: debhelper, cdbs, libqt4-dev, kdelibs5-dev, cmake, libfam0, libkf5kdelibs4support5-bin, qtbase5-dev, extra-cmake-modules, kio-dev
+Depends: megasync (>= 3.5.0)
 Package-List:
   dolphin-megasync deb gnome optional
 Files:

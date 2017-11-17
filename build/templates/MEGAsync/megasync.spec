@@ -90,6 +90,11 @@ Store up to 50 GB for free!
 %define flag_cryptopp -q
 %endif
 
+%define flag_cares %{nil}
+%if 0%{?rhel_version}
+%define flag_cares -e
+%endif
+
 %define flag_disablezlib %{nil}
 %if 0%{?fedora_version} == 23
 %define flag_disablezlib -z
@@ -101,7 +106,7 @@ Store up to 50 GB for free!
 
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 
-./configure %{flag_cryptopp} -g %{flag_disablezlib}
+./configure %{flag_cryptopp} -g %{flag_disablezlib} %{flag_cares}
 
 # Fedora uses system Crypto++ header files
 %if 0%{?fedora}
@@ -201,8 +206,8 @@ YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
 [MEGAsync]
 name=MEGAsync
-baseurl=https://mega.nz/linux/MEGAsync/Fedora_$releasever/
-gpgkey=https://mega.nz/linux/MEGAsync/Fedora_$releasever/repodata/repomd.xml.key
+baseurl=https://mega.nz/linux/MEGAsync/Fedora_\$releasever/
+gpgkey=https://mega.nz/linux/MEGAsync/Fedora_\$releasever/repodata/repomd.xml.key
 gpgcheck=1
 enabled=1
 DATA

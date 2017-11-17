@@ -12,6 +12,8 @@ ExtServer::ExtServer(MegaApplication *app): QObject(),
 {
     connect(this, SIGNAL(newUploadQueue(QQueue<QString>)), app, SLOT(shellUpload(QQueue<QString>)),Qt::QueuedConnection);
     connect(this, SIGNAL(newExportQueue(QQueue<QString>)), app, SLOT(shellExport(QQueue<QString>)),Qt::QueuedConnection);
+    connect(this, SIGNAL(viewOnMega(QByteArray, bool)), app, SLOT(shellViewOnMega(QByteArray, bool)), Qt::QueuedConnection);
+
 
     // construct local socket path
     sockPath = MegaApplication::applicationDataPath() + QDir::separator() + QString::fromAscii("mega.socket");
@@ -144,11 +146,6 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
                 break;
             }
 
-            if (!numFiles && !numFolders)
-            {
-                break;
-            }
-
             QString actionString;
             switch (stringId)
             {
@@ -163,6 +160,12 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
                     break;
                 case STRING_SEND:
                     actionString = QCoreApplication::translate("ShellExtension", "Send to a MEGA user");
+                    break;
+                case STRING_VIEW_ON_MEGA:
+                    actionString = QCoreApplication::translate("ShellExtension", "View on MEGA");
+                    break;
+                case STRING_VIEW_VERSIONS:
+                    actionString = QCoreApplication::translate("ShellExtension", "View previous versions");
                     break;
             }
 
@@ -201,6 +204,11 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
             {
                 fullString = QCoreApplication::translate("ShellExtension", "%1 (%2)")
                         .arg(actionString).arg(sNumFolders);
+            }
+            else
+            {
+                fullString = QCoreApplication::translate("ShellExtension", "%1")
+                        .arg(actionString);
             }
 
             strncpy(out, fullString.toUtf8().constData(), BUFSIZE);
@@ -268,6 +276,33 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
                 emit newExportQueue(exportQueue);
                 exportQueue.clear();
             }
+        }
+        case L'V': //View on MEGA
+        {
+            QString filePath = QString::fromUtf8(content);
+            QFileInfo file(filePath);
+            if (file.exists())
+            {
+                emit viewOnMega(filePath.toUtf8(), false);
+
+            }
+            break;
+        }
+        case L'R': //Open pRevious versions
+        {
+            QString filePath = QString::fromUtf8(content);
+            QFileInfo file(filePath);
+            if (file.exists())
+            {
+                emit viewOnMega(filePath.toUtf8(), true);
+
+            }
+            break;
+        }
+        case L'H': //Has previous versions? (still unsupported)
+        {
+            strncpy(out, "0", BUFSIZE);
+            break;
         }
         case 'I':
         default:
