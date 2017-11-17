@@ -8,5 +8,7 @@ FileState mega_ext_client_get_path_state(MEGAExt *mega_ext, const gchar *path);
 gboolean mega_ext_client_paste_link(MEGAExt *mega_ext, const gchar *path);
 gboolean mega_ext_client_upload(MEGAExt *mega_ext, const gchar *path);
 gboolean mega_ext_client_end_request(MEGAExt *mega_ext);
+gboolean mega_ext_client_open_link(MEGAExt *mega_ext, const gchar *path);
+gboolean mega_ext_client_open_previous(MEGAExt *mega_ext, const gchar *path);
 
 #endif

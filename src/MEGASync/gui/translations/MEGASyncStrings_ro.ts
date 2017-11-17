@@ -1394,7 +1394,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</translation>
+        <translation type="unfinished">Cheia noastră SSL nu poate fi verificată. Ai putea fi afectat de un atac de tip man-in-the-middle sau software-ul antivirus ar putea intercepta comunicaţiile şi să cauzeze problema. Te rugăm să dezactivezi software-ul antivirus şi să încerci din nou.</translation>
     </message>
     <message>
         <source>No Internet connection</source>

@@ -1,3 +1,12 @@
+Tue Nov 7 18:10:19 CET 2017 - linux@mega.co.nz
+- Update to version 3.5:
+  * New UI style
+  * Support to generate file versions in MEGA
+  * Integration with Finder (macOS 10.10+)
+  * Allow to exclude specific files/folders
+  * Bug fixes and other minor improvements
+
+-------------------------------------------------------------------
 Fri Jun 23 12:43:22 CEST 2017 - linux@mega.co.nz
 - Update to version 3.1.4:
   * Support for Apple File System (macOS High Sierra)

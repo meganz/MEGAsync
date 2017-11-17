@@ -1429,7 +1429,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Are you sure you want to exit?</source>
-        <translation type="unfinished">Voulez-vous vraiment fermer le client de synchro?</translation>
+        <translation type="unfinished">Voulez-vous vraiment fermer le client de synchro ?</translation>
     </message>
     <message>
         <source>Transfer manager</source>

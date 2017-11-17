@@ -268,7 +268,6 @@ void LinkProcessor::downloadLinks(QString localPath)
     {
         if (linkNode[i] && linkSelected[i])
         {
-            QApplication::processEvents();
             megaApi->startDownload(linkNode[i], (localPath + QDir::separator()).toUtf8().constData());
         }
     }

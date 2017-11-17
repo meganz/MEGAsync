@@ -135,12 +135,12 @@
     <message>
         <source>Add exclusion</source>
         <translatorcomment>Title of the dialog displayed when an user is adding a new exclusion rule for the synchronizations.</translatorcomment>
-        <translation type="unfinished">Add exclusion</translation>
+        <translation type="unfinished">Thêm ngoại lệ</translation>
     </message>
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization</translation>
+        <translation type="unfinished">Nhập tên, dạng tên hay đường dẫn mẫu (được phép sử dụng các ky tự đặng biệt như * và? để biểu hiện) hoặc chọn ra tệp tin và thư mục bạn muốn liệt vào danh sách ngoại lệ khỏi quá trình đồng bộ</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -175,7 +175,7 @@
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation type="unfinished">Please enter a valid file name or absolute path.</translation>
+        <translation type="unfinished">Xin nhập một đường dẫn hoặc tên tệp tin một cách hợp lệ.</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
@@ -889,7 +889,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
-        <translation type="unfinished">Show MEGAsync options</translation>
+        <translation type="unfinished">Hiện các tùy chọn cho MEGAsync</translation>
     </message>
     <message>
         <source>USED BANDWIDTH %1</source>

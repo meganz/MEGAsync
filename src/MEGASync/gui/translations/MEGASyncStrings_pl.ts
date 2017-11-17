@@ -1998,7 +1998,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>&amp;No</source>
         <translatorcomment>Label for No button. Keep capital letter.</translatorcomment>
-        <translation>&amp;No</translation>
+        <translation>&amp;Nie</translation>
     </message>
     <message>
         <source>&amp;OK</source>
@@ -2019,7 +2019,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>&amp;No</source>
-        <translation type="unfinished">&amp;No</translation>
+        <translation type="unfinished">&amp;Nie</translation>
     </message>
     <message>
         <source>OK</source>

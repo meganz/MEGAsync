@@ -1,3 +1,13 @@
+megasync (3.5) stable; urgency=low
+
+  * New UI style
+  * Support to generate file versions in MEGA
+  * Integration with Finder (macOS 10.10+)
+  * Allow to exclude specific files/folders
+  * Bug fixes and other minor improvements
+
+ -- MEGA Team <linux@mega.co.nz>  Tue, 07 Nov 2017 18:10:19 +0100
+
 megasync (3.1.4) stable; urgency=low
 
   * Support for Apple File System (macOS High Sierra)
