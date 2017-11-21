@@ -301,6 +301,23 @@ bool UpdateTask::processUpdateFile(QNetworkReply *reply)
     if (!downloadURLs.size())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "All files are up to date");
+
+        int intVersion = 0;
+        QDir dataDir(preferences->getDataPath());
+        QString appVersionPath = dataDir.filePath(QString::fromAscii("megasync.version"));
+        QFile f(appVersionPath);
+        if (f.open(QFile::ReadOnly | QFile::Text))
+        {
+            QTextStream in(&f);
+            QString version = in.readAll();
+            intVersion = version.toInt();
+            if (intVersion > Preferences::VERSION_CODE)
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "External update detected");
+                return true;
+            }
+        }
+
         return false;
     }
 
