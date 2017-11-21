@@ -176,6 +176,10 @@ void UpdateTask::finalCleanup()
     //Remove the update folder (new location)
     Utilities::removeRecursively(updateFolder.absolutePath());
 
+#ifdef __APPLE__
+    MEGA_SET_PERMISSIONS;
+#endif
+
     emit updateCompleted();
 }
 
