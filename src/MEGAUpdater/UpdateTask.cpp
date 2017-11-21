@@ -352,7 +352,7 @@ void UpdateTask::checkForUpdates()
                 }
 
                 //Download file to specific folder
-                if (downloadFile(downloadURLs[currentFile], localFile))
+                if (downloadFile(string(downloadURLs[currentFile] + randomSec).c_str(), localFile))
                 {
                     LOG(LOG_LEVEL_INFO, "File ready: %s", localPaths[currentFile].c_str());
                     if (!alreadyDownloaded(localPaths[currentFile], fileSignatures[currentFile]))
