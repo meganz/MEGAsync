@@ -726,6 +726,10 @@ void MegaApplication::initialize()
     }
 #endif
 
+#ifdef __APPLE__
+    MEGA_SET_PERMISSIONS;
+#endif
+
     if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_REGISTER_UPDATE_TASK))
     {
         bool success = Platform::registerUpdateJob();

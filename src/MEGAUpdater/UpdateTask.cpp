@@ -194,7 +194,10 @@ string UpdateTask::getAppDataDir()
 }
 
 #define MEGA_TO_NATIVE_SEPARATORS(x) std::replace(x.begin(), x.end(), '\\', '/');
-#define MEGA_SET_PERMISSIONS chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAclient", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
+#define MEGA_SET_PERMISSIONS chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAclient", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
+                             chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAupdater", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
+                             chmod("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/Contents/MacOS/MEGAShellExtFinder", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
+
 
 string UpdateTask::getAppDir()
 {
@@ -349,7 +352,7 @@ void UpdateTask::checkForUpdates()
                 }
 
                 //Download file to specific folder
-                if (downloadFile(downloadURLs[currentFile], localFile))
+                if (downloadFile(string(downloadURLs[currentFile] + randomSec).c_str(), localFile))
                 {
                     LOG(LOG_LEVEL_INFO, "File ready: %s", localPaths[currentFile].c_str());
                     if (!alreadyDownloaded(localPaths[currentFile], fileSignatures[currentFile]))
