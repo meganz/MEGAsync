@@ -11,6 +11,8 @@
 /* Context menu option label to indicate the user has selected %i number of files */
 "%i files" = "파일 %i개";
 /* Context menu option label to indicate the user has selected a folder */
-"1 folder" = "1개의 폴더";
+"1 folder" = "폴더 1개";
 /* Context menu option label to indicate the user has selected %i number of folders */
 "%i folders" = "폴더 %i개";
+/*  */
+"View previous versions" = "이전 버전 보기";

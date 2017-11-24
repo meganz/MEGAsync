@@ -16,6 +16,6 @@
 - (instancetype)initWithServerName:(NSString*)serverName delegate:(FIFinderSync <ShellProtocolDelegate>*)delegate;
 - (void)start;
 - (void)sendRequest:(NSString*)command type:(NSString*)type;
-- (void) connectionDidDie;
+- (void)connectionDidDie;
 
 @end

@@ -9,6 +9,9 @@ WCHAR MegaInterface::OP_LINK        = L'L'; //paste Link
 WCHAR MegaInterface::OP_SHARE       = L'S'; //Share folder
 WCHAR MegaInterface::OP_SEND        = L'C'; //Copy to user
 WCHAR MegaInterface::OP_STRING      = L'T'; //Get Translated String
+WCHAR MegaInterface::OP_VIEW        = L'V'; //View on MEGA
+WCHAR MegaInterface::OP_VERSIONS    = L'R'; //View pRevious versions
+WCHAR MegaInterface::OP_HASVERSIONS = L'H'; //Has previous versions?
 
 int MegaInterface::sendRequest(WCHAR type, PCWSTR content, PCWSTR response, int responseLen)
 {
@@ -98,6 +101,39 @@ bool MegaInterface::shareFolder(PCWSTR path)
 {
     WCHAR chReadBuf[2];
     int cbRead = sendRequest(MegaInterface::OP_SHARE, path, chReadBuf, sizeof(chReadBuf));
+    if (cbRead > sizeof(WCHAR))
+    {
+        return true;
+    }
+    return false;
+}
+
+bool MegaInterface::hasVersions(PCWSTR path)
+{
+    WCHAR chReadBuf[2];
+    int cbRead = sendRequest(MegaInterface::OP_HASVERSIONS, path, chReadBuf, sizeof(chReadBuf));
+    if (cbRead > sizeof(WCHAR) && (chReadBuf[0] - L'0'))
+    {
+        return true;
+    }
+    return false;
+}
+
+bool MegaInterface::viewOnMEGA(PCWSTR path)
+{
+    WCHAR chReadBuf[2];
+    int cbRead = sendRequest(MegaInterface::OP_VIEW, path, chReadBuf, sizeof(chReadBuf));
+    if (cbRead > sizeof(WCHAR))
+    {
+        return true;
+    }
+    return false;
+}
+
+bool MegaInterface::viewVersions(PCWSTR path)
+{
+    WCHAR chReadBuf[2];
+    int cbRead = sendRequest(MegaInterface::OP_VERSIONS, path, chReadBuf, sizeof(chReadBuf));
     if (cbRead > sizeof(WCHAR))
     {
         return true;

@@ -29,6 +29,8 @@ private slots:
     void getLinks();
     void uploadFile();
     void uploadFiles();
+    void viewOnMega();
+    void viewPreviousVersions();
     QString getString(int type, int numFiles,int numFolders);
 };
 

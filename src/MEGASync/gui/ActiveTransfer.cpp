@@ -28,7 +28,6 @@ void ActiveTransfer::setFileName(QString fileName)
     this->fileName = fileName;
     QFont f = ui->lFileName->font();
     QFontMetrics fm = QFontMetrics(f);
-    ui->lFileName->setStyleSheet(QString::fromUtf8("color: grey;"));
     ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
 
     QIcon icon;
@@ -99,10 +98,10 @@ bool ActiveTransfer::isActive()
 
 void ActiveTransfer::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (!regular || !(event->button() == Qt::RightButton))
+    if (!(event->button() == Qt::RightButton))
     {
         return;
     }
 
-    emit cancel(event->x(), event->y());
+    emit showContextMenu(QPoint(event->x(), event->y()), regular);
 }

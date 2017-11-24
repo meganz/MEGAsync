@@ -2,14 +2,14 @@
 
 ##
  # @file contrib/getlatestversionAndTriggerBuildAllRepos.sh
- # @brief Gets the project cloning git project and creates tarball, then
- #     Triggers OBS compilation for configured repositories          
+ # @brief Gets the latest version of the git project and creates tarball, then
+ #     triggers OBS compilation for configured repositories          
  #     It stores the project files at                                
- #         /mnt/DATA/datos/building/local_project/desktop_$THEDATE   
+ #         /datos/building/local_project/desktop_$THEDATE   
  #     and the stuff for repos building at                           
- #         /mnt/DATA/datos/building/osc_projects/$THEDATE    
+ #         /datos/building/osc_projects/$THEDATE    
  #
- # (c) 2013-2016 by Mega Limited, Auckland, New Zealand
+ # (c) 2013-2017 by Mega Limited, Auckland, New Zealand
  #
  # This file is part of the MEGA SDK - Client Access Engine.
  #
@@ -27,6 +27,41 @@
 ##
 
 
+function printusage {
+	echo "$0 [--home] [package=PACKAGE] [user@remoteobsserver] [-t branch] [PROJECTPATH [OSCFOLDER]]"
+	echo "This scripts gets latest version of the git project and creates tarball, then triggers OBS compilation for configured repositories"
+	echo " An alternative branch/commit can be specified with -t BRANCH "
+	echo " Use --home to only update home:Admin project. Otherwise DEB and RPM projects will be updated" 
+	echo " Use package=PACKAGE to build only a particular package. Otherwise all the packages will be added" 
+}
+
+if [[ $1 == "--help" ]]; then
+	printusage
+	exit 1
+fi
+
+
+if [[ $1 == "--home" ]]; then
+	onlyhomeproject=$1;
+	shift
+fi
+
+if [[ "$1" == "package="* ]]; then
+	packages="$1"
+	shift
+else
+	packages=""
+fi
+
+sshpasscommand=""
+if [[ $1 == *@* ]]; then
+remote=$1
+shift
+echo -n $remote Password: 
+read -s password
+sshpasscommand="sshpass -p $password ssh $remote"
+echo
+fi
 
 while getopts ":t:" opt; do
   case $opt in
@@ -51,27 +86,41 @@ THEDATE=`date +%Y%m%d%H%M%S`
 PROJECT_PATH=$1
 NEWOSCFOLDER_PATH=$2
 if [ -z "$PROJECT_PATH" ]; then
-	PROJECT_PATH=/mnt/DATA/datos/building/local_project/desktop_$THEDATE
+	PROJECT_PATH=/datos/building/local_project/desktop_$THEDATE
 	echo "using default PROJECT_PATH: $PROJECT_PATH"
 fi
 
+function copy
+{
+	if [ "$sshpasscommand" ]; then
+		sshpass -p $password scp $1 $remote:$2
+	else #linking will be enough
+		ln -sf $1 $2
+	fi
+}
+
 #checkout master project and submodules
-echo git clone $tagtodl https://github.com/meganz/desktop $PROJECT_PATH
-if ! git clone $tagtodl https://github.com/meganz/desktop $PROJECT_PATH; then exit 1;fi
+echo git clone $tagtodl --recursive --depth 1 https://github.com/meganz/desktop $PROJECT_PATH
+if ! git clone $tagtodl --recursive --depth 1 https://github.com/meganz/desktop $PROJECT_PATH; then exit 1;fi
 pushd $PROJECT_PATH
-git submodule init
-git submodule update
 pushd build
+
 ./create_tarball.sh
+ver=`cat version`
+copy ./MEGAsync/MEGAShellExtDolphin/debian.changelog /assets/changelogs/dolphin-megasync/dolphin-megasync_${ver}.changelog
+copy ./MEGAsync/MEGAShellExtNautilus/debian.changelog /assets/changelogs/nautilus-megasync/nautilus-megasync_${ver}.changelog
+copy ./MEGAsync/MEGAShellExtThunar/debian.changelog /assets/changelogs/thunar-megasync/thunar-megasync_${ver}.changelog
+copy ./MEGAsync/MEGAsync/debian.changelog /assets/changelogs/megasync/megasync_${ver}.changelog
+
 popd
 popd
 
 # trigger build commiting new changes into OBS projects
 if [ -z "$NEWOSCFOLDER_PATH" ]; then
-	NEWOSCFOLDER_PATH=/mnt/DATA/datos/building/osc_projects/$THEDATE
+	NEWOSCFOLDER_PATH=/datos/building/osc_projects/$THEDATE
 	echo "using default NEWOSCFOLDER_PATH: $NEWOSCFOLDER_PATH"
 fi
 
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-$DIR/triggerBuild.sh $PROJECT_PATH $NEWOSCFOLDER_PATH
+REMOTEP=$password $DIR/triggerBuild.sh $onlyhomeproject $packages $remote $PROJECT_PATH $NEWOSCFOLDER_PATH
+

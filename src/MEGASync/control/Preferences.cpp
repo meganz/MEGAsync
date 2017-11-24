@@ -11,17 +11,18 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/3.1.4.0";
-const int Preferences::VERSION_CODE = 3104;
+const char Preferences::USER_AGENT[] = "MEGAsync/3.5.1.0";
+const int Preferences::VERSION_CODE = 3501;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("3.1.4");
-const QString Preferences::SDK_ID = QString::fromAscii("0065d1");
+const QString Preferences::VERSION_STRING = QString::fromAscii("3.5.1");
+const QString Preferences::SDK_ID = QString::fromAscii("566019");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- Support for Apple File System (macOS High Sierra)\n"
-            "- Allow to disable left pane icons in settings (Windows 10)\n"
-            "- Updated translations\n"
-            "- Bug fixes");
+            "- New UI style\n"
+            "- Support to generate file versions in MEGA\n"
+            "- Integration with Finder (macOS 10.10+)\n"
+            "- Allow to exclude specific files/folders\n"
+            "- Bug fixes and other minor improvements");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -171,6 +172,7 @@ const QString Preferences::cloudDriveStorageKey     = QString::fromAscii("cloudD
 const QString Preferences::inboxStorageKey          = QString::fromAscii("inboxStorage");
 const QString Preferences::rubbishStorageKey        = QString::fromAscii("rubbishStorage");
 const QString Preferences::inShareStorageKey        = QString::fromAscii("inShareStorage");
+const QString Preferences::versionsStorageKey        = QString::fromAscii("versionsStorage");
 const QString Preferences::cloudDriveFilesKey       = QString::fromAscii("cloudDriveFiles");
 const QString Preferences::inboxFilesKey            = QString::fromAscii("inboxFiles");
 const QString Preferences::rubbishFilesKey          = QString::fromAscii("rubbishFiles");
@@ -238,6 +240,7 @@ const QString Preferences::wasUploadsPausedKey      = QString::fromAscii("wasUpl
 const QString Preferences::wasDownloadsPausedKey    = QString::fromAscii("wasDownloadsPaused");
 const QString Preferences::lastExecutionTimeKey     = QString::fromAscii("lastExecutionTime");
 const QString Preferences::excludedSyncNamesKey     = QString::fromAscii("excludedSyncNames");
+const QString Preferences::excludedSyncPathsKey     = QString::fromAscii("excludedSyncPaths");
 const QString Preferences::lastVersionKey           = QString::fromAscii("lastVersion");
 const QString Preferences::lastStatsRequestKey      = QString::fromAscii("lastStatsRequest");
 const QString Preferences::lastUpdateTimeKey        = QString::fromAscii("lastUpdateTime");
@@ -305,8 +308,9 @@ Preferences *Preferences::instance()
     {
         Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("https://mega.nz"));
         Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("https://mega.co.nz"));
-        Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("chrome-extension://kpgogfgfingilcbkpahnggpfdabapnol"));
-        Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("chrome-extension://bigefpfhnfcobdlfbedofhhaibnlghod"));
+        Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("chrome-extension://*"));
+        Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("moz-extension://*"));
+        Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("edge-extension://*"));
 
         preferences = new Preferences();
     }
@@ -423,7 +427,6 @@ void Preferences::setFirstName(QString firstName)
     settings->setValue(firstNameKey, firstName);
     settings->sync();
     mutex.unlock();
-    emit stateChanged();
 }
 
 QString Preferences::lastName()
@@ -441,7 +444,6 @@ void Preferences::setLastName(QString lastName)
     settings->setValue(lastNameKey, lastName);
     settings->sync();
     mutex.unlock();
-    emit stateChanged();
 }
 
 QString Preferences::emailHash()
@@ -521,6 +523,17 @@ void Preferences::setUsedStorage(long long value)
     mutex.unlock();
 }
 
+long long Preferences::availableStorage()
+{
+    mutex.lock();
+    assert(logged());
+    long long total = settings->value(totalStorageKey).toLongLong();
+    long long used = settings->value(usedStorageKey).toLongLong();
+    mutex.unlock();
+    long long available = total - used;
+    return available >= 0 ? available : 0;
+}
+
 long long Preferences::cloudDriveStorage()
 {
     mutex.lock();
@@ -586,6 +599,23 @@ void Preferences::setInShareStorage(long long value)
     mutex.lock();
     assert(logged());
     settings->setValue(inShareStorageKey, value);
+    mutex.unlock();
+}
+
+long long Preferences::versionsStorage()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(versionsStorageKey).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setVersionsStorage(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(versionsStorageKey, value);
     mutex.unlock();
 }
 
@@ -2017,6 +2047,33 @@ void Preferences::setExcludedSyncNames(QStringList names)
     mutex.unlock();
 }
 
+QStringList Preferences::getExcludedSyncPaths()
+{
+    mutex.lock();
+    assert(logged());
+    QStringList value = excludedSyncPaths;
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setExcludedSyncPaths(QStringList paths)
+{
+    mutex.lock();
+    assert(logged());
+    excludedSyncPaths = paths;
+    if (!excludedSyncPaths.size())
+    {
+        settings->remove(excludedSyncPathsKey);
+    }
+    else
+    {
+        settings->setValue(excludedSyncPathsKey, excludedSyncPaths.join(QString::fromAscii("\n")));
+    }
+
+    settings->sync();
+    mutex.unlock();
+}
+
 QStringList Preferences::getPreviousCrashes()
 {
     mutex.lock();
@@ -2607,6 +2664,12 @@ void Preferences::loadExcludedSyncNames()
         excludedSyncNames.clear();
     }
 
+    excludedSyncPaths = settings->value(excludedSyncPathsKey).toString().split(QString::fromAscii("\n", QString::SkipEmptyParts));
+    if (excludedSyncPaths.size()==1 && excludedSyncPaths.at(0).isEmpty())
+    {
+        excludedSyncPaths.clear();
+    }
+
     if (settings->value(lastVersionKey).toInt() < 108)
     {
         excludedSyncNames.clear();
@@ -2614,6 +2677,13 @@ void Preferences::loadExcludedSyncNames()
         excludedSyncNames.append(QString::fromUtf8("desktop.ini"));
         excludedSyncNames.append(QString::fromUtf8("~*"));
         excludedSyncNames.append(QString::fromUtf8(".*"));
+    }
+
+    if (settings->value(lastVersionKey).toInt() < 3400)
+    {
+        excludedSyncNames.append(QString::fromUtf8("*~.*"));
+        excludedSyncNames.append(QString::fromUtf8("*.sb-????????-??????"));
+        excludedSyncNames.append(QString::fromUtf8("*.tmp"));
     }
 
     if (settings->value(lastVersionKey).toInt() < 2907)
@@ -2626,7 +2696,12 @@ void Preferences::loadExcludedSyncNames()
     excludedSyncNames = excludedSyncNamesSet.toList();
     qSort(excludedSyncNames.begin(), excludedSyncNames.end(), caseInsensitiveLessThan);
 
+    QSet<QString> excludedSyncPathsSet = QSet<QString>::fromList(excludedSyncPaths);
+    excludedSyncPaths = excludedSyncPathsSet.toList();
+    qSort(excludedSyncPaths.begin(), excludedSyncPaths.end(), caseInsensitiveLessThan);
+
     setExcludedSyncNames(excludedSyncNames);
+    setExcludedSyncPaths(excludedSyncPaths);
     mutex.unlock();
 }
 

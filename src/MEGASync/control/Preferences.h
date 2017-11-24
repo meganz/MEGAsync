@@ -47,6 +47,7 @@ public:
     void setTotalStorage(long long value);
     long long usedStorage();
     void setUsedStorage(long long value);
+    long long availableStorage();
 
     long long cloudDriveStorage();
     void setCloudDriveStorage(long long value);
@@ -56,6 +57,8 @@ public:
     void setRubbishStorage(long long value);
     long long inShareStorage();
     void setInShareStorage(long long value);
+    long long versionsStorage();
+    void setVersionsStorage(long long value);
 
     long long cloudDriveFiles();
     void setCloudDriveFiles(long long value);
@@ -219,6 +222,9 @@ public:
 
     QStringList getExcludedSyncNames();
     void setExcludedSyncNames(QStringList names);
+    QStringList getExcludedSyncPaths();
+    void setExcludedSyncPaths(QStringList paths);
+
     QStringList getPreviousCrashes();
     void setPreviousCrashes(QStringList crashes);
     long long getLastReboot();
@@ -293,7 +299,8 @@ public:
     enum {
         ONE_TIME_ACTION_DEPRECATED_OPERATING_SYSTEM = 0,
         ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE = 1,
-        ONE_TIME_ACTION_ACTIVE_FINDER_EXT = 2
+        ONE_TIME_ACTION_ACTIVE_FINDER_EXT = 2,
+        ONE_TIME_ACTION_REGISTER_UPDATE_TASK = 3
     };
 
     static const int MAX_FILES_IN_NEW_SYNC_FOLDER;
@@ -358,6 +365,7 @@ protected:
     QList<bool> activeFolders;
     QList<bool> temporaryInactiveFolders;
     QStringList excludedSyncNames;
+    QStringList excludedSyncPaths;
     bool errorFlag;
     long long tempBandwidth;
     int tempBandwidthInterval;
@@ -378,6 +386,7 @@ protected:
     static const QString inboxStorageKey;
     static const QString rubbishStorageKey;
     static const QString inShareStorageKey;
+    static const QString versionsStorageKey;
     static const QString cloudDriveFilesKey;
     static const QString inboxFilesKey;
     static const QString rubbishFilesKey;
@@ -434,6 +443,7 @@ protected:
     static const QString fileTimeKey;
     static const QString lastExecutionTimeKey;
     static const QString excludedSyncNamesKey;
+    static const QString excludedSyncPathsKey;
     static const QString lastVersionKey;
     static const QString isCrashedKey;
     static const QString lastStatsRequestKey;

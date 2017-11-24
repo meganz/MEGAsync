@@ -4,6 +4,7 @@
 #include "MegaApplication.h"
 #include "control/Utilities.h"
 #include "gui/MultiQFileDialog.h"
+#include "platform/Platform.h"
 
 using namespace mega;
 
@@ -91,11 +92,11 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             if (error->getErrorCode() == MegaError::API_EEXIST)
             {
-                QMessageBox::warning(this, tr("Error"), tr("User already exists"), QMessageBox::Ok);
+                QMessageBox::warning(NULL, tr("Error"), tr("User already exists"), QMessageBox::Ok);
             }
             else if (error->getErrorCode() != MegaError::API_ESSL)
             {
-                QMessageBox::warning(this, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
+                QMessageBox::warning(NULL, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
             }
             break;
         }
@@ -118,15 +119,15 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             if (error->getErrorCode() == MegaError::API_ENOENT)
             {
-                QMessageBox::warning(this, tr("Error"), tr("Incorrect email and/or password.") + QString::fromUtf8(" ") + tr("Have you verified your account?"), QMessageBox::Ok);
+                QMessageBox::warning(NULL, tr("Error"), tr("Incorrect email and/or password.") + QString::fromUtf8(" ") + tr("Have you verified your account?"), QMessageBox::Ok);
             }
             else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
             {
-                QMessageBox::warning(this, tr("Error"), tr("Please check your e-mail and click the link to confirm your account."), QMessageBox::Ok);
+                QMessageBox::warning(NULL, tr("Error"), tr("Please check your e-mail and click the link to confirm your account."), QMessageBox::Ok);
             }
             else if (error->getErrorCode() == MegaError::API_ETOOMANY)
             {
-                QMessageBox::warning(this, tr("Error"),
+                QMessageBox::warning(NULL, tr("Error"),
                                      tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
                                      .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
                                      .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")))
@@ -138,7 +139,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             }
             else if (error->getErrorCode() != MegaError::API_ESSL)
             {
-                QMessageBox::warning(this, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
+                QMessageBox::warning(NULL, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
             }
             break;
         }
@@ -149,7 +150,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 MegaNode *node = megaApi->getNodeByPath("/MEGAsync");
                 if (!node)
                 {
-                    QMessageBox::warning(this, tr("Error"), tr("MEGA folder doesn't exist"), QMessageBox::Ok);
+                    QMessageBox::warning(NULL, tr("Error"), tr("MEGA folder doesn't exist"), QMessageBox::Ok);
                 }
                 else
                 {
@@ -163,7 +164,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             if (error->getErrorCode() != MegaError::API_ESSL
                     && error->getErrorCode() != MegaError::API_ESID)
             {
-                QMessageBox::warning(this, tr("Error"),  QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
+                QMessageBox::warning(NULL, tr("Error"),  QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
             }
 
             break;
@@ -173,7 +174,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             if (error->getErrorCode() != MegaError::API_OK)
             {
                 page_login();
-                QMessageBox::warning(this, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
+                QMessageBox::warning(NULL, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
                 break;
             }
 
@@ -213,6 +214,8 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 preferences->setProxyRequiresAuth(proxyAuth);
                 preferences->setProxyUsername(proxyUsername);
                 preferences->setProxyPassword(proxyPassword);
+
+                Platform::notifyAllSyncFoldersAdded();
 
                 done(QDialog::Accepted);
                 break;
@@ -291,19 +294,19 @@ void SetupWizard::on_bNext_clicked()
 
         if (!email.length())
         {
-            QMessageBox::warning(this, tr("Error"), tr("Please, enter your e-mail address"), QMessageBox::Ok);
+            QMessageBox::warning(NULL, tr("Error"), tr("Please, enter your e-mail address"), QMessageBox::Ok);
             return;
         }
 
         if (!email.contains(QChar::fromAscii('@')) || !email.contains(QChar::fromAscii('.')))
         {
-           QMessageBox::warning(this, tr("Error"), tr("Please, enter a valid e-mail address"), QMessageBox::Ok);
+           QMessageBox::warning(NULL, tr("Error"), tr("Please, enter a valid e-mail address"), QMessageBox::Ok);
            return;
         }
 
         if (!password.length())
         {
-            QMessageBox::warning(this, tr("Error"), tr("Please, enter your password"), QMessageBox::Ok);
+            QMessageBox::warning(NULL, tr("Error"), tr("Please, enter your password"), QMessageBox::Ok);
             return;
         }
 
@@ -321,43 +324,43 @@ void SetupWizard::on_bNext_clicked()
 
         if (!name.length())
         {
-            QMessageBox::warning(this, tr("Error"), tr("Please, enter your name"), QMessageBox::Ok);
+            QMessageBox::warning(NULL, tr("Error"), tr("Please, enter your name"), QMessageBox::Ok);
             return;
         }
 
         if (!email.length())
         {
-            QMessageBox::warning(this, tr("Error"), tr("Please, enter your e-mail address"), QMessageBox::Ok);
+            QMessageBox::warning(NULL, tr("Error"), tr("Please, enter your e-mail address"), QMessageBox::Ok);
             return;
         }
 
         if (!email.contains(QChar::fromAscii('@')) || !email.contains(QChar::fromAscii('.')))
         {
-           QMessageBox::warning(this, tr("Error"), tr("Please, enter a valid e-mail address"), QMessageBox::Ok);
+           QMessageBox::warning(NULL, tr("Error"), tr("Please, enter a valid e-mail address"), QMessageBox::Ok);
            return;
         }
 
         if (!password.length())
         {
-            QMessageBox::warning(this, tr("Error"), tr("Please, enter your password"), QMessageBox::Ok);
+            QMessageBox::warning(NULL, tr("Error"), tr("Please, enter your password"), QMessageBox::Ok);
             return;
         }
 
         if (password.length() < 8)
         {
-            QMessageBox::warning(this, tr("Error"), tr("Please, enter a stronger password"), QMessageBox::Ok);
+            QMessageBox::warning(NULL, tr("Error"), tr("Please, enter a stronger password"), QMessageBox::Ok);
             return;
         }
 
         if (password.compare(repeatPassword))
         {
-            QMessageBox::warning(this, tr("Error"), tr("The entered passwords don't match"), QMessageBox::Ok);
+            QMessageBox::warning(NULL, tr("Error"), tr("The entered passwords don't match"), QMessageBox::Ok);
             return;
         }
 
         if (!ui->cAgreeWithTerms->isChecked())
         {
-            QMessageBox::warning(this, tr("Error"), tr("You have to accept our terms of service"), QMessageBox::Ok);
+            QMessageBox::warning(NULL, tr("Error"), tr("You have to accept our terms of service"), QMessageBox::Ok);
             return;
         }
 
@@ -406,20 +409,20 @@ void SetupWizard::on_bNext_clicked()
     {
         if (!ui->eLocalFolder->text().length())
         {
-            QMessageBox::warning(this, tr("Warning"), tr("Please, select a local folder"), QMessageBox::Ok);
+            QMessageBox::warning(NULL, tr("Warning"), tr("Please, select a local folder"), QMessageBox::Ok);
             return;
         }
 
         if (!ui->eMegaFolder->text().length())
         {
-            QMessageBox::warning(this, tr("Warning"), tr("Please, select a MEGA folder"), QMessageBox::Ok);
+            QMessageBox::warning(NULL, tr("Warning"), tr("Please, select a MEGA folder"), QMessageBox::Ok);
             return;
         }
 
         QString localFolderPath = ui->eLocalFolder->text();
         if (!Utilities::verifySyncedFolderLimits(localFolderPath))
         {
-            QMessageBox::warning(this, tr("Warning"), tr("You are trying to sync an extremely large folder.\nTo prevent the syncing of entire boot volumes, which is inefficient and dangerous,\nwe ask you to start with a smaller folder and add more data while MEGAsync is running."), QMessageBox::Ok);
+            QMessageBox::warning(NULL, tr("Warning"), tr("You are trying to sync an extremely large folder.\nTo prevent the syncing of entire boot volumes, which is inefficient and dangerous,\nwe ask you to start with a smaller folder and add more data while MEGAsync is running."), QMessageBox::Ok);
             return;
         }
 
@@ -592,8 +595,7 @@ void SetupWizard::on_bLocalFolder_clicked()
         }
 
         QTemporaryFile test(path + QDir::separator());
-        if (test.open() ||
-                QMessageBox::warning(window(), tr("Warning"), tr("You don't have write permissions in this local folder.") +
+        if (test.open() || QMessageBox::warning(NULL, tr("Warning"), tr("You don't have write permissions in this local folder.") +
                     QString::fromUtf8("\n") + tr("MEGAsync won't be able to download anything here.") + QString::fromUtf8("\n") + tr("Do you want to continue?"),
                     QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
         {

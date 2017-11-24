@@ -98,7 +98,7 @@ void MenuItemAction::setupActionWidget(QSize iconSize)
 
     if (value)
     {
-        value->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #777777;"));
+        value->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #777777; padding-right: 6px;"));
         layout->addWidget(value);
     }
     container->setLayout(layout);

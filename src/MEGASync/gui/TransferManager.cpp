@@ -73,6 +73,25 @@ TransferManager::TransferManager(MegaApi *megaApi, QWidget *parent) :
     Platform::enableDialogBlur(this);
 }
 
+void TransferManager::setActiveTab(int t)
+{
+    switch (t)
+    {
+        case DOWNLOADS_TAB:
+            on_tDownloads_clicked();
+            break;
+        case UPLOADS_TAB:
+            on_tUploads_clicked();
+            break;
+        case COMPLETED_TAB:
+            on_tCompleted_clicked();
+            break;
+        default:
+            on_tAllTransfers_clicked();
+            break;
+    }
+}
+
 TransferManager::~TransferManager()
 {
     delete ui;
@@ -80,15 +99,21 @@ TransferManager::~TransferManager()
 
 void TransferManager::onTransferStart(MegaApi *api, MegaTransfer *transfer)
 {
-    if (!transfer->getPriority() || transfer->isStreamingTransfer()
+    if (transfer->isStreamingTransfer()
             || transfer->isFolderTransfer() || notificationNumber >= transfer->getNotificationNumber())
+    {
+        return;
+    }
+
+    ui->wActiveTransfers->onTransferStart(api, transfer);
+
+    if (!transfer->getPriority())
     {
         return;
     }
 
     ui->wUploads->getModel()->onTransferStart(api, transfer);
     ui->wDownloads->getModel()->onTransferStart(api, transfer);
-    ui->wActiveTransfers->onTransferStart(api, transfer);
 }
 
 void TransferManager::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *e)
@@ -100,40 +125,59 @@ void TransferManager::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
 
     ui->wCompleted->getModel()->onTransferFinish(api, transfer, e);
     ui->wCompletedTab->setVisible(true);
-    if (!transfer->getPriority() || notificationNumber >= transfer->getNotificationNumber())
+
+    if (notificationNumber >= transfer->getNotificationNumber())
+    {
+        return;
+    }
+
+    ui->wActiveTransfers->onTransferFinish(api, transfer, e);
+
+    if (!transfer->getPriority())
     {
         return;
     }
 
     ui->wUploads->getModel()->onTransferFinish(api, transfer, e);
     ui->wDownloads->getModel()->onTransferFinish(api, transfer, e);
-    ui->wActiveTransfers->onTransferFinish(api, transfer, e);
 }
 
 void TransferManager::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
 {
-    if (!transfer->getPriority() || transfer->isStreamingTransfer()
+    if (transfer->isStreamingTransfer()
             || transfer->isFolderTransfer() || notificationNumber >= transfer->getNotificationNumber())
+    {
+        return;
+    }
+
+    ui->wActiveTransfers->onTransferUpdate(api, transfer);
+
+    if (!transfer->getPriority())
     {
         return;
     }
 
     ui->wUploads->getModel()->onTransferUpdate(api, transfer);
     ui->wDownloads->getModel()->onTransferUpdate(api, transfer);
-    ui->wActiveTransfers->onTransferUpdate(api, transfer);
 }
 
 void TransferManager::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError *e)
 {
-    if (!transfer->getPriority() || transfer->isStreamingTransfer()
+    if (transfer->isStreamingTransfer()
             || transfer->isFolderTransfer() || notificationNumber >= transfer->getNotificationNumber())
+    {
+        return;
+    }
+
+    ui->wActiveTransfers->onTransferTemporaryError(api, transfer, e);
+
+    if (!transfer->getPriority())
     {
         return;
     }
 
     ui->wUploads->getModel()->onTransferTemporaryError(api, transfer, e);
     ui->wDownloads->getModel()->onTransferTemporaryError(api, transfer, e);
-    ui->wActiveTransfers->onTransferTemporaryError(api, transfer, e);
 }
 
 void TransferManager::createAddMenu()
@@ -141,7 +185,11 @@ void TransferManager::createAddMenu()
     if (!addMenu)
     {
         addMenu = new QMenu(this);
+#ifdef __APPLE__
         addMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+#else
+        addMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
+#endif
     }
     else
     {
@@ -167,7 +215,7 @@ void TransferManager::createAddMenu()
         uploadAction = NULL;
     }
 
-    uploadAction = new MenuItemAction(tr("Upload to MEGA"), QIcon(QString::fromAscii("://images/upload_to_mega_ico.png")), QIcon(QString::fromAscii("://images/upload_to_mega_ico_white.png")));
+    uploadAction = new MenuItemAction(tr("Upload"), QIcon(QString::fromAscii("://images/upload_to_mega_ico.png")), QIcon(QString::fromAscii("://images/upload_to_mega_ico_white.png")));
     connect(uploadAction, SIGNAL(triggered()), qApp, SLOT(uploadActionClicked()));
 
     if (downloadAction)
@@ -176,7 +224,7 @@ void TransferManager::createAddMenu()
         downloadAction = NULL;
     }
 
-    downloadAction = new MenuItemAction(tr("Download from MEGA"), QIcon(QString::fromAscii("://images/download_from_mega_ico.png")), QIcon(QString::fromAscii("://images/download_from_mega_ico_white.png")));
+    downloadAction = new MenuItemAction(tr("Download"), QIcon(QString::fromAscii("://images/download_from_mega_ico.png")), QIcon(QString::fromAscii("://images/download_from_mega_ico_white.png")));
     connect(downloadAction, SIGNAL(triggered()), qApp, SLOT(downloadActionClicked()));
 
     if (settingsAction)
@@ -224,6 +272,7 @@ void TransferManager::on_tCompleted_clicked()
     updateState();
     updatePauseState();
     ui->wCompleted->refreshTransferItems();
+    ui->wCompletedTab->setVisible(true);
 }
 
 void TransferManager::on_tDownloads_clicked()

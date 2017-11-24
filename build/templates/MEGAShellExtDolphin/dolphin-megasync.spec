@@ -34,7 +34,7 @@ BuildRequires: kf5-kdelibs4support-devel extra-cmake-modules
 BuildRequires: qt-devel kdelibs-devel
 %endif
 
-Requires:       megasync
+Requires:       megasync >= 3.5
 
 %description
 Secure:
@@ -66,6 +66,9 @@ echo %(kde4-config --path services | awk -NF ":" '{print $NF}')/megasync-plugin.
 echo %(kde4-config --path module | awk -NF ":" '{print $NF}')/megasyncplugin.so >> %{EXTRA_FILES}
 
 if which kf5-config >/dev/null; then
+%if 0%{?fedora_version} >= 26 || 0%{?suse_version} > 1320
+rm megasync-plugin.moc
+%endif
 rm -r CMakeFiles
 rm CMakeLists.txt
 mv CMakeLists_kde5.txt CMakeLists.txt
@@ -80,7 +83,8 @@ if [ -d %{buildroot}/%(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plu
 echo %(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/kf5/overlayicon/megasyncdolphinoverlayplugin.so >> %{EXTRA_FILES}
 echo %(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/kf5/overlayicon >> %{EXTRA_FILES}
 echo %(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/kf5 >> %{EXTRA_FILES}
-echo %{_datadir}/icons/hicolor/*/*/mega-*.png >> %{EXTRA_FILES}
+echo '%{_datadir}/icons/hicolor/*/*/mega-*.png' >> %{EXTRA_FILES}
+echo '%{_datadir}/icons/hicolor/*/*' >> %{EXTRA_FILES}
 fi
 
 fi

@@ -11,9 +11,13 @@ if [ "x$ver" == "x" ]; then
 fi
 
 
-if [[ $distro = "Raspbian GNU/Linux 8.0 (jessie)" ]]; then
+if [[ $distro = "Raspbian GNU/Linux 9.1 (stretch)" ]]; then
+    str="Raspbian_9.0"
+elif [[ $distro = "Raspbian GNU/Linux 8.0 (jessie)" ]]; then
     str="Raspbian_8.0"
 # Ubuntu
+elif [[ $ver = "17.10" ]]; then
+    str="xUbuntu_17.10"
 elif [[ $ver = "17.04" ]]; then
     str="xUbuntu_17.04"
 elif [[ $ver = "16.10" ]]; then
@@ -138,5 +142,9 @@ URYSLAw5e33Za+vKMGF/hifuJ1V0GYkUig==
 -----END PGP PUBLIC KEY BLOCK-----
 KEY
 
-sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf
+sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf || true
+
+/bin/touch --no-create /usr/share/icons/hicolor &>/dev/null || true
+/bin/touch --no-create /usr/share/icons/ubuntu-mono-dark &>/dev/null || true
+/usr/bin/gtk-update-icon-cache /usr/share/icons/* &>/dev/null || true
 

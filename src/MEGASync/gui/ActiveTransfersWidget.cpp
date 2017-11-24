@@ -114,9 +114,14 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
     }
 
     int type = transfer->getType();
+    unsigned long long priority = transfer->getPriority();
+    if (!priority)
+    {
+        priority = 0xFFFFFFFFFFFFFFFFULL;
+    }
     if (type == MegaTransfer::TYPE_DOWNLOAD)
     {
-        if (transfer->getPriority() > activeDownload.priority
+        if (priority > activeDownload.priority
                 && !(activeDownload.transferState == MegaTransfer::STATE_PAUSED))
         {
             if (activeDownload.tag == transfer->getTag())
@@ -143,7 +148,7 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
         }
 
         activeDownload.transferState = transfer->getState();
-        activeDownload.priority = transfer->getPriority();
+        activeDownload.priority = priority;
         activeDownload.meanTransferSpeed = transfer->getMeanSpeed();
         setSpeed(&activeDownload, transfer->getSpeed());
         setTransferredBytes(&activeDownload, transfer->getTransferredBytes());
@@ -151,7 +156,7 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
     }
     else
     {
-        if (transfer->getPriority() > activeUpload.priority
+        if (priority > activeUpload.priority
                 && !(activeUpload.transferState == MegaTransfer::STATE_PAUSED))
         {
             if (activeUpload.tag == transfer->getTag())
@@ -178,7 +183,7 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
         }
 
         activeUpload.transferState = transfer->getState();
-        activeUpload.priority = transfer->getPriority();
+        activeUpload.priority = priority;
         activeUpload.meanTransferSpeed = transfer->getMeanSpeed();
         setSpeed(&activeUpload, transfer->getSpeed());
         setTransferredBytes(&activeUpload, transfer->getTransferredBytes());

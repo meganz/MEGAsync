@@ -25,7 +25,7 @@ display_help() {
     local app=$(basename "$0")
     echo ""
     echo "Usage:"
-    echo " $app [-c] [-i] [-k] [-p pass] [-x pathXMLdir] BASEREPOURL"
+    echo " $app [-c] [-i] [-k] [-p pass] BASEREPOURL"
     echo ""
     echo "This script will check the correctness of all packages using virtual machines."
     echo "It will choose the specific repo corresponding to all the configured VM, using"
@@ -45,8 +45,8 @@ display_help() {
     echo " -c : check megasync packages have changed (updated or newly installed)"
     echo " -i : install anew (removes previous megasync package)"
     echo " -k : keep VMs running after completion"
+    echo " -n : disable GPG checks"
     echo " -p pass : password for VMs (both user mega & root)"
-    echo " -x pathXMLdir : path for the xml files describing the VMs"
     echo ""
 }
 
@@ -55,21 +55,21 @@ remove_megasync=0
 quit_machine=1
 
 
-while getopts ":ikcp:x:" opt; do
+while getopts ":ikcnp:" opt; do
   case $opt in
     i)
 		remove_megasync=1
 		flag_remove_megasync="-$opt"
       ;;
+	n)
+		flag_nogpgcheck="-$opt"
+	;;
 	c)
 		flag_require_change="-$opt"
-	;;
+	;;	
 	p)
 		arg_passwd="-$opt $OPTARG"
-	;;
-	x)
-		flagXMLdir="-$opt $OPTARG"
-      ;;     		
+	;;     		
     k)
 		quit_machine=0
 		flag_quit_machine="-$opt"
@@ -94,17 +94,14 @@ sudo date
 
 # notice: use http://linux.deve.... instead of https://linu...
 BASEURL=$1
-BASEURLDEB9=$1
 BASEURLDEB=$BASEURL
 BASEURLRPM=$BASEURL
 BASEURLARCH=$BASEURL
-URLDEB9=$BASEURL/Debian_9.0
 if [ -z $BASEURL ]; then
  BASEURL=http://192.168.122.1:8000
  BASEURLDEB=$BASEURL/DEB
  BASEURLRPM=$BASEURL/RPM
  BASEURLARCH=$BASEURL/DEB  #they belong to the same OBS project named 'DEB'
- URLDEB9=http://192.168.122.1:8001
 fi
 
 PAIRSVMNAMEREPOURL=""
@@ -117,13 +114,15 @@ PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_21;$BASEURLRPM/Fedora_21"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_22;$BASEURLRPM/Fedora_22"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_23;$BASEURLRPM/Fedora_23"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_24;$BASEURLRPM/Fedora_24"
-PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_25;$BASEURLRPM/Fedora_25" #NOTICE: using other repo
-PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_25_i386;$BASEURLRPM/Fedora_25" #NOTICE: using other repo
+PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_25;$BASEURLRPM/Fedora_25"
+PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_26;$BASEURLRPM/Fedora_26"
+PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL FEDORA_27;$BASEURLRPM/Fedora_27"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL OPENSUSE_12.2;$BASEURLRPM/openSUSE_12.2"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL OPENSUSE_12.3;$BASEURLRPM/openSUSE_12.3"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL OPENSUSE_13.2;$BASEURLRPM/openSUSE_13.2"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL OPENSUSE_LEAP_42.1;$BASEURLRPM/openSUSE_Leap_42.1"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL OPENSUSE_LEAP_42.2;$BASEURLRPM/openSUSE_Leap_42.2"
+PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL OPENSUSE_LEAP_42.3;$BASEURLRPM/openSUSE_Leap_42.3"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL OPENSUSE_TUMBLEWEED;$BASEURLRPM/openSUSE_Tumbleweed"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL UBUNTU_12.04;$BASEURLDEB/xUbuntu_12.04"	
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL UBUNTU_13.10;$BASEURLDEB/xUbuntu_13.10"
@@ -134,13 +133,14 @@ PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL UBUNTU_16.04;$BASEURLDEB/xUbuntu_16.04"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL UBUNTU_16.04_i386;$BASEURLDEB/xUbuntu_16.04"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL UBUNTU_16.10;$BASEURLDEB/xUbuntu_16.10"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL UBUNTU_17.04;$BASEURLDEB/xUbuntu_17.04"
+PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL UBUNTU_17.10;$BASEURLDEB/xUbuntu_17.10"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL LINUXMINT_17.3;$BASEURLDEB/xUbuntu_14.04"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL LINUXMINT_18;$BASEURLDEB/xUbuntu_16.04"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_7.8.0;$BASEURLDEB/Debian_7.0"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_8;$BASEURLDEB/Debian_8.0"
 PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_8.6;$BASEURLDEB/Debian_8.0"
-PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_9_CLEAN_testing;$URLDEB9" #NOTICE: using other repo
-PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_9_i386_T;$URLDEB9" #NOTICE: using other repo
+PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_9;$BASEURLDEB/Debian_9.0" #NOTICE: using other repo
+PAIRSVMNAMEREPOURL="$PAIRSVMNAMEREPOURL DEBIAN_9_i386_T;$BASEURLDEB/Debian_9.0" #NOTICE: using other repo
 
 #existing,but failing VMs
 ##Opensuse 13.1 -> no network interface!!
@@ -174,8 +174,8 @@ for i in `shuf -e $PAIRSVMNAMEREPOURL`; do
 	DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 	
 	rm ${VMNAME}_{OK,FAIL} 2> /dev/null
-	echo $DIR/check_package.sh $arg_passwd $flagXMLdir $flag_require_change $flag_remove_megasync $flag_quit_machine $VMNAME $REPO 
-	( $DIR/check_package.sh $arg_passwd $flagXMLdir $flag_require_change $flag_remove_megasync $flag_quit_machine $VMNAME $REPO 2>&1 ) > output_check_package_${VMNAME}.log &
+	echo $DIR/check_package.sh $arg_passwd $flag_require_change $flag_remove_megasync $flag_quit_machine $flag_nogpgcheck $VMNAME $REPO 
+	( $DIR/check_package.sh $arg_passwd $flag_require_change $flag_remove_megasync $flag_quit_machine $flag_nogpgcheck $VMNAME $REPO 2>&1 ) > output_check_package_${VMNAME}.log &
 	
 	sleep 1
 	

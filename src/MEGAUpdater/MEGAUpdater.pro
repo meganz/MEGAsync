@@ -1,3 +1,6 @@
+CONFIG -= qt
+MEGASDK_BASE_PATH = $$PWD/../MEGASync/mega
+
 CONFIG(debug, debug|release) {
     CONFIG -= debug release
     CONFIG += debug
@@ -9,45 +12,63 @@ CONFIG(release, debug|release) {
 
 TARGET = MEGAupdater
 TEMPLATE = app
-CONFIG += console
 
-SOURCES += ../MEGASync/mega/src/crypto/cryptopp.cpp \
-            ../MEGASync/mega/src/base64.cpp \
-            ../MEGASync/mega/src/utils.cpp \
-            ../MEGAsync/mega/src/logging.cpp
+HEADERS += UpdateTask.h \
+    Preferences.h \
+    MacUtils.h
 
-LIBS += -lcryptopp
+SOURCES += MEGAUpdater.cpp \
+    UpdateTask.cpp
+
+INCLUDEPATH += $$MEGASDK_BASE_PATH/bindings/qt/3rdparty/include
+
+macx {    
+    OBJECTIVE_SOURCES +=  MacUtils.mm
+    DEFINES += _DARWIN_FEATURE_64_BIT_INODE USE_OPENSSL CRYPTOPP_DISABLE_ASM
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
+#    QMAKE_CXXFLAGS -= -stdlib=libc++
+#    QMAKE_LFLAGS -= -stdlib=libc++
+#    CONFIG -= c++11
+    LIBS += -L$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/
+    LIBS += -framework Cocoa -framework SystemConfiguration -framework CoreFoundation -framework Foundation -framework Security
+    QMAKE_CXXFLAGS += -g
+    LIBS += -lcryptopp
+}
 
 win32 {
-    release {
-        LIBS += -L"$$_PRO_FILE_PWD_/../MEGAsync/mega/bindings/qt/3rdparty/libs/x32"
+    contains(CONFIG, BUILDX64) {
+       release {
+            LIBS += -L"$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/x64"
+        }
+        else {
+            LIBS += -L"$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/x64d"
+        }
     }
-    else {
-        LIBS += -L"$$_PRO_FILE_PWD_/../MEGAsync/mega/bindings/qt/3rdparty/libs/x32d"
+
+    !contains(CONFIG, BUILDX64) {
+        release {
+            LIBS += -L"$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/x32"
+        }
+        else {
+            LIBS += -L"$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/x32d"
+        }
     }
 
-    INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/zlib
-    LIBS += -lws2_32
-    DEFINES += USE_CURL
+    DEFINES += UNICODE _UNICODE NTDDI_VERSION=0x05010000 _WIN32_WINNT=0x0501
+    LIBS += -lurlmon -lShlwapi -lShell32 -lAdvapi32 -lcryptoppmt
+
+    QMAKE_CXXFLAGS_RELEASE = $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO
+    QMAKE_LFLAGS_RELEASE = $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
+
+    QMAKE_CXXFLAGS_RELEASE += -MT
+    QMAKE_CXXFLAGS_DEBUG += -MTd
+
+    QMAKE_CXXFLAGS_RELEASE -= -MD
+    QMAKE_CXXFLAGS_DEBUG -= -MDd
+
+    RC_FILE = icon.rc
+    QMAKE_LFLAGS += /LARGEADDRESSAWARE
+    QMAKE_LFLAGS_WINDOWS += /SUBSYSTEM:WINDOWS,5.01
+    QMAKE_LFLAGS_CONSOLE += /SUBSYSTEM:CONSOLE,5.01
+    DEFINES += PSAPI_VERSION=1
 }
-
-macx {
-   LIBS += -L$$_PRO_FILE_PWD_/../MEGAsync/mega/bindings/qt/3rdparty/libs
-}
-
-DEFINES += USE_CRYPTOPP
-DEPENDPATH += $$PWD
-INCLUDEPATH += $$PWD ../MEGASync/mega/bindings/qt/3rdparty/include \
-                ../MEGASync/mega/bindings/qt/3rdparty/include/cryptopp \
-                ../MEGASync/mega/bindings/qt/3rdparty/include/cares \
-                ../MEGASync/mega/include/
-
-win32 {
-    INCLUDEPATH += ../MEGASync/mega/include/mega/wincurl
-}
-
-unix {
-    INCLUDEPATH += ../MEGASync/mega/include/mega/posix
-}
-
-SOURCES += MegaUpdater.cpp

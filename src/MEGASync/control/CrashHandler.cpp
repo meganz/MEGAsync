@@ -24,6 +24,117 @@ using namespace std;
     #include <execinfo.h>
     #include <sys/utsname.h>
 
+
+#ifdef __linux__
+    #include <fstream>
+
+string &ltrimEtcProperty(string &s, const char &c)
+{
+    size_t pos = s.find_first_not_of(c);
+    s = s.substr(pos == string::npos ? s.length() : pos, s.length());
+    return s;
+}
+
+string &rtrimEtcProperty(string &s, const char &c)
+{
+    size_t pos = s.find_last_not_of(c);
+    if (pos != string::npos)
+    {
+        pos++;
+    }
+    s = s.substr(0, pos);
+    return s;
+}
+
+string &trimEtcproperty(string &what)
+{
+    rtrimEtcProperty(what,' ');
+    ltrimEtcProperty(what,' ');
+    if (what.size() > 1)
+    {
+        if (what[0] == '\'' || what[0] == '"')
+        {
+            rtrimEtcProperty(what, what[0]);
+            ltrimEtcProperty(what, what[0]);
+        }
+    }
+    return what;
+}
+
+string getPropertyFromEtcFile(const char *configFile, const char *propertyName)
+{
+    ifstream infile(configFile);
+    string line;
+
+    while (getline(infile, line))
+    {
+        if (line.length() > 0 && line[0] != '#')
+        {
+            if (!strlen(propertyName)) //if empty return first line
+            {
+                return trimEtcproperty(line);
+            }
+            string key, value;
+            size_t pos = line.find("=");
+            if (pos != string::npos && ((pos + 1) < line.size()))
+            {
+                key = line.substr(0, pos);
+                rtrimEtcProperty(key, ' ');
+
+                if (!strcmp(key.c_str(), propertyName))
+                {
+                    value = line.substr(pos + 1);
+                    return trimEtcproperty(value);
+                }
+            }
+        }
+    }
+
+    return string();
+}
+
+string getDistro()
+{
+    string distro;
+    distro = getPropertyFromEtcFile("/etc/lsb-release", "DISTRIB_ID");
+    if (!distro.size())
+    {
+        distro = getPropertyFromEtcFile("/etc/os-release", "ID");
+    }
+    if (!distro.size())
+    {
+        distro = getPropertyFromEtcFile("/etc/redhat-release", "");
+    }
+    if (!distro.size())
+    {
+        distro = getPropertyFromEtcFile("/etc/debian-release", "");
+    }
+    if (distro.size() > 20)
+    {
+        distro = distro.substr(0, 20);
+    }
+    transform(distro.begin(), distro.end(), distro.begin(), ::tolower);
+    return distro;
+}
+
+string getDistroVersion()
+{
+    string version;
+    version = getPropertyFromEtcFile("/etc/lsb-release", "DISTRIB_RELEASE");
+    if (!version.size())
+    {
+        version = getPropertyFromEtcFile("/etc/os-release", "VERSION_ID");
+    }
+    if (version.size() > 10)
+    {
+        version = version.substr(0, 10);
+    }
+    transform(version.begin(), version.end(), version.begin(), ::tolower);
+    return version;
+}
+#endif
+
+
     string dump_path;
 
     // signal handler
@@ -38,23 +149,50 @@ using namespace std;
 
         std::ostringstream oss;
         oss << "MEGAprivate ERROR DUMP\n";
-        oss << "Application: " << QApplication::applicationName().toStdString() << "\n";
-        oss << "Version code: " << QString::number(Preferences::VERSION_CODE).toStdString() <<
-               "." << QString::number(Preferences::BUILD_ID).toStdString() << "\n";
+        oss << "Application: " << QApplication::applicationName().toUtf8().constData() << "\n";
+        oss << "Version code: " << QString::number(Preferences::VERSION_CODE).toUtf8().constData() <<
+               "." << QString::number(Preferences::BUILD_ID).toUtf8().constData() << "\n";
         oss << "Module name: " << "megasync" << "\n";
+
+        string distroinfo;
+        #ifdef __linux__
+            string distro = getDistro();
+            if (distro.size())
+            {
+                distroinfo.append(distro);
+                string distroversion = getDistroVersion();
+                if (distroversion.size())
+                {
+                    distroinfo.append(" ");
+                    distroinfo.append(distroversion);
+                    distroinfo.append("/");
+                }
+                else
+                {
+                    distroinfo.append("/");
+                }
+            }
+        #endif
 
         struct utsname osData;
         if (!uname(&osData))
         {
             oss << "Operating system: " << osData.sysname << "\n";
-            oss << "System version:  " << osData.version << "\n";
+            oss << "System version:  " << distroinfo << osData.version << "\n";
             oss << "System release:  " << osData.release << "\n";
             oss << "System arch: " << osData.machine << "\n";
         }
         else
         {
             oss << "Operating system: Unknown\n";
-            oss << "System version: Unknown\n";
+            if (distroinfo.size())
+            {
+                oss << "System version: " << distroinfo << "\n";
+            }
+            else
+            {
+                oss << "System version: Unknown\n";
+            }
             oss << "System release: Unknown\n";
             oss << "System arch: Unknown\n";
         }
@@ -199,7 +337,7 @@ void CrashHandlerPrivate::InitCrashHandler(const QString& dumpPath)
 #else
     #ifdef CREATE_COMPATIBLE_MINIDUMPS
         #if defined(Q_OS_LINUX)
-            std::string pathAsStr = dumpPath.toStdString();
+            std::string pathAsStr = dumpPath.toUtf8().constData();
             google_breakpad::MinidumpDescriptor md(pathAsStr);
             pHandler = new google_breakpad::ExceptionHandler(
                 md,
@@ -210,7 +348,7 @@ void CrashHandlerPrivate::InitCrashHandler(const QString& dumpPath)
                 -1
                 );
         #elif defined(Q_OS_MAC)
-            std::string pathAsStr = dumpPath.toStdString();
+            std::string pathAsStr = dumpPath.toUtf8().constData();
             pHandler = new google_breakpad::ExceptionHandler(
                 pathAsStr,
                 /*FilterCallback*/ 0,
@@ -231,7 +369,7 @@ void CrashHandlerPrivate::InitCrashHandler(const QString& dumpPath)
 
         char name[37];
         sprintf(name, "%08x-%04x-%04x-%08x-%08x", data1, data2, data3, data4, data5);
-        dump_path = dumpPath.toStdString() + "/" + name + ".dmp";
+        dump_path = std::string(dumpPath.toUtf8().constData()) + "/" + name + ".dmp";
 
         /* Install our signal handler */
         struct sigaction sa;

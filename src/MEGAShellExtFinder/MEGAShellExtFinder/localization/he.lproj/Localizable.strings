@@ -14,3 +14,5 @@
 "1 folder" = "תיקייה אחת";
 /* Context menu option label to indicate the user has selected %i number of folders */
 "%i folders" = "%i תיקיות";
+/*  */
+"View previous versions" = "View previous versions";

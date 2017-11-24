@@ -68,13 +68,13 @@
     }
     
     NSString *firstChar = [strings objectAtIndex:0];
-    if ([firstChar isEqualToString:@"P"]) //Format: <op-code>:<path-file>:<state-code>
+    if ([firstChar isEqualToString:@"P"]) //Format: <op-code>:<path-file>:<state-code>:<show-badges>
     {
         if ([strings count] < 3)
         {
             return;
         }
-        [_delegate onItemChanged:[strings objectAtIndex:1]  withState:[[strings objectAtIndex:2] intValue]];
+        [_delegate onItemChanged:[strings objectAtIndex:1]  withState:[[strings objectAtIndex:2] intValue] shouldShowBadges:[[strings objectAtIndex:3] intValue]];
     }
     else if ([firstChar isEqualToString:@"A"]) //Format: <op-code>:<path-file>:<sync-name>
     {
@@ -103,13 +103,12 @@
 - (void)sendRequest:(NSString*)command type:(NSString*)type {
     
     char separator = ':';
-    int commandLength = (int)[command length];
-    NSData *headerLength = [NSData dataWithBytes:&commandLength length:sizeof(int)];
+    uint32_t commandLength = (uint32_t)[command lengthOfBytesUsingEncoding: NSUTF8StringEncoding];
     
     NSMutableData *query = [NSMutableData data];
     [query appendData:[type dataUsingEncoding:NSUTF8StringEncoding]];
     [query appendBytes:&separator length:sizeof(char)];
-    [query appendData:headerLength];
+    [query appendBytes:&commandLength length:sizeof(uint32_t)];
     [query appendBytes:&separator length:sizeof(char)];
     [query appendData:[command dataUsingEncoding:NSUTF8StringEncoding]];
      

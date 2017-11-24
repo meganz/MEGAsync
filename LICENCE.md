@@ -7,7 +7,7 @@ these rights, you accept this licence. If you do not accept the
 licence, do not access the code.
 
 Words used in the Mega Limited Terms of Service
-[https://mega.nz/#terms] have the same meaning in this licence. Where
+[https://mega.nz/terms] have the same meaning in this licence. Where
 there is any inconsistency between this licence and those Terms of
 Service, these terms prevail.
 
@@ -52,8 +52,8 @@ Section 2 -- Grant of Rights
 
 4. Subject to the terms of this licence, you must at all times comply
    with and shall be bound by our Terms of Use
-   [https://mega.nz/#terms], Privacy Policy [https://mega.nz/#privacy]
-   and Takedown Guidance Policy [https://mega.nz/#takedown].
+   [https://mega.nz/terms], Privacy Policy [https://mega.nz/privacy]
+   and Takedown Guidance Policy [https://mega.nz/takedown].
 
 
 Section 3 -- Limitations

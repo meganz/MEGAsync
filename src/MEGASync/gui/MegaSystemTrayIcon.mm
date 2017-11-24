@@ -156,17 +156,27 @@ void MegaSystemTrayIcon::setIcon(const QIcon &icon, const QIcon &iconWhite)
     CGImageRef cgImage = pixmap->toMacCGImageRef();
     CGImageRef cgImageWhite = pixmapWhite->toMacCGImageRef();
 #endif
-    NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:cgImage];
-    [m_sys->item->icon autorelease];
-    m_sys->item->icon = [[NSImage alloc] init];
-    [m_sys->item->icon addRepresentation:bitmapRep];
-    [bitmapRep release];
 
-    NSBitmapImageRep *bitmapRepWhite = [[NSBitmapImageRep alloc] initWithCGImage:cgImageWhite];
-    [m_sys->item->iconWhite autorelease];
-    m_sys->item->iconWhite =[[NSImage alloc] init];
-    [m_sys->item->iconWhite addRepresentation:bitmapRepWhite];
-    [bitmapRepWhite release];
+    if (cgImage != nil)
+    {
+        NSBitmapImageRep *bitmapRep = [[NSBitmapImageRep alloc] initWithCGImage:cgImage];
+        [m_sys->item->icon release];
+        m_sys->item->icon = [[NSImage alloc] init];
+        [m_sys->item->icon addRepresentation:bitmapRep];
+
+        [bitmapRep release];
+        CGImageRelease(cgImage);
+    }
+
+    if (cgImageWhite != nil)
+    {
+        NSBitmapImageRep *bitmapRepWhite = [[NSBitmapImageRep alloc] initWithCGImage:cgImageWhite];
+        [m_sys->item->iconWhite release];
+        m_sys->item->iconWhite =[[NSImage alloc] init];
+        [m_sys->item->iconWhite addRepresentation:bitmapRepWhite];
+        [bitmapRepWhite release];
+        CGImageRelease(cgImageWhite);
+    }
 
     [[[m_sys->item item] view] display];
 
@@ -192,7 +202,7 @@ void MegaSystemTrayIcon::setToolTip(const QString &toolTip)
     if (!m_sys)
         return;
 
-    NSString *convertedString = [[NSString  alloc] initWithUTF8String:(char *)toolTip.toStdString().c_str()];
+    NSString *convertedString = [[NSString  alloc] initWithUTF8String:(char *)toolTip.toUtf8().constData()];
     [[[m_sys->item item] view] setToolTip:convertedString];
 }
 

@@ -14,3 +14,5 @@
 "1 folder" = "مجلد واحد";
 /* Context menu option label to indicate the user has selected %i number of folders */
 "%i folders" = "%i مجلدات";
+/*  */
+"View previous versions" = "شاهد نسخ سابقة";

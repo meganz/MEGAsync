@@ -17,11 +17,18 @@ class MacXExtServer : public QObject
     Q_OBJECT
 
 public:
+
+    enum {
+        NOTIFY_ADD_SYNCS = 0,
+        NOTIFY_DEL_SYNCS = 1
+    };
+
     MacXExtServer(MegaApplication *app);
     virtual ~MacXExtServer();
-    void notifyItemChange(QString path);
+    void notifyItemChange(std::string *localPath, int newState);
     void notifySyncAdd(QString path, QString syncName);
     void notifySyncDel(QString path, QString syncName);
+    void notifyAllClients(int op);
 
 protected:
     MacXLocalServer *m_localServer;
@@ -33,7 +40,7 @@ public slots:
    void onClientData();
    void onClientDisconnected();
 
-   void doSendToAll(QString str);
+   void doSendToAll(QByteArray str);
 
 private:
    QString sockPath;
@@ -43,8 +50,8 @@ private:
 signals:
    void newUploadQueue(QQueue<QString> uploadQueue);
    void newExportQueue(QQueue<QString> exportQueue);
-   void viewOnMega(QString localPath);
-   void sendToAll(QString str);
+   void viewOnMega(QByteArray localPath, bool versions);
+   void sendToAll(QByteArray str);
 };
 
 #endif // MACXEXTSERVER_H

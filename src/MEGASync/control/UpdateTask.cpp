@@ -1,5 +1,6 @@
 #include "UpdateTask.h"
 #include "control/Utilities.h"
+#include "platform/Platform.h"
 #include <iostream>
 #include <QAuthenticator>
 #include <QDesktopServices>
@@ -7,7 +8,7 @@
 using namespace mega;
 using namespace std;
 
-UpdateTask::UpdateTask(MegaApi *megaApi, QString appFolder, QObject *parent) :
+UpdateTask::UpdateTask(MegaApi *megaApi, QString appFolder, bool isPublic, QObject *parent) :
     QObject(parent)
 {
     m_WebCtrl = NULL;
@@ -19,6 +20,7 @@ UpdateTask::UpdateTask(MegaApi *megaApi, QString appFolder, QObject *parent) :
     timeoutTimer = NULL;
     this->megaApi = megaApi;
     this->appFolder = QDir(appFolder);
+    this->isPublic = isPublic;
 }
 
 UpdateTask::~UpdateTask()
@@ -174,6 +176,10 @@ void UpdateTask::finalCleanup()
     //Remove the update folder (new location)
     Utilities::removeRecursively(updateFolder.absolutePath());
 
+#ifdef __APPLE__
+    MEGA_SET_PERMISSIONS;
+#endif
+
     emit updateCompleted();
 }
 
@@ -295,6 +301,23 @@ bool UpdateTask::processUpdateFile(QNetworkReply *reply)
     if (!downloadURLs.size())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "All files are up to date");
+
+        int intVersion = 0;
+        QDir dataDir(preferences->getDataPath());
+        QString appVersionPath = dataDir.filePath(QString::fromAscii("megasync.version"));
+        QFile f(appVersionPath);
+        if (f.open(QFile::ReadOnly | QFile::Text))
+        {
+            QTextStream in(&f);
+            QString version = in.readAll();
+            intVersion = version.toInt();
+            if (intVersion > Preferences::VERSION_CODE)
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "External update detected");
+                return true;
+            }
+        }
+
         return false;
     }
 
@@ -362,6 +385,13 @@ bool UpdateTask::processFile(QNetworkReply *reply)
     }
     localFile.close();
 
+#ifdef _WIN32
+    if (isPublic)
+    {
+        Platform::makePubliclyReadable((LPTSTR)QDir::toNativeSeparators(localFile.fileName()).utf16());
+    }
+#endif
+
     return true;
 }
 
@@ -384,7 +414,16 @@ bool UpdateTask::performUpdate()
 
         QFileInfo dstInfo(appFolder.absoluteFilePath(file));
         QDir dstDir = dstInfo.dir();
-        dstDir.mkpath(QString::fromUtf8("."));
+        if (!dstDir.exists())
+        {
+            dstDir.mkpath(QString::fromUtf8("."));
+#ifdef _WIN32
+            if (isPublic)
+            {
+                Platform::makePubliclyReadable((LPTSTR)QDir::toNativeSeparators(dstDir.absolutePath()).utf16());
+            }
+#endif
+        }
 
         appFolder.rename(file, backupFolder.absoluteFilePath(file));
         if (!updateFolder.rename(file, appFolder.absoluteFilePath(file)))

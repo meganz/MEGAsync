@@ -9,7 +9,9 @@ typedef enum {
    STRING_UPLOAD = 0,
    STRING_GETLINK = 1,
    STRING_SHARE = 2,
-   STRING_SEND = 3
+   STRING_SEND = 3,
+   STRING_VIEW_ON_MEGA = 5,
+   STRING_VIEW_VERSIONS = 6
 } StringID;
 
 class ExtServer: public QObject
@@ -37,6 +39,7 @@ class ExtServer: public QObject
  signals:
     void newUploadQueue(QQueue<QString> uploadQueue);
     void newExportQueue(QQueue<QString> exportQueue);
+    void viewOnMega(QByteArray path, bool versions);
 };
 
 #endif

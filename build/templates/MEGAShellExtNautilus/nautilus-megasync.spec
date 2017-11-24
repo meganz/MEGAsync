@@ -22,7 +22,7 @@ BuildRequires: fedora-logos
 BuildRequires: sl-logos, gcc-c++
 %endif
 
-Requires:       nautilus, megasync
+Requires:       nautilus, megasync >= 3.5
 
 %description
 Secure:
@@ -48,6 +48,14 @@ qmake-qt4
 %else
 qmake
 %endif
+
+if [ 0$(head /usr/share/doc/nautilus/NEWS -n 1 | awk '{print $NF}' | awk -F':' '{print $1}' | awk -F "." '{FS=".";print $1*10000+$2*100+$3}') -gt 31503 ]; then 
+    for i in data/emblems/64x64/*smaller.png; do mv $i ${i/-smaller/}; done
+    echo "NEWER NAUTILUS REQUIRES SMALLER OVERLAY ICONS"    
+else
+    rm data/emblems/64x64/*smaller.png
+    echo "OLDER NAUTILUS DOES NOT REQUIRE SMALLER OVERLAY ICONS"
+fi
 
 make
 

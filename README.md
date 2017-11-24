@@ -4,7 +4,7 @@ MEGA Sync Client
 Easy automated syncing between your computers and your MEGA cloud drive.
 
 This repository contains all the development history of the official sync client of MEGA:
-https://mega.nz/#sync
+https://mega.nz/sync
 
 #### Supported Platforms
 
@@ -15,6 +15,7 @@ https://mega.nz/#sync
 #### Get the source
 ```
 git clone https://github.com/meganz/MEGAsync.git
+cd MEGAsync
 git submodule update --init --recursive
 ```
 
@@ -53,7 +54,7 @@ It's recommended to go to `Project -> Run` in QTCreator and disable the option `
 
 ##### Requirements:
 * Xcode
-* QT 5.X
+* QT 5.6.2
 
 ##### Preparation:
 1.- Install Xcode in your system
@@ -61,7 +62,7 @@ It's recommended to go to `Project -> Run` in QTCreator and disable the option `
 2.- Clone or download this repo
 
 3.- Download the required third party libraries and configuration file (`config.h`) from this link:
-https://mega.nz/#!G5xmTLZY!jB2LyuXRSNGmBo1djUNhRbvy_pa42aDZyhgaTK1PAlI
+https://mega.nz/#!m0AkyAAQ!dTZhq9IKzRrL5Kl5zCQkAk2X3iCuf2uEbSfdZ-OyLnU
 
 4.- Uncompress that file and move the folder `3rdparty` into `src/MEGASync/mega/bindings/qt`/ and the file `config.h` into `src/MEGASync/mega/include/mega/`
 
@@ -75,7 +76,8 @@ Preparation:
 
 First install dependencies. e.g., for a debian/ubuntu:
 ```
-sudo apt-get install build-essential autoconf automake m4 libtool libtool-bin qt4-qmake make libqt4-dev libcrypto++-dev libsqlite3-dev libc-ares-dev
+sudo apt-get install build-essential autoconf automake m4 libtool libtool-bin qt4-qmake make libqt4-dev libcrypto++-dev libsqlite3-dev libc-ares-dev libcurl4-openssl-dev libssl-dev
+# Optional, if you wish to build nautilus extension:
 sudo apt-get install libnautilus-extension-dev
 ```
 

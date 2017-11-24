@@ -32,6 +32,8 @@ const char OP_LINK        = 'L'; //paste Link
 const char OP_SHARE       = 'S'; //Share folder
 const char OP_SEND        = 'C'; //Copy to user
 const char OP_STRING      = 'T'; //Get Translated String
+const char OP_VIEW        = 'V'; //View on MEGA
+const char OP_PREVIOUS    = 'R'; //View previous versions
 
 class MegasyncDolphinOverlayPlugin : public KOverlayIconPlugin
 {
@@ -110,7 +112,7 @@ private slots:
             QString url = sockNotifyServer.readLine();
             while(url.endsWith('\n')) url.chop(1);
 
-            qDebug("MEGASYNCOVERLAYPLUGIN: Server notified <%s>: %s",action.toStdString().c_str(), url.toStdString().c_str());
+            qDebug("MEGASYNCOVERLAYPLUGIN: Server notified <%s>: %s",action.toUtf8().constData(), url.toUtf8().constData());
 
             emit overlaysChanged(QUrl::fromLocalFile(url), getOverlays(QUrl::fromLocalFile(url)));
         }
@@ -163,18 +165,18 @@ public:
         {
             case FILE_SYNCED:
                 r << "mega-dolphin-synced";
-                qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-synced",url.toLocalFile().toStdString().c_str());
+                qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-synced",url.toLocalFile().toUtf8().constData());
                 break;
             case FILE_PENDING:
                 r << "mega-dolphin-pending";
-                qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-pending",url.toLocalFile().toStdString().c_str());
+                qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-pending",url.toLocalFile().toUtf8().constData());
                 break;
             case FILE_SYNCING:
                 r << "mega-dolphin-syncing";
-                qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-syncing",url.toLocalFile().toStdString().c_str());
+                qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: mega-dolphin-syncing",url.toLocalFile().toUtf8().constData());
                 break;
             default:
-                qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: %d",url.toLocalFile().toStdString().c_str(),state);
+                qDebug("MEGASYNCOVERLAYPLUGIN: getOverlays <%s>: %d",url.toLocalFile().toUtf8().constData(),state);
                 break;
         }
 
@@ -206,7 +208,7 @@ private:
                 return QString();
         }
 
-        req.sprintf("%c:%s", type, command.toStdString().c_str());
+        req.sprintf("%c:%s", type, command.toUtf8().constData());
 
         sockExtServer.write(req.toUtf8());
         sockExtServer.flush();

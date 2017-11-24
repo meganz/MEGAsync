@@ -22,11 +22,12 @@ bool LinuxPlatform::enableTrayIcon(QString executable)
     return false;
 }
 
-void LinuxPlatform::notifyItemChange(QString path)
+void LinuxPlatform::notifyItemChange(string *localPath, int)
 {
-    if (notify_server && !Preferences::instance()->overlayIconsDisabled())
+    if (notify_server && localPath && localPath->size()
+            && !Preferences::instance()->overlayIconsDisabled())
     {
-        notify_server->notifyItemChange(path);
+        notify_server->notifyItemChange(localPath);
     }
 }
 
@@ -147,6 +148,21 @@ void LinuxPlatform::syncFolderRemoved(QString syncPath, QString syncName, QStrin
     }
 }
 
+void LinuxPlatform::notifyRestartSyncFolders()
+{
+
+}
+
+void LinuxPlatform::notifyAllSyncFoldersAdded()
+{
+
+}
+
+void LinuxPlatform::notifyAllSyncFoldersRemoved()
+{
+
+}
+
 QByteArray LinuxPlatform::encrypt(QByteArray data, QByteArray key)
 {
     return data;
@@ -233,6 +249,16 @@ void LinuxPlatform::enableDialogBlur(QDialog *dialog)
 void LinuxPlatform::activateBackgroundWindow(QDialog *)
 {
 
+}
+
+void LinuxPlatform::execBackgroundWindow(QDialog *window)
+{
+    window->exec();
+}
+
+bool LinuxPlatform::registerUpdateJob()
+{
+    return true;
 }
 
 void LinuxPlatform::uninstall()

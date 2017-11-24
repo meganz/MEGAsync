@@ -11,13 +11,43 @@
 
 #include <megaapi.h>
 
+class RequestData
+{
+public:
+    enum
+    {
+        STATE_OPEN = 0,       ///< Selection dialog is still open.
+        STATE_OK   = 1,       ///< Everything OK
+        STATE_CANCELLED = 2,  ///< Selection dialog cancelled by user.
+    };
+
+    RequestData();
+    int files;
+    int folders;
+    long long tsStart;
+    long long tsEnd;
+    int status;
+};
+
+class RequestTransferData
+{
+public:
+    RequestTransferData();
+    int state;
+    long long progress;
+    long long size;
+    long long speed;
+    long long tsStart;
+    long long tsEnd;
+};
+
 class HTTPRequest
 {
 public:
-    HTTPRequest() : contentLength(0), origin(-1) {}
+    HTTPRequest() : contentLength(0), origin(QString::fromUtf8("*")) {}
     QString data;
     int contentLength;
-    int origin;
+    QString origin;
 };
 
 class HTTPServer: public QTcpServer
@@ -25,7 +55,10 @@ class HTTPServer: public QTcpServer
     Q_OBJECT
 
     public:
+        static const unsigned int MAX_REQUEST_TIME_SECS;
+
         HTTPServer(mega::MegaApi *megaApi, quint16 port, bool sslEnabled);
+        ~HTTPServer();
 #if QT_VERSION >= 0x050000
         void incomingConnection(qintptr socket);
 #else
@@ -34,13 +67,21 @@ class HTTPServer: public QTcpServer
         void pause();
         void resume();
 
+        void checkAndPurgeRequests();
+        void onUploadSelectionAccepted(int files, int folders);
+        void onUploadSelectionDiscarded();
+        void onTransferDataUpdate(mega::MegaHandle handle, int state, long long progress, long long size, long long speed);
+
     signals:
         void onLinkReceived(QString link, QString auth);
-        void onSyncRequested(long long handle);
         void onExternalDownloadRequested(QQueue<mega::MegaNode*> files);
         void onExternalDownloadRequestFinished();
+        void onExternalFileUploadRequested(qlonglong targetHandle);
+        void onExternalFolderUploadRequested(qlonglong targetHandle);
+        void onExternalFolderSyncRequested(qlonglong targetHandle);
+        void onExternalOpenTransferManagerRequested(int tab);
 
-    private slots:
+    public slots:
         void readClient();
         void discardClient();
         void rejectRequest(QAbstractSocket *socket, QString response = QString::fromUtf8("403 Forbidden"));
@@ -55,6 +96,8 @@ class HTTPServer: public QTcpServer
         bool isFirstWebDownloadDone;
         mega::MegaApi *megaApi;
         QMap<QAbstractSocket*, HTTPRequest*> requests;
+        QMultiMap<QString, RequestData*> webDataRequests;
+        QMap<mega::MegaHandle, RequestTransferData*> webTransferStateRequests;
 };
 
 #endif // HTTPSERVER_H

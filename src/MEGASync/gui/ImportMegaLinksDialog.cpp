@@ -70,7 +70,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
         if (testNode)
         {
             const char *tPath = megaApi->getNodePath(testNode);
-            if (tPath && strncmp(tPath, QString::fromUtf8("//bin/").toStdString().c_str(), 6))
+            if (tPath && strncmp(tPath, "//bin/", 6))
             {   
                 ui->eMegaFolder->setText(QString::fromUtf8(tPath));
                 delete [] tPath;
@@ -154,52 +154,6 @@ QString ImportMegaLinksDialog::getDownloadPath()
 
 void ImportMegaLinksDialog::on_cDownload_clicked()
 {
-    if (ui->cImport->isChecked() && ui->cDownload->isChecked())
-    {
-        QString importFolder = ui->eMegaFolder->text();
-        MegaNode *nImportFolder = megaApi->getNodeByPath(importFolder.toUtf8().constData());
-        MegaNode *parent = nImportFolder;
-
-        if (!parent)
-        {
-            parent = megaApi->getRootNode();
-        }
-
-        while (parent)
-        {
-            if (megaApi->isSynced(parent))
-            {
-                int result;
-                if (linkProcessor->size() == 1)
-                {
-                    result = QMessageBox::warning(this, tr("Warning"),
-                        tr("You are about to import this file to a synced folder.\n"
-                            "If you enable downloading, the file will be duplicated on your computer.\n"
-                            "Are you sure?"), QMessageBox::Yes, QMessageBox::No);
-                }
-                else
-                {
-                    result = QMessageBox::warning(this, tr("Warning"),
-                        tr("You are about to import these files to a synced folder.\n"
-                            "If you enable downloading, the files will be duplicated on your computer.\n"
-                            "Are you sure?"), QMessageBox::Yes, QMessageBox::No);
-                }
-
-                if (result != QMessageBox::Yes)
-                {
-                    ui->cDownload->setChecked(false);
-                    delete parent;
-                    return;
-                }
-                delete parent;
-                break;
-            }
-            nImportFolder = parent;
-            parent = megaApi->getParentNode(nImportFolder);
-            delete nImportFolder;
-        }
-    }
-
     if (finished && (ui->cDownload->isChecked() || ui->cImport->isChecked()))
     {
         ui->bOk->setEnabled(true);
@@ -270,7 +224,7 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
         QTemporaryFile test(path + QDir::separator());
         if (!test.open())
         {
-            QMessageBox::critical(window(), tr("Error"), tr("You don't have write permissions in this local folder."));
+            QMessageBox::critical(NULL, tr("Error"), tr("You don't have write permissions in this local folder."));
             return;
         }
 

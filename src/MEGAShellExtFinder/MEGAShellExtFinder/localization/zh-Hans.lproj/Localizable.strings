@@ -14,3 +14,5 @@
 "1 folder" = "一个文件夹";
 /* Context menu option label to indicate the user has selected %i number of folders */
 "%i folders" = "%i个文件夹";
+/*  */
+"View previous versions" = "查看之前的版本";

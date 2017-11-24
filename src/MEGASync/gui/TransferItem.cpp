@@ -263,7 +263,6 @@ void TransferItem::finishTransfer()
 void TransferItem::updateTransfer()
 {
     ui->sTransferState->setCurrentWidget(ui->stateActive);
-    updateAnimation();
     switch (transferState)
     {
         case MegaTransfer::STATE_ACTIVE:
@@ -477,10 +476,11 @@ void TransferItem::mouseHoverTransfer(bool isHover)
 
 void TransferItem::loadDefaultTransferIcon()
 {
-    ui->lActionType->setPixmap(loadIconResource);
     if (animation && animation->state() != QMovie::NotRunning)
     {
         animation->stop();
+        ui->lActionType->setMovie(NULL);
+        ui->lActionType->setPixmap(loadIconResource);
     }
 }
 

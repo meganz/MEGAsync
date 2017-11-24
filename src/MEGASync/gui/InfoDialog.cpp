@@ -29,7 +29,16 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 {
     ui->setupUi(this);
     //Set window properties
-    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+#ifdef Q_OS_LINUX
+    if (!QSystemTrayIcon::isSystemTrayAvailable())
+    {
+        setWindowFlags(Qt::FramelessWindowHint);
+    }
+    else
+#endif
+    {
+        setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    }
 
 #ifdef __APPLE__
     setAttribute(Qt::WA_TranslucentBackground);
@@ -68,13 +77,13 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
-    ui->wTransfer1->setType(MegaTransfer::TYPE_DOWNLOAD);
-    ui->wTransfer1->hideTransfer();
-    ui->wTransfer2->setType(MegaTransfer::TYPE_UPLOAD);
-    ui->wTransfer2->hideTransfer();
+    ui->wTransferDown->setType(MegaTransfer::TYPE_DOWNLOAD);
+    ui->wTransferDown->hideTransfer();
+    ui->wTransferUp->setType(MegaTransfer::TYPE_UPLOAD);
+    ui->wTransferUp->hideTransfer();
 
     ui->bTransferManager->setToolTip(tr("Open Transfer Manager"));
-    ui->bSettings->setToolTip(tr("Access your MEGAsync settings"));
+    ui->bSettings->setToolTip(tr("Show MEGAsync options"));
 
     ui->pUsageStorage->installEventFilter(this);
     ui->pUsageStorage->setMouseTracking(true);
@@ -120,6 +129,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     arrow->hide();
 #endif
 
+    on_bDotUsedStorage_clicked();
+
     //Create the overlay widget with a semi-transparent background
     //that will be shown over the transfers when they are paused
     overlay = new QPushButton(this);
@@ -128,8 +139,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     overlay->setStyleSheet(QString::fromAscii("background-color: rgba(247, 247, 247, 200); "
                                               "border: none; "));
 
-    ui->wTransfer1->hide();
-    ui->wTransfer1->hide();
+    ui->wTransferDown->hide();
+    ui->wTransferUp->hide();
     overlay->resize(ui->wTransfers->minimumSize());
 #ifdef __APPLE__
     overlay->move(1, 72);
@@ -139,8 +150,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 #endif
     overlay->hide();
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
-    connect(ui->wTransfer1, SIGNAL(cancel(int, int)), this, SLOT(onTransfer1Cancel(int, int)));
-    connect(ui->wTransfer2, SIGNAL(cancel(int, int)), this, SLOT(onTransfer2Cancel(int, int)));
+    connect(ui->wTransferDown, SIGNAL(showContextMenu(QPoint, bool)), this, SLOT(onContextDownloadMenu(QPoint, bool)));
+    connect(ui->wTransferUp, SIGNAL(showContextMenu(QPoint, bool)), this, SLOT(onContextUploadMenu(QPoint, bool)));
 
     if (preferences->logged())
     {
@@ -169,7 +180,7 @@ void InfoDialog::setUserName()
     {
         return;
     }
-    QString pattern(QString::fromUtf8("%1 %2").arg(preferences->firstName()).arg(preferences->lastName()));
+    QString pattern(QString::fromUtf8("%1 %2").arg(first).arg(last));
 
     QFont f = ui->lName->font();
     QFontMetrics fm = QFontMetrics(f);
@@ -199,8 +210,6 @@ void InfoDialog::setUsage()
         ui->bDotUsedStorage->show();
     }
 
-    on_bDotUsedStorage_clicked();
-
     if (preferences->totalStorage() == 0)
     {
         ui->pUsageStorage->setValue(0);
@@ -223,7 +232,7 @@ void InfoDialog::setUsage()
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
 
         QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1&nbsp;</span>")
-                                     .arg(QString::number(percentage).append(QString::fromAscii("%"))))
+                                     .arg(QString::number(percentage).append(QString::fromAscii(" %"))))
                                      .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(preferences->totalStorage())));
         ui->lPercentageUsedStorage->setText(used);
@@ -235,7 +244,7 @@ void InfoDialog::setUsage()
     {
         ui->pUsageQuota->setValue(0);
         ui->lPercentageUsedQuota->setText(QString::fromUtf8(""));
-        ui->lTotalUsedQuota->setText(tr("USED TRANSFERS %1").arg(tr("Data temporarily unavailable")));
+        ui->lTotalUsedQuota->setText(tr("USED BANDWIDTH %1").arg(tr("Data temporarily unavailable")));
     }
     else
     {
@@ -257,7 +266,7 @@ void InfoDialog::setUsage()
                                      .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(preferences->totalBandwidth())));
         ui->lPercentageUsedQuota->setText(used);
-        ui->lTotalUsedQuota->setText(tr("USED TRANSFERS %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
+        ui->lTotalUsedQuota->setText(tr("USED BANDWIDTH %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
                                                               .arg(Utilities::getSizeString(preferences->usedBandwidth()))));
     }
 }
@@ -286,7 +295,7 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
             downloadSpeed = speed;
         }
 
-        wTransfer = ui->wTransfer1;
+        wTransfer = ui->wTransferDown;
         if (!activeDownload || activeDownload->getTag() != transfer->getTag())
         {
             delete activeDownload;
@@ -305,7 +314,7 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
             uploadSpeed = speed;
         }
 
-        wTransfer = ui->wTransfer2;
+        wTransfer = ui->wTransferUp;
         if (!activeUpload || activeUpload->getTag() != transfer->getTag())
         {
             delete activeUpload;
@@ -395,7 +404,7 @@ void InfoDialog::updateTransfers()
             if (preferences->logged())
             {
                 ui->lDownloads->setText(fullPattern.arg(downloadString));
-                if (!ui->wTransfer1->isActive())
+                if (!ui->wTransferDown->isActive())
                 {
                     ui->wDownloadDesc->hide();
                 }
@@ -457,7 +466,7 @@ void InfoDialog::updateTransfers()
 
             ui->lUploads->setText(fullPattern.arg(uploadString));
 
-            if (!ui->wTransfer2->isActive())
+            if (!ui->wTransferUp->isActive())
             {
                 ui->wUploadDesc->hide();
             }
@@ -469,7 +478,7 @@ void InfoDialog::updateTransfers()
 
         if (remainingUploads || remainingDownloads)
         {
-            if (ui->wTransfer1->isActive() || ui->wTransfer2->isActive())
+            if (ui->wTransferDown->isActive() || ui->wTransferUp->isActive())
             {
                 ui->sActiveTransfers->setCurrentWidget(ui->pUpdating);
             }
@@ -482,7 +491,7 @@ void InfoDialog::transferFinished(int error)
     remainingUploads = megaApi->getNumPendingUploads();
     remainingDownloads = megaApi->getNumPendingDownloads();
 
-    if (!remainingDownloads && ui->wTransfer1->isActive())
+    if (!remainingDownloads && ui->wTransferDown->isActive())
     {
         if (!downloadsFinishedTimer.isActive())
         {
@@ -501,7 +510,7 @@ void InfoDialog::transferFinished(int error)
         downloadsFinishedTimer.stop();
     }
 
-    if (!remainingUploads && ui->wTransfer2->isActive())
+    if (!remainingUploads && ui->wTransferUp->isActive())
     {
         if (!uploadsFinishedTimer.isActive())
         {
@@ -611,6 +620,7 @@ void InfoDialog::setOverQuotaMode(bool state)
         ui->bUpgrade->style()->polish(ui->bUpgrade);
         ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
+        ui->bSyncFolder->setVisible(false);
     }
     else
     {
@@ -621,6 +631,7 @@ void InfoDialog::setOverQuotaMode(bool state)
         ui->bUpgrade->style()->polish(ui->bUpgrade);
         ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
+        ui->bSyncFolder->setVisible(true);
     }
 }
 
@@ -777,7 +788,7 @@ void InfoDialog::addSync()
     addSync(INVALID_HANDLE);
 }
 
-void InfoDialog::onTransfer1Cancel(int x, int y)
+void InfoDialog::onContextDownloadMenu(QPoint pos, bool regular)
 {
     if (transferMenu)
     {
@@ -790,9 +801,9 @@ void InfoDialog::onTransfer1Cancel(int x, int y)
     }
 
     transferMenu = new QMenu();
-#ifndef __APPLE__
+#ifndef __APPLE__    
     transferMenu->setStyleSheet(QString::fromAscii(
-            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
+            "QMenu {background-color: white; border: 1px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
             "QMenu::item {background-color: white; color: black;} "
             "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
 #endif
@@ -802,11 +813,15 @@ void InfoDialog::onTransfer1Cancel(int x, int y)
         transferMenu->addAction(tr("Resume download"), this, SLOT(downloadState()));
     }
     transferMenu->addAction(megaApi->areTransfersPaused(MegaTransfer::TYPE_DOWNLOAD) ? tr("Resume downloads") : tr("Pause downloads"), this, SLOT(globalDownloadState()));
-    transferMenu->addAction(tr("Cancel download"), this, SLOT(cancelCurrentDownload()));
-    transferMenu->addAction(tr("Cancel all downloads"), this, SLOT(cancelAllDownloads()));
+
+    if (regular)
+    {
+        transferMenu->addAction(tr("Cancel download"), this, SLOT(cancelCurrentDownload()));
+        transferMenu->addAction(tr("Cancel all downloads"), this, SLOT(cancelAllDownloads()));
+    }
 
 #ifdef __APPLE__
-    transferMenu->exec(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
+    transferMenu->exec(ui->wTransferDown->mapToGlobal(pos));
     if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
     {
         this->hide();
@@ -815,11 +830,11 @@ void InfoDialog::onTransfer1Cancel(int x, int y)
     transferMenu->deleteLater();
     transferMenu = NULL;
 #else
-    transferMenu->popup(ui->wTransfer1->mapToGlobal(QPoint(x, y)));
+    transferMenu->popup(ui->wTransferDown->mapToGlobal(pos));
 #endif
 }
 
-void InfoDialog::onTransfer2Cancel(int x, int y)
+void InfoDialog::onContextUploadMenu(QPoint pos, bool regular)
 {
     if (transferMenu)
     {
@@ -834,7 +849,7 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
     transferMenu = new QMenu();
 #ifndef __APPLE__
     transferMenu->setStyleSheet(QString::fromAscii(
-            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
+            "QMenu {background-color: white; border: 1px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
             "QMenu::item {background-color: white; color: black;} "
             "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
 #endif
@@ -844,11 +859,15 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
         transferMenu->addAction(tr("Resume upload"), this, SLOT(uploadState()));
     }
     transferMenu->addAction(megaApi->areTransfersPaused(MegaTransfer::TYPE_UPLOAD) ? tr("Resume uploads") : tr("Pause uploads"), this, SLOT(globalUploadState()));
-    transferMenu->addAction(tr("Cancel upload"), this, SLOT(cancelCurrentUpload()));
-    transferMenu->addAction(tr("Cancel all uploads"), this, SLOT(cancelAllUploads()));
+
+    if (regular)
+    {
+        transferMenu->addAction(tr("Cancel upload"), this, SLOT(cancelCurrentUpload()));
+        transferMenu->addAction(tr("Cancel all uploads"), this, SLOT(cancelAllUploads()));
+    }
 
 #ifdef __APPLE__
-    transferMenu->exec(ui->wTransfer2->mapToGlobal(QPoint(x, y)));
+    transferMenu->exec(ui->wTransferUp->mapToGlobal(pos));
     if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
     {
         this->hide();
@@ -857,7 +876,7 @@ void InfoDialog::onTransfer2Cancel(int x, int y)
     transferMenu->deleteLater();
     transferMenu = NULL;
 #else
-    transferMenu->popup(ui->wTransfer2->mapToGlobal(QPoint(x, y)));
+    transferMenu->popup(ui->wTransferUp->mapToGlobal(pos));
 #endif
 }
 
@@ -954,7 +973,7 @@ void InfoDialog::onAllUploadsFinished()
     remainingUploads = megaApi->getNumPendingUploads();
     if (!remainingUploads)
     {
-        ui->wTransfer2->hideTransfer();
+        ui->wTransferUp->hideTransfer();
         ui->lUploads->setText(QString::fromAscii(""));
         ui->wUploadDesc->hide();
         uploadSpeed = 0;
@@ -971,8 +990,7 @@ void InfoDialog::onAllDownloadsFinished()
     remainingDownloads = megaApi->getNumPendingDownloads();
     if (!remainingDownloads)
     {
-
-        ui->wTransfer1->hideTransfer();
+        ui->wTransferDown->hideTransfer();
         ui->lDownloads->setText(QString::fromAscii(""));
         ui->wDownloadDesc->hide();
 
@@ -1005,7 +1023,7 @@ void InfoDialog::onAllTransfersFinished()
 
 void InfoDialog::on_bSettings_clicked()
 {
-    QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width()-6, ui->bSettings->height()));
+    QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width() - 2, ui->bSettings->height()));
 
 #ifdef __APPLE__
     QPointer<InfoDialog> iod = this;
@@ -1044,14 +1062,11 @@ void InfoDialog::on_bSyncFolder_clicked()
     else
     {
         syncsMenu = new QMenu();
+#ifdef __APPLE__
         syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
-
-        MenuItemAction *addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_add_sync.png")),
-                                                           QIcon(QString::fromAscii("://images/ico_drop_add_sync_over.png")));
-        connect(addSyncAction, SIGNAL(triggered()), this, SLOT(addSync()));
-        syncsMenu->addAction(addSyncAction);
-        syncsMenu->addSeparator();
-
+#else
+        syncsMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+#endif
         QSignalMapper *menuSignalMapper = new QSignalMapper();
         connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
 
@@ -1074,6 +1089,15 @@ void InfoDialog::on_bSyncFolder_clicked()
         connect(syncsMenu, SIGNAL(aboutToHide()), syncsMenu, SLOT(deleteLater()));
         connect(syncsMenu, SIGNAL(destroyed(QObject*)), menuSignalMapper, SLOT(deleteLater()));
 
+        MenuItemAction *addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_add_sync.png")),
+                                                           QIcon(QString::fromAscii("://images/ico_drop_add_sync_over.png")));
+        connect(addSyncAction, SIGNAL(triggered()), this, SLOT(addSync()));
+        if (activeFolders)
+        {
+            syncsMenu->addSeparator();
+        }
+        syncsMenu->addAction(addSyncAction);
+
 #ifdef __APPLE__
         syncsMenu->exec(this->mapToGlobal(QPoint(20, this->height() - (activeFolders + 1) * 28 - (activeFolders ? 16 : 8))));
         if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
@@ -1081,7 +1105,7 @@ void InfoDialog::on_bSyncFolder_clicked()
             this->hide();
         }
 #else
-        syncsMenu->popup(ui->bSyncFolder->mapToGlobal(QPoint(0, -activeFolders*35)));
+        syncsMenu->popup(ui->bSyncFolder->mapToGlobal(QPoint(-5, (activeFolders ? -21 : -12) - activeFolders * 32)));
 #endif
         syncsMenu = NULL;
     }
@@ -1102,7 +1126,7 @@ void InfoDialog::openFolder(QString path)
 
 void InfoDialog::addSync(MegaHandle h)
 {
-    static BindFolderDialog *dialog = NULL;
+    static QPointer<BindFolderDialog> dialog = NULL;
     if (dialog)
     {
         if (h != mega::INVALID_HANDLE)
@@ -1122,8 +1146,8 @@ void InfoDialog::addSync(MegaHandle h)
         dialog->setMegaFolder(h);
     }
 
-    int result = dialog->exec();
-    if (result != QDialog::Accepted)
+    int result = dialog->exec();    
+    if (!dialog || !result)
     {
         delete dialog;
         dialog = NULL;
@@ -1178,7 +1202,7 @@ void InfoDialog::on_bTransferManager_clicked()
 
 void InfoDialog::onOverlayClicked()
 {
-    app->pauseTransfers();
+    app->pauseTransfers(false);
 }
 
 void InfoDialog::clearUserAttributes()
@@ -1287,7 +1311,6 @@ void InfoDialog::regenerateLayout()
         gWidget->setVisible(true);
 
         overlay->setVisible(false);
-
     }
     else
     {
@@ -1307,7 +1330,7 @@ void InfoDialog::regenerateLayout()
 
     if (activeDownload)
     {
-        ActiveTransfer *wTransfer = ui->wTransfer1;
+        ActiveTransfer *wTransfer = ui->wTransferDown;
         wTransfer->setFileName(QString::fromUtf8(activeDownload->getFileName()));
         wTransfer->setProgress(activeDownload->getTotalBytes() - remainingDownloadBytes,
                                activeDownload->getTotalBytes(),
