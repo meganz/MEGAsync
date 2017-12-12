@@ -100,6 +100,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     accountDetailsDialog = NULL;
     cacheSize = -1;
     remoteCacheSize = -1;
+    fileVersionsSize = preferences->versionsStorage();
 
     hasUpperLimit = false;
     hasLowerLimit = false;
@@ -419,7 +420,7 @@ void SettingsDialog::onCacheSizeAvailable()
 {
     if (cacheSize != -1 && remoteCacheSize != -1)
     {
-        if (!cacheSize && !remoteCacheSize)
+        if (!cacheSize && !remoteCacheSize && !fileVersionsSize)
         {
             return;
         }
@@ -430,8 +431,11 @@ void SettingsDialog::onCacheSizeAvailable()
         }
         else
         {
+            //Hide and remove from layout to avoid  uneeded space
             ui->lCacheSize->hide();
             ui->bClearCache->hide();
+            ui->wLeftCache->layout()->removeWidget(ui->lCacheSize);
+            ui->wLeftCache->layout()->removeWidget(ui->bClearCache);
         }
 
         if (remoteCacheSize)
@@ -440,8 +444,25 @@ void SettingsDialog::onCacheSizeAvailable()
         }
         else
         {
+            //Hide and remove from layout to avoid  uneeded space
             ui->lRemoteCacheSize->hide();
             ui->bClearRemoteCache->hide();
+            ui->wRightCache->layout()->removeWidget(ui->bClearRemoteCache);
+            ui->wRightCache->layout()->removeWidget(ui->lRemoteCacheSize);
+        }
+
+        if (fileVersionsSize)
+        {
+            ui->lFileVersionsSize->setText(QString::fromUtf8("File versions size: %1").arg(Utilities::getSizeString(fileVersionsSize)));
+
+        }
+        else
+        {
+            //Hide and remove from layout to avoid  uneeded space
+            ui->lFileVersionsSize->hide();
+            ui->bClearFileVersions->hide();
+            ui->wLeftCache->layout()->removeWidget(ui->lFileVersionsSize);
+            ui->wLeftCache->layout()->removeWidget(ui->bClearFileVersions);
         }
 
         ui->gCache->setVisible(true);
@@ -456,8 +477,8 @@ void SettingsDialog::onCacheSizeAvailable()
             maxHeightAnimation->setPropertyName("maximumHeight");
             minHeightAnimation->setStartValue(minimumHeight());
             maxHeightAnimation->setStartValue(maximumHeight());
-            minHeightAnimation->setEndValue(540);
-            maxHeightAnimation->setEndValue(540);
+            minHeightAnimation->setEndValue(572);
+            maxHeightAnimation->setEndValue(572);
             minHeightAnimation->setDuration(150);
             maxHeightAnimation->setDuration(150);
             animationGroup->start();
@@ -628,16 +649,25 @@ void SettingsDialog::on_bAdvanced_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    if (!cacheSize && !remoteCacheSize)
+
+    onCacheSizeAvailable();
+
+    if (!cacheSize && !remoteCacheSize && !fileVersionsSize)
     {
         minHeightAnimation->setEndValue(488);
         maxHeightAnimation->setEndValue(488);
+    }
+    else if (cacheSize && fileVersionsSize)
+    {
+        minHeightAnimation->setEndValue(572);
+        maxHeightAnimation->setEndValue(572);
     }
     else
     {
         minHeightAnimation->setEndValue(540);
         maxHeightAnimation->setEndValue(540);
     }
+
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
@@ -2084,8 +2114,11 @@ void SettingsDialog::on_bClearCache_clicked()
     QtConcurrent::run(deleteCache);
 
     cacheSize = 0;
+    //Hide and remove from layout to avoid  uneeded space
     ui->bClearCache->hide();
     ui->lCacheSize->hide();
+    ui->wLeftCache->layout()->removeWidget(ui->lCacheSize);
+    ui->wLeftCache->layout()->removeWidget(ui->bClearCache);
     onClearCache();
 }
 
@@ -2133,20 +2166,47 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
 
     QtConcurrent::run(deleteRemoteCache, megaApi);
     remoteCacheSize = 0;
+    //Hide and remove from layout to avoid  uneeded space
     ui->bClearRemoteCache->hide();
     ui->lRemoteCacheSize->hide();
+    ui->wRightCache->layout()->removeWidget(ui->bClearRemoteCache);
+    ui->wRightCache->layout()->removeWidget(ui->lRemoteCacheSize);
+    onClearCache();
+}
+
+void SettingsDialog::on_bClearFileVersions_clicked()
+{
+    QPointer<SettingsDialog> dialog = QPointer<SettingsDialog>(this);
+    if (QMegaMessageBox::warning(NULL,
+                             QString::fromUtf8("MEGAsync"),
+                             tr("Are you sure you want to remove all file versions of your accout?"),
+                             Utilities::getDevicePixelRatio(), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
+            || !dialog)
+    {
+        return;
+    }
+
+    megaApi->removeVersions();
+    // Reset file version size to adjust UI
+    fileVersionsSize = 0;
+
+    //Hide and remove from layout to avoid  uneeded space
+    ui->lFileVersionsSize->hide();
+    ui->bClearFileVersions->hide();
+    ui->wLeftCache->layout()->removeWidget(ui->lFileVersionsSize);
+    ui->wLeftCache->layout()->removeWidget(ui->bClearFileVersions);
     onClearCache();
 }
 
 void SettingsDialog::onClearCache()
 {
-    if (!cacheSize && !remoteCacheSize)
+    if (!cacheSize && !remoteCacheSize && !fileVersionsSize)
     {
         ui->gCache->setVisible(false);
         ui->lCacheSeparator->hide();
 
     #ifdef __APPLE__
-        if (!cacheSize && !remoteCacheSize)
+        if (!cacheSize && !remoteCacheSize && !fileVersionsSize)
         {
             minHeightAnimation->setTargetObject(this);
             maxHeightAnimation->setTargetObject(this);
@@ -2162,6 +2222,29 @@ void SettingsDialog::onClearCache()
         }
     #endif
     }
+
+    #ifdef __APPLE__
+    else if (cacheSize && fileVersionsSize)
+    {
+
+        minHeightAnimation->setEndValue(572);
+        maxHeightAnimation->setEndValue(572);
+    }
+    else
+    {
+        minHeightAnimation->setEndValue(540);
+        maxHeightAnimation->setEndValue(540);
+    }
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    minHeightAnimation->setStartValue(minimumHeight());
+    maxHeightAnimation->setStartValue(maximumHeight());
+    minHeightAnimation->setDuration(150);
+    maxHeightAnimation->setDuration(150);
+    animationGroup->start();
+    #endif
 
 }
 void SettingsDialog::onProxyTestError()

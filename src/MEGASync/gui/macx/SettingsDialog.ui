@@ -558,7 +558,7 @@ padding-bottom: 6px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <property name="sizePolicy">
@@ -3370,7 +3370,7 @@ background:transparent;</string>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_17">
+         <layout class="QHBoxLayout" name="horizontalLayout_11">
           <property name="leftMargin">
            <number>30</number>
           </property>
@@ -3378,57 +3378,100 @@ background:transparent;</string>
            <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>24</number>
+           <number>30</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
           </property>
           <item>
-           <widget class="QWidget" name="wLocalCache" native="true">
+           <widget class="QWidget" name="wLeftCache" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_11">
+            <layout class="QFormLayout" name="formLayout_2">
+             <property name="fieldGrowthPolicy">
+              <enum>QFormLayout::ExpandingFieldsGrow</enum>
+             </property>
+             <property name="labelAlignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+             </property>
+             <property name="formAlignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+             </property>
+             <property name="horizontalSpacing">
+              <number>-1</number>
+             </property>
+             <property name="verticalSpacing">
+              <number>8</number>
+             </property>
              <property name="leftMargin">
               <number>0</number>
              </property>
              <property name="topMargin">
-              <number>0</number>
+              <number>4</number>
              </property>
              <property name="rightMargin">
               <number>0</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>4</number>
              </property>
-             <item>
+             <item row="0" column="0">
               <widget class="QLabel" name="lCacheSize">
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">margin-top: 2px;</string>
                </property>
                <property name="text">
                 <string>Local backup: %1</string>
                </property>
               </widget>
              </item>
-             <item>
-              <spacer name="horizontalSpacer_8">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
+             <item row="2" column="0">
+              <widget class="QLabel" name="lFileVersionsSize">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
                </property>
-               <property name="sizeHint" stdset="0">
+               <property name="focusPolicy">
+                <enum>Qt::StrongFocus</enum>
+               </property>
+               <property name="text">
+                <string>File versions size: %1</string>
+               </property>
+               <property name="margin">
+                <number>2</number>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QPushButton" name="bClearCache">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="minimumSize">
                 <size>
-                 <width>17</width>
-                 <height>10</height>
+                 <width>0</width>
+                 <height>32</height>
                 </size>
                </property>
-              </spacer>
+               <property name="text">
+                <string>Clear</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
+               </property>
+              </widget>
              </item>
-             <item>
-              <widget class="QPushButton" name="bClearCache">
+             <item row="2" column="1">
+              <widget class="QPushButton" name="bClearFileVersions">
                <property name="enabled">
                 <bool>true</bool>
                </property>
@@ -3438,30 +3481,44 @@ background:transparent;</string>
               </widget>
              </item>
             </layout>
+            <zorder>lCacheSize</zorder>
+            <zorder>horizontalSpacer_10</zorder>
+            <zorder>bClearCache</zorder>
+            <zorder>lFileVersionsSize</zorder>
+            <zorder>bClearFileVersions</zorder>
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="wRemoteCache" native="true">
+           <widget class="QWidget" name="wRightCache" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_14">
+            <layout class="QFormLayout" name="formLayout_5">
+             <property name="fieldGrowthPolicy">
+              <enum>QFormLayout::ExpandingFieldsGrow</enum>
+             </property>
+             <property name="formAlignment">
+              <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
+             </property>
+             <property name="verticalSpacing">
+              <number>8</number>
+             </property>
              <property name="leftMargin">
               <number>0</number>
              </property>
              <property name="topMargin">
-              <number>0</number>
+              <number>4</number>
              </property>
              <property name="rightMargin">
-              <number>0</number>
+              <number>8</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
              </property>
-             <item>
+             <item row="0" column="0">
               <widget class="QLabel" name="lRemoteCacheSize">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -3480,20 +3537,7 @@ background:transparent;</string>
                </property>
               </widget>
              </item>
-             <item>
-              <spacer name="horizontalSpacer_9">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>17</width>
-                 <height>10</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
+             <item row="0" column="1">
               <widget class="QPushButton" name="bClearRemoteCache">
                <property name="enabled">
                 <bool>true</bool>
@@ -4158,7 +4202,6 @@ background:transparent;</string>
   <tabstop>bDeleteName</tabstop>
   <tabstop>bAddName</tabstop>
   <tabstop>lCacheSize</tabstop>
-  <tabstop>bClearCache</tabstop>
   <tabstop>lRemoteCacheSize</tabstop>
   <tabstop>bClearRemoteCache</tabstop>
   <tabstop>cOverlayIcons</tabstop>

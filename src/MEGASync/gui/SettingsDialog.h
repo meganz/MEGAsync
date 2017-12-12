@@ -108,6 +108,7 @@ private slots:
     void on_bDeleteName_clicked();
     void on_bClearCache_clicked();
     void on_bClearRemoteCache_clicked();
+    void on_bClearFileVersions_clicked();
     void onProxyTestError();
     void onProxyTestSuccess();
     void on_bUpdate_clicked();
@@ -139,6 +140,7 @@ private:
     int modifyingSettings;
     long long cacheSize;
     long long remoteCacheSize;
+    long long fileVersionsSize;
     bool hasDefaultUploadOption;
     bool hasDefaultDownloadOption;
     bool hasUpperLimit;
