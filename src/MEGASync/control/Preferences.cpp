@@ -207,6 +207,10 @@ const QString Preferences::lowerSizeLimitValueKey       = QString::fromAscii("lo
 const QString Preferences::upperSizeLimitUnitKey        = QString::fromAscii("upperSizeLimitUnit");
 const QString Preferences::lowerSizeLimitUnitKey        = QString::fromAscii("lowerSizeLimitUnit");
 
+
+const QString Preferences::cleanerDaysLimitKey       = QString::fromAscii("cleanerDaysLimit");
+const QString Preferences::cleanerDaysLimitValueKey  = QString::fromAscii("cleanerDaysLimitValue");
+
 const QString Preferences::folderPermissionsKey         = QString::fromAscii("folderPermissions");
 const QString Preferences::filePermissionsKey           = QString::fromAscii("filePermissions");
 
@@ -275,6 +279,9 @@ const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
 const bool Preferences::defaultUpperSizeLimit       = false;
 const bool Preferences::defaultLowerSizeLimit       = false;
+
+const bool Preferences::defaultCleanerDaysLimit     = false;
+
 const bool Preferences::defaultUseHttpsOnly         = false;
 const bool Preferences::defaultSSLcertificateException = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
@@ -285,6 +292,7 @@ const int Preferences::defaultTransferDownloadMethod      = MegaApi::TRANSFER_ME
 const int Preferences::defaultTransferUploadMethod        = MegaApi::TRANSFER_METHOD_AUTO;
 const long long  Preferences::defaultUpperSizeLimitValue              = 0;
 const long long  Preferences::defaultLowerSizeLimitValue              = 0;
+const int  Preferences::defaultCleanerDaysLimitValue            = 30;
 const int Preferences::defaultLowerSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
 const int Preferences::defaultUpperSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
 const int Preferences::defaultFolderPermissions = 0;
@@ -1190,6 +1198,39 @@ void Preferences::setUpperSizeLimitValue(long long value)
     mutex.lock();
     assert(logged());
     settings->setValue(upperSizeLimitValueKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::cleanerDaysLimit()
+{
+    mutex.lock();
+    bool value = settings->value(cleanerDaysLimitKey, defaultCleanerDaysLimit).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setCleanerDaysLimit(bool value)
+{
+    mutex.lock();
+    settings->setValue(cleanerDaysLimitKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+int Preferences::cleanerDaysLimitValue()
+{
+    mutex.lock();
+    assert(logged());
+    int value = settings->value(cleanerDaysLimitValueKey, defaultCleanerDaysLimitValue).toInt();
+    mutex.unlock();
+    return value;
+}
+void Preferences::setCleanerDaysLimitValue(int value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(cleanerDaysLimitValueKey, value);
     settings->sync();
     mutex.unlock();
 }

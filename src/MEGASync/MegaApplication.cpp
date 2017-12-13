@@ -2704,6 +2704,41 @@ void MegaApplication::unlink()
     Platform::notifyAllSyncFoldersRemoved();
 }
 
+void MegaApplication::cleanLocalCaches()
+{
+    if (preferences->cleanerDaysLimit())
+    {
+        int timeLimitDays = preferences->cleanerDaysLimitValue();
+        Preferences *preferences = Preferences::instance();
+        for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+        {
+            QString syncPath = preferences->getLocalFolder(i);
+            if (!syncPath.isEmpty())
+            {
+                QDir cacheDir(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
+                if (cacheDir.exists())
+                {
+                    QFileInfoList dailyCaches = cacheDir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
+                    for (int i = 0; i < dailyCaches.size(); i++)
+                    {
+                        QFileInfo cacheFolder = dailyCaches[i];
+                        if (!cacheFolder.fileName().compare(QString::fromUtf8("tmp"))) //DO NOT REMOVE tmp subfolder
+                        {
+                            continue;
+                        }
+
+                        QDateTime creationTime(cacheFolder.created());
+                        if (creationTime.isValid() && creationTime.daysTo(QDateTime::currentDateTime()) > timeLimitDays)
+                        {
+                            Utilities::removeRecursively(cacheFolder.canonicalFilePath());
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 void MegaApplication::showInfoMessage(QString message, QString title)
 {
     if (appfinished)

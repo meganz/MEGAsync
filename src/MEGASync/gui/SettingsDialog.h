@@ -14,6 +14,7 @@
 #include "AccountDetailsDialog.h"
 #include "BindFolderDialog.h"
 #include "SizeLimitDialog.h"
+#include "LocalCleanScheduler.h"
 #include "DownloadFromMegaDialog.h"
 #include "Preferences.h"
 #include "megaapi.h"
@@ -96,6 +97,7 @@ private slots:
     void on_bApply_clicked();
     void on_bDelete_clicked();
     void on_bExcludeSize_clicked();
+    void on_bLocalCleaner_clicked();
 
     void on_bUnlink_clicked();
     void on_bExportMasterKey_clicked();
@@ -150,6 +152,9 @@ private:
     int upperLimitUnit;
     int lowerLimitUnit;
     bool sizeLimitsChanged;
+    bool hasDaysLimit;
+    int daysLimit;
+    bool cleanerLimitsChanged;
     QButtonGroup downloadButtonGroup;
     QButtonGroup uploadButtonGroup;
 

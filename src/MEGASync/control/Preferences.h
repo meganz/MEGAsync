@@ -132,7 +132,11 @@ public:
     int upperSizeLimitUnit();
     void setUpperSizeLimitUnit(int value);
     int lowerSizeLimitUnit();
-    void setLowerSizeLimitUnit(int value);
+    void setLowerSizeLimitUnit(int value);     
+    bool cleanerDaysLimit();
+    void setCleanerDaysLimit(bool value);
+    int cleanerDaysLimitValue();
+    void setCleanerDaysLimitValue(int value);
     int folderPermissionsValue();
     void setFolderPermissionsValue(int permissions);
     int filePermissionsValue();
@@ -414,6 +418,8 @@ protected:
     static const QString lowerSizeLimitValueKey;
     static const QString upperSizeLimitUnitKey;
     static const QString lowerSizeLimitUnitKey;
+    static const QString cleanerDaysLimitKey;
+    static const QString cleanerDaysLimitValueKey;
     static const QString folderPermissionsKey;
     static const QString filePermissionsKey;
     static const QString proxyTypeKey;
@@ -499,6 +505,8 @@ protected:
     static const long long defaultLowerSizeLimitValue;
     static const int defaultUpperSizeLimitUnit;
     static const int defaultLowerSizeLimitUnit;
+    static const bool defaultCleanerDaysLimit;
+    static const int defaultCleanerDaysLimitValue;
     static const int defaultTransferDownloadMethod;
     static const int defaultTransferUploadMethod;
     static const int defaultFolderPermissions;

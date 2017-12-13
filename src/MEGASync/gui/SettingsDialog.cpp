@@ -88,6 +88,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     syncsChanged = false;
     excludedNamesChanged = false;
     sizeLimitsChanged = false;
+    cleanerLimitsChanged = false;
 #ifndef WIN32
     filePermissions = 0;
     folderPermissions = 0;
@@ -109,6 +110,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     upperLimitUnit = Preferences::MEGA_BYTE_UNIT;
     lowerLimitUnit = Preferences::MEGA_BYTE_UNIT;
     debugCounter = 0;
+    hasDaysLimit = false;
+    daysLimit = 0;
 
     ui->eProxyPort->setValidator(new QIntValidator(0, 65535, this));
     ui->eUploadLimit->setValidator(new QIntValidator(0, 1000000000, this));
@@ -1463,6 +1466,14 @@ int SettingsDialog::saveSettings()
             sizeLimitsChanged = false;
         }
 
+        if (cleanerLimitsChanged)
+        {
+            preferences->setCleanerDaysLimit(hasDaysLimit);
+            preferences->setCleanerDaysLimitValue(daysLimit);
+
+            cleanerLimitsChanged = false;
+        }
+
         if (ui->cOverlayIcons->isChecked() != preferences->overlayIconsDisabled())
         {
             preferences->disableOverlayIcons(ui->cOverlayIcons->isChecked());
@@ -1666,6 +1677,8 @@ void SettingsDialog::loadSizeLimits()
     upperLimitUnit = preferences->upperSizeLimitUnit();
     lowerLimitUnit = preferences->lowerSizeLimitUnit();
     ui->lLimitsInfo->setText(getFormatString());
+    hasDaysLimit = preferences->cleanerDaysLimit();
+    daysLimit = preferences->cleanerDaysLimitValue();
 }
 #ifndef WIN32
 void SettingsDialog::on_bPermissions_clicked()
@@ -2021,6 +2034,31 @@ void SettingsDialog::on_bExcludeSize_clicked()
     }
 }
 
+void SettingsDialog::on_bLocalCleaner_clicked()
+{
+    QPointer<LocalCleanScheduler> dialog = new LocalCleanScheduler(this);
+    dialog->setDaysLimit(hasDaysLimit);
+    dialog->setDaysLimitValue(daysLimit);
+
+    int result = dialog->exec();
+    if (!dialog || result != QDialog::Accepted)
+    {
+        delete dialog;
+        return;
+    }
+
+    hasDaysLimit = dialog->daysLimit();
+    daysLimit = dialog->daysLimitValue();
+    delete dialog;
+
+    if (hasDaysLimit != preferences->cleanerDaysLimit() ||
+       daysLimit != preferences->cleanerDaysLimitValue())
+    {
+        cleanerLimitsChanged = true;
+        stateChanged();
+    }
+}
+
 void SettingsDialog::changeEvent(QEvent *event)
 {
     modifyingSettings++;
@@ -2179,7 +2217,7 @@ void SettingsDialog::on_bClearFileVersions_clicked()
     QPointer<SettingsDialog> dialog = QPointer<SettingsDialog>(this);
     if (QMegaMessageBox::warning(NULL,
                              QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to remove all file versions of your accout?"),
+                             tr("Are you sure you want to remove all file versions of your account?"),
                              Utilities::getDevicePixelRatio(), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
             || !dialog)
     {
