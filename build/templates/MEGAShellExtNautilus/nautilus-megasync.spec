@@ -56,7 +56,11 @@ else
     rm data/emblems/64x64/*smaller.png
     echo "OLDER NAUTILUS DOES NOT REQUIRE SMALLER OVERLAY ICONS"
 fi
-
+%if 0%{?fedora_version} >= 27
+#tweak to have debug symbols to stripe: for some reason they seem gone by default in Fedora 27,
+#   causing "gdb-add-index: No index was created for ..." which lead to error "Empty %files file ....debugsourcefiles.list"
+sed "s# gcc# gcc -g#g" -i Makefile
+%endif
 make
 
 %install
