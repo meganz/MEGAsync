@@ -123,6 +123,7 @@ private slots:
 protected:
     void changeEvent(QEvent * event);
     QString getFormatString();
+    QString getFormatLimitDays();
 
 private:
     Ui::SettingsDialog *ui;
