@@ -3551,7 +3551,7 @@ background:transparent;</string>
           <item>
            <widget class="QPushButton" name="bLocalCleaner">
             <property name="text">
-             <string>Local clean scheduler</string>
+             <string>.debris removal scheduler</string>
             </property>
            </widget>
           </item>
@@ -3653,7 +3653,7 @@ background:transparent;</string>
              </size>
             </property>
             <property name="text">
-             <string>Enable file versioning</string>
+             <string>Disable file versioning</string>
             </property>
            </widget>
           </item>

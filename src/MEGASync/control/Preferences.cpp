@@ -281,7 +281,7 @@ const bool Preferences::defaultUpdateAutomatically  = true;
 const bool Preferences::defaultUpperSizeLimit       = false;
 const bool Preferences::defaultLowerSizeLimit       = false;
 
-const bool Preferences::defaultCleanerDaysLimit     = false;
+const bool Preferences::defaultCleanerDaysLimit     = true;
 
 const bool Preferences::defaultUseHttpsOnly         = false;
 const bool Preferences::defaultSSLcertificateException = false;

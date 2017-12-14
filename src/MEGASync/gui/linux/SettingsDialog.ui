@@ -3270,7 +3270,7 @@ background:transparent;</string>
           <item>
            <widget class="QPushButton" name="bLocalCleaner">
             <property name="text">
-             <string>Local clean scheduler</string>
+             <string>Rubbish removal scheduler</string>
             </property>
            </widget>
           </item>
@@ -3288,7 +3288,7 @@ background:transparent;</string>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>212</width>
+              <width>184</width>
               <height>20</height>
              </size>
             </property>
@@ -3354,7 +3354,7 @@ background:transparent;</string>
           <item>
            <widget class="QCheckBox" name="cEnableFileVersioning">
             <property name="text">
-             <string>Enable file versioning</string>
+             <string>Disable file versioning</string>
             </property>
            </widget>
           </item>
@@ -3365,7 +3365,7 @@ background:transparent;</string>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>107</width>
+              <width>103</width>
               <height>20</height>
              </size>
             </property>
