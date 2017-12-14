@@ -144,6 +144,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(ui->cOverlayIcons, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
     connect(ui->cAutoUpdate, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
     connect(ui->cLanguage, SIGNAL(currentIndexChanged(int)), this, SLOT(stateChanged()));
+    connect(ui->cEnableFileVersioning, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
 
     connect(ui->rDownloadNoLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
     connect(ui->rDownloadLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
@@ -1054,6 +1055,7 @@ void SettingsDialog::loadSettings()
         }
 
         loadSizeLimits();
+        ui->cEnableFileVersioning->setChecked(preferences->fileVersioningDisabled());
         ui->cOverlayIcons->setChecked(preferences->overlayIconsDisabled());
     }
 
@@ -1458,6 +1460,11 @@ int SettingsDialog::saveSettings()
             preferences->setCleanerDaysLimitValue(daysLimit);
 
             cleanerLimitsChanged = false;
+        }
+
+        if (ui->cEnableFileVersioning->isChecked() != preferences->fileVersioningDisabled())
+        {
+            preferences->disableFileVersioning(ui->cEnableFileVersioning->isChecked());
         }
 
         if (ui->cOverlayIcons->isChecked() != preferences->overlayIconsDisabled())
