@@ -254,6 +254,7 @@ const QString Preferences::previousCrashesKey       = QString::fromAscii("previo
 const QString Preferences::lastRebootKey            = QString::fromAscii("lastReboot");
 const QString Preferences::lastExitKey              = QString::fromAscii("lastExit");
 const QString Preferences::disableOverlayIconsKey   = QString::fromAscii("disableOverlayIcons");
+const QString Preferences::disableFileVersioningKey = QString::fromAscii("disableFileVersioning");
 const QString Preferences::disableLeftPaneIconsKey  = QString::fromAscii("disableLeftPaneIcons");
 const QString Preferences::sessionKey               = QString::fromAscii("session");
 const QString Preferences::firstStartDoneKey        = QString::fromAscii("firstStartDone");
@@ -2550,6 +2551,22 @@ void Preferences::setLastStatsRequest(long long value)
 {
     mutex.lock();
     settings->setValue(lastStatsRequestKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::fileVersioningDisabled()
+{
+    mutex.lock();
+    bool result = settings->value(disableFileVersioningKey, false).toBool();
+    mutex.unlock();
+    return result;
+}
+
+void Preferences::disableFileVersioning(bool value)
+{
+    mutex.lock();
+    settings->setValue(disableFileVersioningKey, value);
     settings->sync();
     mutex.unlock();
 }

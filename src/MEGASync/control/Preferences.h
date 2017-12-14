@@ -263,6 +263,8 @@ public:
     long long lastStatsRequest();
     void setLastStatsRequest(long long value);
 
+    bool fileVersioningDisabled();
+    void disableFileVersioning(bool value);
     bool overlayIconsDisabled();
     void disableOverlayIcons(bool value);
     bool leftPaneIconsDisabled();
@@ -462,6 +464,7 @@ protected:
     static const QString lastRebootKey;
     static const QString lastExitKey;
     static const QString disableOverlayIconsKey;
+    static const QString disableFileVersioningKey;
     static const QString disableLeftPaneIconsKey;
     static const QString sessionKey;
     static const QString firstStartDoneKey;
