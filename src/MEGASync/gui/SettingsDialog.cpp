@@ -259,6 +259,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 #endif
 
     ui->gCache->setVisible(false);
+    ui->lFileVersionsSize->setVisible(false);
+    ui->bClearFileVersions->setVisible(false);
     setProxyOnly(proxyOnly);
     ui->bOk->setDefault(true);
 
@@ -430,6 +432,7 @@ void SettingsDialog::onCacheSizeAvailable()
         if (cacheSize)
         {
             ui->lCacheSize->setText(QString::fromUtf8(MEGA_DEBRIS_FOLDER) + QString::fromUtf8(": %1").arg(Utilities::getSizeString(cacheSize)));
+            ui->gCache->setVisible(true);
         }
         else
         {
@@ -441,6 +444,7 @@ void SettingsDialog::onCacheSizeAvailable()
         if (remoteCacheSize)
         {
             ui->lRemoteCacheSize->setText(QString::fromUtf8("SyncDebris: %1").arg(Utilities::getSizeString(remoteCacheSize)));
+            ui->gCache->setVisible(true);
         }
         else
         {
@@ -452,7 +456,8 @@ void SettingsDialog::onCacheSizeAvailable()
         if (fileVersionsSize)
         {
             ui->lFileVersionsSize->setText(QString::fromUtf8("File versions size: %1").arg(Utilities::getSizeString(fileVersionsSize)));
-
+            ui->lFileVersionsSize->setVisible(true);
+            ui->bClearFileVersions->setVisible(true);
         }
         else
         {
@@ -460,8 +465,6 @@ void SettingsDialog::onCacheSizeAvailable()
             ui->lFileVersionsSize->hide();
             ui->bClearFileVersions->hide();
         }
-
-        ui->gCache->setVisible(true);
 
     #ifdef __APPLE__
         if (ui->wStack->currentWidget() == ui->pAdvanced)
