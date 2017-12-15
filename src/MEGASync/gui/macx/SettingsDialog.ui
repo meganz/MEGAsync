@@ -3534,7 +3534,7 @@ background:transparent;</string>
         <widget class="QWidget" name="wScheduler" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout_25">
           <property name="spacing">
-           <number>-1</number>
+           <number>60</number>
           </property>
           <property name="leftMargin">
            <number>30</number>
