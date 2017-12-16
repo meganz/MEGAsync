@@ -1,3 +1,11 @@
+Wed Dec 13 12:06:31 CET 2017 - linux@mega.co.nz
+- Update to version 3.5.3:
+  * Integration with Finder (macOS 10.10+)
+  * Faster scanning of files
+  * Improved the management of deleted files
+  * Bug fixes and other minor improvements
+
+-------------------------------------------------------------------
 Tue Nov 7 18:10:19 CET 2017 - linux@mega.co.nz
 - Update to version 3.5:
   * New UI style
