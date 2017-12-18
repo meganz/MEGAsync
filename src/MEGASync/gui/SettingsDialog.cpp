@@ -254,8 +254,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-
-    ui->lCacheSeparator->hide();
 #endif
 
     ui->bLocalCleaner->setText(ui->bLocalCleaner->text().replace(QString::fromUtf8("[A]"), QString::fromAscii(MEGA_DEBRIS_FOLDER)));
@@ -443,8 +441,8 @@ void SettingsDialog::onCacheSizeAvailable()
             ui->bClearCache->hide();
 
             // Move remote SyncDebris widget to left side
-            ui->gCache->layout()->removeWidget(ui->wLeftCache);
-            ui->wRightCache->layout()->removeItem(ui->rSpacer);
+            ui->gCache->layout()->removeWidget(ui->wLocalCache);
+            ui->wRemoteCache->layout()->removeItem(ui->rSpacer);
             ((QBoxLayout *)ui->gCache->layout())->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Fixed));
         }
 
@@ -2185,8 +2183,8 @@ void SettingsDialog::on_bClearCache_clicked()
     ui->lCacheSize->hide();
 
     // Move remote SyncDebris widget to left side
-    ui->gCache->layout()->removeWidget(ui->wLeftCache);
-    ui->wRightCache->layout()->removeItem(ui->rSpacer);
+    ui->gCache->layout()->removeWidget(ui->wLocalCache);
+    ui->wRemoteCache->layout()->removeItem(ui->rSpacer);
     ((QBoxLayout *)ui->gCache->layout())->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Fixed));
 
     onClearCache();

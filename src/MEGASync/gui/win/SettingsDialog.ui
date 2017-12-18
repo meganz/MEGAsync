@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>640</height>
+    <height>600</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,13 +22,13 @@
   <property name="minimumSize">
    <size>
     <width>500</width>
-    <height>640</height>
+    <height>600</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>500</width>
-    <height>640</height>
+    <height>600</height>
    </size>
   </property>
   <property name="contextMenuPolicy">
@@ -596,13 +596,13 @@ background:transparent;</string>
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>500</height>
+       <height>460</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>500</width>
-       <height>500</height>
+       <height>460</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -3556,7 +3556,7 @@ background:transparent;</string>
           <item>
            <widget class="QPushButton" name="bLocalCleaner">
             <property name="text">
-             <string>[A] removal scheduler</string>
+             <string>%1 cleaning scheduler</string>
             </property>
            </widget>
           </item>
