@@ -3140,22 +3140,6 @@ background:transparent;</string>
               </widget>
              </item>
              <item>
-              <spacer name="horizontalSpacer_5">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Expanding</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>37</width>
-                 <height>13</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
               <widget class="QPushButton" name="bClearCache">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -3183,6 +3167,22 @@ background:transparent;</string>
                </property>
               </widget>
              </item>
+             <item>
+              <spacer name="horizontalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>37</width>
+                 <height>13</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
             </layout>
            </widget>
           </item>
@@ -3208,19 +3208,6 @@ background:transparent;</string>
               <number>0</number>
              </property>
              <item>
-              <widget class="QLabel" name="lRemoteCacheSize">
-               <property name="focusPolicy">
-                <enum>Qt::StrongFocus</enum>
-               </property>
-               <property name="text">
-                <string>Remote backup: %1</string>
-               </property>
-               <property name="margin">
-                <number>10</number>
-               </property>
-              </widget>
-             </item>
-             <item>
               <spacer name="horizontalSpacer_7">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -3232,6 +3219,19 @@ background:transparent;</string>
                 </size>
                </property>
               </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="lRemoteCacheSize">
+               <property name="focusPolicy">
+                <enum>Qt::StrongFocus</enum>
+               </property>
+               <property name="text">
+                <string>Remote backup: %1</string>
+               </property>
+               <property name="margin">
+                <number>10</number>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QPushButton" name="bClearRemoteCache">

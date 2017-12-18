@@ -360,7 +360,7 @@ padding-bottom: 6px;
          <string>Proxy</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/proxies_32.png</normaloff>:/images/proxies_32.png</iconset>
         </property>
         <property name="iconSize">
@@ -403,7 +403,7 @@ padding-bottom: 6px;
          <string>Advanced</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/advanced_32.png</normaloff>:/images/advanced_32.png</iconset>
         </property>
         <property name="iconSize">
@@ -454,7 +454,7 @@ background:transparent;</string>
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../Resources_linux.qrc">
+      <iconset resource="../Resources_win.qrc">
        <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
      </property>
      <property name="iconSize">
@@ -702,7 +702,7 @@ background:transparent;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_linux.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/Free.png</normaloff>:/images/Free.png</iconset>
             </property>
             <property name="iconSize">
@@ -959,7 +959,7 @@ border: none;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_win.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -1245,7 +1245,7 @@ border: none;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_win.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -1530,7 +1530,7 @@ border: none;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_win.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -2131,7 +2131,7 @@ border: none;</string>
           <string notr="true"/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_win.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -3070,7 +3070,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_win.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -3341,7 +3341,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_win.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -3426,22 +3426,6 @@ background:transparent;</string>
               </widget>
              </item>
              <item>
-              <spacer name="horizontalSpacer_5">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Expanding</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>37</width>
-                 <height>13</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
               <widget class="QPushButton" name="bClearCache">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
@@ -3469,6 +3453,22 @@ background:transparent;</string>
                </property>
               </widget>
              </item>
+             <item>
+              <spacer name="horizontalSpacer_5">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Expanding</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>37</width>
+                 <height>13</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
             </layout>
            </widget>
           </item>
@@ -3494,19 +3494,6 @@ background:transparent;</string>
               <number>0</number>
              </property>
              <item>
-              <widget class="QLabel" name="lRemoteCacheSize">
-               <property name="focusPolicy">
-                <enum>Qt::StrongFocus</enum>
-               </property>
-               <property name="text">
-                <string>Remote backup: %1</string>
-               </property>
-               <property name="margin">
-                <number>10</number>
-               </property>
-              </widget>
-             </item>
-             <item>
               <spacer name="horizontalSpacer_7">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -3518,6 +3505,19 @@ background:transparent;</string>
                 </size>
                </property>
               </spacer>
+             </item>
+             <item>
+              <widget class="QLabel" name="lRemoteCacheSize">
+               <property name="focusPolicy">
+                <enum>Qt::StrongFocus</enum>
+               </property>
+               <property name="text">
+                <string>Remote backup: %1</string>
+               </property>
+               <property name="margin">
+                <number>10</number>
+               </property>
+              </widget>
              </item>
              <item>
               <widget class="QPushButton" name="bClearRemoteCache">
@@ -3611,7 +3611,7 @@ background:transparent;</string>
           <string>...</string>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_win.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -3705,7 +3705,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_linux.qrc">
+          <iconset resource="../Resources_win.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -4305,7 +4305,7 @@ background:transparent;</string>
   <tabstop>bApply</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
  <slots>

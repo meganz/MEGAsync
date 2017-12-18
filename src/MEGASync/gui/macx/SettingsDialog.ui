@@ -3418,19 +3418,6 @@ background:transparent;</string>
               </widget>
              </item>
              <item>
-              <spacer name="horizontalSpacer_8">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>27</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
               <widget class="QPushButton" name="bClearCache">
                <property name="enabled">
                 <bool>true</bool>
@@ -3448,6 +3435,19 @@ background:transparent;</string>
                 <bool>false</bool>
                </property>
               </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_8">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
              </item>
             </layout>
            </widget>
@@ -3474,6 +3474,19 @@ background:transparent;</string>
               <number>0</number>
              </property>
              <item>
+              <spacer name="horizontalSpacer_9">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
               <widget class="QLabel" name="lRemoteCacheSize">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -3491,19 +3504,6 @@ background:transparent;</string>
                 <number>2</number>
                </property>
               </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_9">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>27</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
              </item>
              <item>
               <widget class="QPushButton" name="bClearRemoteCache">
@@ -3534,7 +3534,7 @@ background:transparent;</string>
         <widget class="QWidget" name="wScheduler" native="true">
          <layout class="QHBoxLayout" name="horizontalLayout_25">
           <property name="spacing">
-           <number>60</number>
+           <number>-1</number>
           </property>
           <property name="leftMargin">
            <number>30</number>
