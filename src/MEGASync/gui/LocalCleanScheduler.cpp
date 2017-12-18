@@ -10,6 +10,8 @@ LocalCleanScheduler::LocalCleanScheduler(QWidget *parent) :
 
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
+    setWindowTitle(windowTitle().arg(QString::fromAscii(mega::MEGA_DEBRIS_FOLDER)));
+
     ui->eNumberDays->setMaximum(365);
     ui->bOK->setDefault(true);
 }

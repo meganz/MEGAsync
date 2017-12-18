@@ -3384,7 +3384,7 @@ background:transparent;</string>
            <number>0</number>
           </property>
           <item>
-           <widget class="QWidget" name="wLeftCache" native="true">
+           <widget class="QWidget" name="wLocalCache" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -3408,6 +3408,9 @@ background:transparent;</string>
               <widget class="QLabel" name="lCacheSize">
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
+               </property>
+               <property name="toolTip">
+                <string>Local folder with a backup of files deleted in MEGA</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">margin-top: 2px;</string>
@@ -3453,7 +3456,7 @@ background:transparent;</string>
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="wRightCache" native="true">
+           <widget class="QWidget" name="wRemoteCache" native="true">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
               <horstretch>0</horstretch>
@@ -3496,6 +3499,9 @@ background:transparent;</string>
                </property>
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
+               </property>
+               <property name="toolTip">
+                <string>Folder in MEGA with a backup of files deleted in the local computer</string>
                </property>
                <property name="text">
                 <string>Remote backup: %1</string>
@@ -3551,7 +3557,7 @@ background:transparent;</string>
           <item>
            <widget class="QPushButton" name="bLocalCleaner">
             <property name="text">
-             <string>[A] removal scheduler</string>
+             <string>%1 cleaning scheduler</string>
             </property>
            </widget>
           </item>

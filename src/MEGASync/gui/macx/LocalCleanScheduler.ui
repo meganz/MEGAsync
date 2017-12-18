@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Local cache cleaning scheduler</string>
+   <string>%1 cleaning scheduler</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -67,13 +67,13 @@
         <property name="minimumSize">
          <size>
           <width>210</width>
-          <height>34</height>
+          <height>19</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>210</width>
-          <height>34</height>
+          <height>19</height>
          </size>
         </property>
         <property name="text">
@@ -94,17 +94,20 @@
           <property name="minimumSize">
            <size>
             <width>64</width>
-            <height>0</height>
+            <height>19</height>
            </size>
           </property>
           <property name="maximumSize">
            <size>
             <width>64</width>
-            <height>16777215</height>
+            <height>19</height>
            </size>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="minimum">
+           <number>0</number>
           </property>
          </widget>
         </item>
@@ -113,7 +116,13 @@
           <property name="minimumSize">
            <size>
             <width>50</width>
-            <height>0</height>
+            <height>19</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>19</height>
            </size>
           </property>
           <property name="styleSheet">

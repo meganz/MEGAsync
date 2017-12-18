@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "QMegaMessageBox.h"
+#include "megaapi.h"
 
 namespace Ui {
 class LocalCleanScheduler;

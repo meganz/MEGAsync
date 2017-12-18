@@ -256,7 +256,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
 #endif
 
-    ui->bLocalCleaner->setText(ui->bLocalCleaner->text().replace(QString::fromUtf8("[A]"), QString::fromAscii(MEGA_DEBRIS_FOLDER)));
+    ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
 
     ui->gCache->setVisible(false);
     ui->lFileVersionsSize->setVisible(false);
@@ -2118,15 +2118,13 @@ QString SettingsDialog::getFormatLimitDays()
     QString format;
     if (hasDaysLimit)
     {
-        format += tr ("Remove files older than ") + QString::fromUtf8("%1 ").arg(daysLimit);
-
         if (daysLimit > 1)
         {
-            format += tr("days");
+            format += tr("Remove files older than %1 days").arg(QString::number(daysLimit));
         }
         else
         {
-            format += tr("day");
+            format += tr("Remove files older than 1 day");
         }
     }
     else
