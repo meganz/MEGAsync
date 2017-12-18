@@ -441,6 +441,11 @@ void SettingsDialog::onCacheSizeAvailable()
             //Hide and remove from layout to avoid  uneeded space
             ui->lCacheSize->hide();
             ui->bClearCache->hide();
+
+            // Move remote SyncDebris widget to left side
+            ui->gCache->layout()->removeWidget(ui->wLeftCache);
+            ui->wRightCache->layout()->removeItem(ui->rSpacer);
+            ((QBoxLayout *)ui->gCache->layout())->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Fixed));
         }
 
         if (remoteCacheSize)
@@ -2178,6 +2183,12 @@ void SettingsDialog::on_bClearCache_clicked()
 
     ui->bClearCache->hide();
     ui->lCacheSize->hide();
+
+    // Move remote SyncDebris widget to left side
+    ui->gCache->layout()->removeWidget(ui->wLeftCache);
+    ui->wRightCache->layout()->removeItem(ui->rSpacer);
+    ((QBoxLayout *)ui->gCache->layout())->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Fixed));
+
     onClearCache();
 }
 

@@ -3494,7 +3494,7 @@ background:transparent;</string>
               <number>0</number>
              </property>
              <item>
-              <spacer name="horizontalSpacer_7">
+              <spacer name="rSpacer">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
