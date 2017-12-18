@@ -258,6 +258,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->lCacheSeparator->hide();
 #endif
 
+    ui->bLocalCleaner->setText(ui->bLocalCleaner->text().replace(QString::fromUtf8("[A]"), QString::fromAscii(MEGA_DEBRIS_FOLDER)));
+
     ui->gCache->setVisible(false);
     ui->lFileVersionsSize->setVisible(false);
     ui->bClearFileVersions->setVisible(false);

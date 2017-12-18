@@ -3551,7 +3551,7 @@ background:transparent;</string>
           <item>
            <widget class="QPushButton" name="bLocalCleaner">
             <property name="text">
-             <string>.debris removal scheduler</string>
+             <string>[A] removal scheduler</string>
             </property>
            </widget>
           </item>
