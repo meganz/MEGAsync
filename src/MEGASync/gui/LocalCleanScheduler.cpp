@@ -46,6 +46,7 @@ void LocalCleanScheduler::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
+        setWindowTitle(windowTitle().arg(QString::fromAscii(mega::MEGA_DEBRIS_FOLDER)));
         ui->retranslateUi(this);
     }
     QDialog::changeEvent(event);
