@@ -2245,7 +2245,7 @@ void SettingsDialog::on_bClearFileVersions_clicked()
     QPointer<SettingsDialog> dialog = QPointer<SettingsDialog>(this);
     if (QMegaMessageBox::warning(NULL,
                              QString::fromUtf8("MEGAsync"),
-                             tr("Are you sure you want to remove all file versions of your account?"),
+                             tr("You are about to permanently remove all file versions. Would you like to proceed?"),
                              Utilities::getDevicePixelRatio(), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
             || !dialog)
     {

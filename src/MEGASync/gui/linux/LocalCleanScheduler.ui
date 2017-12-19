@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Local cache cleaning scheduler</string>
+   <string>%1 cleaning scheduler</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">

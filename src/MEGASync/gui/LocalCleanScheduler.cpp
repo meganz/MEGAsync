@@ -68,7 +68,7 @@ void LocalCleanScheduler::on_bOK_clicked()
 {
     if (daysLimit() && !daysLimitValue())
     {
-        QMegaMessageBox::warning(NULL, tr("Warning"), tr("Day limit cannot be zero"), Utilities::getDevicePixelRatio(), QMessageBox::Ok);
+        QMegaMessageBox::warning(NULL, tr("Warning"), tr("Please enter a valid value"), Utilities::getDevicePixelRatio(), QMessageBox::Ok);
         return;
     }
     accept();

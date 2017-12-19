@@ -3608,7 +3608,7 @@ background:transparent;</string>
 background:transparent;</string>
          </property>
          <property name="text">
-          <string>...</string>
+          <string/>
          </property>
          <property name="icon">
           <iconset resource="../Resources_win.qrc">
