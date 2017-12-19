@@ -144,7 +144,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(ui->cOverlayIcons, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
     connect(ui->cAutoUpdate, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
     connect(ui->cLanguage, SIGNAL(currentIndexChanged(int)), this, SLOT(stateChanged()));
-    connect(ui->cEnableFileVersioning, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
+    connect(ui->cEnableFileVersioning, SIGNAL(clicked(bool)), this, SLOT(fileVersioningStateChanged()));
 
     connect(ui->rDownloadNoLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
     connect(ui->rDownloadLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
@@ -357,6 +357,22 @@ void SettingsDialog::stateChanged()
 #else
     this->on_bApply_clicked();
 #endif
+}
+
+void SettingsDialog::fileVersioningStateChanged()
+{
+    QPointer<SettingsDialog> dialog = QPointer<SettingsDialog>(this);
+    if (ui->cEnableFileVersioning->isChecked() && (QMegaMessageBox::warning(NULL,
+                             QString::fromUtf8("MEGAsync"),
+                             tr("Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?"),
+                             Utilities::getDevicePixelRatio(), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
+            || !dialog))
+    {
+        ui->cEnableFileVersioning->setChecked(false);
+        return;
+    }
+
+    stateChanged();
 }
 
 void SettingsDialog::syncStateChanged(int state)
