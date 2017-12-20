@@ -592,6 +592,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     isFirstFileSynced = false;
     transferManager = NULL;
     queuedUserStats = 0;
+    cleaningSchedulerExecution = 0;
     maxMemoryUsage = 0;
     nUnviewedTransfers = 0;
     completedTabActive = false;
@@ -2007,6 +2008,13 @@ void MegaApplication::periodicTasks()
     if (appfinished)
     {
         return;
+    }
+
+    if (!cleaningSchedulerExecution || ((QDateTime::currentMSecsSinceEpoch() - cleaningSchedulerExecution) > Preferences::MIN_UPDATE_CLEANING_INTERVAL))
+    {
+        cleaningSchedulerExecution = QDateTime::currentMSecsSinceEpoch();
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Cleaning local cache folders");
+        cleanLocalCaches();
     }
 
     if (queuedUserStats && queuedUserStats < QDateTime::currentMSecsSinceEpoch())
