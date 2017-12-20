@@ -31,6 +31,7 @@ const int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
 const int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
 
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
+const long long Preferences::MIN_UPDATE_CLEANING_INTERVAL  = 7200000;
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL_OVERQUOTA    = 30000;
 const long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
 const long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;

@@ -289,6 +289,7 @@ protected:
     unsigned long long activeTransferPriority[2];
     unsigned int activeTransferState[2];
     long long queuedUserStats;
+    long long cleaningSchedulerExecution;
     long long maxMemoryUsage;
     int exportOps;
     int syncState;
