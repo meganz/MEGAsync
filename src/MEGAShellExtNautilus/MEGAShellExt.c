@@ -119,6 +119,23 @@ void mega_ext_on_sync_del(MEGAExt *mega_ext, const gchar *path)
     g_hash_table_remove(mega_ext->h_syncs, path);
 }
 
+
+void expanselocalpath(char *path, char *absolutepath)
+{
+    if (strlen(path) && path[0] == '/')
+    {
+        //*absolutepath = *path;
+        strcpy(absolutepath, path);
+
+        char canonical[PATH_MAX];
+        if (realpath(absolutepath,canonical) != NULL)
+        {
+            strcpy(absolutepath, canonical);
+        }
+        return;
+    }
+}
+
 // path: a full path to filesystem object
 // return TRUE if path located in one of the sync folders
 static gboolean mega_ext_path_in_sync(MEGAExt *mega_ext, const gchar *path)
@@ -132,6 +149,15 @@ static gboolean mega_ext_path_in_sync(MEGAExt *mega_ext, const gchar *path)
         // sync must be a prefix of path
         if (strlen(sync) <= strlen(path)) {
             if (!strncmp(sync, path, strlen(sync))) {
+                found = TRUE;
+                break;
+            }
+        }
+
+        char canonical[PATH_MAX];
+        expanselocalpath(path,canonical);
+        if (strlen(sync) <= strlen(canonical)) {
+            if (!strncmp(sync, canonical, strlen(sync))) {
                 found = TRUE;
                 break;
             }
@@ -298,6 +324,12 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
         else
         {
             state = mega_ext_client_get_path_state(mega_ext, path);
+            if (state == FILE_NOTFOUND)
+            {
+                char canonical[PATH_MAX];
+                expanselocalpath(path,canonical);
+                state = mega_ext_client_get_path_state(mega_ext, canonical);
+            }
         }
         g_free(path);
 
@@ -451,6 +483,13 @@ static NautilusOperationResult mega_ext_update_file_info(NautilusInfoProvider *p
     g_debug("mega_ext_update_file_info %s", path);
 
     state = mega_ext_client_get_path_state(mega_ext, path);
+    if (state == FILE_NOTFOUND)
+    {
+        char canonical[PATH_MAX];
+        expanselocalpath(path,canonical);
+        state = mega_ext_client_get_path_state(mega_ext, canonical);
+    }
+
     g_debug("mega_ext_update_file_info. File: %s  State: %s", path, file_state_to_str(state));
     g_free(path);
 

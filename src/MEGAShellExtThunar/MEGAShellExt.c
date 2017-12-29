@@ -131,6 +131,21 @@ static void mega_ext_on_upload_selected(GtkAction *action, gpointer user_data)
         mega_ext_client_end_request(mega_ext);
 }
 
+void expanselocalpath(char *path, char *absolutepath)
+{
+    if (strlen(path) && path[0] == '/')
+    {
+        strcpy(absolutepath, path);
+
+        char canonical[PATH_MAX];
+        if (realpath(absolutepath,canonical) != NULL)
+        {
+            strcpy(absolutepath, canonical);
+        }
+        return;
+    }
+}
+
 // user clicked on "Get MEGA link" menu item
 static void mega_ext_on_get_link_selected(GtkAction *action, gpointer user_data)
 {
@@ -166,6 +181,7 @@ static void mega_ext_on_get_link_selected(GtkAction *action, gpointer user_data)
     if (flag)
         mega_ext_client_end_request(mega_ext);
 }
+
 
 // user clicked on "View on MEGA" menu item
 static void mega_ext_on_view_on_mega_selected(GtkAction *action, gpointer user_data)
@@ -282,6 +298,12 @@ static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UN
         else
         {
             state = mega_ext_client_get_path_state(mega_ext, path);
+            if (state == FILE_NOTFOUND)
+            {
+                char canonical[PATH_MAX];
+                expanselocalpath(path,canonical);
+                state = mega_ext_client_get_path_state(mega_ext, canonical);
+            }
         }
         g_free(path);
 
@@ -427,6 +449,12 @@ static GList* mega_ext_get_folder_actions(ThunarxMenuProvider *provider, G_GNUC_
     else
     {
         state = mega_ext_client_get_path_state(mega_ext, path);
+        if (state == FILE_NOTFOUND)
+        {
+            char canonical[PATH_MAX];
+            expanselocalpath(path,canonical);
+            state = mega_ext_client_get_path_state(mega_ext, canonical);
+        }
     }
     g_free(path);
 
@@ -513,6 +541,15 @@ static gboolean mega_ext_path_in_sync(MEGAExt *mega_ext, const gchar *path)
         // sync must be a prefix of path
         if (strlen(sync) <= strlen(path)) {
             if (!strncmp(sync, path, strlen(sync))) {
+                found = TRUE;
+                break;
+            }
+        }
+
+        char canonical[PATH_MAX];
+        expanselocalpath(path,canonical);
+        if (strlen(sync) <= strlen(canonical)) {
+            if (!strncmp(sync, canonical, strlen(sync))) {
                 found = TRUE;
                 break;
             }
