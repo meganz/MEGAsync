@@ -90,7 +90,7 @@ static gchar *mega_ext_client_send_request(MEGAExt *mega_ext, gchar type, const 
     GIOStatus status;
     gint num_retries;
 
-    g_debug("Sending request: %s ", in);
+    g_debug("Sending request: %c:%s ", type, in);
 
     // try to send request several times
     for (num_retries = 0; num_retries < mega_ext->num_retries; num_retries++) {
@@ -141,6 +141,8 @@ static gchar *mega_ext_client_send_request(MEGAExt *mega_ext, gchar type, const 
     if (strlen(out) > 1 && out[strlen(out)-1] == '\n')
         out[strlen(out)-1] = '\0';
 
+    g_debug("Request responded: %s ", out);
+
     return out;
 }
 
@@ -162,7 +164,10 @@ FileState mega_ext_client_get_path_state(MEGAExt *mega_ext, const gchar *path)
     gchar *out;
     FileState st;
 
-    out = mega_ext_client_send_request(mega_ext, OP_PATH_STATE, path);
+    char canonical[PATH_MAX];
+    expanselocalpath(path,canonical);
+
+    out = mega_ext_client_send_request(mega_ext, OP_PATH_STATE, canonical);
 
     if (!out)
         return FILE_ERROR;
@@ -177,7 +182,10 @@ gboolean mega_ext_client_paste_link(MEGAExt *mega_ext, const gchar *path)
 {
     gchar *out;
 
-    out = mega_ext_client_send_request(mega_ext, OP_LINK, path);
+    char canonical[PATH_MAX];
+    expanselocalpath(path,canonical);
+
+    out = mega_ext_client_send_request(mega_ext, OP_LINK, canonical);
 
     if (!out)
         return FALSE;
@@ -190,7 +198,10 @@ gboolean mega_ext_client_upload(MEGAExt *mega_ext, const gchar *path)
 {
     gchar *out;
 
-    out = mega_ext_client_send_request(mega_ext, OP_UPLOAD, path);
+    char canonical[PATH_MAX];
+    expanselocalpath(path,canonical);
+
+    out = mega_ext_client_send_request(mega_ext, OP_UPLOAD, canonical);
 
     if (!out)
         return FALSE;
@@ -217,7 +228,10 @@ gboolean mega_ext_client_open_link(MEGAExt *mega_ext, const gchar *path)
 {
     gchar *out;
 
-    out = mega_ext_client_send_request(mega_ext, OP_VIEW, path);
+    char canonical[PATH_MAX];
+    expanselocalpath(path,canonical);
+
+    out = mega_ext_client_send_request(mega_ext, OP_VIEW, canonical);
 
     if (!out)
         return FALSE;
@@ -231,7 +245,10 @@ gboolean mega_ext_client_open_previous(MEGAExt *mega_ext, const gchar *path)
 {
     gchar *out;
 
-    out = mega_ext_client_send_request(mega_ext, OP_PREVIOUS, path);
+    char canonical[PATH_MAX];
+    expanselocalpath(path,canonical);
+
+    out = mega_ext_client_send_request(mega_ext, OP_PREVIOUS, canonical);
 
     if (!out)
         return FALSE;
