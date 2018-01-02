@@ -87,6 +87,7 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
 
     for( int i = 0; i < fileItemInfos.items().count(); i++)
     {
+
         KFileItem item = fileItemInfos.items().at(i);
         selectedFilePath = item.localPath();
         selectedFilePaths << selectedFilePath;
@@ -127,10 +128,8 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
     // if there any unsynced files / folders selected
     if (unsyncedFiles || unsyncedFolders)
     {
-        QAction *act = new KAction(this);
         QString actionText = getString(STRING_UPLOAD, unsyncedFiles, unsyncedFolders);
-        act->setText(actionText);
-
+        QAction *act = new KAction(actionText.trimmed(), this);
         menuAction->addAction(act);
         connect(act, SIGNAL(triggered()), this, SLOT(uploadFiles()));
     }
@@ -138,10 +137,8 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
     // if there any synced files / folders selected
     if (syncedFiles || syncedFolders)
     {
-        QAction *act = new KAction(this);
         QString actionText = getString(STRING_GETLINK, syncedFiles, syncedFolders);
-        act->setText(actionText);
-
+        QAction *act = new KAction(actionText.trimmed(), this);
         menuAction->addAction(act);
 
         // set menu icon //TODO: state refers to the last file. Does it make any sense??
@@ -160,18 +157,16 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
     {
         if (syncedFolders)
         {
-            QAction *act = new KAction(this);
             QString actionText = getString(STRING_VIEW_ON_MEGA, 0, 0);
-            act->setText(actionText);
+            QAction *act = new KAction(actionText.trimmed(), this);
 
             menuAction->addAction(act);
             connect(act, SIGNAL(triggered()), this, SLOT(viewOnMega()));
         }
         else
         {
-            QAction *act = new KAction(this);
             QString actionText = getString(STRING_VIEW_VERSIONS, 0, 0);
-            act->setText(actionText);
+            QAction *act = new KAction(actionText.trimmed(), this);
 
             menuAction->addAction(act);
             connect(act, SIGNAL(triggered()), this, SLOT(viewPreviousVersions()));
@@ -184,13 +179,14 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
 int MEGASyncPlugin::getState()
 {
     QString res;
-    res = sendRequest(OP_PATH_STATE, selectedFilePath);
+    res = sendRequest(OP_PATH_STATE, QFileInfo(selectedFilePath).canonicalFilePath());
+
     return res.toInt();
 }
 
 void MEGASyncPlugin::getLink()
 {
-    if (sendRequest(OP_LINK, selectedFilePath).size())
+    if (sendRequest(OP_LINK, QFileInfo(selectedFilePath).canonicalFilePath()).size())
     {
         sendRequest(OP_END, " ");
     }
@@ -201,7 +197,7 @@ void MEGASyncPlugin::getLinks()
     for(int i = 0; i<selectedFilePaths.size(); i++)
     {
         QString path = selectedFilePaths.at(i);
-        if (sendRequest(OP_LINK, path).size())
+        if (sendRequest(OP_LINK, QFileInfo(path).canonicalFilePath()).size())
         {
         }
     }
@@ -210,7 +206,7 @@ void MEGASyncPlugin::getLinks()
 
 void MEGASyncPlugin::uploadFile()
 {
-    if (sendRequest(OP_UPLOAD, selectedFilePath).size())
+    if (sendRequest(OP_UPLOAD, QFileInfo(selectedFilePath).canonicalFilePath()).size())
     {
         sendRequest(OP_END, " ");
     }
@@ -221,7 +217,7 @@ void MEGASyncPlugin::uploadFiles()
     for(int i = 0; i<selectedFilePaths.size(); i++)
     {
         QString path = selectedFilePaths.at(i);
-        if (sendRequest(OP_UPLOAD, path).size())
+        if (sendRequest(OP_UPLOAD, QFileInfo(path).canonicalFilePath()).size())
         {
         }
     }
@@ -230,7 +226,7 @@ void MEGASyncPlugin::uploadFiles()
 
 void MEGASyncPlugin::viewOnMega()
 {
-    if (sendRequest(OP_VIEW, selectedFilePath).size())
+    if (sendRequest(OP_VIEW, QFileInfo(selectedFilePath).canonicalFilePath()).size())
     {
         sendRequest(OP_END, " ");
     }
@@ -238,7 +234,7 @@ void MEGASyncPlugin::viewOnMega()
 
 void MEGASyncPlugin::viewPreviousVersions()
 {
-    if (sendRequest(OP_PREVIOUS, selectedFilePath).size())
+    if (sendRequest(OP_PREVIOUS, QFileInfo(selectedFilePath).canonicalFilePath()).size())
     {
         sendRequest(OP_END, " ");
     }
