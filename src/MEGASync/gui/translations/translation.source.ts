@@ -2781,11 +2781,6 @@ when the application starts again</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>File versions size: %1</source>
-        <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size.</translatorcomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hover local debris label.</translatorcomment>
         <translation type="unfinished"></translation>
@@ -2813,6 +2808,11 @@ when the application starts again</source>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the actual account.</translatorcomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File versions: %1</source>
+        <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

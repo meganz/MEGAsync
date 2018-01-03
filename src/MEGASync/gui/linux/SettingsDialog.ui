@@ -3374,7 +3374,7 @@ background:transparent;</string>
           <item>
            <widget class="QLabel" name="label_3">
             <property name="text">
-             <string>File versions size: %1</string>
+             <string>File versions: %1</string>
             </property>
            </widget>
           </item>
