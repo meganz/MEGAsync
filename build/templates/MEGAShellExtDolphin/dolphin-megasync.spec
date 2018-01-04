@@ -75,6 +75,10 @@ mv CMakeLists_kde5.txt CMakeLists.txt
 cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" $PWD
 make
 make install DESTDIR=%{buildroot}
+%if 0%{?fedora_version} >= 27
+#fix issue with compilation of megasync-plugin-overlay.cpp lacking of symbols: replace with a precompiled library
+mv megasyncdolphinoverlayplugin.so_fed27 %{buildroot}/%(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/kf5/overlayicon/megasyncdolphinoverlayplugin.so
+%endif
 
 echo %(kf5-config --path services | awk -NF ":" '{print $NF}')/megasync-plugin.desktop >> %{EXTRA_FILES}
 echo %(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/megasyncplugin.so >> %{EXTRA_FILES}

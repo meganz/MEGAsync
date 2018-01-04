@@ -291,6 +291,8 @@ ln -s ../../src/MEGAShellExtDolphin/CMakeLists_kde5.txt $EXT_NAME/CMakeLists_kde
 ln -s ../../src/MEGAShellExtDolphin/megasync-plugin.h $EXT_NAME/megasync-plugin.h
 ln -s ../../src/MEGAShellExtDolphin/megasync-plugin.desktop $EXT_NAME/megasync-plugin.desktop
 ln -s ../../src/MEGAShellExtDolphin/MEGAShellExtDolphin.pro $EXT_NAME/MEGAShellExtDolphin.pro
+ln -s /assets/precompiled/dolphinext/megasyncdolphinoverlayplugin.so_fed27 $EXT_NAME/
+ln -s /assets/precompiled/dolphinext/megasyncdolphinoverlayplugin.so_ub1710 $EXT_NAME/
 ln -s ../MEGAsync/MEGAsync/debian.copyright $EXT_NAME/debian.copyright
 
 export GZIP=-9
