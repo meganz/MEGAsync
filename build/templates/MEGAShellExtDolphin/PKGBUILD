@@ -60,7 +60,8 @@ build() {
 	rm megasync-plugin.moc
 	rm CMakeLists.txt
 	mv CMakeLists_kde5.txt CMakeLists.txt
-	cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" $PWD
+#	cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" $PWD
+	cmake -DCMAKE_INSTALL_PREFIX="/usr" $PWD
 	make
 	fi
 
@@ -92,6 +93,6 @@ package() {
 		fi
 		#mv $pkgdir/usr/lib/qt5/plugins$(find $pkgdir -name megasyncplugin.so) $pkgdir$(kf5-config --path lib | awk -NF ":" '{print $NF}')
 	fi
-	
+	cp megasyncdolphinoverlayplugin.so_arch `find $pkgdir -name megasyncdolphinoverlayplugin.so`
 }
 
