@@ -297,12 +297,12 @@ static GList* mega_ext_get_file_actions(ThunarxMenuProvider *provider, G_GNUC_UN
         }
         else
         {
-            state = mega_ext_client_get_path_state(mega_ext, path);
+            state = mega_ext_client_get_path_state(mega_ext, path, 1);
             if (state == FILE_NOTFOUND)
             {
                 char canonical[PATH_MAX];
                 expanselocalpath(path,canonical);
-                state = mega_ext_client_get_path_state(mega_ext, canonical);
+                state = mega_ext_client_get_path_state(mega_ext, canonical, 1);
             }
         }
         g_free(path);
@@ -448,12 +448,12 @@ static GList* mega_ext_get_folder_actions(ThunarxMenuProvider *provider, G_GNUC_
     } 
     else
     {
-        state = mega_ext_client_get_path_state(mega_ext, path);
+        state = mega_ext_client_get_path_state(mega_ext, path, 0);
         if (state == FILE_NOTFOUND)
         {
             char canonical[PATH_MAX];
             expanselocalpath(path,canonical);
-            state = mega_ext_client_get_path_state(mega_ext, canonical);
+            state = mega_ext_client_get_path_state(mega_ext, canonical, 0);
         }
     }
     g_free(path);
@@ -542,7 +542,7 @@ static gboolean mega_ext_path_in_sync(MEGAExt *mega_ext, const gchar *path)
         if (strlen(sync) <= strlen(path)) {
             if (!strncmp(sync, path, strlen(sync))) {
                 found = TRUE;
-                break;
+                break; 
             }
         }
 

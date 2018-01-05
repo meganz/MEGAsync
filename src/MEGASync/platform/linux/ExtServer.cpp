@@ -239,9 +239,13 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
         case 'P':
         {
             int state = MegaApi::STATE_NONE;
-            if (!Preferences::instance()->overlayIconsDisabled())
+            string scontent(content);
+            size_t possep = scontent.find((char)0x1C);
+            bool forceGetState = (possep != string::npos) && ((possep + 1) < scontent.size()) && scontent.at(possep+1) == '1';
+
+            if (forceGetState || !Preferences::instance()->overlayIconsDisabled() )
             {
-                string tmpPath(content);
+                string tmpPath = scontent.substr(0,possep);
                 state = ((MegaApplication *)qApp)->getMegaApi()->syncPathState(&tmpPath);
             }
 

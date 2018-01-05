@@ -323,12 +323,12 @@ static GList *mega_ext_get_file_items(NautilusMenuProvider *provider, G_GNUC_UNU
         }
         else
         {
-            state = mega_ext_client_get_path_state(mega_ext, path);
+            state = mega_ext_client_get_path_state(mega_ext, path, 1);
             if (state == FILE_NOTFOUND)
             {
                 char canonical[PATH_MAX];
                 expanselocalpath(path,canonical);
-                state = mega_ext_client_get_path_state(mega_ext, canonical);
+                state = mega_ext_client_get_path_state(mega_ext, canonical, 1);
             }
         }
         g_free(path);
@@ -482,12 +482,12 @@ static NautilusOperationResult mega_ext_update_file_info(NautilusInfoProvider *p
     }
     g_debug("mega_ext_update_file_info %s", path);
 
-    state = mega_ext_client_get_path_state(mega_ext, path);
+    state = mega_ext_client_get_path_state(mega_ext, path, 0);
     if (state == FILE_NOTFOUND)
     {
         char canonical[PATH_MAX];
         expanselocalpath(path,canonical);
-        state = mega_ext_client_get_path_state(mega_ext, canonical);
+        state = mega_ext_client_get_path_state(mega_ext, canonical, 0);
     }
 
     g_debug("mega_ext_update_file_info. File: %s  State: %s", path, file_state_to_str(state));

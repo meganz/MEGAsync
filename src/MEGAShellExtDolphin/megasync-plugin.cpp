@@ -179,7 +179,10 @@ QList<QAction*> MEGASyncPlugin::actions(const KFileItemListProperties & fileItem
 int MEGASyncPlugin::getState()
 {
     QString res;
-    res = sendRequest(OP_PATH_STATE, QFileInfo(selectedFilePath).canonicalFilePath());
+    QString cannonicalpath = QFileInfo(selectedFilePath).canonicalFilePath();
+    cannonicalpath.append((char)0x1C);
+    cannonicalpath.append('1');
+    res = sendRequest(OP_PATH_STATE,cannonicalpath);
 
     return res.toInt();
 }
