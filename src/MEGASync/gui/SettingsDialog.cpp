@@ -2090,6 +2090,7 @@ void SettingsDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
+        ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
         ui->retranslateUi(this);
 
 #ifdef __APPLE__
