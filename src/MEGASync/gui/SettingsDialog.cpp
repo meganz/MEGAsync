@@ -482,7 +482,7 @@ void SettingsDialog::onCacheSizeAvailable()
 
         if (fileVersionsSize)
         {
-            ui->lFileVersionsSize->setText(QString::fromUtf8("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
+            ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
             ui->lFileVersionsSize->setVisible(true);
             ui->bClearFileVersions->setVisible(true);
         }
