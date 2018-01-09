@@ -1488,7 +1488,7 @@ int SettingsDialog::saveSettings()
         {
             preferences->setCleanerDaysLimit(hasDaysLimit);
             preferences->setCleanerDaysLimitValue(daysLimit);
-
+            app->cleanLocalCaches();
             cleanerLimitsChanged = false;
         }
 
