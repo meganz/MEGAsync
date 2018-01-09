@@ -2203,6 +2203,9 @@ void SettingsDialog::on_bClearCache_clicked()
     // Move remote SyncDebris widget to left side
     ui->gCache->layout()->removeWidget(ui->wLocalCache);
     ui->wRemoteCache->layout()->removeItem(ui->rSpacer);
+#ifndef __APPLE__
+    ui->lRemoteCacheSize->setMargin(2);
+#endif
     ((QBoxLayout *)ui->gCache->layout())->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Fixed));
 
     onClearCache();
