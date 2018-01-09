@@ -794,6 +794,26 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\qt.conf" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\qt.conf" "$USERNAME" "GenericRead + GenericWrite"
 
+  File "${SRCDIR_MEGASYNC}\avcodec-57.dll"
+  AccessControl::SetFileOwner "$INSTDIR\avcodec-57.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\avcodec-57.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  File "${SRCDIR_MEGASYNC}\avformat-57.dll"
+  AccessControl::SetFileOwner "$INSTDIR\avformat-57.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\avformat-57.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  File "${SRCDIR_MEGASYNC}\avutil-55.dll"
+  AccessControl::SetFileOwner "$INSTDIR\avutil-55.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\avutil-55.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  File "${SRCDIR_MEGASYNC}\swscale-4.dll"
+  AccessControl::SetFileOwner "$INSTDIR\swscale-4.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\swscale-4.dll" "$USERNAME" "GenericRead + GenericWrite"
+  
+  File "${SRCDIR_MEGASYNC}\swresample-2.dll"
+  AccessControl::SetFileOwner "$INSTDIR\swresample-2.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\swresample-2.dll" "$USERNAME" "GenericRead + GenericWrite"
+
 ;!ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
   File "${UNINSTALLER_NAME}"
   AccessControl::SetFileOwner "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME"
@@ -1060,6 +1080,11 @@ Section Uninstall
   Delete "$INSTDIR\libsodium.dll"
   Delete "$INSTDIR\qt.conf"
   Delete "$INSTDIR\NSIS.Library.RegTool*.exe"
+  Delete "$INSTDIR\avcodec-57.dll"
+  Delete "$INSTDIR\avformat-57.dll"
+  Delete "$INSTDIR\avutil-55.dll"
+  Delete "$INSTDIR\swscale-4.dll"
+  Delete "$INSTDIR\swresample-2.dll"
 
   !define LIBRARY_COM
   !define LIBRARY_SHELL_EXTENSION
