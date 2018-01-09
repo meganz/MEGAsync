@@ -2010,7 +2010,7 @@ void MegaApplication::periodicTasks()
         return;
     }
 
-    if (!cleaningSchedulerExecution || ((QDateTime::currentMSecsSinceEpoch() - cleaningSchedulerExecution) > Preferences::MIN_UPDATE_CLEANING_INTERVAL))
+    if (!cleaningSchedulerExecution || ((QDateTime::currentMSecsSinceEpoch() - cleaningSchedulerExecution) > Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS))
     {
         cleaningSchedulerExecution = QDateTime::currentMSecsSinceEpoch();
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Cleaning local cache folders");
