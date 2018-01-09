@@ -2717,7 +2717,6 @@ void MegaApplication::cleanLocalCaches()
     if (preferences->cleanerDaysLimit())
     {
         int timeLimitDays = preferences->cleanerDaysLimitValue();
-        Preferences *preferences = Preferences::instance();
         for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
         {
             QString syncPath = preferences->getLocalFolder(i);
