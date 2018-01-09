@@ -54,7 +54,10 @@ debug {
 
 CONFIG += USE_LIBUV
 CONFIG += USE_MEGAAPI
-CONFIG += USE_FFMPEG
+
+win32 {
+    CONFIG += USE_FFMPEG
+}
 
 include(gui/gui.pri)
 include(mega/bindings/qt/sdk.pri)
