@@ -132,7 +132,11 @@ public:
     int upperSizeLimitUnit();
     void setUpperSizeLimitUnit(int value);
     int lowerSizeLimitUnit();
-    void setLowerSizeLimitUnit(int value);
+    void setLowerSizeLimitUnit(int value);     
+    bool cleanerDaysLimit();
+    void setCleanerDaysLimit(bool value);
+    int cleanerDaysLimitValue();
+    void setCleanerDaysLimitValue(int value);
     int folderPermissionsValue();
     void setFolderPermissionsValue(int permissions);
     int filePermissionsValue();
@@ -259,6 +263,8 @@ public:
     long long lastStatsRequest();
     void setLastStatsRequest(long long value);
 
+    bool fileVersioningDisabled();
+    void disableFileVersioning(bool value);
     bool overlayIconsDisabled();
     void disableOverlayIcons(bool value);
     bool leftPaneIconsDisabled();
@@ -307,6 +313,7 @@ public:
     static const int MAX_FOLDERS_IN_NEW_SYNC_FOLDER;
     static const long long MIN_UPDATE_STATS_INTERVAL;
     static const long long MIN_UPDATE_STATS_INTERVAL_OVERQUOTA;
+    static const long long MIN_UPDATE_CLEANING_INTERVAL_MS;
     static const int STATE_REFRESH_INTERVAL_MS;
     static const int FINISHED_TRANSFER_REFRESH_INTERVAL_MS;
     static const long long MIN_UPDATE_NOTIFICATION_INTERVAL_MS;
@@ -414,6 +421,8 @@ protected:
     static const QString lowerSizeLimitValueKey;
     static const QString upperSizeLimitUnitKey;
     static const QString lowerSizeLimitUnitKey;
+    static const QString cleanerDaysLimitKey;
+    static const QString cleanerDaysLimitValueKey;
     static const QString folderPermissionsKey;
     static const QString filePermissionsKey;
     static const QString proxyTypeKey;
@@ -456,6 +465,7 @@ protected:
     static const QString lastRebootKey;
     static const QString lastExitKey;
     static const QString disableOverlayIconsKey;
+    static const QString disableFileVersioningKey;
     static const QString disableLeftPaneIconsKey;
     static const QString sessionKey;
     static const QString firstStartDoneKey;
@@ -499,6 +509,8 @@ protected:
     static const long long defaultLowerSizeLimitValue;
     static const int defaultUpperSizeLimitUnit;
     static const int defaultLowerSizeLimitUnit;
+    static const bool defaultCleanerDaysLimit;
+    static const int defaultCleanerDaysLimitValue;
     static const int defaultTransferDownloadMethod;
     static const int defaultTransferUploadMethod;
     static const int defaultFolderPermissions;

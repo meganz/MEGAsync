@@ -251,12 +251,6 @@ Function .onInit
   ;    abort
   ;${EndIf}
 
-  ${CPUFeatures.CheckFeature} "SSE2" $0
-  StrCmp $0 "no" 0 sse2supported
-    MessageBox mb_IconStop|mb_TopMost|mb_SetForeground "CPU not compatible. SSE2 is required to run this version of MEGAsync"
-    Quit
-sse2supported:
-
   UAC::RunElevated
   ${Switch} $0
   ${Case} 0

@@ -88,6 +88,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     syncsChanged = false;
     excludedNamesChanged = false;
     sizeLimitsChanged = false;
+    cleanerLimitsChanged = false;
+    fileVersioningChanged = false;
 #ifndef WIN32
     filePermissions = 0;
     folderPermissions = 0;
@@ -100,6 +102,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     accountDetailsDialog = NULL;
     cacheSize = -1;
     remoteCacheSize = -1;
+    fileVersionsSize = preferences->versionsStorage();
 
     hasUpperLimit = false;
     hasLowerLimit = false;
@@ -108,6 +111,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     upperLimitUnit = Preferences::MEGA_BYTE_UNIT;
     lowerLimitUnit = Preferences::MEGA_BYTE_UNIT;
     debugCounter = 0;
+    hasDaysLimit = false;
+    daysLimit = 0;
 
     ui->eProxyPort->setValidator(new QIntValidator(0, 65535, this));
     ui->eUploadLimit->setValidator(new QIntValidator(0, 1000000000, this));
@@ -140,6 +145,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(ui->cOverlayIcons, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
     connect(ui->cAutoUpdate, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
     connect(ui->cLanguage, SIGNAL(currentIndexChanged(int)), this, SLOT(stateChanged()));
+    connect(ui->cDisableFileVersioning, SIGNAL(clicked(bool)), this, SLOT(fileVersioningStateChanged()));
 
     connect(ui->rDownloadNoLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
     connect(ui->rDownloadLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
@@ -241,8 +247,6 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
     }
 
-    ui->lCacheSeparator->hide();
-
 #else
 
     ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
@@ -251,11 +255,13 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
-
-    ui->lCacheSeparator->hide();
 #endif
 
+    ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
+
     ui->gCache->setVisible(false);
+    ui->lFileVersionsSize->setVisible(false);
+    ui->bClearFileVersions->setVisible(false);
     setProxyOnly(proxyOnly);
     ui->bOk->setDefault(true);
 
@@ -354,6 +360,26 @@ void SettingsDialog::stateChanged()
 #endif
 }
 
+void SettingsDialog::fileVersioningStateChanged()
+{
+    QPointer<SettingsDialog> dialog = QPointer<SettingsDialog>(this);
+    if (ui->cDisableFileVersioning->isChecked() && (QMegaMessageBox::warning(NULL,
+                             QString::fromUtf8("MEGAsync"),
+                             tr("Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?"),
+                             Utilities::getDevicePixelRatio(), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
+            || !dialog))
+    {
+        if (dialog)
+        {
+            ui->cDisableFileVersioning->setChecked(false);
+        }
+        return;
+    }
+
+    fileVersioningChanged = true;
+    stateChanged();
+}
+
 void SettingsDialog::syncStateChanged(int state)
 {
     if (state)
@@ -419,7 +445,7 @@ void SettingsDialog::onCacheSizeAvailable()
 {
     if (cacheSize != -1 && remoteCacheSize != -1)
     {
-        if (!cacheSize && !remoteCacheSize)
+        if (!cacheSize && !remoteCacheSize && !fileVersionsSize)
         {
             return;
         }
@@ -427,25 +453,47 @@ void SettingsDialog::onCacheSizeAvailable()
         if (cacheSize)
         {
             ui->lCacheSize->setText(QString::fromUtf8(MEGA_DEBRIS_FOLDER) + QString::fromUtf8(": %1").arg(Utilities::getSizeString(cacheSize)));
+            ui->gCache->setVisible(true);
         }
         else
         {
+            //Hide and remove from layout to avoid  uneeded space
             ui->lCacheSize->hide();
             ui->bClearCache->hide();
+
+            // Move remote SyncDebris widget to left side
+            ui->gCache->layout()->removeWidget(ui->wLocalCache);
+            ui->wRemoteCache->layout()->removeItem(ui->rSpacer);
+#ifndef __APPLE__
+            ui->lRemoteCacheSize->setMargin(2);
+#endif
+            ((QBoxLayout *)ui->gCache->layout())->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Fixed));
         }
 
         if (remoteCacheSize)
         {
             ui->lRemoteCacheSize->setText(QString::fromUtf8("SyncDebris: %1").arg(Utilities::getSizeString(remoteCacheSize)));
+            ui->gCache->setVisible(true);
         }
         else
         {
+            //Hide and remove from layout to avoid  uneeded space
             ui->lRemoteCacheSize->hide();
             ui->bClearRemoteCache->hide();
         }
 
-        ui->gCache->setVisible(true);
-        ui->lCacheSeparator->show();
+        if (fileVersionsSize)
+        {
+            ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
+            ui->lFileVersionsSize->setVisible(true);
+            ui->bClearFileVersions->setVisible(true);
+        }
+        else
+        {
+            //Hide and remove from layout to avoid  uneeded space
+            ui->lFileVersionsSize->hide();
+            ui->bClearFileVersions->hide();
+        }
 
     #ifdef __APPLE__
         if (ui->wStack->currentWidget() == ui->pAdvanced)
@@ -456,8 +504,8 @@ void SettingsDialog::onCacheSizeAvailable()
             maxHeightAnimation->setPropertyName("maximumHeight");
             minHeightAnimation->setStartValue(minimumHeight());
             maxHeightAnimation->setStartValue(maximumHeight());
-            minHeightAnimation->setEndValue(540);
-            maxHeightAnimation->setEndValue(540);
+            minHeightAnimation->setEndValue(572);
+            maxHeightAnimation->setEndValue(572);
             minHeightAnimation->setDuration(150);
             maxHeightAnimation->setDuration(150);
             animationGroup->start();
@@ -628,16 +676,20 @@ void SettingsDialog::on_bAdvanced_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
+
+    onCacheSizeAvailable();
+
     if (!cacheSize && !remoteCacheSize)
     {
-        minHeightAnimation->setEndValue(488);
-        maxHeightAnimation->setEndValue(488);
+        minHeightAnimation->setEndValue(595);
+        maxHeightAnimation->setEndValue(595);
     }
     else
     {
-        minHeightAnimation->setEndValue(540);
-        maxHeightAnimation->setEndValue(540);
+        minHeightAnimation->setEndValue(640);
+        maxHeightAnimation->setEndValue(640);
     }
+
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
@@ -1035,6 +1087,7 @@ void SettingsDialog::loadSettings()
         }
 
         loadSizeLimits();
+        ui->cDisableFileVersioning->setChecked(preferences->fileVersioningDisabled());
         ui->cOverlayIcons->setChecked(preferences->overlayIconsDisabled());
     }
 
@@ -1433,6 +1486,20 @@ int SettingsDialog::saveSettings()
             sizeLimitsChanged = false;
         }
 
+        if (cleanerLimitsChanged)
+        {
+            preferences->setCleanerDaysLimit(hasDaysLimit);
+            preferences->setCleanerDaysLimitValue(daysLimit);
+            app->cleanLocalCaches();
+            cleanerLimitsChanged = false;
+        }
+
+        if (fileVersioningChanged && ui->cDisableFileVersioning->isChecked() != preferences->fileVersioningDisabled())
+        {
+            megaApi->setFileVersionsOption(ui->cDisableFileVersioning->isChecked());
+            fileVersioningChanged = false;
+        }
+
         if (ui->cOverlayIcons->isChecked() != preferences->overlayIconsDisabled())
         {
             preferences->disableOverlayIcons(ui->cOverlayIcons->isChecked());
@@ -1636,6 +1703,9 @@ void SettingsDialog::loadSizeLimits()
     upperLimitUnit = preferences->upperSizeLimitUnit();
     lowerLimitUnit = preferences->lowerSizeLimitUnit();
     ui->lLimitsInfo->setText(getFormatString());
+    hasDaysLimit = preferences->cleanerDaysLimit();
+    daysLimit = preferences->cleanerDaysLimitValue();
+    ui->lLocalCleanerState->setText(getFormatLimitDays());
 }
 #ifndef WIN32
 void SettingsDialog::on_bPermissions_clicked()
@@ -1991,11 +2061,39 @@ void SettingsDialog::on_bExcludeSize_clicked()
     }
 }
 
+void SettingsDialog::on_bLocalCleaner_clicked()
+{
+    QPointer<LocalCleanScheduler> dialog = new LocalCleanScheduler(this);
+    dialog->setDaysLimit(hasDaysLimit);
+    dialog->setDaysLimitValue(daysLimit);
+
+    int result = dialog->exec();
+    if (!dialog || result != QDialog::Accepted)
+    {
+        delete dialog;
+        return;
+    }
+
+    hasDaysLimit = dialog->daysLimit();
+    daysLimit = dialog->daysLimitValue();
+    delete dialog;
+
+    ui->lLocalCleanerState->setText(getFormatLimitDays());
+    if (hasDaysLimit != preferences->cleanerDaysLimit() ||
+       daysLimit != preferences->cleanerDaysLimitValue())
+    {
+        cleanerLimitsChanged = true;
+        stateChanged();
+    }
+}
+
 void SettingsDialog::changeEvent(QEvent *event)
 {
     modifyingSettings++;
     if (event->type() == QEvent::LanguageChange)
     {
+        ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
+        ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
         ui->retranslateUi(this);
 
 #ifdef __APPLE__
@@ -2034,6 +2132,27 @@ QString SettingsDialog::getFormatString()
         }
 
         format += QString::fromUtf8(")");
+    }
+    else
+    {
+        format = tr("Disabled");
+    }
+    return format;
+}
+
+QString SettingsDialog::getFormatLimitDays()
+{
+    QString format;
+    if (hasDaysLimit)
+    {
+        if (daysLimit > 1)
+        {
+            format += tr("Remove files older than %1 days").arg(QString::number(daysLimit));
+        }
+        else
+        {
+            format += tr("Remove files older than 1 day");
+        }
     }
     else
     {
@@ -2084,8 +2203,18 @@ void SettingsDialog::on_bClearCache_clicked()
     QtConcurrent::run(deleteCache);
 
     cacheSize = 0;
+
     ui->bClearCache->hide();
     ui->lCacheSize->hide();
+
+    // Move remote SyncDebris widget to left side
+    ui->gCache->layout()->removeWidget(ui->wLocalCache);
+    ui->wRemoteCache->layout()->removeItem(ui->rSpacer);
+#ifndef __APPLE__
+    ui->lRemoteCacheSize->setMargin(2);
+#endif
+    ((QBoxLayout *)ui->gCache->layout())->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Fixed));
+
     onClearCache();
 }
 
@@ -2133,9 +2262,31 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
 
     QtConcurrent::run(deleteRemoteCache, megaApi);
     remoteCacheSize = 0;
+
     ui->bClearRemoteCache->hide();
     ui->lRemoteCacheSize->hide();
+
     onClearCache();
+}
+
+void SettingsDialog::on_bClearFileVersions_clicked()
+{
+    QPointer<SettingsDialog> dialog = QPointer<SettingsDialog>(this);
+    if (QMegaMessageBox::warning(NULL,
+                             QString::fromUtf8("MEGAsync"),
+                             tr("You are about to permanently remove all file versions. Would you like to proceed?"),
+                             Utilities::getDevicePixelRatio(), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
+            || !dialog)
+    {
+        return;
+    }
+
+    megaApi->removeVersions();
+    // Reset file version size to adjust UI
+    fileVersionsSize = 0;
+
+    ui->lFileVersionsSize->hide();
+    ui->bClearFileVersions->hide();
 }
 
 void SettingsDialog::onClearCache()
@@ -2143,7 +2294,6 @@ void SettingsDialog::onClearCache()
     if (!cacheSize && !remoteCacheSize)
     {
         ui->gCache->setVisible(false);
-        ui->lCacheSeparator->hide();
 
     #ifdef __APPLE__
         if (!cacheSize && !remoteCacheSize)
@@ -2154,15 +2304,14 @@ void SettingsDialog::onClearCache()
             maxHeightAnimation->setPropertyName("maximumHeight");
             minHeightAnimation->setStartValue(minimumHeight());
             maxHeightAnimation->setStartValue(maximumHeight());
-            minHeightAnimation->setEndValue(488);
-            maxHeightAnimation->setEndValue(488);
+            minHeightAnimation->setEndValue(595);
+            maxHeightAnimation->setEndValue(595);
             minHeightAnimation->setDuration(150);
             maxHeightAnimation->setDuration(150);
             animationGroup->start();
         }
     #endif
     }
-
 }
 void SettingsDialog::onProxyTestError()
 {

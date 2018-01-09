@@ -207,8 +207,7 @@ const char *ExtServer::GetAnswerToRequest(const char *buf)
             }
             else
             {
-                fullString = QCoreApplication::translate("ShellExtension", "%1")
-                        .arg(actionString);
+                fullString = actionString;
             }
 
             strncpy(out, fullString.toUtf8().constData(), BUFSIZE);
