@@ -89,6 +89,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     excludedNamesChanged = false;
     sizeLimitsChanged = false;
     cleanerLimitsChanged = false;
+    fileVersioningChanged = false;
 #ifndef WIN32
     filePermissions = 0;
     folderPermissions = 0;
@@ -375,6 +376,7 @@ void SettingsDialog::fileVersioningStateChanged()
         return;
     }
 
+    fileVersioningChanged = true;
     stateChanged();
 }
 
@@ -1492,9 +1494,10 @@ int SettingsDialog::saveSettings()
             cleanerLimitsChanged = false;
         }
 
-        if (ui->cDisableFileVersioning->isChecked() != preferences->fileVersioningDisabled())
+        if (fileVersioningChanged && ui->cDisableFileVersioning->isChecked() != preferences->fileVersioningDisabled())
         {
-            preferences->disableFileVersioning(ui->cDisableFileVersioning->isChecked());
+            megaApi->setFileVersionsOption(ui->cDisableFileVersioning->isChecked());
+            fileVersioningChanged = false;
         }
 
         if (ui->cOverlayIcons->isChecked() != preferences->overlayIconsDisabled())

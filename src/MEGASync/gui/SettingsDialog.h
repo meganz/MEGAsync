@@ -157,6 +157,7 @@ private:
     bool hasDaysLimit;
     int daysLimit;
     bool cleanerLimitsChanged;
+    bool fileVersioningChanged;
     QButtonGroup downloadButtonGroup;
     QButtonGroup uploadButtonGroup;
 
