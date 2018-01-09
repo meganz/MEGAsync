@@ -368,7 +368,10 @@ void SettingsDialog::fileVersioningStateChanged()
                              Utilities::getDevicePixelRatio(), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
             || !dialog))
     {
-        ui->cEnableFileVersioning->setChecked(false);
+        if (dialog)
+        {
+            ui->cEnableFileVersioning->setChecked(false);
+        }
         return;
     }
 
