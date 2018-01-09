@@ -144,7 +144,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     connect(ui->cOverlayIcons, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
     connect(ui->cAutoUpdate, SIGNAL(stateChanged(int)), this, SLOT(stateChanged()));
     connect(ui->cLanguage, SIGNAL(currentIndexChanged(int)), this, SLOT(stateChanged()));
-    connect(ui->cEnableFileVersioning, SIGNAL(clicked(bool)), this, SLOT(fileVersioningStateChanged()));
+    connect(ui->cDisableFileVersioning, SIGNAL(clicked(bool)), this, SLOT(fileVersioningStateChanged()));
 
     connect(ui->rDownloadNoLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
     connect(ui->rDownloadLimit, SIGNAL(clicked()), this, SLOT(stateChanged()));
@@ -362,7 +362,7 @@ void SettingsDialog::stateChanged()
 void SettingsDialog::fileVersioningStateChanged()
 {
     QPointer<SettingsDialog> dialog = QPointer<SettingsDialog>(this);
-    if (ui->cEnableFileVersioning->isChecked() && (QMegaMessageBox::warning(NULL,
+    if (ui->cDisableFileVersioning->isChecked() && (QMegaMessageBox::warning(NULL,
                              QString::fromUtf8("MEGAsync"),
                              tr("Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?"),
                              Utilities::getDevicePixelRatio(), QMessageBox::Yes | QMessageBox::No, QMessageBox::No) != QMessageBox::Yes
@@ -370,7 +370,7 @@ void SettingsDialog::fileVersioningStateChanged()
     {
         if (dialog)
         {
-            ui->cEnableFileVersioning->setChecked(false);
+            ui->cDisableFileVersioning->setChecked(false);
         }
         return;
     }
@@ -1085,7 +1085,7 @@ void SettingsDialog::loadSettings()
         }
 
         loadSizeLimits();
-        ui->cEnableFileVersioning->setChecked(preferences->fileVersioningDisabled());
+        ui->cDisableFileVersioning->setChecked(preferences->fileVersioningDisabled());
         ui->cOverlayIcons->setChecked(preferences->overlayIconsDisabled());
     }
 
@@ -1492,9 +1492,9 @@ int SettingsDialog::saveSettings()
             cleanerLimitsChanged = false;
         }
 
-        if (ui->cEnableFileVersioning->isChecked() != preferences->fileVersioningDisabled())
+        if (ui->cDisableFileVersioning->isChecked() != preferences->fileVersioningDisabled())
         {
-            preferences->disableFileVersioning(ui->cEnableFileVersioning->isChecked());
+            preferences->disableFileVersioning(ui->cDisableFileVersioning->isChecked());
         }
 
         if (ui->cOverlayIcons->isChecked() != preferences->overlayIconsDisabled())

@@ -3352,7 +3352,7 @@ background:transparent;</string>
            <number>0</number>
           </property>
           <item>
-           <widget class="QCheckBox" name="cEnableFileVersioning">
+           <widget class="QCheckBox" name="cDisableFileVersioning">
             <property name="text">
              <string>Disable file versioning</string>
             </property>

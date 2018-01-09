@@ -3645,7 +3645,7 @@ background:transparent;</string>
            <number>0</number>
           </property>
           <item>
-           <widget class="QCheckBox" name="cEnableFileVersioning">
+           <widget class="QCheckBox" name="cDisableFileVersioning">
             <property name="minimumSize">
              <size>
               <width>145</width>
