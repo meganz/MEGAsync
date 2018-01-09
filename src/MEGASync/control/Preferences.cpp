@@ -2558,6 +2558,7 @@ void Preferences::setLastStatsRequest(long long value)
 bool Preferences::fileVersioningDisabled()
 {
     mutex.lock();
+    assert(logged());
     bool result = settings->value(disableFileVersioningKey, false).toBool();
     mutex.unlock();
     return result;
@@ -2566,6 +2567,7 @@ bool Preferences::fileVersioningDisabled()
 void Preferences::disableFileVersioning(bool value)
 {
     mutex.lock();
+    assert(logged());
     settings->setValue(disableFileVersioningKey, value);
     settings->sync();
     mutex.unlock();
