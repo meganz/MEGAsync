@@ -57,6 +57,7 @@ CONFIG += USE_MEGAAPI
 
 win32 {
     CONFIG += USE_FFMPEG
+    CONFIG += USE_MEDIAINFO
 }
 
 include(gui/gui.pri)
