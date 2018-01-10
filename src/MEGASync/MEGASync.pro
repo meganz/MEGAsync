@@ -54,10 +54,10 @@ debug {
 
 CONFIG += USE_LIBUV
 CONFIG += USE_MEGAAPI
+CONFIG += USE_MEDIAINFO
 
 win32 {
     CONFIG += USE_FFMPEG
-    CONFIG += USE_MEDIAINFO
 }
 
 include(gui/gui.pri)
