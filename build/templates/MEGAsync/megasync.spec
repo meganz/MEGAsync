@@ -13,7 +13,7 @@ BuildRequires: openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libt
 BuildRequires: hicolor-icon-theme, unzip, wget
 
 %if 0%{?suse_version}
-BuildRequires: libcares-devel
+BuildRequires: libcares-devel, pkg-config
 BuildRequires: update-desktop-files
  
 %if 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
@@ -31,6 +31,10 @@ BuildRequires: -post-build-checks
 BuildRequires: libcryptopp-devel
 %endif
 
+%endif
+
+%if 0%{?fedora_version}==21 || 0%{?fedora_version}==22 || 0%{?fedora_version}>=25 || 0%{?sle_version} == 120300
+BuildRequires: libzen-devel, libmediainfo-devel
 %endif
 
 
@@ -81,6 +85,12 @@ Store up to 50 GB for free!
 %build
 
 %define flag_cryptopp %{nil}
+%define flag_disablemediainfo -i
+
+%if 0%{?fedora_version}==19 || 0%{?fedora_version}==20 || 0%{?fedora_version}==23 || 0%{?fedora_version}==24 || 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} || ( 0%{?suse_version} && 0%{?sle_version} != 120300)
+%define flag_disablemediainfo %{nil}
+%endif
+
 
 %if 0%{?centos_version} || 0%{?scientificlinux_version}
 %define flag_cryptopp -q
@@ -106,7 +116,7 @@ Store up to 50 GB for free!
 
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 
-./configure %{flag_cryptopp} -g %{flag_disablezlib} %{flag_cares}
+./configure %{flag_cryptopp} -g %{flag_disablezlib} %{flag_cares} %{flag_disablemediainfo}
 
 # Fedora uses system Crypto++ header files
 %if 0%{?fedora}
