@@ -11,16 +11,16 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/3.5.3.3";
-const int Preferences::VERSION_CODE = 3503;
-const int Preferences::BUILD_ID = 3;
+const char Preferences::USER_AGENT[] = "MEGAsync/3.5.8.0";
+const int Preferences::VERSION_CODE = 3508;
+const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("3.5.3");
-const QString Preferences::SDK_ID = QString::fromAscii("27855b");
+const QString Preferences::VERSION_STRING = QString::fromAscii("3.5.8");
+const QString Preferences::SDK_ID = QString::fromAscii("8bbdd8");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- Integration with Finder (macOS 10.10+)\n"
-            "- Faster scanning of files\n"
-            "- Improved the management of deleted files\n"
+            "- New options related to file versioning\n"
+            "- Local backup cleaning scheduler\n"
+            "- Support for video thumbnails and metadata\n"
             "- Bug fixes and other minor improvements");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
