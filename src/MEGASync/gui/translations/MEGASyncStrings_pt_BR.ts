@@ -11,7 +11,7 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">Nuvem de Arquivos</translation>
+        <translation type="unfinished">Nuvem de arquivos</translation>
     </message>
     <message>
         <source>Inbox</source>
@@ -87,7 +87,7 @@
     <message>
         <source>No Transfers</source>
         <translatorcomment>Label to indicate that there are no active transfers at current time</translatorcomment>
-        <translation type="unfinished">Não há Transferências</translation>
+        <translation type="unfinished">Não há transferências</translation>
     </message>
     <message>
         <source>Remaining Downloads</source>
@@ -102,12 +102,12 @@
     <message>
         <source>No Downloads</source>
         <translatorcomment>Label to indicate that there are no active downloads at current time</translatorcomment>
-        <translation type="unfinished">Não há Descarregamentos</translation>
+        <translation type="unfinished">Não há downloads</translation>
     </message>
     <message>
         <source>Remaining Uploads</source>
         <translatorcomment>Label to indicate the number of remaining uploads</translatorcomment>
-        <translation type="unfinished">Uploads remanescentes</translation>
+        <translation type="unfinished">Uploads restantes</translation>
     </message>
     <message>
         <source>upload speed</source>
@@ -117,7 +117,7 @@
     <message>
         <source>No Uploads</source>
         <translatorcomment>Label to indicate that there are no active uploads at current time</translatorcomment>
-        <translation type="unfinished">Sem Uploads</translation>
+        <translation type="unfinished">Não há uploads</translation>
     </message>
     <message>
         <source>PAUSED</source>
@@ -563,7 +563,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation type="unfinished">Por favor aguarde...</translation>
+        <translation type="unfinished">Por favor, aguarde...</translation>
     </message>
 </context>
 <context>
@@ -662,7 +662,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGA website</source>
         <translatorcomment>Label with an URL link to MEGA website</translatorcomment>
-        <translation type="vanished">MEGA website</translation>
+        <translation type="vanished">Site do MEGA</translation>
     </message>
     <message>
         <source>%1 of %2</source>
@@ -712,17 +712,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Label to cancel all pending uploads.(String as short as possible)</translatorcomment>
-        <translation>Cancelar todos os envios</translation>
+        <translation>Cancelar todos os uploads</translation>
     </message>
     <message>
         <source>Cancel upload</source>
         <translatorcomment>Label to cancel the actual upload. (String as short as possible)</translatorcomment>
-        <translation>Cancelar envio</translation>
+        <translation>Cancelar upload</translation>
     </message>
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation>Adicionar Sync</translation>
+        <translation>Adicionar sincronização</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -775,7 +775,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Resume downloads</source>
         <translatorcomment>Label to resume the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Retomar downloads</translation>
+        <translation type="unfinished">Continuar downloads</translation>
     </message>
     <message>
         <source>Pause downloads</source>
@@ -785,7 +785,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Resume uploads</source>
         <translatorcomment>Label to resume the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Retomar os uploads</translation>
+        <translation type="unfinished">Continuar uploads</translation>
     </message>
     <message>
         <source>Pause uploads</source>
@@ -800,7 +800,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Resume upload</source>
         <translatorcomment>Label to resume the current upload. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Continuar o upload</translation>
+        <translation type="unfinished">Continuar upload</translation>
     </message>
     <message>
         <source>Blocked file: %1</source>
@@ -824,7 +824,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Upgrade to PRO</translation>
+        <translation type="unfinished">Upgrade a PRO</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -869,7 +869,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Nuvem de Arquivos</translation>
+        <translation type="unfinished">Nuvem de arquivos</translation>
     </message>
     <message>
         <source>Inbox</source>
@@ -921,7 +921,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGA website</source>
         <translatorcomment>Label to MEGA website link</translatorcomment>
-        <translation type="unfinished">MEGA website</translation>
+        <translation type="unfinished">Site do MEGA</translation>
     </message>
     <message>
         <source>%1 of %2</source>
@@ -1018,6 +1018,44 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>LocalCleanScheduler</name>
+    <message>
+        <source>%1 cleaning scheduler</source>
+        <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">%1 cleaning scheduler</translation>
+    </message>
+    <message>
+        <source>Remove files older than</source>
+        <translatorcomment>Checkbox label to indicate that files older than specified value will be removed.</translatorcomment>
+        <translation type="unfinished">Remover arquivos com mais de</translation>
+    </message>
+    <message>
+        <source>days</source>
+        <translatorcomment>Label to indicate number of days in context of scheduled deletions</translatorcomment>
+        <translation type="unfinished">dias</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel button.</translatorcomment>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for OK button.</translatorcomment>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">Atenção</translation>
+    </message>
+    <message>
+        <source>Please enter a valid value</source>
+        <translatorcomment>Information message shown when user introduces an invalid value </translatorcomment>
+        <translation type="unfinished">Por favor, digite um valor válido</translation>
+    </message>
+</context>
+<context>
     <name>MegaApplication</name>
     <message>
         <source>MEGAsync</source>
@@ -1075,7 +1113,7 @@ Exit anyway?</source>
     <message>
         <source>About MEGAsync</source>
         <translatorcomment>Title of the dialog that displays the version code of MEGAsync.</translatorcomment>
-        <translation type="unfinished">Sobre MEGAsync</translation>
+        <translation type="unfinished">Sobre o MEGAsync</translation>
     </message>
     <message>
         <source>MEGAsync version code %1</source>
@@ -1407,7 +1445,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="unfinished">Erro temporário, tente novamente.</translation>
+        <translation type="unfinished">Erro temporário,  tentando novamente.</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -1463,7 +1501,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download</source>
         <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
-        <translation type="unfinished">Baixar</translation>
+        <translation type="unfinished">Download</translation>
     </message>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
@@ -1491,12 +1529,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to stream a file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Corrente</translation>
+        <translation type="unfinished">Streaming</translation>
     </message>
     <message>
         <source>MEGA website</source>
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="unfinished">MEGA website</translation>
+        <translation type="unfinished">Site do MEGA</translation>
     </message>
 </context>
 <context>
@@ -1509,7 +1547,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>Erro interno</translation>
+        <translation>Erro Interno</translation>
     </message>
     <message>
         <source>Invalid argument</source>
@@ -1784,7 +1822,7 @@ Are you sure?</source>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
-        <translation type="obsolete">Nuvem de Arquivos</translation>
+        <translation type="obsolete">Nuvem de arquivos</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
@@ -2192,7 +2230,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>GRATUITA</translation>
+        <translation>GRÁTIS</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -2207,7 +2245,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
-        <translation>Atualizar conta</translation>
+        <translation>Assinar</translation>
     </message>
     <message>
         <source>Synced folders</source>
@@ -2359,7 +2397,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default path for MEGAsync uploads.</translatorcomment>
-        <translation type="obsolete">/MEGAsync Envios</translation>
+        <translation type="obsolete">/MEGAsync Uploads</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2433,7 +2471,7 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>Por favor aguarde...</translation>
+        <translation>Por favor, aguarde...</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -2534,7 +2572,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Uploads:</source>
         <translatorcomment>Label to indicate the default folder for uploads. String as short as possible</translatorcomment>
-        <translation>Envios:</translation>
+        <translation>Uploads:</translation>
     </message>
     <message>
         <source>Downloads:</source>
@@ -2593,7 +2631,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Mantenha sempre o controle físico de sua chave de recuperação (por exemplo em um dispositivo cliente, armazenamento externo, ou imprimir).</translation>
+        <translation type="unfinished">Mantenha sempre o controle físico de sua chave de recuperação (por exemplo, guarde-a em um dispositivo cliente, em armazenamento externo ou impressa).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2692,7 +2730,7 @@ when the application starts again</source>
     <message>
         <source>Uploads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for uploads</translatorcomment>
-        <translation type="unfinished">Envios</translation>
+        <translation type="unfinished">Uploads</translation>
     </message>
     <message>
         <source>PRO Lite</source>
@@ -2717,6 +2755,51 @@ when the application starts again</source>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync</translatorcomment>
         <translation type="unfinished">Reiniciar</translation>
+    </message>
+    <message>
+        <source>%1 cleaning scheduler</source>
+        <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">%1 cleaning scheduler</translation>
+    </message>
+    <message>
+        <source>Disable file versioning</source>
+        <translatorcomment>Checkbox label to enable/disable file versioning feature</translatorcomment>
+        <translation type="unfinished">Desabilitar o controle de versões de arquivos</translation>
+    </message>
+    <message>
+        <source>Local folder with a backup of files deleted in MEGA</source>
+        <translatorcomment>Tooltip shown when hover local debris label.</translatorcomment>
+        <translation type="unfinished">Pasta local com um backup dos arquivos deletados da pasta sincronizada remota (no MEGA)</translation>
+    </message>
+    <message>
+        <source>Folder in MEGA with a backup of files deleted in the local computer</source>
+        <translatorcomment>Tooltip shown when hover remote SyncDebris label.</translatorcomment>
+        <translation type="unfinished">Pasta no MEGA com um backup dos arquivos deletados da pasta sincronizada local (no computador)</translation>
+    </message>
+    <message>
+        <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
+        <translatorcomment>Informative text shown when user is trying to disable file versioning before proceed.</translatorcomment>
+        <translation type="unfinished">Desativar o controle de versões impedirá a criação e o armazenamento de novas versões de arquivos. Você quer continuar?</translation>
+    </message>
+    <message>
+        <source>Remove files older than %1 days</source>
+        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than %1 days will be removed. Keep %1 placeholder, it will be replaced with the value specified by the user at runtime</translatorcomment>
+        <translation type="unfinished">Remover arquivos com mais de %1 dias</translation>
+    </message>
+    <message>
+        <source>Remove files older than 1 day</source>
+        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than 1 day will be removed.</translatorcomment>
+        <translation type="unfinished">Remover arquivos com mais de 1 dia</translation>
+    </message>
+    <message>
+        <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
+        <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the actual account.</translatorcomment>
+        <translation type="unfinished">Você está prestes a remover permanentemente todas as versões. Gostaria de continuar?</translation>
+    </message>
+    <message>
+        <source>File versions: %1</source>
+        <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
+        <translation type="unfinished">Versões de arquivos: %1</translation>
     </message>
 </context>
 <context>
@@ -3080,7 +3163,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation type="unfinished">Por favor, verifique seu e-mail e clique no link para confirmar sua conta.</translation>
+        <translation type="unfinished">Por favor verifique seu e-mail e clique no link para confirmar sua conta.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
@@ -3213,7 +3296,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation type="unfinished">Nuvem de Arquivos</translation>
+        <translation type="unfinished">Nuvem de arquivos</translation>
     </message>
     <message>
         <source>Public link</source>
@@ -3377,12 +3460,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transfer Manager</source>
         <translatorcomment>Title of the dialog of Transfer Manager</translatorcomment>
-        <translation type="unfinished">Gestor de transferência</translation>
+        <translation type="unfinished">Gestor de transferências</translation>
     </message>
     <message>
         <source>Add...</source>
         <translatorcomment>Button label to add transfers items (uploads/downloads/public links) to the dialog (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Add...</translation>
+        <translation type="unfinished">Adicionar...</translation>
     </message>
     <message>
         <source>Downloads</source>
@@ -3392,7 +3475,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Uploads</source>
         <translatorcomment>Label of tab to access all active uploads</translatorcomment>
-        <translation type="unfinished">Envios</translation>
+        <translation type="unfinished">Uploads</translation>
     </message>
     <message>
         <source>Completed</source>
@@ -3464,7 +3547,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished">Baixar</translation>
+        <translation type="unfinished">Download</translation>
     </message>
 </context>
 <context>
@@ -3472,12 +3555,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>No Downloads</source>
         <translatorcomment>Label to indicate that there are no active downloads</translatorcomment>
-        <translation type="unfinished">Não há Descarregamentos</translation>
+        <translation type="unfinished">Não há downloads</translation>
     </message>
     <message>
         <source>No Uploads</source>
         <translatorcomment>Label to indicate that there are no active uploads</translatorcomment>
-        <translation type="unfinished">Sem Uploads</translation>
+        <translation type="unfinished">Não há uploads</translation>
     </message>
     <message>
         <source>Paused Transfers</source>
@@ -3529,7 +3612,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>/MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded. Keep / symbol.</translatorcomment>
-        <translation type="obsolete">/MEGAsync Envios</translation>
+        <translation type="obsolete">/MEGAsync Uploads</translation>
     </message>
     <message>
         <source>MEGAsync Uploads</source>
@@ -3564,7 +3647,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">Nuvem de Arquivos</translation>
+        <translation type="unfinished">Nuvem de arquivos</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -3575,7 +3658,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageWidget</name>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">Nuvem de Arquivos</translation>
+        <translation type="unfinished">Nuvem de arquivos</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>

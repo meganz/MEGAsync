@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Disponible</translation>
+        <translation type="unfinished">Disponibles</translation>
     </message>
     <message>
         <source>Total size taken up by file versions:</source>
@@ -127,7 +127,7 @@
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
         <translatorcomment>Warning message shown when an user try to cancel the selected transfer</translatorcomment>
-        <translation type="unfinished">Voulez-vous vraiment annuler ce transfert?</translation>
+        <translation type="unfinished">Voulez-vous vraiment annuler ce transfert ?</translation>
     </message>
 </context>
 <context>
@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Saisir un nom, un chemin absolu (les métacaractères * et? sont autorisés) ou choisir quels fichier ou dossier doit être exclu de la synchronisation</translation>
+        <translation type="unfinished">Saisir un nom, un chemin absolu (les métacaractères * et ? sont autorisés) ou choisir quels fichier ou dossier doit être exclu de la synchronisation</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -275,7 +275,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">Conditions générales d&apos;utilisation </translation>
+        <translation type="unfinished">Conditions générales d’utilisation</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
@@ -303,7 +303,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Are you sure you want to continue?</source>
         <translatorcomment>Question for the user in the dialog that allows to disable a security check of MEGAsync. The user have to reply yes or no</translatorcomment>
-        <translation type="unfinished">Voulez-vous vraiment poursuivre?</translation>
+        <translation type="unfinished">Voulez-vous vraiment poursuivre ?</translation>
     </message>
     <message>
         <source>Remember my decision and don&apos;t ask me again</source>
@@ -493,7 +493,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Do you want to continue?</source>
         <translatorcomment>Label to indicate if the user wants to continue in spite of the problem occured.</translatorcomment>
-        <translation>Voulez-vous poursuivre?</translation>
+        <translation>Voulez-vous poursuivre ?</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -747,7 +747,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">Téléchargement en cours</translation>
+        <translation type="vanished">Téléchargement</translation>
     </message>
     <message>
         <source>Uploading </source>
@@ -770,7 +770,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Settings</source>
-        <translation type="obsolete">Réglages</translation>
+        <translation type="obsolete">Paramètres</translation>
     </message>
     <message>
         <source>Resume downloads</source>
@@ -935,7 +935,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Réglages</translation>
+        <translation type="unfinished">Paramètres</translation>
     </message>
 </context>
 <context>
@@ -986,7 +986,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
-        <translation type="unfinished">Profitez de 50 Go de stockage nuagique protégé pour un chiffrement de bout en bout contrôlé par l&apos;utilisateur, et créez un compte GRATUIT, ou abonnez-vous à l&apos;une de nos [A]offres PRO[/A].</translation>
+        <translation type="unfinished">Profitez de 50 Go de stockage nuagique protégé pour un chiffrement de bout en bout contrôlé par l’utilisateur, et créez un compte GRATUIT, ou abonnez-vous à l’une de nos [A]offres PRO[/A].</translation>
     </message>
 </context>
 <context>
@@ -1018,6 +1018,44 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>LocalCleanScheduler</name>
+    <message>
+        <source>%1 cleaning scheduler</source>
+        <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">Programmateur de nettoyage de %1 </translation>
+    </message>
+    <message>
+        <source>Remove files older than</source>
+        <translatorcomment>Checkbox label to indicate that files older than specified value will be removed.</translatorcomment>
+        <translation type="unfinished">Supprimer les fichiers plus anciens que</translation>
+    </message>
+    <message>
+        <source>days</source>
+        <translatorcomment>Label to indicate number of days in context of scheduled deletions</translatorcomment>
+        <translation type="unfinished">jour</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel button.</translatorcomment>
+        <translation type="unfinished">Annuler</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for OK button.</translatorcomment>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">Avertissement</translation>
+    </message>
+    <message>
+        <source>Please enter a valid value</source>
+        <translatorcomment>Information message shown when user introduces an invalid value </translatorcomment>
+        <translation type="unfinished">Veuillez saisir une valeur valide</translation>
+    </message>
+</context>
+<context>
     <name>MegaApplication</name>
     <message>
         <source>MEGAsync</source>
@@ -1035,7 +1073,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
         <translatorcomment>Notification message that MEGAsync is actually running.</translatorcomment>
-        <translation>MEGAsync est maintenant en fonction. Cliquer ici pour ouvrir la fenêtre d&apos;état.</translation>
+        <translation>MEGAsync est maintenant en fonction. Cliquer ici pour ouvrir la fenêtre d’état.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1110,7 +1148,7 @@ Exit anyway?</source>
     <message>
         <source>Settings</source>
         <translatorcomment>Label to indicate the Settings option for the application (MAX 20 characters)</translatorcomment>
-        <translation>Réglages</translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -1254,7 +1292,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is now running. Click the system tray icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGAsync est maintenant en fonction. Cliquer sur l&apos;icône de la zone de notification pour ouvrir la fenêtre d&apos;état.</translation>
+        <translation>MEGAsync est maintenant en fonction. Cliquer sur l’icône de la zone de notification pour ouvrir la fenêtre d’état.</translation>
     </message>
     <message>
         <source>A new version of MEGAsync is available!</source>
@@ -1264,7 +1302,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGAsync est maintenant en fonction. Cliquer sur l&apos;icône de la zone de notification pour ouvrir la fenêtre d&apos;état.</translation>
+        <translation>MEGAsync est maintenant en fonction. Cliquer sur l’icône de la zone de notification pour ouvrir la fenêtre d’état.</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -1284,7 +1322,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Show status</source>
         <translatorcomment>Label displayed to let the user displays the Information dialog of MEGAsync. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation>Afficher l&apos;état</translation>
+        <translation>Afficher l’état</translation>
     </message>
     <message>
         <source>Your config is corrupt, please start over</source>
@@ -1458,7 +1496,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
-        <translation type="unfinished">Téléversement</translation>
+        <translation type="unfinished">Téléverser</translation>
     </message>
     <message>
         <source>Download</source>
@@ -1631,7 +1669,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
         <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation type="unfinished">Voulez-vous vraiment annuler ce transfert?</translation>
+        <translation type="unfinished">Voulez-vous vraiment annuler ce transfert ?</translation>
     </message>
     <message>
         <source>paused</source>
@@ -1689,7 +1727,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Clear</source>
         <translatorcomment>Label of context menu option to clear selected transfer item of completed view</translatorcomment>
-        <translation type="unfinished">Vider</translation>
+        <translation type="unfinished">Effacer</translation>
     </message>
     <message>
         <source>Clear All</source>
@@ -1703,7 +1741,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
-        <translation type="unfinished">Voulez-vous vraiment annuler ce transfert?</translation>
+        <translation type="unfinished">Voulez-vous vraiment annuler ce transfert ?</translation>
     </message>
 </context>
 <context>
@@ -1719,7 +1757,7 @@ inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
         <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
-        <translation type="obsolete">Le dossier de destination est synchronisé et un fichier du même nom (%1) s&apos;y trouve déjà. Si vous poursuivez le téléversement, le fichier précédent sera écrasé. Êtes-vous certain?</translation>
+        <translation type="obsolete">Le dossier de destination est synchronisé et un fichier du même nom (%1) s&apos;y trouve déjà. Si vous poursuivez le téléversement, le fichier précédent sera écrasé. Êtes-vous certain ?</translation>
     </message>
 </context>
 <context>
@@ -1746,7 +1784,7 @@ Are you sure?</source>
     <message>
         <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
         <translatorcomment>Warning message shown during synchronization scenario</translatorcomment>
-        <translation type="unfinished">Le dossier de destination est synchronisé et contient déjà un fichier portant le même nom.Si vous poursuivez le téléversement, le fichier précédent sera écrasé. Êtes-vous sûr?</translation>
+        <translation type="unfinished">Le dossier de destination est synchronisé et contient déjà un fichier portant le même nom.Si vous poursuivez le téléversement, le fichier précédent sera écrasé. Êtes-vous sûr ?</translation>
     </message>
 </context>
 <context>
@@ -1810,7 +1848,7 @@ Please, select a subfolder.</source>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation type="obsolete">Vous avez %1 dans ce dossier.Voulez-vous vraiment le synchroniser?</translation>
+        <translation type="obsolete">Vous avez %1 dans ce dossier.Voulez-vous vraiment le synchroniser ?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
@@ -1840,7 +1878,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation type="unfinished">Voulez-vous vraiment supprimer « %1 »?</translation>
+        <translation type="unfinished">Voulez-vous vraiment supprimer « %1 » ?</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -2055,7 +2093,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
-        <translation>Il y a 1 minute</translation>
+        <translation>il y a 1 minute</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -2065,12 +2103,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
-        <translation>Il y  a 1 heure</translation>
+        <translation>il y a 1 heure</translation>
     </message>
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
-        <translation>Il y a 1 jour</translation>
+        <translation>il y a 1 jour</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -2378,7 +2416,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Label to ask for confirmation to the user.</translatorcomment>
-        <translation>Êtes-vous sûr?</translation>
+        <translation>Êtes-vous sûr ?</translation>
     </message>
     <message>
         <source>Excluded name</source>
@@ -2389,7 +2427,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation type="vanished">Saisir un nom à exclure de la synchronisation (les métacaractères * et? sont autorisés) :</translation>
+        <translation type="vanished">Saisir un nom à exclure de la synchronisation (les métacaractères * et ? sont autorisés) :</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2399,7 +2437,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Transfers</source>
         <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>Transferts</translation>
+        <translation>Tranferts</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2418,7 +2456,7 @@ when the application starts again.</source>
     <message>
         <source>Clear</source>
         <translatorcomment>Label to let the user clear the cache. Keep capital letter.</translatorcomment>
-        <translation>Vider</translation>
+        <translation>Effacer</translation>
     </message>
     <message>
         <source>HTTP</source>
@@ -2488,7 +2526,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">MEGAsync effectuera une analyse complète de vos dossiers synchronisés au démarrage. Voulez-vous redémarrer MEGAsync maintenant?</translation>
+        <translation type="obsolete">MEGAsync effectuera une analyse complète de vos dossiers synchronisés au démarrage. Voulez-vous redémarrer MEGAsync maintenant ?</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2519,7 +2557,7 @@ Do you want to restart MEGAsync now?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync effectuera une analyse complète de vos dossiers synchronisés au démarrage. Voulez-vous redémarrer MEGAsync maintenant?</translation>
+        <translation>MEGAsync effectuera une analyse complète de vos dossiers synchronisés au démarrage. Voulez-vous redémarrer MEGAsync maintenant ?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -2593,7 +2631,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">Assurez toujours le contrôle physique de votre clé de récupération (p. ex. sur un dispositif client, une mémoire externe ou encore imprimée).</translation>
+        <translation type="unfinished">assurez toujours le contrôle physique de votre clé de récupération (p. ex. sur un dispositif client, une mémoire externe ou encore imprimée).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -2633,7 +2671,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
-        <translation type="unfinished">Voulez-vous redémarrer MEGAsync maintenant?</translation>
+        <translation type="unfinished">Voulez-vous redémarrer MEGAsync maintenant ?</translation>
     </message>
     <message>
         <source>Permissions</source>
@@ -2648,7 +2686,7 @@ when the application starts again</source>
     <message>
         <source>Enable this option only if your transfers don&apos;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">N&apos;activer cette option que si vos transferts ne démarrent pas. Dans des conditions normales, le protocole HTTP est adéquat, car tous les transferts sont déjà chiffrés.</translation>
+        <translation type="unfinished">N’activer cette option que si vos transferts ne démarrent pas. Dans des conditions normales, le protocole HTTP est adéquat, car tous les transferts sont déjà chiffrés.</translation>
     </message>
     <message>
         <source>Local backup: %1</source>
@@ -2664,7 +2702,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">Souhaitez-vous supprimer votre sauvegarde locale maintenant?</translation>
+        <translation type="unfinished">Souhaitez-vous supprimer votre sauvegarde locale maintenant ?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
@@ -2672,7 +2710,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your remote backup now?</source>
-        <translation type="unfinished">Souhaitez-vous supprimer votre sauvegarde à distance maintenant?</translation>
+        <translation type="unfinished">Souhaitez-vous supprimer votre sauvegarde à distance maintenant ?</translation>
     </message>
     <message>
         <source>Download rate limit</source>
@@ -2718,6 +2756,51 @@ when the application starts again</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync</translatorcomment>
         <translation type="unfinished">Redémarrer</translation>
     </message>
+    <message>
+        <source>%1 cleaning scheduler</source>
+        <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">Programmateur de nettoyage de %1 </translation>
+    </message>
+    <message>
+        <source>Disable file versioning</source>
+        <translatorcomment>Checkbox label to enable/disable file versioning feature</translatorcomment>
+        <translation type="unfinished">Désactiver le versionnage des fichiers</translation>
+    </message>
+    <message>
+        <source>Local folder with a backup of files deleted in MEGA</source>
+        <translatorcomment>Tooltip shown when hover local debris label.</translatorcomment>
+        <translation type="unfinished">Un dossier local contenant une sauvegarde des fichiers supprimés dans MEGA</translation>
+    </message>
+    <message>
+        <source>Folder in MEGA with a backup of files deleted in the local computer</source>
+        <translatorcomment>Tooltip shown when hover remote SyncDebris label.</translatorcomment>
+        <translation type="unfinished">Un dossier dans MEGA contenant une sauvegarde des fichiers supprimés sur l’ordinateur local</translation>
+    </message>
+    <message>
+        <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
+        <translatorcomment>Informative text shown when user is trying to disable file versioning before proceed.</translatorcomment>
+        <translation type="unfinished">La désactivation du versionnage des fichiers empêchera la création et l’enregistrement de nouvelles versions des fichiers. Souhaitez-vous continuer ?</translation>
+    </message>
+    <message>
+        <source>Remove files older than %1 days</source>
+        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than %1 days will be removed. Keep %1 placeholder, it will be replaced with the value specified by the user at runtime</translatorcomment>
+        <translation type="unfinished">Supprimer les fichiers de plus de %1 jours</translation>
+    </message>
+    <message>
+        <source>Remove files older than 1 day</source>
+        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than 1 day will be removed.</translatorcomment>
+        <translation type="unfinished">Supprimer les fichiers de plus de 1 jour</translation>
+    </message>
+    <message>
+        <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
+        <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the actual account.</translatorcomment>
+        <translation type="unfinished">Vous êtes sur le point de supprimer irrémédiablement toutes les versions des fichiers. Souhaitez-vous continuer ?</translation>
+    </message>
+    <message>
+        <source>File versions: %1</source>
+        <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
+        <translation type="unfinished">Versions de fichiers : %1</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -2744,7 +2827,7 @@ when the application starts again</source>
     <message>
         <source>Name:</source>
         <translatorcomment>Label for field name at create account. String as short as possible.</translatorcomment>
-        <translation>Nom :</translation>
+        <translation>Prénom :</translation>
     </message>
     <message>
         <source>Email:</source>
@@ -2764,7 +2847,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>J&apos;accepte les &lt;a href=&quot;https://mega.nz/#terms&quot;&gt;conditions générales d&apos;utilisation&lt;/a&gt; de MEGA</translation>
+        <translation>J’accepte les &lt;a href=&quot;https://mega.nz/#terms&quot;&gt;conditions générales d’utilisation&lt;/a&gt; de MEGA</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -2880,7 +2963,7 @@ when the application starts again</source>
     <message>
         <source>Have you verified your account?</source>
         <translatorcomment>Label displayed to inform the user about the need of verify the created account.</translatorcomment>
-        <translation>Avez-vous vérifié votre compte?</translation>
+        <translation>Avez-vous vérifié votre compte ?</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
@@ -2940,7 +3023,7 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">Vous avez %1 dans votre disque nuagique.Voulez-vous vraiment synchroniser l&apos;intégralité de votre disque nuagique?</translation>
+        <translation type="obsolete">Vous avez %1 dans votre disque nuagique.Voulez-vous vraiment synchroniser l&apos;intégralité de votre disque nuagique ?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -3022,7 +3105,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Do you want to continue?</source>
         <translatorcomment>Message of confirmation to continue with the current operation.</translatorcomment>
-        <translation>Voulez-vous poursuivre?</translation>
+        <translation>Voulez-vous poursuivre ?</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -3036,7 +3119,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation type="unfinished">Voulez-vous vraiment interrompre cet assistant et annuler tous les changements?</translation>
+        <translation type="unfinished">Voulez-vous vraiment interrompre cet assistant et annuler tous les changements ?</translation>
     </message>
     <message>
         <source>Skip</source>
@@ -3056,7 +3139,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Very Weak</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Very Weak security </translatorcomment>
-        <translation type="unfinished">Très Faible</translation>
+        <translation type="unfinished">Très faible</translation>
     </message>
     <message>
         <source>Weak</source>
@@ -3253,7 +3336,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation type="unfinished">Voulez-vous vraiment arrêter la lecture en continu?</translation>
+        <translation type="unfinished">Voulez-vous vraiment arrêter la lecture en continu ?</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3328,7 +3411,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 minute ago</source>
-        <translation type="unfinished">Il y a 1 minute</translation>
+        <translation type="unfinished">il y a 1 minute</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -3336,7 +3419,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 hour ago</source>
-        <translation type="unfinished">Il y  a 1 heure</translation>
+        <translation type="unfinished">il y a 1 heure</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
@@ -3344,7 +3427,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="unfinished">Il y a 1 jour</translation>
+        <translation type="unfinished">il y a 1 jour</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -3432,7 +3515,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Settings</source>
         <translatorcomment>Label to indicate the Settings option for the application</translatorcomment>
-        <translation type="unfinished">Réglages</translation>
+        <translation type="unfinished">Paramètres</translation>
     </message>
     <message>
         <source>Preferences</source>
@@ -3447,7 +3530,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel all transfers?</source>
         <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation type="unfinished">Voulez-vous vraiment annuler tous les transferts?</translation>
+        <translation type="unfinished">Voulez-vous vraiment annuler tous les transferts ?</translation>
     </message>
     <message>
         <source>Resume</source>
@@ -3460,7 +3543,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload</source>
-        <translation type="unfinished">Téléversement</translation>
+        <translation type="unfinished">Téléverser</translation>
     </message>
     <message>
         <source>Download</source>
@@ -3595,7 +3678,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">Disponible</translation>
+        <translation type="unfinished">Disponibles</translation>
     </message>
 </context>
 <context>
