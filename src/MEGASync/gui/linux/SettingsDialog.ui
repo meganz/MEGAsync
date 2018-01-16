@@ -3372,7 +3372,7 @@ background:transparent;</string>
            </spacer>
           </item>
           <item>
-           <widget class="QLabel" name="label_3">
+           <widget class="QLabel" name="lFileVersionsSize">
             <property name="text">
              <string>File versions: %1</string>
             </property>
