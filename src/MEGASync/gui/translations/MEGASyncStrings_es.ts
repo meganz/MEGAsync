@@ -55,7 +55,7 @@
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Carpetas Compartidas</translation>
+        <translation type="unfinished">Carpetas compartidas</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
@@ -87,7 +87,7 @@
     <message>
         <source>No Transfers</source>
         <translatorcomment>Label to indicate that there are no active transfers at current time</translatorcomment>
-        <translation type="unfinished">No hay transferencias</translation>
+        <translation type="unfinished">No hay Transferencias</translation>
     </message>
     <message>
         <source>Remaining Downloads</source>
@@ -102,7 +102,7 @@
     <message>
         <source>No Downloads</source>
         <translatorcomment>Label to indicate that there are no active downloads at current time</translatorcomment>
-        <translation type="unfinished">No hay descargas</translation>
+        <translation type="unfinished">No hay Descargas</translation>
     </message>
     <message>
         <source>Remaining Uploads</source>
@@ -117,7 +117,7 @@
     <message>
         <source>No Uploads</source>
         <translatorcomment>Label to indicate that there are no active uploads at current time</translatorcomment>
-        <translation type="unfinished">No hay subidas</translation>
+        <translation type="unfinished">No hay Subidas</translation>
     </message>
     <message>
         <source>PAUSED</source>
@@ -318,7 +318,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Yes</source>
         <translatorcomment>Positive response to a question. The text will be inside a button.</translatorcomment>
-        <translation type="unfinished">Si</translation>
+        <translation type="unfinished">Sí</translation>
     </message>
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
@@ -563,7 +563,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation type="unfinished">Por favor, espera...</translation>
+        <translation type="unfinished">Por favor espera...</translation>
     </message>
 </context>
 <context>
@@ -610,7 +610,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Error al desencriptar</translation>
+        <translation>Error al descifrar</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -879,7 +879,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Carpetas Compartidas</translation>
+        <translation type="unfinished">Carpetas compartidas</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
@@ -1018,6 +1018,44 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>LocalCleanScheduler</name>
+    <message>
+        <source>%1 cleaning scheduler</source>
+        <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">Autolimpieza de %1</translation>
+    </message>
+    <message>
+        <source>Remove files older than</source>
+        <translatorcomment>Checkbox label to indicate that files older than specified value will be removed.</translatorcomment>
+        <translation type="unfinished">Eliminar archivos anteriores a</translation>
+    </message>
+    <message>
+        <source>days</source>
+        <translatorcomment>Label to indicate number of days in context of scheduled deletions</translatorcomment>
+        <translation type="unfinished">días</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel button.</translatorcomment>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for OK button.</translatorcomment>
+        <translation type="unfinished">Aceptar</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">Advertencia</translation>
+    </message>
+    <message>
+        <source>Please enter a valid value</source>
+        <translatorcomment>Information message shown when user introduces an invalid value </translatorcomment>
+        <translation type="unfinished">Por favor ingresa un valor válido</translation>
+    </message>
+</context>
+<context>
     <name>MegaApplication</name>
     <message>
         <source>MEGAsync</source>
@@ -1045,7 +1083,7 @@ because the remote folder doesn&apos;t exist</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">Tu sincronización &quot;%1&quot; se ha desactivado porque la carpeta remota está en la papelera</translation>
+        <translation type="obsolete">Tu sincronización &quot;%1&quot; se ha desactivado porque la carpeta remota está en la Papelera</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1339,7 +1377,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Tu sincronización &quot;%1&quot; ha sido desactivada porque la carpeta remota se encuentra en la papelera</translation>
+        <translation type="unfinished">Tu sincronización &quot;%1&quot; ha sido desactivada porque la carpeta remota se encuentra en la Papelera</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -1453,7 +1491,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation type="unfinished">El enlace no se puede generar porque el archivo está dentro de una carpeta compartida entrante o en la papelera de tu cuenta de MEGA</translation>
+        <translation type="unfinished">El enlace no se puede generar porque el archivo está dentro de una carpeta compartida entrante o en la Papelera de tu cuenta de MEGA</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -1844,7 +1882,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">Borrar</translation>
+        <translation type="unfinished">Eliminar</translation>
     </message>
     <message>
         <source>Only files can be used for streaming.</source>
@@ -1857,7 +1895,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">Seleccione sólo un fichero.</translation>
+        <translation type="unfinished">Selecciona sólo un archivo.</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -1904,7 +1942,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Invalid MEGA Link</source>
         <translatorcomment>Label to indicate that MEGA link processed is invalid/incorrect </translatorcomment>
-        <translation type="unfinished">Enlace incorrecto a MEGA</translation>
+        <translation type="unfinished">Enlace MEGA incorrecto</translation>
     </message>
 </context>
 <context>
@@ -2192,7 +2230,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>Gratis</translation>
+        <translation>GRATIS</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -2216,7 +2254,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Delete</source>
         <translatorcomment>Button lable to delete a synchronization. String as short as possible.</translatorcomment>
-        <translation>Borrar</translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <source>Add</source>
@@ -2433,7 +2471,7 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>Por favor, espera...</translation>
+        <translation>Por favor espera...</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -2578,7 +2616,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Exportar Clave de Recuperación</translation>
+        <translation type="unfinished">Exportar Clave de recuperación</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2588,7 +2626,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Exportando la Clave de recuperación y guardándola en un sitio seguro te permite establecer una nueva contraseña sin pérdida de datos. </translation>
+        <translation type="unfinished">Exportar la Clave de recuperación y guardarla en un sitio seguro te permite establecer una nueva contraseña sin pérdida de datos. </translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
@@ -2629,7 +2667,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">Las copias de seguridad de tus archivos sincronizados anteriormente se eliminarán de forma permanente. Por favor comprueba tu carpeta [A] de la papelera de tu cuenta MEGA para ver si necesitas rescatar algo antes de continuar.</translation>
+        <translation type="unfinished">Las copias de seguridad de tus archivos sincronizados anteriormente se eliminarán de forma permanente. Por favor comprueba tu carpeta [A] de la Papelera de tu cuenta MEGA para ver si necesitas rescatar algo antes de continuar.</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
@@ -2718,6 +2756,51 @@ when the application starts again</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync</translatorcomment>
         <translation type="unfinished">Reiniciar</translation>
     </message>
+    <message>
+        <source>%1 cleaning scheduler</source>
+        <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">Autolimpieza de %1</translation>
+    </message>
+    <message>
+        <source>Disable file versioning</source>
+        <translatorcomment>Checkbox label to enable/disable file versioning feature</translatorcomment>
+        <translation type="unfinished">Desactivar versionado de archivos</translation>
+    </message>
+    <message>
+        <source>Local folder with a backup of files deleted in MEGA</source>
+        <translatorcomment>Tooltip shown when hover local debris label.</translatorcomment>
+        <translation type="unfinished">Carpeta local con una copia de seguridad de los archivos eliminados en MEGA</translation>
+    </message>
+    <message>
+        <source>Folder in MEGA with a backup of files deleted in the local computer</source>
+        <translatorcomment>Tooltip shown when hover remote SyncDebris label.</translatorcomment>
+        <translation type="unfinished">Carpeta en MEGA con una copia de seguridad de los archivos eliminados en el ordenador local</translation>
+    </message>
+    <message>
+        <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
+        <translatorcomment>Informative text shown when user is trying to disable file versioning before proceed.</translatorcomment>
+        <translation type="unfinished">La desactivación del control de versiones evitará la creación y el almacenamiento de nuevas versiones de archivos. ¿Quieres continuar?</translation>
+    </message>
+    <message>
+        <source>Remove files older than %1 days</source>
+        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than %1 days will be removed. Keep %1 placeholder, it will be replaced with the value specified by the user at runtime</translatorcomment>
+        <translation type="unfinished">Eliminar archivos anteriores a %1 días</translation>
+    </message>
+    <message>
+        <source>Remove files older than 1 day</source>
+        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than 1 day will be removed.</translatorcomment>
+        <translation type="unfinished">Eliminar archivos anteriores a 1 día</translation>
+    </message>
+    <message>
+        <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
+        <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the actual account.</translatorcomment>
+        <translation type="unfinished">Estás a punto de eliminar permanentemente todas las versiones de archivos. ¿Quieres continuar?</translation>
+    </message>
+    <message>
+        <source>File versions: %1</source>
+        <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
+        <translation type="unfinished">Versiones de archivos: %1</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -2764,7 +2847,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Estoy de acuerdo con los &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Términos de servicio&lt;/a&gt;</translation>
+        <translation>Acepto los &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Términos de servicio&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -3268,7 +3351,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open link</source>
         <translatorcomment>Title of the dialog to enter a MEGA file link for streaming</translatorcomment>
-        <translation type="unfinished">Abrir link</translation>
+        <translation type="unfinished">Abrir enlace</translation>
     </message>
     <message>
         <source>Enter a MEGA file link:</source>
@@ -3288,7 +3371,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">Error al desencriptar</translation>
+        <translation type="unfinished">Error al descifrar</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3472,17 +3555,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>No Downloads</source>
         <translatorcomment>Label to indicate that there are no active downloads</translatorcomment>
-        <translation type="unfinished">No hay descargas</translation>
+        <translation type="unfinished">No hay Descargas</translation>
     </message>
     <message>
         <source>No Uploads</source>
         <translatorcomment>Label to indicate that there are no active uploads</translatorcomment>
-        <translation type="unfinished">No hay subidas</translation>
+        <translation type="unfinished">No hay Subidas</translation>
     </message>
     <message>
         <source>Paused Transfers</source>
         <translatorcomment>Label to indicate that active transfers are paused</translatorcomment>
-        <translation type="unfinished">Transferencias Pausadas</translation>
+        <translation type="unfinished">Transferencias en pausa</translation>
     </message>
 </context>
 <context>
@@ -3560,7 +3643,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Carpetas Compartidas</translation>
+        <translation type="unfinished">Carpetas compartidas</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -3583,7 +3666,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Carpetas Compartidas</translation>
+        <translation type="unfinished">Carpetas compartidas</translation>
     </message>
     <message>
         <source>Inbox</source>

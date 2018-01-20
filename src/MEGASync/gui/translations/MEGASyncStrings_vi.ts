@@ -21,7 +21,7 @@
     <message>
         <source>Rubbish Bin</source>
         <translatorcomment>Label for Rubbish Bin space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">Thùng Rác</translation>
+        <translation type="obsolete">Thùng rác</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -87,7 +87,7 @@
     <message>
         <source>No Transfers</source>
         <translatorcomment>Label to indicate that there are no active transfers at current time</translatorcomment>
-        <translation type="unfinished">Không có truyền tải</translation>
+        <translation type="unfinished">Không Có Truyền Tải Nào</translation>
     </message>
     <message>
         <source>Remaining Downloads</source>
@@ -275,12 +275,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">Điều khoản Dịch vụ</translation>
+        <translation type="unfinished">Điều Khoản Sử Dụng Dịch Vụ</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished">Chính sách riêng tư</translation>
+        <translation type="unfinished">Chính Sách Quyền Riêng Tư</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -563,7 +563,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation type="unfinished">Xin chờ...</translation>
+        <translation type="unfinished">Vui lòng chớ...</translation>
     </message>
 </context>
 <context>
@@ -610,7 +610,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Lỗi giải mã</translation>
+        <translation>Giải mã sai</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -747,7 +747,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">Đang tải xuống</translation>
+        <translation type="vanished">Đang tải</translation>
     </message>
     <message>
         <source>Uploading </source>
@@ -1018,6 +1018,44 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>LocalCleanScheduler</name>
+    <message>
+        <source>%1 cleaning scheduler</source>
+        <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">%1 cleaning scheduler</translation>
+    </message>
+    <message>
+        <source>Remove files older than</source>
+        <translatorcomment>Checkbox label to indicate that files older than specified value will be removed.</translatorcomment>
+        <translation type="unfinished">Xóa dữ liệu có trong thùng lâu hơn</translation>
+    </message>
+    <message>
+        <source>days</source>
+        <translatorcomment>Label to indicate number of days in context of scheduled deletions</translatorcomment>
+        <translation type="unfinished">ngày</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel button.</translatorcomment>
+        <translation type="unfinished">Hủy bỏ</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for OK button.</translatorcomment>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">Cảnh báo</translation>
+    </message>
+    <message>
+        <source>Please enter a valid value</source>
+        <translatorcomment>Information message shown when user introduces an invalid value </translatorcomment>
+        <translation type="unfinished">Please enter a valid value</translation>
+    </message>
+</context>
+<context>
     <name>MegaApplication</name>
     <message>
         <source>MEGAsync</source>
@@ -1105,7 +1143,7 @@ Exit anyway?</source>
     <message>
         <source>About</source>
         <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
-        <translation type="unfinished">Thông tin</translation>
+        <translation type="unfinished">Thông Tin</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1407,7 +1445,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="unfinished">Tạm thời có lỗi, đang thử lại.</translation>
+        <translation type="unfinished">Tạm thời bị lỗi, hãy thử lại</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -1463,7 +1501,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download</source>
         <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
-        <translation type="unfinished">Tải xuống</translation>
+        <translation type="unfinished">Tải về</translation>
     </message>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
@@ -1826,7 +1864,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation type="unfinished">Bạn cần có quyền Đọc &amp; Ghi hoặc Toàn Quyền Truy Cập để có thể đăng tải nội dung vào thư mục này.</translation>
+        <translation type="unfinished">Bạn cần có quyền Xem &amp; Sửa hoặc Toàn Quyền Truy Cập để có thể đăng tải nội dung vào thư mục này.</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
@@ -2117,7 +2155,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>General</source>
-        <translation type="obsolete">Tổng quan</translation>
+        <translation type="obsolete">Tổng Quan</translation>
     </message>
     <message>
         <source>Account</source>
@@ -2137,7 +2175,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Advanced</source>
         <translatorcomment>Tab label of Advanced settings dialog. Max 15 characters.</translatorcomment>
-        <translation>Nâng cao</translation>
+        <translation>Nâng Cao</translation>
     </message>
     <message>
         <source>Help</source>
@@ -2177,7 +2215,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Language</source>
         <translatorcomment>Label to let the user select the desired language for the application.</translatorcomment>
-        <translation>Language</translation>
+        <translation>Ngôn Ngữ</translation>
     </message>
     <message>
         <source>English</source>
@@ -2433,7 +2471,7 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>Xin chờ...</translation>
+        <translation>Vui lòng chớ...</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -2638,7 +2676,7 @@ when the application starts again</source>
     <message>
         <source>Permissions</source>
         <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Quyền sử dụng</translation>
+        <translation type="unfinished">Cấp phép</translation>
     </message>
     <message>
         <source>Don&apos;t use HTTP</source>
@@ -2717,6 +2755,51 @@ when the application starts again</source>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync</translatorcomment>
         <translation type="unfinished">Khởi động lại MEGAsync</translation>
+    </message>
+    <message>
+        <source>%1 cleaning scheduler</source>
+        <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">%1 cleaning scheduler</translation>
+    </message>
+    <message>
+        <source>Disable file versioning</source>
+        <translatorcomment>Checkbox label to enable/disable file versioning feature</translatorcomment>
+        <translation type="unfinished">Tắt chức năng ghi lịch sử phiên bản</translation>
+    </message>
+    <message>
+        <source>Local folder with a backup of files deleted in MEGA</source>
+        <translatorcomment>Tooltip shown when hover local debris label.</translatorcomment>
+        <translation type="unfinished">A local folder with a backup of files deleted in MEGA</translation>
+    </message>
+    <message>
+        <source>Folder in MEGA with a backup of files deleted in the local computer</source>
+        <translatorcomment>Tooltip shown when hover remote SyncDebris label.</translatorcomment>
+        <translation type="unfinished">A folder in MEGA with a backup of files deleted in the local computer</translation>
+    </message>
+    <message>
+        <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
+        <translatorcomment>Informative text shown when user is trying to disable file versioning before proceed.</translatorcomment>
+        <translation type="unfinished">Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</translation>
+    </message>
+    <message>
+        <source>Remove files older than %1 days</source>
+        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than %1 days will be removed. Keep %1 placeholder, it will be replaced with the value specified by the user at runtime</translatorcomment>
+        <translation type="unfinished">Remove files older than %1 days</translation>
+    </message>
+    <message>
+        <source>Remove files older than 1 day</source>
+        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than 1 day will be removed.</translatorcomment>
+        <translation type="unfinished">Remove files older than 1 day</translation>
+    </message>
+    <message>
+        <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
+        <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the actual account.</translatorcomment>
+        <translation type="unfinished">You are about to permanently remove all file versions. Would you like to proceed?</translation>
+    </message>
+    <message>
+        <source>File versions: %1</source>
+        <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
+        <translation type="unfinished">File versions: %1</translation>
     </message>
 </context>
 <context>
@@ -2850,7 +2933,7 @@ when the application starts again</source>
     <message>
         <source>Next</source>
         <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>Tiếp</translation>
+        <translation>Kế tiếp</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3080,7 +3163,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation type="unfinished">Xin kiểm tra email và click vào liên kết để xác nhận tài khoản.</translation>
+        <translation type="unfinished">Hãy kiểm tra hộp thư của bạn và xác nhận tài khoản của bạn.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
@@ -3288,7 +3371,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">Lỗi giải mã</translation>
+        <translation type="unfinished">Giải mã sai</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3464,7 +3547,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished">Tải xuống</translation>
+        <translation type="unfinished">Tải về</translation>
     </message>
 </context>
 <context>
@@ -3568,7 +3651,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">Thùng Rác</translation>
+        <translation type="unfinished">Thùng rác</translation>
     </message>
 </context>
 <context>
@@ -3579,7 +3662,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">Thùng Rác</translation>
+        <translation type="unfinished">Thùng rác</translation>
     </message>
     <message>
         <source>Incoming Shares</source>

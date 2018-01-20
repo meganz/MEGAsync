@@ -11,17 +11,17 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">כונן בענן</translation>
+        <translation type="unfinished">כונן ענן</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">תיבת דואר נכנס</translation>
+        <translation type="unfinished">פריטים נכנסים</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
         <translatorcomment>Label for Rubbish Bin space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">אשפתון</translation>
+        <translation type="obsolete">סל האשפה</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -46,7 +46,7 @@
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation type="vanished">אוקי</translation>
+        <translation type="vanished">אוקיי</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -155,12 +155,12 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">בטל</translation>
+        <translation type="unfinished">ביטול</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for confirmation button.</translatorcomment>
-        <translation type="unfinished">אוקי</translation>
+        <translation type="unfinished">אוקיי</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -246,12 +246,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>אוקי</translation>
+        <translation>אוקיי</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>בטל</translation>
+        <translation>ביטול</translation>
     </message>
     <message>
         <source>Error</source>
@@ -275,12 +275,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">תנאי השימוש</translation>
+        <translation type="unfinished">תנאי שימוש</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished">מדיניות הפרטיות</translation>
+        <translation type="unfinished">מדיניות פרטיות</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -346,7 +346,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>בטל</translation>
+        <translation>ביטול</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -379,12 +379,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>אוקי</translation>
+        <translation>אוקיי</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>בטל</translation>
+        <translation>ביטול</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -442,7 +442,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>1 folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected a folder</translatorcomment>
-        <translation type="unfinished">תיקייה אחת</translation>
+        <translation type="unfinished">תיקייה 1</translation>
     </message>
     <message>
         <source>%i folders</source>
@@ -527,7 +527,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">התחבר</translation>
+        <translation type="unfinished">התחברות</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
@@ -586,12 +586,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>אוקי</translation>
+        <translation>אוקיי</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>בטל</translation>
+        <translation>ביטול</translation>
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
@@ -610,7 +610,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>טעות בפיענוח</translation>
+        <translation>שגיאת פיענוח</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -824,7 +824,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">השתדרג לPRO</translation>
+        <translation type="unfinished">שדרג למתקדם</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -869,12 +869,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">כונן בענן</translation>
+        <translation type="unfinished">כונן ענן</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">תיבת דואר נכנס</translation>
+        <translation type="unfinished">פריטים נכנסים</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -978,7 +978,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished">התחבר</translation>
+        <translation type="unfinished">התחברות</translation>
     </message>
     <message>
         <source>Create Account</source>
@@ -1015,6 +1015,44 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Install just for me</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is just for the current user.</translatorcomment>
         <translation>התקן רק במשתמש שלי</translation>
+    </message>
+</context>
+<context>
+    <name>LocalCleanScheduler</name>
+    <message>
+        <source>%1 cleaning scheduler</source>
+        <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">%1 cleaning scheduler</translation>
+    </message>
+    <message>
+        <source>Remove files older than</source>
+        <translatorcomment>Checkbox label to indicate that files older than specified value will be removed.</translatorcomment>
+        <translation type="unfinished">מחק קבצים הישנים מ-</translation>
+    </message>
+    <message>
+        <source>days</source>
+        <translatorcomment>Label to indicate number of days in context of scheduled deletions</translatorcomment>
+        <translation type="unfinished">ימים</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel button.</translatorcomment>
+        <translation type="unfinished">ביטול</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for OK button.</translatorcomment>
+        <translation type="unfinished">אוקיי</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">אזהרה</translation>
+    </message>
+    <message>
+        <source>Please enter a valid value</source>
+        <translatorcomment>Information message shown when user introduces an invalid value </translatorcomment>
+        <translation type="unfinished">Please enter a valid value</translation>
     </message>
 </context>
 <context>
@@ -1167,7 +1205,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">התיקייה (%l) לא הועלאה מכיוון שהיא גדולה במיוחד. אנו עושים את הבדיקה הזאת על מנת למנוע העלאה של קבצי אתחול שלמים, אשר אינם יעילים ומסוכנים.</translation>
+        <translation type="obsolete">התיקייה (%1) לא הועלאה מכיוון שהיא גדולה במיוחד. אנו עושים את הבדיקה הזאת על מנת למנוע העלאה של קבצי אתחול שלמים, אשר אינם יעילים ומסוכנים.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
@@ -1407,7 +1445,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="unfinished">שגיאה זמית, מנסה שוב.</translation>
+        <translation type="unfinished">שגיאה זמנית, מנסה שוב.</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -1458,7 +1496,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
-        <translation type="unfinished">העלאה</translation>
+        <translation type="unfinished">העלה</translation>
     </message>
     <message>
         <source>Download</source>
@@ -1669,7 +1707,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label of context menu option to cancel selected transfer</translatorcomment>
-        <translation type="unfinished">בטל</translation>
+        <translation type="unfinished">ביטול</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -1736,12 +1774,12 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">בטל</translation>
+        <translation type="unfinished">ביטול</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for OK button.</translatorcomment>
-        <translation type="unfinished">אוקי</translation>
+        <translation type="unfinished">אוקיי</translation>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
@@ -1774,17 +1812,17 @@ Are you sure?</source>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>אוקי</translation>
+        <translation>אוקיי</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>בטל</translation>
+        <translation>ביטול</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
-        <translation type="obsolete">כונן בענן</translation>
+        <translation type="obsolete">כונן ענן</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
@@ -1884,7 +1922,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>בטל</translation>
+        <translation>ביטול</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2023,11 +2061,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">אוקי</translation>
+        <translation type="unfinished">אוקיי</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">בטל</translation>
+        <translation type="unfinished">ביטול</translation>
     </message>
 </context>
 <context>
@@ -2147,12 +2185,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>אוקי</translation>
+        <translation>אוקיי</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>בטל</translation>
+        <translation>ביטול</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -2207,7 +2245,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
-        <translation>השתדרג</translation>
+        <translation>שדרג</translation>
     </message>
     <message>
         <source>Synced folders</source>
@@ -2718,6 +2756,51 @@ when the application starts again</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync</translatorcomment>
         <translation type="unfinished">Restart</translation>
     </message>
+    <message>
+        <source>%1 cleaning scheduler</source>
+        <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">%1 cleaning scheduler</translation>
+    </message>
+    <message>
+        <source>Disable file versioning</source>
+        <translatorcomment>Checkbox label to enable/disable file versioning feature</translatorcomment>
+        <translation type="unfinished">Disable file versioning</translation>
+    </message>
+    <message>
+        <source>Local folder with a backup of files deleted in MEGA</source>
+        <translatorcomment>Tooltip shown when hover local debris label.</translatorcomment>
+        <translation type="unfinished">A local folder with a backup of files deleted in MEGA</translation>
+    </message>
+    <message>
+        <source>Folder in MEGA with a backup of files deleted in the local computer</source>
+        <translatorcomment>Tooltip shown when hover remote SyncDebris label.</translatorcomment>
+        <translation type="unfinished">A folder in MEGA with a backup of files deleted in the local computer</translation>
+    </message>
+    <message>
+        <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
+        <translatorcomment>Informative text shown when user is trying to disable file versioning before proceed.</translatorcomment>
+        <translation type="unfinished">Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</translation>
+    </message>
+    <message>
+        <source>Remove files older than %1 days</source>
+        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than %1 days will be removed. Keep %1 placeholder, it will be replaced with the value specified by the user at runtime</translatorcomment>
+        <translation type="unfinished">Remove files older than %1 days</translation>
+    </message>
+    <message>
+        <source>Remove files older than 1 day</source>
+        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than 1 day will be removed.</translatorcomment>
+        <translation type="unfinished">Remove files older than 1 day</translation>
+    </message>
+    <message>
+        <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
+        <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the actual account.</translatorcomment>
+        <translation type="unfinished">You are about to permanently remove all file versions. Would you like to proceed?</translation>
+    </message>
+    <message>
+        <source>File versions: %1</source>
+        <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
+        <translation type="unfinished">File versions: %1</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -2855,7 +2938,7 @@ when the application starts again</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>בטל</translation>
+        <translation>ביטול</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3080,7 +3163,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation type="unfinished">אנא בדוק את תיבת הדואר שלך ולחץ על הקישור על מנת לאשר את חשבונך.</translation>
+        <translation type="unfinished">אנא בדוק את האימייל שלך ולחץ על לינק האישור לחשבונך.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
@@ -3127,7 +3210,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 folder</source>
         <translatorcomment>Label to indicate one folder.</translatorcomment>
-        <translation>תיקייה אחת</translation>
+        <translation>תיקייה 1</translation>
     </message>
     <message>
         <source>%1 folders</source>
@@ -3180,12 +3263,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">בטל</translation>
+        <translation type="unfinished">ביטול</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation type="unfinished">אוקי</translation>
+        <translation type="unfinished">אוקיי</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3213,7 +3296,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation type="unfinished">כונן בענן</translation>
+        <translation type="unfinished">כונן ענן</translation>
     </message>
     <message>
         <source>Public link</source>
@@ -3288,7 +3371,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">טעות בפיענוח</translation>
+        <translation type="unfinished">שגיאת פיענוח</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3460,7 +3543,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload</source>
-        <translation type="unfinished">העלאה</translation>
+        <translation type="unfinished">העלה</translation>
     </message>
     <message>
         <source>Download</source>
@@ -3539,12 +3622,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>אוקי</translation>
+        <translation>אוקיי</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>בטל</translation>
+        <translation>ביטול</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -3556,7 +3639,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">תיבת דואר נכנס</translation>
+        <translation type="unfinished">פריטים נכנסים</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -3564,22 +3647,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">כונן בענן</translation>
+        <translation type="unfinished">כונן ענן</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">אשפתון</translation>
+        <translation type="unfinished">סל האשפה</translation>
     </message>
 </context>
 <context>
     <name>UsageWidget</name>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">כונן בענן</translation>
+        <translation type="unfinished">כונן ענן</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">אשפתון</translation>
+        <translation type="unfinished">סל האשפה</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -3587,7 +3670,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">תיבת דואר נכנס</translation>
+        <translation type="unfinished">פריטים נכנסים</translation>
     </message>
     <message>
         <source>Used</source>

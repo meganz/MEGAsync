@@ -135,12 +135,12 @@
     <message>
         <source>Add exclusion</source>
         <translatorcomment>Title of the dialog displayed when an user is adding a new exclusion rule for the synchronizations.</translatorcomment>
-        <translation type="unfinished">Add exclusion</translation>
+        <translation type="unfinished">新增排除規則</translation>
     </message>
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization</translation>
+        <translation type="unfinished">請輸入名稱、絕對路徑（允許使用*星號和?問號），或者也可選擇要從同步中排除的檔案或資料夾</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -180,17 +180,17 @@
     <message>
         <source>Select the file or folder you want to exclude</source>
         <translatorcomment>Caption of dialog to select a file or folder to exclude for the synchronizations</translatorcomment>
-        <translation type="unfinished">Select the file or folder you want to exclude</translation>
+        <translation type="unfinished">請選擇您想要排除的檔案或資料夾</translation>
     </message>
     <message>
         <source>Select the folder you want to exclude</source>
         <translatorcomment>Caption of dialog to select a folder to exclude for the synchronizations</translatorcomment>
-        <translation type="unfinished">Select the folder you want to exclude</translation>
+        <translation type="unfinished">請選擇您想要排除的資料夾</translation>
     </message>
     <message>
         <source>Select the file you want to exclude</source>
         <translatorcomment>Caption of dialog to select a file to exclude for the synchronizations</translatorcomment>
-        <translation type="unfinished">Select the file you want to exclude</translation>
+        <translation type="unfinished">請選擇您想要排除的檔案</translation>
     </message>
 </context>
 <context>
@@ -323,7 +323,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">You are about to allow a setting that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
+        <translation type="unfinished">您即將進行一個讓您的通訊內容可以被攔截的設定。 因我們有強大的端對端加密技術，攻擊者仍是無法存取您的資料的，但他們可能會盲目地將您的檔案和資料夾移動到MEGA中、刪除檔案或使您無法登入您的帳戶。</translation>
     </message>
 </context>
 <context>
@@ -1018,6 +1018,44 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>LocalCleanScheduler</name>
+    <message>
+        <source>%1 cleaning scheduler</source>
+        <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">%1 清理排程功能</translation>
+    </message>
+    <message>
+        <source>Remove files older than</source>
+        <translatorcomment>Checkbox label to indicate that files older than specified value will be removed.</translatorcomment>
+        <translation type="unfinished">刪除較舊的檔案，早於</translation>
+    </message>
+    <message>
+        <source>days</source>
+        <translatorcomment>Label to indicate number of days in context of scheduled deletions</translatorcomment>
+        <translation type="unfinished">日</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel button.</translatorcomment>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for OK button.</translatorcomment>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">警告</translation>
+    </message>
+    <message>
+        <source>Please enter a valid value</source>
+        <translatorcomment>Information message shown when user introduces an invalid value </translatorcomment>
+        <translation type="unfinished">請輸入有效的數值</translation>
+    </message>
+</context>
+<context>
     <name>MegaApplication</name>
     <message>
         <source>MEGAsync</source>
@@ -1394,7 +1432,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</translation>
+        <translation type="unfinished">我們的SSL密鑰無法驗證。您可能是受到了中間人攻擊，或是您的防毒軟體攔截了您的通訊內容，才會導致此問題發生。請先禁用它後重試。</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -1438,7 +1476,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation type="unfinished">Could not find a system tray to place the MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</translation>
+        <translation type="unfinished">無法找到系統匣來放置MEGAsync縮圖。MEGAsync若能有系統匣圖示將會更為方便，但如果沒有圖示，它也可以正常運作。若您想開啟界面，只需再次開啟MEGAsync即可。</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -1719,7 +1757,7 @@ inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
         <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
-        <translation type="obsolete">目標資料夾已同步，而您已經有一個名稱相同的檔案於其中（%1）。如果選擇繼續上傳，之前的檔案將會被覆蓋。您確定要繼續嗎？</translation>
+        <translation type="obsolete">目標資料夾已同步，而您已經有一個名稱相同的檔案於其中(%1)。如果選擇繼續上傳，之前的檔案將會被覆蓋。您確定要繼續嗎？</translation>
     </message>
 </context>
 <context>
@@ -2404,7 +2442,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation type="obsolete">新的排除檔案名功能選項將於應用程式的下一個階段被考慮規劃。</translation>
+        <translation type="obsolete">應用程式再次啟動時，新的排除檔案名將可應用。</translation>
     </message>
     <message>
         <source>Cache</source>
@@ -2604,7 +2642,7 @@ Do you want to restart MEGAsync now?</source>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
-        <translation type="unfinished">新的排除檔案名功能選項將於應用程式的下一個階段被考慮規劃。</translation>
+        <translation type="unfinished">應用程式再次啟動時，新的排除檔案名將可應用。</translation>
     </message>
     <message>
         <source>The new excluded file sizes will be taken into account when the application starts again.</source>
@@ -2717,6 +2755,51 @@ when the application starts again</source>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync</translatorcomment>
         <translation type="unfinished">重新啟動</translation>
+    </message>
+    <message>
+        <source>%1 cleaning scheduler</source>
+        <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">%1 清理排程功能</translation>
+    </message>
+    <message>
+        <source>Disable file versioning</source>
+        <translatorcomment>Checkbox label to enable/disable file versioning feature</translatorcomment>
+        <translation type="unfinished">停用檔案版本功能</translation>
+    </message>
+    <message>
+        <source>Local folder with a backup of files deleted in MEGA</source>
+        <translatorcomment>Tooltip shown when hover local debris label.</translatorcomment>
+        <translation type="unfinished">有一個含有檔案備份的MEGA資料夾已被刪除</translation>
+    </message>
+    <message>
+        <source>Folder in MEGA with a backup of files deleted in the local computer</source>
+        <translatorcomment>Tooltip shown when hover remote SyncDebris label.</translatorcomment>
+        <translation type="unfinished">於本機電腦中，有一個含有檔案備份的MEGA資料夾已被刪除</translation>
+    </message>
+    <message>
+        <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
+        <translatorcomment>Informative text shown when user is trying to disable file versioning before proceed.</translatorcomment>
+        <translation type="unfinished">停用檔案版本功能將會阻止系統創建與儲存新的檔案版本。您確定要繼續嗎？</translation>
+    </message>
+    <message>
+        <source>Remove files older than %1 days</source>
+        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than %1 days will be removed. Keep %1 placeholder, it will be replaced with the value specified by the user at runtime</translatorcomment>
+        <translation type="unfinished">移除超過%1天的檔案</translation>
+    </message>
+    <message>
+        <source>Remove files older than 1 day</source>
+        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than 1 day will be removed.</translatorcomment>
+        <translation type="unfinished">移除超過1天的檔案</translation>
+    </message>
+    <message>
+        <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
+        <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the actual account.</translatorcomment>
+        <translation type="unfinished">您將永久刪除所有檔案版本。確定要繼續嗎？</translation>
+    </message>
+    <message>
+        <source>File versions: %1</source>
+        <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
+        <translation type="unfinished">檔案歷史版本：%1</translation>
     </message>
 </context>
 <context>

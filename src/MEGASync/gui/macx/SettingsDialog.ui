@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>593</height>
+    <height>648</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -558,7 +558,7 @@ padding-bottom: 6px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <property name="sizePolicy">
@@ -3370,9 +3370,9 @@ background:transparent;</string>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_17">
+         <layout class="QHBoxLayout" name="horizontalLayout_11">
           <property name="leftMargin">
-           <number>30</number>
+           <number>29</number>
           </property>
           <property name="topMargin">
            <number>0</number>
@@ -3391,7 +3391,7 @@ background:transparent;</string>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_11">
+            <layout class="QHBoxLayout" name="horizontalLayout_17">
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -3409,8 +3409,33 @@ background:transparent;</string>
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
                </property>
+               <property name="toolTip">
+                <string>Local folder with a backup of files deleted in MEGA</string>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">margin-top: 2px;</string>
+               </property>
                <property name="text">
                 <string>Local backup: %1</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="bClearCache">
+               <property name="enabled">
+                <bool>true</bool>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Clear</string>
+               </property>
+               <property name="autoDefault">
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -3421,21 +3446,11 @@ background:transparent;</string>
                </property>
                <property name="sizeHint" stdset="0">
                 <size>
-                 <width>17</width>
-                 <height>10</height>
+                 <width>40</width>
+                 <height>20</height>
                 </size>
                </property>
               </spacer>
-             </item>
-             <item>
-              <widget class="QPushButton" name="bClearCache">
-               <property name="enabled">
-                <bool>true</bool>
-               </property>
-               <property name="text">
-                <string>Clear</string>
-               </property>
-              </widget>
              </item>
             </layout>
            </widget>
@@ -3448,7 +3463,7 @@ background:transparent;</string>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
-            <layout class="QHBoxLayout" name="horizontalLayout_14">
+            <layout class="QHBoxLayout" name="horizontalLayout_24">
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -3462,6 +3477,19 @@ background:transparent;</string>
               <number>0</number>
              </property>
              <item>
+              <spacer name="rSpacer">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item>
               <widget class="QLabel" name="lRemoteCacheSize">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -3472,6 +3500,9 @@ background:transparent;</string>
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
                </property>
+               <property name="toolTip">
+                <string>Folder in MEGA with a backup of files deleted in the local computer</string>
+               </property>
                <property name="text">
                 <string>Remote backup: %1</string>
                </property>
@@ -3479,19 +3510,6 @@ background:transparent;</string>
                 <number>2</number>
                </property>
               </widget>
-             </item>
-             <item>
-              <spacer name="horizontalSpacer_9">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>17</width>
-                 <height>10</height>
-                </size>
-               </property>
-              </spacer>
              </item>
              <item>
               <widget class="QPushButton" name="bClearRemoteCache">
@@ -3519,7 +3537,179 @@ background:transparent;</string>
         </widget>
        </item>
        <item>
+        <widget class="QWidget" name="wScheduler" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_25">
+          <property name="spacing">
+           <number>-1</number>
+          </property>
+          <property name="leftMargin">
+           <number>30</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>30</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QPushButton" name="bLocalCleaner">
+            <property name="text">
+             <string>%1 cleaning scheduler</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lLocalCleanerState">
+            <property name="styleSheet">
+             <string notr="true">font-style: normal;</string>
+            </property>
+            <property name="text">
+             <string>Disabled</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_10">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <widget class="QToolButton" name="lCacheSeparator">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>500</width>
+           <height>2</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>500</width>
+           <height>2</height>
+          </size>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border:none;
+background:transparent;</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../Resources_macx.qrc">
+           <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>500</width>
+           <height>2</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="wMngVersions" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_14">
+          <property name="leftMargin">
+           <number>30</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>30</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QCheckBox" name="cDisableFileVersioning">
+            <property name="minimumSize">
+             <size>
+              <width>145</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>Disable file versioning</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_5">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="lFileVersionsSize">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
+            <property name="text">
+             <string>File versions: %1</string>
+            </property>
+            <property name="margin">
+             <number>2</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="bClearFileVersions">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
+            <property name="text">
+             <string>Clear</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="toolButton_7">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -4158,7 +4348,6 @@ background:transparent;</string>
   <tabstop>bDeleteName</tabstop>
   <tabstop>bAddName</tabstop>
   <tabstop>lCacheSize</tabstop>
-  <tabstop>bClearCache</tabstop>
   <tabstop>lRemoteCacheSize</tabstop>
   <tabstop>bClearRemoteCache</tabstop>
   <tabstop>cOverlayIcons</tabstop>

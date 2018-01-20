@@ -592,6 +592,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     isFirstFileSynced = false;
     transferManager = NULL;
     queuedUserStats = 0;
+    cleaningSchedulerExecution = 0;
     maxMemoryUsage = 0;
     nUnviewedTransfers = 0;
     completedTabActive = false;
@@ -1331,6 +1332,7 @@ void MegaApplication::loggedIn()
     megaApi->getPricing();
     megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
     megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
+    megaApi->getFileVersionsOption();
 
     const char *email = megaApi->getMyEmail();
     if (email)
@@ -2007,6 +2009,13 @@ void MegaApplication::periodicTasks()
     if (appfinished)
     {
         return;
+    }
+
+    if (!cleaningSchedulerExecution || ((QDateTime::currentMSecsSinceEpoch() - cleaningSchedulerExecution) > Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS))
+    {
+        cleaningSchedulerExecution = QDateTime::currentMSecsSinceEpoch();
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Cleaning local cache folders");
+        cleanLocalCaches();
     }
 
     if (queuedUserStats && queuedUserStats < QDateTime::currentMSecsSinceEpoch())
@@ -2702,6 +2711,45 @@ void MegaApplication::unlink()
     downloadQueue.clear();
     megaApi->logout();
     Platform::notifyAllSyncFoldersRemoved();
+}
+
+void MegaApplication::cleanLocalCaches()
+{
+    if (!preferences->logged())
+    {
+        return;
+    }
+
+    if (preferences->cleanerDaysLimit())
+    {
+        int timeLimitDays = preferences->cleanerDaysLimitValue();
+        for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
+        {
+            QString syncPath = preferences->getLocalFolder(i);
+            if (!syncPath.isEmpty())
+            {
+                QDir cacheDir(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
+                if (cacheDir.exists())
+                {
+                    QFileInfoList dailyCaches = cacheDir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
+                    for (int i = 0; i < dailyCaches.size(); i++)
+                    {
+                        QFileInfo cacheFolder = dailyCaches[i];
+                        if (!cacheFolder.fileName().compare(QString::fromUtf8("tmp"))) //DO NOT REMOVE tmp subfolder
+                        {
+                            continue;
+                        }
+
+                        QDateTime creationTime(cacheFolder.created());
+                        if (creationTime.isValid() && creationTime.daysTo(QDateTime::currentDateTime()) > timeLimitDays)
+                        {
+                            Utilities::removeRecursively(cacheFolder.canonicalFilePath());
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 void MegaApplication::showInfoMessage(QString message, QString title)
@@ -5269,6 +5317,25 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         }
         break;
     }
+    case MegaRequest::TYPE_SET_ATTR_USER:
+    {
+        if (!preferences->logged())
+        {
+            break;
+        }
+
+        if (e->getErrorCode() != MegaError::API_OK)
+        {
+            break;
+        }
+
+        if (request->getParamType() == MegaApi::USER_ATTR_DISABLE_VERSIONS)
+        {
+            preferences->disableFileVersioning(!strcmp(request->getText(), "1"));
+        }
+
+        break;
+    }
     case MegaRequest::TYPE_GET_ATTR_USER:
     {
         if (!preferences->logged())
@@ -5314,6 +5381,15 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             if (infoDialog)
             {
                 infoDialog->setAvatar();
+            }
+        }
+        else if (request->getParamType() == MegaApi::USER_ATTR_DISABLE_VERSIONS)
+        {
+            if (e->getErrorCode() == MegaError::API_OK
+                    || e->getErrorCode() == MegaError::API_ENOENT)
+            {
+                // API_ENOENT is expected when the user has never disabled versioning
+                preferences->disableFileVersioning(request->getFlag());
             }
         }
 
@@ -6368,6 +6444,11 @@ void MegaApplication::onUsersUpdate(MegaApi *, MegaUserList *userList)
                     megaApi->getUserAvatar(Utilities::getAvatarPath(QString::fromUtf8(email)).toUtf8().constData());
                     delete [] email;
                 }
+            }
+
+            if (user->hasChanged(MegaUser::CHANGE_TYPE_DISABLE_VERSIONS))
+            {
+                megaApi->getFileVersionsOption();
             }
             break;
         }

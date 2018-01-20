@@ -93,7 +93,12 @@ const char *TARGET_PATHS_WIN[] = {
     "ucrtbase.dll",
     "uninst.exe",
     "vccorlib140.dll",
-    "vcruntime140.dll"
+    "vcruntime140.dll",
+    "avcodec-57.dll",
+    "avformat-57.dll",
+    "avutil-55.dll",
+    "swscale-4.dll",
+    "swresample-2.dll"
 };
 
 const char *UPDATE_FILES_WIN[] = {
@@ -173,11 +178,20 @@ const char *UPDATE_FILES_WIN[] = {
     "ucrtbase.dll",
     "uninst.exe",
     "vccorlib140.dll",
-    "vcruntime140.dll"
+    "vcruntime140.dll",
+    "avcodec-57.dll",
+    "avformat-57.dll",
+    "avutil-55.dll",
+    "swscale-4.dll",
+    "swresample-2.dll"
 };
 
 const char *TARGET_PATHS_OSX[] = {
     "Contents/_CodeSignature/CodeResources",
+    "Contents/Frameworks/libavcodec.57.dylib",
+    "Contents/Frameworks/libavformat.57.dylib",
+    "Contents/Frameworks/libavutil.55.dylib",
+    "Contents/Frameworks/libswscale.4.dylib",
     "Contents/Frameworks/QtCore.framework/Versions/5/_CodeSignature/CodeResources",
     "Contents/Frameworks/QtCore.framework/Versions/5/QtCore",
     "Contents/Frameworks/QtCore.framework/Versions/5/Resources/Info.plist",
@@ -263,6 +277,10 @@ const char *TARGET_PATHS_OSX[] = {
 
 const char *UPDATE_FILES_OSX[] = {
     "Contents/_CodeSignature/CodeResources",
+    "Contents/Frameworks/libavcodec.57.dylib",
+    "Contents/Frameworks/libavformat.57.dylib",
+    "Contents/Frameworks/libavutil.55.dylib",
+    "Contents/Frameworks/libswscale.4.dylib",
     "Contents/Frameworks/QtCore.framework/Versions/5/_CodeSignature/CodeResources",
     "Contents/Frameworks/QtCore.framework/Versions/5/QtCore",
     "Contents/Frameworks/QtCore.framework/Versions/5/Resources/Info.plist",
