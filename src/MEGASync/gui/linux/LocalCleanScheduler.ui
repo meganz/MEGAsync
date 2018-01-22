@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>90</height>
+    <height>97</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>400</width>
-    <height>90</height>
+    <height>97</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -27,7 +27,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
-    <number>-1</number>
+    <number>6</number>
    </property>
    <property name="leftMargin">
     <number>13</number>
@@ -50,6 +50,9 @@
       </sizepolicy>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <property name="spacing">
+       <number>6</number>
+      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -67,13 +70,13 @@
         <property name="minimumSize">
          <size>
           <width>210</width>
-          <height>34</height>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>210</width>
-          <height>34</height>
+          <height>16777215</height>
          </size>
         </property>
         <property name="text">
@@ -82,12 +85,15 @@
        </widget>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout">
+       <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0">
         <property name="spacing">
-         <number>0</number>
+         <number>6</number>
+        </property>
+        <property name="sizeConstraint">
+         <enum>QLayout::SetDefaultConstraint</enum>
         </property>
         <property name="leftMargin">
-         <number>14</number>
+         <number>54</number>
         </property>
         <item>
          <widget class="QSpinBox" name="eNumberDays">
@@ -99,7 +105,7 @@
           </property>
           <property name="maximumSize">
            <size>
-            <width>64</width>
+            <width>16777215</width>
             <height>16777215</height>
            </size>
           </property>
@@ -112,7 +118,7 @@
          <widget class="QLabel" name="lDays">
           <property name="minimumSize">
            <size>
-            <width>50</width>
+            <width>0</width>
             <height>0</height>
            </size>
           </property>
@@ -123,7 +129,7 @@
            <string>days</string>
           </property>
           <property name="alignment">
-           <set>Qt::AlignCenter</set>
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
           </property>
          </widget>
         </item>
@@ -189,7 +195,7 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>32</height>
+          <height>0</height>
          </size>
         </property>
         <property name="text">
@@ -202,7 +208,7 @@
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>32</height>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">

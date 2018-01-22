@@ -11,12 +11,12 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">คลาวด์ไดรฟ์</translation>
+        <translation type="unfinished">คลาวด์ไดร์ฟ</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">กล่องขาเข้า</translation>
+        <translation type="unfinished">กล่องเข้า</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -26,7 +26,7 @@
     <message>
         <source>Storage</source>
         <translatorcomment>Label for Storage space used. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">พื้นที่จัดเก็บ</translation>
+        <translation type="obsolete">พื้นที่จัดเก็บข้อมูล</translation>
     </message>
     <message>
         <source>Files</source>
@@ -67,7 +67,7 @@
     </message>
     <message>
         <source>Total size taken up by file versions:</source>
-        <translation type="unfinished">Total size taken up by file versions:</translation>
+        <translation type="unfinished">ขนาดโดยรวมของเวอร์ชันไฟล์:</translation>
     </message>
     <message>
         <source>USED STORAGE %1</source>
@@ -135,22 +135,22 @@
     <message>
         <source>Add exclusion</source>
         <translatorcomment>Title of the dialog displayed when an user is adding a new exclusion rule for the synchronizations.</translatorcomment>
-        <translation type="unfinished">Add exclusion</translation>
+        <translation type="unfinished">เพิ่มการยกเว้น</translation>
     </message>
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization</translation>
+        <translation type="unfinished">กรอกชื่อเส้นทางแบบเต็ม (อนุญาตให้ใช้สัญลักษณ์ * และ? แทนได้) หรือเลือกไฟล์หรือโฟลเดอร์ที่คุณต้องการยกเว้นจากการซิงโครไนซ์</translation>
     </message>
     <message>
         <source>Choose File</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a file to be excluded for the synchonization</translatorcomment>
-        <translation type="unfinished">Choose File</translation>
+        <translation type="unfinished">เลือกไฟล์</translation>
     </message>
     <message>
         <source>Choose Folder</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a folder to be excluded for the synchonization</translatorcomment>
-        <translation type="unfinished">Choose Folder</translation>
+        <translation type="unfinished">เลือกโฟลเดอร์</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -175,22 +175,22 @@
     <message>
         <source>Please enter a valid file name or absolute path.</source>
         <translatorcomment>Information message shown when the user selects an invalid file name or path for the exclusion</translatorcomment>
-        <translation type="unfinished">Please enter a valid file name or absolute path.</translation>
+        <translation type="unfinished">กรุณากรอกชื่อไฟล์ที่ถูกต้องหรือเส้นทางแบบเต็ม</translation>
     </message>
     <message>
         <source>Select the file or folder you want to exclude</source>
         <translatorcomment>Caption of dialog to select a file or folder to exclude for the synchronizations</translatorcomment>
-        <translation type="unfinished">Select the file or folder you want to exclude</translation>
+        <translation type="unfinished">เลือกไฟล์หรือโฟลเดอร์ที่คุณต้องการยกเว้น</translation>
     </message>
     <message>
         <source>Select the folder you want to exclude</source>
         <translatorcomment>Caption of dialog to select a folder to exclude for the synchronizations</translatorcomment>
-        <translation type="unfinished">Select the folder you want to exclude</translation>
+        <translation type="unfinished">เลือกโฟลเดอร์ที่คุณต้องการยกเว้น</translation>
     </message>
     <message>
         <source>Select the file you want to exclude</source>
         <translatorcomment>Caption of dialog to select a file to exclude for the synchronizations</translatorcomment>
-        <translation type="unfinished">Select the file you want to exclude</translation>
+        <translation type="unfinished">เลือกไฟล์ที่คุณต้องการยกเว้น</translation>
     </message>
 </context>
 <context>
@@ -275,7 +275,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">ข้อกำหนดในการบริการ</translation>
+        <translation type="unfinished">ข้อตกลงในการใช้งาน</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
@@ -313,7 +313,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>No</source>
         <translatorcomment>Negative response to a question. The text will be inside a button.</translatorcomment>
-        <translation type="unfinished">ไม่</translation>
+        <translation type="unfinished">ไม่ใช่</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -323,7 +323,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">You are about to allow a setting that could allow your communications to be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny you access to your account.</translation>
+        <translation type="unfinished">คุณกำลังจะอนุญาตการตั้งค่า ที่อาจทำให้การสื่อสารถูกดักฟังได้ ข้อมูลของคุณจะยังไม่สามารถเข้าถึงเมื่อถูกโจมตี เนื่องจากมีการเข้ารหัสตั้งแต่ต้นทางถึงปลายทาง แต่พวกเขาสามารถสุ่มการย้ายไฟล์และโฟลเดอร์ของคุณใน MEGA ได้ ให้คุณลบหรือปฏิเสธการเข้าถึงบัญชีของคุณ</translation>
     </message>
 </context>
 <context>
@@ -442,7 +442,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>1 folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected a folder</translatorcomment>
-        <translation type="unfinished">1 โฟลเดอร์</translation>
+        <translation type="unfinished">1 โฟล์เดอร์</translation>
     </message>
     <message>
         <source>%i folders</source>
@@ -747,7 +747,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">การดาวน์โหลด</translation>
+        <translation type="vanished">กำลังดาวน์โหลด</translation>
     </message>
     <message>
         <source>Uploading </source>
@@ -869,12 +869,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">คลาวด์ไดรฟ์</translation>
+        <translation type="unfinished">คลาวด์ไดร์ฟ</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">กล่องขาเข้า</translation>
+        <translation type="unfinished">กล่องเข้า</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -889,7 +889,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Show MEGAsync options</source>
         <translatorcomment>Tooltip for the button that opens MEGAsync options menu</translatorcomment>
-        <translation type="unfinished">Show MEGAsync options</translation>
+        <translation type="unfinished">แสดงตัวเลือก MEGAsync</translation>
     </message>
     <message>
         <source>USED BANDWIDTH %1</source>
@@ -1015,6 +1015,44 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Install just for me</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is just for the current user.</translatorcomment>
         <translation>ติดตั้งเพียงแค่สำหรับฉัน</translation>
+    </message>
+</context>
+<context>
+    <name>LocalCleanScheduler</name>
+    <message>
+        <source>%1 cleaning scheduler</source>
+        <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">%1 cleaning scheduler</translation>
+    </message>
+    <message>
+        <source>Remove files older than</source>
+        <translatorcomment>Checkbox label to indicate that files older than specified value will be removed.</translatorcomment>
+        <translation type="unfinished">ลบไฟล์ที่เก่ากว่า</translation>
+    </message>
+    <message>
+        <source>days</source>
+        <translatorcomment>Label to indicate number of days in context of scheduled deletions</translatorcomment>
+        <translation type="unfinished">วัน</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel button.</translatorcomment>
+        <translation type="unfinished">ยกเลิก</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for OK button.</translatorcomment>
+        <translation type="unfinished">ตกลง</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">คำเตือน</translation>
+    </message>
+    <message>
+        <source>Please enter a valid value</source>
+        <translatorcomment>Information message shown when user introduces an invalid value </translatorcomment>
+        <translation type="unfinished">Please enter a valid value</translation>
     </message>
 </context>
 <context>
@@ -1407,7 +1445,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="unfinished">มีข้อผิดพลาดชั่วคราว กรุณาลองใหม่</translation>
+        <translation type="unfinished">เกิดการผิดพลาดขึ้นชั่วขณะ, กำลังลองใหม่.</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -1509,7 +1547,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>ข้อผิดพลาดภายใน</translation>
+        <translation>เกิดข้อผิดพลาดภายใน</translation>
     </message>
     <message>
         <source>Invalid argument</source>
@@ -1784,7 +1822,7 @@ Are you sure?</source>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
-        <translation type="obsolete">คลาวด์ไดรฟ์</translation>
+        <translation type="obsolete">คลาวด์ไดร์ฟ</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
@@ -1976,7 +2014,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Storage</source>
-        <translation type="unfinished">พื้นที่จัดเก็บ</translation>
+        <translation type="unfinished">พื้นที่จัดเก็บข้อมูล</translation>
     </message>
     <message>
         <source>Bandwidth</source>
@@ -2716,7 +2754,52 @@ when the application starts again</source>
     <message>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync</translatorcomment>
-        <translation type="unfinished">Restart</translation>
+        <translation type="unfinished">รีสตาร์ท</translation>
+    </message>
+    <message>
+        <source>%1 cleaning scheduler</source>
+        <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">%1 cleaning scheduler</translation>
+    </message>
+    <message>
+        <source>Disable file versioning</source>
+        <translatorcomment>Checkbox label to enable/disable file versioning feature</translatorcomment>
+        <translation type="unfinished">Disable file versioning</translation>
+    </message>
+    <message>
+        <source>Local folder with a backup of files deleted in MEGA</source>
+        <translatorcomment>Tooltip shown when hover local debris label.</translatorcomment>
+        <translation type="unfinished">A local folder with a backup of files deleted in MEGA</translation>
+    </message>
+    <message>
+        <source>Folder in MEGA with a backup of files deleted in the local computer</source>
+        <translatorcomment>Tooltip shown when hover remote SyncDebris label.</translatorcomment>
+        <translation type="unfinished">A folder in MEGA with a backup of files deleted in the local computer</translation>
+    </message>
+    <message>
+        <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
+        <translatorcomment>Informative text shown when user is trying to disable file versioning before proceed.</translatorcomment>
+        <translation type="unfinished">Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</translation>
+    </message>
+    <message>
+        <source>Remove files older than %1 days</source>
+        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than %1 days will be removed. Keep %1 placeholder, it will be replaced with the value specified by the user at runtime</translatorcomment>
+        <translation type="unfinished">Remove files older than %1 days</translation>
+    </message>
+    <message>
+        <source>Remove files older than 1 day</source>
+        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than 1 day will be removed.</translatorcomment>
+        <translation type="unfinished">Remove files older than 1 day</translation>
+    </message>
+    <message>
+        <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
+        <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the actual account.</translatorcomment>
+        <translation type="unfinished">You are about to permanently remove all file versions. Would you like to proceed?</translation>
+    </message>
+    <message>
+        <source>File versions: %1</source>
+        <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
+        <translation type="unfinished">File versions: %1</translation>
     </message>
 </context>
 <context>
@@ -3127,7 +3210,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 folder</source>
         <translatorcomment>Label to indicate one folder.</translatorcomment>
-        <translation>1 โฟลเดอร์</translation>
+        <translation>1 โฟล์เดอร์</translation>
     </message>
     <message>
         <source>%1 folders</source>
@@ -3213,7 +3296,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation type="unfinished">คลาวด์ไดรฟ์</translation>
+        <translation type="unfinished">คลาวด์ไดร์ฟ</translation>
     </message>
     <message>
         <source>Public link</source>
@@ -3556,7 +3639,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">กล่องขาเข้า</translation>
+        <translation type="unfinished">กล่องเข้า</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -3564,7 +3647,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">คลาวด์ไดรฟ์</translation>
+        <translation type="unfinished">คลาวด์ไดร์ฟ</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -3575,7 +3658,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageWidget</name>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">คลาวด์ไดรฟ์</translation>
+        <translation type="unfinished">คลาวด์ไดร์ฟ</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -3587,7 +3670,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">กล่องขาเข้า</translation>
+        <translation type="unfinished">กล่องเข้า</translation>
     </message>
     <message>
         <source>Used</source>

@@ -2715,6 +2715,11 @@ void MegaApplication::unlink()
 
 void MegaApplication::cleanLocalCaches()
 {
+    if (!preferences->logged())
+    {
+        return;
+    }
+
     if (preferences->cleanerDaysLimit())
     {
         int timeLimitDays = preferences->cleanerDaysLimitValue();
