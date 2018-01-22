@@ -11,17 +11,16 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/3.5.1.0";
-const int Preferences::VERSION_CODE = 3501;
+const char Preferences::USER_AGENT[] = "MEGAsync/3.6.0.0";
+const int Preferences::VERSION_CODE = 3600;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("3.5.1");
-const QString Preferences::SDK_ID = QString::fromAscii("566019");
+const QString Preferences::VERSION_STRING = QString::fromAscii("3.6.0");
+const QString Preferences::SDK_ID = QString::fromAscii("b72f46");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- New UI style\n"
-            "- Support to generate file versions in MEGA\n"
-            "- Integration with Finder (macOS 10.10+)\n"
-            "- Allow to exclude specific files/folders\n"
+            "- New options related to file versioning\n"
+            "- Local backup cleaning scheduler\n"
+            "- Support for video thumbnails and metadata\n"
             "- Bug fixes and other minor improvements");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
@@ -31,6 +30,7 @@ const int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
 const int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
 
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
+const long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS  = 7200000;
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL_OVERQUOTA    = 30000;
 const long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
 const long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
@@ -206,6 +206,10 @@ const QString Preferences::lowerSizeLimitValueKey       = QString::fromAscii("lo
 const QString Preferences::upperSizeLimitUnitKey        = QString::fromAscii("upperSizeLimitUnit");
 const QString Preferences::lowerSizeLimitUnitKey        = QString::fromAscii("lowerSizeLimitUnit");
 
+
+const QString Preferences::cleanerDaysLimitKey       = QString::fromAscii("cleanerDaysLimit");
+const QString Preferences::cleanerDaysLimitValueKey  = QString::fromAscii("cleanerDaysLimitValue");
+
 const QString Preferences::folderPermissionsKey         = QString::fromAscii("folderPermissions");
 const QString Preferences::filePermissionsKey           = QString::fromAscii("filePermissions");
 
@@ -249,6 +253,7 @@ const QString Preferences::previousCrashesKey       = QString::fromAscii("previo
 const QString Preferences::lastRebootKey            = QString::fromAscii("lastReboot");
 const QString Preferences::lastExitKey              = QString::fromAscii("lastExit");
 const QString Preferences::disableOverlayIconsKey   = QString::fromAscii("disableOverlayIcons");
+const QString Preferences::disableFileVersioningKey = QString::fromAscii("disableFileVersioning");
 const QString Preferences::disableLeftPaneIconsKey  = QString::fromAscii("disableLeftPaneIcons");
 const QString Preferences::sessionKey               = QString::fromAscii("session");
 const QString Preferences::firstStartDoneKey        = QString::fromAscii("firstStartDone");
@@ -274,6 +279,9 @@ const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
 const bool Preferences::defaultUpperSizeLimit       = false;
 const bool Preferences::defaultLowerSizeLimit       = false;
+
+const bool Preferences::defaultCleanerDaysLimit     = true;
+
 const bool Preferences::defaultUseHttpsOnly         = false;
 const bool Preferences::defaultSSLcertificateException = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
@@ -284,6 +292,7 @@ const int Preferences::defaultTransferDownloadMethod      = MegaApi::TRANSFER_ME
 const int Preferences::defaultTransferUploadMethod        = MegaApi::TRANSFER_METHOD_AUTO;
 const long long  Preferences::defaultUpperSizeLimitValue              = 0;
 const long long  Preferences::defaultLowerSizeLimitValue              = 0;
+const int  Preferences::defaultCleanerDaysLimitValue            = 30;
 const int Preferences::defaultLowerSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
 const int Preferences::defaultUpperSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
 const int Preferences::defaultFolderPermissions = 0;
@@ -1189,6 +1198,39 @@ void Preferences::setUpperSizeLimitValue(long long value)
     mutex.lock();
     assert(logged());
     settings->setValue(upperSizeLimitValueKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::cleanerDaysLimit()
+{
+    mutex.lock();
+    bool value = settings->value(cleanerDaysLimitKey, defaultCleanerDaysLimit).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setCleanerDaysLimit(bool value)
+{
+    mutex.lock();
+    settings->setValue(cleanerDaysLimitKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+int Preferences::cleanerDaysLimitValue()
+{
+    mutex.lock();
+    assert(logged());
+    int value = settings->value(cleanerDaysLimitValueKey, defaultCleanerDaysLimitValue).toInt();
+    mutex.unlock();
+    return value;
+}
+void Preferences::setCleanerDaysLimitValue(int value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(cleanerDaysLimitValueKey, value);
     settings->sync();
     mutex.unlock();
 }
@@ -2508,6 +2550,24 @@ void Preferences::setLastStatsRequest(long long value)
 {
     mutex.lock();
     settings->setValue(lastStatsRequestKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::fileVersioningDisabled()
+{
+    mutex.lock();
+    assert(logged());
+    bool result = settings->value(disableFileVersioningKey, false).toBool();
+    mutex.unlock();
+    return result;
+}
+
+void Preferences::disableFileVersioning(bool value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(disableFileVersioningKey, value);
     settings->sync();
     mutex.unlock();
 }

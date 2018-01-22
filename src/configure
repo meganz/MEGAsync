@@ -17,6 +17,7 @@ display_help() {
     echo " -e : Download and link CARES statically."
     echo " -f : Force software packages rebuild."
     echo " -g : Download and link CURL statically."
+    echo " -i : Do not download and link LIBMEDIAINFO statically."
     echo " -q : Download and link CRYPTOPP statically."
     echo " -z : Do not download and link ZLIB statically."
     echo ""
@@ -27,13 +28,16 @@ FLAG_CARES=""
 FLAG_CURL=""
 FLAG_DISABLE_ZLIB=""
 
-while getopts ":efgqz" opt; do
+while getopts ":efgiqz" opt; do
     case $opt in
         q) 
             FLAG_CRYPTOPP="-q"; 
             ;;
         g) 
             FLAG_CURL="-g"; 
+            ;;
+        i)
+            FLAG_LIBMEDIA="-i";
             ;;
         e) 
             FLAG_CARES="-e"; 
@@ -65,7 +69,7 @@ shift $((OPTIND-1))
 # if archives are not yet downloaded
 if [ ! -d "$archives" ]; then
     mkdir $archives
-    ./MEGASync/mega/contrib/build_sdk.sh $FLAG_CRYPTOPP -n $FLAG_CARES -f $FLAG_CURL $FLAG_DISABLE_ZLIB -w -s -v -u -o $archives
+    ./MEGASync/mega/contrib/build_sdk.sh $FLAG_CRYPTOPP -n $FLAG_CARES $FLAG_LIBMEDIA -f $FLAG_CURL $FLAG_DISABLE_ZLIB -w -s -v -u -o $archives
     rm_archives=1
 fi
 
@@ -73,7 +77,7 @@ cd MEGASync/mega
 ./contrib/build_sdk.sh \
     $FLAG_CRYPTOPP \
     -o $archives \
-    -f $FLAG_CARES $FLAG_CURL $FLAG_DISABLE_ZLIB \
+    -f $FLAG_CARES $FLAG_CURL $FLAG_LIBMEDIA $FLAG_DISABLE_ZLIB \
     -l \
     -n \
     -c \

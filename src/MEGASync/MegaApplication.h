@@ -88,6 +88,7 @@ public:
     mega::MegaApi *getMegaApi() { return megaApi; }
 
     void unlink();
+    void cleanLocalCaches();
     void showInfoMessage(QString message, QString title = tr("MEGAsync"));
     void showWarningMessage(QString message, QString title = tr("MEGAsync"));
     void showErrorMessage(QString message, QString title = tr("MEGAsync"));
@@ -284,6 +285,7 @@ protected:
     unsigned long long activeTransferPriority[2];
     unsigned int activeTransferState[2];
     long long queuedUserStats;
+    long long cleaningSchedulerExecution;
     long long maxMemoryUsage;
     int exportOps;
     int syncState;

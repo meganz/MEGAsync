@@ -9,6 +9,8 @@
 #include <QtConcurrent/QtConcurrent>
 #endif
 
+#define MAX_STREAMING_BUFFER_SIZE 8242880 // 8 MB
+
 using namespace mega;
 
 StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, QWidget *parent) :
@@ -25,6 +27,7 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, QWidget
 
     this->megaApi = megaApi;
     this->selectedMegaNode = NULL;
+    this->megaApi->httpServerSetMaxBufferSize(MAX_STREAMING_BUFFER_SIZE);
     this->megaApi->httpServerStart();
 
     setWindowTitle(tr("Stream from MEGA"));

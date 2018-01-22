@@ -9,6 +9,17 @@ MOUNTDIR=tmp
 RESOURCES=installer/resourcesDMG
 QTBASE=/QT/qt5/qtbase
 
+AVCODEC_VERSION=libavcodec.57.dylib
+AVFORMAT_VERSION=libavformat.57.dylib
+AVUTIL_VERSION=libavutil.55.dylib
+SWSCALE_VERSION=libswscale.4.dylib
+
+AVCODEC_PATH=src/MEGASync/mega/bindings/qt/3rdparty/libs/$AVCODEC_VERSION
+AVFORMAT_PATH=src/MEGASync/mega/bindings/qt/3rdparty/libs/$AVFORMAT_VERSION
+AVUTIL_PATH=src/MEGASync/mega/bindings/qt/3rdparty/libs/$AVUTIL_VERSION
+SWSCALE_PATH=src/MEGASync/mega/bindings/qt/3rdparty/libs/$SWSCALE_VERSION
+
+
 sign=0
 createdmg=0
 
@@ -44,6 +55,28 @@ strip MEGAUpdater/MEGAupdater.app/Contents/MacOS/MEGAupdater
 mv MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
 mv MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
 mv MEGAUpdater/MEGAupdater.app/Contents/MacOS/MEGAupdater MEGASync/MEGAsync.app/Contents/MacOS/MEGAupdater
+
+cp -L ../$AVCODEC_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
+cp -L ../$AVFORMAT_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
+cp -L ../$AVUTIL_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
+cp -L ../$SWSCALE_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
+
+if [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVCODEC_VERSION ]  \
+	|| [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVFORMAT_VERSION ]  \
+	|| [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$AVUTIL_VERSION ]  \
+	|| [ ! -f MEGASync/MEGAsync.app/Contents/Frameworks/$SWSCALE_VERSION ];
+then
+	echo "Error copying FFmpeg libs to app bundle."
+	exit 1
+fi
+
+install_name_tool -change @loader_path/$AVCODEC_VERSION @executable_path/../Frameworks/$AVCODEC_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
+install_name_tool -change @loader_path/$AVFORMAT_VERSION @executable_path/../Frameworks/$AVFORMAT_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
+install_name_tool -change @loader_path/$AVUTIL_VERSION @executable_path/../Frameworks/$AVUTIL_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
+install_name_tool -change @loader_path/$SWSCALE_VERSION @executable_path/../Frameworks/$SWSCALE_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
+
+otool -L MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
+
 mv MEGAsync/MEGAsync.app ./
 
 #Attach shell extension
