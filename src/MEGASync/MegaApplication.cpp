@@ -4930,7 +4930,7 @@ void MegaApplication::createTrayMenu()
 #else
     exitAction = new MenuItemAction(tr("Quit"), QIcon(QString::fromAscii("://images/ico_quit_out.png")), QIcon(QString::fromAscii("://images/ico_quit_over.png")));
 #endif
-    connect(exitAction, SIGNAL(triggered()), this, SLOT(exitApplication()));
+    connect(exitAction, SIGNAL(triggered()), this, SLOT(exitApplication()), Qt::QueuedConnection);
 
     if (settingsAction)
     {
@@ -4943,7 +4943,7 @@ void MegaApplication::createTrayMenu()
 #else
     settingsAction = new MenuItemAction(tr("Preferences"), QIcon(QString::fromAscii("://images/ico_preferences_out.png")), QIcon(QString::fromAscii("://images/ico_preferences_over.png")));
 #endif
-    connect(settingsAction, SIGNAL(triggered()), this, SLOT(openSettings()));
+    connect(settingsAction, SIGNAL(triggered()), this, SLOT(openSettings()), Qt::QueuedConnection);
 
     if (webAction)
     {
@@ -4952,7 +4952,7 @@ void MegaApplication::createTrayMenu()
     }
 
     webAction = new MenuItemAction(tr("MEGA website"), QIcon(QString::fromAscii("://images/ico_MEGA_website_out.png")), QIcon(QString::fromAscii("://images/ico_MEGA_website_over.png")));
-    connect(webAction, SIGNAL(triggered()), this, SLOT(officialWeb()));
+    connect(webAction, SIGNAL(triggered()), this, SLOT(officialWeb()), Qt::QueuedConnection);
 
     if (pauseTransfersAction)
     {
@@ -4961,7 +4961,7 @@ void MegaApplication::createTrayMenu()
     }
 
     pauseTransfersAction = new MenuItemAction(tr("Pause Transfers"), QIcon(QString::fromAscii("://images/ico_pause_transfers.png")), QIcon(QString::fromAscii("://images/ico_pause_transfers_over.png")));
-    connect(pauseTransfersAction, SIGNAL(triggered()), this, SLOT(pauseTransfers()));
+    connect(pauseTransfersAction, SIGNAL(triggered()), this, SLOT(pauseTransfers()), Qt::QueuedConnection);
 
     if (importLinksAction)
     {
@@ -4970,7 +4970,7 @@ void MegaApplication::createTrayMenu()
     }
 
     importLinksAction = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
-    connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()));
+    connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()), Qt::QueuedConnection);
 
     if (uploadAction)
     {
@@ -4979,7 +4979,7 @@ void MegaApplication::createTrayMenu()
     }
 
     uploadAction = new MenuItemAction(tr("Upload"), QIcon(QString::fromAscii("://images/ico_upload_out.png")), QIcon(QString::fromAscii("://images/ico_upload_over.png")));
-    connect(uploadAction, SIGNAL(triggered()), this, SLOT(uploadActionClicked()));
+    connect(uploadAction, SIGNAL(triggered()), this, SLOT(uploadActionClicked()), Qt::QueuedConnection);
 
     if (downloadAction)
     {
@@ -4988,7 +4988,7 @@ void MegaApplication::createTrayMenu()
     }
 
     downloadAction = new MenuItemAction(tr("Download"), QIcon(QString::fromAscii("://images/ico_download_out.png")), QIcon(QString::fromAscii("://images/ico_download_over.png")));
-    connect(downloadAction, SIGNAL(triggered()), this, SLOT(downloadActionClicked()));
+    connect(downloadAction, SIGNAL(triggered()), this, SLOT(downloadActionClicked()), Qt::QueuedConnection);
 
     if (streamAction)
     {
@@ -4997,7 +4997,7 @@ void MegaApplication::createTrayMenu()
     }
 
     streamAction = new MenuItemAction(tr("Stream"), QIcon(QString::fromAscii("://images/ico_stream_out.png")), QIcon(QString::fromAscii("://images/ico_stream_over.png")));
-    connect(streamAction, SIGNAL(triggered()), this, SLOT(streamActionClicked()));
+    connect(streamAction, SIGNAL(triggered()), this, SLOT(streamActionClicked()), Qt::QueuedConnection);
 
     if (updateAction)
     {
@@ -5017,7 +5017,7 @@ void MegaApplication::createTrayMenu()
         updateAction->setIconVisibleInMenu(true);
 #endif
     }
-    connect(updateAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
+    connect(updateAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()), Qt::QueuedConnection);
 
     trayMenu->addAction(updateAction);
     trayMenu->addAction(webAction);
