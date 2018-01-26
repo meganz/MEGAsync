@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
                 long majorVersion = strtol(token, &endPtr, 10);
                 if (endPtr != token && errno != ERANGE && majorVersion >= INT_MIN && majorVersion <= INT_MAX)
                 {
-                    if((int)majorVersion < 12) // Older versions from 10.8
+                    if((int)majorVersion < 13) // Older versions from 10.9 (mavericks)
                     {
                         execl("/Applications/MEGAsync.app/Contents/MacOS/MEGADeprecatedVersion", "/Applications/MEGAsync.app/Contents/MacOS/MEGADeprecatedVersion", NULL);
                         free(origVersion);
