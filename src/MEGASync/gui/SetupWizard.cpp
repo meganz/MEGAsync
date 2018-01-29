@@ -34,6 +34,12 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
         QString::fromUtf8("\" style=\"color:#DC0000\">"))
         .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz")));
 
+    ui->lLearnMore->setText(ui->lLearnMore->text()
+                            .replace(QString::fromUtf8("[A]"),
+                                     QString::fromUtf8("<a href=\"https://mega.nz/help/client/megasync/syncing/how-to-setup-sync-client-can-i-specify-which-folder-s-to-sync-576c80e2886688e6028b4591\" style=\"color:#DC0000\">"))
+                            .replace(QString::fromUtf8("[/A]"),
+                                     QString::fromUtf8("</a>")));
+
     page_initial();
 
 #if 0 //Strings for the translation system. These lines don't need to be built
@@ -397,6 +403,8 @@ void SetupWizard::on_bNext_clicked()
             ui->lAdditionalSyncs->hide();
         }
 
+        ui->lLearnMore->hide();
+        ui->bNext->show();
         ui->sPages->setCurrentWidget(ui->pAdvanced);
 
         defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
@@ -635,6 +643,28 @@ void SetupWizard::on_bMegaFolder_clicked()
     delete node;
 }
 
+void SetupWizard::initModeSelection()
+{
+    qreal ratio = 1.0;
+#if QT_VERSION >= 0x050000
+    ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+#endif
+    if (ratio < 2)
+    {
+        ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("#wTypicalSetup { border-image: url(\":/images/select_sync_bt.png\"); }"));
+        ui->wAdvancedSetup->setStyleSheet(QString::fromUtf8("#wAdvancedSetup { border-image: url(\":/images/select_sync_bt.png\"); }"));
+    }
+    else
+    {
+        ui->wTypicalSetup->setStyleSheet(QString::fromUtf8("#wTypicalSetup { border-image: url(\":/images/select_sync_bt@2x.png\"); }"));
+        ui->wAdvancedSetup->setStyleSheet(QString::fromUtf8("#wAdvancedSetup { border-image: url(\":/images/select_sync_bt@2x.png\"); }"));
+    }
+
+    ui->rTypicalSetup->setChecked(false);
+    ui->rAdvancedSetup->setChecked(false);
+    repaint();
+}
+
 void SetupWizard::wTypicalSetup_clicked()
 {    
     qreal ratio = 1.0;
@@ -654,6 +684,7 @@ void SetupWizard::wTypicalSetup_clicked()
 
     ui->rTypicalSetup->setChecked(true);
     ui->rAdvancedSetup->setChecked(false);
+    ui->bNext->setEnabled(true);
     repaint();
 }
 
@@ -676,6 +707,7 @@ void SetupWizard::wAdvancedSetup_clicked()
 
     ui->rTypicalSetup->setChecked(false);
     ui->rAdvancedSetup->setChecked(true);
+    ui->bNext->setEnabled(true);
     repaint();
 }
 
@@ -767,7 +799,8 @@ void SetupWizard::page_login()
 {
     ui->eLoginPassword->clear();
     ui->lVerify->hide();
-    wTypicalSetup_clicked();
+    ui->lLearnMore->hide();
+    initModeSelection();
 
     ui->bCancel->setEnabled(true);
     ui->bCancel->setVisible(true);
@@ -790,6 +823,7 @@ void SetupWizard::page_logout()
     ui->lProgress->setText(tr("Logging out..."));
     ui->progressBar->setMaximum(0);
     ui->progressBar->setValue(-1);
+    ui->lLearnMore->hide();
 
     ui->bCancel->setEnabled(true);
     ui->bCancel->setVisible(true);
@@ -814,7 +848,8 @@ void SetupWizard::page_initial()
     ui->eEmail->clear();
     ui->ePassword->clear();
     ui->eRepeatPassword->clear();
-    wTypicalSetup_clicked();
+    ui->lLearnMore->hide();
+    initModeSelection();
 
     ui->bCancel->setEnabled(true);
     ui->bCancel->setVisible(true);
@@ -837,12 +872,13 @@ void SetupWizard::page_initial()
 
 void SetupWizard::page_mode()
 {
-    wTypicalSetup_clicked();
+    initModeSelection();
 
+    ui->lLearnMore->show();
     ui->bCancel->setEnabled(true);
     ui->bCancel->setVisible(true);
     ui->bNext->setVisible(true);
-    ui->bNext->setEnabled(true);
+    ui->bNext->setEnabled(false);
     ui->bBack->setVisible(true);
     ui->bBack->setVisible(true);
     ui->bSkip->setVisible(true);
@@ -855,6 +891,7 @@ void SetupWizard::page_mode()
 
 void SetupWizard::page_welcome()
 {
+    ui->lLearnMore->hide();
     ui->bCancel->setEnabled(true);
     ui->bCancel->setVisible(true);
     ui->bCancel->setText(tr("Finish"));
