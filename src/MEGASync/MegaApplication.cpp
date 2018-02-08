@@ -3625,6 +3625,8 @@ void MegaApplication::transferManagerActionClicked(int tab)
     connect(transferManager, SIGNAL(viewedCompletedTransfers()), this, SLOT(clearViewedTransfers()));
     connect(transferManager, SIGNAL(completedTransfersTabActive(bool)), this, SLOT(onCompletedTransfersTabActive(bool)));
     transferManager->setActiveTab(tab);
+
+    Platform::activateBackgroundWindow(transferManager);
     transferManager->show();
 }
 
