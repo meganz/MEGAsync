@@ -4120,6 +4120,19 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
     fileUploadSelector = new QFileDialog();
     fileUploadSelector->setFileMode(QFileDialog::ExistingFiles);
     fileUploadSelector->setOption(QFileDialog::DontUseNativeDialog, false);
+
+#if QT_VERSION < 0x050000
+    QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+#else
+    QString  defaultFolderPath;
+    QStringList paths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+    if (paths.size())
+    {
+        defaultFolderPath = paths.at(0);
+    }
+#endif
+    fileUploadSelector->setDirectory(defaultFolderPath);
+
     Platform::execBackgroundWindow(fileUploadSelector);
     if (!fileUploadSelector)
     {
@@ -4186,6 +4199,19 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     folderUploadSelector = new QFileDialog();
     folderUploadSelector->setFileMode(QFileDialog::Directory);
     folderUploadSelector->setOption(QFileDialog::ShowDirsOnly, true);
+
+#if QT_VERSION < 0x050000
+    QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+#else
+    QString  defaultFolderPath;
+    QStringList paths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+    if (paths.size())
+    {
+        defaultFolderPath = paths.at(0);
+    }
+#endif
+    folderUploadSelector->setDirectory(defaultFolderPath);
+
     Platform::execBackgroundWindow(folderUploadSelector);
     if (!folderUploadSelector)
     {
