@@ -16,6 +16,7 @@
 #include "control/Utilities.h"
 #include "MegaApplication.h"
 #include "MenuItemAction.h"
+#include "platform/Platform.h"
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -1147,8 +1148,13 @@ void InfoDialog::addSync(MegaHandle h)
         dialog->setMegaFolder(h);
     }
 
-    int result = dialog->exec();    
-    if (!dialog || !result)
+    Platform::execBackgroundWindow(dialog);
+    if (!dialog)
+    {
+        return;
+    }
+
+    if (dialog->result() != QDialog::Accepted)
     {
         delete dialog;
         dialog = NULL;
