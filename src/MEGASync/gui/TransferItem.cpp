@@ -64,6 +64,18 @@ QString TransferItem::getFileName()
     return fileName;
 }
 
+QString TransferItem::getTransferName()
+{
+    if (ui->sTransferState->currentWidget() == ui->stateCompleted)
+    {
+        return ui->lTransferNameCompleted->text();
+    }
+    else
+    {
+        return ui->lTransferName->text();
+    }
+}
+
 void TransferItem::setTransferredBytes(long long totalTransferredBytes, bool cancellable)
 {
     this->totalTransferredBytes = totalTransferredBytes;
