@@ -1111,11 +1111,17 @@ void MegaApplication::updateTrayIcon()
 
     if (!icon.isEmpty())
     {
-        QIcon ic = QIcon(icon);
-#ifdef __APPLE__
-        ic.setIsMask(true);
+#ifndef __APPLE__
+    #ifdef _WIN32
+        trayIcon->setIcon(QIcon(icon));
+    #else
+        setTrayIconFromTheme(icon);
+    #endif
+#else
+    QIcon ic = QIcon(icon);
+    ic.setIsMask(true);
+    trayIcon->setIcon(ic);
 #endif
-        trayIcon->setIcon(ic);
     }
 
     if (!tooltip.isEmpty())
@@ -2482,7 +2488,9 @@ void MegaApplication::scanningAnimationStep()
     scanningAnimationIndex++;
     QIcon ic = QIcon(QString::fromAscii("://images/icon_syncing_mac") +
                      QString::number(scanningAnimationIndex) + QString::fromAscii(".png"));
+#ifdef __APPLE__
     ic.setIsMask(true);
+#endif
     trayIcon->setIcon(ic);
 }
 
