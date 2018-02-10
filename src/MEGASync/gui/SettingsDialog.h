@@ -14,6 +14,7 @@
 #include "AccountDetailsDialog.h"
 #include "BindFolderDialog.h"
 #include "SizeLimitDialog.h"
+#include "LocalCleanScheduler.h"
 #include "DownloadFromMegaDialog.h"
 #include "Preferences.h"
 #include "megaapi.h"
@@ -50,6 +51,7 @@ public:
 
 public slots:
     void stateChanged();
+    void fileVersioningStateChanged();
     void syncStateChanged(int state);
     void proxyStateChanged();
     void onLocalCacheSizeAvailable();
@@ -96,6 +98,7 @@ private slots:
     void on_bApply_clicked();
     void on_bDelete_clicked();
     void on_bExcludeSize_clicked();
+    void on_bLocalCleaner_clicked();
 
     void on_bUnlink_clicked();
     void on_bExportMasterKey_clicked();
@@ -108,6 +111,7 @@ private slots:
     void on_bDeleteName_clicked();
     void on_bClearCache_clicked();
     void on_bClearRemoteCache_clicked();
+    void on_bClearFileVersions_clicked();
     void onProxyTestError();
     void onProxyTestSuccess();
     void on_bUpdate_clicked();
@@ -120,6 +124,7 @@ private slots:
 protected:
     void changeEvent(QEvent * event);
     QString getFormatString();
+    QString getFormatLimitDays();
 
 private:
     Ui::SettingsDialog *ui;
@@ -139,6 +144,7 @@ private:
     int modifyingSettings;
     long long cacheSize;
     long long remoteCacheSize;
+    long long fileVersionsSize;
     bool hasDefaultUploadOption;
     bool hasDefaultDownloadOption;
     bool hasUpperLimit;
@@ -148,6 +154,10 @@ private:
     int upperLimitUnit;
     int lowerLimitUnit;
     bool sizeLimitsChanged;
+    bool hasDaysLimit;
+    int daysLimit;
+    bool cleanerLimitsChanged;
+    bool fileVersioningChanged;
     QButtonGroup downloadButtonGroup;
     QButtonGroup uploadButtonGroup;
 

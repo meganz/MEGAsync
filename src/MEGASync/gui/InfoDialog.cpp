@@ -638,6 +638,7 @@ void InfoDialog::setOverQuotaMode(bool state)
 void InfoDialog::updateState()
 {
     updateTransfers();
+    updateSyncsButton();
     if (preferences->getGlobalPaused())
     {
         if (!preferences->logged())

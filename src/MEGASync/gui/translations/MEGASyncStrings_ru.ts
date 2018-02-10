@@ -21,12 +21,12 @@
     <message>
         <source>Rubbish Bin</source>
         <translatorcomment>Label for Rubbish Bin space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">Kорзина</translation>
+        <translation type="obsolete">Корзина</translation>
     </message>
     <message>
         <source>Storage</source>
         <translatorcomment>Label for Storage space used. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">хранение</translation>
+        <translation type="obsolete">свободного места</translation>
     </message>
     <message>
         <source>Files</source>
@@ -46,7 +46,7 @@
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation type="vanished">ХОРОШО</translation>
+        <translation type="vanished">ОК</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -155,12 +155,12 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">Отменить</translation>
+        <translation type="unfinished">Отмена</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for confirmation button.</translatorcomment>
-        <translation type="unfinished">ХОРОШО</translation>
+        <translation type="unfinished">ОК</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -246,12 +246,12 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>ХОРОШО</translation>
+        <translation>ОК</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Отменить</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <source>Error</source>
@@ -275,7 +275,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">Пользовательское соглашение </translation>
+        <translation type="unfinished">Условия предоставления услуг</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
@@ -346,7 +346,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Отменить</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -379,12 +379,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>ХОРОШО</translation>
+        <translation>ОК</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Отменить</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -586,12 +586,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>ХОРОШО</translation>
+        <translation>ОК</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Отменить</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
@@ -610,7 +610,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Ошибка расшифровки</translation>
+        <translation>Ошибка дешифрования</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -747,7 +747,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">Загрузка</translation>
+        <translation type="vanished">Скачивание</translation>
     </message>
     <message>
         <source>Uploading </source>
@@ -824,7 +824,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Обновление до PRO</translation>
+        <translation type="unfinished">Повысить статус до PRO</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -1015,6 +1015,44 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Install just for me</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is just for the current user.</translatorcomment>
         <translation>Установить только для себя</translation>
+    </message>
+</context>
+<context>
+    <name>LocalCleanScheduler</name>
+    <message>
+        <source>%1 cleaning scheduler</source>
+        <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">Планировщик очистки папки %1</translation>
+    </message>
+    <message>
+        <source>Remove files older than</source>
+        <translatorcomment>Checkbox label to indicate that files older than specified value will be removed.</translatorcomment>
+        <translation type="unfinished">Удалять файлы старше</translation>
+    </message>
+    <message>
+        <source>days</source>
+        <translatorcomment>Label to indicate number of days in context of scheduled deletions</translatorcomment>
+        <translation type="unfinished">дн.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel button.</translatorcomment>
+        <translation type="unfinished">Отмена</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for OK button.</translatorcomment>
+        <translation type="unfinished">ОК</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">Предупреждение</translation>
+    </message>
+    <message>
+        <source>Please enter a valid value</source>
+        <translatorcomment>Information message shown when user introduces an invalid value </translatorcomment>
+        <translation type="unfinished">Введите действительное значение</translation>
     </message>
 </context>
 <context>
@@ -1407,7 +1445,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="unfinished">Временная ошибка, повторите попытку.</translation>
+        <translation type="unfinished">Временная ошибка. Попробуйте ещё раз.</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -1458,7 +1496,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
-        <translation type="unfinished">Загрузить</translation>
+        <translation type="unfinished">Загрузка на сервер</translation>
     </message>
     <message>
         <source>Download</source>
@@ -1669,7 +1707,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label of context menu option to cancel selected transfer</translatorcomment>
-        <translation type="unfinished">Отменить</translation>
+        <translation type="unfinished">Отмена</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -1736,12 +1774,12 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">Отменить</translation>
+        <translation type="unfinished">Отмена</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for OK button.</translatorcomment>
-        <translation type="unfinished">ХОРОШО</translation>
+        <translation type="unfinished">ОК</translation>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
@@ -1774,17 +1812,17 @@ Are you sure?</source>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>ХОРОШО</translation>
+        <translation>ОК</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Отменить</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
-        <translation type="obsolete">Cloud Drive</translation>
+        <translation type="obsolete">Облачный диск</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
@@ -1884,7 +1922,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>Отменить</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1976,7 +2014,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Storage</source>
-        <translation type="unfinished">хранение</translation>
+        <translation type="unfinished">свободного места</translation>
     </message>
     <message>
         <source>Bandwidth</source>
@@ -2023,11 +2061,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">ХОРОШО</translation>
+        <translation type="unfinished">ОК</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Отменить</translation>
+        <translation type="unfinished">Отмена</translation>
     </message>
 </context>
 <context>
@@ -2122,7 +2160,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Account</source>
         <translatorcomment>Tab label of Account dialog. Max 15 characters.</translatorcomment>
-        <translation>Аккаунт</translation>
+        <translation>Учётная запись</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -2147,12 +2185,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>ХОРОШО</translation>
+        <translation>ОК</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Отменить</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -2192,7 +2230,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>БЕСПЛАТНО</translation>
+        <translation>БЕСПЛАТНЫЙ</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -2207,7 +2245,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
-        <translation>Обновлять</translation>
+        <translation>Повысить статус</translation>
     </message>
     <message>
         <source>Synced folders</source>
@@ -2638,7 +2676,7 @@ when the application starts again</source>
     <message>
         <source>Permissions</source>
         <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Разрешения</translation>
+        <translation type="unfinished">Права</translation>
     </message>
     <message>
         <source>Don&apos;t use HTTP</source>
@@ -2717,6 +2755,51 @@ when the application starts again</source>
         <source>Restart</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync</translatorcomment>
         <translation type="unfinished">Перезапуск</translation>
+    </message>
+    <message>
+        <source>%1 cleaning scheduler</source>
+        <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">Планировщик очистки папки %1</translation>
+    </message>
+    <message>
+        <source>Disable file versioning</source>
+        <translatorcomment>Checkbox label to enable/disable file versioning feature</translatorcomment>
+        <translation type="unfinished">Отключить версии файлов</translation>
+    </message>
+    <message>
+        <source>Local folder with a backup of files deleted in MEGA</source>
+        <translatorcomment>Tooltip shown when hover local debris label.</translatorcomment>
+        <translation type="unfinished">Локальная папка с резервной копией удалённых в MEGA файлов</translation>
+    </message>
+    <message>
+        <source>Folder in MEGA with a backup of files deleted in the local computer</source>
+        <translatorcomment>Tooltip shown when hover remote SyncDebris label.</translatorcomment>
+        <translation type="unfinished">Папка в MEGA с резервной копией файлов, удалённых на локальном компьютере</translation>
+    </message>
+    <message>
+        <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
+        <translatorcomment>Informative text shown when user is trying to disable file versioning before proceed.</translatorcomment>
+        <translation type="unfinished">Отключение версий файлов прекратит создание и хранение новых версий файлов. Продолжить?</translation>
+    </message>
+    <message>
+        <source>Remove files older than %1 days</source>
+        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than %1 days will be removed. Keep %1 placeholder, it will be replaced with the value specified by the user at runtime</translatorcomment>
+        <translation type="unfinished">Удалять файлы старее %1 дн.</translation>
+    </message>
+    <message>
+        <source>Remove files older than 1 day</source>
+        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than 1 day will be removed.</translatorcomment>
+        <translation type="unfinished">Удалять файлы старее 1 дня</translation>
+    </message>
+    <message>
+        <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
+        <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the actual account.</translatorcomment>
+        <translation type="unfinished">Вы собираетесь безвозвратно удалить все версии файлов. Продолжить?</translation>
+    </message>
+    <message>
+        <source>File versions: %1</source>
+        <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
+        <translation type="unfinished">Версии файлов: %1</translation>
     </message>
 </context>
 <context>
@@ -2850,12 +2933,12 @@ when the application starts again</source>
     <message>
         <source>Next</source>
         <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>Следующий</translation>
+        <translation>Далее</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>Отменить</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3080,7 +3163,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation type="unfinished">Пожалуйста, проверьте свой ​​адрес электронной почты и нажмите на ссылку для подтверждения своего аккаунта.</translation>
+        <translation type="unfinished">Подтвердите регистрацию, перейдя по ссылке в письме, которое придёт на ваш электронный адрес.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
@@ -3180,12 +3263,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">Отменить</translation>
+        <translation type="unfinished">Отмена</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation type="unfinished">ХОРОШО</translation>
+        <translation type="unfinished">ОК</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3213,7 +3296,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation type="unfinished">Cloud Drive</translation>
+        <translation type="unfinished">Облачный диск</translation>
     </message>
     <message>
         <source>Public link</source>
@@ -3288,7 +3371,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">Ошибка расшифровки</translation>
+        <translation type="unfinished">Ошибка дешифрования</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3460,7 +3543,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload</source>
-        <translation type="unfinished">Загрузить</translation>
+        <translation type="unfinished">Загрузка на сервер</translation>
     </message>
     <message>
         <source>Download</source>
@@ -3539,12 +3622,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>ХОРОШО</translation>
+        <translation>ОК</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Отменить</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -3568,7 +3651,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">Kорзина</translation>
+        <translation type="unfinished">Корзина</translation>
     </message>
 </context>
 <context>
@@ -3579,7 +3662,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">Kорзина</translation>
+        <translation type="unfinished">Корзина</translation>
     </message>
     <message>
         <source>Incoming Shares</source>

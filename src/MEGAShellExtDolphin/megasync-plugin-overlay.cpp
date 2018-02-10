@@ -190,7 +190,7 @@ private:
     int getState(QString path)
     {
         QString res;
-        res = sendRequest(OP_PATH_STATE, path);
+        res = sendRequest(OP_PATH_STATE, QFileInfo(path).canonicalFilePath());
         return res.toInt();
     }
 

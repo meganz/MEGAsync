@@ -47,7 +47,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/AvatarWidget.cpp \
     $$PWD/MenuItemAction.cpp \
     $$PWD/DataUsageMenu.cpp \
-    $$PWD/AddExclusionDialog.cpp
+    $$PWD/AddExclusionDialog.cpp \
+    $$PWD/LocalCleanScheduler.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -96,7 +97,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AvatarWidget.h \
     $$PWD/MenuItemAction.h \
     $$PWD/DataUsageMenu.h \
-    $$PWD/AddExclusionDialog.h
+    $$PWD/AddExclusionDialog.h \
+    $$PWD/LocalCleanScheduler.h
 
 INCLUDEPATH += $$PWD
 
@@ -140,7 +142,8 @@ win32 {
                 $$PWD/win/TransfersStateInfoWidget.ui \
                 $$PWD/win/MegaSpeedGraph.ui \
                 $$PWD/win/ActiveTransfersWidget.ui \
-                $$PWD/win/AddExclusionDialog.ui
+                $$PWD/win/AddExclusionDialog.ui \
+                $$PWD/win/LocalCleanScheduler.ui
 }
 
 macx {
@@ -181,7 +184,8 @@ macx {
                 $$PWD/macx/TransfersStateInfoWidget.ui \
                 $$PWD/macx/MegaSpeedGraph.ui \
                 $$PWD/macx/ActiveTransfersWidget.ui \
-                $$PWD/macx/AddExclusionDialog.ui
+                $$PWD/macx/AddExclusionDialog.ui \
+                $$PWD/macx/LocalCleanScheduler.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -231,7 +235,8 @@ unix:!macx {
                 $$PWD/linux/TransfersStateInfoWidget.ui \
                 $$PWD/linux/MegaSpeedGraph.ui \
                 $$PWD/linux/ActiveTransfersWidget.ui \
-                $$PWD/linux/AddExclusionDialog.ui
+                $$PWD/linux/AddExclusionDialog.ui \
+                $$PWD/linux/LocalCleanScheduler.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

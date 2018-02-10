@@ -7,7 +7,7 @@ CONFIG(debug, debug|release) {
 }
 
 win32 {
-    SUBDIRS += MEGAUpdater
+    #SUBDIRS += MEGAUpdater
     SUBDIRS += MEGACrashAnalyzer
     CONFIG(with_ext) {
         SUBDIRS += MEGAShellExt

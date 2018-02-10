@@ -11,17 +11,16 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/3.5.1.0";
-const int Preferences::VERSION_CODE = 3501;
+const char Preferences::USER_AGENT[] = "MEGAsync/3.6.0.0";
+const int Preferences::VERSION_CODE = 3600;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("3.5.1");
-const QString Preferences::SDK_ID = QString::fromAscii("566019");
+const QString Preferences::VERSION_STRING = QString::fromAscii("3.6.0");
+const QString Preferences::SDK_ID = QString::fromAscii("b72f46");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- New UI style\n"
-            "- Support to generate file versions in MEGA\n"
-            "- Integration with Finder (macOS 10.10+)\n"
-            "- Allow to exclude specific files/folders\n"
+            "- New options related to file versioning\n"
+            "- Local backup cleaning scheduler\n"
+            "- Support for video thumbnails and metadata\n"
             "- Bug fixes and other minor improvements");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
@@ -31,6 +30,7 @@ const int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
 const int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
 
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
+const long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS  = 7200000;
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL_OVERQUOTA    = 30000;
 const long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
 const long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
@@ -48,34 +48,33 @@ const unsigned int Preferences::MAX_COMPLETED_ITEMS                 = 1000;
 const qint16 Preferences::HTTPS_PORT = 6342;
 
 const QString Preferences::defaultHttpsKey = QString::fromUtf8(
-            "-----BEGIN PRIVATE KEY-----\n"
-            "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxk9BUskgy2dHN\n"
-            "udvrzqsj3614UniXjAw3skMP+xUULBgaTcGgQkYRMM6I7ro/9Ropq5ypK5p8cmUq\n"
-            "TYhu/9Z4RP/asHDIMC7lIqIvgoZXQWdJHAhJ9KBgnYi+jQN0Q6IQBad9WR/dKMcu\n"
-            "lnN0oMyn82rO9owV47dYVzdQnPE1k1z1HqzKyqrBjHvGfSQyMA2YCuSl1K3EzQY8\n"
-            "NFYXeu3ZjwFCPvuDmRpLqkgKBrvwHPu0zaQN7WliNBz+8JnBt6PUNNvTZ0y/iYUR\n"
-            "T3k4SHlhi/xXdV9jqjAN433RMIrGIWpFnBoJpaTFbTsU3z6Nj5BU/TYQpaBOieiT\n"
-            "fO21acl7AgMBAAECggEAePMy7N1Zq7kM29EB6AUmMBMD9nZFyQMMt0rlvpbH7qtx\n"
-            "50ia32sEimTx5/aiSTnKjiNjWx5l5OmN2lhg2ynKjLSCiBOxXcjjyBHk4fNHSVs0\n"
-            "3GkJhEXojqX+I7usZJ5EXiFbyVbRCzPhJuw2y3NSsfpr/3eSRr6JfNQ6yt96s3/+\n"
-            "jCI05FP+3lR4BMiBIqHwEUXJeEU1tpR33qgg10ii18NgqQcLir2I/xaT7nzCvkBl\n"
-            "bxZYLEtM5dWL1J79qCOS/WlDvFSjlzh0BkkAhNYy7SChjPGOu0r/k07A2ec9KxO0\n"
-            "971B0tip4O+w8OjHDZvV80QpCXGKcQfEtd+/mBScgQKBgQDlmQ9PYOb8GSC2Yttg\n"
-            "XyIkisCqbUamIsojFL70U0wnkygykQXTkxiHYPtMVg4WyyLfF7oPqn0D0YOYEd+e\n"
-            "RFYiHdr+CA4IopsWZ5I4HqYtrbwtapMRQPFRzNIMNdMpFlfBGRV9ZKQQtXHV445w\n"
-            "n32KCUZVO26A6YYvmzmo7QR5WwKBgQDF/13BvTPlm+k0m2hheUWpiQqHrYW/oAai\n"
-            "rK7iVmT4Qln1YOCUvt17mDRxXj17NEKR4uVcDix5yrbFuClpeDZZkq1/2HIB5bD9\n"
-            "1uQWVzlYnCytaYusfq3XKfcwG/GIt6mi3lstZV4XdEFxjczdWt7EeWwAAr+DfYw6\n"
-            "pAYruMLKYQKBgDYs75fjXZ2OsFFY8jrDN+M3ek68ijcZbmjotEYigY21A38rCRzr\n"
-            "UJZhI+rXQ2vNcuUBTD32FJmaDlsLnKBTr59NPCdE70rKU53twmrLkJqmrAhrZVhk\n"
-            "4oxSsB2Bddn0E7DUomV8IdpvdfTqROn+ODkiBx6Fb4WrlKYXEnvxsWSRAoGAV1av\n"
-            "F+AK/XTJ6R/Ian7hQMinsXPUtNO1OZrsxgCQJ4a1Qe1LA7Ix5uwb7gpBGpDR8KJi\n"
-            "xDmoWs0V1J/I/LI/X0G5cNScbcPRUBezozs0m6bAeno9V4jFzEzBsiIRaFqD5Mkq\n"
-            "9Rpq5/OrTpjbTqVf8NES1+peanU+HzvtUOn+WuECgYEAxj++fk8A+dimgwM1qzh0\n"
-            "chTWqZygTQNvMAId11nRVJqC2nVOt1vSnM4HBBd+6qxG6eKOxzG4VyYJuHd18AT8\n"
-            "RplMrMlFmIJpvXRoFIgoPPS7qUnZcjEidPndXG42+xbD8eDsHnG4LMHB9+J9xLwA\n"
-            "xs+OLGD+kjzh+HkpkzYSDp4=\n"
-            "-----END PRIVATE KEY-----\n");
+            "-----BEGIN RSA PRIVATE KEY-----\n"
+            "MIIEowIBAAKCAQEAsZPQVLJIMtnRzbnb686rI9+teFJ4l4wMN7JDD/sVFCwYGk3B\n"
+            "oEJGETDOiO66P/UaKaucqSuafHJlKk2Ibv/WeET/2rBwyDAu5SKiL4KGV0FnSRwI\n"
+            "SfSgYJ2Ivo0DdEOiEAWnfVkf3SjHLpZzdKDMp/NqzvaMFeO3WFc3UJzxNZNc9R6s\n"
+            "ysqqwYx7xn0kMjANmArkpdStxM0GPDRWF3rt2Y8BQj77g5kaS6pICga78Bz7tM2k\n"
+            "De1pYjQc/vCZwbej1DTb02dMv4mFEU95OEh5YYv8V3VfY6owDeN90TCKxiFqRZwa\n"
+            "CaWkxW07FN8+jY+QVP02EKWgTonok3zttWnJewIDAQABAoIBAHjzMuzdWau5DNvR\n"
+            "AegFJjATA/Z2RckDDLdK5b6Wx+6rcedImt9rBIpk8ef2okk5yo4jY1seZeTpjdpY\n"
+            "YNspyoy0gogTsV3I48gR5OHzR0lbNNxpCYRF6I6l/iO7rGSeRF4hW8lW0Qsz4Sbs\n"
+            "NstzUrH6a/93kka+iXzUOsrferN//owiNORT/t5UeATIgSKh8BFFyXhFNbaUd96o\n"
+            "INdIotfDYKkHC4q9iP8Wk+58wr5AZW8WWCxLTOXVi9Se/agjkv1pQ7xUo5c4dAZJ\n"
+            "AITWMu0goYzxjrtK/5NOwNnnPSsTtPe9QdLYqeDvsPDoxw2b1fNEKQlxinEHxLXf\n"
+            "v5gUnIECgYEA5ZkPT2Dm/BkgtmLbYF8iJIrAqm1GpiLKIxS+9FNMJ5MoMpEF05MY\n"
+            "h2D7TFYOFssi3xe6D6p9A9GDmBHfnkRWIh3a/ggOCKKbFmeSOB6mLa28LWqTEUDx\n"
+            "UczSDDXTKRZXwRkVfWSkELVx1eOOcJ99iglGVTtugOmGL5s5qO0EeVsCgYEAxf9d\n"
+            "wb0z5ZvpNJtoYXlFqYkKh62Fv6AGoqyu4lZk+EJZ9WDglL7de5g0cV49ezRCkeLl\n"
+            "XA4secq2xbgpaXg2WZKtf9hyAeWw/dbkFlc5WJwsrWmLrH6t1yn3MBvxiLepot5b\n"
+            "LWVeF3RBcY3M3VrexHlsAAK/g32MOqQGK7jCymECgYA2LO+X412djrBRWPI6wzfj\n"
+            "N3pOvIo3GW5o6LRGIoGNtQN/Kwkc61CWYSPq10NrzXLlAUw99hSZmg5bC5ygU6+f\n"
+            "TTwnRO9KylOd7cJqy5CapqwIa2VYZOKMUrAdgXXZ9BOw1KJlfCHab3X06kTp/jg5\n"
+            "IgcehW+Fq5SmFxJ78bFkkQKBgFdWrxfgCv10yekfyGp+4UDIp7Fz1LTTtTma7MYA\n"
+            "kCeGtUHtSwOyMebsG+4KQRqQ0fCiYsQ5qFrNFdSfyPyyP19BuXDUnG3D0VAXs6M7\n"
+            "NJumwHp6PVeIxcxMwbIiEWhag+TJKvUaaufzq06Y206lX/DREtfqXmp1Ph877VDp\n"
+            "/lrhAoGBAMY/vn5PAPnYpoMDNas4dHIU1qmcoE0DbzACHddZ0VSagtp1Trdb0pzO\n"
+            "BwQXfuqsRunijscxuFcmCbh3dfAE/EaZTKzJRZiCab10aBSIKDz0u6lJ2XIxInT5\n"
+            "3VxuNvsWw/Hg7B5xuCzBwffifcS8AMbPjixg/pI84fh5KZM2Eg6e\n"
+            "-----END RSA PRIVATE KEY-----\n");
 
 const QString Preferences::defaultHttpsCert = QString::fromUtf8(
             "-----BEGIN CERTIFICATE-----\n"
@@ -207,6 +206,10 @@ const QString Preferences::lowerSizeLimitValueKey       = QString::fromAscii("lo
 const QString Preferences::upperSizeLimitUnitKey        = QString::fromAscii("upperSizeLimitUnit");
 const QString Preferences::lowerSizeLimitUnitKey        = QString::fromAscii("lowerSizeLimitUnit");
 
+
+const QString Preferences::cleanerDaysLimitKey       = QString::fromAscii("cleanerDaysLimit");
+const QString Preferences::cleanerDaysLimitValueKey  = QString::fromAscii("cleanerDaysLimitValue");
+
 const QString Preferences::folderPermissionsKey         = QString::fromAscii("folderPermissions");
 const QString Preferences::filePermissionsKey           = QString::fromAscii("filePermissions");
 
@@ -250,6 +253,7 @@ const QString Preferences::previousCrashesKey       = QString::fromAscii("previo
 const QString Preferences::lastRebootKey            = QString::fromAscii("lastReboot");
 const QString Preferences::lastExitKey              = QString::fromAscii("lastExit");
 const QString Preferences::disableOverlayIconsKey   = QString::fromAscii("disableOverlayIcons");
+const QString Preferences::disableFileVersioningKey = QString::fromAscii("disableFileVersioning");
 const QString Preferences::disableLeftPaneIconsKey  = QString::fromAscii("disableLeftPaneIcons");
 const QString Preferences::sessionKey               = QString::fromAscii("session");
 const QString Preferences::firstStartDoneKey        = QString::fromAscii("firstStartDone");
@@ -275,6 +279,9 @@ const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
 const bool Preferences::defaultUpperSizeLimit       = false;
 const bool Preferences::defaultLowerSizeLimit       = false;
+
+const bool Preferences::defaultCleanerDaysLimit     = true;
+
 const bool Preferences::defaultUseHttpsOnly         = false;
 const bool Preferences::defaultSSLcertificateException = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
@@ -285,6 +292,7 @@ const int Preferences::defaultTransferDownloadMethod      = MegaApi::TRANSFER_ME
 const int Preferences::defaultTransferUploadMethod        = MegaApi::TRANSFER_METHOD_AUTO;
 const long long  Preferences::defaultUpperSizeLimitValue              = 0;
 const long long  Preferences::defaultLowerSizeLimitValue              = 0;
+const int  Preferences::defaultCleanerDaysLimitValue            = 30;
 const int Preferences::defaultLowerSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
 const int Preferences::defaultUpperSizeLimitUnit =  Preferences::MEGA_BYTE_UNIT;
 const int Preferences::defaultFolderPermissions = 0;
@@ -1190,6 +1198,39 @@ void Preferences::setUpperSizeLimitValue(long long value)
     mutex.lock();
     assert(logged());
     settings->setValue(upperSizeLimitValueKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::cleanerDaysLimit()
+{
+    mutex.lock();
+    bool value = settings->value(cleanerDaysLimitKey, defaultCleanerDaysLimit).toBool();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setCleanerDaysLimit(bool value)
+{
+    mutex.lock();
+    settings->setValue(cleanerDaysLimitKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+int Preferences::cleanerDaysLimitValue()
+{
+    mutex.lock();
+    assert(logged());
+    int value = settings->value(cleanerDaysLimitValueKey, defaultCleanerDaysLimitValue).toInt();
+    mutex.unlock();
+    return value;
+}
+void Preferences::setCleanerDaysLimitValue(int value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(cleanerDaysLimitValueKey, value);
     settings->sync();
     mutex.unlock();
 }
@@ -2509,6 +2550,24 @@ void Preferences::setLastStatsRequest(long long value)
 {
     mutex.lock();
     settings->setValue(lastStatsRequestKey, value);
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::fileVersioningDisabled()
+{
+    mutex.lock();
+    assert(logged());
+    bool result = settings->value(disableFileVersioningKey, false).toBool();
+    mutex.unlock();
+    return result;
+}
+
+void Preferences::disableFileVersioning(bool value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(disableFileVersioningKey, value);
     settings->sync();
     mutex.unlock();
 }

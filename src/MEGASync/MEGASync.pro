@@ -54,6 +54,16 @@ debug {
 
 CONFIG += USE_LIBUV
 CONFIG += USE_MEGAAPI
+CONFIG += USE_MEDIAINFO
+
+unix:!macx {
+        exists(/usr/include/ffmpeg-mega)|exists(mega/bindings/qt/3rdparty/include/ffmpeg)|packagesExist(ffmpeg) {
+            CONFIG += USE_FFMPEG
+        }
+}
+else {
+    CONFIG += USE_FFMPEG
+}
 
 include(gui/gui.pri)
 include(mega/bindings/qt/sdk.pri)
@@ -131,10 +141,10 @@ macx {
 
     QMAKE_INFO_PLIST = Info_MEGA.plist
 
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
-    QMAKE_CXXFLAGS -= -stdlib=libc++
-    QMAKE_LFLAGS -= -stdlib=libc++
-    CONFIG -= c++11
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
+#    QMAKE_CXXFLAGS -= -stdlib=libc++
+#    QMAKE_LFLAGS -= -stdlib=libc++
+#    CONFIG -= c++11
     QMAKE_CXXFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -F /System/Library/Frameworks/Security.framework/
 }

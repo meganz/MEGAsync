@@ -1,9 +1,10 @@
 #!/usr/bin/make -f
+FMEDIAINFO := $(shell dpkg -l | grep mediainfo >/dev/null && echo "-i" || echo " ")
 
 build: build-stamp
 build-stamp:
 	dh_testdir
-	./configure -g
+	./configure -g $(FMEDIAINFO)
 	qmake-qt5 || qmake || /usr/lib/*/qt5/bin/qmake
 	lrelease-qt5 MEGASync/MEGASync.pro || lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt5/bin/lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt4/bin/lrelease MEGASync/MEGASync.pro
 	make

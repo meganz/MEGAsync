@@ -1,3 +1,21 @@
+megasync (3.6.0) stable; urgency=low
+
+  * New options related to file versioning
+  * Local backup cleaning scheduler
+  * Support for video thumbnails and metadata
+  * Bug fixes and other minor improvements
+
+ -- MEGA Team <linux@mega.co.nz>  Fri, 26 Jan 2018 11:36:06 +0100
+
+megasync (3.5.3) stable; urgency=low
+
+  * Integration with Finder (macOS 10.10+)
+  * Faster scanning of files
+  * Improved the management of deleted files
+  * Bug fixes and other minor improvements
+
+ -- MEGA Team <linux@mega.co.nz>  Wed, 13 Dec 2017 12:06:31 +0100
+
 megasync (3.5) stable; urgency=low
 
   * New UI style

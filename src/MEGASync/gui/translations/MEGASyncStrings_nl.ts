@@ -26,7 +26,7 @@
     <message>
         <source>Storage</source>
         <translatorcomment>Label for Storage space used. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">Opslagruimte</translation>
+        <translation type="obsolete">Opslag</translation>
     </message>
     <message>
         <source>Files</source>
@@ -155,7 +155,7 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">Annuleren</translation>
+        <translation type="unfinished">Annuleer</translation>
     </message>
     <message>
         <source>OK</source>
@@ -251,7 +251,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Annuleren</translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>Error</source>
@@ -280,7 +280,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished">Privacy Policy</translation>
+        <translation type="unfinished">Privacybeleid</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -346,7 +346,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Annuleren</translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -384,7 +384,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Annuleren</translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -563,7 +563,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation type="unfinished">Een ogenblik geduld a.u.b...</translation>
+        <translation type="unfinished">Een moment geduld a.u.b.</translation>
     </message>
 </context>
 <context>
@@ -591,7 +591,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Annuleren</translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
@@ -610,7 +610,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Decryptie fout</translation>
+        <translation>Er is een fout in de decryptie opgetreden</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -1015,6 +1015,44 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Install just for me</source>
         <translatorcomment>Label to indicate that MEGAsync installation on Windows is just for the current user.</translatorcomment>
         <translation>Installeer alleen voor mij</translation>
+    </message>
+</context>
+<context>
+    <name>LocalCleanScheduler</name>
+    <message>
+        <source>%1 cleaning scheduler</source>
+        <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">%1 planner schoonmaken</translation>
+    </message>
+    <message>
+        <source>Remove files older than</source>
+        <translatorcomment>Checkbox label to indicate that files older than specified value will be removed.</translatorcomment>
+        <translation type="unfinished">Verwijder bestanden ouder dan</translation>
+    </message>
+    <message>
+        <source>days</source>
+        <translatorcomment>Label to indicate number of days in context of scheduled deletions</translatorcomment>
+        <translation type="unfinished">dagen</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Label for Cancel button.</translatorcomment>
+        <translation type="unfinished">Annuleer</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translatorcomment>Label for OK button.</translatorcomment>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
+        <translation type="unfinished">Waarschuwing</translation>
+    </message>
+    <message>
+        <source>Please enter a valid value</source>
+        <translatorcomment>Information message shown when user introduces an invalid value </translatorcomment>
+        <translation type="unfinished">Voer een geldige waarde in</translation>
     </message>
 </context>
 <context>
@@ -1669,7 +1707,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label of context menu option to cancel selected transfer</translatorcomment>
-        <translation type="unfinished">Annuleren</translation>
+        <translation type="unfinished">Annuleer</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -1736,7 +1774,7 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">Annuleren</translation>
+        <translation type="unfinished">Annuleer</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1779,7 +1817,7 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Annuleren</translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -1884,7 +1922,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>Annuleren</translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1976,7 +2014,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Storage</source>
-        <translation type="unfinished">Opslagruimte</translation>
+        <translation type="unfinished">Opslag</translation>
     </message>
     <message>
         <source>Bandwidth</source>
@@ -2027,7 +2065,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuleren</translation>
+        <translation type="unfinished">Annuleer</translation>
     </message>
 </context>
 <context>
@@ -2152,7 +2190,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Annuleren</translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -2221,7 +2259,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Add</source>
         <translatorcomment>Button lable to add a synchronization. String as short as possible.</translatorcomment>
-        <translation>Voeg toe</translation>
+        <translation>Toevoegen</translation>
     </message>
     <message>
         <source>Local Folder</source>
@@ -2433,7 +2471,7 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>Een ogenblik geduld a.u.b...</translation>
+        <translation>Een moment geduld a.u.b.</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -2718,6 +2756,51 @@ when the application starts again</source>
         <translatorcomment>Label for restart button.to relaunch MEGAsync</translatorcomment>
         <translation type="unfinished">Herstart</translation>
     </message>
+    <message>
+        <source>%1 cleaning scheduler</source>
+        <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">%1 planner schoonmaken</translation>
+    </message>
+    <message>
+        <source>Disable file versioning</source>
+        <translatorcomment>Checkbox label to enable/disable file versioning feature</translatorcomment>
+        <translation type="unfinished">Bestandsversie uitschakelen</translation>
+    </message>
+    <message>
+        <source>Local folder with a backup of files deleted in MEGA</source>
+        <translatorcomment>Tooltip shown when hover local debris label.</translatorcomment>
+        <translation type="unfinished">Een lokale map met een reservekopie van bestanden die verwijderd zijn in MEGA.</translation>
+    </message>
+    <message>
+        <source>Folder in MEGA with a backup of files deleted in the local computer</source>
+        <translatorcomment>Tooltip shown when hover remote SyncDebris label.</translatorcomment>
+        <translation type="unfinished">Een map in MEGA met een reservekopie van bestanden die verwijderd zijn in de lokale computer</translation>
+    </message>
+    <message>
+        <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
+        <translatorcomment>Informative text shown when user is trying to disable file versioning before proceed.</translatorcomment>
+        <translation type="unfinished">Bestandsversie uitschakelen zorgt ervoor dat er geen nieuwe bestandsversies worden gemaakt of opgeslagen. Wilt u doorgaan?</translation>
+    </message>
+    <message>
+        <source>Remove files older than %1 days</source>
+        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than %1 days will be removed. Keep %1 placeholder, it will be replaced with the value specified by the user at runtime</translatorcomment>
+        <translation type="unfinished">Verwijder bestanden ouder dan %1 dagen</translation>
+    </message>
+    <message>
+        <source>Remove files older than 1 day</source>
+        <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than 1 day will be removed.</translatorcomment>
+        <translation type="unfinished">Verwijder bestanden ouder dan 1 dag</translation>
+    </message>
+    <message>
+        <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
+        <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the actual account.</translatorcomment>
+        <translation type="unfinished">U staat op het punt alle bestandsversies permanent te verwijderen. Wilt u doorgaan?</translation>
+    </message>
+    <message>
+        <source>File versions: %1</source>
+        <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
+        <translation type="unfinished">Bestand versies %1</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -2855,7 +2938,7 @@ when the application starts again</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>Annuleren</translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3180,7 +3263,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">Annuleren</translation>
+        <translation type="unfinished">Annuleer</translation>
     </message>
     <message>
         <source>OK</source>
@@ -3248,7 +3331,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Close</source>
         <translatorcomment>Text of the button to close the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Sluit</translation>
+        <translation type="unfinished">Sluiten</translation>
     </message>
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
@@ -3288,7 +3371,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">Decryptie fout</translation>
+        <translation type="unfinished">Er is een fout in de decryptie opgetreden</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3412,7 +3495,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Close</source>
         <translatorcomment>Button label to close transfer manager dialog</translatorcomment>
-        <translation type="unfinished">Sluit</translation>
+        <translation type="unfinished">Sluiten</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -3544,7 +3627,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Annuleren</translation>
+        <translation>Annuleer</translation>
     </message>
     <message>
         <source>Choose</source>
