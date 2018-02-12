@@ -16,9 +16,8 @@ int main(int argc, char *argv[])
     {
         if (strchr(releaseStr,'.'))
         {
-            char *origVersion = strdup(releaseStr);
             char *token = strtok(releaseStr, ".");
-            if (token && origVersion && strcmp(origVersion, token))
+            if (token)
             {
                 errno = 0;
                 char *endPtr = NULL;
@@ -28,11 +27,9 @@ int main(int argc, char *argv[])
                     if((int)majorVersion < 13) // Older versions from 10.9 (mavericks)
                     {
                         execl("/Applications/MEGAsync.app/Contents/MacOS/MEGADeprecatedVersion", "/Applications/MEGAsync.app/Contents/MacOS/MEGADeprecatedVersion", NULL);
-                        free(origVersion);
                         return 0;
                     }
                 }
-                free(origVersion);
             }
         }
     }
