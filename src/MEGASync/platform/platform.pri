@@ -7,11 +7,14 @@ HEADERS +=  $$PWD/Platform.h $$PWD/notificator.h
 win32 {
     SOURCES +=	$$PWD/win/WindowsPlatform.cpp \
 		$$PWD/win/WinShellDispatcherTask.cpp \
-		$$PWD/win/WinTrayReceiver.cpp
+                $$PWD/win/WinTrayReceiver.cpp \
+                $$PWD/win/wintoastlib.cpp
 
     HEADERS  += $$PWD/win/WindowsPlatform.h \
 		$$PWD/win/WinShellDispatcherTask.h \
-		$$PWD/win/WinTrayReceiver.h
+                $$PWD/win/WinTrayReceiver.h \
+                $$PWD/win/wintoastlib.h \
+                $$PWD/win/WintoastCompat.h
 
     LIBS += -lole32 -lShell32 -lcrypt32 -ltaskschd
     DEFINES += UNICODE _UNICODE NTDDI_VERSION=0x05010000 _WIN32_WINNT=0x0501
