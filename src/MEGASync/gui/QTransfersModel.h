@@ -25,7 +25,8 @@ public:
     enum {
         TYPE_DOWNLOAD = 0,
         TYPE_UPLOAD,
-        TYPE_FINISHED
+        TYPE_FINISHED,
+        TYPE_RECENTLY_UPDATED
     };
 
     explicit QTransfersModel(int type, QObject *parent = 0);
