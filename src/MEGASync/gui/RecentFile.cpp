@@ -13,15 +13,14 @@
 using namespace mega;
 
 RecentFile::RecentFile(QWidget *parent) :
-    QWidget(parent),
+    TransferItem(parent),
     ui(new Ui::RecentFile)
 {
     ui->setupUi(this);
-    ui->lTime->setText(QString::fromUtf8(""));
-    info.fileHandle = mega::INVALID_HANDLE;
-    menu = NULL;
-    getLinkDisabled = false;
-    ui->pArrow->installEventFilter(this);
+
+    getLinkButtonEnabled = false;
+
+    ui->lGetLink->installEventFilter(this);
     update();
 }
 
@@ -30,160 +29,102 @@ RecentFile::~RecentFile()
     delete ui;
 }
 
-void RecentFile::setFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey, long long time)
+void RecentFile::setFileName(QString fileName)
 {
-    info.fileName = fileName;
-    info.fileHandle = fileHandle;
-    info.localPath = localPath;
-    info.nodeKey = nodeKey;
-    info.dateTime = QDateTime::fromMSecsSinceEpoch(time);
+    TransferItem::setFileName(fileName);
+
+    QFont f = ui->lFileName->font();
+    QFontMetrics fm = QFontMetrics(f);
+    ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
+    ui->lFileName->setToolTip(fileName);
+
+    QIcon icon;
+    icon.addFile(Utilities::getExtensionPixmapSmall(fileName), QSize(), QIcon::Normal, QIcon::Off);
+    ui->lFileType->setIcon(icon);
+    ui->lFileType->setIconSize(QSize(20, 22));
 }
 
-void RecentFile::updateWidget()
+void RecentFile::setType(int type, bool isSyncTransfer)
 {
-    closeMenu();
+    TransferItem::setType(type, isSyncTransfer);
+    QIcon icon;
 
-    if (!info.fileName.length())
+    qreal ratio = 1.0;
+#if QT_VERSION >= 0x050000
+    ratio = qApp->testAttribute(Qt::AA_UseHighDpiPixmaps) ? devicePixelRatio() : 1.0;
+#endif
+
+    switch (type)
     {
-        ui->lFileType->setText(QString());
-        ui->lFileName->setText(QString());
-        ui->lFileType->setIcon(QIcon());
-        ui->lTime->setText(QString::fromAscii(""));
-        ui->pArrow->installEventFilter(this);
-        ui->pArrow->update();
-        return;
+        case MegaTransfer::TYPE_UPLOAD:
+            icon.addFile(QString::fromUtf8(":/images/upload_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            break;
+        case MegaTransfer::TYPE_DOWNLOAD:
+            icon.addFile(QString::fromUtf8(":/images/download_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            break;
+        default:
+            break;
     }
 
-    if (info.fileName.compare(ui->lFileName->text()))
-    {
-        QFont f = ui->lFileName->font();
-        QFontMetrics fm = QFontMetrics(f);
-        ui->lFileName->setText(fm.elidedText(info.fileName, Qt::ElideRight,ui->lFileName->width()));
+    ui->lTransferType->setIcon(icon);
+    ui->lTransferType->setIconSize(QSize(12, 12));
+}
 
-        QIcon icon;
-        icon.addFile(Utilities::getExtensionPixmapMedium(info.fileName), QSize(), QIcon::Normal, QIcon::Off);
-        ui->lFileType->setIcon(icon);
-        ui->lFileType->setIconSize(QSize(48, 48));
+void RecentFile::setTransferState(int value)
+{
+    TransferItem::setTransferState(value);
+//    switch (transferState)
+//    {
+//    case MegaTransfer::STATE_COMPLETED:
+//    case MegaTransfer::STATE_FAILED:
+//        finishTransfer();
+//        break;
+//    case MegaTransfer::STATE_CANCELLED:
+//    default:
+//        break;
+//    }
+}
+
+bool RecentFile::getLinkButtonClicked(QPoint pos)
+{
+    if (!getLinkButtonEnabled)
+    {
+        return false;
     }
 
-    if (getLinkDisabled)
+    switch (transferState)
     {
-        ui->pArrow->installEventFilter(this);
-        ui->pArrow->update();
+    case MegaTransfer::STATE_COMPLETED:
+    case MegaTransfer::STATE_FAILED:
+        if (ui->lGetLink->rect().contains(ui->lGetLink->mapFrom(this, pos)))
+        {
+            return true;
+        }
+        break;
+    case MegaTransfer::STATE_CANCELLED:
+    default:
+        break;
+    }
+
+    return false;
+}
+
+void RecentFile::mouseHoverTransfer(bool isHover)
+{
+    if (isHover)
+    {
+        getLinkButtonEnabled = true;
+        ui->lGetLink->removeEventFilter(this);
+        ui->lGetLink->update();
     }
     else
     {
-        ui->pArrow->removeEventFilter(this);
-        ui->pArrow->update();
+        getLinkButtonEnabled = false;
+        ui->lGetLink->installEventFilter(this);
+        ui->lGetLink->update();
     }
 
-    QDateTime now = QDateTime::currentDateTime();
-    qint64 secs = info.dateTime.secsTo(now);
-    if (secs < 2)
-    {
-        ui->lTime->setText(tr("just now"));
-    }
-    else if (secs < 60)
-    {
-        ui->lTime->setText(tr("%1 seconds ago").arg(secs));
-    }
-    else if (secs < 3600)
-    {
-        int minutes = secs/60;
-        if (minutes == 1)
-        {
-            ui->lTime->setText(tr("1 minute ago"));
-        }
-        else
-        {
-            ui->lTime->setText(tr("%1 minutes ago").arg(minutes));
-        }
-    }
-    else if (secs < 86400)
-    {
-        int hours = secs/3600;
-        if (hours == 1)
-        {
-            ui->lTime->setText(tr("1 hour ago"));
-        }
-        else
-        {
-            ui->lTime->setText(tr("%1 hours ago").arg(hours));
-        }
-    }
-    else if (secs < 2592000)
-    {
-        int days = secs/86400;
-        if (days == 1)
-        {
-            ui->lTime->setText(tr("1 day ago"));
-        }
-        else
-        {
-            ui->lTime->setText(tr("%1 days ago").arg(days));
-        }
-    }
-    else if (secs < 31536000)
-    {
-        int months = secs/2592000;
-        if (months == 1)
-        {
-            ui->lTime->setText(tr("1 month ago"));
-        }
-        else
-        {
-            ui->lTime->setText(tr("%1 months ago").arg(months));
-        }
-    }
-    else
-    {
-        int years = secs/31536000;
-        if (years == 1)
-        {
-            ui->lTime->setText(tr("1 year ago"));
-        }
-        else
-        {
-            ui->lTime->setText(tr("%1 years ago").arg(years));
-        }
-    }
-}
-
-void RecentFile::closeMenu()
-{
-    if (menu)
-    {
-        menu->close();
-    }
-}
-
-RecentFileInfo RecentFile::getFileInfo()
-{
-    return info;
-}
-
-void RecentFile::setFileInfo(RecentFileInfo info)
-{
-    this->info = info;
-}
-
-void RecentFile::disableGetLink(bool disable)
-{
-    this->getLinkDisabled = disable;
-    updateWidget();
-    update();
-}
-
-void RecentFile::clear()
-{
-    info.fileName.clear();
-    info.fileHandle = mega::INVALID_HANDLE;
-    info.localPath.clear();
-    info.nodeKey.clear();
-    info.dateTime = QDateTime();
-
-    closeMenu();
-    getLinkDisabled = false;
+    emit refreshTransfer(this->getTransferTag());
 }
 
 bool RecentFile::eventFilter(QObject *, QEvent *ev)
@@ -191,105 +132,12 @@ bool RecentFile::eventFilter(QObject *, QEvent *ev)
     return ev->type() == QEvent::Paint || ev->type() == QEvent::ToolTip;
 }
 
-void RecentFile::changeEvent(QEvent *event)
+QSize RecentFile::minimumSizeHint() const
 {
-    if (event->type() == QEvent::LanguageChange)
-        updateWidget();
-
-    QWidget::changeEvent(event);
+    return QSize(400, 32);
+}
+QSize RecentFile::sizeHint() const
+{
+    return QSize(400, 32);
 }
 
-void RecentFile::on_pArrow_clicked()
-{
-    if (getLinkDisabled)
-    {
-        return;
-    }
-
-    if (info.fileHandle != mega::INVALID_HANDLE)
-    {
-        ((MegaApplication*)qApp)->copyFileLink(info.fileHandle, info.nodeKey);
-    }
-}
-
-void RecentFile::on_lFileType_customContextMenuRequested(const QPoint &pos)
-{
-    if (menu)
-    {
-        menu->close();
-        return;
-    }
-
-    if (info.localPath.isEmpty() || !QFileInfo(info.localPath).exists())
-    {
-        return;
-    }
-
-    menu = new QMenu();
-#ifndef __APPLE__
-    menu->setStyleSheet(QString::fromAscii(
-            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
-            "QMenu::item {background-color: white; color: black;} "
-            "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
-#endif
-    menu->addAction(tr("Open"), this, SLOT(openFile()));
-    menu->addAction(tr("Show in folder"), this, SLOT(showInFolder()));
-#if defined _WIN32 && (QT_VERSION < 0x050000)
-    menu->exec(this->mapToGlobal(pos));
-#else
-    menu->exec(this->mapToGlobal(QPoint(pos.x(), 0)));
-#endif
-
-    menu->deleteLater();
-    menu = NULL;
-}
-
-void RecentFile::on_wText_customContextMenuRequested(const QPoint &pos)
-{
-    if (menu)
-    {
-        menu->close();
-        return;
-    }
-
-    if (info.localPath.isEmpty() || !QFileInfo(info.localPath).exists())
-    {
-        return;
-    }
-
-    menu = new QMenu(); 
-#ifndef __APPLE__
-    menu->setStyleSheet(QString::fromAscii(
-            "QMenu {background-color: white; border: 2px solid #B8B8B8; padding: 5px; border-radius: 5px;} "
-            "QMenu::item {background-color: white; color: black;} "
-            "QMenu::item:selected {background-color: rgb(242, 242, 242);}"));
-#endif
-    menu->addAction(tr("Open"), this, SLOT(openFile()));
-    menu->addAction(tr("Show in folder"), this, SLOT(showInFolder()));
-#if defined _WIN32 && (QT_VERSION < 0x050000)
-    menu->exec(this->mapToGlobal(pos));
-#else
-    menu->exec(this->mapToGlobal(QPoint(pos.x(), 0)));
-#endif
-
-    menu->deleteLater();
-    menu = NULL;
-}
-
-void RecentFile::showInFolder()
-{
-    if (!info.localPath.isEmpty())
-    {
-        QWidget::window()->hide();
-        Platform::showInFolder(info.localPath);
-    }
-}
-
-void RecentFile::openFile()
-{
-    if (!info.localPath.isEmpty())
-    {
-        QWidget::window()->hide();
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(info.localPath));
-    }
-}

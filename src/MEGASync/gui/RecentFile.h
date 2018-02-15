@@ -5,52 +5,47 @@
 #include <QFileInfo>
 #include <QDateTime>
 #include <QMenu>
+#include "TransferItem.h"
 
 namespace Ui {
 class RecentFile;
 }
 
-class RecentFileInfo
-{
-public:
-    QString fileName;
-    long long fileHandle;
-    QDateTime dateTime;
-    QString localPath;
-    QString nodeKey;
-};
-
-class RecentFile : public QWidget
+class RecentFile : public TransferItem
 {
     Q_OBJECT
 
 public:
     explicit RecentFile(QWidget *parent = 0);
+
     ~RecentFile();
-    void setFile(QString fileName, long long fileHandle, QString localPath, QString nodeKey, long long time);
-    void updateWidget();
-    void closeMenu();
-    RecentFileInfo getFileInfo();
-    void setFileInfo(RecentFileInfo info);
-    void disableGetLink(bool disable);
-    void clear();
+
+    void setFileName(QString fileName);
+    void setType(int type, bool isSyncTransfer = false);
+    void setTransferState(int value);
+
+    bool getLinkButtonClicked(QPoint pos);
+
+    void updateTransfer() {}
+    void updateFinishedTime() {}
+    void loadDefaultTransferIcon() {}
+    void updateAnimation() {}
+    bool cancelButtonClicked(QPoint pos) { return false;}
+    void mouseHoverTransfer(bool isHover);
+
     bool eventFilter(QObject *, QEvent * ev);
+    QSize minimumSizeHint() const;
+    QSize sizeHint() const;
+
+signals:
+    void refreshTransfer(int tag);
 
 private:
     Ui::RecentFile *ui;
 
 protected:
-    RecentFileInfo info;
-    QMenu *menu;
-    void changeEvent(QEvent * event);
-    bool getLinkDisabled;
+    bool getLinkButtonEnabled;
 
-private slots:
-    void on_pArrow_clicked();
-    void on_lFileType_customContextMenuRequested(const QPoint &pos);
-    void on_wText_customContextMenuRequested(const QPoint &pos);
-    void showInFolder();
-    void openFile();
 };
 
 #endif // RECENTFILE_H

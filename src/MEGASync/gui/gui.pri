@@ -32,7 +32,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/UpgradeDialog.cpp \
     $$PWD/PlanWidget.cpp \
     $$PWD/InfoWizard.cpp \
-    $$PWD/TransferItem.cpp \
     $$PWD/TransferManager.cpp \
     $$PWD/TransfersWidget.cpp \
     $$PWD/QTransfersModel.cpp \
@@ -48,7 +47,9 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/MenuItemAction.cpp \
     $$PWD/DataUsageMenu.cpp \
     $$PWD/AddExclusionDialog.cpp \
-    $$PWD/LocalCleanScheduler.cpp
+    $$PWD/LocalCleanScheduler.cpp \
+    $$PWD/TransferManagerItem.cpp \
+    $$PWD/TransferItem.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -82,7 +83,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/UpgradeDialog.h \
     $$PWD/PlanWidget.h \
     $$PWD/InfoWizard.h \
-    $$PWD/TransferItem.h \
     $$PWD/TransferManager.h \
     $$PWD/TransfersWidget.h \
     $$PWD/QTransfersModel.h \
@@ -98,7 +98,9 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/MenuItemAction.h \
     $$PWD/DataUsageMenu.h \
     $$PWD/AddExclusionDialog.h \
-    $$PWD/LocalCleanScheduler.h
+    $$PWD/LocalCleanScheduler.h \
+    $$PWD/TransferManagerItem.h \
+    $$PWD/TransferItem.h
 
 INCLUDEPATH += $$PWD
 
@@ -136,7 +138,7 @@ win32 {
                 $$PWD/win/PlanWidget.ui \
                 $$PWD/win/UpgradeDialog.ui \
                 $$PWD/win/InfoWizard.ui \
-                $$PWD/win/TransferItem.ui \
+                $$PWD/win/TransferManagerItem.ui \
                 $$PWD/win/TransferManager.ui \
                 $$PWD/win/TransfersWidget.ui \
                 $$PWD/win/TransfersStateInfoWidget.ui \
@@ -178,7 +180,7 @@ macx {
                 $$PWD/macx/PlanWidget.ui \
                 $$PWD/macx/UpgradeDialog.ui \
                 $$PWD/macx/InfoWizard.ui \
-                $$PWD/macx/TransferItem.ui \
+                $$PWD/macx/TransferManagerItem.ui \
                 $$PWD/macx/TransferManager.ui \
                 $$PWD/macx/TransfersWidget.ui \
                 $$PWD/macx/TransfersStateInfoWidget.ui \
@@ -229,7 +231,7 @@ unix:!macx {
                 $$PWD/linux/PlanWidget.ui \
                 $$PWD/linux/UpgradeDialog.ui \
                 $$PWD/linux/InfoWizard.ui \
-                $$PWD/linux/TransferItem.ui \
+                $$PWD/linux/TransferManagerItem.ui \
                 $$PWD/linux/TransferManager.ui \
                 $$PWD/linux/TransfersWidget.ui \
                 $$PWD/linux/TransfersStateInfoWidget.ui \
@@ -242,4 +244,4 @@ unix:!macx {
                $$PWD/PermissionsWidget.h
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
-}
+}  
