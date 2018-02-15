@@ -9,7 +9,6 @@
 #include "megaapi.h"
 #include "QTransfersModel.h"
 
-
 using namespace mega;
 
 MegaTransferDelegate::MegaTransferDelegate(QTransfersModel *model, QObject *parent)
@@ -32,7 +31,15 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         TransferItem *ti = model->transferItems[tag];
         if (!ti)
         {
-            ti = new TransferItem();
+            if (modelType == QTransfersModel::TYPE_RECENTLY_UPDATED)
+            {
+                ti = new RecentFile();
+            }
+            else
+            {
+                ti = new TransferManagerItem();
+            }
+
             ti->setTransferTag(tag);
             connect(ti, SIGNAL(refreshTransfer(int)), model, SLOT(refreshTransferItem(int)));
             model->transferItems.insert(tag, ti);
@@ -47,7 +54,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 ti->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
                 ti->setTransferState(transfer->getState());
                 ti->setPriority(transfer->getPriority());
-                if (modelType == QTransfersModel::TYPE_FINISHED)
+                if (modelType == QTransfersModel::TYPE_FINISHED || modelType == QTransfersModel::TYPE_RECENTLY_UPDATED)
                 {
                     ti->setFinishedTime(transfer->getUpdateTime());
                 }
@@ -62,7 +69,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             ti->updateTransfer();
         }
 
-        if (modelType == QTransfersModel::TYPE_FINISHED)
+        if (modelType == QTransfersModel::TYPE_FINISHED || modelType == QTransfersModel::TYPE_RECENTLY_UPDATED)
         {
             ti->updateFinishedTime();
         }

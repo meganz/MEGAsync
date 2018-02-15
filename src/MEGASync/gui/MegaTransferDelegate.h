@@ -3,6 +3,8 @@
 
 #include <QStyledItemDelegate>
 #include "TransferItem.h"
+#include "TransferManagerItem.h"
+#include "RecentFile.h"
 #include "QTransfersModel.h"
 
 class MegaTransferDelegate : public QStyledItemDelegate
