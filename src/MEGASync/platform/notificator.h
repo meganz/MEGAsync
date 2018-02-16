@@ -16,6 +16,79 @@ class QDBusInterface;
 #endif
 QT_END_NAMESPACE
 
+class MegaNotification : public QObject
+{
+    Q_OBJECT
+
+public:
+    enum CloseReason {
+        Unknown,
+        UserAction,
+        AppHidden,
+        TimedOut
+    };
+
+    MegaNotification();
+    virtual ~MegaNotification();
+
+    QString getTitle() const;
+    void setTitle(const QString &value);
+    QString getText() const;
+    void setText(const QString &value);
+    QString getSource() const;
+    void setSource(const QString &value);
+    int getExpirationTime() const;
+    void setExpirationTime(int value);
+    QString getImagePath() const;
+    void setImagePath(const QString &value);
+    int getStyle() const;
+    void setStyle(int value);
+    QStringList getActions() const;
+    void setActions(const QStringList &value);
+    QIcon getImage() const;
+    void setImage(const QIcon &value);
+    int getType() const;
+    void setType(int value);
+    int64_t getId() const;
+    void setId(const int64_t &value);
+
+protected:
+    QString title;
+    QString text;
+    QString source;
+    int expirationTime;
+    QString imagePath;
+    QIcon image;
+    int style;
+    QStringList actions;
+    int type;
+    int64_t id;
+
+signals:
+    void activated(int action);
+    void closed(int reason);
+    void failed();
+};
+
+#ifdef _WIN32
+#include "platform/win/wintoastlib.h"
+
+class WinToastNotification : public MegaNotification, public WinToastLib::IWinToastHandler
+{
+    Q_OBJECT
+
+public:
+    WinToastNotification();
+    virtual ~WinToastNotification();
+
+    void toastActivated();
+    void toastActivated(int actionIndex);
+    void toastDismissed(WinToastDismissalReason state);
+    void toastFailed();
+};
+#endif
+
+
 /** Cross-platform desktop notification client. */
 class Notificator: public QObject
 {
@@ -62,12 +135,16 @@ private:
     QString programName;
     Mode mode;
     QSystemTrayIcon *trayIcon;
+    QString defaultIconPath;
+
 #ifdef USE_DBUS
     QDBusInterface *interface;
 
     void notifyDBus(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout);
 #endif
     void notifySystray(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout);
+    void notifySystray(MegaNotification *notification);
+
 #ifdef Q_OS_MAC
     void notifyGrowl(Class cls, const QString &title, const QString &text, const QIcon &icon);
     void notifyMacUserNotificationCenter(Class cls, const QString &title, const QString &text, const QIcon &icon);

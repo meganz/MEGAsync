@@ -206,7 +206,7 @@ namespace Util {
     inline HRESULT defaultShellLinkPath(const std::wstring& appname, _In_ WCHAR* path, _In_ DWORD nSize = MAX_PATH) {
         HRESULT hr = defaultShellLinksDirectory(path, nSize);
         if (SUCCEEDED(hr)) {
-            const std::wstring appLink(appname + DEFAULT_LINK_FORMAT);
+            const std::wstring appLink(appname + L"\\" + appname + DEFAULT_LINK_FORMAT);
             errno_t result = wcscat_s(path, nSize, appLink.c_str());
             hr = (result == 0) ? S_OK : E_INVALIDARG;
             DEBUG_MSG("Default shell link file path: " << path);
@@ -569,7 +569,7 @@ HRESULT	WinToast::createShellLinkHelper() {
     return hr;
 }
 
-INT64 WinToast::showToast(_In_ const WinToastTemplate& toast, _In_  IWinToastHandler* handler)  {
+INT64 WinToast::showToast(_In_ const WinToastTemplate& toast, _In_  std::shared_ptr<IWinToastHandler> handler)  {
     INT64 id = -1;
     if (!isInitialized()) {
         DEBUG_MSG("Error when launching the toast. WinToast is not initialized =(");
@@ -635,7 +635,7 @@ INT64 WinToast::showToast(_In_ const WinToastTemplate& toast, _In_  IWinToastHan
                                     hr = notification->put_ExpirationTime(&expirationDateTime);
                                 }
                                 if (SUCCEEDED(hr)) {
-                                    hr = Util::setEventHandlers(notification.Get(), std::shared_ptr<IWinToastHandler>(handler), expiration);
+                                    hr = Util::setEventHandlers(notification.Get(), handler, expiration);
                                 }
                                 if (SUCCEEDED(hr)) {
                                     GUID guid;

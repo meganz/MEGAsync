@@ -16,6 +16,7 @@
 #include <string.h>
 #include <vector>
 #include <map>
+#include <memory>
 
 #if NTDDI_VERSION < NTDDI_VISTA
 #include "WintoastCompat.h"
@@ -41,10 +42,10 @@ namespace WinToastLib {
             ApplicationHidden = ToastDismissalReason::ToastDismissalReason_ApplicationHidden,
             TimedOut = ToastDismissalReason::ToastDismissalReason_TimedOut
         };
-        virtual void toastActivated() const = 0;
-        virtual void toastActivated(int actionIndex) const = 0;
-        virtual void toastDismissed(WinToastDismissalReason state) const = 0;
-        virtual void toastFailed() const = 0;
+        virtual void toastActivated() = 0;
+        virtual void toastActivated(int actionIndex) = 0;
+        virtual void toastDismissed(WinToastDismissalReason state) = 0;
+        virtual void toastFailed() = 0;
         virtual ~IWinToastHandler() {}
     };
 
@@ -112,7 +113,7 @@ namespace WinToastLib {
                                                     );
         virtual bool            initialize();
         virtual bool            isInitialized() const { return _isInitialized; }
-        virtual INT64           showToast(_In_ const WinToastTemplate& toast, _In_ IWinToastHandler* handler);
+        virtual INT64           showToast(_In_ const WinToastTemplate& toast, _In_ std::shared_ptr<IWinToastHandler> handler);
         virtual bool            hideToast(_In_ INT64 id);
         virtual void            clear();
         inline std::wstring     appName() const { return _appName; }
