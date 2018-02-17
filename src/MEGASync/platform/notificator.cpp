@@ -273,7 +273,7 @@ void Notificator::notifySystray(Class cls, const QString &title, const QString &
 #ifdef _WIN32
     if (WinToast::instance()->isCompatible())
     {
-        WinToastNotification *n = new WinToastNotification();
+        MegaNotification *n = new MegaNotification();
         if (title == tr("MEGAsync"))
         {
             n->setTitle(QString::fromUtf8("MEGA"));
@@ -316,39 +316,38 @@ void Notificator::notifySystray(Class cls, const QString &title, const QString &
 
 void Notificator::notifySystray(MegaNotification *notification)
 {
-#ifdef _WIN32
-    std::shared_ptr<WinToastNotification> winNotification(dynamic_cast<WinToastNotification*>(notification));
-    if (!winNotification)
+    if (!notification)
     {
         return;
     }
 
+#ifdef _WIN32
     if (!WinToast::instance()->isCompatible())
     {
-        notifySystray((Notificator::Class)winNotification->getType(), winNotification->getText(),
-                      winNotification->getSource(), winNotification->getImage(), winNotification->getExpirationTime());
+        notifySystray((Notificator::Class)notification->getType(), notification->getText(),
+                      notification->getSource(), notification->getImage(), notification->getExpirationTime());
         return;
     }
 
     WinToastTemplate templ(WinToastTemplate::ImageAndText02);
-    templ.setTextField((LPCWSTR)winNotification->getTitle().utf16(), WinToastTemplate::FirstLine);
-    templ.setTextField((LPCWSTR)winNotification->getText().utf16(), WinToastTemplate::SecondLine);
-    templ.setAttributionText((LPCWSTR)winNotification->getSource().utf16());
-    templ.setExpiration(winNotification->getExpirationTime());
-    templ.setImagePath((LPCWSTR)winNotification->getImagePath().utf16());
+    templ.setTextField((LPCWSTR)notification->getTitle().utf16(), WinToastTemplate::FirstLine);
+    templ.setTextField((LPCWSTR)notification->getText().utf16(), WinToastTemplate::SecondLine);
+    templ.setAttributionText((LPCWSTR)notification->getSource().utf16());
+    templ.setExpiration(notification->getExpirationTime());
+    templ.setImagePath((LPCWSTR)notification->getImagePath().utf16());
 
-    QStringList userActions = winNotification->getActions();
+    QStringList userActions = notification->getActions();
     for (int i = 0; i < userActions.size(); i++)
     {
         templ.addAction((LPCWSTR)userActions.at(i).utf16());
     }
 
-    winNotification->setId(WinToast::instance()->showToast(templ, winNotification));
+    notification->setId(WinToast::instance()->showToast(templ, std::shared_ptr<IWinToastHandler>(new WinToastNotification(notification))));
     return;
 #endif
 
-    notifySystray((Notificator::Class)winNotification->getType(), winNotification->getText(),
-                  winNotification->getSource(), winNotification->getImage(), winNotification->getExpirationTime());
+    notifySystray((Notificator::Class)notification->getType(), notification->getText(),
+                  notification->getSource(), notification->getImage(), notification->getExpirationTime());
 }
 
 // Based on Qt's tray icon implementation
@@ -509,6 +508,16 @@ void MegaNotification::setId(const int64_t &value)
     id = value;
 }
 
+QString MegaNotification::getData() const
+{
+    return data;
+}
+
+void MegaNotification::setData(const QString &value)
+{
+    data = value;
+}
+
 MegaNotification::MegaNotification()
 {
     title = QString::fromUtf8("MEGA");
@@ -517,6 +526,10 @@ MegaNotification::MegaNotification()
     style = -1;
     type = Notificator::Class::Information;
     id = -1;
+
+    connect(this, SIGNAL(activated(int)), this, SLOT(deleteLater()), Qt::QueuedConnection);
+    connect(this, SIGNAL(closed(int)), this, SLOT(deleteLater()), Qt::QueuedConnection);
+    connect(this, SIGNAL(failed()), this, SLOT(deleteLater()), Qt::QueuedConnection);
 }
 
 MegaNotification::~MegaNotification()
@@ -575,9 +588,12 @@ void MegaNotification::setImagePath(const QString &value)
 }
 
 #ifdef _WIN32
-WinToastNotification::WinToastNotification()
-{
 
+QMutex WinToastNotification::mutex;
+
+WinToastNotification::WinToastNotification(QPointer<MegaNotification> megaNotification)
+{
+    this->notification = megaNotification;
 }
 
 WinToastNotification::~WinToastNotification()
@@ -587,36 +603,60 @@ WinToastNotification::~WinToastNotification()
 
 void WinToastNotification::toastActivated()
 {
-    emit activated(-1);
+    mutex.lock();
+    if (notification)
+    {
+        emit notification->activated(-1);
+        notification = NULL;
+    }
+    mutex.unlock();
 }
 
 void WinToastNotification::toastActivated(int actionIndex)
 {
-    emit activated(actionIndex);
+    mutex.lock();
+    if (notification)
+    {
+        emit notification->activated(actionIndex);
+        notification = NULL;
+    }
+    mutex.unlock();
 }
 
 void WinToastNotification::toastDismissed(WinToastDismissalReason state)
 {
-    int reason = MegaNotification::CloseReason::Unknown;
-    switch (state)
+    mutex.lock();
+    if (notification)
     {
-    case WinToastDismissalReason::UserCanceled:
-        reason = CloseReason::UserAction;
-        break;
-    case WinToastDismissalReason::ApplicationHidden:
-        reason = CloseReason::AppHidden;
-        break;
-    case WinToastDismissalReason::TimedOut:
-        reason = CloseReason::TimedOut;
-        break;
-    }
+        int reason = MegaNotification::CloseReason::Unknown;
+        switch (state)
+        {
+        case WinToastDismissalReason::UserCanceled:
+            reason = MegaNotification::CloseReason::UserAction;
+            break;
+        case WinToastDismissalReason::ApplicationHidden:
+            reason = MegaNotification::CloseReason::AppHidden;
+            break;
+        case WinToastDismissalReason::TimedOut:
+            reason = MegaNotification::CloseReason::TimedOut;
+            break;
+        }
 
-    emit closed(reason);
+        emit notification->closed(reason);
+        notification = NULL;
+    }
+    mutex.unlock();
 }
 
 void WinToastNotification::toastFailed()
 {
-    emit failed();
+    mutex.lock();
+    if (notification)
+    {
+        emit notification->failed();
+        notification = NULL;
+    }
+    mutex.unlock();
 }
 
 #endif

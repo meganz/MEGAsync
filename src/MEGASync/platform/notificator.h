@@ -7,6 +7,8 @@
 
 #include <QIcon>
 #include <QObject>
+#include <QPointer>
+#include <QMutex>
 
 QT_BEGIN_NAMESPACE
 class QSystemTrayIcon;
@@ -51,6 +53,8 @@ public:
     void setType(int value);
     int64_t getId() const;
     void setId(const int64_t &value);
+    QString getData() const;
+    void setData(const QString &value);
 
 protected:
     QString title;
@@ -63,6 +67,7 @@ protected:
     QStringList actions;
     int type;
     int64_t id;
+    QString data;
 
 signals:
     void activated(int action);
@@ -73,12 +78,14 @@ signals:
 #ifdef _WIN32
 #include "platform/win/wintoastlib.h"
 
-class WinToastNotification : public MegaNotification, public WinToastLib::IWinToastHandler
+class WinToastNotification : public WinToastLib::IWinToastHandler
 {
-    Q_OBJECT
+private:
+    static QMutex mutex;
+    QPointer<MegaNotification> notification;
 
 public:
-    WinToastNotification();
+    WinToastNotification(QPointer<MegaNotification> megaNotification);
     virtual ~WinToastNotification();
 
     void toastActivated();
