@@ -137,7 +137,10 @@ namespace WinToastLib {
         bool                                            _hasCoInitialized;
         std::wstring                                    _appName;
         std::wstring                                    _aumi;
-        std::map<INT64, ComPtr<IToastNotification>>     _buffer;
+        std::map<INT64, ComPtr<IToastNotification>>     _buffer;   
+        std::map<INT64, EventRegistrationToken>         _activationTokens;
+        std::map<INT64, EventRegistrationToken>         _dismissedTokens;
+        std::map<INT64, EventRegistrationToken>         _failedTokens;
 
         HRESULT     validateShellLinkHelper(_Out_ bool& wasChanged);
         HRESULT		createShellLinkHelper();

@@ -243,8 +243,8 @@ namespace Util {
         return hr;
     }
 
-    inline HRESULT setEventHandlers(_In_ IToastNotification* notification, _In_ std::shared_ptr<IWinToastHandler> eventHandler, _In_ INT64 expirationTime) {
-        EventRegistrationToken activatedToken, dismissedToken, failedToken;
+    inline HRESULT setEventHandlers(_In_ IToastNotification* notification, _In_ std::shared_ptr<IWinToastHandler> eventHandler, _In_ INT64 expirationTime,
+                                    EventRegistrationToken &activatedToken, EventRegistrationToken &dismissedToken, EventRegistrationToken &failedToken) {
         HRESULT hr = notification->add_Activated(
                 #if NTDDI_VERSION < NTDDI_VISTA
                     MegaCompatToastCallbackWrapper<IInspectable, IInspectable>(
@@ -304,6 +304,14 @@ namespace Util {
                     return S_OK;
                 }).Get(), &failedToken);
             }
+            else
+            {
+                notification->remove_Dismissed(dismissedToken);
+            }
+        }
+        else
+        {
+            notification->remove_Activated(activatedToken);
         }
         return hr;
     }
@@ -634,17 +642,26 @@ INT64 WinToast::showToast(_In_ const WinToastTemplate& toast, _In_  std::shared_
                                     expiration = expirationDateTime;
                                     hr = notification->put_ExpirationTime(&expirationDateTime);
                                 }
-                                if (SUCCEEDED(hr)) {
-                                    hr = Util::setEventHandlers(notification.Get(), handler, expiration);
-                                }
+
                                 if (SUCCEEDED(hr)) {
                                     GUID guid;
                                     hr = CoCreateGuid(&guid);
                                     if (SUCCEEDED(hr)) {
                                         id = guid.Data1;
                                         _buffer[id] = notification;
-                                        DEBUG_MSG("xml: " << Util::AsString(xmlDocument));
-                                        hr = notifier->Show(notification.Get());
+                                        hr = Util::setEventHandlers(notification.Get(), handler, expiration,
+                                                                    _activationTokens[id], _dismissedTokens[id], _failedTokens[id]);
+                                        if (SUCCEEDED(hr)) {
+                                            DEBUG_MSG("xml: " << Util::AsString(xmlDocument));
+                                            hr = notifier->Show(notification.Get());
+                                        }
+                                        else
+                                        {
+                                            _activationTokens.erase(id);
+                                            _dismissedTokens.erase(id);
+                                            _failedTokens.erase(id);
+                                            _buffer.erase(id);
+                                        }
                                     }
                                 }
                             }
@@ -677,10 +694,16 @@ bool WinToast::hideToast(_In_ INT64 id) {
     const bool find = _buffer.find(id) != _buffer.end();
 	if (find) {
 		bool succeded = false;
+        _buffer[id].Get()->remove_Activated(_activationTokens[id]);
+        _buffer[id].Get()->remove_Dismissed(_dismissedTokens[id]);
+        _buffer[id].Get()->remove_Failed(_failedTokens[id]);
 		ComPtr<IToastNotifier> notify = notifier(&succeded);
 		if (succeded) {
 			notify->Hide(_buffer[id].Get());
 		}
+        _activationTokens.erase(id);
+        _dismissedTokens.erase(id);
+        _failedTokens.erase(id);
 		_buffer.erase(id);
 	}
     return find;

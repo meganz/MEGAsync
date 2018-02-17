@@ -534,7 +534,12 @@ MegaNotification::MegaNotification()
 
 MegaNotification::~MegaNotification()
 {
-
+#ifdef _WIN32
+    if (id != -1)
+    {
+        WinToast::instance()->hideToast(id);
+    }
+#endif
 }
 
 QString MegaNotification::getTitle() const
