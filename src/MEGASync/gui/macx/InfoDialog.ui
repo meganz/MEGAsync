@@ -1827,13 +1827,13 @@ color: #333333;
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>45</height>
+          <height>55</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>45</height>
+          <height>55</height>
          </size>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
