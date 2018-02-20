@@ -102,7 +102,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     accountDetailsDialog = NULL;
     cacheSize = -1;
     remoteCacheSize = -1;
-    fileVersionsSize = preferences->versionsStorage();
+    fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
 
     hasUpperLimit = false;
     hasLowerLimit = false;
