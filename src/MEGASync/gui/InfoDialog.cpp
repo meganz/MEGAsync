@@ -1348,8 +1348,17 @@ void InfoDialog::regenerateLayout()
     else
     {
 
-        setMinimumHeight(397);
-        setMaximumHeight(397);
+        if (ui->wRecentUpdated->getActualMode() == RecentlyUpdated::EXPANDED)
+        {
+            setMinimumHeight(557);
+            setMaximumHeight(557);
+        }
+        else
+        {
+            setMinimumHeight(397);
+            setMaximumHeight(397);
+        }
+
 
         ui->bTransferManager->setVisible(true);
         ui->bSyncFolder->setVisible(true);

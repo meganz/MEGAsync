@@ -19,7 +19,8 @@ RecentlyUpdated::~RecentlyUpdated()
 
 void RecentlyUpdated::setVisualMode(int mode)
 {
-    switch(mode)
+    actualMode = mode;
+    switch(actualMode)
     {
         case EXPANDED: //Show header and tree view with list of updated transfers
             ui->wTransfers->show();
@@ -27,13 +28,17 @@ void RecentlyUpdated::setVisualMode(int mode)
         case COLLAPSED: //Show only Recently updated header
             ui->wTransfers->hide();
             break;
-
     }
 }
 
 void RecentlyUpdated::onTransferFinish(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError *e)
 {
     ui->wTransfers->getModel()->onTransferFinish(api, transfer, e);
+}
+
+int RecentlyUpdated::getActualMode() const
+{
+    return actualMode;
 }
 
 void RecentlyUpdated::on_cRecentlyUpdated_stateChanged(int arg1)

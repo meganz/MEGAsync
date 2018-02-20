@@ -24,12 +24,13 @@ public:
     ~RecentlyUpdated();
 
     void setVisualMode(int mode);
+    int getActualMode() const;
 
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
 
-
 private:
     Ui::RecentlyUpdated *ui;
+    int actualMode;
 
 private slots:
     void on_cRecentlyUpdated_stateChanged(int arg1);
