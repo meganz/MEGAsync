@@ -10,13 +10,14 @@
 #include "SettingsDialog.h"
 #include "DataUsageMenu.h"
 #include "MenuItemAction.h"
+#include "RecentlyUpdated.h"
 
 namespace Ui {
 class InfoDialog;
 }
 
 class MegaApplication;
-class InfoDialog : public QDialog
+class InfoDialog : public QDialog, public mega::MegaTransferListener
 {
     Q_OBJECT
 
@@ -47,6 +48,8 @@ public:
     void closeSyncsMenu();
     void addSync(mega::MegaHandle h);
     void clearUserAttributes();
+
+    virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
 
 #ifdef __APPLE__
     void moveArrow(QPoint p);
@@ -90,11 +93,20 @@ private slots:
 
     void hideUsageBalloon();
 
+#ifdef __APPLE__
+    void recentlyUpdatedStateChanged(int mode);
+    void onAnimationFinished();
+#endif
+
 private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;
 #ifdef __APPLE__
     QPushButton *arrow;
+
+    QPropertyAnimation *minHeightAnimation;
+    QPropertyAnimation *maxHeightAnimation;
+    QParallelAnimationGroup *animationGroup;
 #endif
 
     QMenu *syncsMenu;

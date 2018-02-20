@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>385</height>
+    <height>397</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>400</width>
-    <height>385</height>
+    <height>397</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>402</width>
-    <height>385</height>
+    <width>400</width>
+    <height>557</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -121,7 +121,7 @@ background-color: transparent;
 background-color:  rgba(0, 0, 0, 5%);
 }
 
-#wContainerBottom
+#wContainerBottom, #wRecentUpdated
 {
 background-color: white;
 border-bottom-left-radius: 2px;
@@ -295,15 +295,21 @@ color: #999999;
    </item>
    <item>
     <widget class="QWidget" name="wContainerHeader" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
-       <width>0</width>
+       <width>400</width>
        <height>248</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>16777215</width>
+       <width>400</width>
        <height>248</height>
       </size>
      </property>
@@ -430,7 +436,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/tray_transfer_manager_ico.png</normaloff>:/images/tray_transfer_manager_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -476,7 +482,7 @@ margin-top: -1px;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -495,6 +501,18 @@ margin-top: -1px;
       </item>
       <item>
        <widget class="QWidget" name="wActiveTransfersContainer" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>188</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>188</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -519,32 +537,32 @@ margin-top: -1px;
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>190</height>
+             <height>188</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
              <width>16777215</width>
-             <height>190</height>
+             <height>188</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>1</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="pUpdated">
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>190</height>
+              <height>188</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>190</height>
+              <height>188</height>
              </size>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -585,7 +603,7 @@ border: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
+                <iconset resource="../Resources_linux.qrc">
                  <normaloff>:/images/empty_upToDate.png</normaloff>:/images/empty_upToDate.png</iconset>
                </property>
                <property name="iconSize">
@@ -658,13 +676,13 @@ border: none;</string>
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>190</height>
+              <height>188</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>190</height>
+              <height>188</height>
              </size>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -822,7 +840,7 @@ border: none;</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../Resources_macx.qrc">
+                      <iconset resource="../Resources_linux.qrc">
                        <normaloff>:/images/clock_ico.png</normaloff>:/images/clock_ico.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -963,7 +981,7 @@ border: none;</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../Resources_macx.qrc">
+                      <iconset resource="../Resources_linux.qrc">
                        <normaloff>:/images/clock_ico.png</normaloff>:/images/clock_ico.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -1030,13 +1048,13 @@ border: none;</string>
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>190</height>
+              <height>188</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>190</height>
+              <height>188</height>
              </size>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -1128,33 +1146,77 @@ border: none;</string>
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="wSeparator" native="true">
+    <widget class="RecentlyUpdated" name="wRecentUpdated" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
-       <width>0</width>
-       <height>1</height>
+       <width>400</width>
+       <height>31</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>16777215</width>
-       <height>1</height>
+       <width>400</width>
+       <height>31</height>
       </size>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="QWidget" name="wContainerBottom" native="true">
+    <spacer name="vRupdatedSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>0</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QWidget" name="wSeparator" native="true">
      <property name="minimumSize">
       <size>
-       <width>0</width>
-       <height>127</height>
+       <width>400</width>
+       <height>1</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>16777215</width>
-       <height>127</height>
+       <width>400</width>
+       <height>1</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="wContainerBottom" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>105</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>400</width>
+       <height>105</height>
       </size>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -1234,7 +1296,7 @@ border: none;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/Nav_Dot_inactive.png</normaloff>
              <normalon>:/images/Nav_Dot_inactive.png</normalon>
              <disabledoff>:/images/Nav_Dot_inactive.png</disabledoff>
@@ -1270,7 +1332,7 @@ border: none;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/Nav_Dot_inactive.png</normaloff>:/images/Nav_Dot_inactive.png</iconset>
            </property>
            <property name="iconSize">
@@ -1342,7 +1404,7 @@ border: none;</string>
             </size>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="pStorage">
             <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -1817,7 +1879,7 @@ color: #333333;
             <string>Syncs</string>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/ico_syncs.png</normaloff>:/images/ico_syncs.png</iconset>
            </property>
            <property name="iconSize">
@@ -1896,6 +1958,12 @@ color: #333333;
    <header location="global">AvatarWidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>RecentlyUpdated</class>
+   <extends>QWidget</extends>
+   <header location="global">RecentlyUpdated.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>bSettings</tabstop>
@@ -1906,7 +1974,7 @@ color: #333333;
   <tabstop>label</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

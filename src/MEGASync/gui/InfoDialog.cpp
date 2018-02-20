@@ -70,6 +70,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     sharesItem = NULL;
     rubbishItem = NULL;
     gWidget = NULL;
+
     overQuotaState = false;
 
     //Initialize header dialog and disable chat features
@@ -127,6 +128,21 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     arrow->setStyleSheet(QString::fromAscii("border: none;"));
     arrow->resize(30,10);
     arrow->hide();
+
+
+    minHeightAnimation = new QPropertyAnimation();
+    maxHeightAnimation = new QPropertyAnimation();
+    animationGroup = new QParallelAnimationGroup();
+
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    animationGroup->addAnimation(minHeightAnimation);
+    animationGroup->addAnimation(maxHeightAnimation);
+    connect(animationGroup, SIGNAL(finished()), this, SLOT(onAnimationFinished()));
+
+    connect(ui->wRecentUpdated, SIGNAL(onRecentlyUpdatedClicked(int)), this, SLOT(recentlyUpdatedStateChanged(int)));
 #endif
 
     on_bDotUsedStorage_clicked();
@@ -1211,6 +1227,16 @@ void InfoDialog::clearUserAttributes()
     ui->bAvatar->clearData();
 }
 
+void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *e)
+{
+    if (transfer->isStreamingTransfer() || transfer->isFolderTransfer())
+    {
+        return;
+    }
+
+    ui->wRecentUpdated->onTransferFinish(api, transfer, e);
+}
+
 void InfoDialog::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
@@ -1308,13 +1334,23 @@ void InfoDialog::regenerateLayout()
         ui->wSeparator->setVisible(false);
         dialogLayout->removeWidget(ui->wContainerBottom);
         ui->wContainerBottom->setVisible(false);
+        dialogLayout->removeWidget(ui->wRecentUpdated);
+        ui->wRecentUpdated->setVisible(false);
+        dialogLayout->removeItem(ui->vRupdatedSpacer);
         dialogLayout->addWidget(gWidget);
         gWidget->setVisible(true);
 
         overlay->setVisible(false);
+
+        setMinimumHeight(385);
+        setMaximumHeight(385);
     }
     else
     {
+
+        setMinimumHeight(397);
+        setMaximumHeight(397);
+
         ui->bTransferManager->setVisible(true);
         ui->bSyncFolder->setVisible(true);
         ui->bAvatar->setVisible(true);
@@ -1322,7 +1358,10 @@ void InfoDialog::regenerateLayout()
         dialogLayout->removeWidget(gWidget);
         gWidget->setVisible(false);
         dialogLayout->addWidget(ui->wContainerHeader);
-        ui->wContainerHeader->setVisible(true);
+        ui->wContainerHeader->setVisible(true);    
+        dialogLayout->addWidget(ui->wRecentUpdated);
+        ui->wRecentUpdated->setVisible(true);
+        dialogLayout->addItem(ui->vRupdatedSpacer);
         dialogLayout->addWidget(ui->wSeparator);
         ui->wSeparator->setVisible(true);
         dialogLayout->addWidget(ui->wContainerBottom);
@@ -1446,6 +1485,73 @@ void InfoDialog::hideUsageBalloon()
         storageUsedMenu->hide();
     }
 }
+
+void InfoDialog::recentlyUpdatedStateChanged(int mode)
+{
+//    ui->wRecentUpdated->setVisualMode(RecentlyUpdated::COLLAPSED);
+
+    if (mode == RecentlyUpdated::COLLAPSED)
+    {
+        minHeightAnimation->setTargetObject(this);
+        maxHeightAnimation->setTargetObject(this);
+        minHeightAnimation->setPropertyName("minimumHeight");
+        maxHeightAnimation->setPropertyName("maximumHeight");
+        minHeightAnimation->setStartValue(minimumHeight());
+        maxHeightAnimation->setStartValue(maximumHeight());
+        minHeightAnimation->setEndValue(397);
+        maxHeightAnimation->setEndValue(397);
+        minHeightAnimation->setDuration(1000);
+        maxHeightAnimation->setDuration(1000);
+        animationGroup->start();
+    }
+    else
+    {
+        minHeightAnimation->setTargetObject(this);
+        maxHeightAnimation->setTargetObject(this);
+        minHeightAnimation->setPropertyName("minimumHeight");
+        maxHeightAnimation->setPropertyName("maximumHeight");
+        minHeightAnimation->setStartValue(minimumHeight());
+        maxHeightAnimation->setStartValue(maximumHeight());
+        minHeightAnimation->setEndValue(557);
+        maxHeightAnimation->setEndValue(557);
+        minHeightAnimation->setDuration(1000);
+        maxHeightAnimation->setDuration(1000);
+        animationGroup->start();
+
+//        this->hide();
+//        this->setMaximumHeight(557);
+//        this->setMinimumHeight(557);
+//        onAnimationFinished();
+//        this->show();
+    }
+
+}
+
+#ifdef __APPLE__
+void InfoDialog::onAnimationFinished()
+{
+    if (this->minimumHeight() == 557)
+    {
+//        ui->wRecent1->show();
+//        ui->wRecent2->show();
+//        ui->wRecent3->show();
+
+        ui->wRecentUpdated->setMaximumHeight(191);
+        ui->wRecentUpdated->setVisualMode(RecentlyUpdated::EXPANDED);
+    }
+    else
+    {
+        ui->wRecentUpdated->setMaximumHeight(31);
+        ui->wRecentUpdated->setVisualMode(RecentlyUpdated::COLLAPSED);
+    }
+//    ui->lRecentlyUpdated->show();
+//    ui->cRecentlyUpdated->show();
+//    ui->wRecentlyUpdated->show();
+//    ui->cRecentlyUpdated->setEnabled(true);
+
+    repaint();
+}
+#endif
 
 void InfoDialog::scanningAnimationStep()
 {
