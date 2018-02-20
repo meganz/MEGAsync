@@ -6214,6 +6214,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         //Send updated statics to the information dialog
         if (infoDialog)
         {
+            infoDialog->onTransferFinish(megaApi, transfer, e);
             infoDialog->setTransfer(transfer);
             infoDialog->updateTransfers();
             infoDialog->transferFinished(e->getErrorCode());
