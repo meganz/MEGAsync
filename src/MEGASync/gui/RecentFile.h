@@ -25,13 +25,14 @@ public:
     void setTransferState(int value);
 
     bool getLinkButtonClicked(QPoint pos);
+    void mouseHoverTransfer(bool isHover);
 
     void updateTransfer() {}
     void updateFinishedTime() {}
     void loadDefaultTransferIcon() {}
     void updateAnimation() {}
     bool cancelButtonClicked(QPoint pos) { return false;}
-    void mouseHoverTransfer(bool isHover);
+    void setStateLabel(QString labelState) {}
 
     bool eventFilter(QObject *, QEvent * ev);
     QSize minimumSizeHint() const;

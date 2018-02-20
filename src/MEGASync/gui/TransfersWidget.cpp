@@ -30,10 +30,10 @@ void TransfersWidget::setupTransfers(MegaTransferData *transferData, int type)
     }
 }
 
-void TransfersWidget::setupFinishedTransfers(QList<MegaTransfer* > transferData)
+void TransfersWidget::setupFinishedTransfers(QList<MegaTransfer* > transferData, int modelType)
 {
-    this->type = QTransfersModel::TYPE_FINISHED ;
-    model = new QFinishedTransfersModel(transferData);
+    this->type = modelType;
+    model = new QFinishedTransfersModel(transferData, modelType);
     connect(model, SIGNAL(noTransfers()), this, SLOT(noTransfers()));
     connect(model, SIGNAL(onTransferAdded()), this, SLOT(onTransferAdded()));
 

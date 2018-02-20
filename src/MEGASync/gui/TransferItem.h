@@ -14,8 +14,7 @@ public:
     virtual void setTransferredBytes(long long totalTransferredBytes, bool cancellable);
     virtual void setSpeed(long long transferSpeed, long long meanSpeed);
     virtual void setTotalSize(long long size);
-    virtual void setFinishedTime(long long time);
-    virtual void setStateLabel(QString labelState) = 0;
+    virtual void setFinishedTime(long long time);  
 
     virtual void setType(int type, bool isSyncTransfer = false);
     virtual int getType();
@@ -40,6 +39,7 @@ public:
 
     virtual bool cancelButtonClicked(QPoint pos) = 0;
     virtual void mouseHoverTransfer(bool isHover) = 0;
+    virtual void setStateLabel(QString labelState) = 0;
 
 signals:
     void refreshTransfer(int tag);
