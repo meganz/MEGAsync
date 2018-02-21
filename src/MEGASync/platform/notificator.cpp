@@ -103,11 +103,13 @@ Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, 
     {
         icon.copy(defaultIconPath);
     }
+    currentNotification = NULL;
 
 #ifdef _WIN32
     WinToast::instance()->setAppName(L"MEGAsync");
     WinToast::instance()->setAppUserModelId(L"MegaLimited.MEGAsync");
     WinToast::instance()->initialize();
+    connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(onMessageClicked()));
 #endif
 }
 
@@ -268,10 +270,10 @@ void Notificator::notifyDBus(Class cls, const QString &title, const QString &tex
 }
 #endif
 
-void Notificator::notifySystray(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout)
+void Notificator::notifySystray(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout, bool forceQt)
 {
 #ifdef _WIN32
-    if (WinToast::instance()->isCompatible())
+    if (!forceQt && WinToast::instance()->isCompatible())
     {
         MegaNotification *n = new MegaNotification();
         if (title == tr("MEGAsync"))
@@ -291,6 +293,15 @@ void Notificator::notifySystray(Class cls, const QString &title, const QString &
         return;
     }
 #endif
+
+    if (!forceQt)
+    {
+        if (currentNotification)
+        {
+            currentNotification->deleteLater();
+        }
+        currentNotification = NULL;
+    }
 
     Q_UNUSED(icon);
     QSystemTrayIcon::MessageIcon sicon = QSystemTrayIcon::NoIcon;
@@ -324,10 +335,18 @@ void Notificator::notifySystray(MegaNotification *notification)
 #ifdef _WIN32
     if (!WinToast::instance()->isCompatible())
     {
-        notifySystray((Notificator::Class)notification->getType(), notification->getText(),
-                      notification->getSource(), notification->getImage(), notification->getExpirationTime());
+        if (currentNotification)
+        {
+            currentNotification->deleteLater();
+        }
+        currentNotification = notification;
+        notifySystray((Notificator::Class)notification->getType(), notification->getTitle(),
+                      notification->getText(), notification->getImage(), notification->getExpirationTime(),
+                      true);
         return;
     }
+
+    connect(notification, SIGNAL(failed()), this, SLOT(onModernNotificationFailed()), Qt::QueuedConnection);
 
     WinToastTemplate templ(WinToastTemplate::ImageAndText02);
     templ.setTextField((LPCWSTR)notification->getTitle().utf16(), WinToastTemplate::FirstLine);
@@ -348,6 +367,28 @@ void Notificator::notifySystray(MegaNotification *notification)
 
     notifySystray((Notificator::Class)notification->getType(), notification->getText(),
                   notification->getSource(), notification->getImage(), notification->getExpirationTime());
+}
+
+void Notificator::onModernNotificationFailed()
+{
+    MegaNotification *notification = (MegaNotification *)QObject::sender();
+    if (currentNotification)
+    {
+        currentNotification->deleteLater();
+    }
+    currentNotification = notification;
+    notifySystray((Notificator::Class)notification->getType(), notification->getTitle(),
+                  notification->getText(), notification->getImage(),
+                  notification->getExpirationTime(), true);
+}
+
+void Notificator::onMessageClicked()
+{
+    if (currentNotification)
+    {
+        emit currentNotification->activated(-1);
+        currentNotification = NULL;
+    }
 }
 
 // Based on Qt's tray icon implementation
@@ -458,6 +499,19 @@ void Notificator::notify(Class cls, const QString &title, const QString &text, c
     }
 }
 
+void Notificator::notify(MegaNotification *notification)
+{
+    if (mode == QSystemTray)
+    {
+        notifySystray(notification);
+        return;
+    }
+
+    notify((Class)notification->getType(), notification->getTitle(), notification->getText(),
+           notification->getImage(), notification->getExpirationTime());
+    delete notification;
+}
+
 int MegaNotification::getStyle() const
 {
     return style;
@@ -529,7 +583,6 @@ MegaNotification::MegaNotification()
 
     connect(this, SIGNAL(activated(int)), this, SLOT(deleteLater()), Qt::QueuedConnection);
     connect(this, SIGNAL(closed(int)), this, SLOT(deleteLater()), Qt::QueuedConnection);
-    connect(this, SIGNAL(failed()), this, SLOT(deleteLater()), Qt::QueuedConnection);
 }
 
 MegaNotification::~MegaNotification()

@@ -127,6 +127,7 @@ public slots:
      */
     void notify(Class cls, const QString &title, const QString &text,
                 const QIcon &icon = QIcon(), int millisTimeout = 10000);
+    void notify(MegaNotification *notification);
 
 private:
 
@@ -143,19 +144,24 @@ private:
     Mode mode;
     QSystemTrayIcon *trayIcon;
     QString defaultIconPath;
+    MegaNotification* currentNotification;
 
 #ifdef USE_DBUS
     QDBusInterface *interface;
 
     void notifyDBus(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout);
 #endif
-    void notifySystray(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout);
+    void notifySystray(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout, bool forceQt = false);
     void notifySystray(MegaNotification *notification);
 
 #ifdef Q_OS_MAC
     void notifyGrowl(Class cls, const QString &title, const QString &text, const QIcon &icon);
     void notifyMacUserNotificationCenter(Class cls, const QString &title, const QString &text, const QIcon &icon);
 #endif
+
+protected slots:
+    void onModernNotificationFailed();
+    void onMessageClicked();
 };
 
 #endif // NOTIFICATOR_H
