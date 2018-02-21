@@ -134,6 +134,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
             if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
             {
                 model->removeTransferByTag(tag);
+                item = NULL;
             }
             else
             {
@@ -149,11 +150,12 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
                 if (result == QMessageBox::Yes)
                 {
                     model->megaApi->cancelTransferByTag(tag);
+                    item = NULL;
                 }
             }
         }
 
-        if (item->getLinkButtonClicked(((QMouseEvent *)event)->pos() - option.rect.topLeft()))
+        if (item && item->getLinkButtonClicked(((QMouseEvent *)event)->pos() - option.rect.topLeft()))
         {
             QList<MegaHandle> exportList;
             QStringList linkList;

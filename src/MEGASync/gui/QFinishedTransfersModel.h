@@ -16,8 +16,6 @@ class QFinishedTransfersModel : public QTransfersModel
 public:
     explicit QFinishedTransfersModel(QList<mega::MegaTransfer *>finishedTransfers, int type = QTransfersModel::TYPE_FINISHED, QObject *parent = 0);
     void setupModelTransfers();
-    void removeTransferByTag(int transferTag);
-    void removeAllTransfers();
 
     virtual mega::MegaTransfer *getTransferByTag(int tag);
 
@@ -28,6 +26,10 @@ protected:
 
 private slots:
     void refreshTransferItem(int tag);
+
+public slots:
+    void removeAllTransfers();
+    void removeTransferByTag(int transferTag);
 };
 
 #endif // QFINISHEDTRANSFERSMODEL_H

@@ -3314,6 +3314,8 @@ void MegaApplication::removeFinishedTransfer(int transferTag)
         }
         delete it.value();
         finishedTransfers.erase(it);
+
+        emit clearFinishedTransfer(transferTag);
     }
 }
 
@@ -3322,6 +3324,8 @@ void MegaApplication::removeAllFinishedTransfers()
     qDeleteAll(finishedTransfers);
     finishedTransferOrder.clear();
     finishedTransfers.clear();
+
+    emit clearAllFinishedTransfers();
 }
 
 QList<MegaTransfer*> MegaApplication::getFinishedTransfers()

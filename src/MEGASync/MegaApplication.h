@@ -117,6 +117,8 @@ signals:
     void tryUpdate();
     void installUpdate();
     void unityFixSignal();
+    void clearAllFinishedTransfers();
+    void clearFinishedTransfer(int transferTag);
 
 public slots:
     void showInterface(QString);
