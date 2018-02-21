@@ -23,10 +23,12 @@ void RecentlyUpdated::setVisualMode(int mode)
     switch(actualMode)
     {
         case EXPANDED: //Show header and tree view with list of updated transfers
+            setMaximumHeight(191);
             ui->wTransfers->show();
             break;
         case COLLAPSED: //Show only Recently updated header
             ui->wTransfers->hide();
+            setMaximumHeight(31);
             break;
     }
 }

@@ -129,7 +129,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     arrow->resize(30,10);
     arrow->hide();
 
-
     minHeightAnimation = new QPropertyAnimation();
     maxHeightAnimation = new QPropertyAnimation();
     animationGroup = new QParallelAnimationGroup();
@@ -143,6 +142,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     connect(animationGroup, SIGNAL(finished()), this, SLOT(onAnimationFinished()));
 
     connect(ui->wRecentUpdated, SIGNAL(onRecentlyUpdatedClicked(int)), this, SLOT(recentlyUpdatedStateChanged(int)));
+    ui->wRecentUpdated->setVisualMode(RecentlyUpdated::COLLAPSED);
+#else
+    ui->wRecentUpdated->setVisualMode(RecentlyUpdated::EXPANDED);
 #endif
 
     on_bDotUsedStorage_clicked();
@@ -1495,6 +1497,7 @@ void InfoDialog::hideUsageBalloon()
     }
 }
 
+#ifdef __APPLE__
 void InfoDialog::recentlyUpdatedStateChanged(int mode)
 {
 //    ui->wRecentUpdated->setVisualMode(RecentlyUpdated::COLLAPSED);
@@ -1533,10 +1536,8 @@ void InfoDialog::recentlyUpdatedStateChanged(int mode)
 //        onAnimationFinished();
 //        this->show();
     }
-
 }
 
-#ifdef __APPLE__
 void InfoDialog::onAnimationFinished()
 {
     if (this->minimumHeight() == 557)
@@ -1545,12 +1546,10 @@ void InfoDialog::onAnimationFinished()
 //        ui->wRecent2->show();
 //        ui->wRecent3->show();
 
-        ui->wRecentUpdated->setMaximumHeight(191);
         ui->wRecentUpdated->setVisualMode(RecentlyUpdated::EXPANDED);
     }
     else
     {
-        ui->wRecentUpdated->setMaximumHeight(31);
         ui->wRecentUpdated->setVisualMode(RecentlyUpdated::COLLAPSED);
     }
 //    ui->lRecentlyUpdated->show();
