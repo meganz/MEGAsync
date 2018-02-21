@@ -6122,6 +6122,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         transferManager->onTransferFinish(megaApi, transfer, e);
     }
 
+    if (infoDialog)
+    {
+        infoDialog->onTransferFinish(megaApi, transfer, e);
+    }
+
     if (finishedTransferOrder.size() > Preferences::MAX_COMPLETED_ITEMS)
     {
         removeFinishedTransfer(finishedTransferOrder.first()->getTag());
@@ -6218,7 +6223,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         //Send updated statics to the information dialog
         if (infoDialog)
         {
-            infoDialog->onTransferFinish(megaApi, transfer, e);
             infoDialog->setTransfer(transfer);
             infoDialog->updateTransfers();
             infoDialog->transferFinished(e->getErrorCode());
