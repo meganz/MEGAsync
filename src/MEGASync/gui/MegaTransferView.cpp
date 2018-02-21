@@ -59,7 +59,10 @@ MegaTransferView::MegaTransferView(QWidget *parent) :
 void MegaTransferView::setup(int type)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
+    // Disable and find out alternative way to position context menu,
+    // since main parent widget is flagged as popup (InfoDialog), and coordinates does not work properly
+    // connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
+    connect(this, SIGNAL(showContextMenu(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
     createContextMenu();
     createCompletedContextMenu();
     this->type = type;
@@ -324,6 +327,16 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
         }
     }
     QTreeView::mouseMoveEvent(event);
+}
+
+void MegaTransferView::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (!(event->button() == Qt::RightButton))
+    {
+        return;
+    }
+
+    emit showContextMenu(QPoint(event->x(), event->y()));
 }
 
 void MegaTransferView::leaveEvent(QEvent *event)

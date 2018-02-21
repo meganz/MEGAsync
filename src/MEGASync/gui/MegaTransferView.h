@@ -45,6 +45,7 @@ private:
 
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event);
+    virtual void mouseReleaseEvent ( QMouseEvent * event );
     virtual void leaveEvent(QEvent* event);
     void changeEvent(QEvent *event);
 
@@ -62,6 +63,9 @@ private slots:
     void showInFolderClicked();
     void clearTransferClicked();
     void clearAllTransferClicked();
+
+signals:
+    void showContextMenu(QPoint pos);
 };
 
 #endif // MEGATRANSFERVIEW_H
