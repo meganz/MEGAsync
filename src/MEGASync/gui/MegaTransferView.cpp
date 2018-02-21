@@ -333,6 +333,7 @@ void MegaTransferView::mouseReleaseEvent(QMouseEvent *event)
 {
     if (!(event->button() == Qt::RightButton))
     {
+        QTreeView::mouseReleaseEvent(event);
         return;
     }
 

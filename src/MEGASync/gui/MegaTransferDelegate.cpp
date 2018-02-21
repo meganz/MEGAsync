@@ -8,6 +8,7 @@
 #include "gui/QMegaMessageBox.h"
 #include "megaapi.h"
 #include "QTransfersModel.h"
+#include "MegaApplication.h"
 
 using namespace mega;
 
@@ -151,8 +152,48 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
                 }
             }
         }
+
+        if (item->getLinkButtonClicked(((QMouseEvent *)event)->pos() - option.rect.topLeft()))
+        {
+            QList<MegaHandle> exportList;
+            QStringList linkList;
+
+            int modelType = model->getModelType();
+            if (modelType == QTransfersModel::TYPE_FINISHED
+                    || modelType == QTransfersModel::TYPE_RECENTLY_UPDATED)
+            {
+                MegaTransfer *transfer = model->getTransferByTag(tag);
+                if (transfer)
+                {
+                    MegaNode *node = transfer->getPublicMegaNode();
+                    if (!node || !node->isPublic())
+                    {
+                        exportList.push_back(transfer->getNodeHandle());
+                    }
+                    else
+                    {
+                        char *handle = node->getBase64Handle();
+                        char *key = node->getBase64Key();
+                        if (handle && key)
+                        {
+                            QString link = QString::fromUtf8("https://mega.nz/#!%1!%2")
+                                    .arg(QString::fromUtf8(handle)).arg(QString::fromUtf8(key));
+                            linkList.append(link);
+                        }
+                        delete [] handle;
+                        delete [] key;
+                    }
+                    delete node;
+                }
+
+                if (exportList.size() || linkList.size())
+                {
+                    ((MegaApplication*)qApp)->exportNodes(exportList, linkList);
+                }
+            }
+        }
         return true;
     }
 
-    return QAbstractItemDelegate::editorEvent(event, model, option, index);;
+    return QAbstractItemDelegate::editorEvent(event, model, option, index);
 }
