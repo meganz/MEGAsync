@@ -96,6 +96,7 @@ private slots:
 #ifdef __APPLE__
     void recentlyUpdatedStateChanged(int mode);
     void onAnimationFinished();
+    void onValueChanged(QVariant);
 #endif
 
 private:

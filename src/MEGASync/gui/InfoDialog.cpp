@@ -141,6 +141,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     animationGroup->addAnimation(maxHeightAnimation);
     connect(animationGroup, SIGNAL(finished()), this, SLOT(onAnimationFinished()));
 
+    connect(maxHeightAnimation, SIGNAL(valueChanged(QVariant)), this, SLOT(onValueChanged(QVariant)));
+    connect(minHeightAnimation, SIGNAL(valueChanged(QVariant)), this, SLOT(onValueChanged(QVariant)));
+
     connect(ui->wRecentUpdated, SIGNAL(onRecentlyUpdatedClicked(int)), this, SLOT(recentlyUpdatedStateChanged(int)));
     ui->wRecentUpdated->setVisualMode(RecentlyUpdated::COLLAPSED);
 #else
@@ -1338,7 +1341,6 @@ void InfoDialog::regenerateLayout()
         ui->wContainerBottom->setVisible(false);
         dialogLayout->removeWidget(ui->wRecentUpdated);
         ui->wRecentUpdated->setVisible(false);
-        dialogLayout->removeItem(ui->vRupdatedSpacer);
         dialogLayout->addWidget(gWidget);
         gWidget->setVisible(true);
 
@@ -1372,7 +1374,6 @@ void InfoDialog::regenerateLayout()
         ui->wContainerHeader->setVisible(true);    
         dialogLayout->addWidget(ui->wRecentUpdated);
         ui->wRecentUpdated->setVisible(true);
-        dialogLayout->addItem(ui->vRupdatedSpacer);
         dialogLayout->addWidget(ui->wSeparator);
         ui->wSeparator->setVisible(true);
         dialogLayout->addWidget(ui->wContainerBottom);
@@ -1504,6 +1505,7 @@ void InfoDialog::recentlyUpdatedStateChanged(int mode)
 
     if (mode == RecentlyUpdated::COLLAPSED)
     {
+        ui->wRecentUpdated->setVisualMode(RecentlyUpdated::COLLAPSED);
         minHeightAnimation->setTargetObject(this);
         maxHeightAnimation->setTargetObject(this);
         minHeightAnimation->setPropertyName("minimumHeight");
@@ -1559,6 +1561,12 @@ void InfoDialog::onAnimationFinished()
 
     repaint();
 }
+
+void InfoDialog::onValueChanged(QVariant)
+{
+    repaint();
+}
+
 #endif
 
 void InfoDialog::scanningAnimationStep()
