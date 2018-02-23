@@ -32,7 +32,12 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lTransferType, #lFileType, #lGetLink
+   <string notr="true">RecentFile
+{
+	background-color: transparent;
+}
+
+#lTransferType, #lFileType, #lGetLink
 {
 	border: none;
 }</string>
@@ -44,6 +49,9 @@
    <property name="topMargin">
     <number>0</number>
    </property>
+   <property name="rightMargin">
+    <number>32</number>
+   </property>
    <property name="bottomMargin">
     <number>0</number>
    </property>
@@ -53,7 +61,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../Resources_linux.qrc">
+      <iconset resource="../Resources_macx.qrc">
        <normaloff>:/images/download_item_ico.png</normaloff>:/images/download_item_ico.png</iconset>
      </property>
      <property name="iconSize">
@@ -70,7 +78,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../Resources_linux.qrc">
+      <iconset resource="../Resources_macx.qrc">
        <normaloff>:/images/small_aftereffects.png</normaloff>:/images/small_aftereffects.png</iconset>
      </property>
      <property name="iconSize">
@@ -113,7 +121,7 @@
       <string/>
      </property>
      <property name="icon">
-      <iconset resource="../Resources_linux.qrc">
+      <iconset resource="../Resources_macx.qrc">
        <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
      </property>
      <property name="iconSize">
@@ -127,7 +135,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -32,7 +32,12 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lTransferType, #lFileType, #lGetLink
+   <string notr="true">RecentFile
+{
+	background-color: transparent;
+}
+
+#lTransferType, #lFileType, #lGetLink
 {
 	border: none;
 }</string>

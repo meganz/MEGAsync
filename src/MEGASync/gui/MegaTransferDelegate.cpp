@@ -110,6 +110,12 @@ QSize MegaTransferDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
 {
     if (index.isValid())
     {
+        int modelType = model->getModelType();
+        if (modelType == QTransfersModel::TYPE_RECENTLY_UPDATED)
+        {
+            return QSize(400, 32);
+        }
+
         return QSize(800, 48);
     }
     else
