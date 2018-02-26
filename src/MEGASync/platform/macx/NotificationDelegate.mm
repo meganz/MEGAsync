@@ -60,20 +60,7 @@
 
 - (void)userNotificationCenter:(NSUserNotificationCenter *)center didDismissAlert:(NSUserNotification *)notification
 {
-    int64_t notificationKey = [[notification identifier] longLongValue];
-    QHash<int64_t, MegaNotification *>::iterator it
-           = Notificator::notifications.find(notificationKey);
-    if (it == Notificator::notifications.end())
-    {
-        return;
-    }
-
-    MegaNotification *n = it.value();
-    Notificator::notifications.erase(it);
-
-    emit n->closed(0);
-    NSUserNotificationCenter *notificationCenterInstance = [NSUserNotificationCenter defaultUserNotificationCenter];
-    [notificationCenterInstance removeDeliveredNotification:notification];
+    [self closeAlert:notification];
 }
 
 - (void)closeAlert:(NSUserNotification *)notification
