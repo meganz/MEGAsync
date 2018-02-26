@@ -1134,23 +1134,10 @@ border: none;</string>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>191</height>
+       <height>16777215</height>
       </size>
      </property>
     </widget>
-   </item>
-   <item>
-    <spacer name="vRupdatedSpacer">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>0</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item>
     <widget class="QWidget" name="wContainerBottom" native="true">
