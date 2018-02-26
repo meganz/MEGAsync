@@ -9,6 +9,7 @@
 #include <QObject>
 #include <QPointer>
 #include <QMutex>
+#include <QHash>
 
 QT_BEGIN_NAMESPACE
 class QSystemTrayIcon;
@@ -116,6 +117,8 @@ public:
         Critical        /**< An error occurred */
     };
 
+    static QHash<int64_t, MegaNotification *> notifications;
+
 public slots:
     /** Show notification message.
        @param[in] cls    general message class
@@ -135,8 +138,6 @@ private:
         None,                       /**< Ignore informational notifications, and show a modal pop-up dialog for Critical notifications. */
         Freedesktop,                /**< Use DBus org.freedesktop.Notifications */
         QSystemTray,                /**< Use QSystemTray::showMessage */
-        Growl12,                    /**< Use the Growl 1.2 notification system (Mac only) */
-        Growl13,                    /**< Use the Growl 1.3 notification system (Mac only) */
         UserNotificationCenter      /**< Use the 10.8+ User Notification Center (Mac only) */
     };
 
@@ -153,11 +154,6 @@ private:
 #endif
     void notifySystray(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout, bool forceQt = false);
     void notifySystray(MegaNotification *notification);
-
-#ifdef Q_OS_MAC
-    void notifyGrowl(Class cls, const QString &title, const QString &text, const QIcon &icon);
-    void notifyMacUserNotificationCenter(Class cls, const QString &title, const QString &text, const QIcon &icon);
-#endif
 
 protected slots:
     void onModernNotificationFailed();

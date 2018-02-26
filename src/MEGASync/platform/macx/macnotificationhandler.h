@@ -6,6 +6,7 @@
 #define MACNOTIFICATIONHANDLER_H
 
 #include <QObject>
+#include "notificator.h"
 
 /** Macintosh-specific notification handler (supports UserNotificationCenter and Growl).
  */
@@ -16,15 +17,11 @@ class MacNotificationHandler : public QObject
 public:
     MacNotificationHandler();
 
-    /** shows a 10.8+ UserNotification in the UserNotificationCenter
-     */
-    void showNotification(const QString &title, const QString &text);
+    void showNotification(MegaNotification *notification);
 
     /** executes AppleScript */
     void sendAppleScript(const QString &script);
 
-    /** check if OS can handle UserNotifications */
-    bool hasUserNotificationCenterSupport(void);
     static MacNotificationHandler *instance();
 
 private:

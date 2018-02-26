@@ -40,6 +40,8 @@ using namespace WinToastLib;
 // https://wiki.ubuntu.com/NotificationDevelopmentGuidelines recommends at least 128
 const int FREEDESKTOP_NOTIFICATION_ICON_SIZE = 128;
 
+QHash<int64_t, MegaNotification *> Notificator::notifications;
+
 Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, QObject *parent) :
     QObject(parent),
     programName(programName),
@@ -65,36 +67,7 @@ Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, 
     }
 #endif
 #ifdef Q_OS_MAC
-    // check if users OS has support for NSUserNotification
-    if (MacNotificationHandler::instance()->hasUserNotificationCenterSupport())
-    {
-        mode = UserNotificationCenter;
-    }
-    else
-    {
-        // Check if Growl is installed (based on Qt's tray icon implementation)
-        CFURLRef cfurl;
-        OSStatus status = LSGetApplicationForInfo(kLSUnknownType, kLSUnknownCreator, CFSTR("growlTicket"), kLSRolesAll, 0, &cfurl);
-        if (status != kLSApplicationNotFoundErr)
-        {
-            CFBundleRef bundle = CFBundleCreate(0, cfurl);
-            if (CFStringCompare(CFBundleGetIdentifier(bundle),
-                                CFSTR("com.Growl.GrowlHelperApp"),
-                                kCFCompareCaseInsensitive | kCFCompareBackwards) == kCFCompareEqualTo)
-            {
-                if (CFStringHasSuffix(CFURLGetString(cfurl), CFSTR("/Growl.app/")))
-                {
-                    mode = Growl13;
-                }
-                else
-                {
-                    mode = Growl12;
-                }
-            }
-            CFRelease(cfurl);
-            CFRelease(bundle);
-        }
-    }
+    mode = UserNotificationCenter;
 #endif
 
     QFile icon(QString::fromUtf8("://images/app_ico.ico"));
@@ -391,81 +364,6 @@ void Notificator::onMessageClicked()
     }
 }
 
-// Based on Qt's tray icon implementation
-#ifdef Q_OS_MAC
-void Notificator::notifyGrowl(Class cls, const QString &title, const QString &text, const QIcon &icon)
-{
-    const QString script = QString::fromUtf8(
-        "tell application \"%5\"\n"
-        "  set the allNotificationsList to {\"Notification\"}\n" // -- Make a list of all the notification types (all)
-        "  set the enabledNotificationsList to {\"Notification\"}\n" // -- Make a list of the notifications (enabled)
-        "  register as application \"%1\" all notifications allNotificationsList default notifications enabledNotificationsList\n" // -- Register our script with Growl
-        "  notify with name \"Notification\" title \"%2\" description \"%3\" application name \"%1\"%4\n" // -- Send a Notification
-        "end tell"
-    );
-
-    QString notificationApp(QApplication::applicationName());
-    if (notificationApp.isEmpty())
-    {
-        notificationApp = QString::fromUtf8("Application");
-    }
-
-    QPixmap notificationIconPixmap;
-    if (icon.isNull())
-    {
-        // If no icon specified, set icon based on class
-        QStyle::StandardPixmap sicon = QStyle::SP_MessageBoxQuestion;
-        switch (cls)
-        {
-        case Information:
-            sicon = QStyle::SP_MessageBoxInformation;
-            break;
-
-        case Warning:
-            sicon = QStyle::SP_MessageBoxWarning;
-            break;
-
-        case Critical:
-            sicon = QStyle::SP_MessageBoxCritical;
-            break;
-
-        default:
-            break;
-        }
-        notificationIconPixmap = QApplication::style()->standardPixmap(sicon);
-    }
-    else
-    {
-        QSize size = icon.actualSize(QSize(48, 48));
-        notificationIconPixmap = icon.pixmap(size);
-    }
-
-    QString notificationIcon;
-    QTemporaryFile notificationIconFile;
-    if (!notificationIconPixmap.isNull() && notificationIconFile.open())
-    {
-        QImageWriter writer(&notificationIconFile, "PNG");
-        if (writer.write(notificationIconPixmap.toImage()))
-        {
-            notificationIcon = QString::fromUtf8(" image from location \"file://%1\"").arg(notificationIconFile.fileName());
-        }
-    }
-
-    QString quotedTitle(title), quotedText(text);
-    quotedTitle.replace(QString::fromUtf8("\\"), QString::fromUtf8("\\\\")).replace(QString::fromUtf8("\""), QString::fromUtf8("\\"));
-    quotedText.replace(QString::fromUtf8("\\"), QString::fromUtf8("\\\\")).replace(QString::fromUtf8("\""), QString::fromUtf8("\\"));
-    QString growlApp(this->mode == Notificator::Growl13 ? QString::fromUtf8("Growl") : QString::fromUtf8("GrowlHelperApp"));
-    MacNotificationHandler::instance()->sendAppleScript(script.arg(notificationApp, quotedTitle, quotedText, notificationIcon, growlApp));
-}
-
-void Notificator::notifyMacUserNotificationCenter(Class cls, const QString &title, const QString &text, const QIcon &icon)
-{
-    // icon is not supported by the user notification center yet. OSX will use the app icon.
-    MacNotificationHandler::instance()->showNotification(title, text);
-}
-
-#endif
-
 void Notificator::notify(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout)
 {
     switch(mode)
@@ -480,12 +378,23 @@ void Notificator::notify(Class cls, const QString &title, const QString &text, c
         break;
 #ifdef Q_OS_MAC
     case UserNotificationCenter:
-        notifyMacUserNotificationCenter(cls, title, text, icon);
+    {
+        MegaNotification *n = new MegaNotification();
+        if (title == tr("MEGAsync"))
+        {
+            n->setTitle(QString::fromUtf8("MEGA"));
+        }
+        else
+        {
+            n->setTitle(title);
+        }
+        n->setText(text);
+        n->setExpirationTime(millisTimeout);
+        n->setImagePath(defaultIconPath);
+        n->setType(cls);
+        MacNotificationHandler::instance()->showNotification(n);
         break;
-    case Growl12:
-    case Growl13:
-        notifyGrowl(cls, title, text, icon);
-        break;
+    }
 #endif
     default:
         switch(cls) // Set icon based on class
@@ -506,6 +415,14 @@ void Notificator::notify(MegaNotification *notification)
         notifySystray(notification);
         return;
     }
+
+#ifdef Q_OS_MAC
+    else if (mode == UserNotificationCenter)
+    {
+        MacNotificationHandler::instance()->showNotification(notification);
+        return;
+    }
+#endif
 
     notify((Class)notification->getType(), notification->getTitle(), notification->getText(),
            notification->getImage(), notification->getExpirationTime());
