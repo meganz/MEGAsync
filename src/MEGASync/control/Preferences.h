@@ -43,6 +43,7 @@ public:
     QString privatePw();
     void setSession(QString session);
     QString getSession();
+    unsigned long long transferIdentifier();
     long long totalStorage();
     void setTotalStorage(long long value);
     long long usedStorage();
@@ -488,12 +489,14 @@ protected:
     static const QString httpsCertKey;
     static const QString httpsCertIntermediateKey;
     static const QString httpsCertExpirationKey;
+    static const QString transferIdentifierKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
     static const bool defaultUpdateAutomatically;
     static const int  defaultUploadLimitKB;
     static const int  defaultDownloadLimitKB;
+    static const unsigned long long defaultTransferIdentifier;
     static const int  defaultParallelUploadConnections;
     static const int  defaultParallelDownloadConnections;
     static const int  defaultProxyType;

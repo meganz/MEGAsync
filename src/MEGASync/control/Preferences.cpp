@@ -274,6 +274,7 @@ const QString Preferences::httpsKeyKey              = QString::fromAscii("httpsK
 const QString Preferences::httpsCertKey             = QString::fromAscii("httpsCert");
 const QString Preferences::httpsCertIntermediateKey = QString::fromAscii("httpsCertIntermediate");
 const QString Preferences::httpsCertExpirationKey   = QString::fromAscii("httpsCertExpiration");
+const QString Preferences::transferIdentifierKey   = QString::fromAscii("transferIdentifier");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -287,6 +288,7 @@ const bool Preferences::defaultUseHttpsOnly         = false;
 const bool Preferences::defaultSSLcertificateException = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
 const int  Preferences::defaultDownloadLimitKB      = 0;
+const unsigned long long  Preferences::defaultTransferIdentifier   = 0;
 const int  Preferences::defaultParallelUploadConnections      = 3;
 const int  Preferences::defaultParallelDownloadConnections    = 4;
 const int Preferences::defaultTransferDownloadMethod      = MegaApi::TRANSFER_METHOD_AUTO;
@@ -490,6 +492,16 @@ QString Preferences::getSession()
     mutex.lock();
     assert(logged());
     QString value = settings->value(sessionKey).toString();
+    mutex.unlock();
+    return value;
+}
+
+unsigned long long Preferences::transferIdentifier()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(transferIdentifierKey, defaultTransferIdentifier).toLongLong();
+    settings->setValue(transferIdentifierKey, ++value);
     mutex.unlock();
     return value;
 }
