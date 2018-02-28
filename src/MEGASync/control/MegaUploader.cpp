@@ -12,23 +12,23 @@
 using namespace mega;
 using namespace std;
 
-MegaUploader::MegaUploader(MegaApi *megaApi) : QObject()
+MegaUploader::MegaUploader(MegaApi *megaApi)
 {
     this->megaApi = megaApi;
-    delegateListener = new QTMegaRequestListener(megaApi, this);
+
 }
 
 MegaUploader::~MegaUploader()
 {
-    delete delegateListener;
+
 }
 
-void MegaUploader::upload(QString path, MegaNode *parent)
+void MegaUploader::upload(QString path, MegaNode *parent, unsigned long long appDataID)
 {
-    return upload(QFileInfo(path), parent);
+    return upload(QFileInfo(path), parent, appDataID);
 }
 
-void MegaUploader::upload(QFileInfo info, MegaNode *parent)
+void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long appDataID)
 {
     QApplication::processEvents();
     QString fileName = info.fileName();
@@ -45,25 +45,7 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
         }
     }
 
-    QByteArray utf8name = fileName.toUtf8();
     QString currentPath = QDir::toNativeSeparators(info.absoluteFilePath());
-    if (info.isDir())
-    {
-        MegaNode *child = megaApi->getChildNode(parent, utf8name.constData());
-        if (child && child->getType() == MegaNode::TYPE_FOLDER)
-        {
-            QDir dir(info.absoluteFilePath());
-            QFileInfoList entries = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
-            for (int i = 0; i < entries.size(); i++)
-            {
-                upload(entries[i], child);
-            }
-            delete child;
-            return;
-        }
-        delete child;
-    }
-
     string localPath = megaApi->getLocalPath(parent);
     if (localPath.size() && megaApi->isSyncable(QDir::toNativeSeparators(info.absoluteFilePath()).toUtf8().constData(), info.size()))
     {
@@ -79,44 +61,8 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent)
         megaApi->moveToLocalDebris(destPath.toUtf8().constData());
         QtConcurrent::run(Utilities::copyRecursively, currentPath, destPath);
     }
-    else if (info.isFile())
+    else if (info.isFile() || info.isDir())
     {
-        megaApi->startUpload(currentPath.toUtf8().constData(), parent);
-    }
-    else if (info.isDir())
-    {
-        folders.enqueue(info);
-        megaApi->createFolder(utf8name.constData(), parent, delegateListener);
-    }
-}
-
-void MegaUploader::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *e)
-{
-    switch(request->getType())
-    {
-        case MegaRequest::TYPE_CREATE_FOLDER:
-            if (e->getErrorCode() == MegaError::API_OK)
-            {
-                MegaNode *parent = megaApi->getNodeByHandle(request->getNodeHandle());
-                QDir dir(folders.dequeue().absoluteFilePath());
-                QFileInfoList entries = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
-                for (int i = 0; i < entries.size(); i++)
-                {
-                    QFileInfo info = entries[i];
-                    if (info.isFile())
-                    {
-                        megaApi->startUpload(QDir::toNativeSeparators(info.absoluteFilePath()).toUtf8().constData(), parent);
-                    }
-                    else if (info.isDir())
-                    {
-                        folders.enqueue(info);
-                        megaApi->createFolder(info.fileName().toUtf8().constData(),
-                                              parent,
-                                              delegateListener);
-                    }
-                }
-                delete parent;
-            }
-            break;
+        megaApi->startUploadWithData(currentPath.toUtf8().constData(), parent, QString::number(appDataID).toUtf8().constData());
     }
 }
