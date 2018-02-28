@@ -18,7 +18,7 @@ public:
     // provide megaApiGuest
     MegaDownloader(mega::MegaApi *megaApi, mega::MegaApi *megaApiGuest = NULL);
     virtual ~MegaDownloader();
-    void processDownloadQueue(QQueue<mega::MegaNode *> *downloadQueue, QString path, unsigned long long appDataId = 0);
+    void processDownloadQueue(QQueue<mega::MegaNode *> *downloadQueue, QString path, unsigned long long appDataId);
     void download(mega::MegaNode *parent, QString path, unsigned long long appDataId);
 
 protected:

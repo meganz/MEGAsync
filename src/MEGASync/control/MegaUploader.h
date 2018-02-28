@@ -15,10 +15,10 @@ class MegaUploader
 public:
     MegaUploader(mega::MegaApi *megaApi);
     virtual ~MegaUploader();
-    void upload(QString path, mega::MegaNode *parent, unsigned long long appDataID = 0);
+    void upload(QString path, mega::MegaNode *parent, unsigned long long appDataID);
 
 protected:
-    void upload(QFileInfo info, mega::MegaNode *parent, unsigned long long appDataID = 0);
+    void upload(QFileInfo info, mega::MegaNode *parent, unsigned long long appDataID);
 
     mega::MegaApi *megaApi;
 };
