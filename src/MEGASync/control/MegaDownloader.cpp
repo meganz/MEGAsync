@@ -1,6 +1,6 @@
 #include "MegaDownloader.h"
 #include "Utilities.h"
-#include <QApplication>
+#include "MegaApplication.h"
 #include <QDateTime>
 
 using namespace mega;
@@ -16,12 +16,12 @@ MegaDownloader::~MegaDownloader()
 
 }
 
-void MegaDownloader::download(MegaNode *parent, QString path)
+void MegaDownloader::download(MegaNode *parent, QString path, unsigned long long appDataId)
 {
-    return download(parent, QFileInfo(path));
+    return download(parent, QFileInfo(path), appDataId);
 }
 
-void MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QString path)
+void MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QString path, unsigned long long appDataId)
 {
     QDir dir(path);
     if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
@@ -31,26 +31,47 @@ void MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
         return;
     }
 
+    TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(appDataId);
+
     QString currentPath;
     while (!downloadQueue->isEmpty())
     {
         MegaNode *node = downloadQueue->dequeue();
-        if (node->isForeign() && pathMap.contains(node->getParentHandle()))
+        if (node->isForeign())
         {
-            currentPath = pathMap[node->getParentHandle()];
+            if (pathMap.contains(node->getParentHandle()))
+            {
+                currentPath = pathMap[node->getParentHandle()];
+            }
+            else
+            {
+                if (data)
+                {
+                    if (node->isFolder())
+                    {
+                        data->totalFolders++;
+                    }
+                    else
+                    {
+                        data->totalFiles++;
+                    }
+                }
+
+                currentPath = path;
+            }
         }
         else
         {
             currentPath = path;
         }
 
-        download(node, currentPath);
+        download(node, currentPath, appDataId);
         delete node;
     }
     pathMap.clear();
 }
 
-void MegaDownloader::download(MegaNode *parent, QFileInfo info)
+void MegaDownloader::download(MegaNode *parent, QFileInfo info, unsigned long long appDataId)
 {
     QApplication::processEvents();
 
@@ -64,7 +85,7 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
         }
         else
         {
-            megaApi->startDownload(parent, (currentPath + QDir::separator()).toUtf8().constData());
+            megaApi->startDownloadWithData(parent, (currentPath + QDir::separator()).toUtf8().constData(), QString::number(appDataId).toUtf8().constData());
         }
     }
     else
@@ -87,13 +108,24 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
             }
         }
 
+        TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(appDataId);
+        if (data)
+        {
+            data->pendingTransfers--;
+            if (data->pendingTransfers == 0)
+            {
+                //Transfers finished, show notification
+                emit finishedTransfers(appDataId);
+            }
+        }
+
         if (!parent->isForeign())
         {
             MegaNodeList *nList = megaApi->getChildren(parent);
             for (int i = 0; i < nList->size(); i++)
             {
                 MegaNode *child = nList->get(i);
-                download(child, destPath);
+                download(child, destPath, appDataId);
             }
             delete nList;
         }
