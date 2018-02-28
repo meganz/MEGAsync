@@ -709,6 +709,8 @@ void MegaApplication::initialize()
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi);
     downloader = new MegaDownloader(megaApi);
+    connect(downloader, SIGNAL(finishedTransfers(unsigned long long)), this, SLOT(showNotificationFinishedTransfers(unsigned long long)));
+
 
     connectivityTimer = new QTimer(this);
     connectivityTimer->setSingleShot(true);
@@ -1506,11 +1508,24 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
         return;
     }
 
+    unsigned long long transferId = preferences->transferIdentifier();
+    TransferMetaData* data = new TransferMetaData(MegaTransfer::TYPE_UPLOAD, uploadQueue.size(), uploadQueue.size());
+    transferAppData.insert(transferId, data);
+
     //Process the upload queue using the MegaUploader object
     while (!uploadQueue.isEmpty())
     {
         QString filePath = uploadQueue.dequeue();
-        uploader->upload(filePath, node);
+        if (QFileInfo (filePath).isDir())
+        {
+            data->totalFolders++;
+        }
+        else
+        {
+            data->totalFiles++;
+        }
+
+        uploader->upload(filePath, node, transferId);
     }
     delete node;
 }
@@ -1531,7 +1546,9 @@ void MegaApplication::processDownloadQueue(QString path)
         return;
     }
 
-    downloader->processDownloadQueue(&downloadQueue, path);
+    unsigned long long transferId = preferences->transferIdentifier();
+    transferAppData.insert(transferId, new TransferMetaData(MegaTransfer::TYPE_DOWNLOAD, downloadQueue.size(), downloadQueue.size()));
+    downloader->processDownloadQueue(&downloadQueue, path, transferId);
 }
 
 void MegaApplication::unityFix()
@@ -2467,6 +2484,18 @@ void MegaApplication::initHttpsServer()
     }
 }
 
+TransferMetaData* MegaApplication::getTransferAppData(unsigned long long appDataID)
+{
+    QHash<unsigned long long, TransferMetaData*>::const_iterator it = transferAppData.find(appDataID);
+    if(it == transferAppData.end())
+    {
+        return NULL;
+    }
+
+    TransferMetaData* value = it.value();
+    return value;
+}
+
 void MegaApplication::triggerInstallUpdate()
 {
     if (appfinished)
@@ -3147,6 +3176,38 @@ void MegaApplication::notifyItemChange(QString path, int newState)
 int MegaApplication::getPrevVersion()
 {
     return prevVersion;
+}
+
+void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDataId)
+{
+    QHash<unsigned long long, TransferMetaData*>::iterator it
+           = transferAppData.find(appDataId);
+    if (it == transferAppData.end())
+    {
+        return;
+    }
+
+    if (it.value()->pendingTransfers == 0)
+    {
+        switch (it.value()->transferDirection)
+        {
+            case MegaTransfer::TYPE_UPLOAD:
+                showNotificationMessage(tr("Transfers finished: %1 files and %2 folders uploaded").arg(it.value()->totalFiles)
+                                        .arg(it.value()->totalFolders));
+            break;
+            case MegaTransfer::TYPE_DOWNLOAD:
+                showNotificationMessage(tr("Transfers finished: %1 files and %2 folders downloaded").arg(it.value()->totalFiles)
+                                        .arg(it.value()->totalFolders));
+            break;
+            default:
+                showNotificationMessage(tr("Transfers finished: %1 files and %2 folders").arg(it.value()->totalFiles)
+                                        .arg(it.value()->totalFolders));
+            break;
+        }
+
+        delete it.value();
+        transferAppData.erase(it);
+    }
 }
 
 #ifdef __APPLE__
@@ -6067,21 +6128,58 @@ void MegaApplication::onRequestTemporaryError(MegaApi *, MegaRequest *, MegaErro
 //Called when a transfer has finished
 void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaError* e)
 {
-    if (appfinished || transfer->isStreamingTransfer() || transfer->isFolderTransfer())
+    if (appfinished || transfer->isStreamingTransfer())
     {
         return;
     }
 
-    if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
+    const char *notificationKey = transfer->getAppData();
+    if (notificationKey)
     {
-        if (httpServer)
+        QHash<unsigned long long, TransferMetaData*>::iterator it
+               = transferAppData.find(atoll(notificationKey));
+        if (it != transferAppData.end())
         {
-            httpServer->onTransferDataUpdate(transfer->getNodeHandle(),
-                                             transfer->getState(),
-                                             transfer->getTransferredBytes(),
-                                             transfer->getTotalBytes(),
-                                             transfer->getSpeed());
+            TransferMetaData *data = it.value();
+
+            if (e->getErrorCode() == MegaError::API_EINCOMPLETE)
+            {
+                data->transfersCancelled++;
+            }
+            else if (e->getErrorCode() == MegaError::API_EFAILED)
+            {
+                data->transfersFailed++;
+            }
+
+            data->pendingTransfers--;
+            if (data->pendingTransfers == 0)
+            {
+                switch (data->transferDirection)
+                {
+                    case MegaTransfer::TYPE_UPLOAD:
+                        showNotificationMessage(tr("Transfers finished: %1 files and %2 folders uploaded").arg(data->totalFiles)
+                                                .arg(data->totalFolders));
+                    break;
+                    case MegaTransfer::TYPE_DOWNLOAD:
+                        showNotificationMessage(tr("Transfers finished: %1 files and %2 folders downloaded").arg(data->totalFiles)
+                                                .arg(data->totalFolders));
+                    break;
+                    default:
+                        showNotificationMessage(tr("Transfers finished: %1 files and %2 folders").arg(data->totalFiles)
+                                                .arg(data->totalFolders));
+                    break;
+                }
+
+                delete data;
+                transferAppData.erase(it);
+            }
         }
+    }
+
+
+    if (transfer->isFolderTransfer())
+    {
+        return;
     }
 
     if (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED)
@@ -6110,6 +6208,18 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         if (transferManager)
         {
             transferManager->updateNumberOfCompletedTransfers(nUnviewedTransfers);
+        }
+    }
+
+    if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
+    {
+        if (httpServer)
+        {
+            httpServer->onTransferDataUpdate(transfer->getNodeHandle(),
+                                             transfer->getState(),
+                                             transfer->getTransferredBytes(),
+                                             transfer->getTotalBytes(),
+                                             transfer->getSpeed());
         }
     }
 
