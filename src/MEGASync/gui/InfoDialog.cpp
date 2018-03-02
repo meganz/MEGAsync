@@ -88,6 +88,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     ui->pUsageStorage->installEventFilter(this);
     ui->pUsageStorage->setMouseTracking(true);
+    ui->pUpdated->installEventFilter(this);
+    ui->pUpdated->setAttribute(Qt::WA_TransparentForMouseEvents);
 
     state = STATE_STARTING;
     megaApi = app->getMegaApi();
@@ -173,6 +175,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
     connect(ui->wTransferDown, SIGNAL(showContextMenu(QPoint, bool)), this, SLOT(onContextDownloadMenu(QPoint, bool)));
     connect(ui->wTransferUp, SIGNAL(showContextMenu(QPoint, bool)), this, SLOT(onContextUploadMenu(QPoint, bool)));
+    connect(ui->wTransferDown, SIGNAL(openTransferManager(int)), app, SLOT(externalOpenTransferManager(int)));
+    connect(ui->wTransferUp, SIGNAL(openTransferManager(int)), app, SLOT(externalOpenTransferManager(int)));
+
+    connect(this, SIGNAL(openTransferManager(int)), app, SLOT(externalOpenTransferManager(int)));
 
     if (preferences->logged())
     {
@@ -1268,6 +1274,11 @@ void InfoDialog::changeEvent(QEvent *event)
 
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 {
+    if (obj == ui->pUpdated && e->type() == QEvent::MouseButtonPress)
+    {
+        emit openTransferManager(COMPLETED_TAB);
+    }
+
     if (obj != ui->pUsageStorage)
     {
         return false;

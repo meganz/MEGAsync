@@ -2,12 +2,16 @@
 #include "ui_ActiveTransfer.h"
 #include "control/Utilities.h"
 #include <QMouseEvent>
+#include <qdebug.h>
 
 ActiveTransfer::ActiveTransfer(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::ActiveTransfer)
 {
     ui->setupUi(this);
+
+    setMouseTracking(true);
+
     fileName = QString::fromAscii("");
     ui->pProgress->hide();
     ui->lTransferType->hide();
@@ -16,6 +20,10 @@ ActiveTransfer::ActiveTransfer(QWidget *parent) :
     active = false;
 
     ui->lFileName->setTextInteractionFlags(Qt::NoTextInteraction);
+
+    // Forward mouse press events to manage them on mouseReleaseEvent() slot
+    ui->lFileType->setAttribute(Qt::WA_TransparentForMouseEvents, true);
+    ui->lTransferType->setAttribute(Qt::WA_TransparentForMouseEvents, true);
 }
 
 ActiveTransfer::~ActiveTransfer()
@@ -96,6 +104,16 @@ bool ActiveTransfer::isActive()
     return active;
 }
 
+void ActiveTransfer::mousePressEvent(QMouseEvent *event)
+{
+    if (!(event->button() == Qt::LeftButton))
+    {
+        return;
+    }
+
+    emit openTransferManager(type ? UPLOADS_TAB : DOWNLOADS_TAB);
+}
+
 void ActiveTransfer::mouseReleaseEvent(QMouseEvent *event)
 {
     if (!(event->button() == Qt::RightButton))
@@ -104,4 +122,9 @@ void ActiveTransfer::mouseReleaseEvent(QMouseEvent *event)
     }
 
     emit showContextMenu(QPoint(event->x(), event->y()), regular);
+}
+
+void ActiveTransfer::mouseMoveEvent(QMouseEvent *event)
+{
+    setToolTip(QString::fromUtf8("Open Transfer Manager"));
 }

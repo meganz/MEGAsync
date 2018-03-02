@@ -12,6 +12,13 @@ class ActiveTransfer : public QWidget
     Q_OBJECT
 
 public:
+    enum {
+        ALL_TRANSFERS_TAB = 0,
+        DOWNLOADS_TAB   = 1,
+        UPLOADS_TAB = 2,
+        COMPLETED_TAB = 3
+    };
+
     explicit ActiveTransfer(QWidget *parent = 0);
     ~ActiveTransfer();
 
@@ -23,12 +30,15 @@ public:
 
 signals:
     void showContextMenu(QPoint pos, bool regular);
+    void openTransferManager(int tab);
 
 private:
     Ui::ActiveTransfer *ui;
 
 protected:
-    void mouseReleaseEvent ( QMouseEvent * event );
+    void mousePressEvent(QMouseEvent * event);
+    void mouseReleaseEvent (QMouseEvent * event);
+    void mouseMoveEvent(QMouseEvent *event);
 
     QString fileName;
     int type;
