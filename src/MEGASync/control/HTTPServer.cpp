@@ -369,7 +369,13 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 
             Preferences *preferences = Preferences::instance();
             QString defaultPath = preferences->downloadFolder();
-            webTransferStateRequests.insert(megaApi->base64ToHandle(handle.toUtf8().constData()), new RequestTransferData());
+            MegaHandle megaHandle = megaApi->base64ToHandle(handle.toUtf8().constData());
+            QMap<MegaHandle, RequestTransferData*>::iterator it = webTransferStateRequests.find(megaHandle);
+            if (it != webTransferStateRequests.end())
+            {
+                delete it.value();
+            }
+            webTransferStateRequests.insert(megaHandle, new RequestTransferData());
 
             if (preferences->hasDefaultDownloadFolder() && QFile(defaultPath).exists())
             {
@@ -494,6 +500,12 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                                                              p, privateAuth.toUtf8().constData(),
                                                              publicAuth.toUtf8().constData());
                             downloadQueue.append(node);
+                            QMap<MegaHandle, RequestTransferData*>::iterator it = webTransferStateRequests.find(h);
+                            if (it != webTransferStateRequests.end())
+                            {
+                                delete it.value();
+                            }
+                            webTransferStateRequests.insert(h, new RequestTransferData());
                         }
                         else
                         {
