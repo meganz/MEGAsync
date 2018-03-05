@@ -126,5 +126,5 @@ void ActiveTransfer::mouseReleaseEvent(QMouseEvent *event)
 
 void ActiveTransfer::mouseMoveEvent(QMouseEvent *event)
 {
-    setToolTip(QString::fromUtf8("Open Transfer Manager"));
+    setToolTip(tr("Open Transfer Manager"));
 }

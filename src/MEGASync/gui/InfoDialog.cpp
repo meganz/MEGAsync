@@ -88,8 +88,14 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     ui->pUsageStorage->installEventFilter(this);
     ui->pUsageStorage->setMouseTracking(true);
-    ui->pUpdated->installEventFilter(this);
-    ui->pUpdated->setAttribute(Qt::WA_TransparentForMouseEvents);
+
+    ui->wDownloadDesc->installEventFilter(this);
+    ui->wDownloadDesc->setMouseTracking(true);
+    ui->bClockDown->setAttribute(Qt::WA_TransparentForMouseEvents, true);
+
+    ui->wUploadDesc->installEventFilter(this);
+    ui->wUploadDesc->setMouseTracking(true);
+    ui->bClockUp->setAttribute(Qt::WA_TransparentForMouseEvents, true);
 
     state = STATE_STARTING;
     megaApi = app->getMegaApi();
@@ -1274,9 +1280,30 @@ void InfoDialog::changeEvent(QEvent *event)
 
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 {
-    if (obj == ui->pUpdated && e->type() == QEvent::MouseButtonPress)
+    if (obj == ui->wDownloadDesc)
     {
-        emit openTransferManager(COMPLETED_TAB);
+        if( e->type() == QEvent::MouseButtonPress
+                        && ((QMouseEvent *)e)->button() == Qt::LeftButton)
+        {
+            emit openTransferManager(DOWNLOADS_TAB);
+        }
+        else if (e->type() == Qt::ToolTip)
+        {
+            ui->wDownloadDesc->setToolTip(tr("Open Transfer Manager"));
+        }
+    }
+
+    if (obj == ui->wUploadDesc)
+    {
+        if( e->type() == QEvent::MouseButtonPress
+                        && ((QMouseEvent *)e)->button() == Qt::LeftButton)
+        {
+            emit openTransferManager(UPLOADS_TAB);
+        }
+        else if (e->type() == Qt::ToolTip)
+        {
+            ui->wUploadDesc->setToolTip(tr("Open Transfer Manager"));
+        }
     }
 
     if (obj != ui->pUsageStorage)
