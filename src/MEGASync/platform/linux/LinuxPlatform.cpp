@@ -17,6 +17,11 @@ void LinuxPlatform::initialize(int argc, char *argv[])
 {
 }
 
+void LinuxPlatform::prepareForSync()
+{
+
+}
+
 bool LinuxPlatform::enableTrayIcon(QString executable)
 {
     return false;

@@ -31,6 +31,7 @@ public:
     static bool makePubliclyReadable(LPTSTR fileName);
 
     static void initialize(int argc, char *argv[]);
+    static void prepareForSync();
     static bool enableTrayIcon(QString executable);
     static void notifyItemChange(std::string *localPath, int newState);
     static bool startOnStartup(bool value);

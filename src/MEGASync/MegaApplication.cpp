@@ -5442,6 +5442,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         //This prevents to handle logins in the initial setup wizard
         if (preferences->logged())
         {
+            Platform::prepareForSync();
             int errorCode = e->getErrorCode();
             if (errorCode == MegaError::API_OK)
             {

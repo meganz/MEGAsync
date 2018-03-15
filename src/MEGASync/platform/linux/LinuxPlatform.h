@@ -27,6 +27,7 @@ private:
     LinuxPlatform() {}
 public:
     static void initialize(int argc, char *argv[]);
+    static void prepareForSync();
     static QString desktop_file;
     static bool enableTrayIcon(QString executable);
     static void notifyItemChange(std::string *localPath, int newState);

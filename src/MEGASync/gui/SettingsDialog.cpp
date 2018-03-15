@@ -384,6 +384,7 @@ void SettingsDialog::syncStateChanged(int state)
 {
     if (state)
     {
+        Platform::prepareForSync();
         QPointer<QCheckBox> c = ((QCheckBox *)QObject::sender());
         for (int j = 0; j < ui->tSyncs->rowCount(); j++)
         {
