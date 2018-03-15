@@ -386,7 +386,8 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaError", "Read error");
     QT_TRANSLATE_NOOP("MegaError", "Invalid application key");
     QT_TRANSLATE_NOOP("MegaError", "Unknown error");
-
+    QT_TRANSLATE_NOOP("MegaError", "Your account has been suspended due to multiple breaches of Mega's Terms of Service. Please check your email inbox.");
+    QT_TRANSLATE_NOOP("MegaError", "Your account was terminated due to breach of Mega's Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "Get MEGA link");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "View on MEGA");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "No options available");
@@ -5246,6 +5247,12 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     {
         preferences->setUseHttpsOnly(true);
     }
+    else if (event->getType() == MegaEvent::EVENT_ACCOUNT_BLOCKED)
+    {
+        QMegaMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"),
+                                  QCoreApplication::translate("MegaError", event->getText()),
+                                  Utilities::getDevicePixelRatio());
+    }
 }
 
 //Called when a request is about to start
@@ -5637,9 +5644,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             {
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
                              .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
-                QMegaMessageBox::warning(NULL, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()),
-                                         Utilities::getDevicePixelRatio(), QMessageBox::Ok);
-                unlink();
             }
         }
 
