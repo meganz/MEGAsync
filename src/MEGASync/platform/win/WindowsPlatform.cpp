@@ -100,9 +100,7 @@ void WindowsPlatform::prepareForSync()
                         for (int i = 0; i < localFolders.size(); i++)
                         {
                             QString localFolder = localFolders.at(i);
-                            if (preferences->isFolderActive(i) &&
-                                    (localFolder.startsWith(driveName)
-                                     || localFolder.startsWith(networkName)))
+                            if (localFolder.startsWith(driveName) || localFolder.startsWith(networkName))
                             {
                                 MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Automatically mounting network drive")
                                              .toUtf8().constData());
