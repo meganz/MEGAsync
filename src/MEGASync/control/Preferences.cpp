@@ -185,7 +185,7 @@ const QString Preferences::defaultHttpsCertIntermediate = QString::fromUtf8(
             "-----END CERTIFICATE----- \n"
             );
 
-const long long Preferences::defaultHttpsCertExpiration = 1562378399;
+const long long Preferences::defaultHttpsCertExpiration = 1586476799;
 const long long Preferences::LOCAL_HTTPS_CERT_MAX_EXPIRATION_SECS = 3888000; // 45 days
 
 const QString Preferences::FINDER_EXT_BUNDLE_ID = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
