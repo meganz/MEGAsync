@@ -317,10 +317,10 @@ const QString Preferences::SSLcertificateExceptionKey  = QString::fromAscii("SSL
 const QString Preferences::maxMemoryUsageKey        = QString::fromAscii("maxMemoryUsage");
 const QString Preferences::maxMemoryReportTimeKey   = QString::fromAscii("maxMemoryReportTime");
 const QString Preferences::oneTimeActionDoneKey     = QString::fromAscii("oneTimeActionDone");
-const QString Preferences::httpsKeyKey              = QString::fromAscii("httpsKey");
-const QString Preferences::httpsCertKey             = QString::fromAscii("httpsCert");
-const QString Preferences::httpsCertIntermediateKey = QString::fromAscii("httpsCertIntermediate");
-const QString Preferences::httpsCertExpirationKey   = QString::fromAscii("httpsCertExpiration");
+const QString Preferences::httpsKeyKey              = QString::fromAscii("httpsKey2");
+const QString Preferences::httpsCertKey             = QString::fromAscii("httpsCert2");
+const QString Preferences::httpsCertIntermediateKey = QString::fromAscii("httpsCertIntermediate2");
+const QString Preferences::httpsCertExpirationKey   = QString::fromAscii("httpsCertExpiration2");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
