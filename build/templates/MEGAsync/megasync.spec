@@ -44,7 +44,7 @@ BuildRequires: libzen-devel, libmediainfo-devel
 
 %if 0%{?fedora}
 BuildRequires: c-ares-devel, cryptopp-devel
-%if 0%{?fedora_version} >= 27
+%if 0%{?fedora_version} >= 26
 Requires: cryptopp >= 5.6.5
 %endif
 BuildRequires: desktop-file-utils
