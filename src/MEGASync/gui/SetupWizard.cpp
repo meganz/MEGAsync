@@ -685,6 +685,8 @@ void SetupWizard::wTypicalSetup_clicked()
     ui->rTypicalSetup->setChecked(true);
     ui->rAdvancedSetup->setChecked(false);
     ui->bNext->setEnabled(true);
+    ui->bNext->setDefault(true);
+    ui->bNext->setFocus();
     repaint();
 }
 
@@ -708,6 +710,8 @@ void SetupWizard::wAdvancedSetup_clicked()
     ui->rTypicalSetup->setChecked(false);
     ui->rAdvancedSetup->setChecked(true);
     ui->bNext->setEnabled(true);
+    ui->bNext->setDefault(true);
+    ui->bNext->setFocus();
     repaint();
 }
 
@@ -883,8 +887,9 @@ void SetupWizard::page_mode()
     ui->bBack->setVisible(true);
     ui->bSkip->setVisible(true);
     ui->bSkip->setEnabled(true);
-    ui->bNext->setFocus();
-    ui->bNext->setDefault(true);
+    ui->bNext->setDefault(false);
+    ui->bCancel->setDefault(false);
+    ui->lLearnMore->setFocus();
 
     ui->sPages->setCurrentWidget(ui->pSetupType);
 }
