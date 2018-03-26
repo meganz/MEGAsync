@@ -46,9 +46,9 @@ void TransferItem::setFileName(QString fileName)
     this->fileName = fileName;
     QFont f = ui->lTransferName->font();
     QFontMetrics fm = QFontMetrics(f);
-    ui->lTransferNameCompleted->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lTransferNameCompleted->width()));
+    ui->lTransferNameCompleted->setText(fm.elidedText(fileName, Qt::ElideMiddle, ui->lTransferNameCompleted->width()));
     ui->lTransferNameCompleted->setToolTip(fileName);
-    ui->lTransferName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lTransferName->width()));
+    ui->lTransferName->setText(fm.elidedText(fileName, Qt::ElideMiddle, ui->lTransferName->width()));
     ui->lTransferName->setToolTip(fileName);
 
     QIcon icon;
@@ -62,6 +62,18 @@ void TransferItem::setFileName(QString fileName)
 QString TransferItem::getFileName()
 {
     return fileName;
+}
+
+QString TransferItem::getTransferName()
+{
+    if (ui->sTransferState->currentWidget() == ui->stateCompleted)
+    {
+        return ui->lTransferNameCompleted->text();
+    }
+    else
+    {
+        return ui->lTransferName->text();
+    }
 }
 
 void TransferItem::setTransferredBytes(long long totalTransferredBytes, bool cancellable)
