@@ -1638,13 +1638,6 @@ font-weight: normal;
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="bCancel">
-        <property name="text">
-         <string>Cancel</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QLabel" name="lLearnMore">
         <property name="sizePolicy">
          <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
@@ -1678,6 +1671,13 @@ font-weight: normal;
          </size>
         </property>
        </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="bCancel">
+        <property name="text">
+         <string>Cancel</string>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QPushButton" name="bBack">
