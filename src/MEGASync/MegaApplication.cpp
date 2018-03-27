@@ -386,7 +386,8 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaError", "Read error");
     QT_TRANSLATE_NOOP("MegaError", "Invalid application key");
     QT_TRANSLATE_NOOP("MegaError", "Unknown error");
-
+    QT_TRANSLATE_NOOP("MegaError", "Your account has been suspended due to multiple breaches of Mega's Terms of Service. Please check your email inbox.");
+    QT_TRANSLATE_NOOP("MegaError", "Your account was terminated due to breach of Mega's Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "Get MEGA link");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "View on MEGA");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "No options available");
@@ -3686,6 +3687,8 @@ void MegaApplication::transferManagerActionClicked(int tab)
     connect(transferManager, SIGNAL(viewedCompletedTransfers()), this, SLOT(clearViewedTransfers()));
     connect(transferManager, SIGNAL(completedTransfersTabActive(bool)), this, SLOT(onCompletedTransfersTabActive(bool)));
     transferManager->setActiveTab(tab);
+
+    Platform::activateBackgroundWindow(transferManager);
     transferManager->show();
 }
 
@@ -4181,6 +4184,19 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
     fileUploadSelector = new QFileDialog();
     fileUploadSelector->setFileMode(QFileDialog::ExistingFiles);
     fileUploadSelector->setOption(QFileDialog::DontUseNativeDialog, false);
+
+#if QT_VERSION < 0x050000
+    QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+#else
+    QString  defaultFolderPath;
+    QStringList paths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+    if (paths.size())
+    {
+        defaultFolderPath = paths.at(0);
+    }
+#endif
+    fileUploadSelector->setDirectory(defaultFolderPath);
+
     Platform::execBackgroundWindow(fileUploadSelector);
     if (!fileUploadSelector)
     {
@@ -4247,6 +4263,19 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
     folderUploadSelector = new QFileDialog();
     folderUploadSelector->setFileMode(QFileDialog::Directory);
     folderUploadSelector->setOption(QFileDialog::ShowDirsOnly, true);
+
+#if QT_VERSION < 0x050000
+    QString defaultFolderPath = QDesktopServices::storageLocation(QDesktopServices::HomeLocation);
+#else
+    QString  defaultFolderPath;
+    QStringList paths = QStandardPaths::standardLocations(QStandardPaths::HomeLocation);
+    if (paths.size())
+    {
+        defaultFolderPath = paths.at(0);
+    }
+#endif
+    folderUploadSelector->setDirectory(defaultFolderPath);
+
     Platform::execBackgroundWindow(folderUploadSelector);
     if (!folderUploadSelector)
     {
@@ -5279,6 +5308,12 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     {
         preferences->setUseHttpsOnly(true);
     }
+    else if (event->getType() == MegaEvent::EVENT_ACCOUNT_BLOCKED)
+    {
+        QMegaMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"),
+                                  QCoreApplication::translate("MegaError", event->getText()),
+                                  Utilities::getDevicePixelRatio());
+    }
 }
 
 //Called when a request is about to start
@@ -5468,6 +5503,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         //This prevents to handle logins in the initial setup wizard
         if (preferences->logged())
         {
+            Platform::prepareForSync();
             int errorCode = e->getErrorCode();
             if (errorCode == MegaError::API_OK)
             {
@@ -5670,9 +5706,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             {
                 MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error fetching nodes: %1")
                              .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
-                QMegaMessageBox::warning(NULL, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()),
-                                         Utilities::getDevicePixelRatio(), QMessageBox::Ok);
-                unlink();
             }
         }
 

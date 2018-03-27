@@ -42,18 +42,17 @@ BuildRequires: libcryptopp-devel
 BuildRequires: libzen-devel, libmediainfo-devel
 %endif
 
-
-
 %if 0%{?fedora}
-%if 0%{?fedora_version} >= 23
 BuildRequires: c-ares-devel, cryptopp-devel
+%if 0%{?fedora_version} >= 26
+Requires: cryptopp >= 5.6.5
+%endif
 BuildRequires: desktop-file-utils
+%if 0%{?fedora_version} >= 23
 BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel
 Requires: qt5-qtbase >= 5.6, qt5-qtsvg
 BuildRequires: terminus-fonts, fontpackages-filesystem
 %else
-BuildRequires: c-ares-devel, cryptopp-devel
-BuildRequires: desktop-file-utils
 BuildRequires: qt, qt-x11, qt-devel
 BuildRequires: terminus-fonts, fontpackages-filesystem
 %endif

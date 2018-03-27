@@ -25,6 +25,7 @@ private:
 
 public:
     static void initialize(int argc, char *argv[]);
+    static void prepareForSync();
     static QStringList multipleUpload(QString uploadTitle);
     static bool enableTrayIcon(QString executable);
     static void notifyItemChange(std::string *localPath, int newState);
