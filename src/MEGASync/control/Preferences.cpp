@@ -320,6 +320,7 @@ const QString Preferences::httpsKeyKey              = QString::fromAscii("httpsK
 const QString Preferences::httpsCertKey             = QString::fromAscii("httpsCert2");
 const QString Preferences::httpsCertIntermediateKey = QString::fromAscii("httpsCertIntermediate2");
 const QString Preferences::httpsCertExpirationKey   = QString::fromAscii("httpsCertExpiration2");
+const QString Preferences::transferIdentifierKey    = QString::fromAscii("transferIdentifier");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
