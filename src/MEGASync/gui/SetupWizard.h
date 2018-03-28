@@ -34,6 +34,7 @@ public:
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
     virtual void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request);
     void goToStep(int page);
+    void initModeSelection();
 
 private slots:
     void on_bNext_clicked();
