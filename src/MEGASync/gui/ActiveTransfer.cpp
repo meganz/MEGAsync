@@ -11,6 +11,7 @@ ActiveTransfer::ActiveTransfer(QWidget *parent) :
     ui->setupUi(this);
 
     setMouseTracking(true);
+    setToolTip(tr("Open Transfer Manager"));
 
     fileName = QString::fromAscii("");
     ui->pProgress->hide();
@@ -37,6 +38,7 @@ void ActiveTransfer::setFileName(QString fileName)
     QFont f = ui->lFileName->font();
     QFontMetrics fm = QFontMetrics(f);
     ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
+    ui->lFileName->setToolTip(fileName);
 
     QIcon icon;
     icon.addFile(Utilities::getExtensionPixmapSmall(fileName), QSize(), QIcon::Normal, QIcon::Off);
@@ -122,9 +124,4 @@ void ActiveTransfer::mouseReleaseEvent(QMouseEvent *event)
     }
 
     emit showContextMenu(QPoint(event->x(), event->y()), regular);
-}
-
-void ActiveTransfer::mouseMoveEvent(QMouseEvent *event)
-{
-    setToolTip(tr("Open Transfer Manager"));
 }

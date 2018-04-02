@@ -38,7 +38,6 @@ private:
 protected:
     void mousePressEvent(QMouseEvent * event);
     void mouseReleaseEvent (QMouseEvent * event);
-    void mouseMoveEvent(QMouseEvent *event);
 
     QString fileName;
     int type;
