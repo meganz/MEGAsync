@@ -163,7 +163,10 @@ int main(int argc, char *argv[])
     }
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("QT_SCALE_FACTOR = %1").arg(QString::fromUtf8(getenv("QT_SCALE_FACTOR"))).toUtf8().constData() );
 #endif
+
+#if QT_VERSION < 0x050A00
     QApplication::setDesktopSettingsAware(false);
+#endif
 #endif
     MegaApplication app(argc, argv);
 
