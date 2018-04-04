@@ -62,6 +62,15 @@ void MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
         }
         else
         {
+            if (node->isFolder())
+            {
+                data->totalFolders++;
+            }
+            else
+            {
+                data->totalFiles++;
+            }
+
             currentPath = path;
         }
 
