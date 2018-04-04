@@ -47,11 +47,11 @@ Q_DECLARE_METATYPE(QQueue<QString>)
 class TransferMetaData
 {
 public:
-    TransferMetaData(int direction, int total = 0, int pending = 0,
+    TransferMetaData(int direction, int total = 0, int pending = 0, QString path = QString(),
                      int files = 0, int folders = 0,
                      int failed = 0, int cancelled = 0)
                     : transferDirection(direction), totalTransfers(total), pendingTransfers(pending),
-                      totalFiles(files), totalFolders(folders),
+                      localPath(path), totalFiles(files), totalFolders(folders),
                       transfersFailed(failed), transfersCancelled(cancelled) {}
 
     int totalTransfers;
@@ -61,6 +61,7 @@ public:
     int transfersFailed;
     int transfersCancelled;
     int transferDirection;
+    QString localPath;
 };
 
 class Notificator;
@@ -215,6 +216,8 @@ public slots:
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
+private slots:
+    void showInFolder(int activationButton);
 
 protected:
     void createTrayIcon();

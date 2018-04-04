@@ -1517,6 +1517,15 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     while (!uploadQueue.isEmpty())
     {
         QString filePath = uploadQueue.dequeue();
+
+        // Load parent folder to provide "Show in Folder" option
+        if (data->localPath.isEmpty())
+        {
+            QDir uploadPath(filePath);
+            uploadPath.cdUp();
+            data->localPath = uploadPath.path();
+        }
+
         if (QFileInfo (filePath).isDir())
         {
             data->totalFolders++;
@@ -1548,7 +1557,7 @@ void MegaApplication::processDownloadQueue(QString path)
     }
 
     unsigned long long transferId = preferences->transferIdentifier();
-    transferAppData.insert(transferId, new TransferMetaData(MegaTransfer::TYPE_DOWNLOAD, downloadQueue.size(), downloadQueue.size()));
+    transferAppData.insert(transferId, new TransferMetaData(MegaTransfer::TYPE_DOWNLOAD, downloadQueue.size(), downloadQueue.size(), path));
     downloader->processDownloadQueue(&downloadQueue, path, transferId);
 }
 
@@ -3189,20 +3198,31 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
 
     if (it.value()->pendingTransfers == 0)
     {
+        MegaNotification *notification = new MegaNotification();
+        QString message;
         switch (it.value()->transferDirection)
         {
             case MegaTransfer::TYPE_UPLOAD:
-                showNotificationMessage(tr("Transfers finished: %1 files and %2 folders uploaded").arg(it.value()->totalFiles)
-                                        .arg(it.value()->totalFolders));
+                message = tr("Transfers finished: %1 files and %2 folders uploaded").arg(it.value()->totalFiles)
+                                        .arg(it.value()->totalFolders);
             break;
             case MegaTransfer::TYPE_DOWNLOAD:
-                showNotificationMessage(tr("Transfers finished: %1 files and %2 folders downloaded").arg(it.value()->totalFiles)
-                                        .arg(it.value()->totalFolders));
+                message = tr("Transfers finished: %1 files and %2 folders downloaded").arg(it.value()->totalFiles)
+                                        .arg(it.value()->totalFolders);
             break;
             default:
-                showNotificationMessage(tr("Transfers finished: %1 files and %2 folders").arg(it.value()->totalFiles)
-                                        .arg(it.value()->totalFolders));
+                message = tr("Transfers finished: %1 files and %2 folders").arg(it.value()->totalFiles)
+                                        .arg(it.value()->totalFolders);
             break;
+        }
+
+        if (notificator)
+        {
+            notification->setText(message);
+            notification->setActions(QStringList() << QString::fromUtf8("Show in folder"));
+            notification->setData(it.value()->localPath);
+            connect(notification, SIGNAL(activated(int)), this, SLOT(showInFolder(int)));
+            notificator->notify(notification);
         }
 
         delete it.value();
@@ -3216,6 +3236,16 @@ void MegaApplication::enableFinderExt()
     // We need to wait from OS X El capitan to reload system db before enable the extension
     Platform::enableFinderExtension(true);
     preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_ACTIVE_FINDER_EXT, true);
+}
+
+void MegaApplication::showInFolder(int activationButton)
+{
+    MegaNotification *notification = ((MegaNotification *)QObject::sender());
+
+    if (activationButton == MegaNotification::ActivationActionButtonClicked && !notification->getData().isEmpty())
+    {
+        Platform::showInFolder(notification->getData());
+    }
 }
 #endif
 
@@ -6183,20 +6213,31 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             data->pendingTransfers--;
             if (data->pendingTransfers == 0)
             {
+                MegaNotification *notification = new MegaNotification();
+                QString message;
                 switch (data->transferDirection)
                 {
                     case MegaTransfer::TYPE_UPLOAD:
-                        showNotificationMessage(tr("Transfers finished: %1 files and %2 folders uploaded").arg(data->totalFiles)
-                                                .arg(data->totalFolders));
+                        message = tr("Transfers finished: %1 files and %2 folders uploaded").arg(data->totalFiles)
+                                                .arg(data->totalFolders);
                     break;
                     case MegaTransfer::TYPE_DOWNLOAD:
-                        showNotificationMessage(tr("Transfers finished: %1 files and %2 folders downloaded").arg(data->totalFiles)
-                                                .arg(data->totalFolders));
+                         message = tr("Transfers finished: %1 files and %2 folders downloaded").arg(data->totalFiles)
+                                                .arg(data->totalFolders);
                     break;
                     default:
-                        showNotificationMessage(tr("Transfers finished: %1 files and %2 folders").arg(data->totalFiles)
-                                                .arg(data->totalFolders));
+                         message = tr("Transfers finished: %1 files and %2 folders").arg(data->totalFiles)
+                                                .arg(data->totalFolders);
                     break;
+                }
+
+                if (notificator)
+                {
+                    notification->setText(message);
+                    notification->setActions(QStringList() << QString::fromUtf8("Show in folder"));
+                    notification->setData(data->localPath);
+                    connect(notification, SIGNAL(activated(int)), this, SLOT(showInFolder(int)));
+                    notificator->notify(notification);
                 }
 
                 delete data;
