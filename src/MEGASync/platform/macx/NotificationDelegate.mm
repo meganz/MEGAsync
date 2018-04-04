@@ -24,33 +24,33 @@
     switch (notification.activationType)
     {
         case NSUserNotificationActivationTypeContentsClicked:
-            emit n->activated(-1);
+            emit n->activated(MegaNotification::ActivationContentClicked);
             break;
 
         case NSUserNotificationActivationTypeActionButtonClicked:
             if (n->getActions().size() > 0)
             {
-                emit n->activated(0);
+                emit n->activated(MegaNotification::ActivationActionButtonClicked);
             }
             else
             {
-                emit n->closed(0);
+                emit n->closed(MegaNotification::ActivationActionButtonClicked);
             }
             break;
 
         case NSUserNotificationActivationTypeAdditionalActionClicked:
             if (n->getActions().size() > 1)
             {
-                emit n->activated(1);
+                emit n->activated(MegaNotification::ActivationAdditionalButtonClicked);
             }
             else
             {
-                emit n->closed(0);
+                emit n->closed(MegaNotification::ActivationActionButtonClicked);
             }
             break;
 
        default:
-            emit n->closed(0);
+            emit n->closed(MegaNotification::ActivationActionButtonClicked);
             break;
     }
 
