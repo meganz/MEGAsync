@@ -31,13 +31,11 @@ public:
         TimedOut
     };
 
-#ifdef __APPLE__
     enum  {
         ActivationContentClicked = -1,
         ActivationActionButtonClicked = 0,
         ActivationAdditionalButtonClicked = 1,
     };
-#endif
 
     MegaNotification();
     virtual ~MegaNotification();

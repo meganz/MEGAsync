@@ -3240,6 +3240,7 @@ void MegaApplication::enableFinderExt()
     Platform::enableFinderExtension(true);
     preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_ACTIVE_FINDER_EXT, true);
 }
+#endif
 
 void MegaApplication::showInFolder(int activationButton)
 {
@@ -3250,7 +3251,6 @@ void MegaApplication::showInFolder(int activationButton)
         Platform::showInFolder(notification->getData());
     }
 }
-#endif
 
 void MegaApplication::updateUserStats()
 {
