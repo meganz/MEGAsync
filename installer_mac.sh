@@ -45,7 +45,7 @@ $QTBASE/bin/lrelease ../src/MEGASync/MEGASync.pro
 $QTBASE/bin/qmake -r ../src -spec macx-g++ CONFIG+=release CONFIG+=x86_64 -nocache
 make -j4
 cp -R MEGASync/MEGAsync.app MEGASync/MEGAsync_orig.app
-$QTBASE/bin/macdeployqt MEGASync/MEGAsync.app
+$QTBASE/bin/macdeployqt MEGASync/MEGAsync.app -no-strip
 dsymutil MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync -o MEGAsync.app.dSYM
 strip MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
 dsymutil MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader -o MEGAloader.dSYM
