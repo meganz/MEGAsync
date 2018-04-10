@@ -326,7 +326,14 @@ void Notificator::notifySystray(MegaNotification *notification)
     templ.setTextField((LPCWSTR)notification->getText().utf16(), WinToastTemplate::SecondLine);
     templ.setAttributionText((LPCWSTR)notification->getSource().utf16());
     templ.setExpiration(notification->getExpirationTime());
-    templ.setImagePath((LPCWSTR)notification->getImagePath().utf16());
+    if (!notification->getImagePath().isEmpty())
+    {
+        templ.setImagePath((LPCWSTR)notification->getImagePath().utf16());
+    }
+    else
+    {
+        templ.setImagePath((LPCWSTR)defaultIconPath.utf16());
+    }
 
     QStringList userActions = notification->getActions();
     for (int i = 0; i < userActions.size(); i++)
