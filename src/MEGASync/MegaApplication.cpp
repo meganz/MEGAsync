@@ -6198,8 +6198,9 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     const char *notificationKey = transfer->getAppData();
     if (notificationKey)
     {
+        unsigned long long notificationId = atoll(notificationKey);
         QHash<unsigned long long, TransferMetaData*>::iterator it
-               = transferAppData.find(atoll(notificationKey));
+               = transferAppData.find(notificationId);
         if (it != transferAppData.end())
         {
             TransferMetaData *data = it.value();
@@ -6214,41 +6215,9 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             }
 
             data->pendingTransfers--;
-            if (data->pendingTransfers == 0)
-            {
-                MegaNotification *notification = new MegaNotification();
-                QString message;
-                switch (data->transferDirection)
-                {
-                    case MegaTransfer::TYPE_UPLOAD:
-                        message = tr("Transfers finished: %1 files and %2 folders uploaded").arg(data->totalFiles)
-                                                .arg(data->totalFolders);
-                    break;
-                    case MegaTransfer::TYPE_DOWNLOAD:
-                         message = tr("Transfers finished: %1 files and %2 folders downloaded").arg(data->totalFiles)
-                                                .arg(data->totalFolders);
-                    break;
-                    default:
-                         message = tr("Transfers finished: %1 files and %2 folders").arg(data->totalFiles)
-                                                .arg(data->totalFolders);
-                    break;
-                }
-
-                if (notificator)
-                {
-                    notification->setText(message);
-                    notification->setActions(QStringList() << QString::fromUtf8("Show in folder"));
-                    notification->setData(data->localPath);
-                    connect(notification, SIGNAL(activated(int)), this, SLOT(showInFolder(int)));
-                    notificator->notify(notification);
-                }
-
-                delete data;
-                transferAppData.erase(it);
-            }
+            showNotificationFinishedTransfers(notificationId);
         }
     }
-
 
     if (transfer->isFolderTransfer())
     {
