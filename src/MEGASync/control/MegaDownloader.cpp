@@ -52,6 +52,18 @@ bool MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
                 {
                     data->totalFiles++;
                 }
+
+                if (data->localPath.isEmpty())
+                {
+                    data->localPath = QDir::toNativeSeparators(path);
+                    if (data->totalTransfers == 1)
+                    {
+                        char *escapedName = megaApi->escapeFsIncompatible(node->getName());
+                        QString nodeName = QString::fromUtf8(escapedName);
+                        delete [] escapedName;
+                        data->localPath += QDir::separator() + nodeName;
+                    }
+                }
             }
 
             currentPath = path;
