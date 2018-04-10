@@ -3204,37 +3204,138 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
         return;
     }
 
-    if (it.value()->pendingTransfers == 0)
+    TransferMetaData *data = it.value();
+    if (data->pendingTransfers == 0)
     {
         MegaNotification *notification = new MegaNotification();
+        QString title;
         QString message;
-        switch (it.value()->transferDirection)
+        switch (data->transferDirection)
         {
             case MegaTransfer::TYPE_UPLOAD:
-                message = tr("Transfers finished: %1 files and %2 folders uploaded").arg(it.value()->totalFiles)
-                                        .arg(it.value()->totalFolders);
-            break;
+            {
+                if (data->totalFiles && data->totalFolders)
+                {
+                    title = tr("Upload");
+                    if (data->totalFolders == 1)
+                    {
+                        if (data->totalFiles == 1)
+                        {
+                            message = tr("1 file and 1 folder were successfully uploaded");
+                        }
+                        else
+                        {
+                            message = tr("%1 files and 1 folder were successfully uploaded").arg(data->totalFiles);
+                        }
+                    }
+                    else
+                    {
+                        if (data->totalFiles == 1)
+                        {
+                            message = tr("1 file and %1 folders were successfully uploaded").arg(data->totalFolders);
+                        }
+                        else
+                        {
+                            message = tr("%1 files and %2 folders were successfully uploaded").arg(data->totalFiles).arg(data->totalFolders);
+                        }
+                    }
+                }
+                else if (!data->totalFiles)
+                {
+                    title = tr("Folder Upload");
+                    if (data->totalFolders == 1)
+                    {
+                        message = tr("1 folder was successfully uploaded");
+                    }
+                    else
+                    {
+                        message = tr("%1 folders were successfully uploaded").arg(data->totalFolders);
+                    }
+                }
+                else
+                {
+                    title = tr("File Upload");
+                    if (data->totalFiles == 1)
+                    {
+                        message = tr("1 file was successfully uploaded");
+                    }
+                    else
+                    {
+                        message = tr("%1 files were successfully uploaded").arg(data->totalFiles);
+                    }
+                }
+                break;
+            }
             case MegaTransfer::TYPE_DOWNLOAD:
-                message = tr("Transfers finished: %1 files and %2 folders downloaded").arg(it.value()->totalFiles)
-                                        .arg(it.value()->totalFolders);
-            break;
+            {
+                if (data->totalFiles && data->totalFolders)
+                {
+                    title = tr("Download");
+                    if (data->totalFolders == 1)
+                    {
+                        if (data->totalFiles == 1)
+                        {
+                            message = tr("1 file and 1 folder were successfully downloaded");
+                        }
+                        else
+                        {
+                            message = tr("%1 files and 1 folder were successfully downloaded").arg(data->totalFiles);
+                        }
+                    }
+                    else
+                    {
+                        if (data->totalFiles == 1)
+                        {
+                            message = tr("1 file and %1 folders were successfully downloaded").arg(data->totalFolders);
+                        }
+                        else
+                        {
+                            message = tr("%1 files and %2 folders were successfully downloaded").arg(data->totalFiles).arg(data->totalFolders);
+                        }
+                    }
+                }
+                else if (!data->totalFiles)
+                {
+                    title = tr("Folder Download");
+                    if (data->totalFolders == 1)
+                    {
+                        message = tr("1 folder was successfully downloaded");
+                    }
+                    else
+                    {
+                        message = tr("%1 folders were successfully downloaded").arg(data->totalFolders);
+                    }
+                }
+                else
+                {
+                    title = tr("File Download");
+                    if (data->totalFiles == 1)
+                    {
+                        message = tr("1 file was successfully downloaded");
+                    }
+                    else
+                    {
+                        message = tr("%1 files were successfully downloaded").arg(data->totalFiles);
+                    }
+                }
+                break;
+            }
             default:
-                message = tr("Transfers finished: %1 files and %2 folders").arg(it.value()->totalFiles)
-                                        .arg(it.value()->totalFolders);
-            break;
+                break;
         }
 
-        if (notificator)
+        if (notificator && !message.isEmpty())
         {
+            notification->setTitle(title);
             notification->setText(message);
             notification->setActions(QStringList() << QString::fromUtf8("Show in folder"));
-            notification->setData(it.value()->localPath);
+            notification->setData(data->localPath);
             connect(notification, SIGNAL(activated(int)), this, SLOT(showInFolder(int)));
             notificator->notify(notification);
         }
 
-        delete it.value();
         transferAppData.erase(it);
+        delete data;
     }
 }
 
