@@ -37,28 +37,9 @@ void MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
     while (!downloadQueue->isEmpty())
     {
         MegaNode *node = downloadQueue->dequeue();
-        if (node->isForeign())
+        if (node->isForeign() && pathMap.contains(node->getParentHandle()))
         {
-            if (pathMap.contains(node->getParentHandle()))
-            {
-                currentPath = pathMap[node->getParentHandle()];
-            }
-            else
-            {
-                if (data)
-                {
-                    if (node->isFolder())
-                    {
-                        data->totalFolders++;
-                    }
-                    else
-                    {
-                        data->totalFiles++;
-                    }
-                }
-
-                currentPath = path;
-            }
+            currentPath = pathMap[node->getParentHandle()];
         }
         else
         {
