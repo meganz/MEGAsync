@@ -6200,27 +6200,33 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         return;
     }
 
-    const char *notificationKey = transfer->getAppData();
-    if (notificationKey)
+    // check if it's a top level transfer
+    int folderTransferTag = transfer->getFolderTransferTag();
+    if (folderTransferTag == 0 // file transfer
+            || folderTransferTag == -1) // folder transfer
     {
-        unsigned long long notificationId = atoll(notificationKey);
-        QHash<unsigned long long, TransferMetaData*>::iterator it
-               = transferAppData.find(notificationId);
-        if (it != transferAppData.end())
+        const char *notificationKey = transfer->getAppData();
+        if (notificationKey)
         {
-            TransferMetaData *data = it.value();
-
-            if (e->getErrorCode() == MegaError::API_EINCOMPLETE)
+            unsigned long long notificationId = atoll(notificationKey);
+            QHash<unsigned long long, TransferMetaData*>::iterator it
+                   = transferAppData.find(notificationId);
+            if (it != transferAppData.end())
             {
-                data->transfersCancelled++;
-            }
-            else if (e->getErrorCode() != MegaError::API_OK)
-            {
-                data->transfersFailed++;
-            }
+                TransferMetaData *data = it.value();
 
-            data->pendingTransfers--;
-            showNotificationFinishedTransfers(notificationId);
+                if (e->getErrorCode() == MegaError::API_EINCOMPLETE)
+                {
+                    data->transfersCancelled++;
+                }
+                else if (e->getErrorCode() != MegaError::API_OK)
+                {
+                    data->transfersFailed++;
+                }
+
+                data->pendingTransfers--;
+                showNotificationFinishedTransfers(notificationId);
+            }
         }
     }
 

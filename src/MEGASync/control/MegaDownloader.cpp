@@ -76,47 +76,41 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info, unsigned long lo
     }
     else
     {
-        char *escapedName = megaApi->escapeFsIncompatible(parent->getName());
-        QString nodeName = QString::fromUtf8(escapedName);
-        delete [] escapedName;
-
-        QString destPath = currentPath + QDir::separator() + nodeName;
-        QDir dir(destPath);
-        if (!dir.exists())
-        {
-#ifndef WIN32
-            if (!megaApi->createLocalFolder(dir.toNativeSeparators(destPath).toUtf8().constData()))
-#else
-            if (!dir.mkpath(QString::fromAscii(".")))
-#endif
-            {
-                return;
-            }
-        }
-
-        TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(appDataId);
-        if (data)
-        {
-            data->pendingTransfers--;
-            if (data->pendingTransfers == 0)
-            {
-                //Transfers finished, show notification
-                emit finishedTransfers(appDataId);
-            }
-        }
-
         if (!parent->isForeign())
         {
-            MegaNodeList *nList = megaApi->getChildren(parent);
-            for (int i = 0; i < nList->size(); i++)
-            {
-                MegaNode *child = nList->get(i);
-                download(child, destPath, appDataId);
-            }
-            delete nList;
+            megaApi->startDownloadWithData(parent, (currentPath + QDir::separator()).toUtf8().constData(), QString::number(appDataId).toUtf8().constData());
         }
         else
         {
+            char *escapedName = megaApi->escapeFsIncompatible(parent->getName());
+            QString nodeName = QString::fromUtf8(escapedName);
+            delete [] escapedName;
+
+            QString destPath = currentPath + QDir::separator() + nodeName;
+            QDir dir(destPath);
+            if (!dir.exists())
+            {
+    #ifndef WIN32
+                if (!megaApi->createLocalFolder(dir.toNativeSeparators(destPath).toUtf8().constData()))
+    #else
+                if (!dir.mkpath(QString::fromAscii(".")))
+    #endif
+                {
+                    return;
+                }
+            }
+
+            TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(appDataId);
+            if (data)
+            {
+                data->pendingTransfers--;
+                if (data->pendingTransfers == 0)
+                {
+                    //Transfers finished, show notification
+                    emit finishedTransfers(appDataId);
+                }
+            }
+
             pathMap[parent->getHandle()] = destPath;
         }
     }
