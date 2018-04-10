@@ -1560,8 +1560,13 @@ void MegaApplication::processDownloadQueue(QString path)
     }
 
     unsigned long long transferId = preferences->transferIdentifier();
-    transferAppData.insert(transferId, new TransferMetaData(MegaTransfer::TYPE_DOWNLOAD, downloadQueue.size(), downloadQueue.size(), path));
-    downloader->processDownloadQueue(&downloadQueue, path, transferId);
+    TransferMetaData *transferData =  new TransferMetaData(MegaTransfer::TYPE_DOWNLOAD, downloadQueue.size(), downloadQueue.size(), path);
+    transferAppData.insert(transferId, transferData);
+    if (!downloader->processDownloadQueue(&downloadQueue, path, transferId))
+    {
+        transferAppData.remove(transferId);
+        delete transferData;
+    }
 }
 
 void MegaApplication::unityFix()

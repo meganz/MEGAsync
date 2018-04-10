@@ -21,14 +21,14 @@ void MegaDownloader::download(MegaNode *parent, QString path, unsigned long long
     return download(parent, QFileInfo(path), appDataId);
 }
 
-void MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QString path, unsigned long long appDataId)
+bool MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QString path, unsigned long long appDataId)
 {
     QDir dir(path);
     if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
     {
         qDeleteAll(*downloadQueue);
         downloadQueue->clear();
-        return;
+        return false;
     }
 
     TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(appDataId);
@@ -62,6 +62,7 @@ void MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
         delete node;
     }
     pathMap.clear();
+    return true;
 }
 
 void MegaDownloader::download(MegaNode *parent, QFileInfo info, unsigned long long appDataId)
