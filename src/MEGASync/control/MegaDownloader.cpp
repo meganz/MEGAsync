@@ -5,10 +5,9 @@
 
 using namespace mega;
 
-MegaDownloader::MegaDownloader(MegaApi *megaApi, MegaApi *megaApiGuest) : QObject()
+MegaDownloader::MegaDownloader(MegaApi *megaApi) : QObject()
 {
     this->megaApi = megaApi;
-    this->megaApiGuest = megaApiGuest;
 }
 
 MegaDownloader::~MegaDownloader()
@@ -73,14 +72,7 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info, unsigned long lo
 
     if (parent->getType() == MegaNode::TYPE_FILE)
     {
-        if ((parent->isPublic() || parent->isForeign()) && megaApiGuest)
-        {
-            megaApiGuest->startDownload(parent, (currentPath + QDir::separator()).toUtf8().constData());
-        }
-        else
-        {
-            megaApi->startDownloadWithData(parent, (currentPath + QDir::separator()).toUtf8().constData(), QString::number(appDataId).toUtf8().constData());
-        }
+        megaApi->startDownloadWithData(parent, (currentPath + QDir::separator()).toUtf8().constData(), QString::number(appDataId).toUtf8().constData());
     }
     else
     {
