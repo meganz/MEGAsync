@@ -6208,7 +6208,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             {
                 data->transfersCancelled++;
             }
-            else if (e->getErrorCode() == MegaError::API_EFAILED)
+            else if (e->getErrorCode() != MegaError::API_OK)
             {
                 data->transfersFailed++;
             }
