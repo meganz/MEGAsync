@@ -3354,7 +3354,7 @@ void MegaApplication::showInFolder(int activationButton)
 
     if (activationButton == MegaNotification::ActivationActionButtonClicked && !notification->getData().isEmpty())
     {
-        Platform::showInFolder(notification->getData());
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(QDir::toNativeSeparators(notification->getData())));
     }
 }
 
