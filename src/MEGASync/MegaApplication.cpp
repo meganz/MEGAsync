@@ -1525,7 +1525,10 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
         if (data->localPath.isEmpty())
         {
             QDir uploadPath(filePath);
-            uploadPath.cdUp();
+            if (data->totalTransfers > 1)
+            {
+                uploadPath.cdUp();
+            }
             data->localPath = uploadPath.path();
         }
 
@@ -1560,7 +1563,7 @@ void MegaApplication::processDownloadQueue(QString path)
     }
 
     unsigned long long transferId = preferences->transferIdentifier();
-    TransferMetaData *transferData =  new TransferMetaData(MegaTransfer::TYPE_DOWNLOAD, downloadQueue.size(), downloadQueue.size(), path);
+    TransferMetaData *transferData =  new TransferMetaData(MegaTransfer::TYPE_DOWNLOAD, downloadQueue.size(), downloadQueue.size());
     transferAppData.insert(transferId, transferData);
     if (!downloader->processDownloadQueue(&downloadQueue, path, transferId))
     {
@@ -3325,11 +3328,11 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
         }
 
         if (notificator && !message.isEmpty())
-        {
+        {           
             notification->setTitle(title);
             notification->setText(message);
             notification->setActions(QStringList() << QString::fromUtf8("Show in folder"));
-            notification->setData(data->localPath);
+            notification->setData(((data->totalTransfers == 1) ? QString::number(1) : QString::number(0)) + data->localPath);
             connect(notification, SIGNAL(activated(int)), this, SLOT(showInFolder(int)));
             notificator->notify(notification);
         }
@@ -3352,9 +3355,17 @@ void MegaApplication::showInFolder(int activationButton)
 {
     MegaNotification *notification = ((MegaNotification *)QObject::sender());
 
-    if (activationButton == MegaNotification::ActivationActionButtonClicked && !notification->getData().isEmpty())
+    if (activationButton == MegaNotification::ActivationActionButtonClicked && notification->getData().size() > 1)
     {
-        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(QDir::toNativeSeparators(notification->getData())));
+        QString localPath = QDir::toNativeSeparators(notification->getData().mid(1));
+        if (notification->getData().at(0) == QChar::fromAscii('1'))
+        {
+            Platform::showInFolder(localPath);
+        }
+        else
+        {
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localPath));
+        }
     }
 }
 
