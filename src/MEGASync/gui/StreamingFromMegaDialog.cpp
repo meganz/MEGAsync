@@ -28,7 +28,12 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, QWidget
     this->megaApi = megaApi;
     this->selectedMegaNode = NULL;
     this->megaApi->httpServerSetMaxBufferSize(MAX_STREAMING_BUFFER_SIZE);
-    this->megaApi->httpServerStart();
+
+    int port = 4443;
+    while (!megaApi->httpServerStart(true, port) && port < 4448)
+    {
+        port++;
+    }
 
     setWindowTitle(tr("Stream from MEGA"));
     ui->bCopyLink->setEnabled(false);
