@@ -54,6 +54,18 @@ void TransferManagerItem::setStateLabel(QString labelState)
     ui->lRemainingTime->setText(QString::fromUtf8(""));
 }
 
+QString TransferManagerItem::getTransferName()
+{
+    if (ui->sTransferState->currentWidget() == ui->stateCompleted)
+    {
+        return ui->lTransferNameCompleted->text();
+    }
+    else
+    {
+        return ui->lTransferName->text();
+    }
+}
+
 void TransferManagerItem::setType(int type, bool isSyncTransfer)
 {
 

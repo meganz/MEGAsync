@@ -35,6 +35,7 @@ const long long Preferences::MIN_UPDATE_STATS_INTERVAL_OVERQUOTA    = 30000;
 const long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
 const long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
 const long long Preferences::MIN_EXTERNAL_NODES_WARNING_MS          = 60000;
+const long long Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS  = 10000;
 
 const unsigned int Preferences::UPDATE_INITIAL_DELAY_SECS           = 60;
 const unsigned int Preferences::UPDATE_RETRY_INTERVAL_SECS          = 7200;
@@ -48,97 +49,143 @@ const unsigned int Preferences::MAX_COMPLETED_ITEMS                 = 1000;
 const qint16 Preferences::HTTPS_PORT = 6342;
 
 const QString Preferences::defaultHttpsKey = QString::fromUtf8(
-            "-----BEGIN PRIVATE KEY-----\n"
-            "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxk9BUskgy2dHN\n"
-            "udvrzqsj3614UniXjAw3skMP+xUULBgaTcGgQkYRMM6I7ro/9Ropq5ypK5p8cmUq\n"
-            "TYhu/9Z4RP/asHDIMC7lIqIvgoZXQWdJHAhJ9KBgnYi+jQN0Q6IQBad9WR/dKMcu\n"
-            "lnN0oMyn82rO9owV47dYVzdQnPE1k1z1HqzKyqrBjHvGfSQyMA2YCuSl1K3EzQY8\n"
-            "NFYXeu3ZjwFCPvuDmRpLqkgKBrvwHPu0zaQN7WliNBz+8JnBt6PUNNvTZ0y/iYUR\n"
-            "T3k4SHlhi/xXdV9jqjAN433RMIrGIWpFnBoJpaTFbTsU3z6Nj5BU/TYQpaBOieiT\n"
-            "fO21acl7AgMBAAECggEAePMy7N1Zq7kM29EB6AUmMBMD9nZFyQMMt0rlvpbH7qtx\n"
-            "50ia32sEimTx5/aiSTnKjiNjWx5l5OmN2lhg2ynKjLSCiBOxXcjjyBHk4fNHSVs0\n"
-            "3GkJhEXojqX+I7usZJ5EXiFbyVbRCzPhJuw2y3NSsfpr/3eSRr6JfNQ6yt96s3/+\n"
-            "jCI05FP+3lR4BMiBIqHwEUXJeEU1tpR33qgg10ii18NgqQcLir2I/xaT7nzCvkBl\n"
-            "bxZYLEtM5dWL1J79qCOS/WlDvFSjlzh0BkkAhNYy7SChjPGOu0r/k07A2ec9KxO0\n"
-            "971B0tip4O+w8OjHDZvV80QpCXGKcQfEtd+/mBScgQKBgQDlmQ9PYOb8GSC2Yttg\n"
-            "XyIkisCqbUamIsojFL70U0wnkygykQXTkxiHYPtMVg4WyyLfF7oPqn0D0YOYEd+e\n"
-            "RFYiHdr+CA4IopsWZ5I4HqYtrbwtapMRQPFRzNIMNdMpFlfBGRV9ZKQQtXHV445w\n"
-            "n32KCUZVO26A6YYvmzmo7QR5WwKBgQDF/13BvTPlm+k0m2hheUWpiQqHrYW/oAai\n"
-            "rK7iVmT4Qln1YOCUvt17mDRxXj17NEKR4uVcDix5yrbFuClpeDZZkq1/2HIB5bD9\n"
-            "1uQWVzlYnCytaYusfq3XKfcwG/GIt6mi3lstZV4XdEFxjczdWt7EeWwAAr+DfYw6\n"
-            "pAYruMLKYQKBgDYs75fjXZ2OsFFY8jrDN+M3ek68ijcZbmjotEYigY21A38rCRzr\n"
-            "UJZhI+rXQ2vNcuUBTD32FJmaDlsLnKBTr59NPCdE70rKU53twmrLkJqmrAhrZVhk\n"
-            "4oxSsB2Bddn0E7DUomV8IdpvdfTqROn+ODkiBx6Fb4WrlKYXEnvxsWSRAoGAV1av\n"
-            "F+AK/XTJ6R/Ian7hQMinsXPUtNO1OZrsxgCQJ4a1Qe1LA7Ix5uwb7gpBGpDR8KJi\n"
-            "xDmoWs0V1J/I/LI/X0G5cNScbcPRUBezozs0m6bAeno9V4jFzEzBsiIRaFqD5Mkq\n"
-            "9Rpq5/OrTpjbTqVf8NES1+peanU+HzvtUOn+WuECgYEAxj++fk8A+dimgwM1qzh0\n"
-            "chTWqZygTQNvMAId11nRVJqC2nVOt1vSnM4HBBd+6qxG6eKOxzG4VyYJuHd18AT8\n"
-            "RplMrMlFmIJpvXRoFIgoPPS7qUnZcjEidPndXG42+xbD8eDsHnG4LMHB9+J9xLwA\n"
-            "xs+OLGD+kjzh+HkpkzYSDp4=\n"
-            "-----END PRIVATE KEY-----\n");
+            "-----BEGIN RSA PRIVATE KEY-----\n"
+            "MIIEowIBAAKCAQEAsZPQVLJIMtnRzbnb686rI9+teFJ4l4wMN7JDD/sVFCwYGk3B\n"
+            "oEJGETDOiO66P/UaKaucqSuafHJlKk2Ibv/WeET/2rBwyDAu5SKiL4KGV0FnSRwI\n"
+            "SfSgYJ2Ivo0DdEOiEAWnfVkf3SjHLpZzdKDMp/NqzvaMFeO3WFc3UJzxNZNc9R6s\n"
+            "ysqqwYx7xn0kMjANmArkpdStxM0GPDRWF3rt2Y8BQj77g5kaS6pICga78Bz7tM2k\n"
+            "De1pYjQc/vCZwbej1DTb02dMv4mFEU95OEh5YYv8V3VfY6owDeN90TCKxiFqRZwa\n"
+            "CaWkxW07FN8+jY+QVP02EKWgTonok3zttWnJewIDAQABAoIBAHjzMuzdWau5DNvR\n"
+            "AegFJjATA/Z2RckDDLdK5b6Wx+6rcedImt9rBIpk8ef2okk5yo4jY1seZeTpjdpY\n"
+            "YNspyoy0gogTsV3I48gR5OHzR0lbNNxpCYRF6I6l/iO7rGSeRF4hW8lW0Qsz4Sbs\n"
+            "NstzUrH6a/93kka+iXzUOsrferN//owiNORT/t5UeATIgSKh8BFFyXhFNbaUd96o\n"
+            "INdIotfDYKkHC4q9iP8Wk+58wr5AZW8WWCxLTOXVi9Se/agjkv1pQ7xUo5c4dAZJ\n"
+            "AITWMu0goYzxjrtK/5NOwNnnPSsTtPe9QdLYqeDvsPDoxw2b1fNEKQlxinEHxLXf\n"
+            "v5gUnIECgYEA5ZkPT2Dm/BkgtmLbYF8iJIrAqm1GpiLKIxS+9FNMJ5MoMpEF05MY\n"
+            "h2D7TFYOFssi3xe6D6p9A9GDmBHfnkRWIh3a/ggOCKKbFmeSOB6mLa28LWqTEUDx\n"
+            "UczSDDXTKRZXwRkVfWSkELVx1eOOcJ99iglGVTtugOmGL5s5qO0EeVsCgYEAxf9d\n"
+            "wb0z5ZvpNJtoYXlFqYkKh62Fv6AGoqyu4lZk+EJZ9WDglL7de5g0cV49ezRCkeLl\n"
+            "XA4secq2xbgpaXg2WZKtf9hyAeWw/dbkFlc5WJwsrWmLrH6t1yn3MBvxiLepot5b\n"
+            "LWVeF3RBcY3M3VrexHlsAAK/g32MOqQGK7jCymECgYA2LO+X412djrBRWPI6wzfj\n"
+            "N3pOvIo3GW5o6LRGIoGNtQN/Kwkc61CWYSPq10NrzXLlAUw99hSZmg5bC5ygU6+f\n"
+            "TTwnRO9KylOd7cJqy5CapqwIa2VYZOKMUrAdgXXZ9BOw1KJlfCHab3X06kTp/jg5\n"
+            "IgcehW+Fq5SmFxJ78bFkkQKBgFdWrxfgCv10yekfyGp+4UDIp7Fz1LTTtTma7MYA\n"
+            "kCeGtUHtSwOyMebsG+4KQRqQ0fCiYsQ5qFrNFdSfyPyyP19BuXDUnG3D0VAXs6M7\n"
+            "NJumwHp6PVeIxcxMwbIiEWhag+TJKvUaaufzq06Y206lX/DREtfqXmp1Ph877VDp\n"
+            "/lrhAoGBAMY/vn5PAPnYpoMDNas4dHIU1qmcoE0DbzACHddZ0VSagtp1Trdb0pzO\n"
+            "BwQXfuqsRunijscxuFcmCbh3dfAE/EaZTKzJRZiCab10aBSIKDz0u6lJ2XIxInT5\n"
+            "3VxuNvsWw/Hg7B5xuCzBwffifcS8AMbPjixg/pI84fh5KZM2Eg6e\n"
+            "-----END RSA PRIVATE KEY-----\n");
 
 const QString Preferences::defaultHttpsCert = QString::fromUtf8(
             "-----BEGIN CERTIFICATE-----\n"
-            "MIIGADCCBOigAwIBAgIQL41amoCH4B2agSUpD8Wd2DANBgkqhkiG9w0BAQsFADBC\n"
-            "MQswCQYDVQQGEwJVUzEWMBQGA1UEChMNR2VvVHJ1c3QgSW5jLjEbMBkGA1UEAxMS\n"
-            "UmFwaWRTU0wgU0hBMjU2IENBMB4XDTE3MDQwNTAwMDAwMFoXDTE5MDcwNTIzNTk1\n"
-            "OVowLTErMCkGA1UEAwwibG9jYWxob3N0Lm1lZ2FzeW5jbG9vcGJhY2subWVnYS5u\n"
-            "ejCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALGT0FSySDLZ0c252+vO\n"
-            "qyPfrXhSeJeMDDeyQw/7FRQsGBpNwaBCRhEwzojuuj/1GimrnKkrmnxyZSpNiG7/\n"
-            "1nhE/9qwcMgwLuUioi+ChldBZ0kcCEn0oGCdiL6NA3RDohAFp31ZH90oxy6Wc3Sg\n"
-            "zKfzas72jBXjt1hXN1Cc8TWTXPUerMrKqsGMe8Z9JDIwDZgK5KXUrcTNBjw0Vhd6\n"
-            "7dmPAUI++4OZGkuqSAoGu/Ac+7TNpA3taWI0HP7wmcG3o9Q029NnTL+JhRFPeThI\n"
-            "eWGL/Fd1X2OqMA3jfdEwisYhakWcGgmlpMVtOxTfPo2PkFT9NhCloE6J6JN87bVp\n"
-            "yXsCAwEAAaOCAwUwggMBMC0GA1UdEQQmMCSCImxvY2FsaG9zdC5tZWdhc3luY2xv\n"
-            "b3BiYWNrLm1lZ2EubnowCQYDVR0TBAIwADArBgNVHR8EJDAiMCCgHqAchhpodHRw\n"
-            "Oi8vZ3Auc3ltY2IuY29tL2dwLmNybDBvBgNVHSAEaDBmMGQGBmeBDAECATBaMCoG\n"
-            "CCsGAQUFBwIBFh5odHRwczovL3d3dy5yYXBpZHNzbC5jb20vbGVnYWwwLAYIKwYB\n"
-            "BQUHAgIwIAweaHR0cHM6Ly93d3cucmFwaWRzc2wuY29tL2xlZ2FsMB8GA1UdIwQY\n"
-            "MBaAFJfCJ1CewsnsDIgyyHyt4qYBT9pvMA4GA1UdDwEB/wQEAwIFoDAdBgNVHSUE\n"
-            "FjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwVwYIKwYBBQUHAQEESzBJMB8GCCsGAQUF\n"
-            "BzABhhNodHRwOi8vZ3Auc3ltY2QuY29tMCYGCCsGAQUFBzAChhpodHRwOi8vZ3Au\n"
-            "c3ltY2IuY29tL2dwLmNydDCCAXwGCisGAQQB1nkCBAIEggFsBIIBaAFmAHUA3esd\n"
-            "K3oNT6Ygi4GtgWhwfi6OnQHVXIiNPRHEzbbsvswAAAFbO+z6WwAABAMARjBEAiBy\n"
-            "3jqWJoo6+o4nXCv1R1vSrXwOub7i4zSnjzKQmNuAXAIgF8Fmvm1EB48X9g1qfx+k\n"
-            "sZsdKJRwGcJEFf55onTQlkgAdQCkuQmQtBhYFIe7E6LMZ3AKPDWYBPkb37jjd80O\n"
-            "yA3cEAAAAVs77PqaAAAEAwBGMEQCID/pb8/gqDng+2dJex8pHY2qxCyen3u4Su7d\n"
-            "zPkeHKVFAiBYpUot0v/eWwy6yTODgT9FdDPe6TJfkaounob/gDBTZgB2AO5Lvbd1\n"
-            "zmC64UJpH6vhnmajD35fsHLYgwDEe4l6qP3LAAABWzvs/FoAAAQDAEcwRQIgKHq8\n"
-            "JFAOYbf912dJdbP7h1KkahVBQqOOMJgra1HY6b4CIQD5ybPjzCdqla5srDUIwvpm\n"
-            "B2dPoTqSNx70+pVrmAI60zANBgkqhkiG9w0BAQsFAAOCAQEAeeqe3o38ZcVaOiSM\n"
-            "sv8o1aHJN25jYRVtvm04wlrXRJg90CmfNiaLD+7UeuDtZxcvYmkNA6Vz4NVj5s8b\n"
-            "kRexf64UIhb1fWUr+kgI/gWWcsGAwqn9i3Hs6CIAMvic9bhedCBesef01hTqD1sq\n"
-            "8cN+YZy2fLRcx3NIQ9UpCsSUDkf+1bCjCVbBtUqhJ8zUG6l/TwLEsnXR0GQcBzc1\n"
-            "Elav7ka8GpvbJTuivY4e537WWqM4RAmO5xI+uk9ANwkPFRy7awRSuF2mJTz49GOg\n"
-            "MGA+fCc/TGwZF1syej90ZTKYbRRkyrkSHjehfXW8fr23Y9/OW9u8nV8jm7WPKjYX\n"
-            "Nf2RSQ==\n"
+            "MIIGAjCCBOqgAwIBAgIRAMN6iHtOgy68QBu3kXiaFc8wDQYJKoZIhvcNAQELBQAw\n"
+            "gZYxCzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAO\n"
+            "BgNVBAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMTwwOgYD\n"
+            "VQQDEzNDT01PRE8gUlNBIE9yZ2FuaXphdGlvbiBWYWxpZGF0aW9uIFNlY3VyZSBT\n"
+            "ZXJ2ZXIgQ0EwHhcNMTgwMzE0MDAwMDAwWhcNMjAwNDA5MjM1OTU5WjCByTELMAkG\n"
+            "A1UEBhMCTloxDTALBgNVBBETBDEwMTAxETAPBgNVBAgTCEF1Y2tsYW5kMREwDwYD\n"
+            "VQQHEwhBdWNrbGFuZDEoMCYGA1UECRMfMTUsIFB3YyBUb3dlciwgMTg4IFF1YXkg\n"
+            "U3RyZWV0LDEVMBMGA1UEChMMTWVnYSBMaW1pdGVkMRcwFQYDVQQLEw5JbnN0YW50\n"
+            "U1NMIFBybzErMCkGA1UEAxMibG9jYWxob3N0Lm1lZ2FzeW5jbG9vcGJhY2subWVn\n"
+            "YS5uejCCASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBALGT0FSySDLZ0c25\n"
+            "2+vOqyPfrXhSeJeMDDeyQw/7FRQsGBpNwaBCRhEwzojuuj/1GimrnKkrmnxyZSpN\n"
+            "iG7/1nhE/9qwcMgwLuUioi+ChldBZ0kcCEn0oGCdiL6NA3RDohAFp31ZH90oxy6W\n"
+            "c3SgzKfzas72jBXjt1hXN1Cc8TWTXPUerMrKqsGMe8Z9JDIwDZgK5KXUrcTNBjw0\n"
+            "Vhd67dmPAUI++4OZGkuqSAoGu/Ac+7TNpA3taWI0HP7wmcG3o9Q029NnTL+JhRFP\n"
+            "eThIeWGL/Fd1X2OqMA3jfdEwisYhakWcGgmlpMVtOxTfPo2PkFT9NhCloE6J6JN8\n"
+            "7bVpyXsCAwEAAaOCAhQwggIQMB8GA1UdIwQYMBaAFJrzK9rPrU+2L7sqSEgqErcb\n"
+            "QsEkMB0GA1UdDgQWBBRHlrC2tJsrpgC6c0vMTwVfEcEJRTAOBgNVHQ8BAf8EBAMC\n"
+            "BaAwDAYDVR0TAQH/BAIwADAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIw\n"
+            "UAYDVR0gBEkwRzA7BgwrBgEEAbIxAQIBAwQwKzApBggrBgEFBQcCARYdaHR0cHM6\n"
+            "Ly9zZWN1cmUuY29tb2RvLmNvbS9DUFMwCAYGZ4EMAQICMFoGA1UdHwRTMFEwT6BN\n"
+            "oEuGSWh0dHA6Ly9jcmwuY29tb2RvY2EuY29tL0NPTU9ET1JTQU9yZ2FuaXphdGlv\n"
+            "blZhbGlkYXRpb25TZWN1cmVTZXJ2ZXJDQS5jcmwwgYsGCCsGAQUFBwEBBH8wfTBV\n"
+            "BggrBgEFBQcwAoZJaHR0cDovL2NydC5jb21vZG9jYS5jb20vQ09NT0RPUlNBT3Jn\n"
+            "YW5pemF0aW9uVmFsaWRhdGlvblNlY3VyZVNlcnZlckNBLmNydDAkBggrBgEFBQcw\n"
+            "AYYYaHR0cDovL29jc3AuY29tb2RvY2EuY29tMFUGA1UdEQROMEyCImxvY2FsaG9z\n"
+            "dC5tZWdhc3luY2xvb3BiYWNrLm1lZ2EubnqCJnd3dy5sb2NhbGhvc3QubWVnYXN5\n"
+            "bmNsb29wYmFjay5tZWdhLm56MA0GCSqGSIb3DQEBCwUAA4IBAQCgT+MFT4W3lQgS\n"
+            "pTFrpQhsGUaCtJt9JNva6PZGBinSlU7turwAS+mVteM2Q/Rh6A37hjouVaP8WRSJ\n"
+            "rpP5HriACMtWZeUTmRky4gJX08aW2X8QcihrpluBA3AirT9cu0FZzllO3jAYXUI1\n"
+            "pPL2WOGxYAuOOLCoEn0C4nn2Wzk39vpcaedVvnU8tqWpHTwQgQ3d2dTTxlddAGGU\n"
+            "H6P7d2r7l5Oam7q17L5yjAvQ50gkIJ6QQpOmat7OqnS2FiLl0LNdlWv8OF+WDguW\n"
+            "ANWn96E9StPMkIqw4Uc6O+QPbaRqDUddZNcBiQeAZPzAAXk2a0RmOxMGRU6/v6vg\n"
+            "WJ1PfDrK\n"
             "-----END CERTIFICATE-----\n");
 
-const QString Preferences::defaultHttpsCertIntermediate = QString::fromUtf8(
+const QString Preferences::defaultHttpsCertIntermediate = QString::fromUtf8(            
             "-----BEGIN CERTIFICATE-----\n"
-            "MIIETTCCAzWgAwIBAgIDAjpxMA0GCSqGSIb3DQEBCwUAMEIxCzAJBgNVBAYTAlVTMRYwFAYDVQQK\n"
-            "Ew1HZW9UcnVzdCBJbmMuMRswGQYDVQQDExJHZW9UcnVzdCBHbG9iYWwgQ0EwHhcNMTMxMjExMjM0\n"
-            "NTUxWhcNMjIwNTIwMjM0NTUxWjBCMQswCQYDVQQGEwJVUzEWMBQGA1UEChMNR2VvVHJ1c3QgSW5j\n"
-            "LjEbMBkGA1UEAxMSUmFwaWRTU0wgU0hBMjU2IENBMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIB\n"
-            "CgKCAQEAu1jBEgEul9h9GKrIwuWF4hdsYC7JjTEFORoGmFbdVNcRjFlbPbFUrkshhTIWX1SG5tmx\n"
-            "2GCJa1i+ctqgAEJ2sSdZTM3jutRc2aZ/uyt11UZEvexAXFm33Vmf8Wr3BvzWLxmKlRK6msrVMNI4\n"
-            "/Bk7WxU7NtBDTdFlodSLwWBBs9ZwF8w5wJwMoD23ESJOztmpetIqYpygC04q18NhWoXdXBC5VD0t\n"
-            "A/hJ8LySt7ecMcfpuKqCCwW5Mc0IW7siC/acjopVHHZDdvDibvDfqCl158ikh4tq8bsIyTYYZe5Q\n"
-            "Q7hdctUoOeFTPiUs2itP3YqeUFDgb5rE1RkmiQF1cwmbOwIDAQABo4IBSjCCAUYwHwYDVR0jBBgw\n"
-            "FoAUwHqYaI2J+6sFZAwRfap9ZbjKzE4wHQYDVR0OBBYEFJfCJ1CewsnsDIgyyHyt4qYBT9pvMBIG\n"
-            "A1UdEwEB/wQIMAYBAf8CAQAwDgYDVR0PAQH/BAQDAgEGMDYGA1UdHwQvMC0wK6ApoCeGJWh0dHA6\n"
-            "Ly9nMS5zeW1jYi5jb20vY3Jscy9ndGdsb2JhbC5jcmwwLwYIKwYBBQUHAQEEIzAhMB8GCCsGAQUF\n"
-            "BzABhhNodHRwOi8vZzIuc3ltY2IuY29tMEwGA1UdIARFMEMwQQYKYIZIAYb4RQEHNjAzMDEGCCsG\n"
-            "AQUFBwIBFiVodHRwOi8vd3d3Lmdlb3RydXN0LmNvbS9yZXNvdXJjZXMvY3BzMCkGA1UdEQQiMCCk\n"
-            "HjAcMRowGAYDVQQDExFTeW1hbnRlY1BLSS0xLTU2OTANBgkqhkiG9w0BAQsFAAOCAQEANevhiyBW\n"
-            "lLp6vXmp9uP+bji0MsGj21hWID59xzqxZ2nVeRQb9vrsYPJ5zQoMYIp0TKOTKqDwUX/N6fmS/Zar\n"
-            "RfViPT9gRlATPSATGC6URq7VIf5Dockj/lPEvxrYrDrK3maXI67T30pNcx9vMaJRBBZqAOv5jUOB\n"
-            "8FChH6bKOvMoPF9RrNcKRXdLDlJiG9g4UaCSLT+Qbsh+QJ8gRhVd4FB84XavXu0R0y8TubglpK9Y\n"
-            "Ca81tGJUheNI3rzSkHp6pIQNo0LyUcDUrVNlXWz4Px8G8k/Ll6BKWcZ40egDuYVtLLrhX7atKz4l\n"
-            "ecWLVtXjCYDqwSfC2Q7sRwrp0Mr82A==\n"
-            "-----END CERTIFICATE----- \n");
+            "MIIFdDCCBFygAwIBAgIQJ2buVutJ846r13Ci/ITeIjANBgkqhkiG9w0BAQwFADBv\n"
+            "MQswCQYDVQQGEwJTRTEUMBIGA1UEChMLQWRkVHJ1c3QgQUIxJjAkBgNVBAsTHUFk\n"
+            "ZFRydXN0IEV4dGVybmFsIFRUUCBOZXR3b3JrMSIwIAYDVQQDExlBZGRUcnVzdCBF\n"
+            "eHRlcm5hbCBDQSBSb290MB4XDTAwMDUzMDEwNDgzOFoXDTIwMDUzMDEwNDgzOFow\n"
+            "gYUxCzAJBgNVBAYTAkdCMRswGQYDVQQIExJHcmVhdGVyIE1hbmNoZXN0ZXIxEDAO\n"
+            "BgNVBAcTB1NhbGZvcmQxGjAYBgNVBAoTEUNPTU9ETyBDQSBMaW1pdGVkMSswKQYD\n"
+            "VQQDEyJDT01PRE8gUlNBIENlcnRpZmljYXRpb24gQXV0aG9yaXR5MIICIjANBgkq\n"
+            "hkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAkehUktIKVrGsDSTdxc9EZ3SZKzejfSNw\n"
+            "AHG8U9/E+ioSj0t/EFa9n3Byt2F/yUsPF6c947AEYe7/EZfH9IY+Cvo+XPmT5jR6\n"
+            "2RRr55yzhaCCenavcZDX7P0N+pxs+t+wgvQUfvm+xKYvT3+Zf7X8Z0NyvQwA1onr\n"
+            "ayzT7Y+YHBSrfuXjbvzYqOSSJNpDa2K4Vf3qwbxstovzDo2a5JtsaZn4eEgwRdWt\n"
+            "4Q08RWD8MpZRJ7xnw8outmvqRsfHIKCxH2XeSAi6pE6p8oNGN4Tr6MyBSENnTnIq\n"
+            "m1y9TBsoilwie7SrmNnu4FGDwwlGTm0+mfqVF9p8M1dBPI1R7Qu2XK8sYxrfV8g/\n"
+            "vOldxJuvRZnio1oktLqpVj3Pb6r/SVi+8Kj/9Lit6Tf7urj0Czr56ENCHonYhMsT\n"
+            "8dm74YlguIwoVqwUHZwK53Hrzw7dPamWoUi9PPevtQ0iTMARgexWO/bTouJbt7IE\n"
+            "IlKVgJNp6I5MZfGRAy1wdALqi2cVKWlSArvX31BqVUa/oKMoYX9w0MOiqiwhqkfO\n"
+            "KJwGRXa/ghgntNWutMtQ5mv0TIZxMOmm3xaG4Nj/QN370EKIf6MzOi5cHkERgWPO\n"
+            "GHFrK+ymircxXDpqR+DDeVnWIBqv8mqYqnK8V0rSS527EPywTEHl7R09XiidnMy/\n"
+            "s1Hap0flhFMCAwEAAaOB9DCB8TAfBgNVHSMEGDAWgBStvZh6NLQm9/rEJlTvA73g\n"
+            "JMtUGjAdBgNVHQ4EFgQUu69+Aj36pvE8hI6t7jiY7NkyMtQwDgYDVR0PAQH/BAQD\n"
+            "AgGGMA8GA1UdEwEB/wQFMAMBAf8wEQYDVR0gBAowCDAGBgRVHSAAMEQGA1UdHwQ9\n"
+            "MDswOaA3oDWGM2h0dHA6Ly9jcmwudXNlcnRydXN0LmNvbS9BZGRUcnVzdEV4dGVy\n"
+            "bmFsQ0FSb290LmNybDA1BggrBgEFBQcBAQQpMCcwJQYIKwYBBQUHMAGGGWh0dHA6\n"
+            "Ly9vY3NwLnVzZXJ0cnVzdC5jb20wDQYJKoZIhvcNAQEMBQADggEBAGS/g/FfmoXQ\n"
+            "zbihKVcN6Fr30ek+8nYEbvFScLsePP9NDXRqzIGCJdPDoCpdTPW6i6FtxFQJdcfj\n"
+            "Jw5dhHk3QBN39bSsHNA7qxcS1u80GH4r6XnTq1dFDK8o+tDb5VCViLvfhVdpfZLY\n"
+            "Uspzgb8c8+a4bmYRBbMelC1/kZWSWfFMzqORcUx8Rww7Cxn2obFshj5cqsQugsv5\n"
+            "B5a6SE2Q8pTIqXOi6wZ7I53eovNNVZ96YUWYGGjHXkBrI/V5eu+MtWuLt29G9Hvx\n"
+            "PUsE2JOAWVrgQSQdso8VYFhH2+9uRv0V9dlfmrPb2LjkQLPNlzmuhbsdjrzch5vR\n"
+            "pu/xO28QOG8=\n"
+            "-----END CERTIFICATE----- \n"
+            ";"
+            "-----BEGIN CERTIFICATE-----\n"
+            "MIIGDjCCA/agAwIBAgIQNoJef7WkgZN+9tFza7k8pjANBgkqhkiG9w0BAQwFADCB\n"
+            "hTELMAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4G\n"
+            "A1UEBxMHU2FsZm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQxKzApBgNV\n"
+            "BAMTIkNPTU9ETyBSU0EgQ2VydGlmaWNhdGlvbiBBdXRob3JpdHkwHhcNMTQwMjEy\n"
+            "MDAwMDAwWhcNMjkwMjExMjM1OTU5WjCBljELMAkGA1UEBhMCR0IxGzAZBgNVBAgT\n"
+            "EkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UEBxMHU2FsZm9yZDEaMBgGA1UEChMR\n"
+            "Q09NT0RPIENBIExpbWl0ZWQxPDA6BgNVBAMTM0NPTU9ETyBSU0EgT3JnYW5pemF0\n"
+            "aW9uIFZhbGlkYXRpb24gU2VjdXJlIFNlcnZlciBDQTCCASIwDQYJKoZIhvcNAQEB\n"
+            "BQADggEPADCCAQoCggEBALkU2YXyQURX/zBEHtw8RKMXuG4B+KNfwqkhHc5Z9Ozz\n"
+            "iKkJMjyxi2OkPic284/5OGYuB5dBj0um3cNfnnM858ogDU98MgXPwS5IZUqF0B9W\n"
+            "MW2O5cYy1Bu8n32W/JjXT/j0WFb440W+kRiC5Iq+r81SN1GHTx6Xweg6rvn/RuRl\n"
+            "Pz/DR4MvzLhCXi1+91porl1LwKY1IfWGo8hJi5hjYA3JIUjCkjBlRrKGNQRCJX6t\n"
+            "p05LEkAAeohoXG+fo6R4ESGuPQsOvkUUI8/rddf2oPG8RWxevKEy7PNYeEIoCzoB\n"
+            "dvDFoJ7BaXDej0umed/ydrbjDxN8GDuxUWxqIDnOnmkCAwEAAaOCAWUwggFhMB8G\n"
+            "A1UdIwQYMBaAFLuvfgI9+qbxPISOre44mOzZMjLUMB0GA1UdDgQWBBSa8yvaz61P\n"
+            "ti+7KkhIKhK3G0LBJDAOBgNVHQ8BAf8EBAMCAYYwEgYDVR0TAQH/BAgwBgEB/wIB\n"
+            "ADAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwGwYDVR0gBBQwEjAGBgRV\n"
+            "HSAAMAgGBmeBDAECAjBMBgNVHR8ERTBDMEGgP6A9hjtodHRwOi8vY3JsLmNvbW9k\n"
+            "b2NhLmNvbS9DT01PRE9SU0FDZXJ0aWZpY2F0aW9uQXV0aG9yaXR5LmNybDBxBggr\n"
+            "BgEFBQcBAQRlMGMwOwYIKwYBBQUHMAKGL2h0dHA6Ly9jcnQuY29tb2RvY2EuY29t\n"
+            "L0NPTU9ET1JTQUFkZFRydXN0Q0EuY3J0MCQGCCsGAQUFBzABhhhodHRwOi8vb2Nz\n"
+            "cC5jb21vZG9jYS5jb20wDQYJKoZIhvcNAQEMBQADggIBAGmKNmiaHjtlC+B8z6ar\n"
+            "cTuvYaQ/5GQBSRDTHY/i1e1n055bl71CHgf50Ltt9zKVWiIpYvgMnFlWJzagIhIR\n"
+            "+kf0UclZeylKpUg1fMWXZuAnJTsVejJ1SpH7pmue4lP6DYwT+yO4CxIsru3bHUeQ\n"
+            "1dCTaXaROBU01xjqfrxrWN4qOZADRARKVtho5fV8aX6efVRL0NiGq2dmE1deiSoX\n"
+            "rS2uvUAOZu2K/1S0wQHLqeBHuhFhj62uI0gqxiV5iRxBBJXAEepXK9a0l/qx6RVi\n"
+            "7Epxd/3zoZza9msAKcUy5/pO6rMqpxiXHFinQjZf7BTP+HsO993MiBWamlzI8SDH\n"
+            "0YZyoRebrrr+bKgy0QB2SXP3PyeHPLbJLfqqkJDJCgmfyWkfBxmpv966+AuIgkQW\n"
+            "EH8HwIAiX3+8MN66zQd5ZFbY//NPnDC7bh5RS+bNvRfExb/IP46xH4pGtwZDb2It\n"
+            "z1GdRcqK6ROLwMeRvlu2+jdKif7wndoTJiIsBpA+ixOYoBnW3dpKSH89D4mdJHJL\n"
+            "DntE/9Q2toN2I1iLFGy4XfdhbTl27d0SPWuHiJeRvsBGAh52HN22r1xP9QDWnE2p\n"
+            "4J6ijvyxFnlcIdNFgZoMOWxtKNcl0rcRkND23m9e9Pqki2Z3ci+bkEAsUhJg+f+1\n"
+            "cC6JmnkJiYEt7Fx4b4GH8fxV\n"
+            "-----END CERTIFICATE----- \n"
+            );
 
-const long long Preferences::defaultHttpsCertExpiration = 1562378399;
+const long long Preferences::defaultHttpsCertExpiration = 1586476799;
 const long long Preferences::LOCAL_HTTPS_CERT_MAX_EXPIRATION_SECS = 3888000; // 45 days
 
 const QString Preferences::FINDER_EXT_BUNDLE_ID = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
@@ -270,10 +317,11 @@ const QString Preferences::SSLcertificateExceptionKey  = QString::fromAscii("SSL
 const QString Preferences::maxMemoryUsageKey        = QString::fromAscii("maxMemoryUsage");
 const QString Preferences::maxMemoryReportTimeKey   = QString::fromAscii("maxMemoryReportTime");
 const QString Preferences::oneTimeActionDoneKey     = QString::fromAscii("oneTimeActionDone");
-const QString Preferences::httpsKeyKey              = QString::fromAscii("httpsKey");
-const QString Preferences::httpsCertKey             = QString::fromAscii("httpsCert");
-const QString Preferences::httpsCertIntermediateKey = QString::fromAscii("httpsCertIntermediate");
-const QString Preferences::httpsCertExpirationKey   = QString::fromAscii("httpsCertExpiration");
+const QString Preferences::httpsKeyKey              = QString::fromAscii("httpsKey2");
+const QString Preferences::httpsCertKey             = QString::fromAscii("httpsCert2");
+const QString Preferences::httpsCertIntermediateKey = QString::fromAscii("httpsCertIntermediate2");
+const QString Preferences::httpsCertExpirationKey   = QString::fromAscii("httpsCertExpiration2");
+const QString Preferences::transferIdentifierKey    = QString::fromAscii("transferIdentifier");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -287,6 +335,7 @@ const bool Preferences::defaultUseHttpsOnly         = false;
 const bool Preferences::defaultSSLcertificateException = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
 const int  Preferences::defaultDownloadLimitKB      = 0;
+const unsigned long long  Preferences::defaultTransferIdentifier   = 0;
 const int  Preferences::defaultParallelUploadConnections      = 3;
 const int  Preferences::defaultParallelDownloadConnections    = 4;
 const int Preferences::defaultTransferDownloadMethod      = MegaApi::TRANSFER_METHOD_AUTO;
@@ -400,6 +449,7 @@ void Preferences::initialize(QString dataPath)
 Preferences::Preferences() : QObject(), mutex(QMutex::Recursive)
 {
     diffTimeWithSDK = 0;
+    lastTransferNotification = 0;
     clearTemporalBandwidth();
 }
 
@@ -492,6 +542,26 @@ QString Preferences::getSession()
     QString value = settings->value(sessionKey).toString();
     mutex.unlock();
     return value;
+}
+
+unsigned long long Preferences::transferIdentifier()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(transferIdentifierKey, defaultTransferIdentifier).toLongLong();
+    settings->setValue(transferIdentifierKey, ++value);
+    mutex.unlock();
+    return value;
+}
+
+long long Preferences::lastTransferNotificationTimestamp()
+{
+    return lastTransferNotification;
+}
+
+void Preferences::setLastTransferNotificationTimestamp()
+{
+    lastTransferNotification = QDateTime::currentMSecsSinceEpoch();
 }
 
 long long Preferences::totalStorage()

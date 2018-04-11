@@ -19,6 +19,7 @@ public:
 
     void setFileName(QString fileName); 
     void setStateLabel(QString labelState);
+    QString getTransferName();
 
     void setType(int type, bool isSyncTransfer = false);
     void setTransferState(int value);

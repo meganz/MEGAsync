@@ -68,6 +68,76 @@ void WindowsPlatform::initialize(int argc, char *argv[])
     CoInitializeEx(NULL, COINIT_MULTITHREADED);
 }
 
+void WindowsPlatform::prepareForSync()
+{
+    Preferences *preferences = Preferences::instance();
+
+    QProcess p;
+    p.start(QString::fromUtf8("net use"));
+    p.waitForFinished(2000);
+    QString output = QString::fromUtf8(p.readAllStandardOutput().constData());
+    QString e = QString::fromUtf8(p.readAllStandardError().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Output for \"net use\" command:");
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, output.toUtf8().constData());
+    if (e.size())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error for \"net use\" command:");
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
+    }
+
+    QStringList data = output.split(QString::fromUtf8("\n"));
+    if (data.size() > 1)
+    {
+        for (int i = 1; i < data.size(); i++)
+        {
+            QString drive = data.at(i).trimmed();
+            if (drive.size() && drive.contains(QChar::fromAscii(':')))
+            {
+                int index = drive.indexOf(QString::fromUtf8(":"));
+                if (index >= 2 && drive[index - 2] == QChar::fromAscii(' '))
+                {
+                    drive = drive.mid(index - 1);
+                    QStringList parts = drive.split(QString::fromUtf8(" "), QString::SkipEmptyParts);
+                    if (parts.size() >= 2 && parts.at(1).startsWith(QString::fromUtf8("\\")))
+                    {
+                        QString driveName = parts.at(0);
+                        QString networkName = parts.at(1);
+                        MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Network drive detected: %1 (%2)")
+                                    .arg(networkName).arg(driveName).toUtf8().constData());
+
+                        QStringList localFolders = preferences->getLocalFolders();
+                        for (int i = 0; i < localFolders.size(); i++)
+                        {
+                            QString localFolder = localFolders.at(i);
+                            MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Checking local synced folder: %1").arg(localFolder).toUtf8().constData());
+                            if (localFolder.startsWith(driveName) || localFolder.startsWith(networkName))
+                            {
+                                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Automatically mounting network drive")
+                                             .toUtf8().constData());
+
+                                QProcess p;
+                                QString command = QString::fromUtf8("net use %1 %2").arg(driveName).arg(networkName);
+                                p.start(command);
+                                p.waitForFinished(2000);
+                                QString output = QString::fromUtf8(p.readAllStandardOutput().constData());
+                                QString e = QString::fromUtf8(p.readAllStandardError().constData());
+                                MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Output for \"%1\" command:").arg(command).toUtf8().constData());
+                                MegaApi::log(MegaApi::LOG_LEVEL_INFO, output.toUtf8().constData());
+                                if (e.size())
+                                {
+                                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Error for \"%1\" command:").arg(command).toUtf8().constData());
+                                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 bool WindowsPlatform::enableTrayIcon(QString executable)
 {
     HRESULT hr;

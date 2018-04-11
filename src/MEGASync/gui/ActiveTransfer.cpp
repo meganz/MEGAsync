@@ -37,8 +37,7 @@ void ActiveTransfer::setFileName(QString fileName)
     this->fileName = fileName;
     QFont f = ui->lFileName->font();
     QFontMetrics fm = QFontMetrics(f);
-    ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
-    ui->lFileName->setToolTip(fileName);
+    ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideMiddle, ui->lFileName->width()));
 
     QIcon icon;
     icon.addFile(Utilities::getExtensionPixmapSmall(fileName), QSize(), QIcon::Normal, QIcon::Off);

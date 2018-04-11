@@ -16,6 +16,7 @@
 #include "control/Utilities.h"
 #include "MegaApplication.h"
 #include "MenuItemAction.h"
+#include "platform/Platform.h"
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -739,7 +740,7 @@ void InfoDialog::updateState()
             }
             else if (megaApi->areServersBusy())
             {
-                ui->lBlockedItem->setText(tr("Servers are too busy. Please wait..."));
+                ui->lBlockedItem->setText(tr("The process is taking longer than expected. Please wait..."));
                 ui->lBlockedItem->setAlignment(Qt::AlignCenter);
             }
             else
@@ -1051,7 +1052,10 @@ void InfoDialog::onAllTransfersFinished()
             app->updateUserStats();
         }
 
-        app->showNotificationMessage(tr("All transfers have been completed"));
+        if ((QDateTime::currentMSecsSinceEpoch() - preferences->lastTransferNotificationTimestamp()) > Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS)
+        {
+            app->showNotificationMessage(tr("All transfers have been completed"));
+        }
     }
 }
 
@@ -1180,8 +1184,13 @@ void InfoDialog::addSync(MegaHandle h)
         dialog->setMegaFolder(h);
     }
 
-    int result = dialog->exec();    
-    if (!dialog || !result)
+    Platform::execBackgroundWindow(dialog);
+    if (!dialog)
+    {
+        return;
+    }
+
+    if (dialog->result() != QDialog::Accepted)
     {
         delete dialog;
         dialog = NULL;

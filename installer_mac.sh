@@ -45,16 +45,19 @@ $QTBASE/bin/lrelease ../src/MEGASync/MEGASync.pro
 $QTBASE/bin/qmake -r ../src -spec macx-g++ CONFIG+=release CONFIG+=x86_64 -nocache
 make -j4
 cp -R MEGASync/MEGAsync.app MEGASync/MEGAsync_orig.app
-$QTBASE/bin/macdeployqt MEGASync/MEGAsync.app
+$QTBASE/bin/macdeployqt MEGASync/MEGAsync.app -no-strip
 dsymutil MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync -o MEGAsync.app.dSYM
 strip MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
 dsymutil MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader -o MEGAloader.dSYM
 strip MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader
 dsymutil MEGAUpdater/MEGAupdater.app/Contents/MacOS/MEGAupdater -o MEGAupdater.dSYM
 strip MEGAUpdater/MEGAupdater.app/Contents/MacOS/MEGAupdater
+dsymutil MEGADeprecatedVersion/MEGADeprecatedVersion.app/Contents/MacOS/MEGADeprecatedVersion -o MEGADeprecatedVersion.dSYM
+strip MEGADeprecatedVersion/MEGADeprecatedVersion.app/Contents/MacOS/MEGADeprecatedVersion
 mv MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
 mv MEGALoader/MEGAloader.app/Contents/MacOS/MEGAloader MEGASync/MEGAsync.app/Contents/MacOS/MEGAsync
 mv MEGAUpdater/MEGAupdater.app/Contents/MacOS/MEGAupdater MEGASync/MEGAsync.app/Contents/MacOS/MEGAupdater
+mv MEGADeprecatedVersion/MEGADeprecatedVersion.app/Contents/MacOS/MEGADeprecatedVersion MEGASync/MEGAsync.app/Contents/MacOS/MEGADeprecatedVersion
 
 cp -L ../$AVCODEC_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
 cp -L ../$AVFORMAT_PATH MEGASync/MEGAsync.app/Contents/Frameworks/
@@ -129,5 +132,6 @@ echo "Cleaning"
 rm -rf MEGAsync
 rm -rf MEGALoader
 rm -rf MEGAUpdater
+rm -rf MEGADeprecatedVersion
 
 echo "DONE"

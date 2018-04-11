@@ -44,6 +44,26 @@
 
 Q_DECLARE_METATYPE(QQueue<QString>)
 
+class TransferMetaData
+{
+public:
+    TransferMetaData(int direction, int total = 0, int pending = 0, QString path = QString(),
+                     int files = 0, int folders = 0,
+                     int failed = 0, int cancelled = 0)
+                    : transferDirection(direction), totalTransfers(total), pendingTransfers(pending),
+                      localPath(path), totalFiles(files), totalFolders(folders),
+                      transfersFailed(failed), transfersCancelled(cancelled) {}
+
+    int totalTransfers;
+    int pendingTransfers;
+    int totalFiles;
+    int totalFolders;
+    int transfersFailed;
+    int transfersCancelled;
+    int transferDirection;
+    QString localPath;
+};
+
 class Notificator;
 class MEGASyncDelegateListener;
 
@@ -111,6 +131,8 @@ public:
     void removeFinishedTransfer(int transferTag);
     void removeAllFinishedTransfers();
     mega::MegaTransfer* getFinishedTransferByTag(int tag);
+
+    TransferMetaData* getTransferAppData(unsigned long long appDataID);
 
 signals:
     void startUpdaterThread();
@@ -192,9 +214,12 @@ public slots:
     void onDeprecatedOperatingSystem();
     void notifyItemChange(QString path, int newState);
     int getPrevVersion();
+    void showNotificationFinishedTransfers(unsigned long long appDataId);
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
+private slots:
+    void showInFolder(int activationButton);
 
 protected:
     void createTrayIcon();
@@ -215,11 +240,7 @@ protected:
     void startHttpServer();
     void initHttpsServer();
 
-#ifdef __APPLE__
-    MegaSystemTrayIcon *trayIcon;
-#else
     QSystemTrayIcon *trayIcon;
-#endif
 
     QAction *changeProxyAction;
     QAction *initialExitAction;
@@ -333,6 +354,8 @@ protected:
     QPointer<TransferManager> transferManager;
     QMap<int, mega::MegaTransfer*> finishedTransfers;
     QList<mega::MegaTransfer*> finishedTransferOrder;
+
+    QHash<unsigned long long, TransferMetaData*> transferAppData;
 
     bool reboot;
     bool syncActive;

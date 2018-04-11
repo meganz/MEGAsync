@@ -23,6 +23,7 @@ public:
     void setFileName(QString fileName);
     void setType(int type, bool isSyncTransfer = false);
     void setTransferState(int value);
+    QString getTransferName();
 
     bool getLinkButtonClicked(QPoint pos);
     void mouseHoverTransfer(bool isHover);

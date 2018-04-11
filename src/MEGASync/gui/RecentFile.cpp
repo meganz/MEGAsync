@@ -82,7 +82,12 @@ void RecentFile::setTransferState(int value)
 //    case MegaTransfer::STATE_CANCELLED:
 //    default:
 //        break;
-//    }
+    //    }
+}
+
+QString RecentFile::getTransferName()
+{
+    return ui->lFileName->text();
 }
 
 bool RecentFile::getLinkButtonClicked(QPoint pos)
