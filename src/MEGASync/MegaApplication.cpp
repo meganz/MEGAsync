@@ -722,6 +722,8 @@ void MegaApplication::initialize()
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi);
     downloader = new MegaDownloader(megaApi);
+    connect(downloader, SIGNAL(finishedTransfers(unsigned long long)), this, SLOT(showNotificationFinishedTransfers(unsigned long long)));
+
 
     connectivityTimer = new QTimer(this);
     connectivityTimer->setSingleShot(true);
@@ -1510,11 +1512,36 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
         return;
     }
 
+    unsigned long long transferId = preferences->transferIdentifier();
+    TransferMetaData* data = new TransferMetaData(MegaTransfer::TYPE_UPLOAD, uploadQueue.size(), uploadQueue.size());
+    transferAppData.insert(transferId, data);
+
     //Process the upload queue using the MegaUploader object
     while (!uploadQueue.isEmpty())
     {
         QString filePath = uploadQueue.dequeue();
-        uploader->upload(filePath, node);
+
+        // Load parent folder to provide "Show in Folder" option
+        if (data->localPath.isEmpty())
+        {
+            QDir uploadPath(filePath);
+            if (data->totalTransfers > 1)
+            {
+                uploadPath.cdUp();
+            }
+            data->localPath = uploadPath.path();
+        }
+
+        if (QFileInfo (filePath).isDir())
+        {
+            data->totalFolders++;
+        }
+        else
+        {
+            data->totalFiles++;
+        }
+
+        uploader->upload(filePath, node, transferId);
     }
     delete node;
 }
@@ -1535,7 +1562,14 @@ void MegaApplication::processDownloadQueue(QString path)
         return;
     }
 
-    downloader->processDownloadQueue(&downloadQueue, path);
+    unsigned long long transferId = preferences->transferIdentifier();
+    TransferMetaData *transferData =  new TransferMetaData(MegaTransfer::TYPE_DOWNLOAD, downloadQueue.size(), downloadQueue.size());
+    transferAppData.insert(transferId, transferData);
+    if (!downloader->processDownloadQueue(&downloadQueue, path, transferId))
+    {
+        transferAppData.remove(transferId);
+        delete transferData;
+    }
 }
 
 void MegaApplication::unityFix()
@@ -2471,6 +2505,18 @@ void MegaApplication::initHttpsServer()
     }
 }
 
+TransferMetaData* MegaApplication::getTransferAppData(unsigned long long appDataID)
+{
+    QHash<unsigned long long, TransferMetaData*>::const_iterator it = transferAppData.find(appDataID);
+    if(it == transferAppData.end())
+    {
+        return NULL;
+    }
+
+    TransferMetaData* value = it.value();
+    return value;
+}
+
 void MegaApplication::triggerInstallUpdate()
 {
     if (appfinished)
@@ -3152,6 +3198,151 @@ int MegaApplication::getPrevVersion()
     return prevVersion;
 }
 
+void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDataId)
+{
+    QHash<unsigned long long, TransferMetaData*>::iterator it
+           = transferAppData.find(appDataId);
+    if (it == transferAppData.end())
+    {
+        return;
+    }
+
+    TransferMetaData *data = it.value();
+    if (data->pendingTransfers == 0)
+    {
+        MegaNotification *notification = new MegaNotification();
+        QString title;
+        QString message;
+        switch (data->transferDirection)
+        {
+            case MegaTransfer::TYPE_UPLOAD:
+            {
+                if (data->totalFiles && data->totalFolders)
+                {
+                    title = tr("Upload");
+                    if (data->totalFolders == 1)
+                    {
+                        if (data->totalFiles == 1)
+                        {
+                            message = tr("1 file and 1 folder were successfully uploaded");
+                        }
+                        else
+                        {
+                            message = tr("%1 files and 1 folder were successfully uploaded").arg(data->totalFiles);
+                        }
+                    }
+                    else
+                    {
+                        if (data->totalFiles == 1)
+                        {
+                            message = tr("1 file and %1 folders were successfully uploaded").arg(data->totalFolders);
+                        }
+                        else
+                        {
+                            message = tr("%1 files and %2 folders were successfully uploaded").arg(data->totalFiles).arg(data->totalFolders);
+                        }
+                    }
+                }
+                else if (!data->totalFiles)
+                {
+                    title = tr("Folder Upload");
+                    if (data->totalFolders == 1)
+                    {
+                        message = tr("1 folder was successfully uploaded");
+                    }
+                    else
+                    {
+                        message = tr("%1 folders were successfully uploaded").arg(data->totalFolders);
+                    }
+                }
+                else
+                {
+                    title = tr("File Upload");
+                    if (data->totalFiles == 1)
+                    {
+                        message = tr("1 file was successfully uploaded");
+                    }
+                    else
+                    {
+                        message = tr("%1 files were successfully uploaded").arg(data->totalFiles);
+                    }
+                }
+                break;
+            }
+            case MegaTransfer::TYPE_DOWNLOAD:
+            {
+                if (data->totalFiles && data->totalFolders)
+                {
+                    title = tr("Download");
+                    if (data->totalFolders == 1)
+                    {
+                        if (data->totalFiles == 1)
+                        {
+                            message = tr("1 file and 1 folder were successfully downloaded");
+                        }
+                        else
+                        {
+                            message = tr("%1 files and 1 folder were successfully downloaded").arg(data->totalFiles);
+                        }
+                    }
+                    else
+                    {
+                        if (data->totalFiles == 1)
+                        {
+                            message = tr("1 file and %1 folders were successfully downloaded").arg(data->totalFolders);
+                        }
+                        else
+                        {
+                            message = tr("%1 files and %2 folders were successfully downloaded").arg(data->totalFiles).arg(data->totalFolders);
+                        }
+                    }
+                }
+                else if (!data->totalFiles)
+                {
+                    title = tr("Folder Download");
+                    if (data->totalFolders == 1)
+                    {
+                        message = tr("1 folder was successfully downloaded");
+                    }
+                    else
+                    {
+                        message = tr("%1 folders were successfully downloaded").arg(data->totalFolders);
+                    }
+                }
+                else
+                {
+                    title = tr("File Download");
+                    if (data->totalFiles == 1)
+                    {
+                        message = tr("1 file was successfully downloaded");
+                    }
+                    else
+                    {
+                        message = tr("%1 files were successfully downloaded").arg(data->totalFiles);
+                    }
+                }
+                break;
+            }
+            default:
+                break;
+        }
+
+        if (notificator && !message.isEmpty())
+        {           
+            preferences->setLastTransferNotificationTimestamp();
+            notification->setTitle(title);
+            notification->setText(message);
+            notification->setActions(QStringList() << QString::fromUtf8("Show in folder"));
+            notification->setData(((data->totalTransfers == 1) ? QString::number(1) : QString::number(0)) + data->localPath);
+            connect(notification, SIGNAL(activated(int)), this, SLOT(showInFolder(int)));
+            notificator->notify(notification);
+        }
+
+        transferAppData.erase(it);
+        delete data;
+    }
+}
+
 #ifdef __APPLE__
 void MegaApplication::enableFinderExt()
 {
@@ -3160,6 +3351,24 @@ void MegaApplication::enableFinderExt()
     preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_ACTIVE_FINDER_EXT, true);
 }
 #endif
+
+void MegaApplication::showInFolder(int activationButton)
+{
+    MegaNotification *notification = ((MegaNotification *)QObject::sender());
+
+    if (activationButton == MegaNotification::ActivationActionButtonClicked && notification->getData().size() > 1)
+    {
+        QString localPath = QDir::toNativeSeparators(notification->getData().mid(1));
+        if (notification->getData().at(0) == QChar::fromAscii('1'))
+        {
+            Platform::showInFolder(localPath);
+        }
+        else
+        {
+            QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localPath));
+        }
+    }
+}
 
 void MegaApplication::updateUserStats()
 {
@@ -6099,21 +6308,44 @@ void MegaApplication::onRequestTemporaryError(MegaApi *, MegaRequest *, MegaErro
 //Called when a transfer has finished
 void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaError* e)
 {
-    if (appfinished || transfer->isStreamingTransfer() || transfer->isFolderTransfer())
+    if (appfinished || transfer->isStreamingTransfer())
     {
         return;
     }
 
-    if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
+    // check if it's a top level transfer
+    int folderTransferTag = transfer->getFolderTransferTag();
+    if (folderTransferTag == 0 // file transfer
+            || folderTransferTag == -1) // folder transfer
     {
-        if (httpServer)
+        const char *notificationKey = transfer->getAppData();
+        if (notificationKey)
         {
-            httpServer->onTransferDataUpdate(transfer->getNodeHandle(),
-                                             transfer->getState(),
-                                             transfer->getTransferredBytes(),
-                                             transfer->getTotalBytes(),
-                                             transfer->getSpeed());
+            unsigned long long notificationId = atoll(notificationKey);
+            QHash<unsigned long long, TransferMetaData*>::iterator it
+                   = transferAppData.find(notificationId);
+            if (it != transferAppData.end())
+            {
+                TransferMetaData *data = it.value();
+
+                if (e->getErrorCode() == MegaError::API_EINCOMPLETE)
+                {
+                    data->transfersCancelled++;
+                }
+                else if (e->getErrorCode() != MegaError::API_OK)
+                {
+                    data->transfersFailed++;
+                }
+
+                data->pendingTransfers--;
+                showNotificationFinishedTransfers(notificationId);
+            }
         }
+    }
+
+    if (transfer->isFolderTransfer())
+    {
+        return;
     }
 
     if (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED)
@@ -6142,6 +6374,18 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         if (transferManager)
         {
             transferManager->updateNumberOfCompletedTransfers(nUnviewedTransfers);
+        }
+    }
+
+    if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
+    {
+        if (httpServer)
+        {
+            httpServer->onTransferDataUpdate(transfer->getNodeHandle(),
+                                             transfer->getState(),
+                                             transfer->getTransferredBytes(),
+                                             transfer->getTotalBytes(),
+                                             transfer->getSpeed());
         }
     }
 

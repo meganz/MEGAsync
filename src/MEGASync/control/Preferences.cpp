@@ -35,6 +35,7 @@ const long long Preferences::MIN_UPDATE_STATS_INTERVAL_OVERQUOTA    = 30000;
 const long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
 const long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
 const long long Preferences::MIN_EXTERNAL_NODES_WARNING_MS          = 60000;
+const long long Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS  = 10000;
 
 const unsigned int Preferences::UPDATE_INITIAL_DELAY_SECS           = 60;
 const unsigned int Preferences::UPDATE_RETRY_INTERVAL_SECS          = 7200;
@@ -320,6 +321,7 @@ const QString Preferences::httpsKeyKey              = QString::fromAscii("httpsK
 const QString Preferences::httpsCertKey             = QString::fromAscii("httpsCert2");
 const QString Preferences::httpsCertIntermediateKey = QString::fromAscii("httpsCertIntermediate2");
 const QString Preferences::httpsCertExpirationKey   = QString::fromAscii("httpsCertExpiration2");
+const QString Preferences::transferIdentifierKey    = QString::fromAscii("transferIdentifier");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -333,6 +335,7 @@ const bool Preferences::defaultUseHttpsOnly         = false;
 const bool Preferences::defaultSSLcertificateException = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
 const int  Preferences::defaultDownloadLimitKB      = 0;
+const unsigned long long  Preferences::defaultTransferIdentifier   = 0;
 const int  Preferences::defaultParallelUploadConnections      = 3;
 const int  Preferences::defaultParallelDownloadConnections    = 4;
 const int Preferences::defaultTransferDownloadMethod      = MegaApi::TRANSFER_METHOD_AUTO;
@@ -446,6 +449,7 @@ void Preferences::initialize(QString dataPath)
 Preferences::Preferences() : QObject(), mutex(QMutex::Recursive)
 {
     diffTimeWithSDK = 0;
+    lastTransferNotification = 0;
     clearTemporalBandwidth();
 }
 
@@ -538,6 +542,26 @@ QString Preferences::getSession()
     QString value = settings->value(sessionKey).toString();
     mutex.unlock();
     return value;
+}
+
+unsigned long long Preferences::transferIdentifier()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(transferIdentifierKey, defaultTransferIdentifier).toLongLong();
+    settings->setValue(transferIdentifierKey, ++value);
+    mutex.unlock();
+    return value;
+}
+
+long long Preferences::lastTransferNotificationTimestamp()
+{
+    return lastTransferNotification;
+}
+
+void Preferences::setLastTransferNotificationTimestamp()
+{
+    lastTransferNotification = QDateTime::currentMSecsSinceEpoch();
 }
 
 long long Preferences::totalStorage()
