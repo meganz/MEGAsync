@@ -44,6 +44,8 @@ public:
     void setSession(QString session);
     QString getSession();
     unsigned long long transferIdentifier();
+    long long lastTransferNotificationTimestamp();
+    void setLastTransferNotificationTimestamp();
     long long totalStorage();
     void setTotalStorage(long long value);
     long long usedStorage();
@@ -338,6 +340,7 @@ public:
     static const char UPDATE_PUBLIC_KEY[];
     static const long long MIN_REBOOT_INTERVAL_MS;
     static const long long MIN_EXTERNAL_NODES_WARNING_MS;
+    static const long long MIN_TRANSFER_NOTIFICATION_INTERVAL_MS;
     static const char CLIENT_KEY[];
     static const char USER_AGENT[];
     static const int VERSION_CODE;
@@ -380,6 +383,7 @@ protected:
     bool isTempBandwidthValid;
     QString dataPath;
     long long diffTimeWithSDK;
+    long long lastTransferNotification;
 
     static const QString currentAccountKey;
     static const QString syncsGroupKey;

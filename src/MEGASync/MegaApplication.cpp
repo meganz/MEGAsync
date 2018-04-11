@@ -3329,6 +3329,7 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
 
         if (notificator && !message.isEmpty())
         {           
+            preferences->setLastTransferNotificationTimestamp();
             notification->setTitle(title);
             notification->setText(message);
             notification->setActions(QStringList() << QString::fromUtf8("Show in folder"));

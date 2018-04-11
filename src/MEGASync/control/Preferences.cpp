@@ -35,6 +35,7 @@ const long long Preferences::MIN_UPDATE_STATS_INTERVAL_OVERQUOTA    = 30000;
 const long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
 const long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
 const long long Preferences::MIN_EXTERNAL_NODES_WARNING_MS          = 60000;
+const long long Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS  = 10000;
 
 const unsigned int Preferences::UPDATE_INITIAL_DELAY_SECS           = 60;
 const unsigned int Preferences::UPDATE_RETRY_INTERVAL_SECS          = 7200;
@@ -448,6 +449,7 @@ void Preferences::initialize(QString dataPath)
 Preferences::Preferences() : QObject(), mutex(QMutex::Recursive)
 {
     diffTimeWithSDK = 0;
+    lastTransferNotification = 0;
     clearTemporalBandwidth();
 }
 
@@ -550,6 +552,16 @@ unsigned long long Preferences::transferIdentifier()
     settings->setValue(transferIdentifierKey, ++value);
     mutex.unlock();
     return value;
+}
+
+long long Preferences::lastTransferNotificationTimestamp()
+{
+    return lastTransferNotification;
+}
+
+void Preferences::setLastTransferNotificationTimestamp()
+{
+    lastTransferNotification = QDateTime::currentMSecsSinceEpoch();
 }
 
 long long Preferences::totalStorage()
