@@ -2290,7 +2290,7 @@ border: none;</string>
                 <enum>Qt::StrongFocus</enum>
                </property>
                <property name="text">
-                <string>KB</string>
+                <string>KB/s</string>
                </property>
               </widget>
              </item>
@@ -2501,7 +2501,7 @@ border: none;</string>
                 <enum>Qt::StrongFocus</enum>
                </property>
                <property name="text">
-                <string>KB</string>
+                <string>KB/s</string>
                </property>
               </widget>
              </item>
