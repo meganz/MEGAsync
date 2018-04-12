@@ -140,19 +140,15 @@ int main(int argc, char *argv[])
 #endif
 
 #ifdef Q_OS_MACX
-    if (!qputenv("QT_HARFBUZZ","old"))
-    {
-       MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Error setting QT_HARFBUZZ vble");
-    }
+
+    bool harfbuzzEnabled = qputenv("QT_HARFBUZZ","old");
 
     // From QT (5.9) documentation:
     // Secure Transport SSL backend on macOS may update the default keychain (the default is probably your login keychain) by importing your local certificates and keys.
     // This can also result in system dialogs showing up and asking for permission when your application is using these private keys.
     // If such behavior is undesired, set the QT_SSL_USE_TEMPORARY_KEYCHAIN environment variable to a non-zero value this will prompt QSslSocket to use its own temporary keychain.
-    if (!qputenv("QT_SSL_USE_TEMPORARY_KEYCHAIN","1"))
-    {
-       MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Error setting QT_SSL_USE_TEMPORARY_KEYCHAIN vble");
-    }
+    bool useSSLtemporaryKeychain = qputenv("QT_SSL_USE_TEMPORARY_KEYCHAIN","1");
+
 #endif
 
 #ifdef Q_OS_LINUX
@@ -187,6 +183,19 @@ int main(int argc, char *argv[])
     app.setStyle(new MegaProxyStyle());
 
 #ifdef Q_OS_MACX
+
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Running on macOS version: %1").arg(QString::number(QSysInfo::MacintoshVersion)).toUtf8().constData());
+
+    if (!harfbuzzEnabled)
+    {
+       MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Error setting QT_HARFBUZZ vble");
+    }
+
+    if (!useSSLtemporaryKeychain)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Error setting QT_SSL_USE_TEMPORARY_KEYCHAIN vble");
+    }
+
     if (QSysInfo::MacintoshVersion > QSysInfo::MV_10_8)
     {
         // fix Mac OS X 10.9 (mavericks) font issue
