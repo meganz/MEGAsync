@@ -482,6 +482,11 @@ fi
 
 theDisplay="DISPLAY=:0.0"
 
+if [[ $VMNAME == *"ARCHLINUX"* ]]; then
+theDisplay="DISPLAY=:1.0"
+fi
+
+
 echo " relaunching megasync as user ..."
 VERSIONMEGASYNCREMOTERUNNING=`$sshpasscommand ssh -oStrictHostKeyChecking=no  mega@$IP_GUEST $theDisplay megasync --version | grep -i megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
 logSth "running megasync ..." "$VERSIONMEGASYNCREMOTERUNNING"
@@ -523,6 +528,7 @@ if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	distroDir="openSUSE"
 	ver=$($sshpasscommand ssh root@$IP_GUEST grep -i Tumbleweed /etc/issue > /dev/null && echo Tumbleweed || $sshpasscommand ssh root@$IP_GUEST lsb_release -rs)
 	if [[ x$ver == "x42"* ]]; then ver="Leap_$ver"; fi
+	if [[ x$ver == "x15"* ]]; then ver="Leap_$ver"; fi
 	expected="baseurl=https://mega.nz/linux/MEGAsync/${distroDir}_$ver"
 	resultRepoConfiguredOk=0
 	if ! $sshpasscommand ssh root@$IP_GUEST cat /etc/zypp/repos.d/megasync.repo | grep "$expected" > /dev/null; then
