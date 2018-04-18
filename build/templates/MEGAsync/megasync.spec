@@ -12,6 +12,9 @@ Packager:	MEGA Linux Team <linux@mega.co.nz>
 BuildRequires: openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libtool, gcc-c++
 BuildRequires: hicolor-icon-theme, unzip, wget
 BuildRequires: ffmpeg-mega
+%if 0%{?sle_version} >= 150000
+BuildRequires: libcurl4
+%endif
 
 %if 0%{?suse_version}
 BuildRequires: libcares-devel, pkg-config
@@ -38,7 +41,7 @@ BuildRequires: libcryptopp-devel
 
 %endif
 
-%if 0%{?fedora_version}==21 || 0%{?fedora_version}==22 || 0%{?fedora_version}>=25 || 0%{?sle_version} == 120300
+%if 0%{?fedora_version}==21 || 0%{?fedora_version}==22 || 0%{?fedora_version}>=25 || !(0%{?sle_version} < 120300)
 BuildRequires: libzen-devel, libmediainfo-devel
 %endif
 
@@ -91,7 +94,7 @@ Store up to 50 GB for free!
 %define flag_cryptopp %{nil}
 %define flag_disablemediainfo -i
 
-%if 0%{?fedora_version}==19 || 0%{?fedora_version}==20 || 0%{?fedora_version}==23 || 0%{?fedora_version}==24 || 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} || ( 0%{?suse_version} && 0%{?sle_version} != 120300)
+%if 0%{?fedora_version}==19 || 0%{?fedora_version}==20 || 0%{?fedora_version}==23 || 0%{?fedora_version}==24 || 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} || ( 0%{?suse_version} && 0%{?sle_version} < 120300)
 %define flag_disablemediainfo %{nil}
 %endif
 
@@ -279,7 +282,22 @@ DATA
 fi
 %endif
  
-
+%if 0%{?sle_version} == 150000  
+# openSUSE Leap 15
+if [ -d "/etc/zypp/repos.d/" ]; then
+ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
+cat > "$ZYPP_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+type=rpm-md
+baseurl=https://mega.nz/linux/MEGAsync/openSUSE_Leap_15.0/
+gpgcheck=1
+autorefresh=1
+gpgkey=https://mega.nz/linux/MEGAsync/openSUSE_Leap_15.0/repodata/repomd.xml.key
+enabled=1
+DATA
+fi
+%else
 %if 0%{?suse_version} > 1320
 # openSUSE Tumbleweed (rolling release)
 if [ -d "/etc/zypp/repos.d/" ]; then
@@ -295,6 +313,7 @@ gpgkey=https://mega.nz/linux/MEGAsync/openSUSE_Tumbleweed/repodata/repomd.xml.ke
 enabled=1
 DATA
 fi
+%endif
 %endif
 
 %if 0%{?suse_version} == 1320
