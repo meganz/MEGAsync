@@ -11,9 +11,8 @@ Packager:	MEGA Linux Team <linux@mega.co.nz>
 
 BuildRequires: openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libtool, gcc-c++
 BuildRequires: hicolor-icon-theme, unzip, wget
-%if 0%{?sle_version} < 150000
 BuildRequires: ffmpeg-mega
-%else
+%if 0%{?sle_version} >= 150000
 BuildRequires: libcurl4
 %endif
 
@@ -291,10 +290,10 @@ cat > "$ZYPP_FILE" << DATA
 [MEGAsync]
 name=MEGAsync
 type=rpm-md
-baseurl=https://mega.nz/linux/MEGAsync/openSUSE_Leap_15/
+baseurl=https://mega.nz/linux/MEGAsync/openSUSE_Leap_15.0/
 gpgcheck=1
 autorefresh=1
-gpgkey=https://mega.nz/linux/MEGAsync/openSUSE_Leap_15/repodata/repomd.xml.key
+gpgkey=https://mega.nz/linux/MEGAsync/openSUSE_Leap_15.0/repodata/repomd.xml.key
 enabled=1
 DATA
 fi
