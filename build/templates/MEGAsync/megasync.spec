@@ -11,11 +11,16 @@ Packager:	MEGA Linux Team <linux@mega.co.nz>
 
 BuildRequires: openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libtool, gcc-c++
 BuildRequires: hicolor-icon-theme, unzip, wget
+BuildRequires: ffmpeg-mega
 
 %if 0%{?suse_version}
 BuildRequires: libcares-devel, pkg-config
 BuildRequires: update-desktop-files
- 
+
+#%if 0%{?suse_version} <= 1320
+BuildRequires: libbz2-devel
+#%endif
+
 %if 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
 BuildRequires: libqt5-qtbase-devel >= 5.6, libqt5-linguist, libqt5-qtsvg-devel
 Requires: libQt5Core5 >= 5.6
