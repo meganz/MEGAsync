@@ -290,6 +290,57 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>ChangePassword</name>
+    <message>
+        <source>Change password</source>
+        <translation type="unfinished">Change password</translation>
+    </message>
+    <message>
+        <source>New password</source>
+        <translation type="unfinished">New password</translation>
+    </message>
+    <message>
+        <source>Confirm new password</source>
+        <translation type="unfinished">Confirm new password</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Password changed</source>
+        <translation type="unfinished">Password changed</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translation type="unfinished">Your password has been changed.</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Error</translation>
+    </message>
+    <message>
+        <source>Wrong password</source>
+        <translation type="unfinished">Wrong password</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Warning</translation>
+    </message>
+    <message>
+        <source>Please enter your password</source>
+        <translation type="unfinished">Please enter your password</translation>
+    </message>
+    <message>
+        <source>The entered passwords don&apos;t match</source>
+        <translation type="unfinished">The entered passwords don&apos;t match</translation>
+    </message>
+</context>
+<context>
     <name>ConfirmSSLexception</name>
     <message>
         <source>Warning</source>
@@ -805,7 +856,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Servers are too busy. Please wait...</source>
-        <translation type="unfinished">Servers are too busy. Please wait…</translation>
+        <translation type="obsolete">Servers are too busy. Please wait…</translation>
     </message>
     <message>
         <source>MEGAsync is currently disabled</source>
@@ -890,6 +941,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>USED BANDWIDTH %1</source>
         <translation type="unfinished">USED BANDWIDTH %1</translation>
+    </message>
+    <message>
+        <source>The process is taking longer than expected. Please wait...</source>
+        <translation type="unfinished">The process is taking longer than expected. Please wait...</translation>
     </message>
 </context>
 <context>
@@ -1261,7 +1316,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
-        <translation>Error</translation>
+        <translation type="vanished">Error</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -1659,6 +1714,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Error</source>
         <translation type="obsolete">Error</translation>
     </message>
+    <message>
+        <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
+        <translation type="unfinished">Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</translation>
+    </message>
+    <message>
+        <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
+        <translation type="unfinished">Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</translation>
+    </message>
 </context>
 <context>
     <name>MegaTransferDelegate</name>
@@ -1738,6 +1801,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
         <translation type="unfinished">Are you sure you want to cancel this transfer?</translation>
+    </message>
+    <message>
+        <source>View on MEGA</source>
+        <translation type="unfinished">View on MEGA</translation>
     </message>
 </context>
 <context>
@@ -2797,6 +2864,10 @@ when the application starts again</source>
         <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
         <translation type="unfinished">File versions: %1</translation>
     </message>
+    <message>
+        <source>Change password</source>
+        <translation type="unfinished">Change password</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -3169,6 +3240,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
         <translation type="unfinished">When you finish this assistant, you will be able to sync additional folders using the settings dialog</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translation type="unfinished">Learn more</translation>
     </message>
 </context>
 <context>
