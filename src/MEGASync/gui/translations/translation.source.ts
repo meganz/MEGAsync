@@ -329,7 +329,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Warning</translation>
+        <translation type="obsolete">Warning</translation>
     </message>
     <message>
         <source>Please enter your password</source>
@@ -338,6 +338,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>The entered passwords don&apos;t match</source>
         <translation type="unfinished">The entered passwords don&apos;t match</translation>
+    </message>
+    <message>
+        <source>Please, enter a stronger password</source>
+        <translation type="unfinished">Please, enter a stronger password</translation>
     </message>
 </context>
 <context>
