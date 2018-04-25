@@ -336,7 +336,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">Lütfen şifrenizi girin</translation>
     </message>
     <message>
-        <source>The entered passwords don&#039;t match</source>
+        <source>The entered passwords don&apos;t match</source>
         <translation type="unfinished">Girilen şifreler eşleşmiyor</translation>
     </message>
 </context>
@@ -353,7 +353,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">Devam etmek istediğinizden emin misiniz?</translation>
     </message>
     <message>
-        <source>Remember my decision and don&#039;t ask me again</source>
+        <source>Remember my decision and don&apos;t ask me again</source>
         <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
         <translation type="unfinished">Tercihimi hatırla ve bir daha sorma</translation>
     </message>
@@ -370,7 +370,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">İletişimlerinizin yakalanmasına yol açan bir seçeneğe izin vermek üzeresiniz. Uçtan uca şifrelememizden dolayı verileriniz saldırganlar için yine de erişilemez olacaktır, fakat bilinçsizce MEGA&#039;daki dosya ve klasörlerinizi taşıyabilir, silebilir veya hesabınızın erişimini engelleyebilirler.</translation>
+        <translation type="unfinished">İletişimlerinizin yakalanmasına yol açan bir seçeneğe izin vermek üzeresiniz. Uçtan uca şifrelememizden dolayı verileriniz saldırganlar için yine de erişilemez olacaktır, fakat bilinçsizce MEGA&apos;daki dosya ve klasörlerinizi taşıyabilir, silebilir veya hesabınızın erişimini engelleyebilirler.</translation>
     </message>
 </context>
 <context>
@@ -386,9 +386,9 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>MEGAsync bir sorun algıladı. Detaylar:</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&#039;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>Hata raporunu göndererek bize MEGAsync&#039;i geliştirmemiz için yardımcı olabilirsiniz. Rapor herhangi bir kişisel bilgi içermez. Bize daha fazla ayrıntı vermek istiyorsanız, bunları aşağıda yazın:</translation>
+        <translation>Hata raporunu göndererek bize MEGAsync&apos;i geliştirmemiz için yardımcı olabilirsiniz. Rapor herhangi bir kişisel bilgi içermez. Bize daha fazla ayrıntı vermek istiyorsanız, bunları aşağıda yazın:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -406,7 +406,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to retrieve a file/folder from MEGA.(MAX 20 characters)</translatorcomment>
-        <translation>MEGA&#039;dan indir</translation>
+        <translation>MEGA&apos;dan indir</translation>
     </message>
     <message>
         <source>Please select the download folder for your files:</source>
@@ -449,8 +449,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Hata</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&#039;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>Bu yerel klasörde yazma izniniz yok.</translation>
     </message>
 </context>
@@ -464,7 +464,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>View on MEGA</source>
         <translatorcomment>Finder context menu option to view a synced file through web browser within your MEGA account</translatorcomment>
-        <translation type="unfinished">MEGA&#039;da görüntlüe</translation>
+        <translation type="unfinished">MEGA&apos;da görüntlüe</translation>
     </message>
     <message>
         <source>No options available</source>
@@ -529,12 +529,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Uyarı</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this folder.</source>
+        <source>You don&apos;t have write permissions in this folder.</source>
         <translation type="obsolete">Bu klasörde yazma izniniz yok.</translation>
     </message>
     <message>
-        <source>MEGAsync won&#039;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&#039;t be able to download anything due to the user doesn&#039;t have writhe permissions on the local selected folder.</translatorcomment>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
         <translation>MEGAsync buraya bir şey indiremeyecek.</translation>
     </message>
     <message>
@@ -543,8 +543,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Devam etmek istiyor musunuz?</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&#039;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <source>You don&apos;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
         <translation>Bu yerel klasörde yazma izniniz yok.</translation>
     </message>
     <message>
@@ -594,7 +594,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A]Login[/A] or [B]Create an account[/B] to fully experience MEGA</source>
         <translatorcomment>Label shown at startup of MEGAsync to offer the user the options to login or create and account. Keep [A][B][/A][/B] place holders</translatorcomment>
-        <translation type="unfinished">MEGA&#039;yı tam olarak deneyimlemek için [A]Oturum açın[/A] veya [B]Bir hesap açın[/B]</translation>
+        <translation type="unfinished">MEGA&apos;yı tam olarak deneyimlemek için [A]Oturum açın[/A] veya [B]Bir hesap açın[/B]</translation>
     </message>
 </context>
 <context>
@@ -661,7 +661,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&#039;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
         <translation>Bulunamadı</translation>
     </message>
     <message>
@@ -679,7 +679,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>Hata</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>Bu yerel klasörde yazma izniniz yok.</translation>
     </message>
@@ -871,7 +871,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">PRO&#039;ya yükselt</translation>
+        <translation type="unfinished">PRO&apos;ya yükselt</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -1001,23 +1001,23 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
-        <translation type="unfinished">[S]Esnek:[/S] PC&#039;deki herhangi bir klasörü buluttaki herhangi bir klaösre eşitleyin. Aynı anda dilediğiniz sayıda klasörü eşitleyin.</translation>
+        <translation type="unfinished">[S]Esnek:[/S] PC&apos;deki herhangi bir klasörü buluttaki herhangi bir klaösre eşitleyin. Aynı anda dilediğiniz sayıda klasörü eşitleyin.</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
         <translation type="unfinished">Daha hızlı aktarma hızları</translation>
     </message>
     <message>
-        <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
-        <translation type="unfinished">MEGAsync, MEGA&#039;nın yüksek güçlü altyapısı ve çoklu bağlantı aktarmalarından sonuna kadar faydalanır.</translation>
+        <source>MEGAsync takes full advantage of MEGA&apos;s high-powered infrastructure and multi-connection transfers.</source>
+        <translation type="unfinished">MEGAsync, MEGA&apos;nın yüksek güçlü altyapısı ve çoklu bağlantı aktarmalarından sonuna kadar faydalanır.</translation>
     </message>
     <message>
         <source>Lean &amp; mean resource usage</source>
         <translation type="unfinished">Yalın ve ortalama kaynak kullanımı</translation>
     </message>
     <message>
-        <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
-        <translation type="unfinished">Yavaş tarayıcılara bağlı kalmadan, makinenizde MEGA&#039;nın uçtan uca şifreleme algoritmalarını çalıştırın.</translation>
+        <source>Run MEGA&apos;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
+        <translation type="unfinished">Yavaş tarayıcılara bağlı kalmadan, makinenizde MEGA&apos;nın uçtan uca şifreleme algoritmalarını çalıştırın.</translation>
     </message>
     <message>
         <source>Unlimited file size</source>
@@ -1114,7 +1114,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">MEGAsync test ettiğiniz için teşekkür ederiz.&lt;br&gt;Bu beta sürümünün süresi doldu ve artık geçerli değil.&lt;br&gt;Lütfen güncellemeler için Twitter&#039;da &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; hesabını takip edin.</translation>
+        <translation type="obsolete">MEGAsync test ettiğiniz için teşekkür ederiz.&lt;br&gt;Bu beta sürümünün süresi doldu ve artık geçerli değil.&lt;br&gt;Lütfen güncellemeler için Twitter&apos;da &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; hesabını takip edin.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -1128,7 +1128,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the remote folder doesn&#039;t exist</source>
+because the remote folder doesn&apos;t exist</source>
         <translation type="obsolete">&quot;%1&quot; eşitlemeniz, bulut klasörü bulunamadığı için devre dışı bırakıldı</translation>
     </message>
     <message>
@@ -1138,7 +1138,7 @@ because the remote folder is in the rubbish bin</source>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the local folder doesn&#039;t exist</source>
+because the local folder doesn&apos;t exist</source>
         <translation type="obsolete">&quot;%1&quot; eşitlemeniz, yerel klasör bulunamadığı için devre dışı bırakıldı</translation>
     </message>
     <message>
@@ -1147,11 +1147,11 @@ because the local folder doesn&#039;t exist</source>
         <translation>Hata: Geçersiz hedef klasör. Yükleme iptal edildi</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&#039;t uploaded because it&#039;s too large (this beta is limited to %2 folders or %3 files.</source>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
         <translation type="obsolete">Klasör (%1) çok büyük olduğu için yüklenemedi (bu beta sürümü %2 klasör veya %3 dosya ile sınırlıdır).</translation>
     </message>
     <message>
-        <source>%1 folders weren&#039;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
+        <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
         <translation type="obsolete">%1 klasör çok büyük olduğu için yüklenemedi (beta sürümü %2 klasör veya %3 dosya ile sınırlıdır)</translation>
     </message>
     <message>
@@ -1216,7 +1216,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&#039;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
         <translation>Güncel</translation>
     </message>
     <message>
@@ -1255,11 +1255,11 @@ Exit anyway?</source>
         <translation>Bekliyor</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&#039;t uploaded because it&#039;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">Çok büyük olduğu için klasör (%1) yüklenemedi. Bu kontrolü, verimsiz ve tehlikeli olan önyükleme birimlerinin yüklenmesini engellemek için yapıyoruz.</translation>
     </message>
     <message>
-        <source>%1 folders weren&#039;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">Çok büyük olduğu için %1 klasör yüklenemedi. Bu kontrolü, verimsiz ve tehlikeli olan önyükleme birimlerinin yüklenmesini engellemek için yapıyoruz.</translation>
     </message>
     <message>
@@ -1290,7 +1290,7 @@ Exit anyway?</source>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
         <translatorcomment>Notification message launched to inform the user that there is an available update .</translatorcomment>
-        <translation>MEGAsync&#039;in yeni bir sürümü mevcut! Yüklemek için bu mesajın üzerine tıklayın</translation>
+        <translation>MEGAsync&apos;in yeni bir sürümü mevcut! Yüklemek için bu mesajın üzerine tıklayın</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
@@ -1348,7 +1348,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>A new version of MEGAsync is available!</source>
         <translatorcomment>Notification message launched when an update is available.</translatorcomment>
-        <translation>MEGAsync&#039;in yeni bir sürümü mevcut!</translation>
+        <translation>MEGAsync&apos;in yeni bir sürümü mevcut!</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
@@ -1368,7 +1368,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to upload file/folder to MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation type="obsolete">MEGA&#039;ya yükle</translation>
+        <translation type="obsolete">MEGA&apos;ya yükle</translation>
     </message>
     <message>
         <source>Show status</source>
@@ -1383,7 +1383,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label and title of the dialog displayed when a user wants to download file/folder from MEGA. MAX 20 characters. Keep capital letters.</translatorcomment>
-        <translation type="obsolete">MEGA&#039;dan indir</translation>
+        <translation type="obsolete">MEGA&apos;dan indir</translation>
     </message>
     <message>
         <source>Error getting link: </source>
@@ -1396,12 +1396,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGAsync bağlanamadığı. İnternet bağlantınızı ve yerel güvenlik duvarı ayarlarını kontrol ediniz. Pek çok antivirüs yazılımının güvenlik duvarı içerdiğini unutmayın.</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&#039;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">&quot;%1&quot; eşitlemeniz, bulut klasörü bulunamadığı için devre dışı bırakıldı</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&#039;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">&quot;%1&quot; eşitlemeniz, yerel klasör bulunamadığı için devre dışı bırakıldı</translation>
     </message>
@@ -1436,7 +1436,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Yerel klasör değiştiği için &quot;%1&quot; senkronizasyonu devre dışı bırakıldı</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&#039;t have full access</source>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
         <translation type="unfinished"> &quot;%1&quot; senkronizasyonu devre dışı bırakıldı. Yerel klasör (veya bir bölümü) tam erişeme sahip değil.</translation>
     </message>
@@ -1481,7 +1481,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Hata: Geçersiz hedef klasör. İndirme işlemi iptal edildi.</translation>
     </message>
     <message>
-        <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
         <translation type="unfinished">SSL anahtarımız doğrulanamadı. İletişimlerinizi ele geçirmeye çalışan bir saldırgan olabilir veya antivirüs yazılmınız iletişimlerinizde sıkıntı çıkarıyor olabilir. Lütfen devre dışı bırakıp tekrar deneyin.</translation>
     </message>
@@ -1499,8 +1499,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Geçici hata, tekrar deneniyor.</translation>
     </message>
     <message>
-        <source>I don&#039;t care</source>
-        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
+        <source>I don&apos;t care</source>
+        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&apos;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
         <translation type="unfinished">Umurumda değil</translation>
     </message>
     <message>
@@ -1527,7 +1527,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
         <translatorcomment>Message shown to the user to inform that MEGAsync is not able to find a systray to place tray icon</translatorcomment>
-        <translation type="unfinished">MEGAsync ikonunu yerleştirmek için gerekli sistem tepsisi bulunamadı.MEGAsync sistem tepsisinde ikon olmadan da çalışabilir. Arayüzü açmak istediğinizde, MEGAsync&#039;i tekrar çalıştırmayı deneyin.</translation>
+        <translation type="unfinished">MEGAsync ikonunu yerleştirmek için gerekli sistem tepsisi bulunamadı.MEGAsync sistem tepsisinde ikon olmadan da çalışabilir. Arayüzü açmak istediğinizde, MEGAsync&apos;i tekrar çalıştırmayı deneyin.</translation>
     </message>
     <message>
         <source>Error getting link:</source>
@@ -1540,7 +1540,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">Dosya bulunamadı</translation>
     </message>
     <message>
-        <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
+        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
         <translation type="unfinished">Dosya gelen paylaşımlar klasörü veya Çöp Kutusunda olduğu için link oluşturulamıyor.</translation>
     </message>
@@ -1555,7 +1555,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">İndir</translation>
     </message>
     <message>
-        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
+        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
         <translation type="unfinished">FAT dosya sistemi ile biçimlendirilmiş bir yerel klasörü senkronize ediyorsunuz. Bu dosya sisteminin büyük dosyalar ve düzenleme zamanları ile ilgili büyük sıkıntıları vardır (örn. yaz/kış saati), bu yüzden sadece NTFS gibi güvenilir dosya sistemlerindeki klasörleri eşitlemeniz şiddetle önerilir (detaylı bilgiye [A]buradan[/A] ulaşabilirsiniz).</translation>
     </message>
@@ -1565,7 +1565,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.</source>
-        <translation type="unfinished">MEGAsync çalışmaya devam edecek, ancak güncellemeler OS X Mavericks&#039;ten önceki sürümler için artık desteklenmeyecek.</translation>
+        <translation type="unfinished">MEGAsync çalışmaya devam edecek, ancak güncellemeler OS X Mavericks&apos;ten önceki sürümler için artık desteklenmeyecek.</translation>
     </message>
     <message>
         <source>Resume Transfers</source>
@@ -1716,11 +1716,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation type="unfinished">Hesabınız, MEGA Hizmet Şartları&#039;nın birden fazla ihlalinden dolayı askıya alındı. Lütfen e-posta gelen kutunuzu kontrol edin.</translation>
+        <translation type="unfinished">Hesabınız, MEGA Hizmet Şartları&apos;nın birden fazla ihlalinden dolayı askıya alındı. Lütfen e-posta gelen kutunuzu kontrol edin.</translation>
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation type="unfinished">Hesabınız Mega&#039;nın Hizmet Koşullarını ihlal ettiği için sonlandırıldı, başkalarının haklarını suistimal etmek, yasadışı veriler paylaşmak/yüklemek, ya da sistemi kötüye kullanmak gibi.</translation>
+        <translation type="unfinished">Hesabınız Mega&apos;nın Hizmet Koşullarını ihlal ettiği için sonlandırıldı, başkalarının haklarını suistimal etmek, yasadışı veriler paylaşmak/yüklemek, ya da sistemi kötüye kullanmak gibi.</translation>
     </message>
 </context>
 <context>
@@ -1804,7 +1804,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>View on MEGA</source>
-        <translation type="unfinished">MEGA&#039;da görüntlüe</translation>
+        <translation type="unfinished">MEGA&apos;da görüntlüe</translation>
     </message>
 </context>
 <context>
@@ -1898,7 +1898,7 @@ Are you sure?</source>
         <translation>Hata</translation>
     </message>
     <message>
-        <source>The root folder can&#039;t be synced.
+        <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
         <translation type="obsolete">Kök klasörü eşitlenemez. Lütfen, alt klasör seçin.</translation>
@@ -1915,9 +1915,9 @@ Are you sure you want to sync it?</source>
     </message>
     <message>
         <source>Invalid folder for synchronization.
-Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#039; or &#039;:&#039; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &#039;\\&#039; &#039;/&#039; and &#039;:&#039; codes.</translatorcomment>
-        <translation>Senkronizasyon için geçersiz klasör. Lütfen klasör isimlerinizde &#039;\&#039;, &#039;/&#039; veya &#039;:&#039; karakterlerini kullanmadığınızdan emin olun.</translation>
+Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
+        <translation>Senkronizasyon için geçersiz klasör. Lütfen klasör isimlerinizde &apos;\&apos;, &apos;/&apos; veya &apos;:&apos; karakterlerini kullanmadığınızdan emin olun.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1998,7 +1998,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translation>Bir veya daha fazla MEGA dosya bağlantısı girin</translation>
     </message>
     <message>
-        <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
+        <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
         <translation type="obsolete">Geçerli MEGA bağlantıları bulunamadı (klasör bağlantıları henüz desteklenmiyor).</translation>
     </message>
@@ -2041,7 +2041,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translation type="unfinished">Dosyalar</translation>
     </message>
     <message>
-        <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
+        <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
         <translation type="unfinished">Dosyalar ve klasörlerin sahibi vardır ve kullanıcı gruplarına aittir. Bu diyalogdan, MEGAsync ile oluşturulan aynı grup ve kullanıcılara ait yeni dosya ve klasörlere farklı erişim izinleri atayabilirsiniz. Eğer değiştirmeniz gerekmiyorsa, lütfen güvenlik nedenlerinden dolayı varsayılan ayarları kullanın.</translation>
     </message>
@@ -2340,7 +2340,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
         <translation>Yükleme hız sınırı</translation>
     </message>
     <message>
-        <source>Don&#039;t limit</source>
+        <source>Don&apos;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
         <translation>Sınırlama</translation>
     </message>
@@ -2362,7 +2362,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     <message>
         <source>(about 90% of the available bandwidth)</source>
         <translatorcomment>Label to indicate that management of rate upload limit is automatic is about the 90% of availbale bandwidth. Keep parenthesis.</translatorcomment>
-        <translation>(mevcut bant genişliğinin yaklaşık %90&#039;ı)</translation>
+        <translation>(mevcut bant genişliğinin yaklaşık %90&apos;ı)</translation>
     </message>
     <message>
         <source>Bandwidth quota</source>
@@ -2375,7 +2375,7 @@ Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#03
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
-        <translation type="obsolete">Windows Gezgini&#039;nden yüklemeler için klasör</translation>
+        <translation type="obsolete">Windows Gezgini&apos;nden yüklemeler için klasör</translation>
     </message>
     <message>
         <source>Excluded file names</source>
@@ -2527,7 +2527,7 @@ when the application starts again.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&#039;t respond</source>
+        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
         <translation>Proxy ayarları geçersiz veya proxy yanıt vermiyor</translation>
     </message>
@@ -2589,7 +2589,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">MEGAsync başladığında senkronize edilen klasörlerinin tam taramasını yapacaktır. MEGAsync&#039;i yeniden başlatmak istediğinizden emin misiniz?</translation>
+        <translation type="obsolete">MEGAsync başladığında senkronize edilen klasörlerinin tam taramasını yapacaktır. MEGAsync&apos;i yeniden başlatmak istediğinizden emin misiniz?</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2620,7 +2620,7 @@ Do you want to restart MEGAsync now?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync başladığında senkronize edilen klasörlerinin tam taramasını yapacaktır. MEGAsync&#039;i yeniden başlatmak istediğinizden emin misiniz?</translation>
+        <translation>MEGAsync başladığında senkronize edilen klasörlerinin tam taramasını yapacaktır. MEGAsync&apos;i yeniden başlatmak istediğinizden emin misiniz?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -2643,12 +2643,12 @@ Do you want to restart MEGAsync now?</source>
         <translation>İndirmeler:</translation>
     </message>
     <message>
-        <source>This sync can&#039;t be enabled because the local folder doesn&#039;t exist</source>
+        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
         <translation>Yerel klasör olmadığı için bu senkronizasyon etkinleştirilemiyor</translation>
     </message>
     <message>
-        <source>This sync can&#039;t be enabled because the remote folder doesn&#039;t exist</source>
+        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
         <translation>Uzak klasör olmadığı için bu senkronizasyon etkinleştirilemiyor</translation>
     </message>
@@ -2667,7 +2667,7 @@ Do you want to restart MEGAsync now?</source>
         <translation type="obsolete">Yerel klasörü seç</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
         <translation>Bu yerel klasörde yazma izniniz yok.</translation>
     </message>
@@ -2730,11 +2730,11 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">MEGA&#039;daki senkronize dosyaların önceki sürümlerinin yedekleri kalıcı olarak silinecek. Devam etmeden önce bir şey kurtarmak gerekip gerekmeyeceğini görmek için MEGA hesabınızın Çöp Kutusundaki [A] klasörünü kontrol edin.</translation>
+        <translation type="unfinished">MEGA&apos;daki senkronize dosyaların önceki sürümlerinin yedekleri kalıcı olarak silinecek. Devam etmeden önce bir şey kurtarmak gerekip gerekmeyeceğini görmek için MEGA hesabınızın Çöp Kutusundaki [A] klasörünü kontrol edin.</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
-        <translation type="unfinished">MEGAsync&#039;i şimdi yeniden başlatmak istiyor musunuz?</translation>
+        <translation type="unfinished">MEGAsync&apos;i şimdi yeniden başlatmak istiyor musunuz?</translation>
     </message>
     <message>
         <source>Permissions</source>
@@ -2742,12 +2742,12 @@ when the application starts again</source>
         <translation type="unfinished">İzinler</translation>
     </message>
     <message>
-        <source>Don&#039;t use HTTP</source>
+        <source>Don&apos;t use HTTP</source>
         <translatorcomment>Text next to a checkbox that allows to disable the HTTP protocol for transfers</translatorcomment>
         <translation type="unfinished">HTTP kullanma</translation>
     </message>
     <message>
-        <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
+        <source>Enable this option only if your transfers don&apos;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
         <translation type="unfinished">Bu seçeneği sadece aktarmalarınız başlamazsa etkinleştirin. Normal koşullarda, tüm aktarmalar zaten şifreli olduğu için HTTP tatmin edicidir.</translation>
     </message>
@@ -2805,9 +2805,9 @@ when the application starts again</source>
         <translation type="unfinished">Aktarma kotası</translation>
     </message>
     <message>
-        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
+        <source>Don&apos;t show icons on the left pane of Windows Explorer</source>
         <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
-        <translation type="unfinished">Windows Explorer&#039;ın sol sekmesinde ikon gösterme</translation>
+        <translation type="unfinished">Windows Explorer&apos;ın sol sekmesinde ikon gösterme</translation>
     </message>
     <message>
         <source>Used quota for the last %1 hours: %2</source>
@@ -2832,7 +2832,7 @@ when the application starts again</source>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hover local debris label.</translatorcomment>
-        <translation type="unfinished">MEGA&#039;da silinen dosyaların yedeğine sahip yerel bir klasör</translation>
+        <translation type="unfinished">MEGA&apos;da silinen dosyaların yedeğine sahip yerel bir klasör</translation>
     </message>
     <message>
         <source>Folder in MEGA with a backup of files deleted in the local computer</source>
@@ -2882,8 +2882,8 @@ when the application starts again</source>
         <translation>Bir MEGA hesabım var</translation>
     </message>
     <message>
-        <source>I don&#039;t have a MEGA account</source>
-        <translatorcomment>Label to indicate if the user hasn&#039;t already a MEGA account with a checkbox.</translatorcomment>
+        <source>I don&apos;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>MEGA hesabım yok</translation>
     </message>
     <message>
@@ -2978,7 +2978,7 @@ when the application starts again</source>
     <message>
         <source>Welcome to MEGA</source>
         <translatorcomment>Label displayed to welcome the user.</translatorcomment>
-        <translation>MEGA&#039;ya hoş geldiniz</translation>
+        <translation>MEGA&apos;ya hoş geldiniz</translation>
     </message>
     <message>
         <source>Your local folder:</source>
@@ -3033,7 +3033,7 @@ when the application starts again</source>
         <translation>Hesabınızı doğruladınız mı?</translation>
     </message>
     <message>
-        <source>MEGA folder doesn&#039;t exist</source>
+        <source>MEGA folder doesn&apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>MEGA klasörü yok</translation>
     </message>
@@ -3068,14 +3068,14 @@ when the application starts again</source>
         <translation>Lütfen daha güçlü bir şifre girin</translation>
     </message>
     <message>
-        <source>The entered passwords don&#039;t match</source>
+        <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
         <translation>Girilen şifreler eşleşmiyor</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Hizmet Şartları&#039;nı kabul etmek zorundasınız</translation>
+        <translation>Hizmet Şartları&apos;nı kabul etmek zorundasınız</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -3152,7 +3152,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</source>
         <translatorcomment>Label to inform the user that the synchronization stablished will be automatically synchronized.</translatorcomment>
-        <translation>Yerel klasörünüz ve MEGA Cloud Drive&#039;ınız otomatik olarak senkronize olacaktır.</translation>
+        <translation>Yerel klasörünüz ve MEGA Cloud Drive&apos;ınız otomatik olarak senkronize olacaktır.</translation>
     </message>
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
@@ -3160,12 +3160,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>Bulut Sürücünüz bu klasör ile senkronize edilecek:</translation>
     </message>
     <message>
-        <source>You don&#039;t have write permissions in this local folder.</source>
+        <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>Bu yerel klasörde yazma izniniz yok.</translation>
     </message>
     <message>
-        <source>MEGAsync won&#039;t be able to download anything here.</source>
+        <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>MEGAsync buraya bir şey indiremeyecek.</translation>
     </message>
@@ -3252,7 +3252,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label displayed when a user is trying to upload a file/folder to MEGA from the shell extension. String as short as possible.</translatorcomment>
-        <translation>MEGA&#039;ya yükle</translation>
+        <translation>MEGA&apos;ya yükle</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -3307,7 +3307,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>View on MEGA</source>
         <translatorcomment>Context menu option to view a file or folder through web browser within your MEGA account</translatorcomment>
-        <translation type="unfinished">MEGA&#039;da görüntlüe</translation>
+        <translation type="unfinished">MEGA&apos;da görüntlüe</translation>
     </message>
     <message>
         <source>View previous versions</source>
@@ -3358,7 +3358,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">MEGA&#039;dan yayınla</translation>
+        <translation type="unfinished">MEGA&apos;dan yayınla</translation>
     </message>
     <message>
         <source>Select media from...</source>
@@ -3577,12 +3577,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label to indicate the file upload option from transfer manager dialog</translatorcomment>
-        <translation type="obsolete">MEGA&#039;ya yükle</translation>
+        <translation type="obsolete">MEGA&apos;ya yükle</translation>
     </message>
     <message>
         <source>Download from MEGA</source>
         <translatorcomment>Label to indicate the file download option from transfer manager dialog</translatorcomment>
-        <translation type="obsolete">MEGA&#039;dan indir</translation>
+        <translation type="obsolete">MEGA&apos;dan indir</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -3664,7 +3664,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA</source>
         <translatorcomment>Label and Title of the dialog displayed when a user is trying to upload a file/folder to MEGA.(MAX 20 characters)</translatorcomment>
-        <translation>MEGA&#039;ya yükle</translation>
+        <translation>MEGA&apos;ya yükle</translation>
     </message>
     <message>
         <source>Please, select the upload folder for your files:</source>
