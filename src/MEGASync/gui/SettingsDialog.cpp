@@ -2484,6 +2484,19 @@ void SettingsDialog::on_lAccountImage_clicked()
     }
 }
 
+void SettingsDialog::on_bChangePassword_clicked()
+{
+    QPointer<ChangePassword> cPassword = new ChangePassword(this);
+    int result = cPassword->exec();
+    if (!cPassword || result != QDialog::Accepted)
+    {
+        delete cPassword;
+        return;
+    }
+
+    delete cPassword;
+}
+
 MegaProgressDialog::MegaProgressDialog(const QString &labelText, const QString &cancelButtonText,
                                        int minimum, int maximum, QWidget *parent, Qt::WindowFlags f) :
     QProgressDialog(labelText, cancelButtonText, minimum, maximum, parent, f) {}

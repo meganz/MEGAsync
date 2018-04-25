@@ -16,6 +16,7 @@
 #include "SizeLimitDialog.h"
 #include "LocalCleanScheduler.h"
 #include "DownloadFromMegaDialog.h"
+#include "ChangePassword.h"
 #include "Preferences.h"
 #include "megaapi.h"
 
@@ -118,6 +119,7 @@ private slots:
     void on_bFullCheck_clicked();
     void on_bStorageDetails_clicked();
     void on_lAccountImage_clicked();
+    void on_bChangePassword_clicked();
 
     void onAnimationFinished();
 
