@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
+        <translation type="unfinished">Introduce un nombre, una ruta absoluta (comodines * y? permitidos) o selecciona el archivo o carpeta que quieres excluir de la sincronización.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -237,7 +237,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>The name &quot;%1&quot; is already in use for another sync. Please enter a different name to identify this synced folder:</translation>
+        <translation>El nombre &quot;%1&quot; ya está en uso para otra sincronización. Por favor introduce un nombre diferente para identificar esta carpeta sincronizada:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -257,13 +257,13 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please, select another folder.</translation>
+        <translation type="obsolete">La carpeta local es demasiado grande (esta versión está limitada a %1 carpetas o %2 archivos. Por favor selecciona otra carpeta.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="obsolete">You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation type="obsolete">Estás tratando de sincronizar una carpeta muy grande. Te pedimos que comiences con una carpeta más pequeña y añadas más datos después. Hacemos esta comprobación para evitar la subida de discos completos, porque es ineficiente y peligroso.</translation>
     </message>
 </context>
 <context>
@@ -313,7 +313,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Password changed</source>
-        <translation type="unfinished">Password changed</translation>
+        <translation type="unfinished">Contraseña modificada</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
@@ -552,7 +552,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Estás tratando de sincronizar una carpeta muy grande. Te pedimos que comiences con una carpeta más pequeña y añadas más datos después. Hacemos esta comprobación para evitar la subida de discos completos, porque es ineficiente y peligroso.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1159,7 +1159,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">Synchronization will stop. Deletions that occur while it is not running will not be propagated. Exit anyway?</translation>
+        <translation type="obsolete">La sincronización se parará. Los borrados que sucedan mientras MEGAsync no se ejecuta, no se propagarán al servidor. ¿Seguro que quieres salir?</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -1296,7 +1296,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>Hubo un problema instalando la actualización. Por favor inténtelo de nuevo o descargue la última versión desde: https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1323,7 +1323,7 @@ https://mega.co.nz/#sync</source>
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation type="obsolete">Synchronization will stop. Exit anyway?</translation>
+        <translation type="obsolete">La sincronización se detendrá. ¿Seguro que quieres salir?</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -1334,7 +1334,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="obsolete">Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
+        <translation type="obsolete">No se ha podido acceder al sistema de archivos. Por favor, inténtalo de nuevo. Si el problema persiste contacta con bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -1720,7 +1720,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation type="unfinished">Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</translation>
+        <translation type="unfinished">Hemos cerrado tu cuenta debido a un incumplimiento de los Términos de Servicio de MEGA, como el abuso de los derechos de terceros, la compartición y/o importación de datos ilegales; o el abuso del sistema.</translation>
     </message>
 </context>
 <context>
@@ -1901,7 +1901,7 @@ Are you sure?</source>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation type="obsolete">The root folder can&apos;t be synced. Please, select a subfolder.</translation>
+        <translation type="obsolete">La carpeta raíz no se puede sincronizar. Por favor, selecciona una subcarpeta.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1911,13 +1911,13 @@ Please, select a subfolder.</source>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation type="obsolete">You have %1 in this folder. Are you sure you want to sync it?</translation>
+        <translation type="obsolete">Tienes %1 en esta carpeta. ¿Estás seguro de que quieres sincronizarla?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization. Please, ensure that you don&apos;t use characters like &apos;\&apos;, &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
+        <translation>Carpeta no válida para sincronización. Asegúrate de que no usas caracteres como &apos;\&apos;, &apos;/&apos; or &apos;:&apos; en tus nombres de carpeta.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2490,7 +2490,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation type="vanished">Enter a name to exclude from synchronization.(wildcards * and? are allowed):</translation>
+        <translation type="vanished">Escribe un nombre para excluirlo de la sincronización. (comodines * y? permitidos):</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2589,7 +2589,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
+        <translation type="obsolete">MEGAsync hará un escaneo completo de tus carpetas sincronizadas al inicio. ¿Quieres reiniciar ahora?</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2620,7 +2620,7 @@ Do you want to restart MEGAsync now?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
+        <translation>MEGAsync hará un escaneo completo de tus carpetas sincronizadas al inicio. ¿Quieres reiniciar ahora?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -3090,7 +3090,7 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">You have %1 in your Cloud Drive. Are you sure you want to sync your entire Cloud Drive?</translation>
+        <translation type="obsolete">Tienes %1 en tu Nube.¿Estás seguro de que quieres sincronizar toda tu Nube?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -3109,7 +3109,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please, select another folder.</translation>
+        <translation type="obsolete">La carpeta local es demasiado grande (esta versión está limitada a %1 carpetas o %2 archivos. Por favor selecciona otra carpeta.</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -3126,13 +3126,13 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Estás tratando de sincronizar una carpeta muy grande. Te pedimos que comiences con una carpeta más pequeña y añadas más datos después. Hacemos esta comprobación para evitar la subida de discos completos, porque es ineficiente y peligroso.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
+        <translation>No se ha podido acceder al sistema de archivos. Por favor, inténtalo de nuevo. Si el problema persiste contacta con bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
