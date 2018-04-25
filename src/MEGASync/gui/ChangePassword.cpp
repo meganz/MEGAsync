@@ -59,12 +59,17 @@ void ChangePassword::on_bOk_clicked()
 
     if (emptyField)
     {
-        QMessageBox::warning(this, tr("Warning"), tr("Please enter your password"));
+        QMessageBox::warning(this, tr("Error"), tr("Please enter your password"));
         return;
     }
     else if (!equalPasswords)
     {
-        QMessageBox::warning(this, tr("Warning"), tr("The entered passwords don't match"));
+        QMessageBox::warning(this, tr("Error"), tr("The entered passwords don't match"));
+        return;
+    }
+    else if (newPassword().size() < 8)
+    {
+        QMessageBox::warning(this, tr("Error"), tr("Please, enter a stronger password"));
         return;
     }
 
