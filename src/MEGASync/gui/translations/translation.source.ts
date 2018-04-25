@@ -201,10 +201,6 @@
         <translation>Add synchronized folder</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Please select a local folder and a MEGA folder</source>
         <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
         <translation>Please select a local folder and a MEGA folder</translation>
