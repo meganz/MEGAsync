@@ -6,80 +6,80 @@
     <message>
         <source>Account usage details</source>
         <translatorcomment>Title of the dialog that displays account usage details for the actual logged user.</translatorcomment>
-        <translation>[$2056]</translation>
+        <translation>Account usage details</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">[$1687]</translation>
+        <translation type="unfinished">Cloud Drive</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">[$166]</translation>
+        <translation type="unfinished">Inbox</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
         <translatorcomment>Label for Rubbish Bin space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">[$167]</translation>
+        <translation type="obsolete">Rubbish Bin</translation>
     </message>
     <message>
         <source>Storage</source>
         <translatorcomment>Label for Storage space used. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">[$495]</translation>
+        <translation type="obsolete">Storage</translation>
     </message>
     <message>
         <source>Files</source>
         <translatorcomment>Label for Files. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">[$2034]</translation>
+        <translation type="obsolete">Files</translation>
     </message>
     <message>
         <source>Folders</source>
         <translatorcomment>Label for Folders. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">[$2035]</translation>
+        <translation type="obsolete">Folders</translation>
     </message>
     <message>
         <source>Refresh</source>
         <translatorcomment>Label for Refresh button. Used to retrieve all usage account details from the server.</translatorcomment>
-        <translation type="vanished">[$2036]</translation>
+        <translation type="vanished">Refresh</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation type="vanished">[$81]</translation>
+        <translation type="vanished">OK</translation>
     </message>
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Loading…</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Incoming Shares</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rubbish bin</translation>
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Available</translation>
     </message>
     <message>
         <source>Total size taken up by file versions:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Total size taken up by file versions:</translation>
     </message>
     <message>
         <source>USED STORAGE %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">USED STORAGE %1</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
-        <translation type="unfinished">[$1752]</translation>
+        <translation type="unfinished">Data temporarily unavailable</translation>
     </message>
     <message>
         <source>%1 of %2</source>
-        <translation type="unfinished">[$1607]</translation>
+        <translation type="unfinished">%1 of %2</translation>
     </message>
 </context>
 <context>
