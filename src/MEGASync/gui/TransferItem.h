@@ -18,6 +18,7 @@ public:
 
     void setFileName(QString fileName);
     QString getFileName();
+    QString getTransferName();
     void setTransferredBytes(long long totalTransferredBytes, bool cancellable);
     void setTransferType(int type);
     void setSpeed(long long transferSpeed, long long meanSpeed);

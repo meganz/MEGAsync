@@ -3,6 +3,7 @@
 #include <QEvent>
 #include <QMouseEvent>
 #include <QMessageBox>
+#include <QToolTip>
 #include "control/Utilities.h"
 #include "Preferences.h"
 #include "gui/QMegaMessageBox.h"
@@ -148,4 +149,23 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
     }
 
     return QAbstractItemDelegate::editorEvent(event, model, option, index);;
+}
+
+bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
+{
+    if (event->type() == QEvent::ToolTip)
+    {
+        int tag = index.internalId();
+        TransferItem *item = model->transferItems[tag];
+        if (item)
+        {
+            QString fileName = item->getFileName();
+            if (fileName != item->getTransferName())
+            {
+                QToolTip::showText(event->globalPos(), fileName);
+                return true;
+            }
+        }
+    }
+    return QStyledItemDelegate::helpEvent(event, view, option, index);
 }

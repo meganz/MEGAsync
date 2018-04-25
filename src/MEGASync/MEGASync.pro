@@ -56,11 +56,12 @@ CONFIG += USE_LIBUV
 CONFIG += USE_MEGAAPI
 CONFIG += USE_MEDIAINFO
 
-win32 {
-    CONFIG += USE_FFMPEG
+unix:!macx {
+        exists(/usr/include/ffmpeg-mega)|exists(mega/bindings/qt/3rdparty/include/ffmpeg)|packagesExist(ffmpeg) {
+            CONFIG += USE_FFMPEG
+        }
 }
-
-macx {
+else {
     CONFIG += USE_FFMPEG
 }
 

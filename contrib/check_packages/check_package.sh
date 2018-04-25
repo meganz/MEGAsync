@@ -482,6 +482,11 @@ fi
 
 theDisplay="DISPLAY=:0.0"
 
+if [[ $VMNAME == *"ARCHLINUX"* ]]; then
+theDisplay="DISPLAY=:1.0"
+fi
+
+
 echo " relaunching megasync as user ..."
 VERSIONMEGASYNCREMOTERUNNING=`$sshpasscommand ssh -oStrictHostKeyChecking=no  mega@$IP_GUEST $theDisplay megasync --version | grep -i megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
 logSth "running megasync ..." "$VERSIONMEGASYNCREMOTERUNNING"
@@ -521,9 +526,9 @@ $sshpasscommand ssh root@$IP_GUEST  "cat /usr/share/doc/megasync/{distro,version
 ## CHECKING REPO SET OK ##
 if [[ $VMNAME == *"OPENSUSE"* ]]; then
 	distroDir="openSUSE"
-	ver=$($sshpasscommand ssh root@$IP_GUEST lsb_release -rs)
-	if [ x$ver == "x20160920" ]; then ver="Tumbleweed"; fi
+	ver=$($sshpasscommand ssh root@$IP_GUEST grep -i Tumbleweed /etc/issue > /dev/null && echo Tumbleweed || $sshpasscommand ssh root@$IP_GUEST lsb_release -rs)
 	if [[ x$ver == "x42"* ]]; then ver="Leap_$ver"; fi
+	if [[ x$ver == "x15"* ]]; then ver="Leap_$ver"; fi
 	expected="baseurl=https://mega.nz/linux/MEGAsync/${distroDir}_$ver"
 	resultRepoConfiguredOk=0
 	if ! $sshpasscommand ssh root@$IP_GUEST cat /etc/zypp/repos.d/megasync.repo | grep "$expected" > /dev/null; then
@@ -611,5 +616,5 @@ if [ $quit_machine -eq 1 ]; then
 	$sshpasscommand ssh root@$IP_GUEST shutdown -h now & #unfurtonately this might (though rarely) hang if vm destroyed
 	#$sshpasscommand ssh root@$IP_GUEST sleep 20 #unfurtonately this might hang if vm destroyed
 	sleep 8
-	sudo virsh destroy $VMNAME
+	sudo virsh destroy $VMNAME || sudo pkill -f "/usr/bin/qemu-system-x86_64 -name $VMNAME "
 fi

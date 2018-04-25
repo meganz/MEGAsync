@@ -16,6 +16,7 @@
 #include "control/Utilities.h"
 #include "MegaApplication.h"
 #include "MenuItemAction.h"
+#include "platform/Platform.h"
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -698,7 +699,7 @@ void InfoDialog::updateState()
             {
                 QFileInfo fileBlocked (QString::fromUtf8(blockedPath));
                 ui->lBlockedItem->setToolTip(fileBlocked.absoluteFilePath());
-                ui->lBlockedItem->setAlignment(Qt::AlignLeft);
+                ui->lBlockedItem->setAlignment(Qt::AlignCenter);
                 ui->lBlockedItem->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a style=\" font-size: 12px;\" href=\"local://#%1\">%2</a>")
                                                                .arg(fileBlocked.absoluteFilePath())
                                                                .arg(fileBlocked.fileName())));
@@ -706,7 +707,7 @@ void InfoDialog::updateState()
             }
             else if (megaApi->areServersBusy())
             {
-                ui->lBlockedItem->setText(tr("Servers are too busy. Please wait..."));
+                ui->lBlockedItem->setText(tr("The process is taking longer than expected. Please wait..."));
                 ui->lBlockedItem->setAlignment(Qt::AlignCenter);
             }
             else
@@ -1147,8 +1148,13 @@ void InfoDialog::addSync(MegaHandle h)
         dialog->setMegaFolder(h);
     }
 
-    int result = dialog->exec();    
-    if (!dialog || !result)
+    Platform::execBackgroundWindow(dialog);
+    if (!dialog)
+    {
+        return;
+    }
+
+    if (dialog->result() != QDialog::Accepted)
     {
         delete dialog;
         dialog = NULL;
