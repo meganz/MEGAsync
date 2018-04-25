@@ -51,6 +51,11 @@ void MacXPlatform::initialize(int argc, char *argv[])
     }
 }
 
+void MacXPlatform::prepareForSync()
+{
+
+}
+
 QStringList MacXPlatform::multipleUpload(QString uploadTitle)
 {
     return uploadMultipleFiles(uploadTitle);
