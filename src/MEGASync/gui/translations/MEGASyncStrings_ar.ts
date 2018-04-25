@@ -46,12 +46,12 @@
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation type="vanished">موافق</translation>
+        <translation type="vanished">حسنا</translation>
     </message>
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation type="unfinished">جاري التحميل…</translation>
+        <translation type="unfinished">جاري التحميل</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">أدخل اسم، أو مسار مطلق (الرموز المسموح بها هي ؟ و  *) أو اختر أي ملف أو مجلد تريد استثنائه من عملية التزامن</translation>
+        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -155,12 +155,12 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">إلغاء</translation>
+        <translation type="unfinished">الغاء</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for confirmation button.</translatorcomment>
-        <translation type="unfinished">موافق</translation>
+        <translation type="unfinished">حسنا</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -201,10 +201,6 @@
         <translation>إضافة مجلد متزامنة</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Please select a local folder and a MEGA folder</source>
         <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
         <translation>الرجاء اختيار مجلد محلي ومجلد ميجا</translation>
@@ -241,17 +237,17 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>The name &quot;%1&quot; is already in use for another syncPlease enter a different name to identify this synced folder:</translation>
+        <translation>The name &quot;%1&quot; is already in use for another sync. Please enter a different name to identify this synced folder:</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>موافق</translation>
+        <translation>حسنا</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>إلغاء</translation>
+        <translation>الغاء</translation>
     </message>
     <message>
         <source>Error</source>
@@ -261,13 +257,13 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">المجلد المحلي كبير جدا (هذه نسخة محددة إلى %1 مجلدات أو %2 ملفات.من فضلك، حدد مجلد آخر.</translation>
+        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please, select another folder.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="obsolete">You are trying to sync an extremely large folder.To prevent the syncing of entire boot volumes, which is inefficient and dangerous,we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation type="obsolete">You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
     </message>
 </context>
 <context>
@@ -294,6 +290,57 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>ChangePassword</name>
+    <message>
+        <source>Change password</source>
+        <translation type="unfinished">تغيير كلمة المرور</translation>
+    </message>
+    <message>
+        <source>New password</source>
+        <translation type="unfinished">كلمة سر جديدة</translation>
+    </message>
+    <message>
+        <source>Confirm new password</source>
+        <translation type="unfinished">تأكيد كلمة المرور الجديدة</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">الغاء</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">حسنا</translation>
+    </message>
+    <message>
+        <source>Password changed</source>
+        <translation type="unfinished">تم تغيير كلمة المرور</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translation type="unfinished">تم تغيير كلمة المرور.</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">خطأ</translation>
+    </message>
+    <message>
+        <source>Wrong password</source>
+        <translation type="unfinished">كلمة مرور خاطئة</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">تحذير</translation>
+    </message>
+    <message>
+        <source>Please enter your password</source>
+        <translation type="unfinished">الرجاء إدخال كلمة المرور</translation>
+    </message>
+    <message>
+        <source>The entered passwords don&#039;t match</source>
+        <translation type="unfinished">كلمات السر المدخلة غير متطابقة</translation>
+    </message>
+</context>
+<context>
     <name>ConfirmSSLexception</name>
     <message>
         <source>Warning</source>
@@ -306,7 +353,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">هل أنت متأكد أنك تريد المتابعة؟</translation>
     </message>
     <message>
-        <source>Remember my decision and don&apos;t ask me again</source>
+        <source>Remember my decision and don&#039;t ask me again</source>
         <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
         <translation type="unfinished">تذكر قراري ولا تسألني مرة أخرى</translation>
     </message>
@@ -339,14 +386,14 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>MEGAsync كشفت مشكلة. وهذه هي التفاصيل:</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&#039;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
         <translation>يمكنك مساعدتنا في تحسين MEGAsync عن طريق إرسال هذا التقرير عن الخطأ. أنه لا يحتوي على أي معلومات شخصية. إذا كنت تريد أن تعطي لنا المزيد من التفاصيل، يرجى كتابتها أدناه:</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>إلغاء</translation>
+        <translation>الغاء</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -379,12 +426,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>موافق</translation>
+        <translation>حسنا</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>إلغاء</translation>
+        <translation>الغاء</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -402,8 +449,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>خطأ</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <source>You don&#039;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&#039;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>لا يوجد لديك تصريح الكتابة في هذا المجلد المحلي.</translation>
     </message>
 </context>
@@ -482,12 +529,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>تحذير</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this folder.</source>
+        <source>You don&#039;t have write permissions in this folder.</source>
         <translation type="obsolete">لا يوجد لديك تصريح الكتابة في هذا المجلد.</translation>
     </message>
     <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
+        <source>MEGAsync won&#039;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&#039;t be able to download anything due to the user doesn&#039;t have writhe permissions on the local selected folder.</translatorcomment>
         <translation>MEGAsync سوف لن تكون قادرة على تحميل أي شيء هنا.</translation>
     </message>
     <message>
@@ -496,8 +543,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>هل تريد المتابعة؟</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <source>You don&#039;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&#039;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
         <translation>لا يوجد لديك تصريح الكتابة في هذا المجلد المحلي.</translation>
     </message>
     <message>
@@ -505,7 +552,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>You are trying to sync an extremely large folder.To prevent the syncing of entire boot volumes, which is inefficient and dangerous,we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -537,7 +584,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel download</source>
         <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
-        <translation type="obsolete">إلغاء التحميل</translation>
+        <translation type="obsolete">الغاء التحميل</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -586,12 +633,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>موافق</translation>
+        <translation>حسنا</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>إلغاء</translation>
+        <translation>الغاء</translation>
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
@@ -610,11 +657,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>خطأ في فك التشفير</translation>
+        <translation>خطأ فك التشفير</translation>
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that an imported link can&#039;t be found.</translatorcomment>
         <translation>غير موجود </translation>
     </message>
     <message>
@@ -632,7 +679,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>خطأ</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&#039;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>لا يوجد لديك تصريح الكتابة في هذا المجلد المحلي.</translation>
     </message>
@@ -707,7 +754,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel download</source>
         <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
-        <translation>إلغاء التحميل</translation>
+        <translation>الغاء التحميل</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
@@ -752,7 +799,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">يتم الرفع</translation>
+        <translation type="vanished">جاري الرفع</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
@@ -770,7 +817,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Settings</source>
-        <translation type="obsolete">الإعدادات</translation>
+        <translation type="obsolete">الاعدادات</translation>
     </message>
     <message>
         <source>Resume downloads</source>
@@ -809,7 +856,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Servers are too busy. Please wait...</source>
-        <translation type="unfinished">الخوادم مشغولة جدا. الرجاء الانتظار...</translation>
+        <translation type="obsolete">الخوادم مشغولة جدا. الرجاء الانتظار.</translation>
     </message>
     <message>
         <source>MEGAsync is currently disabled</source>
@@ -824,7 +871,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">الترقية إلى العضوية المتميزة</translation>
+        <translation type="unfinished">رق حسابك إلى برو</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -895,6 +942,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>USED BANDWIDTH %1</source>
         <translation type="unfinished">عرض النطاق الترددي المستخدم %1</translation>
     </message>
+    <message>
+        <source>The process is taking longer than expected. Please wait...</source>
+        <translation type="unfinished">[$18222]</translation>
+    </message>
 </context>
 <context>
     <name>InfoOverQuotaDialog</name>
@@ -935,7 +986,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">الإعدادات</translation>
+        <translation type="unfinished">الاعدادات</translation>
     </message>
 </context>
 <context>
@@ -957,7 +1008,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">تسريع عملية النقل</translation>
     </message>
     <message>
-        <source>MEGAsync takes full advantage of MEGA&apos;s high-powered infrastructure and multi-connection transfers.</source>
+        <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
         <translation type="unfinished">تستفيد MEGAsync من الإمتيازات الكاملة لMEGA من بنية تحتية قوية و عمليات نقل باتصال متعدد.</translation>
     </message>
     <message>
@@ -965,7 +1016,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">مصادر سهلة وآمنة للاستخداام</translation>
     </message>
     <message>
-        <source>Run MEGA&apos;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
+        <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
         <translation type="unfinished">شغّل خوارزميات التشفير من البداية إلى النهاية على جهازك دون الاعتماد على المتصفحات البطيئة</translation>
     </message>
     <message>
@@ -1037,12 +1088,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">إلغاء</translation>
+        <translation type="unfinished">الغاء</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for OK button.</translatorcomment>
-        <translation type="unfinished">موافق</translation>
+        <translation type="unfinished">حسنا</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1068,7 +1119,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>جاري تسجيل الدخول</translation>
+        <translation>تسجيل الدخول</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
@@ -1077,18 +1128,18 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the remote folder doesn&apos;t exist</source>
-        <translation type="obsolete">تم تعطيل المزامنة &quot;%1&quot;بسبب عدم وجود المجلد البعيد</translation>
+because the remote folder doesn&#039;t exist</source>
+        <translation type="obsolete">تم تعطيل المزامنة &quot;%1&quot; بسبب عدم وجود المجلد البعيد</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">تم تعطيل المزامنة &quot;%1&quot;لأن المجلد البعيد في سلة المهملات</translation>
+        <translation type="obsolete">تم تعطيل المزامنة &quot;%1&quot; بسبب  وجود المجلد البعيد في سلة المهملات</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the local folder doesn&apos;t exist</source>
-        <translation type="obsolete">تم تعطيل المزامنة &quot;%1&quot; بسبب  عدد وجود المجلد المحلي</translation>
+because the local folder doesn&#039;t exist</source>
+        <translation type="obsolete">تم تعطيل المزامنة &quot;%1&quot; بسبب عدم وجود المجلد المحلي</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1096,19 +1147,19 @@ because the local folder doesn&apos;t exist</source>
         <translation>خطأ: مجلد الوجهة غير صالح. تم إلغاء الرفع</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
+        <source>The folder (%1) wasn&#039;t uploaded because it&#039;s too large (this beta is limited to %2 folders or %3 files.</source>
         <translation type="obsolete">لا يمكن رفع المجلد (%1) لأنه كبير جدا (الوضع التجريبي الحالي يسمح ب %2 مجلدات او %3 ملفات</translation>
     </message>
     <message>
-        <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
+        <source>%1 folders weren&#039;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
+        <translation type="obsolete">%1 folders weren&#039;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
         <source>Synchronization will stop.
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">سوف يتم ايقاف التزامن.لن يتم نشر عمليات الحذف التي تحدث أثناء عدم تشغيل.</translation>
+        <translation type="obsolete">Synchronization will stop. Deletions that occur while it is not running will not be propagated. Exit anyway?</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -1143,12 +1194,12 @@ Exit anyway?</source>
     <message>
         <source>About</source>
         <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
-        <translation type="unfinished">معلومات عن</translation>
+        <translation type="unfinished">حول</translation>
     </message>
     <message>
         <source>Settings</source>
         <translatorcomment>Label to indicate the Settings option for the application (MAX 20 characters)</translatorcomment>
-        <translation>الإعدادات</translation>
+        <translation>الاعدادات</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -1165,7 +1216,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&#039;t any available update.</translatorcomment>
         <translation>محدث</translation>
     </message>
     <message>
@@ -1204,11 +1255,11 @@ Exit anyway?</source>
         <translation>انتظر</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>The folder (%1) wasn&#039;t uploaded because it&#039;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">المجلد (%1) لم يتم رفعة لأن حجمة كبيرة للغاية. نحن نفعل ذلك الاختيار لمنع تحميل وحدات التخزين التمهيد بأكمله، والتي هي غير فعالة وخطيرة.</translation>
     </message>
     <message>
-        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>%1 folders weren&#039;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">%1 مجلدات لا يتم تحميلها لأنها كبيرة للغاية. نحن نفعل ذلك الاختيار لمنع رفع وحدات التخزين التمهيد بأكمله، والتي هي غير فعالة وخطيرة.</translation>
     </message>
     <message>
@@ -1245,7 +1296,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>حدثت مشكلة أثناء تثبيت التحديث. الرجاء إعادة المحاولة لاحقا أو تنزيل الإصدار الأخير من:https://mega.co.nz/#sync</translation>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1265,14 +1316,14 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
-        <translation>خطأ</translation>
+        <translation type="vanished">خطأ</translation>
     </message>
     <message>
         <source>Synchronization will stop.
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation type="obsolete">سوف يتم وقف التزامن.الخروج على أية حال؟</translation>
+        <translation type="obsolete">Synchronization will stop. Exit anyway?</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -1283,7 +1334,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="obsolete">غير قادر على الحصول على ملفات النظام.حاول مرة اخرى. إذا استمرت المشكلة يرجى الاتصال bug@mega.nz</translation>
+        <translation type="obsolete">Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -1345,12 +1396,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGAsync  غير قادر علي الاتصال. الرجاء التحقق من اتصال الإنترنت الخاص بك واعدادات جدار الحماية المحلي. يرجي ملاحظة أن برامج مكافحة الفيروسات تتضمن جدار ناري.</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&#039;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">تم تعطيل المزامنة &quot;%1&quot; بسبب عدم وجود المجلد البعيد</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&#039;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">تم تعطيل المزامنة &quot;%1&quot; بسبب عدم وجود المجلد المحلي</translation>
     </message>
@@ -1385,7 +1436,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">تم تعطيل المزامنة &quot;%1&quot; بسبب تغير المجلد المحلي</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&#039;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
         <translation type="unfinished">تم تعطيل المزامنة &quot;%1&quot; المجلد البعيد (أو جزء منه) ليس لديه حق الوصول الكامل</translation>
     </message>
@@ -1402,7 +1453,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Logout</source>
         <translatorcomment>Label to indicate Logout action</translatorcomment>
-        <translation type="unfinished">تسجيل الخروج</translation>
+        <translation type="unfinished">الخروج</translation>
     </message>
     <message>
         <source>Transfer failed:</source>
@@ -1430,7 +1481,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">خطأ: وجهة المجلد غير موجود. التحميل تم إلغاؤه </translation>
     </message>
     <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
         <translation type="unfinished">لا يمكن التحقق من مفتاح SSL. من الممكن أن تتأثر بهجوم الوسيط أو برنامج مكافحة الفيروسات الخاص بك يمكن أن تعترض اتصالاتك الخاصة وتسبب هذه المشكلة. الرجاء تعطيله والمحاولة مرة أخرى.</translation>
     </message>
@@ -1448,8 +1499,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">خطأ مؤقت، جاري إعادة المحاولة.</translation>
     </message>
     <message>
-        <source>I don&apos;t care</source>
-        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&apos;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
+        <source>I don&#039;t care</source>
+        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
         <translation type="unfinished">لا أهتم</translation>
     </message>
     <message>
@@ -1489,22 +1540,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">الملف غير موجود</translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
+        <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
         <translation type="unfinished">لا يمكن إنشاء الرابط لأن الملف إما داخل مجلد مشاركة وارد أو في سلة المهملات.</translation>
     </message>
     <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
-        <translation type="unfinished">تحميل</translation>
+        <translation type="unfinished">رفع</translation>
     </message>
     <message>
         <source>Download</source>
         <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
-        <translation type="unfinished">التنزيل</translation>
+        <translation type="unfinished">تحميل</translation>
     </message>
     <message>
-        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
+        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
         <translation type="unfinished">أنت تقوم بمزامنة مجلد محلي بنظام FAT. هذا النظام لديه أوجه قصور في إدارة الملفات الكبيرة وأوقات التعديل التي يمكن أن تسبب مشاكل التزامن (على سبيل المثال عند تغيير التوقيت الصيفي)، لذا فمن المستحسن أن تقوم بمزامنة المجلدات بأنظمة ملفات أكثر موثوقية مثل NTFS  (لمزيد من المعلومات [A]هنا[/A]).</translation>
     </message>
@@ -1663,6 +1714,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Error</source>
         <translation type="obsolete">خطأ</translation>
     </message>
+    <message>
+        <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
+        <translation type="unfinished">تم تعليق حسابك بسبب انتهاكات متعددة لشروط الخدمة الخاصة ب MEGA. يرجى التحقق من بريدك الوارد.</translation>
+    </message>
+    <message>
+        <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
+        <translation type="unfinished">تم الغاء حسابك لدى MEGA لمخالفتك شروط استخدام الخدمة، كاستغلال حقوق الاخرين، او مشاركة او استيراد بيانات غير قانونية، او سوء استعمال واستغلال للنظام.</translation>
+    </message>
 </context>
 <context>
     <name>MegaTransferDelegate</name>
@@ -1707,7 +1766,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label of context menu option to cancel selected transfer</translatorcomment>
-        <translation type="unfinished">إلغاء</translation>
+        <translation type="unfinished">الغاء</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -1743,6 +1802,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Are you sure you want to cancel this transfer?</source>
         <translation type="unfinished">هل أنت متأكد من إلغاء عملية النقل هذه؟</translation>
     </message>
+    <message>
+        <source>View on MEGA</source>
+        <translation type="unfinished">اعرض على MEGA</translation>
+    </message>
 </context>
 <context>
     <name>MegaUploader</name>
@@ -1774,12 +1837,12 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">إلغاء</translation>
+        <translation type="unfinished">الغاء</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for OK button.</translatorcomment>
-        <translation type="unfinished">موافق</translation>
+        <translation type="unfinished">حسنا</translation>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
@@ -1812,12 +1875,12 @@ Are you sure?</source>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>موافق</translation>
+        <translation>حسنا</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>إلغاء</translation>
+        <translation>الغاء</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -1835,10 +1898,10 @@ Are you sure?</source>
         <translation>خطأ</translation>
     </message>
     <message>
-        <source>The root folder can&apos;t be synced.
+        <source>The root folder can&#039;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation type="obsolete">لا يمكن مزامنة المجلد الاساسي.من فضلك، حدد مجلد فرعي.</translation>
+        <translation type="obsolete">The root folder can&#039;t be synced. Please, select a subfolder.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1848,13 +1911,13 @@ Please, select a subfolder.</source>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation type="obsolete">لديك %1 في هذا المجلد.هل أنت متأكد أنك تريد مزامنته؟</translation>
+        <translation type="obsolete">You have %1 in this folder. Are you sure you want to sync it?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
-Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization.Please, ensure that you don&apos;t use characters like &apos;&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
+Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#039; or &#039;:&#039; in your folder names.</source>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &#039;\\&#039; &#039;/&#039; and &#039;:&#039; codes.</translatorcomment>
+        <translation>Invalid folder for synchronization. Please, ensure that you don&#039;t use characters like &#039;\&#039;, &#039;/&#039; or &#039;:&#039; in your folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1922,7 +1985,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>إلغاء</translation>
+        <translation>الغاء</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1935,7 +1998,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>أدخل واحد أو أكثر روابط ملف ميجا</translation>
     </message>
     <message>
-        <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
+        <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
         <translation type="obsolete">لا يوجد رابط MEGA  صالح. (رابط المجلد غير مدعوم حتى الآن)</translation>
     </message>
@@ -1978,7 +2041,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation type="unfinished">ملفات</translation>
     </message>
     <message>
-        <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
+        <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
         <translation type="unfinished">الملفات والمجلدات لها مالك وتنتمي إلى مجموعة من المستخدمين. باستخدام هذا الحوار، يمكنك منح أذونات وصول مختلفة للملفات والمجلدات الجديدة التي تم إنشاؤها بواسطة MEGAsync للمستخدمين الذين ينتمون إلى نفس المجموعة وبقية المستخدمين في الكمبيوتر. إذا لم تكن بحاجة إلى تغييرهم، يرجى تركهم على الإعدادات الافتراضية لأسباب تتعلق بالأمان.</translation>
     </message>
@@ -2061,11 +2124,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">موافق</translation>
+        <translation type="unfinished">حسنا</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+        <translation type="unfinished">الغاء</translation>
     </message>
 </context>
 <context>
@@ -2093,7 +2156,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
-        <translation>منذ 1 دقيقة</translation>
+        <translation>منذ دقيقة</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -2103,12 +2166,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
-        <translation>منذ 1 ساعة</translation>
+        <translation>منذ ساعة</translation>
     </message>
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
-        <translation>منذ 1 يوم</translation>
+        <translation>منذ يوم</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -2180,17 +2243,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Help</source>
         <translatorcomment>Button label for Help.</translatorcomment>
-        <translation>مساعدة</translation>
+        <translation>المساعدة</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>موافق</translation>
+        <translation>حسنا</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>إلغاء</translation>
+        <translation>الغاء</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -2215,7 +2278,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Language</source>
         <translatorcomment>Label to let the user select the desired language for the application.</translatorcomment>
-        <translation>اللغة</translation>
+        <translation>لغة</translation>
     </message>
     <message>
         <source>English</source>
@@ -2230,12 +2293,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>مجانًا</translation>
+        <translation>مجانا</translation>
     </message>
     <message>
         <source>Logout</source>
         <translatorcomment>Button label to logout of the application. Strins as short as possible.</translatorcomment>
-        <translation>تسجيل الخروج</translation>
+        <translation>الخروج</translation>
     </message>
     <message>
         <source>Storage space</source>
@@ -2259,7 +2322,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Add</source>
         <translatorcomment>Button lable to add a synchronization. String as short as possible.</translatorcomment>
-        <translation>إضافة</translation>
+        <translation>اضافة</translation>
     </message>
     <message>
         <source>Local Folder</source>
@@ -2277,7 +2340,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>معدل حد الرفع</translation>
     </message>
     <message>
-        <source>Don&apos;t limit</source>
+        <source>Don&#039;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
         <translation>بدون حد</translation>
     </message>
@@ -2427,7 +2490,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation type="vanished">أدخل اسما تريد استبعاده من التزامن.(* و ؟ يسمح بهم):</translation>
+        <translation type="vanished">Enter a name to exclude from synchronization.(wildcards * and? are allowed):</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2446,7 +2509,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="obsolete">ذاكرة التخزين المؤقت</translation>
+        <translation type="obsolete">التخزين المؤقت                                </translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -2464,7 +2527,7 @@ when the application starts again.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
+        <source>Your proxy settings are invalid or the proxy doesn&#039;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
         <translation>إعدادات الوكيل الخاص بك غير صالحة أو لا يستجيب الوكيل</translation>
     </message>
@@ -2526,7 +2589,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">سوف تقوم MEGAsync بإجراء فحص كامل للمجلدات التي تمت مزامنتهاعندما يبدأ.هل تريد إعادة تشغيل MEGAsync الآن؟</translation>
+        <translation type="obsolete">MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2557,7 +2620,7 @@ Do you want to restart MEGAsync now?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync will perform a full scan of your synced folders when it starts.Do you want to restart MEGAsync now?</translation>
+        <translation>MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -2580,12 +2643,12 @@ Do you want to restart MEGAsync now?</source>
         <translation>الملفات المحملة:</translation>
     </message>
     <message>
-        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <source>This sync can&#039;t be enabled because the local folder doesn&#039;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
         <translation>يتعذر تمكين هذه المزامنة بسبب عدم وجود المجلد المحلي</translation>
     </message>
     <message>
-        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <source>This sync can&#039;t be enabled because the remote folder doesn&#039;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
         <translation>لا يمكن تمكين هذه المزامنة بسبب عدم وجود المجلد البعيد</translation>
     </message>
@@ -2604,7 +2667,7 @@ Do you want to restart MEGAsync now?</source>
         <translation type="obsolete">اختر المجلد المحلي</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&#039;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
         <translation>لا يوجد لديك تصريح الكتابة في هذا المجلد المحلي.</translation>
     </message>
@@ -2616,7 +2679,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">تصدير مفتاح الاستعادة </translation>
+        <translation type="unfinished">تصدير مفتاح الاستعادة</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2679,12 +2742,12 @@ when the application starts again</source>
         <translation type="unfinished">صلاحيات</translation>
     </message>
     <message>
-        <source>Don&apos;t use HTTP</source>
+        <source>Don&#039;t use HTTP</source>
         <translatorcomment>Text next to a checkbox that allows to disable the HTTP protocol for transfers</translatorcomment>
         <translation type="unfinished">لا تستخدم بروتوكول HTTP</translation>
     </message>
     <message>
-        <source>Enable this option only if your transfers don&apos;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
+        <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
         <translation type="unfinished">فعل هذا الخيار فقط عندما لم تبدأ بعمليات النقل. في الظروف العادية فإن استخدام HTTP مقبول كون جميع عمليات النقل مشفرة.</translation>
     </message>
@@ -2734,7 +2797,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>PRO Lite</source>
-        <translation type="unfinished">برو لايت</translation>
+        <translation type="unfinished">لايت</translation>
     </message>
     <message>
         <source>Transfer quota</source>
@@ -2742,7 +2805,7 @@ when the application starts again</source>
         <translation type="unfinished">نقل البيانات                </translation>
     </message>
     <message>
-        <source>Don&apos;t show icons on the left pane of Windows Explorer</source>
+        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
         <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
         <translation type="unfinished">لا تعرض الأيقونات على الجزء الأيسر من مستكشف ويندوز</translation>
     </message>
@@ -2801,6 +2864,10 @@ when the application starts again</source>
         <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
         <translation type="unfinished">نسخ الملف: %1</translation>
     </message>
+    <message>
+        <source>Change password</source>
+        <translation type="unfinished">تغيير كلمة المرور</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -2815,8 +2882,8 @@ when the application starts again</source>
         <translation>أمتلك حساب لدي MEGA</translation>
     </message>
     <message>
-        <source>I don&apos;t have a MEGA account</source>
-        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
+        <source>I don&#039;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&#039;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>لا أمتلك حساب لدي MEGA</translation>
     </message>
     <message>
@@ -2938,7 +3005,7 @@ when the application starts again</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>إلغاء</translation>
+        <translation>الغاء</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2966,7 +3033,7 @@ when the application starts again</source>
         <translation>هل قمت بتفعيل حسابك؟</translation>
     </message>
     <message>
-        <source>MEGA folder doesn&apos;t exist</source>
+        <source>MEGA folder doesn&#039;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>مجلد ميجا غير موجود</translation>
     </message>
@@ -3001,14 +3068,14 @@ when the application starts again</source>
         <translation>من فضلك، أدخل كلمة سر قوية</translation>
     </message>
     <message>
-        <source>The entered passwords don&apos;t match</source>
+        <source>The entered passwords don&#039;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
         <translation>كلمات السر المدخلة غير متطابقة</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>عليك أن تقبل شروط الخدمة</translation>
+        <translation>يجب عليك أن تقبل شروط الخدمة</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -3023,7 +3090,7 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">لديك %1 في هذا محرك السحابة.هل أنت متأكد أنك تريد مزامنة محرك السحابة؟</translation>
+        <translation type="obsolete">You have %1 in your Cloud Drive. Are you sure you want to sync your entire Cloud Drive?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -3042,7 +3109,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">المجلد المحلي كبير جدا (هذه نسخة محددة إلى %1 مجلدات أو %2 ملفات.من فضلك، حدد مجلد آخر.</translation>
+        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please, select another folder.</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -3059,13 +3126,13 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation>You are trying to sync an extremely large folder.To prevent the syncing of entire boot volumes, which is inefficient and dangerous,we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>غير قادر على الحصول على ملفات النظام.حاول مرة اخرى. إذا استمرت المشكلة يرجى الاتصال bug@mega.nz</translation>
+        <translation>Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -3093,12 +3160,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>ستتم مزامنة السحابة الخاصة بك مع هذا المجلد:</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&#039;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>لا يوجد لديك تصريح الكتابة في هذا المجلد المحلي.</translation>
     </message>
     <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <source>MEGAsync won&#039;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>MEGAsync سوف لن تكون قادرة على تحميل أي شيء هنا.</translation>
     </message>
@@ -3129,7 +3196,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished">جاري إنشاء مجلد...</translation>
+        <translation type="unfinished">إنشاء مجلد...</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -3167,12 +3234,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translation type="unfinished">لقد حاولت تسجيل الدخول مرات كثيرة.[BR]الرجاء الانتظار حتى %1 ثم المحاولة ثانية </translation>
+        <translation type="unfinished">لقد حاولت تسجيل الدخول مرات كثيرة.
+[BR]الرجاء الانتظار حتى %1 ثم المحاولة ثانية </translation>
     </message>
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
         <translation type="unfinished">عند الانتهاء من هذا المساعد، سوف تكون قادرا على مزامنة مجلدات إضافية باستخدام شاشة الإعدادات</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translation type="unfinished">للمزيد من المعلومات</translation>
     </message>
 </context>
 <context>
@@ -3263,12 +3335,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">إلغاء</translation>
+        <translation type="unfinished">الغاء</translation>
     </message>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation type="unfinished">موافق</translation>
+        <translation type="unfinished">حسنا</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3371,7 +3443,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">خطأ في فك التشفير</translation>
+        <translation type="unfinished">خطأ فك التشفير</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3411,7 +3483,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 minute ago</source>
-        <translation type="unfinished">منذ 1 دقيقة</translation>
+        <translation type="unfinished">منذ دقيقة</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -3419,7 +3491,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 hour ago</source>
-        <translation type="unfinished">منذ 1 ساعة</translation>
+        <translation type="unfinished">منذ ساعة</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
@@ -3427,7 +3499,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="unfinished">منذ 1 يوم</translation>
+        <translation type="unfinished">منذ يوم</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -3515,7 +3587,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Settings</source>
         <translatorcomment>Label to indicate the Settings option for the application</translatorcomment>
-        <translation type="unfinished">الإعدادات</translation>
+        <translation type="unfinished">الاعدادات</translation>
     </message>
     <message>
         <source>Preferences</source>
@@ -3543,11 +3615,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload</source>
-        <translation type="unfinished">تحميل</translation>
+        <translation type="unfinished">رفع</translation>
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished">التنزيل</translation>
+        <translation type="unfinished">تحميل</translation>
     </message>
 </context>
 <context>
@@ -3580,11 +3652,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">الرجاء الترقية إلى العضوية المتميزة للاستمرار حالا، أو الانتظار%1 للاستمرار مجانا.</translation>
+        <translation type="unfinished">[$18223]</translation>
     </message>
     <message>
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
-        <translation type="unfinished">عنوان IP الذي استخدمته خلال 6 ساعات الماضية لنقل %1 البيانات قد استهلكت الحد كاملا، لإزالة هذا الحد، يمكنك [A]الترقية إلى برو[/A]، والتي سوف تعطيك حزمة حصص نقل خاصة بك وأيضا مساحة تخزين إضافية وافرة.</translation>
+        <translation type="unfinished">[$18224]</translation>
     </message>
 </context>
 <context>
@@ -3622,12 +3694,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>موافق</translation>
+        <translation>حسنا</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>إلغاء</translation>
+        <translation>الغاء</translation>
     </message>
     <message>
         <source>Choose</source>

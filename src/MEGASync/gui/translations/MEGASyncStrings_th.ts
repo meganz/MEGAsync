@@ -87,7 +87,7 @@
     <message>
         <source>No Transfers</source>
         <translatorcomment>Label to indicate that there are no active transfers at current time</translatorcomment>
-        <translation type="unfinished">ยังไม่มีการโอนย้าย</translation>
+        <translation type="unfinished">ยังไม่มีการถ่ายโอน</translation>
     </message>
     <message>
         <source>Remaining Downloads</source>
@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">กรอกชื่อเส้นทางแบบเต็ม (อนุญาตให้ใช้สัญลักษณ์ * และ? แทนได้) หรือเลือกไฟล์หรือโฟลเดอร์ที่คุณต้องการยกเว้นจากการซิงโครไนซ์</translation>
+        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -201,10 +201,6 @@
         <translation>เพิ่มโฟลเดอร์ซิงโครไนซ์</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Please select a local folder and a MEGA folder</source>
         <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
         <translation>กรุณาเลือกโฟลเดอร์บนเครื่องและโฟลเดอร์ของ MEGA</translation>
@@ -241,7 +237,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>ชื่อ &quot;%1&quot; มีอยู่แล้วในการใช้งาน จากการซิงค์ที่อื่นกรุณากรอกชื่อให้แตกต่างกัน สำหรับการระบุโฟลเดอร์ที่จะซิงค์นี้:</translation>
+        <translation>The name &quot;%1&quot; is already in use for another sync. Please enter a different name to identify this synced folder:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -261,13 +257,13 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">โฟลเดอร์บนเครื่องมีขนาดใหญ่เกินไป (เวอร์ชันนี้ถูกจำกัดไว้ที่ %1 โฟลเดอร์หรือ %2 ไฟล์กรุณาเลือกโฟลเดอร์อื่น</translation>
+        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please, select another folder.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="obsolete">คุณกำลังพยายามจะซิงค์โฟลเดอร์ที่มีขนาดใหญ่มากเพื่อป้องกันไม่ให้มีการซิงค์ไดรฟ์ข้อมูลสำหรับเริ่มระบบทั้งหมด ที่จะเป็นอันตรายและไม่มีประสิทธิภาพนั้นเราขอให้คุณเริ่มต้นกับโฟลเดอร์ที่มีขนาดเล็กลง และเพิ่มข้อมูลเพิ่มเติมในขณะที่ MEGAsync กำลังทํางาน</translation>
+        <translation type="obsolete">You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
     </message>
 </context>
 <context>
@@ -294,6 +290,57 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>ChangePassword</name>
+    <message>
+        <source>Change password</source>
+        <translation type="unfinished">เปลี่ยนรหัส</translation>
+    </message>
+    <message>
+        <source>New password</source>
+        <translation type="unfinished">รหัสผ่านใหม่</translation>
+    </message>
+    <message>
+        <source>Confirm new password</source>
+        <translation type="unfinished">ยืนยันรหัสผ่านใหม่</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">ยกเลิก</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">ตกลง</translation>
+    </message>
+    <message>
+        <source>Password changed</source>
+        <translation type="unfinished">Password changed</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translation type="unfinished">รหัสผ่านของคุณได้ถูกเปลี่ยนแล้ว</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">ผิดพลาด</translation>
+    </message>
+    <message>
+        <source>Wrong password</source>
+        <translation type="unfinished">รหัสผ่านไม่ถูกต้อง</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">คำเตือน</translation>
+    </message>
+    <message>
+        <source>Please enter your password</source>
+        <translation type="unfinished">กรุณากรอกรหัสผ่านของคุณ</translation>
+    </message>
+    <message>
+        <source>The entered passwords don&#039;t match</source>
+        <translation type="unfinished">รหัสผ่านที่กรอกไม่ตรงกัน</translation>
+    </message>
+</context>
+<context>
     <name>ConfirmSSLexception</name>
     <message>
         <source>Warning</source>
@@ -306,7 +353,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation type="unfinished">คุณแน่ใจหรือว่าต้องการดำเนินการต่อ</translation>
     </message>
     <message>
-        <source>Remember my decision and don&apos;t ask me again</source>
+        <source>Remember my decision and don&#039;t ask me again</source>
         <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
         <translation type="unfinished">จำค่าการตัดสินใจของฉันไว้และไม่ต้องถามอีก</translation>
     </message>
@@ -339,7 +386,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>MEGAsync ตรวจเจอปัญหา รายละเอียดดังนี้:</translation>
     </message>
     <message>
-        <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
+        <source>You can help us to improve MEGAsync by sending this error report. It doesn&#039;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
         <translation>คุณสามารถช่วยปรับปรุง MEGAsync โดยการส่งรายข้อผิดพลาดนี้ ข้อมูลส่วนตัวของคุณจะไม่ถูกส่งไปด้วยแต่อย่างใด หากต้องการข้อมูลเพิ่มเติม สามารถเขียนลงด้านล่างนี้ได้:</translation>
     </message>
@@ -402,8 +449,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>ผิดพลาด</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
+        <source>You don&#039;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&#039;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
         <translation>คุณไม่มีสิทธิในการเขียนโฟลเดอร์บนเครื่อง</translation>
     </message>
 </context>
@@ -482,12 +529,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>คำเตือน</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this folder.</source>
+        <source>You don&#039;t have write permissions in this folder.</source>
         <translation type="obsolete">คุณไม่มีสิทธิในการเขียนบนโฟลเดอร์นี้ได้</translation>
     </message>
     <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
-        <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
+        <source>MEGAsync won&#039;t be able to download anything here.</source>
+        <translatorcomment>Label to indicate that MEGAsync won&#039;t be able to download anything due to the user doesn&#039;t have writhe permissions on the local selected folder.</translatorcomment>
         <translation>MEGAsync จะไม่ดาวน์โหลดใดๆ ทั้งสิ้น</translation>
     </message>
     <message>
@@ -496,8 +543,8 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>คุณต้องการดำเนินการต่อหรือไม่</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
-        <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
+        <source>You don&#039;t have write permissions in this local folder.</source>
+        <translatorcomment>Label to indicate that a user don&#039;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
         <translation>คุณไม่มีสิทธิในการเขียนโฟลเดอร์บนเครื่อง</translation>
     </message>
     <message>
@@ -505,7 +552,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>คุณกำลังพยายามจะซิงค์โฟลเดอร์ที่มีขนาดใหญ่มากเพื่อป้องกันไม่ให้มีการซิงค์ไดรฟ์ข้อมูลสำหรับเริ่มระบบทั้งหมด ที่จะเป็นอันตรายและไม่มีประสิทธิภาพนั้นเราขอให้คุณเริ่มต้นกับโฟลเดอร์ที่มีขนาดเล็กลง และเพิ่มข้อมูลเพิ่มเติมในขณะที่ MEGAsync กำลังทํางาน</translation>
+        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -614,7 +661,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Not found</source>
-        <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
+        <translatorcomment>Label to indicate that an imported link can&#039;t be found.</translatorcomment>
         <translation>ไม่พบข้อมูลใดๆ</translation>
     </message>
     <message>
@@ -632,7 +679,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translation>ผิดพลาด</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&#039;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
         <translation>คุณไม่มีสิทธิในการเขียนโฟลเดอร์บนเครื่อง</translation>
     </message>
@@ -687,7 +734,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>File transfers paused</source>
         <translatorcomment>Label to indicate that the state of transfers is actually paused.</translatorcomment>
-        <translation type="vanished">หยุดการโอนย้ายไฟล์ชั่วคราว</translation>
+        <translation type="vanished">หยุดการถ่ายโอนไฟล์ชั่วคราว</translation>
     </message>
     <message>
         <source>MEGAsync is scanning</source>
@@ -697,7 +744,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>All transfers have been completed</source>
         <translatorcomment>Label to indicate that all pending transfers are already completed</translatorcomment>
-        <translation>การโอนย้ายทั้งหมดเสร็จเรียบร้อยแล้ว</translation>
+        <translation>การถ่ายโอนทั้งหมดเสร็จเรียบร้อยแล้ว</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
@@ -809,7 +856,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Servers are too busy. Please wait...</source>
-        <translation type="unfinished">เซิร์ฟเวอร์ไม่ว่าง กรุณารอสักครู่</translation>
+        <translation type="obsolete">เซิร์ฟเวอร์ไม่ว่าง กรุณารอสักครู่</translation>
     </message>
     <message>
         <source>MEGAsync is currently disabled</source>
@@ -895,6 +942,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>USED BANDWIDTH %1</source>
         <translation type="unfinished">ใช้แบนด์วิธ %1</translation>
     </message>
+    <message>
+        <source>The process is taking longer than expected. Please wait...</source>
+        <translation type="unfinished">[$18222]</translation>
+    </message>
 </context>
 <context>
     <name>InfoOverQuotaDialog</name>
@@ -954,18 +1005,18 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Faster transfer speeds</source>
-        <translation type="unfinished">โอนย้ายได้อย่างเต็มสปีด</translation>
+        <translation type="unfinished">ถ่ายโอนได้อย่างเต็มสปีด</translation>
     </message>
     <message>
-        <source>MEGAsync takes full advantage of MEGA&apos;s high-powered infrastructure and multi-connection transfers.</source>
-        <translation type="unfinished">MEGAsync ใช้คุณประโยชน์เต็มประสิทธิภาพจากการขับเคลื่อนโครงสร้างพื้นฐานของ MEGA และการโอนย้ายแบบหลากหลายการเชื่อมต่อ</translation>
+        <source>MEGAsync takes full advantage of MEGA&#039;s high-powered infrastructure and multi-connection transfers.</source>
+        <translation type="unfinished">MEGAsync ใช้ประโยชน์จากโครงสร้างพื้นฐานที่ขับเคลื่อนด้วยพลังงานสูงของ MEGA และการถ่ายโอนข้อมูลหลายรูปแบบ</translation>
     </message>
     <message>
         <source>Lean &amp; mean resource usage</source>
         <translation type="unfinished">ลดการใช้ทรัพยากรที่เกินจำเป็น</translation>
     </message>
     <message>
-        <source>Run MEGA&apos;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
+        <source>Run MEGA&#039;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
         <translation type="unfinished">MEGA จะมีกระบวนการเข้ารหัสตั้งแต่ต้นทางถึงปลายทางลงบนเครื่องของคุณโดยไม่ต้องอาศัยเบราว์เซอร์ในการดาวน์โหลด</translation>
     </message>
     <message>
@@ -974,7 +1025,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
-        <translation type="unfinished">ในขณะที่เบราว์เซอร์มีเทคโนโลยีจำกัดขนาดการโอนย้ายไฟล์ คุณสามารถมั่นใจได้เลยว่า การดาวน์โหลดหรืออัปโหลดไฟล์ใดๆ จะไม่มีขีดจำกัดเมื่อคุณใช้ MEGAsync</translation>
+        <translation type="unfinished">แม้ว่าเทคโนโลยีเบราว์เซอร์สามารถจำกัดขนาดไฟล์ของคุณได้ แต่คุณสามารถดาวน์โหลดหรืออัปโหลดไฟล์ด้วย MEGAsync ได้</translation>
     </message>
     <message>
         <source>Login</source>
@@ -986,7 +1037,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
-        <translation type="unfinished">ใช้ประโยชน์จากการจัดเก็บในระบบคลาวด์ด้วยบัญชีฟรี 50GB จะสามารถเข้ารหัสลับไฟล์ทั้งหมดของคุณได้ด้วย[A]แผนแบบ PRO[/A]</translation>
+        <translation type="unfinished">ใช้ประโยชน์จากพื้นที่จัดเก็บข้อมูลขนาด 50 GB ในระบบคลาวด์ โดยใช้การเข้ารหัสลับเข้าตั้งแต่ต้นทางถึงปลายทาง ที่ผู้ใช้ควบคุมได้อย่างปลอดภัยและลงชื่อสมัครใช้บัญชีฟรีหรือ[A]แผน PRO ของเรา[/A]</translation>
     </message>
 </context>
 <context>
@@ -1022,7 +1073,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 cleaning scheduler</translation>
+        <translation type="unfinished">%1 ทำความสะอาดตามกำหนดการ</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1052,7 +1103,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please enter a valid value</source>
         <translatorcomment>Information message shown when user introduces an invalid value </translatorcomment>
-        <translation type="unfinished">Please enter a valid value</translation>
+        <translation type="unfinished">กรุณาใส่ค่าที่ถูกต้อง</translation>
     </message>
 </context>
 <context>
@@ -1068,7 +1119,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Logging in</source>
         <translatorcomment>Label of tray icon showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>กำลังเข้าระบบ</translation>
+        <translation>กำลังเข้าสู่ระบบ</translation>
     </message>
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
@@ -1077,18 +1128,18 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the remote folder doesn&apos;t exist</source>
-        <translation type="obsolete">การซิงค์ &quot;%1&quot; ของคุณถูกปิดการใช้งาน เนื่องจากไม่มีโฟลเดอร์ระยะไกล</translation>
+because the remote folder doesn&#039;t exist</source>
+        <translation type="obsolete">การซิงค์ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) ไม่มีอยู่</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">การซิงค์ &quot;%1&quot; ของคุณได้ถูกปิดการใช้งาน เนื่องจากโฟลเดอร์ระยะไกลอยู่ในถังขยะ</translation>
+        <translation type="obsolete">การซิงค์ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) อยู่ในถังขยะ</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
-because the local folder doesn&apos;t exist</source>
-        <translation type="obsolete">การซิงค์ &quot;%1&quot; ของคุณได้ถูกปิดการใช้งาน เนื่องจากโฟลเดอร์บนเครื่องมีการเปลี่ยนแปลง</translation>
+because the local folder doesn&#039;t exist</source>
+        <translation type="obsolete">การซิงค์ &quot;%1&quot; ของคุณถูกการปิดใช้งานแล้ว เนื่องจากไม่มีโฟลเดอร์บนเครื่อง</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1096,11 +1147,11 @@ because the local folder doesn&apos;t exist</source>
         <translation>ผิดพลาด: โฟลเดอร์ปลายทางไม่ถูกต้อง การอัปโหลดถูกยกเลิกแล้ว</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
+        <source>The folder (%1) wasn&#039;t uploaded because it&#039;s too large (this beta is limited to %2 folders or %3 files.</source>
         <translation type="obsolete">โฟลเดอร์ (%1) ไม่ได้ถูกอัปโหลด เนื่องจากมีขนาดใหญ่เกินไป (เบต้านี้จะจำกัดอยู่ที่ %2 โฟลเดอร์หรือ %3 ไฟล์</translation>
     </message>
     <message>
-        <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
+        <source>%1 folders weren&#039;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
         <translation type="obsolete">%1 โฟลเดอร์ไม่ได้ถูกอัปโหลด เนื่องจากมีขนาดใหญ่เกินไป (เบต้านี้จะจำกัดอยู่ที่ %2 โฟลเดอร์หรือ %3 ไฟล์</translation>
     </message>
     <message>
@@ -1108,7 +1159,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">การซิงโครไนส์จะหยุดทำงานการลบในระหว่างที่โปรแกรมไม่ทำงานจะไม่ถูกเผยแพร่</translation>
+        <translation type="obsolete">Synchronization will stop. Deletions that occur while it is not running will not be propagated. Exit anyway?</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -1165,7 +1216,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&apos;t any available update.</translatorcomment>
+        <translatorcomment>Label of tray icon to indicate that MEGAsync is up to date and there isn&#039;t any available update.</translatorcomment>
         <translation>ล่าสุดแล้ว</translation>
     </message>
     <message>
@@ -1204,11 +1255,11 @@ Exit anyway?</source>
         <translation>กำลังรอ</translation>
     </message>
     <message>
-        <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>The folder (%1) wasn&#039;t uploaded because it&#039;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">โฟลเดอร์ (%1) ไม่ได้อัปโหลด เพราะมีขนาดใหญ่เกินไป เราทำการตรวจสอบ เพื่อป้องกันการอัปโหลดของไดรฟ์ข้อมูลสำหรับเริ่มระบบทั้งหมด ซึ่งอาจไม่มีประสิทธิภาพและเป็นอันตรายได้</translation>
     </message>
     <message>
-        <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
+        <source>%1 folders weren&#039;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
         <translation type="obsolete">%1 โฟลเดอร์ไม่ได้อัปโหลด เพราะมีขนาดใหญ่เกินไป เราทำการตรวจสอบ เพื่อป้องกันการอัปโหลดของไดรฟ์ข้อมูลสำหรับเริ่มระบบทั้งหมด ซึ่งอาจไม่มีประสิทธิภาพและเป็นอันตรายได้</translation>
     </message>
     <message>
@@ -1245,7 +1296,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>เกิดปัญหาในการติดตั้งการอัปเดต กรุณาลองอีกครั้งในภายหลังหรือดาวน์โหลดเวอร์ชันล่าสุดจาก: https://mega.co.nz/#sync</translation>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1265,14 +1316,14 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
-        <translation>ผิดพลาด</translation>
+        <translation type="vanished">ผิดพลาด</translation>
     </message>
     <message>
         <source>Synchronization will stop.
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation type="obsolete">การซิงโครไนซ์จะหยุดทำงานจบการทำงานหรือไม่</translation>
+        <translation type="obsolete">Synchronization will stop. Exit anyway?</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -1283,7 +1334,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="obsolete">ไม่สามารถรับระบบไฟล์ได้กรุณาลองอีกใหม่ครั้ง และหากปัญหายังคงมีอยู่ กรุณาติดต่อ bug@mega.nz</translation>
+        <translation type="obsolete">Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -1345,12 +1396,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">MEGAsync ไม่สามารถเชื่อมต่อได้ กรุณาตรวจสอบการเชื่อมต่ออินเทอร์เน็ตและกำหนดค่าไฟร์วอลล์ในเครื่องของคุณ โปรดทราบว่า ซอฟต์แวร์ป้องกันไวรัสเป็นส่วนสำคัญที่ทำให้เกิดปัญหานี้ รวมไปถึงไฟร์วอลล์ด้วยเช่นกัน</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&#039;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">การซิงค์ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) ไม่มีอยู่</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
+        <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&#039;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
         <translation type="unfinished">การซิงค์ &quot;%1&quot; ของคุณถูกการปิดใช้งานแล้ว เนื่องจากไม่มีโฟลเดอร์บนเครื่อง</translation>
     </message>
@@ -1385,7 +1436,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">การซิงค์ &quot;%1&quot; ของคุณได้ถูกปิดการใช้งาน เนื่องจากโฟลเดอร์บนเครื่องมีการเปลี่ยนแปลง</translation>
     </message>
     <message>
-        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
+        <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&#039;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
         <translation type="unfinished">การซิงค์ &quot;%1&quot; ของคุณได้ถูกปิดการใช้งาน โฟลเดอร์ระยะไกล (หรือบางส่วน) ไม่มีสิทธิ์การเข้าถึงเต็มรูปแบบ</translation>
     </message>
@@ -1407,7 +1458,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transfer failed:</source>
         <translatorcomment>Notification message shown when a transfer failed. Keep colon.</translatorcomment>
-        <translation type="unfinished">โอนย้ายไม่สำเร็จ:</translation>
+        <translation type="unfinished">ถ่ายโอนไม่สำเร็จ:</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -1430,7 +1481,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">ผิดพลาด: โฟลเดอร์ปลายทางไม่ถูกต้อง การดาวน์โหลดได้ถูกยกเลิกแล้ว</translation>
     </message>
     <message>
-        <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
+        <source>Our SSL key can&#039;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
         <translation type="unfinished">ไม่สามารถยืนยันรหัส SSL ของเรา คุณอาจได้รับผลกระทบจากการโจมตีแบบแทรกกลางการสื่อสารหรือซอฟต์แวร์ป้องกันไวรัสอาจขัดขวางการสื่อสารของคุณและทำให้เกิดปัญหานี้ กรุณาปิดใช้งานและลองอีกครั้ง</translation>
     </message>
@@ -1448,8 +1499,8 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">เกิดการผิดพลาดขึ้นชั่วขณะ, กำลังลองใหม่.</translation>
     </message>
     <message>
-        <source>I don&apos;t care</source>
-        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&apos;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
+        <source>I don&#039;t care</source>
+        <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&#039;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
         <translation type="unfinished">ฉันไม่สนใจ</translation>
     </message>
     <message>
@@ -1459,7 +1510,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Transfer canceled</source>
-        <translation type="unfinished">ยกเลิกการโอนย้าย</translation>
+        <translation type="unfinished">ยกเลิกการถ่ายโอน</translation>
     </message>
     <message>
         <source>You are not logged in</source>
@@ -1489,7 +1540,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">ไม่พบไฟล์</translation>
     </message>
     <message>
-        <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
+        <source>The link can&#039;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
         <translation type="unfinished">ไม่สามารถสร้างลิงก์ เนื่องจากไฟล์อยู่ในโฟลเดอร์ขาเข้าหรือถังขยะของคุณ</translation>
     </message>
@@ -1504,7 +1555,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation type="unfinished">ดาวน์โหลด</translation>
     </message>
     <message>
-        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
+        <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&#039;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
         <translation type="unfinished">คุณกำลังซิงค์โฟลเดอร์ภายในเครื่องที่มีฟอร์แมตด้วยระบบไฟล์ FAT ระบบไฟล์ดังกล่าวมีข้อบกพร่องในการจัดการไฟล์ขนาดใหญ่และเวลาในการแก้ไขที่อาจทำให้เกิดปัญหาการซิงค์ได้ (เช่น เมื่อการเปลี่ยนแปลงการปรับบันทึกตามฤดูกาล) ดังนั้น ขอแนะนำให้คุณซิงค์โฟลเดอร์ที่จัดรูปแบบด้วยระบบไฟล์ที่เชื่อถือได้เช่น NTFS (ข้อมูลเพิ่มเติม[A]ที่นี่[/A])</translation>
     </message>
@@ -1519,12 +1570,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Resume Transfers</source>
         <translatorcomment>Label of main menu option to resume transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="unfinished">โอนถ่ายต่อ</translation>
+        <translation type="unfinished">ถ่ายโอนต่อ</translation>
     </message>
     <message>
         <source>Pause Transfers</source>
         <translatorcomment>Label of main menu option to pause transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="unfinished">หยุดการโอนถ่ายชั่วคราว</translation>
+        <translation type="unfinished">หยุดการถ่ายโอนชั่วคราว</translation>
     </message>
     <message>
         <source>Stream</source>
@@ -1572,7 +1623,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Too many concurrent connections or transfers</source>
         <translatorcomment>Label to show that an error for multiple concurrent connections or transfers occurs during a SDK operation.</translatorcomment>
-        <translation>มีการเชื่อมต่อหรือโอนย้ายพร้อมกันมากเกินไป</translation>
+        <translation>มีการเชื่อมต่อหรือถ่ายโอนพร้อมกันมากเกินไป</translation>
     </message>
     <message>
         <source>Out of range</source>
@@ -1663,6 +1714,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Error</source>
         <translation type="obsolete">ผิดพลาด</translation>
     </message>
+    <message>
+        <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
+        <translation type="unfinished">บัญชีของคุณถูกระงับเนื่องจากมีการละเมิดข้อกำหนดในการให้บริการของ MEGA หลายครั้ง กรุณาตรวจสอบกล่องจดหมายอีเมลของคุณ</translation>
+    </message>
+    <message>
+        <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
+        <translation type="unfinished">บัญชีของคุณถูกยุติการใช้งานเนื่องจากละเมิดข้อกำหนดในการให้บริการของ Mega เช่น การใช้สิทธิ์ของผู้อื่น การแชร์และ/หรือการนำเข้าข้อมูลที่ผิดกฎหมาย หรือการละเมิดระบบ</translation>
+    </message>
 </context>
 <context>
     <name>MegaTransferDelegate</name>
@@ -1742,6 +1801,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
         <translation type="unfinished">คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการถ่ายโอนนี้</translation>
+    </message>
+    <message>
+        <source>View on MEGA</source>
+        <translation type="unfinished">ดูบน MEGA</translation>
     </message>
 </context>
 <context>
@@ -1835,10 +1898,10 @@ Are you sure?</source>
         <translation>ผิดพลาด</translation>
     </message>
     <message>
-        <source>The root folder can&apos;t be synced.
+        <source>The root folder can&#039;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation type="obsolete">ไม่สามารถซิงค์โฟลเดอร์รากได้กรุณาเลือกโฟลเดอร์ย่อย</translation>
+        <translation type="obsolete">The root folder can&#039;t be synced. Please, select a subfolder.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1848,13 +1911,13 @@ Please, select a subfolder.</source>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation type="obsolete">คุณมี %1 ในโฟลเดอร์นี้คุณแน่ใจว่าจะซิงค์หรือไม่</translation>
+        <translation type="obsolete">You have %1 in this folder. Are you sure you want to sync it?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
-Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
-        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>โฟลเดอร์ไม่ถูกต้องสำหรับการซิงโครไนส์กรุณาตรวจสอบให้แน่ใจว่าคุณไม่ได้ใช้ตัวอักษร &apos;&apos; &apos;/&apos; หรือ &apos;:&apos; ในชื่อโฟลเดอร์ของคุณ</translation>
+Please, ensure that you don&#039;t use characters like &#039;\&#039; &#039;/&#039; or &#039;:&#039; in your folder names.</source>
+        <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &#039;\\&#039; &#039;/&#039; and &#039;:&#039; codes.</translatorcomment>
+        <translation>Invalid folder for synchronization. Please, ensure that you don&#039;t use characters like &#039;\&#039;, &#039;/&#039; or &#039;:&#039; in your folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1935,7 +1998,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>กรอกลิงก์ไฟล์ของ MEGA แบบเดี่ยวหรือมากกว่า</translation>
     </message>
     <message>
-        <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
+        <source>No valid MEGA links found. (Folder links aren&#039;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
         <translation type="obsolete">ลิงก์ MEGA ไม่ถูกต้อง (ลิงก์โฟลเดอร์ยังไม่สนับสนุน)</translation>
     </message>
@@ -1978,7 +2041,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation type="unfinished">ไฟล์</translation>
     </message>
     <message>
-        <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
+        <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&#039;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
         <translation type="unfinished">ไฟล์และโฟลเดอร์มีเจ้าของและอยู่ในกลุ่มผู้ใช้ การใช้กล่องโต้ตอบนี้คุณสามารถให้สิทธิ์การเข้าถึงที่แตกต่างกันของไฟล์และโฟลเดอร์ใหม่ที่สร้างขึ้นโดย MEGAsync ให้กับผู้ใช้ที่อยู่ในกลุ่มเดียวกันและกับผู้ใช้อื่น ๆ ในเครื่องคอมพิวเตอร์ หากคุณไม่จำเป็นต้องเปลี่ยนแปลง กรุณาเก็บไว้ในการตั้งค่าเริ่มต้นสำหรับเหตุผลด้านความปลอดภัย</translation>
     </message>
@@ -2093,7 +2156,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
-        <translation>1 นาทีที่แล้ว</translation>
+        <translation>1 นาทีที่ผ่านมา</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -2103,12 +2166,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
-        <translation>1 ชั่วโมงที่แล้ว</translation>
+        <translation>1 ชั่วโมงที่ผ่านมา</translation>
     </message>
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
-        <translation>1 วันที่แล้ว</translation>
+        <translation>1 วันที่ผ่านมา</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -2277,7 +2340,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation>การจำกัดอัปโหลด</translation>
     </message>
     <message>
-        <source>Don&apos;t limit</source>
+        <source>Don&#039;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
         <translation>ไม่ต้องจำกัด</translation>
     </message>
@@ -2427,7 +2490,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Enter a name to exclude from synchronization.
 (wildcards * and ? are allowed):</source>
         <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation type="vanished">กรอกชื่อที่ไม่ต้องการให้ซิงโครไนส์(อนุญาตให้ใช้เครื่องหมาย * และ? ได้)</translation>
+        <translation type="vanished">Enter a name to exclude from synchronization.(wildcards * and? are allowed):</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2437,7 +2500,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Transfers</source>
         <translatorcomment>Tab label of Transfers dialog. Max 15 characters.</translatorcomment>
-        <translation>โอนย้าย</translation>
+        <translation>การถ่ายโอน</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -2446,7 +2509,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="obsolete">แคช</translation>
+        <translation type="obsolete">แคช                                </translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -2464,7 +2527,7 @@ when the application starts again.</source>
         <translation>HTTP</translation>
     </message>
     <message>
-        <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
+        <source>Your proxy settings are invalid or the proxy doesn&#039;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
         <translation>การตั้งค่าพร็อกซี่ของคุณไม่ถูกต้องหรือพร็อกซี่ไม่ตอบสนอง</translation>
     </message>
@@ -2526,7 +2589,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">เมื่อมีการเริ่มต้น MEGAsync จะทำการสแกนโฟลเดอร์ที่ซิงค์ของคุณอย่างเต็มรูปแบบคุณต้องการที่จะเริ่มต้น MEGAsync ใหม่ตอนนี้หรือไม่</translation>
+        <translation type="obsolete">MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2557,7 +2620,7 @@ Do you want to restart MEGAsync now?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>เมื่อมีการเริ่มต้น MEGAsync จะทำการสแกนโฟลเดอร์ที่ซิงค์ของคุณอย่างเต็มรูปแบบคุณต้องการที่จะเริ่มต้น MEGAsync ใหม่ตอนนี้หรือไม่</translation>
+        <translation>MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -2580,12 +2643,12 @@ Do you want to restart MEGAsync now?</source>
         <translation>ดาวน์โหลด:</translation>
     </message>
     <message>
-        <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
+        <source>This sync can&#039;t be enabled because the local folder doesn&#039;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
         <translation>การซิงค์จะไม่ถูกเปิดใช้งาน เนื่องจากไม่พบโฟลเดอร์บนเครื่อง</translation>
     </message>
     <message>
-        <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
+        <source>This sync can&#039;t be enabled because the remote folder doesn&#039;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
         <translation>ไม่สามารถเปิดใช้งานการซิงค์ได้ เนื่องจากไม่มีโฟลเดอร์ระยะไกล</translation>
     </message>
@@ -2604,7 +2667,7 @@ Do you want to restart MEGAsync now?</source>
         <translation type="obsolete">เลือกโฟลเดอร์บนเครื่อง</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&#039;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
         <translation>คุณไม่มีสิทธิในการเขียนโฟลเดอร์บนเครื่อง</translation>
     </message>
@@ -2616,7 +2679,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">ส่งออกคีย์สำหรับกู้คืน</translation>
+        <translation type="unfinished">ส่งออกคีย์การกู้คืน</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2679,14 +2742,14 @@ when the application starts again</source>
         <translation type="unfinished">สิทธิ์</translation>
     </message>
     <message>
-        <source>Don&apos;t use HTTP</source>
+        <source>Don&#039;t use HTTP</source>
         <translatorcomment>Text next to a checkbox that allows to disable the HTTP protocol for transfers</translatorcomment>
         <translation type="unfinished">อย่าใช้ HTTP</translation>
     </message>
     <message>
-        <source>Enable this option only if your transfers don&apos;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
+        <source>Enable this option only if your transfers don&#039;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">เปิดใช้ตัวเลือกนี้เท่านั้นถ้าการโอนย้ายของคุณยังไม่เริ่มต้น โดยปกติ HTTP จะยังมีการเข้ารหัสลับระหว่างการโอนย้ายอยู่แล้ว</translation>
+        <translation type="unfinished">เปิดใช้งานตัวเลือกนี้เฉพาะเมื่อการถ่ายโอนของคุณไม่เริ่มทำงาน โดยปกติ HTTP จะยังมีการเข้ารหัสลับระหว่างการถ่ายโอนข้อมูลอยู่แล้ว</translation>
     </message>
     <message>
         <source>Local backup: %1</source>
@@ -2739,10 +2802,10 @@ when the application starts again</source>
     <message>
         <source>Transfer quota</source>
         <translatorcomment>Label to indicate the transfer quota usage of current logged account</translatorcomment>
-        <translation type="unfinished">โควต้าการโอนย้าย</translation>
+        <translation type="unfinished">โควต้าการถ่ายโอน</translation>
     </message>
     <message>
-        <source>Don&apos;t show icons on the left pane of Windows Explorer</source>
+        <source>Don&#039;t show icons on the left pane of Windows Explorer</source>
         <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
         <translation type="unfinished">ไม่แสดงไอคอนในบานหน้าต่างด้านซ้ายของ Windows Explorer</translation>
     </message>
@@ -2759,47 +2822,51 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 cleaning scheduler</translation>
+        <translation type="unfinished">%1 ทำความสะอาดตามกำหนดการ</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
         <translatorcomment>Checkbox label to enable/disable file versioning feature</translatorcomment>
-        <translation type="unfinished">Disable file versioning</translation>
+        <translation type="unfinished">ปิดใช้งานการจัดเตรียมไฟล์</translation>
     </message>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
         <translatorcomment>Tooltip shown when hover local debris label.</translatorcomment>
-        <translation type="unfinished">A local folder with a backup of files deleted in MEGA</translation>
+        <translation type="unfinished">โฟลเดอร์ภายในเครื่องที่มีการสำรองข้อมูลไฟล์ถูกลบใน MEGA</translation>
     </message>
     <message>
         <source>Folder in MEGA with a backup of files deleted in the local computer</source>
         <translatorcomment>Tooltip shown when hover remote SyncDebris label.</translatorcomment>
-        <translation type="unfinished">A folder in MEGA with a backup of files deleted in the local computer</translation>
+        <translation type="unfinished">โฟลเดอร์ใน MEGA พร้อมการสำรองไฟล์ที่ถูกลบออกจากเครื่องคอมพิวเตอร์</translation>
     </message>
     <message>
         <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
         <translatorcomment>Informative text shown when user is trying to disable file versioning before proceed.</translatorcomment>
-        <translation type="unfinished">Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</translation>
+        <translation type="unfinished">การปิดใช้งานการกำหนดเวอร์ชันของไฟล์จะป้องกันไม่ให้เกิดการสร้างและจัดเก็บไฟล์เวอร์ชันใหม่ ๆ คุณต้องการดำเนินการต่อหรือไม่</translation>
     </message>
     <message>
         <source>Remove files older than %1 days</source>
         <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than %1 days will be removed. Keep %1 placeholder, it will be replaced with the value specified by the user at runtime</translatorcomment>
-        <translation type="unfinished">Remove files older than %1 days</translation>
+        <translation type="unfinished">ลบไฟล์ที่เก่ากว่า %1 วัน</translation>
     </message>
     <message>
         <source>Remove files older than 1 day</source>
         <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than 1 day will be removed.</translatorcomment>
-        <translation type="unfinished">Remove files older than 1 day</translation>
+        <translation type="unfinished">ลบไฟล์ที่เก่ากว่า 1 วัน</translation>
     </message>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the actual account.</translatorcomment>
-        <translation type="unfinished">You are about to permanently remove all file versions. Would you like to proceed?</translation>
+        <translation type="unfinished">คุณกำลังจะลบเวอร์ชันไฟล์ทั้งหมดอย่างถาวร คุณต้องการดำเนินการต่อหรือไม่</translation>
     </message>
     <message>
         <source>File versions: %1</source>
         <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
-        <translation type="unfinished">File versions: %1</translation>
+        <translation type="unfinished">เวอร์ชันของไฟล์: %1</translation>
+    </message>
+    <message>
+        <source>Change password</source>
+        <translation type="unfinished">เปลี่ยนรหัส</translation>
     </message>
 </context>
 <context>
@@ -2815,8 +2882,8 @@ when the application starts again</source>
         <translation>ฉันมีบัญชี MEGA แล้ว</translation>
     </message>
     <message>
-        <source>I don&apos;t have a MEGA account</source>
-        <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
+        <source>I don&#039;t have a MEGA account</source>
+        <translatorcomment>Label to indicate if the user hasn&#039;t already a MEGA account with a checkbox.</translatorcomment>
         <translation>ฉันยังไม่มีบัญชี MEGA</translation>
     </message>
     <message>
@@ -2966,7 +3033,7 @@ when the application starts again</source>
         <translation>คุณได้ผ่านการตรวจสอบบัญชีของคุณหรือยัง</translation>
     </message>
     <message>
-        <source>MEGA folder doesn&apos;t exist</source>
+        <source>MEGA folder doesn&#039;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
         <translation>โฟลเดอร์ MEGA ไม่มีอยู่</translation>
     </message>
@@ -3001,7 +3068,7 @@ when the application starts again</source>
         <translation>กรุณากรอกรหัสผ่านที่คาดเดายากกว่านี้</translation>
     </message>
     <message>
-        <source>The entered passwords don&apos;t match</source>
+        <source>The entered passwords don&#039;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
         <translation>รหัสผ่านที่กรอกไม่ตรงกัน</translation>
     </message>
@@ -3023,7 +3090,7 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">คุณมี %1 ในคลาด์ไดร์ฟของคุณคุณแน่ใจหรือไม่ว่าจะซิงค์รายการคลาด์ไดร์ฟทั้งหมดของคุณ</translation>
+        <translation type="obsolete">You have %1 in your Cloud Drive. Are you sure you want to sync your entire Cloud Drive?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -3042,7 +3109,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">โฟลเดอร์บนเครื่องมีขนาดใหญ่เกินไป (เวอร์ชันนี้ถูกจำกัดไว้ที่ %1 โฟลเดอร์หรือ %2 ไฟล์กรุณาเลือกโฟลเดอร์อื่น</translation>
+        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please, select another folder.</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -3059,13 +3126,13 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation>คุณกำลังพยายามจะซิงค์โฟลเดอร์ที่มีขนาดใหญ่มากเพื่อป้องกันไม่ให้มีการซิงค์ไดรฟ์ข้อมูลสำหรับเริ่มระบบทั้งหมด ที่จะเป็นอันตรายและไม่มีประสิทธิภาพนั้นเราขอให้คุณเริ่มต้นกับโฟลเดอร์ที่มีขนาดเล็กลง และเพิ่มข้อมูลเพิ่มเติมในขณะที่ MEGAsync กำลังทํางาน</translation>
+        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>ไม่สามารถรับระบบไฟล์ได้กรุณาลองอีกใหม่ครั้ง และหากปัญหายังคงมีอยู่ กรุณาติดต่อ bug@mega.nz</translation>
+        <translation>Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -3093,12 +3160,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translation>คลาวด์ไดร์ฟของคุณจะถูกซิงค์ให้ตรงกันกับโฟลเดอร์นี้:</translation>
     </message>
     <message>
-        <source>You don&apos;t have write permissions in this local folder.</source>
+        <source>You don&#039;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>คุณไม่มีสิทธิในการเขียนโฟลเดอร์บนเครื่อง</translation>
     </message>
     <message>
-        <source>MEGAsync won&apos;t be able to download anything here.</source>
+        <source>MEGAsync won&#039;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
         <translation>MEGAsync จะไม่ดาวน์โหลดใดๆ ทั้งสิ้น</translation>
     </message>
@@ -3129,7 +3196,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished">กำลังสร้างโฟลเดอร์...</translation>
+        <translation type="unfinished">กำลังสร้างโฟลเดอร์</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -3173,6 +3240,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
         <translation type="unfinished">เมื่อเสร็จสิ้นผู้ช่วยนี้ คุณจะสามารถซิงค์โฟลเดอร์เพิ่มเติมโดยใช้ไดอะล็อกบ็อกซ์การตั้งค่าได้</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translation type="unfinished">เรียนรู้เพิ่มเติม</translation>
     </message>
 </context>
 <context>
@@ -3411,7 +3482,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 minute ago</source>
-        <translation type="unfinished">1 นาทีที่แล้ว</translation>
+        <translation type="unfinished">1 นาทีที่ผ่านมา</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -3419,7 +3490,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 hour ago</source>
-        <translation type="unfinished">1 ชั่วโมงที่แล้ว</translation>
+        <translation type="unfinished">1 ชั่วโมงที่ผ่านมา</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
@@ -3427,7 +3498,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="unfinished">1 วันที่แล้ว</translation>
+        <translation type="unfinished">1 วันที่ผ่านมา</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -3539,7 +3610,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Active Transfers</source>
         <translatorcomment>Label of tab to access all active transfers</translatorcomment>
-        <translation type="unfinished">การโอนย้ายที่ใช้งานอยู่</translation>
+        <translation type="unfinished">การถ่ายโอนที่ใช้งานอยู่</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -3580,11 +3651,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">กรุณาอัปเกรดเป็นแบบ PRO เพื่อให้ดำเนินการต่อได้ทันที หรือจะรอ %1 เพื่อดำเนินการต่อได้ฟรี</translation>
+        <translation type="unfinished">[$18223]</translation>
     </message>
     <message>
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
-        <translation type="unfinished">IP ของคุณได้ใช้การโอนย้ายข้อมูลของคุณไปแล้ว %1 เมื่อ 6 ชั่วโมงที่ผ่านมา ซึ่งถึงขีดจำกัดการใช้งานแล้ว เพื่อหลีกเลี่ยงปัญหานี้ คุณสามารถ [A]อัปเกรดบัญชีเป็นแบบ PRO[/A] จะช่วยให้คุณมีแบนด์วิดธ์และพื้นที่จัดเก็บข้อมูลเพิ่มมากขึ้น</translation>
+        <translation type="unfinished">[$18224]</translation>
     </message>
 </context>
 <context>
