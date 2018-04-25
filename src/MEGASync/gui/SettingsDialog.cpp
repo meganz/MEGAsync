@@ -1882,7 +1882,7 @@ void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
         if (node)
         {
             const char *handle = node->getBase64Handle();
-            QString url = QString::fromAscii("https://mega.nz/#fm/") + QString::fromAscii(handle);
+            QString url = QString::fromAscii("https://mega.nz/fm/") + QString::fromAscii(handle);
             QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
             delete [] handle;
             delete node;
