@@ -35,13 +35,14 @@ private:
     QAction *getLink;
     QAction *openItem;
     QAction *showInFolder;
+    QAction *showInMEGA;
     QAction *clearCompleted;
     QAction *clearAllCompleted;
 
     void createContextMenu();
     void createCompletedContextMenu();
     void customizeContextInProgressMenu(bool enablePause, bool enableResume, bool enableUpMoves, bool enableDownMoves, bool isCancellable);
-    void customizeCompletedContextMenu(bool enableGetLink = true, bool enableOpen = true, bool enableShow = true);
+    void customizeCompletedContextMenu(bool enableGetLink = true, bool enableOpen = true, bool enableShow = true, bool enableShowInMEGA = true);
 
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event);
@@ -60,6 +61,7 @@ private slots:
     void getLinkClicked();
     void openItemClicked();
     void showInFolderClicked();
+    void showInMEGAClicked();
     void clearTransferClicked();
     void clearAllTransferClicked();
 };
