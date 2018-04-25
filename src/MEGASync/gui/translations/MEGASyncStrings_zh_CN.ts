@@ -2083,7 +2083,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation>正是现在</translation>
+        <translation>刚刚</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
@@ -3403,7 +3403,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>just now</source>
-        <translation type="unfinished">正是现在</translation>
+        <translation type="unfinished">刚刚</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
