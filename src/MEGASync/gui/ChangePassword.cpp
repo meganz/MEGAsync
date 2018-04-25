@@ -31,12 +31,12 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
         case MegaRequest::TYPE_CHANGE_PW:
         if (e->getErrorCode() == MegaError::API_OK)
         {
-            QMessageBox::warning(this, tr("Warning"), tr("Your password have been successfully updated."));
+            QMessageBox::information(this, tr("Password changed"), tr("Your password has been changed."));
             accept();
         }
         else
         {
-            QMessageBox::warning(this, tr("Error"), tr("There was a problem during the process"));
+            QMessageBox::warning(this, tr("Error"), tr("Wrong password"));
         }
 
         break;
@@ -56,12 +56,12 @@ void ChangePassword::on_bOk_clicked()
 
     if (emptyField)
     {
-        QMessageBox::warning(this, tr("Warning"), tr("Please fill required fields"));
+        QMessageBox::warning(this, tr("Warning"), tr("Please enter your password"));
         return;
     }
     else if (!equalPasswords)
     {
-        QMessageBox::warning(this, tr("Warning"), tr("Passwords are not the same"));
+        QMessageBox::warning(this, tr("Warning"), tr("The entered passwords don't match"));
         return;
     }
 
