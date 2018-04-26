@@ -329,7 +329,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Attenzione</translation>
+        <translation type="obsolete">Attenzione</translation>
     </message>
     <message>
         <source>Please enter your password</source>
@@ -338,6 +338,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>The entered passwords don&apos;t match</source>
         <translation type="unfinished">Le password immesse non corrispondono</translation>
+    </message>
+    <message>
+        <source>Please, enter a stronger password</source>
+        <translation type="unfinished">Si prega di inserire una password più forte</translation>
     </message>
 </context>
 <context>
@@ -944,7 +948,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
-        <translation type="unfinished">[$18222]</translation>
+        <translation type="unfinished">Il processo sta prendendo più tempo del previsto. Per favore, aspetta.</translation>
     </message>
 </context>
 <context>
@@ -2487,12 +2491,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation type="vanished">Nome escluso</translation>
     </message>
     <message>
-        <source>Enter a name to exclude from synchronization.
-(wildcards * and ? are allowed):</source>
-        <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation type="vanished">Inserisci un nome da escludere nella sincronizzazione. (Simboli come * e? sono permessi):</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an Error message. Keep capital letter.</translatorcomment>
         <translation>Errore</translation>
@@ -2689,7 +2687,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Esportare la chiave master e mantenerla in un luogo sicuro ti permette di impostare una nuova password, senza perdita di dati.</translation>
+        <translation type="unfinished">Esportare la Chiave di Recupero e tenerla in un posto sicuro ti permette di reimpostare la password senza perdite di dati.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
@@ -3651,11 +3649,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">[$18223]</translation>
+        <translation type="unfinished">Per favore, aggiorna a PRO per continuare immediatamente, o attendi %1 per continuare gratuitamente.</translation>
     </message>
     <message>
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
-        <translation type="unfinished">[$18224]</translation>
+        <translation type="unfinished">L&apos;indirizzo IP che stai utilizzando ha utilizzato %1 di banda di trasferimento nelle ultime 6 ore, che ti ha portato oltre il nostro limite corrente. Per rimuovere questo limite, puoi [A]aggiornare a PRO[/A], che ti darà una tua banda di trasferimento e uno spazio di archiviazione aggiuntivo.</translation>
     </message>
 </context>
 <context>

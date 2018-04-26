@@ -329,7 +329,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">คำเตือน</translation>
+        <translation type="obsolete">คำเตือน</translation>
     </message>
     <message>
         <source>Please enter your password</source>
@@ -338,6 +338,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>The entered passwords don&apos;t match</source>
         <translation type="unfinished">รหัสผ่านที่กรอกไม่ตรงกัน</translation>
+    </message>
+    <message>
+        <source>Please, enter a stronger password</source>
+        <translation type="unfinished">กรุณากรอกรหัสผ่านที่คาดเดายากกว่านี้</translation>
     </message>
 </context>
 <context>
@@ -944,7 +948,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
-        <translation type="unfinished">[$18222]</translation>
+        <translation type="unfinished">กระบวนการนี้ใช้เวลานานกว่าที่คาดไว้ กรุณารอสักครู่</translation>
     </message>
 </context>
 <context>
@@ -2487,12 +2491,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation type="vanished">ชื่อยกเว้น</translation>
     </message>
     <message>
-        <source>Enter a name to exclude from synchronization.
-(wildcards * and ? are allowed):</source>
-        <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation type="vanished">Enter a name to exclude from synchronization.(wildcards * and? are allowed):</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an Error message. Keep capital letter.</translatorcomment>
         <translation>ผิดพลาด</translation>
@@ -2689,7 +2687,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">การส่งออกคีย์หลักและการเก็บรักษาไว้ในที่ๆ ปลอดภัย จะช่วยให้คุณสามารถตั้งค่ารหัสผ่านใหม่โดยไม่ต้องสูญเสียข้อมูลใดๆ</translation>
+        <translation type="unfinished">การส่งออกคีย์การกู้คืนและเก็บไว้ในที่ปลอดภัย จะช่วยให้คุณสามารถตั้งรหัสผ่านใหม่โดยไม่สูญเสียข้อมูล</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
@@ -3651,11 +3649,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">[$18223]</translation>
+        <translation type="unfinished">กรุณาอัปเกรดเป็นแบบ PRO เพื่อให้ดำเนินการต่อได้ทันที หรือจะรอ %1 เพื่อดำเนินการต่อได้ฟรี</translation>
     </message>
     <message>
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
-        <translation type="unfinished">[$18224]</translation>
+        <translation type="unfinished">ที่อยู่ IP ที่คุณใช้มีการถ่ายโอนข้อมูล %1 ในช่วง 6 ชั่วโมงที่ผ่านมาซึ่งทำให้ึคุณถึงขีดจำกัดการใช้งานปัจจุบันของเราแล้ว เพื่อหลีกเลี่ยงปัญหานี้ คุณสามารถ [A]อัปเกรดบัญชีเป็นแบบ PRO[/A] จะช่วยให้คุณมีแบนด์วิดธ์และพื้นที่จัดเก็บข้อมูลเพิ่มมากขึ้น</translation>
     </message>
 </context>
 <context>
