@@ -973,7 +973,7 @@ background:transparent;</string>
                 <item>
                  <widget class="QPushButton" name="bChangePassword">
                   <property name="text">
-                   <string>Change Password</string>
+                   <string>Change password</string>
                   </property>
                  </widget>
                 </item>

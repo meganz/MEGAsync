@@ -994,7 +994,7 @@ background:transparent;</string>
                    </size>
                   </property>
                   <property name="text">
-                   <string>Change Password</string>
+                   <string>Change password</string>
                   </property>
                  </widget>
                 </item>

@@ -77,8 +77,6 @@ void WindowsPlatform::prepareForSync()
     p.waitForFinished(2000);
     QString output = QString::fromUtf8(p.readAllStandardOutput().constData());
     QString e = QString::fromUtf8(p.readAllStandardError().constData());
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Output for \"net use\" command:");
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, output.toUtf8().constData());
     if (e.size())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error for \"net use\" command:");

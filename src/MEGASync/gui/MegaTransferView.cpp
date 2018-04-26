@@ -240,7 +240,7 @@ void MegaTransferView::createCompletedContextMenu()
         showInMEGA = NULL;
     }
 
-    showInMEGA = new QAction(tr("Show in MEGA"), this);
+    showInMEGA = new QAction(tr("View on MEGA"), this);
     connect(showInMEGA, SIGNAL(triggered()), this, SLOT(showInMEGAClicked()));
 
 
