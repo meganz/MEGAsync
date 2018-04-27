@@ -16,7 +16,7 @@ const int Preferences::VERSION_CODE = 3605;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("3.6.5");
-const QString Preferences::SDK_ID = QString::fromAscii("a7a807");
+const QString Preferences::SDK_ID = QString::fromAscii("99a46c");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- Allow to change the password\n"
             "- Improvements for the sync engine\n"
