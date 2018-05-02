@@ -1,3 +1,11 @@
+Wed May 2 13:09:17 CEST 2018 - linux@mega.co.nz
+- Update to version 3.6.5:
+  * Allow to change the password
+  * Improvements for the sync engine
+  * Updated third-party libraries
+  * Bug fixes and other minor adjustments
+
+-------------------------------------------------------------------
 Fri Jan 26 11:36:06 CET 2018 - linux@mega.co.nz
 - Update to version 3.6.0:
   * New options related to file versioning
