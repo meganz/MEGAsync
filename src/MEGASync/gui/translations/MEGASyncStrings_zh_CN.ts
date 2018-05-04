@@ -16,7 +16,7 @@
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">收件夹</translation>
+        <translation type="unfinished">收件箱</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -51,7 +51,7 @@
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation type="unfinished">载入中</translation>
+        <translation type="unfinished">加载中</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">输入名称、绝对路径（通配符 * 和 ？亦可）或选择要从同步中排除的文件或文件夹</translation>
+        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -165,7 +165,7 @@
     <message>
         <source>Choose</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a file or a folder to be excluded for the synchonization</translatorcomment>
-        <translation type="unfinished">选取</translation>
+        <translation type="unfinished">选择</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -199,10 +199,6 @@
         <source>Add synchronized folder</source>
         <translatorcomment>Title of the dialog displayed when an user is creating a new synchronized folder.</translatorcomment>
         <translation>新增同步文件夹</translation>
-    </message>
-    <message>
-        <source></source>
-        <translation></translation>
     </message>
     <message>
         <source>Please select a local folder and a MEGA folder</source>
@@ -241,7 +237,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>档名&quot;%1&quot;已被另一同步使用。请输入别的名称以分辨此同步文件夹:</translation>
+        <translation>The name &quot;%1&quot; is already in use for another sync. Please enter a different name to identify this synced folder:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -261,13 +257,13 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">本机文件夹过大(此版本仅限%1 文件夹或%2 文件。请选择另一个文件夹。</translation>
+        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please, select another folder.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="obsolete">您正试着同步一个异常大的文件夹。为了避免让同步爆量，这不太有效率也危险，我们要求您从小的文件夹开始并于MEGAsync同步程序执行时陆续新增资料。</translation>
+        <translation type="obsolete">You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
     </message>
 </context>
 <context>
@@ -294,6 +290,61 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>ChangePassword</name>
+    <message>
+        <source>Change password</source>
+        <translation type="unfinished">变更密码</translation>
+    </message>
+    <message>
+        <source>New password</source>
+        <translation type="unfinished">新密码</translation>
+    </message>
+    <message>
+        <source>Confirm new password</source>
+        <translation type="unfinished">确认新密码</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+    <message>
+        <source>Password changed</source>
+        <translation type="unfinished">Password changed</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translation type="unfinished">您的密码已被更改。</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">错误</translation>
+    </message>
+    <message>
+        <source>Wrong password</source>
+        <translation type="unfinished">错误密码</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="obsolete">警告</translation>
+    </message>
+    <message>
+        <source>Please enter your password</source>
+        <translation type="unfinished">请输入您的密码</translation>
+    </message>
+    <message>
+        <source>The entered passwords don&apos;t match</source>
+        <translation type="unfinished">输入的密码不符</translation>
+    </message>
+    <message>
+        <source>Please, enter a stronger password</source>
+        <translation type="unfinished">请输入一组较强的密码</translation>
+    </message>
+</context>
+<context>
     <name>ConfirmSSLexception</name>
     <message>
         <source>Warning</source>
@@ -313,12 +364,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>No</source>
         <translatorcomment>Negative response to a question. The text will be inside a button.</translatorcomment>
-        <translation type="unfinished">不是</translation>
+        <translation type="unfinished">否</translation>
     </message>
     <message>
         <source>Yes</source>
         <translatorcomment>Positive response to a question. The text will be inside a button.</translatorcomment>
-        <translation type="unfinished">是的</translation>
+        <translation type="unfinished">是</translation>
     </message>
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
@@ -389,7 +440,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the download folder (String as short as possible)</translatorcomment>
-        <translation>选取</translation>
+        <translation>选择</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -474,7 +525,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible)</translatorcomment>
-        <translation>选取</translation>
+        <translation>选择</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -505,7 +556,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>您正试着同步一个异常大的文件夹。为了避免让同步爆量，这不太有效率也危险，我们要求您从小的文件夹开始并于MEGAsync同步程序执行时陆续新增资料。</translation>
+        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -527,7 +578,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">登入</translation>
+        <translation type="unfinished">登录</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
@@ -625,7 +676,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translatorcomment>Label button for Choose action</translatorcomment>
-        <translation>选取</translation>
+        <translation>选择</translation>
     </message>
     <message>
         <source>Error</source>
@@ -809,7 +860,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Servers are too busy. Please wait...</source>
-        <translation type="unfinished">服务器忙碌中。请稍候...</translation>
+        <translation type="obsolete">服务器忙碌中。请稍候...</translation>
     </message>
     <message>
         <source>MEGAsync is currently disabled</source>
@@ -824,7 +875,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">升级到专业版</translation>
+        <translation type="unfinished">升级到Pro计划</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -874,7 +925,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">收件夹</translation>
+        <translation type="unfinished">收件箱</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -894,6 +945,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>USED BANDWIDTH %1</source>
         <translation type="unfinished">已用频宽量%1</translation>
+    </message>
+    <message>
+        <source>The process is taking longer than expected. Please wait...</source>
+        <translation type="unfinished">处理花费的时间比预期的要长。请稍候。</translation>
     </message>
 </context>
 <context>
@@ -978,11 +1033,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished">登入</translation>
+        <translation type="unfinished">登录</translation>
     </message>
     <message>
         <source>Create Account</source>
-        <translation type="unfinished">建立帐号</translation>
+        <translation type="unfinished">创建账号</translation>
     </message>
     <message>
         <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
@@ -1022,7 +1077,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 cleaning scheduler</translation>
+        <translation type="unfinished">%1 清理计划</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1032,7 +1087,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>days</source>
         <translatorcomment>Label to indicate number of days in context of scheduled deletions</translatorcomment>
-        <translation type="unfinished">日</translation>
+        <translation type="unfinished">天</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1078,17 +1133,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation type="obsolete">您的同步&quot;%1&quot;因远程资料不存在已停用</translation>
+        <translation type="obsolete">因远程文件夹不存在，您的同步&quot;%1&quot; 已被停用。</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">您的同步&quot;%1&quot;因远程文件夹在垃圾桶中故已被停用</translation>
+        <translation type="obsolete">因远程文件夹已于垃圾桶内，您的同步&quot;%1&quot; 已被停用。</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation type="obsolete">因本机文件夹不存在，您的同步&quot;%1&quot; 已被停用。</translation>
+        <translation type="obsolete">您的同步&quot;%1&quot;未激活因为本机文件夹不存在</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1108,7 +1163,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">同步将停止。而不运行时发生的缺失将不会延伸。</translation>
+        <translation type="obsolete">Synchronization will stop. Deletions that occur while it is not running will not be propagated. Exit anyway?</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -1245,7 +1300,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>安装更新出现问题。请稍后再试或者从这里下载最新版本：https://mega.nz/sync</translation>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1265,14 +1320,14 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
-        <translation>错误</translation>
+        <translation type="vanished">错误</translation>
     </message>
     <message>
         <source>Synchronization will stop.
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation type="obsolete">同步将停止。还是退出?</translation>
+        <translation type="obsolete">Synchronization will stop. Exit anyway?</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -1283,7 +1338,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="obsolete">未能链接文件系统。请再试一次。如果问题持续请连系bug@mega.nz</translation>
+        <translation type="obsolete">Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -1663,6 +1718,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Error</source>
         <translation type="obsolete">错误</translation>
     </message>
+    <message>
+        <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
+        <translation type="unfinished">由于多次违反MEGA的服务条款，您的帐户已被暂停。请检查您的电子邮件收件箱。</translation>
+    </message>
+    <message>
+        <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
+        <translation type="unfinished">Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</translation>
+    </message>
 </context>
 <context>
     <name>MegaTransferDelegate</name>
@@ -1717,7 +1780,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open</source>
         <translatorcomment>Label of context menu option to open selected completed transfer</translatorcomment>
-        <translation type="unfinished">开启</translation>
+        <translation type="unfinished">打开</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -1742,6 +1805,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
         <translation type="unfinished">你确定要取消这个传输吗？</translation>
+    </message>
+    <message>
+        <source>View on MEGA</source>
+        <translation type="unfinished">在MEGA上阅览</translation>
     </message>
 </context>
 <context>
@@ -1838,7 +1905,7 @@ Are you sure?</source>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation type="obsolete">根文件夹无法被同步。请选择一个子文件夹。</translation>
+        <translation type="obsolete">The root folder can&apos;t be synced. Please, select a subfolder.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1848,13 +1915,13 @@ Please, select a subfolder.</source>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation type="obsolete">您有%1在这个文件夹。您确定要同步?</translation>
+        <translation type="obsolete">You have %1 in this folder. Are you sure you want to sync it?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>同步文件夹命名无效。请确保您未使用特殊符号如&apos;&apos; &apos;/&apos; 或&apos;:&apos; 。</translation>
+        <translation>Invalid folder for synchronization. Please, ensure that you don&apos;t use characters like &apos;\&apos;, &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2093,7 +2160,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
-        <translation>一分钟前</translation>
+        <translation>1 分钟前</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -2103,12 +2170,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
-        <translation>一小时前</translation>
+        <translation>1 小时前</translation>
     </message>
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
-        <translation>一天前</translation>
+        <translation>1 天前</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -2138,7 +2205,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Open</source>
         <translatorcomment>Label to let the user open the selected file.String as short as possible.</translatorcomment>
-        <translation>开启</translation>
+        <translation>打开</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -2180,7 +2247,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Help</source>
         <translatorcomment>Button label for Help.</translatorcomment>
-        <translation>帮助</translation>
+        <translation>支持</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2416,18 +2483,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Label to ask for confirmation to the user.</translatorcomment>
-        <translation>您确定?</translation>
+        <translation>您确定吗?</translation>
     </message>
     <message>
         <source>Excluded name</source>
         <translatorcomment>Title of the dialog to add new excluded file name for the synchronizations.</translatorcomment>
         <translation type="vanished">排除档名</translation>
-    </message>
-    <message>
-        <source>Enter a name to exclude from synchronization.
-(wildcards * and ? are allowed):</source>
-        <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation type="vanished">输入一个需从同步排除的名称(允许使用特殊符号* 与? ):</translation>
     </message>
     <message>
         <source>Error</source>
@@ -2526,7 +2587,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">MEGAsync启动后将全面扫描您的同步文件夹。现在就重启MEGAsync吗？</translation>
+        <translation type="obsolete">MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2557,12 +2618,12 @@ Do you want to restart MEGAsync now?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync启动后将全面扫描您的同步文件夹。现在就重启MEGAsync吗？</translation>
+        <translation>MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
     </message>
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to choose a local/remote folder for downloads and uploads.</translatorcomment>
-        <translation>选取</translation>
+        <translation>选择</translation>
     </message>
     <message>
         <source>Default folders</source>
@@ -2616,7 +2677,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">汇出还原金钥</translation>
+        <translation type="unfinished">导出恢复金匙</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -2626,7 +2687,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">正在导出您的万能密钥，请妥善保管。您的万能密钥使您不会因为密码重置而丢失已上传的数据。</translation>
+        <translation type="unfinished">汇出还原金钥并将其保存于安全的位置，使您于设置新密码时不会有资料遗失。</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
@@ -2667,7 +2728,7 @@ when the application starts again</source>
     <message>
         <source>Backups of the previous versions of your synced files in MEGA will be permanently deleted. Please, check your [A] folder in the Rubbish Bin of your MEGA account to see if you need to rescue something before continuing.</source>
         <translatorcomment>Message shown to inform the user about the deletion of the remote cache and the consecuences</translatorcomment>
-        <translation type="unfinished">该操作将永久删除您的MEGA帐户中同步文件的历史版本备份。继续下一步之前，请前往MEGA帐户之垃圾箱检查是否需要保留某些文件。</translation>
+        <translation type="unfinished">该操作将永久删除您的MEGA帐户中同步文件的历史版本备份。继续下一步之前，请检查MEGA帐户垃圾箱中的[A]文件夹，确认是否需要保留某些文件。</translation>
     </message>
     <message>
         <source>Do you want to restart MEGAsync now?</source>
@@ -2734,7 +2795,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>PRO Lite</source>
-        <translation type="unfinished">PRO LITE</translation>
+        <translation type="unfinished">LITE</translation>
     </message>
     <message>
         <source>Transfer quota</source>
@@ -2759,7 +2820,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 cleaning scheduler</translation>
+        <translation type="unfinished">%1 清理计划</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -2799,7 +2860,11 @@ when the application starts again</source>
     <message>
         <source>File versions: %1</source>
         <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
-        <translation type="unfinished">File versions: %1</translation>
+        <translation type="unfinished">文件版本：%1</translation>
+    </message>
+    <message>
+        <source>Change password</source>
+        <translation type="unfinished">变更密码</translation>
     </message>
 </context>
 <context>
@@ -3008,7 +3073,7 @@ when the application starts again</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>您必须同意我们的服务条款</translation>
+        <translation>您需要接受服务条款</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -3023,7 +3088,7 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">您的云盘有%1，您确定要同步整个云盘到本地吗？</translation>
+        <translation type="obsolete">You have %1 in your Cloud Drive. Are you sure you want to sync your entire Cloud Drive?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -3042,7 +3107,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">本机文件夹过大(此版本仅限%1 文件夹或%2 文件。请选择另一个文件夹。</translation>
+        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please, select another folder.</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -3059,13 +3124,13 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation>您正试着同步一个异常大的文件夹。为了避免让同步爆量，这不太有效率也危险，我们要求您从小的文件夹开始并于MEGAsync同步程序执行时陆续新增资料。</translation>
+        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>未能链接文件系统。请再试一次。如果问题持续请连系bug@mega.nz</translation>
+        <translation>Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -3129,7 +3194,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished">正在创建文件夹</translation>
+        <translation type="unfinished">正在创建文件夹...</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -3163,7 +3228,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation type="unfinished">请检查你的电子邮件，并点击信中的链接以确认帐号。</translation>
+        <translation type="unfinished">请检查您的电子邮件，并点击信中的链接以确认帐号。</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
@@ -3173,6 +3238,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
         <translation type="unfinished">完成这个步骤之后，您稍候依然可以通过设定界面新增同步路径。</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translation type="unfinished">了解更多</translation>
     </message>
 </context>
 <context>
@@ -3411,7 +3480,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 minute ago</source>
-        <translation type="unfinished">一分钟前</translation>
+        <translation type="unfinished">1 分钟前</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -3419,7 +3488,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 hour ago</source>
-        <translation type="unfinished">一小时前</translation>
+        <translation type="unfinished">1 小时前</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
@@ -3427,7 +3496,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="unfinished">一天前</translation>
+        <translation type="unfinished">1 天前</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -3632,14 +3701,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the upload folder (String as short as possible)</translatorcomment>
-        <translation>选取</translation>
+        <translation>选择</translation>
     </message>
 </context>
 <context>
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">收件夹</translation>
+        <translation type="unfinished">收件箱</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -3670,7 +3739,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">收件夹</translation>
+        <translation type="unfinished">收件箱</translation>
     </message>
     <message>
         <source>Used</source>

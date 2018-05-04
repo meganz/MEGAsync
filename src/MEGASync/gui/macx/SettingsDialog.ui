@@ -370,7 +370,7 @@ padding-bottom: 6px;
          <string>Proxy</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/proxies_32.png</normaloff>:/images/proxies_32.png</iconset>
         </property>
         <property name="iconSize">
@@ -410,7 +410,7 @@ padding-bottom: 6px;
          <string>Advanced</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/advanced_32.png</normaloff>:/images/advanced_32.png</iconset>
         </property>
         <property name="iconSize">
@@ -534,6 +534,48 @@ padding-bottom: 6px;
      </layout>
     </widget>
    </item>
+   <item row="3" column="0">
+    <widget class="QToolButton" name="toolButton_4">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>500</width>
+       <height>2</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>500</width>
+       <height>2</height>
+      </size>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border:none;
+background:transparent;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../Resources_win.qrc">
+       <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>500</width>
+       <height>2</height>
+      </size>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="0">
     <widget class="QStackedWidget" name="wStack">
      <property name="sizePolicy">
@@ -558,7 +600,7 @@ padding-bottom: 6px;
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <property name="sizePolicy">
@@ -617,18 +659,18 @@ padding-bottom: 6px;
          <property name="flat">
           <bool>true</bool>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0,0">
+         <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0">
           <property name="spacing">
            <number>6</number>
           </property>
           <property name="leftMargin">
-           <number>27</number>
+           <number>22</number>
           </property>
           <property name="topMargin">
            <number>15</number>
           </property>
           <property name="rightMargin">
-           <number>29</number>
+           <number>22</number>
           </property>
           <property name="bottomMargin">
            <number>15</number>
@@ -645,7 +687,7 @@ padding-bottom: 6px;
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/Free.png</normaloff>:/images/Free.png</iconset>
             </property>
             <property name="iconSize">
@@ -813,59 +855,132 @@ padding-bottom: 6px;
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="bExportMasterKey">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Export Key</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="bUnlink">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
+           <widget class="QWidget" name="widget_14" native="true">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>200</width>
               <height>0</height>
              </size>
             </property>
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>32</height>
-             </size>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::TabFocus</enum>
-            </property>
-            <property name="styleSheet">
-             <string notr="true"/>
-            </property>
-            <property name="text">
-             <string>Logout</string>
-            </property>
-            <property name="autoDefault">
-             <bool>false</bool>
-            </property>
-            <property name="default">
-             <bool>false</bool>
-            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_20">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QWidget" name="widget_16" native="true">
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <layout class="QHBoxLayout" name="horizontalLayout_27">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QPushButton" name="bExportMasterKey">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>Export Key</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="bUnlink">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>32</height>
+                   </size>
+                  </property>
+                  <property name="focusPolicy">
+                   <enum>Qt::TabFocus</enum>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
+                  <property name="text">
+                   <string>Logout</string>
+                  </property>
+                  <property name="autoDefault">
+                   <bool>false</bool>
+                  </property>
+                  <property name="default">
+                   <bool>false</bool>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+             <item>
+              <widget class="QWidget" name="widget_18" native="true">
+               <layout class="QHBoxLayout" name="horizontalLayout_26">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>0</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>0</number>
+                </property>
+                <item>
+                 <widget class="QPushButton" name="bChangePassword">
+                  <property name="text">
+                   <string>Change password</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </item>
          </layout>
@@ -902,7 +1017,7 @@ border: none;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_macx.qrc">
+          <iconset resource="../Resources_win.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -1152,7 +1267,7 @@ border: none;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_macx.qrc">
+          <iconset resource="../Resources_win.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -1437,7 +1552,7 @@ border: none;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_macx.qrc">
+          <iconset resource="../Resources_win.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -2012,7 +2127,7 @@ border: none;</string>
           <string notr="true"/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_macx.qrc">
+          <iconset resource="../Resources_win.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -3080,7 +3195,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_macx.qrc">
+          <iconset resource="../Resources_win.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -3351,7 +3466,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_macx.qrc">
+          <iconset resource="../Resources_win.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -3618,7 +3733,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_macx.qrc">
+          <iconset resource="../Resources_win.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -3739,7 +3854,7 @@ background:transparent;</string>
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_macx.qrc">
+          <iconset resource="../Resources_win.qrc">
            <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
          </property>
          <property name="iconSize">
@@ -4249,48 +4364,6 @@ background:transparent;</string>
      </widget>
     </widget>
    </item>
-   <item row="3" column="0">
-    <widget class="QToolButton" name="toolButton_4">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>500</width>
-       <height>2</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>500</width>
-       <height>2</height>
-      </size>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border:none;
-background:transparent;</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../Resources_macx.qrc">
-       <normaloff>:/images/separator line.png</normaloff>:/images/separator line.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>500</width>
-       <height>2</height>
-      </size>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -4302,8 +4375,6 @@ background:transparent;</string>
   <tabstop>bAdvanced</tabstop>
   <tabstop>lAccountType</tabstop>
   <tabstop>lEmail</tabstop>
-  <tabstop>bExportMasterKey</tabstop>
-  <tabstop>bUnlink</tabstop>
   <tabstop>lStorageSpace</tabstop>
   <tabstop>lStorage</tabstop>
   <tabstop>bStorageDetails</tabstop>
@@ -4356,7 +4427,7 @@ background:transparent;</string>
   <tabstop>bCancel</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
  <slots>

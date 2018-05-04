@@ -1882,7 +1882,7 @@ void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
         if (node)
         {
             const char *handle = node->getBase64Handle();
-            QString url = QString::fromAscii("https://mega.nz/#fm/") + QString::fromAscii(handle);
+            QString url = QString::fromAscii("https://mega.nz/fm/") + QString::fromAscii(handle);
             QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
             delete [] handle;
             delete node;
@@ -2483,6 +2483,19 @@ void SettingsDialog::on_lAccountImage_clicked()
         app->toggleLogging();
         debugCounter = 0;
     }
+}
+
+void SettingsDialog::on_bChangePassword_clicked()
+{
+    QPointer<ChangePassword> cPassword = new ChangePassword(this);
+    int result = cPassword->exec();
+    if (!cPassword || result != QDialog::Accepted)
+    {
+        delete cPassword;
+        return;
+    }
+
+    delete cPassword;
 }
 
 MegaProgressDialog::MegaProgressDialog(const QString &labelText, const QString &cancelButtonText,

@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>Rubbish bin</source>
-        <translation type="unfinished">פח מחזור</translation>
+        <translation type="unfinished">פח אשפה</translation>
     </message>
     <message>
         <source>Available</source>
@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization</translation>
+        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -201,10 +201,6 @@
         <translation>הוספת תיקייה מסונכרנת</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Please select a local folder and a MEGA folder</source>
         <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
         <translation>אנא בחר תיקייה מקומית ותיקיית MEGA</translation>
@@ -241,7 +237,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>השם &quot;%1&quot; כבר נמצא בשימוש בסנכרון אחר.אנא כבר בשם אחר על מנת לזהות את התקייה המסונכרת הזאת:</translation>
+        <translation>The name &quot;%1&quot; is already in use for another sync. Please enter a different name to identify this synced folder:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -261,13 +257,13 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">תקייה מקומית יותר מדי גדולה (גרסא זו מוגבלת ל%1 תיקיות או %2 קבצים).אנא נסה תיקייה אחרת.</translation>
+        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please, select another folder.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="obsolete">אתה מנסה לסנכרן תיקייה גדולה מאוד.על מנת למנוע סנכרון של תיקיות הפעלה שלמות, כאשר זה לא יעיל ומסוכן, אנו מבקשים ממך להתחיל עם תיקיות קטנות יותר ולהוסיף עוד מידע כאשר MEGASync פועל.</translation>
+        <translation type="obsolete">You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
     </message>
 </context>
 <context>
@@ -291,6 +287,61 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Credits</source>
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
         <translation type="unfinished">תודות</translation>
+    </message>
+</context>
+<context>
+    <name>ChangePassword</name>
+    <message>
+        <source>Change password</source>
+        <translation type="unfinished">שנה סיסמה</translation>
+    </message>
+    <message>
+        <source>New password</source>
+        <translation type="unfinished">New password</translation>
+    </message>
+    <message>
+        <source>Confirm new password</source>
+        <translation type="unfinished">אמת את הסיסמה החדשה</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">ביטול</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">אוקיי</translation>
+    </message>
+    <message>
+        <source>Password changed</source>
+        <translation type="unfinished">Password changed</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translation type="unfinished">סיסמתך שונתה.</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">שגיאה</translation>
+    </message>
+    <message>
+        <source>Wrong password</source>
+        <translation type="unfinished">סיסמא לא נכונה</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="obsolete">אזהרה</translation>
+    </message>
+    <message>
+        <source>Please enter your password</source>
+        <translation type="unfinished">אנא הכנס את הסיסמא שלך</translation>
+    </message>
+    <message>
+        <source>The entered passwords don&apos;t match</source>
+        <translation type="unfinished">הסיסמאות אינן תואמות</translation>
+    </message>
+    <message>
+        <source>Please, enter a stronger password</source>
+        <translation type="unfinished">אנא הכנס סיסמא חזקה יותר</translation>
     </message>
 </context>
 <context>
@@ -505,7 +556,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>אתה מנסה לסנכרן תיקייה גדולה מאוד.על מנת למנוע סנכרון של תיקיות הפעלה שלמות, כאשר זה לא יעיל ומסוכן, אנו מבקשים ממך להתחיל עם תיקיות קטנות יותר ולהוסיף עוד מידע כאשר MEGASync פועל.</translation>
+        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -527,7 +578,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">התחברות</translation>
+        <translation type="unfinished">התחבר</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
@@ -537,7 +588,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel download</source>
         <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
-        <translation type="obsolete">בטל הורדה</translation>
+        <translation type="obsolete">בטל את ההורדה</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -707,7 +758,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel download</source>
         <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
-        <translation>בטל הורדה</translation>
+        <translation>בטל את ההורדה</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
@@ -809,7 +860,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Servers are too busy. Please wait...</source>
-        <translation type="unfinished">השרתים עמוסים. אנא המתן...</translation>
+        <translation type="obsolete">השרתים עמוסים. אנא המתן.</translation>
     </message>
     <message>
         <source>MEGAsync is currently disabled</source>
@@ -824,7 +875,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">שדרג למתקדם</translation>
+        <translation type="unfinished">שדרג ל-PRO</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -884,7 +935,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">פח מחזור</translation>
+        <translation type="unfinished">פח אשפה</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -894,6 +945,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>USED BANDWIDTH %1</source>
         <translation type="unfinished">רוחב פס בשימוש %1</translation>
+    </message>
+    <message>
+        <source>The process is taking longer than expected. Please wait...</source>
+        <translation type="unfinished">This process is taking longer than expected. Please wait.</translation>
     </message>
 </context>
 <context>
@@ -978,7 +1033,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished">התחברות</translation>
+        <translation type="unfinished">התחבר</translation>
     </message>
     <message>
         <source>Create Account</source>
@@ -1078,17 +1133,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation type="obsolete">הסנכרון שלך &quot;%1&quot; בוטל מכיוון והתיקייה המרוחקת לא קיימת</translation>
+        <translation type="obsolete">הסנכרון &quot;%1&quot; בוטל מאחר ותיקיית היעד איננה קיימת.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">הסנכרון שלך &quot;%1&quot; בוטל מכיוון והתיקייה המרוחקת נמצאת בפח האשפה</translation>
+        <translation type="obsolete">הסנכרון &quot;%1&quot; בוטל מאחר ותיקיית היעד נמצאת בסל המחזור.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation type="obsolete">הסנכרון &quot;%1&quot; בוטל מאחר והתיקייה המקומית איננה קיימת.</translation>
+        <translation type="obsolete">הסנכרון שלך &quot;%1&quot; בוטל בפני שהתיקייה המקומית לא קיימת</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1108,7 +1163,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">הסנכרון יעצור.מחיקות שקורות כאשר הסנכרון לא פועל, לא ישוכפלו.</translation>
+        <translation type="obsolete">Synchronization will stop. Deletions that occur while it is not running will not be propagated. Exit anyway?</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -1143,7 +1198,7 @@ Exit anyway?</source>
     <message>
         <source>About</source>
         <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
-        <translation type="unfinished">אודות</translation>
+        <translation type="unfinished">הודות</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1245,7 +1300,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>There was a problem installing the update. Please try again later or download the last version from:https://mega.co.nz/#sync</translation>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1265,14 +1320,14 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
-        <translation>שגיאה</translation>
+        <translation type="vanished">שגיאה</translation>
     </message>
     <message>
         <source>Synchronization will stop.
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation type="obsolete">הסנכרון יעצור.</translation>
+        <translation type="obsolete">Synchronization will stop. Exit anyway?</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -1283,7 +1338,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="obsolete">אין אפשרות לקבל את מערכת הקבצים.אנא נסה שוב. אם הבעיה ממשיכה צור קשר עם bug@mega.nz</translation>
+        <translation type="obsolete">Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -1402,7 +1457,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Logout</source>
         <translatorcomment>Label to indicate Logout action</translatorcomment>
-        <translation type="unfinished">התנתק</translation>
+        <translation type="unfinished">יציאה</translation>
     </message>
     <message>
         <source>Transfer failed:</source>
@@ -1496,7 +1551,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
-        <translation type="unfinished">העלה</translation>
+        <translation type="unfinished">העלאה</translation>
     </message>
     <message>
         <source>Download</source>
@@ -1663,6 +1718,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Error</source>
         <translation type="obsolete">שגיאה</translation>
     </message>
+    <message>
+        <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
+        <translation type="unfinished">Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</translation>
+    </message>
+    <message>
+        <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
+        <translation type="unfinished">Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</translation>
+    </message>
 </context>
 <context>
     <name>MegaTransferDelegate</name>
@@ -1742,6 +1805,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
         <translation type="unfinished">האם אתה בטוח שברצונך לבטל העברה זו?</translation>
+    </message>
+    <message>
+        <source>View on MEGA</source>
+        <translation type="unfinished">צפה ב-MEGA</translation>
     </message>
 </context>
 <context>
@@ -1838,7 +1905,7 @@ Are you sure?</source>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation type="obsolete">תיקיית הבסיס לא יכולה להיות מסונכרת.אנא בחר בתיקייה מתחתיה.</translation>
+        <translation type="obsolete">The root folder can&apos;t be synced. Please, select a subfolder.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1848,13 +1915,13 @@ Please, select a subfolder.</source>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation type="obsolete">יש לך %1 בתיקייה זו.האם אתה בטוח שאתה רוצה לסנכרן זאת?</translation>
+        <translation type="obsolete">You have %1 in this folder. Are you sure you want to sync it?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>תיקייה לא תקינה לסנכרון.אנא וודא כי אינך משתמש בתווים כמו &apos;&apos; &apos;/&apos; או &quot;:&quot; בשמות התיקייה שלך.</translation>
+        <translation>Invalid folder for synchronization. Please, ensure that you don&apos;t use characters like &apos;\&apos;, &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2093,7 +2160,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
-        <translation>לפני דקה</translation>
+        <translation>לפני כדקה</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -2103,12 +2170,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
-        <translation>לפני שעה</translation>
+        <translation>לפני כשעה</translation>
     </message>
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
-        <translation>לפני יום</translation>
+        <translation>אתמול</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -2235,7 +2302,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Logout</source>
         <translatorcomment>Button label to logout of the application. Strins as short as possible.</translatorcomment>
-        <translation>התנתק</translation>
+        <translation>יציאה</translation>
     </message>
     <message>
         <source>Storage space</source>
@@ -2424,12 +2491,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation type="vanished">שם לא נכלל</translation>
     </message>
     <message>
-        <source>Enter a name to exclude from synchronization.
-(wildcards * and ? are allowed):</source>
-        <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation type="vanished">הכנס שם על מנת לא לכלות אותו בסנכרון.(ניתן להשתמש ב-* וב-?):</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an Error message. Keep capital letter.</translatorcomment>
         <translation>שגיאה</translation>
@@ -2446,7 +2507,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="obsolete">מטמון</translation>
+        <translation type="obsolete">זכרון מטמון</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -2526,7 +2587,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">MEGASync יערוך סריקה מלאה של הקבצים שמסונכרים כאשר הוא נפתח.</translation>
+        <translation type="obsolete">MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2557,7 +2618,7 @@ Do you want to restart MEGAsync now?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>MEGASync תערוך סקירה מלאה של התיקיות המסונכרנות שלך כאשר הוא מתחיל.</translation>
+        <translation>MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -2626,7 +2687,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">ייצוא המפתח הראשי ושמירתו במקום מאובטח מאפשר לך להגדיר סיסמא חדשה ללא איבוד נתונים.</translation>
+        <translation type="unfinished">ייצוא מפתח השחזור שלך ושמירתו במקום מאובטח, מאפשר לך לקבוע סיסמא חדשה מבלי לאבד מידע.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
@@ -2734,7 +2795,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>PRO Lite</source>
-        <translation type="unfinished">PRO Lite</translation>
+        <translation type="unfinished">קליל</translation>
     </message>
     <message>
         <source>Transfer quota</source>
@@ -2800,6 +2861,10 @@ when the application starts again</source>
         <source>File versions: %1</source>
         <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
         <translation type="unfinished">File versions: %1</translation>
+    </message>
+    <message>
+        <source>Change password</source>
+        <translation type="unfinished">שנה סיסמה</translation>
     </message>
 </context>
 <context>
@@ -2928,7 +2993,7 @@ when the application starts again</source>
     <message>
         <source>Back</source>
         <translatorcomment>Button label to let the user go back through the wizard assistant.</translatorcomment>
-        <translation>חזור</translation>
+        <translation>חזרה</translation>
     </message>
     <message>
         <source>Next</source>
@@ -3008,7 +3073,7 @@ when the application starts again</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>עליך להסכים עם תנאי השימוש שלנו</translation>
+        <translation>הינך חייב להסכים לתנאי השירות שלנו.</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -3023,7 +3088,7 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">יש לך %1 באחסון בענן שלך.האם אתה בטוח שברצונך לסנכרן את כל אחסון הענן שלך?</translation>
+        <translation type="obsolete">You have %1 in your Cloud Drive. Are you sure you want to sync your entire Cloud Drive?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -3042,7 +3107,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">תקייה מקומית יותר מדי גדולה (גרסא זו מוגבלת ל%1 תיקיות או %2 קבצים).אנא נסה תיקייה אחרת.</translation>
+        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please, select another folder.</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -3059,13 +3124,13 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation>אתה מנסה לסנכרן תיקייה גדולה מאוד.על מנת למנוע סנכרון של תיקיות הפעלה שלמות, כאשר זה לא יעיל ומסוכן, אנו מבקשים ממך להתחיל עם תיקיות קטנות יותר ולהוסיף עוד מידע כאשר MEGASync פועל.</translation>
+        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>אין אפשרות לקבל את מערכת הקבצים.אנא נסה שוב. אם הבעיה ממשיכה צור קשר עם bug@mega.nz</translation>
+        <translation>Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -3173,6 +3238,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
         <translation type="unfinished">When you finish this assistant, you will be able to sync additional folders using the settings dialog</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translation type="unfinished">קרא עוד</translation>
     </message>
 </context>
 <context>
@@ -3411,7 +3480,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 minute ago</source>
-        <translation type="unfinished">לפני דקה</translation>
+        <translation type="unfinished">לפני כדקה</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -3419,7 +3488,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 hour ago</source>
-        <translation type="unfinished">לפני שעה</translation>
+        <translation type="unfinished">לפני כשעה</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
@@ -3427,7 +3496,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="unfinished">לפני יום</translation>
+        <translation type="unfinished">אתמול</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -3543,7 +3612,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload</source>
-        <translation type="unfinished">העלה</translation>
+        <translation type="unfinished">העלאה</translation>
     </message>
     <message>
         <source>Download</source>
