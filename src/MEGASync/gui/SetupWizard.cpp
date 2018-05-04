@@ -34,11 +34,8 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
         QString::fromUtf8("\" style=\"color:#DC0000\">"))
         .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz")));
 
-    ui->lLearnMore->setText(ui->lLearnMore->text()
-                            .replace(QString::fromUtf8("[A]"),
-                                     QString::fromUtf8("<a href=\"https://mega.nz/help/client/megasync/syncing/how-to-setup-sync-client-can-i-specify-which-folder-s-to-sync-576c80e2886688e6028b4591\" style=\"color:#DC0000\">"))
-                            .replace(QString::fromUtf8("[/A]"),
-                                     QString::fromUtf8("</a>")));
+    ui->lLearnMore->setText(QString::fromUtf8("<a href=\"https://mega.nz/help/client/megasync/syncing/how-to-setup-sync-client-can-i-specify-which-folder-s-to-sync-576c80e2886688e6028b4591\" style=\"color:#DC0000\">")
+                            + ui->lLearnMore->text() + QString::fromUtf8("</a>"));
 
     page_initial();
 

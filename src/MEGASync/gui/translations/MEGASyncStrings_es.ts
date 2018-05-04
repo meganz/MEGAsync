@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Introduce un nombre, una ruta absoluta (comodines * y? permitidos) o selecciona el archivo o carpeta que quieres excluir de la sincronización.</translation>
+        <translation type="unfinished">Introduce un nombre, una ruta absoluta (comodines * y? permitidos) o selecciona qué archivo o carpeta quieres excluir de la sincronización.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -201,10 +201,6 @@
         <translation>Añadir carpeta sincronizada</translation>
     </message>
     <message>
-        <source></source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Please select a local folder and a MEGA folder</source>
         <translatorcomment>Message displayed when an user is adding a synchronized folder an either local or remote folder are empty.</translatorcomment>
         <translation>Por favor, selecciona una carpeta local y una carpeta en MEGA</translation>
@@ -241,7 +237,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>El nombre &quot;%1&quot; ya está en uso para otra sincronización. Por favor introduce un nombre diferente para identificar esta carpeta sinronizada:</translation>
+        <translation>El nombre &quot;%1&quot; ya está en uso para otra sincronización. Por favor introduce un nombre diferente para identificar esta carpeta sincronizada:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -291,6 +287,61 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Credits</source>
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
         <translation type="unfinished">Créditos</translation>
+    </message>
+</context>
+<context>
+    <name>ChangePassword</name>
+    <message>
+        <source>Change password</source>
+        <translation type="unfinished">Cambiar contraseña</translation>
+    </message>
+    <message>
+        <source>New password</source>
+        <translation type="unfinished">Nueva contraseña</translation>
+    </message>
+    <message>
+        <source>Confirm new password</source>
+        <translation type="unfinished">Confirma tu nueva contraseña</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation type="unfinished">Aceptar</translation>
+    </message>
+    <message>
+        <source>Password changed</source>
+        <translation type="unfinished">Contraseña modificada</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translation type="unfinished">Tu contraseña ha sido cambiada.</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation type="unfinished">Error</translation>
+    </message>
+    <message>
+        <source>Wrong password</source>
+        <translation type="unfinished">Contraseña incorrecta</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="obsolete">Advertencia</translation>
+    </message>
+    <message>
+        <source>Please enter your password</source>
+        <translation type="unfinished">Por favor, introduzca su contraseña</translation>
+    </message>
+    <message>
+        <source>The entered passwords don&apos;t match</source>
+        <translation type="unfinished">Las contraseñas no coinciden</translation>
+    </message>
+    <message>
+        <source>Please, enter a stronger password</source>
+        <translation type="unfinished">Por favor, introduce una contraseña más segura</translation>
     </message>
 </context>
 <context>
@@ -442,7 +493,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>1 folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected a folder</translatorcomment>
-        <translation type="unfinished">Compartiendo una carpeta</translation>
+        <translation type="unfinished">1 carpeta</translation>
     </message>
     <message>
         <source>%i folders</source>
@@ -527,7 +578,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Iniciar sesión</translation>
+        <translation type="unfinished">Iniciar Sesión</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
@@ -809,7 +860,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Servers are too busy. Please wait...</source>
-        <translation type="unfinished">Servidores sobrecargados. Por favor espera...</translation>
+        <translation type="obsolete">Servidores ocupados. Por favor, espera.</translation>
     </message>
     <message>
         <source>MEGAsync is currently disabled</source>
@@ -895,6 +946,10 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>USED BANDWIDTH %1</source>
         <translation type="unfinished">ANCHO DE BANDA UTILIZADO %1</translation>
     </message>
+    <message>
+        <source>The process is taking longer than expected. Please wait...</source>
+        <translation type="unfinished">Este proceso está tardando más de lo esperado. Por favor espera.</translation>
+    </message>
 </context>
 <context>
     <name>InfoOverQuotaDialog</name>
@@ -978,11 +1033,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished">Iniciar sesión</translation>
+        <translation type="unfinished">Iniciar Sesión</translation>
     </message>
     <message>
         <source>Create Account</source>
-        <translation type="unfinished">Crear cuenta</translation>
+        <translation type="unfinished">Crear Cuenta</translation>
     </message>
     <message>
         <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
@@ -1078,12 +1133,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation type="obsolete">Tu sincronización &quot;%1&quot; se ha desactivado porque la carpeta remota no existe</translation>
+        <translation type="obsolete">Tu sincronización &quot;%1&quot; ha sido desactivada porque la carpeta remota no existe</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">Tu sincronización &quot;%1&quot; se ha desactivado porque la carpeta remota está en la Papelera</translation>
+        <translation type="obsolete">Tu sincronización &quot;%1&quot; ha sido desactivada porque la carpeta remota se encuentra en la Papelera</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1108,7 +1163,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">La sincronización se parará.Los borrados que sucedan mientras MEGAsync no se ejecuta, no se propagarán al servidor.</translation>
+        <translation type="obsolete">La sincronización se parará. Los borrados que sucedan mientras MEGAsync no se ejecuta, no se propagarán al servidor. ¿Seguro que quieres salir?</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -1265,14 +1320,14 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
-        <translation>Error</translation>
+        <translation type="vanished">Error</translation>
     </message>
     <message>
         <source>Synchronization will stop.
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation type="obsolete">La sincronización se detendrá</translation>
+        <translation type="obsolete">La sincronización se detendrá. ¿Seguro que quieres salir?</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -1663,6 +1718,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Error</source>
         <translation type="obsolete">Error</translation>
     </message>
+    <message>
+        <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
+        <translation type="unfinished">Tu cuenta ha sido suspendida debido a infracciones múltiples de los Términos de servicio de MEGA. Por favor revisa la bandeja de entrada de tu correo electrónico.</translation>
+    </message>
+    <message>
+        <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
+        <translation type="unfinished">Hemos cerrado tu cuenta debido a un incumplimiento de los Términos de Servicio de MEGA, como el abuso de los derechos de terceros, la compartición y/o importación de datos ilegales; o el abuso del sistema.</translation>
+    </message>
 </context>
 <context>
     <name>MegaTransferDelegate</name>
@@ -1742,6 +1805,10 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
         <translation type="unfinished">¿Seguro que quieres cancelar esta transferencia?</translation>
+    </message>
+    <message>
+        <source>View on MEGA</source>
+        <translation type="unfinished">Ver en MEGA</translation>
     </message>
 </context>
 <context>
@@ -1848,13 +1915,13 @@ Please, select a subfolder.</source>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation type="obsolete">Tienes %1 en esta carpeta.¿Estás seguro de que quieres sincronizarla?</translation>
+        <translation type="obsolete">Tienes %1 en esta carpeta. ¿Estás seguro de que quieres sincronizarla?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Carpeta no válida para sincronización. Asegúrate de que no usas caracteres como &apos;&apos;, &apos;/&apos; o &apos;:&apos; en tus nombres de carpeta.</translation>
+        <translation>Carpeta no válida para sincronización. Asegúrate de que no usas caracteres como &apos;\&apos;, &apos;/&apos; or &apos;:&apos; en tus nombres de carpeta.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2220,7 +2287,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>English</source>
         <translatorcomment>Label for English language.</translatorcomment>
-        <translation type="obsolete">Inglés</translation>
+        <translation type="obsolete">Español</translation>
     </message>
     <message>
         <source>Details</source>
@@ -2424,12 +2491,6 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translation type="vanished">Nombre excluido</translation>
     </message>
     <message>
-        <source>Enter a name to exclude from synchronization.
-(wildcards * and ? are allowed):</source>
-        <translatorcomment>Label to let the user add a new excluded file name. Keep colon.</translatorcomment>
-        <translation type="vanished">Escribe un nombre para excluirlo de la sincronización. (comodines * y? permitidos):</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an Error message. Keep capital letter.</translatorcomment>
         <translation>Error</translation>
@@ -2446,7 +2507,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="obsolete">Caché</translation>
+        <translation type="obsolete">Caché                                </translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -2526,7 +2587,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">MEGAsync hará un escaneo completo de tus carpetas sincronizadas al inicio</translation>
+        <translation type="obsolete">MEGAsync hará un escaneo completo de tus carpetas sincronizadas al inicio. ¿Quieres reiniciar ahora?</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2557,7 +2618,7 @@ Do you want to restart MEGAsync now?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync escaneará tus carpetas sincronizadas en el siguiente reinicio. ¿Quieres reiniciar MEGAsync ahora?</translation>
+        <translation>MEGAsync hará un escaneo completo de tus carpetas sincronizadas al inicio. ¿Quieres reiniciar ahora?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -2626,7 +2687,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Exportar la Clave de recuperación y guardarla en un sitio seguro te permite establecer una nueva contraseña sin pérdida de datos. </translation>
+        <translation type="unfinished">Si exportas la Clave de recuperación y la guardas en un lugar seguro podrás cambiar la contraseña sin perder tus datos.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
@@ -2800,6 +2861,10 @@ when the application starts again</source>
         <source>File versions: %1</source>
         <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
         <translation type="unfinished">Versiones de archivos: %1</translation>
+    </message>
+    <message>
+        <source>Change password</source>
+        <translation type="unfinished">Cambiar contraseña</translation>
     </message>
 </context>
 <context>
@@ -3008,7 +3073,7 @@ when the application starts again</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Debes aceptar los Términos de servicio</translation>
+        <translation>Debes aceptar los Términos de Servicio.</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -3167,12 +3232,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translation type="unfinished">Has intentado conectarte demasiadas veces.[BR]Por favor espera hasta las %1 y prueba de nuevo.</translation>
+        <translation type="unfinished">Has intentado conectarte demasiadas veces.
+[BR]Por favor espera hasta las %1 y prueba de nuevo.</translation>
     </message>
     <message>
         <source>When you finish this assistant, you will be able to sync additional folders using the settings dialog</source>
         <translatorcomment>Label to inform the user about the possibility to add new synchronizations through settings dialog once the initial setup wizard is at final stage</translatorcomment>
         <translation type="unfinished">Cuando termines este asistente, podrás sincronizar carpetas adicionales desde la ventana de ajustes</translation>
+    </message>
+    <message>
+        <source>Learn more</source>
+        <translation type="unfinished">Más información</translation>
     </message>
 </context>
 <context>
@@ -3210,7 +3280,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 folder</source>
         <translatorcomment>Label to indicate one folder.</translatorcomment>
-        <translation>Compartiendo una carpeta</translation>
+        <translation>1 carpeta</translation>
     </message>
     <message>
         <source>%1 folders</source>
