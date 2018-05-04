@@ -11,11 +11,19 @@ Packager:	MEGA Linux Team <linux@mega.co.nz>
 
 BuildRequires: openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libtool, gcc-c++
 BuildRequires: hicolor-icon-theme, unzip, wget
+BuildRequires: ffmpeg-mega
+%if 0%{?sle_version} >= 150000
+BuildRequires: libcurl4
+%endif
 
 %if 0%{?suse_version}
 BuildRequires: libcares-devel, pkg-config
 BuildRequires: update-desktop-files
- 
+
+#%if 0%{?suse_version} <= 1320
+BuildRequires: libbz2-devel
+#%endif
+
 %if 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
 BuildRequires: libqt5-qtbase-devel >= 5.6, libqt5-linguist, libqt5-qtsvg-devel
 Requires: libQt5Core5 >= 5.6
@@ -33,22 +41,21 @@ BuildRequires: libcryptopp-devel
 
 %endif
 
-%if 0%{?fedora_version}==21 || 0%{?fedora_version}==22 || 0%{?fedora_version}>=25 || 0%{?sle_version} == 120300
+%if 0%{?fedora_version}==21 || 0%{?fedora_version}==22 || 0%{?fedora_version}>=25 || !(0%{?sle_version} < 120300)
 BuildRequires: libzen-devel, libmediainfo-devel
 %endif
 
-
-
 %if 0%{?fedora}
-%if 0%{?fedora_version} >= 23
 BuildRequires: c-ares-devel, cryptopp-devel
+%if 0%{?fedora_version} >= 26
+Requires: cryptopp >= 5.6.5
+%endif
 BuildRequires: desktop-file-utils
+%if 0%{?fedora_version} >= 23
 BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel
 Requires: qt5-qtbase >= 5.6, qt5-qtsvg
 BuildRequires: terminus-fonts, fontpackages-filesystem
 %else
-BuildRequires: c-ares-devel, cryptopp-devel
-BuildRequires: desktop-file-utils
 BuildRequires: qt, qt-x11, qt-devel
 BuildRequires: terminus-fonts, fontpackages-filesystem
 %endif
@@ -87,7 +94,7 @@ Store up to 50 GB for free!
 %define flag_cryptopp %{nil}
 %define flag_disablemediainfo -i
 
-%if 0%{?fedora_version}==19 || 0%{?fedora_version}==20 || 0%{?fedora_version}==23 || 0%{?fedora_version}==24 || 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} || ( 0%{?suse_version} && 0%{?sle_version} != 120300)
+%if 0%{?fedora_version}==19 || 0%{?fedora_version}==20 || 0%{?fedora_version}==23 || 0%{?fedora_version}==24 || 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} || ( 0%{?suse_version} && 0%{?sle_version} < 120300)
 %define flag_disablemediainfo %{nil}
 %endif
 
@@ -275,7 +282,22 @@ DATA
 fi
 %endif
  
-
+%if 0%{?sle_version} == 150000  
+# openSUSE Leap 15
+if [ -d "/etc/zypp/repos.d/" ]; then
+ZYPP_FILE="/etc/zypp/repos.d/megasync.repo"
+cat > "$ZYPP_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+type=rpm-md
+baseurl=https://mega.nz/linux/MEGAsync/openSUSE_Leap_15.0/
+gpgcheck=1
+autorefresh=1
+gpgkey=https://mega.nz/linux/MEGAsync/openSUSE_Leap_15.0/repodata/repomd.xml.key
+enabled=1
+DATA
+fi
+%else
 %if 0%{?suse_version} > 1320
 # openSUSE Tumbleweed (rolling release)
 if [ -d "/etc/zypp/repos.d/" ]; then
@@ -291,6 +313,7 @@ gpgkey=https://mega.nz/linux/MEGAsync/openSUSE_Tumbleweed/repodata/repomd.xml.ke
 enabled=1
 DATA
 fi
+%endif
 %endif
 
 %if 0%{?suse_version} == 1320

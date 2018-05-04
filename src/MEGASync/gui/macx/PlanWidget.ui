@@ -431,13 +431,13 @@ QPushButton
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>32</height>
+               <height>56</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
                <width>16777215</width>
-               <height>32</height>
+               <height>56</height>
               </size>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout">
@@ -448,7 +448,7 @@ QPushButton
                <number>0</number>
               </property>
               <property name="topMargin">
-               <number>0</number>
+               <number>12</number>
               </property>
               <property name="rightMargin">
                <number>0</number>
@@ -465,8 +465,29 @@ QPushButton
               </item>
               <item>
                <widget class="QLabel" name="lStorage">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>36</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>36</height>
+                 </size>
+                </property>
+                <property name="lineWidth">
+                 <number>2</number>
+                </property>
                 <property name="text">
                  <string>Storage</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -517,13 +538,13 @@ QPushButton
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>32</height>
+               <height>56</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
                <width>16777215</width>
-               <height>32</height>
+               <height>56</height>
               </size>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -534,7 +555,7 @@ QPushButton
                <number>0</number>
               </property>
               <property name="topMargin">
-               <number>0</number>
+               <number>12</number>
               </property>
               <property name="rightMargin">
                <number>0</number>
@@ -551,8 +572,29 @@ QPushButton
               </item>
               <item>
                <widget class="QLabel" name="lBandWidth">
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>36</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>36</height>
+                 </size>
+                </property>
+                <property name="lineWidth">
+                 <number>2</number>
+                </property>
                 <property name="text">
                  <string>Bandwidth</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>

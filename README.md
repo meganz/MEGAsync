@@ -14,9 +14,7 @@ https://mega.nz/sync
 
 #### Get the source
 ```
-git clone https://github.com/meganz/MEGAsync.git
-cd MEGAsync
-git submodule update --init --recursive
+git clone --recursive https://github.com/meganz/MEGAsync.git
 ```
 
 # Windows compilation

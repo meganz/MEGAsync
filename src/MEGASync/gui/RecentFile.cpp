@@ -58,7 +58,7 @@ void RecentFile::updateWidget()
     {
         QFont f = ui->lFileName->font();
         QFontMetrics fm = QFontMetrics(f);
-        ui->lFileName->setText(fm.elidedText(info.fileName, Qt::ElideRight,ui->lFileName->width()));
+        ui->lFileName->setText(fm.elidedText(info.fileName, Qt::ElideMiddle, ui->lFileName->width()));
 
         QIcon icon;
         icon.addFile(Utilities::getExtensionPixmapMedium(info.fileName), QSize(), QIcon::Normal, QIcon::Off);

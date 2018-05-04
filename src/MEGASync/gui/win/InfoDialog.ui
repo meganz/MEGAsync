@@ -627,8 +627,21 @@ border: none;</string>
                  <height>20</height>
                 </size>
                </property>
+               <property name="styleSheet">
+                <string notr="true">padding-left: 10px;
+padding-right: 10px;</string>
+               </property>
                <property name="text">
                 <string/>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::RichText</enum>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+               <property name="openExternalLinks">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
