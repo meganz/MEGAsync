@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>397</height>
+    <height>366</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>400</width>
-    <height>397</height>
+    <height>366</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>400</width>
-    <height>557</height>
+    <height>366</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -1043,7 +1043,7 @@ border: none;</string>
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="pOverQuota">
+           <widget class="QWidget" name="pTransfers">
             <property name="minimumSize">
              <size>
               <width>0</width>
@@ -1061,44 +1061,28 @@ border: none;</string>
               <number>0</number>
              </property>
              <property name="topMargin">
-              <number>30</number>
+              <number>0</number>
              </property>
              <property name="rightMargin">
               <number>0</number>
              </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
              <item>
-              <widget class="QLabel" name="lDisabled">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
+              <widget class="InfoDialogTransfersWidget" name="wListTransfers" native="true">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>25</height>
+                 <height>190</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>25</height>
+                 <height>190</height>
                 </size>
                </property>
-               <property name="text">
-                <string>MEGAsync is currently disabled</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-               <property name="wordWrap">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QWidget" name="widget" native="true">
                <layout class="QVBoxLayout" name="verticalLayout_6">
                 <property name="spacing">
                  <number>0</number>
@@ -1115,22 +1099,6 @@ border: none;</string>
                 <property name="bottomMargin">
                  <number>0</number>
                 </property>
-                <item>
-                 <widget class="QLabel" name="lDescDisabled">
-                  <property name="text">
-                   <string>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</string>
-                  </property>
-                  <property name="textFormat">
-                   <enum>Qt::AutoText</enum>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                  <property name="wordWrap">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
                </layout>
               </widget>
              </item>
@@ -1142,28 +1110,6 @@ border: none;</string>
        </widget>
       </item>
      </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="RecentlyUpdated" name="wRecentUpdated" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>400</width>
-       <height>31</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>400</width>
-       <height>16777215</height>
-      </size>
-     </property>
     </widget>
    </item>
    <item>
@@ -1945,9 +1891,9 @@ color: #333333;
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>RecentlyUpdated</class>
+   <class>InfoDialogTransfersWidget</class>
    <extends>QWidget</extends>
-   <header location="global">RecentlyUpdated.h</header>
+   <header location="global">InfoDialogTransfersWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

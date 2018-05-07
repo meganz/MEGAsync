@@ -261,74 +261,7 @@ void TransferManagerItem::updateFinishedTime()
     Preferences *preferences = Preferences::instance();
     QDateTime now = QDateTime::currentDateTime();
     qint64 secs = ( now.toMSecsSinceEpoch() / 100 - (preferences->getMsDiffTimeWithSDK() + dsFinishedTime) ) / 10;
-    if (secs < 2)
-    {
-        ui->lRemainingTimeCompleted->setText(tr("just now"));
-    }
-    else if (secs < 60)
-    {
-        ui->lRemainingTimeCompleted->setText(tr("%1 seconds ago").arg(secs));
-    }
-    else if (secs < 3600)
-    {
-        int minutes = secs/60;
-        if (minutes == 1)
-        {
-            ui->lRemainingTimeCompleted->setText(tr("1 minute ago"));
-        }
-        else
-        {
-            ui->lRemainingTimeCompleted->setText(tr("%1 minutes ago").arg(minutes));
-        }
-    }
-    else if (secs < 86400)
-    {
-        int hours = secs/3600;
-        if (hours == 1)
-        {
-            ui->lRemainingTimeCompleted->setText(tr("1 hour ago"));
-        }
-        else
-        {
-            ui->lRemainingTimeCompleted->setText(tr("%1 hours ago").arg(hours));
-        }
-    }
-    else if (secs < 2592000)
-    {
-        int days = secs/86400;
-        if (days == 1)
-        {
-            ui->lRemainingTimeCompleted->setText(tr("1 day ago"));
-        }
-        else
-        {
-            ui->lRemainingTimeCompleted->setText(tr("%1 days ago").arg(days));
-        }
-    }
-    else if (secs < 31536000)
-    {
-        int months = secs/2592000;
-        if (months == 1)
-        {
-            ui->lRemainingTimeCompleted->setText(tr("1 month ago"));
-        }
-        else
-        {
-            ui->lRemainingTimeCompleted->setText(tr("%1 months ago").arg(months));
-        }
-    }
-    else
-    {
-        int years = secs/31536000;
-        if (years == 1)
-        {
-            ui->lRemainingTimeCompleted->setText(tr("1 year ago"));
-        }
-        else
-        {
-            ui->lRemainingTimeCompleted->setText(tr("%1 years ago").arg(years));
-        }
-    }
+    ui->lRemainingTimeCompleted->setText(Utilities::getFinishedTimeString(secs));
 }
 
 bool TransferManagerItem::cancelButtonClicked(QPoint pos)

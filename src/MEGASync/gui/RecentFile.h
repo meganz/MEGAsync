@@ -28,7 +28,8 @@ public:
     bool getLinkButtonClicked(QPoint pos);
     void mouseHoverTransfer(bool isHover);
 
-    void updateTransfer() {}
+    void finishTransfer();
+    void updateTransfer();
     void updateFinishedTime() {}
     void loadDefaultTransferIcon() {}
     void updateAnimation() {}

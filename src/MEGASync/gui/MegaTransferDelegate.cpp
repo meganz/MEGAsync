@@ -33,7 +33,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         TransferItem *ti = model->transferItems[tag];
         if (!ti)
         {
-            if (modelType == QTransfersModel::TYPE_RECENTLY_UPDATED)
+            if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
             {
                 ti = new RecentFile();
             }
@@ -62,7 +62,10 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 }
                 else
                 {
-                    delete transfer;
+                    if (!transfer->isFinished())
+                    {
+                        delete transfer;
+                    }
                 }
             }
         }
@@ -112,9 +115,9 @@ QSize MegaTransferDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
     if (index.isValid())
     {
         int modelType = model->getModelType();
-        if (modelType == QTransfersModel::TYPE_RECENTLY_UPDATED)
+        if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
         {
-            return QSize(400, 32);
+            return QSize(400, 60);
         }
 
         return QSize(800, 48);

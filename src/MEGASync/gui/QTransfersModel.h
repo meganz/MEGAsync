@@ -26,7 +26,8 @@ public:
         TYPE_DOWNLOAD = 0,
         TYPE_UPLOAD,
         TYPE_FINISHED,
-        TYPE_RECENTLY_UPDATED
+        TYPE_RECENTLY_UPDATED,
+        TYPE_CUSTOM_TRANSFERS
     };
 
     explicit QTransfersModel(int type, QObject *parent = 0);

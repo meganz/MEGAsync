@@ -50,7 +50,9 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/LocalCleanScheduler.cpp \
     $$PWD/TransferManagerItem.cpp \
     $$PWD/TransferItem.cpp \
-    $$PWD/RecentlyUpdated.cpp
+    $$PWD/RecentlyUpdated.cpp \
+    $$PWD/InfoDialogTransfersWidget.cpp \
+    $$PWD/QCustomTransfersModel.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -102,7 +104,9 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/LocalCleanScheduler.h \
     $$PWD/TransferManagerItem.h \
     $$PWD/TransferItem.h \
-    $$PWD/RecentlyUpdated.h
+    $$PWD/RecentlyUpdated.h \
+    $$PWD/InfoDialogTransfersWidget.h \
+    $$PWD/QCustomTransfersModel.h
 
 INCLUDEPATH += $$PWD
 
@@ -148,7 +152,8 @@ win32 {
                 $$PWD/win/ActiveTransfersWidget.ui \
                 $$PWD/win/AddExclusionDialog.ui \
                 $$PWD/win/LocalCleanScheduler.ui \
-                $$PWD/win/RecentlyUpdated.ui
+                $$PWD/win/RecentlyUpdated.ui \
+                $$PWD/win/InfoDialogTransfersWidget.ui
 }
 
 macx {
@@ -191,7 +196,8 @@ macx {
                 $$PWD/macx/ActiveTransfersWidget.ui \
                 $$PWD/macx/AddExclusionDialog.ui \
                 $$PWD/macx/LocalCleanScheduler.ui \
-                $$PWD/macx/RecentlyUpdated.ui
+                $$PWD/macx/RecentlyUpdated.ui \
+                $$PWD/macx/InfoDialogTransfersWidget.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -243,10 +249,11 @@ unix:!macx {
                 $$PWD/linux/ActiveTransfersWidget.ui \
                 $$PWD/linux/AddExclusionDialog.ui \
                 $$PWD/linux/LocalCleanScheduler.ui \
-                $$PWD/linux/RecentlyUpdated.ui
+                $$PWD/linux/RecentlyUpdated.ui \
+                $$PWD/linux/InfoDialogTransfersWidget.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
-}  
+}     

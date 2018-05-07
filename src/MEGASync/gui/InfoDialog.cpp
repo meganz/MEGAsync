@@ -78,7 +78,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->wHeader->setStyleSheet(QString::fromUtf8("#wHeader {border: none;}"));
 
     //Set properties of some widgets
-    ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+    ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
     ui->wTransferDown->setType(MegaTransfer::TYPE_DOWNLOAD);
     ui->wTransferDown->hideTransfer();
     ui->wTransferUp->setType(MegaTransfer::TYPE_UPLOAD);
@@ -125,10 +125,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->bDotUsedStorage->hide();
     ui->sUsedData->setCurrentWidget(ui->pStorage);
 
-    ui->lDescDisabled->setText(QString::fromUtf8("<p style=\" line-height: 140%;\"><span style=\"font-size:14px;\">")
-                               + ui->lDescDisabled->text().replace(QString::fromUtf8("[A]"), QString::fromUtf8("<font color=\"#d90007\"> "))
-                                                          .replace(QString::fromUtf8("[/A]"), QString::fromUtf8(" </font>"))
-                                                                   + QString::fromUtf8("</span></p>"));
+    ui->wListTransfers->setupTransfers();
+
 
 #ifdef __APPLE__
     arrow = new QPushButton(this);
@@ -152,11 +150,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     connect(maxHeightAnimation, SIGNAL(valueChanged(QVariant)), this, SLOT(onValueChanged(QVariant)));
     connect(minHeightAnimation, SIGNAL(valueChanged(QVariant)), this, SLOT(onValueChanged(QVariant)));
-
-    connect(ui->wRecentUpdated, SIGNAL(onRecentlyUpdatedClicked(int)), this, SLOT(recentlyUpdatedStateChanged(int)));
-    ui->wRecentUpdated->setVisualMode(RecentlyUpdated::COLLAPSED);
-#else
-    ui->wRecentUpdated->setVisualMode(RecentlyUpdated::EXPANDED);
 #endif
 
     on_bDotUsedStorage_clicked();
@@ -330,8 +323,11 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
         }
 
         wTransfer = ui->wTransferDown;
+
         if (!activeDownload || activeDownload->getTag() != transfer->getTag())
         {
+            ui->wListTransfers->getModel()->updateActiveTransfer(megaApi, transfer);
+
             delete activeDownload;
             activeDownload = transfer->copy();
             wTransfer->setFileName(QString::fromUtf8(transfer->getFileName()));
@@ -351,12 +347,15 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
         wTransfer = ui->wTransferUp;
         if (!activeUpload || activeUpload->getTag() != transfer->getTag())
         {
+            ui->wListTransfers->getModel()->updateActiveTransfer(megaApi, transfer);
+
             delete activeUpload;
             activeUpload = transfer->copy();
             wTransfer->setFileName(QString::fromUtf8(transfer->getFileName()));
         }
     }
     wTransfer->setProgress(completedSize, totalSize, !transfer->isSyncTransfer());
+    ui->wListTransfers->getModel()->onTransferUpdate(megaApi, transfer);
 }
 
 void InfoDialog::updateTransfers()
@@ -1260,7 +1259,7 @@ void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaErro
         return;
     }
 
-    ui->wRecentUpdated->onTransferFinish(api, transfer, e);
+    ui->wListTransfers->getModel()->onTransferFinish(api, transfer, e);
 }
 
 void InfoDialog::changeEvent(QEvent *event)
@@ -1277,11 +1276,7 @@ void InfoDialog::changeEvent(QEvent *event)
             }
             updateSyncsButton();
             state = STATE_STARTING;
-            updateState();
-            ui->lDescDisabled->setText(QString::fromUtf8("<p style=\" line-height: 140%;\"><span style=\"font-size:14px;\">")
-                                       + ui->lDescDisabled->text().replace(QString::fromUtf8("[A]"), QString::fromUtf8("<font color=\"#d90007\"> "))
-                                                                  .replace(QString::fromUtf8("[/A]"), QString::fromUtf8(" </font>"))
-                                                                           + QString::fromUtf8("</span></p>"));
+            updateState();   
         }
     }
     QDialog::changeEvent(event);
@@ -1386,8 +1381,6 @@ void InfoDialog::regenerateLayout()
         ui->wSeparator->setVisible(false);
         dialogLayout->removeWidget(ui->wContainerBottom);
         ui->wContainerBottom->setVisible(false);
-        dialogLayout->removeWidget(ui->wRecentUpdated);
-        ui->wRecentUpdated->setVisible(false);
         dialogLayout->addWidget(gWidget);
         gWidget->setVisible(true);
 
@@ -1398,18 +1391,8 @@ void InfoDialog::regenerateLayout()
     }
     else
     {
-
-        if (ui->wRecentUpdated->getActualMode() == RecentlyUpdated::EXPANDED)
-        {
-            setMinimumHeight(557);
-            setMaximumHeight(557);
-        }
-        else
-        {
-            setMinimumHeight(397);
-            setMaximumHeight(397);
-        }
-
+        setMinimumHeight(366);
+        setMaximumHeight(366);
 
         ui->bTransferManager->setVisible(true);
         ui->bSyncFolder->setVisible(true);
@@ -1419,8 +1402,6 @@ void InfoDialog::regenerateLayout()
         gWidget->setVisible(false);
         dialogLayout->addWidget(ui->wContainerHeader);
         ui->wContainerHeader->setVisible(true);    
-        dialogLayout->addWidget(ui->wRecentUpdated);
-        ui->wRecentUpdated->setVisible(true);
         dialogLayout->addWidget(ui->wSeparator);
         ui->wSeparator->setVisible(true);
         dialogLayout->addWidget(ui->wContainerBottom);
@@ -1552,7 +1533,6 @@ void InfoDialog::recentlyUpdatedStateChanged(int mode)
 
     if (mode == RecentlyUpdated::COLLAPSED)
     {
-        ui->wRecentUpdated->setVisualMode(RecentlyUpdated::COLLAPSED);
         minHeightAnimation->setTargetObject(this);
         maxHeightAnimation->setTargetObject(this);
         minHeightAnimation->setPropertyName("minimumHeight");
@@ -1595,16 +1575,14 @@ void InfoDialog::onAnimationFinished()
 //        ui->wRecent2->show();
 //        ui->wRecent3->show();
 
-        ui->wRecentUpdated->setVisualMode(RecentlyUpdated::EXPANDED);
     }
     else
     {
-        ui->wRecentUpdated->setVisualMode(RecentlyUpdated::COLLAPSED);
     }
-//    ui->lRecentlyUpdated->show();
-//    ui->cRecentlyUpdated->show();
-//    ui->wRecentlyUpdated->show();
-//    ui->cRecentlyUpdated->setEnabled(true);
+//    ui->l TransferListItem->show();
+//    ui->c TransferListItem->show();
+//    ui->w TransferListItem->show();
+//    ui->c TransferListItem->setEnabled(true);
 
     repaint();
 }
