@@ -464,6 +464,79 @@ QString Utilities::getTimeString(long long secs, bool secondPrecision)
     return time;
 }
 
+QString Utilities::getFinishedTimeString(long long secs)
+{
+    if (secs < 2)
+    {
+        return QObject::tr("just now");
+    }
+    else if (secs < 60)
+    {
+        return QObject::tr("%1 seconds ago").arg(secs);
+    }
+    else if (secs < 3600)
+    {
+        int minutes = secs/60;
+        if (minutes == 1)
+        {
+            return QObject::tr("1 minute ago");
+        }
+        else
+        {
+            return QObject::tr("%1 minutes ago").arg(minutes);
+        }
+    }
+    else if (secs < 86400)
+    {
+        int hours = secs/3600;
+        if (hours == 1)
+        {
+            return QObject::tr("1 hour ago");
+        }
+        else
+        {
+            return QObject::tr("%1 hours ago").arg(hours);
+        }
+    }
+    else if (secs < 2592000)
+    {
+        int days = secs/86400;
+        if (days == 1)
+        {
+            return QObject::tr("1 day ago");
+        }
+        else
+        {
+            return QObject::tr("%1 days ago").arg(days);
+        }
+    }
+    else if (secs < 31536000)
+    {
+        int months = secs/2592000;
+        if (months == 1)
+        {
+            return QObject::tr("1 month ago");
+        }
+        else
+        {
+            return QObject::tr("%1 months ago").arg(months);
+        }
+    }
+    else
+    {
+        int years = secs/31536000;
+        if (years == 1)
+        {
+            return QObject::tr("1 year ago");
+        }
+        else
+        {
+            return QObject::tr("%1 years ago").arg(years);
+        }
+    }
+
+}
+
 QString Utilities::getSizeString(unsigned long long bytes)
 {
     unsigned long long KB = 1024;
