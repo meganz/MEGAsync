@@ -1236,6 +1236,48 @@ void MegaApplication::start()
         }
         updated = false;
 
+        if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD))
+        {
+            bool isOSdeprecated = false;
+#ifdef MEGASYNC_DEPRECATED_OS
+            isOSdeprecated = true;
+#endif
+
+#ifdef __APPLE__
+            char releaseStr[256];
+            size_t size = sizeof(releaseStr);
+            if (!sysctlbyname("kern.osrelease", releaseStr, &size, NULL, 0)  && size > 0)
+            {
+                if (strchr(releaseStr,'.'))
+                {
+                    char *token = strtok(releaseStr, ".");
+                    if (token)
+                    {
+                        errno = 0;
+                        char *endPtr = NULL;
+                        long majorVersion = strtol(token, &endPtr, 10);
+                        if (endPtr != token && errno != ERANGE && majorVersion >= INT_MIN && majorVersion <= INT_MAX)
+                        {
+                            if((int)majorVersion < 13) // Older versions from 10.9 (mavericks)
+                            {
+                                isOSdeprecated = true;
+                            }
+                        }
+                    }
+                }
+            }
+#endif
+            if (isOSdeprecated)
+            {
+                QMessageBox::warning(NULL, tr("MEGAsync"),
+                                     tr("Your Operative System is too old. "
+                                        "You might not receive new updates for this application. "
+                                        "We strongly recommend you to update to a new version."
+                                        ));
+                preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD, true);
+            }
+        }
+
         if (!infoDialog)
         {
             infoDialog = new InfoDialog(this);
@@ -1251,6 +1293,7 @@ void MegaApplication::start()
                 }
             }
         }
+
 
         if (!preferences->isFirstStartDone())
         {
@@ -1399,6 +1442,48 @@ void MegaApplication::loggedIn()
     QString language = preferences->language();
     changeLanguage(language);
     updated = false;
+
+    if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD))
+    {
+        bool isOSdeprecated = false;
+#ifdef MEGASYNC_DEPRECATED_OS
+        isOSdeprecated = true;
+#endif
+
+#ifdef __APPLE__
+        char releaseStr[256];
+        size_t size = sizeof(releaseStr);
+        if (!sysctlbyname("kern.osrelease", releaseStr, &size, NULL, 0)  && size > 0)
+        {
+            if (strchr(releaseStr,'.'))
+            {
+                char *token = strtok(releaseStr, ".");
+                if (token)
+                {
+                    errno = 0;
+                    char *endPtr = NULL;
+                    long majorVersion = strtol(token, &endPtr, 10);
+                    if (endPtr != token && errno != ERANGE && majorVersion >= INT_MIN && majorVersion <= INT_MAX)
+                    {
+                        if((int)majorVersion < 13) // Older versions from 10.9 (mavericks)
+                        {
+                            isOSdeprecated = true;
+                        }
+                    }
+                }
+            }
+        }
+#endif
+        if (isOSdeprecated)
+        {
+            QMessageBox::warning(NULL, tr("MEGAsync"),
+                                 tr("Your Operative System is too old. "
+                                    "You might not receive new updates for this application. "
+                                    "We strongly recommend you to update to a new version."
+                                    ));
+            preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD, true);
+        }
+    }
 
     if (!infoDialog)
     {
