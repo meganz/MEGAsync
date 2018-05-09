@@ -1270,10 +1270,14 @@ void MegaApplication::start()
             if (isOSdeprecated)
             {
                 QMessageBox::warning(NULL, tr("MEGAsync"),
-                                     tr("Your Operative System is too old. "
-                                        "You might not receive new updates for this application. "
-                                        "We strongly recommend you to update to a new version."
-                                        ));
+                                     tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
+#ifdef __APPLE__
+                                     + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.")
+#else
+                                     + tr("MEGAsync will continue to work, however you might not receive new updates.")
+
+#endif
+                                     );
                 preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD, true);
             }
         }
