@@ -298,8 +298,6 @@
         <file>images/tray_pause_over_ico@2x.png</file>
         <file>images/tray_play_over_ico.png</file>
         <file>images/tray_play_over_ico@2x.png</file>
-        <file>images/tray_preferences_over_ico.png</file>
-        <file>images/tray_preferences_over_ico@2x.png</file>
         <file>images/tray_share_over_ico.png</file>
         <file>images/tray_share_over_ico@2x.png</file>
         <file>images/drag_dmg.png</file>
@@ -501,8 +499,6 @@
         <file>images/pause_big_ico@2x.png</file>
         <file>images/mbox-warning.png</file>
         <file>images/mbox-warning@2x.png</file>
-        <file>images/tray_transfer_manager_ico_over.png</file>
-        <file>images/tray_transfer_manager_ico_over@2x.png</file>
         <file>images/tray_transfer_manager_ico.png</file>
         <file>images/tray_transfer_manager_ico@2x.png</file>
         <file>images/Lite.png</file>
@@ -583,5 +579,13 @@
         <file>images/ic_small_available@2x.png</file>
         <file>images/ic_small_versions.png</file>
         <file>images/ic_small_versions@2x.png</file>
+        <file>images/ico_menu_scanning_state.png</file>
+        <file>images/ico_menu_scanning_state@2x.png</file>
+        <file>images/ico_menu_uptodate_state.png</file>
+        <file>images/ico_menu_uptodate_state@2x.png</file>
+        <file>images/ico_pause_transfers_state.png</file>
+        <file>images/ico_pause_transfers_state@2x.png</file>
+        <file>images/ico_resume_transfers_state.png</file>
+        <file>images/ico_resume_transfers_state@2x.png</file>
     </qresource>
 </RCC>

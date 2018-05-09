@@ -167,7 +167,6 @@
         <file>images/uptodate.svg</file>
         <file>images/tray_pause_over_ico.png</file>
         <file>images/tray_play_over_ico.png</file>
-        <file>images/tray_preferences_over_ico.png</file>
         <file>images/tray_share_over_ico.png</file>
         <file>images/drag_dmg.png</file>
         <file>images/warning.svg</file>
@@ -260,7 +259,6 @@
         <file>images/completed_transfers.png</file>
         <file>images/pause_big_ico.png</file>
         <file>images/mbox-warning.png</file>
-        <file>images/tray_transfer_manager_ico_over.png</file>
         <file>images/tray_transfer_manager_ico.png</file>
         <file>images/Lite.png</file>
         <file>images/ico_chat_button.png</file>
@@ -305,5 +303,9 @@
         <file>fonts/SourceSansPro-Semibold.ttf</file>
         <file>images/ic_small_available.png</file>
         <file>images/ic_small_versions.png</file>
+        <file>images/ico_menu_scanning_state.png</file>
+        <file>images/ico_menu_uptodate_state.png</file>
+        <file>images/ico_pause_transfers_state.png</file>
+        <file>images/ico_resume_transfers_state.png</file>
     </qresource>
 </RCC>

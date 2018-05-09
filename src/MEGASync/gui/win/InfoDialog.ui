@@ -35,15 +35,6 @@
 {
 	border: none;
 }
-QPushButton#bSettings:hover
-{
-	image: url(://images/tray_preferences_over_ico.png);
-}
-
-QPushButton#bTransferManager:hover
-{
-	image: url(://images/tray_transfer_manager_ico_over.png);
-}
 
 #wContainerHeader
 {
@@ -135,7 +126,7 @@ border-bottom-right-radius: 2px;
 
 QProgressBar#pUsageStorage, QProgressBar#pUsageQuota
 {
-background-color: #EEEEEE;
+background-color: #E6E6E6;
 border-radius: 2px;
 }
 
@@ -145,14 +136,25 @@ background-color: #EB4444;
 border-radius: 2px;
 }
                                                             
-QProgressBar#pUsageStorage::chunk, QProgressBar#pUsageQuota::chunk{
-background-color: #666666;
+QProgressBar#pUsageStorage::chunk{
+background-color: #2BA6DE;
 border-top-left-radius: 2px;
 border-bottom-left-radius: 2px;
 }
 
-QProgressBar#pUsageStorage::chunk[crossedge=true] , QProgressBar#pUsageQuota::chunk[crossedge=true]{
-background-color: #666666;
+QProgressBar#pUsageQuota::chunk{
+background-color: #31B500;
+border-top-left-radius: 2px;
+border-bottom-left-radius: 2px;
+}
+
+QProgressBar#pUsageStorage::chunk[crossedge=true] {
+background-color: #2BA6DE;
+border-radius: 2px;
+}
+
+QProgressBar#pUsageQuota::chunk[crossedge=true]{
+background-color: #31B500;
 border-radius: 2px;
 }
 
@@ -410,7 +412,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/tray_transfer_manager_ico.png</normaloff>:/images/tray_transfer_manager_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -455,7 +457,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -564,7 +566,7 @@ border: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_linux.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/empty_upToDate.png</normaloff>:/images/empty_upToDate.png</iconset>
                </property>
                <property name="iconSize">
@@ -801,7 +803,7 @@ border: none;</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../Resources_linux.qrc">
+                      <iconset resource="../Resources_win.qrc">
                        <normaloff>:/images/clock_ico.png</normaloff>:/images/clock_ico.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -942,7 +944,7 @@ border: none;</string>
                       <string/>
                      </property>
                      <property name="icon">
-                      <iconset resource="../Resources_linux.qrc">
+                      <iconset resource="../Resources_win.qrc">
                        <normaloff>:/images/clock_ico.png</normaloff>:/images/clock_ico.png</iconset>
                      </property>
                      <property name="iconSize">
@@ -1166,7 +1168,7 @@ border: none;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/Nav_Dot_inactive.png</normaloff>
              <normalon>:/images/Nav_Dot_inactive.png</normalon>
              <disabledoff>:/images/Nav_Dot_inactive.png</disabledoff>
@@ -1202,7 +1204,7 @@ border: none;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/Nav_Dot_inactive.png</normaloff>:/images/Nav_Dot_inactive.png</iconset>
            </property>
            <property name="iconSize">
@@ -1280,7 +1282,7 @@ border: none;</string>
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>1</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="pStorage">
             <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -1456,13 +1458,13 @@ border: none;</string>
                   <property name="minimumSize">
                    <size>
                     <width>368</width>
-                    <height>8</height>
+                    <height>4</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
                     <width>368</width>
-                    <height>8</height>
+                    <height>4</height>
                    </size>
                   </property>
                   <property name="cursor">
@@ -1671,13 +1673,13 @@ color: #333333;
                   <property name="minimumSize">
                    <size>
                     <width>368</width>
-                    <height>8</height>
+                    <height>4</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
                     <width>368</width>
-                    <height>8</height>
+                    <height>4</height>
                    </size>
                   </property>
                   <property name="value">
@@ -1729,6 +1731,22 @@ color: #333333;
           <number>8</number>
          </property>
          <item>
+          <widget class="StatusInfo" name="wStatus" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>32</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>32</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="bSyncFolder">
            <property name="minimumSize">
             <size>
@@ -1755,7 +1773,7 @@ color: #333333;
             <string>Syncs</string>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/ico_syncs.png</normaloff>:/images/ico_syncs.png</iconset>
            </property>
            <property name="iconSize">
@@ -1840,6 +1858,12 @@ color: #333333;
    <header location="global">InfoDialogTransfersWidget.h</header>
    <container>1</container>
   </customwidget>
+  <customwidget>
+   <class>StatusInfo</class>
+   <extends>QWidget</extends>
+   <header location="global">StatusInfo.h</header>
+   <container>1</container>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>bSettings</tabstop>
@@ -1850,7 +1874,7 @@ color: #333333;
   <tabstop>label</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

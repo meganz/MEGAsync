@@ -99,6 +99,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->bClockUp->setAttribute(Qt::WA_TransparentForMouseEvents, true);
 
     state = STATE_STARTING;
+    ui->wStatus->setState(state);
+
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
     scanningTimer.setSingleShot(false);
@@ -117,6 +119,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     transfersFinishedTimer.setSingleShot(true);
     transfersFinishedTimer.setInterval(5000);
     connect(&transfersFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllTransfersFinished()));
+
+    connect(ui->wStatus, SIGNAL(clicked()), app, SLOT(pauseTransfers()), Qt::QueuedConnection);
 
     ui->wDownloadDesc->hide();
     ui->wUploadDesc->hide();
@@ -800,6 +804,8 @@ void InfoDialog::updateState()
             }
         }
     }
+
+    ui->wStatus->setState(state);
 }
 
 void InfoDialog::closeSyncsMenu()
@@ -1276,6 +1282,7 @@ void InfoDialog::changeEvent(QEvent *event)
             }
             updateSyncsButton();
             state = STATE_STARTING;
+            ui->wStatus->setState(state);
             updateState();   
         }
     }
