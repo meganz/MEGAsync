@@ -1238,6 +1238,8 @@ void MegaApplication::start()
         }
         updated = false;
 
+        checkOperatingSystem();
+
         if (!infoDialog)
         {
             infoDialog = new InfoDialog(this);
@@ -1253,6 +1255,7 @@ void MegaApplication::start()
                 }
             }
         }
+
 
         if (!preferences->isFirstStartDone())
         {
@@ -1402,6 +1405,8 @@ void MegaApplication::loggedIn()
     QString language = preferences->language();
     changeLanguage(language);
     updated = false;
+
+    checkOperatingSystem();
 
     if (!infoDialog)
     {
@@ -2954,7 +2959,6 @@ void MegaApplication::startUpdateTask()
         connect(updateTask, SIGNAL(installingUpdate(bool)), this, SLOT(onInstallingUpdate(bool)), Qt::UniqueConnection);
         connect(updateTask, SIGNAL(updateNotFound(bool)), this, SLOT(onUpdateNotFound(bool)), Qt::UniqueConnection);
         connect(updateTask, SIGNAL(updateError()), this, SLOT(onUpdateError()), Qt::UniqueConnection);
-        connect(updateTask, SIGNAL(deprecatedOperatingSystem()), this, SLOT(onDeprecatedOperatingSystem()), Qt::UniqueConnection);
 
         connect(updateThread, SIGNAL(finished()), updateTask, SLOT(deleteLater()), Qt::UniqueConnection);
         connect(updateThread, SIGNAL(finished()), updateThread, SLOT(deleteLater()), Qt::UniqueConnection);
@@ -3126,18 +3130,52 @@ void MegaApplication::checkFirstTransfer()
     }
 }
 
-void MegaApplication::onDeprecatedOperatingSystem()
+void MegaApplication::checkOperatingSystem()
 {
-#ifdef __APPLE__
-    if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_DEPRECATED_OPERATING_SYSTEM))
+    if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD))
     {
-        QMegaMessageBox::warning(NULL, tr("MEGAsync"),
-                             tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
-                             + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon."),
-                             Utilities::getDevicePixelRatio());
-        preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_DEPRECATED_OPERATING_SYSTEM, true);
-    }
+        bool isOSdeprecated = false;
+#ifdef MEGASYNC_DEPRECATED_OS
+        isOSdeprecated = true;
 #endif
+
+#ifdef __APPLE__
+        char releaseStr[256];
+        size_t size = sizeof(releaseStr);
+        if (!sysctlbyname("kern.osrelease", releaseStr, &size, NULL, 0)  && size > 0)
+        {
+            if (strchr(releaseStr,'.'))
+            {
+                char *token = strtok(releaseStr, ".");
+                if (token)
+                {
+                    errno = 0;
+                    char *endPtr = NULL;
+                    long majorVersion = strtol(token, &endPtr, 10);
+                    if (endPtr != token && errno != ERANGE && majorVersion >= INT_MIN && majorVersion <= INT_MAX)
+                    {
+                        if((int)majorVersion < 13) // Older versions from 10.9 (mavericks)
+                        {
+                            isOSdeprecated = true;
+                        }
+                    }
+                }
+            }
+        }
+#endif
+        if (isOSdeprecated)
+        {
+            QMessageBox::warning(NULL, tr("MEGAsync"),
+                                 tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
+#ifdef __APPLE__
+                                 + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.")
+#else
+                                 + tr("MEGAsync will continue to work, however you might not receive new updates.")
+#endif
+                                 );
+            preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD, true);
+        }
+    }
 }
 
 void MegaApplication::notifyItemChange(QString path, int newState)

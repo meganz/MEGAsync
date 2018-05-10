@@ -187,7 +187,7 @@ public slots:
     void clearViewedTransfers();
     void onCompletedTransfersTabActive(bool active);
     void checkFirstTransfer();
-    void onDeprecatedOperatingSystem();
+    void checkOperatingSystem();
     void notifyItemChange(QString path, int newState);
     int getPrevVersion();
 #ifdef __APPLE__
