@@ -3168,7 +3168,6 @@ void MegaApplication::checkOperatingSystem()
                                  + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.")
 #else
                                  + tr("MEGAsync will continue to work, however you might not receive new updates.")
-
 #endif
                                  );
             preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD, true);
