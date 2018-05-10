@@ -600,6 +600,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     maxMemoryUsage = 0;
     nUnviewedTransfers = 0;
     completedTabActive = false;
+    inflightUserStats = false;
 
 #ifdef __APPLE__
     scanningTimer = NULL;
@@ -882,7 +883,7 @@ void MegaApplication::updateTrayIcon()
         {
             if (!overquotaCheck)
             {
-                megaApi->getAccountDetails();
+                updateUserStats(true);
                 overquotaCheck = true;
             }
             else
@@ -1149,6 +1150,7 @@ void MegaApplication::start()
 
     indexing = false;
     overquotaCheck = false;
+    inflightUserStats = false;
 
     if (isLinux && trayIcon->contextMenu())
     {
@@ -1332,7 +1334,8 @@ void MegaApplication::loggedIn()
     }
 
     pauseTransfers(paused);
-    megaApi->getAccountDetails();
+    inflightUserStats = false;
+    updateUserStats(true);
     megaApi->getPricing();
     megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
     megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
@@ -2025,7 +2028,7 @@ void MegaApplication::periodicTasks()
     if (queuedUserStats && queuedUserStats < QDateTime::currentMSecsSinceEpoch())
     {
         queuedUserStats = 0;
-        megaApi->getAccountDetails();
+        updateUserStats(true);
     }
 
     checkNetworkInterfaces();
@@ -2236,7 +2239,7 @@ void MegaApplication::showInfoDialog()
     #ifdef __MACH__
             trayIcon->setContextMenu(&emptyMenu);
     #endif
-            megaApi->getAccountDetails();
+            updateUserStats(true);
         }
     }
 
@@ -3162,7 +3165,7 @@ void MegaApplication::enableFinderExt()
 }
 #endif
 
-void MegaApplication::updateUserStats()
+void MegaApplication::updateUserStats(bool force)
 {
     if (appfinished)
     {
@@ -3176,10 +3179,18 @@ void MegaApplication::updateUserStats()
     }
 
     long long lastRequest = preferences->lastStatsRequest();
-    if ((QDateTime::currentMSecsSinceEpoch() - lastRequest) > interval)
+    if (force || (QDateTime::currentMSecsSinceEpoch() - lastRequest) > interval)
     {
         preferences->setLastStatsRequest(QDateTime::currentMSecsSinceEpoch());
-        megaApi->getAccountDetails();
+        if (!inflightUserStats)
+        {
+            inflightUserStats = true;
+            megaApi->getAccountDetails();
+        }
+        else
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Skipped call to getAccountDetails()");
+        }
         queuedUserStats = 0;
     }
     else
@@ -5295,7 +5306,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             infoOverQuota = true;
 
             preferences->setUsedStorage(preferences->totalStorage());
-            megaApi->getAccountDetails();
+            updateUserStats(true);
 
             if (trayMenu && trayMenu->isVisible())
             {
@@ -5655,6 +5666,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
+        inflightUserStats = false;
         if (!preferences->logged())
         {
             break;
@@ -6197,7 +6209,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             infoOverQuota = true;
 
             preferences->setUsedStorage(preferences->totalStorage());
-            megaApi->getAccountDetails();
+            updateUserStats(true);
 
             if (trayMenu && trayMenu->isVisible())
             {
@@ -6394,7 +6406,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         enablingBwOverquota = true;
         preferences->clearTemporalBandwidth();
         megaApi->getPricing();
-        megaApi->getAccountDetails();
+        updateUserStats(true);
         bwOverquotaTimestamp = QDateTime::currentMSecsSinceEpoch() / 1000 + t;
 #ifdef __MACH__
         trayIcon->setContextMenu(initialMenu);
@@ -6445,7 +6457,7 @@ void MegaApplication::onAccountUpdate(MegaApi *)
         bwOverquotaDialog->refreshAccountDetails();
     }
 
-    megaApi->getAccountDetails();
+    updateUserStats(true);
 }
 
 //Called when contacts have been updated in MEGA
