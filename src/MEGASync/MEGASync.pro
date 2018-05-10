@@ -57,7 +57,7 @@ CONFIG += USE_MEGAAPI
 CONFIG += USE_MEDIAINFO
 
 unix:!macx {
-        exists(/usr/include/ffmpeg-mega)|exists(mega/bindings/qt/3rdparty/include/ffmpeg)|packagesExist(ffmpeg) {
+        exists(/usr/include/ffmpeg-mega)|exists(mega/bindings/qt/3rdparty/include/ffmpeg)|packagesExist(ffmpeg)|packagesExist(libavcodec) {
             CONFIG += USE_FFMPEG
         }
 }

@@ -366,7 +366,7 @@ void Notificator::onMessageClicked()
 {
     if (currentNotification)
     {
-        emit currentNotification->activated(-1);
+        currentNotification->emitactivated();
         currentNotification = NULL;
     }
 }
@@ -496,13 +496,18 @@ void MegaNotification::setData(const QString &value)
     data = value;
 }
 
+void MegaNotification::emitactivated()
+{
+    emit activated(-1);
+}
+
 MegaNotification::MegaNotification()
 {
     title = QString::fromUtf8("MEGA");
     text = QString::fromUtf8("MEGAsync");
     expirationTime = 10000;
     style = -1;
-    type = Notificator::Class::Information;
+    type = Notificator::Information;
     id = -1;
 
     connect(this, SIGNAL(activated(int)), this, SLOT(deleteLater()), Qt::QueuedConnection);

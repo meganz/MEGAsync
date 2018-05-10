@@ -63,6 +63,8 @@ public:
     QString getData() const;
     void setData(const QString &value);
 
+    void emitactivated();
+
 protected:
     QString title;
     QString text;
