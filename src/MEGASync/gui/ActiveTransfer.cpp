@@ -42,7 +42,7 @@ void ActiveTransfer::setFileName(QString fileName)
     QIcon icon;
     icon.addFile(Utilities::getExtensionPixmapSmall(fileName), QSize(), QIcon::Normal, QIcon::Off);
     ui->lFileType->setIcon(icon);
-    ui->lFileType->setIconSize(QSize(20, 22));
+    ui->lFileType->setIconSize(QSize(24, 24));
 }
 
 void ActiveTransfer::setProgress(long long completedSize, long long totalSize, bool cancellable)

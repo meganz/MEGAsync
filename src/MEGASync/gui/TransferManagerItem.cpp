@@ -43,9 +43,9 @@ void TransferManagerItem::setFileName(QString fileName)
     QIcon icon;
     icon.addFile(Utilities::getExtensionPixmapSmall(fileName), QSize(), QIcon::Normal, QIcon::Off);
     ui->lFileType->setIcon(icon);
-    ui->lFileType->setIconSize(QSize(20, 22));
+    ui->lFileType->setIconSize(QSize(24, 24));
     ui->lFileTypeCompleted->setIcon(icon);
-    ui->lFileTypeCompleted->setIconSize(QSize(20, 22));
+    ui->lFileTypeCompleted->setIconSize(QSize(24, 24));
 }
 
 void TransferManagerItem::setStateLabel(QString labelState)

@@ -42,9 +42,7 @@ void Utilities::initializeExtensions()
 
     extensionIcons[QString::fromAscii("sql")] = extensionIcons[QString::fromAscii("accdb")] = extensionIcons[QString::fromAscii("db")]  =
                             extensionIcons[QString::fromAscii("dbf")]  = extensionIcons[QString::fromAscii("mdb")]  =
-                            extensionIcons[QString::fromAscii("pdb")] = QString::fromAscii("database.png");
-
-    extensionIcons[QString::fromAscii("dwt")] = QString::fromAscii("dreamweaver.png");
+                            extensionIcons[QString::fromAscii("pdb")] = QString::fromAscii("web_lang.png");
 
     extensionIcons[QString::fromAscii("folder")] = QString::fromAscii("folder.png");
 
@@ -56,37 +54,22 @@ void Utilities::initializeExtensions()
                              extensionIcons[QString::fromAscii("msi")]  = extensionIcons[QString::fromAscii("cmd")]  =
                             extensionIcons[QString::fromAscii("gadget")] = QString::fromAscii("executable.png");
 
-    extensionIcons[QString::fromAscii("as")] = extensionIcons[QString::fromAscii("ascs")] =
-               extensionIcons[QString::fromAscii("asc")]  = QString::fromAscii("fla_lang.png");
-    extensionIcons[QString::fromAscii("fla")] = QString::fromAscii("flash.png");
-
     extensionIcons[QString::fromAscii("fnt")] = extensionIcons[QString::fromAscii("otf")] = extensionIcons[QString::fromAscii("ttf")]  =
                             extensionIcons[QString::fromAscii("fon")]  = QString::fromAscii("font.png");
 
-    extensionIcons[QString::fromAscii("gpx")] = extensionIcons[QString::fromAscii("kml")] = extensionIcons[QString::fromAscii("kmz")]  = QString::fromAscii("gis.png");
-
-
     extensionIcons[QString::fromAscii("gif")] = extensionIcons[QString::fromAscii("tiff")]  = extensionIcons[QString::fromAscii("tif")]  =
                             extensionIcons[QString::fromAscii("bmp")]  = extensionIcons[QString::fromAscii("png")] =
-                            extensionIcons[QString::fromAscii("tga")]  = QString::fromAscii("graphic.png");
-
-    extensionIcons[QString::fromAscii("html")] = extensionIcons[QString::fromAscii("htm")]  = extensionIcons[QString::fromAscii("dhtml")]  =
-                            extensionIcons[QString::fromAscii("xhtml")]  = QString::fromAscii("html.png");
+                            extensionIcons[QString::fromAscii("tga")]  = QString::fromAscii("image.png");
 
     extensionIcons[QString::fromAscii("ai")] = extensionIcons[QString::fromAscii("ait")] = QString::fromAscii("illustrator.png");
     extensionIcons[QString::fromAscii("jpg")] = extensionIcons[QString::fromAscii("jpeg")] = QString::fromAscii("image.png");
     extensionIcons[QString::fromAscii("indd")] = QString::fromAscii("indesign.png");
 
-    extensionIcons[QString::fromAscii("jar")] = extensionIcons[QString::fromAscii("java")]  = extensionIcons[QString::fromAscii("class")]  = QString::fromAscii("java.png");
+    extensionIcons[QString::fromAscii("jar")] = extensionIcons[QString::fromAscii("java")]  = extensionIcons[QString::fromAscii("class")]  = QString::fromAscii("web_data.png");
 
-    extensionIcons[QString::fromAscii("mid")] = extensionIcons[QString::fromAscii("midi")] = QString::fromAscii("midi.png");
     extensionIcons[QString::fromAscii("pdf")] = QString::fromAscii("pdf.png");
     extensionIcons[QString::fromAscii("abr")] = extensionIcons[QString::fromAscii("psb")]  = extensionIcons[QString::fromAscii("psd")]  =
                             QString::fromAscii("photoshop.png");
-
-    extensionIcons[QString::fromAscii("pls")] = extensionIcons[QString::fromAscii("m3u")]  = extensionIcons[QString::fromAscii("asx")]  =
-                            QString::fromAscii("playlist.png");
-    extensionIcons[QString::fromAscii("pcast")] = QString::fromAscii("podcast.png");
 
     extensionIcons[QString::fromAscii("pps")] = extensionIcons[QString::fromAscii("ppt")]  = extensionIcons[QString::fromAscii("pptx")] = QString::fromAscii("powerpoint.png");
 
@@ -101,20 +84,10 @@ void Utilities::initializeExtensions()
                             extensionIcons[QString::fromAscii("orf")] = extensionIcons[QString::fromAscii("rwl")]  =
                             QString::fromAscii("raw.png");
 
-    extensionIcons[QString::fromAscii("rm")] = extensionIcons[QString::fromAscii("ra")]  = extensionIcons[QString::fromAscii("ram")]  =
-                            QString::fromAscii("real_audio.png");
-
-    extensionIcons[QString::fromAscii("sh")] = extensionIcons[QString::fromAscii("c")]  = extensionIcons[QString::fromAscii("cc")]  =
-                            extensionIcons[QString::fromAscii("cpp")]  = extensionIcons[QString::fromAscii("cxx")] =
-                            extensionIcons[QString::fromAscii("h")] = extensionIcons[QString::fromAscii("hpp")]  =
-                            extensionIcons[QString::fromAscii("dll")] = QString::fromAscii("source_code.png");
-
     extensionIcons[QString::fromAscii("ods")]  = extensionIcons[QString::fromAscii("ots")]  =
                             extensionIcons[QString::fromAscii("gsheet")]  = extensionIcons[QString::fromAscii("nb")] =
-                            extensionIcons[QString::fromAscii("xlr")] = extensionIcons[QString::fromAscii("numbers")]  =
-                            QString::fromAscii("spreadsheet.png");
+                            extensionIcons[QString::fromAscii("xlr")] = QString::fromAscii("spreadsheet.png");
 
-    extensionIcons[QString::fromAscii("swf")] = QString::fromAscii("swf.png");
     extensionIcons[QString::fromAscii("torrent")] = QString::fromAscii("torrent.png");
     extensionIcons[QString::fromAscii("dmg")] = QString::fromAscii("dmg.png");
 
@@ -123,11 +96,9 @@ void Utilities::initializeExtensions()
                             extensionIcons[QString::fromAscii("odt")] = extensionIcons[QString::fromAscii("wpd")]  =
                             QString::fromAscii("text.png");
 
-    extensionIcons[QString::fromAscii("vcf")] = QString::fromAscii("vcard.png");
     extensionIcons[QString::fromAscii("svgz")]  = extensionIcons[QString::fromAscii("svg")]  =
                             extensionIcons[QString::fromAscii("cdr")]  = extensionIcons[QString::fromAscii("eps")] =
                             QString::fromAscii("vector.png");
-
 
      extensionIcons[QString::fromAscii("mkv")]  = extensionIcons[QString::fromAscii("webm")]  =
                             extensionIcons[QString::fromAscii("avi")]  = extensionIcons[QString::fromAscii("mp4")] =
@@ -135,11 +106,8 @@ void Utilities::initializeExtensions()
                             extensionIcons[QString::fromAscii("mpeg")] = extensionIcons[QString::fromAscii("mov")]  =
                             extensionIcons[QString::fromAscii("3g2")] = extensionIcons[QString::fromAscii("3gp")]  =
                             extensionIcons[QString::fromAscii("asf")] = extensionIcons[QString::fromAscii("wmv")]  =
-                            extensionIcons[QString::fromAscii("flv")] = QString::fromAscii("video.png");
-
-
-     extensionIcons[QString::fromAscii("srt")] = QString::fromAscii("video_subtitles.png");
-     extensionIcons[QString::fromAscii("vob")] = QString::fromAscii("video_vob.png");
+                            extensionIcons[QString::fromAscii("flv")] = extensionIcons[QString::fromAscii("vob")] =
+                            QString::fromAscii("video.png");
 
      extensionIcons[QString::fromAscii("html")]  = extensionIcons[QString::fromAscii("xml")] = extensionIcons[QString::fromAscii("shtml")]  =
                             extensionIcons[QString::fromAscii("dhtml")] = extensionIcons[QString::fromAscii("js")] =
@@ -152,9 +120,17 @@ void Utilities::initializeExtensions()
                             extensionIcons[QString::fromAscii("cgi")] = extensionIcons[QString::fromAscii("py")]  =
                             QString::fromAscii("web_lang.png");
 
-
      extensionIcons[QString::fromAscii("doc")]  = extensionIcons[QString::fromAscii("docx")] = extensionIcons[QString::fromAscii("dotx")]  =
                             extensionIcons[QString::fromAscii("wps")] = QString::fromAscii("word.png");
+
+     extensionIcons[QString::fromAscii("odt")]  = extensionIcons[QString::fromAscii("ods")] = extensionIcons[QString::fromAscii("odp")]  =
+                            extensionIcons[QString::fromAscii("odb")] = extensionIcons[QString::fromAscii("odg")] = QString::fromAscii("openoffice.png");
+
+     extensionIcons[QString::fromAscii("sketch")] = QString::fromAscii("sketch.png");
+     extensionIcons[QString::fromAscii("xd")] = QString::fromAscii("experiencedesign.png");
+     extensionIcons[QString::fromAscii("pages")] = QString::fromAscii("pages.png");
+     extensionIcons[QString::fromAscii("numbers")] = QString::fromAscii("numbers.png");
+     extensionIcons[QString::fromAscii("key")] = QString::fromAscii("keynote.png");
 }
 
 void Utilities::countFilesAndFolders(QString path, long *numFiles, long *numFolders, long fileLimit, long folderLimit)

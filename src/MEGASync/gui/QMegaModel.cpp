@@ -59,6 +59,15 @@ QVariant QMegaModel::data(const QModelIndex &index, int role) const
             MegaNode *node = item->getNode();
             if (node->getType() >= MegaNode::TYPE_FOLDER)
             {
+                if (node->isInShare())
+                {
+                    return QIcon(QString::fromAscii("://images/small_folder_incoming.png"));;
+                }
+                else if (node->isOutShare())
+                {
+                    return QIcon(QString::fromAscii("://images/small_folder_outgoing.png"));;
+                }
+
                 return folderIcon;
             }
 

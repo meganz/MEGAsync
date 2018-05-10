@@ -42,11 +42,11 @@ void RecentFile::setFileName(QString fileName)
 
 
     QIcon icon;
-    icon.addFile(Utilities::getExtensionPixmapSmall(fileName), QSize(), QIcon::Normal, QIcon::Off);
+    icon.addFile(Utilities::getExtensionPixmapMedium(fileName), QSize(), QIcon::Normal, QIcon::Off);
     ui->lFileType->setIcon(icon);
-    ui->lFileType->setIconSize(QSize(20, 22));
+    ui->lFileType->setIconSize(QSize(48, 48));
     ui->lFileTypeCompleted->setIcon(icon);
-    ui->lFileTypeCompleted->setIconSize(QSize(20, 22));
+    ui->lFileTypeCompleted->setIconSize(QSize(48, 48));
 }
 
 void RecentFile::setType(int type, bool isSyncTransfer)
