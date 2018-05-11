@@ -12,6 +12,7 @@ ChangePassword::ChangePassword(QWidget *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    ui->bOk->setDefault(true);
 
     megaApi = ((MegaApplication *)qApp)->getMegaApi();
     delegateListener = new QTMegaRequestListener(megaApi, this);
@@ -29,6 +30,8 @@ QString ChangePassword::confirmNewPassword()
 
 void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
 {
+    ui->bOk->setEnabled(true);
+
     switch(request->getType())
     {
         case MegaRequest::TYPE_CHANGE_PW:
@@ -73,6 +76,7 @@ void ChangePassword::on_bOk_clicked()
         return;
     }
 
+    ui->bOk->setEnabled(false);
     megaApi->changePassword(NULL, newPassword().toUtf8().constData(), delegateListener);
 }
 
