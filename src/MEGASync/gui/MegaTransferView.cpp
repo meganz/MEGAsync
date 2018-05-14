@@ -28,6 +28,7 @@ MegaTransferView::MegaTransferView(QWidget *parent) :
     getLink = NULL;
     openItem = NULL;
     showInFolder = NULL;
+    showInMEGA = NULL;
     clearCompleted = NULL;
     clearAllCompleted = NULL;
     disableLink = false;
@@ -236,6 +237,16 @@ void MegaTransferView::createCompletedContextMenu()
     showInFolder = new QAction(tr("Show in folder"), this);
     connect(showInFolder, SIGNAL(triggered()), this, SLOT(showInFolderClicked()));
 
+    if (showInMEGA)
+    {
+        showInMEGA->deleteLater();
+        showInMEGA = NULL;
+    }
+
+    showInMEGA = new QAction(tr("View on MEGA"), this);
+    connect(showInMEGA, SIGNAL(triggered()), this, SLOT(showInMEGAClicked()));
+
+
     if (clearCompleted)
     {
         clearCompleted->deleteLater();
@@ -257,6 +268,7 @@ void MegaTransferView::createCompletedContextMenu()
     contextCompleted->addAction(getLink);
     contextCompleted->addAction(openItem);
     contextCompleted->addAction(showInFolder);
+    contextCompleted->addAction(showInMEGA);
     contextCompleted->addSeparator();
     contextCompleted->addAction(clearCompleted);
     contextCompleted->addAction(clearAllCompleted);
@@ -273,11 +285,12 @@ void MegaTransferView::customizeContextInProgressMenu(bool enablePause, bool ena
     cancelTransfer->setVisible(isCancellable);
 }
 
-void MegaTransferView::customizeCompletedContextMenu(bool enableGetLink, bool enableOpen, bool enableShow)
+void MegaTransferView::customizeCompletedContextMenu(bool enableGetLink, bool enableOpen, bool enableShow, bool enableShowInMEGA)
 {
     getLink->setVisible(enableGetLink);
     openItem->setVisible(enableOpen);
     showInFolder->setVisible(enableShow);
+    showInMEGA->setVisible(enableShowInMEGA);
 }
 
 void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
@@ -449,7 +462,7 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
 
                 if (failed)
                 {
-                    customizeCompletedContextMenu(false, false, false);
+                    customizeCompletedContextMenu(false, false, false, false);
                 }
                 else
                 {
@@ -647,6 +660,27 @@ void MegaTransferView::showInFolderClicked()
                 }
                 #endif
                 Platform::showInFolder(localPath);
+            }
+        }
+    }
+}
+
+void MegaTransferView::showInMEGAClicked()
+{
+    MegaTransfer *transfer = NULL;
+    QTransfersModel *model = (QTransfersModel*)this->model();
+    if (model)
+    {
+        for (int i = 0; i < transferTagSelected.size(); i++)
+        {
+            transfer = model->getTransferByTag(transferTagSelected[i]);
+            MegaHandle handle = transfer->getNodeHandle();
+            if (transfer && (handle != INVALID_HANDLE))
+            {
+                const char *b64handle = MegaApi::handleToBase64(handle);
+                QString url = QString::fromAscii("https://mega.nz/fm/") + QString::fromUtf8(b64handle);
+                QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+                delete [] b64handle;
             }
         }
     }

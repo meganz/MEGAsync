@@ -735,7 +735,7 @@ void InfoDialog::updateState()
             {
                 QFileInfo fileBlocked (QString::fromUtf8(blockedPath));
                 ui->lBlockedItem->setToolTip(fileBlocked.absoluteFilePath());
-                ui->lBlockedItem->setAlignment(Qt::AlignLeft);
+                ui->lBlockedItem->setAlignment(Qt::AlignCenter);
                 ui->lBlockedItem->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a style=\" font-size: 12px;\" href=\"local://#%1\">%2</a>")
                                                                .arg(fileBlocked.absoluteFilePath())
                                                                .arg(fileBlocked.fileName())));

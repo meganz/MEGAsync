@@ -1646,7 +1646,7 @@ font-weight: normal;
          </sizepolicy>
         </property>
         <property name="text">
-         <string>[A]learn more[/A]</string>
+         <string>Learn more</string>
         </property>
         <property name="textFormat">
          <enum>Qt::RichText</enum>

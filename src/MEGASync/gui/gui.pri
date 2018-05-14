@@ -54,6 +54,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/InfoDialogTransfersWidget.cpp \
     $$PWD/QCustomTransfersModel.cpp \
     $$PWD/StatusInfo.cpp
+    $$PWD/ChangePassword.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -109,6 +110,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialogTransfersWidget.h \
     $$PWD/QCustomTransfersModel.h \
     $$PWD/StatusInfo.h
+    $$PWD/ChangePassword.h
 
 INCLUDEPATH += $$PWD
 
@@ -157,6 +159,7 @@ win32 {
                 $$PWD/win/RecentlyUpdated.ui \
                 $$PWD/win/InfoDialogTransfersWidget.ui \
                 $$PWD/win/StatusInfo.ui
+                $$PWD/win/ChangePassword.ui
 }
 
 macx {
@@ -202,6 +205,7 @@ macx {
                 $$PWD/macx/RecentlyUpdated.ui \
                 $$PWD/macx/InfoDialogTransfersWidget.ui \
                 $$PWD/macx/StatusInfo.ui
+                $$PWD/macx/ChangePassword.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -256,6 +260,7 @@ unix:!macx {
                 $$PWD/linux/RecentlyUpdated.ui \
                 $$PWD/linux/InfoDialogTransfersWidget.ui \
                 $$PWD/linux/StatusInfo.ui
+                $$PWD/linux/ChangePassword.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
