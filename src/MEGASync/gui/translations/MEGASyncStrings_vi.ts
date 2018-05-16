@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
+        <translation type="unfinished">Nhập tên, dạng tên hay đường dẫn mẫu (được phép sử dụng các ky tự đặng biệt như * và? để biểu hiện) hoặc chọn ra tệp tin và thư mục bạn muốn liệt vào danh sách ngoại lệ khỏi quá trình đồng bộ</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -288,6 +288,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
         <translation type="unfinished">Công Trạng</translation>
     </message>
+    <message>
+        <source>Data Protection Regulation</source>
+        <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
+        <translation type="unfinished">Data Protection Regulation</translation>
+    </message>
 </context>
 <context>
     <name>ChangePassword</name>
@@ -369,7 +374,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Yes</source>
         <translatorcomment>Positive response to a question. The text will be inside a button.</translatorcomment>
-        <translation type="unfinished">Có </translation>
+        <translation type="unfinished">Có</translation>
     </message>
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
@@ -1294,7 +1299,7 @@ Exit anyway?</source>
     <message>
         <source>A new version of MEGAsync is available! Click on this message to install it</source>
         <translatorcomment>Notification message launched to inform the user that there is an available update .</translatorcomment>
-        <translation>MEGAsync hiện có một bản cập nhật mới! Nhấp vào khung hội thoại này để cài đặt </translation>
+        <translation>MEGAsync hiện có một bản cập nhật mới! Nhấp vào khung hội thoại này để cài đặt</translation>
     </message>
     <message>
         <source>There was a problem installing the update. Please try again later or download the last version from:
@@ -1590,6 +1595,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>MEGA website</source>
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation type="unfinished">Trang web MEGA</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however you might not receive new updates.</source>
+        <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however you might not receive new updates.</translation>
     </message>
 </context>
 <context>
@@ -2356,7 +2366,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte upload limit.</translatorcomment>
-        <translation>KB</translation>
+        <translation type="vanished">KB</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -2503,11 +2513,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation type="obsolete">Các dạng tên tệp tin được làm mẫu trong danh sách lọc sẽ có hiệu lực sau khi chương trình được khởi động lại.                </translation>
+        <translation type="obsolete">Các dạng tên tệp tin được làm mẫu trong danh sách lọc sẽ có hiệu lực sau khi chương trình được khởi động lại.</translation>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="obsolete">Bộ nhớ tạm                                </translation>
+        <translation type="obsolete">Bộ nhớ tạm</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -2703,7 +2713,7 @@ Do you want to restart MEGAsync now?</source>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
-        <translation type="unfinished">Các dạng tên tệp tin được làm mẫu trong danh sách lọc sẽ có hiệu lực sau khi chương trình được khởi động lại.                </translation>
+        <translation type="unfinished">Các dạng tên tệp tin được làm mẫu trong danh sách lọc sẽ có hiệu lực sau khi chương trình được khởi động lại.</translation>
     </message>
     <message>
         <source>The new excluded file sizes will be taken into account when the application starts again.</source>
@@ -2988,7 +2998,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>will be automatically synchronized.</source>
-        <translation type="obsolete"> sẽ được đồng bộ hóa tự động.</translation>
+        <translation type="obsolete">sẽ được đồng bộ hóa tự động.</translation>
     </message>
     <message>
         <source>Back</source>
@@ -3194,7 +3204,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished">Đang tạo thư mục...</translation>
+        <translation type="unfinished">Creating folder…</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -3645,7 +3655,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">Phiên tải xuống này không thể thực hiện được vì nó sẽ chiếm hết toàn bộ băng thông cho phép của IP này. Giới hạn này có thể linh động và cũng tùy thuộc vào số lượng băng thông không được sử dụng từ máy chủ.                </translation>
+        <translation type="unfinished">Phiên tải xuống này không thể thực hiện được vì nó sẽ chiếm hết toàn bộ băng thông cho phép của IP này. Giới hạn này có thể linh động và cũng tùy thuộc vào số lượng băng thông không được sử dụng từ máy chủ.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>

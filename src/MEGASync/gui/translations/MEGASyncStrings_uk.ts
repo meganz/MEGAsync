@@ -288,6 +288,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
         <translation type="unfinished">Подяки</translation>
     </message>
+    <message>
+        <source>Data Protection Regulation</source>
+        <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
+        <translation type="unfinished">Data Protection Regulation</translation>
+    </message>
 </context>
 <context>
     <name>ChangePassword</name>
@@ -1382,7 +1387,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your config is corrupt, please start over</source>
         <translatorcomment>Message displayed when an error occurs loading configurations from Settings file.</translatorcomment>
-        <translation>Вашу конфігурацію пошкоджено, будь ласка, почніть все з початку </translation>
+        <translation>Вашу конфігурацію пошкоджено, будь ласка, почніть все з початку</translation>
     </message>
     <message>
         <source>Download from MEGA</source>
@@ -1590,6 +1595,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>MEGA website</source>
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation type="unfinished">MEGA сайт</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however you might not receive new updates.</source>
+        <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however you might not receive new updates.</translation>
     </message>
 </context>
 <context>
@@ -2356,7 +2366,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte upload limit.</translatorcomment>
-        <translation>КБ</translation>
+        <translation type="vanished">КБ</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -3194,7 +3204,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished">Створення теки…</translation>
+        <translation type="unfinished">Creating folder…</translation>
     </message>
     <message>
         <source>Logging out...</source>

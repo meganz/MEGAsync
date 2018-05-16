@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
+        <translation type="unfinished">Введите имя, полный путь (подстановочные символы * и? разрешены) или выберите, какой файл или папку вы хотите исключить из синхронизации</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -237,7 +237,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>The name &quot;%1&quot; is already in use for another sync. Please enter a different name to identify this synced folder:</translation>
+        <translation>Имя &quot;%1&quot; уже используется в другой синхронизации. Введите другое имя для идентификации этой синхронизированной папки:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -257,13 +257,13 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please, select another folder.</translation>
+        <translation type="obsolete">Локальная папка слишком большая (эта версия ограничена числом папок: %1 или файлов: %2). Выберите другую папку.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="obsolete">You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation type="obsolete">Вы пытаетесь синхронизировать чрезвычайно большую папку. Чтобы предотвратить синхронизацию всех загрузочных томов, что неэффективно и опасно, мы просим вас начать с небольшой папки и добавлять больше данных, пока работает MEGAsync.</translation>
     </message>
 </context>
 <context>
@@ -287,6 +287,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Credits</source>
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
         <translation type="unfinished">Благодарность</translation>
+    </message>
+    <message>
+        <source>Data Protection Regulation</source>
+        <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
+        <translation type="unfinished">Data Protection Regulation</translation>
     </message>
 </context>
 <context>
@@ -313,7 +318,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Password changed</source>
-        <translation type="unfinished">Password changed</translation>
+        <translation type="unfinished">Пароль изменён</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
@@ -556,7 +561,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Вы пытаетесь синхронизировать чрезвычайно большую папку. Чтобы предотвратить синхронизацию всех загрузочных томов, что неэффективно и опасно, мы просим вас начать с небольшой папки и добавлять больше данных, пока работает MEGAsync.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -651,7 +656,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>/MEGAsync Imports</source>
         <translatorcomment>Default created folder for imported links at the user Cloud Drive.</translatorcomment>
-        <translation type="obsolete"> /MEGAsync импорт</translation>
+        <translation type="obsolete">/MEGAsync импорт</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -948,7 +953,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
-        <translation type="unfinished">This process is taking longer than expected. Please wait.</translation>
+        <translation type="unfinished">Процесс длится дольше ожидаемого. Пожалуйста, подождите.</translation>
     </message>
 </context>
 <context>
@@ -1163,7 +1168,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">Synchronization will stop. Deletions that occur while it is not running will not be propagated. Exit anyway?</translation>
+        <translation type="obsolete">Синхронизация остановится. Элементы, которые вы удалите при отключенном клиенте, не исчезнут в ранее синхронизированной папке. Всё равно выйти?</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -1300,7 +1305,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>Не удалось установить обновление. Повторите попытку позже или загрузите последнюю версию с: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1315,7 +1320,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>No update available at this time</source>
         <translatorcomment>Notification message launched when a user is cheking if there are any available updates.</translatorcomment>
-        <translation>Нет новых обновлений </translation>
+        <translation>Нет новых обновлений</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1327,7 +1332,7 @@ https://mega.co.nz/#sync</source>
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation type="obsolete">Synchronization will stop. Exit anyway?</translation>
+        <translation type="obsolete">Синхронизация прекратится. Всё равно выйти?</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -1338,7 +1343,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="obsolete">Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
+        <translation type="obsolete">Не удалось получить файловую систему. Пожалуйста, попробуйте еще раз. Если проблема не исчезнет, свяжитесь с нами по адресу bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -1591,6 +1596,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation type="unfinished">Сайт MEGA</translation>
     </message>
+    <message>
+        <source>MEGAsync will continue to work, however you might not receive new updates.</source>
+        <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however you might not receive new updates.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1724,7 +1734,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation type="unfinished">Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</translation>
+        <translation type="unfinished">Ваш аккаунт был заблокирован из-за нарушения Условий использования MEGA, таких как злоупотребление правами других лиц; обмен и/или импорт незаконных данных; или злоупотребление системой.</translation>
     </message>
 </context>
 <context>
@@ -1851,7 +1861,7 @@ Are you sure?</source>
     <message>
         <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
         <translatorcomment>Warning message shown during synchronization scenario</translatorcomment>
-        <translation type="unfinished">Папка назначения уже синхронизирована и уже имеет внутри файл с таким же именем. Если вы продолжите загрузку, то предыдущий файл будет перезаписан. Вы уверены? </translation>
+        <translation type="unfinished">Папка назначения уже синхронизирована и уже имеет внутри файл с таким же именем. Если вы продолжите загрузку, то предыдущий файл будет перезаписан. Вы уверены?</translation>
     </message>
 </context>
 <context>
@@ -1905,7 +1915,7 @@ Are you sure?</source>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation type="obsolete">The root folder can&apos;t be synced. Please, select a subfolder.</translation>
+        <translation type="obsolete">Корневую папку нельзя синхронизировать. Выберите подпапку.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1915,13 +1925,13 @@ Please, select a subfolder.</source>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation type="obsolete">You have %1 in this folder. Are you sure you want to sync it?</translation>
+        <translation type="obsolete">У вас %1 в этой папке. Вы действительно хотите синхронизировать её?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization. Please, ensure that you don&apos;t use characters like &apos;\&apos;, &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
+        <translation>Недействительная папка для синхронизации. Пожалуйста, убедитесь, что вы не используете в именах папок символы «\», «/» или «:».</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2356,7 +2366,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte upload limit.</translatorcomment>
-        <translation>КБ</translation>
+        <translation type="vanished">КБ</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -2507,7 +2517,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="obsolete">Кэш                   </translation>
+        <translation type="obsolete">Кэш</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -2587,7 +2597,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
+        <translation type="obsolete">MEGAsync будет полностью сканировать синхронизируемые папки при запуске. Перезапустить MEGAsync сейчас?</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2618,7 +2628,7 @@ Do you want to restart MEGAsync now?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
+        <translation>MEGAsync будет полностью сканировать синхронизируемые папки при запуске. Перезапустить MEGAsync сейчас?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -3088,7 +3098,7 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">You have %1 in your Cloud Drive. Are you sure you want to sync your entire Cloud Drive?</translation>
+        <translation type="obsolete">У вас %1 в облачном диске. Вы действительно хотите синхронизировать его целиком?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -3107,7 +3117,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please, select another folder.</translation>
+        <translation type="obsolete">Локальная папка слишком большая (эта версия ограничена числом папок: %1 или файлов: %2). Выберите другую папку.</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -3124,13 +3134,13 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Вы пытаетесь синхронизировать чрезвычайно большую папку. Чтобы предотвратить синхронизацию всех загрузочных томов, что неэффективно и опасно, мы просим вас начать с небольшой папки и добавлять больше данных, пока работает MEGAsync.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
+        <translation>Не удалось получить файловую систему. Пожалуйста, попробуйте еще раз. Если проблема не исчезнет, свяжитесь с нами по адресу bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -3194,7 +3204,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished">Создание папки…</translation>
+        <translation type="unfinished">Creating folder…</translation>
     </message>
     <message>
         <source>Logging out...</source>

@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>Rubbish bin</source>
-        <translation type="unfinished">Lata de lixo</translation>
+        <translation type="unfinished">Lixeira</translation>
     </message>
     <message>
         <source>Available</source>
@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Digite um nome, um caminho absoluto (caracteres * e? são permitidos) ou escolha qual arquivo ou pasta você quer excluir da sincronização.</translation>
+        <translation type="unfinished">Digite um nome, um caminho completo (os caracteres-curinga * e? são permitidos) ou escolha qual arquivo ou pasta você deseja excluir da sincronização.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -165,7 +165,7 @@
     <message>
         <source>Choose</source>
         <translatorcomment>Label of button that pop up a selection dialog to choose a file or a folder to be excluded for the synchonization</translatorcomment>
-        <translation type="unfinished">Escolha</translation>
+        <translation type="unfinished">Selecionar</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -271,12 +271,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">Termos de Serviço</translation>
+        <translation type="unfinished">Termos de serviço</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished">Política de Privacidade</translation>
+        <translation type="unfinished">Política de privacidade</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -288,12 +288,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
         <translation type="unfinished">Créditos</translation>
     </message>
+    <message>
+        <source>Data Protection Regulation</source>
+        <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
+        <translation type="unfinished">Regulamento de proteção de dados</translation>
+    </message>
 </context>
 <context>
     <name>ChangePassword</name>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">Mudar a senha</translation>
+        <translation type="unfinished">Alterar senha</translation>
     </message>
     <message>
         <source>New password</source>
@@ -317,7 +322,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Your password has been changed.</source>
-        <translation type="unfinished">Sua senha foi alterada.</translation>
+        <translation type="unfinished">A sua senha foi alterada.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -440,7 +445,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the download folder (String as short as possible)</translatorcomment>
-        <translation>Escolha</translation>
+        <translation>Selecionar</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -525,7 +530,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the folders (local and remote) for a synchronization (String as short as possible)</translatorcomment>
-        <translation>Escolha</translation>
+        <translation>Selecionar</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -661,7 +666,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Erro de decodificação</translation>
+        <translation>Erro ao descifrar</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -676,7 +681,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose</source>
         <translatorcomment>Label button for Choose action</translatorcomment>
-        <translation>Escolha</translation>
+        <translation>Selecionar</translation>
     </message>
     <message>
         <source>Error</source>
@@ -798,12 +803,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">Baixando</translation>
+        <translation type="vanished">Fazendo o download</translation>
     </message>
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">Fazendo upload</translation>
+        <translation type="vanished">Fazendo o upload</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
@@ -935,7 +940,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Lata de lixo</translation>
+        <translation type="unfinished">Lixeira</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1188,7 +1193,7 @@ Exit anyway?</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Entrando...</translation>
+        <translation>Fazendo login...</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -1260,11 +1265,11 @@ Exit anyway?</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">A pasta (%1) não foi enviada porque é extremamente grande. Nós fazemos esta verificação para evitar o envio de diretórios de boot, o que é ineficiente e perigoso. </translation>
+        <translation type="obsolete">A pasta (%1) não foi enviada porque é extremamente grande. Nós fazemos esta verificação para evitar o envio de diretórios de boot, o que é ineficiente e perigoso.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">%1 pastas não foram enviadas porque são extremamente grandes. Nós fazemos esta verificação para evitar o envio de diretórios de boot, o que é ineficiente e perigoso. </translation>
+        <translation type="obsolete">%1 pastas não foram enviadas porque são extremamente grandes. Nós fazemos esta verificação para evitar o envio de diretórios de boot, o que é ineficiente e perigoso.</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -1591,6 +1596,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation type="unfinished">Site do MEGA</translation>
     </message>
+    <message>
+        <source>MEGAsync will continue to work, however you might not receive new updates.</source>
+        <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
+        <translation type="unfinished">O MEGAsync continuará funcionando, mas pode ser que você não receba as novas atualizações.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1915,7 +1925,7 @@ Please, select a subfolder.</source>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation type="obsolete">Há %1 nesta pasta. Você tem certeza de que quer sincronizá-la? </translation>
+        <translation type="obsolete">Há %1 nesta pasta. Você tem certeza de que quer sincronizá-la?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
@@ -2160,7 +2170,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
-        <translation>1 minuto atrás</translation>
+        <translation>Há 1 minuto</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -2170,12 +2180,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
-        <translation>1 hora atrás</translation>
+        <translation>Há 1 hora</translation>
     </message>
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
-        <translation>1 dia atrás</translation>
+        <translation>Há um dia</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -2356,7 +2366,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte upload limit.</translatorcomment>
-        <translation>KB</translation>
+        <translation type="vanished">KB</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -2375,7 +2385,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Upload limits are per upload server and are applied when starting new uploads</source>
-        <translation type="obsolete">Limites de envio são por servidor de upload, e serão aplicados apenas no início de cada transferência </translation>
+        <translation type="obsolete">Limites de envio são por servidor de upload, e serão aplicados apenas no início de cada transferência</translation>
     </message>
     <message>
         <source>Folder for uploads from Windows Explorer</source>
@@ -2399,7 +2409,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Auto-detect</source>
         <translatorcomment>Label to indicate auto detect. Keep capital letters.</translatorcomment>
-        <translation>Auto detectar</translation>
+        <translation>Detectar automaticamente</translation>
     </message>
     <message>
         <source>Proxy</source>
@@ -2483,7 +2493,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Label to ask for confirmation to the user.</translatorcomment>
-        <translation>Tem certeza?</translation>
+        <translation>Você tem certeza?</translation>
     </message>
     <message>
         <source>Excluded name</source>
@@ -2623,7 +2633,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to choose a local/remote folder for downloads and uploads.</translatorcomment>
-        <translation>Escolha</translation>
+        <translation>Selecionar</translation>
     </message>
     <message>
         <source>Default folders</source>
@@ -2687,7 +2697,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Exportar a chave de recuperação e mantê-la em um lugar seguro permite que você defina uma nova senha, sem perda de dados.</translation>
+        <translation type="unfinished">Exportar a chave de recuperação e guardá-la em um lugar seguro permite que você altere a sua senha sem perder os seus dados.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
@@ -2747,7 +2757,7 @@ when the application starts again</source>
     <message>
         <source>Enable this option only if your transfers don&apos;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">Ative essa opção apenas se a sua transferência não iniciar. Em circunstâncias normais, o HTTP é satisfatória como já todas as transferências são criptografados.</translation>
+        <translation type="unfinished">Ative essa opção somente se a sua transferência não começar. Em circunstâncias normais, HTTP é suficiente, pois todas as transferências já estão criptografadas.</translation>
     </message>
     <message>
         <source>Local backup: %1</source>
@@ -2786,7 +2796,7 @@ when the application starts again</source>
     <message>
         <source>Downloads</source>
         <translatorcomment>Label to indicate the actual number of parallel TCP connections used for downloads</translatorcomment>
-        <translation type="unfinished">Transferências</translation>
+        <translation type="unfinished">Downloads</translation>
     </message>
     <message>
         <source>Uploads</source>
@@ -2864,7 +2874,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">Mudar a senha</translation>
+        <translation type="unfinished">Alterar senha</translation>
     </message>
 </context>
 <context>
@@ -3117,7 +3127,7 @@ Please, select another folder.</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>Entrando...</translation>
+        <translation>Fazendo login...</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -3194,12 +3204,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished">Criando pasta...</translation>
+        <translation type="unfinished">Criando pasta…</translation>
     </message>
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation type="unfinished">Saindo...</translation>
+        <translation type="unfinished">Fazendo logout...</translation>
     </message>
     <message>
         <source>Very Weak</source>
@@ -3440,7 +3450,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">Erro de decodificação</translation>
+        <translation type="unfinished">Erro ao descifrar</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -3480,7 +3490,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 minute ago</source>
-        <translation type="unfinished">1 minuto atrás</translation>
+        <translation type="unfinished">Há 1 minuto</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -3488,7 +3498,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 hour ago</source>
-        <translation type="unfinished">1 hora atrás</translation>
+        <translation type="unfinished">Há 1 hora</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
@@ -3496,7 +3506,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="unfinished">1 dia atrás</translation>
+        <translation type="unfinished">Há um dia</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -3539,7 +3549,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Downloads</source>
         <translatorcomment>Label of tab to access all active downloads</translatorcomment>
-        <translation type="unfinished">Transferências</translation>
+        <translation type="unfinished">Downloads</translation>
     </message>
     <message>
         <source>Uploads</source>
@@ -3594,7 +3604,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel all</source>
         <translatorcomment>Button label to cancel all items of active transfers view</translatorcomment>
-        <translation type="unfinished">cancelar tudo</translation>
+        <translation type="unfinished">Cancelar todas as transferências</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel all transfers?</source>
@@ -3645,7 +3655,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">O seu download não pode ser processado porque ultrapassaria o limite de transferência gratuita disponível para o seu IP. Este limite é dinâmico e depende da quantidade de banda não utilizada disponível. </translation>
+        <translation type="unfinished">O seu download não pode ser processado porque ultrapassaria o limite de transferência gratuita disponível para o seu IP. Este limite é dinâmico e depende da quantidade de banda não utilizada disponível.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
@@ -3653,7 +3663,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
-        <translation type="unfinished">O endereço IP que você está usando utilizou %1 de transferência de dados nas últimas 6 horas, o que levou você à exceder o limite atual. Para remover este limite, você pode [A]fazer o upgrade para uma conta PRO[/A], que proporcionará o seu próprio pacote de cota de transferência e também um amplo espaço de armazenamento extra.</translation>
+        <translation type="unfinished">O endereço IP que você está usando utilizou %1 de transferência de dados nas últimas 6 horas, o que levou você a exceder o limite atual. Para remover este limite, você pode [A]fazer o upgrade para uma conta PRO[/A], que proporcionará o seu próprio pacote de cota de transferência e também um amplo espaço de armazenamento extra.</translation>
     </message>
 </context>
 <context>
@@ -3701,7 +3711,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Choose</source>
         <translatorcomment>Button label to select the upload folder (String as short as possible)</translatorcomment>
-        <translation>Escolha</translation>
+        <translation>Selecionar</translation>
     </message>
 </context>
 <context>
