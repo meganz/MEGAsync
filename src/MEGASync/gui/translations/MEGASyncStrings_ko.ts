@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
+        <translation type="unfinished">이름을 입력하거나, 절대 경로(와일드카드 *와?가 허용됩니다) 또는 동기화에서 제외할 파일 또는 폴더를 선택하세요</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -237,7 +237,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>The name &quot;%1&quot; is already in use for another sync. Please enter a different name to identify this synced folder:</translation>
+        <translation>이름 &quot;%1&quot;은 이미 다른 동기화에 사용중입니다. 이 동기화된 폴더를 식별할 다른 이름을 입력하세요:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -257,13 +257,13 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please, select another folder.</translation>
+        <translation type="obsolete">로컬 폴더가 너무 큽니다 (이 버전은 %1개의 폴더 또는 %2개의 파일로 제한되어 있습니다). 다른 폴더를 선택하세요.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="obsolete">You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation type="obsolete">동기화하려는 폴더가 너무 큽니다. 비효율적이고 위험한 전체 부트 볼륨의 동기화를 방지하려면, 작은 폴더로 시작하여 MEGAsync가 작동중일 때 데이터를 추가할 것을 요청합니다.</translation>
     </message>
 </context>
 <context>
@@ -287,6 +287,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Credits</source>
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
         <translation type="unfinished">제작진</translation>
+    </message>
+    <message>
+        <source>Data Protection Regulation</source>
+        <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
+        <translation type="unfinished">Data Protection Regulation</translation>
     </message>
 </context>
 <context>
@@ -313,7 +318,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Password changed</source>
-        <translation type="unfinished">Password changed</translation>
+        <translation type="unfinished">비밀번호 변경됨</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
@@ -556,7 +561,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>동기화하려는 폴더가 너무 큽니다. 비효율적이고 위험한 전체 부트 볼륨의 동기화를 방지하려면, 작은 폴더로 시작하여 MEGAsync가 작동중일 때 데이터를 추가할 것을 요청합니다.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -948,7 +953,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
-        <translation type="unfinished">This process is taking longer than expected. Please wait.</translation>
+        <translation type="unfinished">과정이 예상보다 오래 걸립니다. 기다려주세요.</translation>
     </message>
 </context>
 <context>
@@ -1163,7 +1168,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">Synchronization will stop. Deletions that occur while it is not running will not be propagated. Exit anyway?</translation>
+        <translation type="obsolete">동기화가 멈출 것입니다. 작동중이지 않을 때 발생한 삭제는 전파되지 않습니다. 종료할까요?</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -1300,7 +1305,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>업데이트 설치중 문제가 생겼습니다. 다시 시도하거나 다음에서 최신 버전을 다운로드 하세요: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1327,7 +1332,7 @@ https://mega.co.nz/#sync</source>
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation type="obsolete">Synchronization will stop. Exit anyway?</translation>
+        <translation type="obsolete">동기화가 멈춥니다. 종료할까요?</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -1338,7 +1343,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="obsolete">Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
+        <translation type="obsolete">파일 시스템을 불러올 수 없습니다. 다시 시도하세요. 만약 문제가 계속되면 bug@mega.nz로 연락하세요.</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -1591,6 +1596,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation type="unfinished">MEGA 웹사이트</translation>
     </message>
+    <message>
+        <source>MEGAsync will continue to work, however you might not receive new updates.</source>
+        <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however you might not receive new updates.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1724,7 +1734,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation type="unfinished">Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</translation>
+        <translation type="unfinished">당신의 계정이 다른 이들의 권리를 침해, 불법 데이터의 공유 또는 들여오기, 시스템 오남용 등 MEGA의 이용 약관을 위반하여 제거되었습니다.</translation>
     </message>
 </context>
 <context>
@@ -1905,7 +1915,7 @@ Are you sure?</source>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation type="obsolete">The root folder can&apos;t be synced. Please, select a subfolder.</translation>
+        <translation type="obsolete">루트 폴더는 동기화할 수 없습니다. 하위 폴더를 선택하세요.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1915,13 +1925,13 @@ Please, select a subfolder.</source>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation type="obsolete">You have %1 in this folder. Are you sure you want to sync it?</translation>
+        <translation type="obsolete">이 폴더에 %1이/가 있습니다. 동기화하시겠습니까?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization. Please, ensure that you don&apos;t use characters like &apos;\&apos;, &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
+        <translation>동기화하기에 잘못된 폴더입니다. 폴더 이름에 \&apos;, &apos;/&apos; 또는 &apos;:&apos;을 사용하지 않았는지 확인하세요</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2356,7 +2366,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte upload limit.</translatorcomment>
-        <translation>KB</translation>
+        <translation type="vanished">KB</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -2507,7 +2517,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="obsolete">캐시                                </translation>
+        <translation type="obsolete">캐시</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -2587,7 +2597,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
+        <translation type="obsolete">MEGAsync가 시작할 때 동기화된 폴더의 전체 검색을 실시합니다. MEGAsync를 지금 재시작할까요?</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2618,7 +2628,7 @@ Do you want to restart MEGAsync now?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
+        <translation>MEGAsync가 시작할 때 동기화된 폴더의 전체 검색을 실시합니다. MEGAsync를 지금 재시작할까요?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -3088,7 +3098,7 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">You have %1 in your Cloud Drive. Are you sure you want to sync your entire Cloud Drive?</translation>
+        <translation type="obsolete">클라우드 드라이브에 %1이/가 있습니다. 전체 클라우드 드라이브를 동기화 하시겠습니까?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -3107,7 +3117,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please, select another folder.</translation>
+        <translation type="obsolete">로컬 폴더가 너무 큽니다 (이 버전은 %1개의 폴더 또는 %2개의 파일로 제한되어 있습니다). 다른 폴더를 선택하세요.</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -3124,13 +3134,13 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>동기화하려는 폴더가 너무 큽니다. 비효율적이고 위험한 전체 부트 볼륨의 동기화를 방지하려면, 작은 폴더로 시작하여 MEGAsync가 작동중일 때 데이터를 추가할 것을 요청합니다.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
+        <translation>파일 시스템을 불러올 수 없습니다. 다시 시도하세요. 만약 문제가 계속되면 bug@mega.nz로 연락하세요.</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -3194,7 +3204,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished">폴더 생성 중...</translation>
+        <translation type="unfinished">Creating folder…</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -3646,7 +3656,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">IP 주소에 해당된 무료 전송 한도를 초과하기 때문에 다운로드를 진행할 수 없습니다. 이 제한은 역동적이고 이용가능한 미사용 대역폭량에 따라 다릅니다.                </translation>
+        <translation type="unfinished">IP 주소에 해당된 무료 전송 한도를 초과하기 때문에 다운로드를 진행할 수 없습니다. 이 제한은 역동적이고 이용가능한 미사용 대역폭량에 따라 다릅니다.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>

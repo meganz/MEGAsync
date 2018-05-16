@@ -97,7 +97,7 @@
     <message>
         <source>download speed</source>
         <translatorcomment>Label to indicate the actual current download speed</translatorcomment>
-        <translation type="unfinished">download snelheid  </translation>
+        <translation type="unfinished">download snelheid</translation>
     </message>
     <message>
         <source>No Downloads</source>
@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
+        <translation type="unfinished">Een naam invoeren, een absoluut pad (tekens * en? zijn toegestaan) of kies welk bestand of map u wilt laten uitsluiten van de synchronisatie</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -237,7 +237,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>The name &quot;%1&quot; is already in use for another sync. Please enter a different name to identify this synced folder:</translation>
+        <translation>De naam &quot;%1&quot; is al in gebruik voor een andere synchronisatie. Voer een andere naam in om deze gesynchroniseerde map te identificeren:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -257,13 +257,13 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please, select another folder.</translation>
+        <translation type="obsolete">Lokale map te groot (deze versie is gelimiteerd tot %1 mappen of %2 bestanden). Selecteer een andere map.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="obsolete">You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation type="obsolete">U probeert een een extreem grote map te synchroniseren. Om de synchronisatie van hele opstart volumes te voorkomen, die inefficient en gevaarlijk zijn, vragen we u om te starten met een kleinere map en meer gegevens toe te voegen terwijl MEGAsync bezig is.</translation>
     </message>
 </context>
 <context>
@@ -287,6 +287,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Credits</source>
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
         <translation type="unfinished">Credits</translation>
+    </message>
+    <message>
+        <source>Data Protection Regulation</source>
+        <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
+        <translation type="unfinished">Data Protection Regulation</translation>
     </message>
 </context>
 <context>
@@ -313,7 +318,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Password changed</source>
-        <translation type="unfinished">Password changed</translation>
+        <translation type="unfinished">Wachtwoord gewijzigd</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
@@ -374,7 +379,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">U staat op het punt een instelling toe te staan die ervoor kan zorgen dat uw communicatie wordt onderbroken. Uw gegevens zijn nog steeds ontoegankelijk voor aanvallers door onze eind-tot-eind codering, maar ze kunnen blindelings uw bestanden en mappen verplaatsen in MEGA, verwijder ze of ontzeg de toegang tot uw account. </translation>
+        <translation type="unfinished">U staat op het punt een instelling toe te staan die ervoor kan zorgen dat uw communicatie wordt onderbroken. Uw gegevens zijn nog steeds ontoegankelijk voor aanvallers door onze eind-tot-eind codering, maar ze kunnen blindelings uw bestanden en mappen verplaatsen in MEGA, verwijder ze of ontzeg de toegang tot uw account.</translation>
     </message>
 </context>
 <context>
@@ -556,7 +561,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>U probeert een een extreem grote map te synchroniseren. Om de synchronisatie van hele opstart volumes te voorkomen, die inefficient en gevaarlijk zijn, vragen we u om te starten met een kleinere map en meer gegevens toe te voegen terwijl MEGAsync bezig is.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -948,7 +953,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
-        <translation type="unfinished">This process is taking longer than expected. Please wait.</translation>
+        <translation type="unfinished">Dit process duurt langer dan verwacht. Wacht alstublieft.</translation>
     </message>
 </context>
 <context>
@@ -1163,7 +1168,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">Synchronization will stop. Deletions that occur while it is not running will not be propagated. Exit anyway?</translation>
+        <translation type="obsolete">Synchronisatie stopt. Verwijderingen die plaatsvinden tijdens het niet draaien worden niet verspreid. Toch verlaten?</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -1188,7 +1193,7 @@ Exit anyway?</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Aanmelden...</translation>
+        <translation>Inloggen...</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -1246,7 +1251,7 @@ Exit anyway?</source>
     <message>
         <source>You have new or updated files in your account</source>
         <translatorcomment>Notification message launched when new or updated files have been added or modified to the current MEGA account.</translatorcomment>
-        <translation>U heeft nieuwe of geüpdatete bestanden in uw account </translation>
+        <translation>U heeft nieuwe of geüpdatete bestanden in uw account</translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
@@ -1300,7 +1305,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>Er was een probleem met het installeren van de update. Probeer later nogmaals of download de laatste versie van: https://mega.co.nz/#sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1327,7 +1332,7 @@ https://mega.co.nz/#sync</source>
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation type="obsolete">Synchronization will stop. Exit anyway?</translation>
+        <translation type="obsolete">Synchronisatie stopt. Toch verlaten?</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -1338,7 +1343,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="obsolete">Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
+        <translation type="obsolete">Niet in staat om het bestandssysteem te krijgen. Probeer nogmaals. Als het probleem aanhoud neem contact met ons op bij bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -1591,6 +1596,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation type="unfinished">MEGA website</translation>
     </message>
+    <message>
+        <source>MEGAsync will continue to work, however you might not receive new updates.</source>
+        <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
+        <translation type="unfinished">MEGAsync gaat door met werken, maar u ontvangt mogelijk geen nieuwe updates.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1724,7 +1734,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation type="unfinished">Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</translation>
+        <translation type="unfinished">Uw account werd beëindigd door het verbreken van Mega&apos;s Algemene Voorwaarden, zoals misbruik van rechten van andere; delen en/of importeren van illegale gegevens; systeem misbruik. </translation>
     </message>
 </context>
 <context>
@@ -1905,7 +1915,7 @@ Are you sure?</source>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation type="obsolete">The root folder can&apos;t be synced. Please, select a subfolder.</translation>
+        <translation type="obsolete">De hoofdmap kan niet gesynchroniseerd worden. Selecteer een sub-map.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1915,13 +1925,13 @@ Please, select a subfolder.</source>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation type="obsolete">You have %1 in this folder. Are you sure you want to sync it?</translation>
+        <translation type="obsolete">U heeft %1 in deze map. Weet u zeker dat u deze wilt synchroniseren?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization. Please, ensure that you don&apos;t use characters like &apos;\&apos;, &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
+        <translation>Ongeldige map synchronisatie. Zorg ervoor dat u geen karakters gebruikt zoals &apos;\&apos;, &apos;/&apos; of &apos;:&apos; in uw map namen.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2356,7 +2366,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte upload limit.</translatorcomment>
-        <translation>KB</translation>
+        <translation type="vanished">KB</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -2587,7 +2597,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
+        <translation type="obsolete">MEGAsync verricht een volledige scan van uw gesynchroniseerde mappen wanneer het opstart. Wilt u MEGAsync nu herstarten?</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2618,7 +2628,7 @@ Do you want to restart MEGAsync now?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
+        <translation>MEGAsync verricht een volledige scan van uw gesynchroniseerde mappen wanneer het opstart. Wilt u MEGAsync nu herstarten?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -2932,7 +2942,7 @@ when the application starts again</source>
     <message>
         <source>Choose install type</source>
         <translatorcomment>Label displayed to inform the user about the installation type for the synchronizations (selective or full sync)</translatorcomment>
-        <translation>Kies installeringstype </translation>
+        <translation>Kies installeringstype</translation>
     </message>
     <message>
         <source> Sync your entire cloud drive</source>
@@ -3078,7 +3088,7 @@ when the application starts again</source>
     <message>
         <source>Creating account...</source>
         <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>Account creëren...</translation>
+        <translation>Account creëren... </translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3088,7 +3098,7 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">You have %1 in your Cloud Drive. Are you sure you want to sync your entire Cloud Drive?</translation>
+        <translation type="obsolete">U heeft %1 in uw Cloud Schijf. Weet u zeker dat u de volledige Cloud Schijf wil synchroniseren?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -3107,7 +3117,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please, select another folder.</translation>
+        <translation type="obsolete">Lokale map te groot (deze versie is gelimiteerd tot %1 mappen of %2 bestanden). Selecteer een andere map.</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -3117,20 +3127,20 @@ Please, select another folder.</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>Aanmelden...</translation>
+        <translation>Inloggen...</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>U probeert een een extreem grote map te synchroniseren. Om de synchronisatie van hele opstart volumes te voorkomen, die inefficient en gevaarlijk zijn, vragen we u om te starten met een kleinere map en meer gegevens toe te voegen terwijl MEGAsync bezig is.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
+        <translation>Niet in staat om het bestandssysteem te krijgen. Probeer nogmaals. Als het probleem aanhoud neem contact met ons op bij bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -3194,7 +3204,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished">Folder creëren...</translation>
+        <translation type="unfinished">Map creëren... </translation>
     </message>
     <message>
         <source>Logging out...</source>

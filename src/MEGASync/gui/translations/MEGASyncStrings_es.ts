@@ -55,7 +55,7 @@
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Carpetas compartidas</translation>
+        <translation type="unfinished">Carpetas compartidas entrantes</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
@@ -122,7 +122,7 @@
     <message>
         <source>PAUSED</source>
         <translatorcomment>Label to indicate a global Pause state for all active transfers</translatorcomment>
-        <translation type="unfinished">EN PAUSA</translation>
+        <translation type="unfinished">PAUSADA</translation>
     </message>
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Introduce un nombre, una ruta absoluta (comodines * y? permitidos) o selecciona qué archivo o carpeta quieres excluir de la sincronización.</translation>
+        <translation type="unfinished">Introduce un nombre, una ruta absoluta (comodines * y? permitidos) o selecciona el archivo o carpeta que quieres excluir de la sincronización.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -287,6 +287,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Credits</source>
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
         <translation type="unfinished">Créditos</translation>
+    </message>
+    <message>
+        <source>Data Protection Regulation</source>
+        <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
+        <translation type="unfinished">Reglamento de protección de datos</translation>
     </message>
 </context>
 <context>
@@ -632,7 +637,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Import to my cloud drive</source>
         <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
-        <translation>Importar a Mi nube </translation>
+        <translation>Importar a Mi nube</translation>
     </message>
     <message>
         <source>OK</source>
@@ -698,7 +703,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>RECENTLY UPDATED</source>
         <translatorcomment>Label to indicate the files recently updated. Keep capital letters.</translatorcomment>
-        <translation type="vanished">RECIENTEMENTE ACTUALIZADO </translation>
+        <translation type="vanished">RECIENTEMENTE ACTUALIZADO</translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
@@ -895,7 +900,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>PAUSED</source>
         <translatorcomment>Label to indicate that the current transfer is paused. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">EN PAUSA</translation>
+        <translation type="unfinished">PAUSADA</translation>
     </message>
     <message>
         <source>Paused</source>
@@ -930,7 +935,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Carpetas compartidas</translation>
+        <translation type="unfinished">Carpetas compartidas entrantes</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
@@ -1005,7 +1010,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
-        <translation type="unfinished">[S]Flexible:[/S] Sincroniza las carpetas que quieras de tu PC con las carpetas en la nube. Sincroniza todas las carpetas que quieras al mismo tiempo. </translation>
+        <translation type="unfinished">[S]Flexible:[/S] Sincroniza las carpetas que quieras de tu PC con las carpetas en la nube. Sincroniza todas las carpetas que quieras al mismo tiempo.</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
@@ -1591,6 +1596,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation type="unfinished">Sitio web de MEGA</translation>
     </message>
+    <message>
+        <source>MEGAsync will continue to work, however you might not receive new updates.</source>
+        <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however you might not receive new updates.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1607,7 +1617,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Invalid argument</source>
         <translatorcomment>Label to show that an error of Invalid argument occurs during a SDK operation.</translatorcomment>
-        <translation>Argumento no válido </translation>
+        <translation>Argumento no válido</translation>
     </message>
     <message>
         <source>Request failed, retrying</source>
@@ -2277,7 +2287,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Update automatically</source>
         <translatorcomment>Label to let the user enable automatic updates with a checkbox.</translatorcomment>
-        <translation>Actualizar automáticamente </translation>
+        <translation>Actualizar automáticamente</translation>
     </message>
     <message>
         <source>Language</source>
@@ -2307,7 +2317,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Storage space</source>
         <translatorcomment>Label to indicate the actual storage space used.</translatorcomment>
-        <translation>Uso de espacio en disco</translation>
+        <translation>Almacenamiento</translation>
     </message>
     <message>
         <source>Upgrade</source>
@@ -2341,7 +2351,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Upload rate limit</source>
         <translatorcomment>Label to indicate the actual bandwidth limit for uploads.</translatorcomment>
-        <translation>Límite de velocidad de las subidas</translation>
+        <translation>Velocidad de subida</translation>
     </message>
     <message>
         <source>Don&apos;t limit</source>
@@ -2356,7 +2366,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte upload limit.</translatorcomment>
-        <translation>KB</translation>
+        <translation type="vanished">KB</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -2507,7 +2517,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="obsolete">Caché                                </translation>
+        <translation type="obsolete">Caché</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -2776,7 +2786,7 @@ when the application starts again</source>
     <message>
         <source>Download rate limit</source>
         <translatorcomment>Label to indicate the actual bandwidth limit for downloads.</translatorcomment>
-        <translation type="unfinished">Límite de descarga</translation>
+        <translation type="unfinished">Velocidad de descarga</translation>
     </message>
     <message>
         <source>Number of parallel TCP connections per transfer:</source>
@@ -3088,7 +3098,7 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">Tienes %1 en tu Nube.¿Estás seguro de que quieres sincronizar toda tu Nube?</translation>
+        <translation type="obsolete">Tienes %1 en tu Nube. ¿Estás seguro de que quieres sincronizar toda tu Nube?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -3713,7 +3723,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Carpetas compartidas</translation>
+        <translation type="unfinished">Carpetas compartidas entrantes</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -3736,7 +3746,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Carpetas compartidas</translation>
+        <translation type="unfinished">Carpetas compartidas entrantes</translation>
     </message>
     <message>
         <source>Inbox</source>
