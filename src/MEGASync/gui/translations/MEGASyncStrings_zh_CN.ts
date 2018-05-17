@@ -1305,7 +1305,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>安装更新时出现问题。请稍后再试或从https://mega.co.nz/#sync下载最新版本</translation>
+        <translation>安装更新时出现问题。请稍后重试或从https://mega.nz/sync下载最新版本</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1417,7 +1417,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">您的账户已被封锁。请与support@mega.co.nz 联系。</translation>
+        <translation type="unfinished">您的账号已被锁定。请连系support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -2922,7 +2922,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>我同意MEGA条款&lt;a href=&quot;https://mega.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</translation>
+        <translation>我同意MEGA &lt;a href=&quot;https://mega.nz/terms&quot;&gt;服务条款&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -3185,7 +3185,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">您的账户已被封锁。请与support@mega.co.nz 联系。</translation>
+        <translation type="unfinished">您的账号已被锁定。请连系support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -3204,7 +3204,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished">Creating folder…</translation>
+        <translation type="unfinished">创建文件夹...</translation>
     </message>
     <message>
         <source>Logging out...</source>

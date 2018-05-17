@@ -1305,7 +1305,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>업데이트 설치중 문제가 생겼습니다. 다시 시도하거나 다음에서 최신 버전을 다운로드 하세요: https://mega.co.nz/#sync</translation>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1417,7 +1417,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">계정이 차단되었습니다. support@mega.co.nz로 문의하세요.</translation>
+        <translation type="unfinished">계정이 막혔습니다. support@mega.nz로 연락하세요</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -3185,7 +3185,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">계정이 차단되었습니다. support@mega.co.nz로 문의하세요.</translation>
+        <translation type="unfinished">계정이 막혔습니다. support@mega.nz로 연락하세요</translation>
     </message>
     <message>
         <source>MEGAsync</source>

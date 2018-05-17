@@ -263,7 +263,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="obsolete">انك تحاول مزامنة مجلد بحجم كبير جدا. لتجنب مزامنة كامل سواقة اقلاع الحاسب (وهي عملية غير فعالة وخطرة). نحن ننصح بالبدء بمجلدات اصغر حجما ثم اضافة بقية المجلدت بشكل تدريجي اثناء عمل تطبيق MEGASync</translation>
+        <translation type="obsolete">انك تحاول مزامنة مجلد بحجم كبير جدا. لتجنب مزامنة كامل سواقة اقلاع الحاسب (وهي عملية غير فعالة وخطرة). نحن ننصح بالبدء بمجلدات اصغر حجما ثم اضافة بقية المجلدت بشكل تدريجي اثناء عمل تطبيق MEGAsync</translation>
     </message>
 </context>
 <context>
@@ -561,7 +561,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>انك تحاول مزامنة مجلد بحجم كبير جدا. لتجنب مزامنة كامل سواقة اقلاع الحاسب (وهي عملية غير فعالة وخطرة). نحن ننصح بالبدء بمجلدات اصغر حجما ثم اضافة بقية المجلدت بشكل تدريجي اثناء عمل تطبيق MEGASync</translation>
+        <translation>انك تحاول مزامنة مجلد بحجم كبير جدا. لتجنب مزامنة كامل سواقة اقلاع الحاسب (وهي عملية غير فعالة وخطرة). نحن ننصح بالبدء بمجلدات اصغر حجما ثم اضافة بقية المجلدت بشكل تدريجي اثناء عمل تطبيق MEGAsync</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1305,7 +1305,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>حدثت مشكلة اثناء تنصيب التحديثات. يرجى إعادة المحاولة لاحقا أو تنزيل الإصدار الأخير من التطبيق من: https://mega.co.nz/#sync</translation>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1417,7 +1417,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">تم حظر الحساب الخاص بك. يرجى الاتصال support@mega.co.nz</translation>
+        <translation type="unfinished">تم حظر الحساب الخاص بك. يرجى الاتصال ب support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -2597,7 +2597,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">تطبيق MEGASync سيجري إعادة تفحص لكل المجلدات المزامنة عند إعادة التشغيل. هل تريد إعادة تشغيل MEGASync الان؟</translation>
+        <translation type="obsolete">تطبيق MEGAsync سيجري إعادة تفحص لكل المجلدات المزامنة عند إعادة التشغيل. هل تريد إعادة تشغيل MEGAsync الان؟</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2628,7 +2628,7 @@ Do you want to restart MEGAsync now?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>تطبيق MEGASync سيجري إعادة تفحص لكل المجلدات المزامنة عند إعادة التشغيل. هل تريد إعادة تشغيل MEGASync الان؟</translation>
+        <translation>تطبيق MEGAsync سيجري إعادة تفحص لكل المجلدات المزامنة عند إعادة التشغيل. هل تريد إعادة تشغيل MEGAsync الان؟</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -3134,7 +3134,7 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation>انك تحاول مزامنة مجلد بحجم كبير جدا. لتجنب مزامنة كامل سواقة اقلاع الحاسب (وهي عملية غير فعالة وخطرة). نحن ننصح بالبدء بمجلدات اصغر حجما ثم اضافة بقية المجلدت بشكل تدريجي اثناء عمل تطبيق MEGASync</translation>
+        <translation>انك تحاول مزامنة مجلد بحجم كبير جدا. لتجنب مزامنة كامل سواقة اقلاع الحاسب (وهي عملية غير فعالة وخطرة). نحن ننصح بالبدء بمجلدات اصغر حجما ثم اضافة بقية المجلدت بشكل تدريجي اثناء عمل تطبيق MEGAsync</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
@@ -3185,7 +3185,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">تم حظر الحساب الخاص بك. يرجى الاتصال support@mega.co.nz</translation>
+        <translation type="unfinished">تم حظر الحساب الخاص بك. يرجى الاتصال ب support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>

@@ -1305,7 +1305,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Er was een probleem met het installeren van de update. Probeer later nogmaals of download de laatste versie van: https://mega.co.nz/#sync</translation>
+        <translation>Er was een probleem met het installeren van de update. Probeer later nogmaals of download de laatste versie van: https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1417,7 +1417,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Uw account is geblokkeerd. Neem alstublieft contact op met support@mega.co.nz</translation>
+        <translation type="unfinished">Uw account is geblokkeerd. Neem alstublieft contact op met support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -2922,7 +2922,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Ik ga akkoord met MEGA &lt;a href=&quot;https://mega.nz/#terms&quot;&gt;Algemene Voorwaarden&lt;/a&gt;</translation>
+        <translation>Ik ga akkoord met de MEGA &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Terms of Service&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -3185,7 +3185,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Uw account is geblokkeerd. Neem alstublieft contact op met support@mega.co.nz</translation>
+        <translation type="unfinished">Uw account is geblokkeerd. Neem alstublieft contact op met support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>
