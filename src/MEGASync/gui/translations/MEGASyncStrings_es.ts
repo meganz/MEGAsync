@@ -1305,7 +1305,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Hubo un problema instalando la actualización. Por favor inténtelo de nuevo o descargue la última versión desde: https://mega.nz/sync</translation>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1417,7 +1417,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Tu cuenta ha sido bloqueada. Por favor, contacta con support@mega.nz</translation>
+        <translation type="unfinished">Tu cuenta ha sido bloqueada. Por favor contacta con support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -1599,7 +1599,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however you might not receive new updates.</translation>
+        <translation type="unfinished">MEGAsync seguirá funcionando normalmente, sin embargo podrías no recibir nuevas actualizaciones.</translation>
     </message>
 </context>
 <context>
@@ -3185,7 +3185,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Tu cuenta ha sido bloqueada. Por favor, contacta con support@mega.nz</translation>
+        <translation type="unfinished">Tu cuenta ha sido bloqueada. Por favor contacta con support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>

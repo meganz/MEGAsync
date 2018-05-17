@@ -748,7 +748,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is scanning</source>
         <translatorcomment>Label to indicate that MEGAsync is at state of scanning inside synced folders (String as short as possible)</translatorcomment>
-        <translation type="vanished">MEGASync đang quét dữ liệu</translation>
+        <translation type="vanished">MEGAsync đang quét dữ liệu</translation>
     </message>
     <message>
         <source>All transfers have been completed</source>
@@ -1305,7 +1305,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1417,7 +1417,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Tài khoản của bạn đã bị khóa. Xin liên hệ support@mega.co.nz để được giải quyết.</translation>
+        <translation type="unfinished">Tài khoản của bạn bị khóa. Vui lòng liên hệ support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -3185,7 +3185,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Tài khoản của bạn đã bị khóa. Xin liên hệ support@mega.co.nz để được giải quyết.</translation>
+        <translation type="unfinished">Tài khoản của bạn bị khóa. Vui lòng liên hệ support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>

@@ -1123,7 +1123,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Obrigado por testar o MEGASync.&lt;br&gt;Esta versão beta não está mais disponível.&lt;br&gt;Por favor, siga &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; no Twitter para mais atualizações.</translation>
+        <translation type="obsolete">Obrigado por testar o MEGAsync.&lt;br&gt;Esta versão beta não está mais disponível.&lt;br&gt;Por favor, siga &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; no Twitter para mais atualizações.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -1305,7 +1305,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Houve um problema ao instalar a atualização. Por favor, tente novamente mais tarde ou baixe a última versão em: https://mega.co.nz/sync</translation>
+        <translation>Não foi possível instalar a atualização. Por favor, tente novamente mais tarde ou baixe a última versão de: https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1417,7 +1417,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">A sua conta foi bloqueada. Entre em contato com support@mega.co.nz</translation>
+        <translation type="unfinished">Sua conta foi bloqueada. Por favor, entre em contato com support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -2922,7 +2922,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Eu concordo com os &lt;a href=&quot;https://mega.nz/#terms&quot;&gt;termos de serviço&lt;/a&gt; do MEGA</translation>
+        <translation>Eu concordo com os &lt;a href=&quot;https://mega.nz/terms&quot;&gt;Termos de serviço&lt;/a&gt; do MEGA</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -3185,7 +3185,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">A sua conta foi bloqueada. Entre em contato com support@mega.co.nz</translation>
+        <translation type="unfinished">Sua conta foi bloqueada. Por favor, entre em contato com support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>

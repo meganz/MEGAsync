@@ -1305,7 +1305,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Güncelleme yüklenirken hata oluştu. Lütfen daha sonra tekrar deeyin ya da son sürümü şu adresten edinin:https://mega.co.nz/#sync</translation>
+        <translation>Güncelleme yüklenirken bir sorun oluştu. Lütfen daha sonra tekrar deneyin ya da son sürümü şu adresten indirin: https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1417,7 +1417,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Hesabınız bloke edilmiştir. support@mega.co.nz ile irtibata geçiniz.</translation>
+        <translation type="unfinished">Hesabınız bloke edilmiştir.  Lütfen support@mega.nz ile irtibata geçiniz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -2922,7 +2922,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>MEGA &lt;a href=&quot;https://mega.nz/#terms&quot;&gt;Kullanım Koşulları&lt;/a&gt;nı kabul ediyorum</translation>
+        <translation>MEGA Kullanım Koşullarını &lt;a href=&quot;https://mega.nz/terms&quot;&gt; kabul ediyorum                                </translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -3185,7 +3185,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Hesabınız bloke edilmiştir. support@mega.co.nz ile irtibata geçiniz.</translation>
+        <translation type="unfinished">Hesabınız bloke edilmiştir.  Lütfen support@mega.nz ile irtibata geçiniz</translation>
     </message>
     <message>
         <source>MEGAsync</source>
