@@ -46,7 +46,6 @@ public:
     void setTransfer(mega::MegaTransfer *transfer);
     void updateTransfers();
     void transferFinished(int error);
-    void updateSyncsButton();
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
     void increaseUsedStorage(long long bytes, bool isInShare);

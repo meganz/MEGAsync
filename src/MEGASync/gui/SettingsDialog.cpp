@@ -417,6 +417,7 @@ void SettingsDialog::syncStateChanged(int state)
 
     syncsChanged = true;
     stateChanged();
+    app->regenerateTrayMenu();
 }
 
 void SettingsDialog::proxyStateChanged()
@@ -1662,6 +1663,7 @@ void SettingsDialog::on_bDelete_clicked()
 
     syncsChanged = true;
     stateChanged();
+    app->regenerateTrayMenu();
 }
 
 void SettingsDialog::loadSyncSettings()
@@ -1804,6 +1806,7 @@ void SettingsDialog::on_bAdd_clicked()
 
     syncsChanged = true;
     stateChanged();
+    app->regenerateTrayMenu();
 }
 
 void SettingsDialog::on_bApply_clicked()

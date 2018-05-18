@@ -187,7 +187,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     if (preferences->logged())
     {
         setUsage();
-        updateSyncsButton();
     }
     else
     {
@@ -588,36 +587,6 @@ void InfoDialog::transferFinished(int error)
     }
 }
 
-void InfoDialog::updateSyncsButton()
-{
-    int num = preferences->getNumSyncedFolders();
-    long long firstSyncHandle = mega::INVALID_HANDLE;
-    if (num == 1)
-    {
-        firstSyncHandle = preferences->getMegaFolderHandle(0);
-    }
-
-    MegaNode *rootNode = megaApi->getRootNode();
-    if (!rootNode)
-    {
-        preferences->setCrashed(true);
-        ui->bSyncFolder->setText(QString::fromAscii("MEGA"));
-        return;
-    }
-    long long rootHandle = rootNode->getHandle();
-
-    if ((num == 1) && (firstSyncHandle == rootHandle))
-    {
-        ui->bSyncFolder->setText(QString::fromAscii("MEGA"));
-    }
-    else
-    {
-        ui->bSyncFolder->setText(tr("Syncs"));
-    }
-
-    delete rootNode;
-}
-
 void InfoDialog::setIndexing(bool indexing)
 {
     this->indexing = indexing;
@@ -657,7 +626,6 @@ void InfoDialog::setOverQuotaMode(bool state)
         ui->bUpgrade->style()->polish(ui->bUpgrade);
         ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
-        ui->bSyncFolder->setVisible(false);
     }
     else
     {
@@ -668,14 +636,12 @@ void InfoDialog::setOverQuotaMode(bool state)
         ui->bUpgrade->style()->polish(ui->bUpgrade);
         ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
-        ui->bSyncFolder->setVisible(true);
     }
 }
 
 void InfoDialog::updateState()
 {
     updateTransfers();
-    updateSyncsButton();
     if (preferences->getGlobalPaused())
     {
         if (!preferences->logged())
@@ -826,6 +792,7 @@ void InfoDialog::closeSyncsMenu()
 void InfoDialog::addSync()
 {
     addSync(INVALID_HANDLE);
+    app->regenerateTrayMenu();
 }
 
 void InfoDialog::onContextDownloadMenu(QPoint pos, bool regular)
@@ -1225,7 +1192,6 @@ void InfoDialog::addSync(MegaHandle h)
    delete [] nPath;
    megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
    delete node;
-   updateSyncsButton();
 }
 
 #ifdef __APPLE__
@@ -1280,7 +1246,6 @@ void InfoDialog::changeEvent(QEvent *event)
             {
                 setUsage();
             }
-            updateSyncsButton();
             state = STATE_STARTING;
             ui->wStatus->setState(state);
             updateState();   
@@ -1379,7 +1344,6 @@ void InfoDialog::regenerateLayout()
         }
 
         ui->bTransferManager->setVisible(false);
-        ui->bSyncFolder->setVisible(false);
         ui->bAvatar->setVisible(false);
         ui->bTransferManager->setVisible(false);
         dialogLayout->removeWidget(ui->wContainerHeader);
@@ -1402,7 +1366,6 @@ void InfoDialog::regenerateLayout()
         setMaximumHeight(366);
 
         ui->bTransferManager->setVisible(true);
-        ui->bSyncFolder->setVisible(true);
         ui->bAvatar->setVisible(true);
         ui->bTransferManager->setVisible(true);
         dialogLayout->removeWidget(gWidget);
@@ -1471,28 +1434,28 @@ void InfoDialog::createQuotaUsedMenu()
         cloudItem->deleteLater();
         cloudItem = NULL;
     }
-    cloudItem = new MenuItemAction(tr("Cloud Drive"), Utilities::getSizeString(preferences->cloudDriveStorage()), QIcon(QString::fromAscii("://images/ic_small_cloud_drive.png")), QSize(16,16));
+    cloudItem = new MenuItemAction(tr("Cloud Drive"), Utilities::getSizeString(preferences->cloudDriveStorage()), QIcon(QString::fromAscii("://images/ic_small_cloud_drive.png")), false, QSize(16,16));
 
     if (inboxItem)
     {
         inboxItem->deleteLater();
         inboxItem = NULL;
     }
-    inboxItem = new MenuItemAction(tr("Inbox"), Utilities::getSizeString(preferences->inboxStorage()), QIcon(QString::fromAscii("://images/ic_small_inbox.png")), QSize(16,16));
+    inboxItem = new MenuItemAction(tr("Inbox"), Utilities::getSizeString(preferences->inboxStorage()), QIcon(QString::fromAscii("://images/ic_small_inbox.png")), false, QSize(16,16));
 
     if (sharesItem)
     {
         sharesItem->deleteLater();
         sharesItem = NULL;
     }
-    sharesItem = new MenuItemAction(tr("Incoming Shares"), Utilities::getSizeString(preferences->inShareStorage()), QIcon(QString::fromAscii("://images/ic_small_shares.png")), QSize(16,16));
+    sharesItem = new MenuItemAction(tr("Incoming Shares"), Utilities::getSizeString(preferences->inShareStorage()), QIcon(QString::fromAscii("://images/ic_small_shares.png")), false, QSize(16,16));
 
     if (rubbishItem)
     {
         rubbishItem->deleteLater();
         rubbishItem = NULL;
     }
-    rubbishItem = new MenuItemAction(tr("Rubbish bin"), Utilities::getSizeString(preferences->rubbishStorage()), QIcon(QString::fromAscii("://images/ic_small_rubbish.png")), QSize(16,16));
+    rubbishItem = new MenuItemAction(tr("Rubbish bin"), Utilities::getSizeString(preferences->rubbishStorage()), QIcon(QString::fromAscii("://images/ic_small_rubbish.png")), false, QSize(16,16));
 
     storageUsedMenu->addAction(cloudItem);
     storageUsedMenu->addAction(inboxItem);

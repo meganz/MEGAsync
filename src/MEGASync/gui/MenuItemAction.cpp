@@ -1,7 +1,7 @@
 #include "MenuItemAction.h"
 #include <QKeyEvent>
 
-MenuItemAction::MenuItemAction(const QString title, const QIcon icon, QSize iconSize)
+MenuItemAction::MenuItemAction(const QString title, const QIcon icon, bool manageHoverStates, QSize iconSize)
     : QWidgetAction(NULL)
 {
     this->title = new QLabel(title);
@@ -11,11 +11,17 @@ MenuItemAction::MenuItemAction(const QString title, const QIcon icon, QSize icon
     container = new QWidget(NULL);
     container->setObjectName(QString::fromUtf8("wContainer"));
     container->installEventFilter(this);
+
+    if (manageHoverStates)
+    {
+        container->setAttribute(Qt::WA_TransparentForMouseEvents);
+    }
+
     setupActionWidget(iconSize);
     setDefaultWidget(container);
 }
 
-MenuItemAction::MenuItemAction(const QString title, const QString value, const QIcon icon, QSize iconSize)
+MenuItemAction::MenuItemAction(const QString title, const QString value, const QIcon icon, bool manageHoverStates, QSize iconSize)
     : QWidgetAction(NULL)
 {
     this->title = new QLabel(title);
@@ -25,11 +31,17 @@ MenuItemAction::MenuItemAction(const QString title, const QString value, const Q
     container = new QWidget(NULL);
     container->setObjectName(QString::fromUtf8("wContainer"));
     container->installEventFilter(this);
+
+    if (manageHoverStates)
+    {
+        container->setAttribute(Qt::WA_TransparentForMouseEvents);
+    }
+
     setupActionWidget(iconSize);
     setDefaultWidget(container);
 }
 
-MenuItemAction::MenuItemAction(const QString title, const QIcon icon, const QIcon hoverIcon, QSize iconSize)
+MenuItemAction::MenuItemAction(const QString title, const QIcon icon, const QIcon hoverIcon, bool manageHoverStates, QSize iconSize)
     : QWidgetAction(NULL)
 {
     this->title = new QLabel(title);
@@ -39,6 +51,12 @@ MenuItemAction::MenuItemAction(const QString title, const QIcon icon, const QIco
     container = new QWidget (NULL);
     container->setObjectName(QString::fromUtf8("wContainer"));
     container->installEventFilter(this);
+
+    if (manageHoverStates)
+    {
+        container->setAttribute(Qt::WA_TransparentForMouseEvents);
+    }
+
     setupActionWidget(iconSize);
     setDefaultWidget(container);
 }
@@ -59,6 +77,24 @@ void MenuItemAction::setHoverIcon(const QIcon icon)
 {
     delete this->hoverIcon;
     this->hoverIcon = new QIcon(icon);
+}
+
+void MenuItemAction::setHighlight(bool highlight)
+{
+    if (highlight)
+    {
+        container->setStyleSheet(QString::fromUtf8("#wContainer { border: 2px solid #aaaaaa; border-radius: 2px; margin: 0px 8px 0px 8px; padding: 0px; background-color: #aaaaaa; }"));
+        title->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #ffffff;"));
+        iconButton->setStyleSheet(QString::fromAscii("border: none;"));
+        hoverIcon ? iconButton->setIcon(*hoverIcon) : iconButton->setIcon(*icon);
+    }
+    else
+    {
+        container->setStyleSheet(QString::fromUtf8("#wContainer { border: none; margin: 0px 0px 0px 0px; padding: 0px; background-color: #ffffff; }"));
+        title->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #777777;"));
+        iconButton->setStyleSheet(QString::fromAscii("border: none;"));
+        iconButton->setIcon(*icon);
+    }
 }
 
 MenuItemAction::~MenuItemAction()
@@ -125,5 +161,5 @@ bool MenuItemAction::eventFilter(QObject *obj, QEvent *event)
         }
     }
 
-    return QObject::eventFilter(obj, event);
+    return QWidgetAction::eventFilter(obj,event);
 }

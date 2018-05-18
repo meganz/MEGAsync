@@ -184,6 +184,8 @@ public slots:
     void onUpdateError();
     void rebootApplication(bool update = true);
     void exitApplication();
+    void highLightMenuEntry(QAction* action);
+    void regenerateTrayMenu();
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
     void checkMemoryUsage();
@@ -240,6 +242,8 @@ protected:
     void startHttpServer();
     void initHttpsServer();
 
+    bool eventFilter(QObject *obj, QEvent *e);
+
     QSystemTrayIcon *trayIcon;
 
     QAction *changeProxyAction;
@@ -262,6 +266,7 @@ protected:
     QMenu *trayOverQuotaMenu;
     QMenu *trayGuestMenu;
     QMenu emptyMenu;
+    QMenu *syncsMenu;
     MenuItemAction *exitAction;
     MenuItemAction *settingsAction;
     MenuItemAction *importLinksAction;
@@ -269,7 +274,7 @@ protected:
     MenuItemAction *downloadAction;
     MenuItemAction *streamAction;
     MenuItemAction *webAction;
-    MenuItemAction *pauseTransfersAction;
+    MenuItemAction *addSyncAction;
 
     MenuItemAction *updateAction;
     QAction *showStatusAction;
@@ -282,6 +287,7 @@ protected:
     MenuItemAction *exitActionGuest;
     MenuItemAction *settingsActionGuest;
     MenuItemAction *updateActionGuest;
+    MenuItemAction* lastHovered;
 
 #ifdef __APPLE__
     QTimer *scanningTimer;

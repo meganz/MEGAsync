@@ -1844,47 +1844,6 @@ color: #333333;
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="bSyncFolder">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>32</height>
-            </size>
-           </property>
-           <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
-           </property>
-           <property name="mouseTracking">
-            <bool>false</bool>
-           </property>
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-           <property name="text">
-            <string>Syncs</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
-             <normaloff>:/images/ico_syncs.png</normaloff>:/images/ico_syncs.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>18</width>
-             <height>16</height>
-            </size>
-           </property>
-           <property name="flat">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
           <spacer name="horizontalSpacer">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>
@@ -1966,7 +1925,6 @@ color: #333333;
   <tabstop>bSettings</tabstop>
   <tabstop>lTotalUsedStorage</tabstop>
   <tabstop>lPercentageUsedStorage</tabstop>
-  <tabstop>bSyncFolder</tabstop>
   <tabstop>bUpgrade</tabstop>
   <tabstop>label</tabstop>
  </tabstops>
