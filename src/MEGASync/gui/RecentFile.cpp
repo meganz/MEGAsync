@@ -17,9 +17,13 @@ RecentFile::RecentFile(QWidget *parent) :
     ui(new Ui::RecentFile)
 {
     ui->setupUi(this);
+    ui->bClockDown->setVisible(false);
 
     getLinkButtonEnabled = false;
+    remainingUploads = remainingDownloads = 0;
+    totalUploads = totalDownloads = 0;
 
+    megaApi = ((MegaApplication *)qApp)->getMegaApi();
     ui->lGetLink->installEventFilter(this);
     update();
 }
@@ -63,9 +67,13 @@ void RecentFile::setType(int type, bool isSyncTransfer)
     {
         case MegaTransfer::TYPE_UPLOAD:
             icon.addFile(QString::fromUtf8(":/images/upload_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
+                                                            "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
             break;
         case MegaTransfer::TYPE_DOWNLOAD:
             icon.addFile(QString::fromUtf8(":/images/download_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
+                                                            "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
             break;
         default:
             break;
@@ -147,20 +155,60 @@ void RecentFile::finishTransfer()
 
 void RecentFile::updateTransfer()
 {
-    if (transferState != MegaTransfer::STATE_ACTIVE)
+    int currentUpload, currentDownload;
+
+    if (transferState == MegaTransfer::STATE_COMPLETED || transferState == MegaTransfer::STATE_FAILED)
     {
         ui->sTransferState->setCurrentWidget(ui->completedTransfer);
-
     }
     else
     {
         ui->sTransferState->setCurrentWidget(ui->activeTransfer);
+
+        QString formattedValue(QString::fromUtf8("<span style=\"color:#333333; text-decoration:none;\">&nbsp;%1&nbsp;</span>"));
+        QString nTransfersPattern(tr("%1 of %2"));
+
+        switch (type)
+        {
+            case MegaTransfer::TYPE_UPLOAD:
+                remainingUploads = megaApi->getNumPendingUploads();
+                totalUploads = megaApi->getTotalUploads();
+
+                if (totalUploads < remainingUploads)
+                {
+                    totalUploads = remainingUploads;
+                }
+
+                currentUpload = totalUploads - remainingUploads + 1;
+                //Update current and total number of transfers
+                ui->lTransfers->setText(nTransfersPattern.arg(formattedValue.arg(currentUpload)).arg(formattedValue.arg(totalUploads)));
+
+                break;
+            case MegaTransfer::TYPE_DOWNLOAD:
+                remainingDownloads = megaApi->getNumPendingDownloads();
+                totalDownloads = megaApi->getTotalDownloads();
+
+                if (totalDownloads < remainingDownloads)
+                {
+                    totalDownloads = remainingDownloads;
+                }
+
+                currentDownload = totalDownloads - remainingDownloads + 1;
+                //Update current and total number of transfers
+                ui->lTransfers->setText(nTransfersPattern.arg(formattedValue.arg(currentDownload)).arg(formattedValue.arg(totalDownloads)));
+
+                break;
+            default:
+                break;
+        }
     }
 
     switch (transferState)
     {
         case MegaTransfer::STATE_ACTIVE:
         {
+            ui->bClockDown->setVisible(true);
+
             // Update remaining time
             long long remainingBytes = totalSize - totalTransferredBytes;
             int totalRemainingSeconds = meanTransferSpeed ? remainingBytes / meanTransferSpeed : 0;
@@ -188,7 +236,7 @@ void RecentFile::updateTransfer()
 
             if (!totalTransferredBytes)
             {
-                downloadString = QString::fromUtf8("(%1)").arg(tr("starting"));
+                downloadString = QString::fromUtf8("%1").arg(tr("starting..."));
             }
             else
             {
@@ -200,24 +248,29 @@ void RecentFile::updateTransfer()
             break;
         }
         case MegaTransfer::STATE_PAUSED:
-            ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("paused")));
+            ui->lSpeed->setText(QString::fromUtf8("%1").arg(tr("PAUSED")));
+            ui->bClockDown->setVisible(false);
             ui->lRemainingTime->setText(QString::fromUtf8(""));
             break;
         case MegaTransfer::STATE_QUEUED:
-            ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("queued")));
+            ui->lSpeed->setText(QString::fromUtf8("%1").arg(tr("queued")));
+            ui->bClockDown->setVisible(false);
             ui->lRemainingTime->setText(QString::fromUtf8(""));
             break;
         case MegaTransfer::STATE_RETRYING:
-            ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("retrying")));
+            ui->lSpeed->setText(QString::fromUtf8("%1").arg(tr("retrying...")));
+            ui->bClockDown->setVisible(false);
             ui->lRemainingTime->setText(QString::fromUtf8(""));
             break;
         case MegaTransfer::STATE_COMPLETING:
-            ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("completing")));
+            ui->lSpeed->setText(QString::fromUtf8("%1").arg(tr("completing...")));
+            ui->bClockDown->setVisible(false);
             ui->lRemainingTime->setText(QString::fromUtf8(""));
             break;
         default:
             ui->lSpeed->setText(QString::fromUtf8(""));
             ui->lRemainingTime->setText(QString::fromUtf8(""));
+            ui->bClockDown->setVisible(false);
             break;
     }
 

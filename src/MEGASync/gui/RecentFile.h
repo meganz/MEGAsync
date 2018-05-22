@@ -6,6 +6,7 @@
 #include <QDateTime>
 #include <QMenu>
 #include "TransferItem.h"
+#include "megaapi.h"
 
 namespace Ui {
 class RecentFile;
@@ -45,6 +46,9 @@ signals:
 
 private:
     Ui::RecentFile *ui;
+    mega::MegaApi *megaApi;
+    int remainingUploads, remainingDownloads;
+    int totalUploads, totalDownloads;
 
 protected:
     bool getLinkButtonEnabled;
