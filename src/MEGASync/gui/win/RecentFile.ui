@@ -42,7 +42,7 @@
 	border: none;
 }
 
-#Filename
+#Filename, #lFileNameCompleted
 {
   font-family: &quot;Source Sans Pro&quot;;
   font-size: 13px;
@@ -61,9 +61,16 @@
   font-family: &quot;Source Sans Pro&quot;;
   font-size: 12px;
   color: #666666;
+}
+
+#lElapsedTime
+{
+  font-family: &quot;Source Sans Pro&quot;;
+  font-size: 12px;
+  color: #999999;
 }</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_5">
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -94,7 +101,7 @@
       <number>0</number>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="completedTransfer">
       <property name="minimumSize">
@@ -109,22 +116,106 @@
         <height>60</height>
        </size>
       </property>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
        <property name="spacing">
-        <number>5</number>
+        <number>-1</number>
        </property>
        <property name="leftMargin">
-        <number>20</number>
+        <number>13</number>
        </property>
        <property name="topMargin">
-        <number>0</number>
+        <number>2</number>
        </property>
        <property name="rightMargin">
-        <number>0</number>
+        <number>25</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
        </property>
+       <item>
+        <widget class="QPushButton" name="lFileTypeCompleted">
+         <property name="minimumSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>48</width>
+           <height>48</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="wTransferInfo" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <property name="spacing">
+           <number>1</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+          <item>
+           <widget class="QLabel" name="lFileNameCompleted">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>200</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="text">
+             <string>asdfasdfasdf</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="lElapsedTime">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>TextLabel</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item>
         <widget class="QPushButton" name="lTransferTypeCompleted">
          <property name="text">
@@ -135,32 +226,6 @@
            <width>12</width>
            <height>12</height>
           </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="lFileTypeCompleted">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>20</width>
-           <height>22</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="lFileNameCompleted">
-         <property name="minimumSize">
-          <size>
-           <width>150</width>
-           <height>0</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
          </property>
         </widget>
        </item>
@@ -268,7 +333,7 @@
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_6">
              <property name="spacing">
-              <number>-1</number>
+              <number>0</number>
              </property>
              <property name="leftMargin">
               <number>0</number>
@@ -301,7 +366,7 @@
                  <number>13</number>
                 </property>
                 <property name="topMargin">
-                 <number>8</number>
+                 <number>2</number>
                 </property>
                 <property name="rightMargin">
                  <number>0</number>
@@ -313,14 +378,14 @@
                  <widget class="QPushButton" name="lFileType">
                   <property name="minimumSize">
                    <size>
-                    <width>40</width>
-                    <height>42</height>
+                    <width>48</width>
+                    <height>48</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
-                    <width>40</width>
-                    <height>42</height>
+                    <width>48</width>
+                    <height>48</height>
                    </size>
                   </property>
                   <property name="text">
@@ -350,16 +415,22 @@
                     <number>0</number>
                    </property>
                    <property name="topMargin">
-                    <number>5</number>
+                    <number>8</number>
                    </property>
                    <property name="rightMargin">
                     <number>0</number>
                    </property>
                    <property name="bottomMargin">
-                    <number>0</number>
+                    <number>5</number>
                    </property>
                    <item>
                     <widget class="QLabel" name="lFileName">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="minimumSize">
                       <size>
                        <width>180</width>

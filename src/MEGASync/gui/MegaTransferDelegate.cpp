@@ -53,10 +53,18 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 ti->setFileName(QString::fromUtf8(transfer->getFileName()));
                 ti->setTotalSize(transfer->getTotalBytes());
                 ti->setSpeed(transfer->getSpeed(), transfer->getMeanSpeed());
-                ti->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
-                ti->setTransferState(transfer->getState());
+                ti->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());           
                 ti->setPriority(transfer->getPriority());
-                if (modelType == QTransfersModel::TYPE_FINISHED || modelType == QTransfersModel::TYPE_RECENTLY_UPDATED)
+
+                int tError = transfer->getLastError().getErrorCode();
+                if (tError != MegaError::API_OK)
+                {
+                    ti->setTransferError(tError);
+                }
+
+                ti->setTransferState(transfer->getState());
+
+                if (modelType == QTransfersModel::TYPE_FINISHED || modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
                 {
                     ti->setFinishedTime(transfer->getUpdateTime());
                 }
@@ -74,7 +82,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             ti->updateTransfer();
         }
 
-        if (modelType == QTransfersModel::TYPE_FINISHED || modelType == QTransfersModel::TYPE_RECENTLY_UPDATED)
+        if (modelType == QTransfersModel::TYPE_FINISHED || modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
         {
             ti->updateFinishedTime();
         }

@@ -25,6 +25,9 @@ public:
     virtual int getTransferState();
     virtual void setTransferState(int value);
 
+    virtual int getTransferError();
+    virtual void setTransferError(int error);
+
     virtual int getTransferTag();
     virtual void setTransferTag(int value);
 
@@ -51,6 +54,7 @@ protected:
     int type;
     int transferState;
     int transferTag;
+    int transferError;
     long long transferSpeed;
     long long meanTransferSpeed;
     long long totalSize;

@@ -31,7 +31,7 @@ public:
 
     void finishTransfer();
     void updateTransfer();
-    void updateFinishedTime() {}
+    void updateFinishedTime();
     void loadDefaultTransferIcon() {}
     void updateAnimation() {}
     bool cancelButtonClicked(QPoint pos) { return false;}

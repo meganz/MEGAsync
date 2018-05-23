@@ -3,6 +3,7 @@
 TransferItem::TransferItem(QWidget *parent) : QWidget(parent)
 {
     type = -1;
+    transferError = 0;
     totalSize = 0;
     totalTransferredBytes = 0;
     transferSpeed = 0;
@@ -100,6 +101,16 @@ int TransferItem::getTransferState()
 void TransferItem::setTransferState(int value)
 {
     transferState = value;
+}
+
+int TransferItem::getTransferError()
+{
+    return transferError;
+}
+
+void TransferItem::setTransferError(int error)
+{
+    transferError = error;
 }
 
 int TransferItem::getTransferTag()

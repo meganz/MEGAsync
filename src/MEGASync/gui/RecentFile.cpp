@@ -22,6 +22,7 @@ RecentFile::RecentFile(QWidget *parent) :
     getLinkButtonEnabled = false;
     remainingUploads = remainingDownloads = 0;
     totalUploads = totalDownloads = 0;
+    dsFinishedTime = 0;
 
     megaApi = ((MegaApplication *)qApp)->getMegaApi();
     ui->lGetLink->installEventFilter(this);
@@ -151,6 +152,11 @@ void RecentFile::mouseHoverTransfer(bool isHover)
 void RecentFile::finishTransfer()
 {
     ui->sTransferState->setCurrentWidget(ui->completedTransfer);
+    if (transferError < 0)
+    {
+        ui->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
+        ui->lElapsedTime->setText(tr("failed: ") + QCoreApplication::translate("MegaError", MegaError::getErrorString(transferError)));
+    }
 }
 
 void RecentFile::updateTransfer()
@@ -277,6 +283,21 @@ void RecentFile::updateTransfer()
     // Update progress bar
     unsigned int permil = (totalSize > 0) ? ((1000 * totalTransferredBytes) / totalSize) : 0;
     ui->pbTransfer->setValue(permil);
+}
+
+void RecentFile::updateFinishedTime()
+{
+    if (!dsFinishedTime || transferError < 0)
+    {
+        return;
+    }
+
+    Preferences *preferences = Preferences::instance();
+    QDateTime now = QDateTime::currentDateTime();
+    qint64 secs = ( now.toMSecsSinceEpoch() / 100 - (preferences->getMsDiffTimeWithSDK() + dsFinishedTime) ) / 10;
+
+    ui->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #999999"));
+    ui->lElapsedTime->setText(tr("Added [A]").replace(QString::fromUtf8("[A]"), Utilities::getFinishedTimeString(secs)));
 }
 
 bool RecentFile::eventFilter(QObject *, QEvent *ev)
