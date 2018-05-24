@@ -296,5 +296,7 @@
         <file>images/small_openoffice.png</file>
         <file>images/small_pages.png</file>
         <file>images/small_sketch.png</file>
+        <file>images/ico_item_link.png</file>
+        <file>images/ico_item_retry.png</file>
     </qresource>
 </RCC>

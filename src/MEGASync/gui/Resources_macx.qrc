@@ -543,5 +543,9 @@
         <file>images/small_pages@2x.png</file>
         <file>images/small_sketch.png</file>
         <file>images/small_sketch@2x.png</file>
+        <file>images/ico_item_link.png</file>
+        <file>images/ico_item_link@2x.png</file>
+        <file>images/ico_item_retry.png</file>
+        <file>images/ico_item_retry@2x.png</file>
     </qresource>
 </RCC>

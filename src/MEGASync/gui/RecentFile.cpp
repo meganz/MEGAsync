@@ -154,6 +154,8 @@ void RecentFile::finishTransfer()
     ui->sTransferState->setCurrentWidget(ui->completedTransfer);
     if (transferError < 0)
     {
+        ui->lGetLink->setIcon(QIcon(QString::fromAscii("://images/ico_item_retry.png")));
+        ui->lGetLink->setIconSize(QSize(24,24));
         ui->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
         ui->lElapsedTime->setText(tr("failed: ") + QCoreApplication::translate("MegaError", MegaError::getErrorString(transferError)));
     }
@@ -296,6 +298,8 @@ void RecentFile::updateFinishedTime()
     QDateTime now = QDateTime::currentDateTime();
     qint64 secs = ( now.toMSecsSinceEpoch() / 100 - (preferences->getMsDiffTimeWithSDK() + dsFinishedTime) ) / 10;
 
+    ui->lGetLink->setIcon(QIcon(QString::fromAscii("://images/ico_item_link.png")));
+    ui->lGetLink->setIconSize(QSize(24,24));
     ui->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #999999"));
     ui->lElapsedTime->setText(tr("Added [A]").replace(QString::fromUtf8("[A]"), Utilities::getFinishedTimeString(secs)));
 }

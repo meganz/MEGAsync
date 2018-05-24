@@ -180,37 +180,45 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
 
             int modelType = model->getModelType();
             if (modelType == QTransfersModel::TYPE_FINISHED
-                    || modelType == QTransfersModel::TYPE_RECENTLY_UPDATED)
+                    || modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
             {
                 MegaTransfer *transfer = model->getTransferByTag(tag);
                 if (transfer)
                 {
-                    MegaNode *node = transfer->getPublicMegaNode();
-                    if (!node || !node->isPublic())
+                    if (!transfer->getLastError().getErrorCode())
                     {
-                        exportList.push_back(transfer->getNodeHandle());
+                        MegaNode *node = transfer->getPublicMegaNode();
+                        if (!node || !node->isPublic())
+                        {
+                            exportList.push_back(transfer->getNodeHandle());
+                        }
+                        else
+                        {
+                            char *handle = node->getBase64Handle();
+                            char *key = node->getBase64Key();
+                            if (handle && key)
+                            {
+                                QString link = QString::fromUtf8("https://mega.nz/#!%1!%2")
+                                        .arg(QString::fromUtf8(handle)).arg(QString::fromUtf8(key));
+                                linkList.append(link);
+                            }
+                            delete [] handle;
+                            delete [] key;
+                        }
+                        delete node;
+
+                        if (exportList.size() || linkList.size())
+                        {
+                            ((MegaApplication*)qApp)->exportNodes(exportList, linkList);
+                        }
                     }
                     else
                     {
-                        char *handle = node->getBase64Handle();
-                        char *key = node->getBase64Key();
-                        if (handle && key)
-                        {
-                            QString link = QString::fromUtf8("https://mega.nz/#!%1!%2")
-                                    .arg(QString::fromUtf8(handle)).arg(QString::fromUtf8(key));
-                            linkList.append(link);
-                        }
-                        delete [] handle;
-                        delete [] key;
+                        ((MegaApplication*)qApp)->getMegaApi()->retryTransfer(transfer);
                     }
-                    delete node;
-                }
 
-                if (exportList.size() || linkList.size())
-                {
-                    ((MegaApplication*)qApp)->exportNodes(exportList, linkList);
                 }
-            }
+             }
         }
         return true;
     }
