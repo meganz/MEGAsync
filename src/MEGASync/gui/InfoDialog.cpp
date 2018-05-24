@@ -158,25 +158,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     on_bDotUsedStorage_clicked();
 
-    //Create the overlay widget with a semi-transparent background
-    //that will be shown over the transfers when they are paused
-    overlay = new QPushButton(this);
-    overlay->setIcon(QIcon(QString::fromAscii("://images/tray_paused_large_ico.png")));
-    overlay->setIconSize(QSize(64, 64));
-    overlay->setStyleSheet(QString::fromAscii("background-color: rgba(247, 247, 247, 200); "
-                                              "border: none; "));
-
     ui->wTransferDown->hide();
     ui->wTransferUp->hide();
-    overlay->resize(ui->wTransfers->minimumSize());
-#ifdef __APPLE__
-    overlay->move(1, 72);
-#else
-    overlay->move(2, 60);
-    overlay->resize(overlay->width()-4, overlay->height());
-#endif
-    overlay->hide();
-    connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
+
     connect(ui->wTransferDown, SIGNAL(showContextMenu(QPoint, bool)), this, SLOT(onContextDownloadMenu(QPoint, bool)));
     connect(ui->wTransferUp, SIGNAL(showContextMenu(QPoint, bool)), this, SLOT(onContextUploadMenu(QPoint, bool)));
     connect(ui->wTransferDown, SIGNAL(openTransferManager(int)), app, SLOT(externalOpenTransferManager(int)));
@@ -666,15 +650,6 @@ void InfoDialog::updateState()
             ui->label->setIcon(icon);
             ui->label->setIconSize(QSize(36, 36));
         }
-
-        if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
-        {
-            overlay->setVisible(true);
-        }
-        else
-        {
-            overlay->setVisible(false);
-        }
     }
     else
     {
@@ -682,7 +657,7 @@ void InfoDialog::updateState()
         {
             return;
         }
-        overlay->setVisible(false);
+
         if (downloadSpeed < 0 && uploadSpeed < 0)
         {
             downloadSpeed = 0;
@@ -1214,11 +1189,6 @@ void InfoDialog::on_bTransferManager_clicked()
     app->transferManagerActionClicked();
 }
 
-void InfoDialog::onOverlayClicked()
-{
-    app->pauseTransfers(false);
-}
-
 void InfoDialog::clearUserAttributes()
 {
     ui->bAvatar->clearData();
@@ -1354,8 +1324,6 @@ void InfoDialog::regenerateLayout()
         ui->wContainerBottom->setVisible(false);
         dialogLayout->addWidget(gWidget);
         gWidget->setVisible(true);
-
-        overlay->setVisible(false);
 
         setMinimumHeight(385);
         setMaximumHeight(385);

@@ -90,7 +90,6 @@ private slots:
     void openFolder(QString path);
     void on_bChats_clicked();
     void on_bTransferManager_clicked();
-    void onOverlayClicked();
     void scanningAnimationStep();
     void onUserAction(int action);
 
@@ -111,7 +110,6 @@ signals:
 
 private:
     Ui::InfoDialog *ui;
-    QPushButton *overlay;
 #ifdef __APPLE__
     QPushButton *arrow;
 
