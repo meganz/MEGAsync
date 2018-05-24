@@ -35,7 +35,7 @@ public:
     void loadDefaultTransferIcon() {}
     void updateAnimation() {}
     bool cancelButtonClicked(QPoint pos) { return false;}
-    void setStateLabel(QString labelState) {}
+    void setStateLabel(QString labelState);
 
     bool eventFilter(QObject *, QEvent * ev);
     QSize minimumSizeHint() const;

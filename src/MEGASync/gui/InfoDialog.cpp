@@ -506,6 +506,11 @@ void InfoDialog::updateTransfers()
     }
 }
 
+void InfoDialog::refreshTransferItems()
+{
+    ui->wListTransfers->getModel()->refreshTransfers();
+}
+
 void InfoDialog::transferFinished(int error)
 {
     remainingUploads = megaApi->getNumPendingUploads();

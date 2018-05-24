@@ -24,6 +24,7 @@ public:
 
     virtual int getTransferState();
     virtual void setTransferState(int value);
+    virtual bool isTransferFinished();
 
     virtual int getTransferError();
     virtual void setTransferError(int error);

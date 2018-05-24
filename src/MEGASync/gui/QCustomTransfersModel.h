@@ -21,6 +21,7 @@ public:
 
     explicit QCustomTransfersModel(int type, QObject *parent = 0);
 
+    void refreshTransfers();
     virtual mega::MegaTransfer *getTransferByTag(int tag);
 
     // MegaApi callbacks

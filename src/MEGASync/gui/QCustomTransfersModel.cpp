@@ -12,6 +12,14 @@ QCustomTransfersModel::QCustomTransfersModel(int type, QObject *parent)
     activeDownloadTag = -1;
 }
 
+void QCustomTransfersModel::refreshTransfers()
+{
+    if (transferOrder.size())
+    {
+        emit dataChanged(index(0, 0, QModelIndex()), index(transferOrder.size() - 1, 0, QModelIndex()));
+    }
+}
+
 MegaTransfer *QCustomTransfersModel::getTransferByTag(int tag)
 {
     MegaTransfer *transfer = ((MegaApplication *)qApp)->getFinishedTransferByTag(tag);

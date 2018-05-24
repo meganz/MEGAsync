@@ -45,6 +45,7 @@ public:
     void setAvatar();
     void setTransfer(mega::MegaTransfer *transfer);
     void updateTransfers();
+    void refreshTransferItems();
     void transferFinished(int error);
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);

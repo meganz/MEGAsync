@@ -1,4 +1,5 @@
 #include "TransferItem.h"
+#include "megaapi.h"
 
 TransferItem::TransferItem(QWidget *parent) : QWidget(parent)
 {
@@ -101,6 +102,12 @@ int TransferItem::getTransferState()
 void TransferItem::setTransferState(int value)
 {
     transferState = value;
+}
+
+bool TransferItem::isTransferFinished()
+{
+    return transferState == mega::MegaTransfer::STATE_COMPLETED
+            || transferState == mega::MegaTransfer::STATE_FAILED;
 }
 
 int TransferItem::getTransferError()

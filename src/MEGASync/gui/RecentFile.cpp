@@ -304,6 +304,12 @@ void RecentFile::updateFinishedTime()
     ui->lElapsedTime->setText(tr("Added [A]").replace(QString::fromUtf8("[A]"), Utilities::getFinishedTimeString(secs)));
 }
 
+void RecentFile::setStateLabel(QString labelState)
+{
+    ui->lSpeed->setText(QString::fromUtf8("%1").arg(labelState));
+    ui->lRemainingTime->setText(QString::fromUtf8(""));
+}
+
 bool RecentFile::eventFilter(QObject *, QEvent *ev)
 {
     return ev->type() == QEvent::Paint || ev->type() == QEvent::ToolTip;

@@ -6162,6 +6162,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             transferManager->updatePauseState();
         }
 
+        if (infoDialog)
+        {
+            infoDialog->refreshTransferItems();
+        }
+
         onGlobalSyncStateChanged(megaApi);
         break;
     }

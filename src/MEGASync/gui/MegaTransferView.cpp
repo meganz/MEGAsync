@@ -32,6 +32,7 @@ MegaTransferView::MegaTransferView(QWidget *parent) :
     clearCompleted = NULL;
     clearAllCompleted = NULL;
     disableLink = false;
+    disableMenus = false;
     type = 0;
 
     verticalScrollBar()->setStyleSheet(
@@ -78,6 +79,11 @@ void MegaTransferView::disableGetLink(bool disable)
 int MegaTransferView::getType() const
 {
     return type;
+}
+
+void MegaTransferView::disableContextMenus(bool option)
+{
+    disableMenus = option;
 }
 
 void MegaTransferView::createContextMenu()
@@ -350,7 +356,10 @@ void MegaTransferView::mouseReleaseEvent(QMouseEvent *event)
         return;
     }
 
-    emit showContextMenu(QPoint(event->x(), event->y()));
+    if (!disableMenus)
+    {
+        emit showContextMenu(QPoint(event->x(), event->y()));
+    }
 }
 
 void MegaTransferView::leaveEvent(QEvent *event)
