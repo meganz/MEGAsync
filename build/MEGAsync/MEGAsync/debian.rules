@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 FMEDIAINFO := $(shell dpkg -l | grep mediainfo >/dev/null && echo "-i" || echo " ")
-EXTRAQMAKE := $(shell cat /etc/issue | grep "Ubuntu 1[234]\|Debian.* 7" >/dev/null && echo "DEFINES+=MEGASYNC_DEPRECATED_OS" || echo "")
+EXTRAQMAKE := $(shell cat /etc/issue | grep "Ubuntu 1[235]\|Debian.* 7\|Ubuntu 17.04\|Ubuntu 14.10" >/dev/null && echo "DEFINES+=MEGASYNC_DEPRECATED_OS" || echo "")
 
 build: build-stamp
 build-stamp:

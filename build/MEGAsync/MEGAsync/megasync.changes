@@ -1,3 +1,10 @@
+Wed May 23 17:27:38 CEST 2018 - linux@mega.co.nz
+- Update to version 3.6.6:
+  * General Data Protection Regulation (GDPR) compliance
+  * Updated translations
+  * Bug fixes and other minor adjustments
+
+-------------------------------------------------------------------
 Wed May 2 13:09:17 CEST 2018 - linux@mega.co.nz
 - Update to version 3.6.5:
   * Allow to change the password
