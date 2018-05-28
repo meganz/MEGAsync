@@ -11,7 +11,6 @@
 #include <QEvent>
 #include "InfoDialog.h"
 #include "ActiveTransfer.h"
-#include "RecentFile.h"
 #include "ui_InfoDialog.h"
 #include "control/Utilities.h"
 #include "MegaApplication.h"

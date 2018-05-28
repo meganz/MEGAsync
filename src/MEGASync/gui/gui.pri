@@ -3,7 +3,6 @@ QT       += network
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/ActiveTransfer.cpp \
     $$PWD/InfoDialog.cpp \
-    $$PWD/RecentFile.cpp \
     $$PWD/TransferProgressBar.cpp \
     $$PWD/UsageProgressBar.cpp \
     $$PWD/SetupWizard.cpp \
@@ -54,12 +53,12 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/InfoDialogTransfersWidget.cpp \
     $$PWD/QCustomTransfersModel.cpp \
     $$PWD/StatusInfo.cpp \
-    $$PWD/ChangePassword.cpp
+    $$PWD/ChangePassword.cpp \
+    $$PWD/CustomTransferItem.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
     $$PWD/InfoDialog.h \
-    $$PWD/RecentFile.h \
     $$PWD/TransferProgressBar.h \
     $$PWD/UsageProgressBar.h \
     $$PWD/SetupWizard.h \
@@ -110,7 +109,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialogTransfersWidget.h \
     $$PWD/QCustomTransfersModel.h \
     $$PWD/StatusInfo.h \
-    $$PWD/ChangePassword.h
+    $$PWD/ChangePassword.h \
+    $$PWD/CustomTransferItem.h
 
 INCLUDEPATH += $$PWD
 
@@ -123,7 +123,7 @@ win32 {
     INCLUDEPATH += $$PWD/win
     FORMS    += $$PWD/win/ActiveTransfer.ui \
                 $$PWD/win/InfoDialog.ui \
-                $$PWD/win/RecentFile.ui \
+                $$PWD/win/CustomTransferItem.ui \
                 $$PWD/win/TransferProgressBar.ui \
                 $$PWD/win/UsageProgressBar.ui \
                 $$PWD/win/NodeSelector.ui \
@@ -167,7 +167,6 @@ macx {
     INCLUDEPATH += $$PWD/macx
     FORMS    += $$PWD/macx/ActiveTransfer.ui \
                 $$PWD/macx/InfoDialog.ui \
-                $$PWD/macx/RecentFile.ui \
                 $$PWD/macx/TransferProgressBar.ui \
                 $$PWD/macx/UsageProgressBar.ui \
                 $$PWD/macx/NodeSelector.ui \
@@ -205,7 +204,8 @@ macx {
                 $$PWD/macx/RecentlyUpdated.ui \
                 $$PWD/macx/InfoDialogTransfersWidget.ui \
                 $$PWD/macx/StatusInfo.ui \
-                $$PWD/macx/ChangePassword.ui
+                $$PWD/macx/ChangePassword.ui \
+                $$PWD/macx/CustomTransferItem.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -222,7 +222,7 @@ unix:!macx {
     INCLUDEPATH += $$PWD/linux
     FORMS    += $$PWD/linux/ActiveTransfer.ui \
                 $$PWD/linux/InfoDialog.ui \
-                $$PWD/linux/RecentFile.ui \
+                $$PWD/linux/CustomTransferItem.ui \
                 $$PWD/linux/TransferProgressBar.ui \
                 $$PWD/linux/UsageProgressBar.ui \
                 $$PWD/linux/NodeSelector.ui \
@@ -266,4 +266,4 @@ unix:!macx {
                $$PWD/PermissionsWidget.h
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
-}      
+}

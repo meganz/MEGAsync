@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RecentFile</class>
- <widget class="QWidget" name="RecentFile">
+ <class>CustomTransferItem</class>
+ <widget class="QWidget" name="CustomTransferItem">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -32,7 +32,7 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">RecentFile
+   <string notr="true">CustomTransferItem
 {
 	background-color: transparent;
 }

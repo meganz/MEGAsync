@@ -27,6 +27,10 @@ private:
 
 private:
     void configureTransferView();
+
+private slots:
+    void enableAlternateRowStyle();
+    void disableAlternateRowStyle();
 };
 
 #endif // INFODIALOGTRANSFERSWIDGET_H

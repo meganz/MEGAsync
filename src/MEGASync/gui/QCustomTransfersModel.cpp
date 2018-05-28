@@ -61,6 +61,11 @@ void QCustomTransfersModel::onTransferStart(MegaApi *api, MegaTransfer *transfer
         modelState |= UPLOAD;
         activeUploadTag = transfer->getTag();
     }
+
+    if (transferOrder.size() == 1)
+    {
+        emit onTransferAdded();
+    }
 }
 
 void QCustomTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *e)
@@ -94,6 +99,11 @@ void QCustomTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *transfe
         transfers.insert(item->tag, item);
         transferOrder.insert(it, item);
         endInsertRows();
+    }
+
+    if (transfers.isEmpty())
+    {
+        emit noTransfers();
     }
 }
 

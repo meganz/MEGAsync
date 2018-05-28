@@ -14,7 +14,10 @@ InfoDialogTransfersWidget::InfoDialogTransfersWidget(QWidget *parent) :
 
 void InfoDialogTransfersWidget::setupTransfers()
 {
-    model = new QCustomTransfersModel(QTransfersModel::TYPE_CUSTOM_TRANSFERS);
+    model = new QCustomTransfersModel(QTransfersModel::TYPE_CUSTOM_TRANSFERS); 
+    connect(model, SIGNAL(onTransferAdded()), this, SLOT(enableAlternateRowStyle()));
+    connect(model, SIGNAL(noTransfers()), this, SLOT(disableAlternateRowStyle()));
+
     configureTransferView();
 }
 
@@ -41,7 +44,7 @@ void InfoDialogTransfersWidget::configureTransferView()
     ui->tView->setup(QTransfersModel::TYPE_CUSTOM_TRANSFERS);
     ui->tView->setItemDelegate((QAbstractItemDelegate *)tDelegate);
     ui->tView->header()->close();
-    ui->tView->setSelectionMode(QAbstractItemView::ContiguousSelection);
+    ui->tView->setSelectionMode(QAbstractItemView::NoSelection);
     ui->tView->setDragEnabled(false);
     ui->tView->viewport()->setAcceptDrops(false);
     ui->tView->setDropIndicatorShown(false);
@@ -49,4 +52,16 @@ void InfoDialogTransfersWidget::configureTransferView()
     ui->tView->setModel(model);
     ui->tView->setFocusPolicy(Qt::NoFocus);
     ui->tView->disableContextMenus(true);
+}
+
+void InfoDialogTransfersWidget::enableAlternateRowStyle()
+{
+    ui->tView->setAlternatingRowColors(true);
+    ui->tView->setStyleSheet(QString::fromUtf8("QTreeView {background: #fafafa; alternate-background-color: white;}"));
+}
+
+void InfoDialogTransfersWidget::disableAlternateRowStyle()
+{
+    ui->tView->setAlternatingRowColors(false);
+    ui->tView->setStyleSheet(QString::fromUtf8("QTreeView {background: white;}"));
 }

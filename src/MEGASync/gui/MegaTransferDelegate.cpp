@@ -35,7 +35,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         {
             if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
             {
-                ti = new RecentFile();
+                ti = new CustomTransferItem();
             }
             else
             {

@@ -1,5 +1,5 @@
-#include "RecentFile.h"
-#include "ui_RecentFile.h"
+#include "CustomTransferItem.h"
+#include "ui_CustomTransferItem.h"
 #include "MegaApplication.h"
 #include "control/Utilities.h"
 #include "platform/Platform.h"
@@ -12,9 +12,9 @@
 
 using namespace mega;
 
-RecentFile::RecentFile(QWidget *parent) :
+CustomTransferItem::CustomTransferItem(QWidget *parent) :
     TransferItem(parent),
-    ui(new Ui::RecentFile)
+    ui(new Ui::CustomTransferItem)
 {
     ui->setupUi(this);
     ui->bClockDown->setVisible(false);
@@ -29,12 +29,12 @@ RecentFile::RecentFile(QWidget *parent) :
     update();
 }
 
-RecentFile::~RecentFile()
+CustomTransferItem::~CustomTransferItem()
 {
     delete ui;
 }
 
-void RecentFile::setFileName(QString fileName)
+void CustomTransferItem::setFileName(QString fileName)
 {
     TransferItem::setFileName(fileName);
 
@@ -54,7 +54,7 @@ void RecentFile::setFileName(QString fileName)
     ui->lFileTypeCompleted->setIconSize(QSize(48, 48));
 }
 
-void RecentFile::setType(int type, bool isSyncTransfer)
+void CustomTransferItem::setType(int type, bool isSyncTransfer)
 {
     TransferItem::setType(type, isSyncTransfer);
     QIcon icon;
@@ -86,7 +86,7 @@ void RecentFile::setType(int type, bool isSyncTransfer)
     ui->lTransferTypeCompleted->setIconSize(QSize(12, 12));
 }
 
-void RecentFile::setTransferState(int value)
+void CustomTransferItem::setTransferState(int value)
 {
     TransferItem::setTransferState(value);
     switch (transferState)
@@ -102,12 +102,12 @@ void RecentFile::setTransferState(int value)
         }
 }
 
-QString RecentFile::getTransferName()
+QString CustomTransferItem::getTransferName()
 {
     return ui->lFileName->text();
 }
 
-bool RecentFile::getLinkButtonClicked(QPoint pos)
+bool CustomTransferItem::getLinkButtonClicked(QPoint pos)
 {
     if (!getLinkButtonEnabled)
     {
@@ -131,7 +131,7 @@ bool RecentFile::getLinkButtonClicked(QPoint pos)
     return false;
 }
 
-void RecentFile::mouseHoverTransfer(bool isHover)
+void CustomTransferItem::mouseHoverTransfer(bool isHover)
 {
     if (isHover)
     {
@@ -149,7 +149,7 @@ void RecentFile::mouseHoverTransfer(bool isHover)
     emit refreshTransfer(this->getTransferTag());
 }
 
-void RecentFile::finishTransfer()
+void CustomTransferItem::finishTransfer()
 {
     ui->sTransferState->setCurrentWidget(ui->completedTransfer);
     if (transferError < 0)
@@ -161,7 +161,7 @@ void RecentFile::finishTransfer()
     }
 }
 
-void RecentFile::updateTransfer()
+void CustomTransferItem::updateTransfer()
 {
     int currentUpload, currentDownload;
 
@@ -287,7 +287,7 @@ void RecentFile::updateTransfer()
     ui->pbTransfer->setValue(permil);
 }
 
-void RecentFile::updateFinishedTime()
+void CustomTransferItem::updateFinishedTime()
 {
     if (!dsFinishedTime || transferError < 0)
     {
@@ -304,22 +304,22 @@ void RecentFile::updateFinishedTime()
     ui->lElapsedTime->setText(tr("Added [A]").replace(QString::fromUtf8("[A]"), Utilities::getFinishedTimeString(secs)));
 }
 
-void RecentFile::setStateLabel(QString labelState)
+void CustomTransferItem::setStateLabel(QString labelState)
 {
     ui->lSpeed->setText(QString::fromUtf8("%1").arg(labelState));
     ui->lRemainingTime->setText(QString::fromUtf8(""));
 }
 
-bool RecentFile::eventFilter(QObject *, QEvent *ev)
+bool CustomTransferItem::eventFilter(QObject *, QEvent *ev)
 {
     return ev->type() == QEvent::Paint || ev->type() == QEvent::ToolTip;
 }
 
-QSize RecentFile::minimumSizeHint() const
+QSize CustomTransferItem::minimumSizeHint() const
 {
     return QSize(400, 60);
 }
-QSize RecentFile::sizeHint() const
+QSize CustomTransferItem::sizeHint() const
 {
     return QSize(400, 60);
 }

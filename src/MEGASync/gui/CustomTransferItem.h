@@ -1,5 +1,5 @@
-#ifndef RECENTFILE_H
-#define RECENTFILE_H
+#ifndef CUSTOMTRANSFERITEM_H
+#define CUSTOMTRANSFERITEM_H
 
 #include <QWidget>
 #include <QFileInfo>
@@ -9,17 +9,17 @@
 #include "megaapi.h"
 
 namespace Ui {
-class RecentFile;
+class CustomTransferItem;
 }
 
-class RecentFile : public TransferItem
+class CustomTransferItem : public TransferItem
 {
     Q_OBJECT
 
 public:
-    explicit RecentFile(QWidget *parent = 0);
+    explicit CustomTransferItem(QWidget *parent = 0);
 
-    ~RecentFile();
+    ~CustomTransferItem();
 
     void setFileName(QString fileName);
     void setType(int type, bool isSyncTransfer = false);
@@ -45,7 +45,7 @@ signals:
     void refreshTransfer(int tag);
 
 private:
-    Ui::RecentFile *ui;
+    Ui::CustomTransferItem *ui;
     mega::MegaApi *megaApi;
     int remainingUploads, remainingDownloads;
     int totalUploads, totalDownloads;
@@ -55,4 +55,4 @@ protected:
 
 };
 
-#endif // RECENTFILE_H
+#endif // CUSTOMTRANSFERITEM_H
