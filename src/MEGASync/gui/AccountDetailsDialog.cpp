@@ -5,6 +5,8 @@
 #include "control/Utilities.h"
 #include "math.h"
 
+#include <QStyle>
+
 using namespace mega;
 
 AccountDetailsDialog::AccountDetailsDialog(MegaApi *megaApi, QWidget *parent) :
