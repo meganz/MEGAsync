@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>400</width>
+    <width>350</width>
     <height>60</height>
    </size>
   </property>
@@ -87,7 +87,7 @@
     <widget class="QStackedWidget" name="sTransferState">
      <property name="minimumSize">
       <size>
-       <width>400</width>
+       <width>350</width>
        <height>60</height>
       </size>
      </property>
@@ -101,12 +101,12 @@
       <number>0</number>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="completedTransfer">
       <property name="minimumSize">
        <size>
-        <width>400</width>
+        <width>350</width>
         <height>60</height>
        </size>
       </property>
@@ -127,7 +127,7 @@
         <number>2</number>
        </property>
        <property name="rightMargin">
-        <number>25</number>
+        <number>5</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -276,7 +276,7 @@
      <widget class="QWidget" name="activeTransfer">
       <property name="minimumSize">
        <size>
-        <width>400</width>
+        <width>350</width>
         <height>60</height>
        </size>
       </property>
@@ -303,7 +303,7 @@
         <widget class="QWidget" name="wContainer" native="true">
          <property name="minimumSize">
           <size>
-           <width>400</width>
+           <width>350</width>
            <height>60</height>
           </size>
          </property>
@@ -330,7 +330,7 @@
            <widget class="QWidget" name="widget" native="true">
             <property name="minimumSize">
              <size>
-              <width>400</width>
+              <width>350</width>
               <height>60</height>
              </size>
             </property>
@@ -363,7 +363,7 @@
               <widget class="QWidget" name="wVisualData" native="true">
                <property name="minimumSize">
                 <size>
-                 <width>400</width>
+                 <width>350</width>
                  <height>0</height>
                 </size>
                </property>
@@ -670,7 +670,7 @@
                   </property>
                   <property name="minimumSize">
                    <size>
-                    <width>400</width>
+                    <width>350</width>
                     <height>2</height>
                    </size>
                   </property>
@@ -698,9 +698,6 @@
               </widget>
              </item>
             </layout>
-            <zorder>wVisualData</zorder>
-            <zorder>pbTransfer</zorder>
-            <zorder>wProgressBar</zorder>
            </widget>
           </item>
          </layout>

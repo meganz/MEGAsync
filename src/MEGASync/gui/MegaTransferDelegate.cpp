@@ -135,6 +135,12 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
         painter->save();
         painter->translate(option.rect.topLeft());
+
+        if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS) //If custom transfer model, we should adjust width in case of vertical scrollbar is shown
+        {
+            ti->resize(option.rect.width(), option.rect.height());
+        }
+
         ti->render(painter, QPoint(0, 0), QRegion(0, 0, option.rect.width(), option.rect.height()));
         painter->restore();
     }
