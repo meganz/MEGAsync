@@ -1,11 +1,12 @@
 #!/usr/bin/make -f
 FMEDIAINFO := $(shell dpkg -l | grep mediainfo >/dev/null && echo "-i" || echo " ")
+EXTRAQMAKE := $(shell cat /etc/issue | grep "Ubuntu 1[235]\|Debian.* 7\|Ubuntu 17.04\|Ubuntu 1[46].10" >/dev/null && echo "DEFINES+=MEGASYNC_DEPRECATED_OS" || echo "")
 
 build: build-stamp
 build-stamp:
 	dh_testdir
 	./configure -g $(FMEDIAINFO)
-	qmake-qt5 || qmake || /usr/lib/*/qt5/bin/qmake
+	qmake-qt5 $(EXTRAQMAKE) || qmake $(EXTRAQMAKE) || /usr/lib/*/qt5/bin/qmake $(EXTRAQMAKE)
 	lrelease-qt5 MEGASync/MEGASync.pro || lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt5/bin/lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt4/bin/lrelease MEGASync/MEGASync.pro
 	make
 	echo "fs.inotify.max_user_watches = 524288" > 100-megasync-inotify-limit.conf

@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Saisir un nom, un chemin absolu (les métacaractères * et ? sont permis) et choisir quels fichier ou dossier doit être exclu de la synchronisation.                                </translation>
+        <translation type="unfinished">Saisir un nom, un chemin absolu (les métacaractères * et ? sont autorisés) ou choisir quels fichier ou dossier doit être exclu de la synchronisation</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -263,7 +263,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="obsolete">Vous tentez de synchroniser un dossier extrêmement volumineux. Pour empêcher la synchronisation de volumes d’amorçage entiers, ce qui est inefficace et dangereux, nous vous demandons de commencer avec un dossier plus petit et d’ajouter des données alors que MEGASync fonctionne.</translation>
+        <translation type="obsolete">Vous tentez de synchroniser un dossier extrêmement volumineux. Pour empêcher la synchronisation de volumes d’amorçage entiers, ce qui est inefficace et dangereux, nous vous demandons de commencer avec un dossier plus petit et d’ajouter des données alors que MEGAsync fonctionne.</translation>
     </message>
 </context>
 <context>
@@ -287,6 +287,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Credits</source>
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
         <translation type="unfinished">Crédits</translation>
+    </message>
+    <message>
+        <source>Data Protection Regulation</source>
+        <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
+        <translation type="unfinished">Règlement sur la protection des données</translation>
     </message>
 </context>
 <context>
@@ -556,7 +561,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>Vous tentez de synchroniser un dossier extrêmement volumineux. Pour empêcher la synchronisation de volumes d’amorçage entiers, ce qui est inefficace et dangereux, nous vous demandons de commencer avec un dossier plus petit et d’ajouter des données alors que MEGASync fonctionne.</translation>
+        <translation>Vous tentez de synchroniser un dossier extrêmement volumineux. Pour empêcher la synchronisation de volumes d’amorçage entiers, ce qui est inefficace et dangereux, nous vous demandons de commencer avec un dossier plus petit et d’ajouter des données alors que MEGAsync fonctionne.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1054,7 +1059,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Choose for which users you want to install $(^NameDA).</source>
         <translatorcomment>Label to indicate for which users you want to install MEGAsync. Preserve $(^NameDA) code</translatorcomment>
-        <translation>Choisir pour quel utilisateur installer $(^NameDA). </translation>
+        <translation>Choisir pour quel utilisateur installer $(^NameDA).</translation>
     </message>
     <message>
         <source>Select whether you want to install $(^NameDA) for yourself only or for all users of this computer. $(^ClickNext)</source>
@@ -1077,7 +1082,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">Programmateur de nettoyage de %1 </translation>
+        <translation type="unfinished">Programmateur de nettoyage de %1</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1300,7 +1305,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Un problème est survenu lors de l’installation de la mise à jour. Veuillez ressayer plus tard ou télécharger la dernière version sur : https://mega.co.nz/#sync</translation>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1412,7 +1417,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Votre compte a été bloqué. Veuillez contacter support@mega.co.nz</translation>
+        <translation type="unfinished">Votre compte a été bloqué. Veuillez contacter support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -1447,7 +1452,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Over quota</source>
         <translatorcomment>Label to indicate a state of over quota</translatorcomment>
-        <translation type="unfinished">Dépassement de quota </translation>
+        <translation type="unfinished">Dépassement de quota</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
@@ -1591,6 +1596,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation type="unfinished">Site Web MEGA</translation>
     </message>
+    <message>
+        <source>MEGAsync will continue to work, however you might not receive new updates.</source>
+        <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
+        <translation type="unfinished">MEGAsync continuera à fonctionner, mais vous pourriez ne pas recevoir les nouvelles mises à jour.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1682,7 +1692,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Over quota</source>
         <translatorcomment>Label to show that an error related with an over quota occurs during a SDK operation.</translatorcomment>
-        <translation>Dépassement de quota </translation>
+        <translation>Dépassement de quota</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
@@ -2356,7 +2366,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte upload limit.</translatorcomment>
-        <translation>Ko</translation>
+        <translation type="vanished">Ko</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -2687,7 +2697,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">En exportant et en conservant la clé de récupération dans un endroit sécurisé, vous pourrez définir un nouveau mot de passe, sans encourir de perte de données.</translation>
+        <translation type="unfinished">En exportant et en conservant la clé de récupération en lieu sûr, vous pourrez définir un nouveau mot de passe sans risquer de perdre des données.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
@@ -2820,7 +2830,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">Programmateur de nettoyage de %1 </translation>
+        <translation type="unfinished">Programmateur de nettoyage de %1</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3124,7 +3134,7 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation>Vous tentez de synchroniser un dossier extrêmement volumineux. Pour empêcher la synchronisation de volumes d’amorçage entiers, ce qui est inefficace et dangereux, nous vous demandons de commencer avec un dossier plus petit et d’ajouter des données alors que MEGASync fonctionne.</translation>
+        <translation>Vous tentez de synchroniser un dossier extrêmement volumineux. Pour empêcher la synchronisation de volumes d’amorçage entiers, ce qui est inefficace et dangereux, nous vous demandons de commencer avec un dossier plus petit et d’ajouter des données alors que MEGAsync fonctionne.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
@@ -3175,7 +3185,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Votre compte a été bloqué. Veuillez contacter support@mega.co.nz</translation>
+        <translation type="unfinished">Votre compte a été bloqué. Veuillez contacter support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -3194,7 +3204,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished">Création du dossier...</translation>
+        <translation type="unfinished">Creating folder…</translation>
     </message>
     <message>
         <source>Logging out...</source>

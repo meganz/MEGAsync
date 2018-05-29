@@ -130,22 +130,28 @@ export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %endif
 
+%if ( 0%{?fedora_version} && 0%{?fedora_version}<=24 ) || ( 0%{?centos_version} == 600 ) || ( 0%{?suse_version} && 0%{?suse_version} <= 1320 && !0%{?sle_version})
+%define extraqmake DEFINES+=MEGASYNC_DEPRECATED_OS
+%else
+%define extraqmake %{nil}
+%endif
+
 %if 0%{?fedora} || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
 
 %if 0%{?fedora_version} >= 23 || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
-qmake-qt5 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot}
+qmake-qt5 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
 lrelease-qt5  MEGASync/MEGASync.pro
 %else
-qmake-qt4 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot}
+qmake-qt4 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
 lrelease-qt4  MEGASync/MEGASync.pro
 %endif
 %else
 
 %if 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
-qmake-qt4 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot}
+qmake-qt4 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
 lrelease-qt4  MEGASync/MEGASync.pro
 %else
-qmake DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot}
+qmake DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
 lrelease MEGASync/MEGASync.pro
 %endif
 

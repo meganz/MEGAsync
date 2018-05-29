@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
+        <translation type="unfinished">Wprowadź nazwę, lub ścieżkę (możesz używać * i?) lub wybrać plik lub katalog króry chcesz wykluczyć</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -288,6 +288,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
         <translation type="unfinished">Podziękowania</translation>
     </message>
+    <message>
+        <source>Data Protection Regulation</source>
+        <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
+        <translation type="unfinished">Data Protection Regulation</translation>
+    </message>
 </context>
 <context>
     <name>ChangePassword</name>
@@ -374,7 +379,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
         <translatorcomment>Information for the user about the consequences of disabling a security check of MEGAsync</translatorcomment>
-        <translation type="unfinished">Masz zamiar wprowadzić zmiany w ustawieniach, które zwiększą ryzyko udostępnienia danych. Twoje dane nadal będą bezpieczne dzięki szyfrowaniu, jednak możliwe będzie ich przeniesienie lub usunięcie bez Twojej wiedzy. </translation>
+        <translation type="unfinished">Masz zamiar wprowadzić zmiany w ustawieniach, które zwiększą ryzyko udostępnienia danych. Twoje dane nadal będą bezpieczne dzięki szyfrowaniu, jednak możliwe będzie ich przeniesienie lub usunięcie bez Twojej wiedzy.</translation>
     </message>
 </context>
 <context>
@@ -539,7 +544,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
-        <translation>MEGAsync nie będzie wstanie nic tu pobrać. </translation>
+        <translation>MEGAsync nie będzie wstanie nic tu pobrać.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -573,7 +578,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is on guest mode</source>
         <translatorcomment>Label to inform a user that MEGAsync is running on Guest Mode</translatorcomment>
-        <translation type="unfinished">MEGASync jest w trybie gości</translation>
+        <translation type="unfinished">MEGAsync jest w trybie gości</translation>
     </message>
     <message>
         <source>Login</source>
@@ -693,7 +698,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is up to date</source>
         <translatorcomment>Label to indicate that MEGAsync is at state of up-to-date (String as short as possible)</translatorcomment>
-        <translation type="vanished">MEGASync jest aktualne</translation>
+        <translation type="vanished">MEGAsync jest aktualne</translation>
     </message>
     <message>
         <source>RECENTLY UPDATED</source>
@@ -1118,7 +1123,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Dziękujemy za przeprowadzone testy MEGAsync.&lt;br&gt;Wersja beta nie jest już dostępną.&lt;br/&gt;Obserwuj as na Twitter &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; . </translation>
+        <translation type="obsolete">Dziękujemy za przeprowadzone testy MEGAsync.&lt;br&gt;Wersja beta nie jest już dostępną.&lt;br/&gt;Obserwuj as na Twitter &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; .</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -1300,7 +1305,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1412,7 +1417,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Twoje konto zostało zablokowane. Skontaktuj się z support@mega.co.nz</translation>
+        <translation type="unfinished">Twoje konto zostało zablokowane. Skontaktuj się z support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -1590,6 +1595,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>MEGA website</source>
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation type="unfinished">Strona MEGA</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however you might not receive new updates.</source>
+        <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however you might not receive new updates.</translation>
     </message>
 </context>
 <context>
@@ -2356,7 +2366,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte upload limit.</translatorcomment>
-        <translation>KB</translation>
+        <translation type="vanished">KB</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -2503,7 +2513,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation type="obsolete">Dodane nazwy plików zostaną wzięte pod uwagę po ponownym uruchomieniu aplikacji.                </translation>
+        <translation type="obsolete">Dodane nazwy plików zostaną wzięte pod uwagę po ponownym uruchomieniu aplikacji.</translation>
     </message>
     <message>
         <source>Cache</source>
@@ -2703,7 +2713,7 @@ Do you want to restart MEGAsync now?</source>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
-        <translation type="unfinished">Dodane nazwy plików zostaną wzięte pod uwagę po ponownym uruchomieniu aplikacji.                </translation>
+        <translation type="unfinished">Dodane nazwy plików zostaną wzięte pod uwagę po ponownym uruchomieniu aplikacji.</translation>
     </message>
     <message>
         <source>The new excluded file sizes will be taken into account when the application starts again.</source>
@@ -2718,7 +2728,7 @@ when the application starts again</source>
     <message>
         <source>Excluded file and folder names</source>
         <translatorcomment>Label to indicate the files and folders names exclude from the synchronization.</translatorcomment>
-        <translation type="unfinished">Pomiń nazwy plików i katalogów </translation>
+        <translation type="unfinished">Pomiń nazwy plików i katalogów</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
@@ -3165,7 +3175,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>MEGAsync nie będzie wstanie nic tu pobrać. </translation>
+        <translation>MEGAsync nie będzie wstanie nic tu pobrać.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -3175,7 +3185,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Twoje konto zostało zablokowane. Skontaktuj się z support@mega.co.nz</translation>
+        <translation type="unfinished">Twoje konto zostało zablokowane. Skontaktuj się z support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -3194,7 +3204,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished">Tworzenie katalogu...</translation>
+        <translation type="unfinished">Creating folder…</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -3645,7 +3655,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">Pobieranie nie może być kontynuowane, ponieważ przekroczono dostępny limit na ten adres IP. Limit jest dynamiczny i uzależnony od aktualnej dostępności.                </translation>
+        <translation type="unfinished">Pobieranie nie może być kontynuowane, ponieważ przekroczono dostępny limit na ten adres IP. Limit jest dynamiczny i uzależnony od aktualnej dostępności.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
@@ -3653,7 +3663,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
-        <translation type="unfinished">Zużyłeś już %1  swojego dostępnego transferu w ostatnich 6 godzinach. Aby wyłączyć takie ograniczenia, [A]wybierz konto PRO[/A] które nie ma ograniczeń na przesyłanie danych oraz otrzymasz więcej miejsca na swoje pliki.                </translation>
+        <translation type="unfinished">Zużyłeś już %1  swojego dostępnego transferu w ostatnich 6 godzinach. Aby wyłączyć takie ograniczenia, [A]wybierz konto PRO[/A] które nie ma ograniczeń na przesyłanie danych oraz otrzymasz więcej miejsca na swoje pliki.</translation>
     </message>
 </context>
 <context>
