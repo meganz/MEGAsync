@@ -118,16 +118,16 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <property name="spacing">
-        <number>-1</number>
+        <number>9</number>
        </property>
        <property name="leftMargin">
-        <number>13</number>
+        <number>6</number>
        </property>
        <property name="topMargin">
         <number>2</number>
        </property>
        <property name="rightMargin">
-        <number>5</number>
+        <number>12</number>
        </property>
        <property name="bottomMargin">
         <number>0</number>
@@ -191,12 +191,12 @@
             </property>
             <property name="minimumSize">
              <size>
-              <width>200</width>
+              <width>220</width>
               <height>0</height>
              </size>
             </property>
             <property name="text">
-             <string>asdfasdfasdf</string>
+             <string/>
             </property>
            </widget>
           </item>
@@ -209,24 +209,11 @@
              </sizepolicy>
             </property>
             <property name="text">
-             <string>TextLabel</string>
+             <string/>
             </property>
            </widget>
           </item>
          </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="lTransferTypeCompleted">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>12</width>
-           <height>12</height>
-          </size>
-         </property>
         </widget>
        </item>
        <item>
@@ -448,7 +435,7 @@
                      </property>
                      <property name="minimumSize">
                       <size>
-                       <width>180</width>
+                       <width>220</width>
                        <height>0</height>
                       </size>
                      </property>

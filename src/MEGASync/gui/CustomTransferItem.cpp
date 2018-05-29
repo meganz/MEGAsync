@@ -82,8 +82,6 @@ void CustomTransferItem::setType(int type, bool isSyncTransfer)
 
     ui->lTransferType->setIcon(icon);
     ui->lTransferType->setIconSize(QSize(12, 12));
-    ui->lTransferTypeCompleted->setIcon(icon);
-    ui->lTransferTypeCompleted->setIconSize(QSize(12, 12));
 }
 
 void CustomTransferItem::setTransferState(int value)
