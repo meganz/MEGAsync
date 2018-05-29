@@ -308,6 +308,7 @@ void CustomTransferItem::setStateLabel(QString labelState)
 {
     ui->lSpeed->setText(QString::fromUtf8("%1").arg(labelState));
     ui->lRemainingTime->setText(QString::fromUtf8(""));
+    ui->bClockDown->setVisible(false);
 }
 
 bool CustomTransferItem::eventFilter(QObject *, QEvent *ev)
