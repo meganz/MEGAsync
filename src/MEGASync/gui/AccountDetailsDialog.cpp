@@ -5,6 +5,8 @@
 #include "control/Utilities.h"
 #include "math.h"
 
+#include <QStyle>
+
 using namespace mega;
 
 AccountDetailsDialog::AccountDetailsDialog(MegaApi *megaApi, QWidget *parent) :
@@ -18,7 +20,6 @@ AccountDetailsDialog::AccountDetailsDialog(MegaApi *megaApi, QWidget *parent) :
     this->megaApi = megaApi;
     ui->lLoading->setText(ui->lLoading->text().toUpper());
     refresh(Preferences::instance());
-    megaApi->getAccountDetails();
 }
 
 AccountDetailsDialog::~AccountDetailsDialog()

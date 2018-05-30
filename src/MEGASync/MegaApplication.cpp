@@ -609,6 +609,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     maxMemoryUsage = 0;
     nUnviewedTransfers = 0;
     completedTabActive = false;
+    inflightUserStats = false;
 
 #ifdef __APPLE__
     scanningTimer = NULL;
@@ -889,7 +890,7 @@ void MegaApplication::updateTrayIcon()
         {
             if (!overquotaCheck)
             {
-                megaApi->getAccountDetails();
+                updateUserStats(true);
                 overquotaCheck = true;
             }
             else
@@ -1150,6 +1151,7 @@ void MegaApplication::start()
 
     indexing = false;
     overquotaCheck = false;
+    inflightUserStats = false;
 
     if (isLinux && trayIcon->contextMenu())
     {
@@ -1238,6 +1240,8 @@ void MegaApplication::start()
         }
         updated = false;
 
+        checkOperatingSystem();
+
         if (!infoDialog)
         {
             infoDialog = new InfoDialog(this);
@@ -1253,6 +1257,7 @@ void MegaApplication::start()
                 }
             }
         }
+
 
         if (!preferences->isFirstStartDone())
         {
@@ -1334,7 +1339,8 @@ void MegaApplication::loggedIn()
     }
 
     pauseTransfers(paused);
-    megaApi->getAccountDetails();
+    inflightUserStats = false;
+    updateUserStats(true);
     megaApi->getPricing();
     megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
     megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
@@ -1401,6 +1407,8 @@ void MegaApplication::loggedIn()
     QString language = preferences->language();
     changeLanguage(language);
     updated = false;
+
+    checkOperatingSystem();
 
     if (!infoDialog)
     {
@@ -2059,7 +2067,7 @@ void MegaApplication::periodicTasks()
     if (queuedUserStats && queuedUserStats < QDateTime::currentMSecsSinceEpoch())
     {
         queuedUserStats = 0;
-        megaApi->getAccountDetails();
+        updateUserStats(true);
     }
 
     checkNetworkInterfaces();
@@ -2270,7 +2278,7 @@ void MegaApplication::showInfoDialog()
     #ifdef __MACH__
             trayIcon->setContextMenu(&emptyMenu);
     #endif
-            megaApi->getAccountDetails();
+            updateUserStats(true);
         }
     }
 
@@ -2996,7 +3004,6 @@ void MegaApplication::startUpdateTask()
         connect(updateTask, SIGNAL(installingUpdate(bool)), this, SLOT(onInstallingUpdate(bool)), Qt::UniqueConnection);
         connect(updateTask, SIGNAL(updateNotFound(bool)), this, SLOT(onUpdateNotFound(bool)), Qt::UniqueConnection);
         connect(updateTask, SIGNAL(updateError()), this, SLOT(onUpdateError()), Qt::UniqueConnection);
-        connect(updateTask, SIGNAL(deprecatedOperatingSystem()), this, SLOT(onDeprecatedOperatingSystem()), Qt::UniqueConnection);
 
         connect(updateThread, SIGNAL(finished()), updateTask, SLOT(deleteLater()), Qt::UniqueConnection);
         connect(updateThread, SIGNAL(finished()), updateThread, SLOT(deleteLater()), Qt::UniqueConnection);
@@ -3168,18 +3175,52 @@ void MegaApplication::checkFirstTransfer()
     }
 }
 
-void MegaApplication::onDeprecatedOperatingSystem()
+void MegaApplication::checkOperatingSystem()
 {
-#ifdef __APPLE__
-    if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_DEPRECATED_OPERATING_SYSTEM))
+    if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD))
     {
-        QMegaMessageBox::warning(NULL, tr("MEGAsync"),
-                             tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
-                             + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon."),
-                             Utilities::getDevicePixelRatio());
-        preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_DEPRECATED_OPERATING_SYSTEM, true);
-    }
+        bool isOSdeprecated = false;
+#ifdef MEGASYNC_DEPRECATED_OS
+        isOSdeprecated = true;
 #endif
+
+#ifdef __APPLE__
+        char releaseStr[256];
+        size_t size = sizeof(releaseStr);
+        if (!sysctlbyname("kern.osrelease", releaseStr, &size, NULL, 0)  && size > 0)
+        {
+            if (strchr(releaseStr,'.'))
+            {
+                char *token = strtok(releaseStr, ".");
+                if (token)
+                {
+                    errno = 0;
+                    char *endPtr = NULL;
+                    long majorVersion = strtol(token, &endPtr, 10);
+                    if (endPtr != token && errno != ERANGE && majorVersion >= INT_MIN && majorVersion <= INT_MAX)
+                    {
+                        if((int)majorVersion < 13) // Older versions from 10.9 (mavericks)
+                        {
+                            isOSdeprecated = true;
+                        }
+                    }
+                }
+            }
+        }
+#endif
+        if (isOSdeprecated)
+        {
+            QMessageBox::warning(NULL, tr("MEGAsync"),
+                                 tr("Please consider updating your operating system.") + QString::fromUtf8("\n")
+#ifdef __APPLE__
+                                 + tr("MEGAsync will continue to work, however updates will no longer be supported for versions prior to OS X Mavericks soon.")
+#else
+                                 + tr("MEGAsync will continue to work, however you might not receive new updates.")
+#endif
+                                 );
+            preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_OS_TOO_OLD, true);
+        }
+    }
 }
 
 void MegaApplication::notifyItemChange(QString path, int newState)
@@ -3370,7 +3411,7 @@ void MegaApplication::showInFolder(int activationButton)
     }
 }
 
-void MegaApplication::updateUserStats()
+void MegaApplication::updateUserStats(bool force)
 {
     if (appfinished)
     {
@@ -3384,10 +3425,18 @@ void MegaApplication::updateUserStats()
     }
 
     long long lastRequest = preferences->lastStatsRequest();
-    if ((QDateTime::currentMSecsSinceEpoch() - lastRequest) > interval)
+    if (force || (QDateTime::currentMSecsSinceEpoch() - lastRequest) > interval)
     {
         preferences->setLastStatsRequest(QDateTime::currentMSecsSinceEpoch());
-        megaApi->getAccountDetails();
+        if (!inflightUserStats)
+        {
+            inflightUserStats = true;
+            megaApi->getAccountDetails();
+        }
+        else
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Skipped call to getAccountDetails()");
+        }
         queuedUserStats = 0;
     }
     else
@@ -5500,7 +5549,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             infoOverQuota = true;
 
             preferences->setUsedStorage(preferences->totalStorage());
-            megaApi->getAccountDetails();
+            updateUserStats(true);
 
             if (trayMenu && trayMenu->isVisible())
             {
@@ -5860,6 +5909,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
+        inflightUserStats = false;
         if (!preferences->logged())
         {
             break;
@@ -6437,7 +6487,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             infoOverQuota = true;
 
             preferences->setUsedStorage(preferences->totalStorage());
-            megaApi->getAccountDetails();
+            updateUserStats(true);
 
             if (trayMenu && trayMenu->isVisible())
             {
@@ -6634,7 +6684,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         enablingBwOverquota = true;
         preferences->clearTemporalBandwidth();
         megaApi->getPricing();
-        megaApi->getAccountDetails();
+        updateUserStats(true);
         bwOverquotaTimestamp = QDateTime::currentMSecsSinceEpoch() / 1000 + t;
 #ifdef __MACH__
         trayIcon->setContextMenu(initialMenu);
@@ -6685,7 +6735,7 @@ void MegaApplication::onAccountUpdate(MegaApi *)
         bwOverquotaDialog->refreshAccountDetails();
     }
 
-    megaApi->getAccountDetails();
+    updateUserStats(true);
 }
 
 //Called when contacts have been updated in MEGA

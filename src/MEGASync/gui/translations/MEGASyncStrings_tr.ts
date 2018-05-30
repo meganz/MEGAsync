@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">İsim veya dizin girin (* ve? gibi özel karakterler kullanılabilir) ya da eşitleme istisnalarına eklenecek klasör ve dosyaları seçin.                                </translation>
+        <translation type="unfinished">Bir ad girin, mutlak bir yol (joker karakter * ve? izin verilir) veya senkronizasyon işleminden hariç tutmak istediğiniz dosyayı veya klasörü seçin</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -257,7 +257,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Yerel klasör çok büyük (bu sürüm %1 klasör veya %2 dosya ile sınırlıdır). Lütfen, başka klasör seçin.                                </translation>
+        <translation type="obsolete">Yerel klasör çok büyük (bu sürüm %1 klasör veya %2 dosya ile sınırlıdır). Lütfen, başka klasör seçin.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -288,12 +288,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
         <translation type="unfinished">Katkıda Bulunanlar</translation>
     </message>
+    <message>
+        <source>Data Protection Regulation</source>
+        <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
+        <translation type="unfinished">Data Protection Regulation</translation>
+    </message>
 </context>
 <context>
     <name>ChangePassword</name>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">Şifre değiştir</translation>
+        <translation type="unfinished">Parola değiştir</translation>
     </message>
     <message>
         <source>New password</source>
@@ -301,7 +306,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Confirm new password</source>
-        <translation type="unfinished">Yeni şifreyi onayla </translation>
+        <translation type="unfinished">Yeni parolayı onayla</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -317,7 +322,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Your password has been changed.</source>
-        <translation type="unfinished">Şifreniz değiştirildi.</translation>
+        <translation type="unfinished">Parolanız değiştirildi.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -325,7 +330,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Wrong password</source>
-        <translation type="unfinished">Hatalı şifre</translation>
+        <translation type="unfinished">Hatalı parola</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -333,15 +338,15 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Please enter your password</source>
-        <translation type="unfinished">Lütfen şifrenizi girin</translation>
+        <translation type="unfinished">Lütfen parolanızı girin</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
-        <translation type="unfinished">Girilen şifreler eşleşmiyor</translation>
+        <translation type="unfinished">Girilen parolalar eşleşmiyor</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
-        <translation type="unfinished">Lütfen daha güçlü bir şifre girin</translation>
+        <translation type="unfinished">Lütfen daha güçlü bir parola girin</translation>
     </message>
 </context>
 <context>
@@ -826,7 +831,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Resume downloads</source>
         <translatorcomment>Label to resume the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">İndirmeleri sürdü </translation>
+        <translation type="unfinished">İndirmeleri sürdü</translation>
     </message>
     <message>
         <source>Pause downloads</source>
@@ -1188,7 +1193,7 @@ Exit anyway?</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Giriş yapılıyor ...</translation>
+        <translation>Giriş yapılıyor...                                </translation>
     </message>
     <message>
         <source>Exit</source>
@@ -1300,7 +1305,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>Güncelleme yüklenirken hata oluştu. Lütfen daha sonra tekrar deeyin ya da son sürümü şu adresten edinin:https://mega.co.nz/#sync</translation>
+        <translation>Güncelleme yüklenirken bir sorun oluştu. Lütfen daha sonra tekrar deneyin ya da son sürümü şu adresten indirin: https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1412,7 +1417,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Hesabınız bloke edilmiştir. support@mega.co.nz ile irtibata geçiniz.</translation>
+        <translation type="unfinished">Hesabınız bloke edilmiştir.  Lütfen support@mega.nz ile irtibata geçiniz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -1442,7 +1447,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished"> &quot;%1&quot; senkronizasyonu devre dışı bırakıldı. Yerel klasör (veya bir bölümü) tam erişeme sahip değil.</translation>
+        <translation type="unfinished">&quot;%1&quot; senkronizasyonu devre dışı bırakıldı. Yerel klasör (veya bir bölümü) tam erişeme sahip değil.</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -1546,7 +1551,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation type="unfinished">Dosya gelen paylaşımlar klasörü veya Çöp Kutusunda olduğu için link oluşturulamıyor.</translation>
+        <translation type="unfinished">Dosya gelen paylaşımlar klasörü veya Çöp Kutusunda olduğu için bağlantı oluşturulamıyor.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -1590,6 +1595,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>MEGA website</source>
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation type="unfinished">MEGA web sayfası</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however you might not receive new updates.</source>
+        <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
+        <translation type="unfinished">MEGAsync çalışmaya devam edecek, ama güncellemeleri alamayabilirsiniz.</translation>
     </message>
 </context>
 <context>
@@ -2356,7 +2366,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte upload limit.</translatorcomment>
-        <translation>KB</translation>
+        <translation type="vanished">KB</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -2424,7 +2434,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Proxy server requires a password</source>
         <translatorcomment>Label to indicate if the proxy used requires a password. String as short as possible.</translatorcomment>
-        <translation>Proxy sunucusu bir şifre gerektir</translation>
+        <translation>Vekil sunucu parola istiyor</translation>
     </message>
     <message>
         <source>Username:</source>
@@ -2434,7 +2444,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Password:</source>
         <translatorcomment>Label to indicate the password of the proxy. String as short as possible.</translatorcomment>
-        <translation>Şifre:</translation>
+        <translation>Parola:</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
@@ -2687,7 +2697,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">Kurtarma Anahtarını dışarıya aktarıp güvenli bir yerde saklamak veri kaybına uğramadan şifre değiştirmenizi sağlar.</translation>
+        <translation type="unfinished">Ana Anahtarı dışa aktarmak ve güvenli bir konumda saklamak, veri kaybı yaşamadan yeni bir parola belirleyebilmenizi sağlar.</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
@@ -2864,7 +2874,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">Şifre değiştir</translation>
+        <translation type="unfinished">Parola değiştir</translation>
     </message>
 </context>
 <context>
@@ -2892,7 +2902,7 @@ when the application starts again</source>
     <message>
         <source>Name:</source>
         <translatorcomment>Label for field name at create account. String as short as possible.</translatorcomment>
-        <translation>İsim: </translation>
+        <translation>İsim:</translation>
     </message>
     <message>
         <source>Email:</source>
@@ -2902,17 +2912,17 @@ when the application starts again</source>
     <message>
         <source>Password:</source>
         <translatorcomment>Label for field password at create account. String as short as possible.</translatorcomment>
-        <translation>Şifre:</translation>
+        <translation>Parola:</translation>
     </message>
     <message>
         <source>Repeat password:</source>
         <translatorcomment>Label for field repeat password at create account. String as short as possible.</translatorcomment>
-        <translation>Tekrar şifre:</translation>
+        <translation>Parola tekrarı:</translation>
     </message>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>MEGA &lt;a href=&quot;https://mega.nz/#terms&quot;&gt;Kullanım Koşulları&lt;/a&gt;nı kabul ediyorum</translation>
+        <translation>MEGA Kullanım Koşullarını &lt;a href=&quot;https://mega.nz/terms&quot;&gt; kabul ediyorum                                </translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -3023,7 +3033,7 @@ when the application starts again</source>
     <message>
         <source>Incorrect email and/or password.</source>
         <translatorcomment>Message displayed when a user is trying to loging with an incorrect email/password.</translatorcomment>
-        <translation>Hatalı eposta ve/veya şifre.</translation>
+        <translation>Hatalı eposta ve/veya parola.</translation>
     </message>
     <message>
         <source>Have you verified your account?</source>
@@ -3053,7 +3063,7 @@ when the application starts again</source>
     <message>
         <source>Please, enter your password</source>
         <translatorcomment>Label displayed when the user has not filled the password field.</translatorcomment>
-        <translation>Lütfen şifrenizi girin</translation>
+        <translation>Lütfen parolanızı girin</translation>
     </message>
     <message>
         <source>Please, enter your name</source>
@@ -3063,12 +3073,12 @@ when the application starts again</source>
     <message>
         <source>Please, enter a stronger password</source>
         <translatorcomment>Label displayed when the user has filled a password not enough secure.</translatorcomment>
-        <translation>Lütfen daha güçlü bir şifre girin</translation>
+        <translation>Lütfen daha güçlü bir parola girin</translation>
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
-        <translation>Girilen şifreler eşleşmiyor</translation>
+        <translation>Girilen parolalar eşleşmiyor</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
@@ -3078,7 +3088,7 @@ when the application starts again</source>
     <message>
         <source>Creating account...</source>
         <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>Hesap oluşturuluyor...</translation>
+        <translation>Hesap oluşturuluyor...                                </translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3107,7 +3117,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Yerel klasör çok büyük (bu sürüm %1 klasör veya %2 dosya ile sınırlıdır). Lütfen, başka klasör seçin.                                </translation>
+        <translation type="obsolete">Yerel klasör çok büyük (bu sürüm %1 klasör veya %2 dosya ile sınırlıdır). Lütfen, başka klasör seçin.</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -3117,7 +3127,7 @@ Please, select another folder.</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>Giriş yapılıyor ...</translation>
+        <translation>Giriş yapılıyor...                                </translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -3175,7 +3185,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Hesabınız bloke edilmiştir. support@mega.co.nz ile irtibata geçiniz.</translation>
+        <translation type="unfinished">Hesabınız bloke edilmiştir.  Lütfen support@mega.nz ile irtibata geçiniz</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -3199,7 +3209,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation type="unfinished">Oturum kapatılıyor...</translation>
+        <translation type="unfinished">Oturum kapatılıyor...                                </translation>
     </message>
     <message>
         <source>Very Weak</source>
@@ -3646,7 +3656,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">IP adresiniz için tanımlanmış ücretsiz aktarma sınırını geçtiğiniz için indirme yapılamaz. Bu liidinamiktir ve elimizdeki kullanılmayan bant genişliği miktarına bağlıdır.                </translation>
+        <translation type="unfinished">IP adresiniz için tanımlanmış ücretsiz aktarma sınırını geçtiğiniz için indirme yapılamaz. Bu liidinamiktir ve elimizdeki kullanılmayan bant genişliği miktarına bağlıdır.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
