@@ -68,7 +68,6 @@ QString TransferManagerItem::getTransferName()
 
 void TransferManagerItem::setType(int type, bool isSyncTransfer)
 {
-
     TransferItem::setType(type, isSyncTransfer);
     QIcon icon;
 
@@ -141,7 +140,6 @@ TransferManagerItem::~TransferManagerItem()
     delete animation;
 }
 
-
 void TransferManagerItem::setTransferState(int value)
 {
     TransferItem::setTransferState(value);
@@ -172,7 +170,6 @@ void TransferManagerItem::finishTransfer()
     }
     ui->lCompleted->setIconSize(QSize(12, 12));
     ui->lTotalCompleted->setText(QString::fromUtf8("%1").arg(Utilities::getSizeString(totalSize)));
-
 }
 
 void TransferManagerItem::updateTransfer()

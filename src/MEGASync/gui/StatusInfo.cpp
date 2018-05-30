@@ -78,16 +78,15 @@ void StatusInfo::changeEvent(QEvent *event)
 
 bool StatusInfo::eventFilter(QObject *obj, QEvent *e)
 {
-    if(e->type() == QEvent::MouseButtonPress
-                    && ((QMouseEvent *)e)->button() == Qt::LeftButton)
+    if (e->type() == QEvent::MouseButtonPress
+            && ((QMouseEvent *)e)->button() == Qt::LeftButton && isHovered)
     {
-        emit clicked();
         isHovered = false;
+        emit clicked();
     }
     else if (e->type() == QEvent::Enter)
     {
         isHovered = true;
-
         if (state == STATE_PAUSED)
         {
             ui->lStatusDesc->setText(tr("Resume Transfers"));
