@@ -1,6 +1,7 @@
 #include "ActiveTransfer.h"
 #include "ui_ActiveTransfer.h"
 #include "control/Utilities.h"
+#include "gui/TransferManager.h"
 #include <QMouseEvent>
 #include <qdebug.h>
 
@@ -112,7 +113,7 @@ void ActiveTransfer::mousePressEvent(QMouseEvent *event)
         return;
     }
 
-    emit openTransferManager(type ? UPLOADS_TAB : DOWNLOADS_TAB);
+    emit openTransferManager(type ? TransferManager::UPLOADS_TAB : TransferManager::DOWNLOADS_TAB);
 }
 
 void ActiveTransfer::mouseReleaseEvent(QMouseEvent *event)

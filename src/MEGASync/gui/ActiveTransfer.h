@@ -12,13 +12,6 @@ class ActiveTransfer : public QWidget
     Q_OBJECT
 
 public:
-    enum {
-        ALL_TRANSFERS_TAB = 0,
-        DOWNLOADS_TAB   = 1,
-        UPLOADS_TAB = 2,
-        COMPLETED_TAB = 3
-    };
-
     explicit ActiveTransfer(QWidget *parent = 0);
     ~ActiveTransfer();
 

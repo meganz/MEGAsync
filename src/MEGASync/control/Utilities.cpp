@@ -510,7 +510,6 @@ QString Utilities::getFinishedTimeString(long long secs)
             return QObject::tr("%1 years ago").arg(years);
         }
     }
-
 }
 
 QString Utilities::getSizeString(unsigned long long bytes)

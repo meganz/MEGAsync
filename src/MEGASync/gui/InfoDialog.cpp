@@ -1235,7 +1235,7 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
         if( e->type() == QEvent::MouseButtonPress
                         && ((QMouseEvent *)e)->button() == Qt::LeftButton)
         {
-            emit openTransferManager(DOWNLOADS_TAB);
+            emit openTransferManager(TransferManager::DOWNLOADS_TAB);
         }
         else if (e->type() == Qt::ToolTip)
         {
@@ -1248,7 +1248,7 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
         if( e->type() == QEvent::MouseButtonPress
                         && ((QMouseEvent *)e)->button() == Qt::LeftButton)
         {
-            emit openTransferManager(UPLOADS_TAB);
+            emit openTransferManager(TransferManager::UPLOADS_TAB);
         }
         else if (e->type() == Qt::ToolTip)
         {

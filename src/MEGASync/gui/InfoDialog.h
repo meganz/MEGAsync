@@ -29,13 +29,6 @@ class InfoDialog : public QDialog, public mega::MegaTransferListener
         STATE_UPDATED
     };
 
-    enum {
-        ALL_TRANSFERS_TAB = 0,
-        DOWNLOADS_TAB   = 1,
-        UPLOADS_TAB = 2,
-        COMPLETED_TAB = 3
-    };
-
 public:
     explicit InfoDialog(MegaApplication *app, QWidget *parent = 0);
     ~InfoDialog();
