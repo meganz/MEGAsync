@@ -417,7 +417,6 @@ void SettingsDialog::syncStateChanged(int state)
 
     syncsChanged = true;
     stateChanged();
-    app->regenerateTrayMenu();
 }
 
 void SettingsDialog::proxyStateChanged()
@@ -1367,6 +1366,7 @@ int SettingsDialog::saveSettings()
                 delete node;
             }
 
+            app->regenerateTrayMenu();
             syncsChanged = false;
         }
 #ifdef _WIN32
@@ -1663,7 +1663,6 @@ void SettingsDialog::on_bDelete_clicked()
 
     syncsChanged = true;
     stateChanged();
-    app->regenerateTrayMenu();
 }
 
 void SettingsDialog::loadSyncSettings()
@@ -1806,7 +1805,6 @@ void SettingsDialog::on_bAdd_clicked()
 
     syncsChanged = true;
     stateChanged();
-    app->regenerateTrayMenu();
 }
 
 void SettingsDialog::on_bApply_clicked()

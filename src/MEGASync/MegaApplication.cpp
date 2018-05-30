@@ -1477,6 +1477,8 @@ void MegaApplication::startSyncs()
         return;
     }
 
+    bool syncsModified = false;
+
     //Start syncs
     MegaNode *rubbishNode =  megaApi->getRubbishNode();
     for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
@@ -1492,6 +1494,7 @@ void MegaApplication::startSyncs()
             showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder doesn't exist")
                              .arg(preferences->getSyncName(i)));
             preferences->setSyncState(i, false);
+            syncsModified = true;
             openSettings(SettingsDialog::SYNCS_TAB);
             continue;
         }
@@ -1502,6 +1505,7 @@ void MegaApplication::startSyncs()
             showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder doesn't exist")
                              .arg(preferences->getSyncName(i)));
             preferences->setSyncState(i, false);
+            syncsModified = true;
             openSettings(SettingsDialog::SYNCS_TAB);
             continue;
         }
@@ -1511,6 +1515,11 @@ void MegaApplication::startSyncs()
         delete node;
     }
     delete rubbishNode;
+
+    if (syncsModified)
+    {
+        regenerateTrayMenu();
+    }
 }
 
 //This function is called to upload all files in the uploadQueue field
@@ -1613,6 +1622,7 @@ void MegaApplication::disableSyncs()
         return;
     }
 
+    bool syncsModified = false;
     for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
     {
        if (!preferences->isFolderActive(i))
@@ -1625,9 +1635,15 @@ void MegaApplication::disableSyncs()
                                    preferences->getSyncID(i));
        notifyItemChange(preferences->getLocalFolder(i), MegaApi::STATE_NONE);
        preferences->setSyncState(i, false, true);
+       syncsModified = true;
        MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
        megaApi->disableSync(node);
        delete node;
+    }
+
+    if (syncsModified)
+    {
+        regenerateTrayMenu();
     }
 }
 
@@ -1638,6 +1654,7 @@ void MegaApplication::restoreSyncs()
         return;
     }
 
+    bool syncsModified = false;
     for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
     {
        if (!preferences->isTemporaryInactiveFolder(i) || preferences->isFolderActive(i))
@@ -1645,6 +1662,7 @@ void MegaApplication::restoreSyncs()
            continue;
        }
 
+       syncsModified = true;
        MegaNode *node = megaApi->getNodeByPath(preferences->getMegaFolder(i).toUtf8().constData());
        if (!node)
        {
@@ -1667,6 +1685,11 @@ void MegaApplication::restoreSyncs()
        delete node;
     }
     Platform::notifyAllSyncFoldersAdded();
+
+    if (syncsModified)
+    {
+        regenerateTrayMenu();
+    }
 }
 
 void MegaApplication::closeDialogs()
@@ -6306,6 +6329,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     if (preferences->isFolderActive(i))
                     {
                         preferences->setSyncState(i, false);
+                        regenerateTrayMenu();
                     }
 
                     openSettings(SettingsDialog::SYNCS_TAB);
@@ -6968,6 +6992,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                     delete node;
                     preferences->setSyncState(i, false);
                     openSettings(SettingsDialog::SYNCS_TAB);
+                    regenerateTrayMenu();
                 }
 
                 delete nodeByHandle;
