@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>384</height>
+    <height>514</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>400</width>
-    <height>384</height>
+    <height>514</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>404</width>
-    <height>384</height>
+    <height>514</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -280,13 +280,13 @@ color: #999999;
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>250</height>
+       <height>380</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>250</height>
+       <height>380</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -500,13 +500,13 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>190</height>
+             <height>320</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
              <width>16777215</width>
-             <height>190</height>
+             <height>320</height>
             </size>
            </property>
            <property name="styleSheet">
@@ -519,13 +519,13 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>190</height>
+              <height>320</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>190</height>
+              <height>320</height>
              </size>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -652,13 +652,13 @@ padding-right: 10px;</string>
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>190</height>
+              <height>320</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>190</height>
+              <height>320</height>
              </size>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1024,13 +1024,13 @@ padding-right: 10px;</string>
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>190</height>
+              <height>320</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>190</height>
+              <height>320</height>
              </size>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -1038,13 +1038,25 @@ padding-right: 10px;</string>
               <number>0</number>
              </property>
              <property name="topMargin">
-              <number>30</number>
+              <number>0</number>
              </property>
              <property name="rightMargin">
               <number>0</number>
              </property>
              <item>
               <widget class="InfoDialogTransfersWidget" name="wListTransfers" native="true">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>320</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>320</height>
+                </size>
+               </property>
                <layout class="QVBoxLayout" name="verticalLayout_6">
                 <property name="spacing">
                  <number>0</number>
