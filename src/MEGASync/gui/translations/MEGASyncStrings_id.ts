@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
+        <translation type="unfinished">Masukkan nama, path absolut (wildcard * dan? Diizinkan) atau pilih file atau folder yang ingin Anda kecualikan dari sinkronisasi</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -288,6 +288,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
         <translation type="unfinished">Credit</translation>
     </message>
+    <message>
+        <source>Data Protection Regulation</source>
+        <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
+        <translation type="unfinished">Data Protection Regulation</translation>
+    </message>
 </context>
 <context>
     <name>ChangePassword</name>
@@ -301,7 +306,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Confirm new password</source>
-        <translation type="unfinished">Konfirmasi kata sandi baru </translation>
+        <translation type="unfinished">Konfirmasi kata sandi baru</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1077,7 +1082,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 cleaning scheduler</translation>
+        <translation type="unfinished">Penjadwal pembersihan %1</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1300,7 +1305,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1412,7 +1417,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Kontak anda telah diblok. Harap hubungi support@mega.co.nz</translation>
+        <translation type="unfinished">Akun anda telah di-blok. Harap kontak support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -1590,6 +1595,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>MEGA website</source>
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation type="unfinished">MEGA websie</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however you might not receive new updates.</source>
+        <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however you might not receive new updates.</translation>
     </message>
 </context>
 <context>
@@ -2037,7 +2047,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Public permissions:</source>
         <translatorcomment>Label just before the new public permissions that will be applied to new files and folders</translatorcomment>
-        <translation type="unfinished">Izin public: </translation>
+        <translation type="unfinished">Izin public:</translation>
     </message>
     <message>
         <source>Files</source>
@@ -2356,7 +2366,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte upload limit.</translatorcomment>
-        <translation>KB</translation>
+        <translation type="vanished">KB</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -2503,11 +2513,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>The new excluded file names will be taken into account
 when the application starts again.</source>
-        <translation type="obsolete">Nama file baru yang tidak termasuk akan tetap diperhatikan saat aplikasi dimulai kembali.                </translation>
+        <translation type="obsolete">Nama file baru yang tidak termasuk akan tetap diperhatikan saat aplikasi dimulai kembali.</translation>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="obsolete">Cache                                </translation>
+        <translation type="obsolete">Cache</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -2703,7 +2713,7 @@ Do you want to restart MEGAsync now?</source>
         <source>The new excluded file names will be taken into account
 when the application starts again</source>
         <translatorcomment>Message displayed to inform the user that the new file name exclusion changes will be applied on next startup.</translatorcomment>
-        <translation type="unfinished">Nama file baru yang tidak termasuk akan tetap diperhatikan saat aplikasi dimulai kembali.                </translation>
+        <translation type="unfinished">Nama file baru yang tidak termasuk akan tetap diperhatikan saat aplikasi dimulai kembali.</translation>
     </message>
     <message>
         <source>The new excluded file sizes will be taken into account when the application starts again.</source>
@@ -2820,7 +2830,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 cleaning scheduler</translation>
+        <translation type="unfinished">Penjadwal pembersihan %1</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -2845,7 +2855,7 @@ when the application starts again</source>
     <message>
         <source>Remove files older than %1 days</source>
         <translatorcomment>Informative label to indicate that local cleaning scheduler is active and files older than %1 days will be removed. Keep %1 placeholder, it will be replaced with the value specified by the user at runtime</translatorcomment>
-        <translation type="unfinished">Remove files older than %1 days</translation>
+        <translation type="unfinished">Hapus file yang lebih lama dari %1 hari</translation>
     </message>
     <message>
         <source>Remove files older than 1 day</source>
@@ -2860,7 +2870,7 @@ when the application starts again</source>
     <message>
         <source>File versions: %1</source>
         <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
-        <translation type="unfinished">File versions: %1</translation>
+        <translation type="unfinished">Versi file: %1</translation>
     </message>
     <message>
         <source>Change password</source>
@@ -3175,7 +3185,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Kontak anda telah diblok. Harap hubungi support@mega.co.nz</translation>
+        <translation type="unfinished">Akun anda telah di-blok. Harap kontak support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -3194,7 +3204,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished">Membuat folder...</translation>
+        <translation type="unfinished">Creating folder…</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -3259,7 +3269,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Share with a MEGA user</source>
         <translatorcomment>Label displayed when a user is trying to share a public link of a file/folder with a user. String as short as possible.</translatorcomment>
-        <translation>Bagikan dengan pengguna MEGA </translation>
+        <translation>Bagikan dengan pengguna MEGA</translation>
     </message>
     <message>
         <source>Send to a MEGA user</source>

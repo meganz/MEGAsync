@@ -40,6 +40,8 @@
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
     #include <mach/mach.h>
+    #include <sys/sysctl.h>
+    #include <errno.h>
 #endif
 
 Q_DECLARE_METATYPE(QQueue<QString>)
@@ -121,7 +123,7 @@ public:
     void startUpdateTask();
     void stopUpdateTask();
     void applyProxySettings();
-    void updateUserStats();
+    void updateUserStats(bool force = false);
     void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
     void showTrayMenu(QPoint *point = NULL);
@@ -213,7 +215,7 @@ public slots:
     void clearViewedTransfers();
     void onCompletedTransfersTabActive(bool active);
     void checkFirstTransfer();
-    void onDeprecatedOperatingSystem();
+    void checkOperatingSystem();
     void notifyItemChange(QString path, int newState);
     int getPrevVersion();
     void showNotificationFinishedTransfers(unsigned long long appDataId);
@@ -318,6 +320,7 @@ protected:
     unsigned long long activeTransferPriority[2];
     unsigned int activeTransferState[2];
     long long queuedUserStats;
+    bool inflightUserStats;
     long long cleaningSchedulerExecution;
     long long maxMemoryUsage;
     int exportOps;

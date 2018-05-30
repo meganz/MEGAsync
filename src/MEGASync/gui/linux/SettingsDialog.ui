@@ -2021,6 +2021,13 @@ border: none;</string>
                </property>
               </spacer>
              </item>
+             <item>
+              <widget class="QPushButton" name="bPermissions">
+               <property name="text">
+                <string>Permissions</string>
+               </property>
+              </widget>
+             </item>
             </layout>
            </widget>
           </item>
@@ -2485,7 +2492,7 @@ border: none;</string>
                 <enum>Qt::StrongFocus</enum>
                </property>
                <property name="text">
-                <string>KB/s</string>
+                <string notr="true">KB/s</string>
                </property>
               </widget>
              </item>
@@ -2693,7 +2700,7 @@ border: none;</string>
                 <enum>Qt::StrongFocus</enum>
                </property>
                <property name="text">
-                <string>KB/s</string>
+                <string notr="true">KB/s</string>
                </property>
               </widget>
              </item>

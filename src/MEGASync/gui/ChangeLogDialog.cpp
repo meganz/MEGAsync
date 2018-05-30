@@ -78,6 +78,12 @@ void ChangeLogDialog::on_bAck_clicked()
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(ackUrl));
 }
 
+void ChangeLogDialog::on_bGDPR_clicked()
+{
+    QString gdprUrl = QString::fromAscii("https://mega.nz/gdpr");
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(gdprUrl));
+}
+
 void ChangeLogDialog::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)

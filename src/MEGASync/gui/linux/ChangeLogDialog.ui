@@ -52,7 +52,7 @@ border-radius: 5px;
   font-size: 14px;
   color: #333333;
 }
-#bPolicy, #bTerms, #bAck
+#bPolicy, #bTerms, #bAck, #bGDPR
 {
   font-family: &quot;Helvetica&quot;;
   font-size: 11px;
@@ -254,30 +254,17 @@ border: none;
        <number>34</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>15</number>
       </property>
       <property name="topMargin">
        <number>10</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>15</number>
       </property>
       <property name="bottomMargin">
        <number>2</number>
       </property>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>82</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
       <item>
        <widget class="QPushButton" name="bTerms">
         <property name="styleSheet">
@@ -285,16 +272,6 @@ border: none;
         </property>
         <property name="text">
          <string>Terms of Service</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="bPolicy">
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string>Privacy Policy</string>
         </property>
        </widget>
       </item>
@@ -311,6 +288,16 @@ border: none;
         </property>
        </spacer>
       </item>
+      <item>
+       <widget class="QPushButton" name="bPolicy">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>Privacy Policy</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -321,13 +308,13 @@ border: none;
        <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>15</number>
       </property>
       <property name="topMargin">
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>15</number>
       </property>
       <property name="bottomMargin">
        <number>6</number>
@@ -336,6 +323,26 @@ border: none;
        <widget class="QPushButton" name="bAck">
         <property name="text">
          <string>Credits</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="bGDPR">
+        <property name="text">
+         <string>Data Protection Regulation</string>
         </property>
        </widget>
       </item>

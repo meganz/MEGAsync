@@ -288,6 +288,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label for a link that redirects to an credits section in the web that shows information, licenses, etc. about all third-party libraries used by MEGAsync</translatorcomment>
         <translation type="unfinished">תודות</translation>
     </message>
+    <message>
+        <source>Data Protection Regulation</source>
+        <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
+        <translation type="unfinished">Data Protection Regulation</translation>
+    </message>
 </context>
 <context>
     <name>ChangePassword</name>
@@ -865,7 +870,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is currently disabled</source>
         <translatorcomment>Label to inform a user that MEGAsync is actually disabled due to the account is overquota (storage and/or transfer)</translatorcomment>
-        <translation type="unfinished">MEGASync לא פעיל</translation>
+        <translation type="unfinished">MEGAsync לא פעיל</translation>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
@@ -956,7 +961,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is currently disabled</source>
         <translatorcomment>Labe shown when a user that MEGAsync is currently disabled due to an over quota state.</translatorcomment>
-        <translation type="unfinished">MEGASync לא פעיל</translation>
+        <translation type="unfinished">MEGAsync לא פעיל</translation>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
@@ -1001,7 +1006,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
-        <translation type="unfinished">[S]MEGASync:[/S] סנכרון קל ואוטומטי בין המחשב שלך ולכונן בענן שלך ב-MEGA</translation>
+        <translation type="unfinished">[S]MEGAsync:[/S] סנכרון קל ואוטומטי בין המחשב שלך ולכונן בענן שלך ב-MEGA</translation>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
@@ -1013,7 +1018,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>MEGAsync takes full advantage of MEGA&apos;s high-powered infrastructure and multi-connection transfers.</source>
-        <translation type="unfinished">MEGASync לוקחת את מלוא היתרונות של התשתיות העוצמתיות של MEGA והעברות מקבילות אליה.</translation>
+        <translation type="unfinished">MEGAsync לוקחת את מלוא היתרונות של התשתיות העוצמתיות של MEGA והעברות מקבילות אליה.</translation>
     </message>
     <message>
         <source>Lean &amp; mean resource usage</source>
@@ -1118,7 +1123,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">תודה שניסית את MEGASync.&lt;br&gt; גרסת בטא פגה תוקף.&lt;br&gt;אנא עקוב אחר&lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; בטויטר לעדכונים.</translation>
+        <translation type="obsolete">תודה שניסית את MEGAsync.&lt;br&gt; גרסת בטא פגה תוקף.&lt;br&gt;אנא עקוב אחר&lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; בטויטר לעדכונים.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -1128,7 +1133,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is now running. Click here to open the status window.</source>
         <translatorcomment>Notification message that MEGAsync is actually running.</translatorcomment>
-        <translation>MEGASync פועל כעת. לחץ כאן לראות את חלון המצב.</translation>
+        <translation>MEGAsync פועל כעת. לחץ כאן לראות את חלון המצב.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1300,7 +1305,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1357,7 +1362,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync is now running. Click the menu bar icon to open the status window.</source>
         <translatorcomment>Notification message launched when an user logged in succesfully. String as short as possible.</translatorcomment>
-        <translation>MEGASync פועל כעת. לחץ בסמל בשורת התפריט על מנת לראות את חלון המצב.</translation>
+        <translation>MEGAsync פועל כעת. לחץ בסמל בשורת התפריט על מנת לראות את חלון המצב.</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -1392,12 +1397,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting link: </source>
         <translatorcomment>Notification message launched when an error occurs getting a public link for a file/folder. Keep colon.</translatorcomment>
-        <translation>שגיאה בקבלת קישור: </translation>
+        <translation>שגיאה בקבלת קישור:</translation>
     </message>
     <message>
         <source>MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall.</source>
         <translatorcomment>Notification message launched when a connectivity problem occurs.</translatorcomment>
-        <translation type="unfinished">MEGASync איננו יכול להתחבר. אנא בדוק קישוריות האינטרנט שלך והאם אתה תחת חומת אש.שים לב כי מרבית תוכנות האנטיוירוס כוללות חומת אש.</translation>
+        <translation type="unfinished">MEGAsync איננו יכול להתחבר. אנא בדוק קישוריות האינטרנט שלך והאם אתה תחת חומת אש.שים לב כי מרבית תוכנות האנטיוירוס כוללות חומת אש.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
@@ -1412,7 +1417,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">החשבון שלך נחסם. אנא צור קשר עם support@mega.co.nz</translation>
+        <translation type="unfinished">החשבון שלך נחסם. אנא צור קשר עם support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -1522,11 +1527,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Are you sure you want to exit?</source>
-        <translation type="unfinished">האם אתה בטוח שברצונך לצאת? </translation>
+        <translation type="unfinished">האם אתה בטוח שברצונך לצאת?</translation>
     </message>
     <message>
         <source>Transfer manager</source>
-        <translation type="unfinished">מנהל העברות </translation>
+        <translation type="unfinished">מנהל העברות</translation>
     </message>
     <message>
         <source>Could not find a system tray to place MEGAsync tray icon. MEGAsync is intended to be used with a system tray icon but it can work fine without it. If you want to open the interface, just try to open MEGAsync again.</source>
@@ -1536,7 +1541,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting link:</source>
         <translatorcomment>Notification message shown when an error occurs while getting a public link .</translatorcomment>
-        <translation type="unfinished">שגיאה בקבלת קישור: </translation>
+        <translation type="unfinished">שגיאה בקבלת קישור:</translation>
     </message>
     <message>
         <source>File not found</source>
@@ -1590,6 +1595,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>MEGA website</source>
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
         <translation type="unfinished">האתר של MEGA</translation>
+    </message>
+    <message>
+        <source>MEGAsync will continue to work, however you might not receive new updates.</source>
+        <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
+        <translation type="unfinished">MEGAsync will continue to work, however you might not receive new updates.</translation>
     </message>
 </context>
 <context>
@@ -1945,7 +1955,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation type="unfinished">האם אתה בטוח שברצונך למחוק את &quot;%1&quot;? </translation>
+        <translation type="unfinished">האם אתה בטוח שברצונך למחוק את &quot;%1&quot;?</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -1954,7 +1964,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Only files can be used for streaming.</source>
         <translatorcomment>Warning message when users try to select a folder for streaming</translatorcomment>
-        <translation type="unfinished">ניתן להזרים רק קבצים. </translation>
+        <translation type="unfinished">ניתן להזרים רק קבצים.</translation>
     </message>
     <message>
         <source>Select items</source>
@@ -2218,7 +2228,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Settings - MEGAsync</source>
         <translatorcomment>Title of the MEGAsync Settings dialog. Keep capital letters.</translatorcomment>
-        <translation>הגדרות - MEGASync</translation>
+        <translation>הגדרות - MEGAsync</translation>
     </message>
     <message>
         <source>General</source>
@@ -2356,7 +2366,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>KB</source>
         <translatorcomment>Label to indicate Kilo byte upload limit.</translatorcomment>
-        <translation>KB</translation>
+        <translation type="vanished">KB</translation>
     </message>
     <message>
         <source>Auto</source>
@@ -2601,7 +2611,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Preferences - MEGAsync</source>
         <translatorcomment>Title label of the settings dialog.</translatorcomment>
-        <translation>העדפות - MEGASync</translation>
+        <translation>העדפות - MEGAsync</translation>
     </message>
     <message>
         <source>Open at login</source>
@@ -2763,7 +2773,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">האם אתה רוצה למחוק את הגיבוי המקומי שלך כעת? </translation>
+        <translation type="unfinished">האם אתה רוצה למחוק את הגיבוי המקומי שלך כעת?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
@@ -2771,7 +2781,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your remote backup now?</source>
-        <translation type="unfinished">האם אתה רוצה למחוק את הגיבוי המרוחק שלך כעת? </translation>
+        <translation type="unfinished">האם אתה רוצה למחוק את הגיבוי המרוחק שלך כעת?</translation>
     </message>
     <message>
         <source>Download rate limit</source>
@@ -2872,7 +2882,7 @@ when the application starts again</source>
     <message>
         <source>Setup Wizard - MEGAsync</source>
         <translatorcomment>Title of the dialog Setup Wizar of MEGAsync. Keep capital letters.</translatorcomment>
-        <translation>אשף הגדרות - MEGASync</translation>
+        <translation>אשף הגדרות - MEGAsync</translation>
     </message>
     <message>
         <source>I have a MEGA account</source>
@@ -3135,7 +3145,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Setup Assistant - MEGAsync</source>
         <translatorcomment>Title of the setup assistant dialog. Keep capital letters.</translatorcomment>
-        <translation>עוזר הגדרות - MEGASync</translation>
+        <translation>עוזר הגדרות - MEGAsync</translation>
     </message>
     <message>
         <source>Error getting session key</source>
@@ -3155,7 +3165,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
         <translatorcomment>Label to inform the user wich local folder will be synchronized with the cloud drive. Keep colon.</translatorcomment>
-        <translation>כונן הענן שלך יסונכרן עם התיקייה הבאה: </translation>
+        <translation>כונן הענן שלך יסונכרן עם התיקייה הבאה:</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -3175,7 +3185,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">החשבון שלך נחסם. אנא צור קשר עם support@mega.co.nz</translation>
+        <translation type="unfinished">החשבון שלך נחסם. אנא צור קשר עם support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -3194,7 +3204,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished">יוצר תיקייה...</translation>
+        <translation type="unfinished">Creating folder…</translation>
     </message>
     <message>
         <source>Logging out...</source>
@@ -3355,12 +3365,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">הזרם מ-MEGA </translation>
+        <translation type="unfinished">הזרם מ-MEGA</translation>
     </message>
     <message>
         <source>Select media from...</source>
         <translatorcomment>Label just above of the buttons to select files for streaming</translatorcomment>
-        <translation type="unfinished">בחר מדיה מ... </translation>
+        <translation type="unfinished">בחר מדיה מ...</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -3375,7 +3385,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>File info:</source>
         <translatorcomment>Text just before of the information of the file selected for streaming</translatorcomment>
-        <translation type="unfinished">מידע: </translation>
+        <translation type="unfinished">מידע:</translation>
     </message>
     <message>
         <source>Nothing selected</source>
@@ -3385,7 +3395,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open with:</source>
         <translatorcomment>Text above the buttons to open a streaming link</translatorcomment>
-        <translation type="unfinished">פתח באמצעות: </translation>
+        <translation type="unfinished">פתח באמצעות:</translation>
     </message>
     <message>
         <source>Default application</source>
@@ -3405,7 +3415,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation type="unfinished">האם אתה בטוח שברצונך לעצור את ההזרמה? </translation>
+        <translation type="unfinished">האם אתה בטוח שברצונך לעצור את ההזרמה?</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3686,7 +3696,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync Uploads</source>
         <translatorcomment>Label to indicate the default MEGA folder for file uploaded.</translatorcomment>
-        <translation type="obsolete">העלאות של MEGASync</translation>
+        <translation type="obsolete">העלאות של MEGAsync</translation>
     </message>
     <message>
         <source>OK</source>
