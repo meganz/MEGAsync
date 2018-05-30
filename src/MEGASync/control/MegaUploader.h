@@ -9,22 +9,18 @@
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
 
-class MegaUploader : public QObject, public mega::MegaRequestListener
+class MegaUploader
 {
-    Q_OBJECT
 
 public:
     MegaUploader(mega::MegaApi *megaApi);
     virtual ~MegaUploader();
-    void upload(QString path, mega::MegaNode *parent);
-    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
+    void upload(QString path, mega::MegaNode *parent, unsigned long long appDataID);
 
 protected:
-    void upload(QFileInfo info, mega::MegaNode *parent);
+    void upload(QFileInfo info, mega::MegaNode *parent, unsigned long long appDataID);
 
     mega::MegaApi *megaApi;
-    mega::QTMegaRequestListener *delegateListener;
-    QQueue<QFileInfo> folders;
 };
 
 #endif // MEGAUPLOADER_H

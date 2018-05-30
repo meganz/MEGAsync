@@ -469,7 +469,6 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
            </property>
            <property name="styleSheet">
             <string notr="true">border: none;
-margin-top: -1px;
 </string>
            </property>
            <property name="text">

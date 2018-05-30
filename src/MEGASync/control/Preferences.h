@@ -43,6 +43,9 @@ public:
     QString privatePw();
     void setSession(QString session);
     QString getSession();
+    unsigned long long transferIdentifier();
+    long long lastTransferNotificationTimestamp();
+    void setLastTransferNotificationTimestamp();
     long long totalStorage();
     void setTotalStorage(long long value);
     long long usedStorage();
@@ -338,6 +341,7 @@ public:
     static const char UPDATE_PUBLIC_KEY[];
     static const long long MIN_REBOOT_INTERVAL_MS;
     static const long long MIN_EXTERNAL_NODES_WARNING_MS;
+    static const long long MIN_TRANSFER_NOTIFICATION_INTERVAL_MS;
     static const char CLIENT_KEY[];
     static const char USER_AGENT[];
     static const int VERSION_CODE;
@@ -380,6 +384,7 @@ protected:
     bool isTempBandwidthValid;
     QString dataPath;
     long long diffTimeWithSDK;
+    long long lastTransferNotification;
 
     static const QString currentAccountKey;
     static const QString syncsGroupKey;
@@ -489,12 +494,14 @@ protected:
     static const QString httpsCertKey;
     static const QString httpsCertIntermediateKey;
     static const QString httpsCertExpirationKey;
+    static const QString transferIdentifierKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
     static const bool defaultUpdateAutomatically;
     static const int  defaultUploadLimitKB;
     static const int  defaultDownloadLimitKB;
+    static const unsigned long long defaultTransferIdentifier;
     static const int  defaultParallelUploadConnections;
     static const int  defaultParallelDownloadConnections;
     static const int  defaultProxyType;

@@ -1019,7 +1019,10 @@ void InfoDialog::onAllTransfersFinished()
             app->updateUserStats();
         }
 
-        app->showNotificationMessage(tr("All transfers have been completed"));
+        if ((QDateTime::currentMSecsSinceEpoch() - preferences->lastTransferNotificationTimestamp()) > Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS)
+        {
+            app->showNotificationMessage(tr("All transfers have been completed"));
+        }
     }
 }
 

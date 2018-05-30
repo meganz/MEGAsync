@@ -16,17 +16,19 @@ class MegaDownloader : public QObject
 public:
     // If you want to manage public transfers in a different MegaApi object,
     // provide megaApiGuest
-    MegaDownloader(mega::MegaApi *megaApi, mega::MegaApi *megaApiGuest = NULL);
+    MegaDownloader(mega::MegaApi *megaApi);
     virtual ~MegaDownloader();
-    void processDownloadQueue(QQueue<mega::MegaNode *> *downloadQueue, QString path);
-    void download(mega::MegaNode *parent, QString path);
+    bool processDownloadQueue(QQueue<mega::MegaNode *> *downloadQueue, QString path, unsigned long long appDataId);
+    void download(mega::MegaNode *parent, QString path, unsigned long long appDataId);
 
 protected:
-    void download(mega::MegaNode *parent, QFileInfo info);
+    void download(mega::MegaNode *parent, QFileInfo info, unsigned long long appDataId);
 
     mega::MegaApi *megaApi;
-    mega::MegaApi *megaApiGuest;
     QMap<mega::MegaHandle, QString> pathMap;
+
+signals:
+    void finishedTransfers(unsigned long long appDataId);
 };
 
 #endif // MEGADOWNLOADER_H
