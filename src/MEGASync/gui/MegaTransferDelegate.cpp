@@ -67,6 +67,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 if (ti->isTransferFinished())
                 {
                     ti->setFinishedTime(transfer->getUpdateTime());
+                    ti->updateFinishedTime();
                 }
                 else
                 {
@@ -75,7 +76,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                         delete transfer;
                     }
                 }
-            }
+            }            
         }
         else
         {
@@ -87,7 +88,6 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             {
                 ti->updateFinishedTime();
             }
-
 
             Preferences *preferences = Preferences::instance();
             if (ti->getType() == MegaTransfer::TYPE_DOWNLOAD)
