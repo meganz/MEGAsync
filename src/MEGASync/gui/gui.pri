@@ -49,7 +49,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/LocalCleanScheduler.cpp \
     $$PWD/TransferManagerItem.cpp \
     $$PWD/TransferItem.cpp \
-    $$PWD/RecentlyUpdated.cpp \
     $$PWD/InfoDialogTransfersWidget.cpp \
     $$PWD/QCustomTransfersModel.cpp \
     $$PWD/StatusInfo.cpp \
@@ -105,7 +104,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/LocalCleanScheduler.h \
     $$PWD/TransferManagerItem.h \
     $$PWD/TransferItem.h \
-    $$PWD/RecentlyUpdated.h \
     $$PWD/InfoDialogTransfersWidget.h \
     $$PWD/QCustomTransfersModel.h \
     $$PWD/StatusInfo.h \
@@ -156,7 +154,6 @@ win32 {
                 $$PWD/win/ActiveTransfersWidget.ui \
                 $$PWD/win/AddExclusionDialog.ui \
                 $$PWD/win/LocalCleanScheduler.ui \
-                $$PWD/win/RecentlyUpdated.ui \
                 $$PWD/win/InfoDialogTransfersWidget.ui \
                 $$PWD/win/StatusInfo.ui \
                 $$PWD/win/ChangePassword.ui
@@ -201,7 +198,6 @@ macx {
                 $$PWD/macx/ActiveTransfersWidget.ui \
                 $$PWD/macx/AddExclusionDialog.ui \
                 $$PWD/macx/LocalCleanScheduler.ui \
-                $$PWD/macx/RecentlyUpdated.ui \
                 $$PWD/macx/InfoDialogTransfersWidget.ui \
                 $$PWD/macx/StatusInfo.ui \
                 $$PWD/macx/ChangePassword.ui \
@@ -257,7 +253,6 @@ unix:!macx {
                 $$PWD/linux/ActiveTransfersWidget.ui \
                 $$PWD/linux/AddExclusionDialog.ui \
                 $$PWD/linux/LocalCleanScheduler.ui \
-                $$PWD/linux/RecentlyUpdated.ui \
                 $$PWD/linux/InfoDialogTransfersWidget.ui \
                 $$PWD/linux/StatusInfo.ui \
                 $$PWD/linux/ChangePassword.ui

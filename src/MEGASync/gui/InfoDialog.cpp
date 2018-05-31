@@ -60,7 +60,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->lUploads->setText(QString::fromAscii(""));
     indexing = false;
     waiting = false;
-    syncsMenu = NULL;
     activeDownload = NULL;
     activeUpload = NULL;
     transferMenu = NULL;
@@ -138,21 +137,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     arrow->setStyleSheet(QString::fromAscii("border: none;"));
     arrow->resize(30,10);
     arrow->hide();
-
-    minHeightAnimation = new QPropertyAnimation();
-    maxHeightAnimation = new QPropertyAnimation();
-    animationGroup = new QParallelAnimationGroup();
-
-    minHeightAnimation->setTargetObject(this);
-    maxHeightAnimation->setTargetObject(this);
-    minHeightAnimation->setPropertyName("minimumHeight");
-    maxHeightAnimation->setPropertyName("maximumHeight");
-    animationGroup->addAnimation(minHeightAnimation);
-    animationGroup->addAnimation(maxHeightAnimation);
-    connect(animationGroup, SIGNAL(finished()), this, SLOT(onAnimationFinished()));
-
-    connect(maxHeightAnimation, SIGNAL(valueChanged(QVariant)), this, SLOT(onValueChanged(QVariant)));
-    connect(minHeightAnimation, SIGNAL(valueChanged(QVariant)), this, SLOT(onValueChanged(QVariant)));
 #endif
 
     on_bDotUsedStorage_clicked();
@@ -753,21 +737,6 @@ void InfoDialog::updateState()
     ui->wStatus->setState(state);
 }
 
-void InfoDialog::closeSyncsMenu()
-{
-#ifdef __APPLE__
-    if (syncsMenu && syncsMenu->isVisible())
-    {
-        syncsMenu->close();
-    }
-
-    if (transferMenu && transferMenu->isVisible())
-    {
-        transferMenu->close();
-    }
-#endif
-}
-
 void InfoDialog::addSync()
 {
     addSync(INVALID_HANDLE);
@@ -1031,74 +1000,6 @@ void InfoDialog::on_bSettings_clicked()
         this->hide();
     }
 #endif
-}
-
-void InfoDialog::on_bSyncFolder_clicked()
-{
-    int num = preferences->getNumSyncedFolders();
-
-    MegaNode *rootNode = megaApi->getRootNode();
-    if (!rootNode)
-    {
-        preferences->setCrashed(true);
-        return;
-    }
-
-    if ((num == 1) && (preferences->getMegaFolderHandle(0) == rootNode->getHandle()))
-    {
-        openFolder(preferences->getLocalFolder(0));
-    }
-    else
-    {
-        syncsMenu = new QMenu();
-#ifdef __APPLE__
-        syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
-#else
-        syncsMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
-#endif
-        QSignalMapper *menuSignalMapper = new QSignalMapper();
-        connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
-
-        int activeFolders = 0;
-        for (int i = 0; i < num; i++)
-        {
-            if (!preferences->isFolderActive(i))
-            {
-                continue;
-            }
-
-            activeFolders++;
-            MenuItemAction *action = new MenuItemAction(preferences->getSyncName(i), QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")),
-                                                        QIcon(QString::fromAscii("://images/ico_drop_synched_folder_over.png")));
-            connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()));
-            syncsMenu->addAction(action);
-            menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
-        }
-
-        connect(syncsMenu, SIGNAL(aboutToHide()), syncsMenu, SLOT(deleteLater()));
-        connect(syncsMenu, SIGNAL(destroyed(QObject*)), menuSignalMapper, SLOT(deleteLater()));
-
-        MenuItemAction *addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_add_sync.png")),
-                                                           QIcon(QString::fromAscii("://images/ico_drop_add_sync_over.png")));
-        connect(addSyncAction, SIGNAL(triggered()), this, SLOT(addSync()));
-        if (activeFolders)
-        {
-            syncsMenu->addSeparator();
-        }
-        syncsMenu->addAction(addSyncAction);
-
-#ifdef __APPLE__
-        syncsMenu->exec(this->mapToGlobal(QPoint(20, this->height() - (activeFolders + 1) * 28 - (activeFolders ? 16 : 8))));
-        if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
-        {
-            this->hide();
-        }
-#else
-        syncsMenu->popup(ui->bSyncFolder->mapToGlobal(QPoint(-5, (activeFolders ? -21 : -12) - activeFolders * 32)));
-#endif
-        syncsMenu = NULL;
-    }
-    delete rootNode;
 }
 
 void InfoDialog::on_bUpgrade_clicked()
@@ -1467,74 +1368,6 @@ void InfoDialog::hideUsageBalloon()
         storageUsedMenu->hide();
     }
 }
-
-#ifdef __APPLE__
-void InfoDialog::recentlyUpdatedStateChanged(int mode)
-{
-//    ui->wRecentUpdated->setVisualMode(RecentlyUpdated::COLLAPSED);
-
-    if (mode == RecentlyUpdated::COLLAPSED)
-    {
-        minHeightAnimation->setTargetObject(this);
-        maxHeightAnimation->setTargetObject(this);
-        minHeightAnimation->setPropertyName("minimumHeight");
-        maxHeightAnimation->setPropertyName("maximumHeight");
-        minHeightAnimation->setStartValue(minimumHeight());
-        maxHeightAnimation->setStartValue(maximumHeight());
-        minHeightAnimation->setEndValue(397);
-        maxHeightAnimation->setEndValue(397);
-        minHeightAnimation->setDuration(1000);
-        maxHeightAnimation->setDuration(1000);
-        animationGroup->start();
-    }
-    else
-    {
-        minHeightAnimation->setTargetObject(this);
-        maxHeightAnimation->setTargetObject(this);
-        minHeightAnimation->setPropertyName("minimumHeight");
-        maxHeightAnimation->setPropertyName("maximumHeight");
-        minHeightAnimation->setStartValue(minimumHeight());
-        maxHeightAnimation->setStartValue(maximumHeight());
-        minHeightAnimation->setEndValue(557);
-        maxHeightAnimation->setEndValue(557);
-        minHeightAnimation->setDuration(1000);
-        maxHeightAnimation->setDuration(1000);
-        animationGroup->start();
-
-//        this->hide();
-//        this->setMaximumHeight(557);
-//        this->setMinimumHeight(557);
-//        onAnimationFinished();
-//        this->show();
-    }
-}
-
-void InfoDialog::onAnimationFinished()
-{
-    if (this->minimumHeight() == 557)
-    {
-//        ui->wRecent1->show();
-//        ui->wRecent2->show();
-//        ui->wRecent3->show();
-
-    }
-    else
-    {
-    }
-//    ui->l TransferListItem->show();
-//    ui->c TransferListItem->show();
-//    ui->w TransferListItem->show();
-//    ui->c TransferListItem->setEnabled(true);
-
-    repaint();
-}
-
-void InfoDialog::onValueChanged(QVariant)
-{
-    repaint();
-}
-
-#endif
 
 void InfoDialog::scanningAnimationStep()
 {

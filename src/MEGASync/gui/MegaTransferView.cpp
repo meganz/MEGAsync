@@ -446,7 +446,7 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
         if (transferTagSelected.size())
         {
             int modelType = model->getModelType();
-            if (modelType == QTransfersModel::TYPE_FINISHED || modelType == QTransfersModel::TYPE_RECENTLY_UPDATED)
+            if (modelType == QTransfersModel::TYPE_FINISHED)
             {
                 bool failed = false;
                 MegaTransfer *transfer = NULL;

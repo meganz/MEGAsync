@@ -10,7 +10,6 @@
 #include "SettingsDialog.h"
 #include "DataUsageMenu.h"
 #include "MenuItemAction.h"
-#include "RecentlyUpdated.h"
 
 namespace Ui {
 class InfoDialog;
@@ -45,7 +44,6 @@ public:
     void increaseUsedStorage(long long bytes, bool isInShare);
     void setOverQuotaMode(bool state);
     void updateState();
-    void closeSyncsMenu();
     void addSync(mega::MegaHandle h);
     void clearUserAttributes();
 
@@ -79,7 +77,6 @@ public slots:
 
 private slots:
     void on_bSettings_clicked();
-    void on_bSyncFolder_clicked();
     void on_bUpgrade_clicked();
     void openFolder(QString path);
     void on_bChats_clicked();
@@ -92,13 +89,6 @@ private slots:
 
     void hideUsageBalloon();
 
-
-#ifdef __APPLE__
-    void recentlyUpdatedStateChanged(int mode);
-    void onAnimationFinished();
-    void onValueChanged(QVariant);
-#endif
-
 signals:
     void openTransferManager(int tab);
 
@@ -106,13 +96,8 @@ private:
     Ui::InfoDialog *ui;
 #ifdef __APPLE__
     QPushButton *arrow;
-
-    QPropertyAnimation *minHeightAnimation;
-    QPropertyAnimation *maxHeightAnimation;
-    QParallelAnimationGroup *animationGroup;
 #endif
 
-    QMenu *syncsMenu;
     QMenu *transferMenu;
     DataUsageMenu *storageUsedMenu;
 

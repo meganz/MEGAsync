@@ -2383,7 +2383,6 @@ void MegaApplication::showInfoDialog()
         }
         else
         {
-            infoDialog->closeSyncsMenu();
             if (trayMenu->isVisible())
             {
                 trayMenu->close();
