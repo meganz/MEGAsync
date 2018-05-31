@@ -14,6 +14,7 @@ namespace Ui {
 class TransfersWidget;
 }
 
+class MegaApplication;
 class TransfersWidget : public QWidget
 {
     Q_OBJECT
@@ -37,6 +38,7 @@ private:
     MegaTransferDelegate *tDelegate;
     int type;
     int isPaused;
+    MegaApplication *app;
 
 private:
     void configureTransferView();

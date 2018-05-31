@@ -32,6 +32,7 @@ public:
 
 private slots:
     void refreshTransferItem(int tag);
+    void removeAllCompletedTransfers();
 
 protected:
     void updateTransferInfo(mega::MegaTransfer *transfer);

@@ -247,7 +247,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../Resources_macx.qrc">
+          <iconset resource="../Resources_linux.qrc">
            <normaloff>:/images/ico_item_link.png</normaloff>:/images/ico_item_link.png</iconset>
          </property>
          <property name="iconSize">
@@ -615,7 +615,7 @@
                    <string/>
                   </property>
                   <property name="icon">
-                   <iconset resource="../Resources_macx.qrc">
+                   <iconset resource="../Resources_linux.qrc">
                     <normaloff>:/images/clock_ico.png</normaloff>:/images/clock_ico.png</iconset>
                   </property>
                   <property name="iconSize">
@@ -690,7 +690,7 @@
                    <number>1000</number>
                   </property>
                   <property name="value">
-                   <number>50</number>
+                   <number>0</number>
                   </property>
                   <property name="textVisible">
                    <bool>false</bool>
@@ -713,7 +713,7 @@
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

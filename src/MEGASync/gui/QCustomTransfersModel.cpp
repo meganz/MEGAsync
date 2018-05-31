@@ -210,7 +210,48 @@ void QCustomTransfersModel::replaceWithTransfer(MegaTransfer *transfer)
 
 void QCustomTransfersModel::removeAllTransfers()
 {
+    removeAllCompletedTransfers();
+}
 
+void QCustomTransfersModel::removeAllCompletedTransfers()
+{
+    if (transfers.size())
+    {
+        int initialDelPos = 0;
+        if (activeDownloadTag > -1)
+        {
+            initialDelPos++;
+        }
+
+        if (activeUploadTag > -1)
+        {
+            initialDelPos++;
+        }
+
+        beginRemoveRows(QModelIndex(), initialDelPos, transfers.size() - 1);
+
+            QList<int> removeTags;
+            QMap<int, TransferItemData*>::iterator it;
+            for (it = transfers.begin(); it != transfers.end(); ++it)
+            {
+                int tag = it.key();
+                if (tag != activeDownloadTag && tag != activeUploadTag)
+                {
+                    removeTags.append(tag);
+                }
+            }
+
+            int actualTag;
+            foreach (actualTag, removeTags)
+            {
+                transfers.remove(actualTag);
+                transferItems.remove(actualTag);
+            }
+
+            transferOrder.erase(transferOrder.begin() + initialDelPos, transferOrder.end());
+
+        endRemoveRows();
+    }
 }
 
 void QCustomTransfersModel::removeTransferByTag(int transferTag)

@@ -10,6 +10,7 @@ namespace Ui {
 class InfoDialogTransfersWidget;
 }
 
+class MegaApplication;
 class InfoDialogTransfersWidget : public QWidget
 {
     Q_OBJECT
@@ -31,6 +32,9 @@ private:
 private slots:
     void enableAlternateRowStyle();
     void disableAlternateRowStyle();
+
+private:
+    MegaApplication *app;
 };
 
 #endif // INFODIALOGTRANSFERSWIDGET_H
