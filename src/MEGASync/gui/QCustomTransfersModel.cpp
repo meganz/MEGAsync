@@ -104,7 +104,10 @@ void QCustomTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *transfe
     }
     else
     {
-        emit onTransferAdded();
+        if (transferOrder.size() == 1)
+        {
+            emit onTransferAdded();
+        }
     }
 }
 
