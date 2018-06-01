@@ -43,12 +43,11 @@ void QCustomTransfersModel::onTransferStart(MegaApi *api, MegaTransfer *transfer
     item->tag = transfer->getTag();
     item->priority = transfer->getPriority();
 
-    int row = 0;
-    beginInsertRows(QModelIndex(), row, row);
     transfer_it it = getInsertPosition(transfer);
+    int row = it - transferOrder.begin();
+    beginInsertRows(QModelIndex(), row, row);
     transfers.insert(item->tag, item);
     transferOrder.insert(it, item);
-    endInsertRows();
 
     // Update model state
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
@@ -61,6 +60,7 @@ void QCustomTransfersModel::onTransferStart(MegaApi *api, MegaTransfer *transfer
         modelState |= UPLOAD;
         activeUploadTag = transfer->getTag();
     }
+    endInsertRows();
 
     if (transferOrder.size() == 1)
     {
@@ -70,18 +70,6 @@ void QCustomTransfersModel::onTransferStart(MegaApi *api, MegaTransfer *transfer
 
 void QCustomTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *e)
 {
-    int actualTag = transfer->getTag();
-    if (activeDownloadTag == actualTag && transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
-    {
-        modelState &= ~DOWNLOAD;
-        activeDownloadTag = -1;
-    }
-    else if (activeUploadTag == actualTag && transfer->getType() == MegaTransfer::TYPE_UPLOAD)
-    {
-        modelState &= ~UPLOAD;
-        activeUploadTag = -1;
-    }
-
     removeTransferByTag(transfer->getTag());
 
     if (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED)
@@ -90,12 +78,21 @@ void QCustomTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *transfe
         item->tag = transfer->getTag();
         item->priority = transfer->getPriority();
 
-        //FIXME SET A THRESHOLD FOR MAXIMUM NUMBER OF COMPLETED TRANSFERS
+        if (transfers.size() == Preferences::MAX_COMPLETED_ITEMS)
+        {
+            TransferItemData *t = transferOrder.back();
+            int row = transferOrder.size() - 1;
+            beginRemoveRows(QModelIndex(), row, row);
+            transfers.remove(t->tag);
+            transferOrder.pop_back();
+            transferItems.remove(t->tag);
+            endRemoveRows();
+            delete t;
+        }
 
-        int row = 0;
-
-        beginInsertRows(QModelIndex(), row, row);
         transfer_it it = getInsertPosition(transfer);
+        int row = it - transferOrder.begin();
+        beginInsertRows(QModelIndex(), row, row);
         transfers.insert(item->tag, item);
         transferOrder.insert(it, item);
         endInsertRows();
@@ -104,6 +101,13 @@ void QCustomTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *transfe
     if (transfers.isEmpty())
     {
         emit noTransfers();
+    }
+    else
+    {
+        if (transferOrder.size() == 1)
+        {
+            emit onTransferAdded();
+        }
     }
 }
 
@@ -178,34 +182,28 @@ void QCustomTransfersModel::replaceWithTransfer(MegaTransfer *transfer)
         activeUploadTag = transfer->getTag();
     }
 
-    TransferItemData *item =  transfers.value(transferToReplaced);
-    if (!item)
-    {
-        return;
-    }
-
     int row = 0;
     transfer_it it;
     for (it = transferOrder.begin(); it != transferOrder.end() && (*it)->tag != transferToReplaced; ++it)
     {
         ++row;
     }
-    assert(row < transferOrder.size());
+
+    TransferItemData *item =  transfers.value(transferToReplaced);
+    assert(item && row < transferOrder.size());
 
     //Generate new element and place it
     TransferItemData *newItem = new TransferItemData();
     newItem->tag = transfer->getTag();
     newItem->priority = transfer->getPriority();
 
-    beginRemoveRows(QModelIndex(), row, row);
-
-    transfers.remove(transferToReplaced);
     transfers.insert(newItem->tag, newItem);
+    transferOrder[row] = newItem;
+    transfers.remove(transferToReplaced);
     transferItems.remove(transferToReplaced);
-    transferOrder[it - transferOrder.begin()] = newItem;
-
-    endRemoveRows();
     delete item;
+
+    emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
 }
 
 void QCustomTransfersModel::removeAllTransfers()
@@ -229,28 +227,28 @@ void QCustomTransfersModel::removeAllCompletedTransfers()
         }
 
         beginRemoveRows(QModelIndex(), initialDelPos, transfers.size() - 1);
-
-            QList<int> removeTags;
-            QMap<int, TransferItemData*>::iterator it;
-            for (it = transfers.begin(); it != transfers.end(); ++it)
+        for (QMap<int, TransferItemData*>::iterator it = transfers.begin(); it != transfers.end();)
+        {
+            int tag = it.key();
+            if (tag != activeDownloadTag && tag != activeUploadTag)
             {
-                int tag = it.key();
-                if (tag != activeDownloadTag && tag != activeUploadTag)
-                {
-                    removeTags.append(tag);
-                }
+                TransferItemData *item = it.value();
+                transferItems.remove(tag);
+                it = transfers.erase(it);
+                delete item;
             }
-
-            int actualTag;
-            foreach (actualTag, removeTags)
+            else
             {
-                transfers.remove(actualTag);
-                transferItems.remove(actualTag);
+                it++;
             }
-
-            transferOrder.erase(transferOrder.begin() + initialDelPos, transferOrder.end());
-
+        }
+        transferOrder.erase(transferOrder.begin() + initialDelPos, transferOrder.end());
         endRemoveRows();
+    }
+
+    if (transfers.isEmpty())
+    {
+        emit noTransfers();
     }
 }
 
@@ -271,24 +269,42 @@ void QCustomTransfersModel::removeTransferByTag(int transferTag)
     assert(row < transferOrder.size());
 
     beginRemoveRows(QModelIndex(), row, row);
+    if (activeDownloadTag == transferTag)
+    {
+        modelState &= ~DOWNLOAD;
+        activeDownloadTag = -1;
+    }
+    else if (activeUploadTag == transferTag)
+    {
+        modelState &= ~UPLOAD;
+        activeUploadTag = -1;
+    }
+
     transfers.remove(transferTag);
     transferOrder.erase(it);
-//    ((MegaApplication *)qApp)->removeFinishedTransfer(transferTag);
     transferItems.remove(transferTag);
     endRemoveRows();
     delete item;
+
+    if (transfers.isEmpty())
+    {
+        emit noTransfers();
+    }
 }
 
 void QCustomTransfersModel::updateActiveTransfer(MegaApi *api, MegaTransfer *newtransfer)
 {
+    if (newtransfer->isFinished())
+    {
+        return;
+    }
+
     int type = newtransfer->getType();
     if (type == MegaTransfer::TYPE_DOWNLOAD)
     {
         if (activeDownloadTag == -1)
         {
             onTransferStart(api, newtransfer);
-            modelState |= DOWNLOAD;
-            activeDownloadTag = newtransfer->getTag();
         }
         else if (activeDownloadTag != newtransfer->getTag())
         {
@@ -300,8 +316,6 @@ void QCustomTransfersModel::updateActiveTransfer(MegaApi *api, MegaTransfer *new
         if (activeUploadTag == -1)
         {
             onTransferStart(api, newtransfer);
-            modelState |= UPLOAD;
-            activeUploadTag = newtransfer->getTag();
         }
         else if (activeUploadTag != newtransfer->getTag())
         {
@@ -313,30 +327,24 @@ void QCustomTransfersModel::updateActiveTransfer(MegaApi *api, MegaTransfer *new
 transfer_it QCustomTransfersModel::getInsertPosition(MegaTransfer *transfer)
 {
     transfer_it it = transferOrder.begin();
-
-    switch (transfer->getState())
+    if (transfer->isFinished())
     {
-        case MegaTransfer::STATE_COMPLETED:
-        case MegaTransfer::STATE_FAILED:
-            if (modelState & DOWNLOAD)
-            {
-                std::advance(it, 1);
-            }
+        if (modelState & DOWNLOAD)
+        {
+            std::advance(it, 1);
+        }
 
-            if (modelState & UPLOAD)
-            {
-                std::advance(it, 1);
-            }
-
-            break;
-        case MegaTransfer::STATE_CANCELLED:
-        default:
-            if (modelState & DOWNLOAD)
-            {
-                std::advance(it, 1);
-            }
-            break;
+        if (modelState & UPLOAD)
+        {
+            std::advance(it, 1);
+        }
     }
-
+    else
+    {
+        if (modelState & DOWNLOAD)
+        {
+            std::advance(it, 1);
+        }
+    }
     return it;
 }
