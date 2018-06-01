@@ -95,6 +95,10 @@ void QCustomTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *transfe
     {
         emit noTransfers();
     }
+    else
+    {
+        emit onTransferAdded();
+    }
 }
 
 void QCustomTransfersModel::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
@@ -231,6 +235,11 @@ void QCustomTransfersModel::removeAllCompletedTransfers()
         transferOrder.erase(transferOrder.begin() + initialDelPos, transferOrder.end());
         endRemoveRows();
     }
+
+    if (transfers.isEmpty())
+    {
+        emit noTransfers();
+    }
 }
 
 void QCustomTransfersModel::removeTransferByTag(int transferTag)
@@ -266,6 +275,11 @@ void QCustomTransfersModel::removeTransferByTag(int transferTag)
     transferItems.remove(transferTag);
     endRemoveRows();
     delete item;
+
+    if (transfers.isEmpty())
+    {
+        emit noTransfers();
+    }
 }
 
 void QCustomTransfersModel::updateActiveTransfer(MegaApi *api, MegaTransfer *newtransfer)
