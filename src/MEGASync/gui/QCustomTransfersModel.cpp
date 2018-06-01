@@ -82,7 +82,18 @@ void QCustomTransfersModel::onTransferFinish(MegaApi *api, MegaTransfer *transfe
         item->tag = transfer->getTag();
         item->priority = transfer->getPriority();
 
-        //FIXME SET A THRESHOLD FOR MAXIMUM NUMBER OF COMPLETED TRANSFERS
+        if (transfers.size() == Preferences::MAX_COMPLETED_ITEMS)
+        {
+            TransferItemData *t = transferOrder.back();
+            int row = transferOrder.size() - 1;
+            beginRemoveRows(QModelIndex(), row, row);
+            transfers.remove(t->tag);
+            transferOrder.pop_back();
+            transferItems.remove(t->tag);
+            endRemoveRows();
+            delete t;
+        }
+
         transfer_it it = getInsertPosition(transfer);
         int row = it - transferOrder.begin();
         beginInsertRows(QModelIndex(), row, row);
