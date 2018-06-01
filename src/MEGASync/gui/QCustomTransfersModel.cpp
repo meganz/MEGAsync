@@ -22,10 +22,6 @@ void QCustomTransfersModel::refreshTransfers()
 
 MegaTransfer *QCustomTransfersModel::getTransferByTag(int tag)
 {
-    // FIXME: This function is not safe because the memory could be owned by MegaApplication or
-    // the calling object. Either return NULL if this function is not needed for this model
-    // (because it doesn't have a context menu) or return a copy of the finished transfer and
-    // ensure that it's properly deleted
     MegaTransfer *transfer = ((MegaApplication *)qApp)->getFinishedTransferByTag(tag);
     if (transfer)
     {
