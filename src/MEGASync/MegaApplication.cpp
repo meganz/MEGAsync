@@ -5841,11 +5841,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
 
-        if (infoDialog)
-        {
-            infoDialog->setUserName();
-        }
-
         break;
     }
     case MegaRequest::TYPE_LOGIN:
