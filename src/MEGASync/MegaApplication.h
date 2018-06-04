@@ -127,6 +127,7 @@ public:
     void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
     void showTrayMenu(QPoint *point = NULL);
+    void createTrayMenu();
     void toggleLogging();
     QList<mega::MegaTransfer* > getFinishedTransfers();
     int getNumUnviewedTransfers();
@@ -187,7 +188,6 @@ public slots:
     void rebootApplication(bool update = true);
     void exitApplication();
     void highLightMenuEntry(QAction* action);
-    void regenerateTrayMenu();
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
     void checkMemoryUsage();
@@ -227,7 +227,6 @@ private slots:
 
 protected:
     void createTrayIcon();
-    void createTrayMenu();
     void createOverQuotaMenu();
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();

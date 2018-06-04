@@ -725,7 +725,7 @@ void InfoDialog::updateState()
 void InfoDialog::addSync()
 {
     addSync(INVALID_HANDLE);
-    app->regenerateTrayMenu();
+    app->createTrayMenu();
 }
 
 void InfoDialog::onContextDownloadMenu(QPoint pos, bool regular)
