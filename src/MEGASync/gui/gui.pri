@@ -53,7 +53,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/QCustomTransfersModel.cpp \
     $$PWD/StatusInfo.cpp \
     $$PWD/ChangePassword.cpp \
-    $$PWD/CustomTransferItem.cpp
+    $$PWD/CustomTransferItem.cpp \
+    $$PWD/PSAwidget.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -108,7 +109,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/QCustomTransfersModel.h \
     $$PWD/StatusInfo.h \
     $$PWD/ChangePassword.h \
-    $$PWD/CustomTransferItem.h
+    $$PWD/CustomTransferItem.h \
+    $$PWD/PSAwidget.h
 
 INCLUDEPATH += $$PWD
 
@@ -156,7 +158,8 @@ win32 {
                 $$PWD/win/LocalCleanScheduler.ui \
                 $$PWD/win/InfoDialogTransfersWidget.ui \
                 $$PWD/win/StatusInfo.ui \
-                $$PWD/win/ChangePassword.ui
+                $$PWD/win/ChangePassword.ui \
+                $$PWD/win/PSAwidget.ui
 }
 
 macx {
@@ -201,7 +204,8 @@ macx {
                 $$PWD/macx/InfoDialogTransfersWidget.ui \
                 $$PWD/macx/StatusInfo.ui \
                 $$PWD/macx/ChangePassword.ui \
-                $$PWD/macx/CustomTransferItem.ui
+                $$PWD/macx/CustomTransferItem.ui \
+                $$PWD/macx/PSAwidget.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -255,7 +259,8 @@ unix:!macx {
                 $$PWD/linux/LocalCleanScheduler.ui \
                 $$PWD/linux/InfoDialogTransfersWidget.ui \
                 $$PWD/linux/StatusInfo.ui \
-                $$PWD/linux/ChangePassword.ui
+                $$PWD/linux/ChangePassword.ui \
+                $$PWD/linux/PSAwidget.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

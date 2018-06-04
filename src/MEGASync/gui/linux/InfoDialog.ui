@@ -462,6 +462,22 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
        </widget>
       </item>
       <item>
+       <widget class="PSAwidget" name="wPSA" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>400</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>400</width>
+          <height>120</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QWidget" name="wActiveTransfersContainer" native="true">
         <property name="styleSheet">
          <string notr="true"/>
@@ -500,7 +516,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>1</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="pUpdated">
             <property name="minimumSize">
@@ -1863,6 +1879,12 @@ color: #333333;
    <class>StatusInfo</class>
    <extends>QWidget</extends>
    <header location="global">StatusInfo.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PSAwidget</class>
+   <extends>QWidget</extends>
+   <header>PSAwidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
