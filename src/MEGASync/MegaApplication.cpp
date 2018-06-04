@@ -1518,7 +1518,7 @@ void MegaApplication::startSyncs()
 
     if (syncsModified)
     {
-        regenerateTrayMenu();
+        createTrayMenu();
     }
 }
 
@@ -1643,7 +1643,7 @@ void MegaApplication::disableSyncs()
 
     if (syncsModified)
     {
-        regenerateTrayMenu();
+        createTrayMenu();
     }
 }
 
@@ -1688,7 +1688,7 @@ void MegaApplication::restoreSyncs()
 
     if (syncsModified)
     {
-        regenerateTrayMenu();
+        createTrayMenu();
     }
 }
 
@@ -1850,12 +1850,6 @@ void MegaApplication::highLightMenuEntry(QAction *action)
         lastHovered = pAction;
         lastHovered->setHighlight(true);
     }
-}
-
-void MegaApplication::regenerateTrayMenu()
-{
-    lastHovered = NULL;
-    createTrayMenu();
 }
 
 void MegaApplication::pauseTransfers(bool pause)
@@ -5135,6 +5129,8 @@ void MegaApplication::createTrayMenu()
         return;
     }
 
+    lastHovered = NULL;
+
     if (!initialMenu)
     {
         initialMenu = new QMenu();
@@ -6323,7 +6319,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     if (preferences->isFolderActive(i))
                     {
                         preferences->setSyncState(i, false);
-                        regenerateTrayMenu();
+                        createTrayMenu();
                     }
 
                     openSettings(SettingsDialog::SYNCS_TAB);
@@ -6986,7 +6982,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                     delete node;
                     preferences->setSyncState(i, false);
                     openSettings(SettingsDialog::SYNCS_TAB);
-                    regenerateTrayMenu();
+                    createTrayMenu();
                 }
 
                 delete nodeByHandle;
