@@ -33,7 +33,6 @@ public:
     ~InfoDialog();
 
     void setUsage();
-    void setUserName();
     void setAvatar();
     void setTransfer(mega::MegaTransfer *transfer);
     void updateTransfers();

@@ -362,7 +362,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
           <number>20</number>
          </property>
          <property name="leftMargin">
-          <number>18</number>
+          <number>15</number>
          </property>
          <property name="rightMargin">
           <number>13</number>
@@ -380,19 +380,6 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
              <width>30</width>
              <height>30</height>
             </size>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="lName">
-           <property name="maximumSize">
-            <size>
-             <width>200</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string/>
            </property>
           </widget>
          </item>

@@ -169,21 +169,6 @@ InfoDialog::~InfoDialog()
     delete activeUpload;
 }
 
-void InfoDialog::setUserName()
-{
-    QString first = preferences->firstName();
-    QString last = preferences->lastName();
-    if (first.isNull() || last.isNull())
-    {
-        return;
-    }
-    QString pattern(QString::fromUtf8("%1 %2").arg(first).arg(last));
-
-    QFont f = ui->lName->font();
-    QFontMetrics fm = QFontMetrics(f);
-    ui->lName->setText(fm.elidedText(pattern, Qt::ElideRight,ui->lName->maximumWidth()));
-}
-
 void InfoDialog::setAvatar()
 {
     const char *email = megaApi->getMyEmail();
@@ -1116,7 +1101,6 @@ void InfoDialog::changeEvent(QEvent *event)
         ui->retranslateUi(this);
         if (preferences->logged())
         {
-            setUserName();
             if (preferences->totalStorage())
             {
                 setUsage();
