@@ -54,7 +54,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/StatusInfo.cpp \
     $$PWD/ChangePassword.cpp \
     $$PWD/CustomTransferItem.cpp \
-    $$PWD/PSAwidget.cpp
+    $$PWD/PSAwidget.cpp \
+    $$PWD/ElidedLabel.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -110,7 +111,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/StatusInfo.h \
     $$PWD/ChangePassword.h \
     $$PWD/CustomTransferItem.h \
-    $$PWD/PSAwidget.h
+    $$PWD/PSAwidget.h \
+    $$PWD/ElidedLabel.h
 
 INCLUDEPATH += $$PWD
 
