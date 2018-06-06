@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>373</height>
+    <height>514</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>400</width>
-    <height>373</height>
+    <height>514</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>402</width>
-    <height>373</height>
+    <width>404</width>
+    <height>514</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -31,7 +31,7 @@
  border: 1px solid  rgb(100, 100, 100);
 }
 
-#bAvatar, #bState, #bDotUsedQuota, #bDotUsedStorage, #bMEGAheader, #bClockDown, #bClockUp
+#bAvatar, #bState, #bDotUsedQuota, #bDotUsedStorage, #bMEGAheader, #bClockDown, #bClockUp, #wRecentUpdated
 {
 	border: none;
 }
@@ -112,7 +112,7 @@ border-bottom-right-radius: 5px;
 background-color: transparent;
 }
 
-#wSeparator
+#wSeparator, #wHeaderSeparator
 {
 background-color:  rgba(0, 0, 0, 5%);
 }
@@ -280,13 +280,13 @@ color: #999999;
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>250</height>
+       <height>380</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>250</height>
+       <height>380</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -478,6 +478,22 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
        </widget>
       </item>
       <item>
+       <widget class="QWidget" name="wHeaderSeparator" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>1</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>1</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QWidget" name="wActiveTransfersContainer" native="true">
         <property name="styleSheet">
          <string notr="true"/>
@@ -503,32 +519,32 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>190</height>
+             <height>320</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
              <width>16777215</width>
-             <height>190</height>
+             <height>320</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>2</number>
            </property>
            <widget class="QWidget" name="pUpdated">
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>190</height>
+              <height>320</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>190</height>
+              <height>320</height>
              </size>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -633,8 +649,7 @@ border: none;</string>
                </property>
                <property name="styleSheet">
                 <string notr="true">padding-left: 10px;
-padding-right: 10px;
-</string>
+padding-right: 10px;</string>
                </property>
                <property name="text">
                 <string/>
@@ -656,13 +671,13 @@ padding-right: 10px;
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>190</height>
+              <height>320</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>190</height>
+              <height>320</height>
              </size>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1024,17 +1039,17 @@ padding-right: 10px;
              </item>
             </layout>
            </widget>
-           <widget class="QWidget" name="pOverQuota">
+           <widget class="QWidget" name="pTransfers">
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>190</height>
+              <height>320</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>16777215</width>
-              <height>190</height>
+              <height>320</height>
              </size>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -1042,44 +1057,25 @@ padding-right: 10px;
               <number>0</number>
              </property>
              <property name="topMargin">
-              <number>30</number>
+              <number>0</number>
              </property>
              <property name="rightMargin">
               <number>0</number>
              </property>
              <item>
-              <widget class="QLabel" name="lDisabled">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
+              <widget class="InfoDialogTransfersWidget" name="wListTransfers" native="true">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>25</height>
+                 <height>200</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>25</height>
+                 <height>320</height>
                 </size>
                </property>
-               <property name="text">
-                <string>MEGAsync is currently disabled</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-               <property name="wordWrap">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QWidget" name="widget" native="true">
                <layout class="QVBoxLayout" name="verticalLayout_6">
                 <property name="spacing">
                  <number>0</number>
@@ -1096,22 +1092,6 @@ padding-right: 10px;
                 <property name="bottomMargin">
                  <number>0</number>
                 </property>
-                <item>
-                 <widget class="QLabel" name="lDescDisabled">
-                  <property name="text">
-                   <string>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</string>
-                  </property>
-                  <property name="textFormat">
-                   <enum>Qt::AutoText</enum>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                  <property name="wordWrap">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
                </layout>
               </widget>
              </item>
@@ -1346,7 +1326,7 @@ padding-right: 10px;
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>1</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="pStorage">
             <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -1873,6 +1853,12 @@ color: #333333;
    <class>AvatarWidget</class>
    <extends>QWidget</extends>
    <header location="global">AvatarWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>InfoDialogTransfersWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">InfoDialogTransfersWidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
