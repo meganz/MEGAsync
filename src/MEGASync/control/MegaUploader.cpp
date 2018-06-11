@@ -47,8 +47,6 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
 
     QString currentPath = QDir::toNativeSeparators(info.absoluteFilePath());
     string localPath = megaApi->getLocalPath(parent);
-    if (localPath.size() && megaApi->isSyncable(QDir::toNativeSeparators(info.absoluteFilePath()).toUtf8().constData(), info.size()))
-    {
 #ifdef WIN32
         QString destPath = QDir::toNativeSeparators(QString::fromWCharArray((const wchar_t *)localPath.data()) + QDir::separator() + fileName);
         if (destPath.startsWith(QString::fromAscii("\\\\?\\")))
@@ -58,11 +56,11 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
 #else
         QString destPath = QDir::toNativeSeparators(QString::fromUtf8(localPath.data()) + QDir::separator() + fileName);
 #endif
-        if (currentPath != destPath)
-        {
-            megaApi->moveToLocalDebris(destPath.toUtf8().constData());
-            QtConcurrent::run(Utilities::copyRecursively, currentPath, destPath);
-        }
+
+    if (localPath.size() && currentPath != destPath && megaApi->isSyncable(destPath.toUtf8().constData(), info.size()))
+    {
+        megaApi->moveToLocalDebris(destPath.toUtf8().constData());
+        QtConcurrent::run(Utilities::copyRecursively, currentPath, destPath);
     }
     else if (info.isFile() || info.isDir())
     {
