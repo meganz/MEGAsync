@@ -58,8 +58,11 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
 #else
         QString destPath = QDir::toNativeSeparators(QString::fromUtf8(localPath.data()) + QDir::separator() + fileName);
 #endif
-        megaApi->moveToLocalDebris(destPath.toUtf8().constData());
-        QtConcurrent::run(Utilities::copyRecursively, currentPath, destPath);
+        if (currentPath != destPath)
+        {
+            megaApi->moveToLocalDebris(destPath.toUtf8().constData());
+            QtConcurrent::run(Utilities::copyRecursively, currentPath, destPath);
+        }
     }
     else if (info.isFile() || info.isDir())
     {
