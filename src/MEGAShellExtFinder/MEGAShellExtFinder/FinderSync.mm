@@ -287,7 +287,7 @@ void cleanItemsOfFolder(std::string dirPath)
     
     //NSLog(@"state: %i for path: %@ showBadge: %i", state, urlPath, badge);
     
-    if ([self isDirectory:[NSURL URLWithString:urlPath]])
+    if ([self isDirectory:[NSURL fileURLWithPath:urlPath]])
     {
         urlPath = [urlPath stringByAppendingString:@"/"];
     }
