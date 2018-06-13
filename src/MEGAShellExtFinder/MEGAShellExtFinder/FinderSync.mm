@@ -118,7 +118,7 @@ void cleanItemsOfFolder(std::string dirPath)
 // Disable menu and toolbar options
 
 - (NSString *)toolbarItemName {
-    return NSLocalizedString(@"MEGA Finder Extension", nil);
+    return NSLocalizedString(@"MEGA", nil);
 }
 
 - (NSString *)toolbarItemToolTip {
