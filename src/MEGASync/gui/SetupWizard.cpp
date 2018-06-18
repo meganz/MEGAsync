@@ -5,6 +5,7 @@
 #include "control/Utilities.h"
 #include "gui/MultiQFileDialog.h"
 #include "platform/Platform.h"
+#include <QtConcurrent/QtConcurrent>
 
 using namespace mega;
 
@@ -17,11 +18,16 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowModality(Qt::WindowModal);
 
+    connect(ui->ePassword, SIGNAL(textChanged(QString)), this, SLOT(onPasswordTextChanged(QString)));
+
     ui->wAdvancedSetup->installEventFilter(this);
     ui->wTypicalSetup->installEventFilter(this);
     ui->lTermsLink->installEventFilter(this);
     ui->rTypicalSetup->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->rAdvancedSetup->setAttribute(Qt::WA_TransparentForMouseEvents);
+
+    ui->wHelp->hide();
+    connect(ui->wHelp, SIGNAL(clicked()), this, SLOT(on_bLearMore_clicked()));
 
     this->app = app;
     this->closing = false;
@@ -33,9 +39,6 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
         QString::fromUtf8("\">"),
         QString::fromUtf8("\" style=\"color:#DC0000\">"))
         .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz")));
-
-    ui->lLearnMore->setText(QString::fromUtf8("<a href=\"https://mega.nz/help/client/megasync/syncing/how-to-setup-sync-client-can-i-specify-which-folder-s-to-sync-576c80e2886688e6028b4591\" style=\"color:#DC0000\">")
-                            + ui->lLearnMore->text() + QString::fromUtf8("</a>"));
 
     page_initial();
 
@@ -77,7 +80,6 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 page_login();
 
                 ui->eLoginEmail->setText(ui->eEmail->text().toLower().trimmed());
-                ui->lVerify->setVisible(true);
                 ui->eName->clear();
                 ui->eEmail->clear();
                 ui->ePassword->clear();
@@ -381,8 +383,8 @@ void SetupWizard::on_bNext_clicked()
         {
             defaultFolderPath.append(QString::fromUtf8("/MEGAsync"));
             ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync"));
-            ui->lAdvancedLabel->setText(tr("The following folders will be automatically synchronized:"));
             ui->lAdvancedSetup->setText(tr("Selective sync"));
+            ui->lHeader->setText(tr("Setup selective sync"));
             ui->bMegaFolder->show();
             ui->eMegaFolder->show();
             ui->lMegaFolder->show();
@@ -392,15 +394,18 @@ void SetupWizard::on_bNext_clicked()
         {
             defaultFolderPath.append(QString::fromUtf8("/MEGA"));
             ui->eMegaFolder->setText(QString::fromUtf8("/"));
-            ui->lAdvancedLabel->setText(tr("Your Cloud Drive will be synchronized with this folder:"));
-            ui->lAdvancedSetup->setText(tr("Full sync"));
+            ui->lAdvancedSetup->setText(tr("Select Local folder"));
+            ui->lHeader->setText(tr("Setup full sync"));
             ui->bMegaFolder->hide();
             ui->eMegaFolder->hide();
             ui->lMegaFolder->hide();
             ui->lAdditionalSyncs->hide();
         }
 
-        ui->lLearnMore->hide();
+        ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step4.png")));
+        ui->bCurrentStep->setIconSize(QSize(512, 44));
+
+        ui->wHelp->hide();
         ui->bNext->show();
         ui->sPages->setCurrentWidget(ui->pAdvanced);
 
@@ -799,8 +804,7 @@ void SetupWizard::closeEvent(QCloseEvent *event)
 void SetupWizard::page_login()
 {
     ui->eLoginPassword->clear();
-    ui->lVerify->hide();
-    ui->lLearnMore->hide();
+    ui->wHelp->hide();
     initModeSelection();
 
     ui->bCancel->setEnabled(true);
@@ -814,6 +818,10 @@ void SetupWizard::page_login()
     ui->eLoginEmail->setFocus();
     ui->bNext->setDefault(true);
 
+    ui->lHeader->setText(tr("Login to your MEGA account"));
+    ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step2.png")));
+    ui->bCurrentStep->setIconSize(QSize(512, 44));
+
     ui->sPages->setCurrentWidget(ui->pLogin);
     sessionKey.clear();
 }
@@ -824,7 +832,7 @@ void SetupWizard::page_logout()
     ui->lProgress->setText(tr("Logging out..."));
     ui->progressBar->setMaximum(0);
     ui->progressBar->setValue(-1);
-    ui->lLearnMore->hide();
+    ui->wHelp->hide();
 
     ui->bCancel->setEnabled(true);
     ui->bCancel->setVisible(true);
@@ -844,12 +852,11 @@ void SetupWizard::page_logout()
 void SetupWizard::page_initial()
 {
     ui->eLoginPassword->clear();
-    ui->lVerify->hide();
     ui->eName->clear();
     ui->eEmail->clear();
     ui->ePassword->clear();
     ui->eRepeatPassword->clear();
-    ui->lLearnMore->hide();
+    ui->wHelp->hide();
     initModeSelection();
 
     ui->bCancel->setEnabled(true);
@@ -875,7 +882,6 @@ void SetupWizard::page_mode()
 {
     initModeSelection();
 
-    ui->lLearnMore->show();
     ui->bCancel->setEnabled(true);
     ui->bCancel->setVisible(true);
     ui->bNext->setVisible(true);
@@ -886,14 +892,18 @@ void SetupWizard::page_mode()
     ui->bSkip->setEnabled(true);
     ui->bNext->setDefault(false);
     ui->bCancel->setDefault(false);
-    ui->lLearnMore->setFocus();
+    ui->wHelp->show();
+
+    ui->lHeader->setText(tr("Choose install type"));
+    ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step3.png")));
+    ui->bCurrentStep->setIconSize(QSize(512, 44));
 
     ui->sPages->setCurrentWidget(ui->pSetupType);
 }
 
 void SetupWizard::page_welcome()
 {
-    ui->lLearnMore->hide();
+    ui->wHelp->hide();
     ui->bCancel->setEnabled(true);
     ui->bCancel->setVisible(true);
     ui->bCancel->setText(tr("Finish"));
@@ -906,7 +916,13 @@ void SetupWizard::page_welcome()
     ui->bCancel->setFocus();
     ui->bCancel->setDefault(true);
 
+    ui->lHeader->setText(tr("We are all done!"));
+    ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step5.png")));
+    ui->bCurrentStep->setIconSize(QSize(512, 44));
+
     ui->sPages->setCurrentWidget(ui->pWelcome);
+    ui->wButtons->hide();
+    ui->bFinish->setFocus();
 }
 
 void SetupWizard::page_newaccount()
@@ -921,6 +937,10 @@ void SetupWizard::page_newaccount()
     ui->bSkip->setEnabled(false);
     ui->eName->setFocus();
     ui->bNext->setDefault(true);
+
+    ui->lHeader->setText(tr("Create a new MEGA account"));
+    ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step1.png")));
+    ui->bCurrentStep->setIconSize(QSize(512, 44));
 
     ui->sPages->setCurrentWidget(ui->pNewAccount);
 }
@@ -941,7 +961,73 @@ void SetupWizard::page_progress()
     ui->sPages->setCurrentWidget(ui->pProgress);
 }
 
+void SetupWizard::setLevelStrength(int level)
+{
+    switch (level)
+    {
+        case MegaApi::PASSWORD_STRENGTH_VERYWEAK:
+            ui->wVeryWeak->setStyleSheet(QString::fromUtf8("background-color:#FD684C;"));
+            ui->wWeak->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wMedium->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wGood->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wStrong->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            break;
+        case MegaApi::PASSWORD_STRENGTH_WEAK:
+            ui->wVeryWeak->setStyleSheet(QString::fromUtf8("background-color:#FFA500;"));
+            ui->wWeak->setStyleSheet(QString::fromUtf8("background-color:#FFA500;"));
+            ui->wMedium->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wGood->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wStrong->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            break;
+        case MegaApi::PASSWORD_STRENGTH_MEDIUM:
+            ui->wVeryWeak->setStyleSheet(QString::fromUtf8("background-color:#FFD300;"));
+            ui->wWeak->setStyleSheet(QString::fromUtf8("background-color:#FFD300;"));
+            ui->wMedium->setStyleSheet(QString::fromUtf8("background-color:#FFD300;"));
+            ui->wGood->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wStrong->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            break;
+        case MegaApi::PASSWORD_STRENGTH_GOOD:
+            ui->wVeryWeak->setStyleSheet(QString::fromUtf8("background-color:#81D522;"));
+            ui->wWeak->setStyleSheet(QString::fromUtf8("background-color:#81D522;"));
+            ui->wMedium->setStyleSheet(QString::fromUtf8("background-color:#81D522;"));
+            ui->wGood->setStyleSheet(QString::fromUtf8("background-color:#81D522;"));
+            ui->wStrong->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            break;
+        case MegaApi::PASSWORD_STRENGTH_STRONG:
+            ui->wVeryWeak->setStyleSheet(QString::fromUtf8("background-color:#00BFA5;"));
+            ui->wWeak->setStyleSheet(QString::fromUtf8("background-color:#00BFA5;"));
+            ui->wMedium->setStyleSheet(QString::fromUtf8("background-color:#00BFA5;"));
+            ui->wGood->setStyleSheet(QString::fromUtf8("background-color:#00BFA5;"));
+            ui->wStrong->setStyleSheet(QString::fromUtf8("background-color:#00BFA5;"));
+            break;
+        default:
+            ui->wVeryWeak->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wWeak->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wMedium->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wGood->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wStrong->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            break;
+    }
+}
+
 void SetupWizard::lTermsLink_clicked()
 {
     ui->cAgreeWithTerms->toggle();
+}
+
+void SetupWizard::on_bLearMore_clicked()
+{
+    QString helpUrl = QString::fromAscii("https://mega.nz/help/client/megasync/syncing/how-to-setup-sync-client-can-i-specify-which-folder-s-to-sync-576c80e2886688e6028b4591\\");
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
+}
+
+void SetupWizard::on_bFinish_clicked()
+{
+    on_bCancel_clicked();
+}
+
+void SetupWizard::onPasswordTextChanged(QString text)
+{
+    int strength = megaApi->getPasswordStrength(text.toUtf8().constData());
+    text.isEmpty() ? setLevelStrength(-1) : setLevelStrength(strength);
 }

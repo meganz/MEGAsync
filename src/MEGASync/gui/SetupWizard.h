@@ -46,6 +46,10 @@ private slots:
     void wTypicalSetup_clicked();
     void wAdvancedSetup_clicked();
     void lTermsLink_clicked();
+    void on_bLearMore_clicked();
+    void on_bFinish_clicked();
+
+    void onPasswordTextChanged(QString text);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
@@ -58,6 +62,8 @@ protected:
     void page_welcome();
     void page_newaccount();
     void page_progress();
+
+    void setLevelStrength(int level);
 
     Ui::SetupWizard *ui;
     MegaApplication *app;

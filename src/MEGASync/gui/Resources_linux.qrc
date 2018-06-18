@@ -4,7 +4,6 @@
         <file>fonts/OpenSans-Semibold.ttf</file>
         <file>images/account_32.png</file>
         <file>images/app_128.png</file>
-        <file>images/background.png</file>
         <file>images/bandwidth_32.png</file>
         <file>images/drag_3D.png</file>
         <file>images/drag_aftereffects.png</file>
@@ -305,5 +304,11 @@
         <file>fonts/SourceSansPro-Semibold.ttf</file>
         <file>images/ic_small_available.png</file>
         <file>images/ic_small_versions.png</file>
+        <file>images/setup_step1.png</file>
+        <file>images/setup_step2.png</file>
+        <file>images/setup_step3.png</file>
+        <file>images/setup_step4.png</file>
+        <file>images/setup_step5.png</file>
+        <file>images/desktop_app_TM.png</file>
     </qresource>
 </RCC>

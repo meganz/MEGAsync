@@ -2,7 +2,6 @@
     <qresource prefix="/">
         <file>images/account_32.png</file>
         <file>images/app_128.png</file>
-        <file>images/background.png</file>
         <file>images/bandwidth_32.png</file>
         <file>images/drag_3D.png</file>
         <file>images/drag_aftereffects.png</file>
@@ -236,7 +235,6 @@
         <file>images/import_error_ico@2x.png</file>
         <file>images/import_ok_icon@2x.png</file>
         <file>images/import_warning_ico@2x.png</file>
-        <file>images/background@2x.png</file>
         <file>images/full_sync_ico.png</file>
         <file>images/full_sync_ico@2x.png</file>
         <file>images/logo@2x.png</file>
@@ -583,5 +581,17 @@
         <file>images/ic_small_available@2x.png</file>
         <file>images/ic_small_versions.png</file>
         <file>images/ic_small_versions@2x.png</file>
+        <file>images/setup_step1.png</file>
+        <file>images/setup_step1@2x.png</file>
+        <file>images/setup_step2.png</file>
+        <file>images/setup_step2@2x.png</file>
+        <file>images/setup_step3.png</file>
+        <file>images/setup_step3@2x.png</file>
+        <file>images/setup_step4.png</file>
+        <file>images/setup_step4@2x.png</file>
+        <file>images/setup_step5.png</file>
+        <file>images/setup_step5@2x.png</file>
+        <file>images/desktop_app_TM.png</file>
+        <file>images/desktop_app_TM@2x.png</file>
     </qresource>
 </RCC>
