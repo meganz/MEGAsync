@@ -4546,6 +4546,14 @@ void MegaApplication::onUpdateError()
 //Called when users click in the tray icon
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
+#ifdef Q_OS_LINUX
+    if (getenv("XDG_CURRENT_DESKTOP") && !strcmp(getenv("XDG_CURRENT_DESKTOP"),"ubuntu:GNOME"))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Ignoring unexpected trayIconActivated detected in ubuntu:GNOME desktop.");
+        return;
+    }
+#endif
+
     if (appfinished)
     {
         return;
