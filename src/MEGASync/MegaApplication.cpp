@@ -6688,7 +6688,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         if (infoDialog)
         {
             infoDialog->setTransfer(transfer);
-            infoDialog->updateTransfers();
             infoDialog->transferFinished(e->getErrorCode());
         }
 
@@ -6791,7 +6790,6 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
         if (infoDialog)
         {
             infoDialog->setTransfer(transfer);
-            infoDialog->updateTransfers();
         }
     }
     else if (activeTransferTag[type] == transfer->getTag())

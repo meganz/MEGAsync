@@ -547,5 +547,9 @@
         <file>images/ico_item_link@2x.png</file>
         <file>images/ico_item_retry.png</file>
         <file>images/ico_item_retry@2x.png</file>
+        <file>images/storage_almost_full.png</file>
+        <file>images/storage_almost_full@2x.png</file>
+        <file>images/storage_full.png</file>
+        <file>images/storage_full@2x.png</file>
     </qresource>
 </RCC>

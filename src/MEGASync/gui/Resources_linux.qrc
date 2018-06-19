@@ -290,5 +290,7 @@
         <file>images/small_sketch.png</file>
         <file>images/ico_item_link.png</file>
         <file>images/ico_item_retry.png</file>
+        <file>images/storage_almost_full.png</file>
+        <file>images/storage_full.png</file>
     </qresource>
 </RCC>

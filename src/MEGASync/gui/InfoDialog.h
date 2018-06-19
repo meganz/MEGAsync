@@ -35,7 +35,6 @@ public:
     void setUsage();
     void setAvatar();
     void setTransfer(mega::MegaTransfer *transfer);
-    void updateTransfers();
     void refreshTransferItems();
     void transferFinished(int error);
     void setIndexing(bool indexing);
@@ -60,16 +59,9 @@ private:
 
 public slots:
    void addSync();
-   void onContextDownloadMenu(QPoint pos, bool regular);
-   void onContextUploadMenu(QPoint pos, bool regular);
    void globalDownloadState();
-   void downloadState();
    void globalUploadState();
    void uploadState();
-   void cancelAllUploads();
-   void cancelAllDownloads();
-   void cancelCurrentUpload();
-   void cancelCurrentDownload();
    void onAllUploadsFinished();
    void onAllDownloadsFinished();
    void onAllTransfersFinished();
@@ -85,6 +77,9 @@ private slots:
 
     void on_bDotUsedStorage_clicked();
     void on_bDotUsedQuota_clicked();
+
+    void on_bDismiss_clicked();
+    void on_bBuyQuota_clicked();
 
     void hideUsageBalloon();
 
@@ -105,15 +100,7 @@ private:
     MenuItemAction *sharesItem;
     MenuItemAction *rubbishItem;
 
-    long long downloadSpeed;
-    long long uploadSpeed;
-    int currentUpload;
-    int currentDownload;
-    int totalUploads;
-    int totalDownloads;
     int activeDownloadState, activeUploadState;
-    long long remainingDownloadBytes, remainingUploadBytes;
-    long long meanDownloadSpeed, meanUploadSpeed;
     int remainingUploads, remainingDownloads;
     bool indexing;
     bool waiting;
