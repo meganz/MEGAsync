@@ -1638,7 +1638,7 @@ padding-right: 10px;
                      <property name="styleSheet">
                       <string notr="true">#lTotalUsed
 {
-font: &quot;Helvetica&quot;;
+font: &quot;Source Sans Pro&quot;;
 font-size: 12px;
 font-weight: normal;
 color: #333333;
@@ -1678,7 +1678,7 @@ color: #333333;
                      <property name="styleSheet">
                       <string notr="true">#lPercentageUsed
 {
-font: &quot;Helvetica&quot;;
+font: &quot;Source Sans Pro&quot;;
 font-size: 12px;
 font-weight: normal;
 color: #333333;

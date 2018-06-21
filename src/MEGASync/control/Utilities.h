@@ -13,6 +13,16 @@
                              chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAupdater", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
                              chmod("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/Contents/MacOS/MEGAShellExtFinder", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
 #endif
+
+struct PlanInfo
+{
+    int amount;
+    QString currency;
+    unsigned long long gbStorage;
+    unsigned long long gbTransfer;
+    int level;
+};
+
 class Utilities
 {
 public:

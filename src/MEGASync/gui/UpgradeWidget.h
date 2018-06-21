@@ -1,5 +1,5 @@
-#ifndef PLANWIDGET_H
-#define PLANWIDGET_H
+#ifndef UPGRADEWIDGET_H
+#define UPGRADEWIDGET_H
 
 #include <QWidget>
 #include <megaapi.h>
@@ -7,10 +7,10 @@
 #include "Utilities.h"
 
 namespace Ui {
-class PlanWidget;
+class UpgradeWidget;
 }
 
-class PlanWidget : public QWidget
+class UpgradeWidget : public QWidget
 {
     Q_OBJECT
 
@@ -22,12 +22,12 @@ public:
            PRO_LITE = 4
     } ProLevel;
 
-    explicit PlanWidget(PlanInfo data, QString userAgent, QWidget *parent = 0);
+    explicit UpgradeWidget(PlanInfo data, QString userAgent, QWidget *parent = 0);
     void setPlanInfo(PlanInfo data);
-    ~PlanWidget();
+    ~UpgradeWidget();
 
 private:
-    Ui::PlanWidget *ui;
+    Ui::UpgradeWidget *ui;
     QPushButton *overlay;
     PlanInfo details;
     QString userAgent;
@@ -38,4 +38,4 @@ private slots:
     void onOverlayClicked();
 };
 
-#endif // PLANWIDGET_H
+#endif // UPGRADEWIDGET_H

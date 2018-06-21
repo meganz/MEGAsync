@@ -53,7 +53,9 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/QCustomTransfersModel.cpp \
     $$PWD/StatusInfo.cpp \
     $$PWD/ChangePassword.cpp \
-    $$PWD/CustomTransferItem.cpp
+    $$PWD/CustomTransferItem.cpp \
+    $$PWD/UpgradeOverStorage.cpp \
+    $$PWD/UpgradeWidget.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -108,7 +110,9 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/QCustomTransfersModel.h \
     $$PWD/StatusInfo.h \
     $$PWD/ChangePassword.h \
-    $$PWD/CustomTransferItem.h
+    $$PWD/CustomTransferItem.h \
+    $$PWD/UpgradeOverStorage.h \
+    $$PWD/UpgradeWidget.h
 
 INCLUDEPATH += $$PWD
 
@@ -156,7 +160,9 @@ win32 {
                 $$PWD/win/LocalCleanScheduler.ui \
                 $$PWD/win/InfoDialogTransfersWidget.ui \
                 $$PWD/win/StatusInfo.ui \
-                $$PWD/win/ChangePassword.ui
+                $$PWD/win/ChangePassword.ui \
+                $$PWD/win/UpgradeOverStorage.ui \
+                $$PWD/win/UpgradeWidget.ui
 }
 
 macx {
@@ -201,7 +207,9 @@ macx {
                 $$PWD/macx/InfoDialogTransfersWidget.ui \
                 $$PWD/macx/StatusInfo.ui \
                 $$PWD/macx/ChangePassword.ui \
-                $$PWD/macx/CustomTransferItem.ui
+                $$PWD/macx/CustomTransferItem.ui \
+                $$PWD/macx/UpgradeOverStorage.ui \
+                $$PWD/macx/UpgradeWidget.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -255,7 +263,9 @@ unix:!macx {
                 $$PWD/linux/LocalCleanScheduler.ui \
                 $$PWD/linux/InfoDialogTransfersWidget.ui \
                 $$PWD/linux/StatusInfo.ui \
-                $$PWD/linux/ChangePassword.ui
+                $$PWD/linux/ChangePassword.ui \
+                $$PWD/linux/UpgradeOverStorage.ui \
+                $$PWD/linux/UpgradeWidget.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

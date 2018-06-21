@@ -292,5 +292,7 @@
         <file>images/ico_item_retry.png</file>
         <file>images/storage_almost_full.png</file>
         <file>images/storage_full.png</file>
+        <file>images/card_border.png</file>
+        <file>images/achievements.png</file>
     </qresource>
 </RCC>
