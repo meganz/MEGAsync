@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>184</width>
-    <height>244</height>
+    <width>182</width>
+    <height>242</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>184</width>
-    <height>244</height>
+    <width>182</width>
+    <height>242</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>184</width>
-    <height>244</height>
+    <width>182</width>
+    <height>242</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -89,14 +89,14 @@ QPushButton
     <widget class="QWidget" name="wContainer" native="true">
      <property name="minimumSize">
       <size>
-       <width>184</width>
-       <height>244</height>
+       <width>182</width>
+       <height>242</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>184</width>
-       <height>244</height>
+       <width>182</width>
+       <height>242</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -110,7 +110,7 @@ QPushButton
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>9</number>
+       <number>11</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -136,7 +136,7 @@ QPushButton
          <string notr="true">margin-top: -10px;</string>
         </property>
         <property name="text">
-         <string notr="true">PRO LITE</string>
+         <string notr="true"/>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -171,7 +171,7 @@ QPushButton
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>22</number>
+          <number>20</number>
          </property>
          <item>
           <widget class="QLabel" name="lPrice">
@@ -191,7 +191,7 @@ QPushButton
             <string notr="true"/>
            </property>
            <property name="text">
-            <string notr="true">4.99 EUR</string>
+            <string notr="true"/>
            </property>
            <property name="textFormat">
             <enum>Qt::RichText</enum>
@@ -216,7 +216,7 @@ QPushButton
             </size>
            </property>
            <property name="text">
-            <string>month</string>
+            <string/>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -242,7 +242,7 @@ QPushButton
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
          <property name="spacing">
-          <number>0</number>
+          <number>6</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -254,7 +254,7 @@ QPushButton
           <number>0</number>
          </property>
          <property name="bottomMargin">
-          <number>20</number>
+          <number>24</number>
          </property>
          <item>
           <widget class="QWidget" name="widget_3" native="true">
@@ -298,7 +298,7 @@ QPushButton
                </size>
               </property>
               <property name="text">
-               <string notr="true">200 GB</string>
+               <string notr="true"/>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
@@ -350,7 +350,7 @@ QPushButton
                </size>
               </property>
               <property name="text">
-               <string notr="true">1 TB</string>
+               <string notr="true"/>
               </property>
               <property name="alignment">
                <set>Qt::AlignCenter</set>
