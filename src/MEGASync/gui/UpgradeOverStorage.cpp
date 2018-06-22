@@ -28,8 +28,8 @@ UpgradeOverStorage::UpgradeOverStorage(MegaApi *megaApi, MegaPricing *pricing, Q
     refreshUsedStorage();
 
     plansLayout = new QHBoxLayout();
-    plansLayout->setContentsMargins(15,0,15,0);
-    plansLayout->setSpacing(0);
+    plansLayout->setContentsMargins(20,5,20,0);
+    plansLayout->setSpacing(2);
 
     delete ui->wPlans->layout();
     ui->wPlans->setLayout(plansLayout);

@@ -103,7 +103,7 @@
        <number>0</number>
       </property>
       <property name="topMargin">
-       <number>35</number>
+       <number>37</number>
       </property>
       <property name="rightMargin">
        <number>0</number>
@@ -204,13 +204,13 @@
     <widget class="QWidget" name="wPlans" native="true">
      <property name="minimumSize">
       <size>
-       <width>0</width>
+       <width>800</width>
        <height>280</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>16777215</width>
+       <width>800</width>
        <height>280</height>
       </size>
      </property>
@@ -244,7 +244,7 @@
        <number>0</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>16</number>
       </property>
       <item>
        <spacer name="horizontalSpacer_3">
