@@ -555,5 +555,7 @@
         <file>images/card_border@2x.png</file>
         <file>images/achievements.png</file>
         <file>images/achievements@2x.png</file>
+        <file>images/ico_menu_full.png</file>
+        <file>images/ico_menu_full@2x.png</file>
     </qresource>
 </RCC>

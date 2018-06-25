@@ -369,6 +369,8 @@ void InfoDialog::increaseUsedStorage(long long bytes, bool isInShare)
 void InfoDialog::setOverQuotaMode(bool state)
 {
     overQuotaState = state;
+    ui->wStatus->setOverQuotaState(state);
+
     if (state)
     {
         ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));

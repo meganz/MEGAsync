@@ -302,5 +302,6 @@
         <file>images/storage_full.png</file>
         <file>images/card_border.png</file>
         <file>images/achievements.png</file>
+        <file>images/ico_menu_full.png</file>
     </qresource>
 </RCC>

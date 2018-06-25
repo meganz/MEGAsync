@@ -24,6 +24,7 @@ public:
     ~StatusInfo();
 
     void setState(int state);
+    void setOverQuotaState(bool oq);
 signals:
     void clicked();
 
@@ -35,6 +36,7 @@ private:
     Ui::StatusInfo *ui;
     int state;
     bool isHovered;
+    bool isOverQuota;
 };
 
 #endif // STATUSINFO_H

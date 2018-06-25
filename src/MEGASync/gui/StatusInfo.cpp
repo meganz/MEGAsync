@@ -8,6 +8,7 @@ StatusInfo::StatusInfo(QWidget *parent) :
 {
     ui->setupUi(this);
     isHovered = false;
+    isOverQuota = false;
     installEventFilter(this);
 }
 
@@ -55,16 +56,33 @@ void StatusInfo::setState(int state)
         }
         case STATE_UPDATED:
         {
-            ui->lStatusDesc->setText(tr("Up to date"));
-            QIcon icon;
-            icon.addFile(QString::fromUtf8(":/images/ico_menu_uptodate_state.png"), QSize(), QIcon::Normal, QIcon::Off);
-            ui->bIconState->setIcon(icon);
-            ui->bIconState->setIconSize(QSize(24, 24));
+            if (isOverQuota)
+            {
+                ui->lStatusDesc->setText(tr("Account full"));
+                QIcon icon;
+                icon.addFile(QString::fromUtf8(":/images/ico_menu_full.png"), QSize(), QIcon::Normal, QIcon::Off);
+                ui->bIconState->setIcon(icon);
+                ui->bIconState->setIconSize(QSize(24, 24));
+            }
+            else
+            {
+                ui->lStatusDesc->setText(tr("Up to date"));
+                QIcon icon;
+                icon.addFile(QString::fromUtf8(":/images/ico_menu_uptodate_state.png"), QSize(), QIcon::Normal, QIcon::Off);
+                ui->bIconState->setIcon(icon);
+                ui->bIconState->setIconSize(QSize(24, 24));
+            }
             break;
         }
         default:
             break;
     }
+}
+
+void StatusInfo::setOverQuotaState(bool oq)
+{
+    isOverQuota = oq;
+    setState(state);
 }
 
 void StatusInfo::changeEvent(QEvent *event)
