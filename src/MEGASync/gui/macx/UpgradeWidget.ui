@@ -216,7 +216,7 @@ QPushButton
             </size>
            </property>
            <property name="text">
-            <string/>
+            <string>month</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
