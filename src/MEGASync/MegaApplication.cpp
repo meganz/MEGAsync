@@ -405,7 +405,9 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaError", "Connection overflow");
     QT_TRANSLATE_NOOP("MegaError", "Write error");
     QT_TRANSLATE_NOOP("MegaError", "Read error");
-    QT_TRANSLATE_NOOP("MegaError", "Invalid application key");
+    QT_TRANSLATE_NOOP("MegaError", "Invalid application key");    
+    QT_TRANSLATE_NOOP("MegaError", "SSL verification failed");
+    QT_TRANSLATE_NOOP("MegaError", "Not enough quota");
     QT_TRANSLATE_NOOP("MegaError", "Unknown error");
     QT_TRANSLATE_NOOP("MegaError", "Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.");
     QT_TRANSLATE_NOOP("MegaError", "Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.");
