@@ -17,6 +17,7 @@
 #include "gui/NodeSelector.h"
 #include "gui/InfoDialog.h"
 #include "gui/InfoOverQuotaDialog.h"
+#include "gui/UpgradeOverStorage.h"
 #include "gui/SetupWizard.h"
 #include "gui/SettingsDialog.h"
 #include "gui/UploadToMegaDialog.h"
@@ -224,6 +225,7 @@ public slots:
 #endif
 private slots:
     void showInFolder(int activationButton);
+    void redirectToUpgrade(int activationButton);
 
 protected:
     void createTrayIcon();
@@ -321,6 +323,8 @@ protected:
     long long queuedUserStats;
     bool inflightUserStats;
     long long cleaningSchedulerExecution;
+    long long overStorageDialogExecution;
+    long long overStorageNotificationExecution;
     long long maxMemoryUsage;
     int exportOps;
     int syncState;
@@ -328,6 +332,7 @@ protected:
     long long bwOverquotaTimestamp;
     bool enablingBwOverquota;
     UpgradeDialog *bwOverquotaDialog;
+    UpgradeOverStorage *storageOverquotaDialog;
     bool bwOverquotaEvent;
     InfoWizard *infoWizard;
     mega::QTMegaListener *delegateListener;

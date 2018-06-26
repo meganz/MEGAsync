@@ -607,6 +607,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     bwOverquotaTimestamp = 0;
     enablingBwOverquota = false;
     bwOverquotaDialog = NULL;
+    storageOverquotaDialog = NULL;
     bwOverquotaEvent = false;
     infoWizard = NULL;
     externalNodesTimestamp = 0;
@@ -617,6 +618,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     transferManager = NULL;
     queuedUserStats = 0;
     cleaningSchedulerExecution = 0;
+    overStorageDialogExecution = 0;
+    overStorageNotificationExecution = 0;
     maxMemoryUsage = 0;
     nUnviewedTransfers = 0;
     completedTabActive = false;
@@ -1738,6 +1741,9 @@ void MegaApplication::closeDialogs()
 
     delete bwOverquotaDialog;
     bwOverquotaDialog = NULL;
+
+    delete storageOverquotaDialog;
+    storageOverquotaDialog = NULL;
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -2115,6 +2121,40 @@ void MegaApplication::periodicTasks()
         return;
     }
 
+    if (infoOverQuota)
+    {
+        if (!overStorageDialogExecution || ((QDateTime::currentMSecsSinceEpoch() - overStorageDialogExecution) > Preferences::OQ_DIALOG_INTERVAL_MS))
+        {
+            overStorageDialogExecution = QDateTime::currentMSecsSinceEpoch();
+            if (!storageOverquotaDialog)
+            {
+                storageOverquotaDialog = new UpgradeOverStorage(megaApi, pricing);
+                connect(storageOverquotaDialog, SIGNAL(finished(int)), this, SLOT(overquotaDialogFinished(int)));
+                Platform::activateBackgroundWindow(storageOverquotaDialog);
+                storageOverquotaDialog->show();
+
+            }
+            else
+            {
+                storageOverquotaDialog->activateWindow();
+                storageOverquotaDialog->raise();
+            }
+        }
+        else if (((QDateTime::currentMSecsSinceEpoch() - overStorageDialogExecution) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
+                     && (!overStorageDialogExecution || ((QDateTime::currentMSecsSinceEpoch() - overStorageNotificationExecution) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
+        {
+            overStorageNotificationExecution = QDateTime::currentMSecsSinceEpoch();
+
+            MegaNotification *notification = new MegaNotification();
+            notification->setTitle(tr("Your account is full."));
+            notification->setText(tr("Upgrade now to a PRO account."));
+            notification->setActions(QStringList() << QString::fromUtf8("Get PRO"));
+            connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
+            notificator->notify(notification);
+        }
+    }
+
+
     if (!cleaningSchedulerExecution || ((QDateTime::currentMSecsSinceEpoch() - cleaningSchedulerExecution) > Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS))
     {
         cleaningSchedulerExecution = QDateTime::currentMSecsSinceEpoch();
@@ -2199,6 +2239,8 @@ void MegaApplication::cleanAll()
 
     delete bwOverquotaDialog;
     bwOverquotaDialog = NULL;
+    delete storageOverquotaDialog;
+    storageOverquotaDialog = NULL;
     delete infoWizard;
     infoWizard = NULL;
     delete infoDialog;
@@ -2804,6 +2846,12 @@ void MegaApplication::overquotaDialogFinished(int)
     {
         bwOverquotaDialog->deleteLater();
         bwOverquotaDialog = NULL;
+    }
+
+    if (storageOverquotaDialog)
+    {
+        storageOverquotaDialog->deleteLater();
+        storageOverquotaDialog = NULL;
     }
 }
 
@@ -3484,6 +3532,16 @@ void MegaApplication::showInFolder(int activationButton)
         {
             QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(localPath));
         }
+    }
+}
+
+void MegaApplication::redirectToUpgrade(int activationButton)
+{
+    if (activationButton == MegaNotification::ActivationActionButtonClicked)
+    {
+        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
+        QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
+        megaApi->getSessionTransferURL(url.toUtf8().constData());
     }
 }
 

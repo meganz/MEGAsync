@@ -317,6 +317,8 @@ public:
     static const int MAX_FOLDERS_IN_NEW_SYNC_FOLDER;
     static const long long MIN_UPDATE_STATS_INTERVAL;
     static const long long MIN_UPDATE_STATS_INTERVAL_OVERQUOTA;
+    static const long long OQ_DIALOG_INTERVAL_MS;
+    static const long long OQ_NOTIFICATION_INTERVAL_MS;
     static const long long MIN_UPDATE_CLEANING_INTERVAL_MS;
     static const int STATE_REFRESH_INTERVAL_MS;
     static const int FINISHED_TRANSFER_REFRESH_INTERVAL_MS;

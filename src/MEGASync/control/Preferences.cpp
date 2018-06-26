@@ -28,6 +28,9 @@ const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStri
 const int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
 const int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
 
+const long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
+const long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 129600000; // 36 hours
+
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
 const long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS  = 7200000;
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL_OVERQUOTA    = 30000;
