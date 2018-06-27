@@ -10,6 +10,7 @@
 #include "SettingsDialog.h"
 #include "DataUsageMenu.h"
 #include "MenuItemAction.h"
+#include "control/Preferences.h"
 
 namespace Ui {
 class InfoDialog;
@@ -44,6 +45,7 @@ public:
     void updateState();
     void addSync(mega::MegaHandle h);
     void clearUserAttributes();
+    void handleOverStorage(int state);
 
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
 
@@ -85,6 +87,8 @@ private slots:
 
 signals:
     void openTransferManager(int tab);
+    void dismissOQ(bool oq);
+    void userActivity();
 
 private:
     Ui::InfoDialog *ui;

@@ -180,13 +180,6 @@ void InfoDialog::setUsage()
         {
             ui->pUsageStorage->setProperty("crossedge", false);
             ui->pUsageStorage->setProperty("almostoq", true);
-
-            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_almost_full.png")));
-            ui->bOQIcon->setIconSize(QSize(64,64));
-            ui->lOQTitle->setText(tr("You're running out of storage space."));
-            ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
-
-            ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
         }
         else
         {
@@ -373,12 +366,6 @@ void InfoDialog::setOverQuotaMode(bool state)
 
     if (state)
     {
-        ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));
-        ui->bOQIcon->setIconSize(QSize(64,64));
-        ui->lOQTitle->setText(tr("Your MEGA account is full."));
-        ui->lOQDesc->setText(tr("All file uploads are currently disabled. Please upgrade to PRO"));
-        ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
-
         ui->bUpgrade->setProperty("overquota", true);
         ui->pUsageStorage->setProperty("overquota", true);
         ui->bUpgrade->style()->unpolish(ui->bUpgrade);
@@ -388,8 +375,6 @@ void InfoDialog::setOverQuotaMode(bool state)
     }
     else
     {
-        //TODO: Manage almost over quota states settings specific widget if necessary
-        ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
         ui->bUpgrade->setProperty("overquota", false);
         ui->pUsageStorage->setProperty("overquota", false);
         ui->bUpgrade->style()->unpolish(ui->bUpgrade);
@@ -614,6 +599,8 @@ void InfoDialog::onAllTransfersFinished()
 
 void InfoDialog::on_bSettings_clicked()
 {
+    emit userActivity();
+
     QPoint p = ui->bSettings->mapToGlobal(QPoint(ui->bSettings->width() - 2, ui->bSettings->height()));
 
 #ifdef __APPLE__
@@ -724,12 +711,37 @@ void InfoDialog::on_bChats_clicked()
 
 void InfoDialog::on_bTransferManager_clicked()
 {
+    emit userActivity();
     app->transferManagerActionClicked();
 }
 
 void InfoDialog::clearUserAttributes()
 {
     ui->bAvatar->clearData();
+}
+
+void InfoDialog::handleOverStorage(int state)
+{
+    switch (state)
+    {
+        case Preferences::STATE_ALMOST_OVER_STORAGE:
+        ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_almost_full.png")));
+        ui->bOQIcon->setIconSize(QSize(64,64));
+        ui->lOQTitle->setText(tr("You're running out of storage space."));
+        ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
+        ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
+        break;
+        case Preferences::STATE_OVER_STORAGE:
+        ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));
+        ui->bOQIcon->setIconSize(QSize(64,64));
+        ui->lOQTitle->setText(tr("Your MEGA account is full."));
+        ui->lOQDesc->setText(tr("All file uploads are currently disabled. Please upgrade to PRO"));
+        ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
+        break;
+    default:
+        ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
+        break;
+    }
 }
 
 void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *e)
@@ -960,6 +972,7 @@ void InfoDialog::on_bDotUsedQuota_clicked()
 void InfoDialog::on_bDismiss_clicked()
 {
     ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
+    emit dismissOQ(overQuotaState);
 }
 
 void InfoDialog::on_bBuyQuota_clicked()

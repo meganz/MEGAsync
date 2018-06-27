@@ -192,6 +192,7 @@ public slots:
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
     void checkMemoryUsage();
+    void checkOverStorageStates();
     void periodicTasks();
     void cleanAll();
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
@@ -219,6 +220,7 @@ public slots:
     void checkOperatingSystem();
     void notifyItemChange(QString path, int newState);
     int getPrevVersion();
+    void onDismissOQ(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
 #ifdef __APPLE__
     void enableFinderExt();
@@ -226,6 +228,8 @@ public slots:
 private slots:
     void showInFolder(int activationButton);
     void redirectToUpgrade(int activationButton);
+    void registerUserActivity();
+
 
 protected:
     void createTrayIcon();
@@ -244,6 +248,8 @@ protected:
     void deleteMenu(QMenu *menu);
     void startHttpServer();
     void initHttpsServer();
+
+    void sendOverStorageNotification(int state);
 
     bool eventFilter(QObject *obj, QEvent *e);
 
@@ -325,6 +331,11 @@ protected:
     long long cleaningSchedulerExecution;
     long long overStorageDialogExecution;
     long long overStorageNotificationExecution;
+    long long almostOverStorageNotificationExecution;
+    long long almostOverStorageDismissExecution;
+    long long overStorageDismissExecution;
+    long long lastUserActivityExecution;
+    bool almostOQ;
     long long maxMemoryUsage;
     int exportOps;
     int syncState;
