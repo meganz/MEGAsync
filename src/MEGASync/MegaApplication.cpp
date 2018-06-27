@@ -2154,7 +2154,7 @@ void MegaApplication::checkOverStorageStates()
             }
         }
         else if (((QDateTime::currentMSecsSinceEpoch() - overStorageDialogExecution) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
-                     && (!overStorageDialogExecution || ((QDateTime::currentMSecsSinceEpoch() - overStorageNotificationExecution) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
+                     && (!overStorageNotificationExecution || ((QDateTime::currentMSecsSinceEpoch() - overStorageNotificationExecution) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
         {
             overStorageNotificationExecution = QDateTime::currentMSecsSinceEpoch();
             sendOverStorageNotification(Preferences::STATE_OVER_STORAGE);
@@ -2173,7 +2173,7 @@ void MegaApplication::checkOverStorageStates()
     else if (almostOQ)
     {
         if (((QDateTime::currentMSecsSinceEpoch() - overStorageDismissExecution) > Preferences::ALMOST_OS_INTERVAL_MS)
-                     &&(!almostOverStorageDismissExecution || ((QDateTime::currentMSecsSinceEpoch() - almostOverStorageDismissExecution) > Preferences::ALMOST_OS_INTERVAL_MS)))
+                     && (!almostOverStorageDismissExecution || ((QDateTime::currentMSecsSinceEpoch() - almostOverStorageDismissExecution) > Preferences::ALMOST_OS_INTERVAL_MS)))
         {
             if (infoDialog)
             {
