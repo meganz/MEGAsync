@@ -329,11 +329,6 @@ protected:
     long long queuedUserStats;
     bool inflightUserStats;
     long long cleaningSchedulerExecution;
-    long long overStorageDialogExecution;
-    long long overStorageNotificationExecution;
-    long long almostOverStorageNotificationExecution;
-    long long almostOverStorageDismissExecution;
-    long long overStorageDismissExecution;
     long long lastUserActivityExecution;
     bool almostOQ;
     long long maxMemoryUsage;

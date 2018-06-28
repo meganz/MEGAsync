@@ -88,6 +88,18 @@ public:
     bool isTemporalBandwidthValid();
     long long getMsDiffTimeWithSDK();
     void setDsDiffTimeWithSDK(long long diffTime);
+
+    long long getOverStorageDialogExecution();
+    void setOverStorageDialogExecution(long long timestamp);
+    long long getOverStorageNotificationExecution();
+    void setOverStorageNotificationExecution(long long timestamp);
+    long long getAlmostOverStorageNotificationExecution();
+    void setAlmostOverStorageNotificationExecution(long long timestamp);
+    long long getAlmostOverStorageDismissExecution();
+    void setAlmostOverStorageDismissExecution(long long timestamp);
+    long long getOverStorageDismissExecution();
+    void setOverStorageDismissExecution(long long timestamp);
+
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
     void setTemporalBandwidth(long long value);
@@ -394,6 +406,11 @@ protected:
     bool isTempBandwidthValid;
     QString dataPath;
     long long diffTimeWithSDK;
+    long long overStorageDialogExecution;
+    long long overStorageNotificationExecution;
+    long long almostOverStorageNotificationExecution;
+    long long almostOverStorageDismissExecution;
+    long long overStorageDismissExecution;
     long long lastTransferNotification;
 
     static const QString currentAccountKey;
@@ -420,7 +437,12 @@ protected:
     static const QString inShareFoldersKey;
     static const QString totalBandwidthKey;
     static const QString usedBandwidthKey;
-    static const QString usedBandwidthIntervalKey;
+    static const QString usedBandwidthIntervalKey;    
+    static const QString overStorageDialogExecutionKey;
+    static const QString overStorageNotificationExecutionKey;
+    static const QString almostOverStorageNotificationExecutionKey;
+    static const QString almostOverStorageDismissExecutionKey;
+    static const QString overStorageDismissExecutionKey;
     static const QString accountTypeKey;
     static const QString setupWizardCompletedKey;
     static const QString showNotificationsKey;
@@ -516,6 +538,7 @@ protected:
     static const int  defaultParallelDownloadConnections;
     static const int  defaultProxyType;
     static const int  defaultProxyProtocol;
+    static const long long defaultTimeStamp;
     static const QString  defaultProxyServer;
     static const int defaultProxyPort;
     static const bool defaultProxyRequiresAuth;
