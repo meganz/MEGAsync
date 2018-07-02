@@ -3706,35 +3706,29 @@ void MegaApplication::showTrayMenu(QPoint *point)
         trayGuestMenu->popup(p);
 #endif
     }
-    else if (trayMenu && !infoOverQuota)
+    else if (trayMenu)
     {
+        if (!infoOverQuota)
+        {
+            addSyncAction->setVisible(true);
+        }
+        else
+        {
+            addSyncAction->setVisible(false);
+        }
+
         if (trayMenu->isVisible())
         {
             trayMenu->close();
         }
 
         QPoint p = point ? (*point) - QPoint(trayMenu->sizeHint().width(), 0)
-                         : QCursor::pos();
+                         : QCursor::pos();      
 
 #ifdef __APPLE__
         trayMenu->exec(p);
 #else
         trayMenu->popup(p);
-#endif
-    }
-    else if (trayOverQuotaMenu && infoOverQuota)
-    {
-        if (trayOverQuotaMenu->isVisible())
-        {
-            trayOverQuotaMenu->close();
-        }
-
-        QPoint p = point ? (*point) - QPoint(trayOverQuotaMenu->sizeHint().width(), 0)
-                         : QCursor::pos();
-#ifdef __APPLE__
-        trayOverQuotaMenu->exec(p);
-#else
-        trayOverQuotaMenu->popup(p);
 #endif
     }
 }
