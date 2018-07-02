@@ -10,7 +10,6 @@
 #include <QFileInfo>
 #include <QEvent>
 #include "InfoDialog.h"
-#include "ActiveTransfer.h"
 #include "ui_InfoDialog.h"
 #include "control/Utilities.h"
 #include "MegaApplication.h"

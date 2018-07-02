@@ -16,7 +16,6 @@
 #include "gui/TransferManager.h"
 #include "gui/NodeSelector.h"
 #include "gui/InfoDialog.h"
-#include "gui/InfoOverQuotaDialog.h"
 #include "gui/UpgradeOverStorage.h"
 #include "gui/SetupWizard.h"
 #include "gui/SettingsDialog.h"

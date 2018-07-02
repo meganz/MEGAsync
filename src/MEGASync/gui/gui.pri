@@ -1,7 +1,6 @@
 QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
-    $$PWD/ActiveTransfer.cpp \
     $$PWD/InfoDialog.cpp \
     $$PWD/TransferProgressBar.cpp \
     $$PWD/UsageProgressBar.cpp \
@@ -21,7 +20,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/SizeLimitDialog.cpp \
     $$PWD/UsageWidget.cpp \
     $$PWD/MessageBox.cpp \
-    $$PWD/InfoOverQuotaDialog.cpp \
     $$PWD/QMegaModel.cpp \
     $$PWD/MegaItem.cpp \
     $$PWD/ChangeLogDialog.cpp \
@@ -58,7 +56,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/UpgradeWidget.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
-    $$PWD/ActiveTransfer.h \
     $$PWD/InfoDialog.h \
     $$PWD/TransferProgressBar.h \
     $$PWD/UsageProgressBar.h \
@@ -78,7 +75,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/SizeLimitDialog.h \
     $$PWD/UsageWidget.h \
     $$PWD/MessageBox.h \
-    $$PWD/InfoOverQuotaDialog.h \
     $$PWD/QMegaModel.h \
     $$PWD/MegaItem.h \
     $$PWD/ChangeLogDialog.h \
@@ -123,8 +119,7 @@ debug {
 win32 {
     RESOURCES += $$PWD/Resources_win.qrc
     INCLUDEPATH += $$PWD/win
-    FORMS    += $$PWD/win/ActiveTransfer.ui \
-                $$PWD/win/InfoDialog.ui \
+    FORMS    += $$PWD/win/InfoDialog.ui \
                 $$PWD/win/CustomTransferItem.ui \
                 $$PWD/win/TransferProgressBar.ui \
                 $$PWD/win/UsageProgressBar.ui \
@@ -142,7 +137,6 @@ win32 {
                 $$PWD/win/DownloadFromMegaDialog.ui \
                 $$PWD/win/SizeLimitDialog.ui \
                 $$PWD/win/MessageBox.ui \
-                $$PWD/win/InfoOverQuotaDialog.ui \
                 $$PWD/win/ChangeLogDialog.ui \
                 $$PWD/win/GuestWidget.ui \
                 $$PWD/win/StreamingFromMegaDialog.ui \
@@ -168,8 +162,7 @@ win32 {
 macx {
     RESOURCES += $$PWD/Resources_macx.qrc
     INCLUDEPATH += $$PWD/macx
-    FORMS    += $$PWD/macx/ActiveTransfer.ui \
-                $$PWD/macx/InfoDialog.ui \
+    FORMS    += $$PWD/macx/InfoDialog.ui \
                 $$PWD/macx/TransferProgressBar.ui \
                 $$PWD/macx/UsageProgressBar.ui \
                 $$PWD/macx/NodeSelector.ui \
@@ -186,7 +179,6 @@ macx {
                 $$PWD/macx/DownloadFromMegaDialog.ui \
                 $$PWD/macx/SizeLimitDialog.ui \
                 $$PWD/macx/MessageBox.ui \
-                $$PWD/macx/InfoOverQuotaDialog.ui \
                 $$PWD/macx/ChangeLogDialog.ui \
                 $$PWD/macx/GuestWidget.ui \
                 $$PWD/macx/StreamingFromMegaDialog.ui \
@@ -224,8 +216,7 @@ macx {
 unix:!macx {
     RESOURCES += $$PWD/Resources_linux.qrc
     INCLUDEPATH += $$PWD/linux
-    FORMS    += $$PWD/linux/ActiveTransfer.ui \
-                $$PWD/linux/InfoDialog.ui \
+    FORMS    += $$PWD/linux/InfoDialog.ui \
                 $$PWD/linux/CustomTransferItem.ui \
                 $$PWD/linux/TransferProgressBar.ui \
                 $$PWD/linux/UsageProgressBar.ui \
@@ -243,7 +234,6 @@ unix:!macx {
                 $$PWD/linux/DownloadFromMegaDialog.ui \
                 $$PWD/linux/SizeLimitDialog.ui \
                 $$PWD/linux/MessageBox.ui\
-                $$PWD/linux/InfoOverQuotaDialog.ui \
                 $$PWD/linux/ChangeLogDialog.ui \
                 $$PWD/linux/GuestWidget.ui \
                 $$PWD/linux/StreamingFromMegaDialog.ui \
