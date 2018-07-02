@@ -725,21 +725,22 @@ void InfoDialog::handleOverStorage(int state)
     switch (state)
     {
         case Preferences::STATE_ALMOST_OVER_STORAGE:
-        ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_almost_full.png")));
-        ui->bOQIcon->setIconSize(QSize(64,64));
-        ui->lOQTitle->setText(tr("You're running out of storage space."));
-        ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
-        ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
-        break;
+            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_almost_full.png")));
+            ui->bOQIcon->setIconSize(QSize(64,64));
+            ui->lOQTitle->setText(tr("You're running out of storage space."));
+            ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
+            ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
+            break;
         case Preferences::STATE_OVER_STORAGE:
-        ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));
-        ui->bOQIcon->setIconSize(QSize(64,64));
-        ui->lOQTitle->setText(tr("Your MEGA account is full."));
-        ui->lOQDesc->setText(tr("All file uploads are currently disabled. Please upgrade to PRO"));
-        ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
-        break;
-    default:
-        ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
+            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));
+            ui->bOQIcon->setIconSize(QSize(64,64));
+            ui->lOQTitle->setText(tr("Your MEGA account is full."));
+            ui->lOQDesc->setText(tr("All file uploads are currently disabled. Please upgrade to PRO"));
+            ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
+            break;
+        case Preferences::STATE_BELOW_OVER_STORAGE:
+        default:
+            ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
         break;
     }
 }

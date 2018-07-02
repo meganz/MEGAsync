@@ -2428,6 +2428,11 @@ void MegaApplication::showInfoDialog()
 
     if (infoDialog)
     {
+        if (!almostOQ && !infoOverQuota)
+        {
+            infoDialog->handleOverStorage(Preferences::STATE_BELOW_OVER_STORAGE);
+        }
+
         infoDialog->setOverQuotaMode(infoOverQuota);
         if (!infoDialog->isVisible())
         {

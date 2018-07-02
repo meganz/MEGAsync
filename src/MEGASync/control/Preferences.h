@@ -326,7 +326,8 @@ public:
     };
 
     enum {
-        STATE_ALMOST_OVER_STORAGE = 0,
+        STATE_BELOW_OVER_STORAGE = 0,
+        STATE_ALMOST_OVER_STORAGE,
         STATE_OVER_STORAGE
     };
 
