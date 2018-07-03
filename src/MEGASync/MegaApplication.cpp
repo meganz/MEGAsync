@@ -6352,7 +6352,14 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                 || (transfer->isSyncTransfer()
                     && errorCode == MegaError::API_EKEY)))
     {
-        showErrorMessage(tr("Transfer failed:") + QString::fromUtf8(" " ) + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
+        if (errorCode == MegaError::API_EFAILED)
+        {
+            showWarningMessage(tr("Temporary error, retrying."), QString::fromUtf8(transfer->getFileName()));
+        }
+        else
+        {
+            showErrorMessage(tr("Transfer failed:") + QString::fromUtf8(" " ) + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
+        }
     }
 
     //If there are no pending transfers, reset the statics and update the state of the tray icon
