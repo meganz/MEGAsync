@@ -579,5 +579,9 @@
         <file>images/ico_menu_scanning_11@2x.png</file>
         <file>images/ico_menu_scanning_12.png</file>
         <file>images/ico_menu_scanning_12@2x.png</file>
+        <file>images/downloaded_item_ico.png</file>
+        <file>images/downloaded_item_ico@2x.png</file>
+        <file>images/uploaded_item_ico.png</file>
+        <file>images/uploaded_item_ico@2x.png</file>
     </qresource>
 </RCC>

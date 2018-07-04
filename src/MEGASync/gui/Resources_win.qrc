@@ -314,5 +314,7 @@
         <file>images/ico_menu_scanning_10.png</file>
         <file>images/ico_menu_scanning_11.png</file>
         <file>images/ico_menu_scanning_12.png</file>
+        <file>images/downloaded_item_ico.png</file>
+        <file>images/uploaded_item_ico.png</file>
     </qresource>
 </RCC>
