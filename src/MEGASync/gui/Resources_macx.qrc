@@ -501,8 +501,6 @@
         <file>images/ic_small_available@2x.png</file>
         <file>images/ic_small_versions.png</file>
         <file>images/ic_small_versions@2x.png</file>
-        <file>images/ico_menu_scanning_state.png</file>
-        <file>images/ico_menu_scanning_state@2x.png</file>
         <file>images/ico_menu_uptodate_state.png</file>
         <file>images/ico_menu_uptodate_state@2x.png</file>
         <file>images/ico_pause_transfers_state.png</file>
@@ -557,5 +555,29 @@
         <file>images/achievements@2x.png</file>
         <file>images/ico_menu_full.png</file>
         <file>images/ico_menu_full@2x.png</file>
+        <file>images/ico_menu_scanning_1.png</file>
+        <file>images/ico_menu_scanning_1@2x.png</file>
+        <file>images/ico_menu_scanning_2.png</file>
+        <file>images/ico_menu_scanning_2@2x.png</file>
+        <file>images/ico_menu_scanning_3.png</file>
+        <file>images/ico_menu_scanning_3@2x.png</file>
+        <file>images/ico_menu_scanning_4.png</file>
+        <file>images/ico_menu_scanning_4@2x.png</file>
+        <file>images/ico_menu_scanning_5.png</file>
+        <file>images/ico_menu_scanning_5@2x.png</file>
+        <file>images/ico_menu_scanning_6.png</file>
+        <file>images/ico_menu_scanning_6@2x.png</file>
+        <file>images/ico_menu_scanning_7.png</file>
+        <file>images/ico_menu_scanning_7@2x.png</file>
+        <file>images/ico_menu_scanning_8.png</file>
+        <file>images/ico_menu_scanning_8@2x.png</file>
+        <file>images/ico_menu_scanning_9.png</file>
+        <file>images/ico_menu_scanning_9@2x.png</file>
+        <file>images/ico_menu_scanning_10.png</file>
+        <file>images/ico_menu_scanning_10@2x.png</file>
+        <file>images/ico_menu_scanning_11.png</file>
+        <file>images/ico_menu_scanning_11@2x.png</file>
+        <file>images/ico_menu_scanning_12.png</file>
+        <file>images/ico_menu_scanning_12@2x.png</file>
     </qresource>
 </RCC>

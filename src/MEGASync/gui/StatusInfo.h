@@ -2,6 +2,7 @@
 #define STATUSINFO_H
 
 #include <QWidget>
+#include <QTimer>
 
 namespace Ui {
 class StatusInfo;
@@ -32,11 +33,16 @@ protected:
     void changeEvent(QEvent * event);
     bool eventFilter(QObject *obj, QEvent *e);
 
+private slots:
+    void scanningAnimationStep();
+
 private:
     Ui::StatusInfo *ui;
     int state;
     bool isHovered;
     bool isOverQuota;
+    QTimer scanningTimer;
+    int scanningAnimationIndex;
 };
 
 #endif // STATUSINFO_H
