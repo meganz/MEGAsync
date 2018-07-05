@@ -114,7 +114,7 @@ background-color:  rgb(231, 231, 231);
 
 #wContainerBottom, #wRecentUpdated
 {
-background-color: white;
+background-color: #FAFAFA;
 border-bottom-left-radius: 2px;
 border-bottom-right-radius: 2px;
 }
@@ -298,7 +298,12 @@ color: #999999;
   font-family: &quot;Source Sans Pros&quot;;
   font-size: 13px;
   color: #666666;
-}</string>
+}
+#wHeader, #pOverquota, #pUpdated
+{
+  background-color: #FFFFFF;
+}
+</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -900,7 +905,7 @@ padding-right: 10px;
                    </size>
                   </property>
                   <property name="text">
-                   <string>asdfasdf</string>
+                   <string/>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
@@ -913,7 +918,7 @@ padding-right: 10px;
                 <item>
                  <widget class="QLabel" name="lOQDesc">
                   <property name="text">
-                   <string>asdfasdf</string>
+                   <string/>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>

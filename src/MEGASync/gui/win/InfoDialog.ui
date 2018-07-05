@@ -36,6 +36,11 @@
 	border: none;
 }
 
+#wHeader, #pOverquota, #pUpdated
+{
+  background-color: #FFFFFF;
+}
+
 #wContainerHeader
 {
 border-top-left-radius: 2px;
@@ -119,7 +124,7 @@ background-color:  rgb(231, 231, 231);
 
 #wContainerBottom, #wRecentUpdated
 {
-background-color: white;
+background-color: #FAFAFA;
 border-bottom-left-radius: 2px;
 border-bottom-right-radius: 2px;
 }
@@ -457,7 +462,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/tray_transfer_manager_ico.png</normaloff>:/images/tray_transfer_manager_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -502,7 +507,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -648,7 +653,7 @@ border: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_linux.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/empty_upToDate.png</normaloff>:/images/empty_upToDate.png</iconset>
                </property>
                <property name="iconSize">
@@ -1188,7 +1193,7 @@ padding-right: 10px;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/Nav_Dot_inactive.png</normaloff>
              <normalon>:/images/Nav_Dot_inactive.png</normalon>
              <disabledoff>:/images/Nav_Dot_inactive.png</disabledoff>
@@ -1224,7 +1229,7 @@ padding-right: 10px;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/Nav_Dot_inactive.png</normaloff>:/images/Nav_Dot_inactive.png</iconset>
            </property>
            <property name="iconSize">
@@ -1840,7 +1845,7 @@ color: #333333;
   <tabstop>label</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>
