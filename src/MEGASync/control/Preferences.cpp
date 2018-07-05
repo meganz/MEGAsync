@@ -28,6 +28,12 @@ const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStri
 const int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
 const int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
 
+const long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
+const long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 129600000; // 36 hours
+const long long Preferences::ALMOST_OS_INTERVAL_MS = 259200000; // 72 hours
+const long long Preferences::OS_INTERVAL_MS = 129600000; // 36 hours
+const long long Preferences::USER_INACTIVITY_MS = 300000;
+
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
 const long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS  = 7200000;
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL_OVERQUOTA    = 30000;
@@ -231,6 +237,13 @@ const QString Preferences::inShareFoldersKey        = QString::fromAscii("inShar
 const QString Preferences::totalBandwidthKey        = QString::fromAscii("totalBandwidth");
 const QString Preferences::usedBandwidthIntervalKey        = QString::fromAscii("usedBandwidthInterval");
 const QString Preferences::usedBandwidthKey         = QString::fromAscii("usedBandwidth");
+
+const QString Preferences::overStorageDialogExecutionKey = QString::fromAscii("overStorageDialogExecution");
+const QString Preferences::overStorageNotificationExecutionKey = QString::fromAscii("overStorageNotificationExecution");
+const QString Preferences::almostOverStorageNotificationExecutionKey = QString::fromAscii("almostOverStorageNotificationExecution");
+const QString Preferences::almostOverStorageDismissExecutionKey = QString::fromAscii("almostOverStorageDismissExecution");
+const QString Preferences::overStorageDismissExecutionKey = QString::fromAscii("overStorageDismissExecution");
+
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
 const QString Preferences::showNotificationsKey     = QString::fromAscii("showNotifications");
 const QString Preferences::startOnStartupKey        = QString::fromAscii("startOnStartup");
@@ -334,6 +347,7 @@ const bool Preferences::defaultUseHttpsOnly         = false;
 const bool Preferences::defaultSSLcertificateException = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
 const int  Preferences::defaultDownloadLimitKB      = 0;
+const long long Preferences::defaultTimeStamp       = 0;
 const unsigned long long  Preferences::defaultTransferIdentifier   = 0;
 const int  Preferences::defaultParallelUploadConnections      = 3;
 const int  Preferences::defaultParallelDownloadConnections    = 4;
@@ -448,6 +462,11 @@ void Preferences::initialize(QString dataPath)
 Preferences::Preferences() : QObject(), mutex(QMutex::Recursive)
 {
     diffTimeWithSDK = 0;
+    overStorageDialogExecution = -1;
+    overStorageNotificationExecution = -1;
+    almostOverStorageNotificationExecution = -1;
+    almostOverStorageDismissExecution = -1;
+    overStorageDismissExecution = -1;
     lastTransferNotification = 0;
     clearTemporalBandwidth();
 }
@@ -881,6 +900,121 @@ long long Preferences::getMsDiffTimeWithSDK()
 void Preferences::setDsDiffTimeWithSDK(long long diffTime)
 {
     this->diffTimeWithSDK = diffTime;
+}
+
+long long Preferences::getOverStorageDialogExecution()
+{
+    if (overStorageDialogExecution != -1)
+    {
+        return overStorageDialogExecution;
+    }
+
+    mutex.lock();
+    assert(logged());
+    overStorageDialogExecution = settings->value(overStorageDialogExecutionKey, defaultTimeStamp).toLongLong();
+    mutex.unlock();
+    return overStorageDialogExecution;
+}
+
+void Preferences::setOverStorageDialogExecution(long long timestamp)
+{
+    overStorageDialogExecution = timestamp;
+    mutex.lock();
+    assert(logged());
+    settings->setValue(overStorageDialogExecutionKey, timestamp);
+    mutex.unlock();
+}
+
+long long Preferences::getOverStorageNotificationExecution()
+{
+    if (overStorageNotificationExecution != -1)
+    {
+        return overStorageNotificationExecution;
+    }
+
+    mutex.lock();
+    assert(logged());
+    overStorageNotificationExecution = settings->value(overStorageNotificationExecutionKey, defaultTimeStamp).toLongLong();
+    mutex.unlock();
+    return overStorageNotificationExecution;
+}
+
+void Preferences::setOverStorageNotificationExecution(long long timestamp)
+{
+    overStorageNotificationExecution = timestamp;
+    mutex.lock();
+    assert(logged());
+    settings->setValue(overStorageNotificationExecutionKey, timestamp);
+    mutex.unlock();
+}
+
+long long Preferences::getAlmostOverStorageNotificationExecution()
+{
+    if (almostOverStorageNotificationExecution != -1)
+    {
+        return almostOverStorageNotificationExecution;
+    }
+
+    mutex.lock();
+    assert(logged());
+    almostOverStorageNotificationExecution = settings->value(almostOverStorageNotificationExecutionKey, defaultTimeStamp).toLongLong();
+    mutex.unlock();
+    return almostOverStorageNotificationExecution;
+}
+
+void Preferences::setAlmostOverStorageNotificationExecution(long long timestamp)
+{
+    almostOverStorageNotificationExecution = timestamp;
+    mutex.lock();
+    assert(logged());
+    settings->setValue(almostOverStorageNotificationExecutionKey, timestamp);
+    mutex.unlock();
+}
+
+long long Preferences::getAlmostOverStorageDismissExecution()
+{
+    if (almostOverStorageDismissExecution != -1)
+    {
+        return almostOverStorageDismissExecution;
+    }
+
+    mutex.lock();
+    assert(logged());
+    almostOverStorageDismissExecution = settings->value(almostOverStorageDismissExecutionKey, defaultTimeStamp).toLongLong();
+    mutex.unlock();
+    return almostOverStorageDismissExecution;
+}
+
+void Preferences::setAlmostOverStorageDismissExecution(long long timestamp)
+{
+    almostOverStorageDismissExecution = timestamp;
+    mutex.lock();
+    assert(logged());
+    settings->setValue(almostOverStorageDismissExecutionKey, timestamp);
+    mutex.unlock();
+}
+
+long long Preferences::getOverStorageDismissExecution()
+{
+    if (overStorageDismissExecution != -1)
+    {
+        return overStorageDismissExecution;
+    }
+
+    mutex.lock();
+    assert(logged());
+    overStorageDismissExecution = settings->value(overStorageDismissExecutionKey, defaultTimeStamp).toLongLong();
+    mutex.unlock();
+    return overStorageDismissExecution;
+}
+
+void Preferences::setOverStorageDismissExecution(long long timestamp)
+{
+    overStorageDismissExecution = timestamp;
+    mutex.lock();
+    assert(logged());
+    settings->setValue(overStorageDismissExecutionKey, timestamp);
+    mutex.unlock();
 }
 
 void Preferences::setTemporalBandwidthValid(bool value)

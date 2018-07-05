@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QMenu>
 #include <QPushButton>
-#include "ActiveTransfer.h"
 
 namespace Ui {
 class GuestWidget;

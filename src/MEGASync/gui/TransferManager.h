@@ -43,6 +43,7 @@ public:
 signals:
     void viewedCompletedTransfers();
     void completedTransfersTabActive(bool);
+    void userActivity();
 
 private:
     Ui::TransferManager *ui;
