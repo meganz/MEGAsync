@@ -61,9 +61,6 @@ private:
 
 public slots:
    void addSync();
-   void globalDownloadState();
-   void globalUploadState();
-   void uploadState();
    void onAllUploadsFinished();
    void onAllDownloadsFinished();
    void onAllTransfersFinished();

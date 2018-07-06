@@ -473,57 +473,6 @@ void InfoDialog::addSync()
     app->createTrayMenu();
 }
 
-void InfoDialog::globalDownloadState()
-{
-    if (!activeDownload)
-    {
-        return;
-    }
-
-    if (megaApi->areTransfersPaused(MegaTransfer::TYPE_DOWNLOAD))
-    {
-        megaApi->pauseTransfers(false, MegaTransfer::TYPE_DOWNLOAD);
-    }
-    else
-    {
-        megaApi->pauseTransfers(true, MegaTransfer::TYPE_DOWNLOAD);
-    }
-}
-
-void InfoDialog::globalUploadState()
-{
-    if (!activeUpload)
-    {
-        return;
-    }
-
-    if (megaApi->areTransfersPaused(MegaTransfer::TYPE_UPLOAD))
-    {
-        megaApi->pauseTransfers(false, MegaTransfer::TYPE_UPLOAD);
-    }
-    else
-    {
-        megaApi->pauseTransfers(true, MegaTransfer::TYPE_UPLOAD);
-    }
-}
-
-void InfoDialog::uploadState()
-{
-    if (!activeUpload)
-    {
-        return;
-    }
-
-    if (activeUploadState == MegaTransfer::STATE_PAUSED)
-    {
-        megaApi->pauseTransfer(activeUpload, false);
-    }
-    else
-    {
-        megaApi->pauseTransfer(activeUpload, true);
-    }
-}
-
 void InfoDialog::onAllUploadsFinished()
 {
     remainingUploads = megaApi->getNumPendingUploads();
