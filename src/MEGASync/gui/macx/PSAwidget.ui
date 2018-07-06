@@ -26,7 +26,12 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lTitle
+   <string notr="true">#sWidget
+{
+  background-color: #FFFFFF;
+}
+
+#lTitle
 {
   font-family: &quot;Source Sans Pro&quot;;
   font-size: 14px;

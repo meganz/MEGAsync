@@ -37,7 +37,7 @@
 	background-color: transparent;
 }
 
-#lTransferType, #lTransferTypeActive, #lFileType, #lFileTypeActive, #lGetLink, #lFileTypeCompleted, #lTransferTypeCompleted, #pbTransfer
+#lTransferType, #lTransferTypeActive, #lFileType, #lFileTypeActive, #lGetLink, #lFileTypeCompleted, #lTransferTypeCompleted, #pbTransfer, #bTransferType
 {
 	border: none;
 }
@@ -101,7 +101,7 @@
       <number>0</number>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="completedTransfer">
       <property name="minimumSize">
@@ -165,15 +165,15 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_7">
+         <layout class="QVBoxLayout" name="verticalLayout_5">
           <property name="spacing">
-           <number>1</number>
+           <number>3</number>
           </property>
           <property name="leftMargin">
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>0</number>
+           <number>2</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
@@ -192,7 +192,13 @@
             <property name="minimumSize">
              <size>
               <width>220</width>
-              <height>0</height>
+              <height>17</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>17</height>
              </size>
             </property>
             <property name="text">
@@ -201,17 +207,61 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="lElapsedTime">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
+           <layout class="QHBoxLayout" name="horizontalLayout_5">
+            <property name="spacing">
+             <number>8</number>
             </property>
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
+            <item>
+             <widget class="QPushButton" name="lTransferTypeCompleted">
+              <property name="minimumSize">
+               <size>
+                <width>12</width>
+                <height>12</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>12</width>
+                <height>12</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>12</width>
+                <height>12</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lElapsedTime">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>15</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>15</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </item>
          </layout>
         </widget>
@@ -245,10 +295,6 @@
          </property>
          <property name="text">
           <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../Resources_macx.qrc">
-           <normaloff>:/images/ico_item_link.png</normaloff>:/images/ico_item_link.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -436,13 +482,13 @@
                      <property name="minimumSize">
                       <size>
                        <width>220</width>
-                       <height>0</height>
+                       <height>17</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>16777215</height>
+                       <height>17</height>
                       </size>
                      </property>
                      <property name="font">
@@ -690,7 +736,7 @@
                    <number>1000</number>
                   </property>
                   <property name="value">
-                   <number>50</number>
+                   <number>0</number>
                   </property>
                   <property name="textVisible">
                    <bool>false</bool>

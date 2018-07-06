@@ -57,7 +57,7 @@ void CustomTransferItem::setFileName(QString fileName)
 void CustomTransferItem::setType(int type, bool isSyncTransfer)
 {
     TransferItem::setType(type, isSyncTransfer);
-    QIcon icon;
+    QIcon icon, iconCompleted;
 
     qreal ratio = 1.0;
 #if QT_VERSION >= 0x050000
@@ -68,11 +68,13 @@ void CustomTransferItem::setType(int type, bool isSyncTransfer)
     {
         case MegaTransfer::TYPE_UPLOAD:
             icon.addFile(QString::fromUtf8(":/images/upload_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            iconCompleted.addFile(QString::fromUtf8(":/images/uploaded_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
             ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
             break;
         case MegaTransfer::TYPE_DOWNLOAD:
             icon.addFile(QString::fromUtf8(":/images/download_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            iconCompleted.addFile(QString::fromUtf8(":/images/downloaded_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
             ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
             break;
@@ -82,6 +84,8 @@ void CustomTransferItem::setType(int type, bool isSyncTransfer)
 
     ui->lTransferType->setIcon(icon);
     ui->lTransferType->setIconSize(QSize(12, 12));
+    ui->lTransferTypeCompleted->setIcon(iconCompleted);
+    ui->lTransferTypeCompleted->setIconSize(QSize(12, 12));
 }
 
 void CustomTransferItem::setTransferState(int value)

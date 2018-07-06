@@ -274,7 +274,6 @@
         <file>fonts/SourceSansPro-Semibold.ttf</file>
         <file>images/ic_small_available.png</file>
         <file>images/ic_small_versions.png</file>
-        <file>images/ico_menu_scanning_state.png</file>
         <file>images/ico_menu_uptodate_state.png</file>
         <file>images/ico_pause_transfers_state.png</file>
         <file>images/ico_resume_transfers_state.png</file>
@@ -298,5 +297,25 @@
         <file>images/small_sketch.png</file>
         <file>images/ico_item_link.png</file>
         <file>images/ico_item_retry.png</file>
+        <file>images/storage_almost_full.png</file>
+        <file>images/storage_full.png</file>
+        <file>images/card_border.png</file>
+        <file>images/achievements.png</file>
+        <file>images/ico_menu_full.png</file>
+        <file>images/ico_menu_scanning_1.png</file>
+        <file>images/ico_menu_scanning_2.png</file>
+        <file>images/ico_menu_scanning_3.png</file>
+        <file>images/ico_menu_scanning_4.png</file>
+        <file>images/ico_menu_scanning_5.png</file>
+        <file>images/ico_menu_scanning_6.png</file>
+        <file>images/ico_menu_scanning_7.png</file>
+        <file>images/ico_menu_scanning_8.png</file>
+        <file>images/ico_menu_scanning_9.png</file>
+        <file>images/ico_menu_scanning_10.png</file>
+        <file>images/ico_menu_scanning_11.png</file>
+        <file>images/ico_menu_scanning_12.png</file>
+        <file>images/downloaded_item_ico.png</file>
+        <file>images/uploaded_item_ico.png</file>
+        <file>images/upload_to_mega.png</file>
     </qresource>
 </RCC>

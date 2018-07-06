@@ -405,7 +405,9 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaError", "Connection overflow");
     QT_TRANSLATE_NOOP("MegaError", "Write error");
     QT_TRANSLATE_NOOP("MegaError", "Read error");
-    QT_TRANSLATE_NOOP("MegaError", "Invalid application key");
+    QT_TRANSLATE_NOOP("MegaError", "Invalid application key");    
+    QT_TRANSLATE_NOOP("MegaError", "SSL verification failed");
+    QT_TRANSLATE_NOOP("MegaError", "Not enough quota");
     QT_TRANSLATE_NOOP("MegaError", "Unknown error");
     QT_TRANSLATE_NOOP("MegaError", "Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.");
     QT_TRANSLATE_NOOP("MegaError", "Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.");
@@ -607,6 +609,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     bwOverquotaTimestamp = 0;
     enablingBwOverquota = false;
     bwOverquotaDialog = NULL;
+    storageOverquotaDialog = NULL;
     bwOverquotaEvent = false;
     infoWizard = NULL;
     externalNodesTimestamp = 0;
@@ -617,10 +620,12 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     transferManager = NULL;
     queuedUserStats = 0;
     cleaningSchedulerExecution = 0;
+    lastUserActivityExecution = 0;
     maxMemoryUsage = 0;
     nUnviewedTransfers = 0;
     completedTabActive = false;
     inflightUserStats = false;
+    almostOQ = false;
 
 #ifdef __APPLE__
     scanningTimer = NULL;
@@ -1256,6 +1261,9 @@ void MegaApplication::start()
         if (!infoDialog)
         {
             infoDialog = new InfoDialog(this);
+            connect(infoDialog, SIGNAL(dismissOQ(bool)), this, SLOT(onDismissOQ(bool)));
+            connect(infoDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
+
             if (!QSystemTrayIcon::isSystemTrayAvailable())
             {
                 if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE))
@@ -1424,6 +1432,9 @@ void MegaApplication::loggedIn()
     if (!infoDialog)
     {
         infoDialog = new InfoDialog(this);
+        connect(infoDialog, SIGNAL(dismissOQ(bool)), this, SLOT(onDismissOQ(bool)));
+        connect(infoDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
+
         if (!QSystemTrayIcon::isSystemTrayAvailable())
         {
             if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE))
@@ -1738,6 +1749,9 @@ void MegaApplication::closeDialogs()
 
     delete bwOverquotaDialog;
     bwOverquotaDialog = NULL;
+
+    delete storageOverquotaDialog;
+    storageOverquotaDialog = NULL;
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -2108,6 +2122,72 @@ void MegaApplication::checkMemoryUsage()
     }
 }
 
+void MegaApplication::checkOverStorageStates()
+{
+    // Check if user is active
+    if ((QDateTime::currentMSecsSinceEpoch() - lastUserActivityExecution) > Preferences::USER_INACTIVITY_MS)
+    {
+        return;
+    }
+
+    if (infoOverQuota)
+    {
+        if (!preferences->getOverStorageDialogExecution()
+                || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_DIALOG_INTERVAL_MS))
+        {
+            preferences->setOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
+            if (!storageOverquotaDialog)
+            {
+                storageOverquotaDialog = new UpgradeOverStorage(megaApi, pricing);
+                connect(storageOverquotaDialog, SIGNAL(finished(int)), this, SLOT(overquotaDialogFinished(int)));
+                storageOverquotaDialog->show();
+            }
+            else
+            {
+                storageOverquotaDialog->activateWindow();
+                storageOverquotaDialog->raise();
+            }
+        }
+        else if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
+                     && (!preferences->getOverStorageNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
+        {
+            preferences->setOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
+            sendOverStorageNotification(Preferences::STATE_OVER_STORAGE);
+        }
+
+        if (!preferences->getOverStorageDismissExecution()
+                || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDismissExecution()) > Preferences::OS_INTERVAL_MS))
+        {
+            if (infoDialog)
+            {
+                infoDialog->handleOverStorage(Preferences::STATE_OVER_STORAGE);
+            }
+        }
+    }
+    else if (almostOQ)
+    {
+        if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDismissExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)
+                     && (!preferences->getAlmostOverStorageDismissExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getAlmostOverStorageDismissExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)))
+        {
+            if (infoDialog)
+            {
+                infoDialog->handleOverStorage(Preferences::STATE_ALMOST_OVER_STORAGE);
+            }
+        }
+
+
+        bool pendingTransfers = megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads();
+
+        if (!pendingTransfers && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)
+                              && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)
+                              && (!preferences->getAlmostOverStorageNotificationExecution() || (QDateTime::currentMSecsSinceEpoch() - preferences->getAlmostOverStorageNotificationExecution()) > Preferences::ALMOST_OS_INTERVAL_MS))
+        {
+            preferences->setAlmostOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
+            sendOverStorageNotification(Preferences::STATE_ALMOST_OVER_STORAGE);
+        }
+    }
+}
+
 void MegaApplication::periodicTasks()
 {
     if (appfinished)
@@ -2149,6 +2229,8 @@ void MegaApplication::periodicTasks()
             networkConfigurationManager.updateConfigurations();
             checkMemoryUsage();
             megaApi->update();
+
+            checkOverStorageStates();
         }
 
         megaApi->updateStats();
@@ -2199,6 +2281,8 @@ void MegaApplication::cleanAll()
 
     delete bwOverquotaDialog;
     bwOverquotaDialog = NULL;
+    delete storageOverquotaDialog;
+    storageOverquotaDialog = NULL;
     delete infoWizard;
     infoWizard = NULL;
     delete infoDialog;
@@ -2344,6 +2428,11 @@ void MegaApplication::showInfoDialog()
 
     if (infoDialog)
     {
+        if (!almostOQ && !infoOverQuota)
+        {
+            infoDialog->handleOverStorage(Preferences::STATE_BELOW_OVER_STORAGE);
+        }
+
         infoDialog->setOverQuotaMode(infoOverQuota);
         if (!infoDialog->isVisible())
         {
@@ -2570,6 +2659,33 @@ void MegaApplication::initHttpsServer()
             delete [] os;
         }
     }
+}
+
+void MegaApplication::sendOverStorageNotification(int state)
+{
+    MegaNotification *notification = new MegaNotification();
+
+    switch (state)
+    {
+        case Preferences::STATE_ALMOST_OVER_STORAGE:
+            notification->setTitle(tr("Your account is almost full."));
+            notification->setText(tr("Upgrade now to a PRO account."));
+            notification->setActions(QStringList() << QString::fromUtf8("Get PRO"));
+            connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
+        break;
+        case Preferences::STATE_OVER_STORAGE:
+            notification->setTitle(tr("Your account is full."));
+            notification->setText(tr("Upgrade now to a PRO account."));
+            notification->setActions(QStringList() << QString::fromUtf8("Get PRO"));
+            connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
+        break;
+        default:
+            delete notification;
+            return;
+    }
+
+    notificator->notify(notification);
+
 }
 
 bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
@@ -2804,6 +2920,12 @@ void MegaApplication::overquotaDialogFinished(int)
     {
         bwOverquotaDialog->deleteLater();
         bwOverquotaDialog = NULL;
+    }
+
+    if (storageOverquotaDialog)
+    {
+        storageOverquotaDialog->deleteLater();
+        storageOverquotaDialog = NULL;
     }
 }
 
@@ -3487,6 +3609,33 @@ void MegaApplication::showInFolder(int activationButton)
     }
 }
 
+void MegaApplication::redirectToUpgrade(int activationButton)
+{
+    if (activationButton == MegaNotification::ActivationActionButtonClicked)
+    {
+        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
+        QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
+        megaApi->getSessionTransferURL(url.toUtf8().constData());
+    }
+}
+
+void MegaApplication::registerUserActivity()
+{
+    lastUserActivityExecution = QDateTime::currentMSecsSinceEpoch();
+}
+
+void MegaApplication::onDismissOQ(bool overStorage)
+{
+    if (overStorage)
+    {
+        preferences->setOverStorageDismissExecution(QDateTime::currentMSecsSinceEpoch());
+    }
+    else
+    {
+        preferences->setAlmostOverStorageDismissExecution(QDateTime::currentMSecsSinceEpoch());
+    }
+}
+
 void MegaApplication::updateUserStats(bool force)
 {
     if (appfinished)
@@ -3562,35 +3711,29 @@ void MegaApplication::showTrayMenu(QPoint *point)
         trayGuestMenu->popup(p);
 #endif
     }
-    else if (trayMenu && !infoOverQuota)
+    else if (trayMenu)
     {
+        if (!infoOverQuota)
+        {
+            addSyncAction->setVisible(true);
+        }
+        else
+        {
+            addSyncAction->setVisible(false);
+        }
+
         if (trayMenu->isVisible())
         {
             trayMenu->close();
         }
 
         QPoint p = point ? (*point) - QPoint(trayMenu->sizeHint().width(), 0)
-                         : QCursor::pos();
+                         : QCursor::pos();      
 
 #ifdef __APPLE__
         trayMenu->exec(p);
 #else
         trayMenu->popup(p);
-#endif
-    }
-    else if (trayOverQuotaMenu && infoOverQuota)
-    {
-        if (trayOverQuotaMenu->isVisible())
-        {
-            trayOverQuotaMenu->close();
-        }
-
-        QPoint p = point ? (*point) - QPoint(trayOverQuotaMenu->sizeHint().width(), 0)
-                         : QCursor::pos();
-#ifdef __APPLE__
-        trayOverQuotaMenu->exec(p);
-#else
-        trayOverQuotaMenu->popup(p);
 #endif
     }
 }
@@ -3953,6 +4096,7 @@ void MegaApplication::transferManagerActionClicked(int tab)
     // active, tracking is disabled
     connect(transferManager, SIGNAL(viewedCompletedTransfers()), this, SLOT(clearViewedTransfers()));
     connect(transferManager, SIGNAL(completedTransfersTabActive(bool)), this, SLOT(onCompletedTransfersTabActive(bool)));
+    connect(transferManager, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
     transferManager->setActiveTab(tab);
 
     Platform::activateBackgroundWindow(transferManager);
@@ -4824,6 +4968,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         httpServer->processRequest(NULL, request);
     }*/
 
+    registerUserActivity();
     megaApi->retryPendingConnections();
 
     if (reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::Context)
@@ -4988,6 +5133,7 @@ void MegaApplication::openSettings(int tab)
 
     //Show a new settings dialog
     settingsDialog = new SettingsDialog(this);
+    connect(settingsDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
     if (infoOverQuota)
     {
         settingsDialog->setOverQuotaMode(true);
@@ -5106,6 +5252,7 @@ void MegaApplication::changeProxy()
 
     //Show a new settings dialog
     settingsDialog = new SettingsDialog(this, proxyOnly);
+    connect(settingsDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
     if (isLinux && !proxyOnly)
     {
         if (infoOverQuota)
@@ -6134,6 +6281,16 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         preferences->sync();
 
+        int percentage = ceil((100 * ((double)details->getStorageUsed()) / details->getStorageMax()));
+        if (percentage > 90 && percentage <= 100)
+        {
+            almostOQ = true;
+        }
+        else
+        {
+            almostOQ = false;
+        }
+
         if (infoOverQuota && preferences->usedStorage() < preferences->totalStorage())
         {
             if (settingsDialog)
@@ -6688,7 +6845,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         if (infoDialog)
         {
             infoDialog->setTransfer(transfer);
-            infoDialog->updateTransfers();
             infoDialog->transferFinished(e->getErrorCode());
         }
 
@@ -6791,7 +6947,6 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
         if (infoDialog)
         {
             infoDialog->setTransfer(transfer);
-            infoDialog->updateTransfers();
         }
     }
     else if (activeTransferTag[type] == transfer->getTag())

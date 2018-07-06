@@ -266,6 +266,27 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
         TransferItem *item = model->transferItems[tag];
         if (item)
         {
+            if (item && item->getLinkButtonClicked(event->pos() - option.rect.topLeft()))
+            {
+                int modelType = model->getModelType();
+                if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
+                {
+                    MegaTransfer *transfer = model->getTransferByTag(tag);
+                    if (transfer)
+                    {
+                        if (!transfer->getLastError().getErrorCode())
+                        {
+                            QToolTip::showText(event->globalPos(), tr("Get link"));
+                        }
+                        else
+                        {
+                            QToolTip::showText(event->globalPos(), tr("Retry"));
+                        }
+                        return true;
+                    }
+                }
+            }
+
             QString fileName = item->getFileName();
             if (fileName != item->getTransferName())
             {
