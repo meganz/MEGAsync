@@ -73,8 +73,8 @@ private slots:
     void on_bUpgrade_clicked();
     void openFolder(QString path);
     void on_bChats_clicked();
+    void onOverlayClicked();
     void on_bTransferManager_clicked();
-    void scanningAnimationStep();
     void onUserAction(int action);
 
     void on_bDotUsedStorage_clicked();
@@ -92,6 +92,7 @@ signals:
 
 private:
     Ui::InfoDialog *ui;
+    QPushButton *overlay;
 #ifdef __APPLE__
     QPushButton *arrow;
 #endif
@@ -122,11 +123,9 @@ protected:
 
 protected:
     QDateTime lastPopupUpdate;
-    QTimer scanningTimer;
     QTimer downloadsFinishedTimer;
     QTimer uploadsFinishedTimer;
     QTimer transfersFinishedTimer;
-    int scanningAnimationIndex;
     MegaApplication *app;
     Preferences *preferences;
     mega::MegaApi *megaApi;

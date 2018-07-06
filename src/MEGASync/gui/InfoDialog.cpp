@@ -78,10 +78,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
-    scanningTimer.setSingleShot(false);
-    scanningTimer.setInterval(60);
-    scanningAnimationIndex = 1;
-    connect(&scanningTimer, SIGNAL(timeout()), this, SLOT(scanningAnimationStep()));
 
     uploadsFinishedTimer.setSingleShot(true);
     uploadsFinishedTimer.setInterval(5000);
@@ -116,6 +112,21 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     on_bDotUsedStorage_clicked();
 
+    //Create the overlay widget with a semi-transparent background
+    //that will be shown over the transfers when they are paused
+    overlay = new QPushButton(this);
+    overlay->setStyleSheet(QString::fromAscii("background-color: transparent; "
+                                              "border: none; "));
+    overlay->resize(ui->pUpdated->size());
+
+#ifdef __APPLE__
+    overlay->move(1, 72);
+#else
+    overlay->move(2, 60);
+    overlay->resize(overlay->width()-4, overlay->height());
+#endif
+    overlay->hide();
+    connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
     connect(this, SIGNAL(openTransferManager(int)), app, SLOT(externalOpenTransferManager(int)));
 
     if (preferences->logged())
@@ -395,17 +406,6 @@ void InfoDialog::updateState()
         if (state != STATE_PAUSED)
         {
             state = STATE_PAUSED;
-            if (scanningTimer.isActive())
-            {
-                scanningTimer.stop();
-            }
-
-            ui->lSyncUpdated->setText(tr("Paused"));
-            QIcon icon;
-            icon.addFile(QString::fromUtf8(":/images/tray_paused_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-
-            ui->label->setIcon(icon);
-            ui->label->setIconSize(QSize(36, 36));
         }
     }
     else
@@ -446,17 +446,6 @@ void InfoDialog::updateState()
             if (state != STATE_WAITING)
             {
                 state = STATE_WAITING;
-                if (scanningTimer.isActive())
-                {
-                    scanningTimer.stop();
-                }
-
-                ui->lSyncUpdated->setText(tr("Waiting"));
-                QIcon icon;
-                icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-
-                ui->label->setIcon(icon);
-                ui->label->setIconSize(QSize(36, 36));
             }
         }
         else if (indexing)
@@ -464,18 +453,6 @@ void InfoDialog::updateState()
             if (state != STATE_INDEXING)
             {
                 state = STATE_INDEXING;
-                if (!scanningTimer.isActive())
-                {
-                    scanningAnimationIndex = 1;
-                    scanningTimer.start();
-                }
-
-                ui->lSyncUpdated->setText(tr("Scanning..."));
-
-                QIcon icon;
-                icon.addFile(QString::fromUtf8(":/images/tray_scanning_large_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->label->setIcon(icon);
-                ui->label->setIconSize(QSize(36, 36));
             }
         }
         else
@@ -483,16 +460,6 @@ void InfoDialog::updateState()
             if (state != STATE_UPDATED)
             {
                 state = STATE_UPDATED;
-                if (scanningTimer.isActive())
-                {
-                    scanningTimer.stop();
-                }
-
-                ui->lSyncUpdated->setText(tr("Up to date"));
-                QIcon icon;
-                icon.addFile(QString::fromUtf8(":/images/empty_upToDate.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->label->setIcon(icon);
-                ui->label->setIconSize(QSize(36, 36));
             }
         }
     }
@@ -581,6 +548,7 @@ void InfoDialog::onAllTransfersFinished()
     {
         if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
         {
+            overlay->setVisible(true);
             ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
         }
 
@@ -708,6 +676,11 @@ void InfoDialog::on_bChats_clicked()
     megaApi->getSessionTransferURL(url.toUtf8().constData());
 }
 
+void InfoDialog::onOverlayClicked()
+{
+    app->uploadActionClicked();
+}
+
 void InfoDialog::on_bTransferManager_clicked()
 {
     emit userActivity();
@@ -721,6 +694,8 @@ void InfoDialog::clearUserAttributes()
 
 void InfoDialog::handleOverStorage(int state)
 {
+    overlay->setVisible(false);
+
     switch (state)
     {
         case Preferences::STATE_ALMOST_OVER_STORAGE:
@@ -971,6 +946,7 @@ void InfoDialog::on_bDotUsedQuota_clicked()
 
 void InfoDialog::on_bDismiss_clicked()
 {
+    overlay->setVisible(false);
     ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
     emit dismissOQ(overQuotaState);
 }
@@ -986,18 +962,6 @@ void InfoDialog::hideUsageBalloon()
     {
         storageUsedMenu->hide();
     }
-}
-
-void InfoDialog::scanningAnimationStep()
-{
-    scanningAnimationIndex = scanningAnimationIndex%18;
-    scanningAnimationIndex++;
-    QIcon icon;
-    icon.addFile(QString::fromUtf8(":/images/scanning_anime")+
-                 QString::number(scanningAnimationIndex) + QString::fromUtf8(".png") , QSize(), QIcon::Normal, QIcon::Off);
-
-    ui->label->setIcon(icon);
-    ui->label->setIconSize(QSize(36, 36));
 }
 
 #ifdef __APPLE__

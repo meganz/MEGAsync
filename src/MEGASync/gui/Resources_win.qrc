@@ -316,5 +316,6 @@
         <file>images/ico_menu_scanning_12.png</file>
         <file>images/downloaded_item_ico.png</file>
         <file>images/uploaded_item_ico.png</file>
+        <file>images/upload_to_mega.png</file>
     </qresource>
 </RCC>
