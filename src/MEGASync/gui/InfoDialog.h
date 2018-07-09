@@ -64,6 +64,7 @@ public slots:
    void onAllUploadsFinished();
    void onAllDownloadsFinished();
    void onAllTransfersFinished();
+   void updateDialogState();
 
 private slots:
     void on_bSettings_clicked();
@@ -109,6 +110,7 @@ private:
     GuestWidget *gWidget;
     int state;
     bool overQuotaState;
+    int storageState;
 
 protected:
     void changeEvent(QEvent * event);

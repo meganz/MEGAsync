@@ -60,12 +60,13 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     gWidget = NULL;
 
     overQuotaState = false;
+    storageState = Preferences::STATE_BELOW_OVER_STORAGE;
 
     //Initialize header dialog and disable chat features
     ui->wHeader->setStyleSheet(QString::fromUtf8("#wHeader {border: none;}"));
 
     //Set properties of some widgets
-    ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
+    ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
 
     ui->bTransferManager->setToolTip(tr("Open Transfer Manager"));
     ui->bSettings->setToolTip(tr("Show MEGAsync options"));
@@ -125,7 +126,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     overlay->move(2, 60);
     overlay->resize(overlay->width()-4, overlay->height());
 #endif
-    overlay->hide();
+    overlay->show();
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
     connect(this, SIGNAL(openTransferManager(int)), app, SLOT(externalOpenTransferManager(int)));
 
@@ -497,8 +498,9 @@ void InfoDialog::onAllTransfersFinished()
     {
         if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
         {
-            overlay->setVisible(true);
-            ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+            updateDialogState();
+//            overlay->setVisible(true);
+//            ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
         }
 
         if (preferences->logged())
@@ -511,6 +513,30 @@ void InfoDialog::onAllTransfersFinished()
             app->showNotificationMessage(tr("All transfers have been completed"));
         }
     }
+}
+
+void InfoDialog::updateDialogState()
+{
+    if (storageState == Preferences::STATE_ALMOST_OVER_STORAGE
+            || storageState == Preferences::STATE_OVER_STORAGE)
+    {
+        return;
+    }
+
+    remainingUploads = megaApi->getNumPendingUploads();
+    remainingDownloads = megaApi->getNumPendingDownloads();
+
+    if (remainingUploads || remainingDownloads || ui->wListTransfers->getModel()->rowCount(QModelIndex()))
+    {
+        overlay->setVisible(false);
+        ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
+    }
+    else
+    {
+        overlay->setVisible(true);
+        ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+    }
+
 }
 
 void InfoDialog::on_bSettings_clicked()
@@ -644,6 +670,7 @@ void InfoDialog::clearUserAttributes()
 void InfoDialog::handleOverStorage(int state)
 {
     overlay->setVisible(false);
+    storageState = state;
 
     switch (state)
     {
@@ -663,7 +690,7 @@ void InfoDialog::handleOverStorage(int state)
             break;
         case Preferences::STATE_BELOW_OVER_STORAGE:
         default:
-            ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
+            updateDialogState();
         break;
     }
 }
