@@ -10,6 +10,7 @@
 #include "megaapi.h"
 #include "QTransfersModel.h"
 #include "MegaApplication.h"
+#include "platform/Platform.h"
 
 using namespace mega;
 
@@ -204,8 +205,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
                 }
             }
         }
-
-        if (item && item->getLinkButtonClicked(((QMouseEvent *)event)->pos() - option.rect.topLeft()))
+        else if (item && item->getLinkButtonClicked(((QMouseEvent *)event)->pos() - option.rect.topLeft()))
         {
             QList<MegaHandle> exportList;
             QStringList linkList;
@@ -251,6 +251,22 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
 
                 }
              }
+        }
+        else
+        {
+            MegaTransfer *transfer = NULL;
+            transfer = model->getTransferByTag(tag);
+            if (transfer && transfer->isFinished() && transfer->getPath())
+            {
+                QString localPath = QString::fromUtf8(transfer->getPath());
+                #ifdef WIN32
+                if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+                {
+                    localPath = localPath.mid(4);
+                }
+                #endif
+                Platform::showInFolder(localPath);
+            }
         }
         return true;
     }
