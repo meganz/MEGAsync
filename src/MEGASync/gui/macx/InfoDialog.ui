@@ -478,7 +478,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
             </size>
            </property>
            <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
+            <cursorShape>ArrowCursor</cursorShape>
            </property>
            <property name="styleSheet">
             <string notr="true">border: none;
@@ -523,7 +523,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
             </size>
            </property>
            <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
+            <cursorShape>ArrowCursor</cursorShape>
            </property>
            <property name="styleSheet">
             <string notr="true">border: none;
@@ -858,8 +858,7 @@ padding-right: 10px;
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">
-</string>
+                <string notr="true"/>
                </property>
                <layout class="QHBoxLayout" name="horizontalLayout_5">
                 <property name="spacing">
@@ -1868,7 +1867,7 @@ color: #333333;
             </size>
            </property>
            <property name="cursor">
-            <cursorShape>PointingHandCursor</cursorShape>
+            <cursorShape>ArrowCursor</cursorShape>
            </property>
            <property name="mouseTracking">
             <bool>false</bool>

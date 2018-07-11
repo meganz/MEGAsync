@@ -1040,6 +1040,9 @@ padding-right: 10px;
                     <height>50</height>
                    </size>
                   </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
                   <property name="text">
                    <string>Dismiss</string>
                   </property>
@@ -1058,6 +1061,9 @@ padding-right: 10px;
                     <width>16777215</width>
                     <height>50</height>
                    </size>
+                  </property>
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
                   </property>
                   <property name="text">
                    <string>Buy more space</string>
