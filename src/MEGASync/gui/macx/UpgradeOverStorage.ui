@@ -44,7 +44,7 @@
 #lEncourageUpgrade
 {
 	color: #F0373A;
-	font-family: Lato;
+	font-family: &quot;Source Sans Pro&quot;;
 	font-size: 14px;
 	font-weight: 600;
 	line-height: 17px;
@@ -53,7 +53,7 @@
 #lUsageStorage
 {
 	color: #333333;
-	font-family: Lato;
+	font-family: &quot;Source Sans Pro&quot;;
 	font-size: 14px;
 	line-height: 24px;
 }

@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>512</height>
+    <height>524</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>400</width>
-    <height>512</height>
+    <height>524</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>400</width>
-    <height>512</height>
+    <height>524</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -247,16 +247,15 @@ border-radius: 2px;
 #lOQTitle
 {
 	color: #333333;
-	font-family: Lato;
+	font-family: &quot;Source Sans Pro&quot;;
 	font-size: 16px;
 }
 
 #lOQDesc
 {
 	color: #F0373A;
-	font-family: Lato;
+	font-family: &quot;Source Sans Pro&quot;;
 	font-size: 14px;
-	font-weight: 600;
 }
 
 
@@ -370,13 +369,13 @@ color: #999999;
      <property name="minimumSize">
       <size>
        <width>400</width>
-       <height>380</height>
+       <height>391</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>400</width>
-       <height>380</height>
+       <height>391</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -597,13 +596,13 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>320</height>
+          <height>331</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>320</height>
+          <height>331</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -630,32 +629,32 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>200</height>
+             <height>211</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
              <width>16777215</width>
-             <height>320</height>
+             <height>331</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true"/>
            </property>
            <property name="currentIndex">
-            <number>2</number>
+            <number>1</number>
            </property>
            <widget class="QWidget" name="pUpdated">
             <property name="minimumSize">
              <size>
               <width>400</width>
-              <height>200</height>
+              <height>211</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
               <width>400</width>
-              <height>320</height>
+              <height>331</height>
              </size>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_8">
@@ -678,6 +677,9 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
               <layout class="QHBoxLayout" name="horizontalLayout_9">
                <property name="spacing">
                 <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>5</number>
                </property>
                <item>
                 <spacer name="horizontalSpacer_9">
@@ -815,47 +817,53 @@ padding-right: 10px;
            <widget class="QWidget" name="pOverquota">
             <property name="minimumSize">
              <size>
-              <width>0</width>
-              <height>200</height>
+              <width>400</width>
+              <height>211</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>16777215</width>
-              <height>320</height>
+              <width>400</width>
+              <height>331</height>
              </size>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
              <property name="spacing">
-              <number>30</number>
+              <number>23</number>
              </property>
              <property name="leftMargin">
               <number>20</number>
              </property>
              <property name="topMargin">
-              <number>30</number>
+              <number>32</number>
              </property>
              <property name="rightMargin">
               <number>20</number>
              </property>
              <property name="bottomMargin">
-              <number>40</number>
+              <number>30</number>
              </property>
              <item>
               <widget class="QWidget" name="wOQIcon" native="true">
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>64</height>
+                 <height>75</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>64</height>
+                 <height>75</height>
                 </size>
                </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
                <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <property name="spacing">
+                 <number>0</number>
+                </property>
                 <property name="leftMargin">
                  <number>0</number>
                 </property>
@@ -866,7 +874,7 @@ padding-right: 10px;
                  <number>0</number>
                 </property>
                 <property name="bottomMargin">
-                 <number>0</number>
+                 <number>2</number>
                 </property>
                 <item>
                  <spacer name="horizontalSpacer_5">
@@ -932,16 +940,16 @@ padding-right: 10px;
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_13">
                 <property name="spacing">
-                 <number>15</number>
+                 <number>10</number>
                 </property>
                 <property name="leftMargin">
-                 <number>0</number>
+                 <number>6</number>
                 </property>
                 <property name="topMargin">
                  <number>0</number>
                 </property>
                 <property name="rightMargin">
-                 <number>0</number>
+                 <number>6</number>
                 </property>
                 <property name="bottomMargin">
                  <number>0</number>
@@ -988,21 +996,11 @@ padding-right: 10px;
               </widget>
              </item>
              <item>
-              <spacer name="verticalSpacer">
-               <property name="orientation">
-                <enum>Qt::Vertical</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>20</width>
-                 <height>40</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item>
               <widget class="QWidget" name="wQQButtons" native="true">
                <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <property name="spacing">
+                 <number>10</number>
+                </property>
                 <property name="leftMargin">
                  <number>0</number>
                 </property>
@@ -1087,14 +1085,14 @@ padding-right: 10px;
            <widget class="QWidget" name="pTransfers">
             <property name="minimumSize">
              <size>
-              <width>0</width>
-              <height>200</height>
+              <width>400</width>
+              <height>211</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>16777215</width>
-              <height>320</height>
+              <width>400</width>
+              <height>331</height>
              </size>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_12">
@@ -1115,13 +1113,13 @@ padding-right: 10px;
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>200</height>
+                 <height>211</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>320</height>
+                 <height>331</height>
                 </size>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_6">
