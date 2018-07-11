@@ -176,7 +176,7 @@ Please, select another folder.</source>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="obsolete">Egy túl nagy könyvtárt próbálsz szinkronizálni. Hogy megakadályozzuk az egész boot rendszer szinkronizálását, mely nem túlzottan ajánlott és veszélyes, megkérünk hogy kezdd a kisebb fájlokkal és fokozatosan növeld a MEGAsync futása alatt.</translation>
+        <translation type="obsolete">Egy túl nagy könyvtárt próbálsz szinkronizálni. Hogy megakadályozzuk az egész boot rendszer szinkronizálását, mely nem túlzottan ajánlott és veszélyes, megkérünk, hogy kezdd a kisebb fájlokkal és fokozatosan növeld a MEGAsync futása alatt.</translation>
     </message>
 </context>
 <context>
