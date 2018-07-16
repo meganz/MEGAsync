@@ -115,10 +115,6 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 {
                     preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
                 }
-
-                email.clear();
-                password.clear();
-
                 break;
             }
 
@@ -150,7 +146,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     return;
                 }
 
-                megaApi->multiFactorAuthLogin(request->getEmail(), password.toUtf8().constData(), pin.toUtf8().constData(), delegateListener);
+                megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData(), delegateListener);
             }
             else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
             {
@@ -326,8 +322,8 @@ void SetupWizard::on_bNext_clicked()
     }
     else if (w == ui->pLogin)
     {
-        email = ui->eLoginEmail->text().toLower().trimmed();
-        password = ui->eLoginPassword->text();
+        QString email = ui->eLoginEmail->text().toLower().trimmed();
+        QString password = ui->eLoginPassword->text();
 
         if (!email.length())
         {
@@ -833,9 +829,6 @@ void SetupWizard::closeEvent(QCloseEvent *event)
 
 void SetupWizard::page_login()
 {
-    email.clear();
-    password.clear();
-
     ui->eLoginPassword->clear();
     ui->lVerify->hide();
     ui->lLearnMore->hide();

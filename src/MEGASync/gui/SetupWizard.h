@@ -67,8 +67,6 @@ protected:
     QString sessionKey;
     mega::QTMegaRequestListener *delegateListener;
     bool closing;
-    QString email;
-    QString password;
 };
 
 #endif // SETUPWIZARD_H
