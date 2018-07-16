@@ -147,6 +147,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 }
 
                 megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData(), delegateListener);
+                return;
             }
             else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
             {
