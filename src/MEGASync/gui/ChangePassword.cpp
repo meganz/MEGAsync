@@ -118,7 +118,17 @@ void ChangePassword::on_bOk_clicked()
     }
 
     ui->bOk->setEnabled(false);
-    megaApi->multiFactorAuthCheck(Preferences::instance()->email().toUtf8().constData(), delegateListener);
+
+    char *email = megaApi->getMyEmail();
+    if (email)
+    {
+        megaApi->multiFactorAuthCheck(email, delegateListener);
+        delete [] email;
+    }
+    else
+    {
+        megaApi->multiFactorAuthCheck(Preferences::instance()->email().toUtf8().constData(), delegateListener);
+    }
 }
 
 void ChangePassword::changeEvent(QEvent *event)

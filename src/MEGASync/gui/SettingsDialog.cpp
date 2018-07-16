@@ -951,7 +951,16 @@ void SettingsDialog::loadSettings()
         }
 
         //Account
-        ui->lEmail->setText(preferences->email());
+        char *email = megaApi->getMyEmail();
+        if (email)
+        {
+            ui->lEmail->setText(QString::fromUtf8(email));
+            delete [] email;
+        }
+        else
+        {
+            ui->lEmail->setText(preferences->email());
+        }
         refreshAccountDetails();
 
         QIcon icon;
