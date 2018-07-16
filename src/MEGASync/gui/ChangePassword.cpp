@@ -67,6 +67,10 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
                     megaApi->changePassword(NULL, newPassword().toUtf8().constData(), delegateListener);
                 }
             }
+            else
+            {
+                QMessageBox::critical(this, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()));
+            }
             break;
         }
         case MegaRequest::TYPE_CHANGE_PW:
@@ -80,9 +84,13 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
             {
                 QMessageBox::critical(NULL, tr("Error"), tr("Invalid code"));
             }
+            else if (e->getErrorCode() == MegaError::API_ETOOMANY)
+            {
+                QMessageBox::critical(NULL, tr("Error"), tr("Too many requests. Please wait."));
+            }
             else
             {
-                QMessageBox::warning(this, tr("Error"), tr("Wrong password"));
+                QMessageBox::critical(this, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()));
             }
 
             break;
