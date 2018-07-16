@@ -6354,11 +6354,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     {
         if (errorCode == MegaError::API_EFAILED)
         {
-            showWarningMessage(tr("Temporary error, retrying."), QString::fromUtf8(transfer->getFileName()));
+            showWarningMessage(tr("Transfer failed:") + QString::fromUtf8(" ") + tr("Temporarily not available"), QString::fromUtf8(transfer->getFileName()));
         }
         else
         {
-            showErrorMessage(tr("Transfer failed:") + QString::fromUtf8(" " ) + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
+            showErrorMessage(tr("Transfer failed:") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
         }
     }
 
