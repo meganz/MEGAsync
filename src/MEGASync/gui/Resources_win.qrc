@@ -313,5 +313,6 @@
         <file>fonts/SourceSansPro-Semibold.ttf</file>
         <file>images/ic_small_available.png</file>
         <file>images/ic_small_versions.png</file>
+        <file>images/shield.png</file>
     </qresource>
 </RCC>
