@@ -39,12 +39,16 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
             {
                 if (request->getFlag()) //2FA enabled
                 {
+                    QPointer<ChangePassword> dialog = this;
                     QPointer<Login2FA> verification = new Login2FA(this);
                     verification->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
                     int result = verification->exec();
-                    if (!verification || result != QDialog::Accepted)
+                    if (!dialog || !verification || result != QDialog::Accepted)
                     {
-                        ui->bOk->setEnabled(true);
+                        if (dialog)
+                        {
+                            ui->bOk->setEnabled(true);
+                        }
                         delete verification;
                         return;
                     }
@@ -74,13 +78,17 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
             }
             else if (e->getErrorCode() == MegaError::API_EFAILED || e->getErrorCode() == MegaError::API_EEXPIRED)
             {
+                QPointer<ChangePassword> dialog = this;
                 QPointer<Login2FA> verification = new Login2FA(this);
                 verification->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
                 verification->invalidCode(true);
                 int result = verification->exec();
-                if (!verification || result != QDialog::Accepted)
+                if (!dialog || !verification || result != QDialog::Accepted)
                 {
-                    ui->bOk->setEnabled(true);
+                    if (dialog)
+                    {
+                        ui->bOk->setEnabled(true);
+                    }
                     delete verification;
                     return;
                 }
