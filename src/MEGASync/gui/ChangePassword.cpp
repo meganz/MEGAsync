@@ -31,8 +31,6 @@ QString ChangePassword::confirmNewPassword()
 
 void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *request, mega::MegaError *e)
 {
-    ui->bOk->setEnabled(true);
-
     switch(request->getType())
     {
         case MegaRequest::TYPE_MULTI_FACTOR_AUTH_CHECK:
@@ -46,6 +44,7 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
                     int result = verification->exec();
                     if (!verification || result != QDialog::Accepted)
                     {
+                        ui->bOk->setEnabled(true);
                         delete verification;
                         return;
                     }
@@ -70,7 +69,7 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
         {
             if (e->getErrorCode() == MegaError::API_OK)
             {
-                QMessageBox::information(this, tr("Password changed"), tr("Your password has been changed."));
+                ui->bOk->setEnabled(true);
                 accept();
             }
             else if (e->getErrorCode() == MegaError::API_EFAILED || e->getErrorCode() == MegaError::API_EEXPIRED)
@@ -81,6 +80,7 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
                 int result = verification->exec();
                 if (!verification || result != QDialog::Accepted)
                 {
+                    ui->bOk->setEnabled(true);
                     delete verification;
                     return;
                 }
@@ -92,10 +92,12 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
             }
             else if (e->getErrorCode() == MegaError::API_ETOOMANY)
             {
+                ui->bOk->setEnabled(true);
                 QMessageBox::critical(NULL, tr("Error"), tr("Too many requests. Please wait."));
             }
             else
             {
+                ui->bOk->setEnabled(true);
                 QMessageBox::critical(this, tr("Error"), QCoreApplication::translate("MegaError", e->getErrorString()));
             }
 

@@ -5702,6 +5702,14 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         break;
     }
+    case MegaRequest::TYPE_CHANGE_PW:
+    {
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            QMessageBox::information(NULL, tr("Password changed"), tr("Your password has been changed."));
+        }
+        break;
+    }
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
         inflightUserStats = false;
