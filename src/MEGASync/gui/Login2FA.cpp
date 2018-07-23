@@ -38,7 +38,7 @@ void Login2FA::invalidCode(bool showWarning)
 
 void Login2FA::on_bNext_clicked()
 {
-    QRegExp re(QString::fromUtf8("\\d*"));
+    QRegExp re(QString::fromUtf8("\\d\\d\\d\\d\\d\\d"));
     QString text = pinCode();
     if (text.isEmpty() || !re.exactMatch(text))
     {
