@@ -93,6 +93,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     connect(&transfersFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllTransfersFinished()));
 
     connect(ui->wStatus, SIGNAL(clicked()), app, SLOT(pauseTransfers()), Qt::QueuedConnection);
+    connect(ui->wPSA, SIGNAL(PSAseen(int)), app, SLOT(PSAseen(int)), Qt::QueuedConnection);
 
     ui->lBlockedItem->setText(QString::fromUtf8(""));
     ui->bDotUsedQuota->hide();
@@ -526,7 +527,9 @@ void InfoDialog::updateDialogState()
     remainingUploads = megaApi->getNumPendingUploads();
     remainingDownloads = megaApi->getNumPendingDownloads();
 
-    if (remainingUploads || remainingDownloads || ui->wListTransfers->getModel()->rowCount(QModelIndex()))
+    if (remainingUploads || remainingDownloads
+            || ui->wListTransfers->getModel()->rowCount(QModelIndex())
+            || ui->wPSA->isPSAshown())
     {
         overlay->setVisible(false);
         ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
@@ -693,6 +696,16 @@ void InfoDialog::handleOverStorage(int state)
             updateDialogState();
         break;
     }
+}
+
+void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton)
+{
+    if (ui->wPSA->isPSAshown() == id)
+    {
+        return;
+    }
+
+    ui->wPSA->setAnnounce(id, title, text, urlImage, textButton, linkButton);
 }
 
 void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *e)

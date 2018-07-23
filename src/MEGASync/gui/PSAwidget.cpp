@@ -1,6 +1,7 @@
 #include "PSAwidget.h"
 #include "ui_PSAwidget.h"
 #include <QDesktopServices>
+#include <Utilities.h>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -12,6 +13,17 @@ PSAwidget::PSAwidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    this->idPSA = 0;
+    this->reply = NULL;
+
+    networkAccess = new QNetworkAccessManager(this);
+    timer = new QTimer(this);
+    timer->setSingleShot(true);
+
+    connect(timer, SIGNAL(timeout()), this, SLOT(onTestTimeout()));
+    connect(networkAccess, SIGNAL(finished(QNetworkReply*)),
+            this, SLOT(onRequestImgFinished(QNetworkReply*)));
+
     minHeightAnimation = new QPropertyAnimation();
     maxHeightAnimation = new QPropertyAnimation();
     animationGroup = new QParallelAnimationGroup();
@@ -22,6 +34,7 @@ PSAwidget::PSAwidget(QWidget *parent) :
     ui->pPSA->hide();
     ui->sWidget->hide();
     ui->wImage->hide();
+    ui->bMore->hide();
 }
 
 PSAwidget::~PSAwidget()
@@ -30,15 +43,42 @@ PSAwidget::~PSAwidget()
     delete minHeightAnimation;
     delete maxHeightAnimation;
     delete animationGroup;
+    delete networkAccess;
+    delete timer;
 }
 
-bool PSAwidget::setAnnounce(QString title, QString desc, QString urlMore, QImage image)
+void PSAwidget::setAnnounce(int id, QString title, QString desc, QString urlImage, QString textButton, QString urlClick)
 {
-    if (title.isEmpty() || desc.isEmpty())
+    this->idPSA = id;
+    this->title = title;
+    this->desc = desc;
+    this->urlImage = urlImage;
+    this->textButton = textButton;
+    this->urlClick = urlClick;
+
+    if (Utilities::getDevicePixelRatio() >= 2)
     {
-        return false;
+        QString imageName = QUrl(urlImage).fileName().split(QString::fromUtf8(".")).at(0);
+        if (!imageName.contains(QRegExp(QString::fromUtf8("@2x$"))))
+        {
+            urlImage.replace(imageName, imageName + QString::fromUtf8("@2x"));
+        }
     }
 
+    testRequest.setUrl(QUrl(urlImage));
+    testRequest.setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::AlwaysNetwork);
+
+    timer->start(5000);
+    reply = networkAccess->get(testRequest);
+}
+
+int PSAwidget::isPSAshown()
+{
+    return idPSA;
+}
+
+bool PSAwidget::showPSA(QImage image)
+{
     QFont f = ui->lTitle->font();
     QFontMetrics fm = QFontMetrics(f);
     int width = ui->lTitle->width();
@@ -47,9 +87,13 @@ bool PSAwidget::setAnnounce(QString title, QString desc, QString urlMore, QImage
     ui->lDesc->setFrameStyle(QFrame::Box);
     ui->lDesc->setText(desc);
 
-    this->urlMore = urlMore;
+    if (!textButton.isEmpty())
+    {
+        ui->bMore->setText(textButton);
+        ui->bMore->show();
+    }
 
-    if (!image.isNull())
+    if (!(image.isNull()))
     {
         ui->bImage->setIcon(QPixmap::fromImage(image));
         ui->bImage->setIconSize(QSize(64, 64));
@@ -76,20 +120,24 @@ bool PSAwidget::setAnnounce(QString title, QString desc, QString urlMore, QImage
 
 void PSAwidget::removeAnnounce()
 {
+    this->idPSA = 0;
+    this->title = QString();
+    this->desc = QString();
+    this->urlImage = QString();
+    this->textButton = QString();
+    this->urlClick = QString();
+
     ui->lTitle->setText(QString::fromUtf8(""));
     ui->lDesc->setText(QString::fromUtf8(""));
+    ui->bMore->setText(QString::fromUtf8(""));
+    ui->bMore->hide();
     ui->wImage->hide();
-
-    ui->pPSA->hide();
-    ui->sWidget->hide();
-    setMinimumHeight(0);
-    setMaximumHeight(0);
 }
 
 void PSAwidget::on_bMore_clicked()
 {
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl(urlMore));
-    emit moreclicked();
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(urlClick));
+    on_bDismiss_clicked();
 }
 
 void PSAwidget::on_bDismiss_clicked()
@@ -106,12 +154,50 @@ void PSAwidget::on_bDismiss_clicked()
     maxHeightAnimation->setEndValue(0);
     minHeightAnimation->setDuration(250);
     maxHeightAnimation->setDuration(250);
-    animationGroup->start();
+    animationGroup->start();   
 
-    emit dismissClicked();
+    emit PSAseen(idPSA);
+    emit PSAhidden();
+
+    removeAnnounce();
 }
 
 void PSAwidget::onAnimationFinished()
 {
     ui->pPSA->show();
+    emit PSAshown();
+}
+
+void PSAwidget::onRequestImgFinished(QNetworkReply *reply)
+{
+    timer->stop();
+    reply->deleteLater();
+    this->reply = NULL;
+
+    QVariant statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
+    if (!statusCode.isValid() || (statusCode.toInt() != 200) || (reply->error() != QNetworkReply::NoError))
+    {
+        showPSA();
+        return;
+    }
+
+    QByteArray bytes = reply->readAll();
+    if (bytes.isEmpty())
+    {
+        showPSA();
+        return;
+    }
+
+    QImage img(64, 64, QImage::Format_ARGB32_Premultiplied);
+    img.loadFromData(bytes);
+    showPSA(img);
+}
+
+void PSAwidget::onTestTimeout()
+{
+    if (reply)
+    {
+        reply->abort();
+        showPSA();
+    }
 }

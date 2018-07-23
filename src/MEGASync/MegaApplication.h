@@ -228,7 +228,7 @@ private slots:
     void showInFolder(int activationButton);
     void redirectToUpgrade(int activationButton);
     void registerUserActivity();
-
+    void PSAseen(int id);
 
 protected:
     void createTrayIcon();

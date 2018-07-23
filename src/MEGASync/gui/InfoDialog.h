@@ -46,6 +46,7 @@ public:
     void addSync(mega::MegaHandle h);
     void clearUserAttributes();
     void handleOverStorage(int state);
+    void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
 
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
 
