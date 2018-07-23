@@ -56,14 +56,15 @@ background-color:  rgba(0, 0, 0, 10%);
 {
 	color: rgba(0,0,0,0.85);
 	font-family: &quot;Source Sans Pro&quot;;
-	font-size: 13px;
+	font-size: 14px;
+    font-weight: 500;
 }
 
 #lCode
 {
 	color: #333333;
 	font-family: &quot;Source Sans Pro&quot;;
-	font-size: 13px;
+	font-size: 14px;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -123,6 +124,9 @@ background-color:  rgba(0, 0, 0, 10%);
           <width>48</width>
           <height>48</height>
          </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
         </property>
         <property name="text">
          <string/>
@@ -483,7 +487,7 @@ background-color:  rgba(0, 0, 0, 10%);
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
-       <number>-1</number>
+       <number>6</number>
       </property>
       <property name="leftMargin">
        <number>12</number>
@@ -547,6 +551,12 @@ background-color:  rgba(0, 0, 0, 10%);
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>leCode</tabstop>
+  <tabstop>bNext</tabstop>
+  <tabstop>bCancel</tabstop>
+  <tabstop>bShield</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

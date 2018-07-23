@@ -8,9 +8,10 @@ Login2FA::Login2FA(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->lError->hide();
-    ui->leCode->setFocus();
 
     connect(ui->leCode, SIGNAL(textChanged(QString)), this, SLOT(inputCodeChanged()));
+    ui->bNext->setDefault(true);
+    ui->leCode->setFocus();
 }
 
 Login2FA::~Login2FA()
