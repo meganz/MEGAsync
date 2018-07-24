@@ -41,7 +41,6 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
                 {
                     QPointer<ChangePassword> dialog = this;
                     QPointer<Login2FA> verification = new Login2FA(this);
-                    verification->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
                     int result = verification->exec();
                     if (!dialog || !verification || result != QDialog::Accepted)
                     {
@@ -80,7 +79,6 @@ void ChangePassword::onRequestFinish(mega::MegaApi *api, mega::MegaRequest *requ
             {
                 QPointer<ChangePassword> dialog = this;
                 QPointer<Login2FA> verification = new Login2FA(this);
-                verification->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
                 verification->invalidCode(true);
                 int result = verification->exec();
                 if (!dialog || !verification || result != QDialog::Accepted)
