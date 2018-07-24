@@ -125,13 +125,16 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             }
             else if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
             {
+                QPointer<SetupWizard> dialog = this;
                 QPointer<Login2FA> verification = new Login2FA(this);
-                verification->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
                 int result = verification->exec();
-                if (!verification || result != QDialog::Accepted)
+                if (!dialog || !verification || result != QDialog::Accepted)
                 {
+                    if (dialog)
+                    {
+                        page_login();
+                    }
                     delete verification;
-                    page_login();
                     return;
                 }
 
@@ -159,14 +162,17 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             }
             else if (error->getErrorCode() == MegaError::API_EFAILED || error->getErrorCode() == MegaError::API_EEXPIRED)
             {
+                QPointer<SetupWizard> dialog = this;
                 QPointer<Login2FA> verification = new Login2FA(this);
-                verification->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
                 verification->invalidCode(true);
                 int result = verification->exec();
-                if (!verification || result != QDialog::Accepted)
+                if (!dialog || !verification || result != QDialog::Accepted)
                 {
+                    if (dialog)
+                    {
+                        page_login();
+                    }
                     delete verification;
-                    page_login();
                     return;
                 }
 
