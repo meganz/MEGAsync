@@ -1366,7 +1366,29 @@ void InfoDialog::drawAvatar(QString email)
             color = QString::fromUtf8(avatarColor);
             delete [] avatarColor;
         }
-        ui->bAvatar->setAvatarLetter(Utilities::getAvatarLetter(), color);
+
+        Preferences *preferences = Preferences::instance();
+        QString fullname = (preferences->firstName() + preferences->lastName()).trimmed();
+        if (fullname.isEmpty())
+        {
+            char *email = megaApi->getMyEmail();
+            if (email)
+            {
+                fullname = QString::fromUtf8(email);
+                delete [] email;
+            }
+            else
+            {
+                fullname = preferences->email();
+            }
+
+            if (fullname.isEmpty())
+            {
+                fullname = QString::fromUtf8(" ");
+            }
+        }
+
+        ui->bAvatar->setAvatarLetter(fullname.at(0).toUpper(), color);
         delete [] userHandle;
     }
 }

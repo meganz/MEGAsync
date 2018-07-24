@@ -5702,6 +5702,14 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         break;
     }
+    case MegaRequest::TYPE_CHANGE_PW:
+    {
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            QMessageBox::information(NULL, tr("Password changed"), tr("Your password has been changed."));
+        }
+        break;
+    }
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
         inflightUserStats = false;
@@ -6352,7 +6360,14 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                 || (transfer->isSyncTransfer()
                     && errorCode == MegaError::API_EKEY)))
     {
-        showErrorMessage(tr("Transfer failed:") + QString::fromUtf8(" " ) + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
+        if (errorCode == MegaError::API_EFAILED)
+        {
+            showWarningMessage(tr("Transfer failed:") + QString::fromUtf8(" ") + tr("Temporarily not available"), QString::fromUtf8(transfer->getFileName()));
+        }
+        else
+        {
+            showErrorMessage(tr("Transfer failed:") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
+        }
     }
 
     //If there are no pending transfers, reset the statics and update the state of the tray icon
