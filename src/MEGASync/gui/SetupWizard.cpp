@@ -18,6 +18,10 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowModality(Qt::WindowModal);
 
+    animationTimer = new QTimer(this);
+    animationTimer->setSingleShot(true);
+    connect(animationTimer, SIGNAL(timeout()), this, SLOT(animationTimout()));
+
     connect(ui->ePassword, SIGNAL(textChanged(QString)), this, SLOT(onPasswordTextChanged(QString)));
 
     ui->wAdvancedSetup->installEventFilter(this);
@@ -40,7 +44,20 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
         QString::fromUtf8("\" style=\"color:#DC0000\">"))
         .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz")));
 
+
+
+    m_animation = new QPropertyAnimation(ui->wErrorMessage, "size");
+    m_animation->setDuration(400);
+    m_animation->setEasingCurve(QEasingCurve::OutCubic);
+    m_animation->setStartValue(QSize(ui->wErrorMessage->minimumWidth(), ui->wErrorMessage->minimumHeight()));
+    m_animation->setEndValue(QSize(ui->wErrorMessage->maximumWidth(), ui->wErrorMessage->maximumHeight()));
+    connect(m_animation, SIGNAL(finished()), this, SLOT(onErrorAnimationFinished()));
+
     page_initial();
+
+    ui->lError->setText(QString::fromUtf8(""));
+    ui->lError->hide();
+    ui->wErrorMessage->resize(QSize(ui->wErrorMessage->minimumWidth(),ui->wErrorMessage->minimumHeight()));
 
 #if 0 //Strings for the translation system. These lines don't need to be built
     QT_TR_NOOP("Very Weak");
@@ -54,6 +71,8 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
 SetupWizard::~SetupWizard()
 {
     delete delegateListener;
+    delete animationTimer;
+    delete m_animation;
     delete ui;
 }
 
@@ -1024,6 +1043,38 @@ void SetupWizard::on_bLearMore_clicked()
 void SetupWizard::on_bFinish_clicked()
 {
     on_bCancel_clicked();
+}
+
+void SetupWizard::showErrorMessage(QString error)
+{
+    animationTimer->stop();
+
+    ui->lError->setText(error);
+    ui->lError->hide();
+    m_animation->setDirection(QAbstractAnimation::Forward);
+
+    m_animation->start();
+}
+
+void SetupWizard::onErrorAnimationFinished()
+{
+    if (QAbstractAnimation::Forward == m_animation->direction())
+    {
+        m_animation->setDirection(QAbstractAnimation::Backward);
+        ui->lError->show();
+        animationTimer->start(2500);
+    }
+    else
+    {
+        m_animation->setDirection(QAbstractAnimation::Forward);
+    }
+}
+
+void SetupWizard::animationTimout()
+{
+    ui->lError->setText(QString::fromUtf8(""));
+    ui->lError->hide();
+    m_animation->start();
 }
 
 void SetupWizard::onPasswordTextChanged(QString text)

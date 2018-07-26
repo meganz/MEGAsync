@@ -80,6 +80,18 @@
 	font-weight: normal;
 	color: #666666;
 	font-size:20px;
+}
+
+#lError
+{
+	color: #FFFFFF;
+	font-family: &quot;SF UI Text&quot;;
+	font-size: 13px;
+}
+
+#wErrorMessage
+{
+	background-color: #333333;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -306,11 +318,132 @@
     </widget>
    </item>
    <item>
+    <widget class="QWidget" name="wErrors" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>560</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>560</width>
+       <height>32</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <widget class="QWidget" name="wErrorMessage" native="true">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>560</width>
+        <height>32</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>560</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>560</width>
+        <height>32</height>
+       </size>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_10">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetDefaultConstraint</enum>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <spacer name="horizontalSpacer_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>268</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="lError">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>530</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>530</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>268</width>
+           <height>0</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
     <widget class="QStackedWidget" name="sPages">
      <property name="minimumSize">
       <size>
        <width>0</width>
-       <height>290</height>
+       <height>258</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -320,7 +453,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="pSetup">
       <property name="styleSheet">
@@ -331,7 +464,7 @@
         <number>11</number>
        </property>
        <property name="topMargin">
-        <number>68</number>
+        <number>25</number>
        </property>
        <property name="bottomMargin">
         <number>12</number>
@@ -442,7 +575,7 @@
         <number>60</number>
        </property>
        <property name="topMargin">
-        <number>25</number>
+        <number>0</number>
        </property>
        <property name="rightMargin">
         <number>60</number>
@@ -475,7 +608,7 @@
            <number>9</number>
           </property>
           <property name="topMargin">
-           <number>74</number>
+           <number>50</number>
           </property>
           <property name="rightMargin">
            <number>9</number>
@@ -538,94 +671,6 @@
             <property name="echoMode">
              <enum>QLineEdit::Password</enum>
             </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLabel" name="lRepeatPassword">
-            <property name="text">
-             <string>Repeat password:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="eRepeatPassword">
-            <property name="styleSheet">
-             <string notr="true">background: none;</string>
-            </property>
-            <property name="echoMode">
-             <enum>QLineEdit::Password</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QWidget" name="widget_4" native="true">
-            <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,1">
-             <property name="spacing">
-              <number>18</number>
-             </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <item>
-              <widget class="QCheckBox" name="cAgreeWithTerms">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>20</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>18</width>
-                 <height>20</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true"/>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="lTermsLink">
-               <property name="focusPolicy">
-                <enum>Qt::StrongFocus</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true"/>
-               </property>
-               <property name="text">
-                <string>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</string>
-               </property>
-               <property name="textFormat">
-                <enum>Qt::RichText</enum>
-               </property>
-               <property name="wordWrap">
-                <bool>true</bool>
-               </property>
-               <property name="openExternalLinks">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
            </widget>
           </item>
           <item row="3" column="1">
@@ -747,6 +792,94 @@
                </property>
                <property name="styleSheet">
                 <string notr="true">background-color: rgba(0,0,0,0.2);</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="lRepeatPassword">
+            <property name="text">
+             <string>Repeat password:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="1">
+           <widget class="QLineEdit" name="eRepeatPassword">
+            <property name="styleSheet">
+             <string notr="true">background: none;</string>
+            </property>
+            <property name="echoMode">
+             <enum>QLineEdit::Password</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="1">
+           <widget class="QWidget" name="widget_4" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,1">
+             <property name="spacing">
+              <number>18</number>
+             </property>
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QCheckBox" name="cAgreeWithTerms">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>18</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="lTermsLink">
+               <property name="focusPolicy">
+                <enum>Qt::StrongFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true"/>
+               </property>
+               <property name="text">
+                <string>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</string>
+               </property>
+               <property name="textFormat">
+                <enum>Qt::RichText</enum>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
+               </property>
+               <property name="openExternalLinks">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -950,7 +1083,7 @@ background-color: #E2E2E2;
            <number>80</number>
           </property>
           <property name="topMargin">
-           <number>100</number>
+           <number>50</number>
           </property>
           <property name="rightMargin">
            <number>80</number>
@@ -1004,7 +1137,7 @@ background-color: #E2E2E2;
         <number>15</number>
        </property>
        <property name="topMargin">
-        <number>26</number>
+        <number>0</number>
        </property>
        <property name="rightMargin">
         <number>15</number>
@@ -1448,12 +1581,15 @@ color: #666666;
      </widget>
      <widget class="QWidget" name="pAdvanced">
       <layout class="QVBoxLayout" name="verticalLayout_6">
+       <property name="spacing">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QLabel" name="lAdvancedSetup">
          <property name="minimumSize">
           <size>
            <width>0</width>
-           <height>40</height>
+           <height>20</height>
           </size>
          </property>
          <property name="font">
@@ -1512,19 +1648,19 @@ color: #333333;
            <number>6</number>
           </property>
           <property name="verticalSpacing">
-           <number>6</number>
+           <number>0</number>
           </property>
           <property name="leftMargin">
            <number>0</number>
           </property>
           <property name="topMargin">
-           <number>4</number>
+           <number>0</number>
           </property>
           <property name="rightMargin">
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>9</number>
+           <number>0</number>
           </property>
           <item row="0" column="0">
            <widget class="QLabel" name="lLocalFolder">
@@ -1652,6 +1788,12 @@ color: #333333;
 }</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QPushButton" name="bSyncType">
             <property name="minimumSize">
@@ -1735,7 +1877,7 @@ color: #333333;
         <number>20</number>
        </property>
        <property name="topMargin">
-        <number>19</number>
+        <number>10</number>
        </property>
        <property name="rightMargin">
         <number>20</number>
@@ -1809,13 +1951,13 @@ font-family: &quot;Montserrat&quot;;
          <property name="minimumSize">
           <size>
            <width>541</width>
-           <height>226</height>
+           <height>200</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>541</width>
-           <height>226</height>
+           <height>200</height>
           </size>
          </property>
          <property name="styleSheet">

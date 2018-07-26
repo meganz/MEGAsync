@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QDesktopServices>
+#include <QPropertyAnimation>
 
 #include "NodeSelector.h"
 #include "Preferences.h"
@@ -48,8 +49,14 @@ private slots:
     void lTermsLink_clicked();
     void on_bLearMore_clicked();
     void on_bFinish_clicked();
+    void showErrorMessage(QString error);
+    void onErrorAnimationFinished();
+    void animationTimout();
 
     void onPasswordTextChanged(QString text);
+
+private:
+    QPropertyAnimation *m_animation;
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
@@ -73,6 +80,7 @@ protected:
     QString sessionKey;
     mega::QTMegaRequestListener *delegateListener;
     bool closing;
+    QTimer *animationTimer;
 };
 
 #endif // SETUPWIZARD_H
