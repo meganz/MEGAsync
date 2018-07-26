@@ -116,11 +116,11 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             if (error->getErrorCode() == MegaError::API_EEXIST)
             {
-                QMessageBox::warning(NULL, tr("Error"), tr("User already exists"), QMessageBox::Ok);
+                showErrorMessage(tr("User already exists"));
             }
             else if (error->getErrorCode() != MegaError::API_ESSL)
             {
-                QMessageBox::warning(NULL, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
+                showErrorMessage(QCoreApplication::translate("MegaError", error->getErrorString()));
             }
             break;
         }
@@ -143,27 +143,25 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             if (error->getErrorCode() == MegaError::API_ENOENT)
             {
-                QMessageBox::warning(NULL, tr("Error"), tr("Incorrect email and/or password.") + QString::fromUtf8(" ") + tr("Have you verified your account?"), QMessageBox::Ok);
+                showErrorMessage(tr("Incorrect email and/or password.") + QString::fromUtf8(" ") + tr("Have you verified your account?"));
             }
             else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
             {
-                QMessageBox::warning(NULL, tr("Error"), tr("Please check your e-mail and click the link to confirm your account."), QMessageBox::Ok);
+                showErrorMessage(tr("Please check your e-mail and click the link to confirm your account."));
             }
             else if (error->getErrorCode() == MegaError::API_ETOOMANY)
             {
-                QMessageBox::warning(NULL, tr("Error"),
-                                     tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
-                                     .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
-                                     .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")))
-                                     , QMessageBox::Ok);
+                showErrorMessage(tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
+                                    .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
+                                    .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm"))));
             }
             else if (error->getErrorCode() == MegaError::API_EBLOCKED)
             {
-                QMessageBox::critical(NULL, tr("Error"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
+                showErrorMessage(tr("Your account has been blocked. Please contact support@mega.co.nz"));
             }
             else if (error->getErrorCode() != MegaError::API_ESSL)
             {
-                QMessageBox::warning(NULL, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
+                showErrorMessage(QCoreApplication::translate("MegaError", error->getErrorString()));
             }
             break;
         }
@@ -204,9 +202,9 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             if (!megaApi->isFilesystemAvailable())
             {
                 page_login();
-                QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                           "Please, try again. If the problem persists "
-                                                           "please contact bug@mega.co.nz"), QMessageBox::Ok);
+                showErrorMessage(tr("Unable to get the filesystem.\n"
+                                    "Please, try again. If the problem persists "
+                                    "please contact bug@mega.co.nz"));
                 done(QDialog::Rejected);
                 preferences->setCrashed(true);
                 app->rebootApplication(false);
@@ -317,19 +315,19 @@ void SetupWizard::on_bNext_clicked()
 
         if (!email.length())
         {
-            QMessageBox::warning(NULL, tr("Error"), tr("Please, enter your e-mail address"), QMessageBox::Ok);
+            showErrorMessage(tr("Please, enter your e-mail address"));
             return;
         }
 
         if (!email.contains(QChar::fromAscii('@')) || !email.contains(QChar::fromAscii('.')))
         {
-           QMessageBox::warning(NULL, tr("Error"), tr("Please, enter a valid e-mail address"), QMessageBox::Ok);
+            showErrorMessage(tr("Please, enter a valid e-mail address"));
            return;
         }
 
         if (!password.length())
         {
-            QMessageBox::warning(NULL, tr("Error"), tr("Please, enter your password"), QMessageBox::Ok);
+            showErrorMessage(tr("Please, enter your password"));
             return;
         }
 
@@ -347,43 +345,43 @@ void SetupWizard::on_bNext_clicked()
 
         if (!name.length())
         {
-            QMessageBox::warning(NULL, tr("Error"), tr("Please, enter your name"), QMessageBox::Ok);
+            showErrorMessage(tr("Please, enter your name"));
             return;
         }
 
         if (!email.length())
         {
-            QMessageBox::warning(NULL, tr("Error"), tr("Please, enter your e-mail address"), QMessageBox::Ok);
+            showErrorMessage(tr("Please, enter your e-mail address"));
             return;
         }
 
         if (!email.contains(QChar::fromAscii('@')) || !email.contains(QChar::fromAscii('.')))
         {
-           QMessageBox::warning(NULL, tr("Error"), tr("Please, enter a valid e-mail address"), QMessageBox::Ok);
-           return;
+            showErrorMessage(tr("Please, enter a valid e-mail address"));
+            return;
         }
 
         if (!password.length())
         {
-            QMessageBox::warning(NULL, tr("Error"), tr("Please, enter your password"), QMessageBox::Ok);
+            showErrorMessage(tr("Please, enter your password"));
             return;
         }
 
         if (password.length() < 8)
         {
-            QMessageBox::warning(NULL, tr("Error"), tr("Please, enter a stronger password"), QMessageBox::Ok);
+            showErrorMessage(tr("Please, enter a stronger password"));
             return;
         }
 
         if (password.compare(repeatPassword))
         {
-            QMessageBox::warning(NULL, tr("Error"), tr("The entered passwords don't match"), QMessageBox::Ok);
+            showErrorMessage(tr("The entered passwords don't match"));
             return;
         }
 
         if (!ui->cAgreeWithTerms->isChecked())
         {
-            QMessageBox::warning(NULL, tr("Error"), tr("You have to accept our terms of service"), QMessageBox::Ok);
+            showErrorMessage(tr("You have to accept our terms of service"));
             return;
         }
 
@@ -437,13 +435,13 @@ void SetupWizard::on_bNext_clicked()
     {
         if (!ui->eLocalFolder->text().length())
         {
-            QMessageBox::warning(NULL, tr("Warning"), tr("Please, select a local folder"), QMessageBox::Ok);
+            showErrorMessage(tr("Please, select a local folder"));
             return;
         }
 
         if (!ui->eMegaFolder->text().length())
         {
-            QMessageBox::warning(NULL, tr("Warning"), tr("Please, select a MEGA folder"), QMessageBox::Ok);
+            showErrorMessage(tr("Please, select a MEGA folder"));
             return;
         }
 
@@ -461,9 +459,10 @@ void SetupWizard::on_bNext_clicked()
             if (!rootNode)
             {
                 page_login();
-                QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                           "Please, try again. If the problem persists "
-                                                           "please contact bug@mega.co.nz"), QMessageBox::Ok);
+                showErrorMessage(tr("Unable to get the filesystem.\n"
+                                    "Please, try again. If the problem persists "
+                                    "please contact bug@mega.co.nz"));
+
                 done(QDialog::Rejected);
                 preferences->setCrashed(true);
                 app->rebootApplication(false);
@@ -513,9 +512,10 @@ void SetupWizard::on_bCancel_clicked()
         if (!rootNode)
         {
             page_login();
-            QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                       "Please, try again. If the problem persists "
-                                                       "please contact bug@mega.co.nz"), QMessageBox::Ok);
+            showErrorMessage(tr("Unable to get the filesystem.\n"
+                                "Please, try again. If the problem persists "
+                                "please contact bug@mega.co.nz"));
+
             done(QDialog::Rejected);
             preferences->setCrashed(true);
             app->rebootApplication(false);
