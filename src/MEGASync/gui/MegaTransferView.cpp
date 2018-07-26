@@ -32,6 +32,7 @@ MegaTransferView::MegaTransferView(QWidget *parent) :
     clearCompleted = NULL;
     clearAllCompleted = NULL;
     disableLink = false;
+    disableMenus = false;
     type = 0;
 
     verticalScrollBar()->setStyleSheet(
@@ -60,7 +61,10 @@ MegaTransferView::MegaTransferView(QWidget *parent) :
 void MegaTransferView::setup(int type)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
+    // Disable and find out alternative way to position context menu,
+    // since main parent widget is flagged as popup (InfoDialog), and coordinates does not work properly
+    // connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
+    connect(this, SIGNAL(showContextMenu(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
     createContextMenu();
     createCompletedContextMenu();
     this->type = type;
@@ -75,6 +79,11 @@ void MegaTransferView::disableGetLink(bool disable)
 int MegaTransferView::getType() const
 {
     return type;
+}
+
+void MegaTransferView::disableContextMenus(bool option)
+{
+    disableMenus = option;
 }
 
 void MegaTransferView::createContextMenu()
@@ -339,6 +348,20 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
     QTreeView::mouseMoveEvent(event);
 }
 
+void MegaTransferView::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (!(event->button() == Qt::RightButton))
+    {
+        QTreeView::mouseReleaseEvent(event);
+        return;
+    }
+
+    if (!disableMenus)
+    {
+        emit showContextMenu(QPoint(event->x(), event->y()));
+    }
+}
+
 void MegaTransferView::leaveEvent(QEvent *event)
 {
     QTransfersModel *model = (QTransfersModel*)this->model();
@@ -422,7 +445,8 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
 
         if (transferTagSelected.size())
         {
-            if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
+            int modelType = model->getModelType();
+            if (modelType == QTransfersModel::TYPE_FINISHED)
             {
                 bool failed = false;
                 MegaTransfer *transfer = NULL;

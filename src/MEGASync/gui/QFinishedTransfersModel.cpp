@@ -4,8 +4,8 @@
 
 using namespace mega;
 
-QFinishedTransfersModel::QFinishedTransfersModel(QList<MegaTransfer *> finishedTransfers, QObject *parent) :
-    QTransfersModel(QTransfersModel::TYPE_FINISHED, parent)
+QFinishedTransfersModel::QFinishedTransfersModel(QList<MegaTransfer *> finishedTransfers, int type, QObject *parent) :
+    QTransfersModel(type, parent)
 {
     int numTransfers = finishedTransfers.size();
     if (numTransfers)
@@ -96,9 +96,10 @@ void QFinishedTransfersModel::removeAllTransfers()
         transferOrder.clear();
         transferItems.clear();
         endRemoveRows();
+
+        ((MegaApplication *)qApp)->removeAllFinishedTransfers();
     }
 
-    ((MegaApplication *)qApp)->removeAllFinishedTransfers();
     emit noTransfers();
 }
 

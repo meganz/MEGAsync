@@ -140,19 +140,15 @@ int main(int argc, char *argv[])
 #endif
 
 #ifdef Q_OS_MACX
-    if (!qputenv("QT_HARFBUZZ","old"))
-    {
-       MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Error setting QT_HARFBUZZ vble");
-    }
+
+    bool harfbuzzEnabled = qputenv("QT_HARFBUZZ","old");
 
     // From QT (5.9) documentation:
     // Secure Transport SSL backend on macOS may update the default keychain (the default is probably your login keychain) by importing your local certificates and keys.
     // This can also result in system dialogs showing up and asking for permission when your application is using these private keys.
     // If such behavior is undesired, set the QT_SSL_USE_TEMPORARY_KEYCHAIN environment variable to a non-zero value this will prompt QSslSocket to use its own temporary keychain.
-    if (!qputenv("QT_SSL_USE_TEMPORARY_KEYCHAIN","1"))
-    {
-       MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Error setting QT_SSL_USE_TEMPORARY_KEYCHAIN vble");
-    }
+    bool useSSLtemporaryKeychain = qputenv("QT_SSL_USE_TEMPORARY_KEYCHAIN","1");
+
 #endif
 
 #ifdef Q_OS_LINUX
@@ -187,6 +183,19 @@ int main(int argc, char *argv[])
     app.setStyle(new MegaProxyStyle());
 
 #ifdef Q_OS_MACX
+
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Running on macOS version: %1").arg(QString::number(QSysInfo::MacintoshVersion)).toUtf8().constData());
+
+    if (!harfbuzzEnabled)
+    {
+       MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Error setting QT_HARFBUZZ vble");
+    }
+
+    if (!useSSLtemporaryKeychain)
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Error setting QT_SSL_USE_TEMPORARY_KEYCHAIN vble");
+    }
+
     if (QSysInfo::MacintoshVersion > QSysInfo::MV_10_8)
     {
         // fix Mac OS X 10.9 (mavericks) font issue
@@ -396,7 +405,9 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaError", "Connection overflow");
     QT_TRANSLATE_NOOP("MegaError", "Write error");
     QT_TRANSLATE_NOOP("MegaError", "Read error");
-    QT_TRANSLATE_NOOP("MegaError", "Invalid application key");
+    QT_TRANSLATE_NOOP("MegaError", "Invalid application key");    
+    QT_TRANSLATE_NOOP("MegaError", "SSL verification failed");
+    QT_TRANSLATE_NOOP("MegaError", "Not enough quota");
     QT_TRANSLATE_NOOP("MegaError", "Unknown error");
     QT_TRANSLATE_NOOP("MegaError", "Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.");
     QT_TRANSLATE_NOOP("MegaError", "Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.");
@@ -502,6 +513,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     trayMenu = NULL;
     trayOverQuotaMenu = NULL;
     trayGuestMenu = NULL;
+    syncsMenu = NULL;
     megaApi = NULL;
     megaApiFolders = NULL;
     delegateListener = NULL;
@@ -524,6 +536,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     importLinksAction = NULL;
     importLinksActionGuest = NULL;
     initialMenu = NULL;
+    lastHovered = NULL;
     isPublic = false;
     prevVersion = 0;
 
@@ -569,7 +582,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     downloadAction = NULL;
     streamAction = NULL;
     webAction = NULL;
-    pauseTransfersAction = NULL;
+    addSyncAction = NULL;
     waiting = false;
     updated = false;
     checkupdate = false;
@@ -596,6 +609,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     bwOverquotaTimestamp = 0;
     enablingBwOverquota = false;
     bwOverquotaDialog = NULL;
+    storageOverquotaDialog = NULL;
     bwOverquotaEvent = false;
     infoWizard = NULL;
     externalNodesTimestamp = 0;
@@ -606,10 +620,12 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     transferManager = NULL;
     queuedUserStats = 0;
     cleaningSchedulerExecution = 0;
+    lastUserActivityExecution = 0;
     maxMemoryUsage = 0;
     nUnviewedTransfers = 0;
     completedTabActive = false;
     inflightUserStats = false;
+    almostOQ = false;
 
 #ifdef __APPLE__
     scanningTimer = NULL;
@@ -1245,6 +1261,9 @@ void MegaApplication::start()
         if (!infoDialog)
         {
             infoDialog = new InfoDialog(this);
+            connect(infoDialog, SIGNAL(dismissOQ(bool)), this, SLOT(onDismissOQ(bool)));
+            connect(infoDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
+
             if (!QSystemTrayIcon::isSystemTrayAvailable())
             {
                 if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE))
@@ -1413,6 +1432,9 @@ void MegaApplication::loggedIn()
     if (!infoDialog)
     {
         infoDialog = new InfoDialog(this);
+        connect(infoDialog, SIGNAL(dismissOQ(bool)), this, SLOT(onDismissOQ(bool)));
+        connect(infoDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
+
         if (!QSystemTrayIcon::isSystemTrayAvailable())
         {
             if (!preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE))
@@ -1426,6 +1448,8 @@ void MegaApplication::loggedIn()
             showInfoDialog();
         }
     }
+
+    createTrayMenu();
 
     //Set the upload limit
     if (preferences->uploadLimitKB() > 0)
@@ -1464,6 +1488,8 @@ void MegaApplication::startSyncs()
         return;
     }
 
+    bool syncsModified = false;
+
     //Start syncs
     MegaNode *rubbishNode =  megaApi->getRubbishNode();
     for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
@@ -1479,6 +1505,7 @@ void MegaApplication::startSyncs()
             showErrorMessage(tr("Your sync \"%1\" has been disabled because the remote folder doesn't exist")
                              .arg(preferences->getSyncName(i)));
             preferences->setSyncState(i, false);
+            syncsModified = true;
             openSettings(SettingsDialog::SYNCS_TAB);
             continue;
         }
@@ -1489,6 +1516,7 @@ void MegaApplication::startSyncs()
             showErrorMessage(tr("Your sync \"%1\" has been disabled because the local folder doesn't exist")
                              .arg(preferences->getSyncName(i)));
             preferences->setSyncState(i, false);
+            syncsModified = true;
             openSettings(SettingsDialog::SYNCS_TAB);
             continue;
         }
@@ -1498,6 +1526,11 @@ void MegaApplication::startSyncs()
         delete node;
     }
     delete rubbishNode;
+
+    if (syncsModified)
+    {
+        createTrayMenu();
+    }
 }
 
 //This function is called to upload all files in the uploadQueue field
@@ -1600,6 +1633,7 @@ void MegaApplication::disableSyncs()
         return;
     }
 
+    bool syncsModified = false;
     for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
     {
        if (!preferences->isFolderActive(i))
@@ -1612,9 +1646,15 @@ void MegaApplication::disableSyncs()
                                    preferences->getSyncID(i));
        notifyItemChange(preferences->getLocalFolder(i), MegaApi::STATE_NONE);
        preferences->setSyncState(i, false, true);
+       syncsModified = true;
        MegaNode *node = megaApi->getNodeByHandle(preferences->getMegaFolderHandle(i));
        megaApi->disableSync(node);
        delete node;
+    }
+
+    if (syncsModified)
+    {
+        createTrayMenu();
     }
 }
 
@@ -1625,6 +1665,7 @@ void MegaApplication::restoreSyncs()
         return;
     }
 
+    bool syncsModified = false;
     for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
     {
        if (!preferences->isTemporaryInactiveFolder(i) || preferences->isFolderActive(i))
@@ -1632,6 +1673,7 @@ void MegaApplication::restoreSyncs()
            continue;
        }
 
+       syncsModified = true;
        MegaNode *node = megaApi->getNodeByPath(preferences->getMegaFolder(i).toUtf8().constData());
        if (!node)
        {
@@ -1654,6 +1696,11 @@ void MegaApplication::restoreSyncs()
        delete node;
     }
     Platform::notifyAllSyncFoldersAdded();
+
+    if (syncsModified)
+    {
+        createTrayMenu();
+    }
 }
 
 void MegaApplication::closeDialogs()
@@ -1702,6 +1749,9 @@ void MegaApplication::closeDialogs()
 
     delete bwOverquotaDialog;
     bwOverquotaDialog = NULL;
+
+    delete storageOverquotaDialog;
+    storageOverquotaDialog = NULL;
 }
 
 void MegaApplication::rebootApplication(bool update)
@@ -1791,6 +1841,28 @@ void MegaApplication::exitApplication()
     {
         exitDialog->activateWindow();
         exitDialog->raise();
+    }
+}
+
+void MegaApplication::highLightMenuEntry(QAction *action)
+{
+    if (!action)
+    {
+        return;
+    }
+
+    MenuItemAction* pAction = (MenuItemAction*)action;
+    if (lastHovered && lastHovered != pAction)
+    {
+        lastHovered->setHighlight(false);
+        pAction->setHighlight(true);
+
+        lastHovered = pAction;
+    }
+    else
+    {
+        lastHovered = pAction;
+        lastHovered->setHighlight(true);
     }
 }
 
@@ -2050,6 +2122,72 @@ void MegaApplication::checkMemoryUsage()
     }
 }
 
+void MegaApplication::checkOverStorageStates()
+{
+    // Check if user is active
+    if ((QDateTime::currentMSecsSinceEpoch() - lastUserActivityExecution) > Preferences::USER_INACTIVITY_MS)
+    {
+        return;
+    }
+
+    if (infoOverQuota)
+    {
+        if (!preferences->getOverStorageDialogExecution()
+                || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_DIALOG_INTERVAL_MS))
+        {
+            preferences->setOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
+            if (!storageOverquotaDialog)
+            {
+                storageOverquotaDialog = new UpgradeOverStorage(megaApi, pricing);
+                connect(storageOverquotaDialog, SIGNAL(finished(int)), this, SLOT(overquotaDialogFinished(int)));
+                storageOverquotaDialog->show();
+            }
+            else
+            {
+                storageOverquotaDialog->activateWindow();
+                storageOverquotaDialog->raise();
+            }
+        }
+        else if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
+                     && (!preferences->getOverStorageNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
+        {
+            preferences->setOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
+            sendOverStorageNotification(Preferences::STATE_OVER_STORAGE);
+        }
+
+        if (!preferences->getOverStorageDismissExecution()
+                || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDismissExecution()) > Preferences::OS_INTERVAL_MS))
+        {
+            if (infoDialog)
+            {
+                infoDialog->handleOverStorage(Preferences::STATE_OVER_STORAGE);
+            }
+        }
+    }
+    else if (almostOQ)
+    {
+        if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDismissExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)
+                     && (!preferences->getAlmostOverStorageDismissExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getAlmostOverStorageDismissExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)))
+        {
+            if (infoDialog)
+            {
+                infoDialog->handleOverStorage(Preferences::STATE_ALMOST_OVER_STORAGE);
+            }
+        }
+
+
+        bool pendingTransfers = megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads();
+
+        if (!pendingTransfers && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)
+                              && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)
+                              && (!preferences->getAlmostOverStorageNotificationExecution() || (QDateTime::currentMSecsSinceEpoch() - preferences->getAlmostOverStorageNotificationExecution()) > Preferences::ALMOST_OS_INTERVAL_MS))
+        {
+            preferences->setAlmostOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
+            sendOverStorageNotification(Preferences::STATE_ALMOST_OVER_STORAGE);
+        }
+    }
+}
+
 void MegaApplication::periodicTasks()
 {
     if (appfinished)
@@ -2091,6 +2229,8 @@ void MegaApplication::periodicTasks()
             networkConfigurationManager.updateConfigurations();
             checkMemoryUsage();
             megaApi->update();
+
+            checkOverStorageStates();
         }
 
         megaApi->updateStats();
@@ -2141,6 +2281,8 @@ void MegaApplication::cleanAll()
 
     delete bwOverquotaDialog;
     bwOverquotaDialog = NULL;
+    delete storageOverquotaDialog;
+    storageOverquotaDialog = NULL;
     delete infoWizard;
     infoWizard = NULL;
     delete infoDialog;
@@ -2163,6 +2305,8 @@ void MegaApplication::cleanAll()
     trayMenu = NULL;
     deleteMenu(trayOverQuotaMenu);
     trayOverQuotaMenu = NULL;
+    deleteMenu(syncsMenu);
+    syncsMenu = NULL;
     deleteMenu(trayGuestMenu);
     trayGuestMenu = NULL;
 #ifdef _WIN32
@@ -2284,6 +2428,11 @@ void MegaApplication::showInfoDialog()
 
     if (infoDialog)
     {
+        if (!almostOQ && !infoOverQuota)
+        {
+            infoDialog->handleOverStorage(Preferences::STATE_BELOW_OVER_STORAGE);
+        }
+
         infoDialog->setOverQuotaMode(infoOverQuota);
         if (!infoDialog->isVisible())
         {
@@ -2317,7 +2466,6 @@ void MegaApplication::showInfoDialog()
         }
         else
         {
-            infoDialog->closeSyncsMenu();
             if (trayMenu->isVisible())
             {
                 trayMenu->close();
@@ -2511,6 +2659,50 @@ void MegaApplication::initHttpsServer()
             delete [] os;
         }
     }
+}
+
+void MegaApplication::sendOverStorageNotification(int state)
+{
+    MegaNotification *notification = new MegaNotification();
+
+    switch (state)
+    {
+        case Preferences::STATE_ALMOST_OVER_STORAGE:
+            notification->setTitle(tr("Your account is almost full."));
+            notification->setText(tr("Upgrade now to a PRO account."));
+            notification->setActions(QStringList() << QString::fromUtf8("Get PRO"));
+            connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
+        break;
+        case Preferences::STATE_OVER_STORAGE:
+            notification->setTitle(tr("Your account is full."));
+            notification->setText(tr("Upgrade now to a PRO account."));
+            notification->setActions(QStringList() << QString::fromUtf8("Get PRO"));
+            connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
+        break;
+        default:
+            delete notification;
+            return;
+    }
+
+    notificator->notify(notification);
+
+}
+
+bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
+{
+    if (obj == trayMenu)
+    {
+        if (e->type() == QEvent::Leave)
+        {
+            if (lastHovered)
+            {
+                lastHovered->setHighlight(false);
+                lastHovered = NULL;
+            }
+        }
+    }
+
+    return QApplication::eventFilter(obj, e);
 }
 
 TransferMetaData* MegaApplication::getTransferAppData(unsigned long long appDataID)
@@ -2728,6 +2920,12 @@ void MegaApplication::overquotaDialogFinished(int)
     {
         bwOverquotaDialog->deleteLater();
         bwOverquotaDialog = NULL;
+    }
+
+    if (storageOverquotaDialog)
+    {
+        storageOverquotaDialog->deleteLater();
+        storageOverquotaDialog = NULL;
     }
 }
 
@@ -3411,6 +3609,33 @@ void MegaApplication::showInFolder(int activationButton)
     }
 }
 
+void MegaApplication::redirectToUpgrade(int activationButton)
+{
+    if (activationButton == MegaNotification::ActivationActionButtonClicked)
+    {
+        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
+        QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
+        megaApi->getSessionTransferURL(url.toUtf8().constData());
+    }
+}
+
+void MegaApplication::registerUserActivity()
+{
+    lastUserActivityExecution = QDateTime::currentMSecsSinceEpoch();
+}
+
+void MegaApplication::onDismissOQ(bool overStorage)
+{
+    if (overStorage)
+    {
+        preferences->setOverStorageDismissExecution(QDateTime::currentMSecsSinceEpoch());
+    }
+    else
+    {
+        preferences->setAlmostOverStorageDismissExecution(QDateTime::currentMSecsSinceEpoch());
+    }
+}
+
 void MegaApplication::updateUserStats(bool force)
 {
     if (appfinished)
@@ -3486,47 +3711,29 @@ void MegaApplication::showTrayMenu(QPoint *point)
         trayGuestMenu->popup(p);
 #endif
     }
-    else if (trayMenu && !infoOverQuota)
+    else if (trayMenu)
     {
+        if (!infoOverQuota)
+        {
+            addSyncAction->setVisible(true);
+        }
+        else
+        {
+            addSyncAction->setVisible(false);
+        }
+
         if (trayMenu->isVisible())
         {
             trayMenu->close();
         }
 
         QPoint p = point ? (*point) - QPoint(trayMenu->sizeHint().width(), 0)
-                         : QCursor::pos();
-        if (preferences->getGlobalPaused())
-        {
-            pauseTransfersAction->setLabelText(tr("Resume Transfers"));
-            pauseTransfersAction->setIcon(QIcon(QString::fromAscii("://images/ico_resume_transfers.png")));
-            pauseTransfersAction->setHoverIcon(QIcon(QString::fromAscii("://images/ico_resume_transfers_over.png")));
-        }
-        else
-        {
-            pauseTransfersAction->setLabelText(tr("Pause Transfers"));
-            pauseTransfersAction->setIcon(QIcon(QString::fromAscii("://images/ico_pause_transfers.png")));
-            pauseTransfersAction->setHoverIcon(QIcon(QString::fromAscii("://images/ico_pause_transfers_over.png")));
-        }
+                         : QCursor::pos();      
 
 #ifdef __APPLE__
         trayMenu->exec(p);
 #else
         trayMenu->popup(p);
-#endif
-    }
-    else if (trayOverQuotaMenu && infoOverQuota)
-    {
-        if (trayOverQuotaMenu->isVisible())
-        {
-            trayOverQuotaMenu->close();
-        }
-
-        QPoint p = point ? (*point) - QPoint(trayOverQuotaMenu->sizeHint().width(), 0)
-                         : QCursor::pos();
-#ifdef __APPLE__
-        trayOverQuotaMenu->exec(p);
-#else
-        trayOverQuotaMenu->popup(p);
 #endif
     }
 }
@@ -3575,6 +3782,8 @@ void MegaApplication::removeFinishedTransfer(int transferTag)
         }
         delete it.value();
         finishedTransfers.erase(it);
+
+        emit clearFinishedTransfer(transferTag);
     }
 }
 
@@ -3583,6 +3792,8 @@ void MegaApplication::removeAllFinishedTransfers()
     qDeleteAll(finishedTransfers);
     finishedTransferOrder.clear();
     finishedTransfers.clear();
+
+    emit clearAllFinishedTransfers();
 }
 
 QList<MegaTransfer*> MegaApplication::getFinishedTransfers()
@@ -3885,6 +4096,7 @@ void MegaApplication::transferManagerActionClicked(int tab)
     // active, tracking is disabled
     connect(transferManager, SIGNAL(viewedCompletedTransfers()), this, SLOT(clearViewedTransfers()));
     connect(transferManager, SIGNAL(completedTransfersTabActive(bool)), this, SLOT(onCompletedTransfersTabActive(bool)));
+    connect(transferManager, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
     transferManager->setActiveTab(tab);
 
     Platform::activateBackgroundWindow(transferManager);
@@ -3945,7 +4157,6 @@ void MegaApplication::createTrayIcon()
         return;
     }
 
-    createTrayMenu();
     createOverQuotaMenu();
     createGuestMenu();
 
@@ -4757,6 +4968,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
         httpServer->processRequest(NULL, request);
     }*/
 
+    registerUserActivity();
     megaApi->retryPendingConnections();
 
     if (reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::Context)
@@ -4921,6 +5133,7 @@ void MegaApplication::openSettings(int tab)
 
     //Show a new settings dialog
     settingsDialog = new SettingsDialog(this);
+    connect(settingsDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
     if (infoOverQuota)
     {
         settingsDialog->setOverQuotaMode(true);
@@ -5039,6 +5252,7 @@ void MegaApplication::changeProxy()
 
     //Show a new settings dialog
     settingsDialog = new SettingsDialog(this, proxyOnly);
+    connect(settingsDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
     if (isLinux && !proxyOnly)
     {
         if (infoOverQuota)
@@ -5061,6 +5275,8 @@ void MegaApplication::createTrayMenu()
     {
         return;
     }
+
+    lastHovered = NULL;
 
     if (!initialMenu)
     {
@@ -5224,9 +5440,9 @@ void MegaApplication::createTrayMenu()
     }
 
 #ifndef __APPLE__
-    exitAction = new MenuItemAction(tr("Exit"), QIcon(QString::fromAscii("://images/ico_quit_out.png")), QIcon(QString::fromAscii("://images/ico_quit_over.png")));
+    exitAction = new MenuItemAction(tr("Exit"), QIcon(QString::fromAscii("://images/ico_quit_out.png")), QIcon(QString::fromAscii("://images/ico_quit_over.png")), true);
 #else
-    exitAction = new MenuItemAction(tr("Quit"), QIcon(QString::fromAscii("://images/ico_quit_out.png")), QIcon(QString::fromAscii("://images/ico_quit_over.png")));
+    exitAction = new MenuItemAction(tr("Quit"), QIcon(QString::fromAscii("://images/ico_quit_out.png")), QIcon(QString::fromAscii("://images/ico_quit_over.png")), true);
 #endif
     connect(exitAction, SIGNAL(triggered()), this, SLOT(exitApplication()), Qt::QueuedConnection);
 
@@ -5237,9 +5453,9 @@ void MegaApplication::createTrayMenu()
     }
 
 #ifndef __APPLE__
-    settingsAction = new MenuItemAction(tr("Settings"), QIcon(QString::fromAscii("://images/ico_preferences_out.png")), QIcon(QString::fromAscii("://images/ico_preferences_over.png")));
+    settingsAction = new MenuItemAction(tr("Settings"), QIcon(QString::fromAscii("://images/ico_preferences_out.png")), QIcon(QString::fromAscii("://images/ico_preferences_over.png")), true);
 #else
-    settingsAction = new MenuItemAction(tr("Preferences"), QIcon(QString::fromAscii("://images/ico_preferences_out.png")), QIcon(QString::fromAscii("://images/ico_preferences_over.png")));
+    settingsAction = new MenuItemAction(tr("Preferences"), QIcon(QString::fromAscii("://images/ico_preferences_out.png")), QIcon(QString::fromAscii("://images/ico_preferences_over.png")), true);
 #endif
     connect(settingsAction, SIGNAL(triggered()), this, SLOT(openSettings()), Qt::QueuedConnection);
 
@@ -5249,17 +5465,94 @@ void MegaApplication::createTrayMenu()
         webAction = NULL;
     }
 
-    webAction = new MenuItemAction(tr("MEGA website"), QIcon(QString::fromAscii("://images/ico_MEGA_website_out.png")), QIcon(QString::fromAscii("://images/ico_MEGA_website_over.png")));
+    webAction = new MenuItemAction(tr("MEGA website"), QIcon(QString::fromAscii("://images/ico_MEGA_website_out.png")), QIcon(QString::fromAscii("://images/ico_MEGA_website_over.png")), true);
     connect(webAction, SIGNAL(triggered()), this, SLOT(officialWeb()), Qt::QueuedConnection);
 
-    if (pauseTransfersAction)
+    if (addSyncAction)
     {
-        pauseTransfersAction->deleteLater();
-        pauseTransfersAction = NULL;
+        addSyncAction->deleteLater();
+        addSyncAction = NULL;
     }
 
-    pauseTransfersAction = new MenuItemAction(tr("Pause Transfers"), QIcon(QString::fromAscii("://images/ico_pause_transfers.png")), QIcon(QString::fromAscii("://images/ico_pause_transfers_over.png")));
-    connect(pauseTransfersAction, SIGNAL(triggered()), this, SLOT(pauseTransfers()), Qt::QueuedConnection);
+    int num = preferences->getNumSyncedFolders();
+    if (num == 0)
+    {
+        addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_syncs.png")), QIcon(QString::fromAscii("://images/ico_syncs.png")), true);
+        connect(addSyncAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()),Qt::QueuedConnection);
+    }
+    else
+    {
+        addSyncAction = new MenuItemAction(tr("Syncs"), QIcon(QString::fromAscii("://images/ico_syncs.png")), QIcon(QString::fromAscii("://images/ico_syncs.png")), true);       
+
+        if (syncsMenu)
+        {
+            syncsMenu->deleteLater();
+            syncsMenu = NULL;
+        }
+
+        syncsMenu = new QMenu();
+
+#ifdef __APPLE__
+        syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+#else
+        syncsMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+#endif
+
+        QSignalMapper *menuSignalMapper = new QSignalMapper();
+        connect(menuSignalMapper, SIGNAL(mapped(QString)), infoDialog, SLOT(openFolder(QString)));
+
+        int activeFolders = 0;
+        for (int i = 0; i < num; i++)
+        {
+            if (!preferences->isFolderActive(i))
+            {
+                continue;
+            }
+
+            activeFolders++;
+            MenuItemAction *action = new MenuItemAction(preferences->getSyncName(i), QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")),
+                                                        QIcon(QString::fromAscii("://images/ico_drop_synched_folder_over.png")), true);
+            connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()));
+
+            syncsMenu->addAction(action);
+            menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
+        }
+
+        if (!activeFolders)
+        {
+            addSyncAction->setLabelText(tr("Add Sync"));
+            connect(addSyncAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()), Qt::QueuedConnection);
+        }
+        else
+        {
+            long long firstSyncHandle = INVALID_HANDLE;
+            if (num == 1)
+            {
+                firstSyncHandle = preferences->getMegaFolderHandle(0);
+            }
+
+            MegaNode *rootNode = megaApi->getRootNode();
+            if (rootNode)
+            {
+                long long rootHandle = rootNode->getHandle();
+                if ((num > 1) || (firstSyncHandle != rootHandle))
+                {
+                    MenuItemAction *addAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_add_sync.png")),
+                                                                       QIcon(QString::fromAscii("://images/ico_drop_add_sync_over.png")), true);
+                    connect(addAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()));
+
+                    if (activeFolders)
+                    {
+                        syncsMenu->addSeparator();
+                    }
+                    syncsMenu->addAction(addAction);
+                }
+                delete rootNode;
+            }
+
+            addSyncAction->setMenu(syncsMenu);
+        }
+    }
 
     if (importLinksAction)
     {
@@ -5267,7 +5560,7 @@ void MegaApplication::createTrayMenu()
         importLinksAction = NULL;
     }
 
-    importLinksAction = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
+    importLinksAction = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")), true);
     connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()), Qt::QueuedConnection);
 
     if (uploadAction)
@@ -5276,7 +5569,7 @@ void MegaApplication::createTrayMenu()
         uploadAction = NULL;
     }
 
-    uploadAction = new MenuItemAction(tr("Upload"), QIcon(QString::fromAscii("://images/ico_upload_out.png")), QIcon(QString::fromAscii("://images/ico_upload_over.png")));
+    uploadAction = new MenuItemAction(tr("Upload"), QIcon(QString::fromAscii("://images/ico_upload_out.png")), QIcon(QString::fromAscii("://images/ico_upload_over.png")), true);
     connect(uploadAction, SIGNAL(triggered()), this, SLOT(uploadActionClicked()), Qt::QueuedConnection);
 
     if (downloadAction)
@@ -5285,7 +5578,7 @@ void MegaApplication::createTrayMenu()
         downloadAction = NULL;
     }
 
-    downloadAction = new MenuItemAction(tr("Download"), QIcon(QString::fromAscii("://images/ico_download_out.png")), QIcon(QString::fromAscii("://images/ico_download_over.png")));
+    downloadAction = new MenuItemAction(tr("Download"), QIcon(QString::fromAscii("://images/ico_download_out.png")), QIcon(QString::fromAscii("://images/ico_download_over.png")), true);
     connect(downloadAction, SIGNAL(triggered()), this, SLOT(downloadActionClicked()), Qt::QueuedConnection);
 
     if (streamAction)
@@ -5294,7 +5587,7 @@ void MegaApplication::createTrayMenu()
         streamAction = NULL;
     }
 
-    streamAction = new MenuItemAction(tr("Stream"), QIcon(QString::fromAscii("://images/ico_stream_out.png")), QIcon(QString::fromAscii("://images/ico_stream_over.png")));
+    streamAction = new MenuItemAction(tr("Stream"), QIcon(QString::fromAscii("://images/ico_stream_out.png")), QIcon(QString::fromAscii("://images/ico_stream_over.png")), true);
     connect(streamAction, SIGNAL(triggered()), this, SLOT(streamActionClicked()), Qt::QueuedConnection);
 
     if (updateAction)
@@ -5305,11 +5598,11 @@ void MegaApplication::createTrayMenu()
 
     if (updateAvailable)
     {
-        updateAction = new MenuItemAction(tr("Install update"), QIcon(QString::fromAscii("://images/ico_about_MEGA_out.png")), QIcon(QString::fromAscii("://images/ico_about_MEGA_over.png")));
+        updateAction = new MenuItemAction(tr("Install update"), QIcon(QString::fromAscii("://images/ico_about_MEGA_out.png")), QIcon(QString::fromAscii("://images/ico_about_MEGA_over.png")), true);
     }
     else
     {
-        updateAction = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromAscii("://images/ico_about_MEGA_out.png")), QIcon(QString::fromAscii("://images/ico_about_MEGA_over.png")));
+        updateAction = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromAscii("://images/ico_about_MEGA_out.png")), QIcon(QString::fromAscii("://images/ico_about_MEGA_over.png")), true);
 #ifndef __APPLE__
         updateAction->setIcon(QIcon(QString::fromUtf8("://images/check_mega_version.png")));
         updateAction->setIconVisibleInMenu(true);
@@ -5320,7 +5613,7 @@ void MegaApplication::createTrayMenu()
     trayMenu->addAction(updateAction);
     trayMenu->addAction(webAction);
     trayMenu->addSeparator();
-    trayMenu->addAction(pauseTransfersAction);
+    trayMenu->addAction(addSyncAction);
     trayMenu->addAction(importLinksAction);
     trayMenu->addAction(uploadAction);
     trayMenu->addAction(downloadAction);
@@ -5328,6 +5621,12 @@ void MegaApplication::createTrayMenu()
     trayMenu->addAction(settingsAction);
     trayMenu->addSeparator();
     trayMenu->addAction(exitAction);
+
+    //Highligth menu entry on mouse over
+    connect(trayMenu, SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
+
+    //Hide highlighted menu entry when mouse over
+    trayMenu->installEventFilter(this);
 }
 
 void MegaApplication::createOverQuotaMenu()
@@ -5685,11 +5984,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
 
-        if (infoDialog)
-        {
-            infoDialog->setUserName();
-        }
-
         break;
     }
     case MegaRequest::TYPE_LOGIN:
@@ -5987,6 +6281,16 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         preferences->sync();
 
+        int percentage = ceil((100 * ((double)details->getStorageUsed()) / details->getStorageMax()));
+        if (percentage > 90 && percentage <= 100)
+        {
+            almostOQ = true;
+        }
+        else
+        {
+            almostOQ = false;
+        }
+
         if (infoOverQuota && preferences->usedStorage() < preferences->totalStorage())
         {
             if (settingsDialog)
@@ -6078,6 +6382,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             transferManager->updatePauseState();
         }
 
+        if (infoDialog)
+        {
+            infoDialog->refreshTransferItems();
+        }
+
         onGlobalSyncStateChanged(megaApi);
         break;
     }
@@ -6167,6 +6476,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     if (preferences->isFolderActive(i))
                     {
                         preferences->setSyncState(i, false);
+                        createTrayMenu();
                     }
 
                     openSettings(SettingsDialog::SYNCS_TAB);
@@ -6212,12 +6522,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
 
-        if (infoDialog)
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Sync added");
-            infoDialog->updateSyncsButton();
-        }
-
         if (settingsDialog)
         {
             settingsDialog->loadSettings();
@@ -6239,11 +6543,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             #endif
 
             notifyItemChange(syncPath, MegaApi::STATE_NONE);
-        }
-
-        if (infoDialog)
-        {
-            infoDialog->updateSyncsButton();
         }
 
         if (settingsDialog)
@@ -6444,6 +6743,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         transferManager->onTransferFinish(megaApi, transfer, e);
     }
 
+    if (infoDialog)
+    {
+        infoDialog->onTransferFinish(megaApi, transfer, e);
+    }
+
     if (finishedTransferOrder.size() > Preferences::MAX_COMPLETED_ITEMS)
     {
         removeFinishedTransfer(finishedTransferOrder.first()->getTag());
@@ -6541,8 +6845,8 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         if (infoDialog)
         {
             infoDialog->setTransfer(transfer);
-            infoDialog->updateTransfers();
             infoDialog->transferFinished(e->getErrorCode());
+            infoDialog->updateDialogState();
         }
 
         if (!firstTransferTimer->isActive())
@@ -6644,7 +6948,7 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
         if (infoDialog)
         {
             infoDialog->setTransfer(transfer);
-            infoDialog->updateTransfers();
+            infoDialog->updateDialogState();
         }
     }
     else if (activeTransferTag[type] == transfer->getTag())
@@ -6835,6 +7139,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                     delete node;
                     preferences->setSyncState(i, false);
                     openSettings(SettingsDialog::SYNCS_TAB);
+                    createTrayMenu();
                 }
 
                 delete nodeByHandle;

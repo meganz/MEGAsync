@@ -8,40 +8,23 @@
         <file>images/drag_audio.png</file>
         <file>images/drag_cad.png</file>
         <file>images/drag_compressed.png</file>
-        <file>images/drag_database.png</file>
-        <file>images/drag_dreamweaver.png</file>
         <file>images/drag_excel.png</file>
         <file>images/drag_executable.png</file>
-        <file>images/drag_fla_lang.png</file>
-        <file>images/drag_flash.png</file>
         <file>images/drag_folder.png</file>
-        <file>images/drag_folder_shared.png</file>
         <file>images/drag_font.png</file>
         <file>images/drag_generic.png</file>
-        <file>images/drag_gis.png</file>
-        <file>images/drag_graphic.png</file>
-        <file>images/drag_html.png</file>
         <file>images/drag_illustrator.png</file>
         <file>images/drag_image.png</file>
         <file>images/drag_indesign.png</file>
-        <file>images/drag_java.png</file>
-        <file>images/drag_midi.png</file>
         <file>images/drag_pdf.png</file>
         <file>images/drag_photoshop.png</file>
-        <file>images/drag_playlist.png</file>
-        <file>images/drag_podcast.png</file>
         <file>images/drag_powerpoint.png</file>
         <file>images/drag_raw.png</file>
-        <file>images/drag_real_audio.png</file>
-        <file>images/drag_source_code.png</file>
         <file>images/drag_spreadsheet.png</file>
-        <file>images/drag_swf.png</file>
         <file>images/drag_text.png</file>
         <file>images/drag_torrent.png</file>
         <file>images/drag_vector.png</file>
         <file>images/drag_video.png</file>
-        <file>images/drag_video_subtitles.png</file>
-        <file>images/drag_video_vob.png</file>
         <file>images/drag_web_data.png</file>
         <file>images/drag_web_lang.png</file>
         <file>images/drag_word.png</file>
@@ -55,40 +38,22 @@
         <file>images/small_audio.png</file>
         <file>images/small_cad.png</file>
         <file>images/small_compressed.png</file>
-        <file>images/small_database.png</file>
-        <file>images/small_dreamweaver.png</file>
         <file>images/small_excel.png</file>
         <file>images/small_executable.png</file>
-        <file>images/small_fla_lang.png</file>
-        <file>images/small_flash.png</file>
         <file>images/small_folder.png</file>
-        <file>images/small_folder_shared.png</file>
         <file>images/small_font.png</file>
         <file>images/small_generic.png</file>
-        <file>images/small_gis.png</file>
-        <file>images/small_graphic.png</file>
-        <file>images/small_html.png</file>
         <file>images/small_illustrator.png</file>
         <file>images/small_image.png</file>
         <file>images/small_indesign.png</file>
-        <file>images/small_java.png</file>
-        <file>images/small_midi.png</file>
         <file>images/small_pdf.png</file>
         <file>images/small_photoshop.png</file>
-        <file>images/small_playlist.png</file>
-        <file>images/small_podcast.png</file>
         <file>images/small_powerpoint.png</file>
         <file>images/small_raw.png</file>
-        <file>images/small_real_audio.png</file>
-        <file>images/small_source_code.png</file>
         <file>images/small_spreadsheet.png</file>
-        <file>images/small_swf.png</file>
         <file>images/small_torrent.png</file>
         <file>images/small_vector.png</file>
         <file>images/small_video.png</file>
-        <file>images/small_video_fla.png</file>
-        <file>images/small_video_subtitles.png</file>
-        <file>images/small_video_vob.png</file>
         <file>images/small_web_data.png</file>
         <file>images/small_web_lang.png</file>
         <file>images/small_word.png</file>
@@ -104,9 +69,7 @@
         <file>images/tray_web_ico.png</file>
         <file>images/usageProgress.png</file>
         <file>images/drag_premiere.png</file>
-        <file>images/drag_vcard.png</file>
         <file>images/small_premiere.png</file>
-        <file>images/small_vcard.png</file>
         <file>images/small_text.png</file>
         <file>images/import_cloud_ico.png</file>
         <file>images/import_computer_ico.png</file>
@@ -218,10 +181,6 @@
         <file>images/scanning_anime18@2x.png</file>
         <file>images/drag_camera_sync.png</file>
         <file>images/drag_camera_sync@2x.png</file>
-        <file>images/drag_mac_folder.png</file>
-        <file>images/drag_mac_folder@2x.png</file>
-        <file>images/drag_win_folder.png</file>
-        <file>images/drag_win_folder@2x.png</file>
         <file>images/icon_syncing_mac1.png</file>
         <file>images/icon_syncing_mac1@2x.png</file>
         <file>images/icon_syncing_mac2.png</file>
@@ -253,41 +212,23 @@
         <file>images/drag_audio@2x.png</file>
         <file>images/drag_cad@2x.png</file>
         <file>images/drag_compressed@2x.png</file>
-        <file>images/drag_database@2x.png</file>
-        <file>images/drag_dreamweaver@2x.png</file>
         <file>images/drag_excel@2x.png</file>
         <file>images/drag_executable@2x.png</file>
-        <file>images/drag_fla_lang@2x.png</file>
-        <file>images/drag_flash@2x.png</file>
-        <file>images/drag_folder_shared@2x.png</file>
         <file>images/drag_folder@2x.png</file>
         <file>images/drag_font@2x.png</file>
         <file>images/drag_generic@2x.png</file>
-        <file>images/drag_gis@2x.png</file>
-        <file>images/drag_graphic@2x.png</file>
-        <file>images/drag_html@2x.png</file>
         <file>images/drag_illustrator@2x.png</file>
         <file>images/drag_image@2x.png</file>
         <file>images/drag_indesign@2x.png</file>
-        <file>images/drag_java@2x.png</file>
-        <file>images/drag_midi@2x.png</file>
         <file>images/drag_pdf@2x.png</file>
         <file>images/drag_photoshop@2x.png</file>
-        <file>images/drag_playlist@2x.png</file>
-        <file>images/drag_podcast@2x.png</file>
         <file>images/drag_powerpoint@2x.png</file>
         <file>images/drag_premiere@2x.png</file>
         <file>images/drag_raw@2x.png</file>
-        <file>images/drag_real_audio@2x.png</file>
-        <file>images/drag_source_code@2x.png</file>
         <file>images/drag_spreadsheet@2x.png</file>
-        <file>images/drag_swf@2x.png</file>
         <file>images/drag_text@2x.png</file>
         <file>images/drag_torrent@2x.png</file>
-        <file>images/drag_vcard@2x.png</file>
         <file>images/drag_vector@2x.png</file>
-        <file>images/drag_video_subtitles@2x.png</file>
-        <file>images/drag_video_vob@2x.png</file>
         <file>images/drag_video@2x.png</file>
         <file>images/drag_web_data@2x.png</file>
         <file>images/drag_web_lang@2x.png</file>
@@ -296,8 +237,6 @@
         <file>images/tray_pause_over_ico@2x.png</file>
         <file>images/tray_play_over_ico.png</file>
         <file>images/tray_play_over_ico@2x.png</file>
-        <file>images/tray_preferences_over_ico.png</file>
-        <file>images/tray_preferences_over_ico@2x.png</file>
         <file>images/tray_share_over_ico.png</file>
         <file>images/tray_share_over_ico@2x.png</file>
         <file>images/drag_dmg.png</file>
@@ -311,43 +250,24 @@
         <file>images/small_audio@2x.png</file>
         <file>images/small_cad@2x.png</file>
         <file>images/small_compressed@2x.png</file>
-        <file>images/small_database@2x.png</file>
         <file>images/small_dmg.png</file>
         <file>images/small_dmg@2x.png</file>
-        <file>images/small_dreamweaver@2x.png</file>
         <file>images/small_excel@2x.png</file>
         <file>images/small_executable@2x.png</file>
-        <file>images/small_fla_lang@2x.png</file>
-        <file>images/small_flash@2x.png</file>
-        <file>images/small_folder_shared@2x.png</file>
         <file>images/small_font@2x.png</file>
         <file>images/small_generic@2x.png</file>
-        <file>images/small_gis@2x.png</file>
-        <file>images/small_graphic@2x.png</file>
-        <file>images/small_html@2x.png</file>
         <file>images/small_illustrator@2x.png</file>
         <file>images/small_image@2x.png</file>
         <file>images/small_indesign@2x.png</file>
-        <file>images/small_java@2x.png</file>
-        <file>images/small_midi@2x.png</file>
         <file>images/small_pdf@2x.png</file>
         <file>images/small_photoshop@2x.png</file>
-        <file>images/small_playlist@2x.png</file>
-        <file>images/small_podcast@2x.png</file>
         <file>images/small_powerpoint@2x.png</file>
         <file>images/small_premiere@2x.png</file>
         <file>images/small_raw@2x.png</file>
-        <file>images/small_real_audio@2x.png</file>
-        <file>images/small_source_code@2x.png</file>
         <file>images/small_spreadsheet@2x.png</file>
-        <file>images/small_swf@2x.png</file>
         <file>images/small_text@2x.png</file>
         <file>images/small_torrent@2x.png</file>
-        <file>images/small_vcard@2x.png</file>
         <file>images/small_vector@2x.png</file>
-        <file>images/small_video_fla@2x.png</file>
-        <file>images/small_video_subtitles@2x.png</file>
-        <file>images/small_video_vob@2x.png</file>
         <file>images/small_video@2x.png</file>
         <file>images/small_web_data@2x.png</file>
         <file>images/small_web_lang@2x.png</file>
@@ -499,8 +419,6 @@
         <file>images/pause_big_ico@2x.png</file>
         <file>images/mbox-warning.png</file>
         <file>images/mbox-warning@2x.png</file>
-        <file>images/tray_transfer_manager_ico_over.png</file>
-        <file>images/tray_transfer_manager_ico_over@2x.png</file>
         <file>images/tray_transfer_manager_ico.png</file>
         <file>images/tray_transfer_manager_ico@2x.png</file>
         <file>images/Lite.png</file>
@@ -593,5 +511,89 @@
         <file>images/setup_step5@2x.png</file>
         <file>images/desktop_app_TM.png</file>
         <file>images/desktop_app_TM@2x.png</file>
+        <file>images/ico_menu_uptodate_state.png</file>
+        <file>images/ico_menu_uptodate_state@2x.png</file>
+        <file>images/ico_pause_transfers_state.png</file>
+        <file>images/ico_pause_transfers_state@2x.png</file>
+        <file>images/ico_resume_transfers_state.png</file>
+        <file>images/ico_resume_transfers_state@2x.png</file>
+        <file>images/drag_experiencedesign.png</file>
+        <file>images/drag_experiencedesign@2x.png</file>
+        <file>images/drag_folder_incoming.png</file>
+        <file>images/drag_folder_incoming@2x.png</file>
+        <file>images/drag_folder_outgoing.png</file>
+        <file>images/drag_folder_outgoing@2x.png</file>
+        <file>images/drag_keynote.png</file>
+        <file>images/drag_keynote@2x.png</file>
+        <file>images/drag_numbers.png</file>
+        <file>images/drag_numbers@2x.png</file>
+        <file>images/drag_openoffice.png</file>
+        <file>images/drag_openoffice@2x.png</file>
+        <file>images/drag_pages.png</file>
+        <file>images/drag_pages@2x.png</file>
+        <file>images/drag_sketch.png</file>
+        <file>images/drag_sketch@2x.png</file>
+        <file>images/small_camera_sync.png</file>
+        <file>images/small_camera_sync@2x.png</file>
+        <file>images/small_experiencedesign.png</file>
+        <file>images/small_experiencedesign@2x.png</file>
+        <file>images/small_folder_incoming.png</file>
+        <file>images/small_folder_incoming@2x.png</file>
+        <file>images/small_folder_outgoing.png</file>
+        <file>images/small_folder_outgoing@2x.png</file>
+        <file>images/small_keynote.png</file>
+        <file>images/small_keynote@2x.png</file>
+        <file>images/small_numbers.png</file>
+        <file>images/small_numbers@2x.png</file>
+        <file>images/small_openoffice.png</file>
+        <file>images/small_openoffice@2x.png</file>
+        <file>images/small_pages.png</file>
+        <file>images/small_pages@2x.png</file>
+        <file>images/small_sketch.png</file>
+        <file>images/small_sketch@2x.png</file>
+        <file>images/ico_item_link.png</file>
+        <file>images/ico_item_link@2x.png</file>
+        <file>images/ico_item_retry.png</file>
+        <file>images/ico_item_retry@2x.png</file>
+        <file>images/storage_almost_full.png</file>
+        <file>images/storage_almost_full@2x.png</file>
+        <file>images/storage_full.png</file>
+        <file>images/storage_full@2x.png</file>
+        <file>images/card_border.png</file>
+        <file>images/card_border@2x.png</file>
+        <file>images/achievements.png</file>
+        <file>images/achievements@2x.png</file>
+        <file>images/ico_menu_full.png</file>
+        <file>images/ico_menu_full@2x.png</file>
+        <file>images/ico_menu_scanning_1.png</file>
+        <file>images/ico_menu_scanning_1@2x.png</file>
+        <file>images/ico_menu_scanning_2.png</file>
+        <file>images/ico_menu_scanning_2@2x.png</file>
+        <file>images/ico_menu_scanning_3.png</file>
+        <file>images/ico_menu_scanning_3@2x.png</file>
+        <file>images/ico_menu_scanning_4.png</file>
+        <file>images/ico_menu_scanning_4@2x.png</file>
+        <file>images/ico_menu_scanning_5.png</file>
+        <file>images/ico_menu_scanning_5@2x.png</file>
+        <file>images/ico_menu_scanning_6.png</file>
+        <file>images/ico_menu_scanning_6@2x.png</file>
+        <file>images/ico_menu_scanning_7.png</file>
+        <file>images/ico_menu_scanning_7@2x.png</file>
+        <file>images/ico_menu_scanning_8.png</file>
+        <file>images/ico_menu_scanning_8@2x.png</file>
+        <file>images/ico_menu_scanning_9.png</file>
+        <file>images/ico_menu_scanning_9@2x.png</file>
+        <file>images/ico_menu_scanning_10.png</file>
+        <file>images/ico_menu_scanning_10@2x.png</file>
+        <file>images/ico_menu_scanning_11.png</file>
+        <file>images/ico_menu_scanning_11@2x.png</file>
+        <file>images/ico_menu_scanning_12.png</file>
+        <file>images/ico_menu_scanning_12@2x.png</file>
+        <file>images/downloaded_item_ico.png</file>
+        <file>images/downloaded_item_ico@2x.png</file>
+        <file>images/uploaded_item_ico.png</file>
+        <file>images/uploaded_item_ico@2x.png</file>
+        <file>images/upload_to_mega.png</file>
+        <file>images/upload_to_mega@2x.png</file>
     </qresource>
 </RCC>

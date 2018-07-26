@@ -16,7 +16,7 @@
 #include "gui/TransferManager.h"
 #include "gui/NodeSelector.h"
 #include "gui/InfoDialog.h"
-#include "gui/InfoOverQuotaDialog.h"
+#include "gui/UpgradeOverStorage.h"
 #include "gui/SetupWizard.h"
 #include "gui/SettingsDialog.h"
 #include "gui/UploadToMegaDialog.h"
@@ -127,6 +127,7 @@ public:
     void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
     void showTrayMenu(QPoint *point = NULL);
+    void createTrayMenu();
     void toggleLogging();
     QList<mega::MegaTransfer* > getFinishedTransfers();
     int getNumUnviewedTransfers();
@@ -141,6 +142,8 @@ signals:
     void tryUpdate();
     void installUpdate();
     void unityFixSignal();
+    void clearAllFinishedTransfers();
+    void clearFinishedTransfer(int transferTag);
 
 public slots:
     void showInterface(QString);
@@ -184,9 +187,11 @@ public slots:
     void onUpdateError();
     void rebootApplication(bool update = true);
     void exitApplication();
+    void highLightMenuEntry(QAction* action);
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
     void checkMemoryUsage();
+    void checkOverStorageStates();
     void periodicTasks();
     void cleanAll();
     void onDupplicateLink(QString link, QString name, mega::MegaHandle handle);
@@ -214,16 +219,19 @@ public slots:
     void checkOperatingSystem();
     void notifyItemChange(QString path, int newState);
     int getPrevVersion();
+    void onDismissOQ(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
 private slots:
     void showInFolder(int activationButton);
+    void redirectToUpgrade(int activationButton);
+    void registerUserActivity();
+
 
 protected:
     void createTrayIcon();
-    void createTrayMenu();
     void createOverQuotaMenu();
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
@@ -239,6 +247,10 @@ protected:
     void deleteMenu(QMenu *menu);
     void startHttpServer();
     void initHttpsServer();
+
+    void sendOverStorageNotification(int state);
+
+    bool eventFilter(QObject *obj, QEvent *e);
 
     QSystemTrayIcon *trayIcon;
 
@@ -262,6 +274,7 @@ protected:
     QMenu *trayOverQuotaMenu;
     QMenu *trayGuestMenu;
     QMenu emptyMenu;
+    QMenu *syncsMenu;
     MenuItemAction *exitAction;
     MenuItemAction *settingsAction;
     MenuItemAction *importLinksAction;
@@ -269,7 +282,7 @@ protected:
     MenuItemAction *downloadAction;
     MenuItemAction *streamAction;
     MenuItemAction *webAction;
-    MenuItemAction *pauseTransfersAction;
+    MenuItemAction *addSyncAction;
 
     MenuItemAction *updateAction;
     QAction *showStatusAction;
@@ -282,6 +295,7 @@ protected:
     MenuItemAction *exitActionGuest;
     MenuItemAction *settingsActionGuest;
     MenuItemAction *updateActionGuest;
+    MenuItemAction* lastHovered;
 
 #ifdef __APPLE__
     QTimer *scanningTimer;
@@ -314,6 +328,8 @@ protected:
     long long queuedUserStats;
     bool inflightUserStats;
     long long cleaningSchedulerExecution;
+    long long lastUserActivityExecution;
+    bool almostOQ;
     long long maxMemoryUsage;
     int exportOps;
     int syncState;
@@ -321,6 +337,7 @@ protected:
     long long bwOverquotaTimestamp;
     bool enablingBwOverquota;
     UpgradeDialog *bwOverquotaDialog;
+    UpgradeOverStorage *storageOverquotaDialog;
     bool bwOverquotaEvent;
     InfoWizard *infoWizard;
     mega::QTMegaListener *delegateListener;

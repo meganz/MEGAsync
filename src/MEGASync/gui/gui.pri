@@ -1,9 +1,7 @@
 QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
-    $$PWD/ActiveTransfer.cpp \
     $$PWD/InfoDialog.cpp \
-    $$PWD/RecentFile.cpp \
     $$PWD/TransferProgressBar.cpp \
     $$PWD/UsageProgressBar.cpp \
     $$PWD/SetupWizard.cpp \
@@ -22,7 +20,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/SizeLimitDialog.cpp \
     $$PWD/UsageWidget.cpp \
     $$PWD/MessageBox.cpp \
-    $$PWD/InfoOverQuotaDialog.cpp \
     $$PWD/QMegaModel.cpp \
     $$PWD/MegaItem.cpp \
     $$PWD/ChangeLogDialog.cpp \
@@ -32,7 +29,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/UpgradeDialog.cpp \
     $$PWD/PlanWidget.cpp \
     $$PWD/InfoWizard.cpp \
-    $$PWD/TransferItem.cpp \
     $$PWD/TransferManager.cpp \
     $$PWD/TransfersWidget.cpp \
     $$PWD/QTransfersModel.cpp \
@@ -49,12 +45,20 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/DataUsageMenu.cpp \
     $$PWD/AddExclusionDialog.cpp \
     $$PWD/LocalCleanScheduler.cpp \
-    $$PWD/ChangePassword.cpp
+    $$PWD/TransferManagerItem.cpp \
+    $$PWD/TransferItem.cpp \
+    $$PWD/InfoDialogTransfersWidget.cpp \
+    $$PWD/QCustomTransfersModel.cpp \
+    $$PWD/StatusInfo.cpp \
+    $$PWD/ChangePassword.cpp \
+    $$PWD/CustomTransferItem.cpp \
+    $$PWD/PSAwidget.cpp \
+    $$PWD/ElidedLabel.cpp \
+    $$PWD/UpgradeOverStorage.cpp \
+    $$PWD/UpgradeWidget.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
-    $$PWD/ActiveTransfer.h \
     $$PWD/InfoDialog.h \
-    $$PWD/RecentFile.h \
     $$PWD/TransferProgressBar.h \
     $$PWD/UsageProgressBar.h \
     $$PWD/SetupWizard.h \
@@ -73,7 +77,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/SizeLimitDialog.h \
     $$PWD/UsageWidget.h \
     $$PWD/MessageBox.h \
-    $$PWD/InfoOverQuotaDialog.h \
     $$PWD/QMegaModel.h \
     $$PWD/MegaItem.h \
     $$PWD/ChangeLogDialog.h \
@@ -83,7 +86,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/UpgradeDialog.h \
     $$PWD/PlanWidget.h \
     $$PWD/InfoWizard.h \
-    $$PWD/TransferItem.h \
     $$PWD/TransferManager.h \
     $$PWD/TransfersWidget.h \
     $$PWD/QTransfersModel.h \
@@ -100,7 +102,17 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/DataUsageMenu.h \
     $$PWD/AddExclusionDialog.h \
     $$PWD/LocalCleanScheduler.h \
-    $$PWD/ChangePassword.h
+    $$PWD/TransferManagerItem.h \
+    $$PWD/TransferItem.h \
+    $$PWD/InfoDialogTransfersWidget.h \
+    $$PWD/QCustomTransfersModel.h \
+    $$PWD/StatusInfo.h \
+    $$PWD/ChangePassword.h \
+    $$PWD/CustomTransferItem.h \
+    $$PWD/PSAwidget.h \
+    $$PWD/ElidedLabel.h \
+    $$PWD/UpgradeOverStorage.h \
+    $$PWD/UpgradeWidget.h
 
 INCLUDEPATH += $$PWD
 
@@ -111,9 +123,8 @@ debug {
 win32 {
     RESOURCES += $$PWD/Resources_win.qrc
     INCLUDEPATH += $$PWD/win
-    FORMS    += $$PWD/win/ActiveTransfer.ui \
-                $$PWD/win/InfoDialog.ui \
-                $$PWD/win/RecentFile.ui \
+    FORMS    += $$PWD/win/InfoDialog.ui \
+                $$PWD/win/CustomTransferItem.ui \
                 $$PWD/win/TransferProgressBar.ui \
                 $$PWD/win/UsageProgressBar.ui \
                 $$PWD/win/NodeSelector.ui \
@@ -130,7 +141,6 @@ win32 {
                 $$PWD/win/DownloadFromMegaDialog.ui \
                 $$PWD/win/SizeLimitDialog.ui \
                 $$PWD/win/MessageBox.ui \
-                $$PWD/win/InfoOverQuotaDialog.ui \
                 $$PWD/win/ChangeLogDialog.ui \
                 $$PWD/win/GuestWidget.ui \
                 $$PWD/win/StreamingFromMegaDialog.ui \
@@ -138,7 +148,7 @@ win32 {
                 $$PWD/win/PlanWidget.ui \
                 $$PWD/win/UpgradeDialog.ui \
                 $$PWD/win/InfoWizard.ui \
-                $$PWD/win/TransferItem.ui \
+                $$PWD/win/TransferManagerItem.ui \
                 $$PWD/win/TransferManager.ui \
                 $$PWD/win/TransfersWidget.ui \
                 $$PWD/win/TransfersStateInfoWidget.ui \
@@ -146,15 +156,18 @@ win32 {
                 $$PWD/win/ActiveTransfersWidget.ui \
                 $$PWD/win/AddExclusionDialog.ui \
                 $$PWD/win/LocalCleanScheduler.ui \
-                $$PWD/win/ChangePassword.ui
+                $$PWD/win/InfoDialogTransfersWidget.ui \
+                $$PWD/win/StatusInfo.ui \
+                $$PWD/win/ChangePassword.ui \
+                $$PWD/win/PSAwidget.ui \
+                $$PWD/win/UpgradeOverStorage.ui \
+                $$PWD/win/UpgradeWidget.ui
 }
 
 macx {
     RESOURCES += $$PWD/Resources_macx.qrc
     INCLUDEPATH += $$PWD/macx
-    FORMS    += $$PWD/macx/ActiveTransfer.ui \
-                $$PWD/macx/InfoDialog.ui \
-                $$PWD/macx/RecentFile.ui \
+    FORMS    += $$PWD/macx/InfoDialog.ui \
                 $$PWD/macx/TransferProgressBar.ui \
                 $$PWD/macx/UsageProgressBar.ui \
                 $$PWD/macx/NodeSelector.ui \
@@ -171,7 +184,6 @@ macx {
                 $$PWD/macx/DownloadFromMegaDialog.ui \
                 $$PWD/macx/SizeLimitDialog.ui \
                 $$PWD/macx/MessageBox.ui \
-                $$PWD/macx/InfoOverQuotaDialog.ui \
                 $$PWD/macx/ChangeLogDialog.ui \
                 $$PWD/macx/GuestWidget.ui \
                 $$PWD/macx/StreamingFromMegaDialog.ui \
@@ -181,7 +193,7 @@ macx {
                 $$PWD/macx/PlanWidget.ui \
                 $$PWD/macx/UpgradeDialog.ui \
                 $$PWD/macx/InfoWizard.ui \
-                $$PWD/macx/TransferItem.ui \
+                $$PWD/macx/TransferManagerItem.ui \
                 $$PWD/macx/TransferManager.ui \
                 $$PWD/macx/TransfersWidget.ui \
                 $$PWD/macx/TransfersStateInfoWidget.ui \
@@ -189,7 +201,13 @@ macx {
                 $$PWD/macx/ActiveTransfersWidget.ui \
                 $$PWD/macx/AddExclusionDialog.ui \
                 $$PWD/macx/LocalCleanScheduler.ui \
-                $$PWD/macx/ChangePassword.ui
+                $$PWD/macx/InfoDialogTransfersWidget.ui \
+                $$PWD/macx/StatusInfo.ui \
+                $$PWD/macx/ChangePassword.ui \
+                $$PWD/macx/CustomTransferItem.ui \
+                $$PWD/macx/PSAwidget.ui \
+                $$PWD/macx/UpgradeOverStorage.ui \
+                $$PWD/macx/UpgradeWidget.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -204,9 +222,8 @@ macx {
 unix:!macx {
     RESOURCES += $$PWD/Resources_linux.qrc
     INCLUDEPATH += $$PWD/linux
-    FORMS    += $$PWD/linux/ActiveTransfer.ui \
-                $$PWD/linux/InfoDialog.ui \
-                $$PWD/linux/RecentFile.ui \
+    FORMS    += $$PWD/linux/InfoDialog.ui \
+                $$PWD/linux/CustomTransferItem.ui \
                 $$PWD/linux/TransferProgressBar.ui \
                 $$PWD/linux/UsageProgressBar.ui \
                 $$PWD/linux/NodeSelector.ui \
@@ -223,7 +240,6 @@ unix:!macx {
                 $$PWD/linux/DownloadFromMegaDialog.ui \
                 $$PWD/linux/SizeLimitDialog.ui \
                 $$PWD/linux/MessageBox.ui\
-                $$PWD/linux/InfoOverQuotaDialog.ui \
                 $$PWD/linux/ChangeLogDialog.ui \
                 $$PWD/linux/GuestWidget.ui \
                 $$PWD/linux/StreamingFromMegaDialog.ui \
@@ -233,7 +249,7 @@ unix:!macx {
                 $$PWD/linux/PlanWidget.ui \
                 $$PWD/linux/UpgradeDialog.ui \
                 $$PWD/linux/InfoWizard.ui \
-                $$PWD/linux/TransferItem.ui \
+                $$PWD/linux/TransferManagerItem.ui \
                 $$PWD/linux/TransferManager.ui \
                 $$PWD/linux/TransfersWidget.ui \
                 $$PWD/linux/TransfersStateInfoWidget.ui \
@@ -241,7 +257,12 @@ unix:!macx {
                 $$PWD/linux/ActiveTransfersWidget.ui \
                 $$PWD/linux/AddExclusionDialog.ui \
                 $$PWD/linux/LocalCleanScheduler.ui \
-                $$PWD/linux/ChangePassword.ui
+                $$PWD/linux/InfoDialogTransfersWidget.ui \
+                $$PWD/linux/StatusInfo.ui \
+                $$PWD/linux/ChangePassword.ui \
+                $$PWD/linux/PSAwidget.ui \
+                $$PWD/linux/UpgradeOverStorage.ui \
+                $$PWD/linux/UpgradeWidget.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
