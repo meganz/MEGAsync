@@ -3272,11 +3272,8 @@ void MegaApplication::showTrayMenu(QPoint *point)
 
         QPoint p = point ? (*point) - QPoint(trayGuestMenu->sizeHint().width(), 0)
                          : QCursor::pos();
-#ifdef __APPLE__
-        trayGuestMenu->exec(p);
-#else
+
         trayGuestMenu->popup(p);
-#endif
     }
     else if (trayMenu && !infoOverQuota)
     {
@@ -3300,11 +3297,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
             pauseTransfersAction->setHoverIcon(QIcon(QString::fromAscii("://images/ico_pause_transfers_over.png")));
         }
 
-#ifdef __APPLE__
-        trayMenu->exec(p);
-#else
         trayMenu->popup(p);
-#endif
     }
     else if (trayOverQuotaMenu && infoOverQuota)
     {
@@ -3315,11 +3308,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
 
         QPoint p = point ? (*point) - QPoint(trayOverQuotaMenu->sizeHint().width(), 0)
                          : QCursor::pos();
-#ifdef __APPLE__
-        trayOverQuotaMenu->exec(p);
-#else
         trayOverQuotaMenu->popup(p);
-#endif
     }
 }
 
