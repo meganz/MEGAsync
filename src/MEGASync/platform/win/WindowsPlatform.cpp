@@ -1322,3 +1322,13 @@ void WindowsPlatform::uninstall()
         pService->Release();
     }
 }
+
+bool WindowsPlatform::shouldRunHttpServer()
+{
+    return true;
+}
+
+bool WindowsPlatform::shouldRunHttpsServer()
+{
+    return true;
+}
