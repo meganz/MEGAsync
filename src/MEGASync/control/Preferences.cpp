@@ -40,7 +40,6 @@ const unsigned int Preferences::UPDATE_RETRY_INTERVAL_SECS          = 7200;
 const unsigned int Preferences::UPDATE_TIMEOUT_SECS                 = 600;
 const unsigned int Preferences::MAX_LOGIN_TIME_MS                   = 40000;
 const unsigned int Preferences::PROXY_TEST_TIMEOUT_MS               = 10000;
-const unsigned int Preferences::LOCAL_HTTPS_TEST_TIMEOUT_MS         = 10000;
 const unsigned int Preferences::MAX_IDLE_TIME_MS                    = 600000;
 const unsigned int Preferences::MAX_COMPLETED_ITEMS                 = 1000;
 
@@ -204,9 +203,6 @@ const QString Preferences::UPDATE_FOLDER_NAME               = QString::fromAscii
 const QString Preferences::UPDATE_BACKUP_FOLDER_NAME        = QString::fromAscii("backup");
 const QString Preferences::PROXY_TEST_URL                   = QString::fromUtf8("http://eu.static.mega.co.nz/?");
 const QString Preferences::PROXY_TEST_SUBSTRING             = QString::fromUtf8("<title>MEGA</title>");
-const QString Preferences::LOCAL_HTTPS_TEST_URL             = QString::fromUtf8("https://localhost.megasyncloopback.mega.nz:") + QString::number(Preferences::HTTPS_PORT);
-const QString Preferences::LOCAL_HTTPS_TEST_SUBSTRING       = Preferences::VERSION_STRING;
-const QString Preferences::LOCAL_HTTPS_TEST_POST_DATA       = QString::fromUtf8("{\"a\":\"v\"}");
 const QString Preferences::syncsGroupKey            = QString::fromAscii("Syncs");
 const QString Preferences::currentAccountKey        = QString::fromAscii("currentAccount");
 const QString Preferences::emailKey                 = QString::fromAscii("email");

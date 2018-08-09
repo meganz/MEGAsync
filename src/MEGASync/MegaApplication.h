@@ -178,8 +178,6 @@ public slots:
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();
-    void onLocalHttpsCheckSuccess();
-    void onLocalHttpsCheckError();
     void userAction(int action);
     void changeState();
     void showUpdatedMessage(int lastVersion);
@@ -213,7 +211,8 @@ protected:
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
     void startHttpServer();
-    void initHttpsServer();
+    void startHttpsServer();
+    void initLocalServer();
 
 #ifdef __APPLE__
     MegaSystemTrayIcon *trayIcon;
@@ -358,6 +357,7 @@ protected:
     bool completedTabActive;
     int prevVersion;
     bool isPublic;
+    bool updatingSSLcert;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener
