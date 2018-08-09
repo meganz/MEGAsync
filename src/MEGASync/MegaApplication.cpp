@@ -497,6 +497,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     megaApiFolders = NULL;
     delegateListener = NULL;
     httpServer = NULL;
+    httpsServer = NULL;
     numTransfers[MegaTransfer::TYPE_DOWNLOAD] = 0;
     numTransfers[MegaTransfer::TYPE_UPLOAD] = 0;
     exportOps = 0;
@@ -2048,6 +2049,11 @@ void MegaApplication::periodicTasks()
                 httpServer->checkAndPurgeRequests();
             }
 
+            if (httpsServer)
+            {
+                httpsServer->checkAndPurgeRequests();
+            }
+
             if (checkupdate)
             {
                 checkupdate = false;
@@ -2113,6 +2119,8 @@ void MegaApplication::cleanAll()
     infoDialog = NULL;
     delete httpServer;
     httpServer = NULL;
+    delete httpsServer;
+    httpsServer = NULL;
     delete uploader;
     uploader = NULL;
     delete downloader;
@@ -2432,7 +2440,7 @@ void MegaApplication::startHttpServer()
 {
     //Start the HTTP server
     delete httpServer;
-    httpServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
+    httpServer = new HTTPServer(megaApi, Preferences::HTTP_PORT, false);
     connect(httpServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
     connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
     connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
@@ -2441,7 +2449,18 @@ void MegaApplication::startHttpServer()
     connect(httpServer, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
     connect(httpServer, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTPS server started");
+    //Start the HTTPS server
+    delete httpsServer;
+    httpsServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
+    connect(httpsServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
+    connect(httpsServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
+    connect(httpsServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
+    connect(httpsServer, SIGNAL(onExternalFileUploadRequested(qlonglong)), this, SLOT(externalFileUpload(qlonglong)), Qt::QueuedConnection);
+    connect(httpsServer, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
+    connect(httpsServer, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
+    connect(httpsServer, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
+
+    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local server started");
 }
 
 void MegaApplication::initHttpsServer()
@@ -3963,6 +3982,15 @@ void MegaApplication::processDownloads()
             }
         }
 
+        if (httpsServer)
+        {
+            QQueue<mega::MegaNode *>::iterator it;
+            for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
+            {
+                httpsServer->onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+            }
+        }
+
         //If the dialog is rejected, cancel uploads
         qDeleteAll(downloadQueue);
         downloadQueue.clear();
@@ -4209,12 +4237,20 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
         {
             httpServer->onUploadSelectionAccepted(files, 0);
         }
+        if (httpsServer)
+        {
+            httpsServer->onUploadSelectionAccepted(files, 0);
+        }
     }
     else
     {
         if (httpServer)
         {
             httpServer->onUploadSelectionDiscarded();
+        }
+        if (httpsServer)
+        {
+            httpsServer->onUploadSelectionDiscarded();
         }
     }
 
@@ -4302,12 +4338,20 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
         {
             httpServer->onUploadSelectionAccepted(files, folders);
         }
+        if (httpsServer)
+        {
+            httpsServer->onUploadSelectionAccepted(files, folders);
+        }
     }
     else
     {
         if (httpServer)
         {
             httpServer->onUploadSelectionDiscarded();
+        }
+        if (httpsServer)
+        {
+            httpsServer->onUploadSelectionDiscarded();
         }
     }
 
@@ -6129,6 +6173,15 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
                                              transfer->getTotalBytes(),
                                              transfer->getSpeed());
         }
+
+        if (httpsServer)
+        {
+            httpsServer->onTransferDataUpdate(transfer->getNodeHandle(),
+                                             transfer->getState(),
+                                             transfer->getTransferredBytes(),
+                                             transfer->getTotalBytes(),
+                                             transfer->getSpeed());
+        }
     }
 
     if (transferManager)
@@ -6163,6 +6216,14 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         if (httpServer)
         {
             httpServer->onTransferDataUpdate(transfer->getNodeHandle(),
+                                             transfer->getState(),
+                                             transfer->getTransferredBytes(),
+                                             transfer->getTotalBytes(),
+                                             transfer->getSpeed());
+        }
+        if (httpsServer)
+        {
+            httpsServer->onTransferDataUpdate(transfer->getNodeHandle(),
                                              transfer->getState(),
                                              transfer->getTransferredBytes(),
                                              transfer->getTotalBytes(),
@@ -6382,6 +6443,14 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
         if (httpServer)
         {
             httpServer->onTransferDataUpdate(transfer->getNodeHandle(),
+                                             transfer->getState(),
+                                             transfer->getTransferredBytes(),
+                                             transfer->getTotalBytes(),
+                                             transfer->getSpeed());
+        }
+        if (httpsServer)
+        {
+            httpsServer->onTransferDataUpdate(transfer->getNodeHandle(),
                                              transfer->getState(),
                                              transfer->getTransferredBytes(),
                                              transfer->getTotalBytes(),
