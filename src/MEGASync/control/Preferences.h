@@ -347,6 +347,7 @@ public:
     static const QString CHANGELOG;
     static const QString TRANSLATION_FOLDER;
     static const QString TRANSLATION_PREFIX;
+    static const qint16 HTTP_PORT;
     static const qint16 HTTPS_PORT;
 
     static QStringList HTTPS_ALLOWED_ORIGINS;

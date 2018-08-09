@@ -276,6 +276,7 @@ protected:
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
     HTTPServer *httpServer;
+    HTTPServer *httpsServer;
     UploadToMegaDialog *uploadFolderSelector;
     DownloadFromMegaDialog *downloadFolderSelector;
     mega::MegaHandle fileUploadTarget;
