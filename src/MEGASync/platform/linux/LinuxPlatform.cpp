@@ -273,10 +273,64 @@ void LinuxPlatform::uninstall()
 
 bool LinuxPlatform::shouldRunHttpServer()
 {
-    return true;
+    QProcess p;
+    p.start(QString::fromUtf8("ps ax -o command"));
+    p.waitForFinished(2000);
+    QString output = QString::fromUtf8(p.readAllStandardOutput().constData());
+    QString e = QString::fromUtf8(p.readAllStandardError().constData());
+    if (e.size())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error for \"ps ax -o command\" command:");
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
+    }
+
+    QStringList data = output.split(QString::fromUtf8("\n"));
+    if (data.size() > 1)
+    {
+        for (int i = 1; i < data.size(); i++)
+        {
+            QString command = data.at(i).trimmed();
+            if (command.contains(QString::fromUtf8("firefox"), Qt::CaseInsensitive)
+                    || command.contains(QString::fromUtf8("iceweasel"), Qt::CaseInsensitive)
+                    || command.contains(QString::fromUtf8("chrome"), Qt::CaseInsensitive)
+                    || command.contains(QString::fromUtf8("chromium"), Qt::CaseInsensitive)
+                    )
+            {
+                return true;
+            }
+        }
+    }
+    return false;
 }
 
 bool LinuxPlatform::shouldRunHttpsServer()
 {
-    return true;
+    QProcess p;
+    p.start(QString::fromUtf8("ps ax -o command"));
+    p.waitForFinished(2000);
+    QString output = QString::fromUtf8(p.readAllStandardOutput().constData());
+    QString e = QString::fromUtf8(p.readAllStandardError().constData());
+    if (e.size())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error for \"ps ax -o command\" command:");
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
+    }
+
+    QStringList data = output.split(QString::fromUtf8("\n"));
+    if (data.size() > 1)
+    {
+        for (int i = 1; i < data.size(); i++)
+        {
+            QString command = data.at(i).trimmed();
+            if (command.contains(QString::fromUtf8("safari"), Qt::CaseInsensitive)
+                    || command.contains(QString::fromUtf8("iexplore"), Qt::CaseInsensitive)
+                    || command.contains(QString::fromUtf8("opera"), Qt::CaseInsensitive)
+                    || command.contains(QString::fromUtf8("konkeror"), Qt::CaseInsensitive)
+                    )
+            {
+                return true;
+            }
+        }
+    }
+    return false;
 }
