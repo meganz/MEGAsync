@@ -30,6 +30,11 @@ BuildRequires: kf5-kdelibs4support-devel extra-cmake-modules
 %endif
 %endif
 
+%if 0%{?rhel_version} || 0%{?scientificlinux_version}
+BuildRequires: qt-devel kdelibs-devel gcc-c++
+%endif
+
+
 %if 0%{?centos_version}
 BuildRequires: qt-devel kdelibs-devel
 %endif
@@ -96,7 +101,7 @@ fi
 
 fi
 
-%if 0%{?centos_version}
+%if 0%{?centos_version} || 0%{?rhel_version} || 0%{?scientificlinux_version}
 #fix conflict with existing /usr/lib64 (pointing to /usr/lib)
 if [ -d %{buildroot}/usr/lib ]; then
     rsync -av %{buildroot}/usr/lib/ %{buildroot}/usr/lib64/
