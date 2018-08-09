@@ -2466,11 +2466,11 @@ void MegaApplication::showInfoDialog()
         }
         else
         {
-            if (trayMenu->isVisible())
+            if (trayMenu && trayMenu->isVisible())
             {
                 trayMenu->close();
             }
-            if (trayGuestMenu->isVisible())
+            if (trayGuestMenu && trayGuestMenu->isVisible())
             {
                 trayGuestMenu->close();
             }
