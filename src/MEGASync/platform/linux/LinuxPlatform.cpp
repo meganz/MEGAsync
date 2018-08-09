@@ -270,3 +270,13 @@ void LinuxPlatform::uninstall()
 {
 
 }
+
+bool LinuxPlatform::shouldRunHttpServer()
+{
+    return true;
+}
+
+bool LinuxPlatform::shouldRunHttpsServer()
+{
+    return true;
+}
