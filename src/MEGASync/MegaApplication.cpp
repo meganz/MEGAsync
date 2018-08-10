@@ -519,6 +519,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     isPublic = false;
     prevVersion = 0;
     updatingSSLcert = false;
+    lastSSLcertUpdate = 0;
 
 #ifdef _WIN32
     windowsMenu = NULL;
@@ -2476,32 +2477,28 @@ void MegaApplication::startHttpsServer()
 
 void MegaApplication::initLocalServer()
 {
-    if (Platform::shouldRunHttpServer())
+    if (!httpServer && Platform::shouldRunHttpServer())
     {
         startHttpServer();
     }
-    else
-    {
-        delete httpServer;
-        httpServer = NULL;
-    }
 
-    if (Platform::shouldRunHttpsServer())
+    if (!httpsServer && Platform::shouldRunHttpsServer())
     {
         startHttpsServer();
-        if (!updatingSSLcert
-                && ((preferences->getHttpsCertExpiration() - (QDateTime::currentMSecsSinceEpoch() / 1000))
-                    < Preferences::LOCAL_HTTPS_CERT_MAX_EXPIRATION_SECS))
+        updatingSSLcert = true;
+        lastSSLcertUpdate = QDateTime::currentMSecsSinceEpoch() / 1000;
+        megaApi->getLocalSSLCertificate();
+    }
+
+    if (httpsServer && !updatingSSLcert)
+    {
+        long long currentTime = QDateTime::currentMSecsSinceEpoch() / 1000;
+        if ((currentTime - lastSSLcertUpdate) > Preferences::LOCAL_HTTPS_CERT_RENEW_INTERVAL_SECS)
         {
             updatingSSLcert = true;
-            megaApi->sendEvent(99515, "Local SSL certificate about to expire");
+            lastSSLcertUpdate = currentTime;
             megaApi->getLocalSSLCertificate();
         }
-    }
-    else
-    {
-        delete httpsServer;
-        httpsServer = NULL;
     }
 }
 
@@ -5672,6 +5669,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_GET_LOCAL_SSL_CERT:
     {
+        updatingSSLcert = false;
         if (e->getErrorCode() == MegaError::API_OK)
         {
             MegaStringMap *data = request->getMegaStringMap();
@@ -5698,7 +5696,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             delete httpsServer;
             httpsServer = NULL;
             startHttpsServer();
-            updatingSSLcert = false;
             break;
         }
 
@@ -5710,6 +5707,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             {
                 retried = true;
                 MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Trying to renew the local SSL certificate again");
+                updatingSSLcert = true;
+                lastSSLcertUpdate = QDateTime::currentMSecsSinceEpoch() / 1000;
                 megaApi->getLocalSSLCertificate();
                 break;
             }

@@ -358,6 +358,7 @@ protected:
     int prevVersion;
     bool isPublic;
     bool updatingSSLcert;
+    long long lastSSLcertUpdate;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener

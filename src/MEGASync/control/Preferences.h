@@ -330,6 +330,7 @@ public:
     static const QString PROXY_TEST_SUBSTRING;
     static const unsigned int PROXY_TEST_TIMEOUT_MS;
     static const long long LOCAL_HTTPS_CERT_MAX_EXPIRATION_SECS;
+    static const long long LOCAL_HTTPS_CERT_RENEW_INTERVAL_SECS;
     static const unsigned int MAX_IDLE_TIME_MS;
     static const char UPDATE_PUBLIC_KEY[];
     static const long long MIN_REBOOT_INTERVAL_MS;
