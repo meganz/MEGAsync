@@ -2477,9 +2477,7 @@ void MegaApplication::initLocalServer()
     if (!httpsServer && Platform::shouldRunHttpsServer())
     {
         startHttpsServer();
-        updatingSSLcert = true;
-        lastSSLcertUpdate = QDateTime::currentMSecsSinceEpoch() / 1000;
-        megaApi->getLocalSSLCertificate();
+        renewLocalSSLcert();
     }
 
     if (httpsServer && !updatingSSLcert)
@@ -2487,11 +2485,16 @@ void MegaApplication::initLocalServer()
         long long currentTime = QDateTime::currentMSecsSinceEpoch() / 1000;
         if ((currentTime - lastSSLcertUpdate) > Preferences::LOCAL_HTTPS_CERT_RENEW_INTERVAL_SECS)
         {
-            updatingSSLcert = true;
-            lastSSLcertUpdate = currentTime;
-            megaApi->getLocalSSLCertificate();
+            renewLocalSSLcert();
         }
     }
+}
+
+void MegaApplication::renewLocalSSLcert()
+{
+    updatingSSLcert = true;
+    lastSSLcertUpdate = QDateTime::currentMSecsSinceEpoch() / 1000;
+    megaApi->getLocalSSLCertificate();
 }
 
 void MegaApplication::triggerInstallUpdate()
