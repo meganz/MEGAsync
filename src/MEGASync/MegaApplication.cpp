@@ -2474,9 +2474,8 @@ void MegaApplication::initLocalServer()
         startHttpServer();
     }
 
-    if (!httpsServer && Platform::shouldRunHttpsServer())
+    if (!httpsServer && Platform::shouldRunHttpsServer() && !updatingSSLcert)
     {
-        startHttpsServer();
         renewLocalSSLcert();
     }
 
