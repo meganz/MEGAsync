@@ -34,6 +34,9 @@ RequestTransferData::RequestTransferData()
     tsEnd = -1;
 }
 
+QMultiMap<QString, RequestData*> HTTPServer::webDataRequests;
+QMap<mega::MegaHandle, RequestTransferData*> HTTPServer::webTransferStateRequests;
+
 HTTPServer::HTTPServer(MegaApi *megaApi, quint16 port, bool sslEnabled)
     : QTcpServer(), disabled(false)
 {
@@ -45,10 +48,7 @@ HTTPServer::HTTPServer(MegaApi *megaApi, quint16 port, bool sslEnabled)
 
 HTTPServer::~HTTPServer()
 {
-    qDeleteAll(webDataRequests);
-    webDataRequests.clear();
-    qDeleteAll(webTransferStateRequests);
-    webTransferStateRequests.clear();
+
 }
 
 #if QT_VERSION >= 0x050000

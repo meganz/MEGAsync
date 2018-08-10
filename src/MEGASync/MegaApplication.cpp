@@ -2047,15 +2047,7 @@ void MegaApplication::periodicTasks()
     {
         if (!(++counter % 6))
         {
-            if (httpServer)
-            {
-                httpServer->checkAndPurgeRequests();
-            }
-
-            if (httpsServer)
-            {
-                httpsServer->checkAndPurgeRequests();
-            }
+            HTTPServer::checkAndPurgeRequests();
 
             if (checkupdate)
             {
@@ -4215,25 +4207,12 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
             megaApi->startUpload(QDir::toNativeSeparators(paths[i]).toUtf8().constData(), target);
         }
         delete target;
-        if (httpServer)
-        {
-            httpServer->onUploadSelectionAccepted(files, 0);
-        }
-        if (httpsServer)
-        {
-            httpsServer->onUploadSelectionAccepted(files, 0);
-        }
+
+        HTTPServer::onUploadSelectionAccepted(files, 0);
     }
     else
     {
-        if (httpServer)
-        {
-            httpServer->onUploadSelectionDiscarded();
-        }
-        if (httpsServer)
-        {
-            httpsServer->onUploadSelectionDiscarded();
-        }
+        HTTPServer::onUploadSelectionDiscarded();
     }
 
     delete fileUploadSelector;
@@ -4316,25 +4295,12 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
             megaApi->startUpload(QDir::toNativeSeparators(paths[i]).toUtf8().constData(), target);
         }
         delete target;
-        if (httpServer)
-        {
-            httpServer->onUploadSelectionAccepted(files, folders);
-        }
-        if (httpsServer)
-        {
-            httpsServer->onUploadSelectionAccepted(files, folders);
-        }
+
+        HTTPServer::onUploadSelectionAccepted(files, folders);
     }
     else
     {
-        if (httpServer)
-        {
-            httpServer->onUploadSelectionDiscarded();
-        }
-        if (httpsServer)
-        {
-            httpsServer->onUploadSelectionDiscarded();
-        }
+        HTTPServer::onUploadSelectionDiscarded();
     }
 
     delete folderUploadSelector;
