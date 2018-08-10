@@ -5664,9 +5664,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             {
                 retried = true;
                 MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Trying to renew the local SSL certificate again");
-                updatingSSLcert = true;
-                lastSSLcertUpdate = QDateTime::currentMSecsSinceEpoch() / 1000;
-                megaApi->getLocalSSLCertificate();
+                renewLocalSSLcert();
                 break;
             }
         }
