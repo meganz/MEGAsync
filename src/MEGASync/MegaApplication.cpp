@@ -1540,6 +1540,12 @@ void MegaApplication::processDownloadQueue(QString path)
     QDir dir(path);
     if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
     {
+        QQueue<mega::MegaNode *>::iterator it;
+        for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
+        {
+            HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+        }
+
         qDeleteAll(downloadQueue);
         downloadQueue.clear();
         showErrorMessage(tr("Error: Invalid destination folder. The download has been cancelled"));
@@ -2632,6 +2638,20 @@ void MegaApplication::setupWizardFinished(int result)
     {
         if (!infoWizard && (downloadQueue.size() || pendingLinks.size()))
         {
+            QQueue<mega::MegaNode *>::iterator it;
+            for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
+            {
+                HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+            }
+
+            for (QMap<QString, QString>::iterator it = pendingLinks.begin(); it != pendingLinks.end(); it++)
+            {
+                QString link = it.key();
+                QString handle = link.mid(18, 8);
+                HTTPServer::onTransferDataUpdate(megaApi->base64ToHandle(handle.toUtf8().constData()),
+                                                 MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+            }
+
             qDeleteAll(downloadQueue);
             downloadQueue.clear();
             pendingLinks.clear();
@@ -2709,6 +2729,20 @@ void MegaApplication::infoWizardDialogFinished(int result)
     {
         if (!setupWizard && (downloadQueue.size() || pendingLinks.size()))
         {
+            QQueue<mega::MegaNode *>::iterator it;
+            for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
+            {
+                HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+            }
+
+            for (QMap<QString, QString>::iterator it = pendingLinks.begin(); it != pendingLinks.end(); it++)
+            {
+                QString link = it.key();
+                QString handle = link.mid(18, 8);
+                HTTPServer::onTransferDataUpdate(megaApi->base64ToHandle(handle.toUtf8().constData()),
+                                                 MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+            }
+
             qDeleteAll(downloadQueue);
             downloadQueue.clear();
             pendingLinks.clear();
