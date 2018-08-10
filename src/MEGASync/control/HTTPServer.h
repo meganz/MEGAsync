@@ -93,9 +93,9 @@ class HTTPServer: public QTcpServer
     private:
         bool disabled;
         bool sslEnabled;
-        bool isFirstWebDownloadDone;
         mega::MegaApi *megaApi;
         QMap<QAbstractSocket*, HTTPRequest*> requests;
+        static bool isFirstWebDownloadDone;
         static QMultiMap<QString, RequestData*> webDataRequests;
         static QMap<mega::MegaHandle, RequestTransferData*> webTransferStateRequests;
 };
