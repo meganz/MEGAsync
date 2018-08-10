@@ -190,6 +190,7 @@ public slots:
     void checkOperatingSystem();
     void notifyItemChange(QString path, int newState);
     int getPrevVersion();
+    void renewLocalSSLcert();
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
