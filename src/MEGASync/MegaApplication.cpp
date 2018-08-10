@@ -3961,22 +3961,10 @@ void MegaApplication::processDownloads()
     }
     else
     {
-        if (httpServer)
+        QQueue<mega::MegaNode *>::iterator it;
+        for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
         {
-            QQueue<mega::MegaNode *>::iterator it;
-            for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
-            {
-                httpServer->onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
-            }
-        }
-
-        if (httpsServer)
-        {
-            QQueue<mega::MegaNode *>::iterator it;
-            for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
-            {
-                httpsServer->onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
-            }
+            HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
         }
 
         //If the dialog is rejected, cancel uploads
@@ -6131,23 +6119,11 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
 
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
     {
-        if (httpServer)
-        {
-            httpServer->onTransferDataUpdate(transfer->getNodeHandle(),
+        HTTPServer::onTransferDataUpdate(transfer->getNodeHandle(),
                                              transfer->getState(),
                                              transfer->getTransferredBytes(),
                                              transfer->getTotalBytes(),
                                              transfer->getSpeed());
-        }
-
-        if (httpsServer)
-        {
-            httpsServer->onTransferDataUpdate(transfer->getNodeHandle(),
-                                             transfer->getState(),
-                                             transfer->getTransferredBytes(),
-                                             transfer->getTotalBytes(),
-                                             transfer->getSpeed());
-        }
     }
 
     if (transferManager)
@@ -6179,22 +6155,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
     {
-        if (httpServer)
-        {
-            httpServer->onTransferDataUpdate(transfer->getNodeHandle(),
+        HTTPServer::onTransferDataUpdate(transfer->getNodeHandle(),
                                              transfer->getState(),
                                              transfer->getTransferredBytes(),
                                              transfer->getTotalBytes(),
                                              transfer->getSpeed());
-        }
-        if (httpsServer)
-        {
-            httpsServer->onTransferDataUpdate(transfer->getNodeHandle(),
-                                             transfer->getState(),
-                                             transfer->getTransferredBytes(),
-                                             transfer->getTotalBytes(),
-                                             transfer->getSpeed());
-        }
     }
 
     if (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED)
@@ -6406,22 +6371,11 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     int type = transfer->getType();
     if (type == MegaTransfer::TYPE_DOWNLOAD)
     {
-        if (httpServer)
-        {
-            httpServer->onTransferDataUpdate(transfer->getNodeHandle(),
+        HTTPServer::onTransferDataUpdate(transfer->getNodeHandle(),
                                              transfer->getState(),
                                              transfer->getTransferredBytes(),
                                              transfer->getTotalBytes(),
                                              transfer->getSpeed());
-        }
-        if (httpsServer)
-        {
-            httpsServer->onTransferDataUpdate(transfer->getNodeHandle(),
-                                             transfer->getState(),
-                                             transfer->getTransferredBytes(),
-                                             transfer->getTotalBytes(),
-                                             transfer->getSpeed());
-        }
     }
 
     unsigned long long priority = transfer->getPriority();
