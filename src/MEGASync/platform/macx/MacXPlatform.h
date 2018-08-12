@@ -53,6 +53,8 @@ public:
     static bool registerUpdateJob();
     static void execBackgroundWindow(QDialog *window);
     static void uninstall();
+    static bool shouldRunHttpServer();
+    static bool shouldRunHttpsServer();
 
     static int fd;
 };
