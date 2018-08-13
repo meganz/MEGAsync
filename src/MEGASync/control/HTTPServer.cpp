@@ -34,21 +34,21 @@ RequestTransferData::RequestTransferData()
     tsEnd = -1;
 }
 
+bool HTTPServer::isFirstWebDownloadDone = false;
+QMultiMap<QString, RequestData*> HTTPServer::webDataRequests;
+QMap<mega::MegaHandle, RequestTransferData*> HTTPServer::webTransferStateRequests;
+
 HTTPServer::HTTPServer(MegaApi *megaApi, quint16 port, bool sslEnabled)
     : QTcpServer(), disabled(false)
 {
     this->megaApi = megaApi;
     this->sslEnabled = sslEnabled;
-    this->isFirstWebDownloadDone = false;
     listen(QHostAddress::LocalHost, port);
 }
 
 HTTPServer::~HTTPServer()
 {
-    qDeleteAll(webDataRequests);
-    webDataRequests.clear();
-    qDeleteAll(webTransferStateRequests);
-    webTransferStateRequests.clear();
+
 }
 
 #if QT_VERSION >= 0x050000

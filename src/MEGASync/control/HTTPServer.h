@@ -67,10 +67,10 @@ class HTTPServer: public QTcpServer
         void pause();
         void resume();
 
-        void checkAndPurgeRequests();
-        void onUploadSelectionAccepted(int files, int folders);
-        void onUploadSelectionDiscarded();
-        void onTransferDataUpdate(mega::MegaHandle handle, int state, long long progress, long long size, long long speed);
+        static void checkAndPurgeRequests();
+        static void onUploadSelectionAccepted(int files, int folders);
+        static void onUploadSelectionDiscarded();
+        static void onTransferDataUpdate(mega::MegaHandle handle, int state, long long progress, long long size, long long speed);
 
     signals:
         void onLinkReceived(QString link, QString auth);
@@ -93,11 +93,11 @@ class HTTPServer: public QTcpServer
     private:
         bool disabled;
         bool sslEnabled;
-        bool isFirstWebDownloadDone;
         mega::MegaApi *megaApi;
         QMap<QAbstractSocket*, HTTPRequest*> requests;
-        QMultiMap<QString, RequestData*> webDataRequests;
-        QMap<mega::MegaHandle, RequestTransferData*> webTransferStateRequests;
+        static bool isFirstWebDownloadDone;
+        static QMultiMap<QString, RequestData*> webDataRequests;
+        static QMap<mega::MegaHandle, RequestTransferData*> webTransferStateRequests;
 };
 
 #endif // HTTPSERVER_H
