@@ -50,6 +50,8 @@ public:
     static void execBackgroundWindow(QDialog *window);
     static bool registerUpdateJob();
     static void uninstall();
+    static bool shouldRunHttpServer();
+    static bool shouldRunHttpsServer();
 };
 
 #endif // LINUXPLATFORM_H
