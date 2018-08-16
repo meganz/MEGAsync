@@ -291,9 +291,7 @@ bool LinuxPlatform::shouldRunHttpServer()
         {
             QString command = data.at(i).trimmed();
             if (command.contains(QString::fromUtf8("firefox"), Qt::CaseInsensitive)
-                    || command.contains(QString::fromUtf8("iceweasel"), Qt::CaseInsensitive)
                     || command.contains(QString::fromUtf8("chrome"), Qt::CaseInsensitive)
-                    || command.contains(QString::fromUtf8("chromium"), Qt::CaseInsensitive)
                     )
             {
                 return true;
@@ -325,7 +323,9 @@ bool LinuxPlatform::shouldRunHttpsServer()
             if (command.contains(QString::fromUtf8("safari"), Qt::CaseInsensitive)
                     || command.contains(QString::fromUtf8("iexplore"), Qt::CaseInsensitive)
                     || command.contains(QString::fromUtf8("opera"), Qt::CaseInsensitive)
-                    || command.contains(QString::fromUtf8("konkeror"), Qt::CaseInsensitive)
+                    || command.contains(QString::fromUtf8("iceweasel"), Qt::CaseInsensitive)
+                    || command.contains(QString::fromUtf8("chromium"), Qt::CaseInsensitive)
+                    || command.contains(QString::fromUtf8("konqueror"), Qt::CaseInsensitive)
                     )
             {
                 return true;
