@@ -11,16 +11,14 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/3.6.6.0";
-const int Preferences::VERSION_CODE = 3606;
+const char Preferences::USER_AGENT[] = "MEGAsync/3.6.7.0";
+const int Preferences::VERSION_CODE = 3607;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("3.6.6");
+const QString Preferences::VERSION_STRING = QString::fromAscii("3.6.7");
 const QString Preferences::SDK_ID = QString::fromAscii("99a46c");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- General Data Protection Regulation (GDPR) compliance\n"
-            "- Updated translations\n"
-            "- Bug fixes and other minor adjustments");
+            "- Fixed communications with the webclient");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -40,7 +38,6 @@ const unsigned int Preferences::UPDATE_RETRY_INTERVAL_SECS          = 7200;
 const unsigned int Preferences::UPDATE_TIMEOUT_SECS                 = 600;
 const unsigned int Preferences::MAX_LOGIN_TIME_MS                   = 40000;
 const unsigned int Preferences::PROXY_TEST_TIMEOUT_MS               = 10000;
-const unsigned int Preferences::LOCAL_HTTPS_TEST_TIMEOUT_MS         = 10000;
 const unsigned int Preferences::MAX_IDLE_TIME_MS                    = 600000;
 const unsigned int Preferences::MAX_COMPLETED_ITEMS                 = 1000;
 
@@ -187,6 +184,7 @@ const QString Preferences::defaultHttpsCertIntermediate = QString::fromUtf8(
 
 const long long Preferences::defaultHttpsCertExpiration = 1586476799;
 const long long Preferences::LOCAL_HTTPS_CERT_MAX_EXPIRATION_SECS = 3888000; // 45 days
+const long long Preferences::LOCAL_HTTPS_CERT_RENEW_INTERVAL_SECS = 7200; // 2 hours
 
 const QString Preferences::FINDER_EXT_BUNDLE_ID = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
 QStringList Preferences::HTTPS_ALLOWED_ORIGINS;
@@ -204,9 +202,6 @@ const QString Preferences::UPDATE_FOLDER_NAME               = QString::fromAscii
 const QString Preferences::UPDATE_BACKUP_FOLDER_NAME        = QString::fromAscii("backup");
 const QString Preferences::PROXY_TEST_URL                   = QString::fromUtf8("http://eu.static.mega.co.nz/?");
 const QString Preferences::PROXY_TEST_SUBSTRING             = QString::fromUtf8("<title>MEGA</title>");
-const QString Preferences::LOCAL_HTTPS_TEST_URL             = QString::fromUtf8("https://localhost.megasyncloopback.mega.nz:") + QString::number(Preferences::HTTPS_PORT);
-const QString Preferences::LOCAL_HTTPS_TEST_SUBSTRING       = Preferences::VERSION_STRING;
-const QString Preferences::LOCAL_HTTPS_TEST_POST_DATA       = QString::fromUtf8("{\"a\":\"v\"}");
 const QString Preferences::syncsGroupKey            = QString::fromAscii("Syncs");
 const QString Preferences::currentAccountKey        = QString::fromAscii("currentAccount");
 const QString Preferences::emailKey                 = QString::fromAscii("email");

@@ -518,6 +518,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     initialMenu = NULL;
     isPublic = false;
     prevVersion = 0;
+    updatingSSLcert = false;
+    lastSSLcertUpdate = 0;
 
 #ifdef _WIN32
     windowsMenu = NULL;
@@ -1231,7 +1233,7 @@ void MegaApplication::start()
         QString language = preferences->language();
         changeLanguage(language);
 
-        initHttpsServer();
+        initLocalServer();
         if (updated)
         {
             megaApi->sendEvent(99510, "MEGAsync update");
@@ -1315,7 +1317,7 @@ void MegaApplication::start()
                        preferences->privatePw().toUtf8().constData());
         }
 
-        initHttpsServer();
+        initLocalServer();
         if (updated)
         {
             megaApi->sendEvent(99510, "MEGAsync update");
@@ -1538,6 +1540,12 @@ void MegaApplication::processDownloadQueue(QString path)
     QDir dir(path);
     if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
     {
+        QQueue<mega::MegaNode *>::iterator it;
+        for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
+        {
+            HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+        }
+
         qDeleteAll(downloadQueue);
         downloadQueue.clear();
         showErrorMessage(tr("Error: Invalid destination folder. The download has been cancelled"));
@@ -2038,21 +2046,14 @@ void MegaApplication::periodicTasks()
     }
 
     checkNetworkInterfaces();
+    initLocalServer();
 
     static int counter = 0;
     if (megaApi)
     {
         if (!(++counter % 6))
         {
-            if (httpServer)
-            {
-                httpServer->checkAndPurgeRequests();
-            }
-
-            if (httpsServer)
-            {
-                httpsServer->checkAndPurgeRequests();
-            }
+            HTTPServer::checkAndPurgeRequests();
 
             if (checkupdate)
             {
@@ -2438,64 +2439,62 @@ void MegaApplication::deleteMenu(QMenu *menu)
 
 void MegaApplication::startHttpServer()
 {
-    //Start the HTTP server
-    delete httpServer;
-    httpServer = new HTTPServer(megaApi, Preferences::HTTP_PORT, false);
-    connect(httpServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
-    connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
-    connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
-    connect(httpServer, SIGNAL(onExternalFileUploadRequested(qlonglong)), this, SLOT(externalFileUpload(qlonglong)), Qt::QueuedConnection);
-    connect(httpServer, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
-    connect(httpServer, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
-    connect(httpServer, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
+    if (!httpServer)
+    {
+        //Start the HTTP server
+        httpServer = new HTTPServer(megaApi, Preferences::HTTP_PORT, false);
+        connect(httpServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
+        connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
+        connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
+        connect(httpServer, SIGNAL(onExternalFileUploadRequested(qlonglong)), this, SLOT(externalFileUpload(qlonglong)), Qt::QueuedConnection);
+        connect(httpServer, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
+        connect(httpServer, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
+        connect(httpServer, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
 
-    //Start the HTTPS server
-    delete httpsServer;
-    httpsServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
-    connect(httpsServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
-    connect(httpsServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
-    connect(httpsServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
-    connect(httpsServer, SIGNAL(onExternalFileUploadRequested(qlonglong)), this, SLOT(externalFileUpload(qlonglong)), Qt::QueuedConnection);
-    connect(httpsServer, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
-    connect(httpsServer, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
-    connect(httpsServer, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
-
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local server started");
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTP server started");
+    }
 }
 
-void MegaApplication::initHttpsServer()
+void MegaApplication::startHttpsServer()
 {
-    if (preferences->getHttpsCertExpiration() - (QDateTime::currentMSecsSinceEpoch() / 1000) < Preferences::LOCAL_HTTPS_CERT_MAX_EXPIRATION_SECS)
+    if (!httpsServer)
     {
-        megaApi->sendEvent(99515, "Local SSL certificate about to expire");
-        megaApi->getLocalSSLCertificate();
+        //Start the HTTPS server
+        httpsServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
+        connect(httpsServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
+        connect(httpsServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
+        connect(httpsServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
+        connect(httpsServer, SIGNAL(onExternalFileUploadRequested(qlonglong)), this, SLOT(externalFileUpload(qlonglong)), Qt::QueuedConnection);
+        connect(httpsServer, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
+        connect(httpsServer, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
+        connect(httpsServer, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
+
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTPS server started");
     }
-    else
+}
+
+void MegaApplication::initLocalServer()
+{
+    if (!httpServer && Platform::shouldRunHttpServer())
     {
         startHttpServer();
+    }
 
-        char *os = megaApi->getOperatingSystemVersion();
-        if (os)
+    if (!updatingSSLcert && (httpsServer || Platform::shouldRunHttpsServer()))
+    {
+        long long currentTime = QDateTime::currentMSecsSinceEpoch() / 1000;
+        if ((currentTime - lastSSLcertUpdate) > Preferences::LOCAL_HTTPS_CERT_RENEW_INTERVAL_SECS)
         {
-            if (!QString::fromUtf8(os).startsWith(QString::fromUtf8("Windows 5.")))
-            {
-                ConnectivityChecker *localHttpsChecker = new ConnectivityChecker(Preferences::LOCAL_HTTPS_TEST_URL);
-                localHttpsChecker->setTestString(Preferences::LOCAL_HTTPS_TEST_SUBSTRING);
-                localHttpsChecker->setTimeout(Preferences::LOCAL_HTTPS_TEST_TIMEOUT_MS);
-                localHttpsChecker->setMethod(ConnectivityChecker::METHOD_POST);
-                localHttpsChecker->setPostData(QByteArray(Preferences::LOCAL_HTTPS_TEST_POST_DATA.toUtf8()));
-                localHttpsChecker->setHeader(QByteArray("Origin"), QByteArray("https://mega.nz"));
-
-                connect(localHttpsChecker, SIGNAL(testError()), this, SLOT(onLocalHttpsCheckError()));
-                connect(localHttpsChecker, SIGNAL(testSuccess()), this, SLOT(onLocalHttpsCheckSuccess()));
-                connect(localHttpsChecker, SIGNAL(testFinished()), localHttpsChecker, SLOT(deleteLater()));
-
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing the local HTTPS server");
-                localHttpsChecker->startCheck();
-            }
-            delete [] os;
+            renewLocalSSLcert();
         }
     }
+}
+
+void MegaApplication::renewLocalSSLcert()
+{
+    updatingSSLcert = true;
+    lastSSLcertUpdate = QDateTime::currentMSecsSinceEpoch() / 1000;
+    megaApi->getLocalSSLCertificate();
 }
 
 void MegaApplication::triggerInstallUpdate()
@@ -2617,17 +2616,6 @@ void MegaApplication::onConnectivityCheckError()
     showErrorMessage(tr("MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall."));
 }
 
-void MegaApplication::onLocalHttpsCheckSuccess()
-{
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTPS check succeeded");
-}
-
-void MegaApplication::onLocalHttpsCheckError()
-{
-    megaApi->sendEvent(99516, "Local HTTPS check failed");
-    megaApi->getLocalSSLCertificate();
-}
-
 void MegaApplication::setupWizardFinished(int result)
 {
     if (appfinished)
@@ -2645,6 +2633,20 @@ void MegaApplication::setupWizardFinished(int result)
     {
         if (!infoWizard && (downloadQueue.size() || pendingLinks.size()))
         {
+            QQueue<mega::MegaNode *>::iterator it;
+            for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
+            {
+                HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+            }
+
+            for (QMap<QString, QString>::iterator it = pendingLinks.begin(); it != pendingLinks.end(); it++)
+            {
+                QString link = it.key();
+                QString handle = link.mid(18, 8);
+                HTTPServer::onTransferDataUpdate(megaApi->base64ToHandle(handle.toUtf8().constData()),
+                                                 MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+            }
+
             qDeleteAll(downloadQueue);
             downloadQueue.clear();
             pendingLinks.clear();
@@ -2722,6 +2724,20 @@ void MegaApplication::infoWizardDialogFinished(int result)
     {
         if (!setupWizard && (downloadQueue.size() || pendingLinks.size()))
         {
+            QQueue<mega::MegaNode *>::iterator it;
+            for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
+            {
+                HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+            }
+
+            for (QMap<QString, QString>::iterator it = pendingLinks.begin(); it != pendingLinks.end(); it++)
+            {
+                QString link = it.key();
+                QString handle = link.mid(18, 8);
+                HTTPServer::onTransferDataUpdate(megaApi->base64ToHandle(handle.toUtf8().constData()),
+                                                 MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+            }
+
             qDeleteAll(downloadQueue);
             downloadQueue.clear();
             pendingLinks.clear();
@@ -3962,22 +3978,10 @@ void MegaApplication::processDownloads()
     }
     else
     {
-        if (httpServer)
+        QQueue<mega::MegaNode *>::iterator it;
+        for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
         {
-            QQueue<mega::MegaNode *>::iterator it;
-            for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
-            {
-                httpServer->onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
-            }
-        }
-
-        if (httpsServer)
-        {
-            QQueue<mega::MegaNode *>::iterator it;
-            for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
-            {
-                httpsServer->onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
-            }
+            HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
         }
 
         //If the dialog is rejected, cancel uploads
@@ -4222,25 +4226,12 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
             megaApi->startUpload(QDir::toNativeSeparators(paths[i]).toUtf8().constData(), target);
         }
         delete target;
-        if (httpServer)
-        {
-            httpServer->onUploadSelectionAccepted(files, 0);
-        }
-        if (httpsServer)
-        {
-            httpsServer->onUploadSelectionAccepted(files, 0);
-        }
+
+        HTTPServer::onUploadSelectionAccepted(files, 0);
     }
     else
     {
-        if (httpServer)
-        {
-            httpServer->onUploadSelectionDiscarded();
-        }
-        if (httpsServer)
-        {
-            httpsServer->onUploadSelectionDiscarded();
-        }
+        HTTPServer::onUploadSelectionDiscarded();
     }
 
     delete fileUploadSelector;
@@ -4323,25 +4314,12 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
             megaApi->startUpload(QDir::toNativeSeparators(paths[i]).toUtf8().constData(), target);
         }
         delete target;
-        if (httpServer)
-        {
-            httpServer->onUploadSelectionAccepted(files, folders);
-        }
-        if (httpsServer)
-        {
-            httpsServer->onUploadSelectionAccepted(files, folders);
-        }
+
+        HTTPServer::onUploadSelectionAccepted(files, folders);
     }
     else
     {
-        if (httpServer)
-        {
-            httpServer->onUploadSelectionDiscarded();
-        }
-        if (httpsServer)
-        {
-            httpsServer->onUploadSelectionDiscarded();
-        }
+        HTTPServer::onUploadSelectionDiscarded();
     }
 
     delete folderUploadSelector;
@@ -5665,6 +5643,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_GET_LOCAL_SSL_CERT:
     {
+        updatingSSLcert = false;
         if (e->getErrorCode() == MegaError::API_OK)
         {
             MegaStringMap *data = request->getMegaStringMap();
@@ -5688,7 +5667,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             preferences->setHttpsCertIntermediate(intermediates);
             preferences->setHttpsCertExpiration(request->getNumber());
             megaApi->sendEvent(99517, "Local SSL certificate renewed");
-            startHttpServer();
+            delete httpsServer;
+            httpsServer = NULL;
+            startHttpsServer();
             break;
         }
 
@@ -5700,12 +5681,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             {
                 retried = true;
                 MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Trying to renew the local SSL certificate again");
-                megaApi->getLocalSSLCertificate();
+                renewLocalSSLcert();
                 break;
             }
         }
 
-        startHttpServer();
         break;
     }
     case MegaRequest::TYPE_FETCH_NODES:
@@ -6162,23 +6142,11 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
 
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
     {
-        if (httpServer)
-        {
-            httpServer->onTransferDataUpdate(transfer->getNodeHandle(),
+        HTTPServer::onTransferDataUpdate(transfer->getNodeHandle(),
                                              transfer->getState(),
                                              transfer->getTransferredBytes(),
                                              transfer->getTotalBytes(),
                                              transfer->getSpeed());
-        }
-
-        if (httpsServer)
-        {
-            httpsServer->onTransferDataUpdate(transfer->getNodeHandle(),
-                                             transfer->getState(),
-                                             transfer->getTransferredBytes(),
-                                             transfer->getTotalBytes(),
-                                             transfer->getSpeed());
-        }
     }
 
     if (transferManager)
@@ -6210,22 +6178,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
     {
-        if (httpServer)
-        {
-            httpServer->onTransferDataUpdate(transfer->getNodeHandle(),
+        HTTPServer::onTransferDataUpdate(transfer->getNodeHandle(),
                                              transfer->getState(),
                                              transfer->getTransferredBytes(),
                                              transfer->getTotalBytes(),
                                              transfer->getSpeed());
-        }
-        if (httpsServer)
-        {
-            httpsServer->onTransferDataUpdate(transfer->getNodeHandle(),
-                                             transfer->getState(),
-                                             transfer->getTransferredBytes(),
-                                             transfer->getTotalBytes(),
-                                             transfer->getSpeed());
-        }
     }
 
     if (transfer->getState() == MegaTransfer::STATE_COMPLETED || transfer->getState() == MegaTransfer::STATE_FAILED)
@@ -6444,22 +6401,11 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     int type = transfer->getType();
     if (type == MegaTransfer::TYPE_DOWNLOAD)
     {
-        if (httpServer)
-        {
-            httpServer->onTransferDataUpdate(transfer->getNodeHandle(),
+        HTTPServer::onTransferDataUpdate(transfer->getNodeHandle(),
                                              transfer->getState(),
                                              transfer->getTransferredBytes(),
                                              transfer->getTotalBytes(),
                                              transfer->getSpeed());
-        }
-        if (httpsServer)
-        {
-            httpsServer->onTransferDataUpdate(transfer->getNodeHandle(),
-                                             transfer->getState(),
-                                             transfer->getTransferredBytes(),
-                                             transfer->getTotalBytes(),
-                                             transfer->getSpeed());
-        }
     }
 
     unsigned long long priority = transfer->getPriority();
