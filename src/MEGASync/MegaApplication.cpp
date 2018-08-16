@@ -2480,12 +2480,7 @@ void MegaApplication::initLocalServer()
         startHttpServer();
     }
 
-    if (!httpsServer && Platform::shouldRunHttpsServer() && !updatingSSLcert)
-    {
-        renewLocalSSLcert();
-    }
-
-    if (httpsServer && !updatingSSLcert)
+    if (!updatingSSLcert && (httpsServer || Platform::shouldRunHttpsServer()))
     {
         long long currentTime = QDateTime::currentMSecsSinceEpoch() / 1000;
         if ((currentTime - lastSSLcertUpdate) > Preferences::LOCAL_HTTPS_CERT_RENEW_INTERVAL_SECS)
