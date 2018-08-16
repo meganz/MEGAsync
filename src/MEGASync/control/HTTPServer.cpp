@@ -739,6 +739,15 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 
 void HTTPServer::error(QAbstractSocket::SocketError)
 {
+    if (!disabled && sslEnabled)
+    {
+        QAbstractSocket *socket = (QAbstractSocket*)sender();
+        HTTPRequest *request = requests.value(socket);
+        if (request && !request->data.size())
+        {
+            emit onConnectionError();
+        }
+    }
 }
 
 void HTTPServer::sslErrors(const QList<QSslError> &)

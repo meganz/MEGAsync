@@ -2468,6 +2468,7 @@ void MegaApplication::startHttpsServer()
         connect(httpsServer, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
         connect(httpsServer, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
         connect(httpsServer, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
+        connect(httpsServer, SIGNAL(onConnectionError()), this, SLOT(renewLocalSSLcert()), Qt::QueuedConnection);
 
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTPS server started");
     }
@@ -2492,9 +2493,12 @@ void MegaApplication::initLocalServer()
 
 void MegaApplication::renewLocalSSLcert()
 {
-    updatingSSLcert = true;
-    lastSSLcertUpdate = QDateTime::currentMSecsSinceEpoch() / 1000;
-    megaApi->getLocalSSLCertificate();
+    if (!updatingSSLcert)
+    {
+        updatingSSLcert = true;
+        lastSSLcertUpdate = QDateTime::currentMSecsSinceEpoch() / 1000;
+        megaApi->getLocalSSLCertificate();
+    }
 }
 
 void MegaApplication::triggerInstallUpdate()

@@ -80,6 +80,7 @@ class HTTPServer: public QTcpServer
         void onExternalFolderUploadRequested(qlonglong targetHandle);
         void onExternalFolderSyncRequested(qlonglong targetHandle);
         void onExternalOpenTransferManagerRequested(int tab);
+        void onConnectionError();
 
     public slots:
         void readClient();
