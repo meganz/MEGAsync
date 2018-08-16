@@ -30,6 +30,11 @@ BuildRequires: kf5-kdelibs4support-devel extra-cmake-modules
 %endif
 %endif
 
+%if 0%{?rhel_version} || 0%{?scientificlinux_version}
+BuildRequires: qt-devel kdelibs-devel gcc-c++
+%endif
+
+
 %if 0%{?centos_version}
 BuildRequires: qt-devel kdelibs-devel
 %endif
@@ -77,7 +82,8 @@ make
 make install DESTDIR=%{buildroot}
 #fix issue with compilation of megasync-plugin-overlay.cpp lacking of symbols: replace with a precompiled library
 %if 0%{?fedora_version} >= 26
-mv megasyncdolphinoverlayplugin.so_fed%{?fedora_version} %{buildroot}/%(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/kf5/overlayicon/megasyncdolphinoverlayplugin.so
+mv megasyncdolphinoverlayplugin.so_fed%{?fedora_version} %{buildroot}/%(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/kf5/overlayicon/megasyncdolphinoverlayplugin.so || mv megasyncdolphinoverlayplugin.so_fed27 %{buildroot}/%(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/kf5/overlayicon/megasyncdolphinoverlayplugin.so
+
 %endif
 %if 0%{?suse_version} > 1320
 mv megasyncdolphinoverlayplugin.so_ostum %{buildroot}/%(kf5-config --path lib | awk -NF ":" '{print $1}')/qt5/plugins/kf5/overlayicon/megasyncdolphinoverlayplugin.so
@@ -96,7 +102,7 @@ fi
 
 fi
 
-%if 0%{?centos_version}
+%if 0%{?centos_version} || 0%{?rhel_version} || 0%{?scientificlinux_version}
 #fix conflict with existing /usr/lib64 (pointing to /usr/lib)
 if [ -d %{buildroot}/usr/lib ]; then
     rsync -av %{buildroot}/usr/lib/ %{buildroot}/usr/lib64/
