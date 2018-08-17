@@ -6,6 +6,8 @@
 #include <QProcess>
 
 #import <objc/runtime.h>
+#import <sys/proc_info.h>
+#import <libproc.h>
 
 #ifndef kCFCoreFoundationVersionNumber10_9
     #define kCFCoreFoundationVersionNumber10_9 855.00
@@ -653,4 +655,81 @@ bool registerUpdateDaemon()
     }
 
     return p.exitCode();
+}
+
+bool runHttpServer()
+{
+    int nProcesses = proc_listpids(PROC_ALL_PIDS, 0, NULL, 0);
+
+    pid_t pids[nProcesses];
+    memset(pids, 0, sizeof(pids));
+    proc_listpids(PROC_ALL_PIDS, 0, pids, sizeof(pids));
+
+    for (int i = 0; i < nProcesses; ++i)
+    {
+        if (pids[i] == 0)
+        {
+            continue;
+        }
+
+        char processPath[PROC_PIDPATHINFO_MAXSIZE];
+        memset(processPath, 0, PROC_PIDPATHINFO_MAXSIZE);
+
+        proc_pidpath(pids[i], processPath, sizeof(processPath));
+        if (strlen(processPath) > 0)
+        {
+            int position = strlen(processPath);
+            while(position >= 0 && processPath[position] != '/')
+            {
+                position--;
+            }
+
+            QString processName = QString::fromUtf8(processPath + position + 1);
+            if (!processName.compare(QString::fromUtf8("Google Chrome"), Qt::CaseInsensitive)
+                || !processName.compare(QString::fromUtf8("firefox"), Qt::CaseInsensitive))
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
+}
+
+bool runHttpsServer()
+{
+    int nProcesses = proc_listpids(PROC_ALL_PIDS, 0, NULL, 0);
+
+    pid_t pids[nProcesses];
+    memset(pids, 0, sizeof(pids));
+    proc_listpids(PROC_ALL_PIDS, 0, pids, sizeof(pids));
+
+    for (int i = 0; i < nProcesses; ++i)
+    {
+        if (pids[i] == 0)
+        {
+            continue;
+        }
+
+        char processPath[PROC_PIDPATHINFO_MAXSIZE];
+        memset(processPath, 0, PROC_PIDPATHINFO_MAXSIZE);
+
+        proc_pidpath(pids[i], processPath, sizeof(processPath));
+        if (strlen(processPath) > 0)
+        {
+            int position = strlen(processPath);
+            while(position >= 0 && processPath[position] != '/')
+            {
+                position--;
+            }
+
+            QString processName = QString::fromUtf8(processPath + position + 1);
+            if (!processName.compare(QString::fromUtf8("Safari"), Qt::CaseInsensitive))
+            {
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
