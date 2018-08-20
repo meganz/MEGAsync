@@ -4547,9 +4547,14 @@ void MegaApplication::onUpdateError()
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
 #ifdef Q_OS_LINUX
-    if (getenv("XDG_CURRENT_DESKTOP") && !strcmp(getenv("XDG_CURRENT_DESKTOP"),"ubuntu:GNOME"))
+    if (getenv("XDG_CURRENT_DESKTOP") && (
+                !strcmp(getenv("XDG_CURRENT_DESKTOP"),"ubuntu:GNOME")
+                || !strcmp(getenv("XDG_CURRENT_DESKTOP"),"LXDE")
+                                          )
+            )
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Ignoring unexpected trayIconActivated detected in ubuntu:GNOME desktop.");
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Ignoring unexpected trayIconActivated detected in %1")
+                     .arg(QString::fromUtf8(getenv("XDG_CURRENT_DESKTOP"))).toUtf8().constData() );
         return;
     }
 #endif
