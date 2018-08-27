@@ -208,8 +208,8 @@ void HTTPServer::onTransferDataUpdate(MegaHandle handle, int state, long long pr
 
 void HTTPServer::readClient()
 {
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Processing webclient request");
-    QAbstractSocket *socket = (QSslSocket*)sender();
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Processing webclient request via %1").arg(QString::fromUtf8(sslEnabled ? "HTTPS" : "HTTP")).toUtf8().constData());
+    QAbstractSocket *socket = (QAbstractSocket*)sender();
     HTTPRequest *request = requests.value(socket);
     if (disabled || !request)
     {
