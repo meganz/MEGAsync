@@ -658,12 +658,12 @@ bool registerUpdateDaemon()
 }
 
 bool runHttpServer()
-{
+{   
     int nProcesses = proc_listpids(PROC_ALL_PIDS, 0, NULL, 0);
-
-    pid_t pids[nProcesses];
-    memset(pids, 0, sizeof(pids));
-    proc_listpids(PROC_ALL_PIDS, 0, pids, sizeof(pids));
+    int pidBufSize = nProcesses * sizeof(pid_t);
+    pid_t *pids = new pid_t[nProcesses];
+    memset(pids, 0, pidBufSize);
+    proc_listpids(PROC_ALL_PIDS, 0, pids, pidBufSize);
 
     for (int i = 0; i < nProcesses; ++i)
     {
@@ -676,9 +676,9 @@ bool runHttpServer()
         memset(processPath, 0, PROC_PIDPATHINFO_MAXSIZE);
 
         proc_pidpath(pids[i], processPath, sizeof(processPath));
-        if (strlen(processPath) > 0)
+        int position = strlen(processPath);
+        if (position > 0)
         {
-            int position = strlen(processPath);
             while(position >= 0 && processPath[position] != '/')
             {
                 position--;
@@ -688,21 +688,24 @@ bool runHttpServer()
             if (!processName.compare(QString::fromUtf8("Google Chrome"), Qt::CaseInsensitive)
                 || !processName.compare(QString::fromUtf8("firefox"), Qt::CaseInsensitive))
             {
+                delete [] pids;
                 return true;
             }
         }
     }
 
+    delete [] pids;
     return false;
 }
 
 bool runHttpsServer()
 {
-    int nProcesses = proc_listpids(PROC_ALL_PIDS, 0, NULL, 0);
 
-    pid_t pids[nProcesses];
-    memset(pids, 0, sizeof(pids));
-    proc_listpids(PROC_ALL_PIDS, 0, pids, sizeof(pids));
+    int nProcesses = proc_listpids(PROC_ALL_PIDS, 0, NULL, 0);
+    int pidBufSize = nProcesses * sizeof(pid_t);
+    pid_t *pids = new pid_t[nProcesses];
+    memset(pids, 0, pidBufSize);
+    proc_listpids(PROC_ALL_PIDS, 0, pids, pidBufSize);
 
     for (int i = 0; i < nProcesses; ++i)
     {
@@ -715,9 +718,9 @@ bool runHttpsServer()
         memset(processPath, 0, PROC_PIDPATHINFO_MAXSIZE);
 
         proc_pidpath(pids[i], processPath, sizeof(processPath));
-        if (strlen(processPath) > 0)
+        int position = strlen(processPath);
+        if (position > 0)
         {
-            int position = strlen(processPath);
             while(position >= 0 && processPath[position] != '/')
             {
                 position--;
@@ -727,10 +730,12 @@ bool runHttpsServer()
             if (!processName.compare(QString::fromUtf8("Safari"), Qt::CaseInsensitive)
                 || !processName.compare(QString::fromUtf8("Opera"), Qt::CaseInsensitive))
             {
+                delete [] pids;
                 return true;
             }
         }
     }
 
+    delete [] pids;
     return false;
 }
