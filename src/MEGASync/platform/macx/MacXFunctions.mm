@@ -724,7 +724,8 @@ bool runHttpsServer()
             }
 
             QString processName = QString::fromUtf8(processPath + position + 1);
-            if (!processName.compare(QString::fromUtf8("Safari"), Qt::CaseInsensitive))
+            if (!processName.compare(QString::fromUtf8("Safari"), Qt::CaseInsensitive)
+                || !processName.compare(QString::fromUtf8("Opera"), Qt::CaseInsensitive))
             {
                 return true;
             }
