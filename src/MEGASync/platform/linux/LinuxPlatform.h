@@ -25,6 +25,8 @@ private:
     static QString remove_icon;
 
     LinuxPlatform() {}
+    static QStringList getListRunningProcesses();
+
 public:
     static void initialize(int argc, char *argv[]);
     static void prepareForSync();

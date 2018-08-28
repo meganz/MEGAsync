@@ -271,22 +271,40 @@ void LinuxPlatform::uninstall()
 
 }
 
-// Check if it's needed to start the local HTTP server
-// for communications with the webclient
-bool LinuxPlatform::shouldRunHttpServer()
+QStringList LinuxPlatform::getListRunningProcesses()
 {
     QProcess p;
-    p.start(QString::fromUtf8("ps ax -o command"));
+    p.start(QString::fromUtf8("ps ax -o comm"));
     p.waitForFinished(2000);
     QString output = QString::fromUtf8(p.readAllStandardOutput().constData());
     QString e = QString::fromUtf8(p.readAllStandardError().constData());
     if (e.size())
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error for \"ps ax -o command\" command:");
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error for \"ps ax -o comm\" command:");
         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
     }
 
+    p.start(QString::fromUtf8("/bin/bash -c \"readlink /proc/*/exe\""));
+    p.waitForFinished(2000);
+    QString output2 = QString::fromUtf8(p.readAllStandardOutput().constData());
+    e = QString::fromUtf8(p.readAllStandardError().constData());
+    if (e.size())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error for \"readlink /proc/*/exe\" command:");
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
+    }
     QStringList data = output.split(QString::fromUtf8("\n"));
+
+    data.append(output2.split(QString::fromUtf8("\n")));
+
+    return data;
+}
+
+// Check if it's needed to start the local HTTP server
+// for communications with the webclient
+bool LinuxPlatform::shouldRunHttpServer()
+{
+    QStringList data = getListRunningProcesses();
     if (data.size() > 1)
     {
         for (int i = 1; i < data.size(); i++)
@@ -313,18 +331,8 @@ bool LinuxPlatform::shouldRunHttpServer()
 // for communications with the webclient
 bool LinuxPlatform::shouldRunHttpsServer()
 {
-    QProcess p;
-    p.start(QString::fromUtf8("ps ax -o command"));
-    p.waitForFinished(2000);
-    QString output = QString::fromUtf8(p.readAllStandardOutput().constData());
-    QString e = QString::fromUtf8(p.readAllStandardError().constData());
-    if (e.size())
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error for \"ps ax -o command\" command:");
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
-    }
+    QStringList data = getListRunningProcesses();
 
-    QStringList data = output.split(QString::fromUtf8("\n"));
     if (data.size() > 1)
     {
         for (int i = 1; i < data.size(); i++)
