@@ -62,6 +62,7 @@ void HTTPServer::incomingConnection(int socket)
         return;
     }
 
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Incoming webclient connection");
     Preferences *preferences = Preferences::instance();
     QTcpSocket* s = NULL;
     QSslSocket *sslSocket = NULL;
@@ -207,10 +208,12 @@ void HTTPServer::onTransferDataUpdate(MegaHandle handle, int state, long long pr
 
 void HTTPServer::readClient()
 {
-    QAbstractSocket *socket = (QSslSocket*)sender();
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Processing webclient request via %1").arg(QString::fromUtf8(sslEnabled ? "HTTPS" : "HTTP")).toUtf8().constData());
+    QAbstractSocket *socket = (QAbstractSocket*)sender();
     HTTPRequest *request = requests.value(socket);
     if (disabled || !request)
     {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Webclient request not found");
         discardClient();
         return;
     }
@@ -222,6 +225,7 @@ void HTTPServer::readClient()
         QStringList headers = tokens[0].split(QString::fromUtf8("\r\n"));
         if (!headers.size() || !headers[0].startsWith(QString::fromAscii("POST")))
         {
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Method not allowed for webclient request");
             rejectRequest(socket, QString::fromUtf8("405 Method Not Allowed"));
             return;
         }
@@ -251,6 +255,7 @@ void HTTPServer::readClient()
 
             if (!found)
             {
+                MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Missing or invalid Origin header");
                 rejectRequest(socket);
                 return;
             }
@@ -260,6 +265,7 @@ void HTTPServer::readClient()
         QStringList contentLengthHeader = headers.filter(QRegExp(contentLengthId, Qt::CaseInsensitive));
         if (!contentLengthHeader.size())
         {
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Missing Content-length header");
             rejectRequest(socket);
             return;
         }
@@ -268,6 +274,16 @@ void HTTPServer::readClient()
         request->contentLength = contentLengthHeader[0].mid(contentLengthId.size(), contentLengthHeader[0].size() - contentLengthId.size()).toInt(&ok);
         if (!ok || request->contentLength < tokens[1].size())
         {
+            if (!ok)
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Unable to parse Content-length header: %1")
+                             .arg(contentLengthHeader[0]).toUtf8().constData());
+            }
+            else
+            {
+                MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Invalid Content-length header. Header: %1 - Data: %2")
+                             .arg(request->contentLength).arg(tokens[1].size()).toUtf8().constData());
+            }
             rejectRequest(socket);
             return;
         }
@@ -332,7 +348,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 
     QPointer<QAbstractSocket> safeSocket = socket;
 
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("HTTP request received: %1").arg(request.data).toUtf8().constData());
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Webclient request received: %1").arg(request.data).toUtf8().constData());
     if (request.data == QString::fromUtf8("{\"a\":\"v\"}"))
     {
         MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "GetVersion command received from the webclient");
@@ -739,6 +755,16 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 
 void HTTPServer::error(QAbstractSocket::SocketError)
 {
+    if (!disabled && sslEnabled)
+    {
+        QAbstractSocket *socket = (QAbstractSocket*)sender();
+        HTTPRequest *request = requests.value(socket);
+        if (request && !request->data.size())
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Webclient failed to connect using HTTPS");
+            emit onConnectionError();
+        }
+    }
 }
 
 void HTTPServer::sslErrors(const QList<QSslError> &)
