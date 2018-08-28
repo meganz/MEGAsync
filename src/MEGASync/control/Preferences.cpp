@@ -11,14 +11,20 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/3.6.7.0";
+const char Preferences::USER_AGENT[] = "MEGAsync/3.7.0.0";
 const int Preferences::VERSION_CODE = 3607;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("3.6.7");
-const QString Preferences::SDK_ID = QString::fromAscii("99a46c");
+const QString Preferences::VERSION_STRING = QString::fromAscii("3.7.0");
+const QString Preferences::SDK_ID = QString::fromAscii("b71f58");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- Fixed communications with the webclient");
+            "- Support for multi-factor authentication\n"
+            "- Security improvements for the registration of new accounts\n"
+            "- Better performance for the upload of images\n"
+            "- Creation of thumbnails and previews for RAW images\n"
+            "- Improvements in the management of network connections\n"
+            "- New logic to get external changes in the MEGA account\n"
+            "- Other minor bug fixes and improvements");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
