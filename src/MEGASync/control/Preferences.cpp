@@ -16,7 +16,7 @@ const int Preferences::VERSION_CODE = 3607;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("3.7.0");
-const QString Preferences::SDK_ID = QString::fromAscii("b71f58");
+const QString Preferences::SDK_ID = QString::fromAscii("c2c593");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- Support for multi-factor authentication\n"
             "- Security improvements for the registration of new accounts\n"
