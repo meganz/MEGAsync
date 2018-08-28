@@ -17,7 +17,7 @@ BuildRequires: libcurl4
 %endif
 
 %if 0%{?suse_version}
-BuildRequires: libcares-devel, pkg-config
+BuildRequires: libcares-devel, pkg-config, libraw-devel
 BuildRequires: update-desktop-files
 
 #%if 0%{?suse_version} <= 1320
@@ -39,6 +39,8 @@ BuildRequires: -post-build-checks
 BuildRequires: libcryptopp-devel
 %endif
 
+%else
+BuildRequires: LibRaw-devel
 %endif
 
 %if 0%{?fedora_version}==21 || 0%{?fedora_version}==22 || 0%{?fedora_version}>=25 || !(0%{?sle_version} < 120300)
