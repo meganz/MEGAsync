@@ -373,7 +373,7 @@ background-color:  rgba(0, 0, 0, 10%);
             </size>
            </property>
            <property name="text">
-            <string>INVALID CODE</string>
+            <string>Invalid code</string>
            </property>
           </widget>
          </item>
