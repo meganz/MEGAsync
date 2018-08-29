@@ -10,6 +10,7 @@ Login2FA::Login2FA(QWidget *parent) :
     setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
+    ui->lError->setText(ui->lError->text().toUpper());
     ui->lError->hide();
 
     connect(ui->leCode, SIGNAL(textChanged(QString)), this, SLOT(inputCodeChanged()));
