@@ -40,7 +40,10 @@ BuildRequires: libcryptopp-devel
 %endif
 
 %else
+%if 0%{?rhel_version} == 0
+#if !RHEL
 BuildRequires: LibRaw-devel
+%endif
 %endif
 
 %if 0%{?fedora_version}==21 || 0%{?fedora_version}==22 || 0%{?fedora_version}>=25 || !(0%{?sle_version} < 120300)
@@ -94,6 +97,7 @@ Store up to 50 GB for free!
 %build
 
 %define flag_cryptopp %{nil}
+%define flag_libraw %{nil}
 %define flag_disablemediainfo -i
 
 %if 0%{?fedora_version}==19 || 0%{?fedora_version}==20 || 0%{?fedora_version}==23 || 0%{?fedora_version}==24 || 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} || ( 0%{?suse_version} && 0%{?sle_version} < 120300)
@@ -107,6 +111,8 @@ Store up to 50 GB for free!
 
 %if 0%{?rhel_version}
 %define flag_cryptopp -q
+%define flag_libraw -W
+
 %endif
 
 %define flag_cares %{nil}
@@ -125,7 +131,7 @@ Store up to 50 GB for free!
 
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 
-./configure %{flag_cryptopp} -g %{flag_disablezlib} %{flag_cares} %{flag_disablemediainfo}
+./configure %{flag_cryptopp} -g %{flag_disablezlib} %{flag_cares} %{flag_disablemediainfo} %{flag_libraw}
 
 # Fedora uses system Crypto++ header files
 %if 0%{?fedora}
