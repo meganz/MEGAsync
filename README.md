@@ -74,14 +74,14 @@ Preparation:
 
 First install dependencies. e.g., for a debian/ubuntu:
 ```
-sudo apt-get install build-essential autoconf automake m4 libtool libtool-bin qt4-qmake make libqt4-dev libcrypto++-dev libsqlite3-dev libc-ares-dev libcurl4-openssl-dev libssl-dev
+sudo apt-get install build-essential autoconf automake m4 libtool libtool-bin qt4-qmake make libqt4-dev libcrypto++-dev libsqlite3-dev libc-ares-dev libcurl4-openssl-dev libssl-dev libraw-dev
 # Optional, if you wish to build nautilus extension:
 sudo apt-get install libnautilus-extension-dev
 ```
 
 Addition: for RPM based (e.g: Fedora): 
 ```
-sudo dnf install libtool gcc-c++ c-ares-devel cryptopp-devel openssl-devel qt-devel sqlite-devel zlib-devel
+sudo dnf install libtool gcc-c++ c-ares-devel cryptopp-devel openssl-devel qt-devel sqlite-devel zlib-devel LibRaw-devel
 ```
 
 Building:
