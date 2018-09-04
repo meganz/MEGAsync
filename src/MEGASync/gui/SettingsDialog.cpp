@@ -1470,25 +1470,7 @@ int SettingsDialog::saveSettings()
             preferences->setLowerSizeLimitValue(lowerLimit);
             preferences->setUpperSizeLimitUnit(upperLimitUnit);
             preferences->setLowerSizeLimitUnit(lowerLimitUnit);
-
-            if (hasLowerLimit)
-            {
-                megaApi->setExclusionLowerSizeLimit(preferences->lowerSizeLimitValue() * pow((float)1024, preferences->lowerSizeLimitUnit()));
-            }
-            else
-            {
-                megaApi->setExclusionLowerSizeLimit(0);
-            }
-
-            if (hasUpperLimit)
-            {
-                megaApi->setExclusionUpperSizeLimit(preferences->upperSizeLimitValue() * pow((float)1024, preferences->upperSizeLimitUnit()));
-            }
-            else
-            {
-                megaApi->setExclusionUpperSizeLimit(0);
-            }
-
+            preferences->setCrashed(true);
             QMegaMessageBox::information(this, tr("Warning"),
                                          tr("The new excluded file sizes will be taken into account when the application starts again."),
                                          Utilities::getDevicePixelRatio(),
