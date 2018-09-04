@@ -2468,6 +2468,7 @@ void MegaApplication::startHttpsServer()
         connect(httpsServer, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
         connect(httpsServer, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
         connect(httpsServer, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
+        connect(httpsServer, SIGNAL(onConnectionError()), this, SLOT(renewLocalSSLcert()), Qt::QueuedConnection);
 
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTPS server started");
     }
@@ -2475,12 +2476,13 @@ void MegaApplication::startHttpsServer()
 
 void MegaApplication::initLocalServer()
 {
-    if (!httpServer && Platform::shouldRunHttpServer())
+    // Run both servers for now, until we receive the confirmation of the criteria to start them dynamically
+    if (!httpServer) // && Platform::shouldRunHttpServer())
     {
         startHttpServer();
     }
 
-    if (!updatingSSLcert && (httpsServer || Platform::shouldRunHttpsServer()))
+    if (!updatingSSLcert) // && (httpsServer || Platform::shouldRunHttpsServer()))
     {
         long long currentTime = QDateTime::currentMSecsSinceEpoch() / 1000;
         if ((currentTime - lastSSLcertUpdate) > Preferences::LOCAL_HTTPS_CERT_RENEW_INTERVAL_SECS)
@@ -2492,9 +2494,12 @@ void MegaApplication::initLocalServer()
 
 void MegaApplication::renewLocalSSLcert()
 {
-    updatingSSLcert = true;
-    lastSSLcertUpdate = QDateTime::currentMSecsSinceEpoch() / 1000;
-    megaApi->getLocalSSLCertificate();
+    if (!updatingSSLcert)
+    {
+        updatingSSLcert = true;
+        lastSSLcertUpdate = QDateTime::currentMSecsSinceEpoch() / 1000;
+        megaApi->getLocalSSLCertificate();
+    }
 }
 
 void MegaApplication::triggerInstallUpdate()
@@ -3307,11 +3312,8 @@ void MegaApplication::showTrayMenu(QPoint *point)
 
         QPoint p = point ? (*point) - QPoint(trayGuestMenu->sizeHint().width(), 0)
                          : QCursor::pos();
-#ifdef __APPLE__
-        trayGuestMenu->exec(p);
-#else
+
         trayGuestMenu->popup(p);
-#endif
     }
     else if (trayMenu && !infoOverQuota)
     {
@@ -3335,11 +3337,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
             pauseTransfersAction->setHoverIcon(QIcon(QString::fromAscii("://images/ico_pause_transfers_over.png")));
         }
 
-#ifdef __APPLE__
-        trayMenu->exec(p);
-#else
         trayMenu->popup(p);
-#endif
     }
     else if (trayOverQuotaMenu && infoOverQuota)
     {
@@ -3350,11 +3348,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
 
         QPoint p = point ? (*point) - QPoint(trayOverQuotaMenu->sizeHint().width(), 0)
                          : QCursor::pos();
-#ifdef __APPLE__
-        trayOverQuotaMenu->exec(p);
-#else
         trayOverQuotaMenu->popup(p);
-#endif
     }
 }
 
@@ -4557,6 +4551,19 @@ void MegaApplication::onUpdateError()
 //Called when users click in the tray icon
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
+#ifdef Q_OS_LINUX
+    if (getenv("XDG_CURRENT_DESKTOP") && (
+                !strcmp(getenv("XDG_CURRENT_DESKTOP"),"ubuntu:GNOME")
+                || !strcmp(getenv("XDG_CURRENT_DESKTOP"),"LXDE")
+                                          )
+            )
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Ignoring unexpected trayIconActivated detected in %1")
+                     .arg(QString::fromUtf8(getenv("XDG_CURRENT_DESKTOP"))).toUtf8().constData() );
+        return;
+    }
+#endif
+
     if (appfinished)
     {
         return;
@@ -5726,6 +5733,14 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
         break;
     }
+    case MegaRequest::TYPE_CHANGE_PW:
+    {
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            QMessageBox::information(NULL, tr("Password changed"), tr("Your password has been changed."));
+        }
+        break;
+    }
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
         inflightUserStats = false;
@@ -6370,7 +6385,14 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                 || (transfer->isSyncTransfer()
                     && errorCode == MegaError::API_EKEY)))
     {
-        showErrorMessage(tr("Transfer failed:") + QString::fromUtf8(" " ) + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
+        if (errorCode == MegaError::API_EFAILED)
+        {
+            showWarningMessage(tr("Transfer failed:") + QString::fromUtf8(" ") + tr("Temporarily not available"), QString::fromUtf8(transfer->getFileName()));
+        }
+        else
+        {
+            showErrorMessage(tr("Transfer failed:") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
+        }
     }
 
     //If there are no pending transfers, reset the statics and update the state of the tray icon

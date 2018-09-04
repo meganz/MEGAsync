@@ -271,12 +271,88 @@ void LinuxPlatform::uninstall()
 
 }
 
-bool LinuxPlatform::shouldRunHttpServer()
+QStringList LinuxPlatform::getListRunningProcesses()
 {
-    return true;
+    QProcess p;
+    p.start(QString::fromUtf8("ps ax -o comm"));
+    p.waitForFinished(2000);
+    QString output = QString::fromUtf8(p.readAllStandardOutput().constData());
+    QString e = QString::fromUtf8(p.readAllStandardError().constData());
+    if (e.size())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error for \"ps ax -o comm\" command:");
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
+    }
+
+    p.start(QString::fromUtf8("/bin/bash -c \"readlink /proc/*/exe\""));
+    p.waitForFinished(2000);
+    QString output2 = QString::fromUtf8(p.readAllStandardOutput().constData());
+    e = QString::fromUtf8(p.readAllStandardError().constData());
+    if (e.size())
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error for \"readlink /proc/*/exe\" command:");
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
+    }
+    QStringList data = output.split(QString::fromUtf8("\n"));
+
+    data.append(output2.split(QString::fromUtf8("\n")));
+
+    return data;
 }
 
+// Check if it's needed to start the local HTTP server
+// for communications with the webclient
+bool LinuxPlatform::shouldRunHttpServer()
+{
+    QStringList data = getListRunningProcesses();
+    if (data.size() > 1)
+    {
+        for (int i = 1; i < data.size(); i++)
+        {
+            // The MEGA webclient sends request to MEGAsync to improve the
+            // user experience. We check if web browsers are running because
+            // otherwise it isn't needed to run the local web server for this purpose.
+            // Here is the list or web browsers that allow HTTP communications
+            // with 127.0.0.1 inside HTTPS webs.
+            QString command = data.at(i).trimmed();
+            if (command.contains(QString::fromUtf8("firefox"), Qt::CaseInsensitive)
+                    || command.contains(QString::fromUtf8("chrome"), Qt::CaseInsensitive)
+                    || command.contains(QString::fromUtf8("chromium"), Qt::CaseInsensitive)
+                    )
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+// Check if it's needed to start the local HTTPS server
+// for communications with the webclient
 bool LinuxPlatform::shouldRunHttpsServer()
 {
-    return true;
+    QStringList data = getListRunningProcesses();
+
+    if (data.size() > 1)
+    {
+        for (int i = 1; i < data.size(); i++)
+        {
+            // The MEGA webclient sends request to MEGAsync to improve the
+            // user experience. We check if web browsers are running because
+            // otherwise it isn't needed to run the local web server for this purpose.
+            // Here is the list or web browsers that don't allow HTTP communications
+            // with 127.0.0.1 inside HTTPS webs and therefore require a HTTPS server.
+            QString command = data.at(i).trimmed();
+            if (command.contains(QString::fromUtf8("safari"), Qt::CaseInsensitive)
+                    || command.contains(QString::fromUtf8("iexplore"), Qt::CaseInsensitive)
+                    || command.contains(QString::fromUtf8("opera"), Qt::CaseInsensitive)
+                    || command.contains(QString::fromUtf8("iceweasel"), Qt::CaseInsensitive)
+                    || command.contains(QString::fromUtf8("konqueror"), Qt::CaseInsensitive)
+                    )
+            {
+                return true;
+            }
+        }
+    }
+    return false;
 }

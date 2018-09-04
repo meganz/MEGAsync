@@ -55,6 +55,8 @@ debug {
 CONFIG += USE_LIBUV
 CONFIG += USE_MEGAAPI
 CONFIG += USE_MEDIAINFO
+CONFIG += USE_LIBRAW
+CONFIG += USE_FFMPEG
 
 unix:!macx {
         exists(/usr/include/ffmpeg-mega)|exists(mega/bindings/qt/3rdparty/include/ffmpeg)|packagesExist(ffmpeg) {

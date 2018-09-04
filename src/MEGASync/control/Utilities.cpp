@@ -634,19 +634,3 @@ QString Utilities::getDefaultBasePath()
     return QString();
 }
 
-QChar Utilities::getAvatarLetter()
-{
-    Preferences *preferences = Preferences::instance();
-    QString fullname = (preferences->firstName() + preferences->lastName()).trimmed();
-    if (fullname.isEmpty())
-    {
-        QString email = preferences->email();
-        if (email.size())
-        {
-            return email.at(0).toUpper();
-        }
-        return QChar::fromAscii(' ');
-    }
-
-    return fullname.at(0).toUpper();
-}
