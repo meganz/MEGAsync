@@ -54,7 +54,7 @@ build() {
 	_bindir=$pkgdir/usr/bin
 	cd "$pkgname-$pkgver"
 	./configure -e -q -g
-	qmake-qt5 MEGA.pro || qmake-qt4 MEGA.pro #qmake would fail when qt4 installed (due to some path missconfigurations)
+	qmake-qt5 "CONFIG += FULLREQUIREMENTS" MEGA.pro || qmake-qt4 "CONFIG += FULLREQUIREMENTS" MEGA.pro #qmake would fail when qt4 installed (due to some path missconfigurations)
 	lrelease-qt5 MEGASync/MEGASync.pro || lrelease-qt4 MEGASync/MEGASync.pro 
 	make
 }

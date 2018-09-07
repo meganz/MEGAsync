@@ -147,19 +147,19 @@ rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %if 0%{?fedora} || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
 
 %if 0%{?fedora_version} >= 23 || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
-qmake-qt5 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+qmake-qt5 "CONFIG += FULLREQUIREMENTS" DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
 lrelease-qt5  MEGASync/MEGASync.pro
 %else
-qmake-qt4 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+qmake-qt4 "CONFIG += FULLREQUIREMENTS" DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
 lrelease-qt4  MEGASync/MEGASync.pro
 %endif
 %else
 
 %if 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
-qmake-qt4 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+qmake-qt4 "CONFIG += FULLREQUIREMENTS" DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
 lrelease-qt4  MEGASync/MEGASync.pro
 %else
-qmake DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+qmake "CONFIG += FULLREQUIREMENTS" DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
 lrelease MEGASync/MEGASync.pro
 %endif
 
