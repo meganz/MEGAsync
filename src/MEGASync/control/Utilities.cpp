@@ -157,50 +157,6 @@ void Utilities::initializeExtensions()
                             extensionIcons[QString::fromAscii("wps")] = QString::fromAscii("word.png");
 }
 
-void Utilities::countFilesAndFolders(QString path, long *numFiles, long *numFolders, long fileLimit, long folderLimit)
-{
-    if (!path.size())
-    {
-        return;
-    }
-
-    QApplication::processEvents();
-
-#ifdef WIN32
-    if (path.startsWith(QString::fromAscii("\\\\?\\")))
-    {
-        path = path.mid(4);
-    }
-#endif
-
-    QFileInfo baseDir(path);
-    if (!baseDir.exists() || !baseDir.isDir())
-    {
-        return;
-    }
-
-    if ((((*numFolders) > folderLimit)) || (((*numFiles) > fileLimit)))
-    {
-        return;
-    }
-
-    QDir dir(path);
-    QFileInfoList entries = dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot);
-    for (int i = 0; i < entries.size(); i++)
-    {
-        QFileInfo info = entries[i];
-        if (info.isFile())
-        {
-            (*numFiles)++;
-        }
-        else if (info.isDir())
-        {
-            countFilesAndFolders(info.absoluteFilePath(), numFiles, numFolders, fileLimit, folderLimit);
-            (*numFolders)++;
-        }
-    }
-}
-
 void Utilities::getFolderSize(QString folderPath, long long *size)
 {
     if (!folderPath.size())
