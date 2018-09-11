@@ -2100,6 +2100,10 @@ void MegaApplication::periodicTasks()
 
 void MegaApplication::cleanAll()
 {
+    if (appfinished)
+    {
+        return;
+    }
     appfinished = true;
 
 #ifndef DEBUG

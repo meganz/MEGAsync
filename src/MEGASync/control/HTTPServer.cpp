@@ -294,7 +294,15 @@ void HTTPServer::readClient()
         }
 
         request->data = tokens[1];
+
+
+        QPointer<QAbstractSocket> safeSocket = socket;
+        QPointer<HTTPServer> safeServer = this;
         processRequest(socket, *request);
+        if (!safeServer || !safeSocket)
+        {
+            return;
+        }
 
         HTTPRequest *req = requests.value(socket, NULL);
         if (request == req)
@@ -347,6 +355,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
     QString externalTransferQueryProgressStart = QString::fromUtf8("{\"a\":\"t\",");
 
     QPointer<QAbstractSocket> safeSocket = socket;
+    QPointer<HTTPServer> safeServer = this;
 
     MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Webclient request received: %1").arg(request.data).toUtf8().constData());
     if (request.data == QString::fromUtf8("{\"a\":\"v\"}"))
@@ -484,6 +493,10 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                         QString parentHandle = Utilities::extractJSONString(file, QString::fromUtf8("p"));
                         p = megaApi->base64ToHandle(parentHandle.toUtf8().constData());
                         QApplication::processEvents();
+                        if (!safeServer || !safeSocket)
+                        {
+                            return;
+                        }
                     }
                     else
                     {
@@ -744,7 +757,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                                              "Content-Length: %2\r\n"
                                              "\r\n"
                                              "%3").arg(request.origin).arg(response.size()).arg(response);
-    if (safeSocket)
+    if (safeServer && safeSocket)
     {
         safeSocket->write(fullResponse.toUtf8());
         safeSocket->flush();
