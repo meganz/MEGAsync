@@ -3576,6 +3576,11 @@ void MegaApplication::uploadActionClicked()
          {
                 infoDialog->hide();
                 QApplication::processEvents();
+                if (appfinished)
+                {
+                    return;
+                }
+
                 QStringList files = MacXPlatform::multipleUpload(QCoreApplication::translate("ShellExtension", "Upload to MEGA"));
                 if (files.size())
                 {
