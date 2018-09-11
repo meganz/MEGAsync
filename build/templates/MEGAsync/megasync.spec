@@ -17,7 +17,10 @@ BuildRequires: libcurl4
 %endif
 
 %if 0%{?suse_version}
-BuildRequires: libcares-devel, pkg-config, libraw-devel
+BuildRequires: libcares-devel, pkg-config
+%if %{_target_cpu} != "i586" || (0%{?sle_version} != 120200 && 0%{?sle_version} != 120300)
+BuildRequires: libraw-devel
+%endif
 BuildRequires: update-desktop-files
 
 #%if 0%{?suse_version} <= 1320
@@ -108,6 +111,11 @@ Store up to 50 GB for free!
 %if 0%{?centos_version} || 0%{?scientificlinux_version}
 %define flag_cryptopp -q
 %endif
+
+%if %{_target_cpu} == "i586" && ( 0%{?sle_version} == 120200 || 0%{?sle_version} == 120300)
+%define flag_libraw -W
+%endif
+
 
 %if 0%{?rhel_version}
 %define flag_cryptopp -q
