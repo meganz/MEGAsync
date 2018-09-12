@@ -2100,6 +2100,10 @@ void MegaApplication::periodicTasks()
 
 void MegaApplication::cleanAll()
 {
+    if (appfinished)
+    {
+        return;
+    }
     appfinished = true;
 
 #ifndef DEBUG
@@ -3572,6 +3576,11 @@ void MegaApplication::uploadActionClicked()
          {
                 infoDialog->hide();
                 QApplication::processEvents();
+                if (appfinished)
+                {
+                    return;
+                }
+
                 QStringList files = MacXPlatform::multipleUpload(QCoreApplication::translate("ShellExtension", "Upload to MEGA"));
                 if (files.size())
                 {

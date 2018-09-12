@@ -2,6 +2,7 @@
 #include "Utilities.h"
 #include <QApplication>
 #include <QDateTime>
+#include <QPointer>
 
 using namespace mega;
 
@@ -52,7 +53,12 @@ void MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
 
 void MegaDownloader::download(MegaNode *parent, QFileInfo info)
 {
+    QPointer<MegaDownloader> safePointer = this;
     QApplication::processEvents();
+    if (!safePointer)
+    {
+        return;
+    }
 
     QString currentPath = QDir::toNativeSeparators(info.absoluteFilePath());
 
