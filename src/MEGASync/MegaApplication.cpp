@@ -697,6 +697,17 @@ void MegaApplication::initialize()
 #endif
 
     megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
+
+    QString stagingPath = QDir(dataPath).filePath(QString::fromAscii("megasync.staging"));
+    QFile fstagingPath(stagingPath);
+    if (fstagingPath.exists())
+    {
+        megaApi->changeApiUrl("https://staging.api.mega.co.nz/");
+        megaApiFolders->changeApiUrl("https://staging.api.mega.co.nz/");
+        QMegaMessageBox::warning(NULL, QString::fromUtf8("MEGAsync"), QString::fromUtf8("API URL changed to staging"), Utilities::getDevicePixelRatio());
+        Preferences::SDK_ID.append(QString::fromUtf8(" - STAGING"));
+    }
+
     megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGAsync is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
              .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
 

@@ -340,7 +340,7 @@ public:
     static const int VERSION_CODE;
     static const int BUILD_ID;
     static const QString VERSION_STRING;
-    static const QString SDK_ID;
+    static QString SDK_ID;
     static const QString CHANGELOG;
     static const QString TRANSLATION_FOLDER;
     static const QString TRANSLATION_PREFIX;
