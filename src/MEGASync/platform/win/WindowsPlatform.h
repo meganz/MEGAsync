@@ -20,7 +20,6 @@ private:
     WindowsPlatform() {}
 
     static HRESULT CreateLink(LPCWSTR lpszPathObj, LPCWSTR lpszPathLink, LPCWSTR lpszDesc, LPCWSTR pszIconfile=NULL, int iIconindex=0);
-    static void countFilesAndFolders(QString path, long *numFiles, long *numFolders, long fileLimit, long folderLimit);
     static LPTSTR getCurrentSid();
     static WinShellDispatcherTask *shellDispatcherTask;
 
