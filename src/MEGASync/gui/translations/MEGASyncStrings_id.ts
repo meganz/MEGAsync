@@ -237,7 +237,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>The name &quot;%1&quot; is already in use for another sync. Please enter a different name to identify this synced folder:</translation>
+        <translation>Nama &quot;%1&quot; sudah dipakai untuk sync yang lain. Harap masukan nama yang lain untuk mengidentifikasi folder sync ini:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -257,13 +257,13 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please, select another folder.</translation>
+        <translation type="obsolete">Folder lokal terlalu besar (versi ini terbatas pada %1 folder atau %2 file). Silakan, pilih folder lain.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
-        <translation type="obsolete">You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation type="obsolete">Anda mencoba menyinkronkan folder yang sangat besar. Untuk mencegah penyelarasan seluruh volume boot, yang tidak efisien dan berbahaya, kami meminta Anda untuk memulai dengan folder yang lebih kecil dan menambahkan lebih banyak data sementara MEGAsync sedang berjalan.</translation>
     </message>
 </context>
 <context>
@@ -318,7 +318,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Password changed</source>
-        <translation type="unfinished">Password changed</translation>
+        <translation type="unfinished">Kata sandi diubah</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
@@ -347,6 +347,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please, enter a stronger password</source>
         <translation type="unfinished">Harap, masukan password yang lebih kuat</translation>
+    </message>
+    <message>
+        <source>Too many requests. Please wait.</source>
+        <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</translatorcomment>
+        <translation type="unfinished">Terlalu banyak permintaan. Mohon tunggu.</translation>
     </message>
 </context>
 <context>
@@ -561,7 +566,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Label to inform a user about the fact of syncing a extremely large folder and the possible drawbacks that could arise.</translatorcomment>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Anda mencoba menyinkronkan folder yang sangat besar. Untuk mencegah penyelarasan seluruh volume boot, yang tidak efisien dan berbahaya, kami meminta Anda untuk memulai dengan folder yang lebih kecil dan menambahkan lebih banyak data sementara MEGAsync sedang berjalan.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -953,7 +958,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
-        <translation type="unfinished">This process is taking longer than expected. Please wait.</translation>
+        <translation type="unfinished">Proses ini memakan waktu lebih lama dari yang diperkirakan. Mohon tunggu.</translation>
     </message>
 </context>
 <context>
@@ -1116,6 +1121,39 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>Login2FA</name>
+    <message>
+        <source>Login Verification</source>
+        <translatorcomment>A dialog title for the form which collects the user’s 2FA code for login.</translatorcomment>
+        <translation type="unfinished">Verifikasi Login</translation>
+    </message>
+    <message>
+        <source>Please enter the code generated by your authentication app</source>
+        <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
+        <translation type="unfinished">Silakan masukkan kode yang dihasilkan oleh aplikasi otentikasi Anda</translation>
+    </message>
+    <message>
+        <source>6 digit code:</source>
+        <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
+        <translation type="unfinished">6 digit code</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text to cancel 2FA dialog</translatorcomment>
+        <translation type="unfinished">Batal</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
+        <translation type="unfinished">Berikut</translation>
+    </message>
+    <message>
+        <source>Invalid code</source>
+        <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
+        <translation type="unfinished">Kode salah</translation>
+    </message>
+</context>
+<context>
     <name>MegaApplication</name>
     <message>
         <source>MEGAsync</source>
@@ -1168,7 +1206,7 @@ because the local folder doesn&apos;t exist</source>
 Deletions that occur while it is not running will not be propagated.
 
 Exit anyway?</source>
-        <translation type="obsolete">Synchronization will stop. Deletions that occur while it is not running will not be propagated. Exit anyway?</translation>
+        <translation type="obsolete">Sinkronisasi akan berhenti. Penghapusan yang terjadi saat tidak berjalan tidak akan disebarluaskan. Tetap keluar?</translation>
     </message>
     <message>
         <source>About MEGAsync</source>
@@ -1193,7 +1231,7 @@ Exit anyway?</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Sedang masuk...</translation>
+        <translation>Masuk ...</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -1305,7 +1343,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.nz/sync</translation>
+        <translation>Terjadi masalah saat memasang pembaruan. Silakan coba lagi nanti atau unduh versi terbaru dari: https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1332,7 +1370,7 @@ https://mega.co.nz/#sync</source>
 
 Exit anyway?</source>
         <translatorcomment>Message displayed when a user is exiting the application while there are any active synchronization. Keep &quot;\n&quot; codes and capital letters.</translatorcomment>
-        <translation type="obsolete">Synchronization will stop. Exit anyway?</translation>
+        <translation type="obsolete">Sinkronisasi akan berhenti. Tetap keluar?</translation>
     </message>
     <message>
         <source>Starting</source>
@@ -1343,7 +1381,7 @@ Exit anyway?</source>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs while fetching nodes from the server.</translatorcomment>
-        <translation type="obsolete">Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
+        <translation type="obsolete">Tidak bisa mendapatkan filesystem. Tolong, coba lagi. Jika masalah berlanjut, silakan hubungi kami di bug@mega.nz</translation>
     </message>
     <message>
         <source>Upload files/folders</source>
@@ -1599,7 +1637,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
-        <translation type="unfinished">MEGAsync will continue to work, however you might not receive new updates.</translation>
+        <translation type="unfinished">MEGAsync akan terus berfungsi, namun Anda mungkin tidak menerima pembaruan baru.</translation>
+    </message>
+    <message>
+        <source>Password changed</source>
+        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
+        <translation type="unfinished">Kata sandi diubah</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
+        <translation type="unfinished">Kata sandi anda telah dirubah.</translation>
+    </message>
+    <message>
+        <source>Temporarily not available</source>
+        <translatorcomment>Label to show that an error related with a temporary problem occurs during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Sementara tidak tersedia</translation>
     </message>
 </context>
 <context>
@@ -1730,11 +1783,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation type="unfinished">Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</translation>
+        <translation type="unfinished">Akun Anda telah ditangguhkan karena beberapa pelanggaran Persyaratan Layanan MEGA. Silakan periksa kotak masuk email Anda.</translation>
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation type="unfinished">Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</translation>
+        <translation type="unfinished">Akun Anda dihentikan karena melanggar Ketentuan Layanan Mega, seperti penyalahgunaan hak orang lain; berbagi dan / atau mengimpor data ilegal; atau penyalahgunaan sistem.</translation>
     </message>
 </context>
 <context>
@@ -1915,7 +1968,7 @@ Are you sure?</source>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation type="obsolete">The root folder can&apos;t be synced. Please, select a subfolder.</translation>
+        <translation type="obsolete">Folder root tidak dapat disinkronkan. Silakan, pilih subfolder.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1925,13 +1978,13 @@ Please, select a subfolder.</source>
     <message>
         <source>You have %1 in this folder.
 Are you sure you want to sync it?</source>
-        <translation type="obsolete">You have %1 in this folder. Are you sure you want to sync it?</translation>
+        <translation type="obsolete">Anda punya %1 di folder ini. Apakah anda yakin ingin mensinkronisasi nya?</translation>
     </message>
     <message>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization. Please, ensure that you don&apos;t use characters like &apos;\&apos;, &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
+        <translation>Invalid folder for synchronization.Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in your folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2597,7 +2650,7 @@ when the application starts again.</source>
 when it starts.
 
 Do you want to restart MEGAsync now?</source>
-        <translation type="obsolete">MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
+        <translation type="obsolete">MEGAsync akan melakukan pemindaian penuh dari folder yang Anda sinkronkan saat dimulai. Apakah Anda ingin me-restart MEGAsync sekarang?</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -2628,7 +2681,7 @@ Do you want to restart MEGAsync now?</source>
 
 Do you want to restart MEGAsync now?</source>
         <translatorcomment>Message displayed asking for confirmation to the user for a Full scan operation.</translatorcomment>
-        <translation>MEGAsync will perform a full scan of your synced folders when it starts. Do you want to restart MEGAsync now?</translation>
+        <translation>MEGAsync akan melakukan pemindaian penuh dari folder yang Anda sinkronkan saat dimulai. Apakah Anda ingin me-restart MEGAsync sekarang?</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -2922,7 +2975,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>Saya setuju dengan &lt;a href=&quot;https://mega.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; MEGA</translation>
+        <translation>Saya setuju dengan &lt;a href=&quot;https://mega.nz/#terms&quot;&gt;Kebijakan Pelayanan&lt;/a&gt; MEGA</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -3088,7 +3141,7 @@ when the application starts again</source>
     <message>
         <source>Creating account...</source>
         <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>Membuat akun...</translation>
+        <translation>Membuat akun…</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3098,7 +3151,7 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">You have %1 in your Cloud Drive. Are you sure you want to sync your entire Cloud Drive?</translation>
+        <translation type="obsolete">Anda memiliki %1 di Cloud Drive anda. Anda yakin ingin mensinkronisasi seluruh Cloud Drive anda?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -3117,7 +3170,7 @@ Are you sure you want to sync your entire Cloud Drive?</source>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
 Please, select another folder.</source>
-        <translation type="obsolete">Local folder too large (this version is limited to %1 folders or %2 files). Please, select another folder.</translation>
+        <translation type="obsolete">Folder lokal terlalu besar (versi ini terbatas pada %1 folder atau %2 file). Silakan, pilih folder lain.</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -3127,20 +3180,20 @@ Please, select another folder.</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>Sedang masuk...</translation>
+        <translation>Masuk ...</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translatorcomment>Message displayed to advise the user that is trying to sync an extremely large folder.</translatorcomment>
-        <translation>You are trying to sync an extremely large folder. To prevent the syncing of entire boot volumes, which is inefficient and dangerous, we ask you to start with a smaller folder and add more data while MEGAsync is running.</translation>
+        <translation>Anda mencoba menyinkronkan folder yang sangat besar. Untuk mencegah penyelarasan seluruh volume boot, yang tidak efisien dan berbahaya, kami meminta Anda untuk memulai dengan folder yang lebih kecil dan menambahkan lebih banyak data sementara MEGAsync sedang berjalan.</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
         <translatorcomment>Message displayed when a problem occurs while fetching filesystem from the cloud drive.</translatorcomment>
-        <translation>Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
+        <translation>Tidak bisa mendapatkan filesystem. Tolong, coba lagi. Jika masalah berlanjut, silakan hubungi kami di bug@mega.nz</translation>
     </message>
     <message>
         <source>Setup Assistant - MEGAsync</source>
@@ -3204,12 +3257,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished">Creating folder…</translation>
+        <translation type="unfinished">Membuat folder ...</translation>
     </message>
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation type="unfinished">Keluar...</translation>
+        <translation type="unfinished">Keluar…</translation>
     </message>
     <message>
         <source>Very Weak</source>
