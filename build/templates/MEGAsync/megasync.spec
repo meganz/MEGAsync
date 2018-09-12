@@ -18,7 +18,7 @@ BuildRequires: libcurl4
 
 %if 0%{?suse_version}
 BuildRequires: libcares-devel, pkg-config
-%if %{_target_cpu} != "i586" || (0%{?sle_version} != 120200 && 0%{?sle_version} != 120300)
+%if !( ( %{_target_cpu} == "i586" && ( 0%{?sle_version} == 120200 || 0%{?sle_version} == 120300) ) || 0%{?suse_version} == 1230 )
 BuildRequires: libraw-devel
 %endif
 BuildRequires: update-desktop-files
@@ -112,7 +112,7 @@ Store up to 50 GB for free!
 %define flag_cryptopp -q
 %endif
 
-%if %{_target_cpu} == "i586" && ( 0%{?sle_version} == 120200 || 0%{?sle_version} == 120300)
+%if ( %{_target_cpu} == "i586" && ( 0%{?sle_version} == 120200 || 0%{?sle_version} == 120300) )
 %define flag_libraw -W
 %endif
 
@@ -152,22 +152,30 @@ rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %define extraqmake %{nil}
 %endif
 
+%if 0%{?suse_version} != 1230
+%define fullreqs "CONFIG += FULLREQUIREMENTS"
+%else
+sed -i "s/USE_LIBRAW/NOT_USE_LIBRAW/" MEGASync/MEGASync.pro
+%define fullreqs %{nil}
+%endif
+
+
 %if 0%{?fedora} || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
 
 %if 0%{?fedora_version} >= 23 || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
-qmake-qt5 "CONFIG += FULLREQUIREMENTS" DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+qmake-qt5 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
 lrelease-qt5  MEGASync/MEGASync.pro
 %else
-qmake-qt4 "CONFIG += FULLREQUIREMENTS" DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
 lrelease-qt4  MEGASync/MEGASync.pro
 %endif
 %else
 
 %if 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
-qmake-qt4 "CONFIG += FULLREQUIREMENTS" DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
 lrelease-qt4  MEGASync/MEGASync.pro
 %else
-qmake "CONFIG += FULLREQUIREMENTS" DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+qmake %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
 lrelease MEGASync/MEGASync.pro
 %endif
 
