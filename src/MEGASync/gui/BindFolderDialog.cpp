@@ -167,6 +167,7 @@ void BindFolderDialog::on_bOK_clicked()
                 repeated = true;
 
                 QPointer<QInputDialog> id = new QInputDialog(this);
+                id->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
                 id->setWindowTitle(tr("Sync name"));
                 id->setLabelText(tr("The name \"%1\" is already in use for another sync\n"
                                     "Please enter a different name to identify this synced folder:").arg(syncName));
