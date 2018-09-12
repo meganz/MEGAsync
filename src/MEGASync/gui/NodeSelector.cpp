@@ -374,7 +374,7 @@ void NodeSelector::onSelectionChanged(QItemSelection, QItemSelection)
 void NodeSelector::on_bNewFolder_clicked()
 {
     QPointer<QInputDialog> id = new QInputDialog(this);
-    id->setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    id->setWindowFlags(id->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     id->setWindowTitle(tr("New folder"));
     id->setLabelText(tr("Enter the new folder name:"));
     int result = id->exec();
