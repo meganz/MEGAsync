@@ -232,8 +232,8 @@ void InfoDialog::setUsage()
         ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
 
-        QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1&nbsp;</span>")
-                                     .arg(QString::number(percentage).append(QString::fromAscii(" %"))))
+        QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1</span>")
+                                     .arg(QString::number(percentage).append(QString::fromAscii("%"))))
                                      .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(preferences->totalStorage())));
         ui->lPercentageUsedStorage->setText(used);
@@ -554,21 +554,25 @@ void InfoDialog::transferFinished(int error)
 
 void InfoDialog::updateSyncsButton()
 {
+    if (!preferences->logged())
+    {
+        return;
+    }
+
+    MegaNode *rootNode = megaApi->getRootNode();
+    if (!rootNode)
+    {
+        ui->bSyncFolder->setText(QString::fromAscii("MEGA"));
+        return;
+    }
+
+    long long rootHandle = rootNode->getHandle();
     int num = preferences->getNumSyncedFolders();
     long long firstSyncHandle = mega::INVALID_HANDLE;
     if (num == 1)
     {
         firstSyncHandle = preferences->getMegaFolderHandle(0);
     }
-
-    MegaNode *rootNode = megaApi->getRootNode();
-    if (!rootNode)
-    {
-        preferences->setCrashed(true);
-        ui->bSyncFolder->setText(QString::fromAscii("MEGA"));
-        return;
-    }
-    long long rootHandle = rootNode->getHandle();
 
     if ((num == 1) && (firstSyncHandle == rootHandle))
     {
@@ -1048,15 +1052,18 @@ void InfoDialog::on_bSettings_clicked()
 
 void InfoDialog::on_bSyncFolder_clicked()
 {
-    int num = preferences->getNumSyncedFolders();
+    if (!preferences->logged())
+    {
+        return;
+    }
 
     MegaNode *rootNode = megaApi->getRootNode();
     if (!rootNode)
     {
-        preferences->setCrashed(true);
         return;
     }
 
+    int num = preferences->getNumSyncedFolders();
     if ((num == 1) && (preferences->getMegaFolderHandle(0) == rootNode->getHandle()))
     {
         openFolder(preferences->getLocalFolder(0));

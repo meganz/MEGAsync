@@ -56,12 +56,12 @@ Store up to 50 GB for free!
 ./configure
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 %if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
-qmake-qt4 "CONFIG += debug" DESTDIR=%{buildroot}%{_bindir}
-qmake-qt4 "CONFIG += debug" DESTDIR=%{buildroot}%{_bindir} MEGASync/MEGASync.pro
+qmake-qt4 "CONFIG += FULLREQUIREMENTS" "CONFIG += debug" DESTDIR=%{buildroot}%{_bindir}
+qmake-qt4 "CONFIG += FULLREQUIREMENTS" "CONFIG += debug" DESTDIR=%{buildroot}%{_bindir} MEGASync/MEGASync.pro
 lrelease-qt4  MEGASync/MEGASync.pro
 %else
-qmake "CONFIG += debug" DESTDIR=%{buildroot}%{_bindir}
-qmake "CONFIG += debug" DESTDIR=%{buildroot}%{_bindir} MEGASync/MEGASync.pro
+qmake "CONFIG += FULLREQUIREMENTS" "CONFIG += debug" DESTDIR=%{buildroot}%{_bindir}
+qmake "CONFIG += FULLREQUIREMENTS" "CONFIG += debug" DESTDIR=%{buildroot}%{_bindir} MEGASync/MEGASync.pro
 lrelease MEGASync/MEGASync.pro
 %endif
 
