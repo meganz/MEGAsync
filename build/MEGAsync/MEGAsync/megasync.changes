@@ -1,5 +1,5 @@
-Tue Aug 28 16:21:47 CEST 2018 - linux@mega.co.nz
-- Update to version 3.7.0:
+Wed Sep 12 19:41:17 CEST 2018 - linux@mega.co.nz
+- Update to version 3.7.1:
   * Support for multi-factor authentication
   * Security improvements for the registration of new accounts
   * Better performance for the upload of images

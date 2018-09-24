@@ -1,4 +1,4 @@
-megasync (3.7.0) stable; urgency=low
+megasync (3.7.1) stable; urgency=low
 
   * Support for multi-factor authentication
   * Security improvements for the registration of new accounts
@@ -8,7 +8,7 @@ megasync (3.7.0) stable; urgency=low
   * New logic to get external changes in the MEGA account
   * Other minor bug fixes and improvements
 
- -- MEGA Team <linux@mega.co.nz>  Tue, 28 Aug 2018 16:21:47 +0200
+ -- MEGA Team <linux@mega.co.nz>  Wed, 12 Sep 2018 19:41:17 +0200
 
 megasync (3.6.6) stable; urgency=low
 

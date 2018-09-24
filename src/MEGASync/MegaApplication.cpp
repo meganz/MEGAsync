@@ -148,20 +148,44 @@ int main(int argc, char *argv[])
 
 #ifdef Q_OS_LINUX
 #if QT_VERSION >= 0x050600
+    qreal ratio = 1;
+    int xrdbdpi = 0;
     if (getenv("XDG_CURRENT_DESKTOP") && !strcmp(getenv("XDG_CURRENT_DESKTOP"),"KDE"))
     {
         qputenv("XDG_CURRENT_DESKTOP","OVERRIDEN");
     }
     if (!getenv("QT_SCALE_FACTOR"))
     {
-        MegaApplication appaux(argc,argv); //needed to get geometry (it needs to be instantiated a second time to actually use scale factor)
-        QRect geom = appaux.desktop()->availableGeometry(QCursor::pos());
-        qreal ratio = min(geom.width()/(1920.0),geom.width()/(1080.0)*1920.0/1080.0);
-        ratio = max(1.0,ratio);
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8(" stablishing ratio to = %1").arg(QString::number(ratio)).toUtf8().constData() );
+        QProcess p;
+        p.start(QString::fromUtf8("bash -c \"xrdb -query | grep dpi | awk '{print $2}'\""));
+        p.waitForFinished(2000);
+        QString output = QString::fromUtf8(p.readAllStandardOutput().constData()).trimmed();
+        QString e = QString::fromUtf8(p.readAllStandardError().constData());
+        if (e.size())
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error for \"xrdb -query\" command:");
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
+        }
+
+        xrdbdpi = output.toInt();
+        if ( xrdbdpi > 96)
+        {
+            ratio = output.toDouble()/96.0;
+            if (ratio > 3)
+            {
+                ratio = 3;
+            }
+        }
+        else
+        {
+            MegaApplication appaux(argc,argv); //needed to get geometry (it needs to be instantiated a second time to actually use scale factor)
+            QRect geom = appaux.desktop()->availableGeometry(QCursor::pos());
+            ratio = min(geom.width()/(1920.0),geom.height()/(1080.0))*0.75;
+            ratio = max(1.0,ratio);
+        }
+
         qputenv("QT_SCALE_FACTOR", QString::number(ratio).toUtf8());
     }
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("QT_SCALE_FACTOR = %1").arg(QString::fromUtf8(getenv("QT_SCALE_FACTOR"))).toUtf8().constData() );
 #endif
 
 #if QT_VERSION < 0x050A00
@@ -169,6 +193,12 @@ int main(int argc, char *argv[])
 #endif
 #endif
     MegaApplication app(argc, argv);
+
+#if defined(Q_OS_LINUX) && QT_VERSION >= 0x050600
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("QT_SCALE_FACTOR = %1").arg(QString::fromUtf8(getenv("QT_SCALE_FACTOR"))).toUtf8().constData() );
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("xrdb dpi read = %1").arg(QString::number(xrdbdpi)).toUtf8().constData() );
+
+#endif
 
     qInstallMsgHandler(msgHandler);
 #if QT_VERSION >= 0x050000
