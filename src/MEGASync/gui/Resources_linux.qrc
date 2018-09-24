@@ -33,7 +33,6 @@
         <file>images/folder.ico</file>
         <file>images/general_32.png</file>
         <file>images/help_ico.png</file>
-        <file>images/logo.png</file>
         <file>images/proxies_32.png</file>
         <file>images/small_3D.png</file>
         <file>images/small_aftereffects.png</file>
@@ -314,5 +313,13 @@
         <file>images/downloaded_item_ico.png</file>
         <file>images/uploaded_item_ico.png</file>
         <file>images/upload_to_mega.png</file>
+        <file>images/login_background.png</file>
+        <file>images/login_intermediate.png</file>
+        <file>images/confirmation_link.png</file>
+        <file>images/step_4_full_sync.png</file>
+        <file>images/step_4_selective_sync.png</file>
+        <file>images/login_setup_step1.png</file>
+        <file>images/login_setup_step2.png</file>
+        <file>images/login_setup_step3.png</file>
     </qresource>
 </RCC>

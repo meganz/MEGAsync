@@ -31,7 +31,6 @@
         <file>images/folder.ico</file>
         <file>images/general_32.png</file>
         <file>images/help_ico.png</file>
-        <file>images/logo.png</file>
         <file>images/proxies_32.png</file>
         <file>images/small_3D.png</file>
         <file>images/small_aftereffects.png</file>
@@ -196,7 +195,6 @@
         <file>images/import_warning_ico@2x.png</file>
         <file>images/full_sync_ico.png</file>
         <file>images/full_sync_ico@2x.png</file>
-        <file>images/logo@2x.png</file>
         <file>images/selective_sync_ico.png</file>
         <file>images/selective_sync_ico@2x.png</file>
         <file>images/small_folder@2x.png</file>
@@ -595,5 +593,21 @@
         <file>images/uploaded_item_ico@2x.png</file>
         <file>images/upload_to_mega.png</file>
         <file>images/upload_to_mega@2x.png</file>
+        <file>images/login_background.png</file>
+        <file>images/login_background@2x.png</file>
+        <file>images/login_intermediate.png</file>
+        <file>images/login_intermediate@2x.png</file>
+        <file>images/confirmation_link.png</file>
+        <file>images/confirmation_link@2x.png</file>
+        <file>images/step_4_full_sync.png</file>
+        <file>images/step_4_full_sync@2x.png</file>
+        <file>images/step_4_selective_sync.png</file>
+        <file>images/step_4_selective_sync@2x.png</file>
+        <file>images/login_setup_step1.png</file>
+        <file>images/login_setup_step1@2x.png</file>
+        <file>images/login_setup_step2.png</file>
+        <file>images/login_setup_step2@2x.png</file>
+        <file>images/login_setup_step3.png</file>
+        <file>images/login_setup_step3@2x.png</file>
     </qresource>
 </RCC>
