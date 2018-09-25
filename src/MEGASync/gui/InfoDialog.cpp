@@ -784,7 +784,7 @@ void InfoDialog::regenerateLayout()
         if (!gWidget)
         {
             gWidget = new GuestWidget();
-            connect(gWidget, SIGNAL(actionButtonClicked(int)), this, SLOT(onUserAction(int)));
+            connect(gWidget, SIGNAL(forwardAction(int)), this, SLOT(onUserAction(int)));
         }
 
         ui->bTransferManager->setVisible(false);
@@ -799,8 +799,8 @@ void InfoDialog::regenerateLayout()
         dialogLayout->addWidget(gWidget);
         gWidget->setVisible(true);
 
-        setMinimumHeight(385);
-        setMaximumHeight(385);
+        setMinimumHeight(404);
+        setMaximumHeight(404);
     }
     else
     {

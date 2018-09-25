@@ -35,9 +35,11 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
 
     this->app = app;
     this->closing = false;
+    this->loggingStarted = false;
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
     delegateListener = new QTMegaRequestListener(megaApi, this);
+    megaApi->addRequestListener(delegateListener);
 
     ui->lTermsLink->setText(ui->lTermsLink->text().replace(
         QString::fromUtf8("\">"),
@@ -53,7 +55,7 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     m_animation->setEndValue(QSize(ui->wErrorMessage->maximumWidth(), ui->wErrorMessage->maximumHeight()));
     connect(m_animation, SIGNAL(finished()), this, SLOT(onErrorAnimationFinished()));
 
-    page_initial();
+    page_newaccount();
 
     ui->lError->setText(QString::fromUtf8(""));
     ui->lError->hide();
@@ -76,6 +78,19 @@ SetupWizard::~SetupWizard()
     delete ui;
 }
 
+void SetupWizard::onRequestStart(MegaApi *api, MegaRequest *request)
+{
+    if (request->getType() == MegaRequest::TYPE_LOGIN)
+    {
+        ui->lProgress->setText(tr("Logging in..."));
+        page_progress();
+    }
+    else if (request->getType() == MegaRequest::TYPE_LOGOUT)
+    {
+        page_logout();
+    }
+}
+
 void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *error)
 {
     if (closing)
@@ -87,16 +102,13 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         return;
     }
 
-    ui->bBack->setEnabled(true);
-    ui->bNext->setEnabled(true);
-    ui->bSkip->setEnabled(true);
     switch (request->getType())
     {
         case MegaRequest::TYPE_CREATE_ACCOUNT:
         {
             if (error->getErrorCode() == MegaError::API_OK)
             {
-                page_login();
+                page_login(true);
 
                 ui->eLoginEmail->setText(ui->eEmail->text().toLower().trimmed());
                 ui->eName->clear();
@@ -128,14 +140,17 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         {
             if (error->getErrorCode() == MegaError::API_OK)
             {
-                megaApi->fetchNodes(delegateListener);
+                if (loggingStarted)
+                {
+                    megaApi->fetchNodes();
+                    if (!preferences->hasLoggedIn())
+                    {
+                        preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
+                    }
+                }
+
                 ui->lProgress->setText(tr("Fetching file list..."));
                 page_progress();
-
-                if (!preferences->hasLoggedIn())
-                {
-                    preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
-                }
                 break;
             }
 
@@ -199,54 +214,57 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 break;
             }
 
-            if (!megaApi->isFilesystemAvailable())
+            if (loggingStarted)
             {
-                page_login();
-                showErrorMessage(tr("Unable to get the filesystem.\n"
-                                    "Please, try again. If the problem persists "
-                                    "please contact bug@mega.co.nz"));
-                done(QDialog::Rejected);
-                preferences->setCrashed(true);
-                app->rebootApplication(false);
-                return;
+                if (!megaApi->isFilesystemAvailable())
+                {
+                    page_login();
+                    showErrorMessage(tr("Unable to get the filesystem.\n"
+                                        "Please, try again. If the problem persists "
+                                        "please contact bug@mega.co.nz"));
+                    done(QDialog::Rejected);
+                    preferences->setCrashed(true);
+                    app->rebootApplication(false);
+                    return;
+                }
+
+                char *session = megaApi->dumpSession();
+                sessionKey = QString::fromUtf8(session);
+                delete [] session;
+
+                QString email = ui->eLoginEmail->text().toLower().trimmed();
+                if (preferences->hasEmail(email))
+                {
+                    int proxyType = preferences->proxyType();
+                    QString proxyServer = preferences->proxyServer();
+                    int proxyPort = preferences->proxyPort();
+                    int proxyProtocol = preferences->proxyProtocol();
+                    bool proxyAuth = preferences->proxyRequiresAuth();
+                    QString proxyUsername = preferences->getProxyUsername();
+                    QString proxyPassword = preferences->getProxyPassword();
+
+                    preferences->setEmail(email);
+                    preferences->setSession(sessionKey);
+                    preferences->setProxyType(proxyType);
+                    preferences->setProxyServer(proxyServer);
+                    preferences->setProxyPort(proxyPort);
+                    preferences->setProxyProtocol(proxyProtocol);
+                    preferences->setProxyRequiresAuth(proxyAuth);
+                    preferences->setProxyUsername(proxyUsername);
+                    preferences->setProxyPassword(proxyPassword);
+
+                    Platform::notifyAllSyncFoldersAdded();
+                    done(QDialog::Accepted);
+                    break;
+                }
+
+                page_mode();
             }
-
-            char *session = megaApi->dumpSession();
-            sessionKey = QString::fromUtf8(session);
-            delete [] session;
-
-            QString email = ui->eLoginEmail->text().toLower().trimmed();
-            if (preferences->hasEmail(email))
-            {
-                int proxyType = preferences->proxyType();
-                QString proxyServer = preferences->proxyServer();
-                int proxyPort = preferences->proxyPort();
-                int proxyProtocol = preferences->proxyProtocol();
-                bool proxyAuth = preferences->proxyRequiresAuth();
-                QString proxyUsername = preferences->getProxyUsername();
-                QString proxyPassword = preferences->getProxyPassword();
-
-                preferences->setEmail(email);
-                preferences->setSession(sessionKey);
-                preferences->setProxyType(proxyType);
-                preferences->setProxyServer(proxyServer);
-                preferences->setProxyPort(proxyPort);
-                preferences->setProxyProtocol(proxyProtocol);
-                preferences->setProxyRequiresAuth(proxyAuth);
-                preferences->setProxyUsername(proxyUsername);
-                preferences->setProxyPassword(proxyPassword);
-
-                Platform::notifyAllSyncFoldersAdded();
-
-                done(QDialog::Accepted);
-                break;
-            }
-
-            page_mode();
             break;
         }
         case MegaRequest::TYPE_LOGOUT:
         {
+            loggingStarted = false;
             page_login();
             break;
         }
@@ -270,23 +288,22 @@ void SetupWizard::goToStep(int page)
     QWidget *wPage = ui->sPages->currentWidget();
     if (wPage != ui->pLogin
             && wPage != ui->pNewAccount
-            && wPage != ui->pSetup)
+            && wPage != ui->pProgress)
     {
         return;
     }
 
     switch (page)
     {
-        case PAGE_INITIAL:
-            page_initial();
-            break;
-
         case PAGE_LOGIN:
             page_login();
             break;
 
         case PAGE_NEW_ACCOUNT:
             page_newaccount();
+            break;
+        case PAGE_MODE:
+            page_mode();
             break;
 
         default:
@@ -297,18 +314,7 @@ void SetupWizard::goToStep(int page)
 void SetupWizard::on_bNext_clicked()
 {
     QWidget *w = ui->sPages->currentWidget();
-    if (w == ui->pSetup)
-    {
-        if (ui->rHaveAccount->isChecked())
-        {
-            page_login();
-        }
-        else
-        {
-            page_newaccount();
-        }
-    }
-    else if (w == ui->pLogin)
+    if (w == ui->pLogin)
     {
         QString email = ui->eLoginEmail->text().toLower().trimmed();
         QString password = ui->eLoginPassword->text();
@@ -331,10 +337,8 @@ void SetupWizard::on_bNext_clicked()
             return;
         }
 
-        megaApi->login(email.toUtf8().constData(), password.toUtf8().constData(), delegateListener);
-
-        ui->lProgress->setText(tr("Logging in..."));
-        page_progress();
+        megaApi->login(email.toUtf8().constData(), password.toUtf8().constData());
+        loggingStarted = true;
     }
     else if (w == ui->pNewAccount)
     {
@@ -402,6 +406,10 @@ void SetupWizard::on_bNext_clicked()
             ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync"));
             ui->lAdvancedSetup->setText(tr("Selective sync"));
             ui->lHeader->setText(tr("Setup selective sync"));
+            ui->bSyncType->setIcon(QIcon(QString::fromAscii("://images/step_4_selective_sync.png")));
+            ui->bSyncType->setIconSize(QSize(94, 94));
+            ui->lSyncType->setText(tr("Selective sync"));
+            ui->lSyncTypeDesc->setText(tr("Specific folders in your Cloud Drive will be synchronized with a local folder."));
             ui->bMegaFolder->show();
             ui->eMegaFolder->show();
             ui->lMegaFolder->show();
@@ -413,14 +421,29 @@ void SetupWizard::on_bNext_clicked()
             ui->eMegaFolder->setText(QString::fromUtf8("/"));
             ui->lAdvancedSetup->setText(tr("Select Local folder"));
             ui->lHeader->setText(tr("Setup full sync"));
+            ui->bSyncType->setIcon(QIcon(QString::fromAscii("://images/step_4_full_sync.png")));
+            ui->bSyncType->setIconSize(QSize(94, 94));
+            ui->lSyncType->setText(tr("Full Sync"));
+            ui->lSyncTypeDesc->setText(tr("Your entire Cloud Drive will be synchronized with a local folder."));
             ui->bMegaFolder->hide();
             ui->eMegaFolder->hide();
             ui->lMegaFolder->hide();
             ui->lAdditionalSyncs->hide();
         }
 
-        ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step4.png")));
-        ui->bCurrentStep->setIconSize(QSize(512, 44));
+        ui->bBack->setVisible(true);
+        ui->bBack->setEnabled(true);
+
+        if (!loggingStarted) //Logging started at main dialog
+        {
+            ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/login_setup_step2.png")));
+            ui->bCurrentStep->setIconSize(QSize(512, 44));
+        }
+        else
+        {
+            ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step4.png")));
+            ui->bCurrentStep->setIconSize(QSize(512, 44));
+        }
 
         ui->wHelp->hide();
         ui->bNext->show();
@@ -488,17 +511,18 @@ void SetupWizard::on_bNext_clicked()
 void SetupWizard::on_bBack_clicked()
 {
     QWidget *w = ui->sPages->currentWidget();
-    if (w == ui->pLogin || w == ui->pNewAccount)
+    if (w == ui->pSetupType)
     {
-        page_initial();
-    }
-    else if (w == ui->pSetupType)
-    {
+        megaApi->logout();
         page_logout();
     }
     else if (w == ui->pAdvanced)
     {
         page_mode();
+    }
+    else if (w == ui->pLogin)
+    {
+        page_newaccount();
     }
 }
 
@@ -536,7 +560,7 @@ void SetupWizard::on_bCancel_clicked()
     {
         if (closing)
         {
-            megaApi->localLogout(delegateListener);
+            megaApi->localLogout();
             return;
         }
 
@@ -559,16 +583,19 @@ void SetupWizard::on_bCancel_clicked()
 
         if (button == QMessageBox::Yes)
         {
+            loggingStarted = false;
+
             if (megaApi->isLoggedIn())
             {
                 closing = true;
+                megaApi->logout();
                 page_logout();
             }
             else
             {
                 megaApi->localLogout();
                 done(QDialog::Rejected);
-            }
+            }            
         }
     }
 }
@@ -580,7 +607,15 @@ void SetupWizard::on_bSkip_clicked()
     {
         setupPreferences();
     }
-    done(QDialog::Accepted);
+
+    if (w == ui->pNewAccount)
+    {
+        page_login(false);
+    }
+    else
+    {
+        done(QDialog::Accepted);
+    }
 }
 
 void SetupWizard::on_bLocalFolder_clicked()
@@ -747,8 +782,8 @@ void SetupWizard::setupPreferences()
     bool proxyAuth = preferences->proxyRequiresAuth();
     QString proxyUsername = preferences->getProxyUsername();
     QString proxyPassword = preferences->getProxyPassword();
-    preferences->setEmail(email);
-    preferences->setSession(sessionKey);
+    preferences->setEmail(QString::fromUtf8(megaApi->getMyEmail()));
+    preferences->setSession(QString::fromUtf8(megaApi->dumpSession()));
 
     preferences->setProxyType(proxyType);
     preferences->setProxyServer(proxyServer);
@@ -810,6 +845,7 @@ void SetupWizard::closeEvent(QCloseEvent *event)
         if (megaApi->isLoggedIn())
         {
             closing = true;
+            megaApi->logout();
             page_logout();
         }
         else
@@ -820,7 +856,7 @@ void SetupWizard::closeEvent(QCloseEvent *event)
     }
 }
 
-void SetupWizard::page_login()
+void SetupWizard::page_login(bool showCheckInboxWarning)
 {
     ui->eLoginPassword->clear();
     ui->wHelp->hide();
@@ -831,7 +867,7 @@ void SetupWizard::page_login()
     ui->bNext->setVisible(true);
     ui->bNext->setEnabled(true);
     ui->bBack->setVisible(true);
-    ui->bBack->setVisible(true);
+    ui->bBack->setEnabled(true);
     ui->bSkip->setVisible(false);
     ui->bSkip->setEnabled(false);
     ui->eLoginEmail->setFocus();
@@ -841,13 +877,14 @@ void SetupWizard::page_login()
     ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step2.png")));
     ui->bCurrentStep->setIconSize(QSize(512, 44));
 
+    ui->wCheckInbox->setVisible(showCheckInboxWarning);
+
     ui->sPages->setCurrentWidget(ui->pLogin);
     sessionKey.clear();
 }
 
 void SetupWizard::page_logout()
 {
-    megaApi->logout(delegateListener);
     ui->lProgress->setText(tr("Logging out..."));
     ui->progressBar->setMaximum(0);
     ui->progressBar->setValue(-1);
@@ -868,35 +905,6 @@ void SetupWizard::page_logout()
     sessionKey.clear();
 }
 
-void SetupWizard::page_initial()
-{
-    ui->eLoginPassword->clear();
-    ui->eName->clear();
-    ui->eEmail->clear();
-    ui->ePassword->clear();
-    ui->eRepeatPassword->clear();
-    ui->wHelp->hide();
-    initModeSelection();
-
-    ui->bCancel->setEnabled(true);
-    ui->bCancel->setVisible(true);
-    ui->bNext->setVisible(true);
-    ui->bNext->setEnabled(true);
-    ui->bBack->setVisible(false);
-    ui->bBack->setVisible(false);
-    ui->bSkip->setVisible(false);
-    ui->bSkip->setEnabled(false);
-    ui->rHaveAccount->setChecked(true);
-    ui->rDontHaveAccount->setChecked(false);
-    ui->rHaveAccount->setFocus();
-    ui->bNext->setDefault(true);
-
-    ui->sPages->setCurrentWidget(ui->pSetup);
-    sessionKey.clear();
-
-    selectedMegaFolderHandle = mega::INVALID_HANDLE;
-}
-
 void SetupWizard::page_mode()
 {
     initModeSelection();
@@ -905,17 +913,31 @@ void SetupWizard::page_mode()
     ui->bCancel->setVisible(true);
     ui->bNext->setVisible(true);
     ui->bNext->setEnabled(false);
-    ui->bBack->setVisible(true);
-    ui->bBack->setVisible(true);
+
     ui->bSkip->setVisible(true);
     ui->bSkip->setEnabled(true);
+    ui->bSkip->setText(QString::fromUtf8("Skip"));
     ui->bNext->setDefault(false);
     ui->bCancel->setDefault(false);
     ui->wHelp->show();
 
     ui->lHeader->setText(tr("Choose install type"));
-    ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step3.png")));
-    ui->bCurrentStep->setIconSize(QSize(512, 44));
+
+    if (!loggingStarted) //Logging started at main dialog
+    {
+        ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/login_setup_step1.png")));
+        ui->bCurrentStep->setIconSize(QSize(512, 44));
+        ui->bBack->setVisible(false);
+        ui->bBack->setEnabled(false);
+    }
+    else
+    {
+        ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step3.png")));
+        ui->bCurrentStep->setIconSize(QSize(512, 44));
+        ui->bBack->setVisible(true);
+        ui->bBack->setEnabled(true);
+    }
+
 
     ui->sPages->setCurrentWidget(ui->pSetupType);
 }
@@ -936,8 +958,17 @@ void SetupWizard::page_welcome()
     ui->bCancel->setDefault(true);
 
     ui->lHeader->setText(tr("We are all done!"));
-    ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step5.png")));
-    ui->bCurrentStep->setIconSize(QSize(512, 44));
+
+    if (!loggingStarted) //Logging started at main dialog
+    {
+        ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/login_setup_step3.png")));
+        ui->bCurrentStep->setIconSize(QSize(512, 44));
+    }
+    else
+    {
+        ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step5.png")));
+        ui->bCurrentStep->setIconSize(QSize(512, 44));
+    }
 
     ui->sPages->setCurrentWidget(ui->pWelcome);
     ui->wButtons->hide();
@@ -946,16 +977,28 @@ void SetupWizard::page_welcome()
 
 void SetupWizard::page_newaccount()
 {
+    ui->eLoginPassword->clear();
+    ui->eName->clear();
+    ui->eEmail->clear();
+    ui->ePassword->clear();
+    ui->eRepeatPassword->clear();
+    ui->wHelp->hide();
+    initModeSelection();
+    sessionKey.clear();
+    selectedMegaFolderHandle = mega::INVALID_HANDLE;
+
     ui->bCancel->setEnabled(true);
     ui->bCancel->setVisible(true);
     ui->bNext->setVisible(true);
     ui->bNext->setEnabled(true);
-    ui->bBack->setVisible(true);
-    ui->bBack->setVisible(true);
-    ui->bSkip->setVisible(false);
-    ui->bSkip->setEnabled(false);
+    ui->bBack->setVisible(false);
+    ui->bBack->setEnabled(false);
+    ui->bSkip->setVisible(true);
+    ui->bSkip->setEnabled(true);
+    ui->bSkip->setText(QString::fromUtf8("Login"));
     ui->eName->setFocus();
     ui->bNext->setDefault(true);
+    ui->cAgreeWithTerms->setChecked(false);
 
     ui->lHeader->setText(tr("Create a new MEGA account"));
     ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step1.png")));

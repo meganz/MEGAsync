@@ -26,12 +26,14 @@ public:
     enum {
         PAGE_INITIAL = 0,
         PAGE_NEW_ACCOUNT = 1,
-        PAGE_LOGIN = 2
+        PAGE_LOGIN = 2,
+        PAGE_MODE = 3
     };
 
     explicit SetupWizard(MegaApplication *app, QWidget *parent = 0);
     ~SetupWizard();
 
+    virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request);
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
     virtual void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request);
     void goToStep(int page);
@@ -62,9 +64,8 @@ protected:
     bool eventFilter(QObject *obj, QEvent *event);
     void closeEvent(QCloseEvent * event);
     void setupPreferences();
-    void page_login();
+    void page_login(bool showCheckInboxWarning = false);
     void page_logout();
-    void page_initial();
     void page_mode();
     void page_welcome();
     void page_newaccount();
@@ -80,6 +81,7 @@ protected:
     QString sessionKey;
     mega::QTMegaRequestListener *delegateListener;
     bool closing;
+    bool loggingStarted;
     QTimer *animationTimer;
 };
 

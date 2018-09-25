@@ -453,116 +453,8 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>3</number>
      </property>
-     <widget class="QWidget" name="pSetup">
-      <property name="styleSheet">
-       <string notr="true">background: transparent;</string>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
-       <property name="spacing">
-        <number>11</number>
-       </property>
-       <property name="topMargin">
-        <number>25</number>
-       </property>
-       <property name="bottomMargin">
-        <number>12</number>
-       </property>
-       <item>
-        <widget class="QToolButton" name="lSetupHeader">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="focusPolicy">
-          <enum>Qt::NoFocus</enum>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">border: none;</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../Resources_macx.qrc">
-           <normaloff>:/images/logo.png</normaloff>:/images/logo.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>260</width>
-           <height>80</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QWidget" name="wHaveAccount" native="true">
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <property name="spacing">
-           <number>16</number>
-          </property>
-          <property name="leftMargin">
-           <number>178</number>
-          </property>
-          <property name="topMargin">
-           <number>55</number>
-          </property>
-          <item>
-           <widget class="QRadioButton" name="rHaveAccount">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::StrongFocus</enum>
-            </property>
-            <property name="text">
-             <string>I have a MEGA account</string>
-            </property>
-            <property name="checked">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="rDontHaveAccount">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="focusPolicy">
-             <enum>Qt::StrongFocus</enum>
-            </property>
-            <property name="text">
-             <string>I don't have a MEGA account</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <spacer name="vsSetup">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
-        </widget>
-       </item>
-      </layout>
-     </widget>
      <widget class="QWidget" name="pNewAccount">
       <property name="styleSheet">
        <string notr="true">background: transparent;</string>
@@ -992,7 +884,7 @@ background-color: #E2E2E2;
             <property name="minimumSize">
              <size>
               <width>94</width>
-              <height>0</height>
+              <height>94</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -1001,8 +893,22 @@ background-color: #E2E2E2;
               <height>94</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">border: none;</string>
+            </property>
             <property name="text">
              <string/>
+            </property>
+            <property name="icon">
+             <iconset>
+              <normalon>:/images/confirmation_link.png</normalon>
+             </iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>94</width>
+              <height>94</height>
+             </size>
             </property>
            </widget>
           </item>
@@ -1191,14 +1097,14 @@ background-color: #E2E2E2;
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>0</width>
-                 <height>0</height>
+                 <width>216</width>
+                 <height>124</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>16777215</width>
-                 <height>90</height>
+                 <width>216</width>
+                 <height>124</height>
                 </size>
                </property>
                <property name="font">
@@ -1209,13 +1115,13 @@ background-color: #E2E2E2;
 border: none;</string>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
+                <iconset resource="../Resources_linux.qrc">
                  <normaloff>:/images/full_sync_ico.png</normaloff>:/images/full_sync_ico.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
-                 <width>90</width>
-                 <height>90</height>
+                 <width>216</width>
+                 <height>124</height>
                 </size>
                </property>
                <property name="checkable">
@@ -1252,7 +1158,7 @@ border: none;</string>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_11">
                 <property name="spacing">
-                 <number>8</number>
+                 <number>0</number>
                 </property>
                 <property name="leftMargin">
                  <number>0</number>
@@ -1400,14 +1306,14 @@ color: #666666;
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>0</width>
-                 <height>0</height>
+                 <width>216</width>
+                 <height>124</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>16777215</width>
-                 <height>90</height>
+                 <width>216</width>
+                 <height>124</height>
                 </size>
                </property>
                <property name="font">
@@ -1421,13 +1327,13 @@ border: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
+                <iconset resource="../Resources_linux.qrc">
                  <normaloff>:/images/selective_sync_ico.png</normaloff>:/images/selective_sync_ico.png</iconset>
                </property>
                <property name="iconSize">
                 <size>
-                 <width>90</width>
-                 <height>90</height>
+                 <width>216</width>
+                 <height>124</height>
                 </size>
                </property>
                <property name="checkable">
@@ -1461,7 +1367,7 @@ border: none;</string>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_10">
                 <property name="spacing">
-                 <number>8</number>
+                 <number>0</number>
                 </property>
                 <property name="leftMargin">
                  <number>0</number>
@@ -2126,8 +2032,6 @@ background-image: url(://images/desktop_app_TM.png);
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>rHaveAccount</tabstop>
-  <tabstop>rDontHaveAccount</tabstop>
   <tabstop>bCancel</tabstop>
   <tabstop>bBack</tabstop>
   <tabstop>bNext</tabstop>
@@ -2155,7 +2059,7 @@ background-image: url(://images/desktop_app_TM.png);
   <tabstop>lWelcome</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
  <slots>
