@@ -18,7 +18,7 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>581</width>
+    <width>560</width>
     <height>460</height>
    </size>
   </property>
@@ -114,13 +114,13 @@
     <widget class="QWidget" name="wHeader" native="true">
      <property name="minimumSize">
       <size>
-       <width>0</width>
+       <width>560</width>
        <height>120</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>16777215</width>
+       <width>560</width>
        <height>120</height>
       </size>
      </property>
@@ -135,7 +135,7 @@
        <number>0</number>
       </property>
       <item>
-       <widget class="QWidget" name="widget_5" native="true">
+       <widget class="QWidget" name="wTitle" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout_7">
          <property name="spacing">
           <number>-1</number>
@@ -144,7 +144,7 @@
           <number>0</number>
          </property>
          <property name="topMargin">
-          <number>0</number>
+          <number>5</number>
          </property>
          <property name="rightMargin">
           <number>0</number>
@@ -442,18 +442,18 @@
     <widget class="QStackedWidget" name="sPages">
      <property name="minimumSize">
       <size>
-       <width>0</width>
+       <width>560</width>
        <height>258</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>16777215</width>
+       <width>560</width>
        <height>16777215</height>
       </size>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pNewAccount">
       <property name="styleSheet">
@@ -497,13 +497,13 @@
            <number>11</number>
           </property>
           <property name="leftMargin">
-           <number>9</number>
+           <number>3</number>
           </property>
           <property name="topMargin">
-           <number>50</number>
+           <number>45</number>
           </property>
           <property name="rightMargin">
-           <number>9</number>
+           <number>3</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
@@ -529,6 +529,18 @@
           </item>
           <item row="0" column="1">
            <widget class="QLineEdit" name="eName">
+            <property name="minimumSize">
+             <size>
+              <width>289</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>289</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background: none;</string>
             </property>
@@ -543,6 +555,18 @@
           </item>
           <item row="1" column="1">
            <widget class="QLineEdit" name="eEmail">
+            <property name="minimumSize">
+             <size>
+              <width>289</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>289</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background: none;</string>
             </property>
@@ -557,6 +581,18 @@
           </item>
           <item row="2" column="1">
            <widget class="QLineEdit" name="ePassword">
+            <property name="minimumSize">
+             <size>
+              <width>289</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>289</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background: none;</string>
             </property>
@@ -569,25 +605,25 @@
            <widget class="QWidget" name="wPassStrength" native="true">
             <property name="minimumSize">
              <size>
-              <width>0</width>
+              <width>289</width>
               <height>2</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>16777215</width>
+              <width>289</width>
               <height>2</height>
              </size>
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_3">
              <property name="leftMargin">
-              <number>0</number>
+              <number>1</number>
              </property>
              <property name="topMargin">
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>0</number>
+              <number>1</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
@@ -695,10 +731,25 @@
             <property name="text">
              <string>Repeat password:</string>
             </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item row="4" column="1">
            <widget class="QLineEdit" name="eRepeatPassword">
+            <property name="minimumSize">
+             <size>
+              <width>289</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>289</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background: none;</string>
             </property>
@@ -709,6 +760,18 @@
           </item>
           <item row="5" column="1">
            <widget class="QWidget" name="widget_4" native="true">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>23</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>23</height>
+             </size>
+            </property>
             <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,1">
              <property name="spacing">
               <number>18</number>
@@ -789,16 +852,19 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <property name="spacing">
-        <number>19</number>
+        <number>27</number>
        </property>
        <property name="leftMargin">
-        <number>20</number>
+        <number>32</number>
        </property>
        <property name="topMargin">
-        <number>25</number>
+        <number>40</number>
        </property>
        <property name="rightMargin">
-        <number>20</number>
+        <number>32</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
        </property>
        <item>
         <widget class="QWidget" name="wLoginForm" native="true">
@@ -813,13 +879,13 @@
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
           </property>
           <property name="leftMargin">
-           <number>80</number>
+           <number>65</number>
           </property>
           <property name="topMargin">
-           <number>12</number>
+           <number>1</number>
           </property>
           <property name="rightMargin">
-           <number>80</number>
+           <number>68</number>
           </property>
           <item row="1" column="0">
            <widget class="QLabel" name="lLoginEmail">
@@ -830,6 +896,18 @@
           </item>
           <item row="1" column="1">
            <widget class="QLineEdit" name="eLoginEmail">
+            <property name="minimumSize">
+             <size>
+              <width>289</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>289</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background: none;</string>
             </property>
@@ -844,6 +922,18 @@
           </item>
           <item row="2" column="1">
            <widget class="QLineEdit" name="eLoginPassword">
+            <property name="minimumSize">
+             <size>
+              <width>289</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>289</width>
+              <height>16777215</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">background: none;</string>
             </property>
@@ -879,6 +969,21 @@ background-color: #E2E2E2;
 }</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <property name="spacing">
+           <number>27</number>
+          </property>
+          <property name="leftMargin">
+           <number>21</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>21</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QPushButton" name="bCheckInbox">
             <property name="minimumSize">
@@ -916,22 +1021,40 @@ background-color: #E2E2E2;
            <widget class="QWidget" name="wCheckInboxDesc" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_15">
              <property name="spacing">
-              <number>0</number>
+              <number>4</number>
              </property>
              <property name="leftMargin">
               <number>0</number>
              </property>
              <property name="topMargin">
-              <number>0</number>
+              <number>13</number>
              </property>
              <property name="rightMargin">
               <number>0</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>16</number>
              </property>
              <item>
               <widget class="QLabel" name="lCheckInbox">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">	color: #333333;
+	font-family: &quot;SF UI Text&quot;;
+	font-size: 13px;
+</string>
+               </property>
                <property name="text">
                 <string>Check your inbox</string>
                </property>
@@ -940,10 +1063,19 @@ background-color: #E2E2E2;
              <item>
               <widget class="QLabel" name="lCheckInboxDesc">
                <property name="font">
-                <font/>
+                <font>
+                 <family>SF UI Text</family>
+                 <pointsize>-1</pointsize>
+                </font>
                </property>
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">	color: #666666;
+	font-family: &quot;SF UI Text&quot;;
+	font-size: 13px;
+</string>
                </property>
                <property name="text">
                 <string>Please verify your account using the confirmation link that we have sent to your email account</string>
@@ -970,7 +1102,7 @@ background-color: #E2E2E2;
          <property name="sizeHint" stdset="0">
           <size>
            <width>20</width>
-           <height>40</height>
+           <height>0</height>
           </size>
          </property>
         </spacer>
@@ -1115,7 +1247,7 @@ background-color: #E2E2E2;
 border: none;</string>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_linux.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/full_sync_ico.png</normaloff>:/images/full_sync_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -1327,7 +1459,7 @@ border: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_linux.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/selective_sync_ico.png</normaloff>:/images/selective_sync_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -1954,13 +2086,13 @@ background-image: url(://images/desktop_app_TM.png);
     <widget class="QWidget" name="wButtons" native="true">
      <property name="minimumSize">
       <size>
-       <width>0</width>
+       <width>560</width>
        <height>50</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>16777215</width>
+       <width>560</width>
        <height>50</height>
       </size>
      </property>
@@ -1968,14 +2100,17 @@ background-image: url(://images/desktop_app_TM.png);
       <property name="spacing">
        <number>14</number>
       </property>
+      <property name="leftMargin">
+       <number>32</number>
+      </property>
       <property name="topMargin">
-       <number>15</number>
+       <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>12</number>
+       <number>32</number>
       </property>
       <property name="bottomMargin">
-       <number>13</number>
+       <number>22</number>
       </property>
       <item>
        <widget class="QPushButton" name="bSkip">
@@ -2059,7 +2194,7 @@ background-image: url(://images/desktop_app_TM.png);
   <tabstop>lWelcome</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
  <slots>
