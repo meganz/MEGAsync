@@ -453,7 +453,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="pNewAccount">
       <property name="styleSheet">
@@ -1196,14 +1196,14 @@ background-color: #E2E2E2;
            <widget class="QWidget" name="wTypicalSetup" native="true">
             <property name="minimumSize">
              <size>
-              <width>240</width>
-              <height>236</height>
+              <width>242</width>
+              <height>232</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>240</width>
-              <height>236</height>
+              <width>242</width>
+              <height>232</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -1217,7 +1217,7 @@ background-color: #E2E2E2;
               <number>21</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>14</number>
              </property>
              <item>
               <widget class="QPushButton" name="rTypicalSetup">
@@ -1362,20 +1362,17 @@ color: #E2574C;
                   </property>
                   <property name="font">
                    <font>
+                    <family>SF UI Text</family>
                     <pointsize>-1</pointsize>
-                    <weight>50</weight>
-                    <italic>false</italic>
-                    <bold>false</bold>
                    </font>
                   </property>
                   <property name="focusPolicy">
                    <enum>Qt::StrongFocus</enum>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">font-size: 13px;
-font: &quot;Helvetica&quot;;
-font-weight: normal;
-color: #666666;
+                   <string notr="true">	color: #666666;
+	font-family: &quot;SF UI Text&quot;;
+	font-size: 13px;
 </string>
                   </property>
                   <property name="text">
@@ -1402,14 +1399,14 @@ color: #666666;
            <widget class="QWidget" name="wAdvancedSetup" native="true">
             <property name="minimumSize">
              <size>
-              <width>240</width>
-              <height>236</height>
+              <width>242</width>
+              <height>232</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>240</width>
-              <height>236</height>
+              <width>242</width>
+              <height>232</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -1426,7 +1423,7 @@ color: #666666;
               <number>21</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>14</number>
              </property>
              <item>
               <widget class="QPushButton" name="rAdvancedSetup">
@@ -1586,14 +1583,12 @@ color: #E2574C;
                    <enum>Qt::StrongFocus</enum>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">font-size: 13px;
-font: &quot;Helvetica&quot;;
-font-weight: normal;
-color: #666666;
-</string>
+                   <string notr="true">	color: #666666;
+	font-family: &quot;SF UI Text&quot;;
+	font-size: 13px;</string>
                   </property>
                   <property name="text">
-                   <string> Sync specific folders in your cloud drive</string>
+                   <string>Sync specific folders in your cloud drive</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
@@ -1622,6 +1617,15 @@ color: #666666;
        <property name="spacing">
         <number>0</number>
        </property>
+       <property name="leftMargin">
+        <number>32</number>
+       </property>
+       <property name="rightMargin">
+        <number>32</number>
+       </property>
+       <property name="bottomMargin">
+        <number>27</number>
+       </property>
        <item>
         <widget class="QLabel" name="lAdvancedSetup">
          <property name="minimumSize">
@@ -1632,6 +1636,7 @@ color: #666666;
          </property>
          <property name="font">
           <font>
+           <family>Montserrat</family>
            <pointsize>-1</pointsize>
            <weight>50</weight>
            <italic>false</italic>
@@ -1644,13 +1649,14 @@ color: #666666;
          <property name="styleSheet">
           <string notr="true">#lAdvancedSetup
 {
-font-size: 16px;
-color: #333333;
+	color: #333333;
+	font-family: &quot;Montserrat&quot;;
+	font-size: 16px;
 }
 </string>
          </property>
          <property name="text">
-          <string>Selective sync</string>
+          <string>Selective sync:</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignHCenter|Qt::AlignTop</set>
@@ -1689,13 +1695,13 @@ color: #333333;
            <number>0</number>
           </property>
           <property name="leftMargin">
-           <number>0</number>
+           <number>17</number>
           </property>
           <property name="topMargin">
            <number>0</number>
           </property>
           <property name="rightMargin">
-           <number>0</number>
+           <number>17</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
@@ -1715,7 +1721,11 @@ color: #333333;
              </size>
             </property>
             <property name="styleSheet">
-             <string notr="true">margin-left: 2px;</string>
+             <string notr="true">margin-left: 2px;
+color: #333333;
+font-family: &quot;SF UI Text&quot;;
+font-size: 13px;
+</string>
             </property>
             <property name="text">
              <string>Local folder:</string>
@@ -1752,7 +1762,11 @@ color: #333333;
           <item row="2" column="0">
            <widget class="QLabel" name="lMegaFolder">
             <property name="styleSheet">
-             <string notr="true">margin-left: 2px;</string>
+             <string notr="true">margin-left: 2px;
+color: #333333;
+font-family: &quot;SF UI Text&quot;;
+font-size: 13px;
+</string>
             </property>
             <property name="text">
              <string>MEGA folder:</string>
@@ -1826,8 +1840,17 @@ color: #333333;
 }</string>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <property name="spacing">
+           <number>27</number>
+          </property>
+          <property name="leftMargin">
+           <number>16</number>
+          </property>
           <property name="topMargin">
            <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>21</number>
           </property>
           <property name="bottomMargin">
            <number>0</number>
@@ -1846,6 +1869,9 @@ color: #333333;
               <height>94</height>
              </size>
             </property>
+            <property name="styleSheet">
+             <string notr="true">border: none;</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -1855,22 +1881,39 @@ color: #333333;
            <widget class="QWidget" name="wSyncTypeDesc" native="true">
             <layout class="QVBoxLayout" name="verticalLayout_16">
              <property name="spacing">
-              <number>0</number>
+              <number>4</number>
              </property>
              <property name="leftMargin">
               <number>0</number>
              </property>
              <property name="topMargin">
-              <number>0</number>
+              <number>13</number>
              </property>
              <property name="rightMargin">
               <number>0</number>
              </property>
              <property name="bottomMargin">
-              <number>0</number>
+              <number>16</number>
              </property>
              <item>
               <widget class="QLabel" name="lSyncType">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>20</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">	color: #333333;
+	font-family: &quot;SF UI Text&quot;;
+	font-size: 13px;</string>
+               </property>
                <property name="text">
                 <string/>
                </property>
@@ -1879,10 +1922,18 @@ color: #333333;
              <item>
               <widget class="QLabel" name="lSyncTypeDesc">
                <property name="font">
-                <font/>
+                <font>
+                 <family>SF UI Text</family>
+                 <pointsize>-1</pointsize>
+                </font>
                </property>
                <property name="focusPolicy">
                 <enum>Qt::StrongFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">	color: #666666;
+	font-family: &quot;SF UI Text&quot;;
+	font-size: 13px;</string>
                </property>
                <property name="text">
                 <string/>
@@ -1915,7 +1966,7 @@ color: #333333;
         <number>20</number>
        </property>
        <property name="topMargin">
-        <number>10</number>
+        <number>2</number>
        </property>
        <property name="rightMargin">
         <number>20</number>
@@ -1973,6 +2024,12 @@ font-family: &quot;Montserrat&quot;;
          <property name="focusPolicy">
           <enum>Qt::StrongFocus</enum>
          </property>
+         <property name="styleSheet">
+          <string notr="true">	color: #333333;
+	font-family: &quot;SF UI Text&quot;;
+	font-size: 13px;
+</string>
+         </property>
          <property name="text">
           <string>Your local folder and your MEGA Cloud Drive will be automatically synchronized.</string>
          </property>
@@ -1989,18 +2046,18 @@ font-family: &quot;Montserrat&quot;;
          <property name="minimumSize">
           <size>
            <width>541</width>
-           <height>200</height>
+           <height>226</height>
           </size>
          </property>
          <property name="maximumSize">
           <size>
            <width>541</width>
-           <height>200</height>
+           <height>226</height>
           </size>
          </property>
          <property name="styleSheet">
           <string notr="true">#wAllDone{
-background-image: url(://images/desktop_app_TM.png);
+image: url(://images/desktop_app_TM.png);
 }</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_18">
@@ -2017,7 +2074,7 @@ background-image: url(://images/desktop_app_TM.png);
            <number>0</number>
           </property>
           <property name="bottomMargin">
-           <number>5</number>
+           <number>6</number>
           </property>
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -2045,6 +2102,12 @@ background-image: url(://images/desktop_app_TM.png);
             </item>
             <item>
              <layout class="QVBoxLayout" name="verticalLayout_17">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>5</number>
+              </property>
               <item>
                <spacer name="verticalSpacer">
                 <property name="orientation">
