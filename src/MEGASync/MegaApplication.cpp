@@ -4122,18 +4122,26 @@ void MegaApplication::userAction(int action)
 
     if (!preferences->logged())
     {
-        if (setupWizard)
+        switch (action)
         {
-            setupWizard->goToStep(action);
-            setupWizard->activateWindow();
-            setupWizard->raise();
-            return;
+            case InfoWizard::LOGIN_CLICKED:
+                showInfoDialog();
+                break;
+            default:
+                if (setupWizard)
+                {
+                    setupWizard->goToStep(action);
+                    setupWizard->activateWindow();
+                    setupWizard->raise();
+                    return;
+                }
+                setupWizard = new SetupWizard(this);
+                setupWizard->setModal(false);
+                connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished(int)));
+                setupWizard->goToStep(action);
+                setupWizard->show();
+                break;
         }
-        setupWizard = new SetupWizard(this);
-        setupWizard->setModal(false);
-        connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished(int)));
-        setupWizard->goToStep(action);
-        setupWizard->show();
     }
 }
 
