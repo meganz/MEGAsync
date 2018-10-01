@@ -108,7 +108,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         {
             if (error->getErrorCode() == MegaError::API_OK)
             {
-                page_login(true);
+                page_login();
 
                 ui->eLoginEmail->setText(ui->eEmail->text().toLower().trimmed());
                 ui->eName->clear();
@@ -156,27 +156,32 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             page_login();
 
-            if (error->getErrorCode() == MegaError::API_ENOENT)
+            if (loggingStarted)
             {
-                showErrorMessage(tr("Incorrect email and/or password.") + QString::fromUtf8(" ") + tr("Have you verified your account?"));
-            }
-            else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
-            {
-                showErrorMessage(tr("Please check your e-mail and click the link to confirm your account."));
-            }
-            else if (error->getErrorCode() == MegaError::API_ETOOMANY)
-            {
-                showErrorMessage(tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
-                                    .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
-                                    .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm"))));
-            }
-            else if (error->getErrorCode() == MegaError::API_EBLOCKED)
-            {
-                showErrorMessage(tr("Your account has been blocked. Please contact support@mega.co.nz"));
-            }
-            else if (error->getErrorCode() != MegaError::API_ESSL)
-            {
-                showErrorMessage(QCoreApplication::translate("MegaError", error->getErrorString()));
+                if (error->getErrorCode() == MegaError::API_ENOENT)
+                {
+                    showErrorMessage(tr("Incorrect email and/or password.") + QString::fromUtf8(" ") + tr("Have you verified your account?"));
+                }
+                else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
+                {
+                    showErrorMessage(tr("Please check your e-mail and click the link to confirm your account."));
+                }
+                else if (error->getErrorCode() == MegaError::API_ETOOMANY)
+                {
+                    showErrorMessage(tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
+                                        .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
+                                        .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm"))));
+                }
+                else if (error->getErrorCode() == MegaError::API_EBLOCKED)
+                {
+                    showErrorMessage(tr("Your account has been blocked. Please contact support@mega.co.nz"));
+                }
+                else if (error->getErrorCode() != MegaError::API_ESSL)
+                {
+                    showErrorMessage(QCoreApplication::translate("MegaError", error->getErrorString()));
+                }
+
+                loggingStarted = false;
             }
             break;
         }
@@ -610,7 +615,8 @@ void SetupWizard::on_bSkip_clicked()
 
     if (w == ui->pNewAccount)
     {
-        page_login(false);
+        app->showInfoDialog();
+        done(QDialog::Rejected);
     }
     else
     {
@@ -856,7 +862,7 @@ void SetupWizard::closeEvent(QCloseEvent *event)
     }
 }
 
-void SetupWizard::page_login(bool showCheckInboxWarning)
+void SetupWizard::page_login()
 {
     ui->eLoginPassword->clear();
     ui->wHelp->hide();
@@ -876,8 +882,6 @@ void SetupWizard::page_login(bool showCheckInboxWarning)
     ui->lHeader->setText(tr("Login to your MEGA account"));
     ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step2.png")));
     ui->bCurrentStep->setIconSize(QSize(512, 44));
-
-    ui->wCheckInbox->setVisible(showCheckInboxWarning);
 
     ui->sPages->setCurrentWidget(ui->pLogin);
     sessionKey.clear();

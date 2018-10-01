@@ -64,7 +64,7 @@ protected:
     bool eventFilter(QObject *obj, QEvent *event);
     void closeEvent(QCloseEvent * event);
     void setupPreferences();
-    void page_login(bool showCheckInboxWarning = false);
+    void page_login();
     void page_logout();
     void page_mode();
     void page_welcome();

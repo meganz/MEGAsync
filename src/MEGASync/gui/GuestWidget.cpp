@@ -80,29 +80,34 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             page_login();
 
-            if (error->getErrorCode() == MegaError::API_ENOENT)
+            if (loggingStarted)
             {
-                QMessageBox::warning(NULL, tr("Error"), tr("Incorrect email and/or password.") + QString::fromUtf8(" ") + tr("Have you verified your account?"), QMessageBox::Ok);
-            }
-            else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
-            {
-                QMessageBox::warning(NULL, tr("Error"), tr("Please check your e-mail and click the link to confirm your account."), QMessageBox::Ok);
-            }
-            else if (error->getErrorCode() == MegaError::API_ETOOMANY)
-            {
-                QMessageBox::warning(NULL, tr("Error"),
-                                         tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
-                                         .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
-                                         .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")))
-                                         , QMessageBox::Ok);
-            }
-            else if (error->getErrorCode() == MegaError::API_EBLOCKED)
-            {
-                QMessageBox::critical(NULL, tr("Error"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
-            }
-            else if (error->getErrorCode() != MegaError::API_ESSL)
-            {
-                QMessageBox::warning(NULL, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
+                if (error->getErrorCode() == MegaError::API_ENOENT)
+                {
+                    QMessageBox::warning(NULL, tr("Error"), tr("Incorrect email and/or password.") + QString::fromUtf8(" ") + tr("Have you verified your account?"), QMessageBox::Ok);
+                }
+                else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
+                {
+                    QMessageBox::warning(NULL, tr("Error"), tr("Please check your e-mail and click the link to confirm your account."), QMessageBox::Ok);
+                }
+                else if (error->getErrorCode() == MegaError::API_ETOOMANY)
+                {
+                    QMessageBox::warning(NULL, tr("Error"),
+                                             tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
+                                             .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
+                                             .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")))
+                                             , QMessageBox::Ok);
+                }
+                else if (error->getErrorCode() == MegaError::API_EBLOCKED)
+                {
+                    QMessageBox::critical(NULL, tr("Error"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
+                }
+                else if (error->getErrorCode() != MegaError::API_ESSL)
+                {
+                    QMessageBox::warning(NULL, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
+                }
+
+                loggingStarted = false;
             }
             break;
         }
