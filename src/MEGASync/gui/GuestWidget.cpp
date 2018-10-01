@@ -53,6 +53,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         if (request->getType() == MegaRequest::TYPE_LOGOUT)
         {
             closing = false;
+            loggingStarted = false;
             page_login();
         }
         return;
@@ -117,6 +118,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             if (error->getErrorCode() != MegaError::API_OK)
             {
                 page_login();
+                loggingStarted = false;
                 break;
             }
 
