@@ -453,7 +453,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="pNewAccount">
       <property name="styleSheet">
@@ -1196,14 +1196,14 @@ background-color: #E2E2E2;
            <widget class="QWidget" name="wTypicalSetup" native="true">
             <property name="minimumSize">
              <size>
-              <width>242</width>
-              <height>232</height>
+              <width>246</width>
+              <height>236</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>242</width>
-              <height>232</height>
+              <width>246</width>
+              <height>236</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -1247,7 +1247,7 @@ background-color: #E2E2E2;
 border: none;</string>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/full_sync_ico.png</normaloff>:/images/full_sync_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -1399,14 +1399,14 @@ color: #E2574C;
            <widget class="QWidget" name="wAdvancedSetup" native="true">
             <property name="minimumSize">
              <size>
-              <width>242</width>
-              <height>232</height>
+              <width>246</width>
+              <height>236</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>242</width>
-              <height>232</height>
+              <width>246</width>
+              <height>236</height>
              </size>
             </property>
             <property name="styleSheet">
@@ -1456,7 +1456,7 @@ border: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/selective_sync_ico.png</normaloff>:/images/selective_sync_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -2257,7 +2257,7 @@ image: url(://images/desktop_app_TM.png);
   <tabstop>lWelcome</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
  <slots>

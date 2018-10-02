@@ -183,7 +183,7 @@ margin-top: -1px;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_macx.qrc">
           <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -222,7 +222,7 @@ margin-top: -1px;</string>
 </string>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pLogin">
       <property name="minimumSize">
@@ -334,11 +334,14 @@ image: none;</string>
                  <height>64</height>
                 </size>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="text">
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
                </property>
                <property name="iconSize">
@@ -361,7 +364,7 @@ image: none;</string>
              </size>
             </property>
             <property name="focusPolicy">
-             <enum>Qt::StrongFocus</enum>
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="styleSheet">
              <string notr="true">background: transparent;
@@ -449,6 +452,9 @@ image: none;</string>
                        <height>16777215</height>
                       </size>
                      </property>
+                     <property name="focusPolicy">
+                      <enum>Qt::ClickFocus</enum>
+                     </property>
                      <property name="styleSheet">
                       <string notr="true"/>
                      </property>
@@ -473,6 +479,9 @@ image: none;</string>
                        <width>305</width>
                        <height>16777215</height>
                       </size>
+                     </property>
+                     <property name="focusPolicy">
+                      <enum>Qt::ClickFocus</enum>
                      </property>
                      <property name="text">
                       <string/>
@@ -718,7 +727,7 @@ image: none;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
             </property>
             <property name="iconSize">
@@ -910,8 +919,7 @@ image: none;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">
-</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string>Cancel</string>
@@ -935,7 +943,6 @@ image: none;</string>
               </widget>
              </item>
             </layout>
-            <zorder>wCancel</zorder>
             <zorder>wCancel</zorder>
             <zorder>widget_2</zorder>
            </widget>
@@ -1036,7 +1043,7 @@ image: none;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_win.qrc">
+             <iconset resource="../Resources_macx.qrc">
               <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
             </property>
             <property name="iconSize">
@@ -1084,12 +1091,18 @@ image: none;</string>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>lLogin</tabstop>
+  <tabstop>lEmail</tabstop>
+  <tabstop>lPassword</tabstop>
+  <tabstop>bLogin</tabstop>
   <tabstop>bForgotPassword</tabstop>
   <tabstop>bCreateAccount</tabstop>
+  <tabstop>bSettings</tabstop>
+  <tabstop>bLogoLogging</tabstop>
+  <tabstop>bLogoSettingUp</tabstop>
+  <tabstop>bCancel</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
