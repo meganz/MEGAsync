@@ -558,6 +558,7 @@ elif [[ $VMNAME == *"DEBIAN"* ]] || [[ $VMNAME == *"UBUNTU"* ]] || [[ $VMNAME ==
 	
 	if [[ $distroDir == "Linux Mint 17"* ]]; then distroDir="xUbuntu"; ver="14.04"; fi
 	if [[ $distroDir == "Linux Mint 18"* ]]; then distroDir="xUbuntu"; ver="16.04"; fi
+	if [[ $distroDir == "Linux Mint 19"* ]]; then distroDir="xUbuntu"; ver="18.04"; fi
 	
 	resultRepoConfiguredOk=0
 	expected="deb https://mega.nz/linux/MEGAsync/${distroDir}_$ver/ ./"

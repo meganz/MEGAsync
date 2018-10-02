@@ -157,20 +157,44 @@ int main(int argc, char *argv[])
 
 #ifdef Q_OS_LINUX
 #if QT_VERSION >= 0x050600
+    qreal ratio = 1;
+    int xrdbdpi = 0;
     if (getenv("XDG_CURRENT_DESKTOP") && !strcmp(getenv("XDG_CURRENT_DESKTOP"),"KDE"))
     {
         qputenv("XDG_CURRENT_DESKTOP","OVERRIDEN");
     }
     if (!getenv("QT_SCALE_FACTOR"))
     {
-        MegaApplication appaux(argc,argv); //needed to get geometry (it needs to be instantiated a second time to actually use scale factor)
-        QRect geom = appaux.desktop()->availableGeometry(QCursor::pos());
-        qreal ratio = min(geom.width()/(1920.0),geom.width()/(1080.0)*1920.0/1080.0);
-        ratio = max(1.0,ratio);
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8(" stablishing ratio to = %1").arg(QString::number(ratio)).toUtf8().constData() );
+        QProcess p;
+        p.start(QString::fromUtf8("bash -c \"xrdb -query | grep dpi | awk '{print $2}'\""));
+        p.waitForFinished(2000);
+        QString output = QString::fromUtf8(p.readAllStandardOutput().constData()).trimmed();
+        QString e = QString::fromUtf8(p.readAllStandardError().constData());
+        if (e.size())
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error for \"xrdb -query\" command:");
+            MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
+        }
+
+        xrdbdpi = output.toInt();
+        if ( xrdbdpi > 96)
+        {
+            ratio = output.toDouble()/96.0;
+            if (ratio > 3)
+            {
+                ratio = 3;
+            }
+        }
+        else
+        {
+            MegaApplication appaux(argc,argv); //needed to get geometry (it needs to be instantiated a second time to actually use scale factor)
+            QRect geom = appaux.desktop()->availableGeometry(QCursor::pos());
+            ratio = min(geom.width()/(1920.0),geom.height()/(1080.0))*0.75;
+            ratio = max(1.0,ratio);
+        }
+
         qputenv("QT_SCALE_FACTOR", QString::number(ratio).toUtf8());
     }
-    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("QT_SCALE_FACTOR = %1").arg(QString::fromUtf8(getenv("QT_SCALE_FACTOR"))).toUtf8().constData() );
 #endif
 
 #if QT_VERSION < 0x050A00
@@ -178,6 +202,12 @@ int main(int argc, char *argv[])
 #endif
 #endif
     MegaApplication app(argc, argv);
+
+#if defined(Q_OS_LINUX) && QT_VERSION >= 0x050600
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("QT_SCALE_FACTOR = %1").arg(QString::fromUtf8(getenv("QT_SCALE_FACTOR"))).toUtf8().constData() );
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("xrdb dpi read = %1").arg(QString::number(xrdbdpi)).toUtf8().constData() );
+
+#endif
 
     qInstallMsgHandler(msgHandler);
 #if QT_VERSION >= 0x050000
@@ -506,6 +536,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     megaApiFolders = NULL;
     delegateListener = NULL;
     httpServer = NULL;
+    httpsServer = NULL;
     numTransfers[MegaTransfer::TYPE_DOWNLOAD] = 0;
     numTransfers[MegaTransfer::TYPE_UPLOAD] = 0;
     exportOps = 0;
@@ -526,6 +557,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     initialMenu = NULL;
     isPublic = false;
     prevVersion = 0;
+    updatingSSLcert = false;
+    lastSSLcertUpdate = 0;
 
 #ifdef _WIN32
     windowsMenu = NULL;
@@ -703,6 +736,17 @@ void MegaApplication::initialize()
 #endif
 
     megaApiFolders = new MegaApi(Preferences::CLIENT_KEY, basePath.toUtf8().constData(), Preferences::USER_AGENT);
+
+    QString stagingPath = QDir(dataPath).filePath(QString::fromAscii("megasync.staging"));
+    QFile fstagingPath(stagingPath);
+    if (fstagingPath.exists())
+    {
+        megaApi->changeApiUrl("https://staging.api.mega.co.nz/");
+        megaApiFolders->changeApiUrl("https://staging.api.mega.co.nz/");
+        QMegaMessageBox::warning(NULL, QString::fromUtf8("MEGAsync"), QString::fromUtf8("API URL changed to staging"), Utilities::getDevicePixelRatio());
+        Preferences::SDK_ID.append(QString::fromUtf8(" - STAGING"));
+    }
+
     megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGAsync is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
              .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
 
@@ -1232,7 +1276,7 @@ void MegaApplication::start()
         QString language = preferences->language();
         changeLanguage(language);
 
-        initHttpsServer();
+        initLocalServer();
         if (updated)
         {
             megaApi->sendEvent(99510, "MEGAsync update");
@@ -1316,7 +1360,7 @@ void MegaApplication::start()
                        preferences->privatePw().toUtf8().constData());
         }
 
-        initHttpsServer();
+        initLocalServer();
         if (updated)
         {
             megaApi->sendEvent(99510, "MEGAsync update");
@@ -1564,6 +1608,12 @@ void MegaApplication::processDownloadQueue(QString path)
     QDir dir(path);
     if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
     {
+        QQueue<mega::MegaNode *>::iterator it;
+        for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
+        {
+            HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+        }
+
         qDeleteAll(downloadQueue);
         downloadQueue.clear();
         showErrorMessage(tr("Error: Invalid destination folder. The download has been cancelled"));
@@ -2071,16 +2121,14 @@ void MegaApplication::periodicTasks()
     }
 
     checkNetworkInterfaces();
+    initLocalServer();
 
     static int counter = 0;
     if (megaApi)
     {
         if (!(++counter % 6))
         {
-            if (httpServer)
-            {
-                httpServer->checkAndPurgeRequests();
-            }
+            HTTPServer::checkAndPurgeRequests();
 
             if (checkupdate)
             {
@@ -2116,6 +2164,10 @@ void MegaApplication::periodicTasks()
 
 void MegaApplication::cleanAll()
 {
+    if (appfinished)
+    {
+        return;
+    }
     appfinished = true;
 
 #ifndef DEBUG
@@ -2147,6 +2199,8 @@ void MegaApplication::cleanAll()
     infoDialog = NULL;
     delete httpServer;
     httpServer = NULL;
+    delete httpsServer;
+    httpsServer = NULL;
     delete uploader;
     uploader = NULL;
     delete downloader;
@@ -2464,51 +2518,55 @@ void MegaApplication::deleteMenu(QMenu *menu)
 
 void MegaApplication::startHttpServer()
 {
-    //Start the HTTP server
-    delete httpServer;
-    httpServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
-    connect(httpServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
-    connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
-    connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
-    connect(httpServer, SIGNAL(onExternalFileUploadRequested(qlonglong)), this, SLOT(externalFileUpload(qlonglong)), Qt::QueuedConnection);
-    connect(httpServer, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
-    connect(httpServer, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
-    connect(httpServer, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
+    if (!httpServer)
+    {
+        //Start the HTTP server
+        httpServer = new HTTPServer(megaApi, Preferences::HTTP_PORT, false);
+        connect(httpServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
+        connect(httpServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
+        connect(httpServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
+        connect(httpServer, SIGNAL(onExternalFileUploadRequested(qlonglong)), this, SLOT(externalFileUpload(qlonglong)), Qt::QueuedConnection);
+        connect(httpServer, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
+        connect(httpServer, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
+        connect(httpServer, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
 
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTPS server started");
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTP server started");
+    }
 }
 
-void MegaApplication::initHttpsServer()
+void MegaApplication::startHttpsServer()
 {
-    if (preferences->getHttpsCertExpiration() - (QDateTime::currentMSecsSinceEpoch() / 1000) < Preferences::LOCAL_HTTPS_CERT_MAX_EXPIRATION_SECS)
+    if (!httpsServer)
     {
-        megaApi->sendEvent(99515, "Local SSL certificate about to expire");
-        megaApi->getLocalSSLCertificate();
+        //Start the HTTPS server
+        httpsServer = new HTTPServer(megaApi, Preferences::HTTPS_PORT, true);
+        connect(httpsServer, SIGNAL(onLinkReceived(QString, QString)), this, SLOT(externalDownload(QString, QString)), Qt::QueuedConnection);
+        connect(httpsServer, SIGNAL(onExternalDownloadRequested(QQueue<mega::MegaNode *>)), this, SLOT(externalDownload(QQueue<mega::MegaNode *>)));
+        connect(httpsServer, SIGNAL(onExternalDownloadRequestFinished()), this, SLOT(processDownloads()), Qt::QueuedConnection);
+        connect(httpsServer, SIGNAL(onExternalFileUploadRequested(qlonglong)), this, SLOT(externalFileUpload(qlonglong)), Qt::QueuedConnection);
+        connect(httpsServer, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
+        connect(httpsServer, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
+        connect(httpsServer, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
+        connect(httpsServer, SIGNAL(onConnectionError()), this, SLOT(renewLocalSSLcert()), Qt::QueuedConnection);
+
+        MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTPS server started");
     }
-    else
+}
+
+void MegaApplication::initLocalServer()
+{
+    // Run both servers for now, until we receive the confirmation of the criteria to start them dynamically
+    if (!httpServer) // && Platform::shouldRunHttpServer())
     {
         startHttpServer();
+    }
 
-        char *os = megaApi->getOperatingSystemVersion();
-        if (os)
+    if (!updatingSSLcert) // && (httpsServer || Platform::shouldRunHttpsServer()))
+    {
+        long long currentTime = QDateTime::currentMSecsSinceEpoch() / 1000;
+        if ((currentTime - lastSSLcertUpdate) > Preferences::LOCAL_HTTPS_CERT_RENEW_INTERVAL_SECS)
         {
-            if (!QString::fromUtf8(os).startsWith(QString::fromUtf8("Windows 5.")))
-            {
-                ConnectivityChecker *localHttpsChecker = new ConnectivityChecker(Preferences::LOCAL_HTTPS_TEST_URL);
-                localHttpsChecker->setTestString(Preferences::LOCAL_HTTPS_TEST_SUBSTRING);
-                localHttpsChecker->setTimeout(Preferences::LOCAL_HTTPS_TEST_TIMEOUT_MS);
-                localHttpsChecker->setMethod(ConnectivityChecker::METHOD_POST);
-                localHttpsChecker->setPostData(QByteArray(Preferences::LOCAL_HTTPS_TEST_POST_DATA.toUtf8()));
-                localHttpsChecker->setHeader(QByteArray("Origin"), QByteArray("https://mega.nz"));
-
-                connect(localHttpsChecker, SIGNAL(testError()), this, SLOT(onLocalHttpsCheckError()));
-                connect(localHttpsChecker, SIGNAL(testSuccess()), this, SLOT(onLocalHttpsCheckSuccess()));
-                connect(localHttpsChecker, SIGNAL(testFinished()), localHttpsChecker, SLOT(deleteLater()));
-
-                MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Testing the local HTTPS server");
-                localHttpsChecker->startCheck();
-            }
-            delete [] os;
+            renewLocalSSLcert();
         }
     }
 }
@@ -2523,6 +2581,16 @@ TransferMetaData* MegaApplication::getTransferAppData(unsigned long long appData
 
     TransferMetaData* value = it.value();
     return value;
+}
+
+void MegaApplication::renewLocalSSLcert()
+{
+    if (!updatingSSLcert)
+    {
+        updatingSSLcert = true;
+        lastSSLcertUpdate = QDateTime::currentMSecsSinceEpoch() / 1000;
+        megaApi->getLocalSSLCertificate();
+    }
 }
 
 void MegaApplication::triggerInstallUpdate()
@@ -2643,17 +2711,6 @@ void MegaApplication::onConnectivityCheckError()
     showErrorMessage(tr("MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall."));
 }
 
-void MegaApplication::onLocalHttpsCheckSuccess()
-{
-    MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTPS check succeeded");
-}
-
-void MegaApplication::onLocalHttpsCheckError()
-{
-    megaApi->sendEvent(99516, "Local HTTPS check failed");
-    megaApi->getLocalSSLCertificate();
-}
-
 void MegaApplication::setupWizardFinished(int result)
 {
     if (appfinished)
@@ -2671,6 +2728,20 @@ void MegaApplication::setupWizardFinished(int result)
     {
         if (!infoWizard && (downloadQueue.size() || pendingLinks.size()))
         {
+            QQueue<mega::MegaNode *>::iterator it;
+            for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
+            {
+                HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+            }
+
+            for (QMap<QString, QString>::iterator it = pendingLinks.begin(); it != pendingLinks.end(); it++)
+            {
+                QString link = it.key();
+                QString handle = link.mid(18, 8);
+                HTTPServer::onTransferDataUpdate(megaApi->base64ToHandle(handle.toUtf8().constData()),
+                                                 MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+            }
+
             qDeleteAll(downloadQueue);
             downloadQueue.clear();
             pendingLinks.clear();
@@ -2748,6 +2819,20 @@ void MegaApplication::infoWizardDialogFinished(int result)
     {
         if (!setupWizard && (downloadQueue.size() || pendingLinks.size()))
         {
+            QQueue<mega::MegaNode *>::iterator it;
+            for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
+            {
+                HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+            }
+
+            for (QMap<QString, QString>::iterator it = pendingLinks.begin(); it != pendingLinks.end(); it++)
+            {
+                QString link = it.key();
+                QString handle = link.mid(18, 8);
+                HTTPServer::onTransferDataUpdate(megaApi->base64ToHandle(handle.toUtf8().constData()),
+                                                 MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+            }
+
             qDeleteAll(downloadQueue);
             downloadQueue.clear();
             pendingLinks.clear();
@@ -3480,11 +3565,8 @@ void MegaApplication::showTrayMenu(QPoint *point)
 
         QPoint p = point ? (*point) - QPoint(trayGuestMenu->sizeHint().width(), 0)
                          : QCursor::pos();
-#ifdef __APPLE__
-        trayGuestMenu->exec(p);
-#else
+
         trayGuestMenu->popup(p);
-#endif
     }
     else if (trayMenu && !infoOverQuota)
     {
@@ -3508,11 +3590,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
             pauseTransfersAction->setHoverIcon(QIcon(QString::fromAscii("://images/ico_pause_transfers_over.png")));
         }
 
-#ifdef __APPLE__
-        trayMenu->exec(p);
-#else
         trayMenu->popup(p);
-#endif
     }
     else if (trayOverQuotaMenu && infoOverQuota)
     {
@@ -3523,11 +3601,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
 
         QPoint p = point ? (*point) - QPoint(trayOverQuotaMenu->sizeHint().width(), 0)
                          : QCursor::pos();
-#ifdef __APPLE__
-        trayOverQuotaMenu->exec(p);
-#else
         trayOverQuotaMenu->popup(p);
-#endif
     }
 }
 
@@ -3740,6 +3814,11 @@ void MegaApplication::uploadActionClicked()
          {
                 infoDialog->hide();
                 QApplication::processEvents();
+                if (appfinished)
+                {
+                    return;
+                }
+
                 QStringList files = MacXPlatform::multipleUpload(QCoreApplication::translate("ShellExtension", "Upload to MEGA"));
                 if (files.size())
                 {
@@ -4159,13 +4238,10 @@ void MegaApplication::processDownloads()
     }
     else
     {
-        if (httpServer)
+        QQueue<mega::MegaNode *>::iterator it;
+        for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
         {
-            QQueue<MegaNode *>::iterator it;
-            for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
-            {
-                httpServer->onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
-            }
+            HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
         }
 
         //If the dialog is rejected, cancel uploads
@@ -4410,17 +4486,12 @@ void MegaApplication::externalFileUpload(qlonglong targetFolder)
             megaApi->startUpload(QDir::toNativeSeparators(paths[i]).toUtf8().constData(), target);
         }
         delete target;
-        if (httpServer)
-        {
-            httpServer->onUploadSelectionAccepted(files, 0);
-        }
+
+        HTTPServer::onUploadSelectionAccepted(files, 0);
     }
     else
     {
-        if (httpServer)
-        {
-            httpServer->onUploadSelectionDiscarded();
-        }
+        HTTPServer::onUploadSelectionDiscarded();
     }
 
     delete fileUploadSelector;
@@ -4503,17 +4574,12 @@ void MegaApplication::externalFolderUpload(qlonglong targetFolder)
             megaApi->startUpload(QDir::toNativeSeparators(paths[i]).toUtf8().constData(), target);
         }
         delete target;
-        if (httpServer)
-        {
-            httpServer->onUploadSelectionAccepted(files, folders);
-        }
+
+        HTTPServer::onUploadSelectionAccepted(files, folders);
     }
     else
     {
-        if (httpServer)
-        {
-            httpServer->onUploadSelectionDiscarded();
-        }
+        HTTPServer::onUploadSelectionDiscarded();
     }
 
     delete folderUploadSelector;
@@ -4741,9 +4807,14 @@ void MegaApplication::onUpdateError()
 void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
 #ifdef Q_OS_LINUX
-    if (getenv("XDG_CURRENT_DESKTOP") && !strcmp(getenv("XDG_CURRENT_DESKTOP"),"ubuntu:GNOME"))
+    if (getenv("XDG_CURRENT_DESKTOP") && (
+                !strcmp(getenv("XDG_CURRENT_DESKTOP"),"ubuntu:GNOME")
+                || !strcmp(getenv("XDG_CURRENT_DESKTOP"),"LXDE")
+                                          )
+            )
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Ignoring unexpected trayIconActivated detected in ubuntu:GNOME desktop.");
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Ignoring unexpected trayIconActivated detected in %1")
+                     .arg(QString::fromUtf8(getenv("XDG_CURRENT_DESKTOP"))).toUtf8().constData());
         return;
     }
 #endif
@@ -5845,6 +5916,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_GET_LOCAL_SSL_CERT:
     {
+        updatingSSLcert = false;
         if (e->getErrorCode() == MegaError::API_OK)
         {
             MegaStringMap *data = request->getMegaStringMap();
@@ -5868,7 +5940,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             preferences->setHttpsCertIntermediate(intermediates);
             preferences->setHttpsCertExpiration(request->getNumber());
             megaApi->sendEvent(99517, "Local SSL certificate renewed");
-            startHttpServer();
+            delete httpsServer;
+            httpsServer = NULL;
+            startHttpsServer();
             break;
         }
 
@@ -5880,12 +5954,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             {
                 retried = true;
                 MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Trying to renew the local SSL certificate again");
-                megaApi->getLocalSSLCertificate();
+                renewLocalSSLcert();
                 break;
             }
         }
 
-        startHttpServer();
         break;
     }
     case MegaRequest::TYPE_FETCH_NODES:
@@ -5913,6 +5986,14 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
 
+        break;
+    }
+    case MegaRequest::TYPE_CHANGE_PW:
+    {
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            QMessageBox::information(NULL, tr("Password changed"), tr("Your password has been changed."));
+        }
         break;
     }
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
@@ -6334,14 +6415,11 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
 
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
     {
-        if (httpServer)
-        {
-            httpServer->onTransferDataUpdate(transfer->getNodeHandle(),
+        HTTPServer::onTransferDataUpdate(transfer->getNodeHandle(),
                                              transfer->getState(),
                                              transfer->getTransferredBytes(),
                                              transfer->getTotalBytes(),
                                              transfer->getSpeed());
-        }
     }
 
     if (transferManager)
@@ -6437,14 +6515,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
     {
-        if (httpServer)
-        {
-            httpServer->onTransferDataUpdate(transfer->getNodeHandle(),
+        HTTPServer::onTransferDataUpdate(transfer->getNodeHandle(),
                                              transfer->getState(),
                                              transfer->getTransferredBytes(),
                                              transfer->getTotalBytes(),
                                              transfer->getSpeed());
-        }
     }
 
     if (transferManager)
@@ -6600,7 +6675,14 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                 || (transfer->isSyncTransfer()
                     && errorCode == MegaError::API_EKEY)))
     {
-        showErrorMessage(tr("Transfer failed:") + QString::fromUtf8(" " ) + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
+        if (errorCode == MegaError::API_EFAILED)
+        {
+            showWarningMessage(tr("Transfer failed:") + QString::fromUtf8(" ") + tr("Temporarily not available"), QString::fromUtf8(transfer->getFileName()));
+        }
+        else
+        {
+            showErrorMessage(tr("Transfer failed:") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
+        }
     }
 
     //If there are no pending transfers, reset the statics and update the state of the tray icon
@@ -6627,14 +6709,11 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     int type = transfer->getType();
     if (type == MegaTransfer::TYPE_DOWNLOAD)
     {
-        if (httpServer)
-        {
-            httpServer->onTransferDataUpdate(transfer->getNodeHandle(),
+        HTTPServer::onTransferDataUpdate(transfer->getNodeHandle(),
                                              transfer->getState(),
                                              transfer->getTransferredBytes(),
                                              transfer->getTotalBytes(),
                                              transfer->getSpeed());
-        }
     }
 
     unsigned long long priority = transfer->getPriority();

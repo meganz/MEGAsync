@@ -55,6 +55,8 @@ debug {
 CONFIG += USE_LIBUV
 CONFIG += USE_MEGAAPI
 CONFIG += USE_MEDIAINFO
+CONFIG += USE_LIBRAW
+CONFIG += USE_FFMPEG
 
 unix:!macx {
         exists(/usr/include/ffmpeg-mega)|exists(mega/bindings/qt/3rdparty/include/ffmpeg)|packagesExist(ffmpeg)|packagesExist(libavcodec) {
@@ -144,4 +146,17 @@ macx {
     QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
     QMAKE_CXXFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -F /System/Library/Frameworks/Security.framework/
+}
+
+
+CONFIG(FULLREQUIREMENTS) {
+DEFINES += REQUIRE_HAVE_FFMPEG
+DEFINES += REQUIRE_HAVE_LIBUV
+DEFINES += REQUIRE_HAVE_LIBRAW
+DEFINES += REQUIRE_USE_MEDIAINFO
+#DEFINES += REQUIRE_ENABLE_CHAT
+#DEFINES += REQUIRE_ENABLE_BACKUPS
+#DEFINES += REQUIRE_ENABLE_WEBRTC
+#DEFINES += REQUIRE_ENABLE_EVT_TLS
+#DEFINES += REQUIRE_USE_PCRE
 }

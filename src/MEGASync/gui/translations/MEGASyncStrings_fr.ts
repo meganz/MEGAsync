@@ -87,7 +87,7 @@
     <message>
         <source>No Transfers</source>
         <translatorcomment>Label to indicate that there are no active transfers at current time</translatorcomment>
-        <translation type="unfinished">Aucun transfert</translation>
+        <translation type="unfinished">Il n’y a aucun transfert</translation>
     </message>
     <message>
         <source>Remaining Downloads</source>
@@ -102,7 +102,7 @@
     <message>
         <source>No Downloads</source>
         <translatorcomment>Label to indicate that there are no active downloads at current time</translatorcomment>
-        <translation type="unfinished">Aucun téléchargement</translation>
+        <translation type="unfinished">Il n’y a aucun téléchargement</translation>
     </message>
     <message>
         <source>Remaining Uploads</source>
@@ -117,7 +117,7 @@
     <message>
         <source>No Uploads</source>
         <translatorcomment>Label to indicate that there are no active uploads at current time</translatorcomment>
-        <translation type="unfinished">Aucun téléversement</translation>
+        <translation type="unfinished">Il n’y a aucun téléversement</translation>
     </message>
     <message>
         <source>PAUSED</source>
@@ -127,7 +127,7 @@
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
         <translatorcomment>Warning message shown when an user try to cancel the selected transfer</translatorcomment>
-        <translation type="unfinished">Voulez-vous vraiment annuler ce transfert ?</translation>
+        <translation type="unfinished">Voulez-vous vraiment annuler ce transfert ?</translation>
     </message>
 </context>
 <context>
@@ -348,6 +348,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Please, enter a stronger password</source>
         <translation type="unfinished">Veuillez saisir un mot de passe plus robuste</translation>
     </message>
+    <message>
+        <source>Too many requests. Please wait.</source>
+        <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</translatorcomment>
+        <translation type="unfinished">Trop de requêtes. Veuillez patienter.</translation>
+    </message>
 </context>
 <context>
     <name>ConfirmSSLexception</name>
@@ -460,7 +465,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
-        <translation>Vous n&apos;avez pas le droit d’écriture sur ce dossier local.</translation>
+        <translation>Vous n’avez pas le droit d’écriture sur ce dossier local.</translation>
     </message>
 </context>
 <context>
@@ -539,7 +544,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this folder.</source>
-        <translation type="obsolete">Vous n&apos;avez pas le droit d&apos;écriture sur ce dossier.</translation>
+        <translation type="obsolete">Vous n’avez pas le droit d’écriture sur ce dossier.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
@@ -554,7 +559,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
-        <translation>Vous n&apos;avez pas le droit d’écriture sur ce dossier local.</translation>
+        <translation>Vous n’avez pas le droit d’écriture sur ce dossier local.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -570,7 +575,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
-        <translation type="unfinished">Vous ne pouvez pas synchroniser un dossier partagé sans avoir le droit d&apos;accès total</translation>
+        <translation type="unfinished">Vous ne pouvez pas synchroniser un dossier partagé sans avoir le droit d’accès total</translation>
     </message>
 </context>
 <context>
@@ -619,7 +624,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation type="unfinished">Veuillez patienter...</translation>
+        <translation type="unfinished">Veuillez patienter…</translation>
     </message>
 </context>
 <context>
@@ -690,7 +695,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
-        <translation>Vous n&apos;avez pas le droit d’écriture sur ce dossier local.</translation>
+        <translation>Vous n’avez pas le droit d’écriture sur ce dossier local.</translation>
     </message>
 </context>
 <context>
@@ -798,7 +803,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Total Remaining: </source>
-        <translation type="obsolete">Total restant :</translation>
+        <translation type="obsolete">Total restant :</translation>
     </message>
     <message>
         <source>Downloading </source>
@@ -1046,7 +1051,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
-        <translation type="unfinished">Profitez de 50 Go de stockage nuagique protégé pour un chiffrement de bout en bout contrôlé par l’utilisateur, et créez un compte GRATUIT, ou abonnez-vous à l’une de nos [A]offres PRO[/A].</translation>
+        <translation type="unfinished">Profitez de 50 Go de stockage nuagique protégé pour un chiffrement de bout en bout contrôlé par l’utilisateur et créez un compte GRATUIT, ou abonnez-vous à l’une de nos [A]offres PRO[/A].</translation>
     </message>
 </context>
 <context>
@@ -1113,6 +1118,39 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Please enter a valid value</source>
         <translatorcomment>Information message shown when user introduces an invalid value </translatorcomment>
         <translation type="unfinished">Veuillez saisir une valeur valide</translation>
+    </message>
+</context>
+<context>
+    <name>Login2FA</name>
+    <message>
+        <source>Login Verification</source>
+        <translatorcomment>A dialog title for the form which collects the user’s 2FA code for login.</translatorcomment>
+        <translation type="unfinished">Vérification de la connexion</translation>
+    </message>
+    <message>
+        <source>Please enter the code generated by your authentication app</source>
+        <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
+        <translation type="unfinished">Veuillez saisir le code généré par votre appli d’authentification</translation>
+    </message>
+    <message>
+        <source>6 digit code:</source>
+        <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
+        <translation type="unfinished">Code à 6 chiffres</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text to cancel 2FA dialog</translatorcomment>
+        <translation type="unfinished">Annuler</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
+        <translation type="unfinished">Suivant</translation>
+    </message>
+    <message>
+        <source>Invalid code</source>
+        <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
+        <translation type="unfinished">Code invalide</translation>
     </message>
 </context>
 <context>
@@ -1193,7 +1231,7 @@ Exit anyway?</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Notification message showing a Logging in state. Keep capital letters.</translatorcomment>
-        <translation>Connexion...</translation>
+        <translation>Connexion…</translation>
     </message>
     <message>
         <source>Exit</source>
@@ -1284,12 +1322,12 @@ Exit anyway?</source>
     <message>
         <source>Installing update...</source>
         <translatorcomment>Notification message launched when an update is being installed.</translatorcomment>
-        <translation>Installation de la mise à jour...</translation>
+        <translation>Installation de la mise à jour…</translation>
     </message>
     <message>
         <source>Checking for updates...</source>
         <translatorcomment>Notification message launched when the user wants to check if there are any available update at the moment.</translatorcomment>
-        <translation>Recherche de mises à jour...</translation>
+        <translation>Recherche de mises à jour…</translation>
     </message>
     <message>
         <source>Install update</source>
@@ -1305,17 +1343,17 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.nz/sync</translation>
+        <translation>Un problème est survenu lors de l’installation de la mise à jour. Veuillez ressayer ultérieurement ou télécharger la dernière version sur : https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
         <translatorcomment>Message displayed to thank when a user send a crash report report to MEGA.</translatorcomment>
-        <translation>Merci pour votre collaboration !</translation>
+        <translation>Nous vous remercions de collaboration !</translation>
     </message>
     <message>
         <source>Update available. Downloading...</source>
         <translatorcomment>Notification message launched when an update for MEGAsync is being downloaded.</translatorcomment>
-        <translation>Mise à jour proposée. Téléchargement...</translation>
+        <translation>Une mise à jour est proposée. Téléchargement…</translation>
     </message>
     <message>
         <source>No update available at this time</source>
@@ -1601,6 +1639,21 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
         <translation type="unfinished">MEGAsync continuera à fonctionner, mais vous pourriez ne pas recevoir les nouvelles mises à jour.</translation>
     </message>
+    <message>
+        <source>Password changed</source>
+        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
+        <translation type="unfinished">Le mot de passe a été changé</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
+        <translation type="unfinished">Votre mot de passe a été changé.</translation>
+    </message>
+    <message>
+        <source>Temporarily not available</source>
+        <translatorcomment>Label to show that an error related with a temporary problem occurs during a SDK operation.</translatorcomment>
+        <translation type="unfinished">Temporairement non disponible</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -1742,7 +1795,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
         <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation type="unfinished">Voulez-vous vraiment annuler ce transfert ?</translation>
+        <translation type="unfinished">Voulez-vous vraiment annuler ce transfert ?</translation>
     </message>
     <message>
         <source>paused</source>
@@ -1814,7 +1867,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
-        <translation type="unfinished">Voulez-vous vraiment annuler ce transfert ?</translation>
+        <translation type="unfinished">Voulez-vous vraiment annuler ce transfert ?</translation>
     </message>
     <message>
         <source>View on MEGA</source>
@@ -1834,7 +1887,7 @@ inside it with the same name (%1).
 If you continue the upload, the previous file will be overwritten.
 Are you sure?</source>
         <translatorcomment>Message displayed when a user tries to upload a file to a synced folder wich already contains it  Ask for confirmation. Keep  (%1) code because it will be filled with name of the file. String as short as possible.</translatorcomment>
-        <translation type="obsolete">Le dossier de destination est synchronisé et un fichier du même nom (%1) s&apos;y trouve déjà. Si vous poursuivez le téléversement, le fichier précédent sera écrasé. Êtes-vous certain ?</translation>
+        <translation type="obsolete">Le dossier de destination est synchronisé et un fichier du même nom (%1) s’y trouve déjà. Si vous poursuivez le téléversement, le fichier précédent sera écrasé. Êtes-vous certain ?</translation>
     </message>
 </context>
 <context>
@@ -1861,7 +1914,7 @@ Are you sure?</source>
     <message>
         <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
         <translatorcomment>Warning message shown during synchronization scenario</translatorcomment>
-        <translation type="unfinished">Le dossier de destination est synchronisé et contient déjà un fichier portant le même nom.Si vous poursuivez le téléversement, le fichier précédent sera écrasé. Êtes-vous sûr ?</translation>
+        <translation type="unfinished">Le dossier de destination est synchronisé et contient déjà un fichier portant le même nom. Si vous poursuivez le téléversement, le fichier précédent sera écrasé. Êtes-vous certain ?</translation>
     </message>
 </context>
 <context>
@@ -1931,7 +1984,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Le dossier est invalide pour la synchronisation. Veuillez vous assurer de ne pas utiliser de caractères comme « \ », « / » ou « : » dans les noms de vos dossiers.</translation>
+        <translation>Le dossier est invalide pour la synchronisation.Veuillez vous assurer de ne pas utiliser des caractères tels que  « \ »,  « / » ou « : »  dans vos noms de dossiers.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1955,7 +2008,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation type="unfinished">Voulez-vous vraiment supprimer « %1 » ?</translation>
+        <translation type="unfinished">Voulez-vous vraiment supprimer « %1 » ?</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -2100,7 +2153,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
-        <translation type="unfinished">populaire !</translation>
+        <translation type="unfinished">populaire !</translation>
     </message>
 </context>
 <context>
@@ -2118,7 +2171,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>&amp;OK</source>
         <translatorcomment>Label for accept button. Keep capital letter.</translatorcomment>
-        <translation>&amp;OK</translation>
+        <translation>&amp;D’accord</translation>
     </message>
     <message>
         <source>&amp;Cancel</source>
@@ -2483,7 +2536,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive.</source>
-        <translation type="obsolete">Vous synchronisez déjà l&apos;intégralité de votre disque nuagique.</translation>
+        <translation type="obsolete">Vous synchronisez déjà l’intégralité de votre disque nuagique.</translation>
     </message>
     <message>
         <source>Synchronization will stop working.</source>
@@ -2493,7 +2546,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Are you sure?</source>
         <translatorcomment>Label to ask for confirmation to the user.</translatorcomment>
-        <translation>Êtes-vous sûr ?</translation>
+        <translation>Êtes-vous sûr ?</translation>
     </message>
     <message>
         <source>Excluded name</source>
@@ -2542,7 +2595,7 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>Veuillez patienter...</translation>
+        <translation>Veuillez patienter…</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -2662,7 +2715,7 @@ Do you want to restart MEGAsync now?</source>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
-        <translation type="obsolete">Vous synchronisez déjà l&apos;intégralité de votre disque nuagique</translation>
+        <translation type="obsolete">Vous synchronisez déjà l’intégralité de votre disque nuagique</translation>
     </message>
     <message>
         <source>Enable / disable</source>
@@ -2677,7 +2730,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
-        <translation>Vous n&apos;avez pas le droit d’écriture sur ce dossier local.</translation>
+        <translation>Vous n’avez pas le droit d’écriture sur ce dossier local.</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -2757,7 +2810,7 @@ when the application starts again</source>
     <message>
         <source>Enable this option only if your transfers don&apos;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">N’activer cette option que si vos transferts ne démarrent pas. Dans des conditions normales, le protocole HTTP est adéquat, car tous les transferts sont déjà chiffrés.</translation>
+        <translation type="unfinished">N’activez cette option que si vos transferts ne démarrent pas. Dans des conditions normales, le protocole HTTP est adéquat, car tous les transferts sont déjà chiffrés.</translation>
     </message>
     <message>
         <source>Local backup: %1</source>
@@ -2820,7 +2873,7 @@ when the application starts again</source>
     <message>
         <source>Used quota for the last %1 hours: %2</source>
         <translatorcomment>Label to indicate the usage quota in the last gap of time for free users. Keep %1 and %2 place holders. Will be replaced at runtime</translatorcomment>
-        <translation type="unfinished">Quota utilisé pour les %1 dernières heures : %2</translation>
+        <translation type="unfinished">Quota utilisé durant les %1 dernières heures : %2</translation>
     </message>
     <message>
         <source>Restart</source>
@@ -2922,7 +2975,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>J’accepte les &lt;a href=&quot;https://mega.nz/#terms&quot;&gt;conditions générales d’utilisation&lt;/a&gt; de MEGA</translation>
+        <translation>J’accepte les &lt;a href=&quot;https://mega.nz/terms&quot;&gt;conditions générales d’utilisation&lt;/a&gt; de MEGA</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -2947,7 +3000,7 @@ when the application starts again</source>
     <message>
         <source> Sync your entire cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Synchroniser l&apos;intégralité de votre disque nuagique</translation>
+        <translation>Synchroniser l’intégralité de votre disque nuagique</translation>
     </message>
     <message>
         <source>Full account sync</source>
@@ -3088,7 +3141,7 @@ when the application starts again</source>
     <message>
         <source>Creating account...</source>
         <translatorcomment>Label displayed when the account is being created.</translatorcomment>
-        <translation>Création du compte...</translation>
+        <translation>Création du compte…</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -3098,7 +3151,7 @@ when the application starts again</source>
     <message>
         <source>You have %1 in your Cloud Drive.
 Are you sure you want to sync your entire Cloud Drive?</source>
-        <translation type="obsolete">Vous avez %1 dans votre disque nuagique. Voulez-vous vraiment synchroniser votre disque nuagique entier ?</translation>
+        <translation type="obsolete">Vous avez %1 dans votre disque nuagique. Voulez-vous vraiment synchroniser l’intégralité de votre disque nuagique ?</translation>
     </message>
     <message>
         <source>and your MEGA Cloud Drive</source>
@@ -3127,7 +3180,7 @@ Please, select another folder.</source>
     <message>
         <source>Logging in...</source>
         <translatorcomment>Label displayed when the user is logging in.</translatorcomment>
-        <translation>Connexion...</translation>
+        <translation>Connexion…</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -3170,7 +3223,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>Vous n&apos;avez pas le droit d’écriture sur ce dossier local.</translation>
+        <translation>Vous n’avez pas le droit d’écriture sur ce dossier local.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
@@ -3194,7 +3247,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel this wizard and undo all changes?</source>
         <translatorcomment>Message shown when an user cancel the Setup Wizard.</translatorcomment>
-        <translation type="unfinished">Voulez-vous vraiment interrompre cet assistant et annuler tous les changements ?</translation>
+        <translation type="unfinished">Voulez-vous vraiment interrompre cet assistant et annuler tous les changements ?</translation>
     </message>
     <message>
         <source>Skip</source>
@@ -3204,12 +3257,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Creating folder...</source>
         <translatorcomment>Label shown when an user is creating a remote folder.</translatorcomment>
-        <translation type="unfinished">Creating folder…</translation>
+        <translation type="unfinished">Création du dossier…</translation>
     </message>
     <message>
         <source>Logging out...</source>
         <translatorcomment>Label shown when an user is logging out from his account.</translatorcomment>
-        <translation type="unfinished">Déconnexion...</translation>
+        <translation type="unfinished">Déconnexion…</translation>
     </message>
     <message>
         <source>Very Weak</source>
@@ -3415,7 +3468,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
         <translatorcomment>Warning message shown when the dialog to stream files from MEGA is going to be closed and there is a file selected for streaming</translatorcomment>
-        <translation type="unfinished">Voulez-vous vraiment arrêter la lecture en continu ?</translation>
+        <translation type="unfinished">Voulez-vous vraiment arrêter la lecture en continu ?</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3609,7 +3662,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Are you sure you want to cancel all transfers?</source>
         <translatorcomment>Description label for warning dialog before a transfer cancellation</translatorcomment>
-        <translation type="unfinished">Voulez-vous vraiment annuler tous les transferts ?</translation>
+        <translation type="unfinished">Voulez-vous vraiment annuler tous les transferts ?</translation>
     </message>
     <message>
         <source>Resume</source>
@@ -3634,12 +3687,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>No Downloads</source>
         <translatorcomment>Label to indicate that there are no active downloads</translatorcomment>
-        <translation type="unfinished">Aucun téléchargement</translation>
+        <translation type="unfinished">Il n’y a aucun téléchargement</translation>
     </message>
     <message>
         <source>No Uploads</source>
         <translatorcomment>Label to indicate that there are no active uploads</translatorcomment>
-        <translation type="unfinished">Aucun téléversement</translation>
+        <translation type="unfinished">Il n’y a aucun téléversement</translation>
     </message>
     <message>
         <source>Paused Transfers</source>

@@ -332,11 +332,8 @@ public:
     static const QString PROXY_TEST_URL;
     static const QString PROXY_TEST_SUBSTRING;
     static const unsigned int PROXY_TEST_TIMEOUT_MS;
-    static const QString LOCAL_HTTPS_TEST_URL;
-    static const QString LOCAL_HTTPS_TEST_POST_DATA;
-    static const QString LOCAL_HTTPS_TEST_SUBSTRING;
-    static const unsigned int LOCAL_HTTPS_TEST_TIMEOUT_MS;
     static const long long LOCAL_HTTPS_CERT_MAX_EXPIRATION_SECS;
+    static const long long LOCAL_HTTPS_CERT_RENEW_INTERVAL_SECS;
     static const unsigned int MAX_IDLE_TIME_MS;
     static const char UPDATE_PUBLIC_KEY[];
     static const long long MIN_REBOOT_INTERVAL_MS;
@@ -347,10 +344,11 @@ public:
     static const int VERSION_CODE;
     static const int BUILD_ID;
     static const QString VERSION_STRING;
-    static const QString SDK_ID;
+    static QString SDK_ID;
     static const QString CHANGELOG;
     static const QString TRANSLATION_FOLDER;
     static const QString TRANSLATION_PREFIX;
+    static const qint16 HTTP_PORT;
     static const qint16 HTTPS_PORT;
 
     static QStringList HTTPS_ALLOWED_ORIGINS;

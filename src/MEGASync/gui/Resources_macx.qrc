@@ -583,5 +583,7 @@
         <file>images/ic_small_available@2x.png</file>
         <file>images/ic_small_versions.png</file>
         <file>images/ic_small_versions@2x.png</file>
+        <file>images/shield.png</file>
+        <file>images/shield@2x.png</file>
     </qresource>
 </RCC>

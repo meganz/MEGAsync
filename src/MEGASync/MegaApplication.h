@@ -200,8 +200,6 @@ public slots:
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();
-    void onLocalHttpsCheckSuccess();
-    void onLocalHttpsCheckError();
     void userAction(int action);
     void changeState();
     void showUpdatedMessage(int lastVersion);
@@ -215,6 +213,7 @@ public slots:
     void notifyItemChange(QString path, int newState);
     int getPrevVersion();
     void showNotificationFinishedTransfers(unsigned long long appDataId);
+    void renewLocalSSLcert();
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
@@ -238,7 +237,8 @@ protected:
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
     void startHttpServer();
-    void initHttpsServer();
+    void startHttpsServer();
+    void initLocalServer();
 
     QSystemTrayIcon *trayIcon;
 
@@ -297,6 +297,7 @@ protected:
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
     HTTPServer *httpServer;
+    HTTPServer *httpsServer;
     UploadToMegaDialog *uploadFolderSelector;
     DownloadFromMegaDialog *downloadFolderSelector;
     mega::MegaHandle fileUploadTarget;
@@ -380,6 +381,8 @@ protected:
     bool completedTabActive;
     int prevVersion;
     bool isPublic;
+    bool updatingSSLcert;
+    long long lastSSLcertUpdate;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener

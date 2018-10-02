@@ -49,7 +49,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/DataUsageMenu.cpp \
     $$PWD/AddExclusionDialog.cpp \
     $$PWD/LocalCleanScheduler.cpp \
-    $$PWD/ChangePassword.cpp
+    $$PWD/ChangePassword.cpp \
+    $$PWD/Login2FA.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfer.h \
@@ -100,7 +101,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/DataUsageMenu.h \
     $$PWD/AddExclusionDialog.h \
     $$PWD/LocalCleanScheduler.h \
-    $$PWD/ChangePassword.h
+    $$PWD/ChangePassword.h \
+    $$PWD/Login2FA.h
 
 INCLUDEPATH += $$PWD
 
@@ -146,7 +148,8 @@ win32 {
                 $$PWD/win/ActiveTransfersWidget.ui \
                 $$PWD/win/AddExclusionDialog.ui \
                 $$PWD/win/LocalCleanScheduler.ui \
-                $$PWD/win/ChangePassword.ui
+                $$PWD/win/ChangePassword.ui \
+                $$PWD/win/Login2FA.ui
 }
 
 macx {
@@ -189,7 +192,8 @@ macx {
                 $$PWD/macx/ActiveTransfersWidget.ui \
                 $$PWD/macx/AddExclusionDialog.ui \
                 $$PWD/macx/LocalCleanScheduler.ui \
-                $$PWD/macx/ChangePassword.ui
+                $$PWD/macx/ChangePassword.ui \
+                $$PWD/macx/Login2FA.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -241,7 +245,8 @@ unix:!macx {
                 $$PWD/linux/ActiveTransfersWidget.ui \
                 $$PWD/linux/AddExclusionDialog.ui \
                 $$PWD/linux/LocalCleanScheduler.ui \
-                $$PWD/linux/ChangePassword.ui
+                $$PWD/linux/ChangePassword.ui \
+                $$PWD/linux/Login2FA.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
