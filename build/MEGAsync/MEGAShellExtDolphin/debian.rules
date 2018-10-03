@@ -3,17 +3,17 @@
 build: build-stamp
 build-stamp:
 	dh_testdir
-	cmake -DCMAKE_INSTALL_PREFIX="`kde4-config --prefix`" .
-	make
+	if ! grep "Ubuntu 18" /etc/issue ; then cmake -DCMAKE_INSTALL_PREFIX="`kde4-config --prefix`" .; fi
+	if ! grep "Ubuntu 18" /etc/issue ; then make; fi
 	touch build-stamp
 
 build2:
-	if grep "Ubuntu 17.10" /etc/issue; then rm megasync-plugin.moc;  fi
-	if which kf5-config >/dev/null; then dh_testdir;  rm -r CMakeFiles; rm CMakeLists.txt; mv CMakeLists_kde5.txt CMakeLists.txt; cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" .; make; touch build-stamp; fi
+	if grep "Ubuntu 17.10" /etc/issue || grep "Ubuntu 18" /etc/issue ; then rm megasync-plugin.moc;  fi
+	if which kf5-config >/dev/null; then dh_testdir;  rm -r CMakeFiles; rm CMakeLists.txt; mv CMakeLists_kde5.txt CMakeLists.txt; cmake -DCMAKE_INSTALL_PREFIX="`kf5-config --prefix`" -DPLUGIN_INSTALL_DIR=`kf5-config --qt-plugins` .; make; touch build-stamp; fi
 
 install2: build2
 	#fix issue with compilation of megasync-plugin-overlay.cpp lacking of symbols: replace with a precompiled library
-	if grep "Ubuntu 17.10" /etc/issue; then cp megasyncdolphinoverlayplugin.so_ub1710 `find . -name megasyncdolphinoverlayplugin.so`; fi
+	if grep "Ubuntu 17.10" /etc/issue || grep "Ubuntu 18" /etc/issue; then cp megasyncdolphinoverlayplugin.so_ub1710 `find . -name megasyncdolphinoverlayplugin.so`; fi
 	if which kf5-config >/dev/null; then dh_auto_install --destdir=debian/dolphin-megasync; fi
 
 
