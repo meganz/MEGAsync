@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QtCore>
 #include <QApplication>
+#include <QPointer>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -30,7 +31,13 @@ void MegaUploader::upload(QString path, MegaNode *parent, unsigned long long app
 
 void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long appDataID)
 {
+    QPointer<MegaUploader> safePointer = this;
     QApplication::processEvents();
+    if (!safePointer)
+    {
+        return;
+    }
+
     QString fileName = info.fileName();
     if (fileName.isEmpty() && info.isRoot())
     {
@@ -47,8 +54,6 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
 
     QString currentPath = QDir::toNativeSeparators(info.absoluteFilePath());
     string localPath = megaApi->getLocalPath(parent);
-    if (localPath.size() && megaApi->isSyncable(QDir::toNativeSeparators(info.absoluteFilePath()).toUtf8().constData(), info.size()))
-    {
 #ifdef WIN32
         QString destPath = QDir::toNativeSeparators(QString::fromWCharArray((const wchar_t *)localPath.data()) + QDir::separator() + fileName);
         if (destPath.startsWith(QString::fromAscii("\\\\?\\")))
@@ -58,6 +63,9 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
 #else
         QString destPath = QDir::toNativeSeparators(QString::fromUtf8(localPath.data()) + QDir::separator() + fileName);
 #endif
+
+    if (localPath.size() && currentPath != destPath && megaApi->isSyncable(destPath.toUtf8().constData(), info.size()))
+    {
         megaApi->moveToLocalDebris(destPath.toUtf8().constData());
         QtConcurrent::run(Utilities::copyRecursively, currentPath, destPath);
     }

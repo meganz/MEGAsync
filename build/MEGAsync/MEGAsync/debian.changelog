@@ -1,3 +1,15 @@
+megasync (3.7.1) stable; urgency=low
+
+  * Support for multi-factor authentication
+  * Security improvements for the registration of new accounts
+  * Better performance for the upload of images
+  * Creation of thumbnails and previews for RAW images
+  * Improvements in the management of network connections
+  * New logic to get external changes in the MEGA account
+  * Other minor bug fixes and improvements
+
+ -- MEGA Team <linux@mega.co.nz>  Wed, 12 Sep 2018 19:41:17 +0200
+
 megasync (3.6.6) stable; urgency=low
 
   * General Data Protection Regulation (GDPR) compliance

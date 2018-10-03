@@ -201,8 +201,8 @@ void InfoDialog::setUsage()
         ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
 
-        QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1&nbsp;</span>")
-                                     .arg(QString::number(percentage).append(QString::fromAscii(" %"))))
+        QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1</span>")
+                                     .arg(QString::number(percentage).append(QString::fromAscii("%"))))
                                      .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(preferences->totalStorage())));
         ui->lPercentageUsedStorage->setText(used);
@@ -841,7 +841,29 @@ void InfoDialog::drawAvatar(QString email)
             color = QString::fromUtf8(avatarColor);
             delete [] avatarColor;
         }
-        ui->bAvatar->setAvatarLetter(Utilities::getAvatarLetter(), color);
+
+        Preferences *preferences = Preferences::instance();
+        QString fullname = (preferences->firstName() + preferences->lastName()).trimmed();
+        if (fullname.isEmpty())
+        {
+            char *email = megaApi->getMyEmail();
+            if (email)
+            {
+                fullname = QString::fromUtf8(email);
+                delete [] email;
+            }
+            else
+            {
+                fullname = preferences->email();
+            }
+
+            if (fullname.isEmpty())
+            {
+                fullname = QString::fromUtf8(" ");
+            }
+        }
+
+        ui->bAvatar->setAvatarLetter(fullname.at(0).toUpper(), color);
         delete [] userHandle;
     }
 }

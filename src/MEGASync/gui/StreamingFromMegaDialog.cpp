@@ -123,8 +123,10 @@ void StreamingFromMegaDialog::on_bFromCloud_clicked()
 void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
 {
     QPointer<QInputDialog> id = new QInputDialog(this);
+    id->setWindowFlags(id->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     id->setWindowTitle(tr("Open link"));
     id->setLabelText(tr("Enter a MEGA file link:"));
+    id->resize(470, id->height());
     int result = id->exec();
     if (!id || !result)
     {

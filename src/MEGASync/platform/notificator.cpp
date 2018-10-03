@@ -8,7 +8,7 @@
 #include <QByteArray>
 #include <QIcon>
 #include <QImageWriter>
-#include "QMegaMessageBox.h"
+#include "gui/QMegaMessageBox.h"
 #include "Utilities.h"
 #include <QMetaType>
 #include <QStyle>

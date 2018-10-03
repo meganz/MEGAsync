@@ -317,5 +317,6 @@
         <file>images/downloaded_item_ico.png</file>
         <file>images/uploaded_item_ico.png</file>
         <file>images/upload_to_mega.png</file>
+        <file>images/shield.png</file>
     </qresource>
 </RCC>

@@ -25,6 +25,8 @@ private:
     static QString remove_icon;
 
     LinuxPlatform() {}
+    static QStringList getListRunningProcesses();
+
 public:
     static void initialize(int argc, char *argv[]);
     static void prepareForSync();
@@ -50,6 +52,8 @@ public:
     static void execBackgroundWindow(QDialog *window);
     static bool registerUpdateJob();
     static void uninstall();
+    static bool shouldRunHttpServer();
+    static bool shouldRunHttpsServer();
 };
 
 #endif // LINUXPLATFORM_H

@@ -585,5 +585,7 @@
         <file>images/uploaded_item_ico@2x.png</file>
         <file>images/upload_to_mega.png</file>
         <file>images/upload_to_mega@2x.png</file>
+        <file>images/shield.png</file>
+        <file>images/shield@2x.png</file>
     </qresource>
 </RCC>
