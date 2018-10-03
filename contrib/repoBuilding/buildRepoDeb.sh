@@ -41,11 +41,11 @@ gzip -c9 Sources > Sources.gz
 cat > Release <<-EOF
 Archive: $DIST
 Codename: $DIST
-Origin: manual_build
+Origin: obs://private/DEB/$DIST
 Label: DEB
 Architectures: $ARCHS
 Date: $FECHA
-Description: Debian repository created by buildRepoDeb
+Description: DEB ($DIST)
 Components: main
 EOF
 
