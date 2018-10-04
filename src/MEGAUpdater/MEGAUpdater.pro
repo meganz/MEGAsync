@@ -17,7 +17,7 @@ HEADERS += UpdateTask.h \
     Preferences.h \
     MacUtils.h
 
-SOURCES += MEGAUpdater.cpp \
+SOURCES += MegaUpdater.cpp \
     UpdateTask.cpp
 
 INCLUDEPATH += $$MEGASDK_BASE_PATH/bindings/qt/3rdparty/include
