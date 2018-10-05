@@ -55,7 +55,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/PSAwidget.cpp \
     $$PWD/ElidedLabel.cpp \
     $$PWD/UpgradeOverStorage.cpp \
-    $$PWD/UpgradeWidget.cpp
+    $$PWD/UpgradeWidget.cpp \
+    $$PWD/Login2FA.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
@@ -107,12 +108,13 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialogTransfersWidget.h \
     $$PWD/QCustomTransfersModel.h \
     $$PWD/StatusInfo.h \
-    $$PWD/ChangePassword.h \
     $$PWD/CustomTransferItem.h \
     $$PWD/PSAwidget.h \
     $$PWD/ElidedLabel.h \
     $$PWD/UpgradeOverStorage.h \
-    $$PWD/UpgradeWidget.h
+    $$PWD/UpgradeWidget.h \
+    $$PWD/ChangePassword.h \
+    $$PWD/Login2FA.h
 
 INCLUDEPATH += $$PWD
 
@@ -158,10 +160,11 @@ win32 {
                 $$PWD/win/LocalCleanScheduler.ui \
                 $$PWD/win/InfoDialogTransfersWidget.ui \
                 $$PWD/win/StatusInfo.ui \
-                $$PWD/win/ChangePassword.ui \
                 $$PWD/win/PSAwidget.ui \
                 $$PWD/win/UpgradeOverStorage.ui \
-                $$PWD/win/UpgradeWidget.ui
+                $$PWD/win/UpgradeWidget.ui \
+                $$PWD/win/ChangePassword.ui \
+                $$PWD/win/Login2FA.ui
 }
 
 macx {
@@ -203,11 +206,12 @@ macx {
                 $$PWD/macx/LocalCleanScheduler.ui \
                 $$PWD/macx/InfoDialogTransfersWidget.ui \
                 $$PWD/macx/StatusInfo.ui \
-                $$PWD/macx/ChangePassword.ui \
                 $$PWD/macx/CustomTransferItem.ui \
                 $$PWD/macx/PSAwidget.ui \
                 $$PWD/macx/UpgradeOverStorage.ui \
-                $$PWD/macx/UpgradeWidget.ui
+                $$PWD/macx/UpgradeWidget.ui \
+                $$PWD/macx/ChangePassword.ui \
+                $$PWD/macx/Login2FA.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -259,10 +263,11 @@ unix:!macx {
                 $$PWD/linux/LocalCleanScheduler.ui \
                 $$PWD/linux/InfoDialogTransfersWidget.ui \
                 $$PWD/linux/StatusInfo.ui \
-                $$PWD/linux/ChangePassword.ui \
                 $$PWD/linux/PSAwidget.ui \
                 $$PWD/linux/UpgradeOverStorage.ui \
-                $$PWD/linux/UpgradeWidget.ui
+                $$PWD/linux/UpgradeWidget.ui \
+                $$PWD/linux/ChangePassword.ui \
+                $$PWD/linux/Login2FA.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

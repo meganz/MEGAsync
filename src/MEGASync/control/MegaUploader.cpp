@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QtCore>
 #include <QApplication>
+#include <QPointer>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -30,7 +31,13 @@ void MegaUploader::upload(QString path, MegaNode *parent, unsigned long long app
 
 void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long appDataID)
 {
+    QPointer<MegaUploader> safePointer = this;
     QApplication::processEvents();
+    if (!safePointer)
+    {
+        return;
+    }
+
     QString fileName = info.fileName();
     if (fileName.isEmpty() && info.isRoot())
     {

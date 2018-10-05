@@ -18,6 +18,9 @@ BuildRequires: libcurl4
 
 %if 0%{?suse_version}
 BuildRequires: libcares-devel, pkg-config
+%if !( ( %{_target_cpu} == "i586" && ( 0%{?sle_version} == 120200 || 0%{?sle_version} == 120300) ) || 0%{?suse_version} == 1230 )
+BuildRequires: libraw-devel
+%endif
 BuildRequires: update-desktop-files
 
 #%if 0%{?suse_version} <= 1320
@@ -39,6 +42,11 @@ BuildRequires: -post-build-checks
 BuildRequires: libcryptopp-devel
 %endif
 
+%else
+%if 0%{?rhel_version} == 0
+#if !RHEL
+BuildRequires: LibRaw-devel
+%endif
 %endif
 
 %if 0%{?fedora_version}==21 || 0%{?fedora_version}==22 || 0%{?fedora_version}>=25 || !(0%{?sle_version} < 120300)
@@ -92,6 +100,7 @@ Store up to 50 GB for free!
 %build
 
 %define flag_cryptopp %{nil}
+%define flag_libraw %{nil}
 %define flag_disablemediainfo -i
 
 %if 0%{?fedora_version}==19 || 0%{?fedora_version}==20 || 0%{?fedora_version}==23 || 0%{?fedora_version}==24 || 0%{?centos_version} || 0%{?scientificlinux_version} || 0%{?rhel_version} || ( 0%{?suse_version} && 0%{?sle_version} < 120300)
@@ -103,8 +112,15 @@ Store up to 50 GB for free!
 %define flag_cryptopp -q
 %endif
 
+%if ( %{_target_cpu} == "i586" && ( 0%{?sle_version} == 120200 || 0%{?sle_version} == 120300) )
+%define flag_libraw -W
+%endif
+
+
 %if 0%{?rhel_version}
 %define flag_cryptopp -q
+%define flag_libraw -W
+
 %endif
 
 %define flag_cares %{nil}
@@ -123,7 +139,7 @@ Store up to 50 GB for free!
 
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 
-./configure %{flag_cryptopp} -g %{flag_disablezlib} %{flag_cares} %{flag_disablemediainfo}
+./configure %{flag_cryptopp} -g %{flag_disablezlib} %{flag_cares} %{flag_disablemediainfo} %{flag_libraw}
 
 # Fedora uses system Crypto++ header files
 %if 0%{?fedora}
@@ -136,22 +152,30 @@ rm -fr MEGASync/mega/bindings/qt/3rdparty/include/cryptopp
 %define extraqmake %{nil}
 %endif
 
+%if 0%{?suse_version} != 1230
+%define fullreqs "CONFIG += FULLREQUIREMENTS"
+%else
+sed -i "s/USE_LIBRAW/NOT_USE_LIBRAW/" MEGASync/MEGASync.pro
+%define fullreqs %{nil}
+%endif
+
+
 %if 0%{?fedora} || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
 
 %if 0%{?fedora_version} >= 23 || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
-qmake-qt5 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+qmake-qt5 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
 lrelease-qt5  MEGASync/MEGASync.pro
 %else
-qmake-qt4 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
 lrelease-qt4  MEGASync/MEGASync.pro
 %endif
 %else
 
 %if 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
-qmake-qt4 DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+qmake-qt4 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
 lrelease-qt4  MEGASync/MEGASync.pro
 %else
-qmake DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
+qmake %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
 lrelease MEGASync/MEGASync.pro
 %endif
 

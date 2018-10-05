@@ -156,7 +156,7 @@ $sshpasscommand ssh root@$IP_GUEST sysctl fs.inotify.max_user_watches
 echo " deleting testing file ..."
 $sshpasscommand ssh root@$IP_GUEST rm /home/mega/testFile.txt #Notice: filename comes from the shared file
 echo " checking existing megasync running ..."
-$sshpasscommand ssh root@$IP_GUEST ps aux | grep megasync
+$sshpasscommand ssh root@$IP_GUEST pgrep megasync
 echo " killing megasync ..."
 $sshpasscommand ssh root@$IP_GUEST killall megasync
 
@@ -487,9 +487,9 @@ fi
 
 theDisplay="DISPLAY=:0.0"
 
-if [[ $VMNAME == *"ARCHLINUX"* ]]; then
-theDisplay="DISPLAY=:1.0"
-fi
+#if [[ $VMNAME == *"ARCHLINUX"* ]]; then
+#theDisplay="DISPLAY=:1.0"
+#fi
 
 
 echo " relaunching megasync as user ..."
@@ -500,7 +500,7 @@ $sshpasscommand ssh -oStrictHostKeyChecking=no  mega@$IP_GUEST $theDisplay megas
 sleep 5 #TODO: sleep longer?
 
 echo " checking new megasync running ..."
-$sshpasscommand ssh root@$IP_GUEST ps aux | grep megasync
+$sshpasscommand ssh root@$IP_GUEST pgrep megasync
 resultRunning=$?
 logOperationResult "checking new megasync running ..." $resultRunning
 
@@ -558,6 +558,7 @@ elif [[ $VMNAME == *"DEBIAN"* ]] || [[ $VMNAME == *"UBUNTU"* ]] || [[ $VMNAME ==
 	
 	if [[ $distroDir == "Linux Mint 17"* ]]; then distroDir="xUbuntu"; ver="14.04"; fi
 	if [[ $distroDir == "Linux Mint 18"* ]]; then distroDir="xUbuntu"; ver="16.04"; fi
+	if [[ $distroDir == "Linux Mint 19"* ]]; then distroDir="xUbuntu"; ver="18.04"; fi
 	
 	resultRepoConfiguredOk=0
 	expected="deb https://mega.nz/linux/MEGAsync/${distroDir}_$ver/ ./"

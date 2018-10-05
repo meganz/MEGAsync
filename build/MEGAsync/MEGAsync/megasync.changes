@@ -1,3 +1,14 @@
+Wed Sep 12 19:41:17 CEST 2018 - linux@mega.co.nz
+- Update to version 3.7.1:
+  * Support for multi-factor authentication
+  * Security improvements for the registration of new accounts
+  * Better performance for the upload of images
+  * Creation of thumbnails and previews for RAW images
+  * Improvements in the management of network connections
+  * New logic to get external changes in the MEGA account
+  * Other minor bug fixes and improvements
+
+-------------------------------------------------------------------
 Wed May 23 17:27:38 CEST 2018 - linux@mega.co.nz
 - Update to version 3.6.6:
   * General Data Protection Regulation (GDPR) compliance

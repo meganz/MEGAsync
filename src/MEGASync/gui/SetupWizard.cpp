@@ -4,6 +4,7 @@
 #include "MegaApplication.h"
 #include "control/Utilities.h"
 #include "gui/MultiQFileDialog.h"
+#include "gui/Login2FA.h"
 #include "platform/Platform.h"
 #include <QtConcurrent/QtConcurrent>
 
@@ -162,6 +163,28 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 {
                     showErrorMessage(tr("Incorrect email and/or password.") + QString::fromUtf8(" ") + tr("Have you verified your account?"));
                 }
+                else if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
+                {
+                    QPointer<SetupWizard> dialog = this;
+                    QPointer<Login2FA> verification = new Login2FA(this);
+                    int result = verification->exec();
+                    if (!dialog || !verification || result != QDialog::Accepted)
+                    {
+                        if (dialog)
+                        {
+                            page_login();
+                        }
+                        delete verification;
+                        loggingStarted = false;
+                        return;
+                    }
+
+                    QString pin = verification->pinCode();
+                    delete verification;
+
+                    megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData(), delegateListener);
+                    return;
+                }
                 else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
                 {
                     showErrorMessage(tr("Please check your e-mail and click the link to confirm your account."));
@@ -175,6 +198,29 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 else if (error->getErrorCode() == MegaError::API_EBLOCKED)
                 {
                     showErrorMessage(tr("Your account has been blocked. Please contact support@mega.co.nz"));
+                }
+                else if (error->getErrorCode() == MegaError::API_EFAILED || error->getErrorCode() == MegaError::API_EEXPIRED)
+                {
+                    QPointer<SetupWizard> dialog = this;
+                    QPointer<Login2FA> verification = new Login2FA(this);
+                    verification->invalidCode(true);
+                    int result = verification->exec();
+                    if (!dialog || !verification || result != QDialog::Accepted)
+                    {
+                        if (dialog)
+                        {
+                            page_login();
+                        }
+                        delete verification;
+                        loggingStarted = false;
+                        return;
+                    }
+
+                    QString pin = verification->pinCode();
+                    delete verification;
+
+                    megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData(), delegateListener);
+                    return;
                 }
                 else if (error->getErrorCode() != MegaError::API_ESSL)
                 {

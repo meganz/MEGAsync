@@ -33,14 +33,12 @@ public:
     static QString extractJSONString(QString json, QString name);
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();
-    static QChar getAvatarLetter();
 
 private:
     Utilities() {}
     static QHash<QString, QString> extensionIcons;
     static QHash<QString, QString> languageNames;
     static void initializeExtensions();
-    static void countFilesAndFolders(QString path, long *numFiles, long *numFolders, long fileLimit, long folderLimit);
     static QString getExtensionPixmap(QString fileName, QString prefix);
 
 //Platform dependent functions

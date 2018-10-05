@@ -307,3 +307,13 @@ void MacXPlatform::uninstall()
 {
 
 }
+
+bool MacXPlatform::shouldRunHttpServer()
+{
+    return runHttpServer();
+}
+
+bool MacXPlatform::shouldRunHttpsServer()
+{
+    return runHttpsServer();
+}

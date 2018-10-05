@@ -321,5 +321,6 @@
         <file>images/login_setup_step1.png</file>
         <file>images/login_setup_step2.png</file>
         <file>images/login_setup_step3.png</file>
+        <file>images/shield.png</file>
     </qresource>
 </RCC>
