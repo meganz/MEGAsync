@@ -5,6 +5,7 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include "platform/Platform.h"
+#include "gui/Login2FA.h"
 #include <QtConcurrent/QtConcurrent>
 
 using namespace mega;
@@ -87,6 +88,28 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 {
                     QMessageBox::warning(NULL, tr("Error"), tr("Incorrect email and/or password.") + QString::fromUtf8(" ") + tr("Have you verified your account?"), QMessageBox::Ok);
                 }
+                else if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
+                {
+                    QPointer<GuestWidget> dialog = this;
+                    QPointer<Login2FA> verification = new Login2FA(this);
+                    int result = verification->exec();
+                    if (!dialog || !verification || result != QDialog::Accepted)
+                    {
+                        if (dialog)
+                        {
+                            page_login();
+                        }
+                        delete verification;
+                        loggingStarted = false;
+                        return;
+                    }
+
+                    QString pin = verification->pinCode();
+                    delete verification;
+
+                    megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData(), delegateListener);
+                    return;
+                }
                 else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
                 {
                     QMessageBox::warning(NULL, tr("Error"), tr("Please check your e-mail and click the link to confirm your account."), QMessageBox::Ok);
@@ -102,6 +125,29 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 else if (error->getErrorCode() == MegaError::API_EBLOCKED)
                 {
                     QMessageBox::critical(NULL, tr("Error"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
+                }
+                else if (error->getErrorCode() == MegaError::API_EFAILED || error->getErrorCode() == MegaError::API_EEXPIRED)
+                {
+                    QPointer<GuestWidget> dialog = this;
+                    QPointer<Login2FA> verification = new Login2FA(this);
+                    verification->invalidCode(true);
+                    int result = verification->exec();
+                    if (!dialog || !verification || result != QDialog::Accepted)
+                    {
+                        if (dialog)
+                        {
+                            page_login();
+                        }
+                        delete verification;
+                        loggingStarted = false;
+                        return;
+                    }
+
+                    QString pin = verification->pinCode();
+                    delete verification;
+
+                    megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData(), delegateListener);
+                    return;
                 }
                 else if (error->getErrorCode() != MegaError::API_ESSL)
                 {
