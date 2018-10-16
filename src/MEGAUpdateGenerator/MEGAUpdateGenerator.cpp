@@ -376,9 +376,9 @@ void printUsage(const char* appname)
     cerr << "Sign an update:" << endl;
     cerr << "    " << appname << " -s <win|osx> <update folder> <keyfile> <version_code>" << endl;
     cerr << "  or:" << endl;
-    cerr << "    " << appname << " <update folder> <keyfile> <version_code> --file <contentsfile> --base-url <base_url>" << endl;
+    cerr << "    " << appname << " <update folder> <keyfile> --file <contentsfile> --base-url <base_url>" << endl;
     cerr << "    e.g:" << endl;
-    cerr << "        " << appname << " /tmp/updatefiles /tmp/key.pem 100050 --file /tmp/files.txt --base-url http://g.static.mega.co.nz/upd/wsync/" << endl;
+    cerr << "        " << appname << " /tmp/updatefiles /tmp/key.pem --file /tmp/files.txt --base-url http://g.static.mega.co.nz/upd/wsync/" << endl;
 }
 
 unsigned signFile(const char * filePath, AsymmCipher* key, byte* signature, unsigned signbuflen)
@@ -500,7 +500,8 @@ int main(int argc, char *argv[])
         delete [] privkstr;
         return 0;
     }
-    else if ((args.size() == 3)  && ((bos && (os == "win" || os == "osx")) || (bUrl && externalfile)))
+    else if (((args.size() == 3)  && ((bos && (os == "win" || os == "osx")))
+              || (args.size() == 2 && bUrl && externalfile)))
     {
         //Sign an update
         win = os == "win";
@@ -534,13 +535,6 @@ int main(int argc, char *argv[])
         }
         keyFile.close();
 
-        long versionCode = strtol (args.at(2), NULL, 10);
-        if (!versionCode)
-        {
-            cerr << "Invalid version code" << endl;
-            return 5;
-        }
-
         //Initialize AsymmCypher
         string privks;
         privks.resize(privk.size()/4*3+3);
@@ -548,9 +542,9 @@ int main(int argc, char *argv[])
         aprivk.setkey(AsymmCipher::PRIVKEY,(byte*)privks.data(), privks.size());
 
         //Generate update file signature
-        signatureGenerator.add((const byte *)args.at(2), strlen(args.at(2)));
         vector<string> filesVector;
         vector<string> targetPathsVector;
+        string sversioncode;
 
         if (externalfile)
         {
@@ -576,6 +570,13 @@ int main(int argc, char *argv[])
                     filesVector.push_back(fileToDl.c_str());
                     targetPathsVector.push_back(targetpah.c_str());
                 }
+                else
+                {
+                    if (line.find("#version=") == 0)
+                    {
+                        sversioncode=line.substr(9);
+                    }
+                }
             }
         }
         else
@@ -594,8 +595,18 @@ int main(int argc, char *argv[])
                 filesVector.push_back( (win ? UPDATE_FILES_WIN : UPDATE_FILES_OSX)[i]);
                 targetPathsVector.push_back( (win ? TARGET_PATHS_WIN : TARGET_PATHS_OSX)[i]);
             }
+            sversioncode=args.at(2);
         }
 
+        long versionCode;
+        versionCode = strtol (sversioncode.c_str(), NULL, 10);
+        if (!versionCode)
+        {
+            cerr << "Invalid version code" << endl;
+            return 5;
+        }
+
+        signatureGenerator.add((const byte *)sversioncode.c_str(), strlen(sversioncode.c_str()));
 
         for (unsigned int i = 0; i < filesVector.size(); i++)
         {
@@ -650,7 +661,7 @@ int main(int argc, char *argv[])
         updateFileSignature.resize(Base64::btoa((byte *)signature, signatureSize, (char *)updateFileSignature.data()));
 
         //Print update file
-        cout << args.at(2) << endl;
+        cout << versionCode << endl;
         cout << updateFileSignature << endl;
         for (unsigned int i = 0; i < targetPathsVector.size(); i++)
         {
