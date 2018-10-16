@@ -214,8 +214,8 @@ macx {
                 $$PWD/macx/Login2FA.ui
 
     QT += macextras
-    OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
-    HEADERS += gui/CocoaHelpButton.h gui/MegaSystemTrayIcon.h
+    OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm gui/QSegmentedControl.mm
+    HEADERS += gui/CocoaHelpButton.h gui/MegaSystemTrayIcon.h gui/QSegmentedControl.h
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
