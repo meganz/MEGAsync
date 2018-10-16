@@ -1,5 +1,6 @@
 #include "LinkProcessor.h"
 #include "Utilities.h"
+#include "Preferences.h"
 #include <QDir>
 #include <QDateTime>
 #include <QApplication>
@@ -72,6 +73,10 @@ void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaErro
         else
         {
             linkNode[currentIndex] = request->getPublicMegaNode();
+            if (linkNode[currentIndex])
+            {
+                Preferences::instance()->setLastPublicHandle(linkNode[currentIndex]->getHandle());
+            }
         }
 
         linkError[currentIndex] = e->getErrorCode();
@@ -147,6 +152,7 @@ void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaErro
                 rootNode = megaApiFolders->getRootNode();
             }
 
+            Preferences::instance()->setLastPublicHandle(request->getNodeHandle());
             linkNode[currentIndex] = megaApiFolders->authorizeNode(rootNode);
             delete rootNode;
         }
