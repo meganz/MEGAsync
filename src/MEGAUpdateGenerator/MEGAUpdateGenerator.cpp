@@ -423,6 +423,44 @@ unsigned signFile(const char * filePath, AsymmCipher* key, byte* signature, unsi
     return signatureSize;
 }
 
+
+bool generateHash(const char * filePath, string *hash)
+{
+    HashSHA256 hashGenerator;
+    char buffer[1024];
+
+    ifstream input(filePath, std::ios::in | std::ios::binary);
+    if (input.fail())
+    {
+        return false;
+    }
+
+    while (input.good())
+    {
+        input.read(buffer, sizeof(buffer));
+        hashGenerator.add((byte *)buffer, (unsigned)input.gcount());
+    }
+
+    if (input.bad())
+    {
+        return false;
+    }
+
+    string binaryhash;
+    hashGenerator.get(&binaryhash);
+
+    static const char hexchars[] = "0123456789abcdef";
+    ostringstream oss;
+    for (size_t i=0;i<binaryhash.size();++i)
+    {
+        oss.put(hexchars[(binaryhash[i] >> 4) & 0x0F]);
+        oss.put(hexchars[binaryhash[i] & 0x0F]);
+    }
+    *hash = oss.str();
+
+    return true;
+}
+
 bool extractarg(vector<const char*>& args, const char *what)
 {
     for (int i = int(args.size()); i--; )
@@ -544,6 +582,7 @@ int main(int argc, char *argv[])
         //Generate update file signature
         vector<string> filesVector;
         vector<string> targetPathsVector;
+        vector<string> hashesVector;
         string sversioncode;
 
         if (externalfile)
@@ -561,7 +600,17 @@ int main(int argc, char *argv[])
                     fileToDl = line.substr(0, pos);
                     if (pos != string::npos && ((pos + 1) < line.size()))
                     {
-                        targetpah = line.substr(pos + 1);
+                        string rest = line.substr(pos + 1);
+                        pos = rest.find(";");
+                        targetpah = rest.substr(0, pos);
+                        if (pos != string::npos && ((pos + 1) < rest.size()))
+                        {
+                            hashesVector.push_back(rest.substr(pos + 1));
+                        }
+                        else
+                        {
+                            hashesVector.push_back("UNKNOWN");
+                        }
                     }
                     else
                     {
@@ -611,6 +660,22 @@ int main(int argc, char *argv[])
         for (unsigned int i = 0; i < filesVector.size(); i++)
         {
             string filePath = updateFolder + filesVector.at(i);
+
+            if (hashesVector.at(i) != "UNKNOWN")
+            {
+                string hashFile;
+                generateHash(filePath.c_str(),&hashFile);
+
+                if (hashFile != hashesVector.at(i))
+                {
+                    cerr << "Error checking hash for file: " << filePath << endl
+                          << " calculated=" << hashFile << endl
+                          << "   expected=" << hashesVector.at(i) << endl;
+                    return 6;
+                }
+            }
+
+
             signatureSize = signFile(filePath.data(), &aprivk, signature, sizeof(signature));
             if (!signatureSize)
             {
