@@ -1608,7 +1608,7 @@ void MegaApplication::processDownloadQueue(QString path)
     QDir dir(path);
     if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
     {
-        QQueue<mega::MegaNode *>::iterator it;
+        QQueue<MegaNode *>::iterator it;
         for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
         {
             HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
@@ -2728,7 +2728,7 @@ void MegaApplication::setupWizardFinished(int result)
     {
         if (!infoWizard && (downloadQueue.size() || pendingLinks.size()))
         {
-            QQueue<mega::MegaNode *>::iterator it;
+            QQueue<MegaNode *>::iterator it;
             for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
             {
                 HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
@@ -2819,7 +2819,7 @@ void MegaApplication::infoWizardDialogFinished(int result)
     {
         if (!setupWizard && (downloadQueue.size() || pendingLinks.size()))
         {
-            QQueue<mega::MegaNode *>::iterator it;
+            QQueue<MegaNode *>::iterator it;
             for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
             {
                 HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
@@ -4238,7 +4238,7 @@ void MegaApplication::processDownloads()
     }
     else
     {
-        QQueue<mega::MegaNode *>::iterator it;
+        QQueue<MegaNode *>::iterator it;
         for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
         {
             HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
