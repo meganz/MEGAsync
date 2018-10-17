@@ -73,10 +73,6 @@ void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaErro
         else
         {
             linkNode[currentIndex] = request->getPublicMegaNode();
-            if (linkNode[currentIndex])
-            {
-                Preferences::instance()->setLastPublicHandle(linkNode[currentIndex]->getHandle());
-            }
         }
 
         linkError[currentIndex] = e->getErrorCode();
