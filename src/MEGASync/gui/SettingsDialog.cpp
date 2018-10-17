@@ -814,10 +814,10 @@ void SettingsDialog::on_bUpgrade_clicked()
     Preferences *preferences = Preferences::instance();
     if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
     {
-        mega::MegaHandle aff = preferences->lastPublicHandle();
-        if (aff != mega::INVALID_HANDLE)
+        MegaHandle aff = preferences->lastPublicHandle();
+        if (aff != INVALID_HANDLE)
         {
-            char *base64aff = mega::MegaApi::handleToBase64(aff);
+            char *base64aff = MegaApi::handleToBase64(aff);
             url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
             delete [] base64aff;
         }
@@ -833,10 +833,10 @@ void SettingsDialog::on_bUpgradeBandwidth_clicked()
     Preferences *preferences = Preferences::instance();
     if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
     {
-        mega::MegaHandle aff = preferences->lastPublicHandle();
-        if (aff != mega::INVALID_HANDLE)
+        MegaHandle aff = preferences->lastPublicHandle();
+        if (aff != INVALID_HANDLE)
         {
-            char *base64aff = mega::MegaApi::handleToBase64(aff);
+            char *base64aff = MegaApi::handleToBase64(aff);
             url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
             delete [] base64aff;
         }
