@@ -2495,7 +2495,7 @@ MegaHandle Preferences::lastPublicHandle()
 {
     mutex.lock();
     assert(logged());
-    MegaHandle value = settings->value(lastPublicHandleKey, mega::INVALID_HANDLE).toLongLong();
+    MegaHandle value = settings->value(lastPublicHandleKey, mega::INVALID_HANDLE).toULongLong();
     mutex.unlock();
     return value;
 }
