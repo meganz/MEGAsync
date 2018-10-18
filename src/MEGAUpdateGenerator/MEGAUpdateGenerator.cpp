@@ -497,8 +497,8 @@ int main(int argc, char *argv[])
     bool generate = extractarg(args, "-g");
     string os;
     bool bos = extractargparam(args, "-s", os);
-    string fileUrl;
-    bool bUrl = extractargparam(args, "--base-url", fileUrl);
+    string baseUrl;
+    bool bUrl = extractargparam(args, "--base-url", baseUrl);
 
 
     HashSignature signatureGenerator(new Hash());
@@ -546,7 +546,7 @@ int main(int argc, char *argv[])
 
         if (!bUrl)
         {
-            fileUrl = string ((win ? SERVER_BASE_URL_WIN : SERVER_BASE_URL_OSX));
+            baseUrl = string ((win ? SERVER_BASE_URL_WIN : SERVER_BASE_URL_OSX));
         }
 
         //Prepare the update folder path
@@ -689,10 +689,10 @@ int main(int argc, char *argv[])
             s.resize(Base64::btoa((byte *)signature, signatureSize, (char *)s.data()));
             signatures.push_back(s);
 
-            fileUrl.append(filesVector.at(i));
-            downloadURLs.push_back(fileUrl);
+            string fileurl = baseUrl + filesVector.at(i);
+            downloadURLs.push_back(fileurl);
 
-            signatureGenerator.add((const byte*)fileUrl.data(), fileUrl.size());
+            signatureGenerator.add((const byte*)fileurl.data(), fileurl.size());
             signatureGenerator.add((const byte*)targetPathsVector.at(i).data(),
                                    targetPathsVector.at(i).size());
             signatureGenerator.add((const byte*)s.data(), s.length());
