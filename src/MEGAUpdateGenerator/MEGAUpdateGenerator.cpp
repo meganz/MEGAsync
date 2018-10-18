@@ -643,6 +643,7 @@ int main(int argc, char *argv[])
             {
                 filesVector.push_back( (win ? UPDATE_FILES_WIN : UPDATE_FILES_OSX)[i]);
                 targetPathsVector.push_back( (win ? TARGET_PATHS_WIN : TARGET_PATHS_OSX)[i]);
+                hashesVector.push_back("UNKNOWN");
             }
             sversioncode=args.at(2);
         }
