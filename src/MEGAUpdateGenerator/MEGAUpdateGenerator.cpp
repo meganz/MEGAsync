@@ -376,9 +376,9 @@ void printUsage(const char* appname)
     cerr << "Sign an update:" << endl;
     cerr << "    " << appname << " -s <win|osx> <update folder> <keyfile> <version_code>" << endl;
     cerr << "  or:" << endl;
-    cerr << "    " << appname << " <update folder> <keyfile> --file <contentsfile> --base-url <base_url>" << endl;
+    cerr << "    " << appname << " <update folder> <keyfile> --file <contentsfile>" << endl;
     cerr << "    e.g:" << endl;
-    cerr << "        " << appname << " /tmp/updatefiles /tmp/key.pem --file /tmp/files.txt --base-url http://g.static.mega.co.nz/upd/wsync/" << endl;
+    cerr << "        " << appname << " /tmp/updatefiles /tmp/key.pem --file /tmp/files.txt" << endl;
 }
 
 unsigned signFile(const char * filePath, AsymmCipher* key, byte* signature, unsigned signbuflen)
@@ -497,9 +497,7 @@ int main(int argc, char *argv[])
     bool generate = extractarg(args, "-g");
     string os;
     bool bos = extractargparam(args, "-s", os);
-    string baseUrl;
-    bool bUrl = extractargparam(args, "--base-url", baseUrl);
-
+    string baseUrl="UNSET";
 
     HashSignature signatureGenerator(new Hash());
     AsymmCipher aprivk;
@@ -539,12 +537,12 @@ int main(int argc, char *argv[])
         return 0;
     }
     else if (((args.size() == 3)  && ((bos && (os == "win" || os == "osx")))
-              || (args.size() == 2 && bUrl && externalfile)))
+              || (args.size() == 2 && externalfile)))
     {
         //Sign an update
         win = os == "win";
 
-        if (!bUrl)
+        if (!externalfile)
         {
             baseUrl = string ((win ? SERVER_BASE_URL_WIN : SERVER_BASE_URL_OSX));
         }
@@ -624,6 +622,10 @@ int main(int argc, char *argv[])
                     if (line.find("#version=") == 0)
                     {
                         sversioncode=line.substr(9);
+                    }
+                    if (line.find("#baseurl=") == 0)
+                    {
+                        baseUrl=line.substr(9);
                     }
                 }
             }
