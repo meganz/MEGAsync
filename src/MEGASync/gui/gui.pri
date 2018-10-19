@@ -57,7 +57,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/UpgradeOverStorage.cpp \
     $$PWD/UpgradeWidget.cpp \
     $$PWD/Login2FA.cpp \
-    $$PWD/QRWidget.cpp
+    $$PWD/QRWidget.cpp \
+    $$PWD/QSyncItemWidget.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
@@ -116,7 +117,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/UpgradeWidget.h \
     $$PWD/ChangePassword.h \
     $$PWD/Login2FA.h \
-    $$PWD/QRWidget.h
+    $$PWD/QRWidget.h \
+    $$PWD/QSyncItemWidget.h
 
 INCLUDEPATH += $$PWD
 
@@ -166,7 +168,8 @@ win32 {
                 $$PWD/win/UpgradeOverStorage.ui \
                 $$PWD/win/UpgradeWidget.ui \
                 $$PWD/win/ChangePassword.ui \
-                $$PWD/win/Login2FA.ui
+                $$PWD/win/Login2FA.ui \
+                $$PWD/win/QSyncItemWidget.ui
 }
 
 macx {
@@ -213,7 +216,8 @@ macx {
                 $$PWD/macx/UpgradeOverStorage.ui \
                 $$PWD/macx/UpgradeWidget.ui \
                 $$PWD/macx/ChangePassword.ui \
-                $$PWD/macx/Login2FA.ui
+                $$PWD/macx/Login2FA.ui \
+                $$PWD/macx/QSyncItemWidget.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm gui/QSegmentedControl.mm
@@ -269,7 +273,8 @@ unix:!macx {
                 $$PWD/linux/UpgradeOverStorage.ui \
                 $$PWD/linux/UpgradeWidget.ui \
                 $$PWD/linux/ChangePassword.ui \
-                $$PWD/linux/Login2FA.ui
+                $$PWD/linux/Login2FA.ui \
+                $$PWD/linux/QSyncItemWidget.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
