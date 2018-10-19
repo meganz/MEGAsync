@@ -104,6 +104,29 @@ bool generateHash(const char * filePath, string *hash)
     return true;
 }
 
+
+bool generateHashFromContents(string contents, string *hash)
+{
+    contents.append("\n");
+
+    HashSHA256 hashGenerator;
+    hashGenerator.add((const byte *)contents.data(),contents.size());
+
+    string binaryhash;
+    hashGenerator.get(&binaryhash);
+
+    static const char hexchars[] = "0123456789abcdef";
+    ostringstream oss;
+    for (size_t i=0;i<binaryhash.size();++i)
+    {
+        oss.put(hexchars[(binaryhash[i] >> 4) & 0x0F]);
+        oss.put(hexchars[binaryhash[i] & 0x0F]);
+    }
+    *hash = oss.str();
+
+    return true;
+}
+
 bool extractarg(vector<const char*>& args, const char *what)
 {
     for (int i = int(args.size()); i--; )
@@ -215,6 +238,7 @@ int main(int argc, char *argv[])
         vector<string> hashesVector;
         string sversioncode;
         string baseUrl="UNSET";
+        string pubkeyhash;
 
         //read input file
         filesVector.clear();
@@ -255,12 +279,36 @@ int main(int argc, char *argv[])
                 {
                     sversioncode=line.substr(9);
                 }
-                if (line.find("#baseurl=") == 0)
+                else if (line.find("#baseurl=") == 0)
                 {
                     baseUrl=line.substr(9);
                 }
+                else if (line.find("#pubkeysha256sum=") == 0)
+                {
+                   pubkeyhash =line.substr(strlen("#pubkeysha256sum="));
+                }
             }
         }
+
+        string pubkeyhashFromKey;
+        if (generateHashFromContents(pubk,&pubkeyhashFromKey))
+        {
+            if (pubkeyhashFromKey != pubkeyhash)
+            {
+                cerr << "Error checking hash for pubkey: " << endl
+                     << " calculated=" << pubkeyhashFromKey << endl
+                     << "   expected=" << pubkeyhash << endl
+                        << "   pubkey=" << pubk << endl;
+
+                return 7;
+            }
+        }
+        else
+        {
+            cerr << "Error generating hash for pubkey: " << endl;
+            return 8;
+        }
+
 
         long versionCode;
         versionCode = strtol (sversioncode.c_str(), NULL, 10);

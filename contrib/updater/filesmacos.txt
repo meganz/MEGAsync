@@ -1,5 +1,7 @@
 #version=3701
 #baseurl=http://g.static.mega.co.nz/upd/msync/MEGAsync.app/
+#Hash: note this is the hash of the public key assuming an "\n" at the end
+#pubkeysha256sum=381fac98f5c3329ef5c0d9b6768d9f8d0bbc77bfa38256ac6f3da7452e0dc241
 Contents/_CodeSignature/CodeResources;Contents/_CodeSignature/CodeResources;ee99f43b227f330a65c26d14b077808d22b99f97fc0d3a2c9fbbe4095daa24f2
 Contents/Frameworks/libavcodec.57.dylib;Contents/Frameworks/libavcodec.57.dylib;115e16bd4d5ea5932c341a41b63f183e0dda15110d072afd8a0812a4f20148af
 Contents/Frameworks/libavformat.57.dylib;Contents/Frameworks/libavformat.57.dylib;86bc47ef5c6e6eefbda554b4ff38eb9d1ff15937d0de9868d2c53c0e68e85c29
