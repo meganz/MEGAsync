@@ -49,16 +49,16 @@ void PlanWidget::onOverlayClicked()
     switch (details.level)
     {
         case PRO_LITE:
-            url = QString::fromUtf8("mega://#pro_lite/uao=%1").arg(escapedUserAgent);
+            url = QString::fromUtf8("mega://#propay_4/uao=%1").arg(escapedUserAgent);
             break;
         case PRO_I:
-            url = QString::fromUtf8("mega://#pro_1/uao=%1").arg(escapedUserAgent);
+            url = QString::fromUtf8("mega://#propay_1/uao=%1").arg(escapedUserAgent);
             break;
         case PRO_II:
-            url = QString::fromUtf8("mega://#pro_2/uao=%1").arg(escapedUserAgent);
+            url = QString::fromUtf8("mega://#propay_2/uao=%1").arg(escapedUserAgent);
             break;
         case PRO_III:
-            url = QString::fromUtf8("mega://#pro_3/uao=%1").arg(escapedUserAgent);
+            url = QString::fromUtf8("mega://#propay_3/uao=%1").arg(escapedUserAgent);
             break;
         default:
             url = QString::fromUtf8("mega://#pro/uao=%1").arg(escapedUserAgent);
