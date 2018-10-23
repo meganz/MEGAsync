@@ -116,6 +116,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     ui->lStorageSpace->setText(ui->lStorageSpace->text().append(QString::fromUtf8(":")));
     ui->lLanguage->setText(ui->lLanguage->text().append(QString::fromUtf8(":")));
+    ui->lUploadRateLimit->setText(ui->lUploadRateLimit->text().append(QString::fromUtf8(":")));
+    ui->lDownloadRateLimit->setText(ui->lDownloadRateLimit->text().append(QString::fromUtf8(":")));
 
     ui->eProxyPort->setValidator(new QIntValidator(0, 65535, this));
     ui->eUploadLimit->setValidator(new QIntValidator(0, 1000000000, this));
@@ -698,7 +700,7 @@ void SettingsDialog::on_bBandwidth_clicked()
 
     int bwHeight;
     ui->gBandwidthQuota->show();
-    ui->bSeparatorBandwidth->show();
+    ui->wSeparatorTransferQuota->show();
     bwHeight = 540;
 
     minHeightAnimation->setTargetObject(this);
@@ -1138,7 +1140,7 @@ void SettingsDialog::loadSettings()
         if (preferences->accountType() == 0) //Free user
         {
             ui->gBandwidthQuota->show();
-            ui->bSeparatorBandwidth->show();
+            ui->wSeparatorTransferQuota->show();
             ui->pUsedBandwidth->setValue(0);
             ui->lBandwidth->setText(tr("Used quota for the last %1 hours: %2")
                     .arg(preferences->bandwidthInterval())
@@ -1150,14 +1152,14 @@ void SettingsDialog::loadSettings()
             if (totalBandwidth == 0)
             {
                 ui->gBandwidthQuota->hide();
-                ui->bSeparatorBandwidth->hide();
+                ui->wSeparatorTransferQuota->hide();
                 ui->pUsedBandwidth->setValue(0);
                 ui->lBandwidth->setText(tr("Data temporarily unavailable"));
             }
             else
             {
                 ui->gBandwidthQuota->show();
-                ui->bSeparatorBandwidth->show();
+                ui->wSeparatorTransferQuota->show();
                 int bandwidthPercentage = ceil(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
                 ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
                 ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
@@ -2175,6 +2177,8 @@ void SettingsDialog::changeEvent(QEvent *event)
         ui->retranslateUi(this);
         ui->lStorageSpace->setText(ui->lStorageSpace->text().append(QString::fromUtf8(":")));
         ui->lLanguage->setText(ui->lLanguage->text().append(QString::fromUtf8(":")));
+        ui->lUploadRateLimit->setText(ui->lUploadRateLimit->text().append(QString::fromUtf8(":")));
+        ui->lDownloadRateLimit->setText(ui->lDownloadRateLimit->text().append(QString::fromUtf8(":")));
         ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
         ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
 
