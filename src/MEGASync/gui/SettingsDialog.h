@@ -60,25 +60,17 @@ public slots:
     
 private slots:
     void on_bAccount_clicked();
-
+    void on_bSecurity_clicked();
     void on_bSyncs_clicked();
-
     void on_bBandwidth_clicked();
-
     void on_bAdvanced_clicked();
-
     void on_bProxies_clicked();
 
     void on_bCancel_clicked();
-
     void on_bOk_clicked();
-
     void on_bHelp_clicked();
-
     void on_rProxyManual_clicked();
-
     void on_rProxyAuto_clicked();
-
     void on_rNoProxy_clicked();
 
     void on_bUpgrade_clicked();
@@ -184,6 +176,7 @@ private:
     int saveSettings();
     void onCacheSizeAvailable();
     void onClearCache();
+    void drawAvatar(QString email);
 };
 
 #endif // SETTINGSDIALOG_H

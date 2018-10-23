@@ -1,9 +1,7 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/account_32.png</file>
         <file>images/app_128.png</file>
         <file>images/background.png</file>
-        <file>images/bandwidth_32.png</file>
         <file>images/drag_3D.png</file>
         <file>images/drag_aftereffects.png</file>
         <file>images/drag_audio.png</file>
@@ -33,7 +31,6 @@
         <file>images/general_32.png</file>
         <file>images/help_ico.png</file>
         <file>images/logo.png</file>
-        <file>images/proxies_32.png</file>
         <file>images/small_3D.png</file>
         <file>images/small_aftereffects.png</file>
         <file>images/small_audio.png</file>
@@ -85,10 +82,8 @@
         <file>images/app_ico.ico</file>
         <file>images/login_ico.ico</file>
         <file>images/tray_sync_ico.png</file>
-        <file>images/advanced_32.png</file>
         <file>images/tray_cancel_ico.png</file>
         <file>images/mega_logo.png</file>
-        <file>images/syncs_32.png</file>
         <file>images/selective.png</file>
         <file>images/full_sync.png</file>
         <file>images/download_timer_ico.png</file>
@@ -318,5 +313,13 @@
         <file>images/uploaded_item_ico.png</file>
         <file>images/upload_to_mega.png</file>
         <file>images/shield.png</file>
+        <file>images/settings-advanced.png</file>
+        <file>images/settings-contacts.png</file>
+        <file>images/settings-general.png</file>
+        <file>images/settings-network.png</file>
+        <file>images/settings-notifications.png</file>
+        <file>images/settings-security.png</file>
+        <file>images/settings-syncs.png</file>
+        <file>images/settings-transfers.png</file>
     </qresource>
 </RCC>

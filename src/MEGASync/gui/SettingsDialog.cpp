@@ -114,6 +114,9 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     hasDaysLimit = false;
     daysLimit = 0;
 
+    ui->lStorageSpace->setText(ui->lStorageSpace->text().append(QString::fromUtf8(":")));
+    ui->lLanguage->setText(ui->lLanguage->text().append(QString::fromUtf8(":")));
+
     ui->eProxyPort->setValidator(new QIntValidator(0, 65535, this));
     ui->eUploadLimit->setValidator(new QIntValidator(0, 1000000000, this));
     ui->eDownloadLimit->setValidator(new QIntValidator(0, 1000000000, this));
@@ -231,6 +234,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
 
         ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+        ui->bSecurity->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
         ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
         ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
         ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
@@ -241,6 +245,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header@2x.png\"); }"));
 
         ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
+        ui->bSecurity->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
         ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
         ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
         ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected@2x.png\"); }"));
@@ -251,6 +256,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     ui->wTabHeader->setStyleSheet(QString::fromUtf8("#wTabHeader { border-image: url(\":/images/menu_header.png\"); }"));
     ui->bAccount->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
+    ui->bSecurity->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bBandwidth->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bProxies->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
     ui->bSyncs->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
@@ -529,6 +535,7 @@ void SettingsDialog::on_bAccount_clicked()
 #endif
 
     ui->bAccount->setChecked(true);
+    ui->bSecurity->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(false);
@@ -536,8 +543,11 @@ void SettingsDialog::on_bAccount_clicked()
     ui->wStack->setCurrentWidget(ui->pAccount);
     ui->bOk->setFocus();
 
+    ui->bUnlink->show();
+
 #ifdef __APPLE__
     ui->pAccount->hide();
+    ui->pSecurity->hide();
     ui->pAdvanced->hide();
     ui->pBandwidth->hide();
     ui->pProxies->hide();
@@ -557,6 +567,53 @@ void SettingsDialog::on_bAccount_clicked()
 #endif
 }
 
+void SettingsDialog::on_bSecurity_clicked()
+{
+    emit userActivity();
+
+    if (ui->wStack->currentWidget() == ui->pSecurity)
+    {
+        ui->bSecurity->setChecked(true);
+        return;
+    }
+
+#ifdef __APPLE__
+    ui->bApply->hide();
+#endif
+
+    ui->bAccount->setChecked(false);
+    ui->bSecurity->setChecked(true);
+    ui->bSyncs->setChecked(false);
+    ui->bBandwidth->setChecked(false);
+    ui->bAdvanced->setChecked(false);
+    ui->bProxies->setChecked(false);
+    ui->wStack->setCurrentWidget(ui->pSecurity);
+
+    ui->bUnlink->hide();
+
+#ifdef __APPLE__
+    ui->pAccount->hide();
+    ui->pSecurity->hide();
+    ui->pAdvanced->hide();
+    ui->pBandwidth->hide();
+    ui->pProxies->hide();
+    ui->pSyncs->hide();
+
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    minHeightAnimation->setStartValue(minimumHeight());
+    maxHeightAnimation->setStartValue(maximumHeight());
+    minHeightAnimation->setEndValue(600);
+    maxHeightAnimation->setEndValue(600);
+    minHeightAnimation->setDuration(150);
+    maxHeightAnimation->setDuration(150);
+    animationGroup->start();
+#endif
+
+}
+
 void SettingsDialog::on_bSyncs_clicked()
 {
     emit userActivity();
@@ -572,6 +629,7 @@ void SettingsDialog::on_bSyncs_clicked()
 #endif
 
     ui->bAccount->setChecked(false);
+    ui->bSecurity->setChecked(false);
     ui->bSyncs->setChecked(true);
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(false);
@@ -580,8 +638,11 @@ void SettingsDialog::on_bSyncs_clicked()
     ui->tSyncs->horizontalHeader()->setVisible( true );
     ui->bOk->setFocus();
 
+    ui->bUnlink->hide();
+
 #ifdef __APPLE__
     ui->pAccount->hide();
+    ui->pSecurity->hide();
     ui->pAdvanced->hide();
     ui->pBandwidth->hide();
     ui->pProxies->hide();
@@ -617,6 +678,7 @@ void SettingsDialog::on_bBandwidth_clicked()
 #endif
 
     ui->bAccount->setChecked(false);
+    ui->bSecurity->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(true);
     ui->bAdvanced->setChecked(false);
@@ -624,8 +686,11 @@ void SettingsDialog::on_bBandwidth_clicked()
     ui->wStack->setCurrentWidget(ui->pBandwidth);
     ui->bOk->setFocus();
 
+    ui->bUnlink->hide();
+
 #ifdef __APPLE__
     ui->pAccount->hide();
+    ui->pSecurity->hide();
     ui->pAdvanced->hide();
     ui->pBandwidth->hide();
     ui->pProxies->hide();
@@ -665,6 +730,7 @@ void SettingsDialog::on_bAdvanced_clicked()
 #endif
 
     ui->bAccount->setChecked(false);
+    ui->bSecurity->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(true);
@@ -672,8 +738,11 @@ void SettingsDialog::on_bAdvanced_clicked()
     ui->wStack->setCurrentWidget(ui->pAdvanced);
     ui->bOk->setFocus();
 
+    ui->bUnlink->hide();
+
 #ifdef __APPLE__
     ui->pAccount->hide();
+    ui->pSecurity->hide();
     ui->pAdvanced->hide();
     ui->pBandwidth->hide();
     ui->pProxies->hide();
@@ -721,6 +790,7 @@ void SettingsDialog::on_bProxies_clicked()
 #endif
 
     ui->bAccount->setChecked(false);
+    ui->bSecurity->setChecked(false);
     ui->bSyncs->setChecked(false);
     ui->bBandwidth->setChecked(false);
     ui->bAdvanced->setChecked(false);
@@ -728,8 +798,11 @@ void SettingsDialog::on_bProxies_clicked()
     ui->wStack->setCurrentWidget(ui->pProxies);
     ui->bOk->setFocus();
 
+    ui->bUnlink->hide();
+
 #ifdef __APPLE__
     ui->pAccount->hide();
+    ui->pSecurity->hide();
     ui->pAdvanced->hide();
     ui->pBandwidth->hide();
     ui->pProxies->hide();
@@ -877,7 +950,9 @@ void SettingsDialog::loadSettings()
     if (!proxyOnly)
     {
         //General
+        ui->lName->setText(preferences->firstName() + QString::fromUtf8(" ") + preferences->lastName());
         ui->cShowNotifications->setChecked(preferences->showNotifications());
+        drawAvatar(preferences->email());
 
         if (!preferences->canUpdate(MegaApplication::applicationFilePath()))
         {
@@ -1676,7 +1751,9 @@ void SettingsDialog::loadSyncSettings()
     ui->tSyncs->horizontalHeader()->setResizeMode(QHeaderView::Fixed);
     ui->tSyncs->setRowCount(numFolders);
     ui->tSyncs->setColumnCount(3);
-    ui->tSyncs->setColumnWidth(2, 21);
+    ui->tSyncs->setColumnWidth(0, 292);
+    ui->tSyncs->setColumnWidth(1, 244);
+    ui->tSyncs->setColumnWidth(2, 27);
 
     for (int i = 0; i < numFolders; i++)
     {
@@ -2096,6 +2173,8 @@ void SettingsDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        ui->lStorageSpace->setText(ui->lStorageSpace->text().append(QString::fromUtf8(":")));
+        ui->lLanguage->setText(ui->lLanguage->text().append(QString::fromUtf8(":")));
         ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
         ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
 
@@ -2317,6 +2396,51 @@ void SettingsDialog::onClearCache()
     #endif
     }
 }
+
+void SettingsDialog::drawAvatar(QString email)
+{
+    QString avatarsPath = Utilities::getAvatarPath(email);
+    QFileInfo avatar(avatarsPath);
+    if (avatar.exists())
+    {
+        ui->wAvatar->setAvatarImage(Utilities::getAvatarPath(email));
+    }
+    else
+    {
+        QString color;
+        const char* userHandle = megaApi->getMyUserHandle();
+        const char* avatarColor = megaApi->getUserAvatarColor(userHandle);
+        if (avatarColor)
+        {
+            color = QString::fromUtf8(avatarColor);
+            delete [] avatarColor;
+        }
+
+        Preferences *preferences = Preferences::instance();
+        QString fullname = (preferences->firstName() + preferences->lastName()).trimmed();
+        if (fullname.isEmpty())
+        {
+            char *email = megaApi->getMyEmail();
+            if (email)
+            {
+                fullname = QString::fromUtf8(email);
+                delete [] email;
+            }
+            else
+            {
+                fullname = preferences->email();
+            }
+
+            if (fullname.isEmpty())
+            {
+                fullname = QString::fromUtf8(" ");
+            }
+        }
+
+        ui->wAvatar->setAvatarLetter(fullname.at(0).toUpper(), color);
+        delete [] userHandle;
+    }
+}
 void SettingsDialog::onProxyTestError()
 {
     MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Proxy test failed");
@@ -2403,6 +2527,10 @@ void SettingsDialog::onAnimationFinished()
     if (ui->wStack->currentWidget() == ui->pAccount)
     {
         ui->pAccount->show();
+    }
+    else if (ui->wStack->currentWidget() == ui->pSecurity)
+    {
+        ui->pSecurity->show();
     }
     else if (ui->wStack->currentWidget() == ui->pSyncs)
     {
