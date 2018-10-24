@@ -365,7 +365,7 @@ background-color:  rgba(0, 0, 0, 10%);
           <widget class="QLabel" name="lError">
            <property name="minimumSize">
             <size>
-             <width>97</width>
+             <width>0</width>
              <height>26</height>
             </size>
            </property>
