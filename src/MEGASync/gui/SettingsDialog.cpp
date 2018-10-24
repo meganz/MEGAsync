@@ -118,6 +118,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->lLanguage->setText(ui->lLanguage->text().append(QString::fromUtf8(":")));
     ui->lUploadRateLimit->setText(ui->lUploadRateLimit->text().append(QString::fromUtf8(":")));
     ui->lDownloadRateLimit->setText(ui->lDownloadRateLimit->text().append(QString::fromUtf8(":")));
+    ui->lProxySettings->setText(ui->lProxySettings->text().append(QString::fromUtf8(":")));
 
     ui->eProxyPort->setValidator(new QIntValidator(0, 65535, this));
     ui->eUploadLimit->setValidator(new QIntValidator(0, 1000000000, this));
@@ -2179,6 +2180,7 @@ void SettingsDialog::changeEvent(QEvent *event)
         ui->lLanguage->setText(ui->lLanguage->text().append(QString::fromUtf8(":")));
         ui->lUploadRateLimit->setText(ui->lUploadRateLimit->text().append(QString::fromUtf8(":")));
         ui->lDownloadRateLimit->setText(ui->lDownloadRateLimit->text().append(QString::fromUtf8(":")));
+        ui->lProxySettings->setText(ui->lProxySettings->text().append(QString::fromUtf8(":")));
         ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
         ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
 
