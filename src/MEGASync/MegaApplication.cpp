@@ -2976,6 +2976,11 @@ void MegaApplication::setupWizardFinished(int result)
         megaApi->setExclusionUpperSizeLimit(0);
     }
 
+    if (infoDialog && infoDialog->isVisible())
+    {
+        infoDialog->hide();
+    }
+
     loggedIn();
     startSyncs();
 }

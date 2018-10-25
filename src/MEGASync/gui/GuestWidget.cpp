@@ -80,8 +80,6 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 break;
             }
 
-            page_login();
-
             if (loggingStarted)
             {
                 if (error->getErrorCode() == MegaError::API_ENOENT)
@@ -97,6 +95,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     {
                         if (dialog)
                         {
+                            on_bCancel_clicked();
                             page_login();
                         }
                         delete verification;
@@ -136,6 +135,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     {
                         if (dialog)
                         {
+                            on_bCancel_clicked();
                             page_login();
                         }
                         delete verification;
@@ -155,6 +155,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 }
 
                 loggingStarted = false;
+                page_login();
             }
             break;
         }

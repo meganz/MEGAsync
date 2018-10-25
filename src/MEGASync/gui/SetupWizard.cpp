@@ -155,8 +155,6 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 break;
             }
 
-            page_login();
-
             if (loggingStarted)
             {
                 if (error->getErrorCode() == MegaError::API_ENOENT)
@@ -172,6 +170,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     {
                         if (dialog)
                         {
+                            on_bCancel_clicked();
                             page_login();
                         }
                         delete verification;
@@ -209,6 +208,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     {
                         if (dialog)
                         {
+                            on_bCancel_clicked();
                             page_login();
                         }
                         delete verification;
@@ -228,6 +228,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 }
 
                 loggingStarted = false;
+                page_login();
             }
             break;
         }
@@ -316,9 +317,17 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         }
         case MegaRequest::TYPE_LOGOUT:
         {
-            loggingStarted = false;
-            page_login();
-            break;
+            // If logging was started at GuestWidget logout should forward to create account
+            // Other cases should forward to login page
+            if (loggingStarted)
+            {
+                loggingStarted = false;
+                page_login();
+            }
+            else
+            {
+                page_newaccount();
+            }
         }
     }
 }
