@@ -109,6 +109,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     arrow->setStyleSheet(QString::fromAscii("border: none;"));
     arrow->resize(30,10);
     arrow->hide();
+
+    dummy = NULL;
 #endif
 
     on_bDotUsedStorage_clicked();
@@ -799,6 +801,20 @@ void InfoDialog::regenerateLayout()
         dialogLayout->addWidget(gWidget);
         gWidget->setVisible(true);
 
+        #ifdef __APPLE__
+            if (!dummy)
+            {
+                dummy = new QWidget();
+            }
+
+            dummy = new QWidget();
+            dummy->resize(1,1);
+            dummy->setWindowFlags(Qt::FramelessWindowHint);
+            dummy->setAttribute(Qt::WA_NoSystemBackground);
+            dummy->setAttribute(Qt::WA_TranslucentBackground);
+            dummy->show();
+        #endif
+
         setMinimumHeight(404);
         setMaximumHeight(404);
     }
@@ -818,6 +834,15 @@ void InfoDialog::regenerateLayout()
         ui->wSeparator->setVisible(true);
         dialogLayout->addWidget(ui->wContainerBottom);
         ui->wContainerBottom->setVisible(true);
+
+        #ifdef __APPLE__
+            if (dummy)
+            {
+                dummy->hide();
+                delete dummy;
+                dummy = NULL;
+            }
+        #endif
     }
 
     app->onGlobalSyncStateChanged(NULL);

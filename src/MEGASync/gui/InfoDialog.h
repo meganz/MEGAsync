@@ -93,6 +93,7 @@ private:
     QPushButton *overlay;
 #ifdef __APPLE__
     QPushButton *arrow;
+    QWidget *dummy;
 #endif
 
     QMenu *transferMenu;
