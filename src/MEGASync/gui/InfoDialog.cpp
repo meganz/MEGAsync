@@ -399,6 +399,16 @@ void InfoDialog::setOverQuotaMode(bool state)
 
 void InfoDialog::updateState()
 {
+#ifdef __APPLE__
+    if (!preferences->logged())
+    {
+        if (gWidget)
+        {
+            gWidget->resetFocus();
+        }
+    }
+#endif
+
     if (preferences->getGlobalPaused())
     {
         if (!preferences->logged())
