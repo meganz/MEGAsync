@@ -68,9 +68,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
 
-    ui->bTransferManager->setToolTip(tr("Open Transfer Manager"));
-    ui->bSettings->setToolTip(tr("Show MEGAsync options"));
-
     ui->pUsageStorage->installEventFilter(this);
     ui->pUsageStorage->setMouseTracking(true);
 
