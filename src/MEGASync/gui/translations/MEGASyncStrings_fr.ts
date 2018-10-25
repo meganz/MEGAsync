@@ -1195,11 +1195,11 @@ because the local folder doesn&apos;t exist</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">Le dossier (%1) n&apos;a pas été téléversé, car il est trop gros (cette bêta est limitée à %2 dossiers ou %3 fichiers.)</translation>
+        <translation type="obsolete">Le dossier (%1) n&apos;a pas été téléversé, car il est trop lourd (cette bêta est limitée à %2 dossiers ou %3 fichiers.)</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 dossiers n&apos;ont pas été téléversés, car ils sont trop gros (cette bêta est limitée à %2 dossiers ou %3 fichiers.)</translation>
+        <translation type="obsolete">%1 dossiers n&apos;ont pas été téléversés, car ils sont trop lourds (cette bêta est limitée à %2 dossiers ou %3 fichiers.)</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -3535,7 +3535,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>just now</source>
-        <translation type="unfinished">maintenant</translation>
+        <translation type="unfinished">à l&apos;instant</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
@@ -3708,11 +3708,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">Votre téléchargement n&apos;a pas se poursuivre, car cela vous ferait dépasser la quantité actuelle gratuite de transfert allouée à votre adresse IP. Cette limite est dynamique et dépend de la quantité de bande passante inutilisée dont nous disposons.</translation>
+        <translation type="unfinished">Votre téléchargement n&apos;a pas pu se poursuivre, car cela vous ferait dépasser la quantité actuelle gratuite de transfert allouée à votre adresse IP. Cette limite est dynamique et dépend de la quantité de bande passante inutilisée dont nous disposons.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Veuillez surclasser votre compte vers un compte PRO pour continuer immédiatement ou patienter %1 pour continuer gratuitement.</translation>
+        <translation type="unfinished">Veuillez surclasser votre compte vers un compte Pro pour continuer immédiatement ou patientez %1 pour continuer gratuitement.</translation>
     </message>
     <message>
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
