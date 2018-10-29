@@ -50,11 +50,6 @@
     font-weight: bold;
 }
 
-#cAgreeWithTerms
-{
-	margin-left: -2px;
-}
-
 #lLocalFolder, #lMegaFolder
 {
 	margin-top:2px;	
@@ -138,7 +133,7 @@
        <widget class="QWidget" name="wTitle" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout_7">
          <property name="spacing">
-          <number>-1</number>
+          <number>6</number>
          </property>
          <property name="leftMargin">
           <number>0</number>
@@ -188,23 +183,22 @@
           </widget>
          </item>
          <item>
-          <widget class="CocoaHelpButton" name="wHelp" native="true">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+          <widget class="QPushButton" name="wHelp">
+           <property name="styleSheet">
+            <string notr="true">border: none;
+</string>
            </property>
-           <property name="minimumSize">
-            <size>
-             <width>20</width>
-             <height>20</height>
-            </size>
+           <property name="text">
+            <string/>
            </property>
-           <property name="maximumSize">
+           <property name="icon">
+            <iconset resource="../Resources_macx.qrc">
+             <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
+           </property>
+           <property name="iconSize">
             <size>
-             <width>20</width>
-             <height>20</height>
+             <width>24</width>
+             <height>24</height>
             </size>
            </property>
           </widget>
@@ -774,7 +768,7 @@
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,1">
              <property name="spacing">
-              <number>18</number>
+              <number>6</number>
              </property>
              <property name="leftMargin">
               <number>0</number>
@@ -799,13 +793,13 @@
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>20</height>
+                 <height>23</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
                  <width>18</width>
-                 <height>20</height>
+                 <height>23</height>
                 </size>
                </property>
                <property name="styleSheet">
@@ -2221,14 +2215,6 @@ image: url(://images/desktop_app_TM.png);
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>CocoaHelpButton</class>
-   <extends>QWidget</extends>
-   <header location="global">CocoaHelpButton.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>bCancel</tabstop>
   <tabstop>bBack</tabstop>
