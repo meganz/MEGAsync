@@ -260,6 +260,10 @@ public:
     long long getHttpsCertExpiration();
     void setHttpsCertExpiration(long long expiration);
 
+    long long lastPublicHandleTimestamp();
+    mega::MegaHandle lastPublicHandle();
+    void setLastPublicHandle(mega::MegaHandle handle);
+
     int getNumUsers();
     void enterUser(int i);
     void leaveUser();
@@ -526,6 +530,8 @@ protected:
     static const QString httpsCertIntermediateKey;
     static const QString httpsCertExpirationKey;
     static const QString transferIdentifierKey;
+    static const QString lastPublicHandleKey;
+    static const QString lastPublicHandleTimestampKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;
