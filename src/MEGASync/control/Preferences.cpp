@@ -323,6 +323,8 @@ const QString Preferences::httpsCertKey             = QString::fromAscii("httpsC
 const QString Preferences::httpsCertIntermediateKey = QString::fromAscii("httpsCertIntermediate2");
 const QString Preferences::httpsCertExpirationKey   = QString::fromAscii("httpsCertExpiration2");
 const QString Preferences::transferIdentifierKey    = QString::fromAscii("transferIdentifier");
+const QString Preferences::lastPublicHandleKey      = QString::fromAscii("lastPublicHandle");
+const QString Preferences::lastPublicHandleTimestampKey = QString::fromAscii("lastPublicHandleTimestamp");
 
 const bool Preferences::defaultShowNotifications    = false;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -2478,6 +2480,34 @@ void Preferences::setHttpsCertExpiration(long long expiration)
     }
 
     settings->sync();
+}
+
+long long Preferences::lastPublicHandleTimestamp()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(lastPublicHandleTimestampKey, 0).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+MegaHandle Preferences::lastPublicHandle()
+{
+    mutex.lock();
+    assert(logged());
+    MegaHandle value = settings->value(lastPublicHandleKey, mega::INVALID_HANDLE).toULongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setLastPublicHandle(MegaHandle handle)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(lastPublicHandleKey, handle);
+    settings->setValue(lastPublicHandleTimestampKey, QDateTime::currentMSecsSinceEpoch());
+    settings->sync();
+    mutex.unlock();
 }
 
 int Preferences::getNumUsers()

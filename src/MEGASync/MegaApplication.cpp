@@ -1608,7 +1608,7 @@ void MegaApplication::processDownloadQueue(QString path)
     QDir dir(path);
     if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
     {
-        QQueue<mega::MegaNode *>::iterator it;
+        QQueue<MegaNode *>::iterator it;
         for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
         {
             HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
@@ -2728,7 +2728,7 @@ void MegaApplication::setupWizardFinished(int result)
     {
         if (!infoWizard && (downloadQueue.size() || pendingLinks.size()))
         {
-            QQueue<mega::MegaNode *>::iterator it;
+            QQueue<MegaNode *>::iterator it;
             for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
             {
                 HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
@@ -2819,7 +2819,7 @@ void MegaApplication::infoWizardDialogFinished(int result)
     {
         if (!setupWizard && (downloadQueue.size() || pendingLinks.size()))
         {
-            QQueue<mega::MegaNode *>::iterator it;
+            QQueue<MegaNode *>::iterator it;
             for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
             {
                 HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
@@ -4238,7 +4238,7 @@ void MegaApplication::processDownloads()
     }
     else
     {
-        QQueue<mega::MegaNode *>::iterator it;
+        QQueue<MegaNode *>::iterator it;
         for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
         {
             HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
@@ -6356,15 +6356,24 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_GET_PUBLIC_NODE:
     {
+        MegaNode *node = NULL;
         QString link = QString::fromUtf8(request->getLink());
         QMap<QString, QString>::iterator it = pendingLinks.find(link);
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            node = request->getPublicMegaNode();
+            if (node)
+            {
+                preferences->setLastPublicHandle(node->getHandle());
+            }
+        }
+
         if (it != pendingLinks.end())
         {
             QString auth = it.value();
             pendingLinks.erase(it);
-            if (e->getErrorCode() == MegaError::API_OK)
+            if (e->getErrorCode() == MegaError::API_OK && node)
             {
-                MegaNode *node = request->getPublicMegaNode();
                 if (auth.size())
                 {
                     node->setPrivateAuth(auth.toUtf8().constData());
@@ -6372,12 +6381,14 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
                 downloadQueue.append(node);
                 processDownloads();
+                break;
             }
             else
             {
                 showErrorMessage(tr("Error getting link information"));
             }
         }
+        delete node;
         break;
     }
     case MegaRequest::TYPE_SEND_EVENT:

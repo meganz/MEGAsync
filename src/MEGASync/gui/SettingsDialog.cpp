@@ -811,6 +811,18 @@ void SettingsDialog::on_bUpgrade_clicked()
 {
     QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
     QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
+    Preferences *preferences = Preferences::instance();
+    if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
+    {
+        MegaHandle aff = preferences->lastPublicHandle();
+        if (aff != INVALID_HANDLE)
+        {
+            char *base64aff = MegaApi::handleToBase64(aff);
+            url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
+            delete [] base64aff;
+        }
+    }
+
     megaApi->getSessionTransferURL(url.toUtf8().constData());
 }
 
@@ -818,6 +830,18 @@ void SettingsDialog::on_bUpgradeBandwidth_clicked()
 {
     QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
     QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
+    Preferences *preferences = Preferences::instance();
+    if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
+    {
+        MegaHandle aff = preferences->lastPublicHandle();
+        if (aff != INVALID_HANDLE)
+        {
+            char *base64aff = MegaApi::handleToBase64(aff);
+            url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
+            delete [] base64aff;
+        }
+    }
+
     megaApi->getSessionTransferURL(url.toUtf8().constData());
 }
 
