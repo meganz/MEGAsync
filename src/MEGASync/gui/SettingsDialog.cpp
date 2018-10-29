@@ -462,34 +462,25 @@ void SettingsDialog::onCacheSizeAvailable()
 
         if (cacheSize)
         {
-            ui->lCacheSize->setText(QString::fromUtf8(MEGA_DEBRIS_FOLDER) + QString::fromUtf8(": %1").arg(Utilities::getSizeString(cacheSize)));
+            ui->lLocalCacheSizeDesc->setText(QString::fromUtf8(MEGA_DEBRIS_FOLDER) + QString::fromUtf8(":"));
+            ui->lCacheLocalSize->setText(Utilities::getSizeString(cacheSize));
             ui->gCache->setVisible(true);
+            ui->wLocalCache->show();
         }
         else
         {
-            //Hide and remove from layout to avoid  uneeded space
-            ui->lCacheSize->hide();
-            ui->bClearCache->hide();
-
-            // Move remote SyncDebris widget to left side
-            ui->gCache->layout()->removeWidget(ui->wLocalCache);
-            ui->wRemoteCache->layout()->removeItem(ui->rSpacer);
-#ifndef __APPLE__
-            ui->lRemoteCacheSize->setMargin(2);
-#endif
-            ((QBoxLayout *)ui->gCache->layout())->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Fixed));
+            ui->wLocalCache->hide();
         }
 
         if (remoteCacheSize)
         {
-            ui->lRemoteCacheSize->setText(QString::fromUtf8("SyncDebris: %1").arg(Utilities::getSizeString(remoteCacheSize)));
+            ui->lRemoteCacheSizeDesc->setText(QString::fromUtf8("SyncDebris:"));
+            ui->lCacheRemoteSize->setText(Utilities::getSizeString(remoteCacheSize));
             ui->gCache->setVisible(true);
         }
         else
         {
-            //Hide and remove from layout to avoid  uneeded space
-            ui->lRemoteCacheSize->hide();
-            ui->bClearRemoteCache->hide();
+            ui->wRemoteCache->hide();
         }
 
         if (fileVersionsSize)
@@ -762,17 +753,17 @@ void SettingsDialog::on_bAdvanced_clicked()
 
     if (!cacheSize && !remoteCacheSize)
     {
-        minHeightAnimation->setEndValue(595);
-        maxHeightAnimation->setEndValue(595);
+        minHeightAnimation->setEndValue(610);
+        maxHeightAnimation->setEndValue(610);
     }
     else
     {
-        minHeightAnimation->setEndValue(640);
-        maxHeightAnimation->setEndValue(640);
+        minHeightAnimation->setEndValue(655);
+        maxHeightAnimation->setEndValue(655);
     }
 
-    minHeightAnimation->setDuration(150);
-    maxHeightAnimation->setDuration(150);
+    minHeightAnimation->setDuration(165);
+    maxHeightAnimation->setDuration(165);
     animationGroup->start();
 #endif
 }
@@ -2293,17 +2284,7 @@ void SettingsDialog::on_bClearCache_clicked()
 
     cacheSize = 0;
 
-    ui->bClearCache->hide();
-    ui->lCacheSize->hide();
-
-    // Move remote SyncDebris widget to left side
-    ui->gCache->layout()->removeWidget(ui->wLocalCache);
-    ui->wRemoteCache->layout()->removeItem(ui->rSpacer);
-#ifndef __APPLE__
-    ui->lRemoteCacheSize->setMargin(2);
-#endif
-    ((QBoxLayout *)ui->gCache->layout())->addSpacerItem(new QSpacerItem(1, 1, QSizePolicy::Expanding, QSizePolicy::Fixed));
-
+    ui->wLocalCache->hide();
     onClearCache();
 }
 
@@ -2313,8 +2294,7 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
     if (!syncDebris)
     {
         remoteCacheSize = 0;
-        ui->bClearRemoteCache->hide();
-        ui->lRemoteCacheSize->hide();
+        ui->wRemoteCache->hide();
         onClearCache();
         return;
     }
@@ -2352,9 +2332,7 @@ void SettingsDialog::on_bClearRemoteCache_clicked()
     QtConcurrent::run(deleteRemoteCache, megaApi);
     remoteCacheSize = 0;
 
-    ui->bClearRemoteCache->hide();
-    ui->lRemoteCacheSize->hide();
-
+    ui->wRemoteCache->hide();
     onClearCache();
 }
 
