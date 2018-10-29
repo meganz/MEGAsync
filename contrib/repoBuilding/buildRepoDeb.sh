@@ -90,3 +90,10 @@ cp  /srv/obs/projects/DEB.pkg/_pubkey ./Release.key
 sudo sign -P /srv/obs/projects/DEB.pkg/_signkey -d Release
 mv Release.asc Release.gpg
 sudo chown pol:users Release.gpg
+
+echo "-----BEGIN PGP SIGNED MESSAGE-----" > InRelease
+echo "Hash: SHA512" >> InRelease
+echo "" >> InRelease
+cat Release >> InRelease
+echo "" >> InRelease
+cat Release.gpg >> InRelease
