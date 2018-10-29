@@ -27,9 +27,7 @@ GuestWidget::GuestWidget(QWidget *parent) :
 
     ui->sPages->setCurrentWidget(ui->pLogin);
 
-#ifdef __APPLE__
     resetFocus();
-#endif
 }
 
 GuestWidget::~GuestWidget()
@@ -246,13 +244,15 @@ void GuestWidget::onRequestUpdate(MegaApi *api, MegaRequest *request)
     }
 }
 
-#ifdef __APPLE__
 void GuestWidget::resetFocus()
 {
-    ui->lEmail->setFocus();
+    if (!ui->lEmail->text().size())
+    {
+        ui->lEmail->setFocus();
+    }
+
     ui->bLogin->setDefault(true);
 }
-#endif
 
 void GuestWidget::on_bLogin_clicked()
 {
@@ -365,9 +365,7 @@ void GuestWidget::page_login()
     ui->lPassword->clear();
     ui->sPages->setCurrentWidget(ui->pLogin);
 
-#ifdef __APPLE__
     resetFocus();
-#endif
 }
 
 void GuestWidget::page_progress()

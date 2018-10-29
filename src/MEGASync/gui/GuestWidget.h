@@ -33,9 +33,7 @@ public:
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
     virtual void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request);
 
-#ifdef __APPLE__
     void resetFocus();
-#endif
 
 signals:
     void forwardAction(int action);
