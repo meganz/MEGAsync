@@ -197,13 +197,13 @@ void QCustomTransfersModel::replaceWithTransfer(MegaTransfer *transfer)
     newItem->tag = transfer->getTag();
     newItem->priority = transfer->getPriority();
 
+    beginResetModel();
     transfers.insert(newItem->tag, newItem);
     transferOrder[row] = newItem;
     transfers.remove(transferToReplaced);
     transferItems.remove(transferToReplaced);
+    endResetModel();
     delete item;
-
-    emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
 }
 
 void QCustomTransfersModel::removeAllTransfers()
