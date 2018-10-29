@@ -7064,7 +7064,6 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         #endif
                 closeDialogs();
                 openBwOverquotaDialog();
-                return;
             }
         }
         else
@@ -7099,7 +7098,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
 
             onGlobalSyncStateChanged(megaApi);
         }
-
+        return;
     } 
 
     //Show information to users
