@@ -824,7 +824,6 @@ void InfoDialog::regenerateLayout()
                 dummy = new QWidget();
             }
 
-            dummy = new QWidget();
             dummy->resize(1,1);
             dummy->setWindowFlags(Qt::FramelessWindowHint);
             dummy->setAttribute(Qt::WA_NoSystemBackground);
