@@ -942,7 +942,7 @@ void InfoDialog::on_bDotUsedQuota_clicked()
     ui->sUsedData->setCurrentWidget(ui->pQuota);
 }
 
-void InfoDialog::on_bDismiss_clicked()
+void InfoDialog::on_bDiscard_clicked()
 {
     overlay->setVisible(false);
     ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
