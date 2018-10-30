@@ -1175,7 +1175,7 @@ void SetupWizard::onErrorAnimationFinished()
     {
         m_animation->setDirection(QAbstractAnimation::Backward);
         ui->lError->show();
-        animationTimer->start(2500);
+        animationTimer->start(5000);
     }
     else
     {
