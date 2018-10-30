@@ -156,7 +156,11 @@ bool extractargparam(vector<const char*>& args, const char *what, std::string& p
 
 int main(int argc, char *argv[])
 {
-    vector<const char*> args(argv + 1, argv + argc);
+    vector<const char*> args;
+    if (argc > 1)
+    {
+        args = vector<const char*>(argv + 1, argv + argc);
+    }
 
     string fileInput;
     bool externalfile = extractargparam(args, "--file", fileInput);
