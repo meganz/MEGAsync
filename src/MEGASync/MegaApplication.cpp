@@ -5934,7 +5934,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
     if (e->getErrorCode() == MegaError::API_EOVERQUOTA)
     {
-        //Cancel pending uploads and disable syncs
+        //Disable syncs
         disableSyncs();
         if (!infoOverQuota)
         {
@@ -5962,7 +5962,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             settingsDialog = NULL;
         }
 
-        megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
         onGlobalSyncStateChanged(megaApi);
     }
 
@@ -6890,40 +6889,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         addRecentFile(QString::fromUtf8(transfer->getFileName()), transfer->getNodeHandle(), localPath, publicKey);
     }
 
-    if (e->getErrorCode() == MegaError::API_EOVERQUOTA && !e->getValue())
-    {
-        //Cancel pending uploads and disable syncs
-        disableSyncs();
-        if (!infoOverQuota)
-        {
-            infoOverQuota = true;
-
-            preferences->setUsedStorage(preferences->totalStorage());
-            updateUserStats(true);
-
-            if (trayMenu && trayMenu->isVisible())
-            {
-                trayMenu->close();
-            }
-
-            if (infoDialog && infoDialog->isVisible())
-            {
-                infoDialog->hide();
-            }
-
-            showInfoDialog();
-        }
-
-        if (settingsDialog)
-        {
-            delete settingsDialog;
-            settingsDialog = NULL;
-        }
-
-        megaApi->cancelTransfers(MegaTransfer::TYPE_UPLOAD);
-        onGlobalSyncStateChanged(megaApi);
-    }
-
     if (e->getErrorCode() == MegaError::API_OK
             && transfer->isSyncTransfer()
             && !isFirstFileSynced
@@ -7093,22 +7058,59 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     preferences->setTransferDownloadMethod(api->getDownloadMethod());
     preferences->setTransferUploadMethod(api->getUploadMethod());
 
-    if (e->getErrorCode() == MegaError::API_EOVERQUOTA && e->getValue() && (!bwOverquotaTimestamp || !enablingBwOverquota))
+    if (e->getErrorCode() == MegaError::API_EOVERQUOTA)
     {
         int t = e->getValue();
+        if (t)
+        {
+            if (!bwOverquotaTimestamp || !enablingBwOverquota)
+            {
+                enablingBwOverquota = true;
+                preferences->clearTemporalBandwidth();
+                megaApi->getPricing();
+                updateUserStats(true);
+                bwOverquotaTimestamp = QDateTime::currentMSecsSinceEpoch() / 1000 + t;
+        #ifdef __MACH__
+                trayIcon->setContextMenu(initialMenu);
+        #endif
+                closeDialogs();
+                openBwOverquotaDialog();
+            }
+        }
+        else
+        {
+            //Disable syncs
+            disableSyncs();
+            if (!infoOverQuota)
+            {
+                infoOverQuota = true;
 
-        enablingBwOverquota = true;
-        preferences->clearTemporalBandwidth();
-        megaApi->getPricing();
-        updateUserStats(true);
-        bwOverquotaTimestamp = QDateTime::currentMSecsSinceEpoch() / 1000 + t;
-#ifdef __MACH__
-        trayIcon->setContextMenu(initialMenu);
-#endif
-        closeDialogs();
-        openBwOverquotaDialog();
+                preferences->setUsedStorage(preferences->totalStorage());
+                updateUserStats(true);
+
+                if (trayMenu && trayMenu->isVisible())
+                {
+                    trayMenu->close();
+                }
+
+                if (infoDialog && infoDialog->isVisible())
+                {
+                    infoDialog->hide();
+                }
+
+                showInfoDialog();
+            }
+
+            if (settingsDialog)
+            {
+                delete settingsDialog;
+                settingsDialog = NULL;
+            }
+
+            onGlobalSyncStateChanged(megaApi);
+        }
         return;
-    }
+    } 
 
     //Show information to users
     if (transfer->getNumRetry() == 1)

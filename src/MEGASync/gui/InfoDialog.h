@@ -78,7 +78,7 @@ private slots:
     void on_bDotUsedStorage_clicked();
     void on_bDotUsedQuota_clicked();
 
-    void on_bDismiss_clicked();
+    void on_bDiscard_clicked();
     void on_bBuyQuota_clicked();
 
     void hideUsageBalloon();
