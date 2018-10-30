@@ -216,7 +216,7 @@ border-radius: 2px;
  color: #777777;
 }
 
-#bDismiss
+#bDiscard
 {
 
  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
@@ -1033,7 +1033,7 @@ padding-right: 10px;
                  </spacer>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="bDismiss">
+                 <widget class="QPushButton" name="bDiscard">
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
