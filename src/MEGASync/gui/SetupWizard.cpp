@@ -113,6 +113,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
                 ui->eLoginEmail->setText(ui->eEmail->text().toLower().trimmed());
                 ui->eName->clear();
+                ui->eLastName->clear();
                 ui->eEmail->clear();
                 ui->ePassword->clear();
                 ui->eRepeatPassword->clear();
@@ -404,6 +405,7 @@ void SetupWizard::on_bNext_clicked()
     else if (w == ui->pNewAccount)
     {
         QString name = ui->eName->text().trimmed();
+        QString lastName = ui->eLastName->text().trimmed();
         QString email = ui->eEmail->text().toLower().trimmed();
         QString password = ui->ePassword->text();
         QString repeatPassword = ui->eRepeatPassword->text();
@@ -411,6 +413,12 @@ void SetupWizard::on_bNext_clicked()
         if (!name.length())
         {
             showErrorMessage(tr("Please, enter your name"));
+            return;
+        }
+
+        if (!lastName.length())
+        {
+            showErrorMessage(tr("Please, enter your last name"));
             return;
         }
 
@@ -452,7 +460,8 @@ void SetupWizard::on_bNext_clicked()
 
         megaApi->createAccount(email.toUtf8().constData(),
                                password.toUtf8().constData(),
-                               name.toUtf8().constData(), NULL,
+                               name.toUtf8().constData(),
+                               lastName.toUtf8().constData(),
                                delegateListener);
 
         ui->lProgress->setText(tr("Creating account..."));
@@ -1039,6 +1048,7 @@ void SetupWizard::page_newaccount()
 {
     ui->eLoginPassword->clear();
     ui->eName->clear();
+    ui->eLastName->clear();
     ui->eEmail->clear();
     ui->ePassword->clear();
     ui->eRepeatPassword->clear();
