@@ -2514,7 +2514,6 @@ void MegaApplication::showInfoDialog()
 
             infoDialog->show();
             infoDialog->updateState();
-            infoDialog->setFocus();
             infoDialog->raise();
             infoDialog->activateWindow();
         }

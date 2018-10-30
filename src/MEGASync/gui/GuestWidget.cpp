@@ -26,6 +26,8 @@ GuestWidget::GuestWidget(QWidget *parent) :
     megaApi->addRequestListener(delegateListener);
 
     ui->sPages->setCurrentWidget(ui->pLogin);
+
+    resetFocus();
 }
 
 GuestWidget::~GuestWidget()
@@ -242,6 +244,16 @@ void GuestWidget::onRequestUpdate(MegaApi *api, MegaRequest *request)
     }
 }
 
+void GuestWidget::resetFocus()
+{
+    if (!ui->lEmail->text().size())
+    {
+        ui->lEmail->setFocus();
+    }
+
+    ui->bLogin->setDefault(true);
+}
+
 void GuestWidget::on_bLogin_clicked()
 {
     QString email = ui->lEmail->text().toLower().trimmed();
@@ -352,6 +364,8 @@ void GuestWidget::page_login()
     ui->lEmail->clear();
     ui->lPassword->clear();
     ui->sPages->setCurrentWidget(ui->pLogin);
+
+    resetFocus();
 }
 
 void GuestWidget::page_progress()
