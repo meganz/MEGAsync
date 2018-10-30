@@ -93,7 +93,7 @@ private:
     QPushButton *overlay;
 #ifdef __APPLE__
     QPushButton *arrow;
-    QWidget *dummy;
+    QWidget *dummy; // Patch to let text input on line edits of GuestWidget
 #endif
 
     QMenu *transferMenu;
