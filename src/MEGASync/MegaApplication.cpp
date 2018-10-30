@@ -2516,15 +2516,6 @@ void MegaApplication::showInfoDialog()
             infoDialog->updateState();
             infoDialog->raise();
             infoDialog->activateWindow();
-
-            #ifdef __APPLE__ //Force cursor to be placed in login text edit at GuestWidget for non-logged state
-                if (!preferences->logged())
-                {
-                    QKeyEvent *event = new QKeyEvent ( QEvent::KeyPress, Qt::Key_Tab, Qt::NoModifier);
-                    QCoreApplication::postEvent (infoDialog, event);
-                }
-            #endif
-
         }
         else
         {
