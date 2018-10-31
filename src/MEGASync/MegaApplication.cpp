@@ -2174,6 +2174,11 @@ void MegaApplication::checkMemoryUsage()
 
 void MegaApplication::checkOverStorageStates()
 {
+    if (!preferences->logged())
+    {
+        return;
+    }
+
     // Check if user is active
     if ((QDateTime::currentMSecsSinceEpoch() - lastUserActivityExecution) > Preferences::USER_INACTIVITY_MS)
     {
