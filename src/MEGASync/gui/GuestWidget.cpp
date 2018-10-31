@@ -99,9 +99,9 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                         {
                             on_bCancel_clicked();
                             page_login();
+                            loggingStarted = false;
                         }
                         delete verification;
-                        loggingStarted = false;
                         return;
                     }
 
@@ -139,9 +139,9 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                         {
                             on_bCancel_clicked();
                             page_login();
+                            loggingStarted = false;
                         }
                         delete verification;
-                        loggingStarted = false;
                         return;
                     }
 

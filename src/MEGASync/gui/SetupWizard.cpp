@@ -173,9 +173,9 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                         {
                             on_bCancel_clicked();
                             page_login();
+                            loggingStarted = false;
                         }
                         delete verification;
-                        loggingStarted = false;
                         return;
                     }
 
@@ -211,9 +211,9 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                         {
                             on_bCancel_clicked();
                             page_login();
+                            loggingStarted = false;
                         }
                         delete verification;
-                        loggingStarted = false;
                         return;
                     }
 
@@ -390,7 +390,7 @@ void SetupWizard::on_bNext_clicked()
         if (!email.contains(QChar::fromAscii('@')) || !email.contains(QChar::fromAscii('.')))
         {
             showErrorMessage(tr("Please, enter a valid e-mail address"));
-           return;
+            return;
         }
 
         if (!password.length())
