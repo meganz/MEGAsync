@@ -66,6 +66,11 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
     {
         case MegaRequest::TYPE_LOGIN:
         {
+            if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
+            {
+                ui->bCancel->setVisible(false);
+            }
+
             if (error->getErrorCode() == MegaError::API_OK)
             {
                 if (loggingStarted)
@@ -102,6 +107,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                             loggingStarted = false;
                         }
                         delete verification;
+                        megaApi->localLogout();
                         return;
                     }
 
@@ -142,6 +148,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                             loggingStarted = false;
                         }
                         delete verification;
+                        megaApi->localLogout();
                         return;
                     }
 
@@ -157,8 +164,9 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 }
 
                 loggingStarted = false;
-                page_login();
             }
+
+            page_login();
             break;
         }
 
@@ -352,6 +360,9 @@ void GuestWidget::page_login()
 
 void GuestWidget::page_progress()
 {
+    ui->bCancel->setVisible(true);
+    ui->bCancel->setEnabled(true);
+
     ui->sPages->setStyleSheet(QString::fromUtf8("image: url(\"://images/login_background.png\");"));
     ui->sPages->style()->unpolish(ui->sPages);
     ui->sPages->style()->polish(ui->sPages);
@@ -371,6 +382,9 @@ void GuestWidget::page_settingUp()
 
 void GuestWidget::page_logout()
 {
+    ui->bCancel->setVisible(true);
+    ui->bCancel->setEnabled(true);
+
     ui->sPages->setStyleSheet(QString::fromUtf8("image: url(\"://images/login_background.png\");"));
     ui->sPages->style()->unpolish(ui->sPages);
     ui->sPages->style()->polish(ui->sPages);

@@ -140,6 +140,11 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         }
         case MegaRequest::TYPE_LOGIN:
         {
+            if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
+            {
+                ui->bCancel->setEnabled(false);
+            }
+
             if (error->getErrorCode() == MegaError::API_OK)
             {
                 if (loggingStarted)
@@ -176,6 +181,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                             loggingStarted = false;
                         }
                         delete verification;
+                        megaApi->localLogout();
                         return;
                     }
 
@@ -214,6 +220,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                             loggingStarted = false;
                         }
                         delete verification;
+                        megaApi->localLogout();
                         return;
                     }
 
@@ -231,7 +238,9 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 loggingStarted = false;
                 page_login();
             }
-            else
+            else if (error->getErrorCode() != MegaError::API_EMFAREQUIRED
+                     && error->getErrorCode() != MegaError::API_EFAILED
+                     && error->getErrorCode() != MegaError::API_EEXPIRED)
             {
                 page_newaccount();
             }
