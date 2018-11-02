@@ -565,7 +565,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     settingsActionOverquota = NULL;
     settingsActionGuest = NULL;
     importLinksAction = NULL;
-    importLinksActionGuest = NULL;
     initialMenu = NULL;
     lastHovered = NULL;
     isPublic = false;
@@ -5877,15 +5876,6 @@ void MegaApplication::createGuestMenu()
     }
     connect(updateActionGuest, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
 
-    if (importLinksActionGuest)
-    {
-        importLinksActionGuest->deleteLater();
-        importLinksActionGuest = NULL;
-    }
-
-    importLinksActionGuest = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
-    connect(importLinksActionGuest, SIGNAL(triggered()), this, SLOT(importLinks()));
-
     if (settingsActionGuest)
     {
         settingsActionGuest->deleteLater();
@@ -5901,7 +5891,6 @@ void MegaApplication::createGuestMenu()
 
     trayGuestMenu->addAction(updateActionGuest);
     trayGuestMenu->addSeparator();
-    trayGuestMenu->addAction(importLinksActionGuest);
     trayGuestMenu->addAction(settingsActionGuest);
     trayGuestMenu->addSeparator();
     trayGuestMenu->addAction(exitActionGuest);

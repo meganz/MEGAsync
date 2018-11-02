@@ -291,7 +291,6 @@ protected:
     MenuItemAction *exitActionOverquota;
     MenuItemAction *updateActionOverquota;
 
-    MenuItemAction *importLinksActionGuest;
     MenuItemAction *exitActionGuest;
     MenuItemAction *settingsActionGuest;
     MenuItemAction *updateActionGuest;
