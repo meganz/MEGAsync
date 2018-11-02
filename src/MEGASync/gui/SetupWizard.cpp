@@ -231,6 +231,10 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 loggingStarted = false;
                 page_login();
             }
+            else
+            {
+                page_newaccount();
+            }
             break;
         }
         case MegaRequest::TYPE_CREATE_FOLDER:
@@ -262,9 +266,16 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         case MegaRequest::TYPE_FETCH_NODES:
         {
             if (error->getErrorCode() != MegaError::API_OK)
-            {
-                page_login();
-                loggingStarted = false;
+            {   
+                if (loggingStarted)
+                {
+                    page_login();
+                    loggingStarted = false;
+                }
+                else
+                {
+                    page_newaccount();
+                }
                 break;
             }
 
@@ -892,10 +903,6 @@ void SetupWizard::closeEvent(QCloseEvent *event)
     event->ignore();
     QPointer<QMessageBox> msg = new QMessageBox(this);
     msg->setIcon(QMessageBox::Question);
-    //        TO-DO: Uncomment when asset is included to the project
-    //        msg->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-question.png")
-    //                                                            : QString::fromUtf8(":/images/mbox-question@2x.png")));
-
     msg->setWindowTitle(tr("MEGAsync"));
     msg->setText(tr("Are you sure you want to cancel this wizard and undo all changes?"));
     msg->addButton(QMessageBox::Yes);
