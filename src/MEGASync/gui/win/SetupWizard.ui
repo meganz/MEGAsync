@@ -192,7 +192,7 @@
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_win.qrc">
+            <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -275,6 +275,9 @@
              <width>512</width>
              <height>44</height>
             </size>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::NoFocus</enum>
            </property>
            <property name="text">
             <string/>
@@ -447,7 +450,7 @@
       </size>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pNewAccount">
       <property name="styleSheet">
@@ -813,7 +816,7 @@
              <item>
               <widget class="QLabel" name="lTermsLink">
                <property name="focusPolicy">
-                <enum>Qt::StrongFocus</enum>
+                <enum>Qt::NoFocus</enum>
                </property>
                <property name="styleSheet">
                 <string notr="true"/>
@@ -1018,6 +1021,9 @@ background-color: #E2E2E2;
               <height>94</height>
              </size>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true">border: none;</string>
             </property>
@@ -1089,7 +1095,7 @@ background-color: #E2E2E2;
                 </font>
                </property>
                <property name="focusPolicy">
-                <enum>Qt::StrongFocus</enum>
+                <enum>Qt::NoFocus</enum>
                </property>
                <property name="styleSheet">
                 <string notr="true">	color: #666666;
@@ -1152,7 +1158,7 @@ background-color: #E2E2E2;
           <item>
            <widget class="QLabel" name="lProgress">
             <property name="focusPolicy">
-             <enum>Qt::StrongFocus</enum>
+             <enum>Qt::NoFocus</enum>
             </property>
             <property name="styleSheet">
              <string notr="true"/>
@@ -1226,6 +1232,9 @@ background-color: #E2E2E2;
               <height>236</height>
              </size>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -1262,12 +1271,15 @@ background-color: #E2E2E2;
                <property name="font">
                 <font/>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background: transparent;
 border: none;</string>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/full_sync_ico.png</normaloff>:/images/full_sync_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -1345,7 +1357,7 @@ border: none;</string>
                    </size>
                   </property>
                   <property name="focusPolicy">
-                   <enum>Qt::StrongFocus</enum>
+                   <enum>Qt::NoFocus</enum>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">font-size:16px;
@@ -1387,7 +1399,7 @@ color: #E2574C;
                    </font>
                   </property>
                   <property name="focusPolicy">
-                   <enum>Qt::StrongFocus</enum>
+                   <enum>Qt::NoFocus</enum>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">	color: #666666;
@@ -1429,6 +1441,9 @@ color: #E2574C;
               <height>236</height>
              </size>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::StrongFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -1468,6 +1483,9 @@ color: #E2574C;
                <property name="font">
                 <font/>
                </property>
+               <property name="focusPolicy">
+                <enum>Qt::NoFocus</enum>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background: transparent;
 border: none;</string>
@@ -1476,7 +1494,7 @@ border: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_macx.qrc">
                  <normaloff>:/images/selective_sync_ico.png</normaloff>:/images/selective_sync_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -1559,7 +1577,7 @@ border: none;</string>
                    </font>
                   </property>
                   <property name="focusPolicy">
-                   <enum>Qt::StrongFocus</enum>
+                   <enum>Qt::NoFocus</enum>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">font-size:16px;
@@ -1600,7 +1618,7 @@ color: #E2574C;
                    </size>
                   </property>
                   <property name="focusPolicy">
-                   <enum>Qt::StrongFocus</enum>
+                   <enum>Qt::NoFocus</enum>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">	color: #666666;
@@ -1664,7 +1682,7 @@ color: #E2574C;
           </font>
          </property>
          <property name="focusPolicy">
-          <enum>Qt::StrongFocus</enum>
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">#lAdvancedSetup
@@ -1765,6 +1783,9 @@ font-size: 13px;
                 <height>0</height>
                </size>
               </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
+              </property>
               <property name="readOnly">
                <bool>true</bool>
               </property>
@@ -1805,6 +1826,9 @@ font-size: 13px;
              <widget class="QLineEdit" name="eMegaFolder">
               <property name="enabled">
                <bool>true</bool>
+              </property>
+              <property name="focusPolicy">
+               <enum>Qt::NoFocus</enum>
               </property>
               <property name="readOnly">
                <bool>true</bool>
@@ -1889,6 +1913,9 @@ font-size: 13px;
               <height>94</height>
              </size>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true">border: none;</string>
             </property>
@@ -1948,7 +1975,7 @@ font-size: 13px;
                 </font>
                </property>
                <property name="focusPolicy">
-                <enum>Qt::StrongFocus</enum>
+                <enum>Qt::NoFocus</enum>
                </property>
                <property name="styleSheet">
                 <string notr="true">	color: #666666;
@@ -2021,7 +2048,7 @@ font-size: 13px;
           </font>
          </property>
          <property name="focusPolicy">
-          <enum>Qt::StrongFocus</enum>
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">#lWelcome
@@ -2042,7 +2069,7 @@ font-family: &quot;Montserrat&quot;;
        <item>
         <widget class="QLabel" name="lWelcomeDesc">
          <property name="focusPolicy">
-          <enum>Qt::StrongFocus</enum>
+          <enum>Qt::NoFocus</enum>
          </property>
          <property name="styleSheet">
           <string notr="true">	color: #333333;
@@ -2242,34 +2269,27 @@ image: url(://images/desktop_app_TM.png);
   </layout>
  </widget>
  <tabstops>
-  <tabstop>bCancel</tabstop>
-  <tabstop>bBack</tabstop>
-  <tabstop>bNext</tabstop>
   <tabstop>eName</tabstop>
+  <tabstop>eLastName</tabstop>
   <tabstop>eEmail</tabstop>
   <tabstop>ePassword</tabstop>
   <tabstop>eRepeatPassword</tabstop>
   <tabstop>cAgreeWithTerms</tabstop>
-  <tabstop>lTermsLink</tabstop>
+  <tabstop>bNext</tabstop>
+  <tabstop>bBack</tabstop>
+  <tabstop>bSkip</tabstop>
+  <tabstop>bCancel</tabstop>
   <tabstop>eLoginEmail</tabstop>
   <tabstop>eLoginPassword</tabstop>
-  <tabstop>lProgress</tabstop>
-  <tabstop>rTypicalSetup</tabstop>
-  <tabstop>lTypicalHeader</tabstop>
-  <tabstop>lTypicalDesc</tabstop>
-  <tabstop>rAdvancedSetup</tabstop>
-  <tabstop>lAdvancedHeader</tabstop>
-  <tabstop>lAdvancedDesc</tabstop>
-  <tabstop>bSkip</tabstop>
-  <tabstop>lAdvancedSetup</tabstop>
-  <tabstop>eLocalFolder</tabstop>
+  <tabstop>wTypicalSetup</tabstop>
+  <tabstop>wAdvancedSetup</tabstop>
+  <tabstop>wHelp</tabstop>
   <tabstop>bLocalFolder</tabstop>
-  <tabstop>eMegaFolder</tabstop>
   <tabstop>bMegaFolder</tabstop>
-  <tabstop>lWelcome</tabstop>
+  <tabstop>bFinish</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
  <slots>
