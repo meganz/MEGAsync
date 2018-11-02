@@ -84,6 +84,7 @@ protected:
     QString sessionKey;
     mega::QTMegaRequestListener *delegateListener;
     bool closing;
+    bool closeBlocked;
     bool loggingStarted;
     QTimer *animationTimer;
 };

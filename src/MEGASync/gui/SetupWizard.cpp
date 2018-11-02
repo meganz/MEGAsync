@@ -37,6 +37,7 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     this->app = app;
     this->closing = false;
     this->loggingStarted = false;
+    this->closeBlocked = false;
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
     delegateListener = new QTMegaRequestListener(megaApi, this);
@@ -150,6 +151,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     || error->getErrorCode() == MegaError::API_EEXPIRED)
             {
                 ui->bCancel->setEnabled(false);
+                closeBlocked = true;
             }
 
             if (error->getErrorCode() == MegaError::API_OK)
@@ -919,6 +921,12 @@ void SetupWizard::closeEvent(QCloseEvent *event)
         return;
     }
 
+    if (closeBlocked)
+    {
+        event->ignore();
+        return;
+    }
+
     event->ignore();
     QPointer<QMessageBox> msg = new QMessageBox(this);
     msg->setIcon(QMessageBox::Question);
@@ -951,6 +959,7 @@ void SetupWizard::closeEvent(QCloseEvent *event)
 
 void SetupWizard::page_login()
 {
+    closeBlocked = false;
     ui->eLoginPassword->clear();
     ui->wHelp->hide();
     initModeSelection();
@@ -976,6 +985,7 @@ void SetupWizard::page_login()
 
 void SetupWizard::page_logout()
 {
+    closeBlocked = false;
     ui->lProgress->setText(tr("Logging out..."));
     ui->progressBar->setMaximum(0);
     ui->progressBar->setValue(-1);
@@ -998,6 +1008,7 @@ void SetupWizard::page_logout()
 
 void SetupWizard::page_mode()
 {
+    closeBlocked = false;
     initModeSelection();
 
     ui->bCancel->setEnabled(true);
@@ -1035,6 +1046,7 @@ void SetupWizard::page_mode()
 
 void SetupWizard::page_welcome()
 {
+    closeBlocked = false;
     ui->wHelp->hide();
     ui->bCancel->setEnabled(true);
     ui->bCancel->setVisible(true);
@@ -1068,6 +1080,7 @@ void SetupWizard::page_welcome()
 
 void SetupWizard::page_newaccount()
 {
+    closeBlocked = false;
     ui->eLoginPassword->clear();
     ui->eName->clear();
     ui->eLastName->clear();
@@ -1101,6 +1114,7 @@ void SetupWizard::page_newaccount()
 
 void SetupWizard::page_progress()
 {
+    closeBlocked = false;
     ui->progressBar->setMaximum(0);
     ui->progressBar->setValue(-1);
 
