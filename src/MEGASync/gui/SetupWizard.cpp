@@ -273,7 +273,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 if (!megaApi->isFilesystemAvailable())
                 {
                     page_login();
-                    showErrorMessage(tr("Unable to get the filesystem.\n"
+                    QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
                                         "Please, try again. If the problem persists "
                                         "please contact bug@mega.co.nz"));
                     done(QDialog::Rejected);
@@ -552,7 +552,7 @@ void SetupWizard::on_bNext_clicked()
             if (!rootNode)
             {
                 page_login();
-                showErrorMessage(tr("Unable to get the filesystem.\n"
+                QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
                                     "Please, try again. If the problem persists "
                                     "please contact bug@mega.co.nz"));
 
@@ -606,7 +606,7 @@ void SetupWizard::on_bCancel_clicked()
         if (!rootNode)
         {
             page_login();
-            showErrorMessage(tr("Unable to get the filesystem.\n"
+            QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
                                 "Please, try again. If the problem persists "
                                 "please contact bug@mega.co.nz"));
 
