@@ -3965,10 +3965,6 @@ background:transparent;</string>
           </property>
           <item row="8" column="1">
            <widget class="QWidget" name="widget_13" native="true">
-            <property name="styleSheet">
-             <string notr="true">padding-left: -1px;
-</string>
-            </property>
             <layout class="QVBoxLayout" name="verticalLayout_19">
              <property name="spacing">
               <number>6</number>
@@ -4216,6 +4212,12 @@ background:transparent;</string>
            <widget class="QCheckBox" name="cProxyRequiresPassword">
             <property name="enabled">
              <bool>false</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>18</height>
+             </size>
             </property>
             <property name="text">
              <string>Proxy server requires a password</string>
