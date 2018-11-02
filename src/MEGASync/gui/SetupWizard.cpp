@@ -198,7 +198,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     delete verification;
                     verification = NULL;
 
-                    megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData(), delegateListener);
+                    megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData());
                     return;
                 }
                 else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
@@ -239,7 +239,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                     delete verification;
                     verification = NULL;
 
-                    megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData(), delegateListener);
+                    megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData());
                     return;
                 }
                 else if (error->getErrorCode() != MegaError::API_ESSL)
@@ -493,8 +493,7 @@ void SetupWizard::on_bNext_clicked()
         megaApi->createAccount(email.toUtf8().constData(),
                                password.toUtf8().constData(),
                                name.toUtf8().constData(),
-                               lastName.toUtf8().constData(),
-                               delegateListener);
+                               lastName.toUtf8().constData());
 
         ui->lProgress->setText(tr("Creating account..."));
         page_progress();
@@ -595,7 +594,7 @@ void SetupWizard::on_bNext_clicked()
             }
 
             ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync"));
-            megaApi->createFolder("MEGAsync", rootNode, delegateListener);
+            megaApi->createFolder("MEGAsync", rootNode);
             delete rootNode;
 
             ui->lProgress->setText(tr("Creating folder..."));
