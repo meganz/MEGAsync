@@ -391,6 +391,10 @@ void GuestWidget::page_settingUp()
 
 void GuestWidget::page_logout()
 {
+    ui->sPages->setStyleSheet(QString::fromUtf8("image: url(\"://images/login_background.png\");"));
+    ui->sPages->style()->unpolish(ui->sPages);
+    ui->sPages->style()->polish(ui->sPages);
+
     ui->lProgress->setText(tr("Logging out..."));
     ui->progressBar->setMaximum(0);
     ui->progressBar->setValue(-1);
