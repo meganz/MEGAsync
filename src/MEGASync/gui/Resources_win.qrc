@@ -173,37 +173,37 @@
         <file>images/small_dmg.png</file>
         <file>images/app_64.png</file>
         <file>images/non_logged_graphic.png</file>
-        <file>translations/MEGASyncStrings_ar.qm</file>
-        <file>translations/MEGASyncStrings_bg.qm</file>
-        <file>translations/MEGASyncStrings_cs.qm</file>
-        <file>translations/MEGASyncStrings_de.qm</file>
-        <file>translations/MEGASyncStrings_en.qm</file>
-        <file>translations/MEGASyncStrings_es.qm</file>
-        <file>translations/MEGASyncStrings_fi.qm</file>
-        <file>translations/MEGASyncStrings_fr.qm</file>
-        <file>translations/MEGASyncStrings_he.qm</file>
-        <file>translations/MEGASyncStrings_hu.qm</file>
-        <file>translations/MEGASyncStrings_id.qm</file>
-        <file>translations/MEGASyncStrings_it.qm</file>
-        <file>translations/MEGASyncStrings_ja.qm</file>
-        <file>translations/MEGASyncStrings_ko.qm</file>
-        <file>translations/MEGASyncStrings_nl.qm</file>
-        <file>translations/MEGASyncStrings_pl.qm</file>
-        <file>translations/MEGASyncStrings_pt.qm</file>
-        <file>translations/MEGASyncStrings_pt_BR.qm</file>
-        <file>translations/MEGASyncStrings_ro.qm</file>
-        <file>translations/MEGASyncStrings_ru.qm</file>
-        <file>translations/MEGASyncStrings_sk.qm</file>
-        <file>translations/MEGASyncStrings_sl.qm</file>
-        <file>translations/MEGASyncStrings_sr.qm</file>
-        <file>translations/MEGASyncStrings_sv.qm</file>
-        <file>translations/MEGASyncStrings_th.qm</file>
-        <file>translations/MEGASyncStrings_tl.qm</file>
-        <file>translations/MEGASyncStrings_tr.qm</file>
-        <file>translations/MEGASyncStrings_uk.qm</file>
-        <file>translations/MEGASyncStrings_vi.qm</file>
-        <file>translations/MEGASyncStrings_zh_CN.qm</file>
-        <file>translations/MEGASyncStrings_zh_TW.qm</file>
+        <file>translations/MEGASyncStrings_ar.ts</file>
+        <file>translations/MEGASyncStrings_bg.ts</file>
+        <file>translations/MEGASyncStrings_cs.ts</file>
+        <file>translations/MEGASyncStrings_de.ts</file>
+        <file>translations/MEGASyncStrings_en.ts</file>
+        <file>translations/MEGASyncStrings_es.ts</file>
+        <file>translations/MEGASyncStrings_fi.ts</file>
+        <file>translations/MEGASyncStrings_fr.ts</file>
+        <file>translations/MEGASyncStrings_he.ts</file>
+        <file>translations/MEGASyncStrings_hu.ts</file>
+        <file>translations/MEGASyncStrings_id.ts</file>
+        <file>translations/MEGASyncStrings_it.ts</file>
+        <file>translations/MEGASyncStrings_ja.ts</file>
+        <file>translations/MEGASyncStrings_ko.ts</file>
+        <file>translations/MEGASyncStrings_nl.ts</file>
+        <file>translations/MEGASyncStrings_pl.ts</file>
+        <file>translations/MEGASyncStrings_pt.ts</file>
+        <file>translations/MEGASyncStrings_pt_BR.ts</file>
+        <file>translations/MEGASyncStrings_ro.ts</file>
+        <file>translations/MEGASyncStrings_ru.ts</file>
+        <file>translations/MEGASyncStrings_sk.ts</file>
+        <file>translations/MEGASyncStrings_sl.ts</file>
+        <file>translations/MEGASyncStrings_sr.ts</file>
+        <file>translations/MEGASyncStrings_sv.ts</file>
+        <file>translations/MEGASyncStrings_th.ts</file>
+        <file>translations/MEGASyncStrings_tl.ts</file>
+        <file>translations/MEGASyncStrings_tr.ts</file>
+        <file>translations/MEGASyncStrings_uk.ts</file>
+        <file>translations/MEGASyncStrings_vi.ts</file>
+        <file>translations/MEGASyncStrings_zh_CN.ts</file>
+        <file>translations/MEGASyncStrings_zh_TW.ts</file>
         <file>images/streaming_link.png</file>
         <file>images/streaming_off_icon.png</file>
         <file>images/streaming_on_icon.png</file>
