@@ -86,7 +86,7 @@ void SetupWizard::onRequestStart(MegaApi *api, MegaRequest *request)
         ui->lProgress->setText(tr("Logging in..."));
         page_progress();
     }
-    else if (request->getType() == MegaRequest::TYPE_LOGOUT)
+    else if (request->getType() == MegaRequest::TYPE_LOGOUT && request->getFlag())
     {
         page_logout();
     }
