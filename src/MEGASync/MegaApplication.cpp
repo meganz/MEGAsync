@@ -2593,38 +2593,51 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
     #else
         #ifdef WIN32
             QRect totalGeometry = QApplication::desktop()->screenGeometry();
-            if (totalGeometry == screenGeometry)
+            APPBARDATA pabd;
+            pabd.cbSize = sizeof(APPBARDATA);
+            pabd.hWnd = FindWindow(L"Shell_TrayWnd", NULL);
+            if (pabd.hWnd && SHAppBarMessage(ABM_GETTASKBARPOS, &pabd)
+                    && pabd.rc.right != pabd.rc.left && pabd.rc.bottom != pabd.rc.top)
             {
-                APPBARDATA pabd;
-                pabd.cbSize = sizeof(APPBARDATA);
-                pabd.hWnd = FindWindow(L"Shell_TrayWnd", NULL);
-                if (pabd.hWnd && SHAppBarMessage(ABM_GETTASKBARPOS, &pabd)
-                        && pabd.rc.right != pabd.rc.left && pabd.rc.bottom != pabd.rc.top)
+                int size;
+                switch (pabd.uEdge)
                 {
-                    int size;
-                    switch (pabd.uEdge)
-                    {
-                        case ABE_LEFT:
+                    case ABE_LEFT:
+                        position = screenGeometry.bottomLeft();
+                        if (totalGeometry == screenGeometry)
+                        {
                             size = pabd.rc.right - pabd.rc.left;
                             size = size * screenGeometry.height() / (pabd.rc.bottom - pabd.rc.top);
                             screenGeometry.setLeft(screenGeometry.left() + size);
-                            break;
-                        case ABE_RIGHT:
+                        }
+                        break;
+                    case ABE_RIGHT:
+                        position = screenGeometry.bottomRight();
+                        if (totalGeometry == screenGeometry)
+                        {
                             size = pabd.rc.right - pabd.rc.left;
                             size = size * screenGeometry.height() / (pabd.rc.bottom - pabd.rc.top);
                             screenGeometry.setRight(screenGeometry.right() - size);
-                            break;
-                        case ABE_TOP:
+                        }
+                        break;
+                    case ABE_TOP:
+                        position = screenGeometry.topRight();
+                        if (totalGeometry == screenGeometry)
+                        {
                             size = pabd.rc.bottom - pabd.rc.top;
                             size = size * screenGeometry.width() / (pabd.rc.right - pabd.rc.left);
                             screenGeometry.setTop(screenGeometry.top() + size);
-                            break;
-                        case ABE_BOTTOM:
+                        }
+                        break;
+                    case ABE_BOTTOM:
+                        position = screenGeometry.bottomRight();
+                        if (totalGeometry == screenGeometry)
+                        {
                             size = pabd.rc.bottom - pabd.rc.top;
                             size = size * screenGeometry.width() / (pabd.rc.right - pabd.rc.left);
                             screenGeometry.setBottom(screenGeometry.bottom() - size);
-                            break;
-                    }
+                        }
+                        break;
                 }
             }
         #endif
