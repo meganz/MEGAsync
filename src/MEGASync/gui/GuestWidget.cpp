@@ -324,32 +324,16 @@ void GuestWidget::on_bCancel_clicked()
         return;
     }
 
-    QPointer<QMessageBox> msg = new QMessageBox(this);
-    msg->setIcon(QMessageBox::Question);
-    msg->setWindowTitle(tr("MEGAsync"));
-    msg->setText(tr("Are you sure you want to cancel this wizard and undo all changes?"));
-    msg->addButton(QMessageBox::Yes);
-    msg->addButton(QMessageBox::No);
-    msg->setDefaultButton(QMessageBox::No);
-    int button = msg->exec();
-    if (msg)
+    if (megaApi->isLoggedIn())
     {
-        delete msg;
+        closing = true;
+        megaApi->logout();
+        page_logout();
     }
-
-    if (button == QMessageBox::Yes)
+    else
     {
-        if (megaApi->isLoggedIn())
-        {
-            closing = true;
-            megaApi->logout();
-            page_logout();
-        }
-        else
-        {
-            megaApi->localLogout();
-            page_login();
-        }
+        megaApi->localLogout();
+        page_login();
     }
 }
 
