@@ -1861,9 +1861,6 @@ void MegaApplication::exitApplication()
     {
         exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"),
                                      tr("Are you sure you want to exit?"), QMessageBox::Yes|QMessageBox::No);
-//        TO-DO: Uncomment when asset is included to the project
-//        exitDialog->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-question.png")
-//                                                            : QString::fromUtf8(":/images/mbox-question@2x.png")));
         int button = exitDialog->exec();
         if (!exitDialog)
         {
