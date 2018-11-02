@@ -4,11 +4,9 @@
 #include <QWidget>
 #include <QMenu>
 #include <QPushButton>
-#include <QPointer>
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
 #include "Preferences.h"
-#include "gui/Login2FA.h"
 
 namespace Ui {
 class GuestWidget;
@@ -50,7 +48,6 @@ private slots:
 private:
     Ui::GuestWidget *ui;
     MegaApplication *app;
-    QPointer<Login2FA> verification;
 
 protected:
     mega::QTMegaRequestListener *delegateListener;

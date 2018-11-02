@@ -7,13 +7,11 @@
 #include <QFileDialog>
 #include <QDesktopServices>
 #include <QPropertyAnimation>
-#include <QPointer>
 
 #include "NodeSelector.h"
 #include "Preferences.h"
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
-#include "gui/Login2FA.h"
 
 namespace Ui {
 class SetupWizard;
@@ -61,7 +59,6 @@ private slots:
 
 private:
     QPropertyAnimation *m_animation;
-    QPointer<Login2FA> verification;
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
