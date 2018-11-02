@@ -277,12 +277,14 @@ void GuestWidget::on_bLogin_clicked()
         return;
     }
 
+    app->infoWizardDialogFinished(QDialog::Accepted);
     megaApi->login(email.toUtf8().constData(), password.toUtf8().constData());
     loggingStarted = true;
 }
 
 void GuestWidget::on_bCreateAccount_clicked()
 {
+    app->infoWizardDialogFinished(QDialog::Accepted);
     emit forwardAction(CREATE_ACCOUNT_CLICKED);
 }
 
