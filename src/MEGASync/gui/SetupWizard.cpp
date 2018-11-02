@@ -440,7 +440,7 @@ void SetupWizard::on_bNext_clicked()
             return;
         }
 
-        if (password.length() < 8)
+        if (megaApi->getPasswordStrength(password.toUtf8().constData()) == MegaApi::PASSWORD_STRENGTH_VERYWEAK)
         {
             showErrorMessage(tr("Please, enter a stronger password"));
             return;
