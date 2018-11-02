@@ -5,7 +5,6 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include "platform/Platform.h"
-#include "gui/Login2FA.h"
 #include <QtConcurrent/QtConcurrent>
 
 using namespace mega;
@@ -21,6 +20,7 @@ GuestWidget::GuestWidget(QWidget *parent) :
     preferences = Preferences::instance();
     closing = false;
     loggingStarted = false;
+    verification = NULL;
 
     delegateListener = new QTMegaRequestListener(megaApi, this);
     megaApi->addRequestListener(delegateListener);
@@ -51,6 +51,11 @@ void GuestWidget::onRequestStart(MegaApi *api, MegaRequest *request)
 
 void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *error)
 {
+    if (verification)
+    {
+        return;
+    }
+
     if (closing)
     {
         if (request->getType() == MegaRequest::TYPE_LOGOUT)
@@ -66,7 +71,9 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
     {
         case MegaRequest::TYPE_LOGIN:
         {
-            if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
+            if (error->getErrorCode() == MegaError::API_EMFAREQUIRED
+                || error->getErrorCode() == MegaError::API_EFAILED
+                || error->getErrorCode() == MegaError::API_EEXPIRED)
             {
                 ui->bCancel->setVisible(false);
             }
@@ -96,23 +103,24 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 else if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
                 {
                     QPointer<GuestWidget> dialog = this;
-                    QPointer<Login2FA> verification = new Login2FA(this);
+                    verification = new Login2FA(this);
                     int result = verification->exec();
                     if (!dialog || !verification || result != QDialog::Accepted)
                     {
                         if (dialog)
                         {
-                            on_bCancel_clicked();
+                            megaApi->localLogout();
                             page_login();
                             loggingStarted = false;
+                            delete verification;
+                            verification = NULL;
                         }
-                        delete verification;
-                        megaApi->localLogout();
                         return;
                     }
 
                     QString pin = verification->pinCode();
                     delete verification;
+                    verification = NULL;
 
                     megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData(), delegateListener);
                     return;
@@ -136,24 +144,25 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 else if (error->getErrorCode() == MegaError::API_EFAILED || error->getErrorCode() == MegaError::API_EEXPIRED)
                 {
                     QPointer<GuestWidget> dialog = this;
-                    QPointer<Login2FA> verification = new Login2FA(this);
+                    verification = new Login2FA(this);
                     verification->invalidCode(true);
                     int result = verification->exec();
                     if (!dialog || !verification || result != QDialog::Accepted)
                     {
                         if (dialog)
                         {
-                            on_bCancel_clicked();
+                            megaApi->localLogout();
                             page_login();
                             loggingStarted = false;
+                            delete verification;
+                            verification = NULL;
                         }
-                        delete verification;
-                        megaApi->localLogout();
                         return;
                     }
 
                     QString pin = verification->pinCode();
                     delete verification;
+                    verification = NULL;
 
                     megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData(), delegateListener);
                     return;
