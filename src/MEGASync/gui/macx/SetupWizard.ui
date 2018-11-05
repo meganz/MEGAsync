@@ -1241,6 +1241,9 @@ background-color: #E2E2E2;
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
             </property>
+            <property name="accessibleDescription">
+             <string> Sync your entire cloud drive</string>
+            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -1449,6 +1452,9 @@ color: #E2574C;
             </property>
             <property name="focusPolicy">
              <enum>Qt::StrongFocus</enum>
+            </property>
+            <property name="accessibleDescription">
+             <string>Sync specific folders in your cloud drive</string>
             </property>
             <property name="styleSheet">
              <string notr="true"/>

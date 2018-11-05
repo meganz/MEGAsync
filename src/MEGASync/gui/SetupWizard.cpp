@@ -885,17 +885,41 @@ void SetupWizard::setupPreferences()
 
 bool SetupWizard::eventFilter(QObject *obj, QEvent *event)
 {
-    if (event->type() == QEvent::MouseButtonPress)
+    if (obj == ui->wTypicalSetup)
     {
-        if (obj == ui->wTypicalSetup)
+        if (event->type() == QEvent::KeyPress)
+        {
+            QKeyEvent* key = static_cast<QKeyEvent*>(event);
+            if (key->key() == Qt::Key_Space)
+            {
+                wTypicalSetup_clicked();
+            }
+        }
+
+        if (event->type() == QEvent::MouseButtonPress)
         {
             wTypicalSetup_clicked();
         }
-        else if (obj == ui->wAdvancedSetup)
+    }
+    else if (obj == ui->wAdvancedSetup)
+    {
+        if (event->type() == QEvent::KeyPress)
+        {
+            QKeyEvent* key = static_cast<QKeyEvent*>(event);
+            if (key->key() == Qt::Key_Space)
+            {
+                wAdvancedSetup_clicked();
+            }
+        }
+
+        if (event->type() == QEvent::MouseButtonPress)
         {
             wAdvancedSetup_clicked();
         }
-        else if (obj == ui->lTermsLink)
+    }
+    else if (obj == ui->lTermsLink)
+    {
+        if (event->type() == QEvent::MouseButtonPress)
         {
             lTermsLink_clicked();
         }
