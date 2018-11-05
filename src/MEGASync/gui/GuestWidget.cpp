@@ -45,6 +45,7 @@ void GuestWidget::onRequestStart(MegaApi *api, MegaRequest *request)
     }
     else if (request->getType() == MegaRequest::TYPE_LOGOUT && request->getFlag())
     {
+        closing = true;
         page_logout();
     }
 }

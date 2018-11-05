@@ -89,6 +89,7 @@ void SetupWizard::onRequestStart(MegaApi *api, MegaRequest *request)
     }
     else if (request->getType() == MegaRequest::TYPE_LOGOUT && request->getFlag())
     {
+        closing = true;
         page_logout();
     }
 }
@@ -904,9 +905,16 @@ bool SetupWizard::eventFilter(QObject *obj, QEvent *event)
 
 void SetupWizard::closeEvent(QCloseEvent *event)
 {
-    if (!event->spontaneous() || closing)
+    if (!event->spontaneous())
     {
         event->accept();
+        return;
+    }
+
+    if (closing)
+    {
+        megaApi->localLogout();
+        done(QDialog::Rejected);
         return;
     }
 
