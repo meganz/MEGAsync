@@ -6031,7 +6031,78 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             break;
         }
 
-        if (request->getParamType() == MegaApi::USER_ATTR_FIRSTNAME)
+        if (request->getParamType() == MegaApi::USER_ATTR_STORAGE_STATE)
+        {
+            if (e->getErrorCode() == MegaError::API_OK
+                || e->getErrorCode() == MegaError::API_ENOENT)
+            {
+                int state = request->getNumber();
+                if (state == MegaApi::STORAGE_STATE_RED)
+                {
+                    almostOQ = false;
+
+                    //Disable syncs
+                    disableSyncs();
+                    if (!infoOverQuota)
+                    {
+                        infoOverQuota = true;
+
+                        preferences->setUsedStorage(preferences->totalStorage());
+                        updateUserStats(true);
+
+                        if (trayMenu && trayMenu->isVisible())
+                        {
+                            trayMenu->close();
+                        }
+
+                        if (infoDialog && infoDialog->isVisible())
+                        {
+                            infoDialog->hide();
+                        }
+
+                        showInfoDialog();
+                    }
+
+                    if (settingsDialog)
+                    {
+                        delete settingsDialog;
+                        settingsDialog = NULL;
+                    }
+
+                    onGlobalSyncStateChanged(megaApi);
+                }
+                else
+                {
+                    if (state == MegaApi::STORAGE_STATE_GREEN)
+                    {
+                        almostOQ = false;
+                    }
+                    else if (state == MegaApi::STORAGE_STATE_ORANGE)
+                    {
+                        almostOQ = true;
+                    }
+
+                    if (infoOverQuota)
+                    {
+                        if (settingsDialog)
+                        {
+                            settingsDialog->setOverQuotaMode(false);
+                        }
+
+                        infoOverQuota = false;
+
+                        if (trayOverQuotaMenu && trayOverQuotaMenu->isVisible())
+                        {
+                            trayOverQuotaMenu->close();
+                        }
+
+                        restoreSyncs();
+                        onGlobalSyncStateChanged(megaApi);
+                    }
+                }
+            }
+        }
+        else if (request->getParamType() == MegaApi::USER_ATTR_FIRSTNAME)
         {
             QString firstname(QString::fromUtf8(""));
             if (e->getErrorCode() == MegaError::API_OK && request->getText())
@@ -6382,34 +6453,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         delete inShares;
 
         preferences->sync();
-
-        int percentage = ceil((100 * ((double)details->getStorageUsed()) / details->getStorageMax()));
-        if (percentage > 90 && percentage <= 100)
-        {
-            almostOQ = true;
-        }
-        else
-        {
-            almostOQ = false;
-        }
-
-        if (infoOverQuota && preferences->usedStorage() < preferences->totalStorage())
-        {
-            if (settingsDialog)
-            {
-                settingsDialog->setOverQuotaMode(false);
-            }
-
-            infoOverQuota = false;
-
-            if (trayOverQuotaMenu && trayOverQuotaMenu->isVisible())
-            {
-                trayOverQuotaMenu->close();
-            }
-
-            restoreSyncs();
-            onGlobalSyncStateChanged(megaApi);
-        }
 
         if (!megaApi->getBandwidthOverquotaDelay())
         {
@@ -7170,6 +7213,11 @@ void MegaApplication::onUsersUpdate(MegaApi *, MegaUserList *userList)
         MegaUser *user = userList->get(i);
         if (!user->isOwnChange() && user->getHandle() == myHandle)
         {
+            if (user->hasChanged(MegaUser::CHANGE_TYPE_STORAGE_STATE))
+            {
+                megaApi->getStorageState();
+            }
+
             if (user->hasChanged(MegaUser::CHANGE_TYPE_FIRSTNAME))
             {
                 megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
