@@ -70,13 +70,8 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                     ti->setFinishedTime(transfer->getUpdateTime());
                     ti->updateFinishedTime();
                 }
-                else
-                {
-                    if (!transfer->isFinished())
-                    {
-                        delete transfer;
-                    }
-                }
+
+                delete transfer;
             }            
         }
         else
@@ -244,6 +239,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
                         ((MegaApplication*)qApp)->getMegaApi()->retryTransfer(transfer);
                     }
 
+                    delete transfer;
                 }
              }
         }
@@ -262,6 +258,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
                 #endif
                 Platform::showInFolder(localPath);
             }
+            delete transfer;
         }
         return true;
     }
@@ -293,6 +290,7 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
                         {
                             QToolTip::showText(event->globalPos(), tr("Retry"));
                         }
+                        delete transfer;
                         return true;
                     }
                 }

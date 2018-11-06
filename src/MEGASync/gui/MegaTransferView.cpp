@@ -466,6 +466,7 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                         {
                             failed = true;
                         }
+                        delete transfer;
                     }
                 }
 
@@ -623,6 +624,7 @@ void MegaTransferView::getLinkClicked()
                     delete [] key;
                 }
                 delete node;
+                delete transfer;
             }
         }
 
@@ -646,6 +648,7 @@ void MegaTransferView::openItemClicked()
             {
                 QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(QString::fromUtf8(transfer->getPath())));
             }
+            delete transfer;
         }
     }
 }
@@ -670,6 +673,7 @@ void MegaTransferView::showInFolderClicked()
                 #endif
                 Platform::showInFolder(localPath);
             }
+            delete transfer;
         }
     }
 }
@@ -683,13 +687,17 @@ void MegaTransferView::showInMEGAClicked()
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
             transfer = model->getTransferByTag(transferTagSelected[i]);
-            MegaHandle handle = transfer->getNodeHandle();
-            if (transfer && (handle != INVALID_HANDLE))
+            if (transfer)
             {
-                const char *b64handle = MegaApi::handleToBase64(handle);
-                QString url = QString::fromAscii("https://mega.nz/fm/") + QString::fromUtf8(b64handle);
-                QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-                delete [] b64handle;
+                MegaHandle handle = transfer->getNodeHandle();
+                if (handle != INVALID_HANDLE)
+                {
+                    const char *b64handle = MegaApi::handleToBase64(handle);
+                    QString url = QString::fromAscii("https://mega.nz/fm/") + QString::fromUtf8(b64handle);
+                    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+                    delete [] b64handle;
+                }
+                delete transfer;
             }
         }
     }

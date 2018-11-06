@@ -25,7 +25,7 @@ MegaTransfer *QCustomTransfersModel::getTransferByTag(int tag)
     MegaTransfer *transfer = ((MegaApplication *)qApp)->getFinishedTransferByTag(tag);
     if (transfer)
     {
-        return transfer;
+        return transfer->copy();
     }
 
     return megaApi->getTransferByTag(tag);
