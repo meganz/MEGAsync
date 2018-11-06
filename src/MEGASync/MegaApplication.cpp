@@ -2734,29 +2734,31 @@ void MegaApplication::initLocalServer()
 
 void MegaApplication::sendOverStorageNotification(int state)
 {
-    MegaNotification *notification = new MegaNotification();
-
     switch (state)
     {
         case Preferences::STATE_ALMOST_OVER_STORAGE:
+        {
+            MegaNotification *notification = new MegaNotification();
             notification->setTitle(tr("Your account is almost full."));
             notification->setText(tr("Upgrade now to a PRO account."));
             notification->setActions(QStringList() << QString::fromUtf8("Get PRO"));
             connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
-        break;
+            notificator->notify(notification);
+            break;
+        }
         case Preferences::STATE_OVER_STORAGE:
+        {
+            MegaNotification *notification = new MegaNotification();
             notification->setTitle(tr("Your account is full."));
             notification->setText(tr("Upgrade now to a PRO account."));
             notification->setActions(QStringList() << QString::fromUtf8("Get PRO"));
             connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
-        break;
+            notificator->notify(notification);
+            break;
+        }
         default:
-            delete notification;
-            return;
+            break;
     }
-
-    notificator->notify(notification);
-
 }
 
 bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
@@ -5542,6 +5544,12 @@ void MegaApplication::createTrayMenu()
 #else
         trayMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
 #endif
+
+        //Highlight menu entry on mouse over
+        connect(trayMenu, SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
+
+        //Hide highlighted menu entry when mouse over
+        trayMenu->installEventFilter(this);
     }
     else
     {
@@ -5740,12 +5748,6 @@ void MegaApplication::createTrayMenu()
     trayMenu->addAction(settingsAction);
     trayMenu->addSeparator();
     trayMenu->addAction(exitAction);
-
-    //Highligth menu entry on mouse over
-    connect(trayMenu, SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
-
-    //Hide highlighted menu entry when mouse over
-    trayMenu->installEventFilter(this);
 }
 
 void MegaApplication::createOverQuotaMenu()

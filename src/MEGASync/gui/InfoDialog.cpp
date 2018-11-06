@@ -506,8 +506,6 @@ void InfoDialog::onAllTransfersFinished()
         if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
         {
             updateDialogState();
-//            overlay->setVisible(true);
-//            ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
         }
 
         if (preferences->logged())

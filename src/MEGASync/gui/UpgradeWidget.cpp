@@ -102,6 +102,17 @@ void UpgradeWidget::updatePlanInfo()
     ui->lBandWidthInfo->setText(maxTransfer);
 }
 
+void UpgradeWidget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+        ui->lPeriod->setText(QString::fromUtf8("/%1").arg(ui->lPeriod->text()));
+        updatePlanInfo();
+    }
+    QWidget::changeEvent(event);
+}
+
 void UpgradeWidget::setPlanInfo(PlanInfo data)
 {
     details = data;

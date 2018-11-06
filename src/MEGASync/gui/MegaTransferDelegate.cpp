@@ -70,13 +70,8 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                     ti->setFinishedTime(transfer->getUpdateTime());
                     ti->updateFinishedTime();
                 }
-                else
-                {
-                    if (!transfer->isFinished())
-                    {
-                        delete transfer;
-                    }
-                }
+
+                delete transfer;
             }            
         }
         else
@@ -97,15 +92,12 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 {
                     if (modelType == QTransfersModel::TYPE_DOWNLOAD)
                     {
-
-                            ti->setStateLabel(tr("paused"));
-                            ti->loadDefaultTransferIcon();
-
+                        ti->setStateLabel(tr("paused"));
+                        ti->loadDefaultTransferIcon();
                     }
                     else if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
                     {
-
-                            ti->setStateLabel(tr("PAUSED"));
+                        ti->setStateLabel(tr("PAUSED"));
                     }
                 }
                 else
@@ -185,7 +177,6 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
             if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
             {
                 model->removeTransferByTag(tag);
-                item = NULL;
             }
             else
             {
@@ -201,7 +192,6 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
                 if (result == QMessageBox::Yes)
                 {
                     model->megaApi->cancelTransferByTag(tag);
-                    item = NULL;
                 }
             }
         }
@@ -249,6 +239,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
                         ((MegaApplication*)qApp)->getMegaApi()->retryTransfer(transfer);
                     }
 
+                    delete transfer;
                 }
              }
         }
@@ -267,6 +258,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
                 #endif
                 Platform::showInFolder(localPath);
             }
+            delete transfer;
         }
         return true;
     }
@@ -282,7 +274,7 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
         TransferItem *item = model->transferItems[tag];
         if (item)
         {
-            if (item && item->getLinkButtonClicked(event->pos() - option.rect.topLeft()))
+            if (item->getLinkButtonClicked(event->pos() - option.rect.topLeft()))
             {
                 int modelType = model->getModelType();
                 if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
@@ -298,6 +290,7 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
                         {
                             QToolTip::showText(event->globalPos(), tr("Retry"));
                         }
+                        delete transfer;
                         return true;
                     }
                 }
