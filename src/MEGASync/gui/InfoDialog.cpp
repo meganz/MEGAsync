@@ -805,6 +805,10 @@ void InfoDialog::regenerateLayout()
             gWidget = new GuestWidget();
             connect(gWidget, SIGNAL(forwardAction(int)), this, SLOT(onUserAction(int)));
         }
+        else
+        {
+            gWidget->enableListener();
+        }
 
         ui->bTransferManager->setVisible(false);
         ui->bAvatar->setVisible(false);
@@ -836,6 +840,9 @@ void InfoDialog::regenerateLayout()
     }
     else
     {
+        gWidget->disableListener();
+        gWidget->initialize();
+
         setMinimumHeight(512);
         setMaximumHeight(512);
 

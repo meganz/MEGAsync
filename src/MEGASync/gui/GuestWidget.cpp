@@ -263,6 +263,33 @@ void GuestWidget::resetFocus()
     ui->bLogin->setDefault(true);
 }
 
+void GuestWidget::disableListener()
+{
+    if (!delegateListener)
+    {
+        return;
+    }
+
+    megaApi->removeRequestListener(delegateListener);
+}
+
+void GuestWidget::enableListener()
+{
+    if (!delegateListener)
+    {
+        return;
+    }
+
+    megaApi->addRequestListener(delegateListener);
+}
+
+void GuestWidget::initialize()
+{
+    closing = false;
+    loggingStarted = false;
+    page_login();
+}
+
 void GuestWidget::on_bLogin_clicked()
 {
     QString email = ui->lEmail->text().toLower().trimmed();

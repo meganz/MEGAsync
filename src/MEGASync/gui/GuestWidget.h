@@ -35,6 +35,10 @@ public:
 
     void resetFocus();
 
+    void disableListener();
+    void enableListener();
+    void initialize();
+
 signals:
     void forwardAction(int action);
 
