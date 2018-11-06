@@ -270,16 +270,18 @@ void GuestWidget::disableListener()
         return;
     }
 
-    megaApi->removeRequestListener(delegateListener);
+    delete delegateListener;
+    delegateListener = NULL;
 }
 
 void GuestWidget::enableListener()
 {
-    if (!delegateListener)
+    if (delegateListener)
     {
         return;
     }
 
+    delegateListener = new QTMegaRequestListener(megaApi, this);
     megaApi->addRequestListener(delegateListener);
 }
 
