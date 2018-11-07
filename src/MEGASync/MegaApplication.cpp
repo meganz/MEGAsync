@@ -1203,15 +1203,18 @@ void MegaApplication::start()
     QSvgRenderer qsr; //to have svg library linked
 #endif
 
-
     if (appfinished)
     {
         return;
     }
 
     indexing = false;
+    paused = false;
     overquotaCheck = false;
     inflightUserStats = false;
+
+    infoOverQuota = false;
+    almostOQ = false;
 
     if (isLinux && trayIcon->contextMenu())
     {
@@ -6283,8 +6286,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             closeDialogs();
             removeAllFinishedTransfers();
             clearViewedTransfers();
-            infoOverQuota = false;
-            paused = false;
 
             periodicTasks();
             preferences->setFirstStartDone();
