@@ -376,19 +376,13 @@ void InfoDialog::setOverQuotaMode(bool state)
 
     if (state)
     {
-        ui->bUpgrade->setProperty("overquota", true);
         ui->pUsageStorage->setProperty("overquota", true);
-        ui->bUpgrade->style()->unpolish(ui->bUpgrade);
-        ui->bUpgrade->style()->polish(ui->bUpgrade);
         ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
     }
     else
     {
-        ui->bUpgrade->setProperty("overquota", false);
         ui->pUsageStorage->setProperty("overquota", false);
-        ui->bUpgrade->style()->unpolish(ui->bUpgrade);
-        ui->bUpgrade->style()->polish(ui->bUpgrade);
         ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
     }
