@@ -831,18 +831,26 @@ void InfoDialog::regenerateLayout()
             dummy->setAttribute(Qt::WA_NoSystemBackground);
             dummy->setAttribute(Qt::WA_TranslucentBackground);
             dummy->show();
-        #endif
 
-        setMinimumHeight(404);
-        setMaximumHeight(404);
+            setMinimumHeight(404);
+            setMaximumHeight(404);
+        #else
+            setMinimumHeight(394);
+            setMaximumHeight(394);
+        #endif
     }
     else
     {
         gWidget->disableListener();
         gWidget->initialize();
 
+#ifdef __APPLE__
         setMinimumHeight(512);
         setMaximumHeight(512);
+#else
+        setMinimumHeight(514);
+        setMaximumHeight(514);
+#endif
 
         ui->bTransferManager->setVisible(true);
         ui->bAvatar->setVisible(true);
