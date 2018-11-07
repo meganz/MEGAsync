@@ -16,6 +16,9 @@ GuestWidget::GuestWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->lEmail->setStyleSheet(QString::fromAscii("QLineEdit {color: black;}"));
+    ui->lPassword->setStyleSheet(QString::fromAscii("QLineEdit {color: black;}"));
+
     app = (MegaApplication *)qApp;
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
