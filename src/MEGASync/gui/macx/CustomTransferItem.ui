@@ -42,7 +42,7 @@
 	border: none;
 }
 
-#Filename, #lFileNameCompleted
+#lFileName, #lFileNameCompleted
 {
   font-family: &quot;Source Sans Pro&quot;;
   font-size: 13px;
