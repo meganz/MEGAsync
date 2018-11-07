@@ -480,6 +480,9 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
+           <property name="toolTip">
+            <string>Open Transfer Manager</string>
+           </property>
            <property name="styleSheet">
             <string notr="true">border: none;
 </string>
@@ -524,6 +527,9 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
            </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="toolTip">
+            <string>Show MEGAsync options</string>
            </property>
            <property name="styleSheet">
             <string notr="true">border: none;

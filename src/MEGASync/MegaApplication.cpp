@@ -565,7 +565,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     settingsActionOverquota = NULL;
     settingsActionGuest = NULL;
     importLinksAction = NULL;
-    importLinksActionGuest = NULL;
     initialMenu = NULL;
     lastHovered = NULL;
     isPublic = false;
@@ -1862,9 +1861,6 @@ void MegaApplication::exitApplication()
     {
         exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"),
                                      tr("Are you sure you want to exit?"), QMessageBox::Yes|QMessageBox::No);
-//        TO-DO: Uncomment when asset is included to the project
-//        exitDialog->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-question.png")
-//                                                            : QString::fromUtf8(":/images/mbox-question@2x.png")));
         int button = exitDialog->exec();
         if (!exitDialog)
         {
@@ -2174,6 +2170,11 @@ void MegaApplication::checkMemoryUsage()
 
 void MegaApplication::checkOverStorageStates()
 {
+    if (!preferences->logged())
+    {
+        return;
+    }
+
     // Check if user is active
     if ((QDateTime::currentMSecsSinceEpoch() - lastUserActivityExecution) > Preferences::USER_INACTIVITY_MS)
     {
@@ -2514,7 +2515,6 @@ void MegaApplication::showInfoDialog()
 
             infoDialog->show();
             infoDialog->updateState();
-            infoDialog->setFocus();
             infoDialog->raise();
             infoDialog->activateWindow();
         }
@@ -2593,38 +2593,51 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
     #else
         #ifdef WIN32
             QRect totalGeometry = QApplication::desktop()->screenGeometry();
-            if (totalGeometry == screenGeometry)
+            APPBARDATA pabd;
+            pabd.cbSize = sizeof(APPBARDATA);
+            pabd.hWnd = FindWindow(L"Shell_TrayWnd", NULL);
+            if (pabd.hWnd && SHAppBarMessage(ABM_GETTASKBARPOS, &pabd)
+                    && pabd.rc.right != pabd.rc.left && pabd.rc.bottom != pabd.rc.top)
             {
-                APPBARDATA pabd;
-                pabd.cbSize = sizeof(APPBARDATA);
-                pabd.hWnd = FindWindow(L"Shell_TrayWnd", NULL);
-                if (pabd.hWnd && SHAppBarMessage(ABM_GETTASKBARPOS, &pabd)
-                        && pabd.rc.right != pabd.rc.left && pabd.rc.bottom != pabd.rc.top)
+                int size;
+                switch (pabd.uEdge)
                 {
-                    int size;
-                    switch (pabd.uEdge)
-                    {
-                        case ABE_LEFT:
+                    case ABE_LEFT:
+                        position = screenGeometry.bottomLeft();
+                        if (totalGeometry == screenGeometry)
+                        {
                             size = pabd.rc.right - pabd.rc.left;
                             size = size * screenGeometry.height() / (pabd.rc.bottom - pabd.rc.top);
                             screenGeometry.setLeft(screenGeometry.left() + size);
-                            break;
-                        case ABE_RIGHT:
+                        }
+                        break;
+                    case ABE_RIGHT:
+                        position = screenGeometry.bottomRight();
+                        if (totalGeometry == screenGeometry)
+                        {
                             size = pabd.rc.right - pabd.rc.left;
                             size = size * screenGeometry.height() / (pabd.rc.bottom - pabd.rc.top);
                             screenGeometry.setRight(screenGeometry.right() - size);
-                            break;
-                        case ABE_TOP:
+                        }
+                        break;
+                    case ABE_TOP:
+                        position = screenGeometry.topRight();
+                        if (totalGeometry == screenGeometry)
+                        {
                             size = pabd.rc.bottom - pabd.rc.top;
                             size = size * screenGeometry.width() / (pabd.rc.right - pabd.rc.left);
                             screenGeometry.setTop(screenGeometry.top() + size);
-                            break;
-                        case ABE_BOTTOM:
+                        }
+                        break;
+                    case ABE_BOTTOM:
+                        position = screenGeometry.bottomRight();
+                        if (totalGeometry == screenGeometry)
+                        {
                             size = pabd.rc.bottom - pabd.rc.top;
                             size = size * screenGeometry.width() / (pabd.rc.right - pabd.rc.left);
                             screenGeometry.setBottom(screenGeometry.bottom() - size);
-                            break;
-                    }
+                        }
+                        break;
                 }
             }
         #endif
@@ -2976,6 +2989,11 @@ void MegaApplication::setupWizardFinished(int result)
     else
     {
         megaApi->setExclusionUpperSizeLimit(0);
+    }
+
+    if (infoDialog && infoDialog->isVisible())
+    {
+        infoDialog->hide();
     }
 
     loggedIn();
@@ -4217,18 +4235,26 @@ void MegaApplication::userAction(int action)
 
     if (!preferences->logged())
     {
-        if (setupWizard)
+        switch (action)
         {
-            setupWizard->goToStep(action);
-            setupWizard->activateWindow();
-            setupWizard->raise();
-            return;
+            case InfoWizard::LOGIN_CLICKED:
+                showInfoDialog();
+                break;
+            default:
+                if (setupWizard)
+                {
+                    setupWizard->goToStep(action);
+                    setupWizard->activateWindow();
+                    setupWizard->raise();
+                    return;
+                }
+                setupWizard = new SetupWizard(this);
+                setupWizard->setModal(false);
+                connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished(int)));
+                setupWizard->goToStep(action);
+                setupWizard->show();
+                break;
         }
-        setupWizard = new SetupWizard(this);
-        setupWizard->setModal(false);
-        connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished(int)));
-        setupWizard->goToStep(action);
-        setupWizard->show();
     }
 }
 
@@ -5862,15 +5888,6 @@ void MegaApplication::createGuestMenu()
     }
     connect(updateActionGuest, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
 
-    if (importLinksActionGuest)
-    {
-        importLinksActionGuest->deleteLater();
-        importLinksActionGuest = NULL;
-    }
-
-    importLinksActionGuest = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
-    connect(importLinksActionGuest, SIGNAL(triggered()), this, SLOT(importLinks()));
-
     if (settingsActionGuest)
     {
         settingsActionGuest->deleteLater();
@@ -5886,7 +5903,6 @@ void MegaApplication::createGuestMenu()
 
     trayGuestMenu->addAction(updateActionGuest);
     trayGuestMenu->addSeparator();
-    trayGuestMenu->addAction(importLinksActionGuest);
     trayGuestMenu->addAction(settingsActionGuest);
     trayGuestMenu->addSeparator();
     trayGuestMenu->addAction(exitActionGuest);

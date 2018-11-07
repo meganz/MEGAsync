@@ -68,9 +68,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
 
-    ui->bTransferManager->setToolTip(tr("Open Transfer Manager"));
-    ui->bSettings->setToolTip(tr("Show MEGAsync options"));
-
     ui->pUsageStorage->installEventFilter(this);
     ui->pUsageStorage->setMouseTracking(true);
 
@@ -109,6 +106,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     arrow->setStyleSheet(QString::fromAscii("border: none;"));
     arrow->resize(30,10);
     arrow->hide();
+
+    dummy = NULL;
 #endif
 
     on_bDotUsedStorage_clicked();
@@ -397,6 +396,14 @@ void InfoDialog::setOverQuotaMode(bool state)
 
 void InfoDialog::updateState()
 {
+    if (!preferences->logged())
+    {
+        if (gWidget)
+        {
+            gWidget->resetFocus();
+        }
+    }
+
     if (preferences->getGlobalPaused())
     {
         if (!preferences->logged())
@@ -794,7 +801,11 @@ void InfoDialog::regenerateLayout()
         if (!gWidget)
         {
             gWidget = new GuestWidget();
-            connect(gWidget, SIGNAL(actionButtonClicked(int)), this, SLOT(onUserAction(int)));
+            connect(gWidget, SIGNAL(forwardAction(int)), this, SLOT(onUserAction(int)));
+        }
+        else
+        {
+            gWidget->enableListener();
         }
 
         ui->bTransferManager->setVisible(false);
@@ -809,11 +820,27 @@ void InfoDialog::regenerateLayout()
         dialogLayout->addWidget(gWidget);
         gWidget->setVisible(true);
 
-        setMinimumHeight(385);
-        setMaximumHeight(385);
+        #ifdef __APPLE__
+            if (!dummy)
+            {
+                dummy = new QWidget();
+            }
+
+            dummy->resize(1,1);
+            dummy->setWindowFlags(Qt::FramelessWindowHint);
+            dummy->setAttribute(Qt::WA_NoSystemBackground);
+            dummy->setAttribute(Qt::WA_TranslucentBackground);
+            dummy->show();
+        #endif
+
+        setMinimumHeight(404);
+        setMaximumHeight(404);
     }
     else
     {
+        gWidget->disableListener();
+        gWidget->initialize();
+
         setMinimumHeight(512);
         setMaximumHeight(512);
 
@@ -828,6 +855,15 @@ void InfoDialog::regenerateLayout()
         ui->wSeparator->setVisible(true);
         dialogLayout->addWidget(ui->wContainerBottom);
         ui->wContainerBottom->setVisible(true);
+
+        #ifdef __APPLE__
+            if (dummy)
+            {
+                dummy->hide();
+                delete dummy;
+                dummy = NULL;
+            }
+        #endif
     }
 
     app->onGlobalSyncStateChanged(NULL);
