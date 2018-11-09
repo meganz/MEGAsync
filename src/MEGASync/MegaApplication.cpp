@@ -3563,118 +3563,122 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
         MegaNotification *notification = new MegaNotification();
         QString title;
         QString message;
-        switch (data->transferDirection)
+
+        if (data->transfersFileOK || data->transfersFolderOK)
         {
-            case MegaTransfer::TYPE_UPLOAD:
+            switch (data->transferDirection)
             {
-                if (data->totalFiles && data->totalFolders)
+                case MegaTransfer::TYPE_UPLOAD:
                 {
-                    title = tr("Upload");
-                    if (data->totalFolders == 1)
+                    if (data->transfersFileOK && data->transfersFolderOK)
                     {
-                        if (data->totalFiles == 1)
+                        title = tr("Upload");
+                        if (data->transfersFolderOK == 1)
                         {
-                            message = tr("1 file and 1 folder were successfully uploaded");
+                            if (data->transfersFileOK == 1)
+                            {
+                                message = tr("1 file and 1 folder were successfully uploaded");
+                            }
+                            else
+                            {
+                                message = tr("%1 files and 1 folder were successfully uploaded").arg(data->totalFiles);
+                            }
                         }
                         else
                         {
-                            message = tr("%1 files and 1 folder were successfully uploaded").arg(data->totalFiles);
+                            if (data->transfersFileOK == 1)
+                            {
+                                message = tr("1 file and %1 folders were successfully uploaded").arg(data->totalFolders);
+                            }
+                            else
+                            {
+                                message = tr("%1 files and %2 folders were successfully uploaded").arg(data->totalFiles).arg(data->totalFolders);
+                            }
                         }
                     }
-                    else
+                    else if (!data->transfersFileOK)
                     {
-                        if (data->totalFiles == 1)
+                        title = tr("Folder Upload");
+                        if (data->transfersFolderOK == 1)
                         {
-                            message = tr("1 file and %1 folders were successfully uploaded").arg(data->totalFolders);
+                            message = tr("1 folder was successfully uploaded");
                         }
                         else
                         {
-                            message = tr("%1 files and %2 folders were successfully uploaded").arg(data->totalFiles).arg(data->totalFolders);
+                            message = tr("%1 folders were successfully uploaded").arg(data->totalFolders);
                         }
                     }
-                }
-                else if (!data->totalFiles)
-                {
-                    title = tr("Folder Upload");
-                    if (data->totalFolders == 1)
+                    else
                     {
-                        message = tr("1 folder was successfully uploaded");
+                        title = tr("File Upload");
+                        if (data->transfersFileOK == 1)
+                        {
+                            message = tr("1 file was successfully uploaded");
+                        }
+                        else
+                        {
+                            message = tr("%1 files were successfully uploaded").arg(data->totalFiles);
+                        }
+                    }
+                    break;
+                }
+                case MegaTransfer::TYPE_DOWNLOAD:
+                {
+                    if (data->transfersFileOK && data->transfersFolderOK)
+                    {
+                        title = tr("Download");
+                        if (data->transfersFolderOK == 1)
+                        {
+                            if (data->transfersFileOK == 1)
+                            {
+                                message = tr("1 file and 1 folder were successfully downloaded");
+                            }
+                            else
+                            {
+                                message = tr("%1 files and 1 folder were successfully downloaded").arg(data->totalFiles);
+                            }
+                        }
+                        else
+                        {
+                            if (data->transfersFileOK == 1)
+                            {
+                                message = tr("1 file and %1 folders were successfully downloaded").arg(data->totalFolders);
+                            }
+                            else
+                            {
+                                message = tr("%1 files and %2 folders were successfully downloaded").arg(data->totalFiles).arg(data->totalFolders);
+                            }
+                        }
+                    }
+                    else if (!data->transfersFileOK)
+                    {
+                        title = tr("Folder Download");
+                        if (data->transfersFolderOK == 1)
+                        {
+                            message = tr("1 folder was successfully downloaded");
+                        }
+                        else
+                        {
+                            message = tr("%1 folders were successfully downloaded").arg(data->totalFolders);
+                        }
                     }
                     else
                     {
-                        message = tr("%1 folders were successfully uploaded").arg(data->totalFolders);
+                        title = tr("File Download");
+                        if (data->transfersFileOK == 1)
+                        {
+                            message = tr("1 file was successfully downloaded");
+                        }
+                        else
+                        {
+                            message = tr("%1 files were successfully downloaded").arg(data->totalFiles);
+                        }
                     }
+                    break;
                 }
-                else
-                {
-                    title = tr("File Upload");
-                    if (data->totalFiles == 1)
-                    {
-                        message = tr("1 file was successfully uploaded");
-                    }
-                    else
-                    {
-                        message = tr("%1 files were successfully uploaded").arg(data->totalFiles);
-                    }
-                }
-                break;
+                default:
+                    break;
             }
-            case MegaTransfer::TYPE_DOWNLOAD:
-            {
-                if (data->totalFiles && data->totalFolders)
-                {
-                    title = tr("Download");
-                    if (data->totalFolders == 1)
-                    {
-                        if (data->totalFiles == 1)
-                        {
-                            message = tr("1 file and 1 folder were successfully downloaded");
-                        }
-                        else
-                        {
-                            message = tr("%1 files and 1 folder were successfully downloaded").arg(data->totalFiles);
-                        }
-                    }
-                    else
-                    {
-                        if (data->totalFiles == 1)
-                        {
-                            message = tr("1 file and %1 folders were successfully downloaded").arg(data->totalFolders);
-                        }
-                        else
-                        {
-                            message = tr("%1 files and %2 folders were successfully downloaded").arg(data->totalFiles).arg(data->totalFolders);
-                        }
-                    }
-                }
-                else if (!data->totalFiles)
-                {
-                    title = tr("Folder Download");
-                    if (data->totalFolders == 1)
-                    {
-                        message = tr("1 folder was successfully downloaded");
-                    }
-                    else
-                    {
-                        message = tr("%1 folders were successfully downloaded").arg(data->totalFolders);
-                    }
-                }
-                else
-                {
-                    title = tr("File Download");
-                    if (data->totalFiles == 1)
-                    {
-                        message = tr("1 file was successfully downloaded");
-                    }
-                    else
-                    {
-                        message = tr("%1 files were successfully downloaded").arg(data->totalFiles);
-                    }
-                }
-                break;
-            }
-            default:
-                break;
         }
 
         if (notificator && !message.isEmpty())
@@ -6830,6 +6834,10 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                 else if (e->getErrorCode() != MegaError::API_OK)
                 {
                     data->transfersFailed++;
+                }
+                else
+                {
+                    !folderTransferTag ? data->transfersFileOK++ : data->transfersFolderOK++;
                 }
 
                 data->pendingTransfers--;
