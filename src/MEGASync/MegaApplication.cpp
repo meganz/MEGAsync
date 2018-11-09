@@ -945,16 +945,19 @@ void MegaApplication::updateTrayIcon()
 
     if (infoOverQuota)
     {
-        if (preferences->usedStorage() < preferences->totalStorage())
+        if (preferences->logged())
         {
-            if (!overquotaCheck)
+            if (preferences->usedStorage() < preferences->totalStorage())
             {
-                updateUserStats(true);
-                overquotaCheck = true;
-            }
-            else
-            {
-                updateUserStats();
+                if (!overquotaCheck)
+                {
+                    updateUserStats(true);
+                    overquotaCheck = true;
+                }
+                else
+                {
+                    updateUserStats();
+                }
             }
         }
 
