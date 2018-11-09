@@ -6979,27 +6979,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         }
     }
 
-    int errorCode = e->getErrorCode();
-    if (errorCode != MegaError::API_OK
-            && ((!transfer->isSyncTransfer()
-                    && errorCode != MegaError::API_EACCESS
-                    && errorCode != MegaError::API_ESID
-                    && errorCode != MegaError::API_ESSL
-                    && errorCode != MegaError::API_EINCOMPLETE
-                    && errorCode != MegaError::API_EEXIST)
-                || (transfer->isSyncTransfer()
-                    && errorCode == MegaError::API_EKEY)))
-    {
-        if (errorCode == MegaError::API_EFAILED)
-        {
-            showWarningMessage(tr("Transfer failed:") + QString::fromUtf8(" ") + tr("Temporarily not available"), QString::fromUtf8(transfer->getFileName()));
-        }
-        else
-        {
-            showErrorMessage(tr("Transfer failed:") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
-        }
-    }
-
     //If there are no pending transfers, reset the statics and update the state of the tray icon
     if (!numTransfers[MegaTransfer::TYPE_DOWNLOAD]
             && !numTransfers[MegaTransfer::TYPE_UPLOAD])
@@ -7130,34 +7109,6 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
 
             onGlobalSyncStateChanged(megaApi);
         }
-        return;
-    } 
-
-    //Show information to users
-    if (transfer->getNumRetry() == 1)
-    {
-        int errorCode = e->getErrorCode();
-        if (errorCode == MegaError::API_EFAILED)
-        {
-            showWarningMessage(tr("Temporary error, retrying."), QString::fromUtf8(transfer->getFileName()));
-        }
-        else if (errorCode != MegaError::API_EKEY
-                 && errorCode != MegaError::API_EBLOCKED
-                 && errorCode != MegaError::API_ENOENT
-                 && errorCode != MegaError::API_EINTERNAL)
-        {
-            QString message = tr("Temporary transmission error: ");
-            if (!message.endsWith(QString::fromUtf8(" ")))
-            {
-                message.append(QString::fromUtf8(" "));
-            }
-            showWarningMessage(message
-                           + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
-        }
-    }
-    else
-    {
-        onGlobalSyncStateChanged(megaApi);
     }
 }
 
