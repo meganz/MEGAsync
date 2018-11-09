@@ -730,6 +730,7 @@ void InfoDialog::changeEvent(QEvent *event)
             state = STATE_STARTING;
             ui->wStatus->setState(state);
             updateState();   
+            handleOverStorage(storageState);
         }
     }
     QDialog::changeEvent(event);
