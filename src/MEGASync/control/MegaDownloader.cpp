@@ -121,6 +121,7 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info, unsigned long lo
             TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(appDataId);
             if (data)
             {
+                data->transfersFolderOK++;
                 data->pendingTransfers--;
                 if (data->pendingTransfers == 0)
                 {
