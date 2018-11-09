@@ -1403,6 +1403,7 @@ void MegaApplication::loggedIn()
         infoWizard = NULL;
     }
 
+    registerUserActivity();
     pauseTransfers(paused);
     inflightUserStats = false;
     updateUserStats(true);
