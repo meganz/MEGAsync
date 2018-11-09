@@ -170,7 +170,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             {
                 if (error->getErrorCode() == MegaError::API_ENOENT)
                 {
-                    showErrorMessage(tr("Incorrect email and/or password.") + QString::fromUtf8(" ") + tr("Have you verified your account?"));
+                    showErrorMessage(tr("Incorrect email and/or password."));
                 }
                 else if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
                 {
