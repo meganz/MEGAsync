@@ -3896,6 +3896,11 @@ void MegaApplication::removeFinishedTransfer(int transferTag)
         finishedTransfers.erase(it);
 
         emit clearFinishedTransfer(transferTag);
+
+        if (!finishedTransfers.size() && infoDialog)
+        {
+            infoDialog->updateDialogState();
+        }
     }
 }
 
@@ -3906,6 +3911,11 @@ void MegaApplication::removeAllFinishedTransfers()
     finishedTransfers.clear();
 
     emit clearAllFinishedTransfers();
+
+    if (infoDialog)
+    {
+        infoDialog->updateDialogState();
+    }
 }
 
 QList<MegaTransfer*> MegaApplication::getFinishedTransfers()
