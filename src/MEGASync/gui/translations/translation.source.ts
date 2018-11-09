@@ -419,42 +419,42 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>CustomTransferItem</name>
     <message>
         <source>failed:</source>
-        <translatorcomment>Label to indicate the user that actual transfer has failed. The reason will be append after colon symbol.</translatorcomment>
+        <translatorcomment>Label to indicate that the transfer failed. The reason will be appended after colon symbol.</translatorcomment>
         <translation type="unfinished">failed:</translation>
     </message>
     <message>
         <source>%1 of %2</source>
-        <translatorcomment>Label to indicate the user the amount of completed transfers above the total. %1 will be replace with the number of completed and %2 with the total number of transfers</translatorcomment>
+        <translatorcomment>Label to indicate the number of completed transfers of the total. %1 will be replaced with the number of completed transfers and %2 with the total number of transfers</translatorcomment>
         <translation type="unfinished">%1 of %2</translation>
     </message>
     <message>
         <source>starting...</source>
-        <translatorcomment>Label to indicate the user that actual transfer is starting.</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer is starting.</translatorcomment>
         <translation type="unfinished">starting...</translation>
     </message>
     <message>
         <source>PAUSED</source>
-        <translatorcomment>Label to indicate the user that transfer queue is actually paused. Keep upper case.</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer is paused. Keep uppercase.</translatorcomment>
         <translation type="unfinished">PAUSED</translation>
     </message>
     <message>
         <source>queued</source>
-        <translatorcomment>Label to indicate the user that actual transfer is queued.</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer is queued.</translatorcomment>
         <translation type="unfinished">queued</translation>
     </message>
     <message>
         <source>retrying...</source>
-        <translatorcomment>Label to indicate the user that actual transfer is retrying.</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer is being retried.</translatorcomment>
         <translation type="unfinished">retrying...</translation>
     </message>
     <message>
         <source>completing...</source>
-        <translatorcomment>Label to indicate the user that actual transfer is completing.</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer is being completed.</translatorcomment>
         <translation type="unfinished">completing...</translation>
     </message>
     <message>
         <source>Added [A]</source>
-        <translatorcomment>Label to indicate the user that actual transfer was finalized (added) [A] time ago. [A] will be updated with the time since the transfer finalized.</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer finished (added to the list of recently finished transfers) [A] time ago. [A] will be updated with the time since the transfer finished.</translatorcomment>
         <translation type="unfinished">Added [A]</translation>
     </message>
 </context>
@@ -655,7 +655,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Login to MEGA</source>
-        <translatorcomment>Label shown at main dialog form before login </translatorcomment>
+        <translatorcomment>Label shown at main dialog before logging in</translatorcomment>
         <translation type="unfinished">Login to MEGA</translation>
     </message>
     <message>
@@ -670,63 +670,63 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Forgot password?</source>
-        <translatorcomment>Button label that redirects to forgot password information web page.</translatorcomment>
+        <translatorcomment>Button label that redirects to the web page with information about forgotten passwords.</translatorcomment>
         <translation type="unfinished">Forgot password?</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translatorcomment>Button label to cancel current operation</translatorcomment>
+        <translatorcomment>Button label to cancel the current operation</translatorcomment>
         <translation type="unfinished">Cancel</translation>
     </message>
     <message>
         <source>Setting up your account...</source>
-        <translatorcomment>Label shown at main dialog to inform the user that initial setup is taking place to set sync mode.</translatorcomment>
+        <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
         <translation type="unfinished">Setting up your account...</translation>
     </message>
     <message>
         <source>Logging in...</source>
-        <translatorcomment>Label shown at main dialog to reflect the actual operation. In this case logging in.</translatorcomment>
+        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
         <translation type="unfinished">Logging in...</translation>
     </message>
     <message>
         <source>Fetching file list...</source>
-        <translatorcomment>Label shown at main dialog to reflect the actual operation. In this case fetching file information from servers.</translatorcomment>
+        <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
         <translation type="unfinished">Fetching file list...</translation>
     </message>
     <message>
         <source>Error</source>
-        <translatorcomment>Label shown to reflect an error</translatorcomment>
+        <translatorcomment>Label shown to show an error</translatorcomment>
         <translation type="unfinished">Error</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
-        <translatorcomment>Message box shown when user enters incorrect email and/or password at login </translatorcomment>
+        <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
         <translation type="unfinished">Incorrect email and/or password.</translation>
     </message>
     <message>
         <source>Have you verified your account?</source>
-        <translatorcomment>Label shown dialog during failed login to warn the user about the fact of verify his account before login in.</translatorcomment>
+        <translatorcomment>Message shown after a failed login to recommend the user to verify his account.</translatorcomment>
         <translation type="unfinished">Have you verified your account?</translation>
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translatorcomment>Label shown when a user has created and account to inform that needs to check his e-mail and confirm his account.</translatorcomment>
+        <translatorcomment>Label shown when a user has created and account to inform that he needs to check his e-mail and confirm his account.</translatorcomment>
         <translation type="unfinished">Please check your e-mail and click the link to confirm your account.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
-        <translatorcomment>Label shown at main dialog to inform the user that had failed to login several times and needs to wait before try again.</translatorcomment>
+        <translatorcomment>Label shown at main dialog to inform the user that he has failed to log in several times and has to wait before trying again.</translatorcomment>
         <translation type="unfinished">You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
-        <translatorcomment>Label shown at main dialog to reflect that actual account has been blocked and need to contact support team.</translatorcomment>
+        <translatorcomment>Label shown at main dialog to show that the account has been blocked and the user needs to contact the support team.</translatorcomment>
         <translation type="unfinished">Your account has been blocked. Please contact support@mega.co.nz</translation>
     </message>
     <message>
         <source>Unable to get the filesystem.
 Please, try again. If the problem persists please contact bug@mega.co.nz</source>
-        <translatorcomment>Label shown at main dialog to reflect a problem fetching filesystem from server.</translatorcomment>
+        <translatorcomment>Label shown if there is a fatal error fetching the filesystem from servers.</translatorcomment>
         <translation type="unfinished">Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
     </message>
     <message>
@@ -736,17 +736,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
-        <translatorcomment>Message box shown if user has typed an incorrect email format</translatorcomment>
+        <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
         <translation type="unfinished">Please, enter a valid e-mail address</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
-        <translatorcomment>Message box shown if user does not enter password</translatorcomment>
+        <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
         <translation type="unfinished">Please, enter your password</translation>
     </message>
     <message>
         <source>Logging out...</source>
-        <translatorcomment>Label shown at main dialog to reflect the actual operation. In this case logging iout from actual account.</translatorcomment>
+        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
         <translation type="unfinished">Logging out...</translation>
     </message>
 </context>
@@ -1101,42 +1101,42 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload to MEGA now</source>
-        <translatorcomment>Label shown to the user at main dialog when it is already logged to inform that he can start uploading files to MEGA</translatorcomment>
+        <translatorcomment>Label shown at main dialog when the user is already logged in to inform that he can start uploading files to MEGA</translatorcomment>
         <translation type="unfinished">Upload to MEGA now</translation>
     </message>
     <message>
         <source>Dismiss</source>
-        <translatorcomment>Button label to dismiss (hide) over quota/almost over quota dialogs when they are shown.</translatorcomment>
+        <translatorcomment>Button label to dismiss (hide) overquota dialogs.</translatorcomment>
         <translation type="unfinished">Dismiss</translation>
     </message>
     <message>
         <source>Buy more space</source>
-        <translatorcomment>Button label to redirect the user to upgrade account website.</translatorcomment>
+        <translatorcomment>Button label to redirect the user to upgrade the account in the website.</translatorcomment>
         <translation type="unfinished">Buy more space</translation>
     </message>
     <message>
         <source>TRANSFER QUOTA %1</source>
-        <translatorcomment>Label shown to indicate the actual transfer quota used by current account. %1 will be replaced with actual usage quota</translatorcomment>
+        <translatorcomment>Label shown to indicate the actual transfer quota used by the current account. %1 will be replaced with the used bandwidth quota</translatorcomment>
         <translation type="unfinished">TRANSFER QUOTA %1</translation>
     </message>
     <message>
         <source>You&apos;re running out of storage space.</source>
-        <translatorcomment>Label shown to the user to inform that actual account is running out of storage space.</translatorcomment>
+        <translatorcomment>Label to inform the user that the account is running out of storage space.</translatorcomment>
         <translation type="unfinished">You&apos;re running out of storage space.</translation>
     </message>
     <message>
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
-        <translatorcomment>Label shown to the user to encourage to upgrade his account before the uploads stop</translatorcomment>
+        <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
         <translation type="unfinished">Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</translation>
     </message>
     <message>
         <source>Your MEGA account is full.</source>
-        <translatorcomment>Label shown to the user to warn that the actual account is over storage.</translatorcomment>
+        <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
         <translation type="unfinished">Your MEGA account is full.</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled. Please upgrade to PRO</source>
-        <translatorcomment>Label shown to the user that all uploads are stopped because the account is over storage.</translatorcomment>
+        <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
         <translation type="unfinished">All file uploads are currently disabled. Please upgrade to PRO</translation>
     </message>
 </context>
@@ -1835,7 +1835,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account is almost full.</source>
-        <translatorcomment>System title notification when actual user account is almost full. Over 90 per cent.</translatorcomment>
+        <translatorcomment>Title of the system notification when the account is almost full.</translatorcomment>
         <translation type="unfinished">Your account is almost full.</translation>
     </message>
     <message>
@@ -1845,7 +1845,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account is full.</source>
-        <translatorcomment>System title notification when actual user account is  full.</translatorcomment>
+        <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
         <translation type="unfinished">Your account is full.</translation>
     </message>
     <message>
@@ -1870,7 +1870,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Folder Upload</source>
-        <translatorcomment>System title notification for a folder upload</translatorcomment>
+        <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
         <translation type="unfinished">Folder Upload</translation>
     </message>
     <message>
@@ -1885,7 +1885,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>File Upload</source>
-        <translatorcomment>System title notification for a file upload</translatorcomment>
+        <translatorcomment>Title of system notifications related to a file upload</translatorcomment>
         <translation type="unfinished">File Upload</translation>
     </message>
     <message>
@@ -1920,7 +1920,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Folder Download</source>
-        <translatorcomment>System title notification for a folder download</translatorcomment>
+        <translatorcomment>Title of system notifications related to a folder download</translatorcomment>
         <translation type="unfinished">Folder Download</translation>
     </message>
     <message>
@@ -1935,7 +1935,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>File Download</source>
-        <translatorcomment>System title notification for a file download</translatorcomment>
+        <translatorcomment>Title of system notifications related to a file download</translatorcomment>
         <translation type="unfinished">File Download</translation>
     </message>
     <message>
@@ -1950,12 +1950,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Add Sync</source>
-        <translatorcomment>Entry menu label to add a new synchronization</translatorcomment>
+        <translatorcomment>Menu item to add a new synchronization</translatorcomment>
         <translation type="unfinished">Add Sync</translation>
     </message>
     <message>
         <source>Syncs</source>
-        <translatorcomment>Entry menu label of current synchronizations</translatorcomment>
+        <translatorcomment>Menu item to show current synchronizations</translatorcomment>
         <translation type="unfinished">Syncs</translation>
     </message>
 </context>
@@ -2123,12 +2123,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Get link</source>
-        <translatorcomment>Tooltip shown when user hover the button of Get link for a completed transfer</translatorcomment>
+        <translatorcomment>Tooltip shown when the mouse is over the "Get link" button related to a completed transfer</translatorcomment>
         <translation type="unfinished">Get link</translation>
     </message>
     <message>
         <source>Retry</source>
-        <translatorcomment>Tooltip shown when user hover the button of Retry for a failed transfer</translatorcomment>
+        <translatorcomment>Tooltip shown when the mouse is over the "Retry" button related to a failed transfer</translatorcomment>
         <translation type="unfinished">Retry</translation>
     </message>
 </context>
@@ -2373,12 +2373,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <name>PSAwidget</name>
     <message>
         <source>Know More</source>
-        <translatorcomment>Button label to redirect the user to know more website of actual PSA announcement</translatorcomment>
+        <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
         <translation type="unfinished">Know More</translation>
     </message>
     <message>
         <source>Dismiss</source>
-        <translatorcomment>Button label to dismiss and hide PSA announcement in MEGAsync</translatorcomment>
+        <translatorcomment>Button label to dismiss and hide a PSA announcement</translatorcomment>
         <translation type="unfinished">Dismiss</translation>
     </message>
 </context>
@@ -3654,21 +3654,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Learn more</source>
+        <translatorcomment>Label to redirect the user to a website with information about the different synchronization modes</translatorcomment>
         <translation type="obsolete">Learn more</translation>
     </message>
     <message>
         <source>First name:</source>
-        <translatorcomment>Label for first name field of create account form</translatorcomment>
+        <translatorcomment>Label for first name field in the create account form</translatorcomment>
         <translation type="unfinished">First name:</translation>
     </message>
     <message>
         <source>Last name:</source>
-        <translatorcomment>Label for last name field of create account form</translatorcomment>
+        <translatorcomment>Label for last name field in the create account form</translatorcomment>
         <translation type="unfinished">Last name:</translation>
     </message>
     <message>
         <source>Check your inbox</source>
-        <translatorcomment>Label fshown once the user has just created an account and need to check his inbox to verify it</translatorcomment>
+        <translatorcomment>Label shown when the user has just created an account and needs to check his inbox to verify it</translatorcomment>
         <translation type="unfinished">Check your inbox</translation>
     </message>
     <message>
@@ -3678,27 +3679,27 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Selective sync:</source>
-        <translatorcomment>Label displayed to show Selective sync mode.</translatorcomment>
+        <translatorcomment>Label next to information about the selective sync mode.</translatorcomment>
         <translation type="unfinished">Selective sync:</translation>
     </message>
     <message>
         <source>Enjoy MEGAsync!</source>
-        <translatorcomment>Label displayed twhen user completes the setup wizard</translatorcomment>
+        <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
         <translation type="unfinished">Enjoy MEGAsync!</translation>
     </message>
     <message>
         <source>Please, enter your last name</source>
-        <translatorcomment>Label displayed when the user has not filled the llast name field.</translatorcomment>
+        <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
         <translation type="unfinished">Please, enter your last name</translation>
     </message>
     <message>
         <source>Setup selective sync</source>
-        <translatorcomment>Label shown when user is setting up selective sync mode of MEGAsync</translatorcomment>
+        <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
         <translation type="unfinished">Setup selective sync</translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
-        <translatorcomment>Information label to explain the user about selective sync mode of MEGAsync</translatorcomment>
+        <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
         <translation type="unfinished">Specific folders in your Cloud Drive will be synchronized with a local folder.</translation>
     </message>
     <message>
@@ -3713,12 +3714,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Full Sync</source>
-        <translatorcomment>Label displayed to show Full sync mode. Max 18 characters.</translatorcomment>
+        <translatorcomment>Label displayed to show Full sync mode.</translatorcomment>
         <translation type="unfinished">Full Sync</translation>
     </message>
     <message>
         <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
-        <translatorcomment>Information label to explain the user about full sync mode of MEGAsync</translatorcomment>
+        <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
         <translation type="unfinished">Your entire Cloud Drive will be synchronized with a local folder.</translation>
     </message>
     <message>
@@ -3837,42 +3838,42 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>StatusInfo</name>
     <message>
         <source>Starting</source>
-        <translatorcomment>Information label shown by main dialog to inform that MEGAsync is starting</translatorcomment>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is starting</translatorcomment>
         <translation type="unfinished">Starting</translation>
     </message>
     <message>
         <source>Paused</source>
-        <translatorcomment>Information label shown by main dialog to inform that  all transfers are pause </translatorcomment>
+        <translatorcomment>Information label in the main dialog to show that all transfers are paused</translatorcomment>
         <translation type="unfinished">Paused</translation>
     </message>
     <message>
         <source>Waiting</source>
-        <translatorcomment>Information label shown by main dialog to inform that MEGAsync is at waiting state</translatorcomment>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state</translatorcomment>
         <translation type="unfinished">Waiting</translation>
     </message>
     <message>
         <source>Scanning...</source>
-        <translatorcomment>Information label shown by main dialog to inform that MEGAsync is at scanning state</translatorcomment>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
         <translation type="unfinished">Scanning…</translation>
     </message>
     <message>
         <source>Account full</source>
-        <translatorcomment>Information label shown by main dialog to inform that current account is full storage.</translatorcomment>
+        <translatorcomment>Information label in the main dialog to show that the current account is full.</translatorcomment>
         <translation type="unfinished">Account full</translation>
     </message>
     <message>
         <source>Up to date</source>
-        <translatorcomment>Information label shown by main dialog to inform that MEGAsync is up to date</translatorcomment>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is up to date</translatorcomment>
         <translation type="unfinished">Up to date</translation>
     </message>
     <message>
         <source>Resume Transfers</source>
-        <translatorcomment>Information label shown by main dialog to let the user resume paused transfers</translatorcomment>
+        <translatorcomment>Label in the main dialog that allows the user to resume paused transfers</translatorcomment>
         <translation type="unfinished">Resume Transfers</translation>
     </message>
     <message>
         <source>Pause Transfers</source>
-        <translatorcomment>Information label shown by main dialog to let the user pause active transfers</translatorcomment>
+        <translatorcomment>Label in the main dialog that allows the user to pause active transfers</translatorcomment>
         <translation type="unfinished">Pause Transfers</translation>
     </message>
 </context>
@@ -4149,27 +4150,27 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>TransferManagerItem</name>
     <message>
         <source>starting</source>
-        <translatorcomment>Label to indicate that current transfer is starting</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer is starting</translatorcomment>
         <translation type="unfinished">starting</translation>
     </message>
     <message>
         <source>paused</source>
-        <translatorcomment>Label to indicate that current transfer is paused</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer is paused</translatorcomment>
         <translation type="unfinished">paused</translation>
     </message>
     <message>
         <source>queued</source>
-        <translatorcomment>Label to indicate that current transfer is queued</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer is queued</translatorcomment>
         <translation type="unfinished">queued</translation>
     </message>
     <message>
         <source>retrying</source>
-        <translatorcomment>Label to indicate that current transfer is being retrying</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer is being retried</translatorcomment>
         <translation type="unfinished">retrying</translation>
     </message>
     <message>
         <source>completing</source>
-        <translatorcomment>Label to indicate that current transfer is completing</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer is being completed</translatorcomment>
         <translation type="unfinished">completing</translation>
     </message>
 </context>
@@ -4214,22 +4215,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UpgradeOverStorage</name>
     <message>
         <source>Storage full</source>
-        <translatorcomment>Title label of over storage dialog</translatorcomment>
+        <translatorcomment>Title of the over storage dialog</translatorcomment>
         <translation type="unfinished">Storage full</translation>
     </message>
     <message>
         <source>Your account is full ([A] / [B]). All file uploads to MEGA are currently disabled.</source>
-        <translatorcomment>Label to inform the user about a full account, showing used storage over total available and some information about file uploads.</translatorcomment>
+        <translatorcomment>Label to inform the user about a full account, showing the used storage, the total available and some information about file uploads.</translatorcomment>
         <translation type="unfinished">Your account is full ([A] / [B]). All file uploads to MEGA are currently disabled.</translation>
     </message>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
-        <translatorcomment>Label to encourage the user to upgrade his accout</translatorcomment>
+        <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
         <translation type="unfinished">Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</translation>
     </message>
     <message>
         <source>Earn more storage quota with [A]Achievements[/A].</source>
-        <translatorcomment>Label to inform the user about achievements and the benefit of earn more storage quota. Achievements label will redirect to webclient achievement section when clicked.</translatorcomment>
+        <translatorcomment>Label to inform the user about achievements and the benefit of earning more storage quota. Achievements label will redirect to the achievements section in the webclient when clicked.</translatorcomment>
         <translation type="unfinished">Earn more storage quota with [A]Achievements[/A].</translation>
     </message>
 </context>
@@ -4237,12 +4238,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UpgradeWidget</name>
     <message>
         <source>month</source>
-        <translatorcomment>Label to indicate that price of a PRO plan is per month </translatorcomment>
+        <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
         <translation type="unfinished">month</translation>
     </message>
     <message>
         <source>storage</source>
-        <translatorcomment>Label to indicate the amount of storage of a PRO plan</translatorcomment>
+        <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
         <translation type="unfinished">storage</translation>
     </message>
     <message>
@@ -4349,62 +4350,62 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>Utilities</name>
     <message>
         <source>just now</source>
-        <translatorcomment>Label to indicate that a transfer has finished just now</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished right now</translatorcomment>
         <translation type="unfinished">just now</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished  %1 seconds ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %1 seconds ago</translatorcomment>
         <translation type="unfinished">%1 seconds ago</translation>
     </message>
     <message>
         <source>1 minute ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished  1 minute ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished 1 minute ago</translatorcomment>
         <translation type="unfinished">1 minute ago</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished  %1 minutes ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %1 minutes ago</translatorcomment>
         <translation type="unfinished">%1 minutes ago</translation>
     </message>
     <message>
         <source>1 hour ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished  1 hour ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished 1 hour ago</translatorcomment>
         <translation type="unfinished">1 hour ago</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished  %1 hours ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %1 hours ago</translatorcomment>
         <translation type="unfinished">%1 hours ago</translation>
     </message>
     <message>
         <source>1 day ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished  1 day ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished 1 day ago</translatorcomment>
         <translation type="unfinished">1 day ago</translation>
     </message>
     <message>
         <source>%1 days ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished  %1 days ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %1 days ago</translatorcomment>
         <translation type="unfinished">%1 days ago</translation>
     </message>
     <message>
         <source>1 month ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished  %1 month ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %1 month ago</translatorcomment>
         <translation type="unfinished">1 month ago</translation>
     </message>
     <message>
         <source>%1 months ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished  %1 months ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %1 months ago</translatorcomment>
         <translation type="unfinished">%1 months ago</translation>
     </message>
     <message>
         <source>1 year ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished  %1 year ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %1 year ago</translatorcomment>
         <translation type="unfinished">1 year ago</translation>
     </message>
     <message>
         <source>%1 years ago</source>
-        <translatorcomment>Label to indicate that a transfer has finished  %1 years ago</translatorcomment>
+        <translatorcomment>Label to indicate that a transfer has finished %1 years ago</translatorcomment>
         <translation type="unfinished">%1 years ago</translation>
     </message>
 </context>
