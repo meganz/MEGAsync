@@ -226,24 +226,27 @@ void QCustomTransfersModel::removeAllCompletedTransfers()
             initialDelPos++;
         }
 
-        beginRemoveRows(QModelIndex(), initialDelPos, transfers.size() - 1);
-        for (QMap<int, TransferItemData*>::iterator it = transfers.begin(); it != transfers.end();)
+        if (initialDelPos <= (transfers.size() - 1))
         {
-            int tag = it.key();
-            if (tag != activeDownloadTag && tag != activeUploadTag)
+            beginRemoveRows(QModelIndex(), initialDelPos, transfers.size() - 1);
+            for (QMap<int, TransferItemData*>::iterator it = transfers.begin(); it != transfers.end();)
             {
-                TransferItemData *item = it.value();
-                transferItems.remove(tag);
-                it = transfers.erase(it);
-                delete item;
+                int tag = it.key();
+                if (tag != activeDownloadTag && tag != activeUploadTag)
+                {
+                    TransferItemData *item = it.value();
+                    transferItems.remove(tag);
+                    it = transfers.erase(it);
+                    delete item;
+                }
+                else
+                {
+                    it++;
+                }
             }
-            else
-            {
-                it++;
-            }
+            transferOrder.erase(transferOrder.begin() + initialDelPos, transferOrder.end());
+            endRemoveRows();
         }
-        transferOrder.erase(transferOrder.begin() + initialDelPos, transferOrder.end());
-        endRemoveRows();
     }
 
     if (transfers.isEmpty())
