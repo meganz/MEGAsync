@@ -118,6 +118,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     overlay->setStyleSheet(QString::fromAscii("background-color: transparent; "
                                               "border: none; "));
     overlay->resize(ui->pUpdated->size());
+    overlay->setCursor(Qt::PointingHandCursor);
 
 #ifdef __APPLE__
     overlay->move(1, 72);
