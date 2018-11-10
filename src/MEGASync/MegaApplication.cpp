@@ -5943,6 +5943,71 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                                   QCoreApplication::translate("MegaError", event->getText()),
                                   Utilities::getDevicePixelRatio());
     }
+    else if (event->getType() == MegaEvent::EVENT_STORAGE)
+    {
+        int state = event->getNumber();
+        if (state == MegaApi::STORAGE_STATE_RED)
+        {
+            almostOQ = false;
+
+            //Disable syncs
+            disableSyncs();
+            if (!infoOverQuota)
+            {
+                infoOverQuota = true;
+                preferences->setUsedStorage(preferences->totalStorage());
+                updateUserStats(true);
+
+                if (trayMenu && trayMenu->isVisible())
+                {
+                    trayMenu->close();
+                }
+                if (infoDialog && infoDialog->isVisible())
+                {
+                    infoDialog->hide();
+                }
+
+                checkOverStorageStates();
+                showInfoDialog();
+            }
+
+            if (settingsDialog)
+            {
+                delete settingsDialog;
+                settingsDialog = NULL;
+            }
+            onGlobalSyncStateChanged(megaApi);
+        }
+        else
+        {
+            if (state == MegaApi::STORAGE_STATE_GREEN)
+            {
+                almostOQ = false;
+            }
+            else if (state == MegaApi::STORAGE_STATE_ORANGE)
+            {
+                almostOQ = true;
+                checkOverStorageStates();
+            }
+
+            if (infoOverQuota)
+            {
+                if (settingsDialog)
+                {
+                    settingsDialog->setOverQuotaMode(false);
+                }
+                infoOverQuota = false;
+
+                if (trayOverQuotaMenu && trayOverQuotaMenu->isVisible())
+                {
+                    trayOverQuotaMenu->close();
+                }
+
+                restoreSyncs();
+                onGlobalSyncStateChanged(megaApi);
+            }
+        }
+    }
 }
 
 //Called when a request is about to start
@@ -5971,40 +6036,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         delete sslKeyPinningError;
         sslKeyPinningError = NULL;
-    }
-
-    if (e->getErrorCode() == MegaError::API_EOVERQUOTA)
-    {
-        //Disable syncs
-        disableSyncs();
-        if (!infoOverQuota)
-        {
-            infoOverQuota = true;
-
-            preferences->setUsedStorage(preferences->totalStorage());
-            updateUserStats(true);
-
-            if (trayMenu && trayMenu->isVisible())
-            {
-                trayMenu->close();
-            }
-
-            if (infoDialog && infoDialog->isVisible())
-            {
-                infoDialog->hide();
-            }
-
-            checkOverStorageStates();
-            showInfoDialog();
-        }
-
-        if (settingsDialog)
-        {
-            delete settingsDialog;
-            settingsDialog = NULL;
-        }
-
-        onGlobalSyncStateChanged(megaApi);
     }
 
     switch (request->getType())
@@ -6073,79 +6104,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             break;
         }
 
-        if (request->getParamType() == MegaApi::USER_ATTR_STORAGE_STATE)
-        {
-            if (e->getErrorCode() == MegaError::API_OK
-                || e->getErrorCode() == MegaError::API_ENOENT)
-            {
-                int state = request->getNumber();
-                if (state == MegaApi::STORAGE_STATE_RED)
-                {
-                    almostOQ = false;
-
-                    //Disable syncs
-                    disableSyncs();
-                    if (!infoOverQuota)
-                    {
-                        infoOverQuota = true;
-
-                        preferences->setUsedStorage(preferences->totalStorage());
-                        updateUserStats(true);
-
-                        if (trayMenu && trayMenu->isVisible())
-                        {
-                            trayMenu->close();
-                        }
-
-                        if (infoDialog && infoDialog->isVisible())
-                        {
-                            infoDialog->hide();
-                        }
-
-                        showInfoDialog();
-                    }
-
-                    if (settingsDialog)
-                    {
-                        delete settingsDialog;
-                        settingsDialog = NULL;
-                    }
-
-                    onGlobalSyncStateChanged(megaApi);
-                }
-                else
-                {
-                    if (state == MegaApi::STORAGE_STATE_GREEN)
-                    {
-                        almostOQ = false;
-                    }
-                    else if (state == MegaApi::STORAGE_STATE_ORANGE)
-                    {
-                        almostOQ = true;
-                        checkOverStorageStates();
-                    }
-
-                    if (infoOverQuota)
-                    {
-                        if (settingsDialog)
-                        {
-                            settingsDialog->setOverQuotaMode(false);
-                        }
-
-                        infoOverQuota = false;
-
-                        if (trayOverQuotaMenu && trayOverQuotaMenu->isVisible())
-                        {
-                            trayOverQuotaMenu->close();
-                        }
-
-                        restoreSyncs();
-                        onGlobalSyncStateChanged(megaApi);
-                    }
-                }
-            }
-        }
-        else if (request->getParamType() == MegaApi::USER_ATTR_FIRSTNAME)
+        if (request->getParamType() == MegaApi::USER_ATTR_FIRSTNAME)
         {
             QString firstname(QString::fromUtf8(""));
             if (e->getErrorCode() == MegaError::API_OK && request->getText())
@@ -7144,39 +7103,6 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
                 openBwOverquotaDialog();
             }
         }
-        else
-        {
-            //Disable syncs
-            disableSyncs();
-            if (!infoOverQuota)
-            {
-                infoOverQuota = true;
-
-                preferences->setUsedStorage(preferences->totalStorage());
-                updateUserStats(true);
-
-                if (trayMenu && trayMenu->isVisible())
-                {
-                    trayMenu->close();
-                }
-
-                if (infoDialog && infoDialog->isVisible())
-                {
-                    infoDialog->hide();
-                }
-
-                checkOverStorageStates();
-                showInfoDialog();
-            }
-
-            if (settingsDialog)
-            {
-                delete settingsDialog;
-                settingsDialog = NULL;
-            }
-
-            onGlobalSyncStateChanged(megaApi);
-        }
     }
 }
 
@@ -7210,11 +7136,6 @@ void MegaApplication::onUsersUpdate(MegaApi *, MegaUserList *userList)
         MegaUser *user = userList->get(i);
         if (!user->isOwnChange() && user->getHandle() == myHandle)
         {
-            if (user->hasChanged(MegaUser::CHANGE_TYPE_STORAGE_STATE))
-            {
-                megaApi->getStorageState();
-            }
-
             if (user->hasChanged(MegaUser::CHANGE_TYPE_FIRSTNAME))
             {
                 megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
