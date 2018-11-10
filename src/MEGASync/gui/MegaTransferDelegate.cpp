@@ -243,7 +243,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
                 }
              }
         }
-        else
+        else if (model->getModelType() == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
         {
             MegaTransfer *transfer = NULL;
             transfer = model->getTransferByTag(tag);
@@ -260,6 +260,25 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
             }
             delete transfer;
         }
+        return true;
+    }
+    else if (QEvent::MouseButtonDblClick == event->type() && model->getModelType() == QTransfersModel::TYPE_FINISHED)
+    {
+        MegaTransfer *transfer = NULL;
+        int tag = index.internalId();
+        transfer = model->getTransferByTag(tag);
+        if (transfer && transfer->isFinished() && transfer->getPath())
+        {
+            QString localPath = QString::fromUtf8(transfer->getPath());
+            #ifdef WIN32
+            if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+            {
+                localPath = localPath.mid(4);
+            }
+            #endif
+            Platform::showInFolder(localPath);
+        }
+        delete transfer;
         return true;
     }
 

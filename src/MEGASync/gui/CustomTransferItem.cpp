@@ -40,9 +40,9 @@ void CustomTransferItem::setFileName(QString fileName)
 
     QFont f = ui->lFileName->font();
     QFontMetrics fm = QFontMetrics(f);
-    ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
+    ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideMiddle,ui->lFileName->width()));
     ui->lFileName->setToolTip(fileName);
-    ui->lFileNameCompleted->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
+    ui->lFileNameCompleted->setText(fm.elidedText(fileName, Qt::ElideMiddle,ui->lFileName->width()));
     ui->lFileNameCompleted->setToolTip(fileName);
 
 
@@ -159,7 +159,7 @@ void CustomTransferItem::finishTransfer()
         ui->lGetLink->setIcon(QIcon(QString::fromAscii("://images/ico_item_retry.png")));
         ui->lGetLink->setIconSize(QSize(24,24));
         ui->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
-        ui->lElapsedTime->setText(tr("failed: ") + QCoreApplication::translate("MegaError", MegaError::getErrorString(transferError)));
+        ui->lElapsedTime->setText(tr("failed:") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", MegaError::getErrorString(transferError)));
     }
 }
 

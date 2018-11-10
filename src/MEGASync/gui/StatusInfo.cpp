@@ -7,6 +7,8 @@ StatusInfo::StatusInfo(QWidget *parent) :
     ui(new Ui::StatusInfo)
 {
     ui->setupUi(this);
+    ui->bIconState->setAttribute(Qt::WA_TransparentForMouseEvents);
+
     isHovered = false;
     isOverQuota = false;
 

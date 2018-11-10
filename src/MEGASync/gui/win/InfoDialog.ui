@@ -6,27 +6,32 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>524</height>
+    <width>402</width>
+    <height>514</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>400</width>
-    <height>524</height>
+    <width>402</width>
+    <height>514</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>400</width>
-    <height>524</height>
+    <width>402</width>
+    <height>514</height>
    </size>
   </property>
   <property name="windowTitle">
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#bAvatar, #bState, #bDotUsedQuota, #bDotUsedStorage, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon
+   <string notr="true">#InfoDialog
+{	
+    border: 1px solid  rgb(100, 100, 100);	
+}
+
+#bAvatar, #bState, #bDotUsedQuota, #bDotUsedStorage, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon
 {
 	border: none;
 }
@@ -322,42 +327,17 @@ color: #999999;
     <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="topMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="rightMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
-   <item>
-    <widget class="QWidget" name="wArrow" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>400</width>
-       <height>12</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>12</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-    </widget>
-   </item>
    <item>
     <widget class="QWidget" name="wContainerHeader" native="true">
      <property name="sizePolicy">
@@ -480,6 +460,9 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
+           <property name="toolTip">
+            <string>Open Transfer Manager</string>
+           </property>
            <property name="styleSheet">
             <string notr="true">border: none;
 </string>
@@ -524,6 +507,9 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
            </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
+           </property>
+           <property name="toolTip">
+            <string>Show MEGAsync options</string>
            </property>
            <property name="styleSheet">
             <string notr="true">border: none;

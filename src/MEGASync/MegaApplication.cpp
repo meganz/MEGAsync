@@ -565,7 +565,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     settingsActionOverquota = NULL;
     settingsActionGuest = NULL;
     importLinksAction = NULL;
-    importLinksActionGuest = NULL;
     initialMenu = NULL;
     lastHovered = NULL;
     isPublic = false;
@@ -946,16 +945,19 @@ void MegaApplication::updateTrayIcon()
 
     if (infoOverQuota)
     {
-        if (preferences->usedStorage() < preferences->totalStorage())
+        if (preferences->logged())
         {
-            if (!overquotaCheck)
+            if (preferences->usedStorage() < preferences->totalStorage())
             {
-                updateUserStats(true);
-                overquotaCheck = true;
-            }
-            else
-            {
-                updateUserStats();
+                if (!overquotaCheck)
+                {
+                    updateUserStats(true);
+                    overquotaCheck = true;
+                }
+                else
+                {
+                    updateUserStats();
+                }
             }
         }
 
@@ -1404,6 +1406,7 @@ void MegaApplication::loggedIn()
         infoWizard = NULL;
     }
 
+    registerUserActivity();
     pauseTransfers(paused);
     inflightUserStats = false;
     updateUserStats(true);
@@ -1865,9 +1868,6 @@ void MegaApplication::exitApplication()
     {
         exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"),
                                      tr("Are you sure you want to exit?"), QMessageBox::Yes|QMessageBox::No);
-//        TO-DO: Uncomment when asset is included to the project
-//        exitDialog->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-question.png")
-//                                                            : QString::fromUtf8(":/images/mbox-question@2x.png")));
         int button = exitDialog->exec();
         if (!exitDialog)
         {
@@ -2175,10 +2175,18 @@ void MegaApplication::checkMemoryUsage()
     }
 }
 
+bool MegaApplication::isUserActive()
+{
+    if ((QDateTime::currentMSecsSinceEpoch() - lastUserActivityExecution) > Preferences::USER_INACTIVITY_MS)
+    {
+        return false;
+    }
+    return true;
+}
+
 void MegaApplication::checkOverStorageStates()
 {
-    // Check if user is active
-    if ((QDateTime::currentMSecsSinceEpoch() - lastUserActivityExecution) > Preferences::USER_INACTIVITY_MS)
+    if (!preferences->logged())
     {
         return;
     }
@@ -2201,7 +2209,7 @@ void MegaApplication::checkOverStorageStates()
                 storageOverquotaDialog->raise();
             }
         }
-        else if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
+        else if (isUserActive() && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)
                      && (!preferences->getOverStorageNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
         {
             preferences->setOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
@@ -2230,8 +2238,7 @@ void MegaApplication::checkOverStorageStates()
 
 
         bool pendingTransfers = megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads();
-
-        if (!pendingTransfers && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)
+        if (!pendingTransfers && isUserActive() && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)
                               && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)
                               && (!preferences->getAlmostOverStorageNotificationExecution() || (QDateTime::currentMSecsSinceEpoch() - preferences->getAlmostOverStorageNotificationExecution()) > Preferences::ALMOST_OS_INTERVAL_MS))
         {
@@ -2517,7 +2524,6 @@ void MegaApplication::showInfoDialog()
 
             infoDialog->show();
             infoDialog->updateState();
-            infoDialog->setFocus();
             infoDialog->raise();
             infoDialog->activateWindow();
         }
@@ -2596,38 +2602,51 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
     #else
         #ifdef WIN32
             QRect totalGeometry = QApplication::desktop()->screenGeometry();
-            if (totalGeometry == screenGeometry)
+            APPBARDATA pabd;
+            pabd.cbSize = sizeof(APPBARDATA);
+            pabd.hWnd = FindWindow(L"Shell_TrayWnd", NULL);
+            if (pabd.hWnd && SHAppBarMessage(ABM_GETTASKBARPOS, &pabd)
+                    && pabd.rc.right != pabd.rc.left && pabd.rc.bottom != pabd.rc.top)
             {
-                APPBARDATA pabd;
-                pabd.cbSize = sizeof(APPBARDATA);
-                pabd.hWnd = FindWindow(L"Shell_TrayWnd", NULL);
-                if (pabd.hWnd && SHAppBarMessage(ABM_GETTASKBARPOS, &pabd)
-                        && pabd.rc.right != pabd.rc.left && pabd.rc.bottom != pabd.rc.top)
+                int size;
+                switch (pabd.uEdge)
                 {
-                    int size;
-                    switch (pabd.uEdge)
-                    {
-                        case ABE_LEFT:
+                    case ABE_LEFT:
+                        position = screenGeometry.bottomLeft();
+                        if (totalGeometry == screenGeometry)
+                        {
                             size = pabd.rc.right - pabd.rc.left;
                             size = size * screenGeometry.height() / (pabd.rc.bottom - pabd.rc.top);
                             screenGeometry.setLeft(screenGeometry.left() + size);
-                            break;
-                        case ABE_RIGHT:
+                        }
+                        break;
+                    case ABE_RIGHT:
+                        position = screenGeometry.bottomRight();
+                        if (totalGeometry == screenGeometry)
+                        {
                             size = pabd.rc.right - pabd.rc.left;
                             size = size * screenGeometry.height() / (pabd.rc.bottom - pabd.rc.top);
                             screenGeometry.setRight(screenGeometry.right() - size);
-                            break;
-                        case ABE_TOP:
+                        }
+                        break;
+                    case ABE_TOP:
+                        position = screenGeometry.topRight();
+                        if (totalGeometry == screenGeometry)
+                        {
                             size = pabd.rc.bottom - pabd.rc.top;
                             size = size * screenGeometry.width() / (pabd.rc.right - pabd.rc.left);
                             screenGeometry.setTop(screenGeometry.top() + size);
-                            break;
-                        case ABE_BOTTOM:
+                        }
+                        break;
+                    case ABE_BOTTOM:
+                        position = screenGeometry.bottomRight();
+                        if (totalGeometry == screenGeometry)
+                        {
                             size = pabd.rc.bottom - pabd.rc.top;
                             size = size * screenGeometry.width() / (pabd.rc.right - pabd.rc.left);
                             screenGeometry.setBottom(screenGeometry.bottom() - size);
-                            break;
-                    }
+                        }
+                        break;
                 }
             }
         #endif
@@ -2724,29 +2743,31 @@ void MegaApplication::initLocalServer()
 
 void MegaApplication::sendOverStorageNotification(int state)
 {
-    MegaNotification *notification = new MegaNotification();
-
     switch (state)
     {
         case Preferences::STATE_ALMOST_OVER_STORAGE:
+        {
+            MegaNotification *notification = new MegaNotification();
             notification->setTitle(tr("Your account is almost full."));
             notification->setText(tr("Upgrade now to a PRO account."));
             notification->setActions(QStringList() << QString::fromUtf8("Get PRO"));
             connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
-        break;
+            notificator->notify(notification);
+            break;
+        }
         case Preferences::STATE_OVER_STORAGE:
+        {
+            MegaNotification *notification = new MegaNotification();
             notification->setTitle(tr("Your account is full."));
             notification->setText(tr("Upgrade now to a PRO account."));
             notification->setActions(QStringList() << QString::fromUtf8("Get PRO"));
             connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
-        break;
+            notificator->notify(notification);
+            break;
+        }
         default:
-            delete notification;
-            return;
+            break;
     }
-
-    notificator->notify(notification);
-
 }
 
 bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
@@ -2977,6 +2998,11 @@ void MegaApplication::setupWizardFinished(int result)
     else
     {
         megaApi->setExclusionUpperSizeLimit(0);
+    }
+
+    if (infoDialog && infoDialog->isVisible())
+    {
+        infoDialog->hide();
     }
 
     loggedIn();
@@ -3540,118 +3566,122 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
         MegaNotification *notification = new MegaNotification();
         QString title;
         QString message;
-        switch (data->transferDirection)
+
+        if (data->transfersFileOK || data->transfersFolderOK)
         {
-            case MegaTransfer::TYPE_UPLOAD:
+            switch (data->transferDirection)
             {
-                if (data->totalFiles && data->totalFolders)
+                case MegaTransfer::TYPE_UPLOAD:
                 {
-                    title = tr("Upload");
-                    if (data->totalFolders == 1)
+                    if (data->transfersFileOK && data->transfersFolderOK)
                     {
-                        if (data->totalFiles == 1)
+                        title = tr("Upload");
+                        if (data->transfersFolderOK == 1)
                         {
-                            message = tr("1 file and 1 folder were successfully uploaded");
+                            if (data->transfersFileOK == 1)
+                            {
+                                message = tr("1 file and 1 folder were successfully uploaded");
+                            }
+                            else
+                            {
+                                message = tr("%1 files and 1 folder were successfully uploaded").arg(data->totalFiles);
+                            }
                         }
                         else
                         {
-                            message = tr("%1 files and 1 folder were successfully uploaded").arg(data->totalFiles);
+                            if (data->transfersFileOK == 1)
+                            {
+                                message = tr("1 file and %1 folders were successfully uploaded").arg(data->totalFolders);
+                            }
+                            else
+                            {
+                                message = tr("%1 files and %2 folders were successfully uploaded").arg(data->totalFiles).arg(data->totalFolders);
+                            }
                         }
                     }
-                    else
+                    else if (!data->transfersFileOK)
                     {
-                        if (data->totalFiles == 1)
+                        title = tr("Folder Upload");
+                        if (data->transfersFolderOK == 1)
                         {
-                            message = tr("1 file and %1 folders were successfully uploaded").arg(data->totalFolders);
+                            message = tr("1 folder was successfully uploaded");
                         }
                         else
                         {
-                            message = tr("%1 files and %2 folders were successfully uploaded").arg(data->totalFiles).arg(data->totalFolders);
+                            message = tr("%1 folders were successfully uploaded").arg(data->totalFolders);
                         }
                     }
-                }
-                else if (!data->totalFiles)
-                {
-                    title = tr("Folder Upload");
-                    if (data->totalFolders == 1)
+                    else
                     {
-                        message = tr("1 folder was successfully uploaded");
+                        title = tr("File Upload");
+                        if (data->transfersFileOK == 1)
+                        {
+                            message = tr("1 file was successfully uploaded");
+                        }
+                        else
+                        {
+                            message = tr("%1 files were successfully uploaded").arg(data->totalFiles);
+                        }
+                    }
+                    break;
+                }
+                case MegaTransfer::TYPE_DOWNLOAD:
+                {
+                    if (data->transfersFileOK && data->transfersFolderOK)
+                    {
+                        title = tr("Download");
+                        if (data->transfersFolderOK == 1)
+                        {
+                            if (data->transfersFileOK == 1)
+                            {
+                                message = tr("1 file and 1 folder were successfully downloaded");
+                            }
+                            else
+                            {
+                                message = tr("%1 files and 1 folder were successfully downloaded").arg(data->totalFiles);
+                            }
+                        }
+                        else
+                        {
+                            if (data->transfersFileOK == 1)
+                            {
+                                message = tr("1 file and %1 folders were successfully downloaded").arg(data->totalFolders);
+                            }
+                            else
+                            {
+                                message = tr("%1 files and %2 folders were successfully downloaded").arg(data->totalFiles).arg(data->totalFolders);
+                            }
+                        }
+                    }
+                    else if (!data->transfersFileOK)
+                    {
+                        title = tr("Folder Download");
+                        if (data->transfersFolderOK == 1)
+                        {
+                            message = tr("1 folder was successfully downloaded");
+                        }
+                        else
+                        {
+                            message = tr("%1 folders were successfully downloaded").arg(data->totalFolders);
+                        }
                     }
                     else
                     {
-                        message = tr("%1 folders were successfully uploaded").arg(data->totalFolders);
+                        title = tr("File Download");
+                        if (data->transfersFileOK == 1)
+                        {
+                            message = tr("1 file was successfully downloaded");
+                        }
+                        else
+                        {
+                            message = tr("%1 files were successfully downloaded").arg(data->totalFiles);
+                        }
                     }
+                    break;
                 }
-                else
-                {
-                    title = tr("File Upload");
-                    if (data->totalFiles == 1)
-                    {
-                        message = tr("1 file was successfully uploaded");
-                    }
-                    else
-                    {
-                        message = tr("%1 files were successfully uploaded").arg(data->totalFiles);
-                    }
-                }
-                break;
+                default:
+                    break;
             }
-            case MegaTransfer::TYPE_DOWNLOAD:
-            {
-                if (data->totalFiles && data->totalFolders)
-                {
-                    title = tr("Download");
-                    if (data->totalFolders == 1)
-                    {
-                        if (data->totalFiles == 1)
-                        {
-                            message = tr("1 file and 1 folder were successfully downloaded");
-                        }
-                        else
-                        {
-                            message = tr("%1 files and 1 folder were successfully downloaded").arg(data->totalFiles);
-                        }
-                    }
-                    else
-                    {
-                        if (data->totalFiles == 1)
-                        {
-                            message = tr("1 file and %1 folders were successfully downloaded").arg(data->totalFolders);
-                        }
-                        else
-                        {
-                            message = tr("%1 files and %2 folders were successfully downloaded").arg(data->totalFiles).arg(data->totalFolders);
-                        }
-                    }
-                }
-                else if (!data->totalFiles)
-                {
-                    title = tr("Folder Download");
-                    if (data->totalFolders == 1)
-                    {
-                        message = tr("1 folder was successfully downloaded");
-                    }
-                    else
-                    {
-                        message = tr("%1 folders were successfully downloaded").arg(data->totalFolders);
-                    }
-                }
-                else
-                {
-                    title = tr("File Download");
-                    if (data->totalFiles == 1)
-                    {
-                        message = tr("1 file was successfully downloaded");
-                    }
-                    else
-                    {
-                        message = tr("%1 files were successfully downloaded").arg(data->totalFiles);
-                    }
-                }
-                break;
-            }
-            default:
-                break;
         }
 
         if (notificator && !message.isEmpty())
@@ -3875,6 +3905,11 @@ void MegaApplication::removeFinishedTransfer(int transferTag)
         finishedTransfers.erase(it);
 
         emit clearFinishedTransfer(transferTag);
+
+        if (!finishedTransfers.size() && infoDialog)
+        {
+            infoDialog->updateDialogState();
+        }
     }
 }
 
@@ -3885,6 +3920,11 @@ void MegaApplication::removeAllFinishedTransfers()
     finishedTransfers.clear();
 
     emit clearAllFinishedTransfers();
+
+    if (infoDialog)
+    {
+        infoDialog->updateDialogState();
+    }
 }
 
 QList<MegaTransfer*> MegaApplication::getFinishedTransfers()
@@ -4218,18 +4258,26 @@ void MegaApplication::userAction(int action)
 
     if (!preferences->logged())
     {
-        if (setupWizard)
+        switch (action)
         {
-            setupWizard->goToStep(action);
-            setupWizard->activateWindow();
-            setupWizard->raise();
-            return;
+            case InfoWizard::LOGIN_CLICKED:
+                showInfoDialog();
+                break;
+            default:
+                if (setupWizard)
+                {
+                    setupWizard->goToStep(action);
+                    setupWizard->activateWindow();
+                    setupWizard->raise();
+                    return;
+                }
+                setupWizard = new SetupWizard(this);
+                setupWizard->setModal(false);
+                connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished(int)));
+                setupWizard->goToStep(action);
+                setupWizard->show();
+                break;
         }
-        setupWizard = new SetupWizard(this);
-        setupWizard->setModal(false);
-        connect(setupWizard, SIGNAL(finished(int)), this, SLOT(setupWizardFinished(int)));
-        setupWizard->goToStep(action);
-        setupWizard->show();
     }
 }
 
@@ -5519,6 +5567,12 @@ void MegaApplication::createTrayMenu()
 #else
         trayMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
 #endif
+
+        //Highlight menu entry on mouse over
+        connect(trayMenu, SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
+
+        //Hide highlighted menu entry when mouse over
+        trayMenu->installEventFilter(this);
     }
     else
     {
@@ -5717,12 +5771,6 @@ void MegaApplication::createTrayMenu()
     trayMenu->addAction(settingsAction);
     trayMenu->addSeparator();
     trayMenu->addAction(exitAction);
-
-    //Highligth menu entry on mouse over
-    connect(trayMenu, SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
-
-    //Hide highlighted menu entry when mouse over
-    trayMenu->installEventFilter(this);
 }
 
 void MegaApplication::createOverQuotaMenu()
@@ -5863,15 +5911,6 @@ void MegaApplication::createGuestMenu()
     }
     connect(updateActionGuest, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
 
-    if (importLinksActionGuest)
-    {
-        importLinksActionGuest->deleteLater();
-        importLinksActionGuest = NULL;
-    }
-
-    importLinksActionGuest = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
-    connect(importLinksActionGuest, SIGNAL(triggered()), this, SLOT(importLinks()));
-
     if (settingsActionGuest)
     {
         settingsActionGuest->deleteLater();
@@ -5887,7 +5926,6 @@ void MegaApplication::createGuestMenu()
 
     trayGuestMenu->addAction(updateActionGuest);
     trayGuestMenu->addSeparator();
-    trayGuestMenu->addAction(importLinksActionGuest);
     trayGuestMenu->addAction(settingsActionGuest);
     trayGuestMenu->addSeparator();
     trayGuestMenu->addAction(exitActionGuest);
@@ -5956,6 +5994,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 infoDialog->hide();
             }
 
+            checkOverStorageStates();
             showInfoDialog();
         }
 
@@ -6083,6 +6122,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     else if (state == MegaApi::STORAGE_STATE_ORANGE)
                     {
                         almostOQ = true;
+                        checkOverStorageStates();
                     }
 
                     if (infoOverQuota)
@@ -6839,6 +6879,10 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                 {
                     data->transfersFailed++;
                 }
+                else
+                {
+                    !folderTransferTag ? data->transfersFileOK++ : data->transfersFolderOK++;
+                }
 
                 data->pendingTransfers--;
                 showNotificationFinishedTransfers(notificationId);
@@ -7002,27 +7046,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         }
     }
 
-    int errorCode = e->getErrorCode();
-    if (errorCode != MegaError::API_OK
-            && ((!transfer->isSyncTransfer()
-                    && errorCode != MegaError::API_EACCESS
-                    && errorCode != MegaError::API_ESID
-                    && errorCode != MegaError::API_ESSL
-                    && errorCode != MegaError::API_EINCOMPLETE
-                    && errorCode != MegaError::API_EEXIST)
-                || (transfer->isSyncTransfer()
-                    && errorCode == MegaError::API_EKEY)))
-    {
-        if (errorCode == MegaError::API_EFAILED)
-        {
-            showWarningMessage(tr("Transfer failed:") + QString::fromUtf8(" ") + tr("Temporarily not available"), QString::fromUtf8(transfer->getFileName()));
-        }
-        else
-        {
-            showErrorMessage(tr("Transfer failed:") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
-        }
-    }
-
     //If there are no pending transfers, reset the statics and update the state of the tray icon
     if (!numTransfers[MegaTransfer::TYPE_DOWNLOAD]
             && !numTransfers[MegaTransfer::TYPE_UPLOAD])
@@ -7142,6 +7165,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
                     infoDialog->hide();
                 }
 
+                checkOverStorageStates();
                 showInfoDialog();
             }
 
@@ -7153,34 +7177,6 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
 
             onGlobalSyncStateChanged(megaApi);
         }
-        return;
-    } 
-
-    //Show information to users
-    if (transfer->getNumRetry() == 1)
-    {
-        int errorCode = e->getErrorCode();
-        if (errorCode == MegaError::API_EFAILED)
-        {
-            showWarningMessage(tr("Temporary error, retrying."), QString::fromUtf8(transfer->getFileName()));
-        }
-        else if (errorCode != MegaError::API_EKEY
-                 && errorCode != MegaError::API_EBLOCKED
-                 && errorCode != MegaError::API_ENOENT
-                 && errorCode != MegaError::API_EINTERNAL)
-        {
-            QString message = tr("Temporary transmission error: ");
-            if (!message.endsWith(QString::fromUtf8(" ")))
-            {
-                message.append(QString::fromUtf8(" "));
-            }
-            showWarningMessage(message
-                           + QCoreApplication::translate("MegaError", e->getErrorString()), QString::fromUtf8(transfer->getFileName()));
-        }
-    }
-    else
-    {
-        onGlobalSyncStateChanged(megaApi);
     }
 }
 

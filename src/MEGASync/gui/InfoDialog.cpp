@@ -68,9 +68,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
 
-    ui->bTransferManager->setToolTip(tr("Open Transfer Manager"));
-    ui->bSettings->setToolTip(tr("Show MEGAsync options"));
-
     ui->pUsageStorage->installEventFilter(this);
     ui->pUsageStorage->setMouseTracking(true);
 
@@ -109,6 +106,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     arrow->setStyleSheet(QString::fromAscii("border: none;"));
     arrow->resize(30,10);
     arrow->hide();
+
+    dummy = NULL;
 #endif
 
     on_bDotUsedStorage_clicked();
@@ -377,19 +376,13 @@ void InfoDialog::setOverQuotaMode(bool state)
 
     if (state)
     {
-        ui->bUpgrade->setProperty("overquota", true);
         ui->pUsageStorage->setProperty("overquota", true);
-        ui->bUpgrade->style()->unpolish(ui->bUpgrade);
-        ui->bUpgrade->style()->polish(ui->bUpgrade);
         ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
     }
     else
     {
-        ui->bUpgrade->setProperty("overquota", false);
         ui->pUsageStorage->setProperty("overquota", false);
-        ui->bUpgrade->style()->unpolish(ui->bUpgrade);
-        ui->bUpgrade->style()->polish(ui->bUpgrade);
         ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
     }
@@ -397,6 +390,14 @@ void InfoDialog::setOverQuotaMode(bool state)
 
 void InfoDialog::updateState()
 {
+    if (!preferences->logged())
+    {
+        if (gWidget)
+        {
+            gWidget->resetFocus();
+        }
+    }
+
     if (preferences->getGlobalPaused())
     {
         if (!preferences->logged())
@@ -534,7 +535,6 @@ void InfoDialog::updateDialogState()
         overlay->setVisible(true);
         ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
     }
-
 }
 
 void InfoDialog::on_bSettings_clicked()
@@ -679,9 +679,7 @@ void InfoDialog::clearUserAttributes()
 
 void InfoDialog::handleOverStorage(int state)
 {
-    overlay->setVisible(false);
     storageState = state;
-
     switch (state)
     {
         case Preferences::STATE_ALMOST_OVER_STORAGE:
@@ -690,6 +688,7 @@ void InfoDialog::handleOverStorage(int state)
             ui->lOQTitle->setText(tr("You're running out of storage space."));
             ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
             ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
+            overlay->setVisible(false);
             break;
         case Preferences::STATE_OVER_STORAGE:
             ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));
@@ -697,11 +696,13 @@ void InfoDialog::handleOverStorage(int state)
             ui->lOQTitle->setText(tr("Your MEGA account is full."));
             ui->lOQDesc->setText(tr("All file uploads are currently disabled. Please upgrade to PRO"));
             ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
+            overlay->setVisible(false);
             break;
         case Preferences::STATE_BELOW_OVER_STORAGE:
+        case Preferences::STATE_OVER_STORAGE_DISMISSED:
         default:
             updateDialogState();
-        break;
+            break;
     }
 }
 
@@ -729,6 +730,7 @@ void InfoDialog::changeEvent(QEvent *event)
             state = STATE_STARTING;
             ui->wStatus->setState(state);
             updateState();   
+            handleOverStorage(storageState);
         }
     }
     QDialog::changeEvent(event);
@@ -794,7 +796,11 @@ void InfoDialog::regenerateLayout()
         if (!gWidget)
         {
             gWidget = new GuestWidget();
-            connect(gWidget, SIGNAL(actionButtonClicked(int)), this, SLOT(onUserAction(int)));
+            connect(gWidget, SIGNAL(forwardAction(int)), this, SLOT(onUserAction(int)));
+        }
+        else
+        {
+            gWidget->enableListener();
         }
 
         ui->bTransferManager->setVisible(false);
@@ -809,13 +815,37 @@ void InfoDialog::regenerateLayout()
         dialogLayout->addWidget(gWidget);
         gWidget->setVisible(true);
 
-        setMinimumHeight(385);
-        setMaximumHeight(385);
+        #ifdef __APPLE__
+            if (!dummy)
+            {
+                dummy = new QWidget();
+            }
+
+            dummy->resize(1,1);
+            dummy->setWindowFlags(Qt::FramelessWindowHint);
+            dummy->setAttribute(Qt::WA_NoSystemBackground);
+            dummy->setAttribute(Qt::WA_TranslucentBackground);
+            dummy->show();
+
+            setMinimumHeight(404);
+            setMaximumHeight(404);
+        #else
+            setMinimumHeight(394);
+            setMaximumHeight(394);
+        #endif
     }
     else
     {
+        gWidget->disableListener();
+        gWidget->initialize();
+
+#ifdef __APPLE__
         setMinimumHeight(512);
         setMaximumHeight(512);
+#else
+        setMinimumHeight(514);
+        setMaximumHeight(514);
+#endif
 
         ui->bTransferManager->setVisible(true);
         ui->bAvatar->setVisible(true);
@@ -828,6 +858,15 @@ void InfoDialog::regenerateLayout()
         ui->wSeparator->setVisible(true);
         dialogLayout->addWidget(ui->wContainerBottom);
         ui->wContainerBottom->setVisible(true);
+
+        #ifdef __APPLE__
+            if (dummy)
+            {
+                dummy->hide();
+                delete dummy;
+                dummy = NULL;
+            }
+        #endif
     }
 
     app->onGlobalSyncStateChanged(NULL);
@@ -954,8 +993,8 @@ void InfoDialog::on_bDotUsedQuota_clicked()
 
 void InfoDialog::on_bDiscard_clicked()
 {
-    overlay->setVisible(false);
-    ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
+    storageState = Preferences::STATE_OVER_STORAGE_DISMISSED;
+    updateDialogState();
     emit dismissOQ(overQuotaState);
 }
 

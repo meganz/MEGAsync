@@ -42,7 +42,7 @@
 	border: none;
 }
 
-#Filename, #lFileNameCompleted
+#lFileName, #lFileNameCompleted
 {
   font-family: &quot;Source Sans Pro&quot;;
   font-size: 13px;
@@ -481,7 +481,7 @@
                      </property>
                      <property name="minimumSize">
                       <size>
-                       <width>220</width>
+                       <width>200</width>
                        <height>17</height>
                       </size>
                      </property>
@@ -677,6 +677,18 @@
                 </item>
                 <item>
                  <widget class="QLabel" name="lRemainingTime">
+                  <property name="minimumSize">
+                   <size>
+                    <width>64</width>
+                    <height>0</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>64</width>
+                    <height>16777215</height>
+                   </size>
+                  </property>
                   <property name="text">
                    <string/>
                   </property>
