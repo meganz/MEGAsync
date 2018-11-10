@@ -319,27 +319,6 @@ void InfoDialog::transferFinished(int error)
     {
         uploadsFinishedTimer.stop();
     }
-
-    if (!remainingDownloads
-            && !remainingUploads
-            &&  (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
-    {
-        if (!transfersFinishedTimer.isActive())
-        {
-            if (!error)
-            {
-                transfersFinishedTimer.start();
-            }
-            else
-            {
-                onAllTransfersFinished();
-            }
-        }
-    }
-    else
-    {
-        transfersFinishedTimer.stop();
-    }
 }
 
 void InfoDialog::setIndexing(bool indexing)
