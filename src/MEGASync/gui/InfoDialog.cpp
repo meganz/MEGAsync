@@ -502,11 +502,6 @@ void InfoDialog::onAllTransfersFinished()
             updateDialogState();
         }
 
-        if (preferences->logged())
-        {
-            app->updateUserStats();
-        }
-
         if ((QDateTime::currentMSecsSinceEpoch() - preferences->lastTransferNotificationTimestamp()) > Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS)
         {
             app->showNotificationMessage(tr("All transfers have been completed"));

@@ -639,13 +639,11 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     notificator = NULL;
     pricing = NULL;
     bwOverquotaTimestamp = 0;
-    enablingBwOverquota = false;
     bwOverquotaDialog = NULL;
     storageOverquotaDialog = NULL;
     bwOverquotaEvent = false;
     infoWizard = NULL;
     externalNodesTimestamp = 0;
-    overquotaCheck = false;
     noKeyDetected = 0;
     isFirstSyncDone = false;
     isFirstFileSynced = false;
@@ -657,6 +655,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     nUnviewedTransfers = 0;
     completedTabActive = false;
     inflightUserStats = false;
+    outdatedStorageInfo = false;
+    nodescurrent = false;
     almostOQ = false;
 
 #ifdef __APPLE__
@@ -945,22 +945,6 @@ void MegaApplication::updateTrayIcon()
 
     if (infoOverQuota)
     {
-        if (preferences->logged())
-        {
-            if (preferences->usedStorage() < preferences->totalStorage())
-            {
-                if (!overquotaCheck)
-                {
-                    updateUserStats(true);
-                    overquotaCheck = true;
-                }
-                else
-                {
-                    updateUserStats();
-                }
-            }
-        }
-
         tooltip = QCoreApplication::applicationName()
                 + QString::fromAscii(" ")
                 + Preferences::VERSION_STRING
@@ -1212,8 +1196,9 @@ void MegaApplication::start()
 
     indexing = false;
     paused = false;
-    overquotaCheck = false;
     inflightUserStats = false;
+    outdatedStorageInfo = false;
+    nodescurrent = false;
 
     infoOverQuota = false;
     almostOQ = false;
@@ -1409,7 +1394,6 @@ void MegaApplication::loggedIn()
     registerUserActivity();
     pauseTransfers(paused);
     inflightUserStats = false;
-    updateUserStats(true);
     megaApi->getPricing();
     megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
     megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
@@ -2472,8 +2456,8 @@ void MegaApplication::showInfoDialog()
     {
         if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
         {
-                openBwOverquotaDialog();
-                return;
+            openBwOverquotaDialog();
+            return;
         }
         else if (bwOverquotaTimestamp)
         {
@@ -2487,6 +2471,13 @@ void MegaApplication::showInfoDialog()
             trayIcon->setContextMenu(&emptyMenu);
     #endif
             updateUserStats(true);
+        }
+        else
+        {
+            if (outdatedStorageInfo)
+            {
+                updateUserStats();
+            }
         }
     }
 
@@ -3762,11 +3753,6 @@ void MegaApplication::updateUserStats(bool force)
     }
 
     long long interval = Preferences::MIN_UPDATE_STATS_INTERVAL;
-    if (infoOverQuota || bwOverquotaTimestamp)
-    {
-        interval = Preferences::MIN_UPDATE_STATS_INTERVAL_OVERQUOTA;
-    }
-
     long long lastRequest = preferences->lastStatsRequest();
     if (force || (QDateTime::currentMSecsSinceEpoch() - lastRequest) > interval)
     {
@@ -3774,6 +3760,7 @@ void MegaApplication::updateUserStats(bool force)
         if (!inflightUserStats)
         {
             inflightUserStats = true;
+            outdatedStorageInfo = false;
             megaApi->getAccountDetails();
         }
         else
@@ -4925,7 +4912,6 @@ void MegaApplication::onLinkImportFinished()
     LinkProcessor *linkProcessor = ((LinkProcessor *)QObject::sender());
     preferences->setImportFolder(linkProcessor->getImportParentFolder());
     linkProcessor->deleteLater();
-    updateUserStats();
 }
 
 void MegaApplication::onRequestLinksFinished()
@@ -5943,8 +5929,21 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                                   QCoreApplication::translate("MegaError", event->getText()),
                                   Utilities::getDevicePixelRatio());
     }
+    else if (event->getType() == MegaEvent::EVENT_NODES_CURRENT)
+    {
+        nodescurrent = true;
+        if (!preferences->totalStorage())
+        {
+            updateUserStats(true);
+        }
+        else
+        {
+            outdatedStorageInfo = true;
+        }
+    }
     else if (event->getType() == MegaEvent::EVENT_STORAGE)
     {
+        updateUserStats(true);
         int state = event->getNumber();
         if (state == MegaApi::STORAGE_STATE_RED)
         {
@@ -5956,7 +5955,6 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
             {
                 infoOverQuota = true;
                 preferences->setUsedStorage(preferences->totalStorage());
-                updateUserStats(true);
 
                 if (trayMenu && trayMenu->isVisible())
                 {
@@ -6040,6 +6038,36 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
     switch (request->getType())
     {
+    case MegaRequest::TYPE_COPY:
+    {
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            MegaHandle handle = request->getNodeHandle();
+            MegaNode *node = megaApi->getNodeByHandle(handle);
+            if (node)
+            {
+                if (node->getType() == MegaNode::TYPE_FILE)
+                {
+                    if (infoDialog)
+                    {
+                        bool isShare = !megaApi->isInCloud(node);
+                        infoDialog->increaseUsedStorage(node->getSize(), isShare);
+
+                        if (settingsDialog)
+                        {
+                            settingsDialog->refreshAccountDetails();
+                        }
+                    }
+                }
+                else
+                {
+                    outdatedStorageInfo = true;
+                }
+                delete node;
+            }
+        }
+        break;
+    }
     case MegaRequest::TYPE_EXPORT:
     {
         if (!exportOps && e->getErrorCode() == MegaError::API_OK)
@@ -6376,6 +6404,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
+        outdatedStorageInfo = false;
         inflightUserStats = false;
         if (!preferences->logged())
         {
@@ -6489,7 +6518,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             bwOverquotaDialog->refreshAccountDetails();
         }
 
-        enablingBwOverquota = false;
         delete details;
         break;
     }
@@ -6975,28 +7003,15 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         }
     }
 
-    if (type == MegaTransfer::TYPE_UPLOAD)
+    if (type == MegaTransfer::TYPE_UPLOAD && e->getErrorCode() == MegaError::API_OK && transfer->getTransferredBytes() && infoDialog)
     {
-        if (e->getErrorCode() == MegaError::API_OK)
+        MegaHandle handle = transfer->getParentHandle();
+        MegaNode *node = megaApi->getNodeByHandle(handle);
+        if (node)
         {
-            if (infoDialog)
-            {
-                bool isShare = false;
-
-                MegaHandle handle = transfer->getParentHandle();
-                MegaNode *node = megaApi->getNodeByHandle(handle);
-
-                const char *path = megaApi->getNodePath(node);
-                if (path && path[0] != '/')
-                {
-                    isShare = true;
-                }
-
-                infoDialog->increaseUsedStorage(transfer->getTransferredBytes(), isShare);
-
-                delete node;
-                delete [] path;
-            }
+            bool isShare = !megaApi->isInCloud(node);
+            infoDialog->increaseUsedStorage(transfer->getTransferredBytes(), isShare);
+            delete node;
 
             if (settingsDialog)
             {
@@ -7084,25 +7099,17 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     preferences->setTransferDownloadMethod(api->getDownloadMethod());
     preferences->setTransferUploadMethod(api->getUploadMethod());
 
-    if (e->getErrorCode() == MegaError::API_EOVERQUOTA)
+    if (e->getErrorCode() == MegaError::API_EOVERQUOTA && e->getValue() && bwOverquotaTimestamp <= QDateTime::currentMSecsSinceEpoch() / 1000)
     {
-        int t = e->getValue();
-        if (t)
-        {
-            if (!bwOverquotaTimestamp || !enablingBwOverquota)
-            {
-                enablingBwOverquota = true;
-                preferences->clearTemporalBandwidth();
-                megaApi->getPricing();
-                updateUserStats(true);
-                bwOverquotaTimestamp = QDateTime::currentMSecsSinceEpoch() / 1000 + t;
-        #ifdef __MACH__
-                trayIcon->setContextMenu(initialMenu);
-        #endif
-                closeDialogs();
-                openBwOverquotaDialog();
-            }
-        }
+        preferences->clearTemporalBandwidth();
+        megaApi->getPricing();
+        updateUserStats(true);
+        bwOverquotaTimestamp = QDateTime::currentMSecsSinceEpoch() / 1000 + e->getValue();
+#ifdef __MACH__
+        trayIcon->setContextMenu(initialMenu);
+#endif
+        closeDialogs();
+        openBwOverquotaDialog();
     }
 }
 
@@ -7174,6 +7181,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
     }
 
     bool externalNodes = false;
+    bool newNodes = false;
     bool nodesRemoved = false;
     long long usedStorage = preferences->usedStorage();
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("%1 updated files/folders").arg(nodes->size()).toUtf8().constData());
@@ -7234,10 +7242,28 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             externalNodes = true;
         }
 
-        if (node->isRemoved() && (node->getType() == MegaNode::TYPE_FILE))
+        if (nodescurrent && node->isRemoved() && (node->getType() == MegaNode::TYPE_FILE) && node->getSize())
         {
             usedStorage -= node->getSize();
             nodesRemoved = true;
+        }
+
+        if (nodescurrent && node->getTag() <= 0 && !node->isRemoved() && !node->isSyncDeleted()
+                && (node->getType() == MegaNode::TYPE_FILE)
+                && node->getSize() && node->hasChanged(MegaNode::CHANGE_TYPE_NEW))
+        {
+            long long bytes = node->getSize();
+            if (!megaApi->isInCloud(node))
+            {
+                preferences->setInShareStorage(preferences->inShareStorage() + bytes);
+            }
+            else
+            {
+                preferences->setCloudDriveStorage(preferences->cloudDriveStorage() + bytes);
+            }
+
+            usedStorage += bytes;
+            newNodes = true;
         }
 
         if (!node->isRemoved() && node->getTag()
@@ -7264,15 +7290,24 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
         }
     }
 
-    if (nodesRemoved)
+    if (nodesRemoved || newNodes)
     {
         preferences->setUsedStorage(usedStorage);
-        updateUserStats();
+
+        if (infoDialog)
+        {
+            infoDialog->setUsage();
+        }
+
+        if (settingsDialog)
+        {
+            settingsDialog->refreshAccountDetails();
+        }
     }
 
     if (externalNodes)
     {
-        updateUserStats();
+        outdatedStorageInfo = true;
         if (QDateTime::currentMSecsSinceEpoch() - externalNodesTimestamp > Preferences::MIN_EXTERNAL_NODES_WARNING_MS)
         {
             externalNodesTimestamp = QDateTime::currentMSecsSinceEpoch();
