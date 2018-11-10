@@ -1426,28 +1426,16 @@ void MegaApplication::loggedIn()
     {
         showInfoMessage(tr("MEGAsync is now running. Click here to open the status window."));
     }
-    else if (!updated)
-    {
-        showNotificationMessage(tr("MEGAsync is now running. Click here to open the status window."));
-    }
 #else
     #ifdef __APPLE__
         if (!preferences->lastExecutionTime())
         {
             showInfoMessage(tr("MEGAsync is now running. Click the menu bar icon to open the status window."));
         }
-        else if (!updated)
-        {
-            showNotificationMessage(tr("MEGAsync is now running. Click the menu bar icon to open the status window."));
-        }
     #else
         if (!preferences->lastExecutionTime())
         {
             showInfoMessage(tr("MEGAsync is now running. Click the system tray icon to open the status window."));
-        }
-        else if (!updated)
-        {
-            showNotificationMessage(tr("MEGAsync is now running. Click the system tray icon to open the status window."));
         }
     #endif
 #endif
