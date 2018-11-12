@@ -1211,6 +1211,7 @@ void MegaApplication::start()
     overquotaCheck = false;
     inflightUserStats = false;
     infoOverQuota = false;
+    almostOQ = false;
     paused = false;
 
     if (isLinux && trayIcon->contextMenu())
