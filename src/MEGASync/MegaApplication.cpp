@@ -1214,6 +1214,8 @@ void MegaApplication::start()
     indexing = false;
     overquotaCheck = false;
     inflightUserStats = false;
+    infoOverQuota = false;
+    paused = false;
 
     if (isLinux && trayIcon->contextMenu())
     {
@@ -6240,12 +6242,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             closeDialogs();
             removeAllFinishedTransfers();
             clearViewedTransfers();
-            infoOverQuota = false;
-            paused = false;
 
-            periodicTasks();
             preferences->setFirstStartDone();
             start();
+            periodicTasks();
         }
         break;
     }
