@@ -5125,11 +5125,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
             {
                 trayMenu->close();
             }
-
-            if (trayOverQuotaMenu && trayOverQuotaMenu->isVisible())
-            {
-                trayOverQuotaMenu->close();
-            }
         }
         infoDialogTimer->start(200);
 #else
