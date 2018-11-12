@@ -3725,6 +3725,7 @@ void MegaApplication::redirectToUpgrade(int activationButton)
 void MegaApplication::registerUserActivity()
 {
     lastUserActivityExecution = QDateTime::currentMSecsSinceEpoch();
+    checkOverStorageStates();
 }
 
 void MegaApplication::onDismissOQ(bool overStorage)
