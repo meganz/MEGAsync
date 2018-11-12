@@ -5876,7 +5876,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
 
             checkOverStorageStates();
-            showInfoDialog();
         }
 
         if (settingsDialog)
@@ -6508,7 +6507,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                         createTrayMenu();
                     }
 
-                    openSettings(SettingsDialog::SYNCS_TAB);
                     if (settingsDialog)
                     {
                         settingsDialog->loadSettings();
@@ -7009,7 +7007,6 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
                 }
 
                 checkOverStorageStates();
-                showInfoDialog();
             }
 
             if (settingsDialog)
