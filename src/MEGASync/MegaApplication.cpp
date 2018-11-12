@@ -6368,6 +6368,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             bwOverquotaDialog->refreshAccountDetails();
         }
 
+        if (storageOverquotaDialog)
+        {
+            storageOverquotaDialog->refreshUsedStorage();
+        }
+
         enablingBwOverquota = false;
         delete details;
         break;
