@@ -347,7 +347,7 @@ const bool Preferences::defaultLowerSizeLimit       = false;
 
 const bool Preferences::defaultCleanerDaysLimit     = true;
 
-const bool Preferences::defaultUseHttpsOnly         = false;
+const bool Preferences::defaultUseHttpsOnly         = true;
 const bool Preferences::defaultSSLcertificateException = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
 const int  Preferences::defaultDownloadLimitKB      = 0;
