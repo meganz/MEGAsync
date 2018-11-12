@@ -541,7 +541,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     activeTransferTag[MegaTransfer::TYPE_UPLOAD] = 0;
     trayIcon = NULL;
     trayMenu = NULL;
-    trayOverQuotaMenu = NULL;
     trayGuestMenu = NULL;
     syncsMenu = NULL;
     megaApi = NULL;
@@ -559,10 +558,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     streamSelector = NULL;
     reboot = false;
     exitAction = NULL;
-    exitActionOverquota = NULL;
     exitActionGuest = NULL;
     settingsAction = NULL;
-    settingsActionOverquota = NULL;
     settingsActionGuest = NULL;
     importLinksAction = NULL;
     initialMenu = NULL;
@@ -619,7 +616,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updated = false;
     checkupdate = false;
     updateAction = NULL;
-    updateActionOverquota = NULL;
     updateActionGuest = NULL;
     showStatusAction = NULL;
     pasteMegaLinksDialog = NULL;
@@ -2354,8 +2350,6 @@ void MegaApplication::cleanAll()
     initialMenu = NULL;
     deleteMenu(trayMenu);
     trayMenu = NULL;
-    deleteMenu(trayOverQuotaMenu);
-    trayOverQuotaMenu = NULL;
     deleteMenu(syncsMenu);
     syncsMenu = NULL;
     deleteMenu(trayGuestMenu);
@@ -3819,10 +3813,14 @@ void MegaApplication::showTrayMenu(QPoint *point)
         if (!infoOverQuota)
         {
             addSyncAction->setVisible(true);
+            importLinksAction->setVisible(true);
+            uploadAction->setVisible(true);
         }
         else
         {
             addSyncAction->setVisible(false);
+            importLinksAction->setVisible(false);
+            uploadAction->setVisible(false);
         }
 
         if (trayMenu->isVisible())
@@ -3833,17 +3831,6 @@ void MegaApplication::showTrayMenu(QPoint *point)
         QPoint p = point ? (*point) - QPoint(trayMenu->sizeHint().width(), 0)
                                  : QCursor::pos();
         trayMenu->popup(p);
-    }
-    else if (trayOverQuotaMenu && infoOverQuota)
-    {
-        if (trayOverQuotaMenu->isVisible())
-        {
-            trayOverQuotaMenu->close();
-        }
-
-        QPoint p = point ? (*point) - QPoint(trayOverQuotaMenu->sizeHint().width(), 0)
-                         : QCursor::pos();
-        trayOverQuotaMenu->popup(p);
     }
 }
 
@@ -4289,7 +4276,6 @@ void MegaApplication::createTrayIcon()
         return;
     }
 
-    createOverQuotaMenu();
     createGuestMenu();
 
     if (!trayIcon)
@@ -4968,11 +4954,6 @@ void MegaApplication::onUpdateCompleted()
         createTrayIcon();
     }
 
-    if (trayOverQuotaMenu)
-    {
-        createOverQuotaMenu();
-    }
-
     if (trayGuestMenu)
     {
         createGuestMenu();
@@ -4993,11 +4974,6 @@ void MegaApplication::onUpdateAvailable(bool requested)
     if (trayMenu)
     {
         createTrayIcon();
-    }
-
-    if (trayOverQuotaMenu)
-    {
-        createOverQuotaMenu();
     }
 
     if (trayGuestMenu)
@@ -5761,85 +5737,6 @@ void MegaApplication::createTrayMenu()
     trayMenu->addAction(exitAction);
 }
 
-void MegaApplication::createOverQuotaMenu()
-{
-    if (appfinished)
-    {
-        return;
-    }
-
-    if (!trayOverQuotaMenu)
-    {
-        trayOverQuotaMenu = new QMenu();
-#ifdef __APPLE__
-        trayOverQuotaMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
-#else
-        trayOverQuotaMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
-#endif
-    }
-    else
-    {
-        QList<QAction *> actions = trayOverQuotaMenu->actions();
-        for (int i = 0; i < actions.size(); i++)
-        {
-            trayOverQuotaMenu->removeAction(actions[i]);
-        }
-    }
-
-    if (exitActionOverquota)
-    {
-        exitActionOverquota->deleteLater();
-        exitActionOverquota = NULL;
-    }
-
-#ifndef __APPLE__
-    exitActionOverquota = new MenuItemAction(tr("Exit"), QIcon(QString::fromAscii("://images/ico_quit_out.png")), QIcon(QString::fromAscii("://images/ico_quit_over.png")));
-#else
-    exitActionOverquota = new MenuItemAction(tr("Quit"), QIcon(QString::fromAscii("://images/ico_quit_out.png")), QIcon(QString::fromAscii("://images/ico_quit_over.png")));
-#endif
-    connect(exitActionOverquota, SIGNAL(triggered()), this, SLOT(exitApplication()));
-
-    if (settingsActionOverquota)
-    {
-        settingsActionOverquota->deleteLater();
-        settingsActionOverquota = NULL;
-    }
-
-#ifndef __APPLE__
-    settingsActionOverquota = new MenuItemAction(tr("Settings"), QIcon(QString::fromAscii("://images/ico_preferences_out.png")), QIcon(QString::fromAscii("://images/ico_preferences_over.png")));
-#else
-    settingsActionOverquota = new MenuItemAction(tr("Preferences"), QIcon(QString::fromAscii("://images/ico_preferences_out.png")), QIcon(QString::fromAscii("://images/ico_preferences_over.png")));
-#endif
-    connect(settingsActionOverquota, SIGNAL(triggered()), this, SLOT(openSettings()));
-
-    if (updateActionOverquota)
-    {
-        updateActionOverquota->deleteLater();
-        updateActionOverquota = NULL;
-    }
-
-    if (updateAvailable)
-    {
-        updateActionOverquota = new MenuItemAction(tr("Install update"), QIcon(QString::fromAscii("://images/ico_about_MEGA_out.png")), QIcon(QString::fromAscii("://images/ico_about_MEGA_over.png")));
-    }
-    else
-    {
-        updateActionOverquota = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromAscii("://images/ico_about_MEGA_out.png")), QIcon(QString::fromAscii("://images/ico_about_MEGA_over.png")));
-
-#ifndef __APPLE__
-        updateActionOverquota->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
-        updateActionOverquota->setIconVisibleInMenu(true);
-#endif
-    }
-    connect(updateActionOverquota, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
-
-    trayOverQuotaMenu->addAction(updateActionOverquota);
-    trayOverQuotaMenu->addSeparator();
-    trayOverQuotaMenu->addAction(settingsActionOverquota);
-    trayOverQuotaMenu->addSeparator();
-    trayOverQuotaMenu->addAction(exitActionOverquota);
-}
-
 void MegaApplication::createGuestMenu()
 {
     if (appfinished)
@@ -6431,9 +6328,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
             infoOverQuota = false;
 
-            if (trayOverQuotaMenu && trayOverQuotaMenu->isVisible())
+            if (trayMenu && trayMenu->isVisible())
             {
-                trayOverQuotaMenu->close();
+                trayMenu->close();
             }
 
             restoreSyncs();
