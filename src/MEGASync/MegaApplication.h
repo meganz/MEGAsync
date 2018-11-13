@@ -233,7 +233,6 @@ private slots:
 
 protected:
     void createTrayIcon();
-    void createOverQuotaMenu();
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
     void loggedIn();
@@ -273,7 +272,6 @@ protected:
 #endif
 
     QMenu *trayMenu;
-    QMenu *trayOverQuotaMenu;
     QMenu *trayGuestMenu;
     QMenu emptyMenu;
     QMenu *syncsMenu;
@@ -288,10 +286,6 @@ protected:
 
     MenuItemAction *updateAction;
     QAction *showStatusAction;
-
-    MenuItemAction *settingsActionOverquota;
-    MenuItemAction *exitActionOverquota;
-    MenuItemAction *updateActionOverquota;
 
     MenuItemAction *exitActionGuest;
     MenuItemAction *settingsActionGuest;

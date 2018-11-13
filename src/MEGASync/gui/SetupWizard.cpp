@@ -505,6 +505,7 @@ void SetupWizard::on_bNext_clicked()
             ui->bMegaFolder->show();
             ui->eMegaFolder->show();
             ui->lMegaFolder->show();
+            ui->lAdditionalSyncs->setText(QString::fromUtf8(""));
             ui->lAdditionalSyncs->show();
         }
         else
@@ -520,7 +521,8 @@ void SetupWizard::on_bNext_clicked()
             ui->bMegaFolder->hide();
             ui->eMegaFolder->hide();
             ui->lMegaFolder->hide();
-            ui->lAdditionalSyncs->hide();
+            ui->lAdditionalSyncs->setText(QString::fromUtf8(""));
+            ui->lAdditionalSyncs->show();
         }
 
         ui->bBack->setVisible(true);

@@ -61,7 +61,7 @@ void UpgradeOverStorage::refreshUsedStorage()
     long long total = preferences->totalStorage();
     if (used > total)
     {
-        ui->lUsageStorage->setText(ui->lUsageStorage->text()
+        ui->lUsageStorage->setText(tr("Your account is full ([A] / [B]). All file uploads to MEGA are currently disabled.")
                                    .replace(QString::fromUtf8("[A]"), Utilities::getSizeString(used))
                                    .replace(QString::fromUtf8("[B]"), Utilities::getSizeString(total)));
     }
