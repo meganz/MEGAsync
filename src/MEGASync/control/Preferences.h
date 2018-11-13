@@ -88,6 +88,18 @@ public:
     bool isTemporalBandwidthValid();
     long long getMsDiffTimeWithSDK();
     void setDsDiffTimeWithSDK(long long diffTime);
+
+    long long getOverStorageDialogExecution();
+    void setOverStorageDialogExecution(long long timestamp);
+    long long getOverStorageNotificationExecution();
+    void setOverStorageNotificationExecution(long long timestamp);
+    long long getAlmostOverStorageNotificationExecution();
+    void setAlmostOverStorageNotificationExecution(long long timestamp);
+    long long getAlmostOverStorageDismissExecution();
+    void setAlmostOverStorageDismissExecution(long long timestamp);
+    long long getOverStorageDismissExecution();
+    void setOverStorageDismissExecution(long long timestamp);
+
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
     void setTemporalBandwidth(long long value);
@@ -317,10 +329,22 @@ public:
         ONE_TIME_ACTION_OS_TOO_OLD = 4
     };
 
+    enum {
+        STATE_BELOW_OVER_STORAGE = 0,
+        STATE_ALMOST_OVER_STORAGE,
+        STATE_OVER_STORAGE,
+        STATE_OVER_STORAGE_DISMISSED
+    };
+
     static const int MAX_FILES_IN_NEW_SYNC_FOLDER;
     static const int MAX_FOLDERS_IN_NEW_SYNC_FOLDER;
     static const long long MIN_UPDATE_STATS_INTERVAL;
     static const long long MIN_UPDATE_STATS_INTERVAL_OVERQUOTA;
+    static const long long OQ_DIALOG_INTERVAL_MS;
+    static const long long OQ_NOTIFICATION_INTERVAL_MS;
+    static const long long ALMOST_OS_INTERVAL_MS;
+    static const long long OS_INTERVAL_MS;
+    static const long long USER_INACTIVITY_MS;
     static const long long MIN_UPDATE_CLEANING_INTERVAL_MS;
     static const int STATE_REFRESH_INTERVAL_MS;
     static const int FINISHED_TRANSFER_REFRESH_INTERVAL_MS;
@@ -386,6 +410,11 @@ protected:
     bool isTempBandwidthValid;
     QString dataPath;
     long long diffTimeWithSDK;
+    long long overStorageDialogExecution;
+    long long overStorageNotificationExecution;
+    long long almostOverStorageNotificationExecution;
+    long long almostOverStorageDismissExecution;
+    long long overStorageDismissExecution;
     long long lastTransferNotification;
 
     static const QString currentAccountKey;
@@ -412,7 +441,12 @@ protected:
     static const QString inShareFoldersKey;
     static const QString totalBandwidthKey;
     static const QString usedBandwidthKey;
-    static const QString usedBandwidthIntervalKey;
+    static const QString usedBandwidthIntervalKey;    
+    static const QString overStorageDialogExecutionKey;
+    static const QString overStorageNotificationExecutionKey;
+    static const QString almostOverStorageNotificationExecutionKey;
+    static const QString almostOverStorageDismissExecutionKey;
+    static const QString overStorageDismissExecutionKey;
     static const QString accountTypeKey;
     static const QString setupWizardCompletedKey;
     static const QString showNotificationsKey;
@@ -510,6 +544,7 @@ protected:
     static const int  defaultParallelDownloadConnections;
     static const int  defaultProxyType;
     static const int  defaultProxyProtocol;
+    static const long long defaultTimeStamp;
     static const QString  defaultProxyServer;
     static const int defaultProxyPort;
     static const bool defaultProxyRequiresAuth;

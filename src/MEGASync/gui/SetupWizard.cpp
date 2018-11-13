@@ -6,6 +6,7 @@
 #include "gui/MultiQFileDialog.h"
 #include "gui/Login2FA.h"
 #include "platform/Platform.h"
+#include <QtConcurrent/QtConcurrent>
 
 using namespace mega;
 
@@ -18,27 +19,49 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setWindowModality(Qt::WindowModal);
 
+    animationTimer = new QTimer(this);
+    animationTimer->setSingleShot(true);
+    connect(animationTimer, SIGNAL(timeout()), this, SLOT(animationTimout()));
+
+    connect(ui->ePassword, SIGNAL(textChanged(QString)), this, SLOT(onPasswordTextChanged(QString)));
+
     ui->wAdvancedSetup->installEventFilter(this);
     ui->wTypicalSetup->installEventFilter(this);
     ui->lTermsLink->installEventFilter(this);
     ui->rTypicalSetup->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->rAdvancedSetup->setAttribute(Qt::WA_TransparentForMouseEvents);
 
+    ui->wHelp->hide();
+    connect(ui->wHelp, SIGNAL(clicked()), this, SLOT(on_bLearMore_clicked()));
+
     this->app = app;
     this->closing = false;
+    this->loggingStarted = false;
+    this->closeBlocked = false;
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
     delegateListener = new QTMegaRequestListener(megaApi, this);
+    megaApi->addRequestListener(delegateListener);
 
     ui->lTermsLink->setText(ui->lTermsLink->text().replace(
         QString::fromUtf8("\">"),
         QString::fromUtf8("\" style=\"color:#DC0000\">"))
         .replace(QString::fromUtf8("mega.co.nz"), QString::fromUtf8("mega.nz")));
 
-    ui->lLearnMore->setText(QString::fromUtf8("<a href=\"https://mega.nz/help/client/megasync/syncing/how-to-setup-sync-client-can-i-specify-which-folder-s-to-sync-576c80e2886688e6028b4591\" style=\"color:#DC0000\">")
-                            + ui->lLearnMore->text() + QString::fromUtf8("</a>"));
 
-    page_initial();
+
+    m_animation = new QPropertyAnimation(ui->wErrorMessage, "size");
+    m_animation->setDuration(400);
+    m_animation->setEasingCurve(QEasingCurve::OutCubic);
+    m_animation->setStartValue(QSize(ui->wErrorMessage->minimumWidth(), ui->wErrorMessage->minimumHeight()));
+    m_animation->setEndValue(QSize(ui->wErrorMessage->maximumWidth(), ui->wErrorMessage->maximumHeight()));
+    connect(m_animation, SIGNAL(finished()), this, SLOT(onErrorAnimationFinished()));
+
+    page_newaccount();
+
+    ui->lError->setText(QString::fromUtf8(""));
+    ui->lError->hide();
+    ui->wErrorMessage->resize(QSize(ui->wErrorMessage->minimumWidth(),ui->wErrorMessage->minimumHeight()));
 
 #if 0 //Strings for the translation system. These lines don't need to be built
     QT_TR_NOOP("Very Weak");
@@ -52,7 +75,23 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
 SetupWizard::~SetupWizard()
 {
     delete delegateListener;
+    delete animationTimer;
+    delete m_animation;
     delete ui;
+}
+
+void SetupWizard::onRequestStart(MegaApi *api, MegaRequest *request)
+{
+    if (request->getType() == MegaRequest::TYPE_LOGIN)
+    {
+        ui->lProgress->setText(tr("Logging in..."));
+        page_progress();
+    }
+    else if (request->getType() == MegaRequest::TYPE_LOGOUT && request->getFlag())
+    {
+        closing = true;
+        page_logout();
+    }
 }
 
 void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *error)
@@ -66,9 +105,6 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         return;
     }
 
-    ui->bBack->setEnabled(true);
-    ui->bNext->setEnabled(true);
-    ui->bSkip->setEnabled(true);
     switch (request->getType())
     {
         case MegaRequest::TYPE_CREATE_ACCOUNT:
@@ -78,8 +114,8 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 page_login();
 
                 ui->eLoginEmail->setText(ui->eEmail->text().toLower().trimmed());
-                ui->lVerify->setVisible(true);
                 ui->eName->clear();
+                ui->eLastName->clear();
                 ui->eEmail->clear();
                 ui->ePassword->clear();
                 ui->eRepeatPassword->clear();
@@ -96,99 +132,121 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
 
             if (error->getErrorCode() == MegaError::API_EEXIST)
             {
-                QMessageBox::warning(NULL, tr("Error"), tr("User already exists"), QMessageBox::Ok);
+                showErrorMessage(tr("User already exists"));
             }
             else if (error->getErrorCode() != MegaError::API_ESSL)
             {
-                QMessageBox::warning(NULL, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
+                showErrorMessage(QCoreApplication::translate("MegaError", error->getErrorString()));
             }
             break;
         }
         case MegaRequest::TYPE_LOGIN:
         {
+            if (error->getErrorCode() == MegaError::API_EMFAREQUIRED
+                    || error->getErrorCode() == MegaError::API_EFAILED
+                    || error->getErrorCode() == MegaError::API_EEXPIRED)
+            {
+                ui->bCancel->setEnabled(false);
+                closeBlocked = true;
+            }
+
             if (error->getErrorCode() == MegaError::API_OK)
             {
-                megaApi->fetchNodes(delegateListener);
+                if (loggingStarted)
+                {
+                    megaApi->fetchNodes();
+                    if (!preferences->hasLoggedIn())
+                    {
+                        preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
+                    }
+                }
+
                 ui->lProgress->setText(tr("Fetching file list..."));
                 page_progress();
-
-                if (!preferences->hasLoggedIn())
-                {
-                    preferences->setHasLoggedIn(QDateTime::currentDateTime().toMSecsSinceEpoch() / 1000);
-                }
                 break;
             }
 
-            if (error->getErrorCode() == MegaError::API_ENOENT)
+            if (loggingStarted)
             {
-                QMessageBox::warning(NULL, tr("Error"), tr("Incorrect email and/or password.") + QString::fromUtf8(" ") + tr("Have you verified your account?"), QMessageBox::Ok);
-            }
-            else if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
-            {
-                QPointer<SetupWizard> dialog = this;
-                QPointer<Login2FA> verification = new Login2FA(this);
-                int result = verification->exec();
-                if (!dialog || !verification || result != QDialog::Accepted)
+                if (error->getErrorCode() == MegaError::API_ENOENT)
                 {
-                    if (dialog)
+                    showErrorMessage(tr("Incorrect email and/or password."));
+                }
+                else if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
+                {
+                    QPointer<SetupWizard> dialog = this;
+                    QPointer<Login2FA> verification = new Login2FA(this);
+                    int result = verification->exec();
+                    if (!dialog || !verification || result != QDialog::Accepted)
                     {
-                        page_login();
+                        if (dialog)
+                        {
+                            megaApi->localLogout();
+                            page_login();
+                            loggingStarted = false;
+                        }
+                        delete verification;
+                        return;
                     }
+
+                    QString pin = verification->pinCode();
                     delete verification;
+
+                    megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData());
                     return;
                 }
-
-                QString pin = verification->pinCode();
-                delete verification;
-
-                megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData(), delegateListener);
-                return;
-            }
-            else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
-            {
-                QMessageBox::warning(NULL, tr("Error"), tr("Please check your e-mail and click the link to confirm your account."), QMessageBox::Ok);
-            }
-            else if (error->getErrorCode() == MegaError::API_ETOOMANY)
-            {
-                QMessageBox::warning(NULL, tr("Error"),
-                                     tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
-                                     .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
-                                     .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm")))
-                                     , QMessageBox::Ok);
-            }
-            else if (error->getErrorCode() == MegaError::API_EBLOCKED)
-            {
-                QMessageBox::critical(NULL, tr("Error"), tr("Your account has been blocked. Please contact support@mega.co.nz"));
-            }
-            else if (error->getErrorCode() == MegaError::API_EFAILED || error->getErrorCode() == MegaError::API_EEXPIRED)
-            {
-                QPointer<SetupWizard> dialog = this;
-                QPointer<Login2FA> verification = new Login2FA(this);
-                verification->invalidCode(true);
-                int result = verification->exec();
-                if (!dialog || !verification || result != QDialog::Accepted)
+                else if (error->getErrorCode() == MegaError::API_EINCOMPLETE)
                 {
-                    if (dialog)
+                    showErrorMessage(tr("Please check your e-mail and click the link to confirm your account."));
+                }
+                else if (error->getErrorCode() == MegaError::API_ETOOMANY)
+                {
+                    showErrorMessage(tr("You have attempted to log in too many times.[BR]Please wait until %1 and try again.")
+                                        .replace(QString::fromUtf8("[BR]"), QString::fromUtf8("\n"))
+                                        .arg(QTime::currentTime().addSecs(3600).toString(QString::fromUtf8("hh:mm"))));
+                }
+                else if (error->getErrorCode() == MegaError::API_EBLOCKED)
+                {
+                    showErrorMessage(tr("Your account has been blocked. Please contact support@mega.co.nz"));
+                }
+                else if (error->getErrorCode() == MegaError::API_EFAILED || error->getErrorCode() == MegaError::API_EEXPIRED)
+                {
+                    QPointer<SetupWizard> dialog = this;
+                    QPointer<Login2FA> verification = new Login2FA(this);
+                    verification->invalidCode(true);
+                    int result = verification->exec();
+                    if (!dialog || !verification || result != QDialog::Accepted)
                     {
-                        page_login();
+                        if (dialog)
+                        {
+                            megaApi->localLogout();
+                            page_login();
+                            loggingStarted = false;
+                        }
+                        delete verification;
+                        return;
                     }
+
+                    QString pin = verification->pinCode();
                     delete verification;
+
+                    megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData());
                     return;
                 }
+                else if (error->getErrorCode() != MegaError::API_ESSL)
+                {
+                    showErrorMessage(QCoreApplication::translate("MegaError", error->getErrorString()));
+                }
 
-                QString pin = verification->pinCode();
-                delete verification;
-
-                megaApi->multiFactorAuthLogin(request->getEmail(), request->getPassword(), pin.toUtf8().constData(), delegateListener);
-                return;
+                loggingStarted = false;
+                page_login();
             }
-            else if (error->getErrorCode() != MegaError::API_ESSL)
+            else if (error->getErrorCode() != MegaError::API_EMFAREQUIRED
+                     && error->getErrorCode() != MegaError::API_EFAILED
+                     && error->getErrorCode() != MegaError::API_EEXPIRED)
             {
-                QMessageBox::warning(NULL, tr("Error"), QCoreApplication::translate("MegaError", error->getErrorString()), QMessageBox::Ok);
+                page_newaccount();
             }
-
-            page_login();
-
             break;
         }
         case MegaRequest::TYPE_CREATE_FOLDER:
@@ -220,61 +278,80 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         case MegaRequest::TYPE_FETCH_NODES:
         {
             if (error->getErrorCode() != MegaError::API_OK)
-            {
-                page_login();
+            {   
+                if (loggingStarted)
+                {
+                    page_login();
+                    loggingStarted = false;
+                }
+                else
+                {
+                    page_newaccount();
+                }
                 break;
             }
 
-            if (!megaApi->isFilesystemAvailable())
+            if (loggingStarted)
             {
-                page_login();
-                QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                           "Please, try again. If the problem persists "
-                                                           "please contact bug@mega.co.nz"), QMessageBox::Ok);
-                done(QDialog::Rejected);
-                preferences->setCrashed(true);
-                app->rebootApplication(false);
-                return;
+                if (!megaApi->isFilesystemAvailable())
+                {
+                    page_login();
+                    QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
+                                        "Please, try again. If the problem persists "
+                                        "please contact bug@mega.co.nz"));
+                    done(QDialog::Rejected);
+                    preferences->setCrashed(true);
+                    app->rebootApplication(false);
+                    return;
+                }
+
+                char *session = megaApi->dumpSession();
+                sessionKey = QString::fromUtf8(session);
+                delete [] session;
+
+                QString email = ui->eLoginEmail->text().toLower().trimmed();
+                if (preferences->hasEmail(email))
+                {
+                    int proxyType = preferences->proxyType();
+                    QString proxyServer = preferences->proxyServer();
+                    int proxyPort = preferences->proxyPort();
+                    int proxyProtocol = preferences->proxyProtocol();
+                    bool proxyAuth = preferences->proxyRequiresAuth();
+                    QString proxyUsername = preferences->getProxyUsername();
+                    QString proxyPassword = preferences->getProxyPassword();
+
+                    preferences->setEmail(email);
+                    preferences->setSession(sessionKey);
+                    preferences->setProxyType(proxyType);
+                    preferences->setProxyServer(proxyServer);
+                    preferences->setProxyPort(proxyPort);
+                    preferences->setProxyProtocol(proxyProtocol);
+                    preferences->setProxyRequiresAuth(proxyAuth);
+                    preferences->setProxyUsername(proxyUsername);
+                    preferences->setProxyPassword(proxyPassword);
+
+                    Platform::notifyAllSyncFoldersAdded();
+                    done(QDialog::Accepted);
+                    break;
+                }
+
+                page_mode();
             }
-
-            char *session = megaApi->dumpSession();
-            sessionKey = QString::fromUtf8(session);
-            delete [] session;
-
-            QString email = ui->eLoginEmail->text().toLower().trimmed();
-            if (preferences->hasEmail(email))
-            {
-                int proxyType = preferences->proxyType();
-                QString proxyServer = preferences->proxyServer();
-                int proxyPort = preferences->proxyPort();
-                int proxyProtocol = preferences->proxyProtocol();
-                bool proxyAuth = preferences->proxyRequiresAuth();
-                QString proxyUsername = preferences->getProxyUsername();
-                QString proxyPassword = preferences->getProxyPassword();
-
-                preferences->setEmail(email);
-                preferences->setSession(sessionKey);
-                preferences->setProxyType(proxyType);
-                preferences->setProxyServer(proxyServer);
-                preferences->setProxyPort(proxyPort);
-                preferences->setProxyProtocol(proxyProtocol);
-                preferences->setProxyRequiresAuth(proxyAuth);
-                preferences->setProxyUsername(proxyUsername);
-                preferences->setProxyPassword(proxyPassword);
-
-                Platform::notifyAllSyncFoldersAdded();
-
-                done(QDialog::Accepted);
-                break;
-            }
-
-            page_mode();
             break;
         }
         case MegaRequest::TYPE_LOGOUT:
         {
-            page_login();
-            break;
+            // If logging was started at GuestWidget logout should forward to create account
+            // Other cases should forward to login page
+            if (loggingStarted)
+            {
+                loggingStarted = false;
+                page_login();
+            }
+            else
+            {
+                page_newaccount();
+            }
         }
     }
 }
@@ -296,23 +373,22 @@ void SetupWizard::goToStep(int page)
     QWidget *wPage = ui->sPages->currentWidget();
     if (wPage != ui->pLogin
             && wPage != ui->pNewAccount
-            && wPage != ui->pSetup)
+            && wPage != ui->pProgress)
     {
         return;
     }
 
     switch (page)
     {
-        case PAGE_INITIAL:
-            page_initial();
-            break;
-
         case PAGE_LOGIN:
             page_login();
             break;
 
         case PAGE_NEW_ACCOUNT:
             page_newaccount();
+            break;
+        case PAGE_MODE:
+            page_mode();
             break;
 
         default:
@@ -323,98 +399,92 @@ void SetupWizard::goToStep(int page)
 void SetupWizard::on_bNext_clicked()
 {
     QWidget *w = ui->sPages->currentWidget();
-    if (w == ui->pSetup)
-    {
-        if (ui->rHaveAccount->isChecked())
-        {
-            page_login();
-        }
-        else
-        {
-            page_newaccount();
-        }
-    }
-    else if (w == ui->pLogin)
+    if (w == ui->pLogin)
     {
         QString email = ui->eLoginEmail->text().toLower().trimmed();
         QString password = ui->eLoginPassword->text();
 
         if (!email.length())
         {
-            QMessageBox::warning(NULL, tr("Error"), tr("Please, enter your e-mail address"), QMessageBox::Ok);
+            showErrorMessage(tr("Please, enter your e-mail address"));
             return;
         }
 
         if (!email.contains(QChar::fromAscii('@')) || !email.contains(QChar::fromAscii('.')))
         {
-           QMessageBox::warning(NULL, tr("Error"), tr("Please, enter a valid e-mail address"), QMessageBox::Ok);
-           return;
+            showErrorMessage(tr("Please, enter a valid e-mail address"));
+            return;
         }
 
         if (!password.length())
         {
-            QMessageBox::warning(NULL, tr("Error"), tr("Please, enter your password"), QMessageBox::Ok);
+            showErrorMessage(tr("Please, enter your password"));
             return;
         }
 
-        megaApi->login(email.toUtf8().constData(), password.toUtf8().constData(), delegateListener);
-
-        ui->lProgress->setText(tr("Logging in..."));
-        page_progress();
+        megaApi->login(email.toUtf8().constData(), password.toUtf8().constData());
+        loggingStarted = true;
     }
     else if (w == ui->pNewAccount)
     {
         QString name = ui->eName->text().trimmed();
+        QString lastName = ui->eLastName->text().trimmed();
         QString email = ui->eEmail->text().toLower().trimmed();
         QString password = ui->ePassword->text();
         QString repeatPassword = ui->eRepeatPassword->text();
 
         if (!name.length())
         {
-            QMessageBox::warning(NULL, tr("Error"), tr("Please, enter your name"), QMessageBox::Ok);
+            showErrorMessage(tr("Please, enter your name"));
+            return;
+        }
+
+        if (!lastName.length())
+        {
+            showErrorMessage(tr("Please, enter your last name"));
             return;
         }
 
         if (!email.length())
         {
-            QMessageBox::warning(NULL, tr("Error"), tr("Please, enter your e-mail address"), QMessageBox::Ok);
+            showErrorMessage(tr("Please, enter your e-mail address"));
             return;
         }
 
         if (!email.contains(QChar::fromAscii('@')) || !email.contains(QChar::fromAscii('.')))
         {
-           QMessageBox::warning(NULL, tr("Error"), tr("Please, enter a valid e-mail address"), QMessageBox::Ok);
-           return;
+            showErrorMessage(tr("Please, enter a valid e-mail address"));
+            return;
         }
 
         if (!password.length())
         {
-            QMessageBox::warning(NULL, tr("Error"), tr("Please, enter your password"), QMessageBox::Ok);
+            showErrorMessage(tr("Please, enter your password"));
             return;
         }
 
-        if (password.length() < 8)
+        if (megaApi->getPasswordStrength(password.toUtf8().constData()) == MegaApi::PASSWORD_STRENGTH_VERYWEAK)
         {
-            QMessageBox::warning(NULL, tr("Error"), tr("Please, enter a stronger password"), QMessageBox::Ok);
+            showErrorMessage(tr("Please, enter a stronger password"));
             return;
         }
 
         if (password.compare(repeatPassword))
         {
-            QMessageBox::warning(NULL, tr("Error"), tr("The entered passwords don't match"), QMessageBox::Ok);
+            showErrorMessage(tr("The entered passwords don't match"));
             return;
         }
 
         if (!ui->cAgreeWithTerms->isChecked())
         {
-            QMessageBox::warning(NULL, tr("Error"), tr("You have to accept our terms of service"), QMessageBox::Ok);
+            showErrorMessage(tr("You have to accept our terms of service"));
             return;
         }
 
         megaApi->createAccount(email.toUtf8().constData(),
                                password.toUtf8().constData(),
-                               name.toUtf8().constData(), NULL,
-                               delegateListener);
+                               name.toUtf8().constData(),
+                               lastName.toUtf8().constData());
 
         ui->lProgress->setText(tr("Creating account..."));
         page_progress();
@@ -426,26 +496,50 @@ void SetupWizard::on_bNext_clicked()
         {
             defaultFolderPath.append(QString::fromUtf8("/MEGAsync"));
             ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync"));
-            ui->lAdvancedLabel->setText(tr("The following folders will be automatically synchronized:"));
-            ui->lAdvancedSetup->setText(tr("Selective sync"));
+            ui->lAdvancedSetup->setText(tr("Selective sync:"));
+            ui->lHeader->setText(tr("Setup selective sync"));
+            ui->bSyncType->setIcon(QIcon(QString::fromAscii("://images/step_4_selective_sync.png")));
+            ui->bSyncType->setIconSize(QSize(94, 94));
+            ui->lSyncType->setText(tr("Selective sync"));
+            ui->lSyncTypeDesc->setText(tr("Specific folders in your Cloud Drive will be synchronized with a local folder."));
             ui->bMegaFolder->show();
             ui->eMegaFolder->show();
             ui->lMegaFolder->show();
+            ui->lAdditionalSyncs->setText(QString::fromUtf8(""));
             ui->lAdditionalSyncs->show();
         }
         else
         {
             defaultFolderPath.append(QString::fromUtf8("/MEGA"));
             ui->eMegaFolder->setText(QString::fromUtf8("/"));
-            ui->lAdvancedLabel->setText(tr("Your Cloud Drive will be synchronized with this folder:"));
-            ui->lAdvancedSetup->setText(tr("Full sync"));
+            ui->lAdvancedSetup->setText(tr("Select Local folder:"));
+            ui->lHeader->setText(tr("Setup full sync"));
+            ui->bSyncType->setIcon(QIcon(QString::fromAscii("://images/step_4_full_sync.png")));
+            ui->bSyncType->setIconSize(QSize(94, 94));
+            ui->lSyncType->setText(tr("Full Sync"));
+            ui->lSyncTypeDesc->setText(tr("Your entire Cloud Drive will be synchronized with a local folder."));
             ui->bMegaFolder->hide();
             ui->eMegaFolder->hide();
             ui->lMegaFolder->hide();
-            ui->lAdditionalSyncs->hide();
+            ui->lAdditionalSyncs->setText(QString::fromUtf8(""));
+            ui->lAdditionalSyncs->show();
         }
 
-        ui->lLearnMore->hide();
+        ui->bBack->setVisible(true);
+        ui->bBack->setEnabled(true);
+
+        if (!loggingStarted) //Logging started at main dialog
+        {
+            ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/login_setup_step2.png")));
+            ui->bCurrentStep->setIconSize(QSize(512, 44));
+        }
+        else
+        {
+            ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step4.png")));
+            ui->bCurrentStep->setIconSize(QSize(512, 44));
+        }
+
+        ui->wHelp->hide();
         ui->bNext->show();
         ui->sPages->setCurrentWidget(ui->pAdvanced);
 
@@ -458,13 +552,13 @@ void SetupWizard::on_bNext_clicked()
     {
         if (!ui->eLocalFolder->text().length())
         {
-            QMessageBox::warning(NULL, tr("Warning"), tr("Please, select a local folder"), QMessageBox::Ok);
+            showErrorMessage(tr("Please, select a local folder"));
             return;
         }
 
         if (!ui->eMegaFolder->text().length())
         {
-            QMessageBox::warning(NULL, tr("Warning"), tr("Please, select a MEGA folder"), QMessageBox::Ok);
+            showErrorMessage(tr("Please, select a MEGA folder"));
             return;
         }
 
@@ -483,8 +577,9 @@ void SetupWizard::on_bNext_clicked()
             {
                 page_login();
                 QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                           "Please, try again. If the problem persists "
-                                                           "please contact bug@mega.co.nz"), QMessageBox::Ok);
+                                    "Please, try again. If the problem persists "
+                                    "please contact bug@mega.co.nz"));
+
                 done(QDialog::Rejected);
                 preferences->setCrashed(true);
                 app->rebootApplication(false);
@@ -492,7 +587,7 @@ void SetupWizard::on_bNext_clicked()
             }
 
             ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync"));
-            megaApi->createFolder("MEGAsync", rootNode, delegateListener);
+            megaApi->createFolder("MEGAsync", rootNode);
             delete rootNode;
 
             ui->lProgress->setText(tr("Creating folder..."));
@@ -510,17 +605,18 @@ void SetupWizard::on_bNext_clicked()
 void SetupWizard::on_bBack_clicked()
 {
     QWidget *w = ui->sPages->currentWidget();
-    if (w == ui->pLogin || w == ui->pNewAccount)
+    if (w == ui->pSetupType)
     {
-        page_initial();
-    }
-    else if (w == ui->pSetupType)
-    {
+        megaApi->logout();
         page_logout();
     }
     else if (w == ui->pAdvanced)
     {
         page_mode();
+    }
+    else if (w == ui->pLogin)
+    {
+        page_newaccount();
     }
 }
 
@@ -535,8 +631,9 @@ void SetupWizard::on_bCancel_clicked()
         {
             page_login();
             QMessageBox::warning(NULL, tr("Error"), tr("Unable to get the filesystem.\n"
-                                                       "Please, try again. If the problem persists "
-                                                       "please contact bug@mega.co.nz"), QMessageBox::Ok);
+                                "Please, try again. If the problem persists "
+                                "please contact bug@mega.co.nz"));
+
             done(QDialog::Rejected);
             preferences->setCrashed(true);
             app->rebootApplication(false);
@@ -557,16 +654,12 @@ void SetupWizard::on_bCancel_clicked()
     {
         if (closing)
         {
-            megaApi->localLogout(delegateListener);
+            megaApi->localLogout();
             return;
         }
 
         QPointer<QMessageBox> msg = new QMessageBox(this);
         msg->setIcon(QMessageBox::Question);
-        //        TO-DO: Uncomment when asset is included to the project
-        //        msg->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-question.png")
-        //                                                                    : QString::fromUtf8(":/images/mbox-question@2x.png")));
-
         msg->setWindowTitle(tr("MEGAsync"));
         msg->setText(tr("Are you sure you want to cancel this wizard and undo all changes?"));
         msg->addButton(QMessageBox::Yes);
@@ -580,16 +673,19 @@ void SetupWizard::on_bCancel_clicked()
 
         if (button == QMessageBox::Yes)
         {
+            loggingStarted = false;
+
             if (megaApi->isLoggedIn())
             {
                 closing = true;
+                megaApi->logout();
                 page_logout();
             }
             else
             {
                 megaApi->localLogout();
                 done(QDialog::Rejected);
-            }
+            }            
         }
     }
 }
@@ -601,7 +697,16 @@ void SetupWizard::on_bSkip_clicked()
     {
         setupPreferences();
     }
-    done(QDialog::Accepted);
+
+    if (w == ui->pNewAccount)
+    {
+        app->showInfoDialog();
+        done(QDialog::Rejected);
+    }
+    else
+    {
+        done(QDialog::Accepted);
+    }
 }
 
 void SetupWizard::on_bLocalFolder_clicked()
@@ -768,8 +873,8 @@ void SetupWizard::setupPreferences()
     bool proxyAuth = preferences->proxyRequiresAuth();
     QString proxyUsername = preferences->getProxyUsername();
     QString proxyPassword = preferences->getProxyPassword();
-    preferences->setEmail(email);
-    preferences->setSession(sessionKey);
+    preferences->setEmail(QString::fromUtf8(megaApi->getMyEmail()));
+    preferences->setSession(QString::fromUtf8(megaApi->dumpSession()));
 
     preferences->setProxyType(proxyType);
     preferences->setProxyServer(proxyServer);
@@ -782,17 +887,41 @@ void SetupWizard::setupPreferences()
 
 bool SetupWizard::eventFilter(QObject *obj, QEvent *event)
 {
-    if (event->type() == QEvent::MouseButtonPress)
+    if (obj == ui->wTypicalSetup)
     {
-        if (obj == ui->wTypicalSetup)
+        if (event->type() == QEvent::KeyPress)
+        {
+            QKeyEvent* key = static_cast<QKeyEvent*>(event);
+            if (key->key() == Qt::Key_Space)
+            {
+                wTypicalSetup_clicked();
+            }
+        }
+
+        if (event->type() == QEvent::MouseButtonPress)
         {
             wTypicalSetup_clicked();
         }
-        else if (obj == ui->wAdvancedSetup)
+    }
+    else if (obj == ui->wAdvancedSetup)
+    {
+        if (event->type() == QEvent::KeyPress)
+        {
+            QKeyEvent* key = static_cast<QKeyEvent*>(event);
+            if (key->key() == Qt::Key_Space)
+            {
+                wAdvancedSetup_clicked();
+            }
+        }
+
+        if (event->type() == QEvent::MouseButtonPress)
         {
             wAdvancedSetup_clicked();
         }
-        else if (obj == ui->lTermsLink)
+    }
+    else if (obj == ui->lTermsLink)
+    {
+        if (event->type() == QEvent::MouseButtonPress)
         {
             lTermsLink_clicked();
         }
@@ -802,19 +931,28 @@ bool SetupWizard::eventFilter(QObject *obj, QEvent *event)
 
 void SetupWizard::closeEvent(QCloseEvent *event)
 {
-    if (!event->spontaneous() || closing)
+    if (!event->spontaneous())
     {
         event->accept();
+        return;
+    }
+
+    if (closing)
+    {
+        megaApi->localLogout();
+        done(QDialog::Rejected);
+        return;
+    }
+
+    if (closeBlocked)
+    {
+        event->ignore();
         return;
     }
 
     event->ignore();
     QPointer<QMessageBox> msg = new QMessageBox(this);
     msg->setIcon(QMessageBox::Question);
-    //        TO-DO: Uncomment when asset is included to the project
-    //        msg->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-question.png")
-    //                                                            : QString::fromUtf8(":/images/mbox-question@2x.png")));
-
     msg->setWindowTitle(tr("MEGAsync"));
     msg->setText(tr("Are you sure you want to cancel this wizard and undo all changes?"));
     msg->addButton(QMessageBox::Yes);
@@ -831,6 +969,7 @@ void SetupWizard::closeEvent(QCloseEvent *event)
         if (megaApi->isLoggedIn())
         {
             closing = true;
+            megaApi->logout();
             page_logout();
         }
         else
@@ -843,9 +982,9 @@ void SetupWizard::closeEvent(QCloseEvent *event)
 
 void SetupWizard::page_login()
 {
+    closeBlocked = false;
     ui->eLoginPassword->clear();
-    ui->lVerify->hide();
-    ui->lLearnMore->hide();
+    ui->wHelp->hide();
     initModeSelection();
 
     ui->bCancel->setEnabled(true);
@@ -853,11 +992,15 @@ void SetupWizard::page_login()
     ui->bNext->setVisible(true);
     ui->bNext->setEnabled(true);
     ui->bBack->setVisible(true);
-    ui->bBack->setVisible(true);
+    ui->bBack->setEnabled(true);
     ui->bSkip->setVisible(false);
     ui->bSkip->setEnabled(false);
     ui->eLoginEmail->setFocus();
     ui->bNext->setDefault(true);
+
+    ui->lHeader->setText(tr("Login to your MEGA account"));
+    ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step2.png")));
+    ui->bCurrentStep->setIconSize(QSize(512, 44));
 
     ui->sPages->setCurrentWidget(ui->pLogin);
     sessionKey.clear();
@@ -865,11 +1008,11 @@ void SetupWizard::page_login()
 
 void SetupWizard::page_logout()
 {
-    megaApi->logout(delegateListener);
+    closeBlocked = false;
     ui->lProgress->setText(tr("Logging out..."));
     ui->progressBar->setMaximum(0);
     ui->progressBar->setValue(-1);
-    ui->lLearnMore->hide();
+    ui->wHelp->hide();
 
     ui->bCancel->setEnabled(true);
     ui->bCancel->setVisible(true);
@@ -886,59 +1029,48 @@ void SetupWizard::page_logout()
     sessionKey.clear();
 }
 
-void SetupWizard::page_initial()
-{
-    ui->eLoginPassword->clear();
-    ui->lVerify->hide();
-    ui->eName->clear();
-    ui->eEmail->clear();
-    ui->ePassword->clear();
-    ui->eRepeatPassword->clear();
-    ui->lLearnMore->hide();
-    initModeSelection();
-
-    ui->bCancel->setEnabled(true);
-    ui->bCancel->setVisible(true);
-    ui->bNext->setVisible(true);
-    ui->bNext->setEnabled(true);
-    ui->bBack->setVisible(false);
-    ui->bBack->setVisible(false);
-    ui->bSkip->setVisible(false);
-    ui->bSkip->setEnabled(false);
-    ui->rHaveAccount->setChecked(true);
-    ui->rDontHaveAccount->setChecked(false);
-    ui->rHaveAccount->setFocus();
-    ui->bNext->setDefault(true);
-
-    ui->sPages->setCurrentWidget(ui->pSetup);
-    sessionKey.clear();
-
-    selectedMegaFolderHandle = mega::INVALID_HANDLE;
-}
-
 void SetupWizard::page_mode()
 {
+    closeBlocked = false;
     initModeSelection();
 
-    ui->lLearnMore->show();
     ui->bCancel->setEnabled(true);
     ui->bCancel->setVisible(true);
     ui->bNext->setVisible(true);
     ui->bNext->setEnabled(false);
-    ui->bBack->setVisible(true);
-    ui->bBack->setVisible(true);
+
     ui->bSkip->setVisible(true);
     ui->bSkip->setEnabled(true);
+    ui->bSkip->setText(QString::fromUtf8("Skip"));
     ui->bNext->setDefault(false);
     ui->bCancel->setDefault(false);
-    ui->lLearnMore->setFocus();
+    ui->wHelp->show();
+
+    ui->lHeader->setText(tr("Choose install type"));
+
+    if (!loggingStarted) //Logging started at main dialog
+    {
+        ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/login_setup_step1.png")));
+        ui->bCurrentStep->setIconSize(QSize(512, 44));
+        ui->bBack->setVisible(false);
+        ui->bBack->setEnabled(false);
+    }
+    else
+    {
+        ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step3.png")));
+        ui->bCurrentStep->setIconSize(QSize(512, 44));
+        ui->bBack->setVisible(true);
+        ui->bBack->setEnabled(true);
+    }
+
 
     ui->sPages->setCurrentWidget(ui->pSetupType);
 }
 
 void SetupWizard::page_welcome()
 {
-    ui->lLearnMore->hide();
+    closeBlocked = false;
+    ui->wHelp->hide();
     ui->bCancel->setEnabled(true);
     ui->bCancel->setVisible(true);
     ui->bCancel->setText(tr("Finish"));
@@ -951,27 +1083,61 @@ void SetupWizard::page_welcome()
     ui->bCancel->setFocus();
     ui->bCancel->setDefault(true);
 
+    ui->lHeader->setText(tr("We are all done!"));
+
+    if (!loggingStarted) //Logging started at main dialog
+    {
+        ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/login_setup_step3.png")));
+        ui->bCurrentStep->setIconSize(QSize(512, 44));
+    }
+    else
+    {
+        ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step5.png")));
+        ui->bCurrentStep->setIconSize(QSize(512, 44));
+    }
+
     ui->sPages->setCurrentWidget(ui->pWelcome);
+    ui->wButtons->hide();
+    ui->bFinish->setFocus();
 }
 
 void SetupWizard::page_newaccount()
 {
+    closeBlocked = false;
+    ui->eLoginPassword->clear();
+    ui->eName->clear();
+    ui->eLastName->clear();
+    ui->eEmail->clear();
+    ui->ePassword->clear();
+    ui->eRepeatPassword->clear();
+    ui->wHelp->hide();
+    initModeSelection();
+    sessionKey.clear();
+    selectedMegaFolderHandle = mega::INVALID_HANDLE;
+
     ui->bCancel->setEnabled(true);
     ui->bCancel->setVisible(true);
     ui->bNext->setVisible(true);
     ui->bNext->setEnabled(true);
-    ui->bBack->setVisible(true);
-    ui->bBack->setVisible(true);
-    ui->bSkip->setVisible(false);
-    ui->bSkip->setEnabled(false);
+    ui->bBack->setVisible(false);
+    ui->bBack->setEnabled(false);
+    ui->bSkip->setVisible(true);
+    ui->bSkip->setEnabled(true);
+    ui->bSkip->setText(QString::fromUtf8("Login"));
     ui->eName->setFocus();
     ui->bNext->setDefault(true);
+    ui->cAgreeWithTerms->setChecked(false);
+
+    ui->lHeader->setText(tr("Create a new MEGA account"));
+    ui->bCurrentStep->setIcon(QIcon(QString::fromAscii("://images/setup_step1.png")));
+    ui->bCurrentStep->setIconSize(QSize(512, 44));
 
     ui->sPages->setCurrentWidget(ui->pNewAccount);
 }
 
 void SetupWizard::page_progress()
 {
+    closeBlocked = false;
     ui->progressBar->setMaximum(0);
     ui->progressBar->setValue(-1);
 
@@ -986,7 +1152,105 @@ void SetupWizard::page_progress()
     ui->sPages->setCurrentWidget(ui->pProgress);
 }
 
+void SetupWizard::setLevelStrength(int level)
+{
+    switch (level)
+    {
+        case MegaApi::PASSWORD_STRENGTH_VERYWEAK:
+            ui->wVeryWeak->setStyleSheet(QString::fromUtf8("background-color:#FD684C;"));
+            ui->wWeak->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wMedium->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wGood->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wStrong->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            break;
+        case MegaApi::PASSWORD_STRENGTH_WEAK:
+            ui->wVeryWeak->setStyleSheet(QString::fromUtf8("background-color:#FFA500;"));
+            ui->wWeak->setStyleSheet(QString::fromUtf8("background-color:#FFA500;"));
+            ui->wMedium->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wGood->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wStrong->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            break;
+        case MegaApi::PASSWORD_STRENGTH_MEDIUM:
+            ui->wVeryWeak->setStyleSheet(QString::fromUtf8("background-color:#FFD300;"));
+            ui->wWeak->setStyleSheet(QString::fromUtf8("background-color:#FFD300;"));
+            ui->wMedium->setStyleSheet(QString::fromUtf8("background-color:#FFD300;"));
+            ui->wGood->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wStrong->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            break;
+        case MegaApi::PASSWORD_STRENGTH_GOOD:
+            ui->wVeryWeak->setStyleSheet(QString::fromUtf8("background-color:#81D522;"));
+            ui->wWeak->setStyleSheet(QString::fromUtf8("background-color:#81D522;"));
+            ui->wMedium->setStyleSheet(QString::fromUtf8("background-color:#81D522;"));
+            ui->wGood->setStyleSheet(QString::fromUtf8("background-color:#81D522;"));
+            ui->wStrong->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            break;
+        case MegaApi::PASSWORD_STRENGTH_STRONG:
+            ui->wVeryWeak->setStyleSheet(QString::fromUtf8("background-color:#00BFA5;"));
+            ui->wWeak->setStyleSheet(QString::fromUtf8("background-color:#00BFA5;"));
+            ui->wMedium->setStyleSheet(QString::fromUtf8("background-color:#00BFA5;"));
+            ui->wGood->setStyleSheet(QString::fromUtf8("background-color:#00BFA5;"));
+            ui->wStrong->setStyleSheet(QString::fromUtf8("background-color:#00BFA5;"));
+            break;
+        default:
+            ui->wVeryWeak->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wWeak->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wMedium->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wGood->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            ui->wStrong->setStyleSheet(QString::fromUtf8("background-color:rgba(0,0,0,0.2);"));
+            break;
+    }
+}
+
 void SetupWizard::lTermsLink_clicked()
 {
     ui->cAgreeWithTerms->toggle();
+}
+
+void SetupWizard::on_bLearMore_clicked()
+{
+    QString helpUrl = QString::fromAscii("https://mega.nz/help/client/megasync/syncing/how-to-setup-sync-client-can-i-specify-which-folder-s-to-sync-576c80e2886688e6028b4591\\");
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
+}
+
+void SetupWizard::on_bFinish_clicked()
+{
+    on_bCancel_clicked();
+}
+
+void SetupWizard::showErrorMessage(QString error)
+{
+    animationTimer->stop();
+
+    ui->lError->setText(error);
+    ui->lError->hide();
+    m_animation->setDirection(QAbstractAnimation::Forward);
+
+    m_animation->start();
+}
+
+void SetupWizard::onErrorAnimationFinished()
+{
+    if (QAbstractAnimation::Forward == m_animation->direction())
+    {
+        m_animation->setDirection(QAbstractAnimation::Backward);
+        ui->lError->show();
+        animationTimer->start(5000);
+    }
+    else
+    {
+        m_animation->setDirection(QAbstractAnimation::Forward);
+    }
+}
+
+void SetupWizard::animationTimout()
+{
+    ui->lError->setText(QString::fromUtf8(""));
+    ui->lError->hide();
+    m_animation->start();
+}
+
+void SetupWizard::onPasswordTextChanged(QString text)
+{
+    int strength = megaApi->getPasswordStrength(text.toUtf8().constData());
+    text.isEmpty() ? setLevelStrength(-1) : setLevelStrength(strength);
 }

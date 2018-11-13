@@ -516,6 +516,8 @@ void SettingsDialog::onCacheSizeAvailable()
 }
 void SettingsDialog::on_bAccount_clicked()
 {
+    emit userActivity();
+
     if (ui->wStack->currentWidget() == ui->pAccount)
     {
         ui->bAccount->setChecked(true);
@@ -557,6 +559,8 @@ void SettingsDialog::on_bAccount_clicked()
 
 void SettingsDialog::on_bSyncs_clicked()
 {
+    emit userActivity();
+
     if (ui->wStack->currentWidget() == ui->pSyncs)
     {
         ui->bSyncs->setChecked(true);
@@ -600,6 +604,8 @@ void SettingsDialog::on_bSyncs_clicked()
 
 void SettingsDialog::on_bBandwidth_clicked()
 {
+    emit userActivity();
+
     if (ui->wStack->currentWidget() == ui->pBandwidth)
     {
         ui->bBandwidth->setChecked(true);
@@ -646,6 +652,8 @@ void SettingsDialog::on_bBandwidth_clicked()
 
 void SettingsDialog::on_bAdvanced_clicked()
 {
+    emit userActivity();
+
     if (ui->wStack->currentWidget() == ui->pAdvanced)
     {
         ui->bAdvanced->setChecked(true);
@@ -700,6 +708,8 @@ void SettingsDialog::on_bAdvanced_clicked()
 
 void SettingsDialog::on_bProxies_clicked()
 {
+    emit userActivity();
+
     if (ui->wStack->currentWidget() == ui->pProxies)
     {
         ui->bProxies->setChecked(true);
@@ -1399,6 +1409,7 @@ int SettingsDialog::saveSettings()
                 delete node;
             }
 
+            app->createTrayMenu();
             syncsChanged = false;
         }
 #ifdef _WIN32

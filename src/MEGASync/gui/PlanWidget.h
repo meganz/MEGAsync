@@ -4,15 +4,7 @@
 #include <QWidget>
 #include <megaapi.h>
 #include <QPushButton>
-
-struct PlanInfo
-{
-    int amount;
-    QString currency;
-    unsigned long long gbStorage;
-    unsigned long long gbTransfer;
-    int level;
-};
+#include "Utilities.h"
 
 namespace Ui {
 class PlanWidget;

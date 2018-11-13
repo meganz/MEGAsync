@@ -4,94 +4,57 @@
         <file>fonts/OpenSans-Semibold.ttf</file>
         <file>images/account_32.png</file>
         <file>images/app_128.png</file>
-        <file>images/background.png</file>
         <file>images/bandwidth_32.png</file>
         <file>images/drag_3D.png</file>
         <file>images/drag_aftereffects.png</file>
         <file>images/drag_audio.png</file>
         <file>images/drag_cad.png</file>
         <file>images/drag_compressed.png</file>
-        <file>images/drag_database.png</file>
-        <file>images/drag_dreamweaver.png</file>
         <file>images/drag_excel.png</file>
         <file>images/drag_executable.png</file>
-        <file>images/drag_fla_lang.png</file>
-        <file>images/drag_flash.png</file>
         <file>images/drag_folder.png</file>
-        <file>images/drag_folder_shared.png</file>
         <file>images/drag_font.png</file>
         <file>images/drag_generic.png</file>
-        <file>images/drag_gis.png</file>
-        <file>images/drag_graphic.png</file>
-        <file>images/drag_html.png</file>
         <file>images/drag_illustrator.png</file>
         <file>images/drag_image.png</file>
         <file>images/drag_indesign.png</file>
-        <file>images/drag_java.png</file>
-        <file>images/drag_midi.png</file>
         <file>images/drag_pdf.png</file>
         <file>images/drag_photoshop.png</file>
-        <file>images/drag_playlist.png</file>
-        <file>images/drag_podcast.png</file>
         <file>images/drag_powerpoint.png</file>
         <file>images/drag_raw.png</file>
-        <file>images/drag_real_audio.png</file>
-        <file>images/drag_source_code.png</file>
         <file>images/drag_spreadsheet.png</file>
-        <file>images/drag_swf.png</file>
         <file>images/drag_text.png</file>
         <file>images/drag_torrent.png</file>
         <file>images/drag_vector.png</file>
         <file>images/drag_video.png</file>
-        <file>images/drag_video_subtitles.png</file>
-        <file>images/drag_video_vob.png</file>
         <file>images/drag_web_data.png</file>
         <file>images/drag_web_lang.png</file>
         <file>images/drag_word.png</file>
         <file>images/folder.ico</file>
         <file>images/general_32.png</file>
         <file>images/help_ico.png</file>
-        <file>images/logo.png</file>
         <file>images/proxies_32.png</file>
         <file>images/small_3D.png</file>
         <file>images/small_aftereffects.png</file>
         <file>images/small_audio.png</file>
         <file>images/small_cad.png</file>
         <file>images/small_compressed.png</file>
-        <file>images/small_database.png</file>
-        <file>images/small_dreamweaver.png</file>
         <file>images/small_excel.png</file>
         <file>images/small_executable.png</file>
-        <file>images/small_fla_lang.png</file>
-        <file>images/small_flash.png</file>
         <file>images/small_folder.png</file>
-        <file>images/small_folder_shared.png</file>
         <file>images/small_font.png</file>
         <file>images/small_generic.png</file>
-        <file>images/small_gis.png</file>
-        <file>images/small_graphic.png</file>
-        <file>images/small_html.png</file>
         <file>images/small_illustrator.png</file>
         <file>images/small_image.png</file>
         <file>images/small_indesign.png</file>
-        <file>images/small_java.png</file>
-        <file>images/small_midi.png</file>
         <file>images/small_pdf.png</file>
         <file>images/small_photoshop.png</file>
-        <file>images/small_playlist.png</file>
-        <file>images/small_podcast.png</file>
         <file>images/small_powerpoint.png</file>
         <file>images/small_raw.png</file>
-        <file>images/small_real_audio.png</file>
-        <file>images/small_source_code.png</file>
         <file>images/small_spreadsheet.png</file>
-        <file>images/small_swf.png</file>
         <file>images/small_torrent.png</file>
         <file>images/small_vector.png</file>
         <file>images/small_video.png</file>
-        <file>images/small_video_fla.png</file>
-        <file>images/small_video_subtitles.png</file>
-        <file>images/small_video_vob.png</file>
         <file>images/small_web_data.png</file>
         <file>images/small_web_lang.png</file>
         <file>images/small_word.png</file>
@@ -105,9 +68,7 @@
         <file>images/tray_web_ico.png</file>
         <file>images/usageProgress.png</file>
         <file>images/drag_premiere.png</file>
-        <file>images/drag_vcard.png</file>
         <file>images/small_premiere.png</file>
-        <file>images/small_vcard.png</file>
         <file>images/small_text.png</file>
         <file>images/import_cloud_ico.png</file>
         <file>images/import_computer_ico.png</file>
@@ -167,7 +128,6 @@
         <file>images/uptodate.svg</file>
         <file>images/tray_pause_over_ico.png</file>
         <file>images/tray_play_over_ico.png</file>
-        <file>images/tray_preferences_over_ico.png</file>
         <file>images/tray_share_over_ico.png</file>
         <file>images/drag_dmg.png</file>
         <file>images/warning.svg</file>
@@ -260,7 +220,6 @@
         <file>images/completed_transfers.png</file>
         <file>images/pause_big_ico.png</file>
         <file>images/mbox-warning.png</file>
-        <file>images/tray_transfer_manager_ico_over.png</file>
         <file>images/tray_transfer_manager_ico.png</file>
         <file>images/Lite.png</file>
         <file>images/ico_chat_button.png</file>
@@ -305,6 +264,63 @@
         <file>fonts/SourceSansPro-Semibold.ttf</file>
         <file>images/ic_small_available.png</file>
         <file>images/ic_small_versions.png</file>
+        <file>images/setup_step1.png</file>
+        <file>images/setup_step2.png</file>
+        <file>images/setup_step3.png</file>
+        <file>images/setup_step4.png</file>
+        <file>images/setup_step5.png</file>
+        <file>images/desktop_app_TM.png</file>
+        <file>images/ico_menu_uptodate_state.png</file>
+        <file>images/ico_pause_transfers_state.png</file>
+        <file>images/ico_resume_transfers_state.png</file>
+        <file>images/drag_camera_sync.png</file>
+        <file>images/drag_experiencedesign.png</file>
+        <file>images/drag_folder_incoming.png</file>
+        <file>images/drag_folder_outgoing.png</file>
+        <file>images/drag_keynote.png</file>
+        <file>images/drag_numbers.png</file>
+        <file>images/drag_openoffice.png</file>
+        <file>images/drag_pages.png</file>
+        <file>images/drag_sketch.png</file>
+        <file>images/small_camera_sync.png</file>
+        <file>images/small_experiencedesign.png</file>
+        <file>images/small_folder_incoming.png</file>
+        <file>images/small_folder_outgoing.png</file>
+        <file>images/small_keynote.png</file>
+        <file>images/small_numbers.png</file>
+        <file>images/small_openoffice.png</file>
+        <file>images/small_pages.png</file>
+        <file>images/small_sketch.png</file>
+        <file>images/ico_item_link.png</file>
+        <file>images/ico_item_retry.png</file>
+        <file>images/storage_almost_full.png</file>
+        <file>images/storage_full.png</file>
+        <file>images/card_border.png</file>
+        <file>images/achievements.png</file>
+        <file>images/ico_menu_full.png</file>
+        <file>images/ico_menu_scanning_1.png</file>
+        <file>images/ico_menu_scanning_2.png</file>
+        <file>images/ico_menu_scanning_3.png</file>
+        <file>images/ico_menu_scanning_4.png</file>
+        <file>images/ico_menu_scanning_5.png</file>
+        <file>images/ico_menu_scanning_6.png</file>
+        <file>images/ico_menu_scanning_7.png</file>
+        <file>images/ico_menu_scanning_8.png</file>
+        <file>images/ico_menu_scanning_9.png</file>
+        <file>images/ico_menu_scanning_10.png</file>
+        <file>images/ico_menu_scanning_11.png</file>
+        <file>images/ico_menu_scanning_12.png</file>
+        <file>images/downloaded_item_ico.png</file>
+        <file>images/uploaded_item_ico.png</file>
+        <file>images/upload_to_mega.png</file>
+        <file>images/login_background.png</file>
+        <file>images/login_intermediate.png</file>
+        <file>images/confirmation_link.png</file>
+        <file>images/step_4_full_sync.png</file>
+        <file>images/step_4_selective_sync.png</file>
+        <file>images/login_setup_step1.png</file>
+        <file>images/login_setup_step2.png</file>
+        <file>images/login_setup_step3.png</file>
         <file>images/shield.png</file>
     </qresource>
 </RCC>

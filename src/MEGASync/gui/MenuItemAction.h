@@ -9,12 +9,13 @@
 class MenuItemAction : public QWidgetAction
 {
 public:
-    MenuItemAction(const QString title, const QIcon icon, QSize iconSize = QSize(24,24));
-    MenuItemAction(const QString title, const QString value, const QIcon icon, QSize iconSize = QSize(24,24));
-    MenuItemAction(const QString title, const QIcon icon, const QIcon hoverIcon, QSize iconSize = QSize(24,24));
+    MenuItemAction(const QString title, const QIcon icon, bool manageHoverStates = false, QSize iconSize = QSize(24,24));
+    MenuItemAction(const QString title, const QString value, const QIcon icon, bool manageHoverStates = false, QSize iconSize = QSize(24,24));
+    MenuItemAction(const QString title, const QIcon icon, const QIcon hoverIcon, bool manageHoverStates = false, QSize iconSize = QSize(24,24));
     void setLabelText(QString title);
     void setIcon(const QIcon icon);
     void setHoverIcon(const QIcon icon);
+    void setHighlight(bool highlight);
 
     ~MenuItemAction();
 

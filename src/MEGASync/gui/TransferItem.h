@@ -2,75 +2,60 @@
 #define TRANSFERITEM_H
 
 #include <QWidget>
-#include <QDateTime>
-#include <QMovie>
-
-namespace Ui {
-class TransferItem;
-}
 
 class TransferItem : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit TransferItem(QWidget *parent = 0);
 
-    void setFileName(QString fileName);
-    QString getFileName();
-    QString getTransferName();
-    void setTransferredBytes(long long totalTransferredBytes, bool cancellable);
-    void setTransferType(int type);
-    void setSpeed(long long transferSpeed, long long meanSpeed);
-    void setTotalSize(long long size);
-    void setFinishedTime(long long time);
-    void setStateLabel(QString labelState);
+    virtual void setFileName(QString fileName);
+    virtual QString getFileName();
+    virtual void setTransferredBytes(long long totalTransferredBytes, bool cancellable);
+    virtual void setSpeed(long long transferSpeed, long long meanSpeed);
+    virtual void setTotalSize(long long size);
+    virtual void setFinishedTime(long long time);
 
-    void setType(int type, bool isSyncTransfer = false);
-    int getType();
-    void setPriority(unsigned long long priority);
-    unsigned long long getPriority();
+    virtual void setType(int type, bool isSyncTransfer = false);
+    virtual int getType();
 
-    void finishTransfer();
-    void updateTransfer();
-    void updateAnimation();
-    void updateFinishedTime();
-    void mouseHoverTransfer(bool isHover);
-    void loadDefaultTransferIcon();
+    virtual void setPriority(unsigned long long priority);
+    virtual unsigned long long getPriority();
 
-    QSize minimumSizeHint() const;
-    QSize sizeHint() const;
-    bool cancelButtonClicked(QPoint pos);
+    virtual int getTransferState();
+    virtual void setTransferState(int value);
+    virtual bool isTransferFinished();
 
-    ~TransferItem();
+    virtual int getTransferError();
+    virtual void setTransferError(int error);
 
-    int getTransferState();
-    void setTransferState(int value);
+    virtual int getTransferTag();
+    virtual void setTransferTag(int value);
 
-    int getTransferTag();
-    void setTransferTag(int value);
+    virtual bool getRegular();
+    virtual void setRegular(bool value);
 
-    bool getRegular();
-    void setRegular(bool value);
+    virtual void updateTransfer() = 0;
+    virtual void updateFinishedTime() = 0;
 
-    bool eventFilter(QObject *, QEvent * ev);
+    virtual void loadDefaultTransferIcon() = 0;
+    virtual void updateAnimation() = 0;
+
+    virtual bool cancelButtonClicked(QPoint pos) = 0;
+    virtual bool getLinkButtonClicked(QPoint pos) = 0;
+    virtual void mouseHoverTransfer(bool isHover) = 0;
+    virtual void setStateLabel(QString labelState) = 0;
+    virtual QString getTransferName() = 0;
 
 signals:
     void refreshTransfer(int tag);
-
-private:
-    Ui::TransferItem *ui;
-
-private slots:
-    void frameChanged(int);
 
 protected:
     QString fileName;
     int type;
     int transferState;
     int transferTag;
-    QMovie *animation;
-    QPixmap loadIconResource;
+    int transferError;
     long long transferSpeed;
     long long meanTransferSpeed;
     long long totalSize;

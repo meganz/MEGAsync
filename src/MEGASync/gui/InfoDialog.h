@@ -10,13 +10,14 @@
 #include "SettingsDialog.h"
 #include "DataUsageMenu.h"
 #include "MenuItemAction.h"
+#include "control/Preferences.h"
 
 namespace Ui {
 class InfoDialog;
 }
 
 class MegaApplication;
-class InfoDialog : public QDialog
+class InfoDialog : public QDialog, public mega::MegaTransferListener
 {
     Q_OBJECT
 
@@ -33,20 +34,20 @@ public:
     ~InfoDialog();
 
     void setUsage();
-    void setUserName();
     void setAvatar();
     void setTransfer(mega::MegaTransfer *transfer);
-    void updateTransfers();
+    void refreshTransferItems();
     void transferFinished(int error);
-    void updateSyncsButton();
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
     void increaseUsedStorage(long long bytes, bool isInShare);
     void setOverQuotaMode(bool state);
     void updateState();
-    void closeSyncsMenu();
     void addSync(mega::MegaHandle h);
     void clearUserAttributes();
+    void handleOverStorage(int state);
+
+    virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
 
 #ifdef __APPLE__
     void moveArrow(QPoint p);
@@ -60,44 +61,41 @@ private:
 
 public slots:
    void addSync();
-   void onContextDownloadMenu(QPoint pos, bool regular);
-   void onContextUploadMenu(QPoint pos, bool regular);
-   void globalDownloadState();
-   void downloadState();
-   void globalUploadState();
-   void uploadState();
-   void cancelAllUploads();
-   void cancelAllDownloads();
-   void cancelCurrentUpload();
-   void cancelCurrentDownload();
    void onAllUploadsFinished();
    void onAllDownloadsFinished();
    void onAllTransfersFinished();
+   void updateDialogState();
 
 private slots:
     void on_bSettings_clicked();
-    void on_bSyncFolder_clicked();
     void on_bUpgrade_clicked();
     void openFolder(QString path);
     void on_bChats_clicked();
-    void on_bTransferManager_clicked();
     void onOverlayClicked();
-    void scanningAnimationStep();
+    void on_bTransferManager_clicked();
     void onUserAction(int action);
 
     void on_bDotUsedStorage_clicked();
     void on_bDotUsedQuota_clicked();
 
+    void on_bDiscard_clicked();
+    void on_bBuyQuota_clicked();
+
     void hideUsageBalloon();
+
+signals:
+    void openTransferManager(int tab);
+    void dismissOQ(bool oq);
+    void userActivity();
 
 private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;
 #ifdef __APPLE__
     QPushButton *arrow;
+    QWidget *dummy; // Patch to let text input on line edits of GuestWidget
 #endif
 
-    QMenu *syncsMenu;
     QMenu *transferMenu;
     DataUsageMenu *storageUsedMenu;
 
@@ -106,21 +104,14 @@ private:
     MenuItemAction *sharesItem;
     MenuItemAction *rubbishItem;
 
-    long long downloadSpeed;
-    long long uploadSpeed;
-    int currentUpload;
-    int currentDownload;
-    int totalUploads;
-    int totalDownloads;
     int activeDownloadState, activeUploadState;
-    long long remainingDownloadBytes, remainingUploadBytes;
-    long long meanDownloadSpeed, meanUploadSpeed;
     int remainingUploads, remainingDownloads;
     bool indexing;
     bool waiting;
     GuestWidget *gWidget;
     int state;
     bool overQuotaState;
+    int storageState;
 
 protected:
     void changeEvent(QEvent * event);
@@ -132,11 +123,9 @@ protected:
 
 protected:
     QDateTime lastPopupUpdate;
-    QTimer scanningTimer;
     QTimer downloadsFinishedTimer;
     QTimer uploadsFinishedTimer;
     QTimer transfersFinishedTimer;
-    int scanningAnimationIndex;
     MegaApplication *app;
     Preferences *preferences;
     mega::MegaApi *megaApi;

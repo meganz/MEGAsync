@@ -13,11 +13,22 @@
                              chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAupdater", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
                              chmod("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/Contents/MacOS/MEGAShellExtFinder", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
 #endif
+
+struct PlanInfo
+{
+    int amount;
+    QString currency;
+    unsigned long long gbStorage;
+    unsigned long long gbTransfer;
+    int level;
+};
+
 class Utilities
 {
 public:
     static QString getSizeString(unsigned long long bytes);
     static QString getTimeString(long long secs, bool secondPrecision = true);
+    static QString getFinishedTimeString(long long secs);
     static bool verifySyncedFolderLimits(QString path);
     static QString extractJSONString(QString json, QString name);
     static long long extractJSONNumber(QString json, QString name);
