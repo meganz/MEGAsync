@@ -5876,9 +5876,9 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                 }
                 infoOverQuota = false;
 
-                if (trayOverQuotaMenu && trayOverQuotaMenu->isVisible())
+                if (trayMenu && trayMenu->isVisible())
                 {
-                    trayOverQuotaMenu->close();
+                    trayMenu->close();
                 }
 
                 restoreSyncs();
