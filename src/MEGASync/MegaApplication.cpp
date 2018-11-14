@@ -5978,6 +5978,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             {
                 bwOverquotaDialog->setPricing(pricing);
             }
+
+            if (storageOverquotaDialog)
+            {
+                storageOverquotaDialog->setPricing(pricing);
+            }
         }
         break;
     }
