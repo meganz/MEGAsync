@@ -40,7 +40,6 @@ public:
     void transferFinished(int error);
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
-    void increaseUsedStorage(long long bytes, bool isInShare);
     void setOverQuotaMode(bool state);
     void updateState();
     void addSync(mega::MegaHandle h);

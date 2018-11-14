@@ -5929,36 +5929,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
     switch (request->getType())
     {
-    case MegaRequest::TYPE_COPY:
-    {
-        if (e->getErrorCode() == MegaError::API_OK)
-        {
-            MegaHandle handle = request->getNodeHandle();
-            MegaNode *node = megaApi->getNodeByHandle(handle);
-            if (node)
-            {
-                if (node->getType() == MegaNode::TYPE_FILE)
-                {
-                    if (infoDialog)
-                    {
-                        bool isShare = !megaApi->isInCloud(node);
-                        infoDialog->increaseUsedStorage(node->getSize(), isShare);
-
-                        if (settingsDialog)
-                        {
-                            settingsDialog->refreshAccountDetails();
-                        }
-                    }
-                }
-                else
-                {
-                    outdatedStorageInfo = true;
-                }
-                delete node;
-            }
-        }
-        break;
-    }
     case MegaRequest::TYPE_EXPORT:
     {
         if (!exportOps && e->getErrorCode() == MegaError::API_OK)
@@ -6903,23 +6873,6 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         }
     }
 
-    if (type == MegaTransfer::TYPE_UPLOAD && e->getErrorCode() == MegaError::API_OK && transfer->getTransferredBytes() && infoDialog)
-    {
-        MegaHandle handle = transfer->getParentHandle();
-        MegaNode *node = megaApi->getNodeByHandle(handle);
-        if (node)
-        {
-            bool isShare = !megaApi->isInCloud(node);
-            infoDialog->increaseUsedStorage(transfer->getTransferredBytes(), isShare);
-            delete node;
-
-            if (settingsDialog)
-            {
-                settingsDialog->refreshAccountDetails();
-            }
-        }
-    }
-
     //If there are no pending transfers, reset the statics and update the state of the tray icon
     if (!numTransfers[MegaTransfer::TYPE_DOWNLOAD]
             && !numTransfers[MegaTransfer::TYPE_UPLOAD])
@@ -7148,7 +7101,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             nodesRemoved = true;
         }
 
-        if (nodescurrent && node->getTag() <= 0 && !node->isRemoved() && !node->isSyncDeleted()
+        if (nodescurrent && !node->isRemoved() && !node->isSyncDeleted()
                 && (node->getType() == MegaNode::TYPE_FILE)
                 && node->getSize() && node->hasChanged(MegaNode::CHANGE_TYPE_NEW))
         {
@@ -7193,6 +7146,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
     if (nodesRemoved || newNodes)
     {
         preferences->setUsedStorage(usedStorage);
+        preferences->sync();
 
         if (infoDialog)
         {
@@ -7207,7 +7161,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
 
     if (externalNodes)
     {
-        outdatedStorageInfo = true;
         if (QDateTime::currentMSecsSinceEpoch() - externalNodesTimestamp > Preferences::MIN_EXTERNAL_NODES_WARNING_MS)
         {
             externalNodesTimestamp = QDateTime::currentMSecsSinceEpoch();

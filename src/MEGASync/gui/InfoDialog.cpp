@@ -332,23 +332,6 @@ void InfoDialog::setWaiting(bool waiting)
     this->waiting = waiting;
 }
 
-void InfoDialog::increaseUsedStorage(long long bytes, bool isInShare)
-{
-    if (isInShare)
-    {
-        preferences->setInShareStorage(preferences->inShareStorage() + bytes);
-        preferences->setInShareFiles(preferences->inShareFiles()+1);
-    }
-    else
-    {
-        preferences->setCloudDriveStorage(preferences->cloudDriveStorage() + bytes);
-        preferences->setCloudDriveFiles(preferences->cloudDriveFiles()+1);
-    }
-
-    preferences->setUsedStorage(preferences->usedStorage() + bytes);
-    setUsage();
-}
-
 void InfoDialog::setOverQuotaMode(bool state)
 {
     overQuotaState = state;
