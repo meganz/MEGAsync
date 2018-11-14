@@ -237,6 +237,7 @@ protected:
     bool showTrayIconAlwaysNEW();
     void loggedIn();
     void startSyncs();
+    void applyStorageState(int state);
     void processUploadQueue(mega::MegaHandle nodeHandle);
     void processDownloadQueue(QString path);
     void unityFix();
@@ -326,6 +327,8 @@ protected:
     long long cleaningSchedulerExecution;
     long long lastUserActivityExecution;
     bool almostOQ;
+    int storageState;
+    int appliedStorageState;
     long long maxMemoryUsage;
     int exportOps;
     int syncState;
