@@ -743,7 +743,7 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 
     }
 
-    if (!mousePos.isNull())
+    if (!mousePos.isNull() && preferences && preferences->totalStorage())
     {
         createQuotaUsedMenu();
         QPoint p = ui->pUsageStorage->mapToGlobal(mousePos);
