@@ -1582,7 +1582,6 @@ void MegaApplication::applyStorageState(int state)
                 }
 
                 checkOverStorageStates();
-                showInfoDialog();
             }
 
             if (settingsDialog)
