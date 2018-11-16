@@ -1646,6 +1646,7 @@ void MegaApplication::processUploadQueue(MegaHandle nodeHandle)
     unsigned long long transferId = preferences->transferIdentifier();
     TransferMetaData* data = new TransferMetaData(MegaTransfer::TYPE_UPLOAD, uploadQueue.size(), uploadQueue.size());
     transferAppData.insert(transferId, data);
+    preferences->setOverStorageDismissExecution(0);
 
     //Process the upload queue using the MegaUploader object
     while (!uploadQueue.isEmpty())
@@ -4074,6 +4075,8 @@ void MegaApplication::importLinks()
     //If the user wants to import some links, do it
     if (preferences->logged() && importDialog->shouldImport())
     {
+        preferences->setOverStorageDismissExecution(0);
+
         connect(linkProcessor, SIGNAL(onLinkImportFinish()), this, SLOT(onLinkImportFinished()));
         connect(linkProcessor, SIGNAL(onDupplicateLink(QString, QString, mega::MegaHandle)),
                 this, SLOT(onDupplicateLink(QString, QString, mega::MegaHandle)));
