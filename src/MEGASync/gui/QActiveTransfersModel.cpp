@@ -263,6 +263,12 @@ void QActiveTransfersModel::updateTransferInfo(MegaTransfer *transfer)
         item->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
         item->setTransferState(transfer->getState());
         item->setPriority(newPriority);
+
+        int tError = transfer->getLastError().getErrorCode();
+        if (tError != MegaError::API_OK)
+        {
+            item->setTransferError(tError);
+        }
     }
 
     if (newPriority == itemData->priority)
