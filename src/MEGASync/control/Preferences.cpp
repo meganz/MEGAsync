@@ -32,10 +32,10 @@ const int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
 const int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
 
 const long long Preferences::OQ_DIALOG_INTERVAL_MS = 420000; // 7 min
-const long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 2160000; // 36 min
-const long long Preferences::ALMOST_OS_INTERVAL_MS = 4320000; // 72 min
-const long long Preferences::OS_INTERVAL_MS = 2160000; // 36 hours
-const long long Preferences::USER_INACTIVITY_MS = 60000; // 1 min
+const long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 36000; // 36 secs
+const long long Preferences::ALMOST_OS_INTERVAL_MS = 72000; // 72 secs
+const long long Preferences::OS_INTERVAL_MS = 36000; // 36 secs
+const long long Preferences::USER_INACTIVITY_MS = 20000; // 20 secs
 
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
 const long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS  = 7200000;

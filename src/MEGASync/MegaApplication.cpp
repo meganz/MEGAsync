@@ -2328,9 +2328,9 @@ void MegaApplication::periodicTasks()
             networkConfigurationManager.updateConfigurations();
             checkMemoryUsage();
             megaApi->update();
-
-            checkOverStorageStates();
         }
+
+        checkOverStorageStates();
 
         megaApi->updateStats();
         onGlobalSyncStateChanged(megaApi);
