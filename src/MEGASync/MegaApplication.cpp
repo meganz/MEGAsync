@@ -3878,14 +3878,10 @@ void MegaApplication::showTrayMenu(QPoint *point)
         if (!infoOverQuota)
         {
             addSyncAction->setVisible(true);
-            importLinksAction->setVisible(true);
-            uploadAction->setVisible(true);
         }
         else
         {
             addSyncAction->setVisible(false);
-            importLinksAction->setVisible(false);
-            uploadAction->setVisible(false);
         }
 
         if (trayMenu->isVisible())
@@ -3895,6 +3891,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
 
         QPoint p = point ? (*point) - QPoint(trayMenu->sizeHint().width(), 0)
                                  : QCursor::pos();
+        trayMenu->update();
         trayMenu->popup(p);
     }
 }
