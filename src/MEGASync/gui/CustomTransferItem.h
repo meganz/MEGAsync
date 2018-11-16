@@ -28,6 +28,7 @@ public:
 
     bool getLinkButtonClicked(QPoint pos);
     void mouseHoverTransfer(bool isHover);
+    bool mouseHoverRetryingLabel(QPoint pos);
 
     void finishTransfer();
     void updateTransfer();

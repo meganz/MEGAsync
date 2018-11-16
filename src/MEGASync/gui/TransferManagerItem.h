@@ -34,6 +34,7 @@ public:
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
     bool cancelButtonClicked(QPoint pos);
+    bool mouseHoverRetryingLabel(QPoint pos);
     bool getLinkButtonClicked(QPoint pos) { return false;}
 
     ~TransferManagerItem();
