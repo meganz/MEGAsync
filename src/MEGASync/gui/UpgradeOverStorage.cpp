@@ -4,6 +4,7 @@
 #include "Preferences.h"
 #include <QDateTime>
 #include <QUrl>
+#include <math.h>
 
 using namespace mega;
 
@@ -57,17 +58,46 @@ void UpgradeOverStorage::setPricing(MegaPricing *pricing)
 void UpgradeOverStorage::refreshUsedStorage()
 {
     Preferences *preferences = Preferences::instance();
-    long long used  = preferences->usedStorage();
-    long long total = preferences->totalStorage();
-    if (used > total)
+    long long usedStorage  = preferences->usedStorage();
+    long long totalStorage = preferences->totalStorage();
+
+    if (totalStorage == 0 || usedStorage < totalStorage)
     {
-        ui->lUsageStorage->setText(tr("Your account is full ([A] / [B]). All file uploads to MEGA are currently disabled.")
-                                   .replace(QString::fromUtf8("[A]"), Utilities::getSizeString(used))
-                                   .replace(QString::fromUtf8("[B]"), Utilities::getSizeString(total)));
+        ui->wUsage->hide();
     }
     else
     {
-        ui->lUsageStorage->setText(QString());
+        ui->wUsage->show();
+
+        int percentage = ceil((100 * ((double)usedStorage) / totalStorage));
+        ui->pUsageStorage->setValue((percentage < 100) ? percentage : 100);
+
+        if (percentage > 100)
+        {
+            ui->pUsageStorage->setProperty("almostoq", false);
+            ui->pUsageStorage->setProperty("crossedge", true);
+        }
+        else if (percentage > 90)
+        {
+            ui->pUsageStorage->setProperty("crossedge", false);
+            ui->pUsageStorage->setProperty("almostoq", true);
+        }
+        else
+        {
+            ui->pUsageStorage->setProperty("crossedge", false);
+            ui->pUsageStorage->setProperty("almostoq", false);
+        }
+
+        ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
+        ui->pUsageStorage->style()->polish(ui->pUsageStorage);
+
+        QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1</span>")
+                                     .arg(QString::number(percentage).append(QString::fromAscii("%&nbsp;"))))
+                                     .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
+                                     .arg(Utilities::getSizeString(totalStorage)));
+        ui->lPercentageUsedStorage->setText(used);
+        ui->lTotalUsedStorage->setText(tr("USED STORAGE %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
+                                       .arg(Utilities::getSizeString(usedStorage))));
     }
 
     checkAchievementsEnabled();
@@ -117,10 +147,12 @@ void UpgradeOverStorage::checkAchievementsEnabled()
                                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#fm/account/achievements\"><span style=\"color:#333333; text-decoration:underline;\">"))
                                    .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
         ui->wAchievements->show();
+        setFixedHeight(600);
     }
     else
     {
         ui->wAchievements->hide();
+        setFixedHeight(540);
     }
 }
 
