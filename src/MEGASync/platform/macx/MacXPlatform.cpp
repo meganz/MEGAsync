@@ -320,5 +320,5 @@ bool MacXPlatform::shouldRunHttpsServer()
 
 bool MacXPlatform::isUserActive()
 {
-    return true;
+    return userActive();
 }
