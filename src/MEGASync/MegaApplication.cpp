@@ -2216,18 +2216,9 @@ void MegaApplication::checkMemoryUsage()
     }
 }
 
-bool MegaApplication::isUserActive()
-{
-    if ((QDateTime::currentMSecsSinceEpoch() - lastUserActivityExecution) > Preferences::USER_INACTIVITY_MS)
-    {
-        return false;
-    }
-    return true;
-}
-
 void MegaApplication::checkOverStorageStates()
 {
-    if (!preferences->logged() || !isUserActive())
+    if (!preferences->logged() || !Platform::isUserActive())
     {
         return;
     }
@@ -3791,7 +3782,6 @@ void MegaApplication::redirectToUpgrade(int activationButton)
 void MegaApplication::registerUserActivity()
 {
     lastUserActivityExecution = QDateTime::currentMSecsSinceEpoch();
-    checkOverStorageStates();
 }
 
 void MegaApplication::onDismissOQ(bool overStorage)

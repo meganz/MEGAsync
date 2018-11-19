@@ -55,6 +55,7 @@ public:
     static void uninstall();
     static bool shouldRunHttpServer();
     static bool shouldRunHttpsServer();
+    static bool isUserActive();
 
     static int fd;
 };
