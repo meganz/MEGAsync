@@ -798,8 +798,8 @@ void InfoDialog::regenerateLayout()
         gWidget->initialize();
 
 #ifdef __APPLE__
-        setMinimumHeight(512);
-        setMaximumHeight(512);
+        setMinimumHeight(524);
+        setMaximumHeight(524);
 #else
         setMinimumHeight(514);
         setMaximumHeight(514);
