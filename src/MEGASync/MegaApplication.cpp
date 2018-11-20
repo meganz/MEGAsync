@@ -2516,7 +2516,6 @@ void MegaApplication::showInfoDialog()
     #ifdef __MACH__
             trayIcon->setContextMenu(&emptyMenu);
     #endif
-            updateUserStats(true);
         }
         else
         {
