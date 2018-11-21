@@ -818,6 +818,19 @@ padding-right: 10px;
                </property>
               </widget>
              </item>
+             <item>
+              <spacer name="verticalSpacer">
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>20</width>
+                 <height>40</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
             </layout>
            </widget>
            <widget class="QWidget" name="pOverquota">
@@ -1128,23 +1141,6 @@ padding-right: 10px;
                  <height>331</height>
                 </size>
                </property>
-               <layout class="QVBoxLayout" name="verticalLayout_6">
-                <property name="spacing">
-                 <number>0</number>
-                </property>
-                <property name="leftMargin">
-                 <number>12</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>12</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-               </layout>
               </widget>
              </item>
             </layout>
@@ -1573,7 +1569,7 @@ padding-right: 10px;
                    <string notr="true"/>
                   </property>
                   <property name="value">
-                   <number>18</number>
+                   <number>0</number>
                   </property>
                   <property name="format">
                    <string/>
@@ -1782,7 +1778,7 @@ color: #333333;
                    </size>
                   </property>
                   <property name="value">
-                   <number>12</number>
+                   <number>0</number>
                   </property>
                   <property name="format">
                    <string/>

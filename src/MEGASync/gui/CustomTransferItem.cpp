@@ -151,6 +151,22 @@ void CustomTransferItem::mouseHoverTransfer(bool isHover)
     emit refreshTransfer(this->getTransferTag());
 }
 
+bool CustomTransferItem::mouseHoverRetryingLabel(QPoint pos)
+{
+    switch (transferState)
+    {
+        case MegaTransfer::STATE_RETRYING:
+            if (ui->lSpeed->rect().contains(ui->lSpeed->mapFrom(this, pos)))
+            {
+                return true;
+            }
+            break;
+        default:
+            break;
+    }
+    return false;
+}
+
 void CustomTransferItem::finishTransfer()
 {
     ui->sTransferState->setCurrentWidget(ui->completedTransfer);

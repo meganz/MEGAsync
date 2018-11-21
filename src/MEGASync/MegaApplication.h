@@ -192,7 +192,6 @@ public slots:
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
     void checkMemoryUsage();
-    bool isUserActive();
     void checkOverStorageStates();
     void periodicTasks();
     void cleanAll();
@@ -237,6 +236,7 @@ protected:
     bool showTrayIconAlwaysNEW();
     void loggedIn();
     void startSyncs();
+    void applyStorageState(int state);
     void processUploadQueue(mega::MegaHandle nodeHandle);
     void processDownloadQueue(QString path);
     void unityFix();
@@ -326,12 +326,13 @@ protected:
     long long cleaningSchedulerExecution;
     long long lastUserActivityExecution;
     bool almostOQ;
+    int storageState;
+    int appliedStorageState;
     long long maxMemoryUsage;
     int exportOps;
     int syncState;
     mega::MegaPricing *pricing;
     long long bwOverquotaTimestamp;
-    bool enablingBwOverquota;
     UpgradeDialog *bwOverquotaDialog;
     UpgradeOverStorage *storageOverquotaDialog;
     bool bwOverquotaEvent;
@@ -384,7 +385,6 @@ protected:
     bool updateAvailable;
     bool isLinux;
     long long externalNodesTimestamp;
-    bool overquotaCheck;
     int noKeyDetected;
     bool isFirstSyncDone;
     bool isFirstFileSynced;
@@ -395,6 +395,8 @@ protected:
     bool isPublic;
     bool updatingSSLcert;
     long long lastSSLcertUpdate;
+    bool outdatedStorageInfo;
+    bool nodescurrent;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener

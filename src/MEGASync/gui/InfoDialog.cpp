@@ -332,23 +332,6 @@ void InfoDialog::setWaiting(bool waiting)
     this->waiting = waiting;
 }
 
-void InfoDialog::increaseUsedStorage(long long bytes, bool isInShare)
-{
-    if (isInShare)
-    {
-        preferences->setInShareStorage(preferences->inShareStorage() + bytes);
-        preferences->setInShareFiles(preferences->inShareFiles()+1);
-    }
-    else
-    {
-        preferences->setCloudDriveStorage(preferences->cloudDriveStorage() + bytes);
-        preferences->setCloudDriveFiles(preferences->cloudDriveFiles()+1);
-    }
-
-    preferences->setUsedStorage(preferences->usedStorage() + bytes);
-    setUsage();
-}
-
 void InfoDialog::setOverQuotaMode(bool state)
 {
     overQuotaState = state;
@@ -480,11 +463,6 @@ void InfoDialog::onAllTransfersFinished()
         if (!overQuotaState && (ui->sActiveTransfers->currentWidget() != ui->pUpdated))
         {
             updateDialogState();
-        }
-
-        if (preferences->logged())
-        {
-            app->updateUserStats();
         }
 
         if ((QDateTime::currentMSecsSinceEpoch() - preferences->lastTransferNotificationTimestamp()) > Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS)
@@ -748,7 +726,7 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 
     }
 
-    if (!mousePos.isNull())
+    if (!mousePos.isNull() && preferences && preferences->totalStorage())
     {
         createQuotaUsedMenu();
         QPoint p = ui->pUsageStorage->mapToGlobal(mousePos);
@@ -820,8 +798,8 @@ void InfoDialog::regenerateLayout()
         gWidget->initialize();
 
 #ifdef __APPLE__
-        setMinimumHeight(512);
-        setMaximumHeight(512);
+        setMinimumHeight(524);
+        setMaximumHeight(524);
 #else
         setMinimumHeight(514);
         setMaximumHeight(514);

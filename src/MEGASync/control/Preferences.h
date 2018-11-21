@@ -326,7 +326,8 @@ public:
         ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE = 1,
         ONE_TIME_ACTION_ACTIVE_FINDER_EXT = 2,
         ONE_TIME_ACTION_REGISTER_UPDATE_TASK = 3,
-        ONE_TIME_ACTION_OS_TOO_OLD = 4
+        ONE_TIME_ACTION_OS_TOO_OLD = 4,
+        ONE_TIME_ACTION_HGFS_WARNING = 5
     };
 
     enum {
@@ -339,7 +340,6 @@ public:
     static const int MAX_FILES_IN_NEW_SYNC_FOLDER;
     static const int MAX_FOLDERS_IN_NEW_SYNC_FOLDER;
     static const long long MIN_UPDATE_STATS_INTERVAL;
-    static const long long MIN_UPDATE_STATS_INTERVAL_OVERQUOTA;
     static const long long OQ_DIALOG_INTERVAL_MS;
     static const long long OQ_NOTIFICATION_INTERVAL_MS;
     static const long long ALMOST_OS_INTERVAL_MS;

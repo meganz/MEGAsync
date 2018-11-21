@@ -43,6 +43,7 @@ public:
 
     virtual bool cancelButtonClicked(QPoint pos) = 0;
     virtual bool getLinkButtonClicked(QPoint pos) = 0;
+    virtual bool mouseHoverRetryingLabel(QPoint pos) = 0;
     virtual void mouseHoverTransfer(bool isHover) = 0;
     virtual void setStateLabel(QString labelState) = 0;
     virtual QString getTransferName() = 0;
