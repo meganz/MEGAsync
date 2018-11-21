@@ -6537,15 +6537,22 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                                            fad.dwFileAttributes | FILE_ATTRIBUTE_HIDDEN);
                     }
 
-                    WCHAR exFatFS[] = L"exFAT";
-                    if (fsname.size() && (!memcmp(fsname.data(), L"FAT", 6) || !memcmp(fsname.data(), exFatFS, sizeof(exFatFS)))
-                            && !preferences->isFatWarningShown())
+                    if (fsname.size())
                     {
-                        QMessageBox::warning(NULL, tr("MEGAsync"),
-                                         tr("You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it's strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).")
-                                             .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://help.mega.nz/megasync/syncing.html#can-i-sync-fat-fat32-partitions-under-windows\">"))
-                                             .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>")));
-                        preferences->setFatWarningShown();
+                        if ((!memcmp(fsname.data(), L"FAT", 6) || !memcmp(fsname.data(), L"exFAT", 10)) && !preferences->isFatWarningShown())
+                        {
+                            QMessageBox::warning(NULL, tr("MEGAsync"),
+                                             tr("You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it's strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).")
+                                                 .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://help.mega.nz/megasync/syncing.html#can-i-sync-fat-fat32-partitions-under-windows\">"))
+                                                 .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</a>")));
+                            preferences->setFatWarningShown();
+                        }
+                        else if (!memcmp(fsname.data(), L"HGFS", 8) && !preferences->isOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING))
+                        {
+                            QMessageBox::warning(NULL, tr("MEGAsync"),
+                                tr("You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage."));
+                            preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_HGFS_WARNING, true);
+                        }
                     }
 #endif
                 }
