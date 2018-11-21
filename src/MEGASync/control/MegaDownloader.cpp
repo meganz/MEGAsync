@@ -120,11 +120,17 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info, QString appData)
                 }
             }
 
-            unsigned long long notificationId = strtoll(appData.toUtf8().constData(), NULL, 10);
+            QByteArray appDataArray = appData.toUtf8();
+            char *endptr;
+            unsigned long long notificationId = strtoll(appDataArray.constData(), &endptr, 10);
             TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(notificationId);
             if (data)
             {
-                data->transfersFolderOK++;
+                if ((endptr - appDataArray.constData()) != appData.size())
+                {
+                    data->transfersFolderOK++;
+                }
+
                 data->pendingTransfers--;
                 if (data->pendingTransfers == 0)
                 {
