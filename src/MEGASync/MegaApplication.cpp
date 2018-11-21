@@ -3625,18 +3625,18 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
                             }
                             else
                             {
-                                message = tr("%1 files and 1 folder were successfully uploaded").arg(data->totalFiles);
+                                message = tr("%1 files and 1 folder were successfully uploaded").arg(data->transfersFileOK);
                             }
                         }
                         else
                         {
                             if (data->transfersFileOK == 1)
                             {
-                                message = tr("1 file and %1 folders were successfully uploaded").arg(data->totalFolders);
+                                message = tr("1 file and %1 folders were successfully uploaded").arg(data->transfersFolderOK);
                             }
                             else
                             {
-                                message = tr("%1 files and %2 folders were successfully uploaded").arg(data->totalFiles).arg(data->totalFolders);
+                                message = tr("%1 files and %2 folders were successfully uploaded").arg(data->transfersFileOK).arg(data->transfersFolderOK);
                             }
                         }
                     }
@@ -3649,7 +3649,7 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
                         }
                         else
                         {
-                            message = tr("%1 folders were successfully uploaded").arg(data->totalFolders);
+                            message = tr("%1 folders were successfully uploaded").arg(data->transfersFolderOK);
                         }
                     }
                     else
@@ -3661,7 +3661,7 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
                         }
                         else
                         {
-                            message = tr("%1 files were successfully uploaded").arg(data->totalFiles);
+                            message = tr("%1 files were successfully uploaded").arg(data->transfersFileOK);
                         }
                     }
                     break;
@@ -3679,18 +3679,18 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
                             }
                             else
                             {
-                                message = tr("%1 files and 1 folder were successfully downloaded").arg(data->totalFiles);
+                                message = tr("%1 files and 1 folder were successfully downloaded").arg(data->transfersFileOK);
                             }
                         }
                         else
                         {
                             if (data->transfersFileOK == 1)
                             {
-                                message = tr("1 file and %1 folders were successfully downloaded").arg(data->totalFolders);
+                                message = tr("1 file and %1 folders were successfully downloaded").arg(data->transfersFolderOK);
                             }
                             else
                             {
-                                message = tr("%1 files and %2 folders were successfully downloaded").arg(data->totalFiles).arg(data->totalFolders);
+                                message = tr("%1 files and %2 folders were successfully downloaded").arg(data->transfersFileOK).arg(data->transfersFolderOK);
                             }
                         }
                     }
@@ -3703,7 +3703,7 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
                         }
                         else
                         {
-                            message = tr("%1 folders were successfully downloaded").arg(data->totalFolders);
+                            message = tr("%1 folders were successfully downloaded").arg(data->transfersFolderOK);
                         }
                     }
                     else
@@ -3715,7 +3715,7 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
                         }
                         else
                         {
-                            message = tr("%1 files were successfully downloaded").arg(data->totalFiles);
+                            message = tr("%1 files were successfully downloaded").arg(data->transfersFileOK);
                         }
                     }
                     break;
@@ -6716,24 +6716,27 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         const char *notificationKey = transfer->getAppData();
         if (notificationKey)
         {
-            unsigned long long notificationId = atoll(notificationKey);
+            char *endptr;
+            unsigned long long notificationId = strtoll(notificationKey, &endptr, 10);
             QHash<unsigned long long, TransferMetaData*>::iterator it
                    = transferAppData.find(notificationId);
             if (it != transferAppData.end())
             {
                 TransferMetaData *data = it.value();
-
-                if (e->getErrorCode() == MegaError::API_EINCOMPLETE)
+                if ((endptr - notificationKey) != strlen(notificationKey))
                 {
-                    data->transfersCancelled++;
-                }
-                else if (e->getErrorCode() != MegaError::API_OK)
-                {
-                    data->transfersFailed++;
-                }
-                else
-                {
-                    !folderTransferTag ? data->transfersFileOK++ : data->transfersFolderOK++;
+                    if (e->getErrorCode() == MegaError::API_EINCOMPLETE)
+                    {
+                        data->transfersCancelled++;
+                    }
+                    else if (e->getErrorCode() != MegaError::API_OK)
+                    {
+                        data->transfersFailed++;
+                    }
+                    else
+                    {
+                        !folderTransferTag ? data->transfersFileOK++ : data->transfersFolderOK++;
+                    }
                 }
 
                 data->pendingTransfers--;
