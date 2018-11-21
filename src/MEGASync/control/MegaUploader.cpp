@@ -71,6 +71,6 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
     }
     else if (info.isFile() || info.isDir())
     {
-        megaApi->startUploadWithData(currentPath.toUtf8().constData(), parent, QString::number(appDataID).toUtf8().constData());
+        megaApi->startUploadWithData(currentPath.toUtf8().constData(), parent, (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8().constData());
     }
 }
