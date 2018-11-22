@@ -56,6 +56,7 @@ MegaTransferView::MegaTransferView(QWidget *parent) :
 #endif
                           "}"
                  ""));
+    setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 }
 
 void MegaTransferView::setup(int type)
