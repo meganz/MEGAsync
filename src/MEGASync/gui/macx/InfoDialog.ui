@@ -1424,7 +1424,7 @@ padding-right: 10px;
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_3">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>2</number>
                 </property>
                 <property name="leftMargin">
                  <number>16</number>
@@ -1662,7 +1662,7 @@ padding-right: 10px;
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_7">
                 <property name="spacing">
-                 <number>0</number>
+                 <number>2</number>
                 </property>
                 <property name="leftMargin">
                  <number>16</number>
