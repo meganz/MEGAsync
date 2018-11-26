@@ -233,8 +233,6 @@ void CustomTransferItem::updateTransfer()
     {
         case MegaTransfer::STATE_ACTIVE:
         {
-            ui->bClockDown->setVisible(true);
-
             // Update remaining time
             long long remainingBytes = totalSize - totalTransferredBytes;
             int totalRemainingSeconds = meanTransferSpeed ? remainingBytes / meanTransferSpeed : 0;
@@ -250,10 +248,12 @@ void CustomTransferItem::updateTransfer()
                 {
                     remainingTime = Utilities::getTimeString(totalRemainingSeconds, false);
                 }
+                ui->bClockDown->setVisible(true);
             }
             else
             {
                 remainingTime = QString::fromAscii("");
+                ui->bClockDown->setVisible(false);
             }
             ui->lRemainingTime->setText(remainingTime);
 
