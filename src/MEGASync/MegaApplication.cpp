@@ -1469,6 +1469,7 @@ void MegaApplication::loggedIn()
             showInfoDialog();
         }
     }
+    infoDialog->setUsage();
 
     createTrayMenu();
 

@@ -176,7 +176,11 @@ void InfoDialog::setUsage()
     {
         ui->pUsageStorage->setValue(0);
         ui->lPercentageUsedStorage->setText(QString::fromUtf8(""));
-        ui->lTotalUsedStorage->setText(tr("USED STORAGE %1").arg(tr("Data temporarily unavailable")));
+        ui->lTotalUsedStorage->setText(QString::fromUtf8(""));
+        ui->pUsageStorage->setProperty("crossedge", false);
+        ui->pUsageStorage->setProperty("almostoq", false);
+        ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
+        ui->pUsageStorage->style()->polish(ui->pUsageStorage);
     }
     else
     {
@@ -682,10 +686,7 @@ void InfoDialog::changeEvent(QEvent *event)
         ui->retranslateUi(this);
         if (preferences->logged())
         {
-            if (preferences->totalStorage())
-            {
-                setUsage();
-            }
+            setUsage();
             state = STATE_STARTING;
             ui->wStatus->setState(state);
             updateState();   
