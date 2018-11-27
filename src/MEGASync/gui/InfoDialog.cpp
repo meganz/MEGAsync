@@ -58,6 +58,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     sharesItem = NULL;
     rubbishItem = NULL;
     gWidget = NULL;
+    opacityEffect = NULL;
+    animation = NULL;
 
     overQuotaState = false;
     storageState = Preferences::STATE_BELOW_OVER_STORAGE;
@@ -149,6 +151,8 @@ InfoDialog::~InfoDialog()
     delete gWidget;
     delete activeDownload;
     delete activeUpload;
+    delete opacityEffect;
+    delete animation;
 }
 
 void InfoDialog::setAvatar()
@@ -378,6 +382,7 @@ void InfoDialog::updateState()
         if (state != STATE_PAUSED)
         {
             state = STATE_PAUSED;
+            animateStates(false);
         }
     }
     else
@@ -418,6 +423,7 @@ void InfoDialog::updateState()
             if (state != STATE_WAITING)
             {
                 state = STATE_WAITING;
+                animateStates(true);
             }
         }
         else if (indexing)
@@ -425,6 +431,7 @@ void InfoDialog::updateState()
             if (state != STATE_INDEXING)
             {
                 state = STATE_INDEXING;
+                animateStates(true);
             }
         }
         else
@@ -432,6 +439,7 @@ void InfoDialog::updateState()
             if (state != STATE_UPDATED)
             {
                 state = STATE_UPDATED;
+                animateStates(false);
             }
         }
     }
@@ -497,8 +505,15 @@ void InfoDialog::updateDialogState()
     }
     else
     {
-        overlay->setVisible(true);
         ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+        if (state != STATE_WAITING && state != STATE_INDEXING)
+        {
+            animateStates(false);
+        }
+        else
+        {
+            animateStates(true);
+        }
     }
 }
 
@@ -930,6 +945,53 @@ void InfoDialog::createQuotaUsedMenu()
     storageUsedMenu->addAction(rubbishItem);
 }
 
+void InfoDialog::animateStates(bool opt)
+{
+    if (opt) //Enable animation for scanning/waiting states
+    {
+        ui->lUploadToMega->setIcon(QIcon(QString::fromAscii("://images/init_scanning.png")));
+        ui->lUploadToMega->setIconSize(QSize(352,234));
+        ui->lUploadToMegaDesc->setText(QString::fromUtf8(""));
+        overlay->setVisible(false);
+
+        if (!opacityEffect)
+        {
+            opacityEffect = new QGraphicsOpacityEffect(this);
+        }
+
+        ui->lUploadToMega->setGraphicsEffect(opacityEffect);
+
+        if (!animation)
+        {
+            animation = new QPropertyAnimation(opacityEffect,"opacity");
+            animation->setDuration(2000);
+            animation->setStartValue(1.0);
+            animation->setEndValue(0.5);
+            animation->setEasingCurve(QEasingCurve::InOutQuad);
+            connect(animation, SIGNAL(finished()), SLOT(onAnimationFinished()));
+        }
+
+        animation->start();
+    }
+    else //Disable animation
+    {
+        ui->lUploadToMega->setIcon(QIcon(QString::fromAscii("://images/upload_to_mega.png")));
+        ui->lUploadToMega->setIconSize(QSize(352,234));
+        ui->lUploadToMegaDesc->setText(QString::fromUtf8("Upload to MEGA now"));
+        overlay->setVisible(true);
+
+        if (animation)
+        {
+            if (opacityEffect) //Reset opacity
+            {
+                opacityEffect->setOpacity(1.0);
+            }
+
+            animation->stop();
+        }
+    }
+}
+
 void InfoDialog::onUserAction(int action)
 {
     app->userAction(action);
@@ -973,6 +1035,21 @@ void InfoDialog::hideUsageBalloon()
     {
         storageUsedMenu->hide();
     }
+}
+
+void InfoDialog::onAnimationFinished()
+{
+    if (animation->direction() == QAbstractAnimation::Forward)
+    {
+        animation->setDirection(QAbstractAnimation::Backward);
+        animation->start();
+    }
+    else
+    {
+        animation->setDirection(QAbstractAnimation::Forward);
+        animation->start();
+    }
+
 }
 
 #ifdef __APPLE__
