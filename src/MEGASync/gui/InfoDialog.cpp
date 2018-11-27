@@ -151,7 +151,6 @@ InfoDialog::~InfoDialog()
     delete gWidget;
     delete activeDownload;
     delete activeUpload;
-    delete opacityEffect;
     delete animation;
 }
 
@@ -508,11 +507,11 @@ void InfoDialog::updateDialogState()
         ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
         if (state != STATE_WAITING && state != STATE_INDEXING)
         {
-            animateStates(false);
+            overlay->setVisible(true);
         }
         else
         {
-            animateStates(true);
+            overlay->setVisible(false);
         }
     }
 }
@@ -707,6 +706,7 @@ void InfoDialog::changeEvent(QEvent *event)
         {
             setUsage();
             state = STATE_STARTING;
+            animateStates(false);
             ui->wStatus->setState(state);
             updateState();   
             handleOverStorage(storageState);
@@ -956,14 +956,13 @@ void InfoDialog::animateStates(bool opt)
 
         if (!opacityEffect)
         {
-            opacityEffect = new QGraphicsOpacityEffect(this);
+            opacityEffect = new QGraphicsOpacityEffect();
+            ui->lUploadToMega->setGraphicsEffect(opacityEffect);
         }
-
-        ui->lUploadToMega->setGraphicsEffect(opacityEffect);
 
         if (!animation)
         {
-            animation = new QPropertyAnimation(opacityEffect,"opacity");
+            animation = new QPropertyAnimation(opacityEffect, "opacity");
             animation->setDuration(2000);
             animation->setStartValue(1.0);
             animation->setEndValue(0.5);
@@ -1049,7 +1048,6 @@ void InfoDialog::onAnimationFinished()
         animation->setDirection(QAbstractAnimation::Forward);
         animation->start();
     }
-
 }
 
 #ifdef __APPLE__
