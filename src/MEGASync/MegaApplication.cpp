@@ -5766,10 +5766,6 @@ void MegaApplication::createTrayMenu()
     else
     {
         updateAction = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromAscii("://images/ico_about_MEGA_out.png")), QIcon(QString::fromAscii("://images/ico_about_MEGA_over.png")), true);
-#ifndef __APPLE__
-        updateAction->setIcon(QIcon(QString::fromUtf8("://images/check_mega_version.png")));
-        updateAction->setIconVisibleInMenu(true);
-#endif
     }
     connect(updateAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()), Qt::QueuedConnection);
 
@@ -5838,10 +5834,6 @@ void MegaApplication::createGuestMenu()
     else
     {
         updateActionGuest = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromAscii("://images/ico_about_MEGA_out.png")), QIcon(QString::fromAscii("://images/ico_about_MEGA_over.png")));
-#ifndef __APPLE__
-        updateActionGuest->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
-        updateActionGuest->setIconVisibleInMenu(true);
-#endif
     }
     connect(updateActionGuest, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
 
