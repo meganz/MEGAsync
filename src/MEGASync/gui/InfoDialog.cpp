@@ -67,9 +67,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+    ui->pUsageStorage->setAttribute(Qt::WA_TransparentForMouseEvents);
 
-    ui->pUsageStorage->installEventFilter(this);
-    ui->pUsageStorage->setMouseTracking(true);
+    ui->wUsageStorage->installEventFilter(this);
+    ui->wUsageStorage->setMouseTracking(true);
 
     state = STATE_STARTING;
     ui->wStatus->setState(state);
@@ -175,7 +176,11 @@ void InfoDialog::setUsage()
     {
         ui->pUsageStorage->setValue(0);
         ui->lPercentageUsedStorage->setText(QString::fromUtf8(""));
-        ui->lTotalUsedStorage->setText(tr("USED STORAGE %1").arg(tr("Data temporarily unavailable")));
+        ui->lTotalUsedStorage->setText(QString::fromUtf8(""));
+        ui->pUsageStorage->setProperty("crossedge", false);
+        ui->pUsageStorage->setProperty("almostoq", false);
+        ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
+        ui->pUsageStorage->style()->polish(ui->pUsageStorage);
     }
     else
     {
@@ -681,10 +686,7 @@ void InfoDialog::changeEvent(QEvent *event)
         ui->retranslateUi(this);
         if (preferences->logged())
         {
-            if (preferences->totalStorage())
-            {
-                setUsage();
-            }
+            setUsage();
             state = STATE_STARTING;
             ui->wStatus->setState(state);
             updateState();   
@@ -696,7 +698,7 @@ void InfoDialog::changeEvent(QEvent *event)
 
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 {
-    if (obj != ui->pUsageStorage)
+    if (obj != ui->wUsageStorage)
     {
         return false;
     }
@@ -729,7 +731,7 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
     if (!mousePos.isNull() && preferences && preferences->totalStorage())
     {
         createQuotaUsedMenu();
-        QPoint p = ui->pUsageStorage->mapToGlobal(mousePos);
+        QPoint p = ui->wUsageStorage->mapToGlobal(mousePos);
         QSize s = storageUsedMenu->sizeHint();
         storageUsedMenu->exec(QPoint(p.x() - s.width() / 2, p.y() - s.height()));
     }
