@@ -1570,8 +1570,7 @@ void MegaApplication::applyStorageState(int state)
             disableSyncs();
             if (!infoOverQuota)
             {
-                infoOverQuota = true;
-                preferences->setUsedStorage(preferences->totalStorage());
+                infoOverQuota = true;                
 
                 if (trayMenu && trayMenu->isVisible())
                 {
@@ -7159,6 +7158,16 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
         if (settingsDialog)
         {
             settingsDialog->refreshAccountDetails();
+        }
+
+        if (bwOverquotaDialog)
+        {
+            bwOverquotaDialog->refreshAccountDetails();
+        }
+
+        if (storageOverquotaDialog)
+        {
+            storageOverquotaDialog->refreshUsedStorage();
         }
     }
 
