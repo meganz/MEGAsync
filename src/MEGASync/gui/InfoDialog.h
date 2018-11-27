@@ -11,6 +11,7 @@
 #include "DataUsageMenu.h"
 #include "MenuItemAction.h"
 #include "control/Preferences.h"
+#include <QGraphicsOpacityEffect>
 
 namespace Ui {
 class InfoDialog;
@@ -57,6 +58,7 @@ public:
 private:
     void drawAvatar(QString email);
     void createQuotaUsedMenu();
+    void animateStates(bool opt);
 
 public slots:
    void addSync();
@@ -81,6 +83,7 @@ private slots:
     void on_bBuyQuota_clicked();
 
     void hideUsageBalloon();
+    void onAnimationFinished();
 
 signals:
     void openTransferManager(int tab);
@@ -111,6 +114,9 @@ private:
     int state;
     bool overQuotaState;
     int storageState;
+
+    QPropertyAnimation *animation;
+    QGraphicsOpacityEffect *opacityEffect;
 
 protected:
     void changeEvent(QEvent * event);

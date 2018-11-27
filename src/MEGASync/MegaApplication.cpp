@@ -3775,6 +3775,18 @@ void MegaApplication::redirectToUpgrade(int activationButton)
     {
         QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
         QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
+        Preferences *preferences = Preferences::instance();
+        if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
+        {
+            MegaHandle aff = preferences->lastPublicHandle();
+            if (aff != INVALID_HANDLE)
+            {
+                char *base64aff = MegaApi::handleToBase64(aff);
+                url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
+                delete [] base64aff;
+            }
+        }
+
         megaApi->getSessionTransferURL(url.toUtf8().constData());
     }
 }
@@ -5766,10 +5778,6 @@ void MegaApplication::createTrayMenu()
     else
     {
         updateAction = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromAscii("://images/ico_about_MEGA_out.png")), QIcon(QString::fromAscii("://images/ico_about_MEGA_over.png")), true);
-#ifndef __APPLE__
-        updateAction->setIcon(QIcon(QString::fromUtf8("://images/check_mega_version.png")));
-        updateAction->setIconVisibleInMenu(true);
-#endif
     }
     connect(updateAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()), Qt::QueuedConnection);
 
@@ -5838,10 +5846,6 @@ void MegaApplication::createGuestMenu()
     else
     {
         updateActionGuest = new MenuItemAction(tr("About MEGAsync"), QIcon(QString::fromAscii("://images/ico_about_MEGA_out.png")), QIcon(QString::fromAscii("://images/ico_about_MEGA_over.png")));
-#ifndef __APPLE__
-        updateActionGuest->setIcon(QIcon(QString::fromAscii("://images/check_mega_version.png")));
-        updateActionGuest->setIconVisibleInMenu(true);
-#endif
     }
     connect(updateActionGuest, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()));
 
