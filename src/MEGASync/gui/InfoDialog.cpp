@@ -72,6 +72,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->wUsageStorage->installEventFilter(this);
     ui->wUsageStorage->setMouseTracking(true);
 
+    ui->lOQDesc->setTextFormat(Qt::RichText);
+
     state = STATE_STARTING;
     ui->wStatus->setState(state);
 
@@ -657,7 +659,9 @@ void InfoDialog::handleOverStorage(int state)
             ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));
             ui->bOQIcon->setIconSize(QSize(64,64));
             ui->lOQTitle->setText(tr("Your MEGA account is full."));
-            ui->lOQDesc->setText(tr("All file uploads are currently disabled. Please upgrade to PRO"));
+            ui->lOQDesc->setText(tr("All file uploads are currently disabled.")
+                                    + QString::fromUtf8("<br>")
+                                    + tr("Please upgrade to PRO."));
             ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
             overlay->setVisible(false);
             break;
