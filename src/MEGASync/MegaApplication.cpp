@@ -1571,7 +1571,32 @@ void MegaApplication::applyStorageState(int state)
             if (!infoOverQuota)
             {
                 infoOverQuota = true;
-                preferences->setUsedStorage(preferences->totalStorage());
+
+                if (preferences->usedStorage() < preferences->totalStorage())
+                {
+                    preferences->setUsedStorage(preferences->totalStorage());
+                    preferences->sync();
+
+                    if (infoDialog)
+                    {
+                        infoDialog->setUsage();
+                    }
+
+                    if (settingsDialog)
+                    {
+                        settingsDialog->refreshAccountDetails();
+                    }
+
+                    if (bwOverquotaDialog)
+                    {
+                        bwOverquotaDialog->refreshAccountDetails();
+                    }
+
+                    if (storageOverquotaDialog)
+                    {
+                        storageOverquotaDialog->refreshUsedStorage();
+                    }
+                }
 
                 if (trayMenu && trayMenu->isVisible())
                 {
@@ -7159,6 +7184,16 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
         if (settingsDialog)
         {
             settingsDialog->refreshAccountDetails();
+        }
+
+        if (bwOverquotaDialog)
+        {
+            bwOverquotaDialog->refreshAccountDetails();
+        }
+
+        if (storageOverquotaDialog)
+        {
+            storageOverquotaDialog->refreshUsedStorage();
         }
     }
 
