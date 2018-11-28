@@ -1570,7 +1570,33 @@ void MegaApplication::applyStorageState(int state)
             disableSyncs();
             if (!infoOverQuota)
             {
-                infoOverQuota = true;                
+                infoOverQuota = true;
+
+                if (preferences->usedStorage() < preferences->totalStorage())
+                {
+                    preferences->setUsedStorage(preferences->totalStorage());
+                    preferences->sync();
+
+                    if (infoDialog)
+                    {
+                        infoDialog->setUsage();
+                    }
+
+                    if (settingsDialog)
+                    {
+                        settingsDialog->refreshAccountDetails();
+                    }
+
+                    if (bwOverquotaDialog)
+                    {
+                        bwOverquotaDialog->refreshAccountDetails();
+                    }
+
+                    if (storageOverquotaDialog)
+                    {
+                        storageOverquotaDialog->refreshUsedStorage();
+                    }
+                }
 
                 if (trayMenu && trayMenu->isVisible())
                 {
