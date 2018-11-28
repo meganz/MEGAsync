@@ -209,7 +209,7 @@ border-radius: 2px;
  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                       stop: 0 #ffffff, stop: 1 #fafafa);
  border-radius: 3px;
- border: 1px solid rgba(0, 0, 0, 10%);
+ border: 1px solid rgba(0, 0, 0, 15%);
  padding: 7px 12px 7px 12px;
  font-family: &quot;Source Sans Pro&quot;;
  font-size: 13px;
