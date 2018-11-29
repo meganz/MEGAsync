@@ -54,7 +54,7 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
                            | QPainter::HighQualityAntialiasing);
     QPixmap buffer;
     buffer.setDevicePixelRatio(Utilities::getDevicePixelRatio());
-    buffer.load(QString::fromUtf8(":/images/avatar_frame@2x.png"));
+    buffer.load(QString::fromUtf8(":/images/avatar_frame.png"));
 
     painter.drawPixmap(QRectF(0.0, 0.0, 36.0, 36.0), buffer,  QRectF(0.0, 0.0, 36.0, 36.0));
     painter.translate(width() / 2, height() / 2);
