@@ -330,5 +330,6 @@
         <file>images/login_setup_step3.png</file>
         <file>images/shield.png</file>
         <file>images/init_scanning.png</file>
+        <file>images/avatar_frame.png</file>
     </qresource>
 </RCC>
