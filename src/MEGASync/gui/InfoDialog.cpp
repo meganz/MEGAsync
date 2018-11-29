@@ -64,6 +64,11 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     overQuotaState = false;
     storageState = Preferences::STATE_BELOW_OVER_STORAGE;
 
+
+    ui->wBlocked->setVisible(false);
+    ui->wContainerBottom->setFixedHeight(120);
+
+
     //Initialize header dialog and disable chat features
     ui->wHeader->setStyleSheet(QString::fromUtf8("#wHeader {border: none;}"));
 
@@ -402,21 +407,60 @@ void InfoDialog::updateState()
             if (blockedPath)
             {
                 QFileInfo fileBlocked (QString::fromUtf8(blockedPath));
-                ui->lBlockedItem->setToolTip(fileBlocked.absoluteFilePath());
-                ui->lBlockedItem->setAlignment(Qt::AlignCenter);
-                ui->lBlockedItem->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a style=\" font-size: 12px;\" href=\"local://#%1\">%2</a>")
+
+                if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
+                {
+                    ui->wContainerBottom->setFixedHeight(150);
+                    ui->wBlocked->setVisible(true);
+                    ui->lSDKblock->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a style=\" font-size: 12px;\" href=\"local://#%1\">%2</a>")
+                                                                      .arg(fileBlocked.absoluteFilePath())
+                                                                      .arg(fileBlocked.fileName())));
+                }
+                else
+                {
+                     ui->lSDKblock->setText(QString::fromUtf8(""));
+                     ui->wBlocked->setVisible(false);
+                     ui->wContainerBottom->setFixedHeight(120);
+                }
+
+                ui->lUploadToMegaDesc->setToolTip(fileBlocked.absoluteFilePath());
+                ui->lUploadToMegaDesc->setAlignment(Qt::AlignCenter);
+                ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
+                ui->lUploadToMegaDesc->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a style=\" font-size: 12px;\" href=\"local://#%1\">%2</a>")
                                                                .arg(fileBlocked.absoluteFilePath())
                                                                .arg(fileBlocked.fileName())));
                 delete [] blockedPath;
             }
             else if (megaApi->areServersBusy())
             {
-                ui->lBlockedItem->setText(tr("The process is taking longer than expected. Please wait..."));
-                ui->lBlockedItem->setAlignment(Qt::AlignCenter);
+
+                if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
+                {
+                    ui->wContainerBottom->setFixedHeight(150);
+                    ui->wBlocked->setVisible(true);
+                    ui->lSDKblock->setText(tr("The process is taking longer than expected. Please wait..."));
+                }
+                else
+                {
+                     ui->lSDKblock->setText(QString::fromUtf8(""));
+                     ui->wBlocked->setVisible(false);
+                     ui->wContainerBottom->setFixedHeight(120);
+                }
+
+                ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
+                ui->lUploadToMegaDesc->setText(tr("The process is taking longer than expected. Please wait..."));
+                ui->lUploadToMegaDesc->setAlignment(Qt::AlignCenter);
             }
             else
             {
-                ui->lBlockedItem->setText(QString::fromUtf8(""));
+                if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
+                {
+                    ui->lSDKblock->setText(QString::fromUtf8(""));
+                    ui->wBlocked->setVisible(false);
+                    ui->wContainerBottom->setFixedHeight(120);
+                }
+
+                ui->lUploadToMegaDesc->setText(QString::fromUtf8(""));
             }
 
             if (state != STATE_WAITING)
@@ -951,6 +995,7 @@ void InfoDialog::animateStates(bool opt)
     {
         ui->lUploadToMega->setIcon(QIcon(QString::fromAscii("://images/init_scanning.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
+        ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
         ui->lUploadToMegaDesc->setText(QString::fromUtf8(""));
         overlay->setVisible(false);
 
@@ -976,6 +1021,7 @@ void InfoDialog::animateStates(bool opt)
     {
         ui->lUploadToMega->setIcon(QIcon(QString::fromAscii("://images/upload_to_mega.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
+        ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 18px;"));
         ui->lUploadToMegaDesc->setText(QString::fromUtf8("Upload to MEGA now"));
         overlay->setVisible(true);
 
