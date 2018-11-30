@@ -230,7 +230,10 @@
         <file>images/ico_chat_button.png</file>
         <file>images/Nav_Dot_active.png</file>
         <file>images/Nav_Dot_inactive.png</file>
-        <file>images/ico_syncs.png</file>
+        <file>images/ico_syncs_out.png</file>
+        <file>images/ico_syncs_over.png</file>
+        <file>images/ico_Import_links_out.png</file>
+        <file>images/ico_Import_links_over.png</file>
         <file>images/ico_away.png</file>
         <file>images/ico_busy.png</file>
         <file>images/ico_offline.png</file>
