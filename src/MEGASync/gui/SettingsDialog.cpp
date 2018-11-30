@@ -327,23 +327,8 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 
 void SettingsDialog::setOverQuotaMode(bool mode)
 {
-    if (mode)
-    {
-        ui->bSyncs->setEnabled(false);
-        ui->bSyncs->setChecked(false);
-        ui->bAccount->setChecked(true);
-        ui->wStack->setCurrentWidget(ui->pAccount);
-        ui->pAccount->show();
-
-#ifdef __APPLE__
-        setMinimumHeight(480);
-        setMaximumHeight(480);
-#endif
-    }
-    else
-    {
-        ui->bSyncs->setEnabled(true);
-    }
+    // At the moment, it's not needed to do anything in overquota mode
+    return;
 }
 
 void SettingsDialog::stateChanged()

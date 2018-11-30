@@ -3902,19 +3902,11 @@ void MegaApplication::showTrayMenu(QPoint *point)
         QPoint p = point ? (*point) - QPoint(trayGuestMenu->sizeHint().width(), 0)
                          : QCursor::pos();
 
+        trayGuestMenu->update();
         trayGuestMenu->popup(p);
     }
     else if (trayMenu)
     {
-        if (!infoOverQuota)
-        {
-            addSyncAction->setVisible(true);
-        }
-        else
-        {
-            addSyncAction->setVisible(false);
-        }
-
         if (trayMenu->isVisible())
         {
             trayMenu->close();
