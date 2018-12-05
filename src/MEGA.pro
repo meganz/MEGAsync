@@ -20,6 +20,7 @@ unix:!macx {
         SUBDIRS += MEGAShellExtNautilus
         SUBDIRS += MEGAShellExtThunar
         SUBDIRS += MEGAShellExtDolphin
+        SUBDIRS += MEGAShellExtNemo
     }
 }
 
