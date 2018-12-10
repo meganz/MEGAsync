@@ -432,14 +432,14 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
           <widget class="AvatarWidget" name="bAvatar" native="true">
            <property name="minimumSize">
             <size>
-             <width>30</width>
-             <height>30</height>
+             <width>36</width>
+             <height>36</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>30</width>
-             <height>30</height>
+             <width>36</width>
+             <height>36</height>
             </size>
            </property>
           </widget>
