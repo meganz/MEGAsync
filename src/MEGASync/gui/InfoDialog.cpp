@@ -64,10 +64,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     overQuotaState = false;
     storageState = Preferences::STATE_BELOW_OVER_STORAGE;
 
-
+    ui->lSDKblock->setText(QString::fromUtf8(""));
     ui->wBlocked->setVisible(false);
     ui->wContainerBottom->setFixedHeight(120);
-
 
     //Initialize header dialog and disable chat features
     ui->wHeader->setStyleSheet(QString::fromUtf8("#wHeader {border: none;}"));
@@ -101,7 +100,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     connect(ui->wStatus, SIGNAL(clicked()), app, SLOT(pauseTransfers()), Qt::QueuedConnection);
 
-    ui->lBlockedItem->setText(QString::fromUtf8(""));
     ui->bDotUsedQuota->hide();
     ui->bDotUsedStorage->hide();
     ui->sUsedData->setCurrentWidget(ui->pStorage);
@@ -398,7 +396,14 @@ void InfoDialog::updateState()
 
         if (!waiting)
         {
-            ui->lBlockedItem->setText(QString::fromUtf8(""));
+            if (ui->wBlocked->isVisible())
+            {
+                ui->lSDKblock->setText(QString::fromUtf8(""));
+                ui->wBlocked->setVisible(false);
+                ui->wContainerBottom->setFixedHeight(120);
+            }
+
+            ui->lUploadToMegaDesc->setText(QString::fromUtf8("Upload to MEGA now"));
         }
 
         if (waiting)
@@ -996,7 +1001,6 @@ void InfoDialog::animateStates(bool opt)
         ui->lUploadToMega->setIcon(QIcon(QString::fromAscii("://images/init_scanning.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
         ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
-        ui->lUploadToMegaDesc->setText(QString::fromUtf8(""));
         overlay->setVisible(false);
 
         if (!opacityEffect)
