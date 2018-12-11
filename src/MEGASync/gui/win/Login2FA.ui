@@ -55,16 +55,16 @@ background-color:  rgba(0, 0, 0, 10%);
 #lDesc
 {
 	color: rgba(0,0,0,0.85);
-	font-family: &quot;Source Sans Pro&quot;;
-	font-size: 14px;
+	font-family: &quot;SF UI Text&quot;;
+	font-size: 13px;
     font-weight: 500;
 }
 
-#lCode
+#lLostAuthCode
 {
-	color: #333333;
-	font-family: &quot;Source Sans Pro&quot;;
-	font-size: 14px;
+    color: #666666;
+	font-family: &quot;SF UI Text&quot;;
+	font-size: 11px;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -490,10 +490,10 @@ background-color:  rgba(0, 0, 0, 10%);
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
-       <number>6</number>
+       <number>-1</number>
       </property>
       <property name="leftMargin">
-       <number>12</number>
+       <number>32</number>
       </property>
       <property name="topMargin">
        <number>10</number>
@@ -505,13 +505,66 @@ background-color:  rgba(0, 0, 0, 10%);
        <number>18</number>
       </property>
       <item>
+       <widget class="CocoaHelpButton" name="wHelp" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>21</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>21</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="lLostAuthCode">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>155</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="textFormat">
+         <enum>Qt::RichText</enum>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+        <property name="openExternalLinks">
+         <bool>true</bool>
+        </property>
+        <property name="textInteractionFlags">
+         <set>Qt::TextBrowserInteraction</set>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>40</width>
+          <width>10</width>
           <height>20</height>
          </size>
         </property>
@@ -554,11 +607,18 @@ background-color:  rgba(0, 0, 0, 10%);
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CocoaHelpButton</class>
+   <extends>QWidget</extends>
+   <header location="global">CocoaHelpButton.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>leCode</tabstop>
   <tabstop>bNext</tabstop>
   <tabstop>bCancel</tabstop>
-  <tabstop>bShield</tabstop>
  </tabstops>
  <resources/>
  <connections/>
