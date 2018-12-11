@@ -2261,6 +2261,7 @@ void MegaApplication::checkOverStorageStates()
                 || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_DIALOG_INTERVAL_MS))
         {
             preferences->setOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
+            megaApi->sendEvent(99518, "Overstorage dialog shown");
             if (!storageOverquotaDialog)
             {
                 storageOverquotaDialog = new UpgradeOverStorage(megaApi, pricing);
@@ -2277,6 +2278,7 @@ void MegaApplication::checkOverStorageStates()
                      && (!preferences->getOverStorageNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
         {
             preferences->setOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
+            megaApi->sendEvent(99519, "Overstorage notification shown");
             sendOverStorageNotification(Preferences::STATE_OVER_STORAGE);
         }
 
@@ -2285,6 +2287,7 @@ void MegaApplication::checkOverStorageStates()
         {
             if (infoDialog)
             {
+                megaApi->sendEvent(99520, "Overstorage warning shown");
                 infoDialog->handleOverStorage(Preferences::STATE_OVER_STORAGE);
             }
         }
@@ -2296,6 +2299,7 @@ void MegaApplication::checkOverStorageStates()
         {
             if (infoDialog)
             {
+                megaApi->sendEvent(99521, "Almost overstorage warning shown");
                 infoDialog->handleOverStorage(Preferences::STATE_ALMOST_OVER_STORAGE);
             }
         }
@@ -2307,6 +2311,7 @@ void MegaApplication::checkOverStorageStates()
                               && (!preferences->getAlmostOverStorageNotificationExecution() || (QDateTime::currentMSecsSinceEpoch() - preferences->getAlmostOverStorageNotificationExecution()) > Preferences::ALMOST_OS_INTERVAL_MS))
         {
             preferences->setAlmostOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
+            megaApi->sendEvent(99522, "Almost overstorage notification shown");
             sendOverStorageNotification(Preferences::STATE_ALMOST_OVER_STORAGE);
         }
     }
@@ -2572,6 +2577,15 @@ void MegaApplication::showInfoDialog()
     {
         if (!infoDialog->isVisible())
         {
+            if (storageState == MegaApi::STORAGE_STATE_RED)
+            {
+                megaApi->sendEvent(99523, "Main dialog shown while overquota");
+            }
+            else if (storageState == MegaApi::STORAGE_STATE_ORANGE)
+            {
+                megaApi->sendEvent(99524, "Main dialog shown while almost overquota");
+            }
+
             int posx, posy;
             calculateInfoDialogCoordinates(infoDialog, &posx, &posy);
 
