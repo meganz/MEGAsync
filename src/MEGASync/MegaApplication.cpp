@@ -1557,6 +1557,12 @@ void MegaApplication::startSyncs()
 
 void MegaApplication::applyStorageState(int state)
 {
+    if (state == MegaApi::STORAGE_STATE_CHANGE)
+    {
+        updateUserStats(true);
+        return;
+    }
+
     storageState = state;
     if (preferences->logged() && storageState != appliedStorageState)
     {
