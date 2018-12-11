@@ -7131,13 +7131,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             }
         }
 
-        if (!node->getTag() && !node->isRemoved()
-                && !node->isSyncDeleted()
-                && ((lastExit / 1000) < node->getCreationTime()))
-        {
-            externalNodes = true;
-        }
-
         if (nodescurrent && node->isRemoved() && (node->getType() == MegaNode::TYPE_FILE) && node->getSize())
         {
             usedStorage -= node->getSize();
@@ -7160,6 +7153,13 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
 
             usedStorage += bytes;
             newNodes = true;
+
+            if (!externalNodes && !node->getTag()
+                    && ((lastExit / 1000) < node->getCreationTime())
+                    && megaApi->isInsideSync(node))
+            {
+                externalNodes = true;
+            }
         }
 
         if (!node->isRemoved() && node->getTag()
