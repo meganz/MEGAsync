@@ -314,26 +314,6 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
                     }
                 }
             }
-            else if (item->mouseHoverRetryingLabel(event->pos() - option.rect.topLeft()))
-            {
-                int modelType = model->getModelType();
-                if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS
-                        || modelType == QTransfersModel::TYPE_UPLOAD
-                        || modelType == QTransfersModel::TYPE_DOWNLOAD)
-                {
-                    MegaTransfer *transfer = model->getTransferByTag(tag);
-                    if (transfer)
-                    {
-                        int transferError = transfer->getLastError().getErrorCode();
-                        if (transferError != MegaError::API_OK)
-                        {
-                            QToolTip::showText(event->globalPos(), QCoreApplication::translate("MegaError", MegaError::getErrorString(transferError)));
-                        }
-                        delete transfer;
-                        return true;
-                    }
-                }
-            }
 
             QString fileName = item->getFileName();
             if (fileName != item->getTransferName())

@@ -1557,6 +1557,12 @@ void MegaApplication::startSyncs()
 
 void MegaApplication::applyStorageState(int state)
 {
+    if (state == MegaApi::STORAGE_STATE_CHANGE)
+    {
+        updateUserStats(true);
+        return;
+    }
+
     storageState = state;
     if (preferences->logged() && storageState != appliedStorageState)
     {
@@ -1606,8 +1612,6 @@ void MegaApplication::applyStorageState(int state)
                 {
                     infoDialog->hide();
                 }
-
-                checkOverStorageStates();
             }
 
             if (settingsDialog)
@@ -1626,7 +1630,6 @@ void MegaApplication::applyStorageState(int state)
             else if (state == MegaApi::STORAGE_STATE_ORANGE)
             {
                 almostOQ = true;
-                checkOverStorageStates();
             }
 
             if (infoOverQuota)
@@ -1646,6 +1649,7 @@ void MegaApplication::applyStorageState(int state)
                 onGlobalSyncStateChanged(megaApi);
             }
         }
+        checkOverStorageStates();
     }
 }
 
@@ -2244,7 +2248,7 @@ void MegaApplication::checkMemoryUsage()
 
 void MegaApplication::checkOverStorageStates()
 {
-    if (!preferences->logged() || !Platform::isUserActive())
+    if (!preferences->logged() || ((!infoDialog || !infoDialog->isVisible()) && !storageOverquotaDialog && !Platform::isUserActive()))
     {
         return;
     }
@@ -2255,6 +2259,7 @@ void MegaApplication::checkOverStorageStates()
                 || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDialogExecution()) > Preferences::OQ_DIALOG_INTERVAL_MS))
         {
             preferences->setOverStorageDialogExecution(QDateTime::currentMSecsSinceEpoch());
+            megaApi->sendEvent(99518, "Overstorage dialog shown");
             if (!storageOverquotaDialog)
             {
                 storageOverquotaDialog = new UpgradeOverStorage(megaApi, pricing);
@@ -2271,29 +2276,43 @@ void MegaApplication::checkOverStorageStates()
                      && (!preferences->getOverStorageNotificationExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::OQ_NOTIFICATION_INTERVAL_MS)))
         {
             preferences->setOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
+            megaApi->sendEvent(99519, "Overstorage notification shown");
             sendOverStorageNotification(Preferences::STATE_OVER_STORAGE);
         }
 
-        if (!preferences->getOverStorageDismissExecution()
-                || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDismissExecution()) > Preferences::OS_INTERVAL_MS))
+        if (infoDialog)
         {
-            if (infoDialog)
+            if (!preferences->getOverStorageDismissExecution()
+                    || ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDismissExecution()) > Preferences::OS_INTERVAL_MS))
             {
-                infoDialog->handleOverStorage(Preferences::STATE_OVER_STORAGE);
+                if (infoDialog->updateOverStorageState(Preferences::STATE_OVER_STORAGE))
+                {
+                    megaApi->sendEvent(99520, "Overstorage warning shown");
+                }
+            }
+            else
+            {
+                infoDialog->updateOverStorageState(Preferences::STATE_OVER_STORAGE_DISMISSED);
             }
         }
     }
     else if (almostOQ)
     {
-        if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDismissExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)
-                     && (!preferences->getAlmostOverStorageDismissExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getAlmostOverStorageDismissExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)))
+        if (infoDialog)
         {
-            if (infoDialog)
+            if (((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageDismissExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)
+                         && (!preferences->getAlmostOverStorageDismissExecution() || ((QDateTime::currentMSecsSinceEpoch() - preferences->getAlmostOverStorageDismissExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)))
             {
-                infoDialog->handleOverStorage(Preferences::STATE_ALMOST_OVER_STORAGE);
+                if (infoDialog->updateOverStorageState(Preferences::STATE_ALMOST_OVER_STORAGE))
+                {
+                    megaApi->sendEvent(99521, "Almost overstorage warning shown");
+                }
+            }
+            else
+            {
+                infoDialog->updateOverStorageState(Preferences::STATE_OVER_STORAGE_DISMISSED);
             }
         }
-
 
         bool pendingTransfers = megaApi->getNumPendingDownloads() || megaApi->getNumPendingUploads();
         if (!pendingTransfers && ((QDateTime::currentMSecsSinceEpoch() - preferences->getOverStorageNotificationExecution()) > Preferences::ALMOST_OS_INTERVAL_MS)
@@ -2301,8 +2320,33 @@ void MegaApplication::checkOverStorageStates()
                               && (!preferences->getAlmostOverStorageNotificationExecution() || (QDateTime::currentMSecsSinceEpoch() - preferences->getAlmostOverStorageNotificationExecution()) > Preferences::ALMOST_OS_INTERVAL_MS))
         {
             preferences->setAlmostOverStorageNotificationExecution(QDateTime::currentMSecsSinceEpoch());
+            megaApi->sendEvent(99522, "Almost overstorage notification shown");
             sendOverStorageNotification(Preferences::STATE_ALMOST_OVER_STORAGE);
         }
+
+        if (storageOverquotaDialog)
+        {
+            storageOverquotaDialog->deleteLater();
+            storageOverquotaDialog = NULL;
+        }
+    }
+    else
+    {
+        if (infoDialog)
+        {
+            infoDialog->updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
+        }
+
+        if (storageOverquotaDialog)
+        {
+            storageOverquotaDialog->deleteLater();
+            storageOverquotaDialog = NULL;
+        }
+    }
+
+    if (infoDialog)
+    {
+        infoDialog->setOverQuotaMode(infoOverQuota);
     }
 }
 
@@ -2550,22 +2594,21 @@ void MegaApplication::showInfoDialog()
                 updateUserStats();
             }
         }
-
-        if (infoDialog)
-        {
-            if (!almostOQ && !infoOverQuota)
-            {
-                infoDialog->handleOverStorage(Preferences::STATE_BELOW_OVER_STORAGE);
-            }
-
-            infoDialog->setOverQuotaMode(infoOverQuota);
-        }
     }
 
     if (infoDialog)
     {
         if (!infoDialog->isVisible())
         {
+            if (storageState == MegaApi::STORAGE_STATE_RED)
+            {
+                megaApi->sendEvent(99523, "Main dialog shown while overquota");
+            }
+            else if (storageState == MegaApi::STORAGE_STATE_ORANGE)
+            {
+                megaApi->sendEvent(99524, "Main dialog shown while almost overquota");
+            }
+
             int posx, posy;
             calculateInfoDialogCoordinates(infoDialog, &posx, &posy);
 
@@ -3917,19 +3960,11 @@ void MegaApplication::showTrayMenu(QPoint *point)
         QPoint p = point ? (*point) - QPoint(trayGuestMenu->sizeHint().width(), 0)
                          : QCursor::pos();
 
+        trayGuestMenu->update();
         trayGuestMenu->popup(p);
     }
     else if (trayMenu)
     {
-        if (!infoOverQuota)
-        {
-            addSyncAction->setVisible(true);
-        }
-        else
-        {
-            addSyncAction->setVisible(false);
-        }
-
         if (trayMenu->isVisible())
         {
             trayMenu->close();
@@ -4764,6 +4799,11 @@ void MegaApplication::externalDownload(QQueue<MegaNode *> newDownloadQueue)
     }
 
     downloadQueue.append(newDownloadQueue);
+
+    if (preferences->getDownloadsPaused())
+    {
+        megaApi->pauseTransfers(false, MegaTransfer::TYPE_DOWNLOAD);
+    }
 }
 
 void MegaApplication::externalDownload(QString megaLink, QString auth)
@@ -4777,6 +4817,11 @@ void MegaApplication::externalDownload(QString megaLink, QString auth)
 
     if (preferences->logged())
     {
+        if (preferences->getDownloadsPaused())
+        {
+            megaApi->pauseTransfers(false, MegaTransfer::TYPE_DOWNLOAD);
+        }
+
         megaApi->getPublicNode(megaLink.toUtf8().constData());
     }
     else
@@ -5695,12 +5740,12 @@ void MegaApplication::createTrayMenu()
     int num = preferences->getNumSyncedFolders();
     if (num == 0)
     {
-        addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_syncs.png")), QIcon(QString::fromAscii("://images/ico_syncs.png")), true);
+        addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_syncs_out.png")), QIcon(QString::fromAscii("://images/ico_syncs_over.png")), true);
         connect(addSyncAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()),Qt::QueuedConnection);
     }
     else
     {
-        addSyncAction = new MenuItemAction(tr("Syncs"), QIcon(QString::fromAscii("://images/ico_syncs.png")), QIcon(QString::fromAscii("://images/ico_syncs.png")), true);       
+        addSyncAction = new MenuItemAction(tr("Syncs"), QIcon(QString::fromAscii("://images/ico_syncs_out.png")), QIcon(QString::fromAscii("://images/ico_syncs_over.png")), true);
 
         if (syncsMenu)
         {
@@ -5778,7 +5823,7 @@ void MegaApplication::createTrayMenu()
         importLinksAction = NULL;
     }
 
-    importLinksAction = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")), true);
+    importLinksAction = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/ico_Import_links_out.png")), QIcon(QString::fromAscii("://images/ico_Import_links_over.png")), true);
     connect(importLinksAction, SIGNAL(triggered()), this, SLOT(importLinks()), Qt::QueuedConnection);
 
     if (uploadAction)
@@ -6965,7 +7010,6 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
         if (infoDialog)
         {
             infoDialog->setTransfer(transfer);
-            infoDialog->updateDialogState();
         }
     }
     else if (activeTransferTag[type] == transfer->getTag())
@@ -7134,13 +7178,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             }
         }
 
-        if (!node->getTag() && !node->isRemoved()
-                && !node->isSyncDeleted()
-                && ((lastExit / 1000) < node->getCreationTime()))
-        {
-            externalNodes = true;
-        }
-
         if (nodescurrent && node->isRemoved() && (node->getType() == MegaNode::TYPE_FILE) && node->getSize())
         {
             usedStorage -= node->getSize();
@@ -7163,6 +7200,13 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
 
             usedStorage += bytes;
             newNodes = true;
+
+            if (!externalNodes && !node->getTag()
+                    && ((lastExit / 1000) < node->getCreationTime())
+                    && megaApi->isInsideSync(node))
+            {
+                externalNodes = true;
+            }
         }
 
         if (!node->isRemoved() && node->getTag()

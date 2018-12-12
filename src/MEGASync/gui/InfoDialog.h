@@ -45,7 +45,7 @@ public:
     void updateState();
     void addSync(mega::MegaHandle h);
     void clearUserAttributes();
-    void handleOverStorage(int state);
+    bool updateOverStorageState(int state);
 
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
 
