@@ -4784,6 +4784,11 @@ void MegaApplication::externalDownload(QQueue<MegaNode *> newDownloadQueue)
     }
 
     downloadQueue.append(newDownloadQueue);
+
+    if (preferences->getDownloadsPaused())
+    {
+        megaApi->pauseTransfers(false, MegaTransfer::TYPE_DOWNLOAD);
+    }
 }
 
 void MegaApplication::externalDownload(QString megaLink, QString auth)
@@ -4797,6 +4802,11 @@ void MegaApplication::externalDownload(QString megaLink, QString auth)
 
     if (preferences->logged())
     {
+        if (preferences->getDownloadsPaused())
+        {
+            megaApi->pauseTransfers(false, MegaTransfer::TYPE_DOWNLOAD);
+        }
+
         megaApi->getPublicNode(megaLink.toUtf8().constData());
     }
     else
