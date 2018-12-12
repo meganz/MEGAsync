@@ -26,7 +26,12 @@
    <string>Login Verification</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#Login2FA
+   <string notr="true">QWidget
+{
+font-size: 11px;
+}
+
+#Login2FA
 {
 	background-color:  #F4F4F4;
 }
@@ -58,6 +63,13 @@ background-color:  rgba(0, 0, 0, 10%);
 	font-family: &quot;SF UI Text&quot;;
 	font-size: 13px;
     font-weight: 500;
+}
+
+#lCode
+{
+    color: #333333;
+	font-family: &quot;SF UI Text&quot;;
+	font-size: 13px;
 }
 
 #lLostAuthCode
@@ -490,7 +502,7 @@ background-color:  rgba(0, 0, 0, 10%);
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
-       <number>-1</number>
+       <number>6</number>
       </property>
       <property name="leftMargin">
        <number>32</number>
@@ -505,17 +517,34 @@ background-color:  rgba(0, 0, 0, 10%);
        <number>18</number>
       </property>
       <item>
-       <widget class="CocoaHelpButton" name="wHelp" native="true">
+       <widget class="QPushButton" name="wHelp">
         <property name="minimumSize">
          <size>
-          <width>21</width>
+          <width>0</width>
           <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>21</width>
+          <width>16777215</width>
           <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border: none;
+</string>
+        </property>
+        <property name="text">
+         <string notr="true"/>
+        </property>
+        <property name="icon">
+         <iconset resource="../Resources_macx.qrc">
+          <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
          </size>
         </property>
        </widget>
@@ -607,19 +636,13 @@ background-color:  rgba(0, 0, 0, 10%);
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>CocoaHelpButton</class>
-   <extends>QWidget</extends>
-   <header location="global">CocoaHelpButton.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <tabstops>
   <tabstop>leCode</tabstop>
   <tabstop>bNext</tabstop>
   <tabstop>bCancel</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../Resources_macx.qrc"/>
+ </resources>
  <connections/>
 </ui>
