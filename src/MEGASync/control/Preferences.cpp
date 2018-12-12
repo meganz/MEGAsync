@@ -2627,7 +2627,7 @@ MegaHandle Preferences::lastPublicHandle()
 {
     mutex.lock();
     assert(logged());
-    MegaHandle value = settings->value(lastPublicHandleKey, mega::INVALID_HANDLE).toULongLong();
+    MegaHandle value = settings->value(lastPublicHandleKey, 0).toULongLong();
     mutex.unlock();
     return value;
 }
@@ -2636,7 +2636,7 @@ void Preferences::setLastPublicHandle(MegaHandle handle)
 {
     mutex.lock();
     assert(logged());
-    settings->setValue(lastPublicHandleKey, handle);
+    settings->setValue(lastPublicHandleKey, (long long) handle);
     settings->setValue(lastPublicHandleTimestampKey, QDateTime::currentMSecsSinceEpoch());
     settings->sync();
     mutex.unlock();
