@@ -285,6 +285,9 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         ui->bApply->hide();
     }
 #endif
+
+    ui->lOQWarning->setText(QString::fromUtf8(""));
+    ui->wOQError->hide();
 }
 
 SettingsDialog::~SettingsDialog()
@@ -327,7 +330,33 @@ void SettingsDialog::setProxyOnly(bool proxyOnly)
 
 void SettingsDialog::setOverQuotaMode(bool mode)
 {
-    // At the moment, it's not needed to do anything in overquota mode
+    if (mode)
+    {
+        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
+        QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
+        Preferences *preferences = Preferences::instance();
+        if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
+        {
+            MegaHandle aff = preferences->lastPublicHandle();
+            if (aff != INVALID_HANDLE)
+            {
+                char *base64aff = MegaApi::handleToBase64(aff);
+                url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
+                delete [] base64aff;
+            }
+        }
+
+        ui->lOQWarning->setText(tr("Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</string>")
+                                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#%1\"><span style=\"color:#d90007; text-decoration:none;\">").arg(url))
+                                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
+        ui->wOQError->show();
+    }
+    else
+    {
+        ui->lOQWarning->setText(QString::fromUtf8(""));
+        ui->wOQError->hide();
+    }
+
     return;
 }
 
