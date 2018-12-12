@@ -284,7 +284,15 @@ void CustomTransferItem::updateTransfer()
             ui->lRemainingTime->setText(QString::fromUtf8(""));
             break;
         case MegaTransfer::STATE_RETRYING:
-            ui->lSpeed->setText(QString::fromUtf8("%1").arg(tr("retrying...")));
+            if (transferError == MegaError::API_EOVERQUOTA)
+            {
+                ui->lSpeed->setText(QString::fromUtf8("%1").arg(tr("Out of storage space")));
+            }
+            else
+            {
+                ui->lSpeed->setText(QString::fromUtf8("%1").arg(tr("retrying...")));
+            }
+
             ui->bClockDown->setVisible(false);
             ui->lRemainingTime->setText(QString::fromUtf8(""));
             break;
