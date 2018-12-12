@@ -771,6 +771,9 @@ margin-right: 20px;</string>
                <property name="wordWrap">
                 <bool>true</bool>
                </property>
+               <property name="openExternalLinks">
+                <bool>true</bool>
+               </property>
               </widget>
              </item>
              <item>
@@ -1206,6 +1209,9 @@ margin-right: 20px;</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
            </property>
           </widget>
          </item>

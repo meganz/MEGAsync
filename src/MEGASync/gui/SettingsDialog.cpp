@@ -2198,7 +2198,8 @@ void SettingsDialog::on_bClearCache_clicked()
         QFileInfo fi(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
         if (fi.exists() && fi.isDir())
         {
-            syncs += QString::fromUtf8("<br/><a href=\"local://#%1\">%2</a>").arg(fi.absoluteFilePath()).arg(preferences->getSyncName(i));
+            syncs += QString::fromUtf8("<br/><a href=\"local://#%1\">%2</a>")
+                    .arg(fi.absoluteFilePath() + QDir::separator()).arg(preferences->getSyncName(i));
         }
     }
 

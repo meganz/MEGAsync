@@ -3495,7 +3495,22 @@ void MegaApplication::handleLocalPath(const QUrl &url)
         return;
     }
 
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(QDir::toNativeSeparators(url.fragment())));
+    QString path = QDir::toNativeSeparators(url.fragment());
+    if (path.endsWith(QDir::separator()))
+    {
+        path.truncate(path.size() - 1);
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
+    }
+    else
+    {
+        #ifdef WIN32
+        if (path.startsWith(QString::fromAscii("\\\\?\\")))
+        {
+            path = path.mid(4);
+        }
+        #endif
+        Platform::showInFolder(path);
+    }
 }
 
 void MegaApplication::clearUserAttributes()
