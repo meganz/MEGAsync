@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>TransferItem</class>
- <widget class="QWidget" name="TransferItem">
+ <class>TransferManagerItem</class>
+ <widget class="QWidget" name="TransferManagerItem">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -29,7 +29,7 @@
    <bool>true</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">TransferItem
+   <string notr="true">TransferManagerItem
 {
 	background-color: transparent;
 }
@@ -394,7 +394,7 @@ padding-top: 1px;</string>
              <string/>
             </property>
             <property name="pixmap">
-             <pixmap resource="../Resources_macx.qrc">:/images/cloud_item_ico.png</pixmap>
+             <pixmap resource="../Resources_linux.qrc">:/images/cloud_item_ico.png</pixmap>
             </property>
            </widget>
           </item>
@@ -435,7 +435,7 @@ padding-top: 1px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../Resources_linux.qrc">
               <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -570,13 +570,13 @@ padding-top: 1px;</string>
               <widget class="QLabel" name="lTransferNameCompleted">
                <property name="minimumSize">
                 <size>
-                 <width>330</width>
+                 <width>375</width>
                  <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>16777215</width>
+                 <width>375</width>
                  <height>16777215</height>
                 </size>
                </property>
@@ -734,7 +734,7 @@ padding-top: 1px;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../Resources_linux.qrc">
               <normaloff>:/images/clear_item_ico.png</normaloff>:/images/clear_item_ico.png</iconset>
             </property>
             <property name="iconSize">
@@ -755,7 +755,7 @@ padding-top: 1px;</string>
   </layout>
  </widget>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>
