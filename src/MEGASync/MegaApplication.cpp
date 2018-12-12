@@ -193,10 +193,19 @@ int main(int argc, char *argv[])
     }
 #endif
 
-#if QT_VERSION < 0x050A00
+#if QT_VERSION >= 0x050000
+    if (!unsetenv("QT_QPA_PLATFORMTHEME")) //open folder dialog & similar crashes is fixed with this
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Error unsetting QT_QPA_PLATFORMTHEME vble");
+    }
+    if (!unsetenv("SHLVL")) // reported failure in mint
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Error unsetting SHLVL vble");
+    }
+#endif
     QApplication::setDesktopSettingsAware(false);
 #endif
-#endif
+
     MegaApplication app(argc, argv);
 
 #if defined(Q_OS_LINUX) && QT_VERSION >= 0x050600
