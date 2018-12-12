@@ -124,6 +124,7 @@ void StatusInfo::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        setState(state);
     }
     QWidget::changeEvent(event);
 }

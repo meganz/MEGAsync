@@ -344,6 +344,11 @@ void InfoDialog::setWaiting(bool waiting)
 
 void InfoDialog::setOverQuotaMode(bool state)
 {
+    if (overQuotaState == state)
+    {
+        return;
+    }
+
     overQuotaState = state;
     ui->wStatus->setOverQuotaState(state);
 
@@ -488,31 +493,50 @@ void InfoDialog::onAllTransfersFinished()
 
 void InfoDialog::updateDialogState()
 {
-    if (storageState == Preferences::STATE_ALMOST_OVER_STORAGE
-            || storageState == Preferences::STATE_OVER_STORAGE)
+    switch (storageState)
     {
-        return;
-    }
-
-    remainingUploads = megaApi->getNumPendingUploads();
-    remainingDownloads = megaApi->getNumPendingDownloads();
-
-    if (remainingUploads || remainingDownloads || ui->wListTransfers->getModel()->rowCount(QModelIndex()))
-    {
-        overlay->setVisible(false);
-        ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
-    }
-    else
-    {
-        ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
-        if (state != STATE_WAITING && state != STATE_INDEXING)
-        {
-            overlay->setVisible(true);
-        }
-        else
-        {
+        case Preferences::STATE_ALMOST_OVER_STORAGE:
+            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_almost_full.png")));
+            ui->bOQIcon->setIconSize(QSize(64,64));
+            ui->lOQTitle->setText(tr("You're running out of storage space."));
+            ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
+            ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
             overlay->setVisible(false);
-        }
+            break;
+        case Preferences::STATE_OVER_STORAGE:
+            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));
+            ui->bOQIcon->setIconSize(QSize(64,64));
+            ui->lOQTitle->setText(tr("Your MEGA account is full."));
+            ui->lOQDesc->setText(tr("All file uploads are currently disabled.")
+                                    + QString::fromUtf8("<br>")
+                                    + tr("Please upgrade to PRO."));
+            ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
+            overlay->setVisible(false);
+            break;
+        case Preferences::STATE_BELOW_OVER_STORAGE:
+        case Preferences::STATE_OVER_STORAGE_DISMISSED:
+        default:
+            remainingUploads = megaApi->getNumPendingUploads();
+            remainingDownloads = megaApi->getNumPendingDownloads();
+
+            if (remainingUploads || remainingDownloads || ui->wListTransfers->getModel()->rowCount(QModelIndex()))
+            {
+                overlay->setVisible(false);
+                ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
+            }
+            else
+            {
+                ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+                if (state != STATE_WAITING && state != STATE_INDEXING)
+                {
+                    overlay->setVisible(true);
+                }
+                else
+                {
+                    overlay->setVisible(false);
+                }
+            }
+            break;
     }
 }
 
@@ -656,35 +680,15 @@ void InfoDialog::clearUserAttributes()
     ui->bAvatar->clearData();
 }
 
-void InfoDialog::handleOverStorage(int state)
+bool InfoDialog::updateOverStorageState(int state)
 {
-    storageState = state;
-    switch (state)
+    if (storageState != state)
     {
-        case Preferences::STATE_ALMOST_OVER_STORAGE:
-            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_almost_full.png")));
-            ui->bOQIcon->setIconSize(QSize(64,64));
-            ui->lOQTitle->setText(tr("You're running out of storage space."));
-            ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
-            ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
-            overlay->setVisible(false);
-            break;
-        case Preferences::STATE_OVER_STORAGE:
-            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));
-            ui->bOQIcon->setIconSize(QSize(64,64));
-            ui->lOQTitle->setText(tr("Your MEGA account is full."));
-            ui->lOQDesc->setText(tr("All file uploads are currently disabled.")
-                                    + QString::fromUtf8("<br>")
-                                    + tr("Please upgrade to PRO."));
-            ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
-            overlay->setVisible(false);
-            break;
-        case Preferences::STATE_BELOW_OVER_STORAGE:
-        case Preferences::STATE_OVER_STORAGE_DISMISSED:
-        default:
-            updateDialogState();
-            break;
+        storageState = state;
+        updateDialogState();
+        return true;
     }
+    return false;
 }
 
 void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *e)
@@ -707,9 +711,8 @@ void InfoDialog::changeEvent(QEvent *event)
             setUsage();
             state = STATE_STARTING;
             animateStates(false);
-            ui->wStatus->setState(state);
             updateState();   
-            handleOverStorage(storageState);
+            updateDialogState();
         }
     }
     QDialog::changeEvent(event);
@@ -1018,8 +1021,7 @@ void InfoDialog::on_bDotUsedQuota_clicked()
 
 void InfoDialog::on_bDiscard_clicked()
 {
-    storageState = Preferences::STATE_OVER_STORAGE_DISMISSED;
-    updateDialogState();
+    updateOverStorageState(Preferences::STATE_OVER_STORAGE_DISMISSED);
     emit dismissOQ(overQuotaState);
 }
 
