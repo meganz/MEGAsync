@@ -19,5 +19,8 @@ void unSetFolderIcon(QString path);
 QString defaultOpenApp(QString extension);
 void enableBlurForWindow(QWidget *window);
 bool registerUpdateDaemon();
+bool runHttpServer();
+bool runHttpsServer();
+bool userActive();
 
 #endif // MACXFUNCTIONS_H

@@ -10,6 +10,7 @@
 class ElidedLabel : public QFrame
 {
     Q_OBJECT
+
     Q_PROPERTY(QString text READ text WRITE setText)
     Q_PROPERTY(bool isElided READ isElided)
 

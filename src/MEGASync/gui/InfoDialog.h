@@ -11,6 +11,7 @@
 #include "DataUsageMenu.h"
 #include "MenuItemAction.h"
 #include "control/Preferences.h"
+#include <QGraphicsOpacityEffect>
 
 namespace Ui {
 class InfoDialog;
@@ -40,13 +41,11 @@ public:
     void transferFinished(int error);
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
-    void increaseUsedStorage(long long bytes, bool isInShare);
     void setOverQuotaMode(bool state);
-    void updateState();
     void addSync(mega::MegaHandle h);
     void clearUserAttributes();
-    void handleOverStorage(int state);
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
+    bool updateOverStorageState(int state);
 
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
 
@@ -59,6 +58,7 @@ public:
 private:
     void drawAvatar(QString email);
     void createQuotaUsedMenu();
+    void animateStates(bool opt);
 
 public slots:
    void addSync();
@@ -79,10 +79,11 @@ private slots:
     void on_bDotUsedStorage_clicked();
     void on_bDotUsedQuota_clicked();
 
-    void on_bDismiss_clicked();
+    void on_bDiscard_clicked();
     void on_bBuyQuota_clicked();
 
     void hideUsageBalloon();
+    void onAnimationFinished();
 
 signals:
     void openTransferManager(int tab);
@@ -94,6 +95,7 @@ private:
     QPushButton *overlay;
 #ifdef __APPLE__
     QPushButton *arrow;
+    QWidget *dummy; // Patch to let text input on line edits of GuestWidget
 #endif
 
     QMenu *transferMenu;
@@ -113,7 +115,12 @@ private:
     bool overQuotaState;
     int storageState;
 
+    QPropertyAnimation *animation;
+    QGraphicsOpacityEffect *opacityEffect;
+
 protected:
+    void updateBlockedState();
+    void updateState();
     void changeEvent(QEvent * event);
     bool eventFilter(QObject *obj, QEvent *e);
 #ifdef __APPLE__

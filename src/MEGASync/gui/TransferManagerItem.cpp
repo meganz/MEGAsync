@@ -226,7 +226,15 @@ void TransferManagerItem::updateTransfer()
             ui->lRemainingTime->setText(QString::fromUtf8(""));
             break;
         case MegaTransfer::STATE_RETRYING:
-            ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("retrying")));
+            if (transferError == MegaError::API_EOVERQUOTA)
+            {
+                ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("Out of storage space")));
+            }
+            else
+            {
+                ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("retrying")));
+            }
+
             ui->lRemainingTime->setText(QString::fromUtf8(""));
             break;
         case MegaTransfer::STATE_COMPLETING:
@@ -287,6 +295,22 @@ bool TransferManagerItem::cancelButtonClicked(QPoint pos)
         break;
     }
 
+    return false;
+}
+
+bool TransferManagerItem::mouseHoverRetryingLabel(QPoint pos)
+{
+    switch (transferState)
+    {
+        case MegaTransfer::STATE_RETRYING:
+            if (ui->lSpeed->rect().contains(ui->lSpeed->mapFrom(this, pos)))
+            {
+                return true;
+            }
+            break;
+        default:
+            break;
+    }
     return false;
 }
 

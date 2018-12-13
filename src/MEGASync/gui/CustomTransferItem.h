@@ -28,6 +28,7 @@ public:
 
     bool getLinkButtonClicked(QPoint pos);
     void mouseHoverTransfer(bool isHover);
+    bool mouseHoverRetryingLabel(QPoint pos);
 
     void finishTransfer();
     void updateTransfer();
@@ -41,9 +42,6 @@ public:
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
 
-signals:
-    void refreshTransfer(int tag);
-
 private:
     Ui::CustomTransferItem *ui;
     mega::MegaApi *megaApi;
@@ -52,7 +50,6 @@ private:
 
 protected:
     bool getLinkButtonEnabled;
-
 };
 
 #endif // CUSTOMTRANSFERITEM_H

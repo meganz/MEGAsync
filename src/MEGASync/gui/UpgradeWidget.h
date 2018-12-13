@@ -34,6 +34,9 @@ private:
 
     void updatePlanInfo();
 
+protected:
+    void changeEvent(QEvent* event);
+
 private slots:
     void onOverlayClicked();
 };

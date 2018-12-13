@@ -4,6 +4,8 @@
 #include <QDesktopServices>
 #include <QUrl>
 #include <QtCore>
+#include "Preferences.h"
+#include "megaapi.h"
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -43,24 +45,39 @@ PlanWidget::PlanWidget(PlanInfo data, QString userAgent, QWidget *parent) :
 void PlanWidget::onOverlayClicked()
 {
     QString escapedUserAgent = QString::fromUtf8(QUrl::toPercentEncoding(userAgent));
+    QString url;
     switch (details.level)
     {
         case PRO_LITE:
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro_lite/uao=%1").arg(escapedUserAgent)));
+            url = QString::fromUtf8("mega://#propay_4/uao=%1").arg(escapedUserAgent);
             break;
         case PRO_I:
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro_1/uao=%1").arg(escapedUserAgent)));
+            url = QString::fromUtf8("mega://#propay_1/uao=%1").arg(escapedUserAgent);
             break;
         case PRO_II:
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro_2/uao=%1").arg(escapedUserAgent)));
+            url = QString::fromUtf8("mega://#propay_2/uao=%1").arg(escapedUserAgent);
             break;
         case PRO_III:
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro_3/uao=%1").arg(escapedUserAgent)));
+            url = QString::fromUtf8("mega://#propay_3/uao=%1").arg(escapedUserAgent);
             break;
         default:
-            QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#pro/uao=%1").arg(escapedUserAgent)));
+            url = QString::fromUtf8("mega://#pro/uao=%1").arg(escapedUserAgent);
             break;
     }
+
+    Preferences *preferences = Preferences::instance();
+    if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
+    {
+        mega::MegaHandle aff = preferences->lastPublicHandle();
+        if (aff != mega::INVALID_HANDLE)
+        {
+            char *base64aff = mega::MegaApi::handleToBase64(aff);
+            url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
+            delete [] base64aff;
+        }
+    }
+
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
 }
 
 PlanWidget::~PlanWidget()

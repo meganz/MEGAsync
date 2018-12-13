@@ -11,16 +11,19 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/3.6.6.0";
-const int Preferences::VERSION_CODE = 3606;
+const char Preferences::USER_AGENT[] = "MEGAsync/3.9.4.0";
+const int Preferences::VERSION_CODE = 3904;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("3.6.6");
-const QString Preferences::SDK_ID = QString::fromAscii("99a46c");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.0.0");
+QString Preferences::SDK_ID = QString::fromAscii("BETA4");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- General Data Protection Regulation (GDPR) compliance\n"
-            "- Updated translations\n"
-            "- Bug fixes and other minor adjustments");
+            "- New design for the main dialog\n"
+            "- Improved setup assistant\n"
+            "- Support to show Public Service Announcements\n"
+            "- Modern notifications\n"
+            "- Updated third-party libraries\n"
+            "- Other minor bug fixes and improvements");
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -28,15 +31,14 @@ const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStri
 const int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
 const int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
 
-const long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
-const long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 129600000; // 36 hours
-const long long Preferences::ALMOST_OS_INTERVAL_MS = 259200000; // 72 hours
-const long long Preferences::OS_INTERVAL_MS = 129600000; // 36 hours
-const long long Preferences::USER_INACTIVITY_MS = 300000;
+const long long Preferences::OQ_DIALOG_INTERVAL_MS = 420000; // 7 min
+const long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 36000; // 36 secs
+const long long Preferences::ALMOST_OS_INTERVAL_MS = 72000; // 72 secs
+const long long Preferences::OS_INTERVAL_MS = 36000; // 36 secs
+const long long Preferences::USER_INACTIVITY_MS = 20000; // 20 secs
 
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
 const long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS  = 7200000;
-const long long Preferences::MIN_UPDATE_STATS_INTERVAL_OVERQUOTA    = 30000;
 const long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
 const long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
 const long long Preferences::MIN_EXTERNAL_NODES_WARNING_MS          = 60000;
@@ -47,10 +49,10 @@ const unsigned int Preferences::UPDATE_RETRY_INTERVAL_SECS          = 7200;
 const unsigned int Preferences::UPDATE_TIMEOUT_SECS                 = 600;
 const unsigned int Preferences::MAX_LOGIN_TIME_MS                   = 40000;
 const unsigned int Preferences::PROXY_TEST_TIMEOUT_MS               = 10000;
-const unsigned int Preferences::LOCAL_HTTPS_TEST_TIMEOUT_MS         = 10000;
 const unsigned int Preferences::MAX_IDLE_TIME_MS                    = 600000;
 const unsigned int Preferences::MAX_COMPLETED_ITEMS                 = 1000;
 
+const qint16 Preferences::HTTP_PORT  = 6341;
 const qint16 Preferences::HTTPS_PORT = 6342;
 
 const QString Preferences::defaultHttpsKey = QString::fromUtf8(
@@ -192,6 +194,7 @@ const QString Preferences::defaultHttpsCertIntermediate = QString::fromUtf8(
 
 const long long Preferences::defaultHttpsCertExpiration = 1586476799;
 const long long Preferences::LOCAL_HTTPS_CERT_MAX_EXPIRATION_SECS = 3888000; // 45 days
+const long long Preferences::LOCAL_HTTPS_CERT_RENEW_INTERVAL_SECS = 7200; // 2 hours
 
 const QString Preferences::FINDER_EXT_BUNDLE_ID = QString::fromUtf8("mega.mac.MEGAShellExtFinder");
 QStringList Preferences::HTTPS_ALLOWED_ORIGINS;
@@ -207,11 +210,8 @@ const char Preferences::UPDATE_PUBLIC_KEY[] = "EACTzXPE8fdMhm6LizLe1FxV2DncybVh2
 const QString Preferences::CRASH_REPORT_URL                 = QString::fromUtf8("http://g.api.mega.co.nz/hb?crashdump");
 const QString Preferences::UPDATE_FOLDER_NAME               = QString::fromAscii("update");
 const QString Preferences::UPDATE_BACKUP_FOLDER_NAME        = QString::fromAscii("backup");
-const QString Preferences::PROXY_TEST_URL                   = QString::fromUtf8("http://eu.static.mega.co.nz/?");
-const QString Preferences::PROXY_TEST_SUBSTRING             = QString::fromUtf8("<title>MEGA</title>");
-const QString Preferences::LOCAL_HTTPS_TEST_URL             = QString::fromUtf8("https://localhost.megasyncloopback.mega.nz:") + QString::number(Preferences::HTTPS_PORT);
-const QString Preferences::LOCAL_HTTPS_TEST_SUBSTRING       = Preferences::VERSION_STRING;
-const QString Preferences::LOCAL_HTTPS_TEST_POST_DATA       = QString::fromUtf8("{\"a\":\"v\"}");
+const QString Preferences::PROXY_TEST_URL                   = QString::fromUtf8("https://g.api.mega.co.nz/cs");
+const QString Preferences::PROXY_TEST_SUBSTRING             = QString::fromUtf8("-2");
 const QString Preferences::syncsGroupKey            = QString::fromAscii("Syncs");
 const QString Preferences::currentAccountKey        = QString::fromAscii("currentAccount");
 const QString Preferences::emailKey                 = QString::fromAscii("email");
@@ -334,8 +334,10 @@ const QString Preferences::httpsCertKey             = QString::fromAscii("httpsC
 const QString Preferences::httpsCertIntermediateKey = QString::fromAscii("httpsCertIntermediate2");
 const QString Preferences::httpsCertExpirationKey   = QString::fromAscii("httpsCertExpiration2");
 const QString Preferences::transferIdentifierKey    = QString::fromAscii("transferIdentifier");
+const QString Preferences::lastPublicHandleKey      = QString::fromAscii("lastPublicHandle");
+const QString Preferences::lastPublicHandleTimestampKey = QString::fromAscii("lastPublicHandleTimestamp");
 
-const bool Preferences::defaultShowNotifications    = false;
+const bool Preferences::defaultShowNotifications    = true;
 const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
 const bool Preferences::defaultUpperSizeLimit       = false;
@@ -343,7 +345,7 @@ const bool Preferences::defaultLowerSizeLimit       = false;
 
 const bool Preferences::defaultCleanerDaysLimit     = true;
 
-const bool Preferences::defaultUseHttpsOnly         = false;
+const bool Preferences::defaultUseHttpsOnly         = true;
 const bool Preferences::defaultSSLcertificateException = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
 const int  Preferences::defaultDownloadLimitKB      = 0;
@@ -2610,6 +2612,34 @@ void Preferences::setHttpsCertExpiration(long long expiration)
     }
 
     settings->sync();
+}
+
+long long Preferences::lastPublicHandleTimestamp()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(lastPublicHandleTimestampKey, 0).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+MegaHandle Preferences::lastPublicHandle()
+{
+    mutex.lock();
+    assert(logged());
+    MegaHandle value = settings->value(lastPublicHandleKey, (unsigned long long) mega::INVALID_HANDLE).toULongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setLastPublicHandle(MegaHandle handle)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(lastPublicHandleKey, (unsigned long long) handle);
+    settings->setValue(lastPublicHandleTimestampKey, QDateTime::currentMSecsSinceEpoch());
+    settings->sync();
+    mutex.unlock();
 }
 
 int Preferences::getNumUsers()

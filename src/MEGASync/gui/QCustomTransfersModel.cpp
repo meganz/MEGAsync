@@ -25,7 +25,7 @@ MegaTransfer *QCustomTransfersModel::getTransferByTag(int tag)
     MegaTransfer *transfer = ((MegaApplication *)qApp)->getFinishedTransferByTag(tag);
     if (transfer)
     {
-        return transfer;
+        return transfer->copy();
     }
 
     return megaApi->getTransferByTag(tag);
@@ -161,6 +161,12 @@ void QCustomTransfersModel::updateTransferInfo(MegaTransfer *transfer)
         item->setTransferredBytes(transfer->getTransferredBytes(), !transfer->isSyncTransfer());
         item->setTransferState(transfer->getState());
         item->setPriority(newPriority);
+
+        int tError = transfer->getLastError().getErrorCode();
+        if (tError != MegaError::API_OK)
+        {
+            item->setTransferError(tError);
+        }
     }
 
     //Update modified item
@@ -197,13 +203,13 @@ void QCustomTransfersModel::replaceWithTransfer(MegaTransfer *transfer)
     newItem->tag = transfer->getTag();
     newItem->priority = transfer->getPriority();
 
+    beginResetModel();
     transfers.insert(newItem->tag, newItem);
     transferOrder[row] = newItem;
     transfers.remove(transferToReplaced);
     transferItems.remove(transferToReplaced);
+    endResetModel();
     delete item;
-
-    emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
 }
 
 void QCustomTransfersModel::removeAllTransfers()
@@ -226,24 +232,27 @@ void QCustomTransfersModel::removeAllCompletedTransfers()
             initialDelPos++;
         }
 
-        beginRemoveRows(QModelIndex(), initialDelPos, transfers.size() - 1);
-        for (QMap<int, TransferItemData*>::iterator it = transfers.begin(); it != transfers.end();)
+        if (initialDelPos <= (transfers.size() - 1))
         {
-            int tag = it.key();
-            if (tag != activeDownloadTag && tag != activeUploadTag)
+            beginRemoveRows(QModelIndex(), initialDelPos, transfers.size() - 1);
+            for (QMap<int, TransferItemData*>::iterator it = transfers.begin(); it != transfers.end();)
             {
-                TransferItemData *item = it.value();
-                transferItems.remove(tag);
-                it = transfers.erase(it);
-                delete item;
+                int tag = it.key();
+                if (tag != activeDownloadTag && tag != activeUploadTag)
+                {
+                    TransferItemData *item = it.value();
+                    transferItems.remove(tag);
+                    it = transfers.erase(it);
+                    delete item;
+                }
+                else
+                {
+                    it++;
+                }
             }
-            else
-            {
-                it++;
-            }
+            transferOrder.erase(transferOrder.begin() + initialDelPos, transferOrder.end());
+            endRemoveRows();
         }
-        transferOrder.erase(transferOrder.begin() + initialDelPos, transferOrder.end());
-        endRemoveRows();
     }
 
     if (transfers.isEmpty())

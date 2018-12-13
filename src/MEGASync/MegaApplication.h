@@ -49,17 +49,18 @@ Q_DECLARE_METATYPE(QQueue<QString>)
 class TransferMetaData
 {
 public:
-    TransferMetaData(int direction, int total = 0, int pending = 0, QString path = QString(),
-                     int files = 0, int folders = 0,
-                     int failed = 0, int cancelled = 0)
+    TransferMetaData(int direction, int total = 0, int pending = 0, QString path = QString())
                     : transferDirection(direction), totalTransfers(total), pendingTransfers(pending),
-                      localPath(path), totalFiles(files), totalFolders(folders),
-                      transfersFailed(failed), transfersCancelled(cancelled) {}
+                      localPath(path), totalFiles(0), totalFolders(0),
+                      transfersFileOK(0), transfersFolderOK(0),
+                      transfersFailed(0), transfersCancelled(0) {}
 
     int totalTransfers;
     int pendingTransfers;
     int totalFiles;
     int totalFolders;
+    int transfersFileOK;
+    int transfersFolderOK;
     int transfersFailed;
     int transfersCancelled;
     int transferDirection;
@@ -205,8 +206,6 @@ public slots:
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();
-    void onLocalHttpsCheckSuccess();
-    void onLocalHttpsCheckError();
     void userAction(int action);
     void changeState();
     void showUpdatedMessage(int lastVersion);
@@ -221,6 +220,7 @@ public slots:
     int getPrevVersion();
     void onDismissOQ(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
+    void renewLocalSSLcert();
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
@@ -232,11 +232,11 @@ private slots:
 
 protected:
     void createTrayIcon();
-    void createOverQuotaMenu();
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
     void loggedIn();
     void startSyncs();
+    void applyStorageState(int state);
     void processUploadQueue(mega::MegaHandle nodeHandle);
     void processDownloadQueue(QString path);
     void unityFix();
@@ -246,7 +246,8 @@ protected:
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
     void startHttpServer();
-    void initHttpsServer();
+    void startHttpsServer();
+    void initLocalServer();
 
     void sendOverStorageNotification(int state);
 
@@ -271,7 +272,6 @@ protected:
 #endif
 
     QMenu *trayMenu;
-    QMenu *trayOverQuotaMenu;
     QMenu *trayGuestMenu;
     QMenu emptyMenu;
     QMenu *syncsMenu;
@@ -287,11 +287,6 @@ protected:
     MenuItemAction *updateAction;
     QAction *showStatusAction;
 
-    MenuItemAction *settingsActionOverquota;
-    MenuItemAction *exitActionOverquota;
-    MenuItemAction *updateActionOverquota;
-
-    MenuItemAction *importLinksActionGuest;
     MenuItemAction *exitActionGuest;
     MenuItemAction *settingsActionGuest;
     MenuItemAction *updateActionGuest;
@@ -311,6 +306,7 @@ protected:
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
     HTTPServer *httpServer;
+    HTTPServer *httpsServer;
     UploadToMegaDialog *uploadFolderSelector;
     DownloadFromMegaDialog *downloadFolderSelector;
     mega::MegaHandle fileUploadTarget;
@@ -330,12 +326,13 @@ protected:
     long long cleaningSchedulerExecution;
     long long lastUserActivityExecution;
     bool almostOQ;
+    int storageState;
+    int appliedStorageState;
     long long maxMemoryUsage;
     int exportOps;
     int syncState;
     mega::MegaPricing *pricing;
     long long bwOverquotaTimestamp;
-    bool enablingBwOverquota;
     UpgradeDialog *bwOverquotaDialog;
     UpgradeOverStorage *storageOverquotaDialog;
     bool bwOverquotaEvent;
@@ -388,7 +385,6 @@ protected:
     bool updateAvailable;
     bool isLinux;
     long long externalNodesTimestamp;
-    bool overquotaCheck;
     int noKeyDetected;
     bool isFirstSyncDone;
     bool isFirstFileSynced;
@@ -397,6 +393,10 @@ protected:
     bool completedTabActive;
     int prevVersion;
     bool isPublic;
+    bool updatingSSLcert;
+    long long lastSSLcertUpdate;
+    bool outdatedStorageInfo;
+    bool nodescurrent;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener

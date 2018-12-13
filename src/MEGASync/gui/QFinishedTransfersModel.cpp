@@ -105,7 +105,12 @@ void QFinishedTransfersModel::removeAllTransfers()
 
 MegaTransfer *QFinishedTransfersModel::getTransferByTag(int tag)
 {
-    return ((MegaApplication *)qApp)->getFinishedTransferByTag(tag);
+    MegaTransfer *transfer = ((MegaApplication *)qApp)->getFinishedTransferByTag(tag);
+    if (transfer)
+    {
+        return transfer->copy();
+    }
+    return NULL;
 }
 
 void QFinishedTransfersModel::onTransferFinish(MegaApi *, MegaTransfer *transfer, MegaError *)

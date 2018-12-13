@@ -9,8 +9,9 @@
 #include "megaapi.h"
 #include "QTMegaRequestListener.h"
 
-class MegaUploader
+class MegaUploader : public QObject
 {
+    Q_OBJECT
 
 public:
     MegaUploader(mega::MegaApi *megaApi);

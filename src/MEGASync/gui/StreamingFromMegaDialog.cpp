@@ -69,10 +69,6 @@ void StreamingFromMegaDialog::closeEvent(QCloseEvent *event)
 
     QPointer<QMessageBox> msg = new QMessageBox(this);
     msg->setIcon(QMessageBox::Question);
-    //        TO-DO: Uncomment when asset is included to the project
-    //        msg->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-question.png")
-    //                                                            : QString::fromUtf8(":/images/mbox-question@2x.png")));
-
     msg->setWindowTitle(tr("Stream from MEGA"));
     msg->setText(tr("Are you sure that you want to stop the streaming?"));
     msg->addButton(QMessageBox::Yes);
@@ -123,8 +119,10 @@ void StreamingFromMegaDialog::on_bFromCloud_clicked()
 void StreamingFromMegaDialog::on_bFromPublicLink_clicked()
 {
     QPointer<QInputDialog> id = new QInputDialog(this);
+    id->setWindowFlags(id->windowFlags() & ~Qt::WindowContextHelpButtonHint);
     id->setWindowTitle(tr("Open link"));
     id->setLabelText(tr("Enter a MEGA file link:"));
+    id->resize(470, id->height());
     int result = id->exec();
     if (!id || !result)
     {

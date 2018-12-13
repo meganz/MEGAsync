@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
+        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -237,7 +237,7 @@
         <source>The name &quot;%1&quot; is already in use for another sync
 Please enter a different name to identify this synced folder:</source>
         <translatorcomment>Detailed message displayed when a user is using a name for a local folder that is already used. Preserve &quot;%1&quot; code because is used to indicate the local folder at runtime.</translatorcomment>
-        <translation>The name &quot;%1&quot; is already in use for another sync. Please enter a different name to identify this synced folder:</translation>
+        <translation>The name “%1” is already in use for another sync. Please enter a different name to identify this synced folder:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -318,11 +318,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Password changed</source>
-        <translation type="unfinished">Password changed</translation>
+        <translation type="obsolete">Password changed</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
-        <translation type="unfinished">Your password has been changed.</translation>
+        <translation type="obsolete">Your password has been changed.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -330,7 +330,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Wrong password</source>
-        <translation type="unfinished">Wrong password</translation>
+        <translation type="obsolete">Wrong password</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -342,11 +342,16 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>The entered passwords don&apos;t match</source>
-        <translation type="unfinished">The entered passwords don&apos;t match</translation>
+        <translation type="unfinished">The entered passwords don’t match</translation>
     </message>
     <message>
         <source>Please, enter a stronger password</source>
         <translation type="unfinished">Please, enter a stronger password</translation>
+    </message>
+    <message>
+        <source>Too many requests. Please wait.</source>
+        <translatorcomment>Message shown when the SDK is waiting for the server to complete a request due to a rate limit (API error -4) - (String as short as possible).</translatorcomment>
+        <translation type="unfinished">Too many requests. Please wait.</translation>
     </message>
 </context>
 <context>
@@ -364,7 +369,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Remember my decision and don&apos;t ask me again</source>
         <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Remember my decision and don&apos;t ask me again</translation>
+        <translation type="unfinished">Remember my decision and don’t ask me again</translation>
     </message>
     <message>
         <source>No</source>
@@ -397,7 +402,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</source>
         <translatorcomment>Label to indicate if the user wants to add some more details to attach to the crash report.</translatorcomment>
-        <translation>You can help us to improve MEGAsync by sending this error report. It doesn&apos;t contain any personal information. If you want to give us more details, please write them below:</translation>
+        <translation>You can help us to improve MEGAsync by sending this error report. It doesn’t contain any personal information. If you want to give us more details, please write them below:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -408,6 +413,49 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Send report</source>
         <translatorcomment>Label for Send report button.</translatorcomment>
         <translation>Send report</translation>
+    </message>
+</context>
+<context>
+    <name>CustomTransferItem</name>
+    <message>
+        <source>failed:</source>
+        <translatorcomment>Label to indicate that the transfer failed. The reason will be appended after colon symbol.</translatorcomment>
+        <translation type="unfinished">failed:</translation>
+    </message>
+    <message>
+        <source>%1 of %2</source>
+        <translatorcomment>Label to indicate the number of completed transfers of the total. %1 will be replaced with the number of completed transfers and %2 with the total number of transfers</translatorcomment>
+        <translation type="unfinished">%1 of %2</translation>
+    </message>
+    <message>
+        <source>starting...</source>
+        <translatorcomment>Label to indicate that a transfer is starting.</translatorcomment>
+        <translation type="unfinished">starting…</translation>
+    </message>
+    <message>
+        <source>PAUSED</source>
+        <translatorcomment>Label to indicate that a transfer is paused. Keep uppercase.</translatorcomment>
+        <translation type="unfinished">PAUSED</translation>
+    </message>
+    <message>
+        <source>queued</source>
+        <translatorcomment>Label to indicate that a transfer is queued.</translatorcomment>
+        <translation type="unfinished">queued</translation>
+    </message>
+    <message>
+        <source>retrying...</source>
+        <translatorcomment>Label to indicate that a transfer is being retried.</translatorcomment>
+        <translation type="unfinished">retrying…</translation>
+    </message>
+    <message>
+        <source>completing...</source>
+        <translatorcomment>Label to indicate that a transfer is being completed.</translatorcomment>
+        <translation type="unfinished">completing…</translation>
+    </message>
+    <message>
+        <source>Added [A]</source>
+        <translatorcomment>Label to indicate that a transfer finished (added to the list of recently finished transfers) [A] time ago. [A] will be updated with the time since the transfer finished.</translatorcomment>
+        <translation type="unfinished">Added [A]</translation>
     </message>
 </context>
 <context>
@@ -460,7 +508,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder to download files/folders from MEGA.</translatorcomment>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>You don’t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -539,12 +587,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>You don&apos;t have write permissions in this folder.</source>
-        <translation type="obsolete">You don&apos;t have write permissions in this folder.</translation>
+        <translation type="obsolete">You don’t have write permissions in this folder.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Label to indicate that MEGAsync won&apos;t be able to download anything due to the user doesn&apos;t have writhe permissions on the local selected folder.</translatorcomment>
-        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+        <translation>MEGAsync won’t be able to download anything here.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -554,7 +602,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Label to indicate that a user don&apos;t have write permissions in the selected local folder for a synchronization.</translatorcomment>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>You don’t have write permissions in this local folder.</translation>
     </message>
     <message>
         <source>You are trying to sync an extremely large folder.
@@ -578,7 +626,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is on guest mode</source>
         <translatorcomment>Label to inform a user that MEGAsync is running on Guest Mode</translatorcomment>
-        <translation type="unfinished">MEGAsync is in guest mode</translation>
+        <translation type="obsolete">MEGAsync is in guest mode</translation>
     </message>
     <message>
         <source>Login</source>
@@ -603,7 +651,103 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A]Login[/A] or [B]Create an account[/B] to fully experience MEGA</source>
         <translatorcomment>Label shown at startup of MEGAsync to offer the user the options to login or create and account. Keep [A][B][/A][/B] place holders</translatorcomment>
-        <translation type="unfinished">[A]Login[/A] or [B]Create an account[/B] to fully experience MEGA</translation>
+        <translation type="obsolete">[A]Login[/A] or [B]Create an account[/B] to fully experience MEGA</translation>
+    </message>
+    <message>
+        <source>Login to MEGA</source>
+        <translatorcomment>Label shown at main dialog before logging in</translatorcomment>
+        <translation type="unfinished">Login to MEGA</translation>
+    </message>
+    <message>
+        <source>Email address</source>
+        <translatorcomment>Tip shown in email line edit before typing the user email address.</translatorcomment>
+        <translation type="unfinished">Email address</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translatorcomment>Tip shown in password line edit before typing the user password</translatorcomment>
+        <translation type="unfinished">Password</translation>
+    </message>
+    <message>
+        <source>Forgot password?</source>
+        <translatorcomment>Button label that redirects to the web page with information about forgotten passwords.</translatorcomment>
+        <translation type="unfinished">Forgot password?</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button label to cancel the current operation</translatorcomment>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>Setting up your account...</source>
+        <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
+        <translation type="unfinished">Setting up your account…</translation>
+    </message>
+    <message>
+        <source>Logging in...</source>
+        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
+        <translation type="unfinished">Logging in…</translation>
+    </message>
+    <message>
+        <source>Fetching file list...</source>
+        <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
+        <translation type="unfinished">Fetching file list…</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Label shown to show an error</translatorcomment>
+        <translation type="unfinished">Error</translation>
+    </message>
+    <message>
+        <source>Incorrect email and/or password.</source>
+        <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
+        <translation type="unfinished">Incorrect email and/or password.</translation>
+    </message>
+    <message>
+        <source>Have you verified your account?</source>
+        <translatorcomment>Message shown after a failed login to recommend the user to verify his account.</translatorcomment>
+        <translation type="obsolete">Have you verified your account?</translation>
+    </message>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translatorcomment>Label shown when a user has created and account to inform that he needs to check his e-mail and confirm his account.</translatorcomment>
+        <translation type="unfinished">Please check your email and click the link to confirm your account.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translatorcomment>Label shown at main dialog to inform the user that he has failed to log in several times and has to wait before trying again.</translatorcomment>
+        <translation type="unfinished">You have attempted to log in too many times.[BR]Please wait until %1 and try again.</translation>
+    </message>
+    <message>
+        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
+        <translatorcomment>Label shown at main dialog to show that the account has been blocked and the user needs to contact the support team.</translatorcomment>
+        <translation type="unfinished">Your account has been blocked. Please contact support@mega.nz</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translatorcomment>Label shown if there is a fatal error fetching the filesystem from servers.</translatorcomment>
+        <translation type="unfinished">Unable to get the filesystem. Please, try again. If the problem persists please contact us at bug@mega.nz</translation>
+    </message>
+    <message>
+        <source>Please, enter your e-mail address</source>
+        <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
+        <translation type="unfinished">Please, enter your email address</translation>
+    </message>
+    <message>
+        <source>Please, enter a valid e-mail address</source>
+        <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
+        <translation type="unfinished">Please, enter a valid email address</translation>
+    </message>
+    <message>
+        <source>Please, enter your password</source>
+        <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
+        <translation type="unfinished">Please, enter your password</translation>
+    </message>
+    <message>
+        <source>Logging out...</source>
+        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
+        <translation type="unfinished">Logging out…</translation>
     </message>
 </context>
 <context>
@@ -637,7 +781,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Import to my cloud drive</source>
         <translatorcomment>Label to indicate if the user wants to import the selected MEGA link(s) to his cloud drive.</translatorcomment>
-        <translation>Import to my cloud drive</translation>
+        <translation>Import to my Cloud Drive</translation>
     </message>
     <message>
         <source>OK</source>
@@ -690,7 +834,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message shown when a user is trying to download a file to a local folder without the right permissions.</translatorcomment>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>You don’t have write permissions in this local folder.</translation>
     </message>
 </context>
 <context>
@@ -713,7 +857,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation>Syncs</translation>
+        <translation type="vanished">Syncs</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -733,7 +877,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>%1 of %2 (%3/s)</source>
         <translatorcomment>Label to keep the count of pending and total files. Preserve %1, %2 and %3 codes beacuse they are used to include the number of pending, total files and actual speed.</translatorcomment>
-        <translation>%1 of %2 (%3/s)</translation>
+        <translation type="vanished">%1 of %2 (%3/s)</translation>
     </message>
     <message>
         <source>%1 of %2 (paused)</source>
@@ -758,27 +902,27 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Label to cancel all pending downloads.(String as short as possible)</translatorcomment>
-        <translation>Cancel all downloads</translation>
+        <translation type="vanished">Cancel all downloads</translation>
     </message>
     <message>
         <source>Cancel download</source>
         <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
-        <translation>Cancel download</translation>
+        <translation type="vanished">Cancel download</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Label to cancel all pending uploads.(String as short as possible)</translatorcomment>
-        <translation>Cancel all uploads</translation>
+        <translation type="vanished">Cancel all uploads</translation>
     </message>
     <message>
         <source>Cancel upload</source>
         <translatorcomment>Label to cancel the actual upload. (String as short as possible)</translatorcomment>
-        <translation>Cancel upload</translation>
+        <translation type="vanished">Cancel upload</translation>
     </message>
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation>Add Sync</translation>
+        <translation type="vanished">Add Sync</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -818,7 +962,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is starting</source>
         <translatorcomment>Label to indicate that MEGAsync is at start state (String as short as possible)</translatorcomment>
-        <translation>MEGAsync is starting</translation>
+        <translation type="vanished">MEGAsync is starting</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -831,32 +975,32 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Resume downloads</source>
         <translatorcomment>Label to resume the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume downloads</translation>
+        <translation type="obsolete">Resume downloads</translation>
     </message>
     <message>
         <source>Pause downloads</source>
         <translatorcomment>Label to pause the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Pause downloads</translation>
+        <translation type="obsolete">Pause downloads</translation>
     </message>
     <message>
         <source>Resume uploads</source>
         <translatorcomment>Label to resume the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume uploads</translation>
+        <translation type="obsolete">Resume uploads</translation>
     </message>
     <message>
         <source>Pause uploads</source>
         <translatorcomment>Label to pause the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Pause uploads</translation>
+        <translation type="obsolete">Pause uploads</translation>
     </message>
     <message>
         <source>Resume download</source>
         <translatorcomment>Label to resume the current download. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume download</translation>
+        <translation type="obsolete">Resume download</translation>
     </message>
     <message>
         <source>Resume upload</source>
         <translatorcomment>Label to resume the current upload. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Resume upload</translation>
+        <translation type="obsolete">Resume upload</translation>
     </message>
     <message>
         <source>Blocked file: %1</source>
@@ -870,12 +1014,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is currently disabled</source>
         <translatorcomment>Label to inform a user that MEGAsync is actually disabled due to the account is overquota (storage and/or transfer)</translatorcomment>
-        <translation type="unfinished">MEGAsync is currently disabled</translation>
+        <translation type="obsolete">MEGAsync is currently disabled</translation>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
         <translatorcomment>Label to inform the user that his account is overquota and needs to upgrade to keep using it.</translatorcomment>
-        <translation type="unfinished">Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</translation>
+        <translation type="obsolete">Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</translation>
     </message>
     <message>
         <source>Upgrade to PRO</source>
@@ -900,27 +1044,27 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>PAUSED</source>
         <translatorcomment>Label to indicate that the current transfer is paused. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">PAUSED</translation>
+        <translation type="obsolete">PAUSED</translation>
     </message>
     <message>
         <source>Paused</source>
         <translatorcomment>Label to indicate that MEGAsync is at pause state</translatorcomment>
-        <translation type="unfinished">Paused</translation>
+        <translation type="obsolete">Paused</translation>
     </message>
     <message>
         <source>Waiting</source>
         <translatorcomment>Label to indicate that MEGAsync is at waiting state</translatorcomment>
-        <translation type="unfinished">Waiting</translation>
+        <translation type="obsolete">Waiting</translation>
     </message>
     <message>
         <source>Scanning...</source>
         <translatorcomment>Label to indicate that MEGAsync is at scanning state</translatorcomment>
-        <translation type="unfinished">Scanning…</translation>
+        <translation type="obsolete">Scanning…</translation>
     </message>
     <message>
         <source>Up to date</source>
         <translatorcomment>Label to indicate that MEGAsync is at up-to-date state</translatorcomment>
-        <translation type="unfinished">Up to date</translation>
+        <translation type="obsolete">Up to date</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -949,11 +1093,51 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>USED BANDWIDTH %1</source>
-        <translation type="unfinished">USED BANDWIDTH %1</translation>
+        <translation type="obsolete">USED BANDWIDTH %1</translation>
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
         <translation type="unfinished">This process is taking longer than expected. Please wait.</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA now</source>
+        <translatorcomment>Label shown at main dialog when the user is already logged in to inform that he can start uploading files to MEGA</translatorcomment>
+        <translation type="unfinished">Upload to MEGA now</translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button label to dismiss (hide) overquota dialogs.</translatorcomment>
+        <translation type="unfinished">Dismiss</translation>
+    </message>
+    <message>
+        <source>Buy more space</source>
+        <translatorcomment>Button label to redirect the user to upgrade the account in the website.</translatorcomment>
+        <translation type="unfinished">Buy more space</translation>
+    </message>
+    <message>
+        <source>TRANSFER QUOTA %1</source>
+        <translatorcomment>Label shown to indicate the actual transfer quota used by the current account. %1 will be replaced with the used bandwidth quota</translatorcomment>
+        <translation type="unfinished">TRANSFER QUOTA %1</translation>
+    </message>
+    <message>
+        <source>You&apos;re running out of storage space.</source>
+        <translatorcomment>Label to inform the user that the account is running out of storage space.</translatorcomment>
+        <translation type="unfinished">You’re running out of space!</translation>
+    </message>
+    <message>
+        <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
+        <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
+        <translation type="unfinished">Upgrade to PRO now before your account becomes full and your uploads to MEGA stop.</translation>
+    </message>
+    <message>
+        <source>Your MEGA account is full.</source>
+        <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
+        <translation type="unfinished">Your MEGA account is full.</translation>
+    </message>
+    <message>
+        <source>All file uploads are currently disabled. Please upgrade to PRO</source>
+        <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
+        <translation type="unfinished">All file uploads are currently disabled. Please upgrade to PRO.</translation>
     </message>
 </context>
 <context>
@@ -961,41 +1145,41 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is currently disabled</source>
         <translatorcomment>Labe shown when a user that MEGAsync is currently disabled due to an over quota state.</translatorcomment>
-        <translation type="unfinished">MEGAsync is currently disabled</translation>
+        <translation type="obsolete">MEGAsync is currently disabled</translation>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
         <translatorcomment>Label to inform the user that is over quota and let him to upgrade his account. Keep [A] [/A] codes, will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</translation>
+        <translation type="obsolete">Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</translation>
     </message>
     <message>
         <source>Upgrade your account</source>
         <translatorcomment>Button label to redirect the user to upgrade web page.</translatorcomment>
-        <translation type="unfinished">Upgrade your account</translation>
+        <translation type="obsolete">Upgrade your account</translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
         <translatorcomment>Labe to indicate that the account usage is temporaryly unavailable.</translatorcomment>
-        <translation type="unfinished">Usage: Data temporarily unavailable</translation>
+        <translation type="obsolete">Usage: Data temporarily unavailable</translation>
     </message>
     <message>
         <source>MEGA website</source>
         <translatorcomment>Label to MEGA website link</translatorcomment>
-        <translation type="unfinished">MEGA website</translation>
+        <translation type="obsolete">MEGA website</translation>
     </message>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the current amount of account usage.over the total actual plan.  Keep %1 and %2 codes.</translatorcomment>
-        <translation type="unfinished">%1 of %2</translation>
+        <translation type="obsolete">%1 of %2</translation>
     </message>
     <message>
         <source>Usage: %1</source>
         <translatorcomment>Label to indicate the amount of account usage. Keep %1 code.</translatorcomment>
-        <translation type="unfinished">Usage: %1</translation>
+        <translation type="obsolete">Usage: %1</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Settings</translation>
+        <translation type="obsolete">Settings</translation>
     </message>
 </context>
 <context>
@@ -1006,7 +1190,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
-        <translation type="unfinished">[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</translation>
+        <translation type="unfinished">[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA Cloud Drive</translation>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
@@ -1116,6 +1300,39 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
 </context>
 <context>
+    <name>Login2FA</name>
+    <message>
+        <source>Login Verification</source>
+        <translatorcomment>A dialog title for the form which collects the user’s 2FA code for login.</translatorcomment>
+        <translation type="unfinished">Login Verification</translation>
+    </message>
+    <message>
+        <source>Please enter the code generated by your authentication app</source>
+        <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
+        <translation type="unfinished">Please enter the 6-digit code generated by your Authenticator App.</translation>
+    </message>
+    <message>
+        <source>6 digit code:</source>
+        <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
+        <translation type="unfinished">6 digit code</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button text to cancel 2FA dialog</translatorcomment>
+        <translation type="unfinished">Cancel</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
+        <translation type="unfinished">Next</translation>
+    </message>
+    <message>
+        <source>Invalid code</source>
+        <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
+        <translation type="unfinished">Invalid code</translation>
+    </message>
+</context>
+<context>
     <name>MegaApplication</name>
     <message>
         <source>MEGAsync</source>
@@ -1123,7 +1340,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</translation>
+        <translation type="obsolete">Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=“https://twitter.com/MEGAprivacy“&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -1138,17 +1355,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</translation>
+        <translation type="obsolete">Your sync “%1” has been disabled because the remote folder doesn’t exist</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</translation>
+        <translation type="obsolete">Your sync “%1” has been disabled because the remote folder is in the rubbish bin</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation type="obsolete">Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</translation>
+        <translation type="obsolete">Your sync “%1” has been disabled because the local folder doesn’t exist</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1157,11 +1374,11 @@ because the local folder doesn&apos;t exist</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">The folder (%1) wasn&apos;t uploaded because it’s too large (this beta is limited to %2 folders or %3 files.</translation>
+        <translation type="obsolete">The folder (%1) wasn’t uploaded because it’s too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</source>
-        <translation type="obsolete">%1 folders weren&apos;t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
+        <translation type="obsolete">%1 folders weren’t uploaded because they are too large (this beta is limited to %2 folders or %3 files.</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -1246,7 +1463,7 @@ Exit anyway?</source>
     <message>
         <source>Temporary transmission error: </source>
         <translatorcomment>Notification message launched when there is a temporal problem with a transfer. Keep colon.</translatorcomment>
-        <translation>Temporary transmission error:</translation>
+        <translation type="vanished">Temporary transmission error:</translation>
     </message>
     <message>
         <source>You have new or updated files in your account</source>
@@ -1265,11 +1482,11 @@ Exit anyway?</source>
     </message>
     <message>
         <source>The folder (%1) wasn&apos;t uploaded because it&apos;s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">The folder (%1) wasn&apos;t uploaded because it’s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation type="obsolete">The folder (%1) wasn’t uploaded because it’s extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
     </message>
     <message>
         <source>%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</source>
-        <translation type="obsolete">%1 folders weren&apos;t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
+        <translation type="obsolete">%1 folders weren’t uploaded because they are extremely large. We do this check to prevent the uploading of entire boot volumes, which is inefficient and dangerous.</translation>
     </message>
     <message>
         <source>Update available!</source>
@@ -1305,7 +1522,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>There was a problem installing the update. Please try again later or download the last version from: https://mega.co.nz/#sync</translation>
+        <translation>There was a problem installing the update. Please try again later or download the latest version from: https://mega.nz/sync</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1407,17 +1624,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</translation>
+        <translation type="unfinished">Your sync “%1” has been disabled because the remote folder doesn’t exist</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</translation>
+        <translation type="unfinished">Your sync “%1” has been disabled because the local folder doesn’t exist</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an error occurs (BLOCK ACCOUNT) during a login operation.</translatorcomment>
-        <translation type="unfinished">Your account has been blocked. Please contact support@mega.co.nz</translation>
+        <translation type="unfinished">Your account has been blocked. Please contact support@mega.nz</translation>
     </message>
     <message>
         <source>Login error: %1</source>
@@ -1437,17 +1654,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</translation>
+        <translation type="unfinished">Your sync “%1” has been disabled because the remote folder is in the rubbish bin</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the local folder has changed(moved/deleted/...). Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the local folder has changed</translation>
+        <translation type="unfinished">Your sync “%1” has been disabled because the local folder has changed</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</translation>
+        <translation type="unfinished">Your sync “%1” has been disabled. The remote folder (or part of it) doesn’t have full access</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -1457,7 +1674,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</translation>
+        <translation type="unfinished">Your sync “%1” has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -1467,7 +1684,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transfer failed:</source>
         <translatorcomment>Notification message shown when a transfer failed. Keep colon.</translatorcomment>
-        <translation type="unfinished">Transfer failed:</translation>
+        <translation type="obsolete">Transfer failed:</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -1492,7 +1709,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</source>
         <translatorcomment>Notification message shown when SSL checks fails.</translatorcomment>
-        <translation type="unfinished">Our SSL key can&apos;t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</translation>
+        <translation type="unfinished">Our SSL key can’t be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.</translation>
     </message>
     <message>
         <source>No Internet connection</source>
@@ -1505,12 +1722,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="unfinished">Temporary error, retrying.</translation>
+        <translation type="obsolete">Temporary error, retrying.</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
         <translatorcomment>Text for a button that, when clicked, will disable and important security check of MEGAsync. The text should be as short as possible. If it&apos;s not possible to provide a short translation, it can be translated as: Ignore</translatorcomment>
-        <translation type="unfinished">I don&apos;t care</translation>
+        <translation type="unfinished">I don’t care</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -1551,7 +1768,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The link can&apos;t be generated because the file is in an incoming shared folder or in your Rubbish Bin</source>
         <translatorcomment>Notification error message shown while generating a public link of a file from an incoming shared folder or from the rubbish bin</translatorcomment>
-        <translation type="unfinished">The link can&apos;t be generated because the file is inside an incoming shared folder or your Rubbish Bin.</translation>
+        <translation type="unfinished">The link can’t be generated because the file is inside an incoming shared folder or your Rubbish Bin.</translation>
     </message>
     <message>
         <source>Upload</source>
@@ -1579,12 +1796,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Resume Transfers</source>
         <translatorcomment>Label of main menu option to resume transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="unfinished">Resume Transfers</translation>
+        <translation type="obsolete">Resume Transfers</translation>
     </message>
     <message>
         <source>Pause Transfers</source>
         <translatorcomment>Label of main menu option to pause transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="unfinished">Pause Transfers</translation>
+        <translation type="obsolete">Pause Transfers</translation>
     </message>
     <message>
         <source>Stream</source>
@@ -1600,6 +1817,146 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
         <translatorcomment>Message shown to the user to inform that he is using an operating system that will be unsupported soon</translatorcomment>
         <translation type="unfinished">MEGAsync will continue to work, however you might not receive new updates.</translation>
+    </message>
+    <message>
+        <source>Password changed</source>
+        <translatorcomment>Title of the dialog displayed when the change password process finish successful.</translatorcomment>
+        <translation type="unfinished">Password changed</translation>
+    </message>
+    <message>
+        <source>Your password has been changed.</source>
+        <translatorcomment>Success message shown when the password has been changed</translatorcomment>
+        <translation type="unfinished">Your password has been changed.</translation>
+    </message>
+    <message>
+        <source>Temporarily not available</source>
+        <translatorcomment>Label to show that an error related with a temporary problem occurs during a SDK operation.</translatorcomment>
+        <translation type="obsolete">Temporarily not available</translation>
+    </message>
+    <message>
+        <source>Your account is almost full.</source>
+        <translatorcomment>Title of the system notification when the account is almost full.</translatorcomment>
+        <translation type="unfinished">Your account is almost full.</translation>
+    </message>
+    <message>
+        <source>Upgrade now to a PRO account.</source>
+        <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
+        <translation type="unfinished">Upgrade now to a PRO account.</translation>
+    </message>
+    <message>
+        <source>Your account is full.</source>
+        <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
+        <translation type="unfinished">Your account is full.</translation>
+    </message>
+    <message>
+        <source>1 file and 1 folder were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that 1 files and 1 folder were successfully uploaded</translatorcomment>
+        <translation type="unfinished">1 file and 1 folder were successfully uploaded</translation>
+    </message>
+    <message>
+        <source>%1 files and 1 folder were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %1 files and 1 folder were successfully uploaded</translatorcomment>
+        <translation type="unfinished">%1 files and 1 folder were successfully uploaded</translation>
+    </message>
+    <message>
+        <source>1 file and %1 folders were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that 1 files and %1 folders were successfully uploaded</translatorcomment>
+        <translation type="unfinished">1 file and %1 folders were successfully uploaded</translation>
+    </message>
+    <message>
+        <source>%1 files and %2 folders were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %1 files and %2 folder were successfully uploaded</translatorcomment>
+        <translation type="unfinished">%1 files and %2 folders were successfully uploaded</translation>
+    </message>
+    <message>
+        <source>Folder Upload</source>
+        <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
+        <translation type="unfinished">Folder Upload</translation>
+    </message>
+    <message>
+        <source>1 folder was successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that 1 folder was successfully uploaded</translatorcomment>
+        <translation type="unfinished">1 folder was successfully uploaded</translation>
+    </message>
+    <message>
+        <source>%1 folders were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %1 folders were successfully uploaded</translatorcomment>
+        <translation type="unfinished">%1 folders were successfully uploaded</translation>
+    </message>
+    <message>
+        <source>File Upload</source>
+        <translatorcomment>Title of system notifications related to a file upload</translatorcomment>
+        <translation type="unfinished">File Upload</translation>
+    </message>
+    <message>
+        <source>1 file was successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that 1 file was successfully uploaded</translatorcomment>
+        <translation type="unfinished">1 file was successfully uploaded</translation>
+    </message>
+    <message>
+        <source>%1 files were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
+        <translation type="unfinished">%1 files were successfully uploaded</translation>
+    </message>
+    <message>
+        <source>1 file and 1 folder were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that 1 files and 1 folder were successfully downloaded</translatorcomment>
+        <translation type="unfinished">1 file and 1 folder were successfully downloaded</translation>
+    </message>
+    <message>
+        <source>%1 files and 1 folder were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %1 files and 1 folder were successfully downloaded</translatorcomment>
+        <translation type="unfinished">%1 files and 1 folder were successfully downloaded</translation>
+    </message>
+    <message>
+        <source>1 file and %1 folders were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that 1 files and %1 folders were successfully downloaded</translatorcomment>
+        <translation type="unfinished">1 file and %1 folders were successfully downloaded</translation>
+    </message>
+    <message>
+        <source>%1 files and %2 folders were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %1 files and %2 folder were successfully downloaded</translatorcomment>
+        <translation type="unfinished">%1 files and %2 folders were successfully downloaded</translation>
+    </message>
+    <message>
+        <source>Folder Download</source>
+        <translatorcomment>Title of system notifications related to a folder download</translatorcomment>
+        <translation type="unfinished">Folder Download</translation>
+    </message>
+    <message>
+        <source>1 folder was successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that 1 folder was successfully downloaded</translatorcomment>
+        <translation type="unfinished">1 folder was successfully downloaded</translation>
+    </message>
+    <message>
+        <source>%1 folders were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %1 folders were successfully downloaded</translatorcomment>
+        <translation type="unfinished">%1 folders were successfully downloaded</translation>
+    </message>
+    <message>
+        <source>File Download</source>
+        <translatorcomment>Title of system notifications related to a file download</translatorcomment>
+        <translation type="unfinished">File Download</translation>
+    </message>
+    <message>
+        <source>1 file was successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that 1 file was successfully downloaded</translatorcomment>
+        <translation type="unfinished">1 file was successfully downloaded</translation>
+    </message>
+    <message>
+        <source>%1 files were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
+        <translation type="unfinished">%1 files were successfully downloaded</translation>
+    </message>
+    <message>
+        <source>Add Sync</source>
+        <translatorcomment>Menu item to add a new synchronization</translatorcomment>
+        <translation type="unfinished">Add Sync</translation>
+    </message>
+    <message>
+        <source>Syncs</source>
+        <translatorcomment>Menu item to show current synchronizations</translatorcomment>
+        <translation type="unfinished">Syncs</translation>
     </message>
 </context>
 <context>
@@ -1736,6 +2093,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translation type="unfinished">Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</translation>
     </message>
+    <message>
+        <source>SSL verification failed</source>
+        <translatorcomment>Error shown when SSL check has failed</translatorcomment>
+        <translation type="unfinished">SSL verification failed</translation>
+    </message>
+    <message>
+        <source>Not enough quota</source>
+        <translatorcomment>Label shown when current account does not have enough quota to complete the operation</translatorcomment>
+        <translation type="unfinished">Not enough quota</translation>
+    </message>
 </context>
 <context>
     <name>MegaTransferDelegate</name>
@@ -1748,6 +2115,21 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>paused</source>
         <translatorcomment>Label to indicate that selected transfer is at paused state</translatorcomment>
         <translation type="unfinished">paused</translation>
+    </message>
+    <message>
+        <source>PAUSED</source>
+        <translatorcomment>Label to indicate that the current transfer is paused. Keep capital letters.</translatorcomment>
+        <translation type="unfinished">PAUSED</translation>
+    </message>
+    <message>
+        <source>Get link</source>
+        <translatorcomment>Tooltip shown when the mouse is over the &quot;Get link&quot; button related to a completed transfer</translatorcomment>
+        <translation type="unfinished">Get link</translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translatorcomment>Tooltip shown when the mouse is over the &quot;Retry&quot; button related to a failed transfer</translatorcomment>
+        <translation type="unfinished">Retry</translation>
     </message>
 </context>
 <context>
@@ -1915,7 +2297,7 @@ Are you sure?</source>
         <source>The root folder can&apos;t be synced.
 Please, select a subfolder.</source>
         <translatorcomment>Message displayed when a user is creating incompatible synchronizations.</translatorcomment>
-        <translation type="obsolete">The root folder can&apos;t be synced. Please, select a subfolder.</translation>
+        <translation type="obsolete">The root folder can’t be synced. Please, select a subfolder.</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1931,7 +2313,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization. Please, ensure that you don&apos;t use characters like &apos;\&apos;, &apos;/&apos; or &apos;:&apos; in your folder names.</translation>
+        <translation>Invalid folder for synchronization.Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in your folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -1955,7 +2337,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Are you sure that you want to delete &quot;%1&quot;?</source>
-        <translation type="unfinished">Are you sure that you want to delete &quot;%1&quot;?</translation>
+        <translation type="unfinished">Are you sure that you want to delete “%1”?</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -1977,6 +2359,27 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Get MEGA link</source>
         <translation type="unfinished">Get MEGA link</translation>
+    </message>
+</context>
+<context>
+    <name>Notificator</name>
+    <message>
+        <source>MEGAsync</source>
+        <translatorcomment>Product name.</translatorcomment>
+        <translation type="unfinished">MEGAsync</translation>
+    </message>
+</context>
+<context>
+    <name>PSAwidget</name>
+    <message>
+        <source>Know More</source>
+        <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
+        <translation type="unfinished">Know More</translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button label to dismiss and hide a PSA announcement</translatorcomment>
+        <translation type="unfinished">Dismiss</translation>
     </message>
 </context>
 <context>
@@ -2014,7 +2417,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>No valid MEGA links found. (Folder links aren&apos;t yet supported)</source>
         <translatorcomment>Message displayed when a user tries to import some invalid links or links to folders.</translatorcomment>
-        <translation type="obsolete">No valid MEGA links found. (Folder links aren&apos;t yet supported)</translation>
+        <translation type="obsolete">No valid MEGA links found. (Folder links aren’t yet supported)</translation>
     </message>
     <message>
         <source>Invalid MEGA Link</source>
@@ -2057,7 +2460,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog, you can grant different access permissions for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them on the default settings for security reasons.</translation>
+        <translation type="unfinished">Files and folders have an owner and belong to a group of users. Using this dialog, you can grant different access permissions for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don’t need to change them, please leave them on the default settings for security reasons.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -2150,77 +2553,77 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 hours ago</source>
         <translatorcomment>Label to inform the user how many hours ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 hours ago</translation>
+        <translation type="vanished">%1 hours ago</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Button tooltip to generate a public link for a specific file. Keep capital letters.</translatorcomment>
-        <translation>Get MEGA link</translation>
+        <translation type="vanished">Get MEGA link</translation>
     </message>
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation>just now</translation>
+        <translation type="vanished">just now</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
         <translatorcomment>Label to inform the user how many second ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 seconds ago</translation>
+        <translation type="vanished">%1 seconds ago</translation>
     </message>
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
-        <translation>1 minute ago</translation>
+        <translation type="vanished">1 minute ago</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
         <translatorcomment>Label to inform the user how many minutes ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 minutes ago</translation>
+        <translation type="vanished">%1 minutes ago</translation>
     </message>
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
-        <translation>1 hour ago</translation>
+        <translation type="vanished">1 hour ago</translation>
     </message>
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
-        <translation>1 day ago</translation>
+        <translation type="vanished">1 day ago</translation>
     </message>
     <message>
         <source>%1 days ago</source>
         <translatorcomment>Label to inform the user how many days ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 days ago</translation>
+        <translation type="vanished">%1 days ago</translation>
     </message>
     <message>
         <source>1 month ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one month ago.</translatorcomment>
-        <translation>1 month ago</translation>
+        <translation type="vanished">1 month ago</translation>
     </message>
     <message>
         <source>%1 months ago</source>
         <translatorcomment>Label to inform the user how many months ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 months ago</translation>
+        <translation type="vanished">%1 months ago</translation>
     </message>
     <message>
         <source>1 year ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one year ago.</translatorcomment>
-        <translation>1 year ago</translation>
+        <translation type="vanished">1 year ago</translation>
     </message>
     <message>
         <source>%1 years ago</source>
         <translatorcomment>Label to inform the user how many years ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 years ago</translation>
+        <translation type="vanished">%1 years ago</translation>
     </message>
     <message>
         <source>Open</source>
         <translatorcomment>Label to let the user open the selected file.String as short as possible.</translatorcomment>
-        <translation>Open</translation>
+        <translation type="vanished">Open</translation>
     </message>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Label to let the user open the selected file using the specific file browser.String as short as possible.</translatorcomment>
-        <translation>Show in folder</translation>
+        <translation type="vanished">Show in folder</translation>
     </message>
 </context>
 <context>
@@ -2356,7 +2759,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Don&apos;t limit</source>
         <translatorcomment>Label to indicate that there is no rate upload limit.</translatorcomment>
-        <translation>Don&apos;t limit</translation>
+        <translation>Don’t limit</translation>
     </message>
     <message>
         <source>Limit to:</source>
@@ -2537,7 +2940,7 @@ when the application starts again.</source>
     <message>
         <source>Your proxy settings are invalid or the proxy doesn&apos;t respond</source>
         <translatorcomment>Message displayed when an error occours testing proxy settings.</translatorcomment>
-        <translation>Your proxy settings are invalid or the proxy doesn&apos;t respond</translation>
+        <translation>Your proxy settings are invalid or the proxy doesn’t respond</translation>
     </message>
     <message>
         <source>Please wait...</source>
@@ -2653,12 +3056,12 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the local folder.</translatorcomment>
-        <translation>This sync can&apos;t be enabled because the local folder doesn&apos;t exist</translation>
+        <translation>This sync can’t be enabled because the local folder doesn’t exist</translation>
     </message>
     <message>
         <source>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Message displayed when an error occurs with the remote folder.</translatorcomment>
-        <translation>This sync can&apos;t be enabled because the remote folder doesn&apos;t exist</translation>
+        <translation>This sync can’t be enabled because the remote folder doesn’t exist</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive</source>
@@ -2677,7 +3080,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to download a file to a folder without write permissions.</translatorcomment>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>You don’t have write permissions in this local folder.</translation>
     </message>
     <message>
         <source>Export Key</source>
@@ -2752,12 +3155,12 @@ when the application starts again</source>
     <message>
         <source>Don&apos;t use HTTP</source>
         <translatorcomment>Text next to a checkbox that allows to disable the HTTP protocol for transfers</translatorcomment>
-        <translation type="unfinished">Don&apos;t use HTTP</translation>
+        <translation type="unfinished">Don’t use HTTP</translation>
     </message>
     <message>
         <source>Enable this option only if your transfers don&apos;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</source>
         <translatorcomment>Information message next to a checkbox that allows to disable the HTTP protocol for transfers.</translatorcomment>
-        <translation type="unfinished">Enable this option only if your transfers don&apos;t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</translation>
+        <translation type="unfinished">Enable this option only if your transfers don’t start. In normal circumstances HTTP is satisfactory as all transfers are already encrypted.</translation>
     </message>
     <message>
         <source>Local backup: %1</source>
@@ -2815,7 +3218,7 @@ when the application starts again</source>
     <message>
         <source>Don&apos;t show icons on the left pane of Windows Explorer</source>
         <translatorcomment>Text next to a checkbox that allows to disable/enable the visualization of MEGAsync icons on the left pane of Windows Explorer</translatorcomment>
-        <translation type="unfinished">Don&apos;t show icons on the left pane of Windows Explorer</translation>
+        <translation type="unfinished">Don’t show icons on the left pane of Windows Explorer</translation>
     </message>
     <message>
         <source>Used quota for the last %1 hours: %2</source>
@@ -2882,17 +3285,17 @@ when the application starts again</source>
     <message>
         <source>Setup Wizard - MEGAsync</source>
         <translatorcomment>Title of the dialog Setup Wizar of MEGAsync. Keep capital letters.</translatorcomment>
-        <translation>Setup Wizard - MEGAsync</translation>
+        <translation type="vanished">Setup Wizard - MEGAsync</translation>
     </message>
     <message>
         <source>I have a MEGA account</source>
         <translatorcomment>Label to indicate the user has already a MEGA account with a checkbox.</translatorcomment>
-        <translation>I have a MEGA account</translation>
+        <translation type="vanished">I have a MEGA account</translation>
     </message>
     <message>
         <source>I don&apos;t have a MEGA account</source>
         <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
-        <translation>I don&apos;t have a MEGA account</translation>
+        <translation type="vanished">I don’t have a MEGA account</translation>
     </message>
     <message>
         <source>Create a new MEGA account</source>
@@ -2902,7 +3305,7 @@ when the application starts again</source>
     <message>
         <source>Name:</source>
         <translatorcomment>Label for field name at create account. String as short as possible.</translatorcomment>
-        <translation>Name:</translation>
+        <translation type="vanished">Name:</translation>
     </message>
     <message>
         <source>Email:</source>
@@ -2922,7 +3325,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</translation>
+        <translation>I agree with the MEGA &lt;a href=“https://mega.nz/terms“&gt;Terms of Service&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -2947,7 +3350,7 @@ when the application starts again</source>
     <message>
         <source> Sync your entire cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Full sync (Sync the entire cloud drive)</translatorcomment>
-        <translation>Sync your entire cloud drive</translation>
+        <translation>Sync your entire Cloud Drive</translation>
     </message>
     <message>
         <source>Full account sync</source>
@@ -2961,12 +3364,12 @@ when the application starts again</source>
     <message>
         <source> Sync specific folders in your cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Selective  sync (Sync specific folders)</translatorcomment>
-        <translation>Sync specific folders in your cloud drive</translation>
+        <translation type="vanished">Sync specific folders in your Cloud Drive</translation>
     </message>
     <message>
         <source>The following folders will be automatically synchronized:</source>
         <translatorcomment>Label to inform the user about the folders wich will be synchronized.</translatorcomment>
-        <translation>The following folders will be automatically synchronized:</translation>
+        <translation type="vanished">The following folders will be automatically synchronized:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -2986,7 +3389,7 @@ when the application starts again</source>
     <message>
         <source>Welcome to MEGA</source>
         <translatorcomment>Label displayed to welcome the user.</translatorcomment>
-        <translation>Welcome to MEGA</translation>
+        <translation type="vanished">Welcome to MEGA</translation>
     </message>
     <message>
         <source>Your local folder:</source>
@@ -3038,12 +3441,12 @@ when the application starts again</source>
     <message>
         <source>Have you verified your account?</source>
         <translatorcomment>Label displayed to inform the user about the need of verify the created account.</translatorcomment>
-        <translation>Have you verified your account?</translation>
+        <translation type="vanished">Have you verified your account?</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
-        <translation>MEGA folder doesn&apos;t exist</translation>
+        <translation>MEGA folder doesn’t exist</translation>
     </message>
     <message>
         <source>Finish</source>
@@ -3053,12 +3456,12 @@ when the application starts again</source>
     <message>
         <source>Please, enter your e-mail address</source>
         <translatorcomment>Label displayed when the user has not filled the email field.</translatorcomment>
-        <translation>Please, enter your e-mail address</translation>
+        <translation>Please, enter your email address</translation>
     </message>
     <message>
         <source>Please, enter a valid e-mail address</source>
         <translatorcomment>Label displayed when the user has filled an invalid email address.</translatorcomment>
-        <translation>Please, enter a valid e-mail address</translation>
+        <translation>Please, enter a valid email address</translation>
     </message>
     <message>
         <source>Please, enter your password</source>
@@ -3078,7 +3481,7 @@ when the application starts again</source>
     <message>
         <source>The entered passwords don&apos;t match</source>
         <translatorcomment>Label displayed when the user has filled different password.</translatorcomment>
-        <translation>The entered passwords don&apos;t match</translation>
+        <translation>The entered passwords don’t match</translation>
     </message>
     <message>
         <source>You have to accept our terms of service</source>
@@ -3165,17 +3568,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
         <translatorcomment>Label to inform the user wich local folder will be synchronized with the cloud drive. Keep colon.</translatorcomment>
-        <translation>Your Cloud Drive will be synchronized with this folder:</translation>
+        <translation type="vanished">Your Cloud Drive will be synchronized with this folder:</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>You don&apos;t have write permissions in this local folder.</translation>
+        <translation>You don’t have write permissions in this local folder.</translation>
     </message>
     <message>
         <source>MEGAsync won&apos;t be able to download anything here.</source>
         <translatorcomment>Message displayed when a user is trying to synchronized a local folder in wich the user has no write permissions.</translatorcomment>
-        <translation>MEGAsync won&apos;t be able to download anything here.</translation>
+        <translation>MEGAsync won’t be able to download anything here.</translation>
     </message>
     <message>
         <source>Do you want to continue?</source>
@@ -3185,7 +3588,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
         <translatorcomment>Message displayed when an account has been blocked.</translatorcomment>
-        <translation type="unfinished">Your account has been blocked. Please contact support@mega.co.nz</translation>
+        <translation type="unfinished">Your account has been blocked. Please contact support@mega.nz</translation>
     </message>
     <message>
         <source>MEGAsync</source>
@@ -3238,7 +3641,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation type="unfinished">Please check your e-mail and click the link to confirm your account.</translation>
+        <translation type="unfinished">Please check your email and click the link to confirm your account.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
@@ -3251,7 +3654,78 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Learn more</source>
-        <translation type="unfinished">Learn more</translation>
+        <translatorcomment>Label to redirect the user to a website with information about the different synchronization modes</translatorcomment>
+        <translation type="obsolete">Learn more</translation>
+    </message>
+    <message>
+        <source>First name:</source>
+        <translatorcomment>Label for first name field in the create account form</translatorcomment>
+        <translation type="unfinished">First name:</translation>
+    </message>
+    <message>
+        <source>Last name:</source>
+        <translatorcomment>Label for last name field in the create account form</translatorcomment>
+        <translation type="unfinished">Last name:</translation>
+    </message>
+    <message>
+        <source>Check your inbox</source>
+        <translatorcomment>Label shown when the user has just created an account and needs to check his inbox to verify it</translatorcomment>
+        <translation type="unfinished">Check your inbox</translation>
+    </message>
+    <message>
+        <source>Sync specific folders in your cloud drive</source>
+        <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
+        <translation type="unfinished">Sync specific folders in your Cloud Drive</translation>
+    </message>
+    <message>
+        <source>Selective sync:</source>
+        <translatorcomment>Label next to information about the selective sync mode.</translatorcomment>
+        <translation type="unfinished">Selective sync</translation>
+    </message>
+    <message>
+        <source>Enjoy MEGAsync!</source>
+        <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
+        <translation type="unfinished">Enjoy MEGAsync!</translation>
+    </message>
+    <message>
+        <source>Please, enter your last name</source>
+        <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
+        <translation type="unfinished">Please, enter your last name</translation>
+    </message>
+    <message>
+        <source>Setup selective sync</source>
+        <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
+        <translation type="unfinished">Setup selective sync</translation>
+    </message>
+    <message>
+        <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
+        <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
+        <translation type="unfinished">Specific folders in your Cloud Drive will be synchronised with a local folder.</translation>
+    </message>
+    <message>
+        <source>Select Local folder:</source>
+        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
+        <translation type="unfinished">Select local folder</translation>
+    </message>
+    <message>
+        <source>Setup full sync</source>
+        <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
+        <translation type="unfinished">Setup full sync</translation>
+    </message>
+    <message>
+        <source>Full Sync</source>
+        <translatorcomment>Label displayed to show Full sync mode.</translatorcomment>
+        <translation type="unfinished">Full sync</translation>
+    </message>
+    <message>
+        <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
+        <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
+        <translation type="unfinished">Your entire Cloud Drive will be synchronized with a local folder.</translation>
+    </message>
+    <message>
+        <source>We are all done!</source>
+        <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
+        <translation type="unfinished">We are all done!</translation>
     </message>
 </context>
 <context>
@@ -3361,6 +3835,49 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>StatusInfo</name>
+    <message>
+        <source>Starting</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is starting</translatorcomment>
+        <translation type="unfinished">Starting</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translatorcomment>Information label in the main dialog to show that all transfers are paused</translatorcomment>
+        <translation type="unfinished">Paused</translation>
+    </message>
+    <message>
+        <source>Waiting</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state</translatorcomment>
+        <translation type="unfinished">Waiting</translation>
+    </message>
+    <message>
+        <source>Scanning...</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
+        <translation type="unfinished">Scanning…</translation>
+    </message>
+    <message>
+        <source>Account full</source>
+        <translatorcomment>Information label in the main dialog to show that the current account is full.</translatorcomment>
+        <translation type="unfinished">Account full</translation>
+    </message>
+    <message>
+        <source>Up to date</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is up to date</translatorcomment>
+        <translation type="unfinished">Up to date</translation>
+    </message>
+    <message>
+        <source>Resume Transfers</source>
+        <translatorcomment>Label in the main dialog that allows the user to resume paused transfers</translatorcomment>
+        <translation type="unfinished">Resume Transfers</translation>
+    </message>
+    <message>
+        <source>Pause Transfers</source>
+        <translatorcomment>Label in the main dialog that allows the user to pause active transfers</translatorcomment>
+        <translation type="unfinished">Pause Transfers</translation>
+    </message>
+</context>
+<context>
     <name>StreamingFromMegaDialog</name>
     <message>
         <source>Stream from MEGA</source>
@@ -3463,75 +3980,75 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>paused</source>
         <translatorcomment>Label to indicate a paused state for a transfer item (upload/download)</translatorcomment>
-        <translation type="unfinished">paused</translation>
+        <translation type="obsolete">paused</translation>
     </message>
     <message>
         <source>queued</source>
         <translatorcomment>Label to indicate a queued state for a transfer item (upload/download)</translatorcomment>
-        <translation type="unfinished">queued</translation>
+        <translation type="obsolete">queued</translation>
     </message>
     <message>
         <source>retrying</source>
         <translatorcomment>Label to indicate a state or retrying for a transfer item (upload/download)</translatorcomment>
-        <translation type="unfinished">retrying</translation>
+        <translation type="obsolete">retrying</translation>
     </message>
     <message>
         <source>completing</source>
         <translatorcomment>Label to indicate a completing state for a transfer item (upload/download)</translatorcomment>
-        <translation type="unfinished">completing</translation>
+        <translation type="obsolete">completing</translation>
     </message>
     <message>
         <source>just now</source>
-        <translation type="unfinished">just now</translation>
+        <translation type="obsolete">just now</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
-        <translation type="unfinished">%1 seconds ago</translation>
+        <translation type="obsolete">%1 seconds ago</translation>
     </message>
     <message>
         <source>1 minute ago</source>
-        <translation type="unfinished">1 minute ago</translation>
+        <translation type="obsolete">1 minute ago</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
-        <translation type="unfinished">%1 minutes ago</translation>
+        <translation type="obsolete">%1 minutes ago</translation>
     </message>
     <message>
         <source>1 hour ago</source>
-        <translation type="unfinished">1 hour ago</translation>
+        <translation type="obsolete">1 hour ago</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
-        <translation type="unfinished">%1 hours ago</translation>
+        <translation type="obsolete">%1 hours ago</translation>
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="unfinished">1 day ago</translation>
+        <translation type="obsolete">1 day ago</translation>
     </message>
     <message>
         <source>%1 days ago</source>
-        <translation type="unfinished">%1 days ago</translation>
+        <translation type="obsolete">%1 days ago</translation>
     </message>
     <message>
         <source>1 month ago</source>
-        <translation type="unfinished">1 month ago</translation>
+        <translation type="obsolete">1 month ago</translation>
     </message>
     <message>
         <source>%1 months ago</source>
-        <translation type="unfinished">%1 months ago</translation>
+        <translation type="obsolete">%1 months ago</translation>
     </message>
     <message>
         <source>1 year ago</source>
-        <translation type="unfinished">1 year ago</translation>
+        <translation type="obsolete">1 year ago</translation>
     </message>
     <message>
         <source>%1 years ago</source>
-        <translation type="unfinished">%1 years ago</translation>
+        <translation type="obsolete">%1 years ago</translation>
     </message>
     <message>
         <source>starting</source>
         <translatorcomment>Label to indicate a state or starting for a transfer item (upload/download)</translatorcomment>
-        <translation type="unfinished">starting</translation>
+        <translation type="obsolete">starting</translation>
     </message>
 </context>
 <context>
@@ -3630,6 +4147,34 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>TransferManagerItem</name>
+    <message>
+        <source>starting</source>
+        <translatorcomment>Label to indicate that a transfer is starting</translatorcomment>
+        <translation type="unfinished">starting</translation>
+    </message>
+    <message>
+        <source>paused</source>
+        <translatorcomment>Label to indicate that a transfer is paused</translatorcomment>
+        <translation type="unfinished">paused</translation>
+    </message>
+    <message>
+        <source>queued</source>
+        <translatorcomment>Label to indicate that a transfer is queued</translatorcomment>
+        <translation type="unfinished">queued</translation>
+    </message>
+    <message>
+        <source>retrying</source>
+        <translatorcomment>Label to indicate that a transfer is being retried</translatorcomment>
+        <translation type="unfinished">retrying</translation>
+    </message>
+    <message>
+        <source>completing</source>
+        <translatorcomment>Label to indicate that a transfer is being completed</translatorcomment>
+        <translation type="unfinished">completing</translation>
+    </message>
+</context>
+<context>
     <name>TransfersStateInfoWidget</name>
     <message>
         <source>No Downloads</source>
@@ -3664,6 +4209,47 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
         <translation type="unfinished">The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space.</translation>
+    </message>
+</context>
+<context>
+    <name>UpgradeOverStorage</name>
+    <message>
+        <source>Storage full</source>
+        <translatorcomment>Title of the over storage dialog</translatorcomment>
+        <translation type="unfinished">Storage Full</translation>
+    </message>
+    <message>
+        <source>Your account is full ([A] / [B]). All file uploads to MEGA are currently disabled.</source>
+        <translatorcomment>Label to inform the user about a full account, showing the used storage, the total available and some information about file uploads.</translatorcomment>
+        <translation type="unfinished">Your account is full ([A] / [B]). All file uploads to MEGA are currently disabled.</translation>
+    </message>
+    <message>
+        <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
+        <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
+        <translation type="unfinished">Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</translation>
+    </message>
+    <message>
+        <source>Earn more storage quota with [A]Achievements[/A].</source>
+        <translatorcomment>Label to inform the user about achievements and the benefit of earning more storage quota. Achievements label will redirect to the achievements section in the webclient when clicked.</translatorcomment>
+        <translation type="unfinished">Earn more storage quota with [A]Achievements[/A].</translation>
+    </message>
+</context>
+<context>
+    <name>UpgradeWidget</name>
+    <message>
+        <source>month</source>
+        <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
+        <translation type="unfinished">month</translation>
+    </message>
+    <message>
+        <source>storage</source>
+        <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
+        <translation type="unfinished">Storage</translation>
+    </message>
+    <message>
+        <source>transfer</source>
+        <translatorcomment>Label to indicate the amount of transfer quota of a PRO plan</translatorcomment>
+        <translation type="unfinished">Transfer</translation>
     </message>
 </context>
 <context>
@@ -3758,6 +4344,69 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Available</source>
         <translation type="unfinished">Available</translation>
+    </message>
+</context>
+<context>
+    <name>Utilities</name>
+    <message>
+        <source>just now</source>
+        <translatorcomment>Label to indicate that a transfer has finished right now</translatorcomment>
+        <translation type="unfinished">just now</translation>
+    </message>
+    <message>
+        <source>%1 seconds ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 seconds ago</translatorcomment>
+        <translation type="unfinished">%1 seconds ago</translation>
+    </message>
+    <message>
+        <source>1 minute ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished 1 minute ago</translatorcomment>
+        <translation type="unfinished">1 minute ago</translation>
+    </message>
+    <message>
+        <source>%1 minutes ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 minutes ago</translatorcomment>
+        <translation type="unfinished">%1 minutes ago</translation>
+    </message>
+    <message>
+        <source>1 hour ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished 1 hour ago</translatorcomment>
+        <translation type="unfinished">1 hour ago</translation>
+    </message>
+    <message>
+        <source>%1 hours ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 hours ago</translatorcomment>
+        <translation type="unfinished">%1 hours ago</translation>
+    </message>
+    <message>
+        <source>1 day ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished 1 day ago</translatorcomment>
+        <translation type="unfinished">1 day ago</translation>
+    </message>
+    <message>
+        <source>%1 days ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 days ago</translatorcomment>
+        <translation type="unfinished">%1 days ago</translation>
+    </message>
+    <message>
+        <source>1 month ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 month ago</translatorcomment>
+        <translation type="unfinished">1 month ago</translation>
+    </message>
+    <message>
+        <source>%1 months ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 months ago</translatorcomment>
+        <translation type="unfinished">%1 months ago</translation>
+    </message>
+    <message>
+        <source>1 year ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 year ago</translatorcomment>
+        <translation type="unfinished">1 year ago</translation>
+    </message>
+    <message>
+        <source>%1 years ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 years ago</translatorcomment>
+        <translation type="unfinished">%1 years ago</translation>
     </message>
 </context>
 <context>

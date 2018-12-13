@@ -196,6 +196,17 @@ License: MIT
 
 https://github.com/libuv/libuv/blob/v1.x/LICENSE
 
+#### LibRaw
+Copyright © 2008-2018 LibRaw LLC (info@libraw.org)
+
+LibRaw is a library for reading RAW files obtained from digital photo cameras (CRW/CR2, NEF, RAF, DNG, and others).
+
+https://www.libraw.org/
+
+License: LGPL 2.1 or CDDL 1.0
+https://github.com/LibRaw/LibRaw/blob/master/LICENSE.LGPL
+https://github.com/LibRaw/LibRaw/blob/master/LICENSE.CDDL
+
 --------------------------------------------------------------------
 
 #### Source Sans Pro fonts

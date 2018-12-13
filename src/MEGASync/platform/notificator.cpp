@@ -8,7 +8,7 @@
 #include <QByteArray>
 #include <QIcon>
 #include <QImageWriter>
-#include "QMegaMessageBox.h"
+#include "gui/QMegaMessageBox.h"
 #include "Utilities.h"
 #include <QMetaType>
 #include <QStyle>
@@ -366,7 +366,7 @@ void Notificator::onMessageClicked()
 {
     if (currentNotification)
     {
-        currentNotification->emitactivated();
+        currentNotification->emitlLegacyNotificationActivated();
         currentNotification = NULL;
     }
 }
@@ -496,9 +496,9 @@ void MegaNotification::setData(const QString &value)
     data = value;
 }
 
-void MegaNotification::emitactivated()
+void MegaNotification::emitlLegacyNotificationActivated()
 {
-    emit activated(-1);
+    emit activated(ActivationLegacyNotificationClicked);
 }
 
 MegaNotification::MegaNotification()
