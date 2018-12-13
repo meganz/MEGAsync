@@ -13,7 +13,7 @@ PSAwidget::PSAwidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    this->idPSA = 0;
+    this->idPSA = -1;
     this->reply = NULL;
     this->ready = false;
     this->shown = false;
@@ -51,6 +51,8 @@ PSAwidget::~PSAwidget()
 
 void PSAwidget::setAnnounce(int id, QString title, QString desc, QString urlImage, QString textButton, QString urlClick)
 {
+    removeAnnounce();
+
     this->idPSA = id;
     this->title = title;
     this->desc = desc;
@@ -72,11 +74,6 @@ void PSAwidget::setAnnounce(int id, QString title, QString desc, QString urlImag
 
     timer->start(5000);
     reply = networkAccess->get(testRequest);
-}
-
-int PSAwidget::isPSAshown()
-{
-    return idPSA;
 }
 
 bool PSAwidget::isPSAready()
@@ -157,7 +154,7 @@ void PSAwidget::hidePSA(bool animated)
 
 void PSAwidget::removeAnnounce()
 {
-    this->idPSA = 0;
+    this->idPSA = -1;
     this->title = QString();
     this->desc = QString();
     this->urlImage = QString();

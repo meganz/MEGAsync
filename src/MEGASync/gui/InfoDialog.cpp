@@ -747,11 +747,6 @@ bool InfoDialog::updateOverStorageState(int state)
 
 void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton)
 {
-    if (ui->wPSA->isPSAshown() == id)
-    {
-        return;
-    }
-
     ui->wPSA->setAnnounce(id, title, text, urlImage, textButton, linkButton);
 }
 

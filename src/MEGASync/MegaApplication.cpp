@@ -3885,7 +3885,10 @@ void MegaApplication::registerUserActivity()
 
 void MegaApplication::PSAseen(int id)
 {
-    megaApi->setPSA(id);
+    if (id >= 0)
+    {
+        megaApi->setPSA(id);
+    }
 }
 
 void MegaApplication::onDismissOQ(bool overStorage)

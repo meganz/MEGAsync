@@ -21,7 +21,6 @@ public:
     ~PSAwidget();
 
     void setAnnounce(int id, QString title, QString desc, QString urlImage, QString textButton, QString urlClick);
-    int isPSAshown();
     bool isPSAready();
     void showPSA();
     void hidePSA(bool animated = false);
