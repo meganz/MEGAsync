@@ -7,7 +7,7 @@ Build-Depends:  debhelper,
                 libqt4-dev,
                 intltool,
                 autotools-dev,
-                libnemo-extension-dev (>= 2.16.0),
+                libnemo-extension-dev,
                 libgtk2.0-bin,
                 cdbs
 

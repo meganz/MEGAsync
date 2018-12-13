@@ -504,13 +504,13 @@ static NemoOperationResult mega_ext_update_file_info(NemoInfoProvider *provider,
     switch (state)
     {
         case FILE_SYNCED:
-            nemo_file_info_add_emblem(file, "mega-synced");
+            nemo_file_info_add_emblem(file, "mega-nemosynced");
             break;
         case FILE_PENDING:
-            nemo_file_info_add_emblem(file, "mega-pending");
+            nemo_file_info_add_emblem(file, "mega-nemopending");
             break;
         case FILE_SYNCING:
-            nemo_file_info_add_emblem(file, "mega-syncing");
+            nemo_file_info_add_emblem(file, "mega-nemosyncing");
             break;
         default:
             break;

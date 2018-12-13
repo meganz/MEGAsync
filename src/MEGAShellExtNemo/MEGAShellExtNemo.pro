@@ -32,9 +32,9 @@ HICOLOR = $$DESKTOP_DESTDIR/share/icons/hicolor
 # emblems
 EMBLEMS_LOC = $$PWD/data/emblems
 emblems32.path = $${HICOLOR}/32x32/emblems
-emblems32.files = $${EMBLEMS_LOC}/32x32/*
+emblems32.files = $${EMBLEMS_LOC}/32x32/*nemo*
 emblems64.path = $${HICOLOR}/64x64/emblems
-emblems64.files = $${EMBLEMS_LOC}/64x64/*
+emblems64.files = $${EMBLEMS_LOC}/64x64/*nemo*
 INSTALLS += emblems32  emblems64
 
 # update icons cache

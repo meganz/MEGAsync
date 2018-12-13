@@ -30,7 +30,7 @@ url=""
 license=() #TODO
 groups=()
 depends=('ca-certificates' 'megasync>=3.5' 'nemo')
-makedepends=( 'ca-certificates' 'qt4' 'nemo' 'libnemo-extension')
+makedepends=( 'ca-certificates' 'qt4' 'nemo')
 checkdepends=()
 optdepends=()
 provides=("nemo-megasync=${pkgver}")
