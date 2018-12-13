@@ -97,7 +97,7 @@ void PSAwidget::setPSAImage(QImage image)
         ui->bMore->show();
     }
 
-    if (!(image.isNull()))
+    if (!image.isNull())
     {
         ui->bImage->setIcon(QPixmap::fromImage(image));
         ui->bImage->setIconSize(QSize(64, 64));
