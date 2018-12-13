@@ -302,7 +302,13 @@ color: #999999;
 {
 	color: #333333;
 	font-family: &quot;Source Sans Pro&quot;;
-	font-size: 18px;
+}
+
+#lSDKblock
+{
+	color: #333333;
+	font-family: &quot;Source Sans Pro&quot;;
+    font-size: 14px;
 }
 
 #wHeader, #pOverquota, #pUpdated
@@ -491,7 +497,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/tray_transfer_manager_ico.png</normaloff>:/images/tray_transfer_manager_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -539,7 +545,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -725,7 +731,7 @@ border: none;</string>
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_linux.qrc">
+                  <iconset resource="../Resources_macx.qrc">
                    <normaloff>:/images/upload_to_mega.png</normaloff>:/images/upload_to_mega.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -1293,7 +1299,7 @@ margin-right: 20px;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/Nav_Dot_inactive.png</normaloff>
              <normalon>:/images/Nav_Dot_inactive.png</normalon>
              <disabledoff>:/images/Nav_Dot_inactive.png</disabledoff>
@@ -1329,7 +1335,7 @@ margin-right: 20px;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_linux.qrc">
+            <iconset resource="../Resources_macx.qrc">
              <normaloff>:/images/Nav_Dot_inactive.png</normaloff>:/images/Nav_Dot_inactive.png</iconset>
            </property>
            <property name="iconSize">
@@ -2028,7 +2034,7 @@ color: #333333;
   <tabstop>bUpgrade</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -408,6 +408,7 @@ void InfoDialog::updateState()
                 ui->wContainerBottom->setFixedHeight(120);
             }
 
+            ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 18px;"));
             ui->lUploadToMegaDesc->setText(QString::fromUtf8("Upload to MEGA now"));
         }
 
@@ -422,7 +423,7 @@ void InfoDialog::updateState()
                 {
                     ui->wContainerBottom->setFixedHeight(150);
                     ui->wBlocked->setVisible(true);
-                    ui->lSDKblock->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a style=\" font-size: 12px;\" href=\"local://#%1\">%2</a>")
+                    ui->lSDKblock->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a href=\"local://#%1\">%2</a>")
                                                                       .arg(fileBlocked.absoluteFilePath())
                                                                       .arg(fileBlocked.fileName())));
                 }
@@ -434,9 +435,8 @@ void InfoDialog::updateState()
                 }
 
                 ui->lUploadToMegaDesc->setToolTip(fileBlocked.absoluteFilePath());
-                ui->lUploadToMegaDesc->setAlignment(Qt::AlignCenter);
                 ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
-                ui->lUploadToMegaDesc->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a style=\" font-size: 12px;\" href=\"local://#%1\">%2</a>")
+                ui->lUploadToMegaDesc->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a href=\"local://#%1\">%2</a>")
                                                                .arg(fileBlocked.absoluteFilePath())
                                                                .arg(fileBlocked.fileName())));
                 delete [] blockedPath;
@@ -459,7 +459,6 @@ void InfoDialog::updateState()
 
                 ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
                 ui->lUploadToMegaDesc->setText(tr("The process is taking longer than expected. Please wait..."));
-                ui->lUploadToMegaDesc->setAlignment(Qt::AlignCenter);
             }
             else
             {
@@ -470,6 +469,7 @@ void InfoDialog::updateState()
                     ui->wContainerBottom->setFixedHeight(120);
                 }
 
+                ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
                 ui->lUploadToMegaDesc->setText(QString::fromUtf8(""));
             }
 
