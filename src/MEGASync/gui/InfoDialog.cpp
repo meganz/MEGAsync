@@ -574,13 +574,11 @@ void InfoDialog::updateDialogState()
             {
                 overlay->setVisible(false);
                 ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
-                if (ui->wPSA->isPSAready())
-                {
-                    ui->wPSA->showPSA();
-                }
+                ui->wPSA->showPSA();
             }
             else
             {
+                ui->wPSA->hidePSA();
                 ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
                 if (!waiting && !indexing)
                 {
@@ -849,6 +847,7 @@ void InfoDialog::regenerateLayout()
             gWidget->enableListener();
         }
 
+        ui->wPSA->removeAnnounce();
         ui->bTransferManager->setVisible(false);
         ui->bAvatar->setVisible(false);
         ui->bTransferManager->setVisible(false);

@@ -25,10 +25,10 @@ public:
     bool isPSAready();
     void showPSA();
     void hidePSA(bool animated = false);
+    void removeAnnounce();
 
 private:
     void setPSAImage(QImage image = QImage());
-    void removeAnnounce();
 
 signals:
     void PSAseen(int id);

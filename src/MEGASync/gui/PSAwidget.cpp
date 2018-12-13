@@ -164,11 +164,24 @@ void PSAwidget::removeAnnounce()
     this->textButton = QString();
     this->urlClick = QString();
 
+    if (reply)
+    {
+        reply->abort();
+    }
+
+    ui->bImage->setIcon(QIcon());
     ui->lTitle->setText(QString::fromUtf8(""));
     ui->lDesc->setText(QString::fromUtf8(""));
     ui->bMore->setText(QString::fromUtf8(""));
     ui->bMore->hide();
     ui->wImage->hide();
+    ui->sWidget->hide();
+    ui->pPSA->hide();
+
+    if (shown)
+    {
+        hidePSA();
+    }
     ready = false;
 }
 
