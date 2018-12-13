@@ -6339,8 +6339,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                     //If we have got the filesystem, start the app
                     loggedIn();
                     restoreSyncs();
-
-                    megaApi->setPSA(0);
                 }
                 else
                 {
