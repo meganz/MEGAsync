@@ -20,13 +20,9 @@ Login2FA::Login2FA(QWidget *parent) :
     ui->bNext->setDefault(true);
     ui->leCode->setFocus();
 
-    ui->lLostAuthCode->setText(QString::fromUtf8("<html><head/><body><p>"
-                                                 "<a href=\"https://mega.nz/recovery\">"
-                                                 "<span style=\"text-decoration: none; "
-                                                 "font-size:11px; color:#666666;"
-                                                 "font-family: \"SF UI Text\";"
-                                                 ">"
-                                                 "Lost your authenticator device?</span></a></p></body></html>"));
+    ui->lLostAuthCode->setText(tr("[A]Lost your authenticator device?[/A]")
+                               .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://mega.nz/recovery\"><span style=\"color:#666666; text-decoration:none; font-size:11px; font-family: \"SF UI Text\"\">"))
+                               .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
 }
 
 Login2FA::~Login2FA()
