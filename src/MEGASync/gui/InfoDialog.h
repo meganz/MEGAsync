@@ -42,7 +42,6 @@ public:
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
     void setOverQuotaMode(bool state);
-    void updateState();
     void addSync(mega::MegaHandle h);
     void clearUserAttributes();
     bool updateOverStorageState(int state);
@@ -119,6 +118,8 @@ private:
     QGraphicsOpacityEffect *opacityEffect;
 
 protected:
+    void updateBlockedState();
+    void updateState();
     void changeEvent(QEvent * event);
     bool eventFilter(QObject *obj, QEvent *e);
 #ifdef __APPLE__

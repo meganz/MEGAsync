@@ -2632,7 +2632,7 @@ void MegaApplication::showInfoDialog()
             #endif
 
             infoDialog->show();
-            infoDialog->updateState();
+            infoDialog->updateDialogState();
             infoDialog->raise();
             infoDialog->activateWindow();
         }
@@ -3538,7 +3538,22 @@ void MegaApplication::handleLocalPath(const QUrl &url)
         return;
     }
 
-    QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(QDir::toNativeSeparators(url.fragment())));
+    QString path = QDir::toNativeSeparators(url.fragment());
+    if (path.endsWith(QDir::separator()))
+    {
+        path.truncate(path.size() - 1);
+        QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
+    }
+    else
+    {
+        #ifdef WIN32
+        if (path.startsWith(QString::fromAscii("\\\\?\\")))
+        {
+            path = path.mid(4);
+        }
+        #endif
+        Platform::showInFolder(path);
+    }
 }
 
 void MegaApplication::clearUserAttributes()
@@ -6495,6 +6510,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (infoDialog)
         {
             infoDialog->refreshTransferItems();
+            infoDialog->updateDialogState();
         }
 
         onGlobalSyncStateChanged(megaApi);
@@ -7293,7 +7309,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
 
         infoDialog->setIndexing(indexing);
         infoDialog->setWaiting(waiting);
-        infoDialog->updateState();
+        infoDialog->updateDialogState();
         infoDialog->transferFinished(MegaError::API_OK);
     }
 

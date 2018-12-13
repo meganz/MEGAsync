@@ -302,7 +302,13 @@ color: #999999;
 {
 	color: #333333;
 	font-family: &quot;Source Sans Pro&quot;;
-	font-size: 18px;
+}
+
+#lSDKblock
+{
+	color: #333333;
+	font-family: &quot;Source Sans Pro&quot;;
+    font-size: 14px;
 }
 
 #wHeader, #pOverquota, #pUpdated
@@ -361,7 +367,7 @@ color: #999999;
    <item>
     <widget class="QWidget" name="wContainerHeader" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -369,7 +375,7 @@ color: #999999;
      <property name="minimumSize">
       <size>
        <width>400</width>
-       <height>391</height>
+       <height>361</height>
       </size>
      </property>
      <property name="maximumSize">
@@ -602,7 +608,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>331</height>
+          <height>301</height>
          </size>
         </property>
         <property name="maximumSize">
@@ -778,7 +784,9 @@ border: none;</string>
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">margin-top: 20px;</string>
+                <string notr="true">margin-top: 20px;
+margin-left: 20px;
+margin-right: 20px;</string>
                </property>
                <property name="text">
                 <string>Upload to MEGA now</string>
@@ -786,35 +794,8 @@ border: none;</string>
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
                </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QLabel" name="lBlockedItem">
-               <property name="minimumSize">
-                <size>
-                 <width>0</width>
-                 <height>20</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>16777215</width>
-                 <height>20</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">padding-left: 10px;
-padding-right: 10px;
-</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="textFormat">
-                <enum>Qt::RichText</enum>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
+               <property name="wordWrap">
+                <bool>true</bool>
                </property>
                <property name="openExternalLinks">
                 <bool>true</bool>
@@ -1192,7 +1173,7 @@ padding-right: 10px;
      <property name="maximumSize">
       <size>
        <width>400</width>
-       <height>120</height>
+       <height>150</height>
       </size>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -1211,6 +1192,52 @@ padding-right: 10px;
       <property name="bottomMargin">
        <number>0</number>
       </property>
+      <item>
+       <widget class="QWidget" name="wBlocked" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>30</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_12">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>16</number>
+         </property>
+         <property name="topMargin">
+          <number>6</number>
+         </property>
+         <property name="rightMargin">
+          <number>16</number>
+         </property>
+         <property name="bottomMargin">
+          <number>6</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="lSDKblock">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+           <property name="openExternalLinks">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
       <item>
        <widget class="QWidget" name="wDots" native="true">
         <property name="minimumSize">

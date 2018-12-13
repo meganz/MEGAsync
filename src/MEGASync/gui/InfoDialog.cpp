@@ -64,6 +64,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     overQuotaState = false;
     storageState = Preferences::STATE_BELOW_OVER_STORAGE;
 
+    ui->lSDKblock->setText(QString::fromUtf8(""));
+    ui->wBlocked->setVisible(false);
+    ui->wContainerBottom->setFixedHeight(120);
+
     //Initialize header dialog and disable chat features
     ui->wHeader->setStyleSheet(QString::fromUtf8("#wHeader {border: none;}"));
 
@@ -96,7 +100,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     connect(ui->wStatus, SIGNAL(clicked()), app, SLOT(pauseTransfers()), Qt::QueuedConnection);
 
-    ui->lBlockedItem->setText(QString::fromUtf8(""));
     ui->bDotUsedQuota->hide();
     ui->bDotUsedStorage->hide();
     ui->sUsedData->setCurrentWidget(ui->pStorage);
@@ -366,6 +369,84 @@ void InfoDialog::setOverQuotaMode(bool state)
     }
 }
 
+void InfoDialog::updateBlockedState()
+{
+    if (!preferences->logged())
+    {
+        return;
+    }
+
+    if (!waiting)
+    {
+        if (ui->wBlocked->isVisible())
+        {
+            ui->lSDKblock->setText(QString::fromUtf8(""));
+            ui->wBlocked->setVisible(false);
+            ui->wContainerBottom->setFixedHeight(120);
+        }
+    }
+    else
+    {
+        const char *blockedPath = megaApi->getBlockedPath();
+        if (blockedPath)
+        {
+            QFileInfo fileBlocked (QString::fromUtf8(blockedPath));
+
+            if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
+            {
+                ui->wContainerBottom->setFixedHeight(150);
+                ui->wBlocked->setVisible(true);
+                ui->lSDKblock->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a href=\"local://#%1\">%2</a>")
+                                                                  .arg(fileBlocked.absoluteFilePath())
+                                                                  .arg(fileBlocked.fileName())));
+            }
+            else
+            {
+                 ui->lSDKblock->setText(QString::fromUtf8(""));
+                 ui->wBlocked->setVisible(false);
+                 ui->wContainerBottom->setFixedHeight(120);
+            }
+
+            ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
+            ui->lUploadToMegaDesc->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a href=\"local://#%1\">%2</a>")
+                                                           .arg(fileBlocked.absoluteFilePath())
+                                                           .arg(fileBlocked.fileName())));
+            delete [] blockedPath;
+        }
+        else if (megaApi->areServersBusy())
+        {
+
+            if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
+            {
+                ui->wContainerBottom->setFixedHeight(150);
+                ui->wBlocked->setVisible(true);
+                ui->lSDKblock->setText(tr("The process is taking longer than expected. Please wait..."));
+            }
+            else
+            {
+                 ui->lSDKblock->setText(QString::fromUtf8(""));
+                 ui->wBlocked->setVisible(false);
+                 ui->wContainerBottom->setFixedHeight(120);
+            }
+
+            ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
+            ui->lUploadToMegaDesc->setText(tr("The process is taking longer than expected. Please wait..."));
+        }
+        else
+        {
+            if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
+            {
+                ui->lSDKblock->setText(QString::fromUtf8(""));
+                ui->wBlocked->setVisible(false);
+                ui->wContainerBottom->setFixedHeight(120);
+            }
+
+            ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
+            ui->lUploadToMegaDesc->setText(QString::fromUtf8(""));
+        }
+    }
+}
+
 void InfoDialog::updateState()
 {
     if (!preferences->logged())
@@ -376,54 +457,20 @@ void InfoDialog::updateState()
         }
     }
 
+    if (!preferences->logged())
+    {
+        return;
+    }
+
     if (preferences->getGlobalPaused())
     {
-        if (!preferences->logged())
-        {
-            return;
-        }
-
-        if (state != STATE_PAUSED)
-        {
-            state = STATE_PAUSED;
-            animateStates(false);
-        }
+        state = STATE_PAUSED;
+        animateStates(waiting || indexing);
     }
     else
     {
-        if (!preferences->logged())
-        {
-            return;
-        }
-
-        if (!waiting)
-        {
-            ui->lBlockedItem->setText(QString::fromUtf8(""));
-        }
-
         if (waiting)
         {
-            const char *blockedPath = megaApi->getBlockedPath();
-            if (blockedPath)
-            {
-                QFileInfo fileBlocked (QString::fromUtf8(blockedPath));
-                ui->lBlockedItem->setToolTip(fileBlocked.absoluteFilePath());
-                ui->lBlockedItem->setAlignment(Qt::AlignCenter);
-                ui->lBlockedItem->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a style=\" font-size: 12px;\" href=\"local://#%1\">%2</a>")
-                                                               .arg(fileBlocked.absoluteFilePath())
-                                                               .arg(fileBlocked.fileName())));
-                delete [] blockedPath;
-            }
-            else if (megaApi->areServersBusy())
-            {
-                ui->lBlockedItem->setText(tr("The process is taking longer than expected. Please wait..."));
-                ui->lBlockedItem->setAlignment(Qt::AlignCenter);
-            }
-            else
-            {
-                ui->lBlockedItem->setText(QString::fromUtf8(""));
-            }
-
             if (state != STATE_WAITING)
             {
                 state = STATE_WAITING;
@@ -493,6 +540,7 @@ void InfoDialog::onAllTransfersFinished()
 
 void InfoDialog::updateDialogState()
 {
+    updateState();
     switch (storageState)
     {
         case Preferences::STATE_ALMOST_OVER_STORAGE:
@@ -527,7 +575,7 @@ void InfoDialog::updateDialogState()
             else
             {
                 ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
-                if (state != STATE_WAITING && state != STATE_INDEXING)
+                if (!waiting && !indexing)
                 {
                     overlay->setVisible(true);
                 }
@@ -538,6 +586,7 @@ void InfoDialog::updateDialogState()
             }
             break;
     }
+    updateBlockedState();
 }
 
 void InfoDialog::on_bSettings_clicked()
@@ -710,8 +759,6 @@ void InfoDialog::changeEvent(QEvent *event)
         {
             setUsage();
             state = STATE_STARTING;
-            animateStates(false);
-            updateState();   
             updateDialogState();
         }
     }
@@ -951,11 +998,10 @@ void InfoDialog::createQuotaUsedMenu()
 void InfoDialog::animateStates(bool opt)
 {
     if (opt) //Enable animation for scanning/waiting states
-    {
+    {        
         ui->lUploadToMega->setIcon(QIcon(QString::fromAscii("://images/init_scanning.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
-        ui->lUploadToMegaDesc->setText(QString::fromUtf8(""));
-        overlay->setVisible(false);
+        ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
 
         if (!opacityEffect)
         {
@@ -973,14 +1019,17 @@ void InfoDialog::animateStates(bool opt)
             connect(animation, SIGNAL(finished()), SLOT(onAnimationFinished()));
         }
 
-        animation->start();
+        if (animation->state() != QAbstractAnimation::Running)
+        {
+            animation->start();
+        }
     }
     else //Disable animation
-    {
+    {   
         ui->lUploadToMega->setIcon(QIcon(QString::fromAscii("://images/upload_to_mega.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
+        ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 18px;"));
         ui->lUploadToMegaDesc->setText(QString::fromUtf8("Upload to MEGA now"));
-        overlay->setVisible(true);
 
         if (animation)
         {
@@ -989,7 +1038,10 @@ void InfoDialog::animateStates(bool opt)
                 opacityEffect->setOpacity(1.0);
             }
 
-            animation->stop();
+            if (animation->state() == QAbstractAnimation::Running)
+            {
+                animation->stop();
+            }
         }
     }
 }
