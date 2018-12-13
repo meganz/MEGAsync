@@ -346,7 +346,7 @@ void SettingsDialog::setOverQuotaMode(bool mode)
             }
         }
 
-        ui->lOQWarning->setText(tr("Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</string>")
+        ui->lOQWarning->setText(tr("Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]")
                                         .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#%1\"><span style=\"color:#d90007; text-decoration:none;\">").arg(url))
                                         .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
         ui->wOQError->show();

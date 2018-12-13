@@ -567,7 +567,7 @@ background-color:  rgba(0, 0, 0, 10%);
          <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string/>
         </property>
         <property name="textFormat">
          <enum>Qt::RichText</enum>
