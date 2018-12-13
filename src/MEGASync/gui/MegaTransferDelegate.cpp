@@ -84,45 +84,45 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             {
                 ti->updateFinishedTime();
             }
+        }
 
-            Preferences *preferences = Preferences::instance();
-            if (ti->getType() == MegaTransfer::TYPE_DOWNLOAD)
+        Preferences *preferences = Preferences::instance();
+        if (ti->getType() == MegaTransfer::TYPE_DOWNLOAD)
+        {
+            if (preferences->getDownloadsPaused())
             {
-                if (preferences->getDownloadsPaused())
+                if (modelType == QTransfersModel::TYPE_DOWNLOAD)
                 {
-                    if (modelType == QTransfersModel::TYPE_DOWNLOAD)
-                    {
-                        ti->setStateLabel(tr("paused"));
-                        ti->loadDefaultTransferIcon();
-                    }
-                    else if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
-                    {
-                        ti->setStateLabel(tr("PAUSED"));
-                    }
+                    ti->setStateLabel(tr("paused"));
+                    ti->loadDefaultTransferIcon();
                 }
-                else
+                else if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
                 {
-                    ti->updateAnimation();
+                    ti->setStateLabel(tr("PAUSED"));
                 }
             }
-            else if (ti->getType() == MegaTransfer::TYPE_UPLOAD)
+            else
             {
-                if (preferences->getUploadsPaused())
-                {
-                   if (modelType == QTransfersModel::TYPE_UPLOAD)
-                   {
-                       ti->setStateLabel(tr("paused"));
-                       ti->loadDefaultTransferIcon();
-                   }
-                   else if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
-                   {
-                       ti->setStateLabel(tr("PAUSED"));
-                   }
-                }
-                else
-                {
-                    ti->updateAnimation();
-                }
+                ti->updateAnimation();
+            }
+        }
+        else if (ti->getType() == MegaTransfer::TYPE_UPLOAD)
+        {
+            if (preferences->getUploadsPaused())
+            {
+               if (modelType == QTransfersModel::TYPE_UPLOAD)
+               {
+                   ti->setStateLabel(tr("paused"));
+                   ti->loadDefaultTransferIcon();
+               }
+               else if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
+               {
+                   ti->setStateLabel(tr("PAUSED"));
+               }
+            }
+            else
+            {
+                ti->updateAnimation();
             }
         }
 

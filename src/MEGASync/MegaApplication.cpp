@@ -2632,7 +2632,7 @@ void MegaApplication::showInfoDialog()
             #endif
 
             infoDialog->show();
-            infoDialog->updateState();
+            infoDialog->updateDialogState();
             infoDialog->raise();
             infoDialog->activateWindow();
         }
@@ -6510,6 +6510,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (infoDialog)
         {
             infoDialog->refreshTransferItems();
+            infoDialog->updateDialogState();
         }
 
         onGlobalSyncStateChanged(megaApi);
@@ -7308,7 +7309,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
 
         infoDialog->setIndexing(indexing);
         infoDialog->setWaiting(waiting);
-        infoDialog->updateState();
+        infoDialog->updateDialogState();
         infoDialog->transferFinished(MegaError::API_OK);
     }
 

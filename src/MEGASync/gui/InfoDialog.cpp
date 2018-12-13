@@ -369,16 +369,8 @@ void InfoDialog::setOverQuotaMode(bool state)
     }
 }
 
-void InfoDialog::updateState()
+void InfoDialog::updateBlockedState()
 {
-    if (!preferences->logged())
-    {
-        if (gWidget)
-        {
-            gWidget->resetFocus();
-        }
-    }
-
     if (!preferences->logged())
     {
         return;
@@ -392,9 +384,6 @@ void InfoDialog::updateState()
             ui->wBlocked->setVisible(false);
             ui->wContainerBottom->setFixedHeight(120);
         }
-
-        ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 18px;"));
-        ui->lUploadToMegaDesc->setText(QString::fromUtf8("Upload to MEGA now"));
     }
     else
     {
@@ -456,14 +445,27 @@ void InfoDialog::updateState()
             ui->lUploadToMegaDesc->setText(QString::fromUtf8(""));
         }
     }
+}
+
+void InfoDialog::updateState()
+{
+    if (!preferences->logged())
+    {
+        if (gWidget)
+        {
+            gWidget->resetFocus();
+        }
+    }
+
+    if (!preferences->logged())
+    {
+        return;
+    }
 
     if (preferences->getGlobalPaused())
     {
-        if (state != STATE_PAUSED)
-        {
-            state = STATE_PAUSED;
-            animateStates(false);
-        }
+        state = STATE_PAUSED;
+        animateStates(waiting || indexing);
     }
     else
     {
@@ -538,6 +540,7 @@ void InfoDialog::onAllTransfersFinished()
 
 void InfoDialog::updateDialogState()
 {
+    updateState();
     switch (storageState)
     {
         case Preferences::STATE_ALMOST_OVER_STORAGE:
@@ -572,7 +575,7 @@ void InfoDialog::updateDialogState()
             else
             {
                 ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
-                if (state != STATE_WAITING && state != STATE_INDEXING)
+                if (!waiting && !indexing)
                 {
                     overlay->setVisible(true);
                 }
@@ -583,7 +586,7 @@ void InfoDialog::updateDialogState()
             }
             break;
     }
-    updateState();
+    updateBlockedState();
 }
 
 void InfoDialog::on_bSettings_clicked()
@@ -756,7 +759,6 @@ void InfoDialog::changeEvent(QEvent *event)
         {
             setUsage();
             state = STATE_STARTING;
-            animateStates(false);
             updateDialogState();
         }
     }
@@ -996,11 +998,10 @@ void InfoDialog::createQuotaUsedMenu()
 void InfoDialog::animateStates(bool opt)
 {
     if (opt) //Enable animation for scanning/waiting states
-    {
+    {        
         ui->lUploadToMega->setIcon(QIcon(QString::fromAscii("://images/init_scanning.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
         ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
-        overlay->setVisible(false);
 
         if (!opacityEffect)
         {
@@ -1018,15 +1019,17 @@ void InfoDialog::animateStates(bool opt)
             connect(animation, SIGNAL(finished()), SLOT(onAnimationFinished()));
         }
 
-        animation->start();
+        if (animation->state() != QAbstractAnimation::Running)
+        {
+            animation->start();
+        }
     }
     else //Disable animation
-    {
+    {   
         ui->lUploadToMega->setIcon(QIcon(QString::fromAscii("://images/upload_to_mega.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
         ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 18px;"));
         ui->lUploadToMegaDesc->setText(QString::fromUtf8("Upload to MEGA now"));
-        overlay->setVisible(true);
 
         if (animation)
         {
@@ -1035,7 +1038,10 @@ void InfoDialog::animateStates(bool opt)
                 opacityEffect->setOpacity(1.0);
             }
 
-            animation->stop();
+            if (animation->state() == QAbstractAnimation::Running)
+            {
+                animation->stop();
+            }
         }
     }
 }
