@@ -140,6 +140,7 @@ void PSAwidget::hidePSA(bool animated)
         return;
     }
 
+    shown = false;
     ui->pPSA->hide();
     minHeightAnimation->setTargetObject(this);
     maxHeightAnimation->setTargetObject(this);
@@ -152,7 +153,6 @@ void PSAwidget::hidePSA(bool animated)
     minHeightAnimation->setDuration(animated ? 250 : 1);
     maxHeightAnimation->setDuration(animated ? 250 : 1);
     animationGroup->start();
-    shown = false;
 }
 
 void PSAwidget::removeAnnounce()
