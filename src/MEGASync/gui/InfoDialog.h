@@ -44,6 +44,7 @@ public:
     void setOverQuotaMode(bool state);
     void addSync(mega::MegaHandle h);
     void clearUserAttributes();
+    void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
 
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);

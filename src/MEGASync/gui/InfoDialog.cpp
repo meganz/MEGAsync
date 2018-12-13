@@ -99,6 +99,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     connect(&transfersFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllTransfersFinished()));
 
     connect(ui->wStatus, SIGNAL(clicked()), app, SLOT(pauseTransfers()), Qt::QueuedConnection);
+    connect(ui->wPSA, SIGNAL(PSAseen(int)), app, SLOT(PSAseen(int)), Qt::QueuedConnection);
 
     ui->bDotUsedQuota->hide();
     ui->bDotUsedStorage->hide();
@@ -550,6 +551,7 @@ void InfoDialog::updateDialogState()
             ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
             ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
             overlay->setVisible(false);
+            ui->wPSA->hidePSA();
             break;
         case Preferences::STATE_OVER_STORAGE:
             ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));
@@ -560,6 +562,7 @@ void InfoDialog::updateDialogState()
                                     + tr("Please upgrade to PRO."));
             ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
             overlay->setVisible(false);
+            ui->wPSA->hidePSA();
             break;
         case Preferences::STATE_BELOW_OVER_STORAGE:
         case Preferences::STATE_OVER_STORAGE_DISMISSED:
@@ -567,13 +570,15 @@ void InfoDialog::updateDialogState()
             remainingUploads = megaApi->getNumPendingUploads();
             remainingDownloads = megaApi->getNumPendingDownloads();
 
-            if (remainingUploads || remainingDownloads || ui->wListTransfers->getModel()->rowCount(QModelIndex()))
+            if (remainingUploads || remainingDownloads || ui->wListTransfers->getModel()->rowCount(QModelIndex()) || ui->wPSA->isPSAready())
             {
                 overlay->setVisible(false);
                 ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
+                ui->wPSA->showPSA();
             }
             else
             {
+                ui->wPSA->hidePSA();
                 ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
                 if (!waiting && !indexing)
                 {
@@ -740,6 +745,11 @@ bool InfoDialog::updateOverStorageState(int state)
     return false;
 }
 
+void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton)
+{
+    ui->wPSA->setAnnounce(id, title, text, urlImage, textButton, linkButton);
+}
+
 void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *e)
 {
     if (transfer->isStreamingTransfer() || transfer->isFolderTransfer())
@@ -832,6 +842,7 @@ void InfoDialog::regenerateLayout()
             gWidget->enableListener();
         }
 
+        ui->wPSA->removeAnnounce();
         ui->bTransferManager->setVisible(false);
         ui->bAvatar->setVisible(false);
         ui->bTransferManager->setVisible(false);

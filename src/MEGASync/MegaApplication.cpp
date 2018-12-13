@@ -1397,6 +1397,7 @@ void MegaApplication::loggedIn()
     megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
     megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
     megaApi->getFileVersionsOption();
+    megaApi->getPSA();
 
     const char *email = megaApi->getMyEmail();
     if (email)
@@ -3882,6 +3883,14 @@ void MegaApplication::registerUserActivity()
     lastUserActivityExecution = QDateTime::currentMSecsSinceEpoch();
 }
 
+void MegaApplication::PSAseen(int id)
+{
+    if (id >= 0)
+    {
+        megaApi->setPSA(id);
+    }
+}
+
 void MegaApplication::onDismissOQ(bool overStorage)
 {
     if (overStorage)
@@ -6064,6 +6073,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             preferences->disableFileVersioning(!strcmp(request->getText(), "1"));
         }
+        else if (request->getParamType() == MegaApi::USER_ATTR_LAST_PSA)
+        {
+            megaApi->getPSA();
+        }
 
         break;
     }
@@ -6731,6 +6744,28 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
         delete node;
+        break;
+    }
+    case MegaRequest::TYPE_GET_PSA:
+    {
+        if (!preferences->logged())
+        {
+            break;
+        }
+
+        if (e->getErrorCode() == MegaError::API_OK)
+        {
+            if (infoDialog)
+            {
+                infoDialog->setPSAannouncement(request->getNumber(),
+                                               QString::fromUtf8(request->getName() ? request->getName() : ""),
+                                               QString::fromUtf8(request->getText() ? request->getText() : ""),
+                                               QString::fromUtf8(request->getFile() ? request->getFile() : ""),
+                                               QString::fromUtf8(request->getPassword() ? request->getPassword() : ""),
+                                               QString::fromUtf8(request->getLink() ? request->getLink() : ""));
+            }
+        }
+
         break;
     }
     case MegaRequest::TYPE_SEND_EVENT:

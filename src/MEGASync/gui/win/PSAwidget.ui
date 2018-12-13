@@ -355,7 +355,7 @@ border: none;
                    </size>
                   </property>
                   <property name="text">
-                   <string>Know More</string>
+                   <string/>
                   </property>
                  </widget>
                 </item>
