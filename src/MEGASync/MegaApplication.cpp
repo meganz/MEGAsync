@@ -155,9 +155,12 @@ int main(int argc, char *argv[])
 #if QT_VERSION >= 0x050600
     qreal ratio = 1;
     int xrdbdpi = 0;
-    if (getenv("XDG_CURRENT_DESKTOP") && !strcmp(getenv("XDG_CURRENT_DESKTOP"),"KDE"))
+    if (!(getenv("DO_NOT_OVERRIDE_XDG_CURRENT_DESKTOP")))
     {
-        qputenv("XDG_CURRENT_DESKTOP","OVERRIDEN");
+        if (getenv("XDG_CURRENT_DESKTOP") && !strcmp(getenv("XDG_CURRENT_DESKTOP"),"KDE") && (!getenv("XDG_SESSION_TYPE") || strcmp(getenv("XDG_SESSION_TYPE"),"wayland") ) )
+        {
+            qputenv("XDG_CURRENT_DESKTOP","GNOME");
+        }
     }
     if (!getenv("QT_SCALE_FACTOR"))
     {
