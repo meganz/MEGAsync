@@ -588,7 +588,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>301</height>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
@@ -621,7 +621,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
            <property name="minimumSize">
             <size>
              <width>0</width>
-             <height>211</height>
+             <height>0</height>
             </size>
            </property>
            <property name="maximumSize">
@@ -1075,7 +1075,7 @@ margin-right: 20px;</string>
             <property name="minimumSize">
              <size>
               <width>400</width>
-              <height>211</height>
+              <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
@@ -1102,7 +1102,7 @@ margin-right: 20px;</string>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>211</height>
+                 <height>0</height>
                 </size>
                </property>
                <property name="maximumSize">

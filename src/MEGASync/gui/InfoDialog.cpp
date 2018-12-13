@@ -551,6 +551,7 @@ void InfoDialog::updateDialogState()
             ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
             ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
             overlay->setVisible(false);
+            ui->wPSA->hidePSA();
             break;
         case Preferences::STATE_OVER_STORAGE:
             ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));
@@ -561,6 +562,7 @@ void InfoDialog::updateDialogState()
                                     + tr("Please upgrade to PRO."));
             ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
             overlay->setVisible(false);
+            ui->wPSA->hidePSA();
             break;
         case Preferences::STATE_BELOW_OVER_STORAGE:
         case Preferences::STATE_OVER_STORAGE_DISMISSED:
@@ -568,10 +570,14 @@ void InfoDialog::updateDialogState()
             remainingUploads = megaApi->getNumPendingUploads();
             remainingDownloads = megaApi->getNumPendingDownloads();
 
-            if (remainingUploads || remainingDownloads || ui->wListTransfers->getModel()->rowCount(QModelIndex()) || ui->wPSA->isPSAshown())
+            if (remainingUploads || remainingDownloads || ui->wListTransfers->getModel()->rowCount(QModelIndex()) || ui->wPSA->isPSAready())
             {
                 overlay->setVisible(false);
                 ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
+                if (ui->wPSA->isPSAready())
+                {
+                    ui->wPSA->showPSA();
+                }
             }
             else
             {

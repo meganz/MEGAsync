@@ -15,6 +15,8 @@ PSAwidget::PSAwidget(QWidget *parent) :
 
     this->idPSA = 0;
     this->reply = NULL;
+    this->ready = false;
+    this->shown = false;
 
     networkAccess = new QNetworkAccessManager(this);
     timer = new QTimer(this);
@@ -77,7 +79,12 @@ int PSAwidget::isPSAshown()
     return idPSA;
 }
 
-bool PSAwidget::showPSA(QImage image)
+bool PSAwidget::isPSAready()
+{
+    return ready;
+}
+
+void PSAwidget::setPSAImage(QImage image)
 {
     QFont f = ui->lTitle->font();
     QFontMetrics fm = QFontMetrics(f);
@@ -98,11 +105,20 @@ bool PSAwidget::showPSA(QImage image)
         ui->bImage->setIcon(QPixmap::fromImage(image));
         ui->bImage->setIconSize(QSize(64, 64));
         ui->wImage->show();
-    }   
+    }
+
+    ready = true;
+}
+
+void PSAwidget::showPSA()
+{
+    if (shown || !ready)
+    {
+        return;
+    }
 
     ui->pPSA->hide();
     ui->sWidget->show();
-
     minHeightAnimation->setTargetObject(this);
     maxHeightAnimation->setTargetObject(this);
     minHeightAnimation->setPropertyName("minimumHeight");
@@ -114,8 +130,29 @@ bool PSAwidget::showPSA(QImage image)
     minHeightAnimation->setDuration(250);
     maxHeightAnimation->setDuration(250);
     animationGroup->start();
+    shown = true;
+}
 
-    return true;
+void PSAwidget::hidePSA(bool animated)
+{
+    if (!shown)
+    {
+        return;
+    }
+
+    ui->pPSA->hide();
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    minHeightAnimation->setStartValue(120);
+    maxHeightAnimation->setStartValue(120);
+    minHeightAnimation->setEndValue(0);
+    maxHeightAnimation->setEndValue(0);
+    minHeightAnimation->setDuration(animated ? 250 : 1);
+    maxHeightAnimation->setDuration(animated ? 250 : 1);
+    animationGroup->start();
+    shown = false;
 }
 
 void PSAwidget::removeAnnounce()
@@ -132,6 +169,7 @@ void PSAwidget::removeAnnounce()
     ui->bMore->setText(QString::fromUtf8(""));
     ui->bMore->hide();
     ui->wImage->hide();
+    ready = false;
 }
 
 void PSAwidget::on_bMore_clicked()
@@ -142,30 +180,14 @@ void PSAwidget::on_bMore_clicked()
 
 void PSAwidget::on_bDismiss_clicked()
 {
-    ui->pPSA->hide();
-
-    minHeightAnimation->setTargetObject(this);
-    maxHeightAnimation->setTargetObject(this);
-    minHeightAnimation->setPropertyName("minimumHeight");
-    maxHeightAnimation->setPropertyName("maximumHeight");
-    minHeightAnimation->setStartValue(120);
-    maxHeightAnimation->setStartValue(120);
-    minHeightAnimation->setEndValue(0);
-    maxHeightAnimation->setEndValue(0);
-    minHeightAnimation->setDuration(250);
-    maxHeightAnimation->setDuration(250);
-    animationGroup->start();   
-
+    hidePSA(true);
     emit PSAseen(idPSA);
-    emit PSAhidden();
-
     removeAnnounce();
 }
 
 void PSAwidget::onAnimationFinished()
 {
-    ui->pPSA->show();
-    emit PSAshown();
+    ui->pPSA->setVisible(shown);
 }
 
 void PSAwidget::onRequestImgFinished(QNetworkReply *reply)
@@ -177,20 +199,20 @@ void PSAwidget::onRequestImgFinished(QNetworkReply *reply)
     QVariant statusCode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
     if (!statusCode.isValid() || (statusCode.toInt() != 200) || (reply->error() != QNetworkReply::NoError))
     {
-        showPSA();
+        setPSAImage();
         return;
     }
 
     QByteArray bytes = reply->readAll();
     if (bytes.isEmpty())
     {
-        showPSA();
+        setPSAImage();
         return;
     }
 
     QImage img(64, 64, QImage::Format_ARGB32_Premultiplied);
     img.loadFromData(bytes);
-    showPSA(img);
+    setPSAImage(img);
 }
 
 void PSAwidget::onTestTimeout()
@@ -198,6 +220,6 @@ void PSAwidget::onTestTimeout()
     if (reply)
     {
         reply->abort();
-        showPSA();
+        setPSAImage();
     }
 }

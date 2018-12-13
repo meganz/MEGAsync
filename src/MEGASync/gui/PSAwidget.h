@@ -22,15 +22,16 @@ public:
 
     void setAnnounce(int id, QString title, QString desc, QString urlImage, QString textButton, QString urlClick);
     int isPSAshown();
+    bool isPSAready();
+    void showPSA();
+    void hidePSA(bool animated = false);
 
 private:
-    bool showPSA(QImage image = QImage());
+    void setPSAImage(QImage image = QImage());
     void removeAnnounce();
 
 signals:
     void PSAseen(int id);
-    void PSAshown();
-    void PSAhidden();
 
 private slots:
     void on_bMore_clicked();
@@ -50,6 +51,8 @@ private:
     QString urlImage;
     QString textButton;
     QString urlClick;
+    bool ready;
+    bool shown;
 
     QNetworkAccessManager *networkAccess;
     QNetworkRequest testRequest;
