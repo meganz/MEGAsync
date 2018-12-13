@@ -6750,6 +6750,11 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_GET_PSA:
     {
+        if (!preferences->logged())
+        {
+            break;
+        }
+
         if (e->getErrorCode() == MegaError::API_OK)
         {
             if (infoDialog)
