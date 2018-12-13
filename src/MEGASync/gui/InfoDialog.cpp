@@ -418,7 +418,6 @@ void InfoDialog::updateState()
                  ui->wContainerBottom->setFixedHeight(120);
             }
 
-            ui->lUploadToMegaDesc->setToolTip(fileBlocked.absoluteFilePath());
             ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
             ui->lUploadToMegaDesc->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a href=\"local://#%1\">%2</a>")
                                                            .arg(fileBlocked.absoluteFilePath())
@@ -584,6 +583,7 @@ void InfoDialog::updateDialogState()
             }
             break;
     }
+    updateState();
 }
 
 void InfoDialog::on_bSettings_clicked()
@@ -757,7 +757,6 @@ void InfoDialog::changeEvent(QEvent *event)
             setUsage();
             state = STATE_STARTING;
             animateStates(false);
-            updateState();   
             updateDialogState();
         }
     }
