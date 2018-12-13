@@ -65,8 +65,11 @@ make
 
 %install
 make install
-mkdir -p $RPM_BUILD_ROOT%{_libdir}/nemo/extensions-3.0
-%{__install} libMEGAShellExtNemo.so -D $RPM_BUILD_ROOT%{_libdir}/nemo/extensions-3.0
+
+export EXTENSIONSDIR=$(pkg-config --variable=extensiondir libnemo-extension)
+mkdir -p %{buildroot}$EXTENSIONSDIR
+%{__install} libMEGAShellExtNemo.so -D %{buildroot}$EXTENSIONSDIR
+
 # clean up
 rm -fr $RPM_BUILD_ROOT/usr/share/icons/hicolor/icon-theme.cache || true
 
