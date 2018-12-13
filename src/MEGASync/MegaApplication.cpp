@@ -6073,6 +6073,10 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             preferences->disableFileVersioning(!strcmp(request->getText(), "1"));
         }
+        else if (request->getParamType() == MegaApi::USER_ATTR_LAST_PSA)
+        {
+            megaApi->getPSA();
+        }
 
         break;
     }
