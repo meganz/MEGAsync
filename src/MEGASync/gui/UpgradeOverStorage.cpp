@@ -4,6 +4,7 @@
 #include "Preferences.h"
 #include <QDateTime>
 #include <QUrl>
+#include <QStyle>
 #include <math.h>
 
 using namespace mega;
