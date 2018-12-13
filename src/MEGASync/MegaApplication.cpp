@@ -194,16 +194,25 @@ int main(int argc, char *argv[])
 #endif
 
 #if QT_VERSION >= 0x050000
-    if (!unsetenv("QT_QPA_PLATFORMTHEME")) //open folder dialog & similar crashes is fixed with this
+    if (!(getenv("DO_NOT_UNSET_QT_QPA_PLATFORMTHEME")) && getenv("QT_QPA_PLATFORMTHEME"))
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Error unsetting QT_QPA_PLATFORMTHEME vble");
+        if (!unsetenv("QT_QPA_PLATFORMTHEME")) //open folder dialog & similar crashes is fixed with this
+        {
+            std::cerr <<  "Error unsetting QT_QPA_PLATFORMTHEME vble" << std::endl;
+        }
     }
-    if (!unsetenv("SHLVL")) // reported failure in mint
+    if (!(getenv("DO_NOT_UNSET_SHLVL")) && getenv("SHLVL"))
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Error unsetting SHLVL vble");
+        if (!unsetenv("SHLVL")) // reported failure in mint
+        {
+            std::cerr <<  "Error unsetting SHLVL vble" << std::endl;
+        }
     }
 #endif
-    QApplication::setDesktopSettingsAware(false);
+    if (!(getenv("DO_NOT_SET_DESKTOP_SETTINGS_UNAWARE")))
+    {
+        QApplication::setDesktopSettingsAware(false);
+    }
 #endif
 
     MegaApplication app(argc, argv);
