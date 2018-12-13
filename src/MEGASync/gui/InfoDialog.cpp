@@ -379,13 +379,87 @@ void InfoDialog::updateState()
         }
     }
 
-    if (preferences->getGlobalPaused())
+    if (!preferences->logged())
     {
-        if (!preferences->logged())
+        return;
+    }
+
+    if (!waiting)
+    {
+        if (ui->wBlocked->isVisible())
         {
-            return;
+            ui->lSDKblock->setText(QString::fromUtf8(""));
+            ui->wBlocked->setVisible(false);
+            ui->wContainerBottom->setFixedHeight(120);
         }
 
+        ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 18px;"));
+        ui->lUploadToMegaDesc->setText(QString::fromUtf8("Upload to MEGA now"));
+    }
+    else
+    {
+        const char *blockedPath = megaApi->getBlockedPath();
+        if (blockedPath)
+        {
+            QFileInfo fileBlocked (QString::fromUtf8(blockedPath));
+
+            if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
+            {
+                ui->wContainerBottom->setFixedHeight(150);
+                ui->wBlocked->setVisible(true);
+                ui->lSDKblock->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a href=\"local://#%1\">%2</a>")
+                                                                  .arg(fileBlocked.absoluteFilePath())
+                                                                  .arg(fileBlocked.fileName())));
+            }
+            else
+            {
+                 ui->lSDKblock->setText(QString::fromUtf8(""));
+                 ui->wBlocked->setVisible(false);
+                 ui->wContainerBottom->setFixedHeight(120);
+            }
+
+            ui->lUploadToMegaDesc->setToolTip(fileBlocked.absoluteFilePath());
+            ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
+            ui->lUploadToMegaDesc->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a href=\"local://#%1\">%2</a>")
+                                                           .arg(fileBlocked.absoluteFilePath())
+                                                           .arg(fileBlocked.fileName())));
+            delete [] blockedPath;
+        }
+        else if (megaApi->areServersBusy())
+        {
+
+            if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
+            {
+                ui->wContainerBottom->setFixedHeight(150);
+                ui->wBlocked->setVisible(true);
+                ui->lSDKblock->setText(tr("The process is taking longer than expected. Please wait..."));
+            }
+            else
+            {
+                 ui->lSDKblock->setText(QString::fromUtf8(""));
+                 ui->wBlocked->setVisible(false);
+                 ui->wContainerBottom->setFixedHeight(120);
+            }
+
+            ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
+            ui->lUploadToMegaDesc->setText(tr("The process is taking longer than expected. Please wait..."));
+        }
+        else
+        {
+            if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
+            {
+                ui->lSDKblock->setText(QString::fromUtf8(""));
+                ui->wBlocked->setVisible(false);
+                ui->wContainerBottom->setFixedHeight(120);
+            }
+
+            ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
+            ui->lUploadToMegaDesc->setText(QString::fromUtf8(""));
+        }
+    }
+
+    if (preferences->getGlobalPaused())
+    {
         if (state != STATE_PAUSED)
         {
             state = STATE_PAUSED;
@@ -394,85 +468,8 @@ void InfoDialog::updateState()
     }
     else
     {
-        if (!preferences->logged())
-        {
-            return;
-        }
-
-        if (!waiting)
-        {
-            if (ui->wBlocked->isVisible())
-            {
-                ui->lSDKblock->setText(QString::fromUtf8(""));
-                ui->wBlocked->setVisible(false);
-                ui->wContainerBottom->setFixedHeight(120);
-            }
-
-            ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 18px;"));
-            ui->lUploadToMegaDesc->setText(QString::fromUtf8("Upload to MEGA now"));
-        }
-
         if (waiting)
         {
-            const char *blockedPath = megaApi->getBlockedPath();
-            if (blockedPath)
-            {
-                QFileInfo fileBlocked (QString::fromUtf8(blockedPath));
-
-                if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
-                {
-                    ui->wContainerBottom->setFixedHeight(150);
-                    ui->wBlocked->setVisible(true);
-                    ui->lSDKblock->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a href=\"local://#%1\">%2</a>")
-                                                                      .arg(fileBlocked.absoluteFilePath())
-                                                                      .arg(fileBlocked.fileName())));
-                }
-                else
-                {
-                     ui->lSDKblock->setText(QString::fromUtf8(""));
-                     ui->wBlocked->setVisible(false);
-                     ui->wContainerBottom->setFixedHeight(120);
-                }
-
-                ui->lUploadToMegaDesc->setToolTip(fileBlocked.absoluteFilePath());
-                ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
-                ui->lUploadToMegaDesc->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a href=\"local://#%1\">%2</a>")
-                                                               .arg(fileBlocked.absoluteFilePath())
-                                                               .arg(fileBlocked.fileName())));
-                delete [] blockedPath;
-            }
-            else if (megaApi->areServersBusy())
-            {
-
-                if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
-                {
-                    ui->wContainerBottom->setFixedHeight(150);
-                    ui->wBlocked->setVisible(true);
-                    ui->lSDKblock->setText(tr("The process is taking longer than expected. Please wait..."));
-                }
-                else
-                {
-                     ui->lSDKblock->setText(QString::fromUtf8(""));
-                     ui->wBlocked->setVisible(false);
-                     ui->wContainerBottom->setFixedHeight(120);
-                }
-
-                ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
-                ui->lUploadToMegaDesc->setText(tr("The process is taking longer than expected. Please wait..."));
-            }
-            else
-            {
-                if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
-                {
-                    ui->lSDKblock->setText(QString::fromUtf8(""));
-                    ui->wBlocked->setVisible(false);
-                    ui->wContainerBottom->setFixedHeight(120);
-                }
-
-                ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
-                ui->lUploadToMegaDesc->setText(QString::fromUtf8(""));
-            }
-
             if (state != STATE_WAITING)
             {
                 state = STATE_WAITING;
