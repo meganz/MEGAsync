@@ -16,7 +16,7 @@ Architecture: any
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          megasync
-Recommends: nemo (>= 2.16.0)
+Recommends: nemo
 Description: Easy automated syncing between your computers and your MEGA cloud drive
  Secure:
  Your data is encrypted end to end. Nobody can intercept it while in storage or in transit.

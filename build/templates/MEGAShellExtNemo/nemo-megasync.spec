@@ -10,7 +10,7 @@ Vendor:		MEGA Limited
 Packager:	MEGA Linux Team <linux@mega.co.nz>
 
 BuildRequires:  qt-devel, glib2-devel, nemo-devel, gnome-common
-BuildRequires:  pkgconfig(libnemo-extension) >= 2.16.0
+BuildRequires:  pkgconfig(libnemo-extension)
 BuildRequires:	hicolor-icon-theme, gnome-shell
 %if 0%{?rhel_version} 
 BuildRequires: redhat-logos
