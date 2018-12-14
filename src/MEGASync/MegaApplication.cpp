@@ -5746,7 +5746,7 @@ void MegaApplication::createTrayMenu()
         addSyncAction = NULL;
     }
 
-    int num = preferences->logged() ? preferences->getNumSyncedFolders() : 0;
+    int num = (megaApi && preferences->logged()) ? preferences->getNumSyncedFolders() : 0;
     if (num == 0)
     {
         addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_syncs_out.png")), QIcon(QString::fromAscii("://images/ico_syncs_over.png")), true);
