@@ -1275,7 +1275,6 @@ int SettingsDialog::saveSettings()
         {
             preferences->setLanguage(selectedLanguageCode);
             app->changeLanguage(selectedLanguageCode);
-            app->createTrayMenu();
             QString currentLanguageCode = app->getCurrentLanguageCode();
             megaApi->setLanguage(currentLanguageCode.toUtf8().constData());
             megaApi->setLanguagePreference(currentLanguageCode.toUtf8().constData());
