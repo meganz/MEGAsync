@@ -1391,6 +1391,10 @@ void MegaApplication::loggedIn()
     registerUserActivity();
     pauseTransfers(paused);
     inflightUserStats = false;
+    if (preferences->hasStorageWarning())
+    {
+        updateUserStats(true);
+    }
     megaApi->getPricing();
     megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
     megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
@@ -1563,92 +1567,96 @@ void MegaApplication::applyStorageState(int state)
     }
 
     storageState = state;
-    if (preferences->logged() && storageState != appliedStorageState)
+    if (preferences->logged())
     {
-        updateUserStats(true);
-        appliedStorageState = storageState;
-        if (state == MegaApi::STORAGE_STATE_RED)
+        preferences->setStorageWarning(state == MegaApi::STORAGE_STATE_RED || state == MegaApi::STORAGE_STATE_ORANGE);
+        if (storageState != appliedStorageState)
         {
-            almostOQ = false;
-
-            //Disable syncs
-            disableSyncs();
-            if (!infoOverQuota)
-            {
-                infoOverQuota = true;
-
-                if (preferences->usedStorage() < preferences->totalStorage())
-                {
-                    preferences->setUsedStorage(preferences->totalStorage());
-                    preferences->sync();
-
-                    if (infoDialog)
-                    {
-                        infoDialog->setUsage();
-                    }
-
-                    if (settingsDialog)
-                    {
-                        settingsDialog->refreshAccountDetails();
-                    }
-
-                    if (bwOverquotaDialog)
-                    {
-                        bwOverquotaDialog->refreshAccountDetails();
-                    }
-
-                    if (storageOverquotaDialog)
-                    {
-                        storageOverquotaDialog->refreshUsedStorage();
-                    }
-                }
-
-                if (trayMenu && trayMenu->isVisible())
-                {
-                    trayMenu->close();
-                }
-                if (infoDialog && infoDialog->isVisible())
-                {
-                    infoDialog->hide();
-                }
-            }
-
-            if (settingsDialog)
-            {
-                delete settingsDialog;
-                settingsDialog = NULL;
-            }
-            onGlobalSyncStateChanged(megaApi);
-        }
-        else
-        {
-            if (state == MegaApi::STORAGE_STATE_GREEN)
+            updateUserStats(true);
+            appliedStorageState = storageState;
+            if (state == MegaApi::STORAGE_STATE_RED)
             {
                 almostOQ = false;
-            }
-            else if (state == MegaApi::STORAGE_STATE_ORANGE)
-            {
-                almostOQ = true;
-            }
 
-            if (infoOverQuota)
-            {
+                //Disable syncs
+                disableSyncs();
+                if (!infoOverQuota)
+                {
+                    infoOverQuota = true;
+
+                    if (preferences->usedStorage() < preferences->totalStorage())
+                    {
+                        preferences->setUsedStorage(preferences->totalStorage());
+                        preferences->sync();
+
+                        if (infoDialog)
+                        {
+                            infoDialog->setUsage();
+                        }
+
+                        if (settingsDialog)
+                        {
+                            settingsDialog->refreshAccountDetails();
+                        }
+
+                        if (bwOverquotaDialog)
+                        {
+                            bwOverquotaDialog->refreshAccountDetails();
+                        }
+
+                        if (storageOverquotaDialog)
+                        {
+                            storageOverquotaDialog->refreshUsedStorage();
+                        }
+                    }
+
+                    if (trayMenu && trayMenu->isVisible())
+                    {
+                        trayMenu->close();
+                    }
+                    if (infoDialog && infoDialog->isVisible())
+                    {
+                        infoDialog->hide();
+                    }
+                }
+
                 if (settingsDialog)
                 {
-                    settingsDialog->setOverQuotaMode(false);
+                    delete settingsDialog;
+                    settingsDialog = NULL;
                 }
-                infoOverQuota = false;
-
-                if (trayMenu && trayMenu->isVisible())
-                {
-                    trayMenu->close();
-                }
-
-                restoreSyncs();
                 onGlobalSyncStateChanged(megaApi);
             }
+            else
+            {
+                if (state == MegaApi::STORAGE_STATE_GREEN)
+                {
+                    almostOQ = false;
+                }
+                else if (state == MegaApi::STORAGE_STATE_ORANGE)
+                {
+                    almostOQ = true;
+                }
+
+                if (infoOverQuota)
+                {
+                    if (settingsDialog)
+                    {
+                        settingsDialog->setOverQuotaMode(false);
+                    }
+                    infoOverQuota = false;
+
+                    if (trayMenu && trayMenu->isVisible())
+                    {
+                        trayMenu->close();
+                    }
+
+                    restoreSyncs();
+                    onGlobalSyncStateChanged(megaApi);
+                }
+            }
+            checkOverStorageStates();
         }
-        checkOverStorageStates();
     }
 }
 
@@ -3107,9 +3115,9 @@ void MegaApplication::setupWizardFinished(int result)
         infoDialog->hide();
     }
 
+    preferences->setStorageWarning(true);
     loggedIn();
     startSyncs();
-    applyStorageState(storageState);
 }
 
 void MegaApplication::overquotaDialogFinished(int)
@@ -6451,6 +6459,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 }
             }
         }
+
+        applyStorageState(storageState);
 
         if (infoDialog)
         {
