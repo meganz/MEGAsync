@@ -651,7 +651,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     nUnviewedTransfers = 0;
     completedTabActive = false;
     inflightUserStats = false;
-    outdatedStorageInfo = false;
     nodescurrent = false;
     almostOQ = false;
     storageState = MegaApi::STORAGE_STATE_GREEN;
@@ -1195,7 +1194,6 @@ void MegaApplication::start()
     indexing = false;
     paused = false;
     inflightUserStats = false;
-    outdatedStorageInfo = false;
     nodescurrent = false;
     infoOverQuota = false;
     almostOQ = false;
@@ -2571,6 +2569,7 @@ void MegaApplication::showInfoDialog()
 
     if (preferences && preferences->logged())
     {
+        updateUserStats(true);
         if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
         {
             openBwOverquotaDialog();
@@ -2587,13 +2586,6 @@ void MegaApplication::showInfoDialog()
     #ifdef __MACH__
             trayIcon->setContextMenu(&emptyMenu);
     #endif
-        }
-        else
-        {
-            if (outdatedStorageInfo)
-            {
-                updateUserStats();
-            }
         }
     }
 
@@ -3918,7 +3910,6 @@ void MegaApplication::updateUserStats(bool force)
         if (!inflightUserStats)
         {
             inflightUserStats = true;
-            outdatedStorageInfo = false;
             megaApi->getAccountDetails();
         }
         else
@@ -5981,7 +5972,6 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     else if (event->getType() == MegaEvent::EVENT_NODES_CURRENT)
     {
         nodescurrent = true;
-        outdatedStorageInfo = true;
     }
     else if (event->getType() == MegaEvent::EVENT_STORAGE)
     {
@@ -6364,7 +6354,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
-        outdatedStorageInfo = false;
         inflightUserStats = false;
         if (!preferences->logged())
         {

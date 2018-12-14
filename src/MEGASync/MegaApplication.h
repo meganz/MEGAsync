@@ -395,7 +395,6 @@ protected:
     bool isPublic;
     bool updatingSSLcert;
     long long lastSSLcertUpdate;
-    bool outdatedStorageInfo;
     bool nodescurrent;
 };
 
