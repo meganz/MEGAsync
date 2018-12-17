@@ -1412,10 +1412,7 @@ void MegaApplication::loggedIn()
     registerUserActivity();
     pauseTransfers(paused);
     inflightUserStats = false;
-    if (preferences->hasStorageWarning())
-    {
-        updateUserStats(true);
-    }
+    updateUserStats(true);
     megaApi->getPricing();
     megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
     megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
@@ -1590,7 +1587,6 @@ void MegaApplication::applyStorageState(int state)
     storageState = state;
     if (preferences->logged())
     {
-        preferences->setStorageWarning(state == MegaApi::STORAGE_STATE_RED || state == MegaApi::STORAGE_STATE_ORANGE);
         if (storageState != appliedStorageState)
         {
             updateUserStats(true);
@@ -3139,9 +3135,9 @@ void MegaApplication::setupWizardFinished(int result)
         infoDialog->hide();
     }
 
-    preferences->setStorageWarning(true);
     loggedIn();
     startSyncs();
+    applyStorageState(storageState);
 }
 
 void MegaApplication::overquotaDialogFinished(int)
@@ -6477,8 +6473,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         delete inShares;
 
         preferences->sync();
-
-        applyStorageState(storageState);
 
         if (infoDialog)
         {
