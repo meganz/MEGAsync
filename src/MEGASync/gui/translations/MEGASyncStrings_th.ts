@@ -1981,7 +1981,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Label to inform the user about the potential issues of syncing a local folder with VMWare.</translatorcomment>
-        <translation type="unfinished">คุณกำลังซิงค์โฟลเดอร์ภายในเครื่องที่แชร์กับ VMWare โฟลเดอร์เหล่านี้ไม่สนับสนุนการแจ้งเตือนของระบบไฟล์ ดังนั้น MEGAsync จะต้องสแกนเพื่อตรวจหาการเปลี่ยนแปลงในไฟล์และโฟลเดอร์ของคุณอย่างต่อเนื่อง หากเป็นไปได้ กรุณาใช้โฟลเดอร์อื่น เพื่อลดการใช้งาน CPU</translation>
+        <translation type="unfinished">คุณกำลังซิงค์โฟลเดอร์ภายในเครื่องที่แชร์กับ VMWare โฟลเดอร์เหล่านี้ไม่สนับสนุนการแจ้งเตือนระบบไฟล์ ดังนั้น MEGAsync จะต้องสแกนเพื่อตรวจหาการเปลี่ยนแปลงในไฟล์และโฟลเดอร์ของคุณอย่างต่อเนื่อง หากเป็นไปได้ กรุณาใช้โฟลเดอร์อื่น เพื่อลดการใช้งาน CPU</translation>
     </message>
 </context>
 <context>
@@ -3307,7 +3307,7 @@ when the application starts again</source>
     <message>
         <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
         <translatorcomment>Label to inform the user that current account is over storage and uploads will be disable. Encourage the user to buy more space and upgrade to PRO. Keep [A] and [/A] codes.</translatorcomment>
-        <translation type="unfinished">บัญชี MEGA ของคุณมีพื้นที่เต็มแล้ว การอัปโหลดทั้งหมดถูกปิดใช้งานซึ่งอาจมีผลกับโฟลเดอร์ที่ซิงค์ของคุณได้ [A]ซื้อพื้นที่เพิ่มเติม[/A]</translation>
+        <translation type="unfinished">บัญชี MEGA คุณมีพื้นที่เต็มแล้ว การอัปโหลดทั้งหมดถูกปิดใช้งาน อาจมีผลกับโฟลเดอร์ที่ซิงค์ของคุณได้ ลองพิจารณา[A]ซื้อพื้นที่เพิ่มเติม[/A]</translation>
     </message>
 </context>
 <context>
