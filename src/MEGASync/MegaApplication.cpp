@@ -2863,7 +2863,7 @@ void MegaApplication::sendOverStorageNotification(int state)
             MegaNotification *notification = new MegaNotification();
             notification->setTitle(tr("Your account is almost full."));
             notification->setText(tr("Upgrade now to a PRO account."));
-            notification->setActions(QStringList() << QString::fromUtf8("Get PRO"));
+            notification->setActions(QStringList() << tr("Get PRO"));
             connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
             notificator->notify(notification);
             break;
@@ -2873,7 +2873,7 @@ void MegaApplication::sendOverStorageNotification(int state)
             MegaNotification *notification = new MegaNotification();
             notification->setTitle(tr("Your account is full."));
             notification->setText(tr("Upgrade now to a PRO account."));
-            notification->setActions(QStringList() << QString::fromUtf8("Get PRO"));
+            notification->setActions(QStringList() << tr("Get PRO"));
             connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
             notificator->notify(notification);
             break;
