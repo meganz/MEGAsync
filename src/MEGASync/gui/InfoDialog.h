@@ -42,10 +42,10 @@ public:
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
     void setOverQuotaMode(bool state);
-    void updateState();
     void addSync(mega::MegaHandle h);
     void clearUserAttributes();
-    void handleOverStorage(int state);
+    void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
+    bool updateOverStorageState(int state);
 
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
 
@@ -119,6 +119,8 @@ private:
     QGraphicsOpacityEffect *opacityEffect;
 
 protected:
+    void updateBlockedState();
+    void updateState();
     void changeEvent(QEvent * event);
     bool eventFilter(QObject *obj, QEvent *e);
 #ifdef __APPLE__

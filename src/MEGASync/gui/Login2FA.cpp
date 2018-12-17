@@ -1,6 +1,8 @@
 #include "Login2FA.h"
 #include "ui_Login2FA.h"
 #include <QRegExp>
+#include <QtConcurrent/QtConcurrent>
+#include <QDesktopServices>
 
 Login2FA::Login2FA(QWidget *parent) :
     QDialog(parent),
@@ -13,9 +15,14 @@ Login2FA::Login2FA(QWidget *parent) :
     ui->lError->setText(ui->lError->text().toUpper());
     ui->lError->hide();
 
+    connect(ui->wHelp, SIGNAL(clicked()), this, SLOT(on_bHelp_clicked()));
     connect(ui->leCode, SIGNAL(textChanged(QString)), this, SLOT(inputCodeChanged()));
     ui->bNext->setDefault(true);
     ui->leCode->setFocus();
+
+    ui->lLostAuthCode->setText(tr("[A]Lost your authenticator device?[/A]")
+                               .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"https://mega.nz/recovery\"><span style=\"color:#666666; text-decoration:none; font-size:11px; font-family: \"SF UI Text\"\">"))
+                               .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
 }
 
 Login2FA::~Login2FA()
@@ -62,6 +69,12 @@ void Login2FA::on_bCancel_clicked()
 void Login2FA::inputCodeChanged()
 {
     ui->lError->hide();
+}
+
+void Login2FA::on_bHelp_clicked()
+{
+    QString helpUrl = QString::fromAscii("https://mega.nz/recovery");
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
 
 void Login2FA::changeEvent(QEvent *event)

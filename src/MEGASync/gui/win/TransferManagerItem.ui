@@ -234,7 +234,7 @@ padding-top: 1px;</string>
               <widget class="QLabel" name="lTransferName">
                <property name="minimumSize">
                 <size>
-                 <width>315</width>
+                 <width>250</width>
                  <height>0</height>
                 </size>
                </property>
@@ -306,7 +306,7 @@ padding-top: 1px;</string>
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>120</width>
+                 <width>190</width>
                  <height>16777215</height>
                 </size>
                </property>

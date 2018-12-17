@@ -84,45 +84,45 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             {
                 ti->updateFinishedTime();
             }
+        }
 
-            Preferences *preferences = Preferences::instance();
-            if (ti->getType() == MegaTransfer::TYPE_DOWNLOAD)
+        Preferences *preferences = Preferences::instance();
+        if (ti->getType() == MegaTransfer::TYPE_DOWNLOAD)
+        {
+            if (preferences->getDownloadsPaused())
             {
-                if (preferences->getDownloadsPaused())
+                if (modelType == QTransfersModel::TYPE_DOWNLOAD)
                 {
-                    if (modelType == QTransfersModel::TYPE_DOWNLOAD)
-                    {
-                        ti->setStateLabel(tr("paused"));
-                        ti->loadDefaultTransferIcon();
-                    }
-                    else if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
-                    {
-                        ti->setStateLabel(tr("PAUSED"));
-                    }
+                    ti->setStateLabel(tr("paused"));
+                    ti->loadDefaultTransferIcon();
                 }
-                else
+                else if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
                 {
-                    ti->updateAnimation();
+                    ti->setStateLabel(tr("PAUSED"));
                 }
             }
-            else if (ti->getType() == MegaTransfer::TYPE_UPLOAD)
+            else
             {
-                if (preferences->getUploadsPaused())
-                {
-                   if (modelType == QTransfersModel::TYPE_UPLOAD)
-                   {
-                       ti->setStateLabel(tr("paused"));
-                       ti->loadDefaultTransferIcon();
-                   }
-                   else if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
-                   {
-                       ti->setStateLabel(tr("PAUSED"));
-                   }
-                }
-                else
-                {
-                    ti->updateAnimation();
-                }
+                ti->updateAnimation();
+            }
+        }
+        else if (ti->getType() == MegaTransfer::TYPE_UPLOAD)
+        {
+            if (preferences->getUploadsPaused())
+            {
+               if (modelType == QTransfersModel::TYPE_UPLOAD)
+               {
+                   ti->setStateLabel(tr("paused"));
+                   ti->loadDefaultTransferIcon();
+               }
+               else if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
+               {
+                   ti->setStateLabel(tr("PAUSED"));
+               }
+            }
+            else
+            {
+                ti->updateAnimation();
             }
         }
 
@@ -308,26 +308,6 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
                         else
                         {
                             QToolTip::showText(event->globalPos(), tr("Retry"));
-                        }
-                        delete transfer;
-                        return true;
-                    }
-                }
-            }
-            else if (item->mouseHoverRetryingLabel(event->pos() - option.rect.topLeft()))
-            {
-                int modelType = model->getModelType();
-                if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS
-                        || modelType == QTransfersModel::TYPE_UPLOAD
-                        || modelType == QTransfersModel::TYPE_DOWNLOAD)
-                {
-                    MegaTransfer *transfer = model->getTransferByTag(tag);
-                    if (transfer)
-                    {
-                        int transferError = transfer->getLastError().getErrorCode();
-                        if (transferError != MegaError::API_OK)
-                        {
-                            QToolTip::showText(event->globalPos(), QCoreApplication::translate("MegaError", MegaError::getErrorString(transferError)));
                         }
                         delete transfer;
                         return true;

@@ -228,7 +228,7 @@ private slots:
     void showInFolder(int activationButton);
     void redirectToUpgrade(int activationButton);
     void registerUserActivity();
-
+    void PSAseen(int id);
 
 protected:
     void createTrayIcon();
@@ -242,7 +242,7 @@ protected:
     void unityFix();
     void disableSyncs();
     void restoreSyncs();
-    void closeDialogs();
+    void closeDialogs(bool bwoverquota = false);
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
     void startHttpServer();
@@ -395,7 +395,6 @@ protected:
     bool isPublic;
     bool updatingSSLcert;
     long long lastSSLcertUpdate;
-    bool outdatedStorageInfo;
     bool nodescurrent;
 };
 

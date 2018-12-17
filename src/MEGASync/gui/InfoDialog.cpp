@@ -64,6 +64,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     overQuotaState = false;
     storageState = Preferences::STATE_BELOW_OVER_STORAGE;
 
+    ui->lSDKblock->setText(QString::fromUtf8(""));
+    ui->wBlocked->setVisible(false);
+    ui->wContainerBottom->setFixedHeight(120);
+
     //Initialize header dialog and disable chat features
     ui->wHeader->setStyleSheet(QString::fromUtf8("#wHeader {border: none;}"));
 
@@ -95,8 +99,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     connect(&transfersFinishedTimer, SIGNAL(timeout()), this, SLOT(onAllTransfersFinished()));
 
     connect(ui->wStatus, SIGNAL(clicked()), app, SLOT(pauseTransfers()), Qt::QueuedConnection);
+    connect(ui->wPSA, SIGNAL(PSAseen(int)), app, SLOT(PSAseen(int)), Qt::QueuedConnection);
 
-    ui->lBlockedItem->setText(QString::fromUtf8(""));
     ui->bDotUsedQuota->hide();
     ui->bDotUsedStorage->hide();
     ui->sUsedData->setCurrentWidget(ui->pStorage);
@@ -344,6 +348,11 @@ void InfoDialog::setWaiting(bool waiting)
 
 void InfoDialog::setOverQuotaMode(bool state)
 {
+    if (overQuotaState == state)
+    {
+        return;
+    }
+
     overQuotaState = state;
     ui->wStatus->setOverQuotaState(state);
 
@@ -361,6 +370,84 @@ void InfoDialog::setOverQuotaMode(bool state)
     }
 }
 
+void InfoDialog::updateBlockedState()
+{
+    if (!preferences->logged())
+    {
+        return;
+    }
+
+    if (!waiting)
+    {
+        if (ui->wBlocked->isVisible())
+        {
+            ui->lSDKblock->setText(QString::fromUtf8(""));
+            ui->wBlocked->setVisible(false);
+            ui->wContainerBottom->setFixedHeight(120);
+        }
+    }
+    else
+    {
+        const char *blockedPath = megaApi->getBlockedPath();
+        if (blockedPath)
+        {
+            QFileInfo fileBlocked (QString::fromUtf8(blockedPath));
+
+            if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
+            {
+                ui->wContainerBottom->setFixedHeight(150);
+                ui->wBlocked->setVisible(true);
+                ui->lSDKblock->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a href=\"local://#%1\">%2</a>")
+                                                                  .arg(fileBlocked.absoluteFilePath())
+                                                                  .arg(fileBlocked.fileName())));
+            }
+            else
+            {
+                 ui->lSDKblock->setText(QString::fromUtf8(""));
+                 ui->wBlocked->setVisible(false);
+                 ui->wContainerBottom->setFixedHeight(120);
+            }
+
+            ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
+            ui->lUploadToMegaDesc->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a href=\"local://#%1\">%2</a>")
+                                                           .arg(fileBlocked.absoluteFilePath())
+                                                           .arg(fileBlocked.fileName())));
+            delete [] blockedPath;
+        }
+        else if (megaApi->areServersBusy())
+        {
+
+            if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
+            {
+                ui->wContainerBottom->setFixedHeight(150);
+                ui->wBlocked->setVisible(true);
+                ui->lSDKblock->setText(tr("The process is taking longer than expected. Please wait..."));
+            }
+            else
+            {
+                 ui->lSDKblock->setText(QString::fromUtf8(""));
+                 ui->wBlocked->setVisible(false);
+                 ui->wContainerBottom->setFixedHeight(120);
+            }
+
+            ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
+            ui->lUploadToMegaDesc->setText(tr("The process is taking longer than expected. Please wait..."));
+        }
+        else
+        {
+            if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
+            {
+                ui->lSDKblock->setText(QString::fromUtf8(""));
+                ui->wBlocked->setVisible(false);
+                ui->wContainerBottom->setFixedHeight(120);
+            }
+
+            ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
+            ui->lUploadToMegaDesc->setText(QString::fromUtf8(""));
+        }
+    }
+}
+
 void InfoDialog::updateState()
 {
     if (!preferences->logged())
@@ -371,54 +458,20 @@ void InfoDialog::updateState()
         }
     }
 
+    if (!preferences->logged())
+    {
+        return;
+    }
+
     if (preferences->getGlobalPaused())
     {
-        if (!preferences->logged())
-        {
-            return;
-        }
-
-        if (state != STATE_PAUSED)
-        {
-            state = STATE_PAUSED;
-            animateStates(false);
-        }
+        state = STATE_PAUSED;
+        animateStates(waiting || indexing);
     }
     else
     {
-        if (!preferences->logged())
-        {
-            return;
-        }
-
-        if (!waiting)
-        {
-            ui->lBlockedItem->setText(QString::fromUtf8(""));
-        }
-
         if (waiting)
         {
-            const char *blockedPath = megaApi->getBlockedPath();
-            if (blockedPath)
-            {
-                QFileInfo fileBlocked (QString::fromUtf8(blockedPath));
-                ui->lBlockedItem->setToolTip(fileBlocked.absoluteFilePath());
-                ui->lBlockedItem->setAlignment(Qt::AlignCenter);
-                ui->lBlockedItem->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a style=\" font-size: 12px;\" href=\"local://#%1\">%2</a>")
-                                                               .arg(fileBlocked.absoluteFilePath())
-                                                               .arg(fileBlocked.fileName())));
-                delete [] blockedPath;
-            }
-            else if (megaApi->areServersBusy())
-            {
-                ui->lBlockedItem->setText(tr("The process is taking longer than expected. Please wait..."));
-                ui->lBlockedItem->setAlignment(Qt::AlignCenter);
-            }
-            else
-            {
-                ui->lBlockedItem->setText(QString::fromUtf8(""));
-            }
-
             if (state != STATE_WAITING)
             {
                 state = STATE_WAITING;
@@ -488,32 +541,57 @@ void InfoDialog::onAllTransfersFinished()
 
 void InfoDialog::updateDialogState()
 {
-    if (storageState == Preferences::STATE_ALMOST_OVER_STORAGE
-            || storageState == Preferences::STATE_OVER_STORAGE)
+    updateState();
+    switch (storageState)
     {
-        return;
-    }
-
-    remainingUploads = megaApi->getNumPendingUploads();
-    remainingDownloads = megaApi->getNumPendingDownloads();
-
-    if (remainingUploads || remainingDownloads || ui->wListTransfers->getModel()->rowCount(QModelIndex()))
-    {
-        overlay->setVisible(false);
-        ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
-    }
-    else
-    {
-        ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
-        if (state != STATE_WAITING && state != STATE_INDEXING)
-        {
-            overlay->setVisible(true);
-        }
-        else
-        {
+        case Preferences::STATE_ALMOST_OVER_STORAGE:
+            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_almost_full.png")));
+            ui->bOQIcon->setIconSize(QSize(64,64));
+            ui->lOQTitle->setText(tr("You're running out of storage space."));
+            ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
+            ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
             overlay->setVisible(false);
-        }
+            ui->wPSA->hidePSA();
+            break;
+        case Preferences::STATE_OVER_STORAGE:
+            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));
+            ui->bOQIcon->setIconSize(QSize(64,64));
+            ui->lOQTitle->setText(tr("Your MEGA account is full."));
+            ui->lOQDesc->setText(tr("All file uploads are currently disabled.")
+                                    + QString::fromUtf8("<br>")
+                                    + tr("Please upgrade to PRO."));
+            ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
+            overlay->setVisible(false);
+            ui->wPSA->hidePSA();
+            break;
+        case Preferences::STATE_BELOW_OVER_STORAGE:
+        case Preferences::STATE_OVER_STORAGE_DISMISSED:
+        default:
+            remainingUploads = megaApi->getNumPendingUploads();
+            remainingDownloads = megaApi->getNumPendingDownloads();
+
+            if (remainingUploads || remainingDownloads || ui->wListTransfers->getModel()->rowCount(QModelIndex()) || ui->wPSA->isPSAready())
+            {
+                overlay->setVisible(false);
+                ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
+                ui->wPSA->showPSA();
+            }
+            else
+            {
+                ui->wPSA->hidePSA();
+                ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+                if (!waiting && !indexing)
+                {
+                    overlay->setVisible(true);
+                }
+                else
+                {
+                    overlay->setVisible(false);
+                }
+            }
+            break;
     }
+    updateBlockedState();
 }
 
 void InfoDialog::on_bSettings_clicked()
@@ -656,35 +734,20 @@ void InfoDialog::clearUserAttributes()
     ui->bAvatar->clearData();
 }
 
-void InfoDialog::handleOverStorage(int state)
+bool InfoDialog::updateOverStorageState(int state)
 {
-    storageState = state;
-    switch (state)
+    if (storageState != state)
     {
-        case Preferences::STATE_ALMOST_OVER_STORAGE:
-            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_almost_full.png")));
-            ui->bOQIcon->setIconSize(QSize(64,64));
-            ui->lOQTitle->setText(tr("You're running out of storage space."));
-            ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
-            ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
-            overlay->setVisible(false);
-            break;
-        case Preferences::STATE_OVER_STORAGE:
-            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));
-            ui->bOQIcon->setIconSize(QSize(64,64));
-            ui->lOQTitle->setText(tr("Your MEGA account is full."));
-            ui->lOQDesc->setText(tr("All file uploads are currently disabled.")
-                                    + QString::fromUtf8("<br>")
-                                    + tr("Please upgrade to PRO."));
-            ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
-            overlay->setVisible(false);
-            break;
-        case Preferences::STATE_BELOW_OVER_STORAGE:
-        case Preferences::STATE_OVER_STORAGE_DISMISSED:
-        default:
-            updateDialogState();
-            break;
+        storageState = state;
+        updateDialogState();
+        return true;
     }
+    return false;
+}
+
+void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton)
+{
+    ui->wPSA->setAnnounce(id, title, text, urlImage, textButton, linkButton);
 }
 
 void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaError *e)
@@ -706,10 +769,7 @@ void InfoDialog::changeEvent(QEvent *event)
         {
             setUsage();
             state = STATE_STARTING;
-            animateStates(false);
-            ui->wStatus->setState(state);
-            updateState();   
-            handleOverStorage(storageState);
+            updateDialogState();
         }
     }
     QDialog::changeEvent(event);
@@ -782,6 +842,7 @@ void InfoDialog::regenerateLayout()
             gWidget->enableListener();
         }
 
+        ui->wPSA->removeAnnounce();
         ui->bTransferManager->setVisible(false);
         ui->bAvatar->setVisible(false);
         ui->bTransferManager->setVisible(false);
@@ -948,11 +1009,10 @@ void InfoDialog::createQuotaUsedMenu()
 void InfoDialog::animateStates(bool opt)
 {
     if (opt) //Enable animation for scanning/waiting states
-    {
+    {        
         ui->lUploadToMega->setIcon(QIcon(QString::fromAscii("://images/init_scanning.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
-        ui->lUploadToMegaDesc->setText(QString::fromUtf8(""));
-        overlay->setVisible(false);
+        ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
 
         if (!opacityEffect)
         {
@@ -970,14 +1030,17 @@ void InfoDialog::animateStates(bool opt)
             connect(animation, SIGNAL(finished()), SLOT(onAnimationFinished()));
         }
 
-        animation->start();
+        if (animation->state() != QAbstractAnimation::Running)
+        {
+            animation->start();
+        }
     }
     else //Disable animation
-    {
+    {   
         ui->lUploadToMega->setIcon(QIcon(QString::fromAscii("://images/upload_to_mega.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
+        ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 18px;"));
         ui->lUploadToMegaDesc->setText(QString::fromUtf8("Upload to MEGA now"));
-        overlay->setVisible(true);
 
         if (animation)
         {
@@ -986,7 +1049,10 @@ void InfoDialog::animateStates(bool opt)
                 opacityEffect->setOpacity(1.0);
             }
 
-            animation->stop();
+            if (animation->state() == QAbstractAnimation::Running)
+            {
+                animation->stop();
+            }
         }
     }
 }
@@ -1018,8 +1084,7 @@ void InfoDialog::on_bDotUsedQuota_clicked()
 
 void InfoDialog::on_bDiscard_clicked()
 {
-    storageState = Preferences::STATE_OVER_STORAGE_DISMISSED;
-    updateDialogState();
+    updateOverStorageState(Preferences::STATE_OVER_STORAGE_DISMISSED);
     emit dismissOQ(overQuotaState);
 }
 

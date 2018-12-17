@@ -11,12 +11,12 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/3.9.4.0";
-const int Preferences::VERSION_CODE = 3904;
+const char Preferences::USER_AGENT[] = "MEGAsync/3.9.5.0";
+const int Preferences::VERSION_CODE = 3905;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.0.0");
-QString Preferences::SDK_ID = QString::fromAscii("BETA4");
+QString Preferences::SDK_ID = QString::fromAscii("RC1");
 const QString Preferences::CHANGELOG = QString::fromUtf8(
             "- New design for the main dialog\n"
             "- Improved setup assistant\n"
@@ -31,10 +31,10 @@ const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStri
 const int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
 const int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
 
-const long long Preferences::OQ_DIALOG_INTERVAL_MS = 420000; // 7 min
-const long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 36000; // 36 secs
-const long long Preferences::ALMOST_OS_INTERVAL_MS = 72000; // 72 secs
-const long long Preferences::OS_INTERVAL_MS = 36000; // 36 secs
+const long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
+const long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 129600000; // 36 hours
+const long long Preferences::ALMOST_OS_INTERVAL_MS = 259200000; // 72 hours
+const long long Preferences::OS_INTERVAL_MS = 129600000; // 36 hours
 const long long Preferences::USER_INACTIVITY_MS = 20000; // 20 secs
 
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
@@ -336,6 +336,7 @@ const QString Preferences::httpsCertExpirationKey   = QString::fromAscii("httpsC
 const QString Preferences::transferIdentifierKey    = QString::fromAscii("transferIdentifier");
 const QString Preferences::lastPublicHandleKey      = QString::fromAscii("lastPublicHandle");
 const QString Preferences::lastPublicHandleTimestampKey = QString::fromAscii("lastPublicHandleTimestamp");
+const QString Preferences::storageWarningKey        = QString::fromAscii("storageWarning");
 
 const bool Preferences::defaultShowNotifications    = true;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -2638,6 +2639,30 @@ void Preferences::setLastPublicHandle(MegaHandle handle)
     assert(logged());
     settings->setValue(lastPublicHandleKey, (unsigned long long) handle);
     settings->setValue(lastPublicHandleTimestampKey, QDateTime::currentMSecsSinceEpoch());
+    settings->sync();
+    mutex.unlock();
+}
+
+bool Preferences::hasStorageWarning()
+{
+    mutex.lock();
+    assert(logged());
+    int value = settings->value(storageWarningKey, -1).toInt();
+    long long total = settings->value(totalStorageKey).toLongLong();
+    if (!total || value == -1)
+    {
+        value = !total || settings->value(usedStorageKey).toLongLong() >= (0.9 * total);
+        settings->setValue(storageWarningKey, value);
+        settings->sync();
+    }
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setStorageWarning(bool value)
+{
+    mutex.lock();
+    settings->setValue(storageWarningKey, value);
     settings->sync();
     mutex.unlock();
 }
