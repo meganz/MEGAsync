@@ -832,7 +832,7 @@ margin-right: 20px;</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
              <property name="spacing">
-              <number>23</number>
+              <number>18</number>
              </property>
              <property name="leftMargin">
               <number>20</number>
