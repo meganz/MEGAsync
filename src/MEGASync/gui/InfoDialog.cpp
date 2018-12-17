@@ -1040,7 +1040,7 @@ void InfoDialog::animateStates(bool opt)
         ui->lUploadToMega->setIcon(QIcon(QString::fromAscii("://images/upload_to_mega.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
         ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 18px;"));
-        ui->lUploadToMegaDesc->setText(QString::fromUtf8("Upload to MEGA now"));
+        ui->lUploadToMegaDesc->setText(tr("Upload to MEGA now"));
 
         if (animation)
         {

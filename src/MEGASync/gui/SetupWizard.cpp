@@ -1041,7 +1041,7 @@ void SetupWizard::page_mode()
 
     ui->bSkip->setVisible(true);
     ui->bSkip->setEnabled(true);
-    ui->bSkip->setText(QString::fromUtf8("Skip"));
+    ui->bSkip->setText(tr("Skip"));
     ui->bNext->setDefault(false);
     ui->bCancel->setDefault(false);
     ui->wHelp->show();
@@ -1123,7 +1123,7 @@ void SetupWizard::page_newaccount()
     ui->bBack->setEnabled(false);
     ui->bSkip->setVisible(true);
     ui->bSkip->setEnabled(true);
-    ui->bSkip->setText(QString::fromUtf8("Login"));
+    ui->bSkip->setText(tr("Login"));
     ui->eName->setFocus();
     ui->bNext->setDefault(true);
     ui->cAgreeWithTerms->setChecked(false);

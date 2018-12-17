@@ -428,3 +428,12 @@ void GuestWidget::page_logout()
 
     ui->sPages->setCurrentWidget(ui->pProgress);
 }
+
+void GuestWidget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+    QWidget::changeEvent(event);
+}

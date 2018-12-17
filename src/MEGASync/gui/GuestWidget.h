@@ -64,6 +64,8 @@ protected:
     void page_progress();
     void page_settingUp();
     void page_logout();
+
+    void changeEvent(QEvent * event);
 };
 
 #endif // GUESWIDGET_H
