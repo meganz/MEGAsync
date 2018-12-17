@@ -1837,7 +1837,7 @@ void MegaApplication::restoreSyncs()
     }
 }
 
-void MegaApplication::closeDialogs()
+void MegaApplication::closeDialogs(bool bwoverquota)
 {
     delete transferManager;
     transferManager = NULL;
@@ -1881,8 +1881,11 @@ void MegaApplication::closeDialogs()
     delete sslKeyPinningError;
     sslKeyPinningError = NULL;
 
-    delete bwOverquotaDialog;
-    bwOverquotaDialog = NULL;
+    if (!bwoverquota)
+    {
+        delete bwOverquotaDialog;
+        bwOverquotaDialog = NULL;
+    }
 
     delete storageOverquotaDialog;
     storageOverquotaDialog = NULL;
@@ -5460,7 +5463,7 @@ void MegaApplication::openBwOverquotaDialog()
             bwOverquotaEvent = true;
         }
     }
-    else
+    else if (!bwOverquotaDialog->isVisible())
     {
         bwOverquotaDialog->activateWindow();
         bwOverquotaDialog->raise();
@@ -6416,6 +6419,19 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         preferences->setRubbishFolders(details->getNumFolders(rubbishHandle));
         delete rubbish;
 
+        if (!megaApi->getBandwidthOverquotaDelay() && preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
+        {
+            bwOverquotaTimestamp = 0;
+            preferences->clearTemporalBandwidth();
+#ifdef __MACH__
+            trayIcon->setContextMenu(&emptyMenu);
+#endif
+            if (bwOverquotaDialog)
+            {
+                bwOverquotaDialog->close();
+            }
+        }
+
         preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
         preferences->setTemporalBandwidth(details->getTemporalBandwidth());
         preferences->setTemporalBandwidthValid(details->isTemporalBandwidthValid());
@@ -6440,26 +6456,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         delete inShares;
 
         preferences->sync();
-
-        if (!megaApi->getBandwidthOverquotaDelay())
-        {
-            bwOverquotaTimestamp = 0;
-            preferences->clearTemporalBandwidth();
-#ifdef __MACH__
-            trayIcon->setContextMenu(&emptyMenu);
-#endif
-            if (bwOverquotaDialog)
-            {
-                if (preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
-                {
-                    bwOverquotaDialog->close();
-                }
-                else
-                {
-                    bwOverquotaDialog->refreshAccountDetails();
-                }
-            }
-        }
 
         applyStorageState(storageState);
 
@@ -7078,16 +7074,16 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     preferences->setTransferDownloadMethod(api->getDownloadMethod());
     preferences->setTransferUploadMethod(api->getUploadMethod());
 
-    if (e->getErrorCode() == MegaError::API_EOVERQUOTA && e->getValue() && bwOverquotaTimestamp <= QDateTime::currentMSecsSinceEpoch() / 1000)
+    if (e->getErrorCode() == MegaError::API_EOVERQUOTA && e->getValue() && bwOverquotaTimestamp <= (QDateTime::currentMSecsSinceEpoch() / 1000))
     {
         preferences->clearTemporalBandwidth();
         megaApi->getPricing();
         updateUserStats(true);
-        bwOverquotaTimestamp = QDateTime::currentMSecsSinceEpoch() / 1000 + e->getValue();
+        bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
 #ifdef __MACH__
         trayIcon->setContextMenu(initialMenu);
 #endif
-        closeDialogs();
+        closeDialogs(true);
         openBwOverquotaDialog();
     }
 }

@@ -242,7 +242,7 @@ protected:
     void unityFix();
     void disableSyncs();
     void restoreSyncs();
-    void closeDialogs();
+    void closeDialogs(bool bwoverquota = false);
     void calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy);
     void deleteMenu(QMenu *menu);
     void startHttpServer();
