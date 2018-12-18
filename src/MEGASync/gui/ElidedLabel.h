@@ -22,7 +22,8 @@ public:
     bool isElided() const { return elided; }
 
 protected:
-    void paintEvent(QPaintEvent *event) override;
+
+    void paintEvent(QPaintEvent *event);
 
 signals:
     void elisionChanged(bool elided);
