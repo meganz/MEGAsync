@@ -6,7 +6,10 @@
 #include <QUrl>
 #include "platform/Platform.h"
 #include "gui/Login2FA.h"
+
+#if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
+#endif
 
 using namespace mega;
 

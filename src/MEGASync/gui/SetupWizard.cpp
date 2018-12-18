@@ -6,7 +6,10 @@
 #include "gui/MultiQFileDialog.h"
 #include "gui/Login2FA.h"
 #include "platform/Platform.h"
+
+#if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
+#endif
 
 using namespace mega;
 
