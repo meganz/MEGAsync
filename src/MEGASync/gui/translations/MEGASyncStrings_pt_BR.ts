@@ -1983,6 +1983,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to inform the user about the potential issues of syncing a local folder with VMWare.</translatorcomment>
         <translation type="unfinished">Você está sincronizando uma pasta local compartilhada com o VMWare. Essas pastas não suportam notificações do sistema de arquivos, portanto, o MEGAsync terá que ser continuamente verificado para detectar alterações em seus arquivos e pastas. Se possível, use uma pasta diferente, para reduzir o uso da CPU.</translation>
     </message>
+    <message>
+        <source>Get PRO</source>
+        <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
+        <translation type="unfinished">Get PRO</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
+        <translation type="unfinished">Mostrar na pasta</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2338,7 +2348,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Não é possível sincronizar esta pasta. Por favor, certifique-se de que você não usa caracteres como ‘\’, ‘/’  ou ‘:’ nos nomes das suas pastas.</translation>
+        <translation type="unfinished">Não é possível sincronizar esta pasta. Por favor, certifique-se de que você não usa caracteres como ‘\’, ‘/’  ou ‘:’ nos nomes das suas pastas.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2399,7 +2409,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Know More</source>
         <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
-        <translation type="unfinished">Saiba mais</translation>
+        <translation type="obsolete">Saiba mais</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -3756,6 +3766,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>We are all done!</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
         <translation type="unfinished">Terminamos!</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translatorcomment>Button label to open Login form</translatorcomment>
+        <translation type="unfinished">Entrar</translation>
     </message>
 </context>
 <context>

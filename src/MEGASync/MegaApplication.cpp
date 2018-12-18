@@ -3835,7 +3835,7 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
             preferences->setLastTransferNotificationTimestamp();
             notification->setTitle(title);
             notification->setText(message);
-            notification->setActions(QStringList() << QString::fromUtf8("Show in folder"));
+            notification->setActions(QStringList() << tr("Show in folder"));
             notification->setData(((data->totalTransfers == 1) ? QString::number(1) : QString::number(0)) + data->localPath);
             connect(notification, SIGNAL(activated(int)), this, SLOT(showInFolder(int)));
             notificator->notify(notification);
