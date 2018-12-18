@@ -2,9 +2,12 @@
 #include "ui_PSAwidget.h"
 #include <QDesktopServices>
 #include <Utilities.h>
+#include <QTimer>
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
+#else
+#include <QtConcurrentRun>
 #endif
 
 PSAwidget::PSAwidget(QWidget *parent) :
@@ -62,7 +65,7 @@ void PSAwidget::setAnnounce(int id, QString title, QString desc, QString urlImag
 
     if (Utilities::getDevicePixelRatio() >= 2)
     {
-        QString imageName = QUrl(urlImage).fileName().split(QString::fromUtf8(".")).at(0);
+        QString imageName = QFileInfo(urlImage).fileName().split(QString::fromUtf8(".")).at(0);
         if (!imageName.contains(QRegExp(QString::fromUtf8("@2x$"))))
         {
             urlImage.replace(imageName, imageName + QString::fromUtf8("@2x"));
