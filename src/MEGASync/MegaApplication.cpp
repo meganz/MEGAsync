@@ -639,6 +639,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updateAction = NULL;
     updateActionGuest = NULL;
     showStatusAction = NULL;
+    doNotDisplayShowStatusAction = false;
     pasteMegaLinksDialog = NULL;
     changeLogDialog = NULL;
     importDialog = NULL;
@@ -1229,6 +1230,7 @@ void MegaApplication::start()
 
             delete showStatusAction;
             showStatusAction = NULL;
+            doNotDisplayShowStatusAction = true;
         }
     }
     else
@@ -5288,6 +5290,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 
                 delete showStatusAction;
                 showStatusAction = NULL;
+                doNotDisplayShowStatusAction = true;
             }
 
             if (trayMenu && trayMenu->isVisible())
@@ -5584,7 +5587,7 @@ void MegaApplication::createTrayMenu()
     initialMenu->addAction(initialExitAction);
 
 
-    if (isLinux && infoDialog)
+    if (isLinux && infoDialog && !doNotDisplayShowStatusAction)
     {
         if (showStatusAction)
         {
