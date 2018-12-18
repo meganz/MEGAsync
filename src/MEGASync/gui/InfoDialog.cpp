@@ -842,6 +842,9 @@ void InfoDialog::regenerateLayout()
             gWidget->enableListener();
         }
 
+        updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
+        setOverQuotaMode(false);
+
         ui->wPSA->removeAnnounce();
         ui->bTransferManager->setVisible(false);
         ui->bAvatar->setVisible(false);
