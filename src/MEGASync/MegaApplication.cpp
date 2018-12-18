@@ -4471,19 +4471,6 @@ void MegaApplication::createTrayIcon()
 
     if (isLinux)
     {
-        if (trayIcon->contextMenu())
-        {
-            if (showStatusAction)
-            {
-                showStatusAction->deleteLater();
-                showStatusAction = NULL;
-            }
-
-            showStatusAction = new QAction(tr("Show status"), this);
-            connect(showStatusAction, SIGNAL(triggered()), this, SLOT(showInfoDialog()));
-
-            initialMenu->insertAction(changeProxyAction, showStatusAction);
-        }
         return;
     }
 
@@ -5595,6 +5582,22 @@ void MegaApplication::createTrayMenu()
 
     initialMenu->addAction(changeProxyAction);
     initialMenu->addAction(initialExitAction);
+
+
+    if (isLinux && infoDialog)
+    {
+        if (showStatusAction)
+        {
+            showStatusAction->deleteLater();
+            showStatusAction = NULL;
+        }
+
+        showStatusAction = new QAction(tr("Show status"), this);
+        connect(showStatusAction, SIGNAL(triggered()), this, SLOT(showInfoDialog()));
+
+        initialMenu->insertAction(changeProxyAction, showStatusAction);
+    }
+
 
 #ifdef _WIN32
     if (!windowsMenu)
