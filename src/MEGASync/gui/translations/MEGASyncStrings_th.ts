@@ -1983,6 +1983,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to inform the user about the potential issues of syncing a local folder with VMWare.</translatorcomment>
         <translation type="unfinished">คุณกำลังซิงค์โฟลเดอร์ภายในเครื่องที่แชร์กับ VMWare โฟลเดอร์เหล่านี้ไม่สนับสนุนการแจ้งเตือนระบบไฟล์ ดังนั้น MEGAsync จะต้องสแกนเพื่อตรวจหาการเปลี่ยนแปลงในไฟล์และโฟลเดอร์ของคุณอย่างต่อเนื่อง หากเป็นไปได้ กรุณาใช้โฟลเดอร์อื่น เพื่อลดการใช้งาน CPU</translation>
     </message>
+    <message>
+        <source>Get PRO</source>
+        <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
+        <translation type="unfinished">รับบัญชี PRO</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
+        <translation type="unfinished">แสดงในโฟลเดอร์</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2338,7 +2348,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>โฟลเดอร์สำหรับการซิงโครไนซ์ไม่ถูกต้องกรุณาตรวจสอบว่าคุณไม่ได้ใช้อักขระเหล่านี้ ‘\’ ‘/’ หรือ ‘:’ ในชื่อโฟลเดอร์ของคุณ</translation>
+        <translation type="unfinished">โฟลเดอร์สำหรับการซิงโครไนซ์ไม่ถูกต้องกรุณาตรวจสอบว่าคุณไม่ได้ใช้อักขระเหล่านี้ ‘\’ ‘/’ หรือ ‘:’ ในชื่อโฟลเดอร์ของคุณ</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2399,7 +2409,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Know More</source>
         <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
-        <translation type="unfinished">รู้เพิ่มเติม</translation>
+        <translation type="obsolete">รู้เพิ่มเติม</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -3756,6 +3766,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>We are all done!</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
         <translation type="unfinished">เสร็จแล้วจ้า!</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translatorcomment>Button label to open Login form</translatorcomment>
+        <translation type="unfinished">เข้าสู่ระบบ</translation>
     </message>
 </context>
 <context>

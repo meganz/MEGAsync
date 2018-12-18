@@ -1984,6 +1984,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to inform the user about the potential issues of syncing a local folder with VMWare.</translatorcomment>
         <translation type="unfinished">U bent een lokale map aan het synchroniseren met VMWare. Deze mappen ondersteunen geen bestandssysteem notificaties dus MEGAsync moet steeds worden gescand om wijzigingen te detecteren in uw bestanden en mappen. Gebruik een andere map mits mogelijk om het CPU verbruik te verminderen.</translation>
     </message>
+    <message>
+        <source>Get PRO</source>
+        <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
+        <translation type="unfinished">Get PRO</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
+        <translation type="unfinished">Weergeven in map</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2339,7 +2349,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Ongeldige map voor synchronisatie. Zorg ervoor dat u geen karakters gebruikt zoals ‘\’, ‘/’ of ‘:’ in uw map namen.</translation>
+        <translation type="unfinished">Ongeldige map voor synchronisatie. Zorg ervoor dat u geen karakters gebruikt zoals ‘\’, ‘/’ of ‘:’ in uw map namen.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2400,7 +2410,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Know More</source>
         <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
-        <translation type="unfinished">Leer Meer</translation>
+        <translation type="obsolete">Leer Meer</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -3758,6 +3768,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>We are all done!</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
         <translation type="unfinished">We zijn klaar!</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translatorcomment>Button label to open Login form</translatorcomment>
+        <translation type="unfinished">Login</translation>
     </message>
 </context>
 <context>
