@@ -286,7 +286,6 @@ protected:
 
     MenuItemAction *updateAction;
     QAction *showStatusAction;
-    bool doNotDisplayShowStatusAction;
 
     MenuItemAction *exitActionGuest;
     MenuItemAction *settingsActionGuest;

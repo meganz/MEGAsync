@@ -639,7 +639,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updateAction = NULL;
     updateActionGuest = NULL;
     showStatusAction = NULL;
-    doNotDisplayShowStatusAction = false;
     pasteMegaLinksDialog = NULL;
     changeLogDialog = NULL;
     importDialog = NULL;
@@ -1222,18 +1221,7 @@ void MegaApplication::start()
     storageState = MegaApi::STORAGE_STATE_GREEN;
     appliedStorageState = MegaApi::STORAGE_STATE_GREEN;;
 
-    if (isLinux && trayIcon->contextMenu())
-    {
-        if (showStatusAction)
-        {
-            initialMenu->removeAction(showStatusAction);
-
-            delete showStatusAction;
-            showStatusAction = NULL;
-            doNotDisplayShowStatusAction = true;
-        }
-    }
-    else
+    if (!isLinux || !trayIcon->contextMenu())
     {
         trayIcon->setContextMenu(initialMenu);
     }
@@ -5284,15 +5272,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 #ifndef __APPLE__
         if (isLinux)
         {
-            if (showStatusAction)
-            {
-                initialMenu->removeAction(showStatusAction);
-
-                delete showStatusAction;
-                showStatusAction = NULL;
-                doNotDisplayShowStatusAction = true;
-            }
-
             if (trayMenu && trayMenu->isVisible())
             {
                 trayMenu->close();
@@ -5587,7 +5566,7 @@ void MegaApplication::createTrayMenu()
     initialMenu->addAction(initialExitAction);
 
 
-    if (isLinux && infoDialog && !doNotDisplayShowStatusAction)
+    if (isLinux && infoDialog)
     {
         if (showStatusAction)
         {
