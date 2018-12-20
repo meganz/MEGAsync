@@ -1987,7 +1987,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get PRO</source>
         <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
-        <translation type="unfinished">Get PRO</translation>
+        <translation type="unfinished">Neem PRO</translation>
     </message>
     <message>
         <source>Show in folder</source>

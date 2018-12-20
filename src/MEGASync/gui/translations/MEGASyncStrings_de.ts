@@ -420,7 +420,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>failed:</source>
         <translatorcomment>Label to indicate that the transfer failed. The reason will be appended after colon symbol.</translatorcomment>
-        <translation type="unfinished">failed:</translation>
+        <translation type="unfinished">fehlgeschlagen:</translation>
     </message>
     <message>
         <source>%1 of %2</source>
@@ -430,7 +430,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>starting...</source>
         <translatorcomment>Label to indicate that a transfer is starting.</translatorcomment>
-        <translation type="unfinished">starting…</translation>
+        <translation type="unfinished">beginnt...</translation>
     </message>
     <message>
         <source>PAUSED</source>
@@ -445,22 +445,22 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>retrying...</source>
         <translatorcomment>Label to indicate that a transfer is being retried.</translatorcomment>
-        <translation type="unfinished">retrying…</translation>
+        <translation type="unfinished">wird wiederholt...</translation>
     </message>
     <message>
         <source>completing...</source>
         <translatorcomment>Label to indicate that a transfer is being completed.</translatorcomment>
-        <translation type="unfinished">completing…</translation>
+        <translation type="unfinished">endet...</translation>
     </message>
     <message>
         <source>Added [A]</source>
         <translatorcomment>Label to indicate that a transfer finished (added to the list of recently finished transfers) [A] time ago. [A] will be updated with the time since the transfer finished.</translatorcomment>
-        <translation type="unfinished">Added [A]</translation>
+        <translation type="unfinished">[A] hinzugefügt</translation>
     </message>
     <message>
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
-        <translation type="unfinished">Out of storage space</translation>
+        <translation type="unfinished">Speicherplatz vollständig belegt</translation>
     </message>
 </context>
 <context>
@@ -661,12 +661,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login to MEGA</source>
         <translatorcomment>Label shown at main dialog before logging in</translatorcomment>
-        <translation type="unfinished">Login to MEGA</translation>
+        <translation type="unfinished">In MEGA einloggen</translation>
     </message>
     <message>
         <source>Email address</source>
         <translatorcomment>Tip shown in email line edit before typing the user email address.</translatorcomment>
-        <translation type="unfinished">Email address</translation>
+        <translation type="unfinished">E-Mail-Adresse</translation>
     </message>
     <message>
         <source>Password</source>
@@ -686,7 +686,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Setting up your account...</source>
         <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation type="unfinished">Setting up your account…</translation>
+        <translation type="unfinished">Ihr Account wird eingerichtet...</translation>
     </message>
     <message>
         <source>Logging in...</source>
@@ -1107,7 +1107,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA now</source>
         <translatorcomment>Label shown at main dialog when the user is already logged in to inform that he can start uploading files to MEGA</translatorcomment>
-        <translation type="unfinished">Upload to MEGA now</translation>
+        <translation type="unfinished">Jetzt auf MEGA hochladen</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -1117,12 +1117,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Buy more space</source>
         <translatorcomment>Button label to redirect the user to upgrade the account in the website.</translatorcomment>
-        <translation type="unfinished">Buy more space</translation>
+        <translation type="unfinished">Mehr Speicherplatz erwerben</translation>
     </message>
     <message>
         <source>TRANSFER QUOTA %1</source>
         <translatorcomment>Label shown to indicate the actual transfer quota used by the current account. %1 will be replaced with the used bandwidth quota</translatorcomment>
-        <translation type="unfinished">TRANSFER QUOTA %1</translation>
+        <translation type="unfinished">TRANSFERVOLUMEN %1</translation>
     </message>
     <message>
         <source>You&apos;re running out of storage space.</source>
@@ -1132,27 +1132,27 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
-        <translation type="unfinished">Upgrade to PRO now before your account becomes full and your uploads to MEGA stop.</translation>
+        <translation type="unfinished">Erweitern Sie auf PRO, bevor Ihr Account vollläuft und Ihre Uploads angehalten werden.</translation>
     </message>
     <message>
         <source>Your MEGA account is full.</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation type="unfinished">Your MEGA account is full.</translation>
+        <translation type="unfinished">Ihr MEGA-Account ist voll.</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled. Please upgrade to PRO</source>
         <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
-        <translation type="obsolete">All file uploads are currently disabled. Please upgrade to PRO.</translation>
+        <translation type="obsolete">Uploads sind gesperrt. Bitte erwerben Sie PRO-Status.</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled.</source>
         <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
-        <translation type="unfinished">All file uploads are currently disabled.</translation>
+        <translation type="unfinished">Dateiuploads sind derzeit nicht möglich.</translation>
     </message>
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation type="unfinished">Please upgrade to PRO.</translation>
+        <translation type="unfinished">Bitte erweitern Sie Ihren Account auf PRO.</translation>
     </message>
 </context>
 <context>
@@ -1329,7 +1329,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>6 digit code:</source>
         <translatorcomment>Placeholder text on the Two Factor Authentication login dialog telling the user to enter their 6 digit code from the Google Authenticator app.</translatorcomment>
-        <translation type="unfinished">6 digit code</translation>
+        <translation type="unfinished">6stelliger Code</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1349,7 +1349,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Lost your authenticator device?[/A]</source>
         <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation type="unfinished">[A]Lost your Authenticator device?[/A]</translation>
+        <translation type="unfinished">[A]Authenticator verlorengegangen?[/A]</translation>
     </message>
 </context>
 <context>
@@ -1856,37 +1856,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is almost full.</source>
         <translatorcomment>Title of the system notification when the account is almost full.</translatorcomment>
-        <translation type="unfinished">Your account is almost full.</translation>
+        <translation type="unfinished">Ihr Account ist fast voll.</translation>
     </message>
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation type="unfinished">Upgrade now to a PRO account.</translation>
+        <translation type="unfinished">Erweitern Sie Ihren Account auf PRO!</translation>
     </message>
     <message>
         <source>Your account is full.</source>
         <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
-        <translation type="unfinished">Your account is full.</translation>
+        <translation type="unfinished">Ihr Account ist voll.</translation>
     </message>
     <message>
         <source>1 file and 1 folder were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that 1 files and 1 folder were successfully uploaded</translatorcomment>
-        <translation type="unfinished">1 file and 1 folder were successfully uploaded</translation>
+        <translation type="unfinished">1 Datei und 1 Ordner wurden erfolgreich hochgeladen</translation>
     </message>
     <message>
         <source>%1 files and 1 folder were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files and 1 folder were successfully uploaded</translatorcomment>
-        <translation type="unfinished">%1 files and 1 folder were successfully uploaded</translation>
+        <translation type="unfinished">%1 Dateien und 1 Ordner wurden erfolgreich hochgeladen</translation>
     </message>
     <message>
         <source>1 file and %1 folders were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that 1 files and %1 folders were successfully uploaded</translatorcomment>
-        <translation type="unfinished">1 file and %1 folders were successfully uploaded</translation>
+        <translation type="unfinished">1 Datei und %1 Ordner wurden erfolgreich hochgeladen</translation>
     </message>
     <message>
         <source>%1 files and %2 folders were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folder were successfully uploaded</translatorcomment>
-        <translation type="unfinished">%1 files and %2 folders were successfully uploaded</translation>
+        <translation type="unfinished">%1 Dateien und %2 Ordner wurden erfolgreich hochgeladen</translation>
     </message>
     <message>
         <source>Folder Upload</source>
@@ -1896,12 +1896,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 folder was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that 1 folder was successfully uploaded</translatorcomment>
-        <translation type="unfinished">1 folder was successfully uploaded</translation>
+        <translation type="unfinished">1 Ordner wurde erfolgreich hochgeladen</translation>
     </message>
     <message>
         <source>%1 folders were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 folders were successfully uploaded</translatorcomment>
-        <translation type="unfinished">%1 folders were successfully uploaded</translation>
+        <translation type="unfinished">%1 Ordner wurden erfolgreich hochgeladen</translation>
     </message>
     <message>
         <source>File Upload</source>
@@ -1911,62 +1911,62 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 file was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that 1 file was successfully uploaded</translatorcomment>
-        <translation type="unfinished">1 file was successfully uploaded</translation>
+        <translation type="unfinished">1 Datei wurde erfolgreich hochgeladen</translation>
     </message>
     <message>
         <source>%1 files were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation type="unfinished">%1 files were successfully uploaded</translation>
+        <translation type="unfinished">%1 Dateien wurden erfolgreich hochgeladen</translation>
     </message>
     <message>
         <source>1 file and 1 folder were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that 1 files and 1 folder were successfully downloaded</translatorcomment>
-        <translation type="unfinished">1 file and 1 folder were successfully downloaded</translation>
+        <translation type="unfinished">1 Datei und 1 Ordner wurden erfolgreich heruntergeladen</translation>
     </message>
     <message>
         <source>%1 files and 1 folder were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and 1 folder were successfully downloaded</translatorcomment>
-        <translation type="unfinished">%1 files and 1 folder were successfully downloaded</translation>
+        <translation type="unfinished">%1 Dateien und 1 Ordner wurden erfolgreich heruntergeladen</translation>
     </message>
     <message>
         <source>1 file and %1 folders were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that 1 files and %1 folders were successfully downloaded</translatorcomment>
-        <translation type="unfinished">1 file and %1 folders were successfully downloaded</translation>
+        <translation type="unfinished">1 Datei und %1 Ordner wurden erfolgreich heruntergeladen</translation>
     </message>
     <message>
         <source>%1 files and %2 folders were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folder were successfully downloaded</translatorcomment>
-        <translation type="unfinished">%1 files and %2 folders were successfully downloaded</translation>
+        <translation type="unfinished">%1 Dateien und %2 Ordner wurden erfolgreich heruntergeladen</translation>
     </message>
     <message>
         <source>Folder Download</source>
         <translatorcomment>Title of system notifications related to a folder download</translatorcomment>
-        <translation type="unfinished">Folder Download</translation>
+        <translation type="unfinished">Ordner-Download</translation>
     </message>
     <message>
         <source>1 folder was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that 1 folder was successfully downloaded</translatorcomment>
-        <translation type="unfinished">1 folder was successfully downloaded</translation>
+        <translation type="unfinished">1 Ordner wurde erfolgreich heruntergeladen</translation>
     </message>
     <message>
         <source>%1 folders were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 folders were successfully downloaded</translatorcomment>
-        <translation type="unfinished">%1 folders were successfully downloaded</translation>
+        <translation type="unfinished">%1 Ordner wurden erfolgreich heruntergeladen</translation>
     </message>
     <message>
         <source>File Download</source>
         <translatorcomment>Title of system notifications related to a file download</translatorcomment>
-        <translation type="unfinished">File Download</translation>
+        <translation type="unfinished">Dateidownload</translation>
     </message>
     <message>
         <source>1 file was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that 1 file was successfully downloaded</translatorcomment>
-        <translation type="unfinished">1 file was successfully downloaded</translation>
+        <translation type="unfinished">1 Datei wurde erfolgreich heruntergeladen</translation>
     </message>
     <message>
         <source>%1 files were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation type="unfinished">%1 files were successfully downloaded</translation>
+        <translation type="unfinished">%1 Dateien wurden erfolgreich heruntergeladen</translation>
     </message>
     <message>
         <source>Add Sync</source>
@@ -1981,12 +1981,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Label to inform the user about the potential issues of syncing a local folder with VMWare.</translatorcomment>
-        <translation type="unfinished">You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</translation>
+        <translation type="unfinished">Sie synchronisieren mit einem lokalen Ordner, der auch eine VMWare-Freigabe ist. Leider unterstützen diese Ordner keine Änderungsbenachrichtigungen, sodass MEGAsync ständig nach Änderungen scannen muss. Bitte wählen Sie einen anderen Ordner, um die CPU-Belastung zu reduzieren.</translation>
     </message>
     <message>
         <source>Get PRO</source>
         <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
-        <translation type="unfinished">Get PRO</translation>
+        <translation type="unfinished">PRO-Upgrade</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -2131,12 +2131,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>SSL verification failed</source>
         <translatorcomment>Error shown when SSL check has failed</translatorcomment>
-        <translation type="unfinished">SSL verification failed</translation>
+        <translation type="unfinished">SSL-Prüfung fehlgeschlagen</translation>
     </message>
     <message>
         <source>Not enough quota</source>
         <translatorcomment>Label shown when current account does not have enough quota to complete the operation</translatorcomment>
-        <translation type="unfinished">Not enough quota</translation>
+        <translation type="unfinished">Sie haben Ihr Limit überschritten</translation>
     </message>
 </context>
 <context>
@@ -2348,7 +2348,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation type="unfinished">Invalid folder for synchronization. Please, ensure that you don’t use characters like ‘\’, ‘/’ or ‘:’ in your folder names.</translation>
+        <translation type="unfinished">Ungültiger Ordnerpfad. Bitte verwenden Sie keine reservierten Zeichen wie  ‘\’, ‘/’ oder ‘:’.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2409,7 +2409,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Know More</source>
         <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
-        <translation type="obsolete">Know More</translation>
+        <translation type="obsolete">Mehr erfahren</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -3317,7 +3317,7 @@ when the application starts again</source>
     <message>
         <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
         <translatorcomment>Label to inform the user that current account is over storage and uploads will be disable. Encourage the user to buy more space and upgrade to PRO. Keep [A] and [/A] codes.</translatorcomment>
-        <translation type="unfinished">Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</translation>
+        <translation type="unfinished">Ihr MEGA-Account ist voll. Uploads wurden gestoppt, was auch Ihre synchronisierten Ordner betrifft. [A]Mehr Speicherplatz erwerben[/A]</translation>
     </message>
 </context>
 <context>
@@ -3700,17 +3700,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>First name:</source>
         <translatorcomment>Label for first name field in the create account form</translatorcomment>
-        <translation type="unfinished">First name:</translation>
+        <translation type="unfinished">Vorname:</translation>
     </message>
     <message>
         <source>Last name:</source>
         <translatorcomment>Label for last name field in the create account form</translatorcomment>
-        <translation type="unfinished">Last name:</translation>
+        <translation type="unfinished">Nachname:</translation>
     </message>
     <message>
         <source>Check your inbox</source>
         <translatorcomment>Label shown when the user has just created an account and needs to check his inbox to verify it</translatorcomment>
-        <translation type="unfinished">Check your inbox</translation>
+        <translation type="unfinished">Prüfen Sie Ihren Posteingang</translation>
     </message>
     <message>
         <source>Sync specific folders in your cloud drive</source>
@@ -3725,22 +3725,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enjoy MEGAsync!</source>
         <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation type="unfinished">Enjoy MEGAsync!</translation>
+        <translation type="unfinished">Viel Erfolg mit MEGAsync!</translation>
     </message>
     <message>
         <source>Please, enter your last name</source>
         <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
-        <translation type="unfinished">Please, enter your last name</translation>
+        <translation type="unfinished">Bitte geben Sie Ihren Nachnamen ein</translation>
     </message>
     <message>
         <source>Setup selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Setup selective sync</translation>
+        <translation type="unfinished">Multi-Ordner-Synchronisation</translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Specific folders in your Cloud Drive will be synchronised with a local folder.</translation>
+        <translation type="unfinished">Von Ihnen ausgewählte Ordner in Ihrem Cloud Drive werden mit lokalen Ordnern synchronisiert.</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
@@ -3750,7 +3750,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Setup full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Setup full sync</translation>
+        <translation type="unfinished">Komplett-Sync konfigurieren</translation>
     </message>
     <message>
         <source>Full Sync</source>
@@ -3760,12 +3760,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Your entire Cloud Drive will be synchronized with a local folder.</translation>
+        <translation type="unfinished">Ihr gesamtes Cloud Drive wird mit einem lokalen Ordner synchronisiert.</translation>
     </message>
     <message>
         <source>We are all done!</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
-        <translation type="unfinished">We are all done!</translation>
+        <translation type="unfinished">Fertig!</translation>
     </message>
     <message>
         <source>Login</source>
@@ -3904,7 +3904,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Account full</source>
         <translatorcomment>Information label in the main dialog to show that the current account is full.</translatorcomment>
-        <translation type="unfinished">Account full</translation>
+        <translation type="unfinished">Account voll</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -4221,7 +4221,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
-        <translation type="unfinished">Out of storage space</translation>
+        <translation type="unfinished">Speicherplatz vollständig belegt</translation>
     </message>
 </context>
 <context>
@@ -4271,22 +4271,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is full ([A] / [B]). All file uploads to MEGA are currently disabled.</source>
         <translatorcomment>Label to inform the user about a full account, showing the used storage, the total available and some information about file uploads.</translatorcomment>
-        <translation type="obsolete">Your account is full ([A] / [B]). All file uploads to MEGA are currently disabled.</translation>
+        <translation type="obsolete">Ihr Account ist voll ([A] / [B]). Sie können derzeit keine Dateien auf MEGA hochladen.</translation>
     </message>
     <message>
         <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
         <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
-        <translation type="unfinished">Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</translation>
+        <translation type="unfinished">Für zusätzlichen Speicherplatz erweitern Sie Ihren Account bitte auf PRO (Ihre Uploads werden dann automatisch fortgesetzt).</translation>
     </message>
     <message>
         <source>Earn more storage quota with [A]Achievements[/A].</source>
         <translatorcomment>Label to inform the user about achievements and the benefit of earning more storage quota. Achievements label will redirect to the achievements section in the webclient when clicked.</translatorcomment>
-        <translation type="unfinished">Earn more storage quota with [A]Achievements[/A].</translation>
+        <translation type="unfinished">Kostenloser Speicherplatz mit unserem [A]Bonusprogramm[/A].</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation type="unfinished">Your MEGA account is full.</translation>
+        <translation type="unfinished">Ihr MEGA-Account ist voll.</translation>
     </message>
     <message>
         <source>%1 of %2</source>
