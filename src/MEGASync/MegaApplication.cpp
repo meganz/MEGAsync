@@ -7367,10 +7367,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Current state. Paused = %1   Indexing = %2   Waiting = %3")
                  .arg(paused).arg(indexing).arg(waiting).toUtf8().constData());
 
-    if (!isLinux)
-    {
-        updateTrayIcon();
-    }
+    updateTrayIcon();
 }
 
 void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *)
