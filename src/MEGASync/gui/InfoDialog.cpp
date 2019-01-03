@@ -902,6 +902,9 @@ void InfoDialog::regenerateLayout()
         dialogLayout->addWidget(ui->wContainerBottom);
         ui->wContainerBottom->setVisible(true);
 
+        // Show storage usage
+        on_bDotUsedStorage_clicked();
+
         #ifdef __APPLE__
             if (dummy)
             {
