@@ -133,15 +133,10 @@
         <file>images/app_64.png</file>
         <file>images/non_logged_graphic.png</file>
         <file>translations/MEGASyncStrings_ar.qm</file>
-        <file>translations/MEGASyncStrings_bg.qm</file>
-        <file>translations/MEGASyncStrings_cs.qm</file>
         <file>translations/MEGASyncStrings_de.qm</file>
         <file>translations/MEGASyncStrings_en.qm</file>
         <file>translations/MEGASyncStrings_es.qm</file>
-        <file>translations/MEGASyncStrings_fi.qm</file>
         <file>translations/MEGASyncStrings_fr.qm</file>
-        <file>translations/MEGASyncStrings_he.qm</file>
-        <file>translations/MEGASyncStrings_hu.qm</file>
         <file>translations/MEGASyncStrings_id.qm</file>
         <file>translations/MEGASyncStrings_it.qm</file>
         <file>translations/MEGASyncStrings_ja.qm</file>
@@ -152,10 +147,6 @@
         <file>translations/MEGASyncStrings_pt_BR.qm</file>
         <file>translations/MEGASyncStrings_ro.qm</file>
         <file>translations/MEGASyncStrings_ru.qm</file>
-        <file>translations/MEGASyncStrings_sk.qm</file>
-        <file>translations/MEGASyncStrings_sl.qm</file>
-        <file>translations/MEGASyncStrings_sr.qm</file>
-        <file>translations/MEGASyncStrings_sv.qm</file>
         <file>translations/MEGASyncStrings_th.qm</file>
         <file>translations/MEGASyncStrings_tl.qm</file>
         <file>translations/MEGASyncStrings_tr.qm</file>
