@@ -26,7 +26,12 @@
    <string>Setup Assistant - MEGAsync</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lTypicalDesc, #lAdvancedDesc
+   <string notr="true">#SetupWizard
+{
+	background-color: #f1f1f1;
+}
+
+#lTypicalDesc, #lAdvancedDesc
 {
 	font-size:13px; 
 	color:#666666;
@@ -771,7 +776,7 @@
             </property>
             <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="0,1">
              <property name="spacing">
-              <number>6</number>
+              <number>0</number>
              </property>
              <property name="leftMargin">
               <number>0</number>
@@ -801,7 +806,7 @@
                </property>
                <property name="maximumSize">
                 <size>
-                 <width>18</width>
+                 <width>16777215</width>
                  <height>23</height>
                 </size>
                </property>

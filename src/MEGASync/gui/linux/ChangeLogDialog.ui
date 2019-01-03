@@ -39,7 +39,9 @@ QPushButton:focus {
 #ChangeLogDialog
 {
 border-radius: 5px;
+	background-color: #f1f1f1;
 }
+
 #lVersion, #lSDKVersion
 {
   font-family: &quot;Helvetica&quot;;

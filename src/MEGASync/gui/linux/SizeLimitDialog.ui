@@ -32,7 +32,11 @@
    <string>Exclude by size</string>
   </property>
   <property name="styleSheet">
-   <string notr="true"/>
+   <string notr="true">#SizeLimitDialog
+{
+	background-color: #f1f1f1;
+}
+</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">

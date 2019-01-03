@@ -47,18 +47,13 @@ QGroupBox {
 	border:none;
 }
 
-QCheckBox::indicator {
-     width: 16px;
-     height: 16px;
- }
-
-QRadioButton::indicator {
-     width: 22px;
-     height: 22px;
- }
-
 QScrollBar:horizontal {
 height: 16px;
+}
+
+#SettingsDialog
+{
+	background-color: #f1f1f1;
 }
 
 #wTabHeader QToolButton
@@ -4001,8 +3996,7 @@ background:transparent;</string>
           <item row="8" column="1">
            <widget class="QWidget" name="widget_13" native="true">
             <property name="styleSheet">
-             <string notr="true">padding-left: -1px;
-</string>
+             <string notr="true"/>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_19">
              <property name="spacing">

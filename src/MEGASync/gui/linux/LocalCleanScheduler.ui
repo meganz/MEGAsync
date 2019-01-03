@@ -25,6 +25,13 @@
   <property name="windowTitle">
    <string>%1 cleaning scheduler</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#LocalCleanScheduler
+{
+	background-color: #f1f1f1;
+}
+</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
     <number>6</number>
