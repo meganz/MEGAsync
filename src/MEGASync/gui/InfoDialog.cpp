@@ -844,8 +844,9 @@ void InfoDialog::regenerateLayout()
 
         updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
         setOverQuotaMode(false);
-
+        on_bDotUsedStorage_clicked();
         ui->wPSA->removeAnnounce();
+
         ui->bTransferManager->setVisible(false);
         ui->bAvatar->setVisible(false);
         ui->bTransferManager->setVisible(false);
