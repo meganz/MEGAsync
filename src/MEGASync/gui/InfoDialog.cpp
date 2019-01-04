@@ -844,8 +844,9 @@ void InfoDialog::regenerateLayout()
 
         updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
         setOverQuotaMode(false);
-
+        on_bDotUsedStorage_clicked();
         ui->wPSA->removeAnnounce();
+
         ui->bTransferManager->setVisible(false);
         ui->bAvatar->setVisible(false);
         ui->bTransferManager->setVisible(false);
@@ -901,9 +902,6 @@ void InfoDialog::regenerateLayout()
         ui->wSeparator->setVisible(true);
         dialogLayout->addWidget(ui->wContainerBottom);
         ui->wContainerBottom->setVisible(true);
-
-        // Show storage usage
-        on_bDotUsedStorage_clicked();
 
         #ifdef __APPLE__
             if (dummy)
