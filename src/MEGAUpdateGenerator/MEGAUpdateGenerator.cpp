@@ -3,8 +3,6 @@
 #include <vector>
 #include <string>
 
-#include "mega/types.h"
-#include "mega/crypto/cryptopp.h"
 #include "mega.h"
 
 #define KEY_LENGTH 4096
