@@ -84,15 +84,10 @@ HEADERS += MegaApplication.h
 
 TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ar.ts \
-    gui/translations/MEGASyncStrings_bg.ts \
-    gui/translations/MEGASyncStrings_cs.ts \
     gui/translations/MEGASyncStrings_de.ts \
     gui/translations/MEGASyncStrings_en.ts \
     gui/translations/MEGASyncStrings_es.ts \
-    gui/translations/MEGASyncStrings_fi.ts \
     gui/translations/MEGASyncStrings_fr.ts \
-    gui/translations/MEGASyncStrings_he.ts \
-    gui/translations/MEGASyncStrings_hu.ts \
     gui/translations/MEGASyncStrings_id.ts \
     gui/translations/MEGASyncStrings_it.ts \
     gui/translations/MEGASyncStrings_ja.ts \
@@ -103,10 +98,6 @@ TRANSLATIONS = \
     gui/translations/MEGASyncStrings_pt.ts \
     gui/translations/MEGASyncStrings_ro.ts \
     gui/translations/MEGASyncStrings_ru.ts \
-    gui/translations/MEGASyncStrings_sk.ts \
-    gui/translations/MEGASyncStrings_sl.ts \
-    gui/translations/MEGASyncStrings_sr.ts \
-    gui/translations/MEGASyncStrings_sv.ts \
     gui/translations/MEGASyncStrings_th.ts \
     gui/translations/MEGASyncStrings_tl.ts \
     gui/translations/MEGASyncStrings_tr.ts \
