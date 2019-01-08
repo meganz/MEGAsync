@@ -599,6 +599,9 @@ border-bottom-right-radius: 2px;
              </property>
              <item>
               <widget class="QPushButton" name="bForgotPassword">
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background: transparent;
 image: none;
@@ -625,6 +628,9 @@ image: none;
              </item>
              <item>
               <widget class="QPushButton" name="bCreateAccount">
+               <property name="cursor">
+                <cursorShape>PointingHandCursor</cursorShape>
+               </property>
                <property name="styleSheet">
                 <string notr="true">background: transparent;
 image: none;
