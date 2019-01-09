@@ -32,7 +32,9 @@ win32 {
 }
 
 macx {
-   LIBS += -L$$_PRO_FILE_PWD_/../MEGAsync/mega/bindings/qt/3rdparty/libs
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
+    QMAKE_CXXFLAGS += -DCRYPTOPP_DISABLE_ASM
+    LIBS += -L$$_PRO_FILE_PWD_/../MEGAsync/mega/bindings/qt/3rdparty/libs
 }
 
 DEFINES += USE_CRYPTOPP
@@ -48,6 +50,7 @@ win32 {
 
 unix {
     INCLUDEPATH += ../MEGASync/mega/include/mega/posix
+    DEFINES += USE_PTHREAD
 }
 
 SOURCES += MEGAUpdateGenerator.cpp

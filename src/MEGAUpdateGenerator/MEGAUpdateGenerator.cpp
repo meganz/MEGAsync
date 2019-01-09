@@ -3,15 +3,17 @@
 #include <vector>
 #include <string>
 
-#include "mega/types.h"
-#include "mega/crypto/cryptopp.h"
 #include "mega.h"
 
 #define KEY_LENGTH 4096
 #define SIGNATURE_LENGTH 512
 
 using namespace mega;
-using namespace std;
+using std::string;
+using std::cout;
+using std::cerr;
+using std::endl;
+using std::ifstream;
 
 void printUsage(const char* appname)
 {
@@ -24,7 +26,7 @@ void printUsage(const char* appname)
     cerr << "        " << appname << " /tmp/updatefiles /tmp/key.pem --file /megasync/contrib/updater/fileswin.txt" << endl;
 }
 
-unsigned signFile(const char * filePath, AsymmCipher* key, byte* signature, unsigned signbuflen)
+unsigned signFile(const char * filePath, AsymmCipher* key, ::mega::byte* signature, unsigned signbuflen)
 {
     HashSignature signatureGenerator(new Hash());
     char buffer[1024];
@@ -38,7 +40,7 @@ unsigned signFile(const char * filePath, AsymmCipher* key, byte* signature, unsi
     while (input.good())
     {
         input.read(buffer, sizeof(buffer));
-        signatureGenerator.add((byte *)buffer, (unsigned)input.gcount());
+        signatureGenerator.add((::mega::byte *)buffer, (unsigned)input.gcount());
     }
 
     if (input.bad())
@@ -81,7 +83,7 @@ bool generateHash(const char * filePath, string *hash)
     while (input.good())
     {
         input.read(buffer, sizeof(buffer));
-        hashGenerator.add((byte *)buffer, (unsigned)input.gcount());
+        hashGenerator.add((::mega::byte *)buffer, (unsigned)input.gcount());
     }
 
     if (input.bad())
@@ -110,7 +112,7 @@ bool generateHashFromContents(string contents, string *hash)
     contents.append("\n");
 
     HashSHA256 hashGenerator;
-    hashGenerator.add((const byte *)contents.data(),contents.size());
+    hashGenerator.add((const ::mega::byte *)contents.data(),contents.size());
 
     string binaryhash;
     hashGenerator.get(&binaryhash);
@@ -170,7 +172,7 @@ int main(int argc, char *argv[])
     AsymmCipher aprivk;
     vector<string> downloadURLs;
     vector<string> signatures;
-    byte signature[SIGNATURE_LENGTH];
+    ::mega::byte signature[SIGNATURE_LENGTH];
     unsigned signatureSize;
     string pubk;
     string privk;
@@ -189,11 +191,11 @@ int main(int argc, char *argv[])
 
         int len = pubks.size();
         char* pubkstr = new char[len*4/3+4];
-        Base64::btoa((const byte *)pubks.data(),len,pubkstr);
+        Base64::btoa((const ::mega::byte *)pubks.data(),len,pubkstr);
 
         len = privks.size();
         char *privkstr = new char[len*4/3+4];
-        Base64::btoa((const byte *)privks.data(),len,privkstr);
+        Base64::btoa((const ::mega::byte *)privks.data(),len,privkstr);
 
         cout << pubkstr << endl;
         cout << privkstr << endl;
@@ -233,8 +235,8 @@ int main(int argc, char *argv[])
         //Initialize AsymmCypher
         string privks;
         privks.resize(privk.size()/4*3+3);
-        privks.resize(Base64::atob(privk.data(), (byte *)privks.data(), privks.size()));
-        aprivk.setkey(AsymmCipher::PRIVKEY,(byte*)privks.data(), privks.size());
+        privks.resize(Base64::atob(privk.data(), (::mega::byte *)privks.data(), privks.size()));
+        aprivk.setkey(AsymmCipher::PRIVKEY,(::mega::byte*)privks.data(), privks.size());
 
         //Generate update file signature
         vector<string> filesVector;
@@ -322,7 +324,7 @@ int main(int argc, char *argv[])
             return 5;
         }
 
-        signatureGenerator.add((const byte *)sversioncode.c_str(), strlen(sversioncode.c_str()));
+        signatureGenerator.add((const ::mega::byte *)sversioncode.c_str(), strlen(sversioncode.c_str()));
 
         for (unsigned int i = 0; i < filesVector.size(); i++)
         {
@@ -352,16 +354,16 @@ int main(int argc, char *argv[])
 
             string s;
             s.resize((signatureSize*4)/3+4);
-            s.resize(Base64::btoa((byte *)signature, signatureSize, (char *)s.data()));
+            s.resize(Base64::btoa((::mega::byte *)signature, signatureSize, (char *)s.data()));
             signatures.push_back(s);
 
             string fileurl = baseUrl + filesVector.at(i);
             downloadURLs.push_back(fileurl);
 
-            signatureGenerator.add((const byte*)fileurl.data(), fileurl.size());
-            signatureGenerator.add((const byte*)targetPathsVector.at(i).data(),
+            signatureGenerator.add((const ::mega::byte*)fileurl.data(), fileurl.size());
+            signatureGenerator.add((const ::mega::byte*)targetPathsVector.at(i).data(),
                                    targetPathsVector.at(i).size());
-            signatureGenerator.add((const byte*)s.data(), s.length());
+            signatureGenerator.add((const ::mega::byte*)s.data(), s.length());
         }
 
         signatureSize = signatureGenerator.get(&aprivk, signature, sizeof(signature));
@@ -390,7 +392,7 @@ int main(int argc, char *argv[])
 
         string updateFileSignature;
         updateFileSignature.resize((signatureSize*4)/3+4);
-        updateFileSignature.resize(Base64::btoa((byte *)signature, signatureSize, (char *)updateFileSignature.data()));
+        updateFileSignature.resize(Base64::btoa((::mega::byte *)signature, signatureSize, (char *)updateFileSignature.data()));
 
         //Print update file
         cout << versionCode << endl;
