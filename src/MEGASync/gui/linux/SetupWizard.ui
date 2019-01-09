@@ -459,7 +459,7 @@
      </property>
      <widget class="QWidget" name="pNewAccount">
       <property name="styleSheet">
-       <string notr="true">background: transparent;</string>
+       <string notr="true">#pNewAccount{background: transparent;}</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_8">
        <property name="spacing">
@@ -811,7 +811,7 @@
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true"/>
+                <string notr="true">padding-right: 4px;</string>
                </property>
                <property name="text">
                 <string/>
