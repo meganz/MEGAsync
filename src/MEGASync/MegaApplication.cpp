@@ -1221,17 +1221,7 @@ void MegaApplication::start()
     storageState = MegaApi::STORAGE_STATE_GREEN;
     appliedStorageState = MegaApi::STORAGE_STATE_GREEN;;
 
-    if (isLinux && trayIcon->contextMenu())
-    {
-        if (showStatusAction)
-        {
-            initialMenu->removeAction(showStatusAction);
-
-            delete showStatusAction;
-            showStatusAction = NULL;
-        }
-    }
-    else
+    if (!isLinux || !trayIcon->contextMenu())
     {
         trayIcon->setContextMenu(initialMenu);
     }
@@ -1327,6 +1317,7 @@ void MegaApplication::start()
                     preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
                 }
             }
+            createTrayMenu();
         }
 
 
@@ -4471,19 +4462,6 @@ void MegaApplication::createTrayIcon()
 
     if (isLinux)
     {
-        if (trayIcon->contextMenu())
-        {
-            if (showStatusAction)
-            {
-                showStatusAction->deleteLater();
-                showStatusAction = NULL;
-            }
-
-            showStatusAction = new QAction(tr("Show status"), this);
-            connect(showStatusAction, SIGNAL(triggered()), this, SLOT(showInfoDialog()));
-
-            initialMenu->insertAction(changeProxyAction, showStatusAction);
-        }
         return;
     }
 
@@ -5295,14 +5273,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 #ifndef __APPLE__
         if (isLinux)
         {
-            if (showStatusAction)
-            {
-                initialMenu->removeAction(showStatusAction);
-
-                delete showStatusAction;
-                showStatusAction = NULL;
-            }
-
             if (trayMenu && trayMenu->isVisible())
             {
                 trayMenu->close();
@@ -5595,6 +5565,22 @@ void MegaApplication::createTrayMenu()
 
     initialMenu->addAction(changeProxyAction);
     initialMenu->addAction(initialExitAction);
+
+
+    if (isLinux && infoDialog)
+    {
+        if (showStatusAction)
+        {
+            showStatusAction->deleteLater();
+            showStatusAction = NULL;
+        }
+
+        showStatusAction = new QAction(tr("Show status"), this);
+        connect(showStatusAction, SIGNAL(triggered()), this, SLOT(showInfoDialog()));
+
+        initialMenu->insertAction(changeProxyAction, showStatusAction);
+    }
+
 
 #ifdef _WIN32
     if (!windowsMenu)
