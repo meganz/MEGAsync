@@ -163,7 +163,7 @@ QSize MegaTransferDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
 
 bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
-    if (QEvent::MouseButtonRelease ==  event->type())
+    if (QEvent::MouseButtonPress ==  event->type())
     {
         int tag = index.internalId();
         TransferItem *item = model->transferItems[tag];

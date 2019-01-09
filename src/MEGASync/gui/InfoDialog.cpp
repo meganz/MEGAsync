@@ -75,6 +75,13 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
     ui->pUsageStorage->setAttribute(Qt::WA_TransparentForMouseEvents);
 
+#ifdef __APPLE__
+    if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //Issues with mavericks and popup management
+    {
+        installEventFilter(this);
+    }
+#endif
+
     ui->wUsageStorage->installEventFilter(this);
     ui->wUsageStorage->setMouseTracking(true);
 
@@ -777,6 +784,16 @@ void InfoDialog::changeEvent(QEvent *event)
 
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 {
+#ifdef __APPLE__
+    if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //manage spontaneus mouse press events
+    {
+        if (obj == this && e->type() == QEvent::MouseButtonPress && e->spontaneous())
+        {
+            return true;
+        }
+    }
+#endif
+
     if (obj != ui->wUsageStorage)
     {
         return false;
