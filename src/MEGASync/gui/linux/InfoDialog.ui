@@ -313,7 +313,7 @@ color: #999999;
 {
     color: #333333;
     font-family: &quot;Source Sans Pro&quot;;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 #wHeader, #pOverquota, #pUpdated
