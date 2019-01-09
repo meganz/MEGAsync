@@ -784,50 +784,53 @@ void InfoDialog::changeEvent(QEvent *event)
 
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 {
-    if (obj == ui->wUsageStorage)
-    {
-        QPoint mousePos;
-        switch (e->type())
-        {
-        case QEvent::Hide:
-        case QEvent::Enter:
-             hideUsageBalloon();
-             break;
-
-        case QEvent::MouseButtonPress:
-        {
-             QMouseEvent *me = dynamic_cast<QMouseEvent*>(e);
-             mousePos = me->pos();
-             break;
-        }
-        case QEvent::ToolTip:
-        {
-             QHelpEvent *me = static_cast<QHelpEvent*>(e);
-             mousePos = me->pos();
-             break;
-        }
-        default:
-             break;
-
-        }
-
-        if (!mousePos.isNull() && preferences && preferences->totalStorage())
-        {
-            createQuotaUsedMenu();
-            QPoint p = ui->wUsageStorage->mapToGlobal(mousePos);
-            QSize s = storageUsedMenu->sizeHint();
-            storageUsedMenu->exec(QPoint(p.x() - s.width() / 2, p.y() - s.height()));
-        }
-    }
 #ifdef __APPLE__
-    else if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //manage spontaneus mouse press events
+    if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //manage spontaneus mouse press events
     {
-        if (e->type() == QEvent::MouseButtonPress && e->spontaneous())
+        if (obj == this && e->type() == QEvent::MouseButtonPress && e->spontaneous())
         {
             return true;
         }
     }
 #endif
+
+    if (obj != ui->wUsageStorage)
+    {
+        return false;
+    }
+
+    QPoint mousePos;
+    switch (e->type())
+    {
+    case QEvent::Hide:
+    case QEvent::Enter:
+         hideUsageBalloon();
+         break;
+
+    case QEvent::MouseButtonPress:
+    {
+         QMouseEvent *me = dynamic_cast<QMouseEvent*>(e);
+         mousePos = me->pos();
+         break;
+    }
+    case QEvent::ToolTip:
+    {
+         QHelpEvent *me = static_cast<QHelpEvent*>(e);
+         mousePos = me->pos();
+         break;
+    }
+    default:
+         break;
+
+    }
+
+    if (!mousePos.isNull() && preferences && preferences->totalStorage())
+    {
+        createQuotaUsedMenu();
+        QPoint p = ui->wUsageStorage->mapToGlobal(mousePos);
+        QSize s = storageUsedMenu->sizeHint();
+        storageUsedMenu->exec(QPoint(p.x() - s.width() / 2, p.y() - s.height()));
+    }
 
     return QDialog::eventFilter(obj, e);
 }
