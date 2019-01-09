@@ -75,6 +75,13 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
     ui->pUsageStorage->setAttribute(Qt::WA_TransparentForMouseEvents);
 
+#ifdef __APPLE__
+    if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //Issues with mavericks and popup management
+    {
+        installEventFilter(this);
+    }
+#endif
+
     ui->wUsageStorage->installEventFilter(this);
     ui->wUsageStorage->setMouseTracking(true);
 
@@ -777,43 +784,50 @@ void InfoDialog::changeEvent(QEvent *event)
 
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 {
-    if (obj != ui->wUsageStorage)
+    if (obj == ui->wUsageStorage)
     {
-        return false;
-    }
+        QPoint mousePos;
+        switch (e->type())
+        {
+        case QEvent::Hide:
+        case QEvent::Enter:
+             hideUsageBalloon();
+             break;
 
-    QPoint mousePos;
-    switch (e->type())
-    {
-    case QEvent::Hide:
-    case QEvent::Enter:
-         hideUsageBalloon();
-         break;
+        case QEvent::MouseButtonPress:
+        {
+             QMouseEvent *me = dynamic_cast<QMouseEvent*>(e);
+             mousePos = me->pos();
+             break;
+        }
+        case QEvent::ToolTip:
+        {
+             QHelpEvent *me = static_cast<QHelpEvent*>(e);
+             mousePos = me->pos();
+             break;
+        }
+        default:
+             break;
 
-    case QEvent::MouseButtonPress:
-    {
-         QMouseEvent *me = dynamic_cast<QMouseEvent*>(e);
-         mousePos = me->pos();
-         break;
-    }
-    case QEvent::ToolTip:
-    {
-         QHelpEvent *me = static_cast<QHelpEvent*>(e);
-         mousePos = me->pos();
-         break;
-    }
-    default:
-         break;
+        }
 
+        if (!mousePos.isNull() && preferences && preferences->totalStorage())
+        {
+            createQuotaUsedMenu();
+            QPoint p = ui->wUsageStorage->mapToGlobal(mousePos);
+            QSize s = storageUsedMenu->sizeHint();
+            storageUsedMenu->exec(QPoint(p.x() - s.width() / 2, p.y() - s.height()));
+        }
     }
-
-    if (!mousePos.isNull() && preferences && preferences->totalStorage())
+#ifdef __APPLE__
+    else if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //manage spontaneus mouse press events
     {
-        createQuotaUsedMenu();
-        QPoint p = ui->wUsageStorage->mapToGlobal(mousePos);
-        QSize s = storageUsedMenu->sizeHint();
-        storageUsedMenu->exec(QPoint(p.x() - s.width() / 2, p.y() - s.height()));
+        if (e->type() == QEvent::MouseButtonPress && e->spontaneous())
+        {
+            return true;
+        }
     }
+#endif
 
     return QDialog::eventFilter(obj, e);
 }
