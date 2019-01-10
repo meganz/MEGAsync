@@ -40,6 +40,7 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     this->app = app;
     this->closing = false;
     this->loggingStarted = false;
+    this->creatingDefaultSyncFolder = false;
     this->closeBlocked = false;
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
@@ -254,6 +255,13 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         }
         case MegaRequest::TYPE_CREATE_FOLDER:
         {
+            if (!creatingDefaultSyncFolder)
+            {
+                break;
+            }
+
+            creatingDefaultSyncFolder = false;
+
             if (error->getErrorCode() == MegaError::API_OK)
             {
                 MegaNode *node = megaApi->getNodeByPath("/MEGAsync");
@@ -591,6 +599,7 @@ void SetupWizard::on_bNext_clicked()
 
             ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync"));
             megaApi->createFolder("MEGAsync", rootNode);
+            creatingDefaultSyncFolder = true;
             delete rootNode;
 
             ui->lProgress->setText(tr("Creating folder..."));

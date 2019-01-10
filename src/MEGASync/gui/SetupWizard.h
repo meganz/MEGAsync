@@ -83,6 +83,7 @@ protected:
     bool closing;
     bool closeBlocked;
     bool loggingStarted;
+    bool creatingDefaultSyncFolder;
     QTimer *animationTimer;
 };
 
