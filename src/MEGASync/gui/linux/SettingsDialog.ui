@@ -3285,7 +3285,7 @@ background:transparent;</string>
                </property>
                <property name="minimumSize">
                 <size>
-                 <width>443</width>
+                 <width>441</width>
                  <height>64</height>
                 </size>
                </property>
