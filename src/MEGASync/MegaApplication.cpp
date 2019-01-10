@@ -4466,7 +4466,14 @@ void MegaApplication::createTrayIcon()
     }
 
 #ifdef _WIN32
-    trayIcon->setContextMenu(windowsMenu);
+    if (preferences && preferences->logged() && megaApi && megaApi->isFilesystemAvailable())
+    {
+        trayIcon->setContextMenu(windowsMenu);
+    }
+    else
+    {
+        trayIcon->setContextMenu(initialMenu);
+    }
 #else
     trayIcon->setContextMenu(&emptyMenu);
 #endif
