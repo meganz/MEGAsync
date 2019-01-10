@@ -1220,6 +1220,7 @@ void MegaApplication::start()
     almostOQ = false;
     storageState = MegaApi::STORAGE_STATE_GREEN;
     appliedStorageState = MegaApi::STORAGE_STATE_GREEN;;
+    bwOverquotaTimestamp = 0;
 
     if (!isLinux || !trayIcon->contextMenu())
     {
