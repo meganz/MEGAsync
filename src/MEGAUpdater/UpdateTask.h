@@ -1,6 +1,10 @@
 #ifndef UPDATETASK_H
 #define UPDATETASK_H
 
+#ifdef _WIN32
+#include <Windows.h>
+#endif
+
 #include <cryptopp/cryptlib.h>
 #include <cryptopp/modes.h>
 #include <cryptopp/ccm.h>
@@ -15,6 +19,12 @@
 #include <cryptopp/algparam.h>
 #include <cryptopp/hmac.h>
 #include <cryptopp/pwdbased.h>
+
+#if CRYPTOPP_VERSION >= 600 && ((__cplusplus >= 201103L) || (__RPCNDR_H_VERSION__ == 500))
+using byte = CryptoPP::byte;
+#elif __RPCNDR_H_VERSION__ != 500
+typedef unsigned char byte;
+#endif
 
 class Base64
 {

@@ -69,3 +69,7 @@ win32 {
     QMAKE_LFLAGS_CONSOLE += /SUBSYSTEM:CONSOLE,5.01
     DEFINES += PSAPI_VERSION=1
 }
+
+unix:!macx {
+    error("This tool (MEGAupdater) is only compatible with Windows and macOS. On Linux, MEGA apps can be updated using the official repository.")
+}
