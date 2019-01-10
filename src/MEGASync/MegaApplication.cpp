@@ -1220,6 +1220,7 @@ void MegaApplication::start()
     almostOQ = false;
     storageState = MegaApi::STORAGE_STATE_GREEN;
     appliedStorageState = MegaApi::STORAGE_STATE_GREEN;;
+    bwOverquotaTimestamp = 0;
 
     if (!isLinux || !trayIcon->contextMenu())
     {
@@ -2604,6 +2605,8 @@ void MegaApplication::showInfoDialog()
             }
     #ifdef __MACH__
             trayIcon->setContextMenu(&emptyMenu);
+    #elif defined(_WIN32)
+            trayIcon->setContextMenu(windowsMenu);
     #endif
         }
     }
@@ -4466,7 +4469,8 @@ void MegaApplication::createTrayIcon()
     }
 
 #ifdef _WIN32
-    if (preferences && preferences->logged() && megaApi && megaApi->isFilesystemAvailable())
+    if (preferences && preferences->logged() && megaApi && megaApi->isFilesystemAvailable()
+            && bwOverquotaTimestamp <= QDateTime::currentMSecsSinceEpoch() / 1000)
     {
         trayIcon->setContextMenu(windowsMenu);
     }
@@ -6435,6 +6439,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             preferences->clearTemporalBandwidth();
 #ifdef __MACH__
             trayIcon->setContextMenu(&emptyMenu);
+#elif defined(_WIN32)
+            trayIcon->setContextMenu(windowsMenu);
 #endif
             if (bwOverquotaDialog)
             {
@@ -7089,6 +7095,8 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         updateUserStats(true);
         bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
 #ifdef __MACH__
+        trayIcon->setContextMenu(initialMenu);
+#elif defined(_WIN32)
         trayIcon->setContextMenu(initialMenu);
 #endif
         closeDialogs(true);
