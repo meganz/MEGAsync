@@ -29,7 +29,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->setupUi(this);
     //Set window properties
 #ifdef Q_OS_LINUX
-    if (!QSystemTrayIcon::isSystemTrayAvailable())
+    if (true || !QSystemTrayIcon::isSystemTrayAvailable()) //To avoid issues with text input we implement popup ourselves by listening to WindowDeactivate event
     {
         setWindowFlags(Qt::FramelessWindowHint);
     }
@@ -82,7 +82,11 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     }
 #endif
 
+#ifdef Q_OS_LINUX
+    installEventFilter(this);
+#else
     ui->wUsageStorage->installEventFilter(this);
+#endif
     ui->wUsageStorage->setMouseTracking(true);
 
     ui->lOQDesc->setTextFormat(Qt::RichText);
@@ -784,6 +788,13 @@ void InfoDialog::changeEvent(QEvent *event)
 
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 {
+#ifdef Q_OS_LINUX
+    if (e->type() == QEvent::WindowDeactivate)
+    {
+        close();
+        return true;
+    }
+#endif
 #ifdef __APPLE__
     if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //manage spontaneus mouse press events
     {

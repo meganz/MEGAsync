@@ -208,7 +208,7 @@ int main(int argc, char *argv[])
     {
         if (!unsetenv("SHLVL")) // reported failure in mint
         {
-            std::cerr <<  "Error unsetting SHLVL vble" << std::endl;
+            //std::cerr <<  "Error unsetting SHLVL vble" << std::endl; //Fedora fails to unset this env var ... too verbose error
         }
     }
 #endif
