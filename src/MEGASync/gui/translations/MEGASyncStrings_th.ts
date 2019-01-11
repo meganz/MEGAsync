@@ -16,7 +16,7 @@
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">กล่องเข้า</translation>
+        <translation type="unfinished">กล่องขาเข้า</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -1079,7 +1079,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">กล่องเข้า</translation>
+        <translation type="unfinished">กล่องขาเข้า</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -4369,7 +4369,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">กล่องเข้า</translation>
+        <translation type="unfinished">กล่องขาเข้า</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -4400,7 +4400,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">กล่องเข้า</translation>
+        <translation type="unfinished">กล่องขาเข้า</translation>
     </message>
     <message>
         <source>Used</source>

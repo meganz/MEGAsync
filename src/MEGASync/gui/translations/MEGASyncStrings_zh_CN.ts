@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">可使用的</translation>
+        <translation type="unfinished">可用</translation>
     </message>
     <message>
         <source>Total size taken up by file versions:</source>
@@ -1054,7 +1054,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Paused</source>
         <translatorcomment>Label to indicate that MEGAsync is at pause state</translatorcomment>
-        <translation type="obsolete">暂停</translation>
+        <translation type="obsolete">已暂停</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -1420,7 +1420,7 @@ Exit anyway?</source>
     <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Notification message launched when a link to a file has been copied succesfully to the clipboard.</translatorcomment>
-        <translation>此链接已被复制到剪贴簿</translation>
+        <translation>此链接已复制到剪贴板</translation>
     </message>
     <message>
         <source>The links have been copied to the clipboard</source>
@@ -1468,7 +1468,7 @@ Exit anyway?</source>
     <message>
         <source>Paused</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is in a paused state.</translatorcomment>
-        <translation>暂停</translation>
+        <translation>已暂停</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -2039,7 +2039,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Expired</source>
         <translatorcomment>Label to show that an error related with expiration occurs during a SDK operation.</translatorcomment>
-        <translation>过期</translation>
+        <translation>已过期</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -2159,7 +2159,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get link</source>
         <translatorcomment>Tooltip shown when the mouse is over the &quot;Get link&quot; button related to a completed transfer</translatorcomment>
-        <translation type="unfinished">取得链接</translation>
+        <translation type="unfinished">获得链接</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -2695,7 +2695,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Help</source>
         <translatorcomment>Button label for Help.</translatorcomment>
-        <translation>客户服务</translation>
+        <translation>帮助</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2755,12 +2755,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Storage space</source>
         <translatorcomment>Label to indicate the actual storage space used.</translatorcomment>
-        <translation>储存空间</translation>
+        <translation>存储空间</translation>
     </message>
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
-        <translation>付费升级</translation>
+        <translation>升级</translation>
     </message>
     <message>
         <source>Synced folders</source>
@@ -3248,7 +3248,7 @@ when the application starts again</source>
     <message>
         <source>Transfer quota</source>
         <translatorcomment>Label to indicate the transfer quota usage of current logged account</translatorcomment>
-        <translation type="unfinished">传输配额(频宽)</translation>
+        <translation type="unfinished">传输流量</translation>
     </message>
     <message>
         <source>Don&apos;t show icons on the left pane of Windows Explorer</source>
@@ -3424,7 +3424,7 @@ when the application starts again</source>
     <message>
         <source>Change</source>
         <translatorcomment>Button label to change the local or remote folder during the process of createn a new synchronization. String as short as possible.</translatorcomment>
-        <translation>变更</translation>
+        <translation>更改</translation>
     </message>
     <message>
         <source>Welcome to MEGA</source>
@@ -3672,7 +3672,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Good</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Good security </translatorcomment>
-        <translation type="unfinished">好</translation>
+        <translation type="unfinished">很好</translation>
     </message>
     <message>
         <source>Strong</source>
@@ -3889,7 +3889,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Paused</source>
         <translatorcomment>Information label in the main dialog to show that all transfers are paused</translatorcomment>
-        <translation type="unfinished">暂停</translation>
+        <translation type="unfinished">已暂停</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -4002,7 +4002,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Text shown when a streaming link has been copied to the clipboard</translatorcomment>
-        <translation type="unfinished">此链接已被复制到剪贴簿</translation>
+        <translation type="unfinished">此链接已复制到剪贴板</translation>
     </message>
     <message>
         <source>Error generating streaming link</source>
@@ -4408,7 +4408,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">可使用的</translation>
+        <translation type="unfinished">可用</translation>
     </message>
 </context>
 <context>

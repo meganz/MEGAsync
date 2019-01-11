@@ -3854,7 +3854,11 @@ void MegaApplication::showInFolder(int activationButton)
     MegaNotification *notification = ((MegaNotification *)QObject::sender());
 
     if ((activationButton == MegaNotification::ActivationActionButtonClicked
-         || activationButton == MegaNotification::ActivationLegacyNotificationClicked)
+         || activationButton == MegaNotification::ActivationLegacyNotificationClicked
+     #ifndef _WIN32
+         || activationButton == MegaNotification::ActivationContentClicked
+     #endif
+         )
             && notification->getData().size() > 1)
     {
         QString localPath = QDir::toNativeSeparators(notification->getData().mid(1));
@@ -3872,7 +3876,11 @@ void MegaApplication::showInFolder(int activationButton)
 void MegaApplication::redirectToUpgrade(int activationButton)
 {
     if (activationButton == MegaNotification::ActivationActionButtonClicked
-            || activationButton == MegaNotification::ActivationLegacyNotificationClicked)
+            || activationButton == MegaNotification::ActivationLegacyNotificationClicked
+        #ifndef _WIN32
+            || activationButton == MegaNotification::ActivationContentClicked
+        #endif
+            )
     {
         QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
         QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);

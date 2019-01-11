@@ -26,11 +26,11 @@ void UsageProgressBar::setProgress(long long valueCloud, long long valueRubbish,
     ui->wShares->setStyleSheet(QString::fromUtf8(""));
     ui->wInbox->setStyleSheet(QString::fromUtf8(""));
 
-    int percentageCloud = ceil(1000 * valueCloud / (double)totalBytes);
-    int percentageRubbish = ceil(1000 * valueRubbish / (double)totalBytes) + percentageCloud;
-    int percentageShares = ceil(1000 * valueShares / (double)totalBytes) + percentageRubbish;
-    int percentageinbox = ceil(1000 * valueInbox / (double)totalBytes) + percentageShares;
-    int percentageTotal = ceil(1000 * totalUsed / (double)totalBytes);
+    int percentageCloud = floor(1000 * valueCloud / (double)totalBytes);
+    int percentageRubbish = floor(1000 * valueRubbish / (double)totalBytes) + percentageCloud;
+    int percentageShares = floor(1000 * valueShares / (double)totalBytes) + percentageRubbish;
+    int percentageinbox = floor(1000 * valueInbox / (double)totalBytes) + percentageShares;
+    int percentageTotal = floor(1000 * totalUsed / (double)totalBytes);
 
     if (percentageTotal > 1000)
     {

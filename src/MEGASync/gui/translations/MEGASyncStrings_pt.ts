@@ -2814,7 +2814,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>(about 90% of the available bandwidth)</source>
         <translatorcomment>Label to indicate that management of rate upload limit is automatic is about the 90% of availbale bandwidth. Keep parenthesis.</translatorcomment>
-        <translation>(cerca de 90% da banda disponível)</translation>
+        <translation>(aproximadamente 90% da banda disponível)</translation>
     </message>
     <message>
         <source>Bandwidth quota</source>

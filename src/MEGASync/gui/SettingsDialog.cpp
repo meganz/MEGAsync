@@ -1121,7 +1121,7 @@ void SettingsDialog::loadSettings()
             {
                 ui->gBandwidthQuota->show();
                 ui->bSeparatorBandwidth->show();
-                int bandwidthPercentage = ceil(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+                int bandwidthPercentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
                 ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
                 ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
                         .arg(Utilities::getSizeString(preferences->usedBandwidth()))
@@ -1206,7 +1206,7 @@ void SettingsDialog::refreshAccountDetails()
     else
     {
         ui->bStorageDetails->setEnabled(true);
-        int percentage = ceil(100*((double)preferences->usedStorage()/preferences->totalStorage()));
+        int percentage = floor(100*((double)preferences->usedStorage()/preferences->totalStorage()));
         ui->pStorage->setValue((percentage < 100) ? percentage : 100);
         ui->lStorage->setText(tr("%1 (%2%) of %3 used")
               .arg(Utilities::getSizeString(preferences->usedStorage()))
@@ -1221,7 +1221,7 @@ void SettingsDialog::refreshAccountDetails()
     }
     else
     {
-        int percentage = ceil(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+        int percentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
         ui->pUsedBandwidth->setValue((percentage < 100) ? percentage : 100);
         ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
               .arg(Utilities::getSizeString(preferences->usedBandwidth()))

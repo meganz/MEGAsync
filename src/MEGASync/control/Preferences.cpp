@@ -16,14 +16,14 @@ const int Preferences::VERSION_CODE = 4000;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.0.0");
-QString Preferences::SDK_ID = QString::fromAscii("a01c42");
-const QString Preferences::CHANGELOG = QString::fromUtf8(
+QString Preferences::SDK_ID = QString::fromAscii("975d29");
+const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
             "- New design for the main dialog\n"
             "- Improved setup assistant\n"
             "- Support to show Public Service Announcements\n"
             "- Modern notifications\n"
             "- Updated third-party libraries\n"
-            "- Other minor bug fixes and improvements");
+            "- Other minor bug fixes and improvements"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");

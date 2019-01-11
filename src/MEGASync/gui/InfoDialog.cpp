@@ -200,7 +200,7 @@ void InfoDialog::setUsage()
     }
     else
     {
-        int percentage = ceil((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
+        int percentage = floor((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
         ui->pUsageStorage->setValue((percentage < 100) ? percentage : 100);
 
         if (percentage > 100)
@@ -239,7 +239,7 @@ void InfoDialog::setUsage()
     }
     else
     {
-        int percentage = ceil(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+        int percentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
         ui->pUsageQuota->setValue((percentage < 100) ? percentage : 100);
         if (percentage > 100)
         {
