@@ -507,6 +507,9 @@ background:transparent;</string>
           <underline>true</underline>
          </font>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Help</string>
         </property>
