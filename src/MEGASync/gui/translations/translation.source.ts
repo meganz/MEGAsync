@@ -2542,6 +2542,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>Preferences</name>
+    <message>
+        <source>- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
+        <translation type="unfinished">- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</translation>
+    </message>
+</context>
+<context>
     <name>QDialogButtonBox</name>
     <message>
         <source>&amp;Yes</source>
