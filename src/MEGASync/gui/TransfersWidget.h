@@ -14,13 +14,14 @@ namespace Ui {
 class TransfersWidget;
 }
 
+class MegaApplication;
 class TransfersWidget : public QWidget
 {
     Q_OBJECT
 
 public:
     explicit TransfersWidget(QWidget *parent = 0);
-    void setupFinishedTransfers(QList<mega::MegaTransfer* > transferData);
+    void setupFinishedTransfers(QList<mega::MegaTransfer* > transferData, int modelType = QTransfersModel::TYPE_FINISHED);
     void setupTransfers(mega::MegaTransferData *transferData, int type);
     void refreshTransferItems();
     void clearTransfers();
@@ -33,11 +34,11 @@ public:
 
 private:
     Ui::TransfersWidget *ui;
-    QList<TransferItem *> activeTransfers;
     QTransfersModel *model;
     MegaTransferDelegate *tDelegate;
     int type;
     int isPaused;
+    MegaApplication *app;
 
 private:
     void configureTransferView();

@@ -41,11 +41,11 @@ gzip -c9 Sources > Sources.gz
 cat > Release <<-EOF
 Archive: $DIST
 Codename: $DIST
-Origin: manual_build
+Origin: obs://private/DEB/$DIST
 Label: DEB
 Architectures: $ARCHS
 Date: $FECHA
-Description: Debian repository created by buildRepoDeb
+Description: DEB ($DIST)
 Components: main
 EOF
 
@@ -90,3 +90,10 @@ cp  /srv/obs/projects/DEB.pkg/_pubkey ./Release.key
 sudo sign -P /srv/obs/projects/DEB.pkg/_signkey -d Release
 mv Release.asc Release.gpg
 sudo chown pol:users Release.gpg
+
+echo "-----BEGIN PGP SIGNED MESSAGE-----" > InRelease
+echo "Hash: SHA512" >> InRelease
+echo "" >> InRelease
+cat Release >> InRelease
+echo "" >> InRelease
+cat Release.gpg >> InRelease

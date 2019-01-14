@@ -11,20 +11,19 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/3.7.1.0";
-const int Preferences::VERSION_CODE = 3701;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.0.0.0";
+const int Preferences::VERSION_CODE = 4000;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("3.7.1");
-QString Preferences::SDK_ID = QString::fromAscii("935765");
-const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- Support for multi-factor authentication\n"
-            "- Security improvements for the registration of new accounts\n"
-            "- Better performance for the upload of images\n"
-            "- Creation of thumbnails and previews for RAW images\n"
-            "- Improvements in the management of network connections\n"
-            "- New logic to get external changes in the MEGA account\n"
-            "- Other minor bug fixes and improvements");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.0.0");
+QString Preferences::SDK_ID = QString::fromAscii("975d29");
+const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
+            "- New design for the main dialog\n"
+            "- Improved setup assistant\n"
+            "- Support to show Public Service Announcements\n"
+            "- Modern notifications\n"
+            "- Updated third-party libraries\n"
+            "- Other minor bug fixes and improvements"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -32,12 +31,18 @@ const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStri
 const int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
 const int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
 
+const long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
+const long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 129600000; // 36 hours
+const long long Preferences::ALMOST_OS_INTERVAL_MS = 259200000; // 72 hours
+const long long Preferences::OS_INTERVAL_MS = 129600000; // 36 hours
+const long long Preferences::USER_INACTIVITY_MS = 20000; // 20 secs
+
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
 const long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS  = 7200000;
-const long long Preferences::MIN_UPDATE_STATS_INTERVAL_OVERQUOTA    = 30000;
 const long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
 const long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
 const long long Preferences::MIN_EXTERNAL_NODES_WARNING_MS          = 60000;
+const long long Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS  = 10000;
 
 const unsigned int Preferences::UPDATE_INITIAL_DELAY_SECS           = 60;
 const unsigned int Preferences::UPDATE_RETRY_INTERVAL_SECS          = 7200;
@@ -51,34 +56,33 @@ const qint16 Preferences::HTTP_PORT  = 6341;
 const qint16 Preferences::HTTPS_PORT = 6342;
 
 const QString Preferences::defaultHttpsKey = QString::fromUtf8(
-            "-----BEGIN PRIVATE KEY-----\n"
-            "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCxk9BUskgy2dHN\n"
-            "udvrzqsj3614UniXjAw3skMP+xUULBgaTcGgQkYRMM6I7ro/9Ropq5ypK5p8cmUq\n"
-            "TYhu/9Z4RP/asHDIMC7lIqIvgoZXQWdJHAhJ9KBgnYi+jQN0Q6IQBad9WR/dKMcu\n"
-            "lnN0oMyn82rO9owV47dYVzdQnPE1k1z1HqzKyqrBjHvGfSQyMA2YCuSl1K3EzQY8\n"
-            "NFYXeu3ZjwFCPvuDmRpLqkgKBrvwHPu0zaQN7WliNBz+8JnBt6PUNNvTZ0y/iYUR\n"
-            "T3k4SHlhi/xXdV9jqjAN433RMIrGIWpFnBoJpaTFbTsU3z6Nj5BU/TYQpaBOieiT\n"
-            "fO21acl7AgMBAAECggEAePMy7N1Zq7kM29EB6AUmMBMD9nZFyQMMt0rlvpbH7qtx\n"
-            "50ia32sEimTx5/aiSTnKjiNjWx5l5OmN2lhg2ynKjLSCiBOxXcjjyBHk4fNHSVs0\n"
-            "3GkJhEXojqX+I7usZJ5EXiFbyVbRCzPhJuw2y3NSsfpr/3eSRr6JfNQ6yt96s3/+\n"
-            "jCI05FP+3lR4BMiBIqHwEUXJeEU1tpR33qgg10ii18NgqQcLir2I/xaT7nzCvkBl\n"
-            "bxZYLEtM5dWL1J79qCOS/WlDvFSjlzh0BkkAhNYy7SChjPGOu0r/k07A2ec9KxO0\n"
-            "971B0tip4O+w8OjHDZvV80QpCXGKcQfEtd+/mBScgQKBgQDlmQ9PYOb8GSC2Yttg\n"
-            "XyIkisCqbUamIsojFL70U0wnkygykQXTkxiHYPtMVg4WyyLfF7oPqn0D0YOYEd+e\n"
-            "RFYiHdr+CA4IopsWZ5I4HqYtrbwtapMRQPFRzNIMNdMpFlfBGRV9ZKQQtXHV445w\n"
-            "n32KCUZVO26A6YYvmzmo7QR5WwKBgQDF/13BvTPlm+k0m2hheUWpiQqHrYW/oAai\n"
-            "rK7iVmT4Qln1YOCUvt17mDRxXj17NEKR4uVcDix5yrbFuClpeDZZkq1/2HIB5bD9\n"
-            "1uQWVzlYnCytaYusfq3XKfcwG/GIt6mi3lstZV4XdEFxjczdWt7EeWwAAr+DfYw6\n"
-            "pAYruMLKYQKBgDYs75fjXZ2OsFFY8jrDN+M3ek68ijcZbmjotEYigY21A38rCRzr\n"
-            "UJZhI+rXQ2vNcuUBTD32FJmaDlsLnKBTr59NPCdE70rKU53twmrLkJqmrAhrZVhk\n"
-            "4oxSsB2Bddn0E7DUomV8IdpvdfTqROn+ODkiBx6Fb4WrlKYXEnvxsWSRAoGAV1av\n"
-            "F+AK/XTJ6R/Ian7hQMinsXPUtNO1OZrsxgCQJ4a1Qe1LA7Ix5uwb7gpBGpDR8KJi\n"
-            "xDmoWs0V1J/I/LI/X0G5cNScbcPRUBezozs0m6bAeno9V4jFzEzBsiIRaFqD5Mkq\n"
-            "9Rpq5/OrTpjbTqVf8NES1+peanU+HzvtUOn+WuECgYEAxj++fk8A+dimgwM1qzh0\n"
-            "chTWqZygTQNvMAId11nRVJqC2nVOt1vSnM4HBBd+6qxG6eKOxzG4VyYJuHd18AT8\n"
-            "RplMrMlFmIJpvXRoFIgoPPS7qUnZcjEidPndXG42+xbD8eDsHnG4LMHB9+J9xLwA\n"
-            "xs+OLGD+kjzh+HkpkzYSDp4=\n"
-            "-----END PRIVATE KEY-----\n");
+            "-----BEGIN RSA PRIVATE KEY-----\n"
+            "MIIEowIBAAKCAQEAsZPQVLJIMtnRzbnb686rI9+teFJ4l4wMN7JDD/sVFCwYGk3B\n"
+            "oEJGETDOiO66P/UaKaucqSuafHJlKk2Ibv/WeET/2rBwyDAu5SKiL4KGV0FnSRwI\n"
+            "SfSgYJ2Ivo0DdEOiEAWnfVkf3SjHLpZzdKDMp/NqzvaMFeO3WFc3UJzxNZNc9R6s\n"
+            "ysqqwYx7xn0kMjANmArkpdStxM0GPDRWF3rt2Y8BQj77g5kaS6pICga78Bz7tM2k\n"
+            "De1pYjQc/vCZwbej1DTb02dMv4mFEU95OEh5YYv8V3VfY6owDeN90TCKxiFqRZwa\n"
+            "CaWkxW07FN8+jY+QVP02EKWgTonok3zttWnJewIDAQABAoIBAHjzMuzdWau5DNvR\n"
+            "AegFJjATA/Z2RckDDLdK5b6Wx+6rcedImt9rBIpk8ef2okk5yo4jY1seZeTpjdpY\n"
+            "YNspyoy0gogTsV3I48gR5OHzR0lbNNxpCYRF6I6l/iO7rGSeRF4hW8lW0Qsz4Sbs\n"
+            "NstzUrH6a/93kka+iXzUOsrferN//owiNORT/t5UeATIgSKh8BFFyXhFNbaUd96o\n"
+            "INdIotfDYKkHC4q9iP8Wk+58wr5AZW8WWCxLTOXVi9Se/agjkv1pQ7xUo5c4dAZJ\n"
+            "AITWMu0goYzxjrtK/5NOwNnnPSsTtPe9QdLYqeDvsPDoxw2b1fNEKQlxinEHxLXf\n"
+            "v5gUnIECgYEA5ZkPT2Dm/BkgtmLbYF8iJIrAqm1GpiLKIxS+9FNMJ5MoMpEF05MY\n"
+            "h2D7TFYOFssi3xe6D6p9A9GDmBHfnkRWIh3a/ggOCKKbFmeSOB6mLa28LWqTEUDx\n"
+            "UczSDDXTKRZXwRkVfWSkELVx1eOOcJ99iglGVTtugOmGL5s5qO0EeVsCgYEAxf9d\n"
+            "wb0z5ZvpNJtoYXlFqYkKh62Fv6AGoqyu4lZk+EJZ9WDglL7de5g0cV49ezRCkeLl\n"
+            "XA4secq2xbgpaXg2WZKtf9hyAeWw/dbkFlc5WJwsrWmLrH6t1yn3MBvxiLepot5b\n"
+            "LWVeF3RBcY3M3VrexHlsAAK/g32MOqQGK7jCymECgYA2LO+X412djrBRWPI6wzfj\n"
+            "N3pOvIo3GW5o6LRGIoGNtQN/Kwkc61CWYSPq10NrzXLlAUw99hSZmg5bC5ygU6+f\n"
+            "TTwnRO9KylOd7cJqy5CapqwIa2VYZOKMUrAdgXXZ9BOw1KJlfCHab3X06kTp/jg5\n"
+            "IgcehW+Fq5SmFxJ78bFkkQKBgFdWrxfgCv10yekfyGp+4UDIp7Fz1LTTtTma7MYA\n"
+            "kCeGtUHtSwOyMebsG+4KQRqQ0fCiYsQ5qFrNFdSfyPyyP19BuXDUnG3D0VAXs6M7\n"
+            "NJumwHp6PVeIxcxMwbIiEWhag+TJKvUaaufzq06Y206lX/DREtfqXmp1Ph877VDp\n"
+            "/lrhAoGBAMY/vn5PAPnYpoMDNas4dHIU1qmcoE0DbzACHddZ0VSagtp1Trdb0pzO\n"
+            "BwQXfuqsRunijscxuFcmCbh3dfAE/EaZTKzJRZiCab10aBSIKDz0u6lJ2XIxInT5\n"
+            "3VxuNvsWw/Hg7B5xuCzBwffifcS8AMbPjixg/pI84fh5KZM2Eg6e\n"
+            "-----END RSA PRIVATE KEY-----\n");
 
 const QString Preferences::defaultHttpsCert = QString::fromUtf8(
             "-----BEGIN CERTIFICATE-----\n"
@@ -233,6 +237,13 @@ const QString Preferences::inShareFoldersKey        = QString::fromAscii("inShar
 const QString Preferences::totalBandwidthKey        = QString::fromAscii("totalBandwidth");
 const QString Preferences::usedBandwidthIntervalKey        = QString::fromAscii("usedBandwidthInterval");
 const QString Preferences::usedBandwidthKey         = QString::fromAscii("usedBandwidth");
+
+const QString Preferences::overStorageDialogExecutionKey = QString::fromAscii("overStorageDialogExecution");
+const QString Preferences::overStorageNotificationExecutionKey = QString::fromAscii("overStorageNotificationExecution");
+const QString Preferences::almostOverStorageNotificationExecutionKey = QString::fromAscii("almostOverStorageNotificationExecution");
+const QString Preferences::almostOverStorageDismissExecutionKey = QString::fromAscii("almostOverStorageDismissExecution");
+const QString Preferences::overStorageDismissExecutionKey = QString::fromAscii("overStorageDismissExecution");
+
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
 const QString Preferences::showNotificationsKey     = QString::fromAscii("showNotifications");
 const QString Preferences::startOnStartupKey        = QString::fromAscii("startOnStartup");
@@ -322,8 +333,11 @@ const QString Preferences::httpsKeyKey              = QString::fromAscii("httpsK
 const QString Preferences::httpsCertKey             = QString::fromAscii("httpsCert2");
 const QString Preferences::httpsCertIntermediateKey = QString::fromAscii("httpsCertIntermediate2");
 const QString Preferences::httpsCertExpirationKey   = QString::fromAscii("httpsCertExpiration2");
+const QString Preferences::transferIdentifierKey    = QString::fromAscii("transferIdentifier");
+const QString Preferences::lastPublicHandleKey      = QString::fromAscii("lastPublicHandle");
+const QString Preferences::lastPublicHandleTimestampKey = QString::fromAscii("lastPublicHandleTimestamp");
 
-const bool Preferences::defaultShowNotifications    = false;
+const bool Preferences::defaultShowNotifications    = true;
 const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
 const bool Preferences::defaultUpperSizeLimit       = false;
@@ -331,10 +345,12 @@ const bool Preferences::defaultLowerSizeLimit       = false;
 
 const bool Preferences::defaultCleanerDaysLimit     = true;
 
-const bool Preferences::defaultUseHttpsOnly         = false;
+const bool Preferences::defaultUseHttpsOnly         = true;
 const bool Preferences::defaultSSLcertificateException = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
 const int  Preferences::defaultDownloadLimitKB      = 0;
+const long long Preferences::defaultTimeStamp       = 0;
+const unsigned long long  Preferences::defaultTransferIdentifier   = 0;
 const int  Preferences::defaultParallelUploadConnections      = 3;
 const int  Preferences::defaultParallelDownloadConnections    = 4;
 const int Preferences::defaultTransferDownloadMethod      = MegaApi::TRANSFER_METHOD_AUTO;
@@ -448,6 +464,12 @@ void Preferences::initialize(QString dataPath)
 Preferences::Preferences() : QObject(), mutex(QMutex::Recursive)
 {
     diffTimeWithSDK = 0;
+    overStorageDialogExecution = -1;
+    overStorageNotificationExecution = -1;
+    almostOverStorageNotificationExecution = -1;
+    almostOverStorageDismissExecution = -1;
+    overStorageDismissExecution = -1;
+    lastTransferNotification = 0;
     clearTemporalBandwidth();
 }
 
@@ -540,6 +562,26 @@ QString Preferences::getSession()
     QString value = settings->value(sessionKey).toString();
     mutex.unlock();
     return value;
+}
+
+unsigned long long Preferences::transferIdentifier()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(transferIdentifierKey, defaultTransferIdentifier).toLongLong();
+    settings->setValue(transferIdentifierKey, ++value);
+    mutex.unlock();
+    return value;
+}
+
+long long Preferences::lastTransferNotificationTimestamp()
+{
+    return lastTransferNotification;
+}
+
+void Preferences::setLastTransferNotificationTimestamp()
+{
+    lastTransferNotification = QDateTime::currentMSecsSinceEpoch();
 }
 
 long long Preferences::totalStorage()
@@ -860,6 +902,121 @@ long long Preferences::getMsDiffTimeWithSDK()
 void Preferences::setDsDiffTimeWithSDK(long long diffTime)
 {
     this->diffTimeWithSDK = diffTime;
+}
+
+long long Preferences::getOverStorageDialogExecution()
+{
+    if (overStorageDialogExecution != -1)
+    {
+        return overStorageDialogExecution;
+    }
+
+    mutex.lock();
+    assert(logged());
+    overStorageDialogExecution = settings->value(overStorageDialogExecutionKey, defaultTimeStamp).toLongLong();
+    mutex.unlock();
+    return overStorageDialogExecution;
+}
+
+void Preferences::setOverStorageDialogExecution(long long timestamp)
+{
+    overStorageDialogExecution = timestamp;
+    mutex.lock();
+    assert(logged());
+    settings->setValue(overStorageDialogExecutionKey, timestamp);
+    mutex.unlock();
+}
+
+long long Preferences::getOverStorageNotificationExecution()
+{
+    if (overStorageNotificationExecution != -1)
+    {
+        return overStorageNotificationExecution;
+    }
+
+    mutex.lock();
+    assert(logged());
+    overStorageNotificationExecution = settings->value(overStorageNotificationExecutionKey, defaultTimeStamp).toLongLong();
+    mutex.unlock();
+    return overStorageNotificationExecution;
+}
+
+void Preferences::setOverStorageNotificationExecution(long long timestamp)
+{
+    overStorageNotificationExecution = timestamp;
+    mutex.lock();
+    assert(logged());
+    settings->setValue(overStorageNotificationExecutionKey, timestamp);
+    mutex.unlock();
+}
+
+long long Preferences::getAlmostOverStorageNotificationExecution()
+{
+    if (almostOverStorageNotificationExecution != -1)
+    {
+        return almostOverStorageNotificationExecution;
+    }
+
+    mutex.lock();
+    assert(logged());
+    almostOverStorageNotificationExecution = settings->value(almostOverStorageNotificationExecutionKey, defaultTimeStamp).toLongLong();
+    mutex.unlock();
+    return almostOverStorageNotificationExecution;
+}
+
+void Preferences::setAlmostOverStorageNotificationExecution(long long timestamp)
+{
+    almostOverStorageNotificationExecution = timestamp;
+    mutex.lock();
+    assert(logged());
+    settings->setValue(almostOverStorageNotificationExecutionKey, timestamp);
+    mutex.unlock();
+}
+
+long long Preferences::getAlmostOverStorageDismissExecution()
+{
+    if (almostOverStorageDismissExecution != -1)
+    {
+        return almostOverStorageDismissExecution;
+    }
+
+    mutex.lock();
+    assert(logged());
+    almostOverStorageDismissExecution = settings->value(almostOverStorageDismissExecutionKey, defaultTimeStamp).toLongLong();
+    mutex.unlock();
+    return almostOverStorageDismissExecution;
+}
+
+void Preferences::setAlmostOverStorageDismissExecution(long long timestamp)
+{
+    almostOverStorageDismissExecution = timestamp;
+    mutex.lock();
+    assert(logged());
+    settings->setValue(almostOverStorageDismissExecutionKey, timestamp);
+    mutex.unlock();
+}
+
+long long Preferences::getOverStorageDismissExecution()
+{
+    if (overStorageDismissExecution != -1)
+    {
+        return overStorageDismissExecution;
+    }
+
+    mutex.lock();
+    assert(logged());
+    overStorageDismissExecution = settings->value(overStorageDismissExecutionKey, defaultTimeStamp).toLongLong();
+    mutex.unlock();
+    return overStorageDismissExecution;
+}
+
+void Preferences::setOverStorageDismissExecution(long long timestamp)
+{
+    overStorageDismissExecution = timestamp;
+    mutex.lock();
+    assert(logged());
+    settings->setValue(overStorageDismissExecutionKey, timestamp);
+    mutex.unlock();
 }
 
 void Preferences::setTemporalBandwidthValid(bool value)
@@ -2455,6 +2612,34 @@ void Preferences::setHttpsCertExpiration(long long expiration)
     }
 
     settings->sync();
+}
+
+long long Preferences::lastPublicHandleTimestamp()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(lastPublicHandleTimestampKey, 0).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+MegaHandle Preferences::lastPublicHandle()
+{
+    mutex.lock();
+    assert(logged());
+    MegaHandle value = settings->value(lastPublicHandleKey, (unsigned long long) mega::INVALID_HANDLE).toULongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setLastPublicHandle(MegaHandle handle)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(lastPublicHandleKey, (unsigned long long) handle);
+    settings->setValue(lastPublicHandleTimestampKey, QDateTime::currentMSecsSinceEpoch());
+    settings->sync();
+    mutex.unlock();
 }
 
 int Preferences::getNumUsers()

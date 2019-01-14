@@ -8,13 +8,17 @@
 #include <QByteArray>
 #include <QIcon>
 #include <QImageWriter>
-#include "QMegaMessageBox.h"
+#include "gui/QMegaMessageBox.h"
 #include "Utilities.h"
 #include <QMetaType>
 #include <QStyle>
 #include <QSystemTrayIcon>
 #include <QTemporaryFile>
 #include <QVariant>
+#include <memory>
+
+#include "MegaApplication.h"
+
 #ifdef USE_DBUS
 #include <stdint.h>
 #include <QtDBus/QtDBus>
@@ -28,9 +32,15 @@
 #include "macx/macnotificationhandler.h"
 #endif
 
+#ifdef _WIN32
+#include "platform/win/wintoastlib.h"
+using namespace WinToastLib;
+#endif
 
 // https://wiki.ubuntu.com/NotificationDevelopmentGuidelines recommends at least 128
 const int FREEDESKTOP_NOTIFICATION_ICON_SIZE = 128;
+
+QHash<int64_t, MegaNotification *> Notificator::notifications;
 
 Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, QObject *parent) :
     QObject(parent),
@@ -57,36 +67,22 @@ Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, 
     }
 #endif
 #ifdef Q_OS_MAC
-    // check if users OS has support for NSUserNotification
-    if (MacNotificationHandler::instance()->hasUserNotificationCenterSupport())
+    mode = UserNotificationCenter;
+#endif
+
+    QFile icon(QString::fromUtf8("://images/app_ico.ico"));
+    defaultIconPath = MegaApplication::applicationDataPath() + QString::fromUtf8("\\MEGAsync.ico");
+    if (!QFile(defaultIconPath).exists())
     {
-        mode = UserNotificationCenter;
+        icon.copy(defaultIconPath);
     }
-    else
-    {
-        // Check if Growl is installed (based on Qt's tray icon implementation)
-        CFURLRef cfurl;
-        OSStatus status = LSGetApplicationForInfo(kLSUnknownType, kLSUnknownCreator, CFSTR("growlTicket"), kLSRolesAll, 0, &cfurl);
-        if (status != kLSApplicationNotFoundErr)
-        {
-            CFBundleRef bundle = CFBundleCreate(0, cfurl);
-            if (CFStringCompare(CFBundleGetIdentifier(bundle),
-                                CFSTR("com.Growl.GrowlHelperApp"),
-                                kCFCompareCaseInsensitive | kCFCompareBackwards) == kCFCompareEqualTo)
-            {
-                if (CFStringHasSuffix(CFURLGetString(cfurl), CFSTR("/Growl.app/")))
-                {
-                    mode = Growl13;
-                }
-                else
-                {
-                    mode = Growl12;
-                }
-            }
-            CFRelease(cfurl);
-            CFRelease(bundle);
-        }
-    }
+    currentNotification = NULL;
+
+#ifdef _WIN32
+    WinToast::instance()->setAppName(L"MEGAsync");
+    WinToast::instance()->setAppUserModelId(L"MegaLimited.MEGAsync");
+    WinToast::instance()->initialize();
+    connect(trayIcon, SIGNAL(messageClicked()), this, SLOT(onMessageClicked()));
 #endif
 }
 
@@ -247,8 +243,39 @@ void Notificator::notifyDBus(Class cls, const QString &title, const QString &tex
 }
 #endif
 
-void Notificator::notifySystray(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout)
+void Notificator::notifySystray(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout, bool forceQt)
 {
+#ifdef _WIN32
+    if (!forceQt && WinToast::instance()->isCompatible())
+    {
+        MegaNotification *n = new MegaNotification();
+        if (title == tr("MEGAsync"))
+        {
+            n->setTitle(QString::fromUtf8("MEGA"));
+        }
+        else
+        {
+            n->setTitle(title);
+        }
+        n->setText(text);
+        n->setExpirationTime(millisTimeout);
+        n->setImagePath(defaultIconPath);
+        n->setType(cls);
+        n->setStyle(WinToastTemplate::ImageAndText01);
+        notifySystray(n);
+        return;
+    }
+#endif
+
+    if (!forceQt)
+    {
+        if (currentNotification)
+        {
+            currentNotification->deleteLater();
+        }
+        currentNotification = NULL;
+    }
+
     Q_UNUSED(icon);
     QSystemTrayIcon::MessageIcon sicon = QSystemTrayIcon::NoIcon;
     switch(cls) // Set icon based on class
@@ -271,80 +298,78 @@ void Notificator::notifySystray(Class cls, const QString &title, const QString &
     trayIcon->showMessage(title, text, sicon, millisTimeout);
 }
 
-// Based on Qt's tray icon implementation
-#ifdef Q_OS_MAC
-void Notificator::notifyGrowl(Class cls, const QString &title, const QString &text, const QIcon &icon)
+void Notificator::notifySystray(MegaNotification *notification)
 {
-    const QString script = QString::fromUtf8(
-        "tell application \"%5\"\n"
-        "  set the allNotificationsList to {\"Notification\"}\n" // -- Make a list of all the notification types (all)
-        "  set the enabledNotificationsList to {\"Notification\"}\n" // -- Make a list of the notifications (enabled)
-        "  register as application \"%1\" all notifications allNotificationsList default notifications enabledNotificationsList\n" // -- Register our script with Growl
-        "  notify with name \"Notification\" title \"%2\" description \"%3\" application name \"%1\"%4\n" // -- Send a Notification
-        "end tell"
-    );
-
-    QString notificationApp(QApplication::applicationName());
-    if (notificationApp.isEmpty())
+    if (!notification)
     {
-        notificationApp = QString::fromUtf8("Application");
+        return;
     }
 
-    QPixmap notificationIconPixmap;
-    if (icon.isNull())
+#ifdef _WIN32
+    if (!WinToast::instance()->isCompatible())
     {
-        // If no icon specified, set icon based on class
-        QStyle::StandardPixmap sicon = QStyle::SP_MessageBoxQuestion;
-        switch (cls)
+        if (currentNotification)
         {
-        case Information:
-            sicon = QStyle::SP_MessageBoxInformation;
-            break;
-
-        case Warning:
-            sicon = QStyle::SP_MessageBoxWarning;
-            break;
-
-        case Critical:
-            sicon = QStyle::SP_MessageBoxCritical;
-            break;
-
-        default:
-            break;
+            currentNotification->deleteLater();
         }
-        notificationIconPixmap = QApplication::style()->standardPixmap(sicon);
+        currentNotification = notification;
+        notifySystray((Notificator::Class)notification->getType(), notification->getTitle(),
+                      notification->getText(), notification->getImage(), notification->getExpirationTime(),
+                      true);
+        return;
+    }
+
+    connect(notification, SIGNAL(failed()), this, SLOT(onModernNotificationFailed()), Qt::QueuedConnection);
+
+    WinToastTemplate templ(WinToastTemplate::ImageAndText02);
+    templ.setTextField((LPCWSTR)notification->getTitle().utf16(), WinToastTemplate::FirstLine);
+    templ.setTextField((LPCWSTR)notification->getText().utf16(), WinToastTemplate::SecondLine);
+    templ.setAttributionText((LPCWSTR)notification->getSource().utf16());
+    templ.setExpiration(notification->getExpirationTime());
+    if (!notification->getImagePath().isEmpty())
+    {
+        templ.setImagePath((LPCWSTR)notification->getImagePath().utf16());
     }
     else
     {
-        QSize size = icon.actualSize(QSize(48, 48));
-        notificationIconPixmap = icon.pixmap(size);
+        templ.setImagePath((LPCWSTR)defaultIconPath.utf16());
     }
 
-    QString notificationIcon;
-    QTemporaryFile notificationIconFile;
-    if (!notificationIconPixmap.isNull() && notificationIconFile.open())
+    QStringList userActions = notification->getActions();
+    for (int i = 0; i < userActions.size(); i++)
     {
-        QImageWriter writer(&notificationIconFile, "PNG");
-        if (writer.write(notificationIconPixmap.toImage()))
-        {
-            notificationIcon = QString::fromUtf8(" image from location \"file://%1\"").arg(notificationIconFile.fileName());
-        }
+        templ.addAction((LPCWSTR)userActions.at(i).utf16());
     }
 
-    QString quotedTitle(title), quotedText(text);
-    quotedTitle.replace(QString::fromUtf8("\\"), QString::fromUtf8("\\\\")).replace(QString::fromUtf8("\""), QString::fromUtf8("\\"));
-    quotedText.replace(QString::fromUtf8("\\"), QString::fromUtf8("\\\\")).replace(QString::fromUtf8("\""), QString::fromUtf8("\\"));
-    QString growlApp(this->mode == Notificator::Growl13 ? QString::fromUtf8("Growl") : QString::fromUtf8("GrowlHelperApp"));
-    MacNotificationHandler::instance()->sendAppleScript(script.arg(notificationApp, quotedTitle, quotedText, notificationIcon, growlApp));
-}
-
-void Notificator::notifyMacUserNotificationCenter(Class cls, const QString &title, const QString &text, const QIcon &icon)
-{
-    // icon is not supported by the user notification center yet. OSX will use the app icon.
-    MacNotificationHandler::instance()->showNotification(title, text);
-}
-
+    notification->setId(WinToast::instance()->showToast(templ, std::shared_ptr<IWinToastHandler>(new WinToastNotification(notification))));
+    return;
 #endif
+
+    notifySystray((Notificator::Class)notification->getType(), notification->getText(),
+                  notification->getSource(), notification->getImage(), notification->getExpirationTime());
+}
+
+void Notificator::onModernNotificationFailed()
+{
+    MegaNotification *notification = (MegaNotification *)QObject::sender();
+    if (currentNotification)
+    {
+        currentNotification->deleteLater();
+    }
+    currentNotification = notification;
+    notifySystray((Notificator::Class)notification->getType(), notification->getTitle(),
+                  notification->getText(), notification->getImage(),
+                  notification->getExpirationTime(), true);
+}
+
+void Notificator::onMessageClicked()
+{
+    if (currentNotification)
+    {
+        currentNotification->emitlLegacyNotificationActivated();
+        currentNotification = NULL;
+    }
+}
 
 void Notificator::notify(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout)
 {
@@ -360,12 +385,23 @@ void Notificator::notify(Class cls, const QString &title, const QString &text, c
         break;
 #ifdef Q_OS_MAC
     case UserNotificationCenter:
-        notifyMacUserNotificationCenter(cls, title, text, icon);
+    {
+        MegaNotification *n = new MegaNotification();
+        if (title == tr("MEGAsync"))
+        {
+            n->setTitle(QString::fromUtf8("MEGA"));
+        }
+        else
+        {
+            n->setTitle(title);
+        }
+        n->setText(text);
+        n->setExpirationTime(millisTimeout);
+        n->setImagePath(defaultIconPath);
+        n->setType(cls);
+        MacNotificationHandler::instance()->showNotification(n);
         break;
-    case Growl12:
-    case Growl13:
-        notifyGrowl(cls, title, text, icon);
-        break;
+    }
 #endif
     default:
         switch(cls) // Set icon based on class
@@ -378,3 +414,236 @@ void Notificator::notify(Class cls, const QString &title, const QString &text, c
         break;
     }
 }
+
+void Notificator::notify(MegaNotification *notification)
+{
+    if (mode == QSystemTray)
+    {
+        notifySystray(notification);
+        return;
+    }
+
+#ifdef Q_OS_MAC
+    else if (mode == UserNotificationCenter)
+    {
+        MacNotificationHandler::instance()->showNotification(notification);
+        return;
+    }
+#endif
+
+    notify((Class)notification->getType(), notification->getTitle(), notification->getText(),
+           notification->getImage(), notification->getExpirationTime());
+    delete notification;
+}
+
+int MegaNotification::getStyle() const
+{
+    return style;
+}
+
+void MegaNotification::setStyle(int value)
+{
+    style = value;
+}
+
+QStringList MegaNotification::getActions() const
+{
+    return actions;
+}
+
+void MegaNotification::setActions(const QStringList &value)
+{
+    actions = value;
+}
+
+QIcon MegaNotification::getImage() const
+{
+    return image;
+}
+
+void MegaNotification::setImage(const QIcon &value)
+{
+    image = value;
+}
+
+int MegaNotification::getType() const
+{
+    return type;
+}
+
+void MegaNotification::setType(int value)
+{
+    type = value;
+}
+
+int64_t MegaNotification::getId() const
+{
+    return id;
+}
+
+void MegaNotification::setId(const int64_t &value)
+{
+    id = value;
+}
+
+QString MegaNotification::getData() const
+{
+    return data;
+}
+
+void MegaNotification::setData(const QString &value)
+{
+    data = value;
+}
+
+void MegaNotification::emitlLegacyNotificationActivated()
+{
+    emit activated(ActivationLegacyNotificationClicked);
+}
+
+MegaNotification::MegaNotification()
+{
+    title = QString::fromUtf8("MEGA");
+    text = QString::fromUtf8("MEGAsync");
+    expirationTime = 10000;
+    style = -1;
+    type = Notificator::Information;
+    id = -1;
+
+    connect(this, SIGNAL(activated(int)), this, SLOT(deleteLater()), Qt::QueuedConnection);
+    connect(this, SIGNAL(closed(int)), this, SLOT(deleteLater()), Qt::QueuedConnection);
+}
+
+MegaNotification::~MegaNotification()
+{
+#ifdef _WIN32
+    if (id != -1)
+    {
+        WinToast::instance()->hideToast(id);
+    }
+#endif
+}
+
+QString MegaNotification::getTitle() const
+{
+    return title;
+}
+
+void MegaNotification::setTitle(const QString &value)
+{
+    title = value;
+}
+
+QString MegaNotification::getText() const
+{
+    return text;
+}
+
+void MegaNotification::setText(const QString &value)
+{
+    text = value;
+}
+
+QString MegaNotification::getSource() const
+{
+    return source;
+}
+
+void MegaNotification::setSource(const QString &value)
+{
+    source = value;
+}
+
+int MegaNotification::getExpirationTime() const
+{
+    return expirationTime;
+}
+
+void MegaNotification::setExpirationTime(int value)
+{
+    expirationTime = value;
+}
+
+QString MegaNotification::getImagePath() const
+{
+    return imagePath;
+}
+
+void MegaNotification::setImagePath(const QString &value)
+{
+    imagePath = value;
+}
+
+#ifdef _WIN32
+
+QMutex WinToastNotification::mutex;
+
+WinToastNotification::WinToastNotification(QPointer<MegaNotification> megaNotification)
+{
+    this->notification = megaNotification;
+}
+
+WinToastNotification::~WinToastNotification()
+{
+
+}
+
+void WinToastNotification::toastActivated()
+{
+    mutex.lock();
+    if (notification)
+    {
+        emit notification->activated(-1);
+        notification = NULL;
+    }
+    mutex.unlock();
+}
+
+void WinToastNotification::toastActivated(int actionIndex)
+{
+    mutex.lock();
+    if (notification)
+    {
+        emit notification->activated(actionIndex);
+        notification = NULL;
+    }
+    mutex.unlock();
+}
+
+void WinToastNotification::toastDismissed(WinToastDismissalReason state)
+{
+    mutex.lock();
+    if (notification)
+    {
+        int reason = MegaNotification::CloseReason::Unknown;
+        switch (state)
+        {
+        case WinToastDismissalReason::UserCanceled:
+            reason = MegaNotification::CloseReason::UserAction;
+            break;
+        case WinToastDismissalReason::ApplicationHidden:
+            reason = MegaNotification::CloseReason::AppHidden;
+            break;
+        case WinToastDismissalReason::TimedOut:
+            reason = MegaNotification::CloseReason::TimedOut;
+            break;
+        }
+
+        emit notification->closed(reason);
+        notification = NULL;
+    }
+    mutex.unlock();
+}
+
+void WinToastNotification::toastFailed()
+{
+    mutex.lock();
+    if (notification)
+    {
+        emit notification->failed();
+        notification = NULL;
+    }
+    mutex.unlock();
+}
+
+#endif

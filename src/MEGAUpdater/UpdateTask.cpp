@@ -21,6 +21,7 @@
 #include <algorithm>
 #include <Shlobj.h>
 #else
+#include <unistd.h>
 #include <sys/types.h>
 #include <dirent.h>
 #endif
@@ -29,8 +30,8 @@
 #include "Preferences.h"
 #include "MacUtils.h"
 
-using namespace std;
-using namespace CryptoPP;
+using std::string;
+using CryptoPP::Integer;
 
 #ifdef _WIN32
 

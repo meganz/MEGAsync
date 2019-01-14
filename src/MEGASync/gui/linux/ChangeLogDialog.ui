@@ -100,7 +100,7 @@ border-radius: 5px;
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <property name="topMargin">
-       <number>27</number>
+       <number>21</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>

@@ -32,6 +32,7 @@ MegaTransferView::MegaTransferView(QWidget *parent) :
     clearCompleted = NULL;
     clearAllCompleted = NULL;
     disableLink = false;
+    disableMenus = false;
     type = 0;
 
     verticalScrollBar()->setStyleSheet(
@@ -55,12 +56,16 @@ MegaTransferView::MegaTransferView(QWidget *parent) :
 #endif
                           "}"
                  ""));
+    setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 }
 
 void MegaTransferView::setup(int type)
 {
     setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
+    // Disable and find out alternative way to position context menu,
+    // since main parent widget is flagged as popup (InfoDialog), and coordinates does not work properly
+    // connect(this, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
+    connect(this, SIGNAL(showContextMenu(const QPoint &)), this, SLOT(onCustomContextMenu(const QPoint &)));
     createContextMenu();
     createCompletedContextMenu();
     this->type = type;
@@ -75,6 +80,11 @@ void MegaTransferView::disableGetLink(bool disable)
 int MegaTransferView::getType() const
 {
     return type;
+}
+
+void MegaTransferView::disableContextMenus(bool option)
+{
+    disableMenus = option;
 }
 
 void MegaTransferView::createContextMenu()
@@ -339,6 +349,20 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
     QTreeView::mouseMoveEvent(event);
 }
 
+void MegaTransferView::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (!(event->button() == Qt::RightButton))
+    {
+        QTreeView::mouseReleaseEvent(event);
+        return;
+    }
+
+    if (!disableMenus)
+    {
+        emit showContextMenu(QPoint(event->x(), event->y()));
+    }
+}
+
 void MegaTransferView::leaveEvent(QEvent *event)
 {
     QTransfersModel *model = (QTransfersModel*)this->model();
@@ -422,7 +446,8 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
 
         if (transferTagSelected.size())
         {
-            if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
+            int modelType = model->getModelType();
+            if (modelType == QTransfersModel::TYPE_FINISHED)
             {
                 bool failed = false;
                 MegaTransfer *transfer = NULL;
@@ -442,6 +467,7 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                         {
                             failed = true;
                         }
+                        delete transfer;
                     }
                 }
 
@@ -599,6 +625,7 @@ void MegaTransferView::getLinkClicked()
                     delete [] key;
                 }
                 delete node;
+                delete transfer;
             }
         }
 
@@ -622,6 +649,7 @@ void MegaTransferView::openItemClicked()
             {
                 QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(QString::fromUtf8(transfer->getPath())));
             }
+            delete transfer;
         }
     }
 }
@@ -646,6 +674,7 @@ void MegaTransferView::showInFolderClicked()
                 #endif
                 Platform::showInFolder(localPath);
             }
+            delete transfer;
         }
     }
 }
@@ -659,13 +688,17 @@ void MegaTransferView::showInMEGAClicked()
         for (int i = 0; i < transferTagSelected.size(); i++)
         {
             transfer = model->getTransferByTag(transferTagSelected[i]);
-            MegaHandle handle = transfer->getNodeHandle();
-            if (transfer && (handle != INVALID_HANDLE))
+            if (transfer)
             {
-                const char *b64handle = MegaApi::handleToBase64(handle);
-                QString url = QString::fromAscii("https://mega.nz/fm/") + QString::fromUtf8(b64handle);
-                QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
-                delete [] b64handle;
+                MegaHandle handle = transfer->getNodeHandle();
+                if (handle != INVALID_HANDLE)
+                {
+                    const char *b64handle = MegaApi::handleToBase64(handle);
+                    QString url = QString::fromAscii("https://mega.nz/fm/") + QString::fromUtf8(b64handle);
+                    QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
+                    delete [] b64handle;
+                }
+                delete transfer;
             }
         }
     }

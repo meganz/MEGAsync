@@ -77,9 +77,22 @@ void UpgradeDialog::refreshAccountDetails()
     if (preferences->isTemporalBandwidthValid() && preferences->temporalBandwidth())
     {
         QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
+        QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
+        Preferences *preferences = Preferences::instance();
+        if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
+        {
+            mega::MegaHandle aff = preferences->lastPublicHandle();
+            if (aff != mega::INVALID_HANDLE)
+            {
+                char *base64aff = mega::MegaApi::handleToBase64(aff);
+                url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
+                delete [] base64aff;
+            }
+        }
+
         ui->lDescRecommendation->setText(tr("The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. ")
                                         .arg(Utilities::getSizeString(preferences->temporalBandwidth()))
-                                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#pro/uao=%1\"><span style=\"color:#d90007; text-decoration:none;\">").arg(userAgent))
+                                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#%1\"><span style=\"color:#d90007; text-decoration:none;\">").arg(url))
                                         .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>"))
                                         .replace(QString::fromUtf8("6"), QString::number(preferences->temporalBandwidthInterval())));
     }

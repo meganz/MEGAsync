@@ -207,7 +207,7 @@ void TransferManager::createAddMenu()
     }
 
     importLinksAction = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
-    connect(importLinksAction, SIGNAL(triggered()), qApp, SLOT(importLinks()));
+    connect(importLinksAction, SIGNAL(triggered()), qApp, SLOT(importLinks()), Qt::QueuedConnection);
 
     if (uploadAction)
     {
@@ -216,7 +216,7 @@ void TransferManager::createAddMenu()
     }
 
     uploadAction = new MenuItemAction(tr("Upload"), QIcon(QString::fromAscii("://images/upload_to_mega_ico.png")), QIcon(QString::fromAscii("://images/upload_to_mega_ico_white.png")));
-    connect(uploadAction, SIGNAL(triggered()), qApp, SLOT(uploadActionClicked()));
+    connect(uploadAction, SIGNAL(triggered()), qApp, SLOT(uploadActionClicked()), Qt::QueuedConnection);
 
     if (downloadAction)
     {
@@ -225,7 +225,7 @@ void TransferManager::createAddMenu()
     }
 
     downloadAction = new MenuItemAction(tr("Download"), QIcon(QString::fromAscii("://images/download_from_mega_ico.png")), QIcon(QString::fromAscii("://images/download_from_mega_ico_white.png")));
-    connect(downloadAction, SIGNAL(triggered()), qApp, SLOT(downloadActionClicked()));
+    connect(downloadAction, SIGNAL(triggered()), qApp, SLOT(downloadActionClicked()), Qt::QueuedConnection);
 
     if (settingsAction)
     {
@@ -238,7 +238,7 @@ void TransferManager::createAddMenu()
 #else
     settingsAction = new MenuItemAction(tr("Preferences"), QIcon(QString::fromAscii("://images/settings_ico.png")), QIcon(QString::fromAscii("://images/settings_ico_white.png")));
 #endif
-    connect(settingsAction, SIGNAL(triggered()), qApp, SLOT(openSettings()));
+    connect(settingsAction, SIGNAL(triggered()), qApp, SLOT(openSettings()), Qt::QueuedConnection);
 
     addMenu->addAction(importLinksAction);
     addMenu->addAction(uploadAction);
@@ -249,6 +249,8 @@ void TransferManager::createAddMenu()
 
 void TransferManager::on_tCompleted_clicked()
 {
+    emit userActivity();
+
     if (!refreshTransferTime->isActive())
     {
         refreshTransferTime->start(Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS);
@@ -277,6 +279,8 @@ void TransferManager::on_tCompleted_clicked()
 
 void TransferManager::on_tDownloads_clicked()
 {
+    emit userActivity();
+
     if (refreshTransferTime->isActive())
     {
         refreshTransferTime->stop();
@@ -304,6 +308,8 @@ void TransferManager::on_tDownloads_clicked()
 
 void TransferManager::on_tUploads_clicked()
 {
+    emit userActivity();
+
     if (refreshTransferTime->isActive())
     {
         refreshTransferTime->stop();
@@ -331,6 +337,8 @@ void TransferManager::on_tUploads_clicked()
 
 void TransferManager::on_tAllTransfers_clicked()
 {
+    emit userActivity();
+
     if (refreshTransferTime->isActive())
     {
         refreshTransferTime->stop();
@@ -358,6 +366,8 @@ void TransferManager::on_tAllTransfers_clicked()
 
 void TransferManager::on_bAdd_clicked()
 {
+    emit userActivity();
+
     QPoint point = ui->bAdd->mapToGlobal(QPoint(ui->bAdd->width() , ui->bAdd->height() + 4));
     QPoint p = !point.isNull() ? point - QPoint(addMenu->sizeHint().width(), 0) : QCursor::pos();
 
@@ -370,6 +380,7 @@ void TransferManager::on_bAdd_clicked()
 
 void TransferManager::on_bClose_clicked()
 {
+    emit userActivity();
     close();
 }
 
@@ -453,6 +464,8 @@ void TransferManager::disableGetLink(bool disable)
 
 void TransferManager::on_bPause_clicked()
 {
+    emit userActivity();
+
     QWidget *w = ui->wTransfers->currentWidget();
     if (w == ui->wActiveTransfers)
     {

@@ -15,6 +15,7 @@ public:
     MegaTransferView(QWidget *parent = 0);
     void setup(int type);
     void disableGetLink(bool disable);
+    void disableContextMenus(bool option);
     int getType() const;
 
 private:
@@ -22,6 +23,7 @@ private:
     QList<int> transferTagSelected;
     bool disableLink;
     int type;
+    bool disableMenus;
 
     QMenu *contextInProgressMenu;
     QAction *pauseTransfer;
@@ -46,6 +48,7 @@ private:
 
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event);
+    virtual void mouseReleaseEvent ( QMouseEvent * event );
     virtual void leaveEvent(QEvent* event);
     void changeEvent(QEvent *event);
 
@@ -64,6 +67,9 @@ private slots:
     void showInMEGAClicked();
     void clearTransferClicked();
     void clearAllTransferClicked();
+
+signals:
+    void showContextMenu(QPoint pos);
 };
 
 #endif // MEGATRANSFERVIEW_H

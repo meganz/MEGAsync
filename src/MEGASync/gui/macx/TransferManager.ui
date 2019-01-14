@@ -272,7 +272,7 @@
                </size>
               </property>
               <property name="cursor">
-               <cursorShape>PointingHandCursor</cursorShape>
+               <cursorShape>ArrowCursor</cursorShape>
               </property>
               <property name="styleSheet">
                <string notr="true"/>
@@ -359,7 +359,7 @@ QToolButton
               </size>
              </property>
              <property name="cursor">
-              <cursorShape>PointingHandCursor</cursorShape>
+              <cursorShape>ArrowCursor</cursorShape>
              </property>
              <property name="text">
               <string>Active Transfers</string>
@@ -413,7 +413,7 @@ QToolButton
               </size>
              </property>
              <property name="cursor">
-              <cursorShape>PointingHandCursor</cursorShape>
+              <cursorShape>ArrowCursor</cursorShape>
              </property>
              <property name="text">
               <string>Downloads</string>
@@ -467,7 +467,7 @@ QToolButton
               </size>
              </property>
              <property name="cursor">
-              <cursorShape>PointingHandCursor</cursorShape>
+              <cursorShape>ArrowCursor</cursorShape>
              </property>
              <property name="text">
               <string>Uploads</string>
@@ -536,7 +536,7 @@ QToolButton
                  </size>
                 </property>
                 <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
+                 <cursorShape>ArrowCursor</cursorShape>
                 </property>
                 <property name="text">
                  <string>Completed</string>
@@ -744,7 +744,7 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
          </size>
         </property>
         <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
+         <cursorShape>ArrowCursor</cursorShape>
         </property>
         <property name="text">
          <string>Pause</string>
@@ -779,7 +779,7 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
          </size>
         </property>
         <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
+         <cursorShape>ArrowCursor</cursorShape>
         </property>
         <property name="text">
          <string>Clear all</string>
@@ -824,7 +824,7 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
          </size>
         </property>
         <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
+         <cursorShape>ArrowCursor</cursorShape>
         </property>
         <property name="text">
          <string>Close</string>

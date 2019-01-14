@@ -13,31 +13,44 @@ MacNotificationHandler::MacNotificationHandler()
     notificationDelegate = [[NotificationDelegate alloc] init];
 }
 
-void MacNotificationHandler::showNotification(const QString &title, const QString &text)
+void MacNotificationHandler::showNotification(MegaNotification *notification)
 {
-    // check if users OS has support for NSUserNotification
-    if(this->hasUserNotificationCenterSupport()) {
-        // okay, seems like 10.8+
-        QByteArray utf8 = title.toUtf8();
-        char* cString = (char *)utf8.constData();
-        NSString *titleMac = [[NSString alloc] initWithUTF8String:cString];
+    static int64_t currentNotificationId = 1;
 
-        utf8 = text.toUtf8();
-        cString = (char *)utf8.constData();
-        NSString *textMac = [[NSString alloc] initWithUTF8String:cString];
+    NSUserNotification *userNotification = [[NSUserNotification alloc] init];
+    [userNotification setTitle:[NSString stringWithUTF8String:notification->getTitle().toUtf8().constData()]];
+    [userNotification setInformativeText:[NSString stringWithUTF8String:notification->getText().toUtf8().constData()]];
 
-        // do everything weak linked (because we will keep <10.8 compatibility)
-        id userNotification = [[NSClassFromString(@"NSUserNotification") alloc] init];
-        [userNotification performSelector:@selector(setTitle:) withObject:titleMac];
-        [userNotification performSelector:@selector(setInformativeText:) withObject:textMac];
-        id notificationCenterInstance = [NSClassFromString(@"NSUserNotificationCenter") performSelector:@selector(defaultUserNotificationCenter)];
-        [notificationCenterInstance performSelector:@selector(setDelegate:) withObject:(NotificationDelegate *)notificationDelegate];
-        [notificationCenterInstance performSelector:@selector(deliverNotification:) withObject:userNotification];
-
-        [titleMac release];
-        [textMac release];
-        [userNotification release];
+    QStringList actions = notification->getActions();
+    [userNotification setHasActionButton:actions.size() != 0];
+    if (actions.size())
+    {
+        [userNotification setActionButtonTitle:[NSString stringWithUTF8String:actions.at(0).toUtf8().constData()]];
+        if (actions.size() > 1)
+        {
+            // Only two actions supported for now
+            [userNotification setOtherButtonTitle:[NSString stringWithUTF8String:actions.at(1).toUtf8().constData()]];
+        }
     }
+
+    [userNotification setIdentifier:@(currentNotificationId).stringValue];
+    notification->setId(currentNotificationId);
+    Notificator::notifications[currentNotificationId] = notification;
+    currentNotificationId++;
+
+    NSUserNotificationCenter *notificationCenterInstance = [NSUserNotificationCenter defaultUserNotificationCenter];
+    [notificationCenterInstance setDelegate:(NotificationDelegate *)notificationDelegate];
+    [notificationCenterInstance deliverNotification:userNotification];
+
+    int expirationTime = notification->getExpirationTime();
+    if (expirationTime > 0)
+    {
+        [notificationDelegate performSelector:@selector(closeAlert:)
+            withObject:(NotificationDelegate *)userNotification
+            afterDelay: expirationTime / 1000.0];
+    }
+
+    [userNotification release];
 }
 
 // sendAppleScript just take a QString and executes it as apple script
@@ -53,18 +66,6 @@ void MacNotificationHandler::sendAppleScript(const QString &script)
     [as release];
     [scriptApple release];
 }
-
-bool MacNotificationHandler::hasUserNotificationCenterSupport(void)
-{
-    Class possibleClass = NSClassFromString(@"NSUserNotificationCenter");
-
-    // check if users OS has support for NSUserNotification
-    if(possibleClass!=nil) {
-        return true;
-    }
-    return false;
-}
-
 
 MacNotificationHandler *MacNotificationHandler::instance()
 {

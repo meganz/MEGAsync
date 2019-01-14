@@ -356,3 +356,8 @@ bool LinuxPlatform::shouldRunHttpsServer()
     }
     return false;
 }
+
+bool LinuxPlatform::isUserActive()
+{
+    return true;
+}

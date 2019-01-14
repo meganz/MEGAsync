@@ -123,6 +123,9 @@ private slots:
 
     void onAnimationFinished();
 
+signals:
+    void userActivity();
+
 protected:
     void changeEvent(QEvent * event);
     QString getFormatString();

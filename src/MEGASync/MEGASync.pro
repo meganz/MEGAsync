@@ -59,7 +59,7 @@ CONFIG += USE_LIBRAW
 CONFIG += USE_FFMPEG
 
 unix:!macx {
-        exists(/usr/include/ffmpeg-mega)|exists(mega/bindings/qt/3rdparty/include/ffmpeg)|packagesExist(ffmpeg) {
+        exists(/usr/include/ffmpeg-mega)|exists(mega/bindings/qt/3rdparty/include/ffmpeg)|packagesExist(ffmpeg)|packagesExist(libavcodec) {
             CONFIG += USE_FFMPEG
         }
 }
@@ -84,15 +84,10 @@ HEADERS += MegaApplication.h
 
 TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ar.ts \
-    gui/translations/MEGASyncStrings_bg.ts \
-    gui/translations/MEGASyncStrings_cs.ts \
     gui/translations/MEGASyncStrings_de.ts \
     gui/translations/MEGASyncStrings_en.ts \
     gui/translations/MEGASyncStrings_es.ts \
-    gui/translations/MEGASyncStrings_fi.ts \
     gui/translations/MEGASyncStrings_fr.ts \
-    gui/translations/MEGASyncStrings_he.ts \
-    gui/translations/MEGASyncStrings_hu.ts \
     gui/translations/MEGASyncStrings_id.ts \
     gui/translations/MEGASyncStrings_it.ts \
     gui/translations/MEGASyncStrings_ja.ts \
@@ -103,10 +98,6 @@ TRANSLATIONS = \
     gui/translations/MEGASyncStrings_pt.ts \
     gui/translations/MEGASyncStrings_ro.ts \
     gui/translations/MEGASyncStrings_ru.ts \
-    gui/translations/MEGASyncStrings_sk.ts \
-    gui/translations/MEGASyncStrings_sl.ts \
-    gui/translations/MEGASyncStrings_sr.ts \
-    gui/translations/MEGASyncStrings_sv.ts \
     gui/translations/MEGASyncStrings_th.ts \
     gui/translations/MEGASyncStrings_tl.ts \
     gui/translations/MEGASyncStrings_tr.ts \
@@ -143,10 +134,7 @@ macx {
 
     QMAKE_INFO_PLIST = Info_MEGA.plist
 
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
-    QMAKE_CXXFLAGS -= -stdlib=libc++
-    QMAKE_LFLAGS -= -stdlib=libc++
-    CONFIG -= c++11
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
     QMAKE_CXXFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
     QMAKE_LFLAGS += -F /System/Library/Frameworks/Security.framework/
 }

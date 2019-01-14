@@ -40,7 +40,7 @@ void AccountDetailsDialog::refresh(Preferences *preferences)
     else
     {
         ui->sHeader->setCurrentWidget(ui->pUsedData);
-        int percentage = ceil((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
+        int percentage = floor((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
         ui->pUsageStorage->setValue((percentage < 100) ? percentage : 100);
         if (percentage > 100)
         {

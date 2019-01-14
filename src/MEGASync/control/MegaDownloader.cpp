@@ -1,15 +1,14 @@
 #include "MegaDownloader.h"
 #include "Utilities.h"
-#include <QApplication>
+#include "MegaApplication.h"
 #include <QDateTime>
 #include <QPointer>
 
 using namespace mega;
 
-MegaDownloader::MegaDownloader(MegaApi *megaApi, MegaApi *megaApiGuest) : QObject()
+MegaDownloader::MegaDownloader(MegaApi *megaApi) : QObject()
 {
     this->megaApi = megaApi;
-    this->megaApiGuest = megaApiGuest;
 }
 
 MegaDownloader::~MegaDownloader()
@@ -17,24 +16,27 @@ MegaDownloader::~MegaDownloader()
 
 }
 
-void MegaDownloader::download(MegaNode *parent, QString path)
+void MegaDownloader::download(MegaNode *parent, QString path, QString appData)
 {
-    return download(parent, QFileInfo(path));
+    return download(parent, QFileInfo(path), appData);
 }
 
-void MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QString path)
+bool MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QString path, unsigned long long appDataId)
 {
     QDir dir(path);
     if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
     {
         qDeleteAll(*downloadQueue);
         downloadQueue->clear();
-        return;
+        return false;
     }
+
+    TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(appDataId);
 
     QString currentPath;
     while (!downloadQueue->isEmpty())
     {
+        QString appData = QString::number(appDataId);
         MegaNode *node = downloadQueue->dequeue();
         if (node->isForeign() && pathMap.contains(node->getParentHandle()))
         {
@@ -42,16 +44,42 @@ void MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
         }
         else
         {
+            if (data)
+            {
+                if (node->isFolder())
+                {
+                    data->totalFolders++;
+                }
+                else
+                {
+                    data->totalFiles++;
+                }
+                appData.append(QString::fromUtf8("*"));
+
+                if (data->localPath.isEmpty())
+                {
+                    data->localPath = QDir::toNativeSeparators(path);
+                    if (data->totalTransfers == 1)
+                    {
+                        char *escapedName = megaApi->escapeFsIncompatible(node->getName());
+                        QString nodeName = QString::fromUtf8(escapedName);
+                        delete [] escapedName;
+                        data->localPath += QDir::separator() + nodeName;
+                    }
+                }
+            }
+
             currentPath = path;
         }
 
-        download(node, currentPath);
+        download(node, currentPath, appData);
         delete node;
     }
     pathMap.clear();
+    return true;
 }
 
-void MegaDownloader::download(MegaNode *parent, QFileInfo info)
+void MegaDownloader::download(MegaNode *parent, QFileInfo info, QString appData)
 {
     QPointer<MegaDownloader> safePointer = this;
     QApplication::processEvents();
@@ -64,47 +92,53 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info)
 
     if (parent->getType() == MegaNode::TYPE_FILE)
     {
-        if ((parent->isPublic() || parent->isForeign()) && megaApiGuest)
-        {
-            megaApiGuest->startDownload(parent, (currentPath + QDir::separator()).toUtf8().constData());
-        }
-        else
-        {
-            megaApi->startDownload(parent, (currentPath + QDir::separator()).toUtf8().constData());
-        }
+        megaApi->startDownloadWithData(parent, (currentPath + QDir::separator()).toUtf8().constData(),appData.toUtf8().constData());
     }
     else
     {
-        char *escapedName = megaApi->escapeFsIncompatible(parent->getName());
-        QString nodeName = QString::fromUtf8(escapedName);
-        delete [] escapedName;
-
-        QString destPath = currentPath + QDir::separator() + nodeName;
-        QDir dir(destPath);
-        if (!dir.exists())
-        {
-#ifndef WIN32
-            if (!megaApi->createLocalFolder(dir.toNativeSeparators(destPath).toUtf8().constData()))
-#else
-            if (!dir.mkpath(QString::fromAscii(".")))
-#endif
-            {
-                return;
-            }
-        }
-
         if (!parent->isForeign())
         {
-            MegaNodeList *nList = megaApi->getChildren(parent);
-            for (int i = 0; i < nList->size(); i++)
-            {
-                MegaNode *child = nList->get(i);
-                download(child, destPath);
-            }
-            delete nList;
+            megaApi->startDownloadWithData(parent, (currentPath + QDir::separator()).toUtf8().constData(), appData.toUtf8().constData());
         }
         else
         {
+            char *escapedName = megaApi->escapeFsIncompatible(parent->getName());
+            QString nodeName = QString::fromUtf8(escapedName);
+            delete [] escapedName;
+
+            QString destPath = currentPath + QDir::separator() + nodeName;
+            QDir dir(destPath);
+            if (!dir.exists())
+            {
+    #ifndef WIN32
+                if (!megaApi->createLocalFolder(dir.toNativeSeparators(destPath).toUtf8().constData()))
+    #else
+                if (!dir.mkpath(QString::fromAscii(".")))
+    #endif
+                {
+                    return;
+                }
+            }
+
+            QByteArray appDataArray = appData.toUtf8();
+            char *endptr;
+            unsigned long long notificationId = strtoll(appDataArray.constData(), &endptr, 10);
+            TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(notificationId);
+            if (data)
+            {
+                if ((endptr - appDataArray.constData()) != appData.size())
+                {
+                    data->transfersFolderOK++;
+                }
+
+                data->pendingTransfers--;
+                if (data->pendingTransfers == 0)
+                {
+                    //Transfers finished, show notification
+                    emit finishedTransfers(notificationId);
+                }
+            }
+
             pathMap[parent->getHandle()] = destPath;
         }
     }

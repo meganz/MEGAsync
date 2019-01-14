@@ -17,7 +17,7 @@ HEADERS += UpdateTask.h \
     Preferences.h \
     MacUtils.h
 
-SOURCES += MEGAUpdater.cpp \
+SOURCES += MegaUpdater.cpp \
     UpdateTask.cpp
 
 INCLUDEPATH += $$MEGASDK_BASE_PATH/bindings/qt/3rdparty/include
@@ -25,10 +25,7 @@ INCLUDEPATH += $$MEGASDK_BASE_PATH/bindings/qt/3rdparty/include
 macx {    
     OBJECTIVE_SOURCES +=  MacUtils.mm
     DEFINES += _DARWIN_FEATURE_64_BIT_INODE USE_OPENSSL CRYPTOPP_DISABLE_ASM
-    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
-    QMAKE_CXXFLAGS -= -stdlib=libc++
-    QMAKE_LFLAGS -= -stdlib=libc++
-    CONFIG -= c++11
+    QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.9
     LIBS += -L$$MEGASDK_BASE_PATH/bindings/qt/3rdparty/libs/
     LIBS += -framework Cocoa -framework SystemConfiguration -framework CoreFoundation -framework Foundation -framework Security
     QMAKE_CXXFLAGS += -g
@@ -71,4 +68,8 @@ win32 {
     QMAKE_LFLAGS_WINDOWS += /SUBSYSTEM:WINDOWS,5.01
     QMAKE_LFLAGS_CONSOLE += /SUBSYSTEM:CONSOLE,5.01
     DEFINES += PSAPI_VERSION=1
+}
+
+unix:!macx {
+    error("This tool (MEGAupdater) is only compatible with Windows and macOS. On Linux, MEGA apps can be updated using the official repository.")
 }
