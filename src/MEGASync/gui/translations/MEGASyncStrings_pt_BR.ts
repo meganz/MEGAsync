@@ -460,7 +460,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
-        <translation type="unfinished">Out of storage space</translation>
+        <translation type="unfinished">Espaço de armazenamento excedido</translation>
     </message>
 </context>
 <context>
@@ -1147,12 +1147,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All file uploads are currently disabled.</source>
         <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
-        <translation type="unfinished">All file uploads are currently disabled.</translation>
+        <translation type="unfinished">Os uploads de arquivos estão temporariamente desativados.</translation>
     </message>
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation type="unfinished">Please upgrade to PRO.</translation>
+        <translation type="unfinished">Faça o upgrade a PRO</translation>
     </message>
 </context>
 <context>
@@ -1349,7 +1349,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Lost your authenticator device?[/A]</source>
         <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation type="unfinished">[A]Lost your Authenticator device?[/A]</translation>
+        <translation type="unfinished">[A]Você perdeu o seu dispositivo de autenticação?[/A]</translation>
     </message>
 </context>
 <context>
@@ -1981,7 +1981,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Label to inform the user about the potential issues of syncing a local folder with VMWare.</translatorcomment>
-        <translation type="unfinished">You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</translation>
+        <translation type="unfinished">Você está sincronizando uma pasta local compartilhada com o VMWare. Essas pastas não suportam notificações do sistema de arquivos, portanto, o MEGAsync terá que ser continuamente verificado para detectar alterações em seus arquivos e pastas. Se possível, use uma pasta diferente, para reduzir o uso da CPU.</translation>
+    </message>
+    <message>
+        <source>Get PRO</source>
+        <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
+        <translation type="unfinished">Get PRO</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
+        <translation type="unfinished">Mostrar na pasta</translation>
     </message>
 </context>
 <context>
@@ -2338,7 +2348,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Não foi possível sincronizar esta pasta.Por favor, certifique-se de que você não usa caracteres como ‘’ ‘/’ ou ‘:’ nos nomes das suas pastas.</translation>
+        <translation type="unfinished">Não é possível sincronizar esta pasta. Por favor, certifique-se de que você não usa caracteres como ‘\’, ‘/’  ou ‘:’ nos nomes das suas pastas.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2399,7 +2409,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Know More</source>
         <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
-        <translation type="unfinished">Saiba mais</translation>
+        <translation type="obsolete">Saiba mais</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2804,7 +2814,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>(about 90% of the available bandwidth)</source>
         <translatorcomment>Label to indicate that management of rate upload limit is automatic is about the 90% of availbale bandwidth. Keep parenthesis.</translatorcomment>
-        <translation>(cerca de 90% da banda disponível)</translation>
+        <translation>(aproximadamente 90% da banda disponível)</translation>
     </message>
     <message>
         <source>Bandwidth quota</source>
@@ -3307,7 +3317,7 @@ when the application starts again</source>
     <message>
         <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
         <translatorcomment>Label to inform the user that current account is over storage and uploads will be disable. Encourage the user to buy more space and upgrade to PRO. Keep [A] and [/A] codes.</translatorcomment>
-        <translation type="unfinished">Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</translation>
+        <translation type="unfinished">A sua conta no MEGA está cheia. Todos os uploads estão desativados, o que pode afetar as suas pastas sincronizadas. [A]Comprar mais espaço[/A]</translation>
     </message>
 </context>
 <context>
@@ -3756,6 +3766,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>We are all done!</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
         <translation type="unfinished">Terminamos!</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translatorcomment>Button label to open Login form</translatorcomment>
+        <translation type="unfinished">Entrar</translation>
     </message>
 </context>
 <context>
@@ -4206,7 +4221,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
-        <translation type="unfinished">Out of storage space</translation>
+        <translation type="unfinished">Espaço de armazenamento excedido</translation>
     </message>
 </context>
 <context>

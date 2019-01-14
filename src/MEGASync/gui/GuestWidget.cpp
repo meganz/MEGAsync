@@ -6,7 +6,10 @@
 #include <QUrl>
 #include "platform/Platform.h"
 #include "gui/Login2FA.h"
+
+#if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
+#endif
 
 using namespace mega;
 
@@ -427,4 +430,13 @@ void GuestWidget::page_logout()
     ui->progressBar->setValue(-1);
 
     ui->sPages->setCurrentWidget(ui->pProgress);
+}
+
+void GuestWidget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+    QWidget::changeEvent(event);
 }

@@ -1,8 +1,14 @@
 #include "Login2FA.h"
 #include "ui_Login2FA.h"
 #include <QRegExp>
-#include <QtConcurrent/QtConcurrent>
 #include <QDesktopServices>
+#include <QUrl>
+
+#if QT_VERSION >= 0x050000
+#include <QtConcurrent/QtConcurrent>
+#else
+#include <QtConcurrentRun>
+#endif
 
 Login2FA::Login2FA(QWidget *parent) :
     QDialog(parent),

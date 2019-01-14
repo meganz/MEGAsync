@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">可使用的</translation>
+        <translation type="unfinished">可用</translation>
     </message>
     <message>
         <source>Total size taken up by file versions:</source>
@@ -460,7 +460,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
-        <translation type="unfinished">Out of storage space</translation>
+        <translation type="unfinished">存储空间不足</translation>
     </message>
 </context>
 <context>
@@ -1054,7 +1054,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Paused</source>
         <translatorcomment>Label to indicate that MEGAsync is at pause state</translatorcomment>
-        <translation type="obsolete">暂停</translation>
+        <translation type="obsolete">已暂停</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -1147,12 +1147,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All file uploads are currently disabled.</source>
         <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
-        <translation type="unfinished">All file uploads are currently disabled.</translation>
+        <translation type="unfinished">目前已禁用所有文件上传。</translation>
     </message>
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation type="unfinished">Please upgrade to PRO.</translation>
+        <translation type="unfinished">请升级至PRO帐户。</translation>
     </message>
 </context>
 <context>
@@ -1349,7 +1349,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Lost your authenticator device?[/A]</source>
         <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation type="unfinished">[A]Lost your Authenticator device?[/A]</translation>
+        <translation type="unfinished">[A]丢失了您的验证设备？[/A]</translation>
     </message>
 </context>
 <context>
@@ -1420,7 +1420,7 @@ Exit anyway?</source>
     <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Notification message launched when a link to a file has been copied succesfully to the clipboard.</translatorcomment>
-        <translation>此链接已被复制到剪贴簿</translation>
+        <translation>此链接已复制到剪贴板</translation>
     </message>
     <message>
         <source>The links have been copied to the clipboard</source>
@@ -1468,7 +1468,7 @@ Exit anyway?</source>
     <message>
         <source>Paused</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is in a paused state.</translatorcomment>
-        <translation>暂停</translation>
+        <translation>已暂停</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -1981,7 +1981,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Label to inform the user about the potential issues of syncing a local folder with VMWare.</translatorcomment>
-        <translation type="unfinished">You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</translation>
+        <translation type="unfinished">您正在同步一个与VMWare共享的本地文件夹。 这些文件夹不支持文件系统通知，因此MEGAsync将不断扫描以检测在文件和文件夹中的更改。 建议您请使用其他文件夹以减少CPU使用率。</translation>
+    </message>
+    <message>
+        <source>Get PRO</source>
+        <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
+        <translation type="unfinished">获取PRO帐户</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
+        <translation type="unfinished">显示文件夹</translation>
     </message>
 </context>
 <context>
@@ -2029,7 +2039,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Expired</source>
         <translatorcomment>Label to show that an error related with expiration occurs during a SDK operation.</translatorcomment>
-        <translation>过期</translation>
+        <translation>已过期</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -2149,7 +2159,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get link</source>
         <translatorcomment>Tooltip shown when the mouse is over the &quot;Get link&quot; button related to a completed transfer</translatorcomment>
-        <translation type="unfinished">取得链接</translation>
+        <translation type="unfinished">获得链接</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -2338,7 +2348,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>同步文件夹无效。请确认您的文件夹名称中没有使用 ‘’ ‘/’ 或 ‘:’等字符。</translation>
+        <translation type="unfinished">同步文件夹无效。请确认您的文件夹名称中没有使用例如‘\’‘/’或‘:’ 等字符。</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2399,7 +2409,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Know More</source>
         <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
-        <translation type="unfinished">了解更多</translation>
+        <translation type="obsolete">了解更多</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2685,7 +2695,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Help</source>
         <translatorcomment>Button label for Help.</translatorcomment>
-        <translation>客户服务</translation>
+        <translation>帮助</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2745,12 +2755,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Storage space</source>
         <translatorcomment>Label to indicate the actual storage space used.</translatorcomment>
-        <translation>储存空间</translation>
+        <translation>存储空间</translation>
     </message>
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
-        <translation>付费升级</translation>
+        <translation>升级</translation>
     </message>
     <message>
         <source>Synced folders</source>
@@ -3238,7 +3248,7 @@ when the application starts again</source>
     <message>
         <source>Transfer quota</source>
         <translatorcomment>Label to indicate the transfer quota usage of current logged account</translatorcomment>
-        <translation type="unfinished">传输配额(频宽)</translation>
+        <translation type="unfinished">传输流量</translation>
     </message>
     <message>
         <source>Don&apos;t show icons on the left pane of Windows Explorer</source>
@@ -3307,7 +3317,7 @@ when the application starts again</source>
     <message>
         <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
         <translatorcomment>Label to inform the user that current account is over storage and uploads will be disable. Encourage the user to buy more space and upgrade to PRO. Keep [A] and [/A] codes.</translatorcomment>
-        <translation type="unfinished">Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</translation>
+        <translation type="unfinished">您的MEGA帐户已满。所有上传已被禁用，这可能会影响您已同步的文件夹。[A]购买更多空间[/A]</translation>
     </message>
 </context>
 <context>
@@ -3414,7 +3424,7 @@ when the application starts again</source>
     <message>
         <source>Change</source>
         <translatorcomment>Button label to change the local or remote folder during the process of createn a new synchronization. String as short as possible.</translatorcomment>
-        <translation>变更</translation>
+        <translation>更改</translation>
     </message>
     <message>
         <source>Welcome to MEGA</source>
@@ -3662,7 +3672,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Good</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Good security </translatorcomment>
-        <translation type="unfinished">好</translation>
+        <translation type="unfinished">很好</translation>
     </message>
     <message>
         <source>Strong</source>
@@ -3756,6 +3766,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>We are all done!</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
         <translation type="unfinished">完成！</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translatorcomment>Button label to open Login form</translatorcomment>
+        <translation type="unfinished">登录</translation>
     </message>
 </context>
 <context>
@@ -3874,7 +3889,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Paused</source>
         <translatorcomment>Information label in the main dialog to show that all transfers are paused</translatorcomment>
-        <translation type="unfinished">暂停</translation>
+        <translation type="unfinished">已暂停</translation>
     </message>
     <message>
         <source>Waiting</source>
@@ -3987,7 +4002,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Text shown when a streaming link has been copied to the clipboard</translatorcomment>
-        <translation type="unfinished">此链接已被复制到剪贴簿</translation>
+        <translation type="unfinished">此链接已复制到剪贴板</translation>
     </message>
     <message>
         <source>Error generating streaming link</source>
@@ -4206,7 +4221,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
-        <translation type="unfinished">Out of storage space</translation>
+        <translation type="unfinished">存储空间不足</translation>
     </message>
 </context>
 <context>
@@ -4393,7 +4408,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">可使用的</translation>
+        <translation type="unfinished">可用</translation>
     </message>
 </context>
 <context>

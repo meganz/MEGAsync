@@ -1220,18 +1220,9 @@ void MegaApplication::start()
     almostOQ = false;
     storageState = MegaApi::STORAGE_STATE_GREEN;
     appliedStorageState = MegaApi::STORAGE_STATE_GREEN;;
+    bwOverquotaTimestamp = 0;
 
-    if (isLinux && trayIcon->contextMenu())
-    {
-        if (showStatusAction)
-        {
-            initialMenu->removeAction(showStatusAction);
-
-            delete showStatusAction;
-            showStatusAction = NULL;
-        }
-    }
-    else
+    if (!isLinux || !trayIcon->contextMenu())
     {
         trayIcon->setContextMenu(initialMenu);
     }
@@ -1327,6 +1318,7 @@ void MegaApplication::start()
                     preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
                 }
             }
+            createTrayMenu();
         }
 
 
@@ -1412,10 +1404,7 @@ void MegaApplication::loggedIn()
     registerUserActivity();
     pauseTransfers(paused);
     inflightUserStats = false;
-    if (preferences->hasStorageWarning())
-    {
-        updateUserStats(true);
-    }
+    updateUserStats(true);
     megaApi->getPricing();
     megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
     megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
@@ -1590,7 +1579,6 @@ void MegaApplication::applyStorageState(int state)
     storageState = state;
     if (preferences->logged())
     {
-        preferences->setStorageWarning(state == MegaApi::STORAGE_STATE_RED || state == MegaApi::STORAGE_STATE_ORANGE);
         if (storageState != appliedStorageState)
         {
             updateUserStats(true);
@@ -2617,6 +2605,8 @@ void MegaApplication::showInfoDialog()
             }
     #ifdef __MACH__
             trayIcon->setContextMenu(&emptyMenu);
+    #elif defined(_WIN32)
+            trayIcon->setContextMenu(windowsMenu);
     #endif
         }
     }
@@ -2884,7 +2874,7 @@ void MegaApplication::sendOverStorageNotification(int state)
             MegaNotification *notification = new MegaNotification();
             notification->setTitle(tr("Your account is almost full."));
             notification->setText(tr("Upgrade now to a PRO account."));
-            notification->setActions(QStringList() << QString::fromUtf8("Get PRO"));
+            notification->setActions(QStringList() << tr("Get PRO"));
             connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
             notificator->notify(notification);
             break;
@@ -2894,7 +2884,7 @@ void MegaApplication::sendOverStorageNotification(int state)
             MegaNotification *notification = new MegaNotification();
             notification->setTitle(tr("Your account is full."));
             notification->setText(tr("Upgrade now to a PRO account."));
-            notification->setActions(QStringList() << QString::fromUtf8("Get PRO"));
+            notification->setActions(QStringList() << tr("Get PRO"));
             connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToUpgrade(int)));
             notificator->notify(notification);
             break;
@@ -3139,9 +3129,9 @@ void MegaApplication::setupWizardFinished(int result)
         infoDialog->hide();
     }
 
-    preferences->setStorageWarning(true);
     loggedIn();
     startSyncs();
+    applyStorageState(storageState);
 }
 
 void MegaApplication::overquotaDialogFinished(int)
@@ -3839,7 +3829,7 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
             preferences->setLastTransferNotificationTimestamp();
             notification->setTitle(title);
             notification->setText(message);
-            notification->setActions(QStringList() << QString::fromUtf8("Show in folder"));
+            notification->setActions(QStringList() << tr("Show in folder"));
             notification->setData(((data->totalTransfers == 1) ? QString::number(1) : QString::number(0)) + data->localPath);
             connect(notification, SIGNAL(activated(int)), this, SLOT(showInFolder(int)));
             notificator->notify(notification);
@@ -3864,7 +3854,11 @@ void MegaApplication::showInFolder(int activationButton)
     MegaNotification *notification = ((MegaNotification *)QObject::sender());
 
     if ((activationButton == MegaNotification::ActivationActionButtonClicked
-         || activationButton == MegaNotification::ActivationLegacyNotificationClicked)
+         || activationButton == MegaNotification::ActivationLegacyNotificationClicked
+     #ifndef _WIN32
+         || activationButton == MegaNotification::ActivationContentClicked
+     #endif
+         )
             && notification->getData().size() > 1)
     {
         QString localPath = QDir::toNativeSeparators(notification->getData().mid(1));
@@ -3882,7 +3876,11 @@ void MegaApplication::showInFolder(int activationButton)
 void MegaApplication::redirectToUpgrade(int activationButton)
 {
     if (activationButton == MegaNotification::ActivationActionButtonClicked
-            || activationButton == MegaNotification::ActivationLegacyNotificationClicked)
+            || activationButton == MegaNotification::ActivationLegacyNotificationClicked
+        #ifndef _WIN32
+            || activationButton == MegaNotification::ActivationContentClicked
+        #endif
+            )
     {
         QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
         QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
@@ -4475,24 +4473,19 @@ void MegaApplication::createTrayIcon()
 
     if (isLinux)
     {
-        if (trayIcon->contextMenu())
-        {
-            if (showStatusAction)
-            {
-                showStatusAction->deleteLater();
-                showStatusAction = NULL;
-            }
-
-            showStatusAction = new QAction(tr("Show status"), this);
-            connect(showStatusAction, SIGNAL(triggered()), this, SLOT(showInfoDialog()));
-
-            initialMenu->insertAction(changeProxyAction, showStatusAction);
-        }
         return;
     }
 
 #ifdef _WIN32
-    trayIcon->setContextMenu(windowsMenu);
+    if (preferences && preferences->logged() && megaApi && megaApi->isFilesystemAvailable()
+            && bwOverquotaTimestamp <= QDateTime::currentMSecsSinceEpoch() / 1000)
+    {
+        trayIcon->setContextMenu(windowsMenu);
+    }
+    else
+    {
+        trayIcon->setContextMenu(initialMenu);
+    }
 #else
     trayIcon->setContextMenu(&emptyMenu);
 #endif
@@ -5299,14 +5292,6 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 #ifndef __APPLE__
         if (isLinux)
         {
-            if (showStatusAction)
-            {
-                initialMenu->removeAction(showStatusAction);
-
-                delete showStatusAction;
-                showStatusAction = NULL;
-            }
-
             if (trayMenu && trayMenu->isVisible())
             {
                 trayMenu->close();
@@ -5599,6 +5584,22 @@ void MegaApplication::createTrayMenu()
 
     initialMenu->addAction(changeProxyAction);
     initialMenu->addAction(initialExitAction);
+
+
+    if (isLinux && infoDialog)
+    {
+        if (showStatusAction)
+        {
+            showStatusAction->deleteLater();
+            showStatusAction = NULL;
+        }
+
+        showStatusAction = new QAction(tr("Show status"), this);
+        connect(showStatusAction, SIGNAL(triggered()), this, SLOT(showInfoDialog()));
+
+        initialMenu->insertAction(changeProxyAction, showStatusAction);
+    }
+
 
 #ifdef _WIN32
     if (!windowsMenu)
@@ -6446,6 +6447,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             preferences->clearTemporalBandwidth();
 #ifdef __MACH__
             trayIcon->setContextMenu(&emptyMenu);
+#elif defined(_WIN32)
+            trayIcon->setContextMenu(windowsMenu);
 #endif
             if (bwOverquotaDialog)
             {
@@ -6477,8 +6480,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         delete inShares;
 
         preferences->sync();
-
-        applyStorageState(storageState);
 
         if (infoDialog)
         {
@@ -7103,6 +7104,8 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
 #ifdef __MACH__
         trayIcon->setContextMenu(initialMenu);
+#elif defined(_WIN32)
+        trayIcon->setContextMenu(initialMenu);
 #endif
         closeDialogs(true);
         openBwOverquotaDialog();
@@ -7373,10 +7376,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("Current state. Paused = %1   Indexing = %2   Waiting = %3")
                  .arg(paused).arg(indexing).arg(waiting).toUtf8().constData());
 
-    if (!isLinux)
-    {
-        updateTrayIcon();
-    }
+    updateTrayIcon();
 }
 
 void MegaApplication::onSyncStateChanged(MegaApi *api, MegaSync *)

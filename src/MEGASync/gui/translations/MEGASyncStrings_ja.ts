@@ -1983,6 +1983,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to inform the user about the potential issues of syncing a local folder with VMWare.</translatorcomment>
         <translation type="unfinished">VMWareと共有するローカルフォルダを同期しています。これらのフォルダはファイルシステムの通知をサポートしていないため、あなたのファイルやフォルダの変更を検出するためにMEGAsyncは継続的にスキャンする必要があります。可能であれば、別のフォルダを使用してCPU使用量を減らしてください。</translation>
     </message>
+    <message>
+        <source>Get PRO</source>
+        <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
+        <translation type="unfinished">PROを取得</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
+        <translation type="unfinished">フォルダ表示</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2338,7 +2348,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>同期用のフォルダが無効です。フォルダ名に &apos;\&apos;、 &apos;/&apos;、 &apos;：&apos;などの文字を使用しないようにしてください。</translation>
+        <translation type="unfinished">同期用のフォルダが無効です。フォルダ名に &apos;\&apos;、 &apos;/&apos;、 &apos;：&apos;などの文字を使用しないようにしてください。</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2399,7 +2409,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Know More</source>
         <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
-        <translation type="unfinished">もっと知る</translation>
+        <translation type="obsolete">もっと知る</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -3756,6 +3766,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>We are all done!</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
         <translation type="unfinished">すべて完了しました！　</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translatorcomment>Button label to open Login form</translatorcomment>
+        <translation type="unfinished">ログイン</translation>
     </message>
 </context>
 <context>

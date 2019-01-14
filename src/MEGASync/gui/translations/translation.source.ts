@@ -140,7 +140,7 @@
     <message>
         <source>Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization</source>
         <translatorcomment>Label to describe the different options that the user have to set a exclusion for all synchronizations.</translatorcomment>
-        <translation type="unfinished">Enter a name, an absolute path (wildcards * and? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
+        <translation type="unfinished">Enter a name, an absolute path (wildcards * and ? are allowed) or choose which file or folder you want to exclude from the synchronization.</translation>
     </message>
     <message>
         <source>Choose File</source>
@@ -1349,7 +1349,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>[A]Lost your authenticator device?[/A]</source>
         <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
-        <translation type="unfinished">[A]Lost your authenticator device?[/A]</translation>
+        <translation type="unfinished">[A]Lost your Authenticator device?[/A]</translation>
     </message>
 </context>
 <context>
@@ -1983,6 +1983,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to inform the user about the potential issues of syncing a local folder with VMWare.</translatorcomment>
         <translation type="unfinished">You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</translation>
     </message>
+    <message>
+        <source>Get PRO</source>
+        <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
+        <translation type="unfinished">Get PRO</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
+        <translation type="unfinished">Show in folder</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2338,7 +2348,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Invalid folder for synchronization.Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in your folder names.</translation>
+        <translation type="unfinished">Invalid folder for synchronization. Please, ensure that you don’t use characters like ‘\’, ‘/’ or ‘:’ in your folder names.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2399,7 +2409,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Know More</source>
         <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
-        <translation type="unfinished">Know More</translation>
+        <translation type="obsolete">Know More</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2529,6 +2539,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
         <translation type="unfinished">popular!</translation>
+    </message>
+</context>
+<context>
+    <name>Preferences</name>
+    <message>
+        <source>- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
+        <translation type="unfinished">- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</translation>
     </message>
 </context>
 <context>
@@ -3756,6 +3784,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>We are all done!</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
         <translation type="unfinished">We are all done!</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translatorcomment>Button label to open Login form</translatorcomment>
+        <translation type="unfinished">Login</translation>
     </message>
 </context>
 <context>

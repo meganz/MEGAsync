@@ -313,7 +313,7 @@ color: #999999;
 {
     color: #333333;
     font-family: &quot;Source Sans Pro&quot;;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 #wHeader, #pOverquota, #pUpdated
@@ -812,7 +812,7 @@ margin-right: 20px;</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_2">
              <property name="spacing">
-              <number>23</number>
+              <number>18</number>
              </property>
              <property name="leftMargin">
               <number>20</number>

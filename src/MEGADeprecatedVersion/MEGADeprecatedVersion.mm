@@ -21,7 +21,7 @@
     NSAlert *alert = [[NSAlert alloc] init];
     [alert addButtonWithTitle:@"OK"];
     [alert setMessageText:@"Unsupported macOS Version"];
-    [alert setInformativeText:@"We have detected that you are using and old macOS version that is no longer supported. Please update your system to macOS 10.9+ or download the latest compatible installer of MEGAsync"];
+    [alert setInformativeText:@"We have detected that you are using an old macOS version that is no longer supported. Please update your system to macOS 10.9+ or download the latest compatible installer of MEGAsync."];
 
     NSTextView *view = [[NSTextView alloc] initWithFrame:NSMakeRect(0,0,400,20)];
     [view setTextContainerInset:NSMakeSize(0.0f, 0.0f)];

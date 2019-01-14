@@ -1983,6 +1983,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to inform the user about the potential issues of syncing a local folder with VMWare.</translatorcomment>
         <translation type="unfinished">Vous synchronisez un dossier local partagé avec VMware. Ces dossiers ne prennent pas en charge les notifications du système de fichiers. MEGASync devra donc continuellement analyser pour détecter les changements dans vos fichiers et dossiers. Veuillez si possible utiliser un dossier différent pour réduire l’utilisation de l’UCT.</translation>
     </message>
+    <message>
+        <source>Get PRO</source>
+        <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
+        <translation type="unfinished">Obtenir la version PRO</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
+        <translation type="unfinished">Montrer dans le dossier</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2338,7 +2348,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Le dossier est invalide pour la synchronisation. Veuillez vous assurer de ne pas utiliser des caractères tels que « \ », « / » ou « : »  dans vos noms de dossiers.</translation>
+        <translation type="unfinished">Le dossier est invalide pour la synchronisation. Veuillez vous assurer de ne pas utiliser des caractères tels que « \ », « / » ou « : »  dans vos noms de dossiers.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2399,7 +2409,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Know More</source>
         <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
-        <translation type="unfinished">En apprendre davantage</translation>
+        <translation type="obsolete">En apprendre davantage</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -3756,6 +3766,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>We are all done!</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
         <translation type="unfinished">Nous avons terminé !</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translatorcomment>Button label to open Login form</translatorcomment>
+        <translation type="unfinished">Connexion</translation>
     </message>
 </context>
 <context>

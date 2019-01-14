@@ -75,6 +75,13 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
     ui->pUsageStorage->setAttribute(Qt::WA_TransparentForMouseEvents);
 
+#ifdef __APPLE__
+    if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //Issues with mavericks and popup management
+    {
+        installEventFilter(this);
+    }
+#endif
+
     ui->wUsageStorage->installEventFilter(this);
     ui->wUsageStorage->setMouseTracking(true);
 
@@ -193,7 +200,7 @@ void InfoDialog::setUsage()
     }
     else
     {
-        int percentage = ceil((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
+        int percentage = floor((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
         ui->pUsageStorage->setValue((percentage < 100) ? percentage : 100);
 
         if (percentage > 100)
@@ -232,7 +239,7 @@ void InfoDialog::setUsage()
     }
     else
     {
-        int percentage = ceil(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+        int percentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
         ui->pUsageQuota->setValue((percentage < 100) ? percentage : 100);
         if (percentage > 100)
         {
@@ -777,6 +784,16 @@ void InfoDialog::changeEvent(QEvent *event)
 
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 {
+#ifdef __APPLE__
+    if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //manage spontaneus mouse press events
+    {
+        if (obj == this && e->type() == QEvent::MouseButtonPress && e->spontaneous())
+        {
+            return true;
+        }
+    }
+#endif
+
     if (obj != ui->wUsageStorage)
     {
         return false;
@@ -842,7 +859,11 @@ void InfoDialog::regenerateLayout()
             gWidget->enableListener();
         }
 
+        updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
+        setOverQuotaMode(false);
+        on_bDotUsedStorage_clicked();
         ui->wPSA->removeAnnounce();
+
         ui->bTransferManager->setVisible(false);
         ui->bAvatar->setVisible(false);
         ui->bTransferManager->setVisible(false);
@@ -1040,7 +1061,7 @@ void InfoDialog::animateStates(bool opt)
         ui->lUploadToMega->setIcon(QIcon(QString::fromAscii("://images/upload_to_mega.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
         ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 18px;"));
-        ui->lUploadToMegaDesc->setText(QString::fromUtf8("Upload to MEGA now"));
+        ui->lUploadToMegaDesc->setText(tr("Upload to MEGA now"));
 
         if (animation)
         {

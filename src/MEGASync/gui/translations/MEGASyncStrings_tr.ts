@@ -1984,6 +1984,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to inform the user about the potential issues of syncing a local folder with VMWare.</translatorcomment>
         <translation type="unfinished">VMWare ile paylaşılan bir klasör eşitliyorsunuz. Bu klasörler dosya sistemi düzenlemelerini desteklemez, bu yüzden MEGAsync dosya ve klasörlerinizdeki değişiklikleri tespit etmek için sürekli tarıyor olacaktır. Lütfen işlemci kullanımını azaltmak için mümkünse farklı bir klasör seçin.</translation>
     </message>
+    <message>
+        <source>Get PRO</source>
+        <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
+        <translation type="unfinished">PRO alın</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
+        <translation type="unfinished">Klasörde göster</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2339,7 +2349,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Senkronizasyon için geçersiz klasör.Lütfen klasör isminizin ‘\’, ‘/’ veya ‘:’  gibi karakterler içermediğinden emin olun.</translation>
+        <translation type="unfinished">Senkronizasyon için geçersiz klasör.Lütfen klasör isminizin ‘\’, ‘/’ veya ‘:’  gibi karakterler içermediğinden emin olun.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2400,7 +2410,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Know More</source>
         <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
-        <translation type="unfinished">Dahasını Öğrenin</translation>
+        <translation type="obsolete">Dahasını Öğrenin</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -3758,6 +3768,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>We are all done!</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
         <translation type="unfinished">Tamamdır!</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translatorcomment>Button label to open Login form</translatorcomment>
+        <translation type="unfinished">Oturum Aç</translation>
     </message>
 </context>
 <context>

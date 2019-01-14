@@ -52,11 +52,12 @@ ChangeLogDialog::~ChangeLogDialog()
 
 void ChangeLogDialog::setChangeLogNotes(QString notes)
 {
+    QString changelog = QCoreApplication::translate("Preferences", notes.toUtf8().constData());
     ui->tChangelog->setHtml(QString::fromUtf8("<p style=\"line-height: 119%;\"><span style=\"margin: 16px; font-family: Helvetica; font-size:11px; color: #333333;\">") +
                              tr("New in this version:") +
                              QString::fromUtf8("</span></p>") +
                              QString::fromUtf8("<p style=\" line-height: 146%;\"><span style=\"font-family: Helvetica; font-size:11px; color: #666666;\">") +
-                             notes.replace(QString::fromUtf8("\n"), QString::fromUtf8("<br>")) +
+                             changelog.replace(QString::fromUtf8("\n"), QString::fromUtf8("<br>")) +
                              QString::fromUtf8("</span></p>"));
 }
 

@@ -6,7 +6,10 @@
 #include "gui/MultiQFileDialog.h"
 #include "gui/Login2FA.h"
 #include "platform/Platform.h"
+
+#if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
+#endif
 
 using namespace mega;
 
@@ -37,6 +40,7 @@ SetupWizard::SetupWizard(MegaApplication *app, QWidget *parent) :
     this->app = app;
     this->closing = false;
     this->loggingStarted = false;
+    this->creatingDefaultSyncFolder = false;
     this->closeBlocked = false;
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
@@ -251,6 +255,13 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
         }
         case MegaRequest::TYPE_CREATE_FOLDER:
         {
+            if (!creatingDefaultSyncFolder)
+            {
+                break;
+            }
+
+            creatingDefaultSyncFolder = false;
+
             if (error->getErrorCode() == MegaError::API_OK)
             {
                 MegaNode *node = megaApi->getNodeByPath("/MEGAsync");
@@ -588,6 +599,7 @@ void SetupWizard::on_bNext_clicked()
 
             ui->eMegaFolder->setText(QString::fromUtf8("/MEGAsync"));
             megaApi->createFolder("MEGAsync", rootNode);
+            creatingDefaultSyncFolder = true;
             delete rootNode;
 
             ui->lProgress->setText(tr("Creating folder..."));
@@ -1041,7 +1053,7 @@ void SetupWizard::page_mode()
 
     ui->bSkip->setVisible(true);
     ui->bSkip->setEnabled(true);
-    ui->bSkip->setText(QString::fromUtf8("Skip"));
+    ui->bSkip->setText(tr("Skip"));
     ui->bNext->setDefault(false);
     ui->bCancel->setDefault(false);
     ui->wHelp->show();
@@ -1123,7 +1135,7 @@ void SetupWizard::page_newaccount()
     ui->bBack->setEnabled(false);
     ui->bSkip->setVisible(true);
     ui->bSkip->setEnabled(true);
-    ui->bSkip->setText(QString::fromUtf8("Login"));
+    ui->bSkip->setText(tr("Login"));
     ui->eName->setFocus();
     ui->bNext->setDefault(true);
     ui->cAgreeWithTerms->setChecked(false);

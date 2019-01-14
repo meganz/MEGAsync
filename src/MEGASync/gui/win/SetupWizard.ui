@@ -184,6 +184,9 @@
          </item>
          <item>
           <widget class="QPushButton" name="wHelp">
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
            <property name="styleSheet">
             <string notr="true">border: none;
 </string>
@@ -520,7 +523,7 @@
              <string>First name:</string>
             </property>
             <property name="alignment">
-             <set>Qt::AlignCenter</set>
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -548,6 +551,9 @@
             <property name="text">
              <string>Email:</string>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
            </widget>
           </item>
           <item row="2" column="1">
@@ -573,6 +579,9 @@
            <widget class="QLabel" name="lPassword">
             <property name="text">
              <string>Password:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
           </item>
@@ -728,8 +737,11 @@
             <property name="text">
              <string>Repeat password:</string>
             </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+            </property>
             <property name="wordWrap">
-             <bool>true</bool>
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -861,6 +873,9 @@
            <widget class="QLabel" name="label">
             <property name="text">
              <string>Last name:</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
             </property>
            </widget>
           </item>

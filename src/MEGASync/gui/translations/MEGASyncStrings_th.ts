@@ -16,7 +16,7 @@
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">กล่องเข้า</translation>
+        <translation type="unfinished">กล่องขาเข้า</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -1079,7 +1079,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">กล่องเข้า</translation>
+        <translation type="unfinished">กล่องขาเข้า</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -1981,7 +1981,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
         <translatorcomment>Label to inform the user about the potential issues of syncing a local folder with VMWare.</translatorcomment>
-        <translation type="unfinished">คุณกำลังซิงค์โฟลเดอร์ภายในเครื่องที่แชร์กับ VMWare โฟลเดอร์เหล่านี้ไม่สนับสนุนการแจ้งเตือนของระบบไฟล์ ดังนั้น MEGAsync จะต้องสแกนเพื่อตรวจหาการเปลี่ยนแปลงในไฟล์และโฟลเดอร์ของคุณอย่างต่อเนื่อง หากเป็นไปได้ กรุณาใช้โฟลเดอร์อื่น เพื่อลดการใช้งาน CPU</translation>
+        <translation type="unfinished">คุณกำลังซิงค์โฟลเดอร์ภายในเครื่องที่แชร์กับ VMWare โฟลเดอร์เหล่านี้ไม่สนับสนุนการแจ้งเตือนระบบไฟล์ ดังนั้น MEGAsync จะต้องสแกนเพื่อตรวจหาการเปลี่ยนแปลงในไฟล์และโฟลเดอร์ของคุณอย่างต่อเนื่อง หากเป็นไปได้ กรุณาใช้โฟลเดอร์อื่น เพื่อลดการใช้งาน CPU</translation>
+    </message>
+    <message>
+        <source>Get PRO</source>
+        <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
+        <translation type="unfinished">รับบัญชี PRO</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
+        <translation type="unfinished">แสดงในโฟลเดอร์</translation>
     </message>
 </context>
 <context>
@@ -2338,7 +2348,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>โฟลเดอร์สำหรับการซิงโครไนซ์ไม่ถูกต้องกรุณาตรวจสอบว่าคุณไม่ได้ใช้อักขระเหล่านี้ ‘\’ ‘/’ หรือ ‘:’ ในชื่อโฟลเดอร์ของคุณ</translation>
+        <translation type="unfinished">โฟลเดอร์สำหรับการซิงโครไนซ์ไม่ถูกต้องกรุณาตรวจสอบว่าคุณไม่ได้ใช้อักขระเหล่านี้ ‘\’ ‘/’ หรือ ‘:’ ในชื่อโฟลเดอร์ของคุณ</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2399,7 +2409,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Know More</source>
         <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
-        <translation type="unfinished">รู้เพิ่มเติม</translation>
+        <translation type="obsolete">รู้เพิ่มเติม</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -3307,7 +3317,7 @@ when the application starts again</source>
     <message>
         <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
         <translatorcomment>Label to inform the user that current account is over storage and uploads will be disable. Encourage the user to buy more space and upgrade to PRO. Keep [A] and [/A] codes.</translatorcomment>
-        <translation type="unfinished">บัญชี MEGA ของคุณมีพื้นที่เต็มแล้ว การอัปโหลดทั้งหมดถูกปิดใช้งานซึ่งอาจมีผลกับโฟลเดอร์ที่ซิงค์ของคุณได้ [A]ซื้อพื้นที่เพิ่มเติม[/A]</translation>
+        <translation type="unfinished">บัญชี MEGA คุณมีพื้นที่เต็มแล้ว การอัปโหลดทั้งหมดถูกปิดใช้งาน อาจมีผลกับโฟลเดอร์ที่ซิงค์ของคุณได้ ลองพิจารณา[A]ซื้อพื้นที่เพิ่มเติม[/A]</translation>
     </message>
 </context>
 <context>
@@ -3756,6 +3766,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>We are all done!</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
         <translation type="unfinished">เสร็จแล้วจ้า!</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translatorcomment>Button label to open Login form</translatorcomment>
+        <translation type="unfinished">เข้าสู่ระบบ</translation>
     </message>
 </context>
 <context>
@@ -4354,7 +4369,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">กล่องเข้า</translation>
+        <translation type="unfinished">กล่องขาเข้า</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -4385,7 +4400,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">กล่องเข้า</translation>
+        <translation type="unfinished">กล่องขาเข้า</translation>
     </message>
     <message>
         <source>Used</source>
