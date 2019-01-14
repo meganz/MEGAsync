@@ -283,7 +283,11 @@ void StreamingFromMegaDialog::openStreamWithApp(QString app)
     }
 
 #ifndef __APPLE__
+#ifdef _WIN32
     QString command = QString::fromUtf8("\"%1\" \"%2\"").arg(QDir::toNativeSeparators(app)).arg(streamURL);
+#else
+    QString command = QString::fromUtf8("%1 \"%2\"").arg(QDir::toNativeSeparators(app)).arg(streamURL);
+#endif
     QProcess::startDetached(command);
 #else
     QString args;
