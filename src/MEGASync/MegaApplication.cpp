@@ -149,6 +149,8 @@ int main(int argc, char *argv[])
     // If such behavior is undesired, set the QT_SSL_USE_TEMPORARY_KEYCHAIN environment variable to a non-zero value this will prompt QSslSocket to use its own temporary keychain.
     bool useSSLtemporaryKeychain = qputenv("QT_SSL_USE_TEMPORARY_KEYCHAIN","1");
 
+    qputenv("QT_BEARER_POLL_TIMEOUT", QByteArray::number(-1));
+
 #endif
 
 #ifdef Q_OS_LINUX
