@@ -84,9 +84,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
 #ifdef Q_OS_LINUX
     installEventFilter(this);
-#else
-    ui->wUsageStorage->installEventFilter(this);
 #endif
+    ui->wUsageStorage->installEventFilter(this);
     ui->wUsageStorage->setMouseTracking(true);
 
     ui->lOQDesc->setTextFormat(Qt::RichText);
@@ -789,7 +788,7 @@ void InfoDialog::changeEvent(QEvent *event)
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 {
 #ifdef Q_OS_LINUX
-    if (e->type() == QEvent::WindowDeactivate)
+    if (obj == this && e->type() == QEvent::WindowDeactivate)
     {
         close();
         return true;
