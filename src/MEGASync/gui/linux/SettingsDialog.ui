@@ -3670,7 +3670,7 @@ background:transparent;</string>
           <item>
            <widget class="QPushButton" name="bLocalCleaner">
             <property name="text">
-             <string>%1 cleaning scheduler</string>
+             <string>%1 clearing scheduler</string>
             </property>
            </widget>
           </item>
