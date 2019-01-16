@@ -42,6 +42,11 @@ QPushButton
 	height: 14px;
 }
 
+#NodeSelector
+{
+	background-color: #f1f1f1;
+}
+
 #cbAlwaysUploadToLocation
 {
     spacing: 10px;

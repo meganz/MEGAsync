@@ -34,6 +34,11 @@
 font-size: 11px;
 }
 
+#StreamingFromMegaDialog
+{
+	background-color: #f1f1f1;
+}
+
 #lStreamResourceDesc, #lFileInfoDesc, #lOpenWithDesc 
 {
   font-family: &quot;HelveticaNeue-Light&quot;;
