@@ -28,6 +28,8 @@ then
 			reponame=MEGAsync
 		elif [ "nautilus-megasync" == "$package" ]; then
 			reponame=MEGAShellExtNautilus
+		elif [ "nemo-megasync" == "$package" ]; then
+			reponame=MEGAShellExtNemo
 		else
 			reponame=$package
 		fi

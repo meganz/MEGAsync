@@ -77,6 +77,7 @@ echo -n "License:" >> MEGAsync/MEGAsync/debian.copyright # Some software (e.g: g
 cat ../LICENCE.md | sed 's#^\s*$#\.#g' | sed 's#^# #' >> MEGAsync/MEGAsync/debian.copyright
 cat ../LICENCE.md | sed 's#^\s*$#\.#g' | sed 's#^# #' >> MEGAsync/MEGAShellExtDolphin/debian.copyright
 cat ../LICENCE.md | sed 's#^\s*$#\.#g' | sed 's#^# #' >> MEGAsync/MEGAShellExtNautilus/debian.copyright
+cat ../LICENCE.md | sed 's#^\s*$#\.#g' | sed 's#^# #' >> MEGAsync/MEGAShellExtNemo/debian.copyright
 cat ../LICENCE.md | sed 's#^\s*$#\.#g' | sed 's#^# #' >> MEGAsync/MEGAShellExtThunar/debian.copyright
 
 # read the last generated ChangeLog version
@@ -191,6 +192,60 @@ mv $EXT_NAME.tar.gz MEGAsync/MEGAShellExtNautilus/nautilus-megasync_$EXT_VERSION
 #get md5sum and replace in PKGBUILD
 MD5SUM=`md5sum MEGAsync/MEGAShellExtNautilus/nautilus-megasync_$EXT_VERSION.tar.gz | awk '{print $1}'`
 sed "s/MD5SUM/$MD5SUM/g"  -i MEGAsync/MEGAShellExtNautilus/PKGBUILD
+
+
+
+#
+# Nemo
+#
+
+# make sure the source tree is in "clean" state
+cd ../src/MEGAShellExtNemo/
+make distclean 2> /dev/null || true
+cd ../../build
+
+# extension uses the same version number as MEGASync app
+export EXT_VERSION=$MEGASYNC_VERSION
+export EXT_NAME=nemo-megasync-$EXT_VERSION
+rm -rf $EXT_NAME.tar.gz
+rm -rf $EXT_NAME
+
+# delete previously generated files
+rm -fr MEGAsync/MEGAShellExtNemo/nemo-megasync_*.dsc
+
+# fix version number in template files and copy to appropriate directories
+sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNemo/nemo-megasync.spec > MEGAsync/MEGAShellExtNemo/nemo-megasync.spec
+sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNemo/nemo-megasync.dsc > MEGAsync/MEGAShellExtNemo/nemo-megasync_$EXT_VERSION.dsc
+sed -e "s/EXT_VERSION/$EXT_VERSION/g" templates/MEGAShellExtNemo/PKGBUILD > MEGAsync/MEGAShellExtNemo/PKGBUILD
+
+# create archive
+mkdir $EXT_NAME
+ln -s ../MEGAsync/MEGAShellExtNemo/nemo-megasync.spec $EXT_NAME/nemo-megasync.spec
+ln -s ../MEGAsync/MEGAShellExtNemo/debian.postinst $EXT_NAME/debian.postinst
+ln -s ../../src/MEGAShellExtNemo/mega_ext_client.c $EXT_NAME/mega_ext_client.c
+ln -s ../../src/MEGAShellExtNemo/mega_ext_client.h $EXT_NAME/mega_ext_client.h
+ln -s ../../src/MEGAShellExtNemo/mega_ext_module.c $EXT_NAME/mega_ext_module.c
+ln -s ../../src/MEGAShellExtNemo/mega_notify_client.h $EXT_NAME/mega_notify_client.h
+ln -s ../../src/MEGAShellExtNemo/mega_notify_client.c $EXT_NAME/mega_notify_client.c
+ln -s ../../src/MEGAShellExtNemo/MEGAShellExt.c $EXT_NAME/MEGAShellExt.c
+ln -s ../../src/MEGAShellExtNemo/MEGAShellExt.h $EXT_NAME/MEGAShellExt.h
+ln -s ../../src/MEGAShellExtNemo/MEGAShellExtNemo.pro $EXT_NAME/MEGAShellExtNemo.pro
+ln -s ../../src/MEGAShellExtNemo/data $EXT_NAME/data
+ln -s ../MEGAsync/MEGAsync/debian.copyright $EXT_NAME/debian.copyright
+
+export GZIP=-9
+tar czfh $EXT_NAME.tar.gz --exclude Makefile --exclude '*.o' $EXT_NAME
+rm -rf $EXT_NAME
+
+# delete any previous archive
+rm -fr MEGAsync/MEGAShellExtNemo/nemo-megasync_*.tar.gz
+# transform arch name, to satisfy Debian requirements
+mv $EXT_NAME.tar.gz MEGAsync/MEGAShellExtNemo/nemo-megasync_$EXT_VERSION.tar.gz
+
+#get md5sum and replace in PKGBUILD
+MD5SUM=`md5sum MEGAsync/MEGAShellExtNemo/nemo-megasync_$EXT_VERSION.tar.gz | awk '{print $1}'`
+sed "s/MD5SUM/$MD5SUM/g"  -i MEGAsync/MEGAShellExtNemo/PKGBUILD
+
 
 #
 # Thunar
