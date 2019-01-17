@@ -2561,7 +2561,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Mejorado el asistente de configuración inicial
 - Soporte para mostrar anuncios públicos del servicio
 - Notificaciones de sistema mejoradas
--Actualizadas varias bibliotecas de terceros
+- Actualizadas varias bibliotecas de terceros
 - Arreglados errores menores y añadidas otras pequeñas mejoras</translation>
     </message>
 </context>
