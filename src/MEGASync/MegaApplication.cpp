@@ -3214,7 +3214,7 @@ void MegaApplication::cleanLocalCaches(bool all)
         return;
     }
 
-    if (preferences->cleanerDaysLimit())
+    if (all || preferences->cleanerDaysLimit())
     {
         int timeLimitDays = preferences->cleanerDaysLimitValue();
         for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
