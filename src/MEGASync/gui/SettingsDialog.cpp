@@ -54,7 +54,7 @@ void deleteCache()
         QString syncPath = preferences->getLocalFolder(i);
         if (!syncPath.isEmpty())
         {
-            Utilities::removeRecursively(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
+            ( (MegaApplication *)MegaApplication::instance() )->cleanLocalCaches(true);
         }
     }
 }
