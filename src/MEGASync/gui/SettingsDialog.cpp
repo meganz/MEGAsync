@@ -48,15 +48,7 @@ long long calculateCacheSize()
 
 void deleteCache()
 {
-    Preferences *preferences = Preferences::instance();
-    for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
-    {
-        QString syncPath = preferences->getLocalFolder(i);
-        if (!syncPath.isEmpty())
-        {
-            ( (MegaApplication *)MegaApplication::instance() )->cleanLocalCaches(true);
-        }
-    }
+    ( (MegaApplication *)MegaApplication::instance() )->cleanLocalCaches(true);
 }
 
 long long calculateRemoteCacheSize(MegaApi *megaApi)
