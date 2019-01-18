@@ -1281,7 +1281,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 ทำความสะอาดตามกำหนดการ</translation>
+        <translation type="obsolete">%1 ทำความสะอาดตามกำหนดการ</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1312,6 +1312,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Please enter a valid value</source>
         <translatorcomment>Information message shown when user introduces an invalid value </translatorcomment>
         <translation type="unfinished">กรุณาใส่ค่าที่ถูกต้อง</translation>
+    </message>
+    <message>
+        <source>%1 clearing scheduler</source>
+        <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">%1 ทำความสะอาดตามกำหนดการ</translation>
     </message>
 </context>
 <context>
@@ -1891,7 +1896,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Folder Upload</source>
         <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
-        <translation type="unfinished">อัปโหลดโฟล์เดอร์</translation>
+        <translation type="unfinished">อัปโหลดโฟลเดอร์</translation>
     </message>
     <message>
         <source>1 folder was successfully uploaded</source>
@@ -2539,6 +2544,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
         <translation type="unfinished">ยอดนิยม</translation>
+    </message>
+</context>
+<context>
+    <name>Preferences</name>
+    <message>
+        <source>- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
+        <translation type="unfinished">- ออกแบบกล่องโต้ตอบหลักใหม่
+- ปรับปรุงผู้ช่วยการตั้งค่า
+- สนับสนุนการแสดงประกาศบริการแบบสาธารณะ
+- การแจ้งเตือนที่ทันสมัย
+- อัปเดตไลบรารีบุคคลที่สาม
+- แก้ไขข้อผิดพลาดเล็กน้อยและการปรับปรุงอื่น ๆ</translation>
     </message>
 </context>
 <context>
@@ -3268,7 +3291,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 ทำความสะอาดตามกำหนดการ</translation>
+        <translation type="obsolete">%1 ทำความสะอาดตามกำหนดการ</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3318,6 +3341,11 @@ when the application starts again</source>
         <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
         <translatorcomment>Label to inform the user that current account is over storage and uploads will be disable. Encourage the user to buy more space and upgrade to PRO. Keep [A] and [/A] codes.</translatorcomment>
         <translation type="unfinished">บัญชี MEGA คุณมีพื้นที่เต็มแล้ว การอัปโหลดทั้งหมดถูกปิดใช้งาน อาจมีผลกับโฟลเดอร์ที่ซิงค์ของคุณได้ ลองพิจารณา[A]ซื้อพื้นที่เพิ่มเติม[/A]</translation>
+    </message>
+    <message>
+        <source>%1 clearing scheduler</source>
+        <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">%1 ทำความสะอาดตามกำหนดการ</translation>
     </message>
 </context>
 <context>

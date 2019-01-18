@@ -51,6 +51,11 @@ QPushButton
 	height: 14px;
 }
 
+#MessageBox
+{
+	background-color: #f1f1f1;
+}
+
 #cDefaultPath
 {
     spacing: 10px;

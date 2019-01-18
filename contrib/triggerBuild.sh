@@ -27,7 +27,7 @@
 
 set -e
 
-defaultpackages="MEGAShellExtNautilus MEGAsync MEGAShellExtThunar MEGAShellExtDolphin"
+defaultpackages="MEGAShellExtNautilus MEGAShellExtNemo MEGAsync MEGAShellExtThunar MEGAShellExtDolphin"
 
 function printusage {
 	echo "$0 [--home] [package=PACKAGE] [user@remoteobsserver] [PROJECTPATH [OSCFOLDER]]"

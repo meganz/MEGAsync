@@ -1,0 +1,12 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE=1
+
+vnemo = $(shell dpkg -l libnemo-extension-dev | tail -n 1 | awk '{print $$3}' | awk -F".is.|:|-" '{print $$2}' | awk -F "." '{FS=".";print $$1*10000+$$2*100+$$3}')
+
+common-configure-impl::; 
+	if [ 0$(vnemo) -gt 31403 ]; then for i in data/emblems/64x64/*smaller.png; do mv $$i $$(echo $$i | sed "s#-smaller##g"); done; echo "NEWER NEMO REQUIRES SMALLER OVERLAY ICONS"; else rm data/emblems/64x64/*smaller.png; echo "OLDER NEMO DOES NOT REQUIRE SMALLER OVERLAY ICONS"; fi
+
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/qmake.mk
+

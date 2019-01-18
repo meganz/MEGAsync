@@ -109,6 +109,7 @@ pushd build
 ver=`cat version`
 copy ./MEGAsync/MEGAShellExtDolphin/debian.changelog /assets/changelogs/dolphin-megasync/dolphin-megasync_${ver}.changelog
 copy ./MEGAsync/MEGAShellExtNautilus/debian.changelog /assets/changelogs/nautilus-megasync/nautilus-megasync_${ver}.changelog
+copy ./MEGAsync/MEGAShellExtNemo/debian.changelog /assets/changelogs/nemo-megasync/nemo-megasync_${ver}.changelog
 copy ./MEGAsync/MEGAShellExtThunar/debian.changelog /assets/changelogs/thunar-megasync/thunar-megasync_${ver}.changelog
 copy ./MEGAsync/MEGAsync/debian.changelog /assets/changelogs/megasync/megasync_${ver}.changelog
 

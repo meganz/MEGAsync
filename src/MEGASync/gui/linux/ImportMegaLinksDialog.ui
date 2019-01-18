@@ -51,6 +51,11 @@ QScrollBar:horizontal {
 height: 16px;
 }
 
+#ImportMegaLinksDialog
+{
+	background-color: #f1f1f1;
+}
+
 #bLocalFolder, #bMegaFolder
 {
     border: none;

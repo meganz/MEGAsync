@@ -1,0 +1,6 @@
+nemo-megasync_*.tar.gz
+#generated files
+nemo-megasync_*.dsc
+nemo-megasync.spec
+debian.copyright
+PKGBUILD

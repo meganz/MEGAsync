@@ -1281,7 +1281,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">Планировщик очистки папки %1</translation>
+        <translation type="obsolete">Планировщик очистки папки %1</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1312,6 +1312,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Please enter a valid value</source>
         <translatorcomment>Information message shown when user introduces an invalid value </translatorcomment>
         <translation type="unfinished">Введите действительное значение</translation>
+    </message>
+    <message>
+        <source>%1 clearing scheduler</source>
+        <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">Планировщик очистки папки %1</translation>
     </message>
 </context>
 <context>
@@ -2542,6 +2547,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>Preferences</name>
+    <message>
+        <source>- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
+        <translation type="unfinished">- Новый дизайн основного окна
+- Улучшенный помощник по настройке
+- Поддержка показа публичных служебных объявлений
+- Современные уведомления
+- Обновлены сторонние библиотеки
+- Другие мелкие исправления и улучшения</translation>
+    </message>
+</context>
+<context>
     <name>QDialogButtonBox</name>
     <message>
         <source>&amp;Yes</source>
@@ -3268,7 +3291,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">Планировщик очистки папки %1</translation>
+        <translation type="obsolete">Планировщик очистки папки %1</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3318,6 +3341,11 @@ when the application starts again</source>
         <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
         <translatorcomment>Label to inform the user that current account is over storage and uploads will be disable. Encourage the user to buy more space and upgrade to PRO. Keep [A] and [/A] codes.</translatorcomment>
         <translation type="unfinished">Ваш аккаунт MEGA заполнен. Все загрузки отключены, что может повлиять на синхронизируемые папки. [A]Купить больше места[/A]</translation>
+    </message>
+    <message>
+        <source>%1 clearing scheduler</source>
+        <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">Планировщик очистки папки %1</translation>
     </message>
 </context>
 <context>
