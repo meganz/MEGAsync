@@ -253,6 +253,10 @@ int main(int argc, char *argv[])
         string line;
         while (getline(infile, line))
         {
+            if (line.length() && line[line.length()-1] == '\r')
+            {
+                line = line.substr(0, line.length()-1);
+            }
             if (line.length() > 0 && line[0] != '#')
             {
                 string fileToDl, targetpah;
