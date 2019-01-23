@@ -89,7 +89,7 @@ install_name_tool -delete_rpath "$QTBASE/lib" MEGASync/MEGAsync.app/Contents/Fra
 
 otool -L MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
 
-mv MEGAsync/MEGAsync.app ./
+mv MEGASync/MEGAsync.app ./
 
 #Attach shell extension
 xcodebuild clean build CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO -jobs "$(sysctl -n hw.ncpu)" -configuration Release -target MEGAShellExtFinder -project ../src/MEGAShellExtFinder/MEGAFinderSync.xcodeproj/
