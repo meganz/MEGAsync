@@ -194,6 +194,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
                     model->megaApi->cancelTransferByTag(tag);
                 }
             }
+            return true; // click consumed
         }
         else if (item && item->getLinkButtonClicked(((QMouseEvent *)event)->pos() - option.rect.topLeft()))
         {
@@ -242,6 +243,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
                     delete transfer;
                 }
              }
+             return true; // click consumed
         }
         else if (model->getModelType() == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
         {
@@ -259,8 +261,9 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
                 Platform::showInFolder(localPath);
             }
             delete transfer;
+            return true; // click consumed
         }
-        return true;
+        // we are not consuming the click; fall through to do the usual thing (of selecting the clicked row)
     }
     else if (QEvent::MouseButtonDblClick == event->type() && model->getModelType() == QTransfersModel::TYPE_FINISHED)
     {
@@ -279,7 +282,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
             Platform::showInFolder(localPath);
         }
         delete transfer;
-        return true;
+        return true; // double-click consumed
     }
 
     return QAbstractItemDelegate::editorEvent(event, model, option, index);
