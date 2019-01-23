@@ -1282,7 +1282,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">Autolimpieza de %1</translation>
+        <translation type="obsolete">Autolimpieza de %1</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1313,6 +1313,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Please enter a valid value</source>
         <translatorcomment>Information message shown when user introduces an invalid value </translatorcomment>
         <translation type="unfinished">Por favor ingresa un valor válido</translation>
+    </message>
+    <message>
+        <source>%1 clearing scheduler</source>
+        <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">Autolimpieza de %1</translation>
     </message>
 </context>
 <context>
@@ -2543,6 +2548,24 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>Preferences</name>
+    <message>
+        <source>- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
+        <translation type="unfinished">- Nuevo diseño para la ventana principal
+- Mejorado el asistente de configuración inicial
+- Soporte para mostrar anuncios públicos del servicio
+- Notificaciones de sistema mejoradas
+- Actualizadas varias bibliotecas de terceros
+- Arreglados errores menores y añadidas otras pequeñas mejoras</translation>
+    </message>
+</context>
+<context>
     <name>QDialogButtonBox</name>
     <message>
         <source>&amp;Yes</source>
@@ -3269,7 +3292,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">Autolimpieza de %1</translation>
+        <translation type="obsolete">Autolimpieza de %1</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3319,6 +3342,11 @@ when the application starts again</source>
         <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
         <translatorcomment>Label to inform the user that current account is over storage and uploads will be disable. Encourage the user to buy more space and upgrade to PRO. Keep [A] and [/A] codes.</translatorcomment>
         <translation type="unfinished">Tu cuenta de MEGA está llena. Todas las subidas están deshabilitadas, pudiendo afectar a tus carpetas sincronizadas.[A]Comprar más espacio de almacenamiento[/A]</translation>
+    </message>
+    <message>
+        <source>%1 clearing scheduler</source>
+        <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">Autolimpieza de %1</translation>
     </message>
 </context>
 <context>

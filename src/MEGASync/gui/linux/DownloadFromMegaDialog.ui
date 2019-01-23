@@ -50,7 +50,11 @@ QPushButton
     min-height: 14px;
 	height: 14px;
 }
-</string>
+
+#DownloadFromMegaDialog
+{
+	background-color: #f1f1f1;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

@@ -39,6 +39,11 @@ QPushButton
 	height: 14px;
 }
 
+#CrashReportDialog
+{
+	background-color: #f1f1f1;
+}
+
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">

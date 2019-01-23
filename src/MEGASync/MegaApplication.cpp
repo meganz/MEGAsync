@@ -149,6 +149,8 @@ int main(int argc, char *argv[])
     // If such behavior is undesired, set the QT_SSL_USE_TEMPORARY_KEYCHAIN environment variable to a non-zero value this will prompt QSslSocket to use its own temporary keychain.
     bool useSSLtemporaryKeychain = qputenv("QT_SSL_USE_TEMPORARY_KEYCHAIN","1");
 
+    qputenv("QT_BEARER_POLL_TIMEOUT", QByteArray::number(-1));
+
 #endif
 
 #ifdef Q_OS_LINUX
@@ -208,7 +210,7 @@ int main(int argc, char *argv[])
     {
         if (!unsetenv("SHLVL")) // reported failure in mint
         {
-            std::cerr <<  "Error unsetting SHLVL vble" << std::endl;
+            //std::cerr <<  "Error unsetting SHLVL vble" << std::endl; //Fedora fails to unset this env var ... too verbose error
         }
     }
 #endif
@@ -800,7 +802,7 @@ void MegaApplication::initialize()
     megaApi->addListener(delegateListener);
     uploader = new MegaUploader(megaApi);
     downloader = new MegaDownloader(megaApi);
-    connect(downloader, SIGNAL(finishedTransfers(unsigned long long)), this, SLOT(showNotificationFinishedTransfers(unsigned long long)));
+    connect(downloader, SIGNAL(finishedTransfers(unsigned long long)), this, SLOT(showNotificationFinishedTransfers(unsigned long long)), Qt::QueuedConnection);
 
 
     connectivityTimer = new QTimer(this);
