@@ -48,7 +48,7 @@ long long calculateCacheSize()
 
 void deleteCache()
 {
-    ( (MegaApplication *)MegaApplication::instance() )->cleanLocalCaches(true);
+    ((MegaApplication *)qApp)->cleanLocalCaches(true);
 }
 
 long long calculateRemoteCacheSize(MegaApi *megaApi)
