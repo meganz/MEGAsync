@@ -111,7 +111,7 @@ public:
     mega::MegaApi *getMegaApi() { return megaApi; }
 
     void unlink();
-    void cleanLocalCaches();
+    void cleanLocalCaches(bool all = false);
     void showInfoMessage(QString message, QString title = tr("MEGAsync"));
     void showWarningMessage(QString message, QString title = tr("MEGAsync"));
     void showErrorMessage(QString message, QString title = tr("MEGAsync"));

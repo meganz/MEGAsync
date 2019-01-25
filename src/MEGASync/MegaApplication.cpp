@@ -3209,14 +3209,14 @@ void MegaApplication::unlink()
     Platform::notifyAllSyncFoldersRemoved();
 }
 
-void MegaApplication::cleanLocalCaches()
+void MegaApplication::cleanLocalCaches(bool all)
 {
     if (!preferences->logged())
     {
         return;
     }
 
-    if (preferences->cleanerDaysLimit())
+    if (all || preferences->cleanerDaysLimit())
     {
         int timeLimitDays = preferences->cleanerDaysLimitValue();
         for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
@@ -3237,7 +3237,7 @@ void MegaApplication::cleanLocalCaches()
                         }
 
                         QDateTime creationTime(cacheFolder.created());
-                        if (creationTime.isValid() && creationTime.daysTo(QDateTime::currentDateTime()) > timeLimitDays)
+                        if (all || (creationTime.isValid() && creationTime.daysTo(QDateTime::currentDateTime()) > timeLimitDays) )
                         {
                             Utilities::removeRecursively(cacheFolder.canonicalFilePath());
                         }
