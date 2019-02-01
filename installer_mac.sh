@@ -8,6 +8,8 @@ APP_NAME=MEGAsync
 MOUNTDIR=tmp
 RESOURCES=installer/resourcesDMG
 QTBASE=/QT/qt5/qtbase
+#Get canonical path to be used when removing any @rpath or an absolute path from Qt executables
+QTBASE="$(cd "$QTBASE"; pwd -P)"
 
 AVCODEC_VERSION=libavcodec.57.dylib
 AVFORMAT_VERSION=libavformat.57.dylib
