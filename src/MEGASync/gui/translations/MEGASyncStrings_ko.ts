@@ -298,7 +298,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>ChangePassword</name>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">비밀번호 바꾸기</translation>
+        <translation type="unfinished">비밀번호 변경</translation>
     </message>
     <message>
         <source>New password</source>
@@ -1317,7 +1317,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 비우기 일정</translation>
+        <translation type="unfinished">%1 정리 스케줄러</translation>
     </message>
 </context>
 <context>
@@ -2557,12 +2557,31 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
-        <translation type="unfinished">- 주요 대화창에 대한 새 디자인
+        <translation type="obsolete">- 주요 대화창에 대한 새 디자인
 - 향상된 설치 도우미
 - 공개 서비스 공지사항 보기 지원
 - 최신화된 알림
 - 제3자 라이브러리 업데이트
 - 다른 작은 버그 수정과 향상</translation>
+    </message>
+    <message>
+        <source>- Fix bug with selection of transfer manager items
+- Fix bug of context menu not shown over transfer manager items
+- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
+        <translation type="unfinished">- 전송 관리자 항목 선택 버그 수정
+-전송 관리자 항목의 컨텍스트 메뉴 미노출 버그 수정
+-주 대화창 디자인 변경
+-설정 도우미 향상
+-공지사항 노출 지원
+-최신식 알림
+-제3자 라이브러리 업데이트
+-자잘한 버그 수정 및 향상</translation>
     </message>
 </context>
 <context>
@@ -3336,7 +3355,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">비밀번호 바꾸기</translation>
+        <translation type="unfinished">비밀번호 변경</translation>
     </message>
     <message>
         <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
@@ -3346,7 +3365,7 @@ when the application starts again</source>
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 비우기 일정</translation>
+        <translation type="unfinished">%1 정리 스케줄러</translation>
     </message>
 </context>
 <context>

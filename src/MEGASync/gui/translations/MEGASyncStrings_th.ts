@@ -298,7 +298,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>ChangePassword</name>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">เปลี่ยนรหัส</translation>
+        <translation type="unfinished">เปลี่ยนรหัสผ่าน</translation>
     </message>
     <message>
         <source>New password</source>
@@ -1316,7 +1316,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 ทำความสะอาดตามกำหนดการ</translation>
+        <translation type="unfinished">ตั้งกำหนดการเคลียร์ %1</translation>
     </message>
 </context>
 <context>
@@ -2556,7 +2556,26 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
-        <translation type="unfinished">- ออกแบบกล่องโต้ตอบหลักใหม่
+        <translation type="obsolete">- ออกแบบกล่องโต้ตอบหลักใหม่
+- ปรับปรุงผู้ช่วยการตั้งค่า
+- สนับสนุนการแสดงประกาศบริการแบบสาธารณะ
+- การแจ้งเตือนที่ทันสมัย
+- อัปเดตไลบรารีบุคคลที่สาม
+- แก้ไขข้อผิดพลาดเล็กน้อยและการปรับปรุงอื่น ๆ</translation>
+    </message>
+    <message>
+        <source>- Fix bug with selection of transfer manager items
+- Fix bug of context menu not shown over transfer manager items
+- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
+        <translation type="unfinished">- แก้ไขข้อบกพร่องด้วยการเลือกรายการจัดการการถ่ายโอน
+- แก้ไขข้อผิดพลาดของเมนูบริบทไม่แสดงบนรายการจัดการการถ่ายโอน
+- ออกแบบกล่องโต้ตอบหลักใหม่
 - ปรับปรุงผู้ช่วยการตั้งค่า
 - สนับสนุนการแสดงประกาศบริการแบบสาธารณะ
 - การแจ้งเตือนที่ทันสมัย
@@ -3335,7 +3354,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">เปลี่ยนรหัส</translation>
+        <translation type="unfinished">เปลี่ยนรหัสผ่าน</translation>
     </message>
     <message>
         <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
@@ -3345,7 +3364,7 @@ when the application starts again</source>
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 ทำความสะอาดตามกำหนดการ</translation>
+        <translation type="unfinished">ตั้งกำหนดการเคลียร์ %1</translation>
     </message>
 </context>
 <context>

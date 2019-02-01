@@ -298,7 +298,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>ChangePassword</name>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">Cambia password</translation>
+        <translation type="unfinished">Modifica Password</translation>
     </message>
     <message>
         <source>New password</source>
@@ -1316,7 +1316,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">Pulisci %1</translation>
+        <translation type="unfinished">%1 pulizia automatizzata</translation>
     </message>
 </context>
 <context>
@@ -2556,12 +2556,31 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
-        <translation type="unfinished">- Nuovo design per la finestra principale
+        <translation type="obsolete">- Nuovo design per la finestra principale
 - Migliorato il setup dell&apos;assistente
 - Supporto per mostrare gli Annunci del Servizio Pubblico
 - Modernizzate le notifiche
 - Aggiornate le librerie di terze parti
 - Altri minori miglioramenti e correzioni di bug</translation>
+    </message>
+    <message>
+        <source>- Fix bug with selection of transfer manager items
+- Fix bug of context menu not shown over transfer manager items
+- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
+        <translation type="unfinished">- Fixato bug con selezione degli oggetti del gestore di trasferimenti
+- Fixato bug del menù contestuale non mostrato sopra gli oggetti del gestore di trasferimenti
+- Nuovo design della finestra principale
+- Migliorato il setup dell&apos;Assistente
+- Supporto per mostrare gli Annunci di Pubblico Servizio
+- Notifiche modernizzate
+- Librerie di terze parti aggiornate
+- Altri minori fix di bug e miglioramenti</translation>
     </message>
 </context>
 <context>
@@ -3335,7 +3354,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">Cambia password</translation>
+        <translation type="unfinished">Modifica Password</translation>
     </message>
     <message>
         <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
@@ -3345,7 +3364,7 @@ when the application starts again</source>
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">Pulisci %1</translation>
+        <translation type="unfinished">%1 pulizia automatizzata</translation>
     </message>
 </context>
 <context>
