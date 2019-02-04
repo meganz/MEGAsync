@@ -291,7 +291,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Data Protection Regulation</source>
         <translatorcomment>Label for a link that redirects to GPDR section in the web </translatorcomment>
-        <translation type="unfinished">Data Protection Regulation</translation>
+        <translation type="unfinished">資料保護條例</translation>
     </message>
 </context>
 <context>
@@ -1281,7 +1281,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 清理排程功能</translation>
+        <translation type="obsolete">%1 clearing scheduler</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1349,7 +1349,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Invalid code</source>
         <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation type="unfinished">Invalid code</translation>
+        <translation type="unfinished">無效的條碼</translation>
     </message>
     <message>
         <source>[A]Lost your authenticator device?[/A]</source>
@@ -3310,7 +3310,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 清理排程功能</translation>
+        <translation type="obsolete">%1 clearing scheduler</translation>
     </message>
     <message>
         <source>Disable file versioning</source>

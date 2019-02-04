@@ -1281,7 +1281,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">Pulisci %1</translation>
+        <translation type="obsolete">%1 pulizia automatizzata</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -3310,7 +3310,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">Pulisci %1</translation>
+        <translation type="obsolete">%1 pulizia automatizzata</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
