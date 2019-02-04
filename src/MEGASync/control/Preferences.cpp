@@ -16,7 +16,7 @@ const int Preferences::VERSION_CODE = 4002;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.0.2");
-QString Preferences::SDK_ID = QString::fromAscii("975d29");
+QString Preferences::SDK_ID = QString::fromAscii("4dea1c");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
             "- Fix bug with selection of transfer manager items\n"
             "- Fix bug of context menu not shown over transfer manager items\n"
