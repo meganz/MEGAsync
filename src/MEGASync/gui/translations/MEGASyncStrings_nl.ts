@@ -2574,14 +2574,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
-        <translation type="unfinished">- Fix bug with selection of transfer manager items
-- Fix bug of context menu not shown over transfer manager items
-- New design for the main dialog
-- Improved setup assistant
-- Support to show Public Service Announcements
-- Modern notifications
-- Updated third-party libraries
-- Other minor bug fixes and improvements</translation>
+        <translation type="unfinished">- Fix bug met selectie van transfer beheer items
+- Fix bug van context menu niet getoond over transfer manager items
+- Nieuw ontwerp voor het hoofddialoog
+- Verbeterde ingestelde assistent
+- Ondersteuning om publieke Dienst Aankondigingen te tonen
+- Moderne meldingen
+- Bijgewerkte derde-partij bibliotheken
+- Andere kleine bugfixes en verbeteringen</translation>
     </message>
 </context>
 <context>

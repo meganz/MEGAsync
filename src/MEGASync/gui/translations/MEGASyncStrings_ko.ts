@@ -3183,7 +3183,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">항상 당신의 복구 키에 대한 물리적 제어를 유지하세요 (예를 들어, 장치, 외부 저장소, 또는 인쇄).</translation>
+        <translation type="unfinished">항상 당신의 복구 키에 대해 물리적 분리 보관을유지하세요 (예를 들어 클라이언트 장치, 외부 저장소, 또는 인쇄 등).</translation>
     </message>
     <message>
         <source>Exclude by size</source>

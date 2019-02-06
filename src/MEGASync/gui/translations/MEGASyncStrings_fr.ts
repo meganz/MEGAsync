@@ -2732,7 +2732,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Advanced</source>
         <translatorcomment>Tab label of Advanced settings dialog. Max 15 characters.</translatorcomment>
-        <translation>Avancé</translation>
+        <translation>Paramètres avancés</translation>
     </message>
     <message>
         <source>Help</source>
