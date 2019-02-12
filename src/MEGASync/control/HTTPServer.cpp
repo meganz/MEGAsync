@@ -691,8 +691,18 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
             }
             else
             {
-                int result = megaApi->isNodeSyncable(targetNode);
-                response = QString::number(result);
+                const char *path = megaApi->getNodePath(targetNode);
+                if (path && !strncmp(path, "//bin/", 6))
+                {
+                    delete [] path;
+                    response = QString::number(MegaError::API_EARGS);
+                }
+                else
+                {
+                    int result = megaApi->isNodeSyncable(targetNode);
+                    response = QString::number(result);
+                }
+
                 delete targetNode;
             }
         }
