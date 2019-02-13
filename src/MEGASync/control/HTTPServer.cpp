@@ -692,7 +692,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
             else
             {
                 const char *path = megaApi->getNodePath(targetNode);
-                if (path && !strncmp(path, "//bin/", 6))
+                if (path && !strncmp(path, "//bin", 5))
                 {
                     delete [] path;
                     response = QString::number(MegaError::API_EARGS);

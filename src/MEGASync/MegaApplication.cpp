@@ -4549,7 +4549,7 @@ void MegaApplication::processUploads()
     if (node)
     {
         const char *path = megaApi->getNodePath(node);
-        if (path && !strncmp(path, "//bin/", 6))
+        if (path && !strncmp(path, "//bin", 5))
         {
             preferences->setHasDefaultUploadFolder(false);
             preferences->setUploadFolder(INVALID_HANDLE);
