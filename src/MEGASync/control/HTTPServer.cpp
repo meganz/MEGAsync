@@ -694,7 +694,6 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                 const char *path = megaApi->getNodePath(targetNode);
                 if (path && !strncmp(path, "//bin", 5))
                 {
-                    delete [] path;
                     response = QString::number(MegaError::API_EARGS);
                 }
                 else
@@ -702,7 +701,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                     int result = megaApi->isNodeSyncable(targetNode);
                     response = QString::number(result);
                 }
-
+                delete [] path;
                 delete targetNode;
             }
         }
