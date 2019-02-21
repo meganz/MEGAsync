@@ -298,7 +298,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>ChangePassword</name>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">パスワードを変更する</translation>
+        <translation type="unfinished">パスワードの変更</translation>
     </message>
     <message>
         <source>New password</source>
@@ -1281,7 +1281,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1クリーニングスケジューラ</translation>
+        <translation type="obsolete">%1のクリアスケジューラ</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1316,7 +1316,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1クリーニングスケジューラ</translation>
+        <translation type="unfinished">%1のクリアスケジューラ</translation>
     </message>
 </context>
 <context>
@@ -2556,7 +2556,26 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
-        <translation type="unfinished">－メインダイアログ用の新しいデザイン
+        <translation type="obsolete">－メインダイアログ用の新しいデザイン
+－セットアップアシスタントの改善
+－パブリックサービスのお知らせを表示するためのサポート
+－最新の通知
+－更新されたサードパーティライブラリ
+－その他のマイナーバグの修正および改善</translation>
+    </message>
+    <message>
+        <source>- Fix bug with selection of transfer manager items
+- Fix bug of context menu not shown over transfer manager items
+- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
+        <translation type="unfinished">－転送マネージャ項目の選択に関するバグを修正
+－転送マネージャ項目に対して表示されていないコンテキストメニューのバグを修正
+－メインダイアログ用の新しいデザイン
 －セットアップアシスタントの改善
 －パブリックサービスのお知らせを表示するためのサポート
 －最新の通知
@@ -3291,7 +3310,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1クリーニングスケジューラ</translation>
+        <translation type="obsolete">%1のクリアスケジューラ</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3335,7 +3354,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">パスワードを変更する</translation>
+        <translation type="unfinished">パスワードの変更</translation>
     </message>
     <message>
         <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
@@ -3345,7 +3364,7 @@ when the application starts again</source>
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1クリーニングスケジューラ</translation>
+        <translation type="unfinished">%1のクリアスケジューラ</translation>
     </message>
 </context>
 <context>

@@ -2556,12 +2556,31 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
-        <translation type="unfinished">- Nouvelle conception de la fenêtre de dialogue principale
-- Amélioration de l’assistant de configuration
-- Prise en charge de l’affichage d’annonces d’intérêt public
+        <translation type="obsolete">– Nouvelle conception de la fenêtre de dialogue principale
+– Amélioration de l’assistant de configuration
+– Prise en charge de l’affichage d’annonces d’intérêt public
+– Notifications modernes
+– Mise à jour des bibliothèques tierces
+– Autres correctifs de bogues mineurs et améliorations</translation>
+    </message>
+    <message>
+        <source>- Fix bug with selection of transfer manager items
+- Fix bug of context menu not shown over transfer manager items
+- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
+        <translation type="unfinished">– Correctif de bogue dans la sélection des éléments du gestionnaire de transferts
+– Correctif de bogue du menu contextuel qui n’apparaît pas sur les éléments du gestionnaire de transferts
+– Nouvelle conception de la fenêtre de dialogue principale
+– Amélioration de l’assistant de configuration
+– Prise en charge de l’affichage d’annonces d’intérêt public
 - Notifications modernes
-- Mise à jour des bibliothèques tierces
-- Autres correctifs de bogues mineurs et améliorations</translation>
+– Mise à jour des bibliothèques tierces
+- Autres correctifs de bogues mineurs et améliorations.</translation>
     </message>
 </context>
 <context>
@@ -2713,7 +2732,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Advanced</source>
         <translatorcomment>Tab label of Advanced settings dialog. Max 15 characters.</translatorcomment>
-        <translation>Avancé</translation>
+        <translation>Paramètres avancés</translation>
     </message>
     <message>
         <source>Help</source>
