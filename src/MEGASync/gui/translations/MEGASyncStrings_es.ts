@@ -2557,7 +2557,26 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
-        <translation type="unfinished">- Nuevo diseño para la ventana principal
+        <translation type="obsolete">- Nuevo diseño para la ventana principal
+- Mejorado el asistente de configuración inicial
+- Soporte para mostrar anuncios públicos del servicio
+- Notificaciones de sistema mejoradas
+- Actualizadas varias bibliotecas de terceros
+- Arreglados errores menores y añadidas otras pequeñas mejoras</translation>
+    </message>
+    <message>
+        <source>- Fix bug with selection of transfer manager items
+- Fix bug of context menu not shown over transfer manager items
+- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
+        <translation type="unfinished">- Arreglado error durante la selección de celdas en la ventana del gestor de transferencias
+- Arreglado error al mostrar el menú contextual sobre las celdas en la ventana del gestor de transferencias
+- Nuevo diseño para la ventana principal
 - Mejorado el asistente de configuración inicial
 - Soporte para mostrar anuncios públicos del servicio
 - Notificaciones de sistema mejoradas

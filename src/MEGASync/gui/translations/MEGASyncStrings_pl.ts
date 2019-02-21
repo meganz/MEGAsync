@@ -1281,7 +1281,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 harmonogram sprzątania</translation>
+        <translation type="obsolete">%1 harmonogramu</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1316,7 +1316,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 harmonogram sprzątania</translation>
+        <translation type="unfinished">%1 harmonogramu</translation>
     </message>
 </context>
 <context>
@@ -2556,9 +2556,28 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
-        <translation type="unfinished">- Nowy projekt głównego okna dialogowego 
+        <translation type="obsolete">- Nowy projekt głównego okna dialogowego 
 - Ulepszony asystent konfiguracji
 - Obsługa wyświetlania komunikatów usług publicznych
+- Nowoczesne powiadomienia
+- Zaktualizowane biblioteki innych firm
+- Inne drobne poprawki i ulepszenia</translation>
+    </message>
+    <message>
+        <source>- Fix bug with selection of transfer manager items
+- Fix bug of context menu not shown over transfer manager items
+- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
+        <translation type="unfinished">- Napraw błąd z wyborem elementów menedżera transferu
+- Napraw błąd menu kontekstowego nie pokazanego nad pozycjami menedżera transferu
+- Nowy projekt dla głównego okna dialogowego
+- Ulepszony asystent konfiguracji
+- Wsparcie dla pokazania usługi publicznej Powiadomienia
 - Nowoczesne powiadomienia
 - Zaktualizowane biblioteki innych firm
 - Inne drobne poprawki i ulepszenia</translation>
@@ -3291,7 +3310,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 harmonogram sprzątania</translation>
+        <translation type="obsolete">%1 harmonogramu</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3345,7 +3364,7 @@ when the application starts again</source>
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 harmonogram sprzątania</translation>
+        <translation type="unfinished">%1 harmonogramu</translation>
     </message>
 </context>
 <context>

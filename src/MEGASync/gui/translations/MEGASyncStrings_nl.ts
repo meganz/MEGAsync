@@ -298,7 +298,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>ChangePassword</name>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">Wijzig wachtwoord</translation>
+        <translation type="unfinished">Wijzig Wachtwoord</translation>
     </message>
     <message>
         <source>New password</source>
@@ -1282,7 +1282,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 planner schoonmaken</translation>
+        <translation type="obsolete">%1 wis schema</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1317,7 +1317,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 planner schoonmaken</translation>
+        <translation type="unfinished">%1 wis schema</translation>
     </message>
 </context>
 <context>
@@ -2557,12 +2557,31 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
-        <translation type="unfinished">-Nieuw ontwerp voor het hoofd dialoog
+        <translation type="obsolete">-Nieuw ontwerp voor het hoofd dialoog
 - Geïmproviseerde instellingen assistentie
 - Ondersteuning die Publieke Dienst Aankondigingen
 - Moderne notificaties
 - Geupdate derde-partij bibliotheken
 - Andere minimale bug reparaties en verbeteringen</translation>
+    </message>
+    <message>
+        <source>- Fix bug with selection of transfer manager items
+- Fix bug of context menu not shown over transfer manager items
+- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
+        <translation type="unfinished">- Fix bug met selectie van transfer beheer items
+- Fix bug van context menu niet getoond over transfer manager items
+- Nieuw ontwerp voor het hoofddialoog
+- Verbeterde ingestelde assistent
+- Ondersteuning om publieke Dienst Aankondigingen te tonen
+- Moderne meldingen
+- Bijgewerkte derde-partij bibliotheken
+- Andere kleine bugfixes en verbeteringen</translation>
     </message>
 </context>
 <context>
@@ -3292,7 +3311,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 planner schoonmaken</translation>
+        <translation type="obsolete">%1 wis schema</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3336,7 +3355,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">Wijzig wachtwoord</translation>
+        <translation type="unfinished">Wijzig Wachtwoord</translation>
     </message>
     <message>
         <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
@@ -3346,7 +3365,7 @@ when the application starts again</source>
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 planner schoonmaken</translation>
+        <translation type="unfinished">%1 wis schema</translation>
     </message>
 </context>
 <context>

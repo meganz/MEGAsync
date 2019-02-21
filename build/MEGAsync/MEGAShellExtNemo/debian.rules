@@ -1,12 +1,63 @@
 #!/usr/bin/make -f
-
 export DH_VERBOSE=1
 
 vnemo = $(shell dpkg -l libnemo-extension-dev | tail -n 1 | awk '{print $$3}' | awk -F".is.|:|-" '{print $$2}' | awk -F "." '{FS=".";print $$1*10000+$$2*100+$$3}')
-
 common-configure-impl::; 
 	if [ 0$(vnemo) -gt 31403 ]; then for i in data/emblems/64x64/*smaller.png; do mv $$i $$(echo $$i | sed "s#-smaller##g"); done; echo "NEWER NEMO REQUIRES SMALLER OVERLAY ICONS"; else rm data/emblems/64x64/*smaller.png; echo "OLDER NEMO DOES NOT REQUIRE SMALLER OVERLAY ICONS"; fi
 
-include /usr/share/cdbs/1/rules/debhelper.mk
-include /usr/share/cdbs/1/class/qmake.mk
+build: build-stamp
+build-stamp:
+	dh_testdir
+	qmake
+	make
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+
+
+install: build
+	dh_auto_install --destdir=debian/nemo-megasync -- INSTALL_ROOT=$(CURDIR)/debian/nemo-megasync
+	pkg-config libnemo-extension --variable=extensiondir
+	mkdir -p $(CURDIR)/debian/nemo-megasync/$$(pkg-config libnemo-extension --variable=extensiondir | sed "s#/x86_64-linux-gnu##g" | sed "s#/i386-linux-gnu##g")
+	ln -srf $(CURDIR)/debian/nemo-megasync/$$(pkg-config libnemo-extension --variable=extensiondir)/* $(CURDIR)/debian/nemo-megasync/$$(pkg-config libnemo-extension --variable=extensiondir | sed "s#/x86_64-linux-gnu##g" | sed "s#/i386-linux-gnu##g")/
+
+# Build architecture-independent files here.
+binary-indep: build install
+	# We have nothing to do by default.
+
+# Build architecture-dependent files here.
+binary-arch: build install
+	dh_testdir
+	dh_testroot
+#	dh_installdebconf
+	dh_installdocs
+	dh_installexamples
+	dh_installmenu
+#	dh_installlogrotate
+#	dh_installemacsen
+#	dh_installpam
+#	dh_installmime
+#	dh_installinit
+	dh_installcron
+	dh_installman
+	dh_installinfo
+#	dh_undocumented
+	dh_installchangelogs
+	dh_link
+	dh_strip
+	dh_compress
+	dh_fixperms
+#	dh_makeshlibs
+	dh_installdeb
+#	dh_perl
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install
 

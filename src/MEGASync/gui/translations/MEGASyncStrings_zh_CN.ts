@@ -298,7 +298,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>ChangePassword</name>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">变更密码</translation>
+        <translation type="unfinished">更改密码</translation>
     </message>
     <message>
         <source>New password</source>
@@ -1281,7 +1281,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 清理计划</translation>
+        <translation type="obsolete">%1 定时清理</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1316,7 +1316,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 清理计划</translation>
+        <translation type="unfinished">%1 定时清理</translation>
     </message>
 </context>
 <context>
@@ -2556,12 +2556,31 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
-        <translation type="unfinished">- 对主要对话框进行全新设计
+        <translation type="obsolete">- 对主要对话框进行全新设计
 - 改善设置助手
 - 支持显示公共服务公告
 - 当前通知
 - 更新第三方资料库
 - 其他的小错误修复与改进</translation>
+    </message>
+    <message>
+        <source>- Fix bug with selection of transfer manager items
+- Fix bug of context menu not shown over transfer manager items
+- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
+        <translation type="unfinished">- 修复选择传输管理器项目时的错误
+  - 修复上下文菜单未显示在传输管理器项目的错误
+  - 全新设计主对话框
+  - 改善设置助手
+  - 支持显示公共服务公告
+  - 当前通知
+  - 更新第三方资料库
+  - 其他小错误修复与调整</translation>
     </message>
 </context>
 <context>
@@ -3291,7 +3310,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 清理计划</translation>
+        <translation type="obsolete">%1 定时清理</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3335,7 +3354,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">变更密码</translation>
+        <translation type="unfinished">更改密码</translation>
     </message>
     <message>
         <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
@@ -3345,7 +3364,7 @@ when the application starts again</source>
     <message>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 清理计划</translation>
+        <translation type="unfinished">%1 定时清理</translation>
     </message>
 </context>
 <context>

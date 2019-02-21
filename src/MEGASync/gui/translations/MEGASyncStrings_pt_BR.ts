@@ -1991,7 +1991,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get PRO</source>
         <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
-        <translation type="unfinished">Get PRO</translation>
+        <translation type="unfinished">Faça upgrade a PRO</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -2556,12 +2556,31 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
-        <translation type="unfinished">- New design for the main dialog
+        <translation type="obsolete">- Novo design para a interface principal
+- Assistente de instalação aprimorado
+- Suporte para mostrar anúncios de utilidade pública
+- Notificações modernas 
+- Bibliotecas de terceiros atualizadas
+- Correções de pequenos bugs e outras melhorias</translation>
+    </message>
+    <message>
+        <source>- Fix bug with selection of transfer manager items
+- Fix bug of context menu not shown over transfer manager items
+- New design for the main dialog
 - Improved setup assistant
 - Support to show Public Service Announcements
 - Modern notifications
 - Updated third-party libraries
-- Other minor bug fixes and improvements</translation>
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
+        <translation type="unfinished">- Correção de bug na seleção de itens do gestor de transferências 
+ - Correção de bug do menu de contexto não mostrado para os itens do gestor de transferências 
+ - Novo design para a interface principal 
+ - Aprimoramento do assistente de configuração 
+ - Suporte para avisos de utilidad pública 
+ - Notificações modernas 
+ - Bibliotecas de terceiros atualizadas 
+ - Outras pequenas correções de bugs e aprimoramentos</translation>
     </message>
 </context>
 <context>

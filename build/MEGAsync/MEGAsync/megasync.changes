@@ -1,3 +1,15 @@
+Mon Feb 4 19:48:32 CET 2019 - linux@mega.co.nz
+- Update to version 4.0.2:
+  * Fix bug with selection of transfer manager items
+  * Fix bug of context menu not shown over transfer manager items
+  * New design for the main dialog
+  * Improved setup assistant
+  * Support to show Public Service Announcements
+  * Modern notifications
+  * Updated third-party libraries
+  * Other minor bug fixes and improvements
+
+-------------------------------------------------------------------
 Wed Sep 12 19:41:17 CEST 2018 - linux@mega.co.nz
 - Update to version 3.7.1:
   * Support for multi-factor authentication
