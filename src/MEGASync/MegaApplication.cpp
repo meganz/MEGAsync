@@ -473,6 +473,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("FinderExtensionApp", "1 folder");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "%i folders");
     QT_TRANSLATE_NOOP("FinderExtensionApp", "View previous versions");
+    QT_TRANSLATE_NOOP("MegaNodeNames", "Cloud Drive");
 #endif
 }
 
