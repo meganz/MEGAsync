@@ -479,22 +479,22 @@ QString Utilities::getSizeString(unsigned long long bytes)
 
     if (bytes >= TB)
     {
-        return QString::number( ((int)((100 * bytes) / TB))/100.0) + QString::fromAscii(" TB");
+        return QString::number( ((int)((100 * bytes) / TB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "TB");
     }
 
     if (bytes >= GB)
     {
-        return QString::number( ((int)((100 * bytes) / GB))/100.0) + QString::fromAscii(" GB");
+        return QString::number( ((int)((100 * bytes) / GB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "GB");
     }
 
     if (bytes >= MB)
     {
-        return QString::number( ((int)((100 * bytes) / MB))/100.0) + QString::fromAscii(" MB");
+        return QString::number( ((int)((100 * bytes) / MB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "MB");
     }
 
     if (bytes >= KB)
     {
-        return QString::number( ((int)((100 * bytes) / KB))/100.0) + QString::fromAscii(" KB");
+        return QString::number( ((int)((100 * bytes) / KB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "KB");
     }
 
     return QString::number(bytes) + QString::fromAscii(" bytes");
