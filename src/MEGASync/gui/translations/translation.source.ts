@@ -2145,6 +2145,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>MegaNodeNames</name>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Title of the Cloud Drive section</translatorcomment>
+        <translation type="unfinished">Cloud Drive</translation>
+    </message>
+</context>
+<context>
     <name>MegaTransferDelegate</name>
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
@@ -3925,6 +3933,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
         <translation type="unfinished">Size limits cannot be zero</translation>
     </message>
+    <message>
+        <source>Bytes</source>
+        <translatorcomment>Label to indicate bytes unit.</translatorcomment>
+        <translation type="unfinished">Bytes</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
+        <translation type="unfinished">KB</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
+        <translation type="unfinished">MB</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
+        <translation type="unfinished">GB</translation>
+    </message>
 </context>
 <context>
     <name>StatusInfo</name>
@@ -4519,6 +4547,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 years ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %1 years ago</translatorcomment>
         <translation type="unfinished">%1 years ago</translation>
+    </message>
+    <message>
+        <source>TB</source>
+        <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
+        <translation type="unfinished">TB</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
+        <translation type="unfinished">GB</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
+        <translation type="unfinished">MB</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
+        <translation type="unfinished">KB</translation>
     </message>
 </context>
 <context>

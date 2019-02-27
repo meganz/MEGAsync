@@ -26,7 +26,7 @@
     <message>
         <source>Storage</source>
         <translatorcomment>Label for Storage space used. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">พื้นที่จัดเก็บข้อมูล</translation>
+        <translation type="obsolete">ที่เก็บข้อมูล</translation>
     </message>
     <message>
         <source>Files</source>
@@ -2145,6 +2145,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>MegaNodeNames</name>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Title of the Cloud Drive section</translatorcomment>
+        <translation type="unfinished">คลาวด์ไดร์ฟ</translation>
+    </message>
+</context>
+<context>
     <name>MegaTransferDelegate</name>
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
@@ -2534,7 +2542,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Storage</source>
-        <translation type="unfinished">พื้นที่จัดเก็บข้อมูล</translation>
+        <translation type="unfinished">ที่เก็บข้อมูล</translation>
     </message>
     <message>
         <source>Bandwidth</source>
@@ -3787,7 +3795,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">โฟลเดอร์ที่ระบุในคลาวด์ไดร์ฟของคุณจะซิงโครไนซ์กับโฟลเดอร์ภายในเครื่อง</translation>
+        <translation type="unfinished">โฟลเดอร์เฉพาะในคลาวด์ไดรฟ์ของคุณจะถูกซิงโครไนซ์กับโฟลเดอร์ในระบบ</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
@@ -3924,6 +3932,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
         <translation type="unfinished">ไม่สามารถกำหนดค่าเป็นศูนย์</translation>
+    </message>
+    <message>
+        <source>Bytes</source>
+        <translatorcomment>Label to indicate bytes unit.</translatorcomment>
+        <translation type="unfinished">Bytes</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
+        <translation type="unfinished">KB</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
+        <translation type="unfinished">MB</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
+        <translation type="unfinished">GB</translation>
     </message>
 </context>
 <context>
@@ -4356,7 +4384,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="unfinished">พื้นที่จัดเก็บข้อมูล</translation>
+        <translation type="unfinished">ที่เก็บข้อมูล</translation>
     </message>
     <message>
         <source>transfer</source>
@@ -4519,6 +4547,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 years ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %1 years ago</translatorcomment>
         <translation type="unfinished">%1 ปีที่ผ่านมา</translation>
+    </message>
+    <message>
+        <source>TB</source>
+        <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
+        <translation type="unfinished">TB</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
+        <translation type="unfinished">GB</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
+        <translation type="unfinished">MB</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
+        <translation type="unfinished">KB</translation>
     </message>
 </context>
 <context>

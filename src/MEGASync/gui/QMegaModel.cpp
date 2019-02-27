@@ -1,6 +1,7 @@
 #include "QMegaModel.h"
 
 #include <QBrush>
+#include <QApplication>
 #include "control/Utilities.h"
 
 using namespace mega;
@@ -85,9 +86,13 @@ QVariant QMegaModel::data(const QModelIndex &index, int role) const
         }
         case Qt::DisplayRole:
         {
-            if (item->getParent() || item->getNode()->getType() == MegaNode::TYPE_ROOT)
+            if (item->getParent())
             {
                 return QVariant(QString::fromUtf8(item->getNode()->getName()));
+            }
+            else if (item->getNode()->getType() == MegaNode::TYPE_ROOT)
+            {
+                return QVariant(QCoreApplication::translate("MegaNodeNames",item->getNode()->getName()));
             }
 
             int inshareIndex = index.row() - 1;

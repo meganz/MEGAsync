@@ -2145,6 +2145,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>MegaNodeNames</name>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Title of the Cloud Drive section</translatorcomment>
+        <translation type="unfinished">Облачный диск</translation>
+    </message>
+</context>
+<context>
     <name>MegaTransferDelegate</name>
     <message>
         <source>Are you sure you want to cancel this transfer?</source>
@@ -3787,7 +3795,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Определённые папки на вашем облачном диске будут синхронизированы с локальной папкой.</translation>
+        <translation type="unfinished">Определённые папки на вашем облачном диске будут синхронизироваться с соответствующими локальными папками.</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
@@ -3924,6 +3932,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
         <translation type="unfinished">Ограничения на размер не могут быть нулевыми</translation>
+    </message>
+    <message>
+        <source>Bytes</source>
+        <translatorcomment>Label to indicate bytes unit.</translatorcomment>
+        <translation type="unfinished">Bytes</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
+        <translation type="unfinished">КБ</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
+        <translation type="unfinished">МБ</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
+        <translation type="unfinished">ГБ</translation>
     </message>
 </context>
 <context>
@@ -4519,6 +4547,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 years ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %1 years ago</translatorcomment>
         <translation type="unfinished">%1 лет назад</translation>
+    </message>
+    <message>
+        <source>TB</source>
+        <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
+        <translation type="unfinished">ТБ</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
+        <translation type="unfinished">ГБ</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
+        <translation type="unfinished">МБ</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
+        <translation type="unfinished">КБ</translation>
     </message>
 </context>
 <context>
