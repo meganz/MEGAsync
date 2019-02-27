@@ -74,7 +74,6 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                     if (node && node->isPublic())
                     {
                         ti->setIsLinkAvailable(true);
-                        delete node;
                     }
                     else
                     {
@@ -85,6 +84,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                             delete ownNode;
                         }
                     }
+                    delete node;
                 }
 
                 delete transfer;
