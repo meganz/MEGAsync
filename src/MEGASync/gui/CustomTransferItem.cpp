@@ -111,7 +111,7 @@ QString CustomTransferItem::getTransferName()
 
 bool CustomTransferItem::getLinkButtonClicked(QPoint pos)
 {
-    if (!getLinkButtonEnabled)
+    if (!getLinkButtonEnabled || !isLinkAvailable)
     {
         return false;
     }
@@ -138,14 +138,20 @@ void CustomTransferItem::mouseHoverTransfer(bool isHover)
     if (isHover)
     {
         getLinkButtonEnabled = true;
-        ui->lGetLink->removeEventFilter(this);
-        ui->lGetLink->update();
+        if (isLinkAvailable || transferError < 0)
+        {
+            ui->lGetLink->removeEventFilter(this);
+            ui->lGetLink->update();
+        }
     }
     else
     {
         getLinkButtonEnabled = false;
-        ui->lGetLink->installEventFilter(this);
-        ui->lGetLink->update();
+        if (isLinkAvailable || transferError < 0)
+        {
+            ui->lGetLink->installEventFilter(this);
+            ui->lGetLink->update();
+        }
     }
 
     emit refreshTransfer(this->getTransferTag());

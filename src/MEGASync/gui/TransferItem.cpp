@@ -10,6 +10,7 @@ TransferItem::TransferItem(QWidget *parent) : QWidget(parent)
     transferSpeed = 0;
     meanTransferSpeed = 0;
     regular = false;
+    isLinkAvailable = false;
     cancelButtonEnabled = false;
     isSyncTransfer = false;
     priority = 0;
@@ -138,5 +139,15 @@ bool TransferItem::getRegular()
 void TransferItem::setRegular(bool value)
 {
     regular = value;    
+}
+
+bool TransferItem::getIsLinkAvailable()
+{
+    return isLinkAvailable;
+}
+
+void TransferItem::setIsLinkAvailable(bool value)
+{
+    isLinkAvailable = value;
 }
 

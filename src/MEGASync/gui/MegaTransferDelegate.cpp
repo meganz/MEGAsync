@@ -69,6 +69,22 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 {
                     ti->setFinishedTime(transfer->getUpdateTime());
                     ti->updateFinishedTime();
+
+                    MegaNode *node = transfer->getPublicMegaNode();
+                    if (node && node->isPublic())
+                    {
+                        ti->setIsLinkAvailable(true);
+                    }
+                    else
+                    {
+                        MegaNode *ownNode = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(transfer->getNodeHandle());
+                        if (ownNode)
+                        {
+                            ti->setIsLinkAvailable(true);
+                            delete ownNode;
+                        }
+                    }
+                    delete node;
                 }
 
                 delete transfer;
