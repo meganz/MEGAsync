@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# restart Nemo
+UPDATENOTIFIERDIR=/var/lib/update-notifier/user.d
+echo "Please restart all running instances of Nemo."
+
+if [ -d $UPDATENOTIFIERDIR ] ; then
+        cat > $UPDATENOTIFIERDIR/megasync-install-notify <<DATA
+Name: Nemo Restart Required
+Priority: High
+Terminal: False
+Command: nemo -q
+DontShowAfterReboot: True
+ButtonText: _Restart Nemo
+DisplayIf: pgrep -x nemo -U \$(id -u) > /dev/null
+OnlyAdminUsers: False
+Description:
+ MEGAsync requires Nemo to be restarted to function properly.
+DATA
+fi

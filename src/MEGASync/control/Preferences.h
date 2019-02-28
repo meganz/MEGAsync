@@ -260,6 +260,10 @@ public:
     long long getHttpsCertExpiration();
     void setHttpsCertExpiration(long long expiration);
 
+    long long lastPublicHandleTimestamp();
+    mega::MegaHandle lastPublicHandle();
+    void setLastPublicHandle(mega::MegaHandle handle);
+
     int getNumUsers();
     void enterUser(int i);
     void leaveUser();
@@ -322,19 +326,20 @@ public:
         ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE = 1,
         ONE_TIME_ACTION_ACTIVE_FINDER_EXT = 2,
         ONE_TIME_ACTION_REGISTER_UPDATE_TASK = 3,
-        ONE_TIME_ACTION_OS_TOO_OLD = 4
+        ONE_TIME_ACTION_OS_TOO_OLD = 4,
+        ONE_TIME_ACTION_HGFS_WARNING = 5
     };
 
     enum {
         STATE_BELOW_OVER_STORAGE = 0,
         STATE_ALMOST_OVER_STORAGE,
-        STATE_OVER_STORAGE
+        STATE_OVER_STORAGE,
+        STATE_OVER_STORAGE_DISMISSED
     };
 
     static const int MAX_FILES_IN_NEW_SYNC_FOLDER;
     static const int MAX_FOLDERS_IN_NEW_SYNC_FOLDER;
     static const long long MIN_UPDATE_STATS_INTERVAL;
-    static const long long MIN_UPDATE_STATS_INTERVAL_OVERQUOTA;
     static const long long OQ_DIALOG_INTERVAL_MS;
     static const long long OQ_NOTIFICATION_INTERVAL_MS;
     static const long long ALMOST_OS_INTERVAL_MS;
@@ -526,6 +531,8 @@ protected:
     static const QString httpsCertIntermediateKey;
     static const QString httpsCertExpirationKey;
     static const QString transferIdentifierKey;
+    static const QString lastPublicHandleKey;
+    static const QString lastPublicHandleTimestampKey;
 
     static const bool defaultShowNotifications;
     static const bool defaultStartOnStartup;

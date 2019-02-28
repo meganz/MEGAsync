@@ -16,9 +16,9 @@ MegaDownloader::~MegaDownloader()
 
 }
 
-void MegaDownloader::download(MegaNode *parent, QString path, unsigned long long appDataId)
+void MegaDownloader::download(MegaNode *parent, QString path, QString appData)
 {
-    return download(parent, QFileInfo(path), appDataId);
+    return download(parent, QFileInfo(path), appData);
 }
 
 bool MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QString path, unsigned long long appDataId)
@@ -36,6 +36,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
     QString currentPath;
     while (!downloadQueue->isEmpty())
     {
+        QString appData = QString::number(appDataId);
         MegaNode *node = downloadQueue->dequeue();
         if (node->isForeign() && pathMap.contains(node->getParentHandle()))
         {
@@ -53,6 +54,7 @@ bool MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
                 {
                     data->totalFiles++;
                 }
+                appData.append(QString::fromUtf8("*"));
 
                 if (data->localPath.isEmpty())
                 {
@@ -70,14 +72,14 @@ bool MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QSt
             currentPath = path;
         }
 
-        download(node, currentPath, appDataId);
+        download(node, currentPath, appData);
         delete node;
     }
     pathMap.clear();
     return true;
 }
 
-void MegaDownloader::download(MegaNode *parent, QFileInfo info, unsigned long long appDataId)
+void MegaDownloader::download(MegaNode *parent, QFileInfo info, QString appData)
 {
     QPointer<MegaDownloader> safePointer = this;
     QApplication::processEvents();
@@ -90,13 +92,13 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info, unsigned long lo
 
     if (parent->getType() == MegaNode::TYPE_FILE)
     {
-        megaApi->startDownloadWithData(parent, (currentPath + QDir::separator()).toUtf8().constData(), QString::number(appDataId).toUtf8().constData());
+        megaApi->startDownloadWithData(parent, (currentPath + QDir::separator()).toUtf8().constData(),appData.toUtf8().constData());
     }
     else
     {
         if (!parent->isForeign())
         {
-            megaApi->startDownloadWithData(parent, (currentPath + QDir::separator()).toUtf8().constData(), QString::number(appDataId).toUtf8().constData());
+            megaApi->startDownloadWithData(parent, (currentPath + QDir::separator()).toUtf8().constData(), appData.toUtf8().constData());
         }
         else
         {
@@ -118,14 +120,22 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info, unsigned long lo
                 }
             }
 
-            TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(appDataId);
+            QByteArray appDataArray = appData.toUtf8();
+            char *endptr;
+            unsigned long long notificationId = strtoll(appDataArray.constData(), &endptr, 10);
+            TransferMetaData *data = ((MegaApplication*)qApp)->getTransferAppData(notificationId);
             if (data)
             {
+                if ((endptr - appDataArray.constData()) != appData.size())
+                {
+                    data->transfersFolderOK++;
+                }
+
                 data->pendingTransfers--;
                 if (data->pendingTransfers == 0)
                 {
                     //Transfers finished, show notification
-                    emit finishedTransfers(appDataId);
+                    emit finishedTransfers(notificationId);
                 }
             }
 

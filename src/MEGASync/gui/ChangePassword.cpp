@@ -133,7 +133,7 @@ void ChangePassword::on_bOk_clicked()
         QMessageBox::warning(this, tr("Error"), tr("The entered passwords don't match"));
         return;
     }
-    else if (newPassword().size() < 8)
+    else if (megaApi->getPasswordStrength(newPassword().toUtf8().constData()) == MegaApi::PASSWORD_STRENGTH_VERYWEAK)
     {
         QMessageBox::warning(this, tr("Error"), tr("Please, enter a stronger password"));
         return;

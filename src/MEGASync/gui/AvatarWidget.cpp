@@ -46,21 +46,25 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
         return;
     }
 
-    int radius = ceil(width() - width() * 0.20) / 2;
     QPainter painter(this);
 
-    // Draw border
+    // Draw border image
     painter.setRenderHints(QPainter::Antialiasing
                            | QPainter::SmoothPixmapTransform
                            | QPainter::HighQualityAntialiasing);
-    painter.setPen(QPen(QColor(0, 0, 0, 26), 1));
-    painter.drawEllipse(QRectF(1, 1, width() - 2 , height() - 2));
+    QPixmap buffer;
+#if QT_VERSION >= 0x050000
+    buffer.setDevicePixelRatio(Utilities::getDevicePixelRatio());
+#endif
+    buffer.load(QString::fromUtf8(":/images/avatar_frame.png"));
+
+    painter.drawPixmap(QRectF(0.0, 0.0, 36.0, 36.0), buffer,  QRectF(0.0, 0.0, 36.0, 36.0));
     painter.translate(width() / 2, height() / 2);
 
     if (QFileInfo(pathToFile).exists())
     {
         // Draw circular mask
-        QImage imageMask(width(), height(), QImage::Format_ARGB32_Premultiplied);
+        QImage imageMask(36.0, 36.0, QImage::Format_ARGB32_Premultiplied);
         imageMask.fill(Qt::transparent);
         QPainter mask(&imageMask);
         mask.setRenderHints(QPainter::Antialiasing
@@ -68,7 +72,7 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
                         | QPainter::HighQualityAntialiasing);
         mask.setPen(Qt::NoPen);
         mask.setBrush(Qt::white);
-        mask.drawEllipse(QRectF(0, 0, width(), height()));
+        mask.drawEllipse(QRectF(0, 0, 36, 36));
 
         // Composite mask and avatar
         QImage avatar(imageMask.size(), imageMask.format());
@@ -82,7 +86,7 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
         p.drawImage(0, 0, imageMask);
 
         //Apply avatar
-        painter.drawPixmap(QRect(-radius, -radius, radius * 2, radius * 2), QPixmap::fromImage(avatar));
+        painter.drawPixmap(QRect(-12, -12, 24, 24), QPixmap::fromImage(avatar));
     }
     else
     {
@@ -92,9 +96,9 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
         painter.setFont(font);
         painter.setPen(Qt::NoPen);
         painter.setBrush(QBrush(QColor(color.size() ? color : QString::fromUtf8("#D90007"))));
-        painter.drawEllipse(QRect(-radius, -radius, radius * 2, radius * 2));
+        painter.drawEllipse(QRect(-12, -12, 24, 24));
         painter.setPen(QPen(QColor("#ffffff")));
-        painter.drawText(QRect(-radius, -radius, radius * 2, radius * 2), Qt::AlignCenter, letter);
+        painter.drawText(QRect(-12, -12, 24, 24), Qt::AlignCenter, letter);
     }
 }
 

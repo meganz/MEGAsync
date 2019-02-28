@@ -1392,3 +1392,19 @@ bool WindowsPlatform::shouldRunHttpsServer()
     CloseHandle(snapshot);
     return result;
 }
+
+bool WindowsPlatform::isUserActive()
+{
+    LASTINPUTINFO lii = {0};
+    lii.cbSize = sizeof(LASTINPUTINFO);
+    if (!GetLastInputInfo(&lii))
+    {
+        return true;
+    }
+
+    if ((GetTickCount() - lii.dwTime) > Preferences::USER_INACTIVITY_MS)
+    {
+        return false;
+    }
+    return true;
+}

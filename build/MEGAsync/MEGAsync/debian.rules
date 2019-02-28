@@ -1,6 +1,6 @@
 #!/usr/bin/make -f
 FMEDIAINFO := $(shell dpkg -l | grep mediainfo >/dev/null && echo "-i" || echo " ")
-EXTRAQMAKE := $(shell cat /etc/issue | grep "Ubuntu 1[235]\|Debian.* 7\|Ubuntu 17.04\|Ubuntu 1[46].10" >/dev/null && echo "DEFINES+=MEGASYNC_DEPRECATED_OS" || echo "")
+EXTRAQMAKE := $(shell cat /etc/issue | grep "Ubuntu 1[2357]\|Debian.* 7\|Ubuntu 1[46].10" >/dev/null && echo "DEFINES+=MEGASYNC_DEPRECATED_OS" || echo "")
 FULLREQS := $(shell cat /etc/issue | grep "Ubuntu 12.04" >/dev/null && echo "" || echo '"CONFIG += FULLREQUIREMENTS"')
 
 

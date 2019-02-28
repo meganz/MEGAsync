@@ -269,6 +269,9 @@ border: none;
       </property>
       <item>
        <widget class="QPushButton" name="bTerms">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -292,6 +295,9 @@ border: none;
       </item>
       <item>
        <widget class="QPushButton" name="bPolicy">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -323,6 +329,9 @@ border: none;
       </property>
       <item>
        <widget class="QPushButton" name="bAck">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Credits</string>
         </property>
@@ -343,6 +352,9 @@ border: none;
       </item>
       <item>
        <widget class="QPushButton" name="bGDPR">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="text">
          <string>Data Protection Regulation</string>
         </property>

@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QDesktopServices>
+#include <QPropertyAnimation>
 
 #include "NodeSelector.h"
 #include "Preferences.h"
@@ -25,12 +26,14 @@ public:
     enum {
         PAGE_INITIAL = 0,
         PAGE_NEW_ACCOUNT = 1,
-        PAGE_LOGIN = 2
+        PAGE_LOGIN = 2,
+        PAGE_MODE = 3
     };
 
     explicit SetupWizard(MegaApplication *app, QWidget *parent = 0);
     ~SetupWizard();
 
+    virtual void onRequestStart(mega::MegaApi* api, mega::MegaRequest *request);
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
     virtual void onRequestUpdate(mega::MegaApi* api, mega::MegaRequest *request);
     void goToStep(int page);
@@ -46,6 +49,16 @@ private slots:
     void wTypicalSetup_clicked();
     void wAdvancedSetup_clicked();
     void lTermsLink_clicked();
+    void on_bLearMore_clicked();
+    void on_bFinish_clicked();
+    void showErrorMessage(QString error);
+    void onErrorAnimationFinished();
+    void animationTimout();
+
+    void onPasswordTextChanged(QString text);
+
+private:
+    QPropertyAnimation *m_animation;
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event);
@@ -53,11 +66,12 @@ protected:
     void setupPreferences();
     void page_login();
     void page_logout();
-    void page_initial();
     void page_mode();
     void page_welcome();
     void page_newaccount();
     void page_progress();
+
+    void setLevelStrength(int level);
 
     Ui::SetupWizard *ui;
     MegaApplication *app;
@@ -67,6 +81,10 @@ protected:
     QString sessionKey;
     mega::QTMegaRequestListener *delegateListener;
     bool closing;
+    bool closeBlocked;
+    bool loggingStarted;
+    bool creatingDefaultSyncFolder;
+    QTimer *animationTimer;
 };
 
 #endif // SETUPWIZARD_H

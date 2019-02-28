@@ -188,15 +188,10 @@ QString Utilities::languageCodeToString(QString code)
     if (languageNames.isEmpty())
     {       
         languageNames[QString::fromAscii("ar")] = QString::fromUtf8("العربية");
-        languageNames[QString::fromAscii("bg")] = QString::fromUtf8("български");
-        languageNames[QString::fromAscii("cs")] = QString::fromUtf8("Čeština");
         languageNames[QString::fromAscii("de")] = QString::fromUtf8("Deutsch");  
         languageNames[QString::fromAscii("en")] = QString::fromUtf8("English");
         languageNames[QString::fromAscii("es")] = QString::fromUtf8("Español");
-        languageNames[QString::fromAscii("fi")] = QString::fromUtf8("Suomi");
         languageNames[QString::fromAscii("fr")] = QString::fromUtf8("Français");
-        languageNames[QString::fromAscii("he")] = QString::fromUtf8("עברית");
-        languageNames[QString::fromAscii("hu")] = QString::fromUtf8("Magyar");
         languageNames[QString::fromAscii("id")] = QString::fromUtf8("Bahasa Indonesia");
         languageNames[QString::fromAscii("it")] = QString::fromUtf8("Italiano");
         languageNames[QString::fromAscii("ja")] = QString::fromUtf8("日本語");
@@ -207,10 +202,6 @@ QString Utilities::languageCodeToString(QString code)
         languageNames[QString::fromAscii("pt")] = QString::fromUtf8("Português");
         languageNames[QString::fromAscii("ro")] = QString::fromUtf8("Română");
         languageNames[QString::fromAscii("ru")] = QString::fromUtf8("Pусский");
-        languageNames[QString::fromAscii("sk")] = QString::fromUtf8("Slovenský");
-        languageNames[QString::fromAscii("sl")] = QString::fromUtf8("Slovenščina");
-        languageNames[QString::fromAscii("sr")] = QString::fromUtf8("српски");
-        languageNames[QString::fromAscii("sv")] = QString::fromUtf8("Svenska");
         languageNames[QString::fromAscii("th")] = QString::fromUtf8("ภาษาไทย");
         languageNames[QString::fromAscii("tl")] = QString::fromUtf8("Tagalog");
         languageNames[QString::fromAscii("tr")] = QString::fromUtf8("Türkçe");
@@ -239,6 +230,17 @@ QString Utilities::languageCodeToString(QString code)
         // languageNames[QString::fromAscii("fa")] = QString::fromUtf8("فارسی");
         // languageNames[QString::fromAscii("hr")] = QString::fromUtf8("Hrvatski");
         // languageNames[QString::fromAscii("ka")] = QString::fromUtf8("ქართული");
+        // languageNames[QString::fromAscii("cs")] = QString::fromUtf8("Čeština");
+        // languageNames[QString::fromAscii("sk")] = QString::fromUtf8("Slovenský");
+        // languageNames[QString::fromAscii("sl")] = QString::fromUtf8("Slovenščina");
+        // languageNames[QString::fromAscii("hu")] = QString::fromUtf8("Magyar");
+        // languageNames[QString::fromAscii("fi")] = QString::fromUtf8("Suomi");
+        // languageNames[QString::fromAscii("sr")] = QString::fromUtf8("српски");
+        // languageNames[QString::fromAscii("sv")] = QString::fromUtf8("Svenska");
+        // languageNames[QString::fromAscii("bg")] = QString::fromUtf8("български");
+        // languageNames[QString::fromAscii("he")] = QString::fromUtf8("עברית");
+
+
 
     }
     return languageNames.value(code);
@@ -400,22 +402,22 @@ QString Utilities::getFinishedTimeString(long long secs)
 {
     if (secs < 2)
     {
-        return QObject::tr("just now");
+        return QCoreApplication::translate("Utilities", "just now");
     }
     else if (secs < 60)
     {
-        return QObject::tr("%1 seconds ago").arg(secs);
+        return QCoreApplication::translate("Utilities", "%1 seconds ago").arg(secs);
     }
     else if (secs < 3600)
     {
         int minutes = secs/60;
         if (minutes == 1)
         {
-            return QObject::tr("1 minute ago");
+            return QCoreApplication::translate("Utilities", "1 minute ago");
         }
         else
         {
-            return QObject::tr("%1 minutes ago").arg(minutes);
+            return QCoreApplication::translate("Utilities", "%1 minutes ago").arg(minutes);
         }
     }
     else if (secs < 86400)
@@ -423,11 +425,11 @@ QString Utilities::getFinishedTimeString(long long secs)
         int hours = secs/3600;
         if (hours == 1)
         {
-            return QObject::tr("1 hour ago");
+            return QCoreApplication::translate("Utilities", "1 hour ago");
         }
         else
         {
-            return QObject::tr("%1 hours ago").arg(hours);
+            return QCoreApplication::translate("Utilities", "%1 hours ago").arg(hours);
         }
     }
     else if (secs < 2592000)
@@ -435,11 +437,11 @@ QString Utilities::getFinishedTimeString(long long secs)
         int days = secs/86400;
         if (days == 1)
         {
-            return QObject::tr("1 day ago");
+            return QCoreApplication::translate("Utilities", "1 day ago");
         }
         else
         {
-            return QObject::tr("%1 days ago").arg(days);
+            return QCoreApplication::translate("Utilities", "%1 days ago").arg(days);
         }
     }
     else if (secs < 31536000)
@@ -447,11 +449,11 @@ QString Utilities::getFinishedTimeString(long long secs)
         int months = secs/2592000;
         if (months == 1)
         {
-            return QObject::tr("1 month ago");
+            return QCoreApplication::translate("Utilities", "1 month ago");
         }
         else
         {
-            return QObject::tr("%1 months ago").arg(months);
+            return QCoreApplication::translate("Utilities", "%1 months ago").arg(months);
         }
     }
     else
@@ -459,11 +461,11 @@ QString Utilities::getFinishedTimeString(long long secs)
         int years = secs/31536000;
         if (years == 1)
         {
-            return QObject::tr("1 year ago");
+            return QCoreApplication::translate("Utilities", "1 year ago");
         }
         else
         {
-            return QObject::tr("%1 years ago").arg(years);
+            return QCoreApplication::translate("Utilities", "%1 years ago").arg(years);
         }
     }
 }
@@ -477,22 +479,22 @@ QString Utilities::getSizeString(unsigned long long bytes)
 
     if (bytes >= TB)
     {
-        return QString::number( ((int)((100 * bytes) / TB))/100.0) + QString::fromAscii(" TB");
+        return QString::number( ((int)((100 * bytes) / TB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "TB");
     }
 
     if (bytes >= GB)
     {
-        return QString::number( ((int)((100 * bytes) / GB))/100.0) + QString::fromAscii(" GB");
+        return QString::number( ((int)((100 * bytes) / GB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "GB");
     }
 
     if (bytes >= MB)
     {
-        return QString::number( ((int)((100 * bytes) / MB))/100.0) + QString::fromAscii(" MB");
+        return QString::number( ((int)((100 * bytes) / MB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "MB");
     }
 
     if (bytes >= KB)
     {
-        return QString::number( ((int)((100 * bytes) / KB))/100.0) + QString::fromAscii(" KB");
+        return QString::number( ((int)((100 * bytes) / KB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "KB");
     }
 
     return QString::number(bytes) + QString::fromAscii(" bytes");

@@ -69,14 +69,25 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 {
                     ti->setFinishedTime(transfer->getUpdateTime());
                     ti->updateFinishedTime();
-                }
-                else
-                {
-                    if (!transfer->isFinished())
+
+                    MegaNode *node = transfer->getPublicMegaNode();
+                    if (node && node->isPublic())
                     {
-                        delete transfer;
+                        ti->setIsLinkAvailable(true);
                     }
+                    else
+                    {
+                        MegaNode *ownNode = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(transfer->getNodeHandle());
+                        if (ownNode)
+                        {
+                            ti->setIsLinkAvailable(true);
+                            delete ownNode;
+                        }
+                    }
+                    delete node;
                 }
+
+                delete transfer;
             }            
         }
         else
@@ -89,48 +100,45 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
             {
                 ti->updateFinishedTime();
             }
+        }
 
-            Preferences *preferences = Preferences::instance();
-            if (ti->getType() == MegaTransfer::TYPE_DOWNLOAD)
+        Preferences *preferences = Preferences::instance();
+        if (ti->getType() == MegaTransfer::TYPE_DOWNLOAD)
+        {
+            if (preferences->getDownloadsPaused())
             {
-                if (preferences->getDownloadsPaused())
+                if (modelType == QTransfersModel::TYPE_DOWNLOAD)
                 {
-                    if (modelType == QTransfersModel::TYPE_DOWNLOAD)
-                    {
-
-                            ti->setStateLabel(tr("paused"));
-                            ti->loadDefaultTransferIcon();
-
-                    }
-                    else if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
-                    {
-
-                            ti->setStateLabel(tr("PAUSED"));
-                    }
+                    ti->setStateLabel(tr("paused"));
+                    ti->loadDefaultTransferIcon();
                 }
-                else
+                else if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
                 {
-                    ti->updateAnimation();
+                    ti->setStateLabel(tr("PAUSED"));
                 }
             }
-            else if (ti->getType() == MegaTransfer::TYPE_UPLOAD)
+            else
             {
-                if (preferences->getUploadsPaused())
-                {
-                   if (modelType == QTransfersModel::TYPE_UPLOAD)
-                   {
-                       ti->setStateLabel(tr("paused"));
-                       ti->loadDefaultTransferIcon();
-                   }
-                   else if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
-                   {
-                       ti->setStateLabel(tr("PAUSED"));
-                   }
-                }
-                else
-                {
-                    ti->updateAnimation();
-                }
+                ti->updateAnimation();
+            }
+        }
+        else if (ti->getType() == MegaTransfer::TYPE_UPLOAD)
+        {
+            if (preferences->getUploadsPaused())
+            {
+               if (modelType == QTransfersModel::TYPE_UPLOAD)
+               {
+                   ti->setStateLabel(tr("paused"));
+                   ti->loadDefaultTransferIcon();
+               }
+               else if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
+               {
+                   ti->setStateLabel(tr("PAUSED"));
+               }
+            }
+            else
+            {
+                ti->updateAnimation();
             }
         }
 
@@ -171,7 +179,7 @@ QSize MegaTransferDelegate::sizeHint(const QStyleOptionViewItem &option, const Q
 
 bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, const QStyleOptionViewItem &option, const QModelIndex &index)
 {
-    if (QEvent::MouseButtonRelease ==  event->type())
+    if (QEvent::MouseButtonPress ==  event->type())
     {
         int tag = index.internalId();
         TransferItem *item = model->transferItems[tag];
@@ -185,7 +193,6 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
             if (model->getModelType() == QTransfersModel::TYPE_FINISHED)
             {
                 model->removeTransferByTag(tag);
-                item = NULL;
             }
             else
             {
@@ -201,9 +208,9 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
                 if (result == QMessageBox::Yes)
                 {
                     model->megaApi->cancelTransferByTag(tag);
-                    item = NULL;
                 }
             }
+            return true; // click consumed
         }
         else if (item && item->getLinkButtonClicked(((QMouseEvent *)event)->pos() - option.rect.topLeft()))
         {
@@ -249,10 +256,12 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
                         ((MegaApplication*)qApp)->getMegaApi()->retryTransfer(transfer);
                     }
 
+                    delete transfer;
                 }
              }
+             return true; // click consumed
         }
-        else
+        else if (model->getModelType() == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
         {
             MegaTransfer *transfer = NULL;
             transfer = model->getTransferByTag(tag);
@@ -267,8 +276,29 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
                 #endif
                 Platform::showInFolder(localPath);
             }
+            delete transfer;
+            return true; // click consumed
         }
-        return true;
+        // we are not consuming the click; fall through to do the usual thing (of selecting the clicked row)
+    }
+    else if (QEvent::MouseButtonDblClick == event->type() && model->getModelType() == QTransfersModel::TYPE_FINISHED)
+    {
+        MegaTransfer *transfer = NULL;
+        int tag = index.internalId();
+        transfer = model->getTransferByTag(tag);
+        if (transfer && transfer->isFinished() && transfer->getPath())
+        {
+            QString localPath = QString::fromUtf8(transfer->getPath());
+            #ifdef WIN32
+            if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+            {
+                localPath = localPath.mid(4);
+            }
+            #endif
+            Platform::showInFolder(localPath);
+        }
+        delete transfer;
+        return true; // double-click consumed
     }
 
     return QAbstractItemDelegate::editorEvent(event, model, option, index);
@@ -282,7 +312,7 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
         TransferItem *item = model->transferItems[tag];
         if (item)
         {
-            if (item && item->getLinkButtonClicked(event->pos() - option.rect.topLeft()))
+            if (item->getLinkButtonClicked(event->pos() - option.rect.topLeft()))
             {
                 int modelType = model->getModelType();
                 if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
@@ -298,6 +328,7 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
                         {
                             QToolTip::showText(event->globalPos(), tr("Retry"));
                         }
+                        delete transfer;
                         return true;
                     }
                 }

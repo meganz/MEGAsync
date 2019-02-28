@@ -35,6 +35,7 @@ public:
         ActivationContentClicked = -1,
         ActivationActionButtonClicked = 0,
         ActivationAdditionalButtonClicked = 1,
+        ActivationLegacyNotificationClicked = 2
     };
 
     MegaNotification();
@@ -63,7 +64,7 @@ public:
     QString getData() const;
     void setData(const QString &value);
 
-    void emitactivated();
+    void emitlLegacyNotificationActivated();
 
 protected:
     QString title;

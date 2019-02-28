@@ -48,15 +48,7 @@ long long calculateCacheSize()
 
 void deleteCache()
 {
-    Preferences *preferences = Preferences::instance();
-    for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
-    {
-        QString syncPath = preferences->getLocalFolder(i);
-        if (!syncPath.isEmpty())
-        {
-            Utilities::removeRecursively(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
-        }
-    }
+    ((MegaApplication *)qApp)->cleanLocalCaches(true);
 }
 
 long long calculateRemoteCacheSize(MegaApi *megaApi)
@@ -294,6 +286,9 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
         ui->bApply->hide();
     }
 #endif
+
+    ui->lOQWarning->setText(QString::fromUtf8(""));
+    ui->wOQError->hide();
 }
 
 SettingsDialog::~SettingsDialog()
@@ -338,21 +333,32 @@ void SettingsDialog::setOverQuotaMode(bool mode)
 {
     if (mode)
     {
-        ui->bSyncs->setEnabled(false);
-        ui->bSyncs->setChecked(false);
-        ui->bAccount->setChecked(true);
-        ui->wStack->setCurrentWidget(ui->pAccount);
-        ui->pAccount->show();
+        QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
+        QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
+        Preferences *preferences = Preferences::instance();
+        if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
+        {
+            MegaHandle aff = preferences->lastPublicHandle();
+            if (aff != INVALID_HANDLE)
+            {
+                char *base64aff = MegaApi::handleToBase64(aff);
+                url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
+                delete [] base64aff;
+            }
+        }
 
-#ifdef __APPLE__
-        setMinimumHeight(480);
-        setMaximumHeight(480);
-#endif
+        ui->lOQWarning->setText(tr("Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]")
+                                        .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#%1\"><span style=\"color:#d90007; text-decoration:none;\">").arg(url))
+                                        .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>")));
+        ui->wOQError->show();
     }
     else
     {
-        ui->bSyncs->setEnabled(true);
+        ui->lOQWarning->setText(QString::fromUtf8(""));
+        ui->wOQError->hide();
     }
+
+    return;
 }
 
 void SettingsDialog::stateChanged()
@@ -888,6 +894,18 @@ void SettingsDialog::on_bUpgrade_clicked()
 {
     QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
     QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
+    Preferences *preferences = Preferences::instance();
+    if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
+    {
+        MegaHandle aff = preferences->lastPublicHandle();
+        if (aff != INVALID_HANDLE)
+        {
+            char *base64aff = MegaApi::handleToBase64(aff);
+            url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
+            delete [] base64aff;
+        }
+    }
+
     megaApi->getSessionTransferURL(url.toUtf8().constData());
 }
 
@@ -895,6 +913,18 @@ void SettingsDialog::on_bUpgradeBandwidth_clicked()
 {
     QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
     QString url = QString::fromUtf8("pro/uao=%1").arg(userAgent);
+    Preferences *preferences = Preferences::instance();
+    if (preferences->lastPublicHandleTimestamp() && (QDateTime::currentMSecsSinceEpoch() - preferences->lastPublicHandleTimestamp()) < 86400000)
+    {
+        MegaHandle aff = preferences->lastPublicHandle();
+        if (aff != INVALID_HANDLE)
+        {
+            char *base64aff = MegaApi::handleToBase64(aff);
+            url.append(QString::fromUtf8("/aff=%1/aff_time=%2").arg(QString::fromUtf8(base64aff)).arg(preferences->lastPublicHandleTimestamp() / 1000));
+            delete [] base64aff;
+        }
+    }
+
     megaApi->getSessionTransferURL(url.toUtf8().constData());
 }
 
@@ -1152,7 +1182,7 @@ void SettingsDialog::loadSettings()
             {
                 ui->gBandwidthQuota->show();
                 ui->wSeparatorTransferQuota->show();
-                int bandwidthPercentage = ceil(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+                int bandwidthPercentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
                 ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
                 ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
                         .arg(Utilities::getSizeString(preferences->usedBandwidth()))
@@ -1237,7 +1267,7 @@ void SettingsDialog::refreshAccountDetails()
     else
     {
         ui->bStorageDetails->setEnabled(true);
-        int percentage = ceil(100*((double)preferences->usedStorage()/preferences->totalStorage()));
+        int percentage = floor(100*((double)preferences->usedStorage()/preferences->totalStorage()));
         ui->pStorage->setValue((percentage < 100) ? percentage : 100);
         ui->lStorage->setText(tr("%1 (%2%) of %3 used")
               .arg(Utilities::getSizeString(preferences->usedStorage()))
@@ -1252,7 +1282,7 @@ void SettingsDialog::refreshAccountDetails()
     }
     else
     {
-        int percentage = ceil(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+        int percentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
         ui->pUsedBandwidth->setValue((percentage < 100) ? percentage : 100);
         ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
               .arg(Utilities::getSizeString(preferences->usedBandwidth()))
@@ -2250,7 +2280,8 @@ void SettingsDialog::on_bClearCache_clicked()
         QFileInfo fi(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
         if (fi.exists() && fi.isDir())
         {
-            syncs += QString::fromUtf8("<br/><a href=\"local://#%1\">%2</a>").arg(fi.absoluteFilePath()).arg(preferences->getSyncName(i));
+            syncs += QString::fromUtf8("<br/><a href=\"local://#%1\">%2</a>")
+                    .arg(fi.absoluteFilePath() + QDir::separator()).arg(preferences->getSyncName(i));
         }
     }
 

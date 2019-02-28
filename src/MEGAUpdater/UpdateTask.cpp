@@ -9,7 +9,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
-#include <unistd.h>
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -22,6 +21,7 @@
 #include <algorithm>
 #include <Shlobj.h>
 #else
+#include <unistd.h>
 #include <sys/types.h>
 #include <dirent.h>
 #endif
@@ -30,8 +30,8 @@
 #include "Preferences.h"
 #include "MacUtils.h"
 
-using namespace std;
-using namespace CryptoPP;
+using std::string;
+using CryptoPP::Integer;
 
 #ifdef _WIN32
 
@@ -197,6 +197,7 @@ string UpdateTask::getAppDataDir()
 #define MEGA_TO_NATIVE_SEPARATORS(x) std::replace(x.begin(), x.end(), '\\', '/');
 #define MEGA_SET_PERMISSIONS chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAclient", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
                              chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGAupdater", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
+                             chmod("/Applications/MEGAsync.app/Contents/MacOS/MEGADeprecatedVersion", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH); \
                              chmod("/Applications/MEGAsync.app/Contents/PlugIns/MEGAShellExtFinder.appex/Contents/MacOS/MEGAShellExtFinder", S_IRWXU | S_IRGRP | S_IXGRP | S_IROTH | S_IXOTH);
 
 

@@ -7,6 +7,8 @@ StatusInfo::StatusInfo(QWidget *parent) :
     ui(new Ui::StatusInfo)
 {
     ui->setupUi(this);
+    ui->bIconState->setAttribute(Qt::WA_TransparentForMouseEvents);
+
     isHovered = false;
     isOverQuota = false;
 
@@ -49,16 +51,13 @@ void StatusInfo::setState(int state)
         }
         case STATE_WAITING:
         {
-            if (scanningTimer.isActive())
+            if (!scanningTimer.isActive())
             {
-                scanningTimer.stop();
+                scanningAnimationIndex = 1;
+                scanningTimer.start();
             }
 
             ui->lStatusDesc->setText(tr("Waiting"));
-            QIcon icon;
-            icon.addFile(QString::fromUtf8(":/images/ico_menu_scanning_state.png"), QSize(), QIcon::Normal, QIcon::Off);
-            ui->bIconState->setIcon(icon);
-            ui->bIconState->setIconSize(QSize(24, 24));
             break;
         }
         case STATE_INDEXING:
@@ -125,6 +124,7 @@ void StatusInfo::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        setState(state);
     }
     QWidget::changeEvent(event);
 }

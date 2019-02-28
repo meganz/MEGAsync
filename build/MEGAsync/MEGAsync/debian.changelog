@@ -1,3 +1,16 @@
+megasync (4.0.2) stable; urgency=low
+
+  * Fix bug with selection of transfer manager items
+  * Fix bug of context menu not shown over transfer manager items
+  * New design for the main dialog
+  * Improved setup assistant
+  * Support to show Public Service Announcements
+  * Modern notifications
+  * Updated third-party libraries
+  * Other minor bug fixes and improvements
+
+ -- MEGA Team <linux@mega.co.nz>  Mon, 04 Feb 2019 19:48:32 +0100
+
 megasync (3.7.1) stable; urgency=low
 
   * Support for multi-factor authentication

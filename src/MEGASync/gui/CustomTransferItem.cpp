@@ -40,9 +40,9 @@ void CustomTransferItem::setFileName(QString fileName)
 
     QFont f = ui->lFileName->font();
     QFontMetrics fm = QFontMetrics(f);
-    ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
+    ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideMiddle,ui->lFileName->width()));
     ui->lFileName->setToolTip(fileName);
-    ui->lFileNameCompleted->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lFileName->width()));
+    ui->lFileNameCompleted->setText(fm.elidedText(fileName, Qt::ElideMiddle,ui->lFileName->width()));
     ui->lFileNameCompleted->setToolTip(fileName);
 
 
@@ -111,7 +111,7 @@ QString CustomTransferItem::getTransferName()
 
 bool CustomTransferItem::getLinkButtonClicked(QPoint pos)
 {
-    if (!getLinkButtonEnabled)
+    if (!getLinkButtonEnabled || !isLinkAvailable)
     {
         return false;
     }
@@ -138,17 +138,39 @@ void CustomTransferItem::mouseHoverTransfer(bool isHover)
     if (isHover)
     {
         getLinkButtonEnabled = true;
-        ui->lGetLink->removeEventFilter(this);
-        ui->lGetLink->update();
+        if (isLinkAvailable || transferError < 0)
+        {
+            ui->lGetLink->removeEventFilter(this);
+            ui->lGetLink->update();
+        }
     }
     else
     {
         getLinkButtonEnabled = false;
-        ui->lGetLink->installEventFilter(this);
-        ui->lGetLink->update();
+        if (isLinkAvailable || transferError < 0)
+        {
+            ui->lGetLink->installEventFilter(this);
+            ui->lGetLink->update();
+        }
     }
 
     emit refreshTransfer(this->getTransferTag());
+}
+
+bool CustomTransferItem::mouseHoverRetryingLabel(QPoint pos)
+{
+    switch (transferState)
+    {
+        case MegaTransfer::STATE_RETRYING:
+            if (ui->lSpeed->rect().contains(ui->lSpeed->mapFrom(this, pos)))
+            {
+                return true;
+            }
+            break;
+        default:
+            break;
+    }
+    return false;
 }
 
 void CustomTransferItem::finishTransfer()
@@ -159,7 +181,7 @@ void CustomTransferItem::finishTransfer()
         ui->lGetLink->setIcon(QIcon(QString::fromAscii("://images/ico_item_retry.png")));
         ui->lGetLink->setIconSize(QSize(24,24));
         ui->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
-        ui->lElapsedTime->setText(tr("failed: ") + QCoreApplication::translate("MegaError", MegaError::getErrorString(transferError)));
+        ui->lElapsedTime->setText(tr("failed:") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", MegaError::getErrorString(transferError)));
     }
 }
 
@@ -217,8 +239,6 @@ void CustomTransferItem::updateTransfer()
     {
         case MegaTransfer::STATE_ACTIVE:
         {
-            ui->bClockDown->setVisible(true);
-
             // Update remaining time
             long long remainingBytes = totalSize - totalTransferredBytes;
             int totalRemainingSeconds = meanTransferSpeed ? remainingBytes / meanTransferSpeed : 0;
@@ -234,10 +254,12 @@ void CustomTransferItem::updateTransfer()
                 {
                     remainingTime = Utilities::getTimeString(totalRemainingSeconds, false);
                 }
+                ui->bClockDown->setVisible(true);
             }
             else
             {
                 remainingTime = QString::fromAscii("");
+                ui->bClockDown->setVisible(false);
             }
             ui->lRemainingTime->setText(remainingTime);
 
@@ -268,7 +290,15 @@ void CustomTransferItem::updateTransfer()
             ui->lRemainingTime->setText(QString::fromUtf8(""));
             break;
         case MegaTransfer::STATE_RETRYING:
-            ui->lSpeed->setText(QString::fromUtf8("%1").arg(tr("retrying...")));
+            if (transferError == MegaError::API_EOVERQUOTA)
+            {
+                ui->lSpeed->setText(QString::fromUtf8("%1").arg(tr("Out of storage space")));
+            }
+            else
+            {
+                ui->lSpeed->setText(QString::fromUtf8("%1").arg(tr("retrying...")));
+            }
+
             ui->bClockDown->setVisible(false);
             ui->lRemainingTime->setText(QString::fromUtf8(""));
             break;

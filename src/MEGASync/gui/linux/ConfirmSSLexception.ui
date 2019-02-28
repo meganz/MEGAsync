@@ -47,6 +47,10 @@ QPushButton
 	height: 14px;
 }
 
+#ConfirmSSLexception
+{
+	background-color: #f1f1f1;
+}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1,0,0">

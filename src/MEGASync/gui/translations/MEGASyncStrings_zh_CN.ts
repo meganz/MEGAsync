@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">可使用的</translation>
+        <translation type="unfinished">可用</translation>
     </message>
     <message>
         <source>Total size taken up by file versions:</source>
@@ -298,7 +298,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>ChangePassword</name>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">变更密码</translation>
+        <translation type="unfinished">更改密码</translation>
     </message>
     <message>
         <source>New password</source>
@@ -318,11 +318,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Password changed</source>
-        <translation type="unfinished">密码已更改</translation>
+        <translation type="obsolete">密码已更改</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
-        <translation type="unfinished">您的密码已被更改。</translation>
+        <translation type="obsolete">您的密码已被更改。</translation>
     </message>
     <message>
         <source>Error</source>
@@ -330,7 +330,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Wrong password</source>
-        <translation type="unfinished">错误密码</translation>
+        <translation type="obsolete">错误密码</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -413,6 +413,54 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Send report</source>
         <translatorcomment>Label for Send report button.</translatorcomment>
         <translation>发送报告</translation>
+    </message>
+</context>
+<context>
+    <name>CustomTransferItem</name>
+    <message>
+        <source>failed:</source>
+        <translatorcomment>Label to indicate that the transfer failed. The reason will be appended after colon symbol.</translatorcomment>
+        <translation type="unfinished">传输失败：</translation>
+    </message>
+    <message>
+        <source>%1 of %2</source>
+        <translatorcomment>Label to indicate the number of completed transfers of the total. %1 will be replaced with the number of completed transfers and %2 with the total number of transfers</translatorcomment>
+        <translation type="unfinished">%1 / %2</translation>
+    </message>
+    <message>
+        <source>starting...</source>
+        <translatorcomment>Label to indicate that a transfer is starting.</translatorcomment>
+        <translation type="unfinished">正在开始传输……</translation>
+    </message>
+    <message>
+        <source>PAUSED</source>
+        <translatorcomment>Label to indicate that a transfer is paused. Keep uppercase.</translatorcomment>
+        <translation type="unfinished">暂停</translation>
+    </message>
+    <message>
+        <source>queued</source>
+        <translatorcomment>Label to indicate that a transfer is queued.</translatorcomment>
+        <translation type="unfinished">已入进程</translation>
+    </message>
+    <message>
+        <source>retrying...</source>
+        <translatorcomment>Label to indicate that a transfer is being retried.</translatorcomment>
+        <translation type="unfinished">正在重试传输……</translation>
+    </message>
+    <message>
+        <source>completing...</source>
+        <translatorcomment>Label to indicate that a transfer is being completed.</translatorcomment>
+        <translation type="unfinished">正在完成传输……</translation>
+    </message>
+    <message>
+        <source>Added [A]</source>
+        <translatorcomment>Label to indicate that a transfer finished (added to the list of recently finished transfers) [A] time ago. [A] will be updated with the time since the transfer finished.</translatorcomment>
+        <translation type="unfinished">已添加[A]</translation>
+    </message>
+    <message>
+        <source>Out of storage space</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
+        <translation type="unfinished">存储空间不足</translation>
     </message>
 </context>
 <context>
@@ -583,7 +631,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is on guest mode</source>
         <translatorcomment>Label to inform a user that MEGAsync is running on Guest Mode</translatorcomment>
-        <translation type="unfinished">MEGAsync 处于非登入状态</translation>
+        <translation type="obsolete">MEGAsync 处于非登入状态</translation>
     </message>
     <message>
         <source>Login</source>
@@ -608,7 +656,103 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A]Login[/A] or [B]Create an account[/B] to fully experience MEGA</source>
         <translatorcomment>Label shown at startup of MEGAsync to offer the user the options to login or create and account. Keep [A][B][/A][/B] place holders</translatorcomment>
-        <translation type="unfinished">[A]登入[/A]或[B]创建一个帐户[/B]以充分体验MEGA</translation>
+        <translation type="obsolete">[A]登入[/A]或[B]创建一个帐户[/B]以充分体验MEGA</translation>
+    </message>
+    <message>
+        <source>Login to MEGA</source>
+        <translatorcomment>Label shown at main dialog before logging in</translatorcomment>
+        <translation type="unfinished">登录MEGA</translation>
+    </message>
+    <message>
+        <source>Email address</source>
+        <translatorcomment>Tip shown in email line edit before typing the user email address.</translatorcomment>
+        <translation type="unfinished">邮箱</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translatorcomment>Tip shown in password line edit before typing the user password</translatorcomment>
+        <translation type="unfinished">密码</translation>
+    </message>
+    <message>
+        <source>Forgot password?</source>
+        <translatorcomment>Button label that redirects to the web page with information about forgotten passwords.</translatorcomment>
+        <translation type="unfinished">忘记密码了？</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button label to cancel the current operation</translatorcomment>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <source>Setting up your account...</source>
+        <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
+        <translation type="unfinished">正在配置您的帐户……</translation>
+    </message>
+    <message>
+        <source>Logging in...</source>
+        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
+        <translation type="unfinished">登入中...</translation>
+    </message>
+    <message>
+        <source>Fetching file list...</source>
+        <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
+        <translation type="unfinished">获取文件列表...</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Label shown to show an error</translatorcomment>
+        <translation type="unfinished">错误</translation>
+    </message>
+    <message>
+        <source>Incorrect email and/or password.</source>
+        <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
+        <translation type="unfinished">不正确的电子邮件与/或密码。</translation>
+    </message>
+    <message>
+        <source>Have you verified your account?</source>
+        <translatorcomment>Message shown after a failed login to recommend the user to verify his account.</translatorcomment>
+        <translation type="obsolete">您认证过账号了吗?</translation>
+    </message>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translatorcomment>Label shown when a user has created and account to inform that he needs to check his e-mail and confirm his account.</translatorcomment>
+        <translation type="unfinished">请检查您的电子邮件，然后点击该链接以确认您的帐户。</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translatorcomment>Label shown at main dialog to inform the user that he has failed to log in several times and has to wait before trying again.</translatorcomment>
+        <translation type="unfinished">您于短时间内尝试登入的次数过多。 [BR] 请等待至%1 后再重试。</translation>
+    </message>
+    <message>
+        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
+        <translatorcomment>Label shown at main dialog to show that the account has been blocked and the user needs to contact the support team.</translatorcomment>
+        <translation type="unfinished">您的账号已被锁定。请连系support@mega.nz</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translatorcomment>Label shown if there is a fatal error fetching the filesystem from servers.</translatorcomment>
+        <translation type="unfinished">无法获取文件系统。请再试一次。如果问题仍然存在，请通过bug@mega.nz与我们联系</translation>
+    </message>
+    <message>
+        <source>Please, enter your e-mail address</source>
+        <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
+        <translation type="unfinished">请输入您的e-mail</translation>
+    </message>
+    <message>
+        <source>Please, enter a valid e-mail address</source>
+        <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
+        <translation type="unfinished">请输入一个有效的e-mail</translation>
+    </message>
+    <message>
+        <source>Please, enter your password</source>
+        <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
+        <translation type="unfinished">请输入您的密码</translation>
+    </message>
+    <message>
+        <source>Logging out...</source>
+        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
+        <translation type="unfinished">正在登出...</translation>
     </message>
 </context>
 <context>
@@ -718,7 +862,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation>同步</translation>
+        <translation type="vanished">同步</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -738,7 +882,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>%1 of %2 (%3/s)</source>
         <translatorcomment>Label to keep the count of pending and total files. Preserve %1, %2 and %3 codes beacuse they are used to include the number of pending, total files and actual speed.</translatorcomment>
-        <translation>%1 /%2 (%3/s)</translation>
+        <translation type="vanished">%1 /%2 (%3/s)</translation>
     </message>
     <message>
         <source>%1 of %2 (paused)</source>
@@ -763,27 +907,27 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Label to cancel all pending downloads.(String as short as possible)</translatorcomment>
-        <translation>取消所有下载</translation>
+        <translation type="vanished">取消所有下载</translation>
     </message>
     <message>
         <source>Cancel download</source>
         <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
-        <translation>取消下载</translation>
+        <translation type="vanished">取消下载</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Label to cancel all pending uploads.(String as short as possible)</translatorcomment>
-        <translation>取消所有上传</translation>
+        <translation type="vanished">取消所有上传</translation>
     </message>
     <message>
         <source>Cancel upload</source>
         <translatorcomment>Label to cancel the actual upload. (String as short as possible)</translatorcomment>
-        <translation>取消上传</translation>
+        <translation type="vanished">取消上传</translation>
     </message>
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation>新增同步</translation>
+        <translation type="vanished">新增同步</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -823,7 +967,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is starting</source>
         <translatorcomment>Label to indicate that MEGAsync is at start state (String as short as possible)</translatorcomment>
-        <translation>MEGAsync 开始同步中。</translation>
+        <translation type="vanished">MEGAsync 开始同步中。</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -836,32 +980,32 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Resume downloads</source>
         <translatorcomment>Label to resume the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">继续下载</translation>
+        <translation type="obsolete">继续下载</translation>
     </message>
     <message>
         <source>Pause downloads</source>
         <translatorcomment>Label to pause the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">暂停下载</translation>
+        <translation type="obsolete">暂停下载</translation>
     </message>
     <message>
         <source>Resume uploads</source>
         <translatorcomment>Label to resume the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">继续上传</translation>
+        <translation type="obsolete">继续上传</translation>
     </message>
     <message>
         <source>Pause uploads</source>
         <translatorcomment>Label to pause the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">暂停上传</translation>
+        <translation type="obsolete">暂停上传</translation>
     </message>
     <message>
         <source>Resume download</source>
         <translatorcomment>Label to resume the current download. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">继续下载</translation>
+        <translation type="obsolete">继续下载</translation>
     </message>
     <message>
         <source>Resume upload</source>
         <translatorcomment>Label to resume the current upload. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">继续上传</translation>
+        <translation type="obsolete">继续上传</translation>
     </message>
     <message>
         <source>Blocked file: %1</source>
@@ -875,12 +1019,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is currently disabled</source>
         <translatorcomment>Label to inform a user that MEGAsync is actually disabled due to the account is overquota (storage and/or transfer)</translatorcomment>
-        <translation type="unfinished">MEGAsync同步目前已停用</translation>
+        <translation type="obsolete">MEGAsync同步目前已停用</translation>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
         <translatorcomment>Label to inform the user that his account is overquota and needs to upgrade to keep using it.</translatorcomment>
-        <translation type="unfinished">您的账号已超过使用额度。 [A]升级[/A]以继续想用安全，端对端加密云端储存。</translation>
+        <translation type="obsolete">您的账号已超过使用额度。 [A]升级[/A]以继续想用安全，端对端加密云端储存。</translation>
     </message>
     <message>
         <source>Upgrade to PRO</source>
@@ -905,27 +1049,27 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>PAUSED</source>
         <translatorcomment>Label to indicate that the current transfer is paused. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">暂停</translation>
+        <translation type="obsolete">暂停</translation>
     </message>
     <message>
         <source>Paused</source>
         <translatorcomment>Label to indicate that MEGAsync is at pause state</translatorcomment>
-        <translation type="unfinished">暂停</translation>
+        <translation type="obsolete">已暂停</translation>
     </message>
     <message>
         <source>Waiting</source>
         <translatorcomment>Label to indicate that MEGAsync is at waiting state</translatorcomment>
-        <translation type="unfinished">请等待</translation>
+        <translation type="obsolete">请等待</translation>
     </message>
     <message>
         <source>Scanning...</source>
         <translatorcomment>Label to indicate that MEGAsync is at scanning state</translatorcomment>
-        <translation type="unfinished">正在扫描...</translation>
+        <translation type="obsolete">正在扫描...</translation>
     </message>
     <message>
         <source>Up to date</source>
         <translatorcomment>Label to indicate that MEGAsync is at up-to-date state</translatorcomment>
-        <translation type="unfinished">最新的</translation>
+        <translation type="obsolete">最新的</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -954,11 +1098,61 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>USED BANDWIDTH %1</source>
-        <translation type="unfinished">已用频宽量%1</translation>
+        <translation type="obsolete">已用频宽量%1</translation>
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
         <translation type="unfinished">处理花费的时间比预期的要长。请稍候。</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA now</source>
+        <translatorcomment>Label shown at main dialog when the user is already logged in to inform that he can start uploading files to MEGA</translatorcomment>
+        <translation type="unfinished">立即上传至MEGA</translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button label to dismiss (hide) overquota dialogs.</translatorcomment>
+        <translation type="unfinished">解除</translation>
+    </message>
+    <message>
+        <source>Buy more space</source>
+        <translatorcomment>Button label to redirect the user to upgrade the account in the website.</translatorcomment>
+        <translation type="unfinished">购买更多存储空间</translation>
+    </message>
+    <message>
+        <source>TRANSFER QUOTA %1</source>
+        <translatorcomment>Label shown to indicate the actual transfer quota used by the current account. %1 will be replaced with the used bandwidth quota</translatorcomment>
+        <translation type="unfinished">传输流量%1</translation>
+    </message>
+    <message>
+        <source>You&apos;re running out of storage space.</source>
+        <translatorcomment>Label to inform the user that the account is running out of storage space.</translatorcomment>
+        <translation type="unfinished">您将快没有空间可以使用了!</translation>
+    </message>
+    <message>
+        <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
+        <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
+        <translation type="unfinished">请在您的帐户已满及上传至MEGA前，立即升级至PRO帐户。</translation>
+    </message>
+    <message>
+        <source>Your MEGA account is full.</source>
+        <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
+        <translation type="unfinished">您的MEGA帐户空间已满。</translation>
+    </message>
+    <message>
+        <source>All file uploads are currently disabled. Please upgrade to PRO</source>
+        <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
+        <translation type="obsolete">目前所有文件上传已被禁用。 请升级至PRO帐户。</translation>
+    </message>
+    <message>
+        <source>All file uploads are currently disabled.</source>
+        <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
+        <translation type="unfinished">目前已禁用所有文件上传。</translation>
+    </message>
+    <message>
+        <source>Please upgrade to PRO.</source>
+        <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
+        <translation type="unfinished">请升级至PRO帐户。</translation>
     </message>
 </context>
 <context>
@@ -966,41 +1160,41 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is currently disabled</source>
         <translatorcomment>Labe shown when a user that MEGAsync is currently disabled due to an over quota state.</translatorcomment>
-        <translation type="unfinished">MEGAsync同步目前已停用</translation>
+        <translation type="obsolete">MEGAsync同步目前已停用</translation>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
         <translatorcomment>Label to inform the user that is over quota and let him to upgrade his account. Keep [A] [/A] codes, will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">您的账号已超过使用额度。 [A]升级[/A]以继续想用安全，端对端加密云端储存。</translation>
+        <translation type="obsolete">您的账号已超过使用额度。 [A]升级[/A]以继续想用安全，端对端加密云端储存。</translation>
     </message>
     <message>
         <source>Upgrade your account</source>
         <translatorcomment>Button label to redirect the user to upgrade web page.</translatorcomment>
-        <translation type="unfinished">升级您的账号</translation>
+        <translation type="obsolete">升级您的账号</translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
         <translatorcomment>Labe to indicate that the account usage is temporaryly unavailable.</translatorcomment>
-        <translation type="unfinished">用量:数据暂时无法取得</translation>
+        <translation type="obsolete">用量:数据暂时无法取得</translation>
     </message>
     <message>
         <source>MEGA website</source>
         <translatorcomment>Label to MEGA website link</translatorcomment>
-        <translation type="unfinished">MEGA网站</translation>
+        <translation type="obsolete">MEGA网站</translation>
     </message>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the current amount of account usage.over the total actual plan.  Keep %1 and %2 codes.</translatorcomment>
-        <translation type="unfinished">%1 / %2</translation>
+        <translation type="obsolete">%1 / %2</translation>
     </message>
     <message>
         <source>Usage: %1</source>
         <translatorcomment>Label to indicate the amount of account usage. Keep %1 code.</translatorcomment>
-        <translation type="unfinished">用量: %1</translation>
+        <translation type="obsolete">用量: %1</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">设定</translation>
+        <translation type="obsolete">设定</translation>
     </message>
 </context>
 <context>
@@ -1031,7 +1225,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Run MEGA&apos;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
-        <translation type="unfinished">直接于您的电脑上执行MEGA点对点加密，不使用速度较慢之浏览器。</translation>
+        <translation type="unfinished">在您的电脑上运行MEGA终端至终端加密技术，而不依赖于速度较慢的浏览器。</translation>
     </message>
     <message>
         <source>Unlimited file size</source>
@@ -1087,7 +1281,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 清理计划</translation>
+        <translation type="obsolete">%1 定时清理</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1119,6 +1313,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Information message shown when user introduces an invalid value </translatorcomment>
         <translation type="unfinished">请输入一个有效的数值</translation>
     </message>
+    <message>
+        <source>%1 clearing scheduler</source>
+        <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">%1 定时清理</translation>
+    </message>
 </context>
 <context>
     <name>Login2FA</name>
@@ -1130,7 +1329,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation type="unfinished">请输入验证程序中生成的验证码</translation>
+        <translation type="unfinished">请输入验证程序中生成的6位验证码。</translation>
     </message>
     <message>
         <source>6 digit code:</source>
@@ -1151,6 +1350,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Invalid code</source>
         <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
         <translation type="unfinished">该码无效</translation>
+    </message>
+    <message>
+        <source>[A]Lost your authenticator device?[/A]</source>
+        <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
+        <translation type="unfinished">[A]丢失了您的验证设备？[/A]</translation>
     </message>
 </context>
 <context>
@@ -1221,7 +1425,7 @@ Exit anyway?</source>
     <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Notification message launched when a link to a file has been copied succesfully to the clipboard.</translatorcomment>
-        <translation>此链接已被复制到剪贴簿</translation>
+        <translation>此链接已复制到剪贴板</translation>
     </message>
     <message>
         <source>The links have been copied to the clipboard</source>
@@ -1269,7 +1473,7 @@ Exit anyway?</source>
     <message>
         <source>Paused</source>
         <translatorcomment>Label of tray icon to indicate that MEGAsync is in a paused state.</translatorcomment>
-        <translation>暂停</translation>
+        <translation>已暂停</translation>
     </message>
     <message>
         <source>Scanning</source>
@@ -1284,7 +1488,7 @@ Exit anyway?</source>
     <message>
         <source>Temporary transmission error: </source>
         <translatorcomment>Notification message launched when there is a temporal problem with a transfer. Keep colon.</translatorcomment>
-        <translation>暂时性传输错误:</translation>
+        <translation type="vanished">暂时性传输错误:</translation>
     </message>
     <message>
         <source>You have new or updated files in your account</source>
@@ -1343,7 +1547,7 @@ Exit anyway?</source>
         <source>There was a problem installing the update. Please try again later or download the last version from:
 https://mega.co.nz/#sync</source>
         <translatorcomment>Notification message launched when a problem occurs during the installation of an update. Keep &quot;\n&quot; codes.</translatorcomment>
-        <translation>安装更新时出现问题。请稍后重试或从：https://mega.nz/sync下载最新版本</translation>
+        <translation>安装更新时出现问题。请稍后再试或从：https://mega.nz/sync下载最新版本</translation>
     </message>
     <message>
         <source>Thank you for your collaboration!</source>
@@ -1500,12 +1704,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Logout</source>
         <translatorcomment>Label to indicate Logout action</translatorcomment>
-        <translation type="unfinished">登出</translation>
+        <translation type="unfinished">注销</translation>
     </message>
     <message>
         <source>Transfer failed:</source>
         <translatorcomment>Notification message shown when a transfer failed. Keep colon.</translatorcomment>
-        <translation type="unfinished">传输失败</translation>
+        <translation type="obsolete">传输失败</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -1543,7 +1747,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="unfinished">暂时性的错误，正在重试中。</translation>
+        <translation type="obsolete">暂时性的错误，正在重试中。</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -1617,12 +1821,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Resume Transfers</source>
         <translatorcomment>Label of main menu option to resume transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="unfinished">恢复传输</translation>
+        <translation type="obsolete">恢复传输</translation>
     </message>
     <message>
         <source>Pause Transfers</source>
         <translatorcomment>Label of main menu option to pause transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="unfinished">暂停传输</translation>
+        <translation type="obsolete">暂停传输</translation>
     </message>
     <message>
         <source>Stream</source>
@@ -1652,7 +1856,147 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Temporarily not available</source>
         <translatorcomment>Label to show that an error related with a temporary problem occurs during a SDK operation.</translatorcomment>
-        <translation type="unfinished">暂时无法取得</translation>
+        <translation type="obsolete">暂时无法取得</translation>
+    </message>
+    <message>
+        <source>Your account is almost full.</source>
+        <translatorcomment>Title of the system notification when the account is almost full.</translatorcomment>
+        <translation type="unfinished">您的帐户几乎已满。</translation>
+    </message>
+    <message>
+        <source>Upgrade now to a PRO account.</source>
+        <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
+        <translation type="unfinished">立即升级至PRO帐户。</translation>
+    </message>
+    <message>
+        <source>Your account is full.</source>
+        <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
+        <translation type="unfinished">您的帐户已满。</translation>
+    </message>
+    <message>
+        <source>1 file and 1 folder were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that 1 files and 1 folder were successfully uploaded</translatorcomment>
+        <translation type="unfinished">1个文件和1个文件夹已成功上传</translation>
+    </message>
+    <message>
+        <source>%1 files and 1 folder were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %1 files and 1 folder were successfully uploaded</translatorcomment>
+        <translation type="unfinished">%1个文件和1个文件夹已成功上传</translation>
+    </message>
+    <message>
+        <source>1 file and %1 folders were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that 1 files and %1 folders were successfully uploaded</translatorcomment>
+        <translation type="unfinished">1个文件和%1个文件夹已成功上传</translation>
+    </message>
+    <message>
+        <source>%1 files and %2 folders were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %1 files and %2 folder were successfully uploaded</translatorcomment>
+        <translation type="unfinished">%1个文件和%2个文件夹已成功上传</translation>
+    </message>
+    <message>
+        <source>Folder Upload</source>
+        <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
+        <translation type="unfinished">文件夹上传</translation>
+    </message>
+    <message>
+        <source>1 folder was successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that 1 folder was successfully uploaded</translatorcomment>
+        <translation type="unfinished">1个文件夹已成功上传</translation>
+    </message>
+    <message>
+        <source>%1 folders were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %1 folders were successfully uploaded</translatorcomment>
+        <translation type="unfinished">%1个文件夹已成功上传</translation>
+    </message>
+    <message>
+        <source>File Upload</source>
+        <translatorcomment>Title of system notifications related to a file upload</translatorcomment>
+        <translation type="unfinished">文件上传</translation>
+    </message>
+    <message>
+        <source>1 file was successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that 1 file was successfully uploaded</translatorcomment>
+        <translation type="unfinished">1个文件已成功上传</translation>
+    </message>
+    <message>
+        <source>%1 files were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
+        <translation type="unfinished">%1个文件已成功上传</translation>
+    </message>
+    <message>
+        <source>1 file and 1 folder were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that 1 files and 1 folder were successfully downloaded</translatorcomment>
+        <translation type="unfinished">1个文件和1个文件夹已成功下载</translation>
+    </message>
+    <message>
+        <source>%1 files and 1 folder were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %1 files and 1 folder were successfully downloaded</translatorcomment>
+        <translation type="unfinished">%1个文件和1个文件夹已成功下载</translation>
+    </message>
+    <message>
+        <source>1 file and %1 folders were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that 1 files and %1 folders were successfully downloaded</translatorcomment>
+        <translation type="unfinished">1个文件和%1个文件夹已成功下载</translation>
+    </message>
+    <message>
+        <source>%1 files and %2 folders were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %1 files and %2 folder were successfully downloaded</translatorcomment>
+        <translation type="unfinished">%1个文件和%2个文件夹已成功下载</translation>
+    </message>
+    <message>
+        <source>Folder Download</source>
+        <translatorcomment>Title of system notifications related to a folder download</translatorcomment>
+        <translation type="unfinished">文件夹下载</translation>
+    </message>
+    <message>
+        <source>1 folder was successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that 1 folder was successfully downloaded</translatorcomment>
+        <translation type="unfinished">1个文件夹已成功下载</translation>
+    </message>
+    <message>
+        <source>%1 folders were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %1 folders were successfully downloaded</translatorcomment>
+        <translation type="unfinished">%1个文件夹已成功下载</translation>
+    </message>
+    <message>
+        <source>File Download</source>
+        <translatorcomment>Title of system notifications related to a file download</translatorcomment>
+        <translation type="unfinished">文件下载</translation>
+    </message>
+    <message>
+        <source>1 file was successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that 1 file was successfully downloaded</translatorcomment>
+        <translation type="unfinished">1个文件已成功下载</translation>
+    </message>
+    <message>
+        <source>%1 files were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
+        <translation type="unfinished">%1个文件已成功下载</translation>
+    </message>
+    <message>
+        <source>Add Sync</source>
+        <translatorcomment>Menu item to add a new synchronization</translatorcomment>
+        <translation type="unfinished">新增同步</translation>
+    </message>
+    <message>
+        <source>Syncs</source>
+        <translatorcomment>Menu item to show current synchronizations</translatorcomment>
+        <translation type="unfinished">同步</translation>
+    </message>
+    <message>
+        <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
+        <translatorcomment>Label to inform the user about the potential issues of syncing a local folder with VMWare.</translatorcomment>
+        <translation type="unfinished">您正在同步一个与VMWare共享的本地文件夹。 这些文件夹不支持文件系统通知，因此MEGAsync将不断扫描以检测在文件和文件夹中的更改。 建议您请使用其他文件夹以减少CPU使用率。</translation>
+    </message>
+    <message>
+        <source>Get PRO</source>
+        <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
+        <translation type="unfinished">获取PRO帐户</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
+        <translation type="unfinished">显示文件夹</translation>
     </message>
 </context>
 <context>
@@ -1700,7 +2044,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Expired</source>
         <translatorcomment>Label to show that an error related with expiration occurs during a SDK operation.</translatorcomment>
-        <translation>过期</translation>
+        <translation>已过期</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -1789,6 +2133,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
         <translation type="unfinished">您的账户因违反Mega的服务条款而被终止，如滥用他人权利;共享和/或导入非法数据;或系统滥用等原因。</translation>
     </message>
+    <message>
+        <source>SSL verification failed</source>
+        <translatorcomment>Error shown when SSL check has failed</translatorcomment>
+        <translation type="unfinished">SSL验证失败</translation>
+    </message>
+    <message>
+        <source>Not enough quota</source>
+        <translatorcomment>Label shown when current account does not have enough quota to complete the operation</translatorcomment>
+        <translation type="unfinished">流量不足</translation>
+    </message>
+</context>
+<context>
+    <name>MegaNodeNames</name>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Title of the Cloud Drive section</translatorcomment>
+        <translation type="unfinished">云盘</translation>
+    </message>
 </context>
 <context>
     <name>MegaTransferDelegate</name>
@@ -1801,6 +2163,21 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>paused</source>
         <translatorcomment>Label to indicate that selected transfer is at paused state</translatorcomment>
         <translation type="unfinished">已暂停</translation>
+    </message>
+    <message>
+        <source>PAUSED</source>
+        <translatorcomment>Label to indicate that the current transfer is paused. Keep capital letters.</translatorcomment>
+        <translation type="unfinished">暂停</translation>
+    </message>
+    <message>
+        <source>Get link</source>
+        <translatorcomment>Tooltip shown when the mouse is over the &quot;Get link&quot; button related to a completed transfer</translatorcomment>
+        <translation type="unfinished">获得链接</translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translatorcomment>Tooltip shown when the mouse is over the &quot;Retry&quot; button related to a failed transfer</translatorcomment>
+        <translation type="unfinished">重试</translation>
     </message>
 </context>
 <context>
@@ -1984,7 +2361,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>同步文件夹无效。请确认您的文件夹名称中没有使用 ‘’ ‘/’ 或 ‘:’等字符。</translation>
+        <translation type="unfinished">同步文件夹无效。请确认您的文件夹名称中没有使用例如‘\’‘/’或‘:’ 等字符。</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2030,6 +2407,27 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Get MEGA link</source>
         <translation type="unfinished">取得MEGA链接</translation>
+    </message>
+</context>
+<context>
+    <name>Notificator</name>
+    <message>
+        <source>MEGAsync</source>
+        <translatorcomment>Product name.</translatorcomment>
+        <translation type="unfinished">MEGAsync</translation>
+    </message>
+</context>
+<context>
+    <name>PSAwidget</name>
+    <message>
+        <source>Know More</source>
+        <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
+        <translation type="obsolete">了解更多</translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button label to dismiss and hide a PSA announcement</translatorcomment>
+        <translation type="unfinished">解除</translation>
     </message>
 </context>
 <context>
@@ -2157,6 +2555,43 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>Preferences</name>
+    <message>
+        <source>- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
+        <translation type="obsolete">- 对主要对话框进行全新设计
+- 改善设置助手
+- 支持显示公共服务公告
+- 当前通知
+- 更新第三方资料库
+- 其他的小错误修复与改进</translation>
+    </message>
+    <message>
+        <source>- Fix bug with selection of transfer manager items
+- Fix bug of context menu not shown over transfer manager items
+- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
+        <translation type="unfinished">- 修复选择传输管理器项目时的错误
+  - 修复上下文菜单未显示在传输管理器项目的错误
+  - 全新设计主对话框
+  - 改善设置助手
+  - 支持显示公共服务公告
+  - 当前通知
+  - 更新第三方资料库
+  - 其他小错误修复与调整</translation>
+    </message>
+</context>
+<context>
     <name>QDialogButtonBox</name>
     <message>
         <source>&amp;Yes</source>
@@ -2203,77 +2638,77 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 hours ago</source>
         <translatorcomment>Label to inform the user how many hours ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1小时以前</translation>
+        <translation type="vanished">%1小时以前</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Button tooltip to generate a public link for a specific file. Keep capital letters.</translatorcomment>
-        <translation>取得MEGA链接</translation>
+        <translation type="vanished">取得MEGA链接</translation>
     </message>
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation>正是现在</translation>
+        <translation type="vanished">正是现在</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
         <translatorcomment>Label to inform the user how many second ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 秒前</translation>
+        <translation type="vanished">%1 秒前</translation>
     </message>
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
-        <translation>1 分钟前</translation>
+        <translation type="vanished">1 分钟前</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
         <translatorcomment>Label to inform the user how many minutes ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 分钟前</translation>
+        <translation type="vanished">%1 分钟前</translation>
     </message>
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
-        <translation>1 小时前</translation>
+        <translation type="vanished">1 小时前</translation>
     </message>
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
-        <translation>1 天前</translation>
+        <translation type="vanished">1 天前</translation>
     </message>
     <message>
         <source>%1 days ago</source>
         <translatorcomment>Label to inform the user how many days ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 天前</translation>
+        <translation type="vanished">%1 天前</translation>
     </message>
     <message>
         <source>1 month ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one month ago.</translatorcomment>
-        <translation>1 个月前</translation>
+        <translation type="vanished">1 个月前</translation>
     </message>
     <message>
         <source>%1 months ago</source>
         <translatorcomment>Label to inform the user how many months ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 个月前</translation>
+        <translation type="vanished">%1 个月前</translation>
     </message>
     <message>
         <source>1 year ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one year ago.</translatorcomment>
-        <translation>1 年前</translation>
+        <translation type="vanished">1 年前</translation>
     </message>
     <message>
         <source>%1 years ago</source>
         <translatorcomment>Label to inform the user how many years ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 年前</translation>
+        <translation type="vanished">%1 年前</translation>
     </message>
     <message>
         <source>Open</source>
         <translatorcomment>Label to let the user open the selected file.String as short as possible.</translatorcomment>
-        <translation>打开</translation>
+        <translation type="vanished">打开</translation>
     </message>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Label to let the user open the selected file using the specific file browser.String as short as possible.</translatorcomment>
-        <translation>显示文件夹</translation>
+        <translation type="vanished">显示文件夹</translation>
     </message>
 </context>
 <context>
@@ -2310,7 +2745,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Help</source>
         <translatorcomment>Button label for Help.</translatorcomment>
-        <translation>客户服务</translation>
+        <translation>帮助</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2365,17 +2800,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Logout</source>
         <translatorcomment>Button label to logout of the application. Strins as short as possible.</translatorcomment>
-        <translation>登出</translation>
+        <translation>注销</translation>
     </message>
     <message>
         <source>Storage space</source>
         <translatorcomment>Label to indicate the actual storage space used.</translatorcomment>
-        <translation>储存空间</translation>
+        <translation>存储空间</translation>
     </message>
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
-        <translation>付费升级</translation>
+        <translation>升级</translation>
     </message>
     <message>
         <source>Synced folders</source>
@@ -2750,7 +3185,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">汇出还原金钥并将其保存于安全的位置，使您于设置新密码时不会有资料遗失。</translation>
+        <translation type="unfinished">导出恢复密钥并将其保存在安全位置，使您可以设置新密码并不会丢失数据信息。</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
@@ -2781,7 +3216,7 @@ when the application starts again</source>
     <message>
         <source>Excluded file and folder names</source>
         <translatorcomment>Label to indicate the files and folders names exclude from the synchronization.</translatorcomment>
-        <translation type="unfinished">排除的文件和文件夹之名称</translation>
+        <translation type="unfinished">排除的文件和文件夹名称</translation>
     </message>
     <message>
         <source>Backups of the previous versions of your synced files in your computer will be permanently deleted. Please, check your backup folders to see if you need to rescue something before continuing:</source>
@@ -2863,7 +3298,7 @@ when the application starts again</source>
     <message>
         <source>Transfer quota</source>
         <translatorcomment>Label to indicate the transfer quota usage of current logged account</translatorcomment>
-        <translation type="unfinished">传输配额(频宽)</translation>
+        <translation type="unfinished">传输流量</translation>
     </message>
     <message>
         <source>Don&apos;t show icons on the left pane of Windows Explorer</source>
@@ -2883,7 +3318,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 清理计划</translation>
+        <translation type="obsolete">%1 定时清理</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -2927,7 +3362,17 @@ when the application starts again</source>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">变更密码</translation>
+        <translation type="unfinished">更改密码</translation>
+    </message>
+    <message>
+        <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
+        <translatorcomment>Label to inform the user that current account is over storage and uploads will be disable. Encourage the user to buy more space and upgrade to PRO. Keep [A] and [/A] codes.</translatorcomment>
+        <translation type="unfinished">您的MEGA帐户已满。所有上传已被禁用，这可能会影响您已同步的文件夹。[A]购买更多空间[/A]</translation>
+    </message>
+    <message>
+        <source>%1 clearing scheduler</source>
+        <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">%1 定时清理</translation>
     </message>
 </context>
 <context>
@@ -2935,17 +3380,17 @@ when the application starts again</source>
     <message>
         <source>Setup Wizard - MEGAsync</source>
         <translatorcomment>Title of the dialog Setup Wizar of MEGAsync. Keep capital letters.</translatorcomment>
-        <translation>设定精灵- MEGAsync同步</translation>
+        <translation type="vanished">设定精灵- MEGAsync同步</translation>
     </message>
     <message>
         <source>I have a MEGA account</source>
         <translatorcomment>Label to indicate the user has already a MEGA account with a checkbox.</translatorcomment>
-        <translation>我有MEGA账号</translation>
+        <translation type="vanished">我有MEGA账号</translation>
     </message>
     <message>
         <source>I don&apos;t have a MEGA account</source>
         <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
-        <translation>我没有MEGA账号</translation>
+        <translation type="vanished">我没有MEGA账号</translation>
     </message>
     <message>
         <source>Create a new MEGA account</source>
@@ -2955,7 +3400,7 @@ when the application starts again</source>
     <message>
         <source>Name:</source>
         <translatorcomment>Label for field name at create account. String as short as possible.</translatorcomment>
-        <translation>名称:</translation>
+        <translation type="vanished">名称:</translation>
     </message>
     <message>
         <source>Email:</source>
@@ -3014,12 +3459,12 @@ when the application starts again</source>
     <message>
         <source> Sync specific folders in your cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Selective  sync (Sync specific folders)</translatorcomment>
-        <translation>同步选定的云盘文件夹</translation>
+        <translation type="vanished">同步选定的云盘文件夹</translation>
     </message>
     <message>
         <source>The following folders will be automatically synchronized:</source>
         <translatorcomment>Label to inform the user about the folders wich will be synchronized.</translatorcomment>
-        <translation>下列文件夹将自动同步:</translation>
+        <translation type="vanished">下列文件夹将自动同步:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -3034,12 +3479,12 @@ when the application starts again</source>
     <message>
         <source>Change</source>
         <translatorcomment>Button label to change the local or remote folder during the process of createn a new synchronization. String as short as possible.</translatorcomment>
-        <translation>变更</translation>
+        <translation>更改</translation>
     </message>
     <message>
         <source>Welcome to MEGA</source>
         <translatorcomment>Label displayed to welcome the user.</translatorcomment>
-        <translation>欢迎使用MEGA</translation>
+        <translation type="vanished">欢迎使用MEGA</translation>
     </message>
     <message>
         <source>Your local folder:</source>
@@ -3091,7 +3536,7 @@ when the application starts again</source>
     <message>
         <source>Have you verified your account?</source>
         <translatorcomment>Label displayed to inform the user about the need of verify the created account.</translatorcomment>
-        <translation>您认证过账号了吗?</translation>
+        <translation type="vanished">您认证过账号了吗?</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
@@ -3218,7 +3663,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
         <translatorcomment>Label to inform the user wich local folder will be synchronized with the cloud drive. Keep colon.</translatorcomment>
-        <translation>您的云端将与这个文件夹同步</translation>
+        <translation type="vanished">您的云端将与这个文件夹同步</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -3282,7 +3727,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Good</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Good security </translatorcomment>
-        <translation type="unfinished">好</translation>
+        <translation type="unfinished">很好</translation>
     </message>
     <message>
         <source>Strong</source>
@@ -3291,7 +3736,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation type="unfinished">请检查您的电子邮件，并点击信中的链接以确认账号。</translation>
+        <translation type="unfinished">请检查您的电子邮件，然后点击该链接以确认您的帐户。</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
@@ -3304,7 +3749,83 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Learn more</source>
-        <translation type="unfinished">了解更多</translation>
+        <translatorcomment>Label to redirect the user to a website with information about the different synchronization modes</translatorcomment>
+        <translation type="obsolete">了解更多</translation>
+    </message>
+    <message>
+        <source>First name:</source>
+        <translatorcomment>Label for first name field in the create account form</translatorcomment>
+        <translation type="unfinished">名：</translation>
+    </message>
+    <message>
+        <source>Last name:</source>
+        <translatorcomment>Label for last name field in the create account form</translatorcomment>
+        <translation type="unfinished">姓：</translation>
+    </message>
+    <message>
+        <source>Check your inbox</source>
+        <translatorcomment>Label shown when the user has just created an account and needs to check his inbox to verify it</translatorcomment>
+        <translation type="unfinished">查看您的收件箱</translation>
+    </message>
+    <message>
+        <source>Sync specific folders in your cloud drive</source>
+        <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
+        <translation type="unfinished">同步选定的云盘文件夹</translation>
+    </message>
+    <message>
+        <source>Selective sync:</source>
+        <translatorcomment>Label next to information about the selective sync mode.</translatorcomment>
+        <translation type="unfinished">部分同步</translation>
+    </message>
+    <message>
+        <source>Enjoy MEGAsync!</source>
+        <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
+        <translation type="unfinished">享受MEGAsync吧！</translation>
+    </message>
+    <message>
+        <source>Please, enter your last name</source>
+        <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
+        <translation type="unfinished">请输入您的姓</translation>
+    </message>
+    <message>
+        <source>Setup selective sync</source>
+        <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
+        <translation type="unfinished">设置可选同步</translation>
+    </message>
+    <message>
+        <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
+        <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
+        <translation type="unfinished">您云盘中的指定文件夹将与本地文件夹同步。</translation>
+    </message>
+    <message>
+        <source>Select Local folder:</source>
+        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
+        <translation type="unfinished">选择本机文件夹</translation>
+    </message>
+    <message>
+        <source>Setup full sync</source>
+        <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
+        <translation type="unfinished">设置完全同步</translation>
+    </message>
+    <message>
+        <source>Full Sync</source>
+        <translatorcomment>Label displayed to show Full sync mode.</translatorcomment>
+        <translation type="unfinished">完全同步</translation>
+    </message>
+    <message>
+        <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
+        <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
+        <translation type="unfinished">您云盘中的全部文件将与本地文件夹同步。</translation>
+    </message>
+    <message>
+        <source>We are all done!</source>
+        <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
+        <translation type="unfinished">完成！</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translatorcomment>Button label to open Login form</translatorcomment>
+        <translation type="unfinished">登录</translation>
     </message>
 </context>
 <context>
@@ -3412,6 +3933,69 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
         <translation type="unfinished">大小限制不能为0</translation>
     </message>
+    <message>
+        <source>Bytes</source>
+        <translatorcomment>Label to indicate bytes unit.</translatorcomment>
+        <translation type="unfinished">Bytes</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
+        <translation type="unfinished">KB</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
+        <translation type="unfinished">MB</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
+        <translation type="unfinished">GB</translation>
+    </message>
+</context>
+<context>
+    <name>StatusInfo</name>
+    <message>
+        <source>Starting</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is starting</translatorcomment>
+        <translation type="unfinished">开始</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translatorcomment>Information label in the main dialog to show that all transfers are paused</translatorcomment>
+        <translation type="unfinished">已暂停</translation>
+    </message>
+    <message>
+        <source>Waiting</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state</translatorcomment>
+        <translation type="unfinished">请等待</translation>
+    </message>
+    <message>
+        <source>Scanning...</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
+        <translation type="unfinished">正在扫描...</translation>
+    </message>
+    <message>
+        <source>Account full</source>
+        <translatorcomment>Information label in the main dialog to show that the current account is full.</translatorcomment>
+        <translation type="unfinished">帐户已满</translation>
+    </message>
+    <message>
+        <source>Up to date</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is up to date</translatorcomment>
+        <translation type="unfinished">最新的</translation>
+    </message>
+    <message>
+        <source>Resume Transfers</source>
+        <translatorcomment>Label in the main dialog that allows the user to resume paused transfers</translatorcomment>
+        <translation type="unfinished">恢复传输</translation>
+    </message>
+    <message>
+        <source>Pause Transfers</source>
+        <translatorcomment>Label in the main dialog that allows the user to pause active transfers</translatorcomment>
+        <translation type="unfinished">暂停传输</translation>
+    </message>
 </context>
 <context>
     <name>StreamingFromMegaDialog</name>
@@ -3493,7 +4077,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The link has been copied to the clipboard</source>
         <translatorcomment>Text shown when a streaming link has been copied to the clipboard</translatorcomment>
-        <translation type="unfinished">此链接已被复制到剪贴簿</translation>
+        <translation type="unfinished">此链接已复制到剪贴板</translation>
     </message>
     <message>
         <source>Error generating streaming link</source>
@@ -3516,75 +4100,75 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>paused</source>
         <translatorcomment>Label to indicate a paused state for a transfer item (upload/download)</translatorcomment>
-        <translation type="unfinished">已暂停</translation>
+        <translation type="obsolete">已暂停</translation>
     </message>
     <message>
         <source>queued</source>
         <translatorcomment>Label to indicate a queued state for a transfer item (upload/download)</translatorcomment>
-        <translation type="unfinished">已入进程</translation>
+        <translation type="obsolete">已入进程</translation>
     </message>
     <message>
         <source>retrying</source>
         <translatorcomment>Label to indicate a state or retrying for a transfer item (upload/download)</translatorcomment>
-        <translation type="unfinished">正在重试</translation>
+        <translation type="obsolete">正在重试</translation>
     </message>
     <message>
         <source>completing</source>
         <translatorcomment>Label to indicate a completing state for a transfer item (upload/download)</translatorcomment>
-        <translation type="unfinished">完成中</translation>
+        <translation type="obsolete">完成中</translation>
     </message>
     <message>
         <source>just now</source>
-        <translation type="unfinished">正是现在</translation>
+        <translation type="obsolete">正是现在</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
-        <translation type="unfinished">%1 秒前</translation>
+        <translation type="obsolete">%1 秒前</translation>
     </message>
     <message>
         <source>1 minute ago</source>
-        <translation type="unfinished">1 分钟前</translation>
+        <translation type="obsolete">1 分钟前</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
-        <translation type="unfinished">%1 分钟前</translation>
+        <translation type="obsolete">%1 分钟前</translation>
     </message>
     <message>
         <source>1 hour ago</source>
-        <translation type="unfinished">1 小时前</translation>
+        <translation type="obsolete">1 小时前</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
-        <translation type="unfinished">%1小时以前</translation>
+        <translation type="obsolete">%1小时以前</translation>
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="unfinished">1 天前</translation>
+        <translation type="obsolete">1 天前</translation>
     </message>
     <message>
         <source>%1 days ago</source>
-        <translation type="unfinished">%1 天前</translation>
+        <translation type="obsolete">%1 天前</translation>
     </message>
     <message>
         <source>1 month ago</source>
-        <translation type="unfinished">1 个月前</translation>
+        <translation type="obsolete">1 个月前</translation>
     </message>
     <message>
         <source>%1 months ago</source>
-        <translation type="unfinished">%1 个月前</translation>
+        <translation type="obsolete">%1 个月前</translation>
     </message>
     <message>
         <source>1 year ago</source>
-        <translation type="unfinished">1 年前</translation>
+        <translation type="obsolete">1 年前</translation>
     </message>
     <message>
         <source>%1 years ago</source>
-        <translation type="unfinished">%1 年前</translation>
+        <translation type="obsolete">%1 年前</translation>
     </message>
     <message>
         <source>starting</source>
         <translatorcomment>Label to indicate a state or starting for a transfer item (upload/download)</translatorcomment>
-        <translation type="unfinished">开始</translation>
+        <translation type="obsolete">开始</translation>
     </message>
 </context>
 <context>
@@ -3683,6 +4267,39 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>TransferManagerItem</name>
+    <message>
+        <source>starting</source>
+        <translatorcomment>Label to indicate that a transfer is starting</translatorcomment>
+        <translation type="unfinished">开始</translation>
+    </message>
+    <message>
+        <source>paused</source>
+        <translatorcomment>Label to indicate that a transfer is paused</translatorcomment>
+        <translation type="unfinished">已暂停</translation>
+    </message>
+    <message>
+        <source>queued</source>
+        <translatorcomment>Label to indicate that a transfer is queued</translatorcomment>
+        <translation type="unfinished">已入进程</translation>
+    </message>
+    <message>
+        <source>retrying</source>
+        <translatorcomment>Label to indicate that a transfer is being retried</translatorcomment>
+        <translation type="unfinished">正在重试</translation>
+    </message>
+    <message>
+        <source>completing</source>
+        <translatorcomment>Label to indicate that a transfer is being completed</translatorcomment>
+        <translation type="unfinished">完成中</translation>
+    </message>
+    <message>
+        <source>Out of storage space</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
+        <translation type="unfinished">存储空间不足</translation>
+    </message>
+</context>
+<context>
     <name>TransfersStateInfoWidget</name>
     <message>
         <source>No Downloads</source>
@@ -3720,6 +4337,62 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>UpgradeOverStorage</name>
+    <message>
+        <source>Storage full</source>
+        <translatorcomment>Title of the over storage dialog</translatorcomment>
+        <translation type="unfinished">空间已满</translation>
+    </message>
+    <message>
+        <source>Your account is full ([A] / [B]). All file uploads to MEGA are currently disabled.</source>
+        <translatorcomment>Label to inform the user about a full account, showing the used storage, the total available and some information about file uploads.</translatorcomment>
+        <translation type="obsolete">您的帐户已满([A] / [B])。所有上传至MEGA的文件已被禁用。</translation>
+    </message>
+    <message>
+        <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
+        <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
+        <translation type="unfinished">请升级至PRO帐户立享更多存储空间（您的上传将自动恢复）。</translation>
+    </message>
+    <message>
+        <source>Earn more storage quota with [A]Achievements[/A].</source>
+        <translatorcomment>Label to inform the user about achievements and the benefit of earning more storage quota. Achievements label will redirect to the achievements section in the webclient when clicked.</translatorcomment>
+        <translation type="unfinished">完成[A]成就[/A]赚取更多存储配额。</translation>
+    </message>
+    <message>
+        <source>Your MEGA account is full</source>
+        <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
+        <translation type="unfinished">您的MEGA帐户空间已满。</translation>
+    </message>
+    <message>
+        <source>%1 of %2</source>
+        <translatorcomment>Label to keep the count of used and total storage. Preserve %1 and %2 codes beacuse they are used to include the amount of used and total storage by actual account.</translatorcomment>
+        <translation type="unfinished">%1 / %2</translation>
+    </message>
+    <message>
+        <source>USED STORAGE %1</source>
+        <translatorcomment>Label to indicate the total used storage.quota</translatorcomment>
+        <translation type="unfinished">已用储存空间%1</translation>
+    </message>
+</context>
+<context>
+    <name>UpgradeWidget</name>
+    <message>
+        <source>month</source>
+        <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
+        <translation type="unfinished">月</translation>
+    </message>
+    <message>
+        <source>storage</source>
+        <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
+        <translation type="unfinished">储存空间</translation>
+    </message>
+    <message>
+        <source>transfer</source>
+        <translatorcomment>Label to indicate the amount of transfer quota of a PRO plan</translatorcomment>
+        <translation type="unfinished">传输</translation>
+    </message>
+</context>
+<context>
     <name>UploadToMegaDialog</name>
     <message>
         <source>Upload to MEGA</source>
@@ -3729,7 +4402,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>请选择欲上传文件之目的地文件夹:</translation>
+        <translation>请选择文件的上传文件夹：</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
@@ -3810,7 +4483,90 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Available</source>
-        <translation type="unfinished">可使用的</translation>
+        <translation type="unfinished">可用</translation>
+    </message>
+</context>
+<context>
+    <name>Utilities</name>
+    <message>
+        <source>just now</source>
+        <translatorcomment>Label to indicate that a transfer has finished right now</translatorcomment>
+        <translation type="unfinished">正是现在</translation>
+    </message>
+    <message>
+        <source>%1 seconds ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 seconds ago</translatorcomment>
+        <translation type="unfinished">%1 秒前</translation>
+    </message>
+    <message>
+        <source>1 minute ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished 1 minute ago</translatorcomment>
+        <translation type="unfinished">1 分钟前</translation>
+    </message>
+    <message>
+        <source>%1 minutes ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 minutes ago</translatorcomment>
+        <translation type="unfinished">%1 分钟前</translation>
+    </message>
+    <message>
+        <source>1 hour ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished 1 hour ago</translatorcomment>
+        <translation type="unfinished">1 小时前</translation>
+    </message>
+    <message>
+        <source>%1 hours ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 hours ago</translatorcomment>
+        <translation type="unfinished">%1小时以前</translation>
+    </message>
+    <message>
+        <source>1 day ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished 1 day ago</translatorcomment>
+        <translation type="unfinished">1 天前</translation>
+    </message>
+    <message>
+        <source>%1 days ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 days ago</translatorcomment>
+        <translation type="unfinished">%1 天前</translation>
+    </message>
+    <message>
+        <source>1 month ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 month ago</translatorcomment>
+        <translation type="unfinished">1 个月前</translation>
+    </message>
+    <message>
+        <source>%1 months ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 months ago</translatorcomment>
+        <translation type="unfinished">%1 个月前</translation>
+    </message>
+    <message>
+        <source>1 year ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 year ago</translatorcomment>
+        <translation type="unfinished">1 年前</translation>
+    </message>
+    <message>
+        <source>%1 years ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 years ago</translatorcomment>
+        <translation type="unfinished">%1 年前</translation>
+    </message>
+    <message>
+        <source>TB</source>
+        <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
+        <translation type="unfinished">TB</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
+        <translation type="unfinished">GB</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
+        <translation type="unfinished">MB</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
+        <translation type="unfinished">KB</translation>
     </message>
 </context>
 <context>

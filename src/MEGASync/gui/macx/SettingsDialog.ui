@@ -89,11 +89,6 @@ font-size: 15px;
 font-style: italic;
 }
 
-#label
-{
-font-style: italic;
-}
-
 #pStorage
 {
 padding-right: 5px;
@@ -151,7 +146,10 @@ border: none;
 	margin-top:5px;
 }
 
+#lOQWarning
+{
 
+}
 </string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
@@ -2364,6 +2362,34 @@ background-color: #E2E2E2;
                  </spacer>
                 </item>
                </layout>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QWidget" name="wOQError" native="true">
+            <layout class="QHBoxLayout" name="horizontalLayout_28">
+             <property name="leftMargin">
+              <number>7</number>
+             </property>
+             <property name="topMargin">
+              <number>10</number>
+             </property>
+             <property name="rightMargin">
+              <number>7</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="lOQWarning">
+               <property name="text">
+                <string/>
+               </property>
+               <property name="wordWrap">
+                <bool>true</bool>
+               </property>
+               <property name="openExternalLinks">
+                <bool>true</bool>
+               </property>
               </widget>
              </item>
             </layout>
@@ -5240,7 +5266,7 @@ border: none;</string>
           <item>
            <widget class="QPushButton" name="bLocalCleaner">
             <property name="text">
-             <string>%1 cleaning scheduler</string>
+             <string>%1 clearing scheduler</string>
             </property>
            </widget>
           </item>
@@ -6098,7 +6124,7 @@ border: none;</string>
   <tabstop>bCancel</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
  <slots>

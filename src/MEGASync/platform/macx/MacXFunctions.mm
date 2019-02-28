@@ -4,6 +4,7 @@
 #include <QCoreApplication>
 #include <QWidget>
 #include <QProcess>
+#include <Preferences.h>
 
 #import <objc/runtime.h>
 #import <sys/proc_info.h>
@@ -757,4 +758,15 @@ bool runHttpsServer()
 
     delete [] pids;
     return false;
+}
+
+bool userActive()
+{
+    CFTimeInterval secondsSinceLastEvent = CGEventSourceSecondsSinceLastEventType(kCGEventSourceStateHIDSystemState, kCGAnyInputEventType);
+    if (secondsSinceLastEvent > (Preferences::USER_INACTIVITY_MS / 1000))
+    {
+         return false;
+    }
+
+    return true;
 }

@@ -20,19 +20,19 @@ git clone --recursive https://github.com/meganz/MEGAsync.git
 # Windows compilation
 
 ##### Requirements:
-* Visual Studio 2010
-* QT 4.8
+* Visual Studio 2015
+* QT 5.6.3
 * Qt Creator
 
 ##### Preparation:
-1.- Prepare QTCreator to use the Visual Studio 2010 toolchain and QT 4.8 - 32 bits
+1.- Prepare QTCreator to use the Visual Studio 2015 toolchain and QT 5.6.3 - 32 bits
 
 2.- Clone or download this repo
 
 3.- Create a folder `Release_x32` inside the root of the code that you have just downloaded
 
 4.- Download the required third party libraries from this link:
-https://mega.nz/#!YwEQzBCK!10kFLaIU8_yEL87Md_GowLdQLE1sxvM3yOngOrQy_Wk
+https://mega.nz/#!sjxDSSTa!TN8hASqd79E-5l6Xx0MbToOixfy07N7yxYEzYFTRVYM
 
 5.- Uncompress that file into `src\MEGASync\mega\bindings\qt`
 
@@ -51,8 +51,8 @@ It's recommended to go to `Project -> Run` in QTCreator and disable the option `
 # OS X compilation
 
 ##### Requirements:
-* Xcode
-* QT 5.6.2
+* Xcode 8.3
+* QT 5.6.3
 
 ##### Preparation:
 1.- Install Xcode in your system
@@ -60,7 +60,7 @@ It's recommended to go to `Project -> Run` in QTCreator and disable the option `
 2.- Clone or download this repo
 
 3.- Download the required third party libraries and configuration file (`config.h`) from this link:
-https://mega.nz/#!m0AkyAAQ!dTZhq9IKzRrL5Kl5zCQkAk2X3iCuf2uEbSfdZ-OyLnU
+https://mega.nz/#!T14B0Y4T!EXGg9dRtacgz9_vCUtVq5tj6C3PBpkOHgXG289EBxBM
 
 4.- Uncompress that file and move the folder `3rdparty` into `src/MEGASync/mega/bindings/qt`/ and the file `config.h` into `src/MEGASync/mega/include/mega/`
 

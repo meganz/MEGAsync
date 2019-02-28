@@ -21,6 +21,7 @@ private slots:
     void on_bNext_clicked();
     void on_bCancel_clicked();
     void inputCodeChanged();
+    void on_bHelp_clicked();
 
 protected:
     void changeEvent(QEvent * event);

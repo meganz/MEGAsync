@@ -1,15 +1,16 @@
 #ifndef ELIDEDLABEL_H
 #define ELIDEDLABEL_H
 
-#include <QtWidgets/QFrame>
+#include <QFrame>
 #include <QtCore/QRect>
 #include <QtGui/QResizeEvent>
 #include <QtCore/QString>
-#include <QtWidgets/QWidget>
+#include <QWidget>
 
 class ElidedLabel : public QFrame
 {
     Q_OBJECT
+
     Q_PROPERTY(QString text READ text WRITE setText)
     Q_PROPERTY(bool isElided READ isElided)
 
@@ -21,7 +22,8 @@ public:
     bool isElided() const { return elided; }
 
 protected:
-    void paintEvent(QPaintEvent *event) override;
+
+    void paintEvent(QPaintEvent *event);
 
 signals:
     void elisionChanged(bool elided);

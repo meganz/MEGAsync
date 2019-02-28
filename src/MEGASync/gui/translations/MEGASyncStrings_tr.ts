@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>Rubbish bin</source>
-        <translation type="unfinished">Çöp kutusu</translation>
+        <translation type="unfinished">Çöp Kutusu</translation>
     </message>
     <message>
         <source>Available</source>
@@ -271,7 +271,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">hizmet şartları</translation>
+        <translation type="unfinished">Hizmet Koşulları</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
@@ -298,7 +298,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <name>ChangePassword</name>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">Parola değiştir</translation>
+        <translation type="unfinished">Parola Değiştir</translation>
     </message>
     <message>
         <source>New password</source>
@@ -318,11 +318,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Password changed</source>
-        <translation type="unfinished">Parola değiştirildi</translation>
+        <translation type="obsolete">Parola değiştirildi</translation>
     </message>
     <message>
         <source>Your password has been changed.</source>
-        <translation type="unfinished">Parolanız değiştirildi.</translation>
+        <translation type="obsolete">Parolanız değiştirildi.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -330,7 +330,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Wrong password</source>
-        <translation type="unfinished">Hatalı parola</translation>
+        <translation type="obsolete">Hatalı parola</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -413,6 +413,54 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Send report</source>
         <translatorcomment>Label for Send report button.</translatorcomment>
         <translation>Raporu gönder</translation>
+    </message>
+</context>
+<context>
+    <name>CustomTransferItem</name>
+    <message>
+        <source>failed:</source>
+        <translatorcomment>Label to indicate that the transfer failed. The reason will be appended after colon symbol.</translatorcomment>
+        <translation type="unfinished">başarısız:</translation>
+    </message>
+    <message>
+        <source>%1 of %2</source>
+        <translatorcomment>Label to indicate the number of completed transfers of the total. %1 will be replaced with the number of completed transfers and %2 with the total number of transfers</translatorcomment>
+        <translation type="unfinished">%1 / %2</translation>
+    </message>
+    <message>
+        <source>starting...</source>
+        <translatorcomment>Label to indicate that a transfer is starting.</translatorcomment>
+        <translation type="unfinished">başlıyor...</translation>
+    </message>
+    <message>
+        <source>PAUSED</source>
+        <translatorcomment>Label to indicate that a transfer is paused. Keep uppercase.</translatorcomment>
+        <translation type="unfinished">DURAKLATILMIŞ</translation>
+    </message>
+    <message>
+        <source>queued</source>
+        <translatorcomment>Label to indicate that a transfer is queued.</translatorcomment>
+        <translation type="unfinished">sıraya alındı</translation>
+    </message>
+    <message>
+        <source>retrying...</source>
+        <translatorcomment>Label to indicate that a transfer is being retried.</translatorcomment>
+        <translation type="unfinished">yeniden deneniyor...</translation>
+    </message>
+    <message>
+        <source>completing...</source>
+        <translatorcomment>Label to indicate that a transfer is being completed.</translatorcomment>
+        <translation type="unfinished">tamamlanıyor...</translation>
+    </message>
+    <message>
+        <source>Added [A]</source>
+        <translatorcomment>Label to indicate that a transfer finished (added to the list of recently finished transfers) [A] time ago. [A] will be updated with the time since the transfer finished.</translatorcomment>
+        <translation type="unfinished">Eklendi [A]</translation>
+    </message>
+    <message>
+        <source>Out of storage space</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
+        <translation type="unfinished">Depolama alanı kalmadı</translation>
     </message>
 </context>
 <context>
@@ -583,7 +631,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is on guest mode</source>
         <translatorcomment>Label to inform a user that MEGAsync is running on Guest Mode</translatorcomment>
-        <translation type="unfinished">MEGAsync misafir modunda</translation>
+        <translation type="obsolete">MEGAsync misafir modunda</translation>
     </message>
     <message>
         <source>Login</source>
@@ -608,7 +656,104 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>[A]Login[/A] or [B]Create an account[/B] to fully experience MEGA</source>
         <translatorcomment>Label shown at startup of MEGAsync to offer the user the options to login or create and account. Keep [A][B][/A][/B] place holders</translatorcomment>
-        <translation type="unfinished">MEGA&apos;yı tam olarak deneyimlemek için [A]Oturum açın[/A] veya [B]Bir hesap açın[/B]</translation>
+        <translation type="obsolete">MEGA&apos;yı tam olarak deneyimlemek için [A]Oturum açın[/A] veya [B]Bir hesap açın[/B]</translation>
+    </message>
+    <message>
+        <source>Login to MEGA</source>
+        <translatorcomment>Label shown at main dialog before logging in</translatorcomment>
+        <translation type="unfinished">MEGA&apos;ya Giriş Yapın</translation>
+    </message>
+    <message>
+        <source>Email address</source>
+        <translatorcomment>Tip shown in email line edit before typing the user email address.</translatorcomment>
+        <translation type="unfinished">Eposta adresi</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translatorcomment>Tip shown in password line edit before typing the user password</translatorcomment>
+        <translation type="unfinished">Parola</translation>
+    </message>
+    <message>
+        <source>Forgot password?</source>
+        <translatorcomment>Button label that redirects to the web page with information about forgotten passwords.</translatorcomment>
+        <translation type="unfinished">Parolanızı mı unuttunuz?</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button label to cancel the current operation</translatorcomment>
+        <translation type="unfinished">İptal</translation>
+    </message>
+    <message>
+        <source>Setting up your account...</source>
+        <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
+        <translation type="unfinished">Hesabınız kuruluyor</translation>
+    </message>
+    <message>
+        <source>Logging in...</source>
+        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging in.</translatorcomment>
+        <translation type="unfinished">Giriş yapılıyor...</translation>
+    </message>
+    <message>
+        <source>Fetching file list...</source>
+        <translatorcomment>Label shown at main dialog to show the current operation. In this case fetching file information from servers.</translatorcomment>
+        <translation type="unfinished">Dosya listesi alınıyor...</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translatorcomment>Label shown to show an error</translatorcomment>
+        <translation type="unfinished">Hata</translation>
+    </message>
+    <message>
+        <source>Incorrect email and/or password.</source>
+        <translatorcomment>Message box shown when user enters incorrect email and/or password at login</translatorcomment>
+        <translation type="unfinished">Hatalı eposta ve/veya parola.</translation>
+    </message>
+    <message>
+        <source>Have you verified your account?</source>
+        <translatorcomment>Message shown after a failed login to recommend the user to verify his account.</translatorcomment>
+        <translation type="obsolete">Hesabınızı doğruladınız mı?</translation>
+    </message>
+    <message>
+        <source>Please check your e-mail and click the link to confirm your account.</source>
+        <translatorcomment>Label shown when a user has created and account to inform that he needs to check his e-mail and confirm his account.</translatorcomment>
+        <translation type="unfinished">Lütfen epostanızı kontrol edin ve hesabınızı onaylamak için gönderilen bağlantıya tıklayın.</translation>
+    </message>
+    <message>
+        <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
+        <translatorcomment>Label shown at main dialog to inform the user that he has failed to log in several times and has to wait before trying again.</translatorcomment>
+        <translation type="unfinished">Çok fazla hatalı giriş yaptınız.
+[BR]Lütfen bekleyin %1.</translation>
+    </message>
+    <message>
+        <source>Your account has been blocked. Please contact support@mega.co.nz</source>
+        <translatorcomment>Label shown at main dialog to show that the account has been blocked and the user needs to contact the support team.</translatorcomment>
+        <translation type="unfinished">Hesabınız bloke edilmiştir.  Lütfen support@mega.nz ile irtibata geçiniz</translation>
+    </message>
+    <message>
+        <source>Unable to get the filesystem.
+Please, try again. If the problem persists please contact bug@mega.co.nz</source>
+        <translatorcomment>Label shown if there is a fatal error fetching the filesystem from servers.</translatorcomment>
+        <translation type="unfinished">Dosya sistemi alınamadı. Lütfen, tekrar deneyin. Eğer sorun devam ederse lütfen bug@mega.nz adresinden bize ulaşın</translation>
+    </message>
+    <message>
+        <source>Please, enter your e-mail address</source>
+        <translatorcomment>Message box shown if user does not enter email and try to log in</translatorcomment>
+        <translation type="unfinished">Lütfen e-posta adresinizi girin</translation>
+    </message>
+    <message>
+        <source>Please, enter a valid e-mail address</source>
+        <translatorcomment>Message box shown if user has typed an incorrect email</translatorcomment>
+        <translation type="unfinished">Lütfen geçerli bir e-posta adresi girin</translation>
+    </message>
+    <message>
+        <source>Please, enter your password</source>
+        <translatorcomment>Message box shown if user does not enter a password</translatorcomment>
+        <translation type="unfinished">Lütfen parolanızı girin</translation>
+    </message>
+    <message>
+        <source>Logging out...</source>
+        <translatorcomment>Label shown at main dialog to show the current operation. In this case logging out from the account.</translatorcomment>
+        <translation type="unfinished">Oturum kapatılıyor...</translation>
     </message>
 </context>
 <context>
@@ -718,7 +863,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation>Senkronizeler</translation>
+        <translation type="vanished">Senkronizeler</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -738,7 +883,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>%1 of %2 (%3/s)</source>
         <translatorcomment>Label to keep the count of pending and total files. Preserve %1, %2 and %3 codes beacuse they are used to include the number of pending, total files and actual speed.</translatorcomment>
-        <translation>%1 / %2 (%3/s)</translation>
+        <translation type="vanished">%1 / %2 (%3/s)</translation>
     </message>
     <message>
         <source>%1 of %2 (paused)</source>
@@ -763,27 +908,27 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel all downloads</source>
         <translatorcomment>Label to cancel all pending downloads.(String as short as possible)</translatorcomment>
-        <translation>Tüm indirmeleri iptal et</translation>
+        <translation type="vanished">Tüm indirmeleri iptal et</translation>
     </message>
     <message>
         <source>Cancel download</source>
         <translatorcomment>Label to cancel the actual download.(String as short as possible)</translatorcomment>
-        <translation>İndirmeyi iptal et</translation>
+        <translation type="vanished">İndirmeyi iptal et</translation>
     </message>
     <message>
         <source>Cancel all uploads</source>
         <translatorcomment>Label to cancel all pending uploads.(String as short as possible)</translatorcomment>
-        <translation>Tüm yüklemeleri iptal et</translation>
+        <translation type="vanished">Tüm yüklemeleri iptal et</translation>
     </message>
     <message>
         <source>Cancel upload</source>
         <translatorcomment>Label to cancel the actual upload. (String as short as possible)</translatorcomment>
-        <translation>Yüklemeyi iptal et</translation>
+        <translation type="vanished">Yüklemeyi iptal et</translation>
     </message>
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation>Senkr ekle</translation>
+        <translation type="vanished">Senkr ekle</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -823,7 +968,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is starting</source>
         <translatorcomment>Label to indicate that MEGAsync is at start state (String as short as possible)</translatorcomment>
-        <translation>MEGAsync başlatılıyor</translation>
+        <translation type="vanished">MEGAsync başlatılıyor</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -836,32 +981,32 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Resume downloads</source>
         <translatorcomment>Label to resume the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">İndirmeleri sürdü</translation>
+        <translation type="obsolete">İndirmeleri sürdü</translation>
     </message>
     <message>
         <source>Pause downloads</source>
         <translatorcomment>Label to pause the download queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">İndirmeleri duraklat</translation>
+        <translation type="obsolete">İndirmeleri duraklat</translation>
     </message>
     <message>
         <source>Resume uploads</source>
         <translatorcomment>Label to resume the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Yüklemeleri sürdür</translation>
+        <translation type="obsolete">Yüklemeleri sürdür</translation>
     </message>
     <message>
         <source>Pause uploads</source>
         <translatorcomment>Label to pause the upload queue. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Yüklemeyi duraklat</translation>
+        <translation type="obsolete">Yüklemeyi duraklat</translation>
     </message>
     <message>
         <source>Resume download</source>
         <translatorcomment>Label to resume the current download. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">İndirmeye devam et</translation>
+        <translation type="obsolete">İndirmeye devam et</translation>
     </message>
     <message>
         <source>Resume upload</source>
         <translatorcomment>Label to resume the current upload. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Yüklemeye devam et</translation>
+        <translation type="obsolete">Yüklemeye devam et</translation>
     </message>
     <message>
         <source>Blocked file: %1</source>
@@ -875,12 +1020,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is currently disabled</source>
         <translatorcomment>Label to inform a user that MEGAsync is actually disabled due to the account is overquota (storage and/or transfer)</translatorcomment>
-        <translation type="unfinished">MEGAsync şu anda devre dışı</translation>
+        <translation type="obsolete">MEGAsync şu anda devre dışı</translation>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
         <translatorcomment>Label to inform the user that his account is overquota and needs to upgrade to keep using it.</translatorcomment>
-        <translation type="unfinished">Hesabınız izin verilen alan kotasını aştı. [A]Hesabını yükselt[/A] ve uçtan uca şifreli depolamanın keyfini çıkarmaya devam et.</translation>
+        <translation type="obsolete">Hesabınız izin verilen alan kotasını aştı. [A]Hesabını yükselt[/A] ve uçtan uca şifreli depolamanın keyfini çıkarmaya devam et.</translation>
     </message>
     <message>
         <source>Upgrade to PRO</source>
@@ -905,27 +1050,27 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>PAUSED</source>
         <translatorcomment>Label to indicate that the current transfer is paused. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">DURAKLATILMIŞ</translation>
+        <translation type="obsolete">DURAKLATILMIŞ</translation>
     </message>
     <message>
         <source>Paused</source>
         <translatorcomment>Label to indicate that MEGAsync is at pause state</translatorcomment>
-        <translation type="unfinished">Duraklatıldı</translation>
+        <translation type="obsolete">Duraklatıldı</translation>
     </message>
     <message>
         <source>Waiting</source>
         <translatorcomment>Label to indicate that MEGAsync is at waiting state</translatorcomment>
-        <translation type="unfinished">Bekliyor</translation>
+        <translation type="obsolete">Bekliyor</translation>
     </message>
     <message>
         <source>Scanning...</source>
         <translatorcomment>Label to indicate that MEGAsync is at scanning state</translatorcomment>
-        <translation type="unfinished">Tarıyor...</translation>
+        <translation type="obsolete">Tarıyor...</translation>
     </message>
     <message>
         <source>Up to date</source>
         <translatorcomment>Label to indicate that MEGAsync is at up-to-date state</translatorcomment>
-        <translation type="unfinished">Güncel</translation>
+        <translation type="obsolete">Güncel</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -945,7 +1090,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Çöp kutusu</translation>
+        <translation type="unfinished">Çöp Kutusu</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -954,11 +1099,61 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>USED BANDWIDTH %1</source>
-        <translation type="unfinished">KULLANILAN BANT GENİŞLİĞİ %1</translation>
+        <translation type="obsolete">KULLANILAN BANT GENİŞLİĞİ %1</translation>
     </message>
     <message>
         <source>The process is taking longer than expected. Please wait...</source>
         <translation type="unfinished">Bu işlem beklenenden uzun sürüyor. Lütfen bekleyin.</translation>
+    </message>
+    <message>
+        <source>Upload to MEGA now</source>
+        <translatorcomment>Label shown at main dialog when the user is already logged in to inform that he can start uploading files to MEGA</translatorcomment>
+        <translation type="unfinished">Şimdi MEGA&apos;ya yükle</translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button label to dismiss (hide) overquota dialogs.</translatorcomment>
+        <translation type="unfinished">Son ver</translation>
+    </message>
+    <message>
+        <source>Buy more space</source>
+        <translatorcomment>Button label to redirect the user to upgrade the account in the website.</translatorcomment>
+        <translation type="unfinished">Daha fazla alan alın</translation>
+    </message>
+    <message>
+        <source>TRANSFER QUOTA %1</source>
+        <translatorcomment>Label shown to indicate the actual transfer quota used by the current account. %1 will be replaced with the used bandwidth quota</translatorcomment>
+        <translation type="unfinished">AKTARMA KOTASI %1</translation>
+    </message>
+    <message>
+        <source>You&apos;re running out of storage space.</source>
+        <translatorcomment>Label to inform the user that the account is running out of storage space.</translatorcomment>
+        <translation type="unfinished">Alanınız tükeniyor!</translation>
+    </message>
+    <message>
+        <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
+        <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
+        <translation type="unfinished">MEGA hesabınız dolup yüklemeleriniz durmadan önce şimdi PRO&apos;ya yükseltin.</translation>
+    </message>
+    <message>
+        <source>Your MEGA account is full.</source>
+        <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
+        <translation type="unfinished">MEGA hesabınız dolu.</translation>
+    </message>
+    <message>
+        <source>All file uploads are currently disabled. Please upgrade to PRO</source>
+        <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
+        <translation type="obsolete">Tüm dosya yüklemeleri devre dışı bırakıldı. Lütfen PRO&apos;ya yükseltin.</translation>
+    </message>
+    <message>
+        <source>All file uploads are currently disabled.</source>
+        <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
+        <translation type="unfinished">Tüm dosya yüklemeleri şimdilik devre dışı.</translation>
+    </message>
+    <message>
+        <source>Please upgrade to PRO.</source>
+        <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
+        <translation type="unfinished">Lütfen PRO&apos;ya yükseltin</translation>
     </message>
 </context>
 <context>
@@ -966,41 +1161,41 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>MEGAsync is currently disabled</source>
         <translatorcomment>Labe shown when a user that MEGAsync is currently disabled due to an over quota state.</translatorcomment>
-        <translation type="unfinished">MEGAsync şu anda devre dışı</translation>
+        <translation type="obsolete">MEGAsync şu anda devre dışı</translation>
     </message>
     <message>
         <source>Your account has exceeded its allowed space quota.[A]Upgrade[/A]and keep enjoying secure, end-to-end encrypted storage.</source>
         <translatorcomment>Label to inform the user that is over quota and let him to upgrade his account. Keep [A] [/A] codes, will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">Hesabınız izin verilen alan kotasını aştı. [A]Hesabını yükselt[/A] ve uçtan uca şifreli depolamanın keyfini çıkarmaya devam et.</translation>
+        <translation type="obsolete">Hesabınız izin verilen alan kotasını aştı. [A]Hesabını yükselt[/A] ve uçtan uca şifreli depolamanın keyfini çıkarmaya devam et.</translation>
     </message>
     <message>
         <source>Upgrade your account</source>
         <translatorcomment>Button label to redirect the user to upgrade web page.</translatorcomment>
-        <translation type="unfinished">Hesabınızı yükseltin</translation>
+        <translation type="obsolete">Hesabınızı yükseltin</translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
         <translatorcomment>Labe to indicate that the account usage is temporaryly unavailable.</translatorcomment>
-        <translation type="unfinished">Kullanım: Veri geçici olarak kullanım dışı</translation>
+        <translation type="obsolete">Kullanım: Veri geçici olarak kullanım dışı</translation>
     </message>
     <message>
         <source>MEGA website</source>
         <translatorcomment>Label to MEGA website link</translatorcomment>
-        <translation type="unfinished">MEGA web sayfası</translation>
+        <translation type="obsolete">MEGA web sayfası</translation>
     </message>
     <message>
         <source>%1 of %2</source>
         <translatorcomment>Label to indicate the current amount of account usage.over the total actual plan.  Keep %1 and %2 codes.</translatorcomment>
-        <translation type="unfinished">%1 / %2</translation>
+        <translation type="obsolete">%1 / %2</translation>
     </message>
     <message>
         <source>Usage: %1</source>
         <translatorcomment>Label to indicate the amount of account usage. Keep %1 code.</translatorcomment>
-        <translation type="unfinished">Kullanım: %1</translation>
+        <translation type="obsolete">Kullanım: %1</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">Ayarlar</translation>
+        <translation type="obsolete">Ayarlar</translation>
     </message>
 </context>
 <context>
@@ -1047,7 +1242,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Create Account</source>
-        <translation type="unfinished">Hesap Yaratın</translation>
+        <translation type="unfinished">Hesap Oluşturun</translation>
     </message>
     <message>
         <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
@@ -1087,7 +1282,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 temizlik planlayıcısı</translation>
+        <translation type="obsolete">%1 temizlik zamanlayıcısı</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1119,6 +1314,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Information message shown when user introduces an invalid value </translatorcomment>
         <translation type="unfinished">Lütfen geçerli bir değer girin</translation>
     </message>
+    <message>
+        <source>%1 clearing scheduler</source>
+        <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">%1 temizlik zamanlayıcısı</translation>
+    </message>
 </context>
 <context>
     <name>Login2FA</name>
@@ -1130,7 +1330,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please enter the code generated by your authentication app</source>
         <translatorcomment>Description text of the label displayed to introduce the 6-digit code for the 2FA</translatorcomment>
-        <translation type="unfinished">Lütfen kimlik doğrulama uygulamanızın oluşturduğu kodu girin</translation>
+        <translation type="unfinished">Lütfen Kimlik Doğrulayıcı uygulamanızın oluşturduğu 6 basamaklı kodu girin.</translation>
     </message>
     <message>
         <source>6 digit code:</source>
@@ -1151,6 +1351,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Invalid code</source>
         <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
         <translation type="unfinished">Geçersiz kod</translation>
+    </message>
+    <message>
+        <source>[A]Lost your authenticator device?[/A]</source>
+        <translatorcomment>Label with hyperlink to recovery website when user is entering incorrect 2FA code during login stage</translatorcomment>
+        <translation type="unfinished">[A]Kimlik doğrulama uygulamanızı mı kaybettiniz?[/A]</translation>
     </message>
 </context>
 <context>
@@ -1284,7 +1489,7 @@ Exit anyway?</source>
     <message>
         <source>Temporary transmission error: </source>
         <translatorcomment>Notification message launched when there is a temporal problem with a transfer. Keep colon.</translatorcomment>
-        <translation>Geçici aktarma hatası:</translation>
+        <translation type="vanished">Geçici aktarma hatası:</translation>
     </message>
     <message>
         <source>You have new or updated files in your account</source>
@@ -1505,7 +1710,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Transfer failed:</source>
         <translatorcomment>Notification message shown when a transfer failed. Keep colon.</translatorcomment>
-        <translation type="unfinished">Aktarma başarısız oldu:</translation>
+        <translation type="obsolete">Aktarma başarısız oldu:</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -1543,7 +1748,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="unfinished">Geçici hata, tekrar deneniyor.</translation>
+        <translation type="obsolete">Geçici hata, tekrar deneniyor.</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -1617,12 +1822,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Resume Transfers</source>
         <translatorcomment>Label of main menu option to resume transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="unfinished">Transferleri Sürdür</translation>
+        <translation type="obsolete">Transferleri Sürdür</translation>
     </message>
     <message>
         <source>Pause Transfers</source>
         <translatorcomment>Label of main menu option to pause transfers. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="unfinished">Transferleri Duraklat</translation>
+        <translation type="obsolete">Transferleri Duraklat</translation>
     </message>
     <message>
         <source>Stream</source>
@@ -1652,7 +1857,147 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Temporarily not available</source>
         <translatorcomment>Label to show that an error related with a temporary problem occurs during a SDK operation.</translatorcomment>
-        <translation type="unfinished">Geçici olarak kullanılamıyor</translation>
+        <translation type="obsolete">Geçici olarak kullanılamıyor</translation>
+    </message>
+    <message>
+        <source>Your account is almost full.</source>
+        <translatorcomment>Title of the system notification when the account is almost full.</translatorcomment>
+        <translation type="unfinished">Hesabınız neredeyse dolu.</translation>
+    </message>
+    <message>
+        <source>Upgrade now to a PRO account.</source>
+        <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
+        <translation type="unfinished">Şimdi PRO hesaba yükseltin.</translation>
+    </message>
+    <message>
+        <source>Your account is full.</source>
+        <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
+        <translation type="unfinished">Hesabınız dolu.</translation>
+    </message>
+    <message>
+        <source>1 file and 1 folder were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that 1 files and 1 folder were successfully uploaded</translatorcomment>
+        <translation type="unfinished">1 dosya ve 1 klasör başarıyla yüklendi</translation>
+    </message>
+    <message>
+        <source>%1 files and 1 folder were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %1 files and 1 folder were successfully uploaded</translatorcomment>
+        <translation type="unfinished">%1 dosya ve 1 klasör başarıyla yüklendi</translation>
+    </message>
+    <message>
+        <source>1 file and %1 folders were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that 1 files and %1 folders were successfully uploaded</translatorcomment>
+        <translation type="unfinished">1 dosya ve %1 klasör başarıyla yüklendi</translation>
+    </message>
+    <message>
+        <source>%1 files and %2 folders were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %1 files and %2 folder were successfully uploaded</translatorcomment>
+        <translation type="unfinished">%1 dosya ve %2 klasör başarıyla yüklendi</translation>
+    </message>
+    <message>
+        <source>Folder Upload</source>
+        <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
+        <translation type="unfinished">Klasör Yükle</translation>
+    </message>
+    <message>
+        <source>1 folder was successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that 1 folder was successfully uploaded</translatorcomment>
+        <translation type="unfinished">1 klasör başarıyla yüklendi</translation>
+    </message>
+    <message>
+        <source>%1 folders were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %1 folders were successfully uploaded</translatorcomment>
+        <translation type="unfinished">%1 klasör başarıyla yüklendi</translation>
+    </message>
+    <message>
+        <source>File Upload</source>
+        <translatorcomment>Title of system notifications related to a file upload</translatorcomment>
+        <translation type="unfinished">Dosya Yükle</translation>
+    </message>
+    <message>
+        <source>1 file was successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that 1 file was successfully uploaded</translatorcomment>
+        <translation type="unfinished">1 dosya başarıyla yüklendi</translation>
+    </message>
+    <message>
+        <source>%1 files were successfully uploaded</source>
+        <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
+        <translation type="unfinished">%1 dosya başarıyla yüklendi</translation>
+    </message>
+    <message>
+        <source>1 file and 1 folder were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that 1 files and 1 folder were successfully downloaded</translatorcomment>
+        <translation type="unfinished">1 dosya ve 1 klasör başarıyla indirildi</translation>
+    </message>
+    <message>
+        <source>%1 files and 1 folder were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %1 files and 1 folder were successfully downloaded</translatorcomment>
+        <translation type="unfinished">%1 dosya ve 1 klasör başarıyla indirildi</translation>
+    </message>
+    <message>
+        <source>1 file and %1 folders were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that 1 files and %1 folders were successfully downloaded</translatorcomment>
+        <translation type="unfinished">1 dosya ve %1 klasör başarıyla indirildi</translation>
+    </message>
+    <message>
+        <source>%1 files and %2 folders were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %1 files and %2 folder were successfully downloaded</translatorcomment>
+        <translation type="unfinished">%1 dosya ve %2 klasör başarıyla yüklendi</translation>
+    </message>
+    <message>
+        <source>Folder Download</source>
+        <translatorcomment>Title of system notifications related to a folder download</translatorcomment>
+        <translation type="unfinished">Klasör İndirmesi</translation>
+    </message>
+    <message>
+        <source>1 folder was successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that 1 folder was successfully downloaded</translatorcomment>
+        <translation type="unfinished">1 klasör başarıyla indirildi</translation>
+    </message>
+    <message>
+        <source>%1 folders were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %1 folders were successfully downloaded</translatorcomment>
+        <translation type="unfinished">%1 klasör başarıyla indirildi</translation>
+    </message>
+    <message>
+        <source>File Download</source>
+        <translatorcomment>Title of system notifications related to a file download</translatorcomment>
+        <translation type="unfinished">Dosya İndirmesi</translation>
+    </message>
+    <message>
+        <source>1 file was successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that 1 file was successfully downloaded</translatorcomment>
+        <translation type="unfinished">1 dosya başarıyla indirildi</translation>
+    </message>
+    <message>
+        <source>%1 files were successfully downloaded</source>
+        <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
+        <translation type="unfinished">%1 dosya başarıyla indirildi</translation>
+    </message>
+    <message>
+        <source>Add Sync</source>
+        <translatorcomment>Menu item to add a new synchronization</translatorcomment>
+        <translation type="unfinished">Senkr ekle</translation>
+    </message>
+    <message>
+        <source>Syncs</source>
+        <translatorcomment>Menu item to show current synchronizations</translatorcomment>
+        <translation type="unfinished">Senkronizeler</translation>
+    </message>
+    <message>
+        <source>You are syncing a local folder shared with VMWare. Those folders do not support filesystem notifications so MEGAsync will have to be continuously scanning to detect changes in your files and folders. Please use a different folder if possible to reduce the CPU usage.</source>
+        <translatorcomment>Label to inform the user about the potential issues of syncing a local folder with VMWare.</translatorcomment>
+        <translation type="unfinished">VMWare ile paylaşılan bir klasör eşitliyorsunuz. Bu klasörler dosya sistemi düzenlemelerini desteklemez, bu yüzden MEGAsync dosya ve klasörlerinizdeki değişiklikleri tespit etmek için sürekli tarıyor olacaktır. Lütfen işlemci kullanımını azaltmak için mümkünse farklı bir klasör seçin.</translation>
+    </message>
+    <message>
+        <source>Get PRO</source>
+        <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
+        <translation type="unfinished">PRO alın</translation>
+    </message>
+    <message>
+        <source>Show in folder</source>
+        <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
+        <translation type="unfinished">Klasörde göster</translation>
     </message>
 </context>
 <context>
@@ -1783,11 +2128,29 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
-        <translation type="unfinished">Hesabınız, MEGA Hizmet Şartları&apos;nın birden fazla ihlalinden dolayı askıya alındı. Lütfen e-posta gelen kutunuzu kontrol edin.</translation>
+        <translation type="unfinished">Hesabınız, MEGA Hizmet Koşulları&apos;nın birden fazla ihlalinden dolayı askıya alındı. Lütfen e-posta gelen kutunuzu kontrol edin.</translation>
     </message>
     <message>
         <source>Your account was terminated due to breach of Mega’s Terms of Service, such as abuse of rights of others; sharing and/or importing illegal data; or system abuse.</source>
-        <translation type="unfinished">Hesabınız Mega&apos;nın Hizmet Koşullarını ihlal ettiği için sonlandırıldı, başkalarının haklarını suistimal etmek, yasadışı veriler paylaşmak/yüklemek, ya da sistemi kötüye kullanmak gibi.</translation>
+        <translation type="unfinished">Hesabınız Mega&apos;nın Hizmet Koşulları&apos;nı ihlal ettiği için sonlandırıldı, başkalarının haklarını suistimal etmek, yasadışı veriler paylaşmak/yüklemek, ya da sistemi kötüye kullanmak gibi.</translation>
+    </message>
+    <message>
+        <source>SSL verification failed</source>
+        <translatorcomment>Error shown when SSL check has failed</translatorcomment>
+        <translation type="unfinished">SSL doğrulaması başarısız oldu</translation>
+    </message>
+    <message>
+        <source>Not enough quota</source>
+        <translatorcomment>Label shown when current account does not have enough quota to complete the operation</translatorcomment>
+        <translation type="unfinished">Yetersiz kota</translation>
+    </message>
+</context>
+<context>
+    <name>MegaNodeNames</name>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Title of the Cloud Drive section</translatorcomment>
+        <translation type="unfinished">Bulut Sürücü</translation>
     </message>
 </context>
 <context>
@@ -1801,6 +2164,21 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>paused</source>
         <translatorcomment>Label to indicate that selected transfer is at paused state</translatorcomment>
         <translation type="unfinished">duraklatıldı</translation>
+    </message>
+    <message>
+        <source>PAUSED</source>
+        <translatorcomment>Label to indicate that the current transfer is paused. Keep capital letters.</translatorcomment>
+        <translation type="unfinished">DURAKLATILMIŞ</translation>
+    </message>
+    <message>
+        <source>Get link</source>
+        <translatorcomment>Tooltip shown when the mouse is over the &quot;Get link&quot; button related to a completed transfer</translatorcomment>
+        <translation type="unfinished">Bağlantıyı al</translation>
+    </message>
+    <message>
+        <source>Retry</source>
+        <translatorcomment>Tooltip shown when the mouse is over the &quot;Retry&quot; button related to a failed transfer</translatorcomment>
+        <translation type="unfinished">Yeniden Dene</translation>
     </message>
 </context>
 <context>
@@ -1984,7 +2362,7 @@ Are you sure you want to sync it?</source>
         <source>Invalid folder for synchronization.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Message displayed when a user is trying to create a synchronization using not allowed characthers. Keep  &apos;\\&apos; &apos;/&apos; and &apos;:&apos; codes.</translatorcomment>
-        <translation>Senkronizasyon için geçersiz klasör.Lütfen klasör isminizin  ‘’ ‘/’ veya ‘:’ gibi karakterler içermediğinden emin olun.</translation>
+        <translation type="unfinished">Senkronizasyon için geçersiz klasör.Lütfen klasör isminizin ‘\’, ‘/’ veya ‘:’  gibi karakterler içermediğinden emin olun.</translation>
     </message>
     <message>
         <source>Always upload to this destination</source>
@@ -2030,6 +2408,27 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Get MEGA link</source>
         <translation type="unfinished">MEGA bağlantısını al</translation>
+    </message>
+</context>
+<context>
+    <name>Notificator</name>
+    <message>
+        <source>MEGAsync</source>
+        <translatorcomment>Product name.</translatorcomment>
+        <translation type="unfinished">MEGAsync</translation>
+    </message>
+</context>
+<context>
+    <name>PSAwidget</name>
+    <message>
+        <source>Know More</source>
+        <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
+        <translation type="obsolete">Dahasını Öğrenin</translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button label to dismiss and hide a PSA announcement</translatorcomment>
+        <translation type="unfinished">Son ver</translation>
     </message>
 </context>
 <context>
@@ -2157,6 +2556,43 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
 </context>
 <context>
+    <name>Preferences</name>
+    <message>
+        <source>- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.0.0</translatorcomment>
+        <translation type="obsolete">- Ana iletişim kutusu için yeni tasarım
+- Geliştirilmiş kurulum asistanı
+- Kamu Hizmeti Duyurularını gösterme desteği
+- Modern bildirimler
+- Güncellenmiş üçüncü taraf yordamlıklar
+- Diğer küçük hata düzeltmeleri ve geliştirmeler</translation>
+    </message>
+    <message>
+        <source>- Fix bug with selection of transfer manager items
+- Fix bug of context menu not shown over transfer manager items
+- New design for the main dialog
+- Improved setup assistant
+- Support to show Public Service Announcements
+- Modern notifications
+- Updated third-party libraries
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
+        <translation type="unfinished">- Aktarma yöneticisi öğelerinin seçiminde oluşan hata giderildi
+- Aktarma yöneticisi öğelerinin üzerinde bağlam menüsünün açılmama sorunu giderildi
+- Ana diyalog için tasarım yenilendi
+- Kurulum yardımcısı iyileştirildi
+- Kamu Hizmeti Duyurularını görüntüleme desteği
+- Bildirimler modernleştirildi
+- Üçüncül taraf kitaplıklar güncellendi
+- Bazı küçük hata düzeltmeleri ve iyileştirmeler yapıldı</translation>
+    </message>
+</context>
+<context>
     <name>QDialogButtonBox</name>
     <message>
         <source>&amp;Yes</source>
@@ -2203,77 +2639,77 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 hours ago</source>
         <translatorcomment>Label to inform the user how many hours ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 saat önce</translation>
+        <translation type="vanished">%1 saat önce</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
         <translatorcomment>Button tooltip to generate a public link for a specific file. Keep capital letters.</translatorcomment>
-        <translation>MEGA bağlantısını al</translation>
+        <translation type="vanished">MEGA bağlantısını al</translation>
     </message>
     <message>
         <source>just now</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated just now.</translatorcomment>
-        <translation>az önce</translation>
+        <translation type="vanished">az önce</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
         <translatorcomment>Label to inform the user how many second ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 saniye önce</translation>
+        <translation type="vanished">%1 saniye önce</translation>
     </message>
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
-        <translation>1 dakika önce</translation>
+        <translation type="vanished">1 dakika önce</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
         <translatorcomment>Label to inform the user how many minutes ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 dakika önce</translation>
+        <translation type="vanished">%1 dakika önce</translation>
     </message>
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
-        <translation>1 saat önce</translation>
+        <translation type="vanished">1 saat önce</translation>
     </message>
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
-        <translation>1 gün önce</translation>
+        <translation type="vanished">1 gün önce</translation>
     </message>
     <message>
         <source>%1 days ago</source>
         <translatorcomment>Label to inform the user how many days ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 gün önce</translation>
+        <translation type="vanished">%1 gün önce</translation>
     </message>
     <message>
         <source>1 month ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one month ago.</translatorcomment>
-        <translation>1 ay önce</translation>
+        <translation type="vanished">1 ay önce</translation>
     </message>
     <message>
         <source>%1 months ago</source>
         <translatorcomment>Label to inform the user how many months ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 ay önce</translation>
+        <translation type="vanished">%1 ay önce</translation>
     </message>
     <message>
         <source>1 year ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one year ago.</translatorcomment>
-        <translation>1 yıl önce</translation>
+        <translation type="vanished">1 yıl önce</translation>
     </message>
     <message>
         <source>%1 years ago</source>
         <translatorcomment>Label to inform the user how many years ago was updated the indicated file. Keep %1 code because it will be filled with the name of the updated file.</translatorcomment>
-        <translation>%1 yıl önce</translation>
+        <translation type="vanished">%1 yıl önce</translation>
     </message>
     <message>
         <source>Open</source>
         <translatorcomment>Label to let the user open the selected file.String as short as possible.</translatorcomment>
-        <translation>Aç</translation>
+        <translation type="vanished">Aç</translation>
     </message>
     <message>
         <source>Show in folder</source>
         <translatorcomment>Label to let the user open the selected file using the specific file browser.String as short as possible.</translatorcomment>
-        <translation>Klasörde göster</translation>
+        <translation type="vanished">Klasörde göster</translation>
     </message>
 </context>
 <context>
@@ -2883,7 +3319,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="unfinished">%1 temizlik planlayıcısı</translation>
+        <translation type="obsolete">%1 temizlik zamanlayıcısı</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -2927,7 +3363,17 @@ when the application starts again</source>
     </message>
     <message>
         <source>Change password</source>
-        <translation type="unfinished">Parola değiştir</translation>
+        <translation type="unfinished">Parola Değiştir</translation>
+    </message>
+    <message>
+        <source>Your MEGA account is full. All uploads are disabled, which may affect your synced folders. [A]Buy more space[/A]</source>
+        <translatorcomment>Label to inform the user that current account is over storage and uploads will be disable. Encourage the user to buy more space and upgrade to PRO. Keep [A] and [/A] codes.</translatorcomment>
+        <translation type="unfinished">MEGA hesabınız dolu. Tüm yüklemeler devre dışı bırakıldı, bu eşitlenen klasörlerinizi etkileyebilir. [A]Daha fazla alan alın [/A]</translation>
+    </message>
+    <message>
+        <source>%1 clearing scheduler</source>
+        <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
+        <translation type="unfinished">%1 temizlik zamanlayıcısı</translation>
     </message>
 </context>
 <context>
@@ -2935,17 +3381,17 @@ when the application starts again</source>
     <message>
         <source>Setup Wizard - MEGAsync</source>
         <translatorcomment>Title of the dialog Setup Wizar of MEGAsync. Keep capital letters.</translatorcomment>
-        <translation>Kurulum Sihirbazı - MEGAsync</translation>
+        <translation type="vanished">Kurulum Sihirbazı - MEGAsync</translation>
     </message>
     <message>
         <source>I have a MEGA account</source>
         <translatorcomment>Label to indicate the user has already a MEGA account with a checkbox.</translatorcomment>
-        <translation>Bir MEGA hesabım var</translation>
+        <translation type="vanished">Bir MEGA hesabım var</translation>
     </message>
     <message>
         <source>I don&apos;t have a MEGA account</source>
         <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
-        <translation>MEGA hesabım yok</translation>
+        <translation type="vanished">MEGA hesabım yok</translation>
     </message>
     <message>
         <source>Create a new MEGA account</source>
@@ -2955,7 +3401,7 @@ when the application starts again</source>
     <message>
         <source>Name:</source>
         <translatorcomment>Label for field name at create account. String as short as possible.</translatorcomment>
-        <translation>İsim:</translation>
+        <translation type="vanished">İsim:</translation>
     </message>
     <message>
         <source>Email:</source>
@@ -2975,7 +3421,7 @@ when the application starts again</source>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
         <translatorcomment>Label to aggre with the Terms of use.  Keep code &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt; .String as short as possible.</translatorcomment>
-        <translation>MEGA Kullanım Koşullarını &lt;a href=&quot;https://mega.nz/terms&quot;&gt; kabul ediyorum</translation>
+        <translation>MEGA Hizmet Koşullarını &lt;a href=&quot;https://mega.nz/terms&quot;&gt; kabul ediyorum</translation>
     </message>
     <message>
         <source>Login to your MEGA account</source>
@@ -3014,12 +3460,12 @@ when the application starts again</source>
     <message>
         <source> Sync specific folders in your cloud drive</source>
         <translatorcomment>Label displayed to inform the user about the Selective  sync (Sync specific folders)</translatorcomment>
-        <translation>Bulut sürücünüzde belirli klasörleri senkronize edin</translation>
+        <translation type="vanished">Bulut sürücünüzde belirli klasörleri senkronize edin</translation>
     </message>
     <message>
         <source>The following folders will be automatically synchronized:</source>
         <translatorcomment>Label to inform the user about the folders wich will be synchronized.</translatorcomment>
-        <translation>Şu klasörler otomatik olarak senkronize olacak:</translation>
+        <translation type="vanished">Şu klasörler otomatik olarak senkronize olacak:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -3039,7 +3485,7 @@ when the application starts again</source>
     <message>
         <source>Welcome to MEGA</source>
         <translatorcomment>Label displayed to welcome the user.</translatorcomment>
-        <translation>MEGA&apos;ya hoş geldiniz</translation>
+        <translation type="vanished">MEGA&apos;ya hoş geldiniz</translation>
     </message>
     <message>
         <source>Your local folder:</source>
@@ -3091,7 +3537,7 @@ when the application starts again</source>
     <message>
         <source>Have you verified your account?</source>
         <translatorcomment>Label displayed to inform the user about the need of verify the created account.</translatorcomment>
-        <translation>Hesabınızı doğruladınız mı?</translation>
+        <translation type="vanished">Hesabınızı doğruladınız mı?</translation>
     </message>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
@@ -3136,7 +3582,7 @@ when the application starts again</source>
     <message>
         <source>You have to accept our terms of service</source>
         <translatorcomment>Label displayed when the user has not check the agreement of terms of service.</translatorcomment>
-        <translation>Hizmet Şartları&apos;nı kabul etmek zorundasınız</translation>
+        <translation>Hizmet Koşullarımız&apos;ı kabul etmek zorundasınız</translation>
     </message>
     <message>
         <source>Creating account...</source>
@@ -3218,7 +3664,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your Cloud Drive will be synchronized with this folder:</source>
         <translatorcomment>Label to inform the user wich local folder will be synchronized with the cloud drive. Keep colon.</translatorcomment>
-        <translation>Bulut Sürücünüz bu klasör ile senkronize edilecek:</translation>
+        <translation type="vanished">Bulut Sürücünüz bu klasör ile senkronize edilecek:</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -3291,7 +3737,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please check your e-mail and click the link to confirm your account.</source>
-        <translation type="unfinished">Lütfen e-posta kutunuzu kontrol edin, ve hesabınızı doğrulamak için gönderilen bağlantıya tıklayın.</translation>
+        <translation type="unfinished">Lütfen epostanızı kontrol edin ve hesabınızı onaylamak için gönderilen bağlantıya tıklayın.</translation>
     </message>
     <message>
         <source>You have attempted to log in too many times.[BR]Please wait until %1 and try again.</source>
@@ -3305,7 +3751,83 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Learn more</source>
-        <translation type="unfinished">Dahası</translation>
+        <translatorcomment>Label to redirect the user to a website with information about the different synchronization modes</translatorcomment>
+        <translation type="obsolete">Dahası</translation>
+    </message>
+    <message>
+        <source>First name:</source>
+        <translatorcomment>Label for first name field in the create account form</translatorcomment>
+        <translation type="unfinished">İsim:</translation>
+    </message>
+    <message>
+        <source>Last name:</source>
+        <translatorcomment>Label for last name field in the create account form</translatorcomment>
+        <translation type="unfinished">Soyisim:</translation>
+    </message>
+    <message>
+        <source>Check your inbox</source>
+        <translatorcomment>Label shown when the user has just created an account and needs to check his inbox to verify it</translatorcomment>
+        <translation type="unfinished">Gelen kutunuzu kontrol edin</translation>
+    </message>
+    <message>
+        <source>Sync specific folders in your cloud drive</source>
+        <translatorcomment>Label to inform the user about the selective sync mode of MEGAsync</translatorcomment>
+        <translation type="unfinished">Bulut sürücünüzde belirli klasörleri senkronize edin</translation>
+    </message>
+    <message>
+        <source>Selective sync:</source>
+        <translatorcomment>Label next to information about the selective sync mode.</translatorcomment>
+        <translation type="unfinished">Seçmeli senkronizasyon</translation>
+    </message>
+    <message>
+        <source>Enjoy MEGAsync!</source>
+        <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
+        <translation type="unfinished">MEGAsync&apos;in tadını çıkarın!</translation>
+    </message>
+    <message>
+        <source>Please, enter your last name</source>
+        <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
+        <translation type="unfinished">Lütfen soyisminizi girin</translation>
+    </message>
+    <message>
+        <source>Setup selective sync</source>
+        <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
+        <translation type="unfinished">Seçmeli senkronizasyonu kur</translation>
+    </message>
+    <message>
+        <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
+        <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
+        <translation type="unfinished">Bulut sürücünüzdeki belirli klasörler eşleşen yerel bir klasör ile senkronize edilecektir.</translation>
+    </message>
+    <message>
+        <source>Select Local folder:</source>
+        <translatorcomment>Label displayed to let the user select a local folder for a synchronization.</translatorcomment>
+        <translation type="unfinished">Yerel klasörü seç</translation>
+    </message>
+    <message>
+        <source>Setup full sync</source>
+        <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
+        <translation type="unfinished">Tam senkronizasyonu kur</translation>
+    </message>
+    <message>
+        <source>Full Sync</source>
+        <translatorcomment>Label displayed to show Full sync mode.</translatorcomment>
+        <translation type="unfinished">Tam senkr</translation>
+    </message>
+    <message>
+        <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
+        <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
+        <translation type="unfinished">Tüm Bulut Sürücünüz yerel bir klasör ile senkronize edilecektir.</translation>
+    </message>
+    <message>
+        <source>We are all done!</source>
+        <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
+        <translation type="unfinished">Tamamdır!</translation>
+    </message>
+    <message>
+        <source>Login</source>
+        <translatorcomment>Button label to open Login form</translatorcomment>
+        <translation type="unfinished">Oturum Aç</translation>
     </message>
 </context>
 <context>
@@ -3413,6 +3935,69 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
         <translation type="unfinished">Boyut sınırları sıfır olamaz</translation>
     </message>
+    <message>
+        <source>Bytes</source>
+        <translatorcomment>Label to indicate bytes unit.</translatorcomment>
+        <translation type="unfinished">Bytes</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
+        <translation type="unfinished">KB</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
+        <translation type="unfinished">MB</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
+        <translation type="unfinished">GB</translation>
+    </message>
+</context>
+<context>
+    <name>StatusInfo</name>
+    <message>
+        <source>Starting</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is starting</translatorcomment>
+        <translation type="unfinished">Başlatılıyor</translation>
+    </message>
+    <message>
+        <source>Paused</source>
+        <translatorcomment>Information label in the main dialog to show that all transfers are paused</translatorcomment>
+        <translation type="unfinished">Duraklatıldı</translation>
+    </message>
+    <message>
+        <source>Waiting</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at waiting state</translatorcomment>
+        <translation type="unfinished">Bekliyor</translation>
+    </message>
+    <message>
+        <source>Scanning...</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
+        <translation type="unfinished">Tarıyor...</translation>
+    </message>
+    <message>
+        <source>Account full</source>
+        <translatorcomment>Information label in the main dialog to show that the current account is full.</translatorcomment>
+        <translation type="unfinished">Hesap dolu</translation>
+    </message>
+    <message>
+        <source>Up to date</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is up to date</translatorcomment>
+        <translation type="unfinished">Güncel</translation>
+    </message>
+    <message>
+        <source>Resume Transfers</source>
+        <translatorcomment>Label in the main dialog that allows the user to resume paused transfers</translatorcomment>
+        <translation type="unfinished">Transferleri Sürdür</translation>
+    </message>
+    <message>
+        <source>Pause Transfers</source>
+        <translatorcomment>Label in the main dialog that allows the user to pause active transfers</translatorcomment>
+        <translation type="unfinished">Transferleri Duraklat</translation>
+    </message>
 </context>
 <context>
     <name>StreamingFromMegaDialog</name>
@@ -3517,75 +4102,75 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>paused</source>
         <translatorcomment>Label to indicate a paused state for a transfer item (upload/download)</translatorcomment>
-        <translation type="unfinished">duraklatıldı</translation>
+        <translation type="obsolete">duraklatıldı</translation>
     </message>
     <message>
         <source>queued</source>
         <translatorcomment>Label to indicate a queued state for a transfer item (upload/download)</translatorcomment>
-        <translation type="unfinished">sıraya alındı</translation>
+        <translation type="obsolete">sıraya alındı</translation>
     </message>
     <message>
         <source>retrying</source>
         <translatorcomment>Label to indicate a state or retrying for a transfer item (upload/download)</translatorcomment>
-        <translation type="unfinished">tekrar deneniyor</translation>
+        <translation type="obsolete">tekrar deneniyor</translation>
     </message>
     <message>
         <source>completing</source>
         <translatorcomment>Label to indicate a completing state for a transfer item (upload/download)</translatorcomment>
-        <translation type="unfinished">tamamlanıyor</translation>
+        <translation type="obsolete">tamamlanıyor</translation>
     </message>
     <message>
         <source>just now</source>
-        <translation type="unfinished">az önce</translation>
+        <translation type="obsolete">az önce</translation>
     </message>
     <message>
         <source>%1 seconds ago</source>
-        <translation type="unfinished">%1 saniye önce</translation>
+        <translation type="obsolete">%1 saniye önce</translation>
     </message>
     <message>
         <source>1 minute ago</source>
-        <translation type="unfinished">1 dakika önce</translation>
+        <translation type="obsolete">1 dakika önce</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
-        <translation type="unfinished">%1 dakika önce</translation>
+        <translation type="obsolete">%1 dakika önce</translation>
     </message>
     <message>
         <source>1 hour ago</source>
-        <translation type="unfinished">1 saat önce</translation>
+        <translation type="obsolete">1 saat önce</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
-        <translation type="unfinished">%1 saat önce</translation>
+        <translation type="obsolete">%1 saat önce</translation>
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="unfinished">1 gün önce</translation>
+        <translation type="obsolete">1 gün önce</translation>
     </message>
     <message>
         <source>%1 days ago</source>
-        <translation type="unfinished">%1 gün önce</translation>
+        <translation type="obsolete">%1 gün önce</translation>
     </message>
     <message>
         <source>1 month ago</source>
-        <translation type="unfinished">1 ay önce</translation>
+        <translation type="obsolete">1 ay önce</translation>
     </message>
     <message>
         <source>%1 months ago</source>
-        <translation type="unfinished">%1 ay önce</translation>
+        <translation type="obsolete">%1 ay önce</translation>
     </message>
     <message>
         <source>1 year ago</source>
-        <translation type="unfinished">1 yıl önce</translation>
+        <translation type="obsolete">1 yıl önce</translation>
     </message>
     <message>
         <source>%1 years ago</source>
-        <translation type="unfinished">%1 yıl önce</translation>
+        <translation type="obsolete">%1 yıl önce</translation>
     </message>
     <message>
         <source>starting</source>
         <translatorcomment>Label to indicate a state or starting for a transfer item (upload/download)</translatorcomment>
-        <translation type="unfinished">başlıyor</translation>
+        <translation type="obsolete">başlıyor</translation>
     </message>
 </context>
 <context>
@@ -3684,6 +4269,39 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
 </context>
 <context>
+    <name>TransferManagerItem</name>
+    <message>
+        <source>starting</source>
+        <translatorcomment>Label to indicate that a transfer is starting</translatorcomment>
+        <translation type="unfinished">başlıyor</translation>
+    </message>
+    <message>
+        <source>paused</source>
+        <translatorcomment>Label to indicate that a transfer is paused</translatorcomment>
+        <translation type="unfinished">duraklatıldı</translation>
+    </message>
+    <message>
+        <source>queued</source>
+        <translatorcomment>Label to indicate that a transfer is queued</translatorcomment>
+        <translation type="unfinished">sıraya alındı</translation>
+    </message>
+    <message>
+        <source>retrying</source>
+        <translatorcomment>Label to indicate that a transfer is being retried</translatorcomment>
+        <translation type="unfinished">tekrar deneniyor</translation>
+    </message>
+    <message>
+        <source>completing</source>
+        <translatorcomment>Label to indicate that a transfer is being completed</translatorcomment>
+        <translation type="unfinished">tamamlanıyor</translation>
+    </message>
+    <message>
+        <source>Out of storage space</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
+        <translation type="unfinished">Depolama alanı kalmadı</translation>
+    </message>
+</context>
+<context>
     <name>TransfersStateInfoWidget</name>
     <message>
         <source>No Downloads</source>
@@ -3709,7 +4327,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Your download could not proceed because it would take you over the current free transfer allowance for your IP address. This limit is dynamic and depends on the amount of unused bandwidth we have available.</source>
-        <translation type="unfinished">IP adresiniz için tanımlanmış ücretsiz aktarma sınırını geçtiğiniz için indirme yapılamaz. Bu liidinamiktir ve elimizdeki kullanılmayan bant genişliği miktarına bağlıdır.</translation>
+        <translation type="unfinished">IP adresiniz için tanımlanmış ücretsiz aktarma sınırını geçtiğiniz için indirme yapılamaz. Bu limit dinamiktir ve elimizdeki kullanılmayan bant genişliği miktarına bağlıdır.</translation>
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
@@ -3718,6 +4336,62 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
         <translation type="unfinished">Kullandığınız IP adresi son 6 saat içerisinde %1 veri aktarımı gerçekleştirdi, ve bu sizi şu anki kotanızın üzerine çıkardı. Bu kotayı kaldırmak için, size daha fazla aktarma ve depolama kotası veren [A]PRO&apos;ya yükseltebilirsiniz[/A].</translation>
+    </message>
+</context>
+<context>
+    <name>UpgradeOverStorage</name>
+    <message>
+        <source>Storage full</source>
+        <translatorcomment>Title of the over storage dialog</translatorcomment>
+        <translation type="unfinished">Depolama Dolu</translation>
+    </message>
+    <message>
+        <source>Your account is full ([A] / [B]). All file uploads to MEGA are currently disabled.</source>
+        <translatorcomment>Label to inform the user about a full account, showing the used storage, the total available and some information about file uploads.</translatorcomment>
+        <translation type="obsolete">Hesabınız dolu ([A] / [B]). MEGA&apos;ya olan tüm dosya yüklemeleri devre dışı bırakıldı.</translation>
+    </message>
+    <message>
+        <source>Please upgrade to PRO to enjoy more storage space (your uploads will automatically resume).</source>
+        <translatorcomment>Label to encourage the user to upgrade his account</translatorcomment>
+        <translation type="unfinished">Daha fazla depolama alanının tadını çıkarmak için lütfen PRO&apos;ya yükseltin (yüklemeleriniz otomatik olarak devam edecektir).</translation>
+    </message>
+    <message>
+        <source>Earn more storage quota with [A]Achievements[/A].</source>
+        <translatorcomment>Label to inform the user about achievements and the benefit of earning more storage quota. Achievements label will redirect to the achievements section in the webclient when clicked.</translatorcomment>
+        <translation type="unfinished">[A]Başarımlar[/A] ile daha fazla depolama alanı kazanın.</translation>
+    </message>
+    <message>
+        <source>Your MEGA account is full</source>
+        <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
+        <translation type="unfinished">MEGA hesabınız dolu.</translation>
+    </message>
+    <message>
+        <source>%1 of %2</source>
+        <translatorcomment>Label to keep the count of used and total storage. Preserve %1 and %2 codes beacuse they are used to include the amount of used and total storage by actual account.</translatorcomment>
+        <translation type="unfinished">%1 / %2</translation>
+    </message>
+    <message>
+        <source>USED STORAGE %1</source>
+        <translatorcomment>Label to indicate the total used storage.quota</translatorcomment>
+        <translation type="unfinished">KULLANILAN DEPOLAMA %1</translation>
+    </message>
+</context>
+<context>
+    <name>UpgradeWidget</name>
+    <message>
+        <source>month</source>
+        <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
+        <translation type="unfinished">ay</translation>
+    </message>
+    <message>
+        <source>storage</source>
+        <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
+        <translation type="unfinished">Saklama alanı</translation>
+    </message>
+    <message>
+        <source>transfer</source>
+        <translatorcomment>Label to indicate the amount of transfer quota of a PRO plan</translatorcomment>
+        <translation type="unfinished">Aktarma</translation>
     </message>
 </context>
 <context>
@@ -3812,6 +4486,89 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Available</source>
         <translation type="unfinished">Kullanılabilir</translation>
+    </message>
+</context>
+<context>
+    <name>Utilities</name>
+    <message>
+        <source>just now</source>
+        <translatorcomment>Label to indicate that a transfer has finished right now</translatorcomment>
+        <translation type="unfinished">az önce</translation>
+    </message>
+    <message>
+        <source>%1 seconds ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 seconds ago</translatorcomment>
+        <translation type="unfinished">%1 saniye önce</translation>
+    </message>
+    <message>
+        <source>1 minute ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished 1 minute ago</translatorcomment>
+        <translation type="unfinished">1 dakika önce</translation>
+    </message>
+    <message>
+        <source>%1 minutes ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 minutes ago</translatorcomment>
+        <translation type="unfinished">%1 dakika önce</translation>
+    </message>
+    <message>
+        <source>1 hour ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished 1 hour ago</translatorcomment>
+        <translation type="unfinished">1 saat önce</translation>
+    </message>
+    <message>
+        <source>%1 hours ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 hours ago</translatorcomment>
+        <translation type="unfinished">%1 saat önce</translation>
+    </message>
+    <message>
+        <source>1 day ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished 1 day ago</translatorcomment>
+        <translation type="unfinished">1 gün önce</translation>
+    </message>
+    <message>
+        <source>%1 days ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 days ago</translatorcomment>
+        <translation type="unfinished">%1 gün önce</translation>
+    </message>
+    <message>
+        <source>1 month ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 month ago</translatorcomment>
+        <translation type="unfinished">1 ay önce</translation>
+    </message>
+    <message>
+        <source>%1 months ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 months ago</translatorcomment>
+        <translation type="unfinished">%1 ay önce</translation>
+    </message>
+    <message>
+        <source>1 year ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 year ago</translatorcomment>
+        <translation type="unfinished">1 yıl önce</translation>
+    </message>
+    <message>
+        <source>%1 years ago</source>
+        <translatorcomment>Label to indicate that a transfer has finished %1 years ago</translatorcomment>
+        <translation type="unfinished">%1 yıl önce</translation>
+    </message>
+    <message>
+        <source>TB</source>
+        <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
+        <translation type="unfinished">TB</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
+        <translation type="unfinished">GB</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
+        <translation type="unfinished">MB</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
+        <translation type="unfinished">KB</translation>
     </message>
 </context>
 <context>

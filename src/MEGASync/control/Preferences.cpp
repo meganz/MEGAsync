@@ -11,20 +11,21 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/3.7.1.0";
-const int Preferences::VERSION_CODE = 3701;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.0.2.0";
+const int Preferences::VERSION_CODE = 4002;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("3.7.1");
-QString Preferences::SDK_ID = QString::fromAscii("935765");
-const QString Preferences::CHANGELOG = QString::fromUtf8(
-            "- Support for multi-factor authentication\n"
-            "- Security improvements for the registration of new accounts\n"
-            "- Better performance for the upload of images\n"
-            "- Creation of thumbnails and previews for RAW images\n"
-            "- Improvements in the management of network connections\n"
-            "- New logic to get external changes in the MEGA account\n"
-            "- Other minor bug fixes and improvements");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.0.2");
+QString Preferences::SDK_ID = QString::fromAscii("4dea1c");
+const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
+            "- Fix bug with selection of transfer manager items\n"
+            "- Fix bug of context menu not shown over transfer manager items\n"
+            "- New design for the main dialog\n"
+            "- Improved setup assistant\n"
+            "- Support to show Public Service Announcements\n"
+            "- Modern notifications\n"
+            "- Updated third-party libraries\n"
+            "- Other minor bug fixes and improvements"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
@@ -36,11 +37,10 @@ const long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
 const long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 129600000; // 36 hours
 const long long Preferences::ALMOST_OS_INTERVAL_MS = 259200000; // 72 hours
 const long long Preferences::OS_INTERVAL_MS = 129600000; // 36 hours
-const long long Preferences::USER_INACTIVITY_MS = 300000;
+const long long Preferences::USER_INACTIVITY_MS = 20000; // 20 secs
 
 const long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
 const long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS  = 7200000;
-const long long Preferences::MIN_UPDATE_STATS_INTERVAL_OVERQUOTA    = 30000;
 const long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
 const long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
 const long long Preferences::MIN_EXTERNAL_NODES_WARNING_MS          = 60000;
@@ -336,8 +336,10 @@ const QString Preferences::httpsCertKey             = QString::fromAscii("httpsC
 const QString Preferences::httpsCertIntermediateKey = QString::fromAscii("httpsCertIntermediate2");
 const QString Preferences::httpsCertExpirationKey   = QString::fromAscii("httpsCertExpiration2");
 const QString Preferences::transferIdentifierKey    = QString::fromAscii("transferIdentifier");
+const QString Preferences::lastPublicHandleKey      = QString::fromAscii("lastPublicHandle");
+const QString Preferences::lastPublicHandleTimestampKey = QString::fromAscii("lastPublicHandleTimestamp");
 
-const bool Preferences::defaultShowNotifications    = false;
+const bool Preferences::defaultShowNotifications    = true;
 const bool Preferences::defaultStartOnStartup       = true;
 const bool Preferences::defaultUpdateAutomatically  = true;
 const bool Preferences::defaultUpperSizeLimit       = false;
@@ -345,7 +347,7 @@ const bool Preferences::defaultLowerSizeLimit       = false;
 
 const bool Preferences::defaultCleanerDaysLimit     = true;
 
-const bool Preferences::defaultUseHttpsOnly         = false;
+const bool Preferences::defaultUseHttpsOnly         = true;
 const bool Preferences::defaultSSLcertificateException = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
 const int  Preferences::defaultDownloadLimitKB      = 0;
@@ -2612,6 +2614,34 @@ void Preferences::setHttpsCertExpiration(long long expiration)
     }
 
     settings->sync();
+}
+
+long long Preferences::lastPublicHandleTimestamp()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(lastPublicHandleTimestampKey, 0).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+MegaHandle Preferences::lastPublicHandle()
+{
+    mutex.lock();
+    assert(logged());
+    MegaHandle value = settings->value(lastPublicHandleKey, (unsigned long long) mega::INVALID_HANDLE).toULongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setLastPublicHandle(MegaHandle handle)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(lastPublicHandleKey, (unsigned long long) handle);
+    settings->setValue(lastPublicHandleTimestampKey, QDateTime::currentMSecsSinceEpoch());
+    settings->sync();
+    mutex.unlock();
 }
 
 int Preferences::getNumUsers()

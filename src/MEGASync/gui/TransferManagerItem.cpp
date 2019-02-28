@@ -35,9 +35,9 @@ void TransferManagerItem::setFileName(QString fileName)
 
     QFont f = ui->lTransferName->font();
     QFontMetrics fm = QFontMetrics(f);
-    ui->lTransferNameCompleted->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lTransferNameCompleted->width()));
+    ui->lTransferNameCompleted->setText(fm.elidedText(fileName, Qt::ElideMiddle,ui->lTransferNameCompleted->width()));
     ui->lTransferNameCompleted->setToolTip(fileName);
-    ui->lTransferName->setText(fm.elidedText(fileName, Qt::ElideRight,ui->lTransferName->width()));
+    ui->lTransferName->setText(fm.elidedText(fileName, Qt::ElideMiddle,ui->lTransferName->width()));
     ui->lTransferName->setToolTip(fileName);
 
     QIcon icon;
@@ -226,7 +226,15 @@ void TransferManagerItem::updateTransfer()
             ui->lRemainingTime->setText(QString::fromUtf8(""));
             break;
         case MegaTransfer::STATE_RETRYING:
-            ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("retrying")));
+            if (transferError == MegaError::API_EOVERQUOTA)
+            {
+                ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("Out of storage space")));
+            }
+            else
+            {
+                ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("retrying")));
+            }
+
             ui->lRemainingTime->setText(QString::fromUtf8(""));
             break;
         case MegaTransfer::STATE_COMPLETING:
@@ -287,6 +295,22 @@ bool TransferManagerItem::cancelButtonClicked(QPoint pos)
         break;
     }
 
+    return false;
+}
+
+bool TransferManagerItem::mouseHoverRetryingLabel(QPoint pos)
+{
+    switch (transferState)
+    {
+        case MegaTransfer::STATE_RETRYING:
+            if (ui->lSpeed->rect().contains(ui->lSpeed->mapFrom(this, pos)))
+            {
+                return true;
+            }
+            break;
+        default:
+            break;
+    }
     return false;
 }
 

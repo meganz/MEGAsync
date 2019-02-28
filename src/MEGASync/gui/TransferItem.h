@@ -35,6 +35,9 @@ public:
     virtual bool getRegular();
     virtual void setRegular(bool value);
 
+    virtual bool getIsLinkAvailable();
+    virtual void setIsLinkAvailable(bool value);
+
     virtual void updateTransfer() = 0;
     virtual void updateFinishedTime() = 0;
 
@@ -43,6 +46,7 @@ public:
 
     virtual bool cancelButtonClicked(QPoint pos) = 0;
     virtual bool getLinkButtonClicked(QPoint pos) = 0;
+    virtual bool mouseHoverRetryingLabel(QPoint pos) = 0;
     virtual void mouseHoverTransfer(bool isHover) = 0;
     virtual void setStateLabel(QString labelState) = 0;
     virtual QString getTransferName() = 0;
@@ -61,6 +65,7 @@ protected:
     long long totalSize;
     long long totalTransferredBytes;
     bool regular;
+    bool isLinkAvailable;
     unsigned long long priority;
     bool cancelButtonEnabled;
     bool isSyncTransfer;
