@@ -3704,7 +3704,18 @@ void MegaApplication::showNotificationFinishedTransfers(unsigned long long appDa
     }
 
     TransferMetaData *data = it.value();
-    if (data->pendingTransfers == 0 && preferences->showNotifications())
+    if (!preferences->showNotifications())
+    {
+        if (data->pendingTransfers == 0)
+        {
+            transferAppData.erase(it);
+            delete data;
+        }
+
+        return;
+    }
+
+    if (data->pendingTransfers == 0)
     {
         MegaNotification *notification = new MegaNotification();
         QString title;
