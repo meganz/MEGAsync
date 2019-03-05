@@ -777,7 +777,7 @@ background:transparent;</string>
                    <enum>Qt::StrongFocus</enum>
                   </property>
                   <property name="text">
-                   <string>FREE</string>
+                   <string/>
                   </property>
                  </widget>
                 </item>
@@ -829,7 +829,7 @@ background:transparent;</string>
                    <enum>Qt::StrongFocus</enum>
                   </property>
                   <property name="text">
-                   <string notr="true">sample@email.com</string>
+                   <string notr="true"/>
                   </property>
                  </widget>
                 </item>
@@ -1176,7 +1176,7 @@ border: none;</string>
 </string>
                </property>
                <property name="text">
-                <string notr="true">1.21 GB (1%) of 500 GB used</string>
+                <string notr="true"/>
                </property>
               </widget>
              </item>
