@@ -30,6 +30,15 @@ AccountDetailsDialog::~AccountDetailsDialog()
 void AccountDetailsDialog::refresh(Preferences *preferences)
 {
 
+    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+        ui->sHeader->hide();
+    }
+    else
+    {
+        ui->sHeader->show();
+    }
+
     if (preferences->totalStorage() == 0)
     {
         ui->pUsageStorage->setValue(0);
