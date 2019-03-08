@@ -57,7 +57,16 @@ CONFIG += USE_MEGAAPI
 CONFIG += USE_MEDIAINFO
 CONFIG += USE_LIBRAW
 CONFIG += USE_FFMPEG
+
+macx {
 CONFIG += USE_PDFIUM
+}
+else:win32 {
+CONFIG += USE_PDFIUM
+}
+else:contains(QMAKE_CFLAGS, -m64) { #Notice this might not work for clang!
+CONFIG += USE_PDFIUM
+}
 
 unix:!macx {
         exists(/usr/include/ffmpeg-mega)|exists(mega/bindings/qt/3rdparty/include/ffmpeg)|packagesExist(ffmpeg)|packagesExist(libavcodec) {
@@ -146,7 +155,17 @@ DEFINES += REQUIRE_HAVE_FFMPEG
 DEFINES += REQUIRE_HAVE_LIBUV
 DEFINES += REQUIRE_HAVE_LIBRAW
 DEFINES += REQUIRE_USE_MEDIAINFO
+
+macx {
 DEFINES += REQUIRE_HAVE_PDFIUM
+}
+else:win32 {
+DEFINES += REQUIRE_HAVE_PDFIUM
+}
+else:contains(QMAKE_CFLAGS, -m64) { #Notice this might not work for clang!
+DEFINES += REQUIRE_HAVE_PDFIUM
+}
+
 #DEFINES += REQUIRE_ENABLE_CHAT
 #DEFINES += REQUIRE_ENABLE_BACKUPS
 #DEFINES += REQUIRE_ENABLE_WEBRTC
