@@ -13,7 +13,7 @@ BuildRequires: openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libt
 BuildRequires: hicolor-icon-theme, unzip, wget
 BuildRequires: ffmpeg-mega
 
-%if %{_target_cpu} != "i586"
+%if %{_target_cpu} != "i586" &&  %{_target_cpu} != "i686"
 BuildRequires: pdfium-mega
 %endif
 
