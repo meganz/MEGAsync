@@ -111,7 +111,7 @@ QString CustomTransferItem::getTransferName()
 
 bool CustomTransferItem::getLinkButtonClicked(QPoint pos)
 {
-    if (!getLinkButtonEnabled || !isLinkAvailable)
+    if (!getLinkButtonEnabled || (!isLinkAvailable && !transferError))
     {
         return false;
     }
