@@ -265,7 +265,8 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
         {
             MegaTransfer *transfer = NULL;
             transfer = model->getTransferByTag(tag);
-            if (transfer && transfer->isFinished() && transfer->getPath())
+            if (transfer && transfer->getState() == MegaTransfer::STATE_COMPLETED
+                         && transfer->getPath())
             {
                 QString localPath = QString::fromUtf8(transfer->getPath());
                 #ifdef WIN32
@@ -286,7 +287,9 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
         MegaTransfer *transfer = NULL;
         int tag = index.internalId();
         transfer = model->getTransferByTag(tag);
-        if (transfer && transfer->isFinished() && transfer->getPath())
+
+        if (transfer && transfer->getState() == MegaTransfer::STATE_COMPLETED
+                     && transfer->getPath())
         {
             QString localPath = QString::fromUtf8(transfer->getPath());
             #ifdef WIN32
