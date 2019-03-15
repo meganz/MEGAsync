@@ -31,6 +31,7 @@
 #include <Windows.h>
 #include <Psapi.h>
 #include <Strsafe.h>
+#include <Shellapi.h>
 #endif
 
 using namespace mega;
@@ -108,6 +109,9 @@ int main(int argc, char *argv[])
     QSslSocket::supportsSsl();
 
 #ifdef _WIN32
+
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
     HINSTANCE shcore = NULL;
     WCHAR systemPath[MAX_PATH];
     UINT len = GetSystemDirectory(systemPath, MAX_PATH);
