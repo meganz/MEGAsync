@@ -1,5 +1,5 @@
 
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0)
 project(MEGAsync)
 
 if (WIN32)
@@ -342,3 +342,12 @@ target_link_libraries(MEGAsync Mega
 			ole32 Shell32 crypt32 taskschd Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib
             "${MEGAsyncDir}/mega/bindings/qt/3rdparty/libs/x32d/libuv.lib")
 
+# Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
+IF (MSVC)
+	ADD_CUSTOM_COMMAND(
+		TARGET MEGAsync
+		POST_BUILD
+		COMMAND "mt.exe" -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\MEGAsync.exe.manifest\" -inputresource:\"$<TARGET_FILE:MEGAsync>\"\;\#1 -outputresource:\"$<TARGET_FILE:MEGAsync>\"\;\#1
+		COMMENT "Adding display aware manifest..." 
+	)
+ENDIF(MSVC)
