@@ -42,6 +42,7 @@ public:
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
     void setOverQuotaMode(bool state);
+    void setAccountType(int accType);
     void addSync(mega::MegaHandle h);
     void clearUserAttributes();
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
@@ -114,6 +115,7 @@ private:
     int state;
     bool overQuotaState;
     int storageState;
+    int actualAccountType;
 
     QPropertyAnimation *animation;
     QGraphicsOpacityEffect *opacityEffect;
