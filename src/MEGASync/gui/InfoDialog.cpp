@@ -61,7 +61,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     opacityEffect = NULL;
     animation = NULL;
 
-    actualAccountType = Preferences::ACCOUNT_TYPE_FREE;
+    actualAccountType = -1;
+    setAccountType(preferences->accountType());
+
     overQuotaState = false;
     storageState = Preferences::STATE_BELOW_OVER_STORAGE;
 

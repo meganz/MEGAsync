@@ -351,6 +351,7 @@ const bool Preferences::defaultUseHttpsOnly         = true;
 const bool Preferences::defaultSSLcertificateException = false;
 const int  Preferences::defaultUploadLimitKB        = -1;
 const int  Preferences::defaultDownloadLimitKB      = 0;
+const int  Preferences::defaultAccountType          = Preferences::ACCOUNT_TYPE_FREE;
 const long long Preferences::defaultTimeStamp       = 0;
 const unsigned long long  Preferences::defaultTransferIdentifier   = 0;
 const int  Preferences::defaultParallelUploadConnections      = 3;
@@ -1067,7 +1068,7 @@ int Preferences::accountType()
 {
     mutex.lock();
     assert(logged());
-    int value = settings->value(accountTypeKey).toInt();
+    int value = settings->value(accountTypeKey, defaultAccountType).toInt();
     mutex.unlock();
     return value;
 }
