@@ -610,5 +610,21 @@
         <file>images/init_scanning@2x.png</file>
         <file>images/avatar_frame.png</file>
         <file>images/avatar_frame@2x.png</file>
+        <file>images/icon_left_slice.png</file>
+        <file>images/icon_left_slice@2x.png</file>
+        <file>images/icon_right_slide.png</file>
+        <file>images/icon_right_slide@2x.png</file>
+        <file>images/icon_slice_dot_selected.png</file>
+        <file>images/icon_slice_dot_selected@2x.png</file>
+        <file>images/icon_slice_dot.png</file>
+        <file>images/icon_slice_dot@2x.png</file>
+        <file>images/icon_sync.png</file>
+        <file>images/icon_sync@2x.png</file>
+        <file>images/img_wizard_1.png</file>
+        <file>images/img_wizard_1@2x.png</file>
+        <file>images/img_wizard_2.png</file>
+        <file>images/img_wizard_2@2x.png</file>
+        <file>images/img_wizard_3.png</file>
+        <file>images/img_wizard_3@2x.png</file>
     </qresource>
 </RCC>
