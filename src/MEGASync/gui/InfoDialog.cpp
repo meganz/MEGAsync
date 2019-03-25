@@ -98,7 +98,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
 
-    setAccountType(preferences->accountType());
+    actualAccountType = -1;
 
     uploadsFinishedTimer.setSingleShot(true);
     uploadsFinishedTimer.setInterval(5000);
