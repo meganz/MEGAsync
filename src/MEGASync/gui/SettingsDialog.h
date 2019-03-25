@@ -165,6 +165,7 @@ private:
     bool fileVersioningChanged;
     QButtonGroup downloadButtonGroup;
     QButtonGroup uploadButtonGroup;
+    bool reloadUIpage;
 
 #ifndef WIN32
     int folderPermissions;
