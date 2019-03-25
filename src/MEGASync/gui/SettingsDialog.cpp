@@ -549,11 +549,15 @@ void SettingsDialog::on_bAccount_clicked()
     {
         minHeightAnimation->setEndValue(465);
         maxHeightAnimation->setEndValue(465);
+
+        ui->gStorageSpace->setMinimumHeight(83);
     }
     else
     {
         minHeightAnimation->setEndValue(485);
         maxHeightAnimation->setEndValue(485);
+
+        ui->gStorageSpace->setMinimumHeight(103);
     }
 
 #ifdef __APPLE__
@@ -569,8 +573,6 @@ void SettingsDialog::on_bAccount_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(485);
-    maxHeightAnimation->setEndValue(485);
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
