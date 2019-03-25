@@ -540,7 +540,6 @@ protected:
     static const bool defaultUpdateAutomatically;
     static const int  defaultUploadLimitKB;
     static const int  defaultDownloadLimitKB;
-    static const int  defaultAccountType;
     static const unsigned long long defaultTransferIdentifier;
     static const int  defaultParallelUploadConnections;
     static const int  defaultParallelDownloadConnections;
