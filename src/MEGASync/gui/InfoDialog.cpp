@@ -62,7 +62,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     animation = NULL;
 
     actualAccountType = -1;
-    setAccountType(preferences->accountType());
 
     overQuotaState = false;
     storageState = Preferences::STATE_BELOW_OVER_STORAGE;
@@ -98,6 +97,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
+
+    setAccountType(preferences->accountType());
 
     uploadsFinishedTimer.setSingleShot(true);
     uploadsFinishedTimer.setInterval(5000);
