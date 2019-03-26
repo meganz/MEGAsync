@@ -58,7 +58,7 @@ public slots:
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
 
-    void onDoubleCheckHighDPIWindowSize();
+    void forceRedraw();
     
 private slots:
     void on_bAccount_clicked();
