@@ -66,6 +66,24 @@ void deleteRemoteCache(MegaApi *megaApi)
     delete n;
 }
 
+bool SettingsDialog::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == 216)
+    {
+        QTimer::singleShot(0, this, SLOT(onDoubleCheckHighDPIWindowSize()));
+    }
+    return QObject::eventFilter(obj, event);
+}
+
+void SettingsDialog::onDoubleCheckHighDPIWindowSize()
+{
+    // When dragging this window from one screen to another with a different scaling ratio 
+    // (at least in windows 10 with qt 5.6.3), occastionally the window does not resize properly, 
+    // leaving 100% controls inside a 200% window or vice versa.
+    // This resize() command triggers reevaluation of the window size, which is fixed size anyway.
+    resize(1, 1);
+}
+
 SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsDialog)
@@ -280,6 +298,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     ui->lOQWarning->setText(QString::fromUtf8(""));
     ui->wOQError->hide();
+
+    installEventFilter(this);
 }
 
 SettingsDialog::~SettingsDialog()

@@ -527,7 +527,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                             MegaNode *node = megaApi->createForeignFileNode(h, key.toUtf8().constData(),
                                                              name.toUtf8().constData(), size, mtime,
                                                              p, privateAuth.toUtf8().constData(),
-                                                             publicAuth.toUtf8().constData());
+                                publicAuth.toUtf8().constData(), NULL);
                             downloadQueue.append(node);
                             QMap<MegaHandle, RequestTransferData*>::iterator it = webTransferStateRequests.find(h);
                             if (it != webTransferStateRequests.end())

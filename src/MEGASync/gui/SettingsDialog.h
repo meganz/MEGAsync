@@ -57,6 +57,8 @@ public slots:
     void proxyStateChanged();
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
+
+    void onDoubleCheckHighDPIWindowSize();
     
 private slots:
     void on_bAccount_clicked();
@@ -130,6 +132,7 @@ protected:
     void changeEvent(QEvent * event);
     QString getFormatString();
     QString getFormatLimitDays();
+    bool eventFilter(QObject *obj, QEvent *event) override;
 
 private:
     Ui::SettingsDialog *ui;
