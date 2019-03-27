@@ -545,6 +545,19 @@ void SettingsDialog::on_bAccount_clicked()
     ui->wStack->setCurrentWidget(ui->pAccount);
     ui->bOk->setFocus();
 
+#ifdef __APPLE__
+    ui->pAccount->hide();
+    ui->pAdvanced->hide();
+    ui->pBandwidth->hide();
+    ui->pProxies->hide();
+    ui->pSyncs->hide();
+
+    minHeightAnimation->setTargetObject(this);
+    maxHeightAnimation->setTargetObject(this);
+    minHeightAnimation->setPropertyName("minimumHeight");
+    maxHeightAnimation->setPropertyName("maximumHeight");
+    minHeightAnimation->setStartValue(minimumHeight());
+    maxHeightAnimation->setStartValue(maximumHeight());
     if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
         minHeightAnimation->setEndValue(465);
@@ -559,20 +572,6 @@ void SettingsDialog::on_bAccount_clicked()
 
         ui->gStorageSpace->setMinimumHeight(103);
     }
-
-#ifdef __APPLE__
-    ui->pAccount->hide();
-    ui->pAdvanced->hide();
-    ui->pBandwidth->hide();
-    ui->pProxies->hide();
-    ui->pSyncs->hide();
-
-    minHeightAnimation->setTargetObject(this);
-    maxHeightAnimation->setTargetObject(this);
-    minHeightAnimation->setPropertyName("minimumHeight");
-    maxHeightAnimation->setPropertyName("maximumHeight");
-    minHeightAnimation->setStartValue(minimumHeight());
-    maxHeightAnimation->setStartValue(maximumHeight());
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
@@ -646,21 +645,6 @@ void SettingsDialog::on_bBandwidth_clicked()
     ui->wStack->setCurrentWidget(ui->pBandwidth);
     ui->bOk->setFocus();
 
-    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
-    {
-        minHeightAnimation->setEndValue(520);
-        maxHeightAnimation->setEndValue(520);
-
-        ui->gBandwidthQuota->setMinimumHeight(59);
-    }
-    else
-    {
-        minHeightAnimation->setEndValue(540);
-        maxHeightAnimation->setEndValue(540);
-
-        ui->gBandwidthQuota->setMinimumHeight(79);
-    }
-
 #ifdef __APPLE__
     ui->pAccount->hide();
     ui->pAdvanced->hide();
@@ -678,6 +662,20 @@ void SettingsDialog::on_bBandwidth_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
+    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+        minHeightAnimation->setEndValue(520);
+        maxHeightAnimation->setEndValue(520);
+
+        ui->gBandwidthQuota->setMinimumHeight(59);
+    }
+    else
+    {
+        minHeightAnimation->setEndValue(540);
+        maxHeightAnimation->setEndValue(540);
+
+        ui->gBandwidthQuota->setMinimumHeight(79);
+    }
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
