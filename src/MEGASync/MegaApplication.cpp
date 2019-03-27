@@ -2627,6 +2627,7 @@ void MegaApplication::showInfoDialog()
             infoDialog->updateDialogState();
             infoDialog->raise();
             infoDialog->activateWindow();
+            infoDialog->highDpiResize.queueRedraw();
         }
         else
         {

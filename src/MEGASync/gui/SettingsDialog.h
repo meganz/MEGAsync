@@ -19,6 +19,7 @@
 #include "ChangePassword.h"
 #include "Preferences.h"
 #include "megaapi.h"
+#include "HighDpiResize.h"
 
 namespace Ui {
 class SettingsDialog;
@@ -57,8 +58,6 @@ public slots:
     void proxyStateChanged();
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
-
-    void forceRedraw();
     
 private slots:
     void on_bAccount_clicked();
@@ -132,13 +131,13 @@ protected:
     void changeEvent(QEvent * event);
     QString getFormatString();
     QString getFormatLimitDays();
-    bool eventFilter(QObject *obj, QEvent *event) override;
 
 private:
     Ui::SettingsDialog *ui;
     MegaApplication *app;
     Preferences *preferences;
     mega::MegaApi *megaApi;
+    HighDpiResize highDpiResize;
     bool syncsChanged;
     bool excludedNamesChanged;
     QStringList syncNames;

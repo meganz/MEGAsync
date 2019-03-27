@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QMessageBox>
 #include "Preferences.h"
+#include "HighDpiResize.h"
 
 namespace Ui {
 class SizeLimitDialog;
@@ -33,6 +34,7 @@ public:
 
 private:
     Ui::SizeLimitDialog *ui;
+    HighDpiResize highDpiResize;
 
 protected:
     void changeEvent(QEvent *event);

@@ -20,6 +20,7 @@ BindFolderDialog::BindFolderDialog(MegaApplication *app, QWidget *parent) :
     localFolders = preferences->getLocalFolders();
     megaFolderHandles = preferences->getMegaFolderHandles();
     ui->bOK->setDefault(true);
+    highDpiResize.init(this);
 }
 
 BindFolderDialog::BindFolderDialog(MegaApplication *app, QStringList syncNames,

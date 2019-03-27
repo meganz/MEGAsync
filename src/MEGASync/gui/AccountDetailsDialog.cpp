@@ -20,6 +20,7 @@ AccountDetailsDialog::AccountDetailsDialog(MegaApi *megaApi, QWidget *parent) :
     this->megaApi = megaApi;
     ui->lLoading->setText(ui->lLoading->text().toUpper());
     refresh(Preferences::instance());
+    highDpiResize.init(this);
 }
 
 AccountDetailsDialog::~AccountDetailsDialog()

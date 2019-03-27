@@ -157,6 +157,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     {
         regenerateLayout();
     }
+    highDpiResize.init(this);
 }
 
 InfoDialog::~InfoDialog()

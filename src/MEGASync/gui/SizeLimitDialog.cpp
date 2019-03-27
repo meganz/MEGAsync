@@ -22,6 +22,7 @@ SizeLimitDialog::SizeLimitDialog(QWidget *parent) :
     ui->cbExcludeLowerUnit->addItem(tr("GB"));
 
     ui->bOK->setDefault(true);
+    highDpiResize.init(this);
 }
 
 bool SizeLimitDialog::upperSizeLimit()

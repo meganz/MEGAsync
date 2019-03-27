@@ -2,6 +2,7 @@
 #define DOWNLOADFROMMEGADIALOG_H
 
 #include <QDialog>
+#include "HighDpiResize.h"
 
 namespace Ui {
 class DownloadFromMegaDialog;
@@ -27,6 +28,7 @@ protected:
 
 private:
     Ui::DownloadFromMegaDialog *ui;
+    HighDpiResize highDpiResize;
 };
 
 #endif // DOWNLOADFROMMEGADIALOG_H

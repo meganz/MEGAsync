@@ -10,6 +10,7 @@ CrashReportDialog::CrashReportDialog(QString crash, QWidget *parent) :
 
     ui->tCrash->setText(crash);
     ui->bOK->setDefault(true);
+    highDpiResize.init(this);
 }
 
 QString CrashReportDialog::getUserMessage()
