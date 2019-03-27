@@ -111,7 +111,9 @@ QString CustomTransferItem::getTransferName()
 
 bool CustomTransferItem::getLinkButtonClicked(QPoint pos)
 {
-    if (!getLinkButtonEnabled || !isLinkAvailable)
+    if (!getLinkButtonEnabled
+            || (!isLinkAvailable && !transferError) //retry action needs to be triggered for failed transfers even when !isLinkAvailable (e.g: inshare)
+            )
     {
         return false;
     }
