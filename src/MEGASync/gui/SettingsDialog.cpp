@@ -1154,6 +1154,8 @@ void SettingsDialog::loadSettings()
         }
         else if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
         {
+            ui->gBandwidthQuota->show();
+            ui->bSeparatorBandwidth->show();
             ui->pUsedBandwidth->hide();
             ui->lBandwidth->setText(tr("%1 used")
                   .arg(Utilities::getSizeString(preferences->usedBandwidth())));
