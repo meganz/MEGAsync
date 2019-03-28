@@ -2,6 +2,7 @@
 #define HIGHDPIRESIZE_H
 
 #include <QDialog>
+#include <QPointer>
 
 class HighDpiResize : public QObject
 {
@@ -18,7 +19,7 @@ protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
 
 private:
-    QDialog* dialog = nullptr;
+    QPointer<QDialog> dialog = nullptr;
 };
 
 #endif // HIGHDPIRESIZE_H

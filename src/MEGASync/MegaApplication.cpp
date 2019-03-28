@@ -15,6 +15,7 @@
 #include <QFontDatabase>
 #include <QNetworkProxy>
 #include <assert.h>
+#include <chrono>
 
 #ifdef Q_OS_LINUX
     #include <QSvgRenderer>
@@ -653,6 +654,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     almostOQ = false;
     storageState = MegaApi::STORAGE_STATE_GREEN;
     appliedStorageState = MegaApi::STORAGE_STATE_GREEN;;
+    lastApplicationDeactivation = chrono::steady_clock::now() - 5s;
+    installEventFilter(this);
 
 #ifdef __APPLE__
     scanningTimer = NULL;
@@ -2884,6 +2887,11 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
                 lastHovered = NULL;
             }
         }
+    }
+
+    if (e->type() == QEvent::ApplicationDeactivate)
+    {
+        lastApplicationDeactivation = chrono::steady_clock::now();
     }
 
     return QApplication::eventFilter(obj, e);
@@ -5286,7 +5294,14 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
                 trayMenu->close();
             }
         }
-        infoDialogTimer->start(200);
+#ifdef _WIN32
+        // in windows, a second click on the task bar icon first deactivates the app which closes the infoDialg.  
+        // This statement prevents us opening it again, so that we have one-click to open the infoDialog, and a second closes it.
+        if (chrono::steady_clock::now() - lastApplicationDeactivation > 500ms)
+#endif
+        {
+            infoDialogTimer->start(200);
+        }
 #else
         showInfoDialog();
 #endif
@@ -6934,7 +6949,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         infoDialog->onTransferFinish(megaApi, transfer, e);
     }
 
-    if (finishedTransferOrder.size() > Preferences::MAX_COMPLETED_ITEMS)
+    if (finishedTransferOrder.size() > (int)Preferences::MAX_COMPLETED_ITEMS)
     {
         removeFinishedTransfer(finishedTransferOrder.first()->getTag());
     }

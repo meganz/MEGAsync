@@ -36,6 +36,7 @@
 #include "control/MegaSyncLogger.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
+#include <chrono>
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -396,6 +397,7 @@ protected:
     bool updatingSSLcert;
     long long lastSSLcertUpdate;
     bool nodescurrent;
+    std::chrono::steady_clock::time_point lastApplicationDeactivation;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener
