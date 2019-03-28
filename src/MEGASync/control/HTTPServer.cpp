@@ -425,7 +425,8 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
         if (start > 0)
         {
             QString privateAuth = Utilities::extractJSONString(request.data.mid(0, start), QString::fromUtf8("esid"));
-            QString publicAuth = Utilities::extractJSONString(request.data.mid(0, start), QString::fromUtf8("en"));
+            QString publicAuth  = Utilities::extractJSONString(request.data.mid(0, start), QString::fromUtf8("en"));
+            QString chatAuth    = Utilities::extractJSONString(request.data.mid(0, start), QString::fromUtf8("cauth"));
 
             if (privateAuth.isEmpty() && publicAuth.isEmpty())
             {
@@ -527,7 +528,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                             MegaNode *node = megaApi->createForeignFileNode(h, key.toUtf8().constData(),
                                                              name.toUtf8().constData(), size, mtime,
                                                              p, privateAuth.toUtf8().constData(),
-                                                             publicAuth.toUtf8().constData());
+                                                             publicAuth.toUtf8().constData(), chatAuth.isEmpty() ? NULL : chatAuth.toUtf8().constData());
                             downloadQueue.append(node);
                             QMap<MegaHandle, RequestTransferData*>::iterator it = webTransferStateRequests.find(h);
                             if (it != webTransferStateRequests.end())

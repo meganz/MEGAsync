@@ -61,6 +61,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     opacityEffect = NULL;
     animation = NULL;
 
+    actualAccountType = -1;
+
     overQuotaState = false;
     storageState = Preferences::STATE_BELOW_OVER_STORAGE;
 
@@ -95,6 +97,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
 
     megaApi = app->getMegaApi();
     preferences = Preferences::instance();
+
+    actualAccountType = -1;
 
     uploadsFinishedTimer.setSingleShot(true);
     uploadsFinishedTimer.setInterval(5000);
@@ -180,7 +184,8 @@ void InfoDialog::setAvatar()
 
 void InfoDialog::setUsage()
 {
-    if (preferences->accountType() == 0)
+    int accType = preferences->accountType();
+    if (accType == Preferences::ACCOUNT_TYPE_FREE)
     {
         ui->bDotUsedQuota->hide();
         ui->bDotUsedStorage->hide();
@@ -377,6 +382,48 @@ void InfoDialog::setOverQuotaMode(bool state)
         ui->pUsageStorage->setProperty("overquota", false);
         ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
+    }
+}
+
+void InfoDialog::setAccountType(int accType)
+{
+    if (actualAccountType == accType)
+    {
+        return;
+    }
+
+    actualAccountType = accType;
+    if (actualAccountType == Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+         ui->lTotalUsedStorage->installEventFilter(this);
+         ui->lTotalUsedStorage->setMouseTracking(true);
+         ui->wUsageStorage->removeEventFilter(this);
+         ui->wUsageStorage->setMouseTracking(false);
+         ui->bUpgrade->hide();
+
+         ui->pUsageStorage->hide();
+         ui->wUsageStorage->setCursor(Qt::ArrowCursor);
+         ui->pUsageStorage->setCursor(Qt::ArrowCursor);
+         ui->lPercentageUsedStorage->hide();
+
+         ui->pUsageQuota->hide();
+         ui->lPercentageUsedQuota->hide();
+    }
+    else
+    {
+         ui->lTotalUsedStorage->removeEventFilter(this);
+         ui->lTotalUsedStorage->setMouseTracking(false);
+         ui->wUsageStorage->installEventFilter(this);
+         ui->wUsageStorage->setMouseTracking(true);
+         ui->bUpgrade->show();
+
+         ui->pUsageStorage->show();
+         ui->wUsageStorage->setCursor(Qt::PointingHandCursor);
+         ui->pUsageStorage->setCursor(Qt::PointingHandCursor);
+         ui->lPercentageUsedStorage->show();
+
+         ui->pUsageQuota->show();
+         ui->lPercentageUsedQuota->show();
     }
 }
 
@@ -804,7 +851,7 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
     }
 #endif
 
-    if (obj != ui->wUsageStorage)
+    if (obj != ui->wUsageStorage && obj != ui->lTotalUsedStorage)
     {
         return false;
     }
@@ -837,7 +884,7 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
     if (!mousePos.isNull() && preferences && preferences->totalStorage())
     {
         createQuotaUsedMenu();
-        QPoint p = ui->wUsageStorage->mapToGlobal(mousePos);
+        QPoint p = ((QWidget *)obj)->mapToGlobal(mousePos);
         QSize s = storageUsedMenu->sizeHint();
         storageUsedMenu->exec(QPoint(p.x() - s.width() / 2, p.y() - s.height()));
     }

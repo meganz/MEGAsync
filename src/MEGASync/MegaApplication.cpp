@@ -1460,6 +1460,7 @@ void MegaApplication::loggedIn()
         }
     }
     infoDialog->setUsage();
+    infoDialog->setAccountType(preferences->accountType());
 
     createTrayMenu();
 
@@ -6472,6 +6473,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (infoDialog)
         {
             infoDialog->setUsage();
+            infoDialog->setAccountType(preferences->accountType());
         }
 
         if (settingsDialog)
