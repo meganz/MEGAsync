@@ -931,7 +931,7 @@ background: transparent;</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgba(0,0,0,0.1);</string>
+            <string notr="true">background-color: rgba(0,0,0,10%);</string>
            </property>
           </widget>
          </item>
@@ -1083,7 +1083,7 @@ background: transparent;</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgba(0,0,0,0.05);</string>
+            <string notr="true">background-color: rgba(0,0,0,5%);</string>
            </property>
           </widget>
          </item>
@@ -1274,7 +1274,7 @@ background: transparent;</string>
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: rgba(0,0,0,0.1);</string>
+            <string notr="true">background-color: rgba(0,0,0,10%);</string>
            </property>
           </widget>
          </item>
