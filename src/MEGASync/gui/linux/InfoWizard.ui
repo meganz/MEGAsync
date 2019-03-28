@@ -240,7 +240,7 @@ background: transparent;</string>
                   <string/>
                  </property>
                  <property name="icon">
-                  <iconset resource="../Resources_win.qrc">
+                  <iconset resource="../Resources_linux.qrc">
                    <normaloff>:/images/img_wizard_1.png</normaloff>:/images/img_wizard_1.png</iconset>
                  </property>
                  <property name="iconSize">
@@ -328,7 +328,7 @@ background: transparent;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_linux.qrc">
                  <normaloff>:/images/img_wizard_2.png</normaloff>:/images/img_wizard_2.png</iconset>
                </property>
                <property name="iconSize">
@@ -412,7 +412,7 @@ background: transparent;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_win.qrc">
+                <iconset resource="../Resources_linux.qrc">
                  <normaloff>:/images/img_wizard_3.png</normaloff>:/images/img_wizard_3.png</iconset>
                </property>
                <property name="iconSize">
@@ -497,7 +497,7 @@ background: transparent;</string>
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/icon_sync.png</normaloff>:/images/icon_sync.png</iconset>
               </property>
               <property name="iconSize">
@@ -645,6 +645,9 @@ background: transparent;</string>
              <height>22</height>
             </size>
            </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
            <property name="styleSheet">
             <string notr="true">border: none;
 background: transparent;</string>
@@ -653,7 +656,7 @@ background: transparent;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_win.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/icon_left_slice.png</normaloff>:/images/icon_left_slice.png</iconset>
            </property>
            <property name="iconSize">
@@ -681,6 +684,9 @@ background: transparent;</string>
           <height>6</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true">border: none;
 background: transparent;</string>
@@ -689,7 +695,7 @@ background: transparent;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/icon_slice_dot.png</normaloff>:/images/icon_slice_dot.png</iconset>
         </property>
         <property name="iconSize">
@@ -714,6 +720,9 @@ background: transparent;</string>
           <height>6</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true">border: none;
 background: transparent;</string>
@@ -722,7 +731,7 @@ background: transparent;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/icon_slice_dot.png</normaloff>:/images/icon_slice_dot.png</iconset>
         </property>
         <property name="iconSize">
@@ -747,6 +756,9 @@ background: transparent;</string>
           <height>6</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true">border: none;
 background: transparent;</string>
@@ -755,7 +767,7 @@ background: transparent;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_win.qrc">
+         <iconset resource="../Resources_linux.qrc">
           <normaloff>:/images/icon_slice_dot.png</normaloff>:/images/icon_slice_dot.png</iconset>
         </property>
         <property name="iconSize">
@@ -810,6 +822,9 @@ background: transparent;</string>
              <height>22</height>
             </size>
            </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
            <property name="styleSheet">
             <string notr="true">border: none;
 background: transparent;</string>
@@ -818,7 +833,7 @@ background: transparent;</string>
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_win.qrc">
+            <iconset resource="../Resources_linux.qrc">
              <normaloff>:/images/icon_right_slide.png</normaloff>:/images/icon_right_slide.png</iconset>
            </property>
            <property name="iconSize">
@@ -1036,6 +1051,9 @@ background: transparent;</string>
                 <height>40</height>
                </size>
               </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="styleSheet">
                <string notr="true">background: #DF4843;
 </string>
@@ -1224,6 +1242,9 @@ background: transparent;</string>
                 <height>40</height>
                </size>
               </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="styleSheet">
                <string notr="true">background: #DF4843;
 </string>
@@ -1346,7 +1367,7 @@ background: transparent;</string>
   <tabstop>bStep3</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

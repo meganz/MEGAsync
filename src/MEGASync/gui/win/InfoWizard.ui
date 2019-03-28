@@ -645,6 +645,9 @@ background: transparent;</string>
              <height>22</height>
             </size>
            </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
+           </property>
            <property name="styleSheet">
             <string notr="true">border: none;
 background: transparent;</string>
@@ -681,6 +684,9 @@ background: transparent;</string>
           <height>6</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true">border: none;
 background: transparent;</string>
@@ -714,6 +720,9 @@ background: transparent;</string>
           <height>6</height>
          </size>
         </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
         <property name="styleSheet">
          <string notr="true">border: none;
 background: transparent;</string>
@@ -746,6 +755,9 @@ background: transparent;</string>
           <width>6</width>
           <height>6</height>
          </size>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
         <property name="styleSheet">
          <string notr="true">border: none;
@@ -809,6 +821,9 @@ background: transparent;</string>
              <width>22</width>
              <height>22</height>
             </size>
+           </property>
+           <property name="cursor">
+            <cursorShape>PointingHandCursor</cursorShape>
            </property>
            <property name="styleSheet">
             <string notr="true">border: none;
@@ -1036,6 +1051,9 @@ background: transparent;</string>
                 <height>40</height>
                </size>
               </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="styleSheet">
                <string notr="true">background: #DF4843;
 </string>
@@ -1223,6 +1241,9 @@ background: transparent;</string>
                 <width>16777215</width>
                 <height>40</height>
                </size>
+              </property>
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
               </property>
               <property name="styleSheet">
                <string notr="true">background: #DF4843;
