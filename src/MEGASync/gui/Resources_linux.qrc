@@ -30,8 +30,6 @@
         <file>images/drag_web_data.png</file>
         <file>images/drag_web_lang.png</file>
         <file>images/drag_word.png</file>
-        <file>images/folder.ico</file>
-        <file>images/general_32.png</file>
         <file>images/help_ico.png</file>
         <file>images/proxies_32.png</file>
         <file>images/small_3D.png</file>
@@ -59,13 +57,8 @@
         <file>images/small_web_lang.png</file>
         <file>images/small_word.png</file>
         <file>images/tray_download_ico.png</file>
-        <file>images/tray_folder_ico.png</file>
         <file>images/tray_preferences_ico.png</file>
-        <file>images/tray_queued_ico.png</file>
-        <file>images/tray_share_ico.png</file>
-        <file>images/tray_updated_large_ico.png</file>
         <file>images/tray_upload_ico.png</file>
-        <file>images/tray_web_ico.png</file>
         <file>images/usageProgress.png</file>
         <file>images/drag_premiere.png</file>
         <file>images/small_premiere.png</file>
@@ -75,45 +68,12 @@
         <file>images/import_error_ico.png</file>
         <file>images/import_ok_icon.png</file>
         <file>images/import_warning_ico.png</file>
-        <file>images/tray_pause_ico.png</file>
-        <file>images/tray_paused_large_ico.png</file>
-        <file>images/tray_play_ico.png</file>
-        <file>images/tray_tooltip_clock_ico.png</file>
-        <file>images/tray_add_sync_ico.png</file>
-        <file>images/tray_sync_ico.png</file>
         <file>images/advanced_32.png</file>
-        <file>images/tray_cancel_ico.png</file>
-        <file>images/mega_logo.png</file>
         <file>images/syncs_32.png</file>
-        <file>images/selective.png</file>
-        <file>images/full_sync.png</file>
-        <file>images/download_timer_ico.png</file>
-        <file>images/upload_timer_ico.png</file>
         <file>images/Pro_II.png</file>
         <file>images/Pro_III.png</file>
         <file>images/Pro_I.png</file>
         <file>images/Free.png</file>
-        <file>images/tray_scanning_large_ico.png</file>
-        <file>images/scanning_anime8.png</file>
-        <file>images/scanning_anime9.png</file>
-        <file>images/scanning_anime7.png</file>
-        <file>images/scanning_anime5.png</file>
-        <file>images/scanning_anime6.png</file>
-        <file>images/scanning_anime4.png</file>
-        <file>images/scanning_anime2.png</file>
-        <file>images/scanning_anime3.png</file>
-        <file>images/scanning_anime18.png</file>
-        <file>images/scanning_anime17.png</file>
-        <file>images/scanning_anime15.png</file>
-        <file>images/scanning_anime16.png</file>
-        <file>images/scanning_anime14.png</file>
-        <file>images/scanning_anime12.png</file>
-        <file>images/scanning_anime13.png</file>
-        <file>images/scanning_anime11.png</file>
-        <file>images/scanning_anime1.png</file>
-        <file>images/scanning_anime10.png</file>
-        <file>images/tray_add_sync_ico2.png</file>
-        <file>images/tray_sync_ico2.png</file>
         <file>images/select_sync_bt.png</file>
         <file>images/selected_sync_bt.png</file>
         <file>images/selective_sync_ico.png</file>
@@ -125,15 +85,10 @@
         <file>images/paused.svg</file>
         <file>images/synching.svg</file>
         <file>images/uptodate.svg</file>
-        <file>images/tray_pause_over_ico.png</file>
-        <file>images/tray_play_over_ico.png</file>
-        <file>images/tray_share_over_ico.png</file>
         <file>images/drag_dmg.png</file>
         <file>images/warning.svg</file>
-        <file>images/tray_warning_ico.png</file>
         <file>images/small_dmg.png</file>
         <file>images/app_64.png</file>
-        <file>images/non_logged_graphic.png</file>
         <file>translations/MEGASyncStrings_ar.qm</file>
         <file>translations/MEGASyncStrings_de.qm</file>
         <file>translations/MEGASyncStrings_en.qm</file>
@@ -167,17 +122,6 @@
         <file>images/storage.png</file>
         <file>images/account_type_over.png</file>
         <file>images/account_type_press.png</file>
-        <file>images/arrow_pc_sync.png</file>
-        <file>images/empty_dot.png</file>
-        <file>images/filled_dot.png</file>
-        <file>images/left_arrow.png</file>
-        <file>images/mega_logo_wizard.png</file>
-        <file>images/megasync_info_dialog.png</file>
-        <file>images/pc_sync.png</file>
-        <file>images/resource_thunder.png</file>
-        <file>images/right_arrow.png</file>
-        <file>images/speed_meter.png</file>
-        <file>images/unlimited_file_size.png</file>
         <file>images/add_ico.png</file>
         <file>images/clear_ico.png</file>
         <file>images/clear_item_ico.png</file>
@@ -187,7 +131,6 @@
         <file>images/download_from_mega_ico.png</file>
         <file>images/download_item_ico.png</file>
         <file>images/get_link_ico.png</file>
-        <file>images/megasync_logo.png</file>
         <file>images/no_downloads.png</file>
         <file>images/no_transfers.png</file>
         <file>images/no_uploads.png</file>
@@ -212,18 +155,12 @@
         <file>images/mbox-warning.png</file>
         <file>images/tray_transfer_manager_ico.png</file>
         <file>images/Lite.png</file>
-        <file>images/ico_chat_button.png</file>
         <file>images/Nav_Dot_active.png</file>
         <file>images/Nav_Dot_inactive.png</file>
         <file>images/ico_syncs_out.png</file>
         <file>images/ico_syncs_over.png</file>
         <file>images/ico_Import_links_out.png</file>
         <file>images/ico_Import_links_over.png</file>
-        <file>images/ico_away.png</file>
-        <file>images/ico_busy.png</file>
-        <file>images/ico_offline.png</file>
-        <file>images/ico_online.png</file>
-        <file>images/empty_upToDate.png</file>
         <file>images/ico_add_sync.png</file>
         <file>images/ico_drop_synched_folder.png</file>
         <file>images/ico_about_MEGA_out.png</file>
@@ -232,8 +169,6 @@
         <file>images/ico_download_over.png</file>
         <file>images/ico_MEGA_website_out.png</file>
         <file>images/ico_MEGA_website_over.png</file>
-        <file>images/ico_pause_transfers_over.png</file>
-        <file>images/ico_pause_transfers.png</file>
         <file>images/ico_preferences_out.png</file>
         <file>images/ico_preferences_over.png</file>
         <file>images/ico_quit_out.png</file>
@@ -242,15 +177,12 @@
         <file>images/ico_stream_over.png</file>
         <file>images/ico_upload_out.png</file>
         <file>images/ico_upload_over.png</file>
-        <file>images/MEGA_header.png</file>
         <file>images/ico_drop_add_sync_over.png</file>
         <file>images/ico_drop_synched_folder_over.png</file>
         <file>images/ic_small_cloud_drive.png</file>
         <file>images/ic_small_inbox.png</file>
         <file>images/ic_small_rubbish.png</file>
         <file>images/ic_small_shares.png</file>
-        <file>images/ico_resume_transfers_over.png</file>
-        <file>images/ico_resume_transfers.png</file>
         <file>fonts/SourceSansPro-Bold.ttf</file>
         <file>fonts/SourceSansPro-Light.ttf</file>
         <file>fonts/SourceSansPro-Regular.ttf</file>
@@ -317,5 +249,13 @@
         <file>images/shield.png</file>
         <file>images/init_scanning.png</file>
         <file>images/avatar_frame.png</file>
+        <file>images/icon_left_slice.png</file>
+        <file>images/icon_right_slide.png</file>
+        <file>images/icon_slice_dot_selected.png</file>
+        <file>images/icon_slice_dot.png</file>
+        <file>images/icon_sync.png</file>
+        <file>images/img_wizard_1.png</file>
+        <file>images/img_wizard_2.png</file>
+        <file>images/img_wizard_3.png</file>
     </qresource>
 </RCC>
