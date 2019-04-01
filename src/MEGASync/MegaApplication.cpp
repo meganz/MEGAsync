@@ -108,7 +108,7 @@ int main(int argc, char *argv[])
     // adds thread-safety to OpenSSL
     QSslSocket::supportsSsl();
 
-#ifdef _WIN32
+#ifndef Q_OS_MACX
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
