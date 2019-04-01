@@ -15,7 +15,6 @@
 #include <QFontDatabase>
 #include <QNetworkProxy>
 #include <assert.h>
-#include <chrono>
 
 #ifdef Q_OS_LINUX
     #include <QSvgRenderer>
@@ -654,8 +653,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     almostOQ = false;
     storageState = MegaApi::STORAGE_STATE_GREEN;
     appliedStorageState = MegaApi::STORAGE_STATE_GREEN;;
+#ifdef _WIN32    
     lastApplicationDeactivation = chrono::steady_clock::now() - 5s;
     installEventFilter(this);
+#endif
 
 #ifdef __APPLE__
     scanningTimer = NULL;
@@ -2889,10 +2890,12 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
         }
     }
 
+#ifdef _WIN32    
     if (e->type() == QEvent::ApplicationDeactivate)
     {
         lastApplicationDeactivation = chrono::steady_clock::now();
     }
+#endif
 
     return QApplication::eventFilter(obj, e);
 }
