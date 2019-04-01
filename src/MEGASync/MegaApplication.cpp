@@ -151,7 +151,7 @@ int main(int argc, char *argv[])
             MegaApi::log(MegaApi::LOG_LEVEL_ERROR, e.toUtf8().constData());
         }
 
-        xrdbdpi = output.toInt();
+        xrdbdpi = qRound(output.toDouble());
         if ( xrdbdpi > 96)
         {
             ratio = output.toDouble()/96.0;
