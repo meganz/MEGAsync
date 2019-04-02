@@ -167,9 +167,15 @@ int main(int argc, char *argv[])
             ratio = min(geom.width()/(1920.0),geom.height()/(1080.0))*0.75;
             ratio = max(1.0,ratio);
         }
-
-        qputenv("QT_SCALE_FACTOR", QString::number(ratio).toUtf8());
     }
+    else
+    {
+        ratio = QString::fromUtf8(getenv("QT_SCALE_FACTOR")).toDouble();
+    }
+
+    double increment = 1/6.0; // this seems to work fine with 24x24 images at least
+    ratio = qRound(ratio/increment)*increment;
+    qputenv("QT_SCALE_FACTOR", QString::number(ratio).toUtf8());
 #endif
 
 #if QT_VERSION >= 0x050000
