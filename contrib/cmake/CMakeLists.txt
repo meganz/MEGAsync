@@ -92,7 +92,8 @@ set (FORMS
 	${MEGAsyncDir}/gui/win/UpgradeOverStorage.ui
 	${MEGAsyncDir}/gui/win/UpgradeWidget.ui
 	${MEGAsyncDir}/gui/win/ChangePassword.ui
-	${MEGAsyncDir}/gui/win/Login2FA.ui )
+	${MEGAsyncDir}/gui/win/Login2FA.ui
+	${MEGAsyncDir}/gui/win/TransfersStatusWidget.ui )
 
 set(FORMS_HEADERS "")
 foreach(F ${FORMS})
@@ -144,6 +145,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/InfoDialogTransfersWidget.h
     ${MEGAsyncDir}/gui/InfoWizard.h
     ${MEGAsyncDir}/gui/LocalCleanScheduler.h
+    ${MEGAsyncDir}/gui/TransfersStatusWidget.h
     ${MEGAsyncDir}/gui/Login2FA.h
     ${MEGAsyncDir}/gui/MegaProxyStyle.h
     ${MEGAsyncDir}/gui/MegaSpeedGraph.h
@@ -288,6 +290,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/UpgradeOverStorage.cpp
     ${MEGAsyncDir}/gui/UpgradeWidget.cpp
     ${MEGAsyncDir}/gui/Login2FA.cpp
+    ${MEGAsyncDir}/gui/TransfersStatusWidget.cpp
 	
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
 	${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
