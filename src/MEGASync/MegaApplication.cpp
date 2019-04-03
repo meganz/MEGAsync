@@ -3862,6 +3862,20 @@ void MegaApplication::showInFolder(int activationButton)
     }
 }
 
+void MegaApplication::openFolderPath(QString localPath)
+{
+    if (!localPath.isEmpty())
+    {
+        #ifdef WIN32
+        if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+        {
+            localPath = localPath.mid(4);
+        }
+        #endif
+        Platform::showInFolder(localPath);
+    }
+}
+
 void MegaApplication::redirectToUpgrade(int activationButton)
 {
     if (activationButton == MegaNotification::ActivationActionButtonClicked
