@@ -1715,7 +1715,7 @@ void MegaApplication::processDownloadQueue(QString path)
         QQueue<MegaNode *>::iterator it;
         for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
         {
-            HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+            HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
         }
 
         qDeleteAll(downloadQueue);
@@ -2801,6 +2801,7 @@ void MegaApplication::startHttpServer()
         connect(httpServer, SIGNAL(onExternalFolderUploadRequested(qlonglong)), this, SLOT(externalFolderUpload(qlonglong)), Qt::QueuedConnection);
         connect(httpServer, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
         connect(httpServer, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
+        connect(httpServer, SIGNAL(onExternalShowInFolderRequested(QString)), this, SLOT(openFolderPath(QString)), Qt::QueuedConnection);
 
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTP server started");
     }
@@ -2820,6 +2821,7 @@ void MegaApplication::startHttpsServer()
         connect(httpsServer, SIGNAL(onExternalFolderSyncRequested(qlonglong)), this, SLOT(externalFolderSync(qlonglong)), Qt::QueuedConnection);
         connect(httpsServer, SIGNAL(onExternalOpenTransferManagerRequested(int)), this, SLOT(externalOpenTransferManager(int)), Qt::QueuedConnection);
         connect(httpsServer, SIGNAL(onConnectionError()), this, SLOT(renewLocalSSLcert()), Qt::QueuedConnection);
+        connect(httpsServer, SIGNAL(onExternalShowInFolderRequested(QString)), this, SLOT(openFolderPath(QString)), Qt::QueuedConnection);
 
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, "Local HTTPS server started");
     }
@@ -3049,7 +3051,7 @@ void MegaApplication::setupWizardFinished(int result)
             QQueue<MegaNode *>::iterator it;
             for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
             {
-                HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+                HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
             }
 
             for (QMap<QString, QString>::iterator it = pendingLinks.begin(); it != pendingLinks.end(); it++)
@@ -3057,7 +3059,7 @@ void MegaApplication::setupWizardFinished(int result)
                 QString link = it.key();
                 QString handle = link.mid(18, 8);
                 HTTPServer::onTransferDataUpdate(megaApi->base64ToHandle(handle.toUtf8().constData()),
-                                                 MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+                                                 MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
             }
 
             qDeleteAll(downloadQueue);
@@ -3152,7 +3154,7 @@ void MegaApplication::infoWizardDialogFinished(int result)
             QQueue<MegaNode *>::iterator it;
             for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
             {
-                HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+                HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
             }
 
             for (QMap<QString, QString>::iterator it = pendingLinks.begin(); it != pendingLinks.end(); it++)
@@ -3160,7 +3162,7 @@ void MegaApplication::infoWizardDialogFinished(int result)
                 QString link = it.key();
                 QString handle = link.mid(18, 8);
                 HTTPServer::onTransferDataUpdate(megaApi->base64ToHandle(handle.toUtf8().constData()),
-                                                 MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+                                                 MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
             }
 
             qDeleteAll(downloadQueue);
@@ -4665,7 +4667,7 @@ void MegaApplication::processDownloads()
         QQueue<MegaNode *>::iterator it;
         for (it = downloadQueue.begin(); it != downloadQueue.end(); ++it)
         {
-            HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0);
+            HTTPServer::onTransferDataUpdate((*it)->getHandle(), MegaTransfer::STATE_CANCELLED, 0, 0, 0, QString());
         }
 
         //If the dialog is rejected, cancel uploads
@@ -6829,7 +6831,8 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
                                              transfer->getState(),
                                              transfer->getTransferredBytes(),
                                              transfer->getTotalBytes(),
-                                             transfer->getSpeed());
+                                             transfer->getSpeed(),
+                                             QString::fromUtf8(transfer->getPath()));
     }
 
     if (transferManager)
@@ -6936,7 +6939,8 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
                                              transfer->getState(),
                                              transfer->getTransferredBytes(),
                                              transfer->getTotalBytes(),
-                                             transfer->getSpeed());
+                                             transfer->getSpeed(),
+                                             QString::fromUtf8(transfer->getPath()));
     }
 
     if (transferManager)
@@ -7050,7 +7054,8 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
                                              transfer->getState(),
                                              transfer->getTransferredBytes(),
                                              transfer->getTotalBytes(),
-                                             transfer->getSpeed());
+                                             transfer->getSpeed(),
+                                             QString::fromUtf8(transfer->getPath()));
     }
 
     unsigned long long priority = transfer->getPriority();
