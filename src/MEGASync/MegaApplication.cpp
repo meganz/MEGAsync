@@ -129,7 +129,7 @@ int main(int argc, char *argv[])
 
 #ifdef Q_OS_LINUX
 #if QT_VERSION >= 0x050600
-    qreal ratio = 1;
+    qreal ratio = 1.0;
     int xrdbdpi = 0;
     if (!(getenv("DO_NOT_OVERRIDE_XDG_CURRENT_DESKTOP")))
     {
@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
         xrdbdpi = qRound(output.toDouble());
         if ( xrdbdpi > 96)
         {
-            ratio = output.toDouble()/96.0;
+            ratio = output.toDouble() / 96.0;
             if (ratio > 3)
             {
                 ratio = 3;
@@ -162,10 +162,10 @@ int main(int argc, char *argv[])
         }
         else
         {
-            MegaApplication appaux(argc,argv); //needed to get geometry (it needs to be instantiated a second time to actually use scale factor)
+            MegaApplication appaux(argc, argv); //needed to get geometry (it needs to be instantiated a second time to actually use scale factor)
             QRect geom = appaux.desktop()->availableGeometry(QCursor::pos());
-            ratio = min(geom.width()/(1920.0),geom.height()/(1080.0))*0.75;
-            ratio = max(1.0,ratio);
+            ratio = min(geom.width() / (1920.0),geom.height() / (1080.0)) * 0.75;
+            ratio = max(1.0, ratio);
         }
     }
     else
@@ -173,8 +173,8 @@ int main(int argc, char *argv[])
         ratio = QString::fromUtf8(getenv("QT_SCALE_FACTOR")).toDouble();
     }
 
-    double increment = 1/6.0; // this seems to work fine with 24x24 images at least
-    ratio = qRound(ratio/increment)*increment;
+    double increment = 1 / 6.0; // this seems to work fine with 24x24 images at least
+    ratio = qRound(ratio / increment) * increment;
     qputenv("QT_SCALE_FACTOR", QString::number(ratio).toUtf8());
 #endif
 
