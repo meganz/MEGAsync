@@ -60,6 +60,12 @@ shift
 echo -n $remote Password: 
 read -s password
 sshpasscommand="sshpass -p $password ssh $remote"
+$sshpasscommand hostname > /dev/null
+if [[ $? != 0 ]]; then
+echo
+echo unable to connect to $remote, ensure password is ok
+exit 1
+fi
 echo
 fi
 
