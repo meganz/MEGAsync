@@ -485,5 +485,8 @@
         <file>images/img_wizard_3.png</file>
         <file>images/img_wizard_3@2x.png</file>
         <file>images/img_wizard_3@3x.png</file>
+        <file>images/transfer_manager.png</file>
+        <file>images/transfer_manager@2x.png</file>
+        <file>images/transfer_manager@3x.png</file>
     </qresource>
 </RCC>

@@ -9,10 +9,10 @@ void TransfersStatusWidget::updateSizes()
     if (lastwidth != this->width() || lastheigth != this->height())
     {
         int minwidthheight = qMin(this->width(), this->height());
-        wpen = minwidthheight/48.0*5;
+        wpen = floor(minwidthheight/48.0*4);
         diamoutside = minwidthheight-wpen;
-        spacing = minwidthheight/48.0*4;
-        diaminside = diamoutside-wpen*2-spacing;
+        spacing = minwidthheight/48.0*2;
+        diaminside = diamoutside-wpen*2-spacing*2;
         marginoutside = wpen/2;
 
         residualin = 0;
@@ -28,7 +28,7 @@ void TransfersStatusWidget::updateSizes()
         setPercentInnerCircle(getPercentInnerCircle());
         setPercentOuterCircle(getPercentOuterCircle());
 
-        int sizeinnterimage = minwidthheight/48.0*24;
+        int sizeinnterimage = minwidthheight - 4 * spacing - 4 * wpen;
 
         qDebug() << " minwidthheight = " << minwidthheight << " sizeinnterimage= " << sizeinnterimage;
         ui->bTransferManager->move(minwidthheight/2-sizeinnterimage/2,minwidthheight/2-sizeinnterimage/2);
@@ -38,7 +38,6 @@ void TransfersStatusWidget::updateSizes()
         lastwidth = this->width();
         lastheigth = this->height();
     }
-
 }
 
 TransfersStatusWidget::TransfersStatusWidget(QWidget *parent) :
