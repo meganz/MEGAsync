@@ -638,14 +638,14 @@ class MinidumpWriter {
           uint64_t ret;
           /* char redzone[128]; */
         } seccomp_stackframe;
-        if (top - offsetof(typeof(seccomp_stackframe), deadbeef) < old_top ||
-            top - offsetof(typeof(seccomp_stackframe), deadbeef) +
+        if (top - offsetof(TYPEOF(seccomp_stackframe), deadbeef) < old_top ||
+            top - offsetof(TYPEOF(seccomp_stackframe), deadbeef) +
             sizeof(seccomp_stackframe) >
             thread.stack.start_of_memory_range+thread.stack.memory.data_size) {
           break;
         }
         my_memcpy(&seccomp_stackframe,
-                  bp_addr - offsetof(typeof(seccomp_stackframe), deadbeef),
+                  bp_addr - offsetof(TYPEOF(seccomp_stackframe), deadbeef),
                   sizeof(seccomp_stackframe));
         cpu->rbx = seccomp_stackframe.rbx;
         cpu->rcx = seccomp_stackframe.rcx;
