@@ -109,8 +109,10 @@ int main(int argc, char *argv[])
     QSslSocket::supportsSsl();
 
 #ifndef Q_OS_MACX
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+#if QT_VERSION >= 0x050600
+   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+#endif
+   QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
 #endif
 
 #ifdef Q_OS_MACX
