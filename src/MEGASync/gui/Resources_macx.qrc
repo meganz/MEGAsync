@@ -53,11 +53,9 @@
         <file>images/small_web_data.png</file>
         <file>images/small_web_lang.png</file>
         <file>images/small_word.png</file>
-        <file>images/tray_download_ico.png</file>
         <file>images/tray_pause.ico</file>
         <file>images/tray_preferences_ico.png</file>
         <file>images/tray_sync.ico</file>
-        <file>images/tray_upload_ico.png</file>
         <file>images/usageProgress.png</file>
         <file>images/drag_premiere.png</file>
         <file>images/small_premiere.png</file>
@@ -90,9 +88,7 @@
         <file>images/bandwidth_32@2x.png</file>
         <file>images/proxies_32@2x.png</file>
         <file>images/syncs_32@2x.png</file>
-        <file>images/tray_download_ico@2x.png</file>
         <file>images/tray_preferences_ico@2x.png</file>
-        <file>images/tray_upload_ico@2x.png</file>
         <file>images/usageProgress@2x.png</file>
         <file>images/Pro_I.png</file>
         <file>images/Pro_I@2x.png</file>
