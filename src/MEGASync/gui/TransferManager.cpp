@@ -206,7 +206,7 @@ void TransferManager::createAddMenu()
         importLinksAction = NULL;
     }
 
-    importLinksAction = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
+    importLinksAction = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/ico_Import_links.png")));
     connect(importLinksAction, SIGNAL(triggered()), qApp, SLOT(importLinks()), Qt::QueuedConnection);
 
     if (uploadAction)
@@ -215,7 +215,7 @@ void TransferManager::createAddMenu()
         uploadAction = NULL;
     }
 
-    uploadAction = new MenuItemAction(tr("Upload"), QIcon(QString::fromAscii("://images/upload_to_mega_ico.png")), QIcon(QString::fromAscii("://images/upload_to_mega_ico_white.png")));
+    uploadAction = new MenuItemAction(tr("Upload"), QIcon(QString::fromAscii("://images/ico_upload.png")));
     connect(uploadAction, SIGNAL(triggered()), qApp, SLOT(uploadActionClicked()), Qt::QueuedConnection);
 
     if (downloadAction)
@@ -224,7 +224,7 @@ void TransferManager::createAddMenu()
         downloadAction = NULL;
     }
 
-    downloadAction = new MenuItemAction(tr("Download"), QIcon(QString::fromAscii("://images/download_from_mega_ico.png")), QIcon(QString::fromAscii("://images/download_from_mega_ico_white.png")));
+    downloadAction = new MenuItemAction(tr("Download"), QIcon(QString::fromAscii("://images/ico_download.png")));
     connect(downloadAction, SIGNAL(triggered()), qApp, SLOT(downloadActionClicked()), Qt::QueuedConnection);
 
     if (settingsAction)
@@ -234,9 +234,9 @@ void TransferManager::createAddMenu()
     }
 
 #ifndef __APPLE__
-    settingsAction = new MenuItemAction(tr("Settings"), QIcon(QString::fromAscii("://images/settings_ico.png")), QIcon(QString::fromAscii("://images/settings_ico_white.png")));
+    settingsAction = new MenuItemAction(tr("Settings"), QIcon(QString::fromAscii("://images/ico_preferences.png")));
 #else
-    settingsAction = new MenuItemAction(tr("Preferences"), QIcon(QString::fromAscii("://images/settings_ico.png")), QIcon(QString::fromAscii("://images/settings_ico_white.png")));
+    settingsAction = new MenuItemAction(tr("Preferences"), QIcon(QString::fromAscii("://images/ico_preferences.png")));
 #endif
     connect(settingsAction, SIGNAL(triggered()), qApp, SLOT(openSettings()), Qt::QueuedConnection);
 

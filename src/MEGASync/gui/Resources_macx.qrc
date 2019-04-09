@@ -242,12 +242,8 @@
         <file>images/cloud_item_ico@2x.png</file>
         <file>images/cloud_upload_item_ico.png</file>
         <file>images/cloud_upload_item_ico@2x.png</file>
-        <file>images/download_from_mega_ico.png</file>
-        <file>images/download_from_mega_ico@2x.png</file>
         <file>images/download_item_ico.png</file>
         <file>images/download_item_ico@2x.png</file>
-        <file>images/get_link_ico.png</file>
-        <file>images/get_link_ico@2x.png</file>
         <file>images/no_downloads.png</file>
         <file>images/no_downloads@2x.png</file>
         <file>images/no_transfers.png</file>
@@ -260,14 +256,10 @@
         <file>images/paused_transfers@2x.png</file>
         <file>images/play_ico.png</file>
         <file>images/play_ico@2x.png</file>
-        <file>images/settings_ico.png</file>
-        <file>images/settings_ico@2x.png</file>
         <file>images/sync_item_ico.png</file>
         <file>images/sync_item_ico@2x.png</file>
         <file>images/upload_item_ico.png</file>
         <file>images/upload_item_ico@2x.png</file>
-        <file>images/upload_to_mega_ico.png</file>
-        <file>images/upload_to_mega_ico@2x.png</file>
         <file>fonts/SourceSansPro-Regular.ttf</file>
         <file>fonts/SourceSansPro-Light.ttf</file>
         <file>fonts/SourceSansPro-Semibold.ttf</file>
@@ -280,14 +272,6 @@
         <file>images/downloading@2x.gif</file>
         <file>images/synching@2x.gif</file>
         <file>images/uploading@2x.gif</file>
-        <file>images/download_from_mega_ico_white.png</file>
-        <file>images/download_from_mega_ico_white@2x.png</file>
-        <file>images/get_link_ico_white.png</file>
-        <file>images/get_link_ico_white@2x.png</file>
-        <file>images/settings_ico_white.png</file>
-        <file>images/settings_ico_white@2x.png</file>
-        <file>images/upload_to_mega_ico_white.png</file>
-        <file>images/upload_to_mega_ico_white@2x.png</file>
         <file>images/clock_ico.png</file>
         <file>images/clock_ico@2x.png</file>
         <file>images/completed_transfers.png</file>
@@ -304,50 +288,10 @@
         <file>images/Nav_Dot_active@2x.png</file>
         <file>images/Nav_Dot_inactive.png</file>
         <file>images/Nav_Dot_inactive@2x.png</file>
-        <file>images/ico_syncs_out.png</file>
-        <file>images/ico_syncs_out@2x.png</file>
-        <file>images/ico_syncs_over.png</file>
-        <file>images/ico_syncs_over@2x.png</file>
-        <file>images/ico_Import_links_out.png</file>
-        <file>images/ico_Import_links_out@2x.png</file>
-        <file>images/ico_Import_links_over.png</file>
-        <file>images/ico_Import_links_over@2x.png</file>
         <file>images/ico_add_sync.png</file>
         <file>images/ico_add_sync@2x.png</file>
         <file>images/ico_drop_synched_folder.png</file>
         <file>images/ico_drop_synched_folder@2x.png</file>
-        <file>images/ico_about_MEGA_out.png</file>
-        <file>images/ico_about_MEGA_out@2x.png</file>
-        <file>images/ico_about_MEGA_over.png</file>
-        <file>images/ico_about_MEGA_over@2x.png</file>
-        <file>images/ico_download_out.png</file>
-        <file>images/ico_download_out@2x.png</file>
-        <file>images/ico_download_over.png</file>
-        <file>images/ico_download_over@2x.png</file>
-        <file>images/ico_MEGA_website_out.png</file>
-        <file>images/ico_MEGA_website_out@2x.png</file>
-        <file>images/ico_MEGA_website_over.png</file>
-        <file>images/ico_MEGA_website_over@2x.png</file>
-        <file>images/ico_preferences_out.png</file>
-        <file>images/ico_preferences_out@2x.png</file>
-        <file>images/ico_preferences_over.png</file>
-        <file>images/ico_preferences_over@2x.png</file>
-        <file>images/ico_quit_out.png</file>
-        <file>images/ico_quit_out@2x.png</file>
-        <file>images/ico_quit_over.png</file>
-        <file>images/ico_quit_over@2x.png</file>
-        <file>images/ico_stream_out.png</file>
-        <file>images/ico_stream_out@2x.png</file>
-        <file>images/ico_stream_over.png</file>
-        <file>images/ico_stream_over@2x.png</file>
-        <file>images/ico_upload_out.png</file>
-        <file>images/ico_upload_out@2x.png</file>
-        <file>images/ico_upload_over.png</file>
-        <file>images/ico_upload_over@2x.png</file>
-        <file>images/ico_drop_add_sync_over.png</file>
-        <file>images/ico_drop_add_sync_over@2x.png</file>
-        <file>images/ico_drop_synched_folder_over.png</file>
-        <file>images/ico_drop_synched_folder_over@2x.png</file>
         <file>images/ic_small_cloud_drive.png</file>
         <file>images/ic_small_cloud_drive@2x.png</file>
         <file>images/ic_small_inbox.png</file>
@@ -498,5 +442,27 @@
         <file>images/transfer_manager@2x.png</file>
         <file>images/strong_mark.png</file>
         <file>images/strong_mark@2x.png</file>
+        <file>images/ico_about_MEGA.png</file>
+        <file>images/ico_about_MEGA@2x.png</file>
+        <file>images/ico_add_sync_folder.png</file>
+        <file>images/ico_add_sync_folder@2x.png</file>
+        <file>images/ico_cloud_drive.png</file>
+        <file>images/ico_cloud_drive@2x.png</file>
+        <file>images/ico_download.png</file>
+        <file>images/ico_download@2x.png</file>
+        <file>images/ico_drop_add_sync.png</file>
+        <file>images/ico_drop_add_sync@2x.png</file>
+        <file>images/ico_Import_links.png</file>
+        <file>images/ico_Import_links@2x.png</file>
+        <file>images/ico_MEGA_website.png</file>
+        <file>images/ico_MEGA_website@2x.png</file>
+        <file>images/ico_preferences.png</file>
+        <file>images/ico_preferences@2x.png</file>
+        <file>images/ico_quit.png</file>
+        <file>images/ico_quit@2x.png</file>
+        <file>images/ico_stream.png</file>
+        <file>images/ico_stream@2x.png</file>
+        <file>images/ico_upload.png</file>
+        <file>images/ico_upload@2x.png</file>
     </qresource>
 </RCC>
