@@ -165,9 +165,6 @@
         <file>images/tray_preferences_ico@2x.png</file>
         <file>images/tray_preferences_ico@3x.png</file>
         <file>images/tray_sync.ico</file>
-        <file>images/usageProgress.png</file>
-        <file>images/usageProgress@2x.png</file>
-        <file>images/usageProgress@3x.png</file>
         <file>images/drag_premiere.png</file>
         <file>images/drag_premiere@2x.png</file>
         <file>images/drag_premiere@3x.png</file>
@@ -516,9 +513,6 @@
         <file>images/ico_resume_transfers_state.png</file>
         <file>images/ico_resume_transfers_state@2x.png</file>
         <!-- <file>images/ico_resume_transfers_state@3x.png</file> -->
-        <file>images/drag_camera_sync.png</file>
-        <file>images/drag_camera_sync@2x.png</file>
-        <file>images/drag_camera_sync@3x.png</file>
         <file>images/drag_experiencedesign.png</file>
         <file>images/drag_experiencedesign@2x.png</file>
         <file>images/drag_experiencedesign@3x.png</file>

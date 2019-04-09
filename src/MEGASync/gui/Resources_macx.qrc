@@ -56,7 +56,6 @@
         <file>images/tray_pause.ico</file>
         <file>images/tray_preferences_ico.png</file>
         <file>images/tray_sync.ico</file>
-        <file>images/usageProgress.png</file>
         <file>images/drag_premiere.png</file>
         <file>images/small_premiere.png</file>
         <file>images/small_text.png</file>
@@ -89,7 +88,6 @@
         <file>images/proxies_32@2x.png</file>
         <file>images/syncs_32@2x.png</file>
         <file>images/tray_preferences_ico@2x.png</file>
-        <file>images/usageProgress@2x.png</file>
         <file>images/Pro_I.png</file>
         <file>images/Pro_I@2x.png</file>
         <file>images/menu_header.png</file>
@@ -97,8 +95,6 @@
         <file>images/separator line.png</file>
         <file>images/top_arrow.png</file>
         <file>images/top_arrow@2x.png</file>
-        <file>images/drag_camera_sync.png</file>
-        <file>images/drag_camera_sync@2x.png</file>
         <file>images/icon_syncing_mac1.png</file>
         <file>images/icon_syncing_mac1@2x.png</file>
         <file>images/icon_syncing_mac2.png</file>
