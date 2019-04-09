@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>fonts/OpenSans-Regular.ttf</file>
-        <file>fonts/OpenSans-Semibold.ttf</file>
         <file>images/account_32.png</file>
         <file>images/account_32@2x.png</file>
         <file>images/account_32@3x.png</file>
@@ -354,8 +352,14 @@
         <file>images/completed_item_ico@2x.png</file>
         <file>images/completed_item_ico@3x.png</file>
         <file>images/downloading.gif</file>
+        <file>images/downloading@2x.gif</file>
+        <file>images/downloading@3x.gif</file>
         <file>images/synching.gif</file>
+        <file>images/synching@2x.gif</file>
+        <file>images/synching@3x.gif</file>
         <file>images/uploading.gif</file>
+        <file>images/uploading@2x.gif</file>
+        <file>images/uploading@3x.gif</file>
         <file>images/download_from_mega_ico_white.png</file>
         <file>images/download_from_mega_ico_white@2x.png</file>
         <file>images/download_from_mega_ico_white@3x.png</file>
@@ -470,6 +474,8 @@
         <file>images/ic_small_shares.png</file>
         <file>images/ic_small_shares@2x.png</file>
         <file>images/ic_small_shares@3x.png</file>
+        <file>fonts/OpenSans-Regular.ttf</file>
+        <file>fonts/OpenSans-Semibold.ttf</file>
         <file>fonts/SourceSansPro-Bold.ttf</file>
         <file>fonts/SourceSansPro-Light.ttf</file>
         <file>fonts/SourceSansPro-Regular.ttf</file>
