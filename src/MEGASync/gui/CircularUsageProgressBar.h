@@ -11,7 +11,7 @@
 
 const char DEFAULT_FGCOLOR[] = "#5969BD";
 const char DEFAULT_BKCOLOR[] = "#E5E5E5";
-const char DEFAULT_OQCOLOR[] = "#F0373A";
+const char DEFAULT_OQCOLOR[] = "#DF4843";
 const char DEFAULT_ALMOSTOQCOLOR[] = "#FF6F00";
 
 
