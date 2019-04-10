@@ -75,6 +75,10 @@ private slots:
 
     void on_bHelp_clicked();
 
+#ifndef __APPLE__
+    void on_bHelpIco_clicked();
+#endif
+
     void on_rProxyManual_clicked();
 
     void on_rProxyAuto_clicked();

@@ -811,6 +811,13 @@ void SettingsDialog::on_bHelp_clicked()
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
 
+#ifndef __APPLE__
+void SettingsDialog::on_bHelpIco_clicked()
+{
+    on_bHelp_clicked();
+}
+#endif
+
 void SettingsDialog::on_rProxyManual_clicked()
 {
     ui->cProxyType->setEnabled(true);
