@@ -204,8 +204,20 @@ LibRaw is a library for reading RAW files obtained from digital photo cameras (C
 https://www.libraw.org/
 
 License: LGPL 2.1 or CDDL 1.0
+
 https://github.com/LibRaw/LibRaw/blob/master/LICENSE.LGPL
 https://github.com/LibRaw/LibRaw/blob/master/LICENSE.CDDL
+
+#### PDFium
+Copyright 2014 PDFium Authors. All rights reserved.
+
+PDF generation and rendering library.
+
+https://opensource.google.com/projects/pdfium
+
+License: BSD 3-clause
+
+https://pdfium.googlesource.com/pdfium/+/master/LICENSE
 
 --------------------------------------------------------------------
 
