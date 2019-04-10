@@ -36,8 +36,17 @@
 // signal and return EINTR. See man 7 signal.
 //
 
+
+#if __cplusplus >= 201103L
+#include <type_traits>
+#define TYPEOF(x) std::remove_reference<decltype(x)>::type
+#else
+#define TYPEOF(x) typeof(x)
+#endif
+
+
 #define HANDLE_EINTR(x) ({ \
-  typeof(x) eintr_wrapper_result; \
+  TYPEOF(x) eintr_wrapper_result; \
   do { \
     eintr_wrapper_result = (x); \
   } while (eintr_wrapper_result == -1 && errno == EINTR); \

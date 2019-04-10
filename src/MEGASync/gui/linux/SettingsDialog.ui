@@ -51,6 +51,11 @@ QScrollBar:horizontal {
 height: 16px;
 }
 
+QRadioButton::indicator, QCheckBox::indicator{
+width: 16px;
+height: 16px;
+}
+
 #SettingsDialog
 {
 	background-color: #f1f1f1;
@@ -105,7 +110,7 @@ margin-left: 5px;
 spacing: 11px;
 
 padding-top: 1px;
-padding-bottom: -1px;
+padding-bottom: 0px;
 }
 
 #lStorage
@@ -789,7 +794,7 @@ background:transparent;</string>
                    <enum>Qt::StrongFocus</enum>
                   </property>
                   <property name="text">
-                   <string>FREE</string>
+                   <string/>
                   </property>
                  </widget>
                 </item>
@@ -841,7 +846,7 @@ background:transparent;</string>
                    <enum>Qt::StrongFocus</enum>
                   </property>
                   <property name="text">
-                   <string notr="true">sample@email.com</string>
+                   <string notr="true"/>
                   </property>
                  </widget>
                 </item>
@@ -1218,7 +1223,7 @@ border: none;</string>
 </string>
                </property>
                <property name="text">
-                <string notr="true">1.21 GB (1%) of 500 GB used</string>
+                <string notr="true"/>
                </property>
               </widget>
              </item>
@@ -2806,7 +2811,7 @@ border: none;</string>
            <widget class="QSpinBox" name="eMaxDownloadConnections">
             <property name="minimumSize">
              <size>
-              <width>40</width>
+              <width>45</width>
               <height>0</height>
              </size>
             </property>
@@ -2835,7 +2840,7 @@ border: none;</string>
            <widget class="QSpinBox" name="eMaxUploadConnections">
             <property name="minimumSize">
              <size>
-              <width>40</width>
+              <width>45</width>
               <height>0</height>
              </size>
             </property>

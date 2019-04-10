@@ -450,6 +450,7 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
             if (modelType == QTransfersModel::TYPE_FINISHED)
             {
                 bool failed = false;
+                bool linkAvailable = true;
                 MegaTransfer *transfer = NULL;
                 QTransfersModel *model = (QTransfersModel*)this->model();
                 if (model)
@@ -467,6 +468,12 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                         {
                             failed = true;
                         }
+
+                        if (!model->transferItems[transferTagSelected[i]]->getIsLinkAvailable())
+                        {
+                             linkAvailable = false;
+                        }
+
                         delete transfer;
                     }
                 }
@@ -474,6 +481,10 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                 if (failed)
                 {
                     customizeCompletedContextMenu(false, false, false, false);
+                }
+                else if (!linkAvailable)
+                {
+                    customizeCompletedContextMenu(false, true, true, false);
                 }
                 else
                 {

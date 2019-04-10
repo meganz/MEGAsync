@@ -47,14 +47,9 @@ QGroupBox {
 	border:none;
 }
 
-QCheckBox::indicator {
+QCheckBox::indicator, QRadioButton::indicator {
      width: 16px;
      height: 16px;
- }
-
-QRadioButton::indicator {
-     width: 22px;
-     height: 22px;
  }
 
 QScrollBar:horizontal {
@@ -99,6 +94,9 @@ margin-right: 5px;
 margin-right: 6px;
 margin-left: 1px;
 }
+#rProxyAuto, #rNoProxy, #rProxyManual {
+margin-left: 1px;
+}
 
 #label
 {
@@ -110,7 +108,7 @@ margin-left: 5px;
 spacing: 11px;
 
 padding-top: 1px;
-padding-bottom: -1px;
+padding-bottom: 0px;
 }
 
 #lStorage
@@ -797,7 +795,7 @@ background:transparent;</string>
                    <enum>Qt::StrongFocus</enum>
                   </property>
                   <property name="text">
-                   <string>FREE</string>
+                   <string/>
                   </property>
                  </widget>
                 </item>
@@ -849,7 +847,7 @@ background:transparent;</string>
                    <enum>Qt::StrongFocus</enum>
                   </property>
                   <property name="text">
-                   <string notr="true">sample@email.com</string>
+                   <string notr="true"/>
                   </property>
                  </widget>
                 </item>
@@ -1226,7 +1224,7 @@ border: none;</string>
 </string>
                </property>
                <property name="text">
-                <string notr="true">1.21 GB (1%) of 500 GB used</string>
+                <string notr="true"/>
                </property>
               </widget>
              </item>

@@ -11,6 +11,7 @@
 #include <Sddl.h>
 #include <time.h>
 #include <iostream>
+#include <dpapi.h>
 
 #if QT_VERSION >= 0x050200
 #include <QtWin>

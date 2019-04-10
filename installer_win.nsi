@@ -808,6 +808,10 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\swresample-2.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\swresample-2.dll" "$USERNAME" "GenericRead + GenericWrite"
 
+  File "${SRCDIR_MEGASYNC}\pdfium.dll"
+  AccessControl::SetFileOwner "$INSTDIR\pdfium.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\pdfium.dll" "$USERNAME" "GenericRead + GenericWrite"
+
 ;!ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
   File "${UNINSTALLER_NAME}"
   AccessControl::SetFileOwner "$INSTDIR\${UNINSTALLER_NAME}" "$USERNAME"
@@ -1079,6 +1083,7 @@ Section Uninstall
   Delete "$INSTDIR\avutil-55.dll"
   Delete "$INSTDIR\swscale-4.dll"
   Delete "$INSTDIR\swresample-2.dll"
+  Delete "$INSTDIR\pdfium.dll"
 
   !define LIBRARY_COM
   !define LIBRARY_SHELL_EXTENSION

@@ -1365,7 +1365,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Merci de tester MEGAsync. &lt;br&gt;Cette version bêta n&apos;est plus à jour et est expirée. &lt;br&gt;Veuillez suivre &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; sur Twitter pour des informations à jour.</translation>
+        <translation type="obsolete">Nous vous remercions de de tester MEGAsync. &lt;br&gt;Cette version bêta n’est plus à jour et est expirée. &lt;br&gt;Veuillez suivre &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; sur Twitter pour des renseignements à jour.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -1714,7 +1714,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting link information</source>
         <translatorcomment>Notification  error message shown while getting information from a public link.</translatorcomment>
-        <translation type="unfinished">Erreur de récupération des informations du lien</translation>
+        <translation type="unfinished">Erreur de récupération des renseignements du lien</translation>
     </message>
     <message>
         <source>DEBUG mode disabled</source>
@@ -1808,7 +1808,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
         <translatorcomment>Message shown to the user to inform whe he is trying to sync a folder formatted with FAT filesystem</translatorcomment>
-        <translation type="unfinished">Vous synchronisez un dossier local formaté avec le système de fichiers FAT. Ce système de fichiers présente des lacunes de gestion des fichiers volumineux et des heures de modification qui peuvent causer des problèmes de synchronisations (p. ex. lors des passages à l&apos;heure avancée), et il est fortement recommandé de ne synchroniser que des dossiers formatés avec des systèmes de fichiers plus fiables comme NTFS (plus d&apos;informations [A]ici[/A]).</translation>
+        <translation type="unfinished">Vous synchronisez un dossier local formaté avec le système de fichiers FAT. Ce système de fichiers présente des lacunes de gestion des fichiers volumineux et des heures de modification qui peuvent causer des problèmes de synchronisations (p. ex. lors des passages à l’heure avancée), et il est fortement recommandé de ne synchroniser que des dossiers formatés avec des systèmes de fichiers plus fiables comme NTFS (plus de renseignements [A]ici[/A]).</translation>
     </message>
     <message>
         <source>Please consider updating your operating system.</source>
@@ -2142,6 +2142,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Not enough quota</source>
         <translatorcomment>Label shown when current account does not have enough quota to complete the operation</translatorcomment>
         <translation type="unfinished">Quota insuffisant</translation>
+    </message>
+</context>
+<context>
+    <name>MegaNodeNames</name>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Title of the Cloud Drive section</translatorcomment>
+        <translation type="unfinished">Disque nuagique</translation>
     </message>
 </context>
 <context>
@@ -2500,7 +2508,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Files and folders have an owner and belongs to a group of users. Using this dialog, you can grant different access permission for new files and folders created by MEGAsync to users that belong to the same group and to the rest of the users in the computer. If you don&apos;t need to change them, please leave them as default for security reasons.</source>
         <translatorcomment>Information for users in the dialog that allows to change permissions of new files and folders created by MEGAsync</translatorcomment>
-        <translation type="unfinished">Les fichiers et dossiers ont un propriétaire et appartiennent à un groupe d&apos;utilisateurs. En utilisant cette fenêtre de dialogue, vous pouvez accorder différents droits d&apos;accès aux utilisateurs qui appartiennent au même groupe et aux autres utilisateurs de l&apos;ordinateur pour les nouveaux fichiers et dossiers créés par MEGAsync. Si vous n&apos;avez pas besoin de changer ces droits, veuillez les laisser à leur valeur par défaut pour des raisons de sécurité.</translation>
+        <translation type="unfinished">Les fichiers et dossiers ont un propriétaire et appartiennent à un groupe d’utilisateurs. Pour les nouveaux fichiers et dossiers créés par MEGAsync, cette fenêtre de dialogue vous permet d’accorder différents droits d’accès aux utilisateurs qui appartiennent au même groupe, ainsi qu’aux autres utilisateurs de l’ordinateur. Si vous n’avez pas besoin de changer ces droits, veuillez les laisser à leur valeur par défaut pour des raisons de sécurité.</translation>
     </message>
     <message>
         <source>Owner permissions:</source>
@@ -2934,7 +2942,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the user the amount and percentage of used space and total space available. Keep %1 (%2%) and %3 codes because they will be filled with the required amounts of storage space.</translatorcomment>
-        <translation>%1 (%2% %) utilisés sur %3</translation>
+        <translation>%1 (%2 %) utilisés sur %3</translation>
     </message>
     <message>
         <source>PRO I</source>
@@ -3182,7 +3190,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
         <translatorcomment>Label to inform the user to keep physical control of the master key.</translatorcomment>
-        <translation type="unfinished">assurez toujours le contrôle physique de votre clé de récupération (p. ex. sur un dispositif client, une mémoire externe ou encore imprimée).</translation>
+        <translation type="unfinished">Assurez toujours le contrôle physique de votre clé de récupération (p. ex. sur un dispositif client, une mémoire externe ou encore imprimée).</translation>
     </message>
     <message>
         <source>Exclude by size</source>
@@ -3787,7 +3795,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Des dossiers précis de votre disque nuagique seront synchronisés vers des dossiers locaux.</translation>
+        <translation type="unfinished">Des dossiers précis de votre disque nuagique seront synchronisés vers des dossiers locaux qui leur correspondent.</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
@@ -3925,6 +3933,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
         <translation type="unfinished">Les limites de taille ne peuvent pas être zéro</translation>
     </message>
+    <message>
+        <source>Bytes</source>
+        <translatorcomment>Label to indicate bytes unit.</translatorcomment>
+        <translation type="unfinished">Bytes</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
+        <translation type="unfinished">Ko</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
+        <translation type="unfinished">Mo</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
+        <translation type="unfinished">Go</translation>
+    </message>
 </context>
 <context>
     <name>StatusInfo</name>
@@ -3994,7 +4022,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>File info:</source>
         <translatorcomment>Text just before of the information of the file selected for streaming</translatorcomment>
-        <translation type="unfinished">Infos sur le fichier :</translation>
+        <translation type="unfinished">Renseignements sur le fichier :</translation>
     </message>
     <message>
         <source>Nothing selected</source>
@@ -4064,7 +4092,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error getting link information</source>
         <translatorcomment>Error message shown when a there is an error getting the information of a public link</translatorcomment>
-        <translation type="unfinished">Erreur de récupération des informations du lien</translation>
+        <translation type="unfinished">Erreur de récupération des renseignements du lien</translation>
     </message>
 </context>
 <context>
@@ -4519,6 +4547,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 years ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %1 years ago</translatorcomment>
         <translation type="unfinished">Il y a %1 ans</translation>
+    </message>
+    <message>
+        <source>TB</source>
+        <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
+        <translation type="unfinished">To</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
+        <translation type="unfinished">Go</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
+        <translation type="unfinished">Mo</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
+        <translation type="unfinished">Ko</translation>
     </message>
 </context>
 <context>

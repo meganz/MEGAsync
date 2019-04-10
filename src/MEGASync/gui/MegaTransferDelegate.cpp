@@ -69,6 +69,22 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 {
                     ti->setFinishedTime(transfer->getUpdateTime());
                     ti->updateFinishedTime();
+
+                    MegaNode *node = transfer->getPublicMegaNode();
+                    if (node && node->isPublic())
+                    {
+                        ti->setIsLinkAvailable(true);
+                    }
+                    else
+                    {
+                        MegaNode *ownNode = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(transfer->getNodeHandle());
+                        if (ownNode)
+                        {
+                            ti->setIsLinkAvailable(true);
+                            delete ownNode;
+                        }
+                    }
+                    delete node;
                 }
 
                 delete transfer;
@@ -249,7 +265,8 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
         {
             MegaTransfer *transfer = NULL;
             transfer = model->getTransferByTag(tag);
-            if (transfer && transfer->isFinished() && transfer->getPath())
+            if (transfer && transfer->getState() == MegaTransfer::STATE_COMPLETED
+                         && transfer->getPath())
             {
                 QString localPath = QString::fromUtf8(transfer->getPath());
                 #ifdef WIN32
@@ -270,7 +287,9 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
         MegaTransfer *transfer = NULL;
         int tag = index.internalId();
         transfer = model->getTransferByTag(tag);
-        if (transfer && transfer->isFinished() && transfer->getPath())
+
+        if (transfer && transfer->getState() == MegaTransfer::STATE_COMPLETED
+                     && transfer->getPath())
         {
             QString localPath = QString::fromUtf8(transfer->getPath());
             #ifdef WIN32

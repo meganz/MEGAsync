@@ -172,3 +172,14 @@ DEFINES += REQUIRE_HAVE_PDFIUM
 #DEFINES += REQUIRE_ENABLE_EVT_TLS
 #DEFINES += REQUIRE_USE_PCRE
 }
+
+CONFIG(debug) {
+    OUTPATH=debug
+}
+CONFIG(release) {
+    OUTPATH=release
+}
+
+win32 {
+    QMAKE_POST_LINK = $$quote(mt.exe -nologo -manifest $$shell_path($$PWD/../../contrib/cmake/MEGAsync.exe.manifest) -outputresource:$$shell_path($${OUTPATH}/$${TARGET}.exe);1$$escape_expand(\n\t))
+}

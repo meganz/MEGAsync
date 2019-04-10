@@ -55,7 +55,7 @@
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Carpetas compartidas entrantes</translation>
+        <translation type="unfinished">Compartido conmigo</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
@@ -1085,7 +1085,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Carpetas compartidas entrantes</translation>
+        <translation type="unfinished">Compartido conmigo</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
@@ -2143,6 +2143,14 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Not enough quota</source>
         <translatorcomment>Label shown when current account does not have enough quota to complete the operation</translatorcomment>
         <translation type="unfinished">Cuota insuficiente</translation>
+    </message>
+</context>
+<context>
+    <name>MegaNodeNames</name>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Title of the Cloud Drive section</translatorcomment>
+        <translation type="unfinished">Mi nube</translation>
     </message>
 </context>
 <context>
@@ -3789,7 +3797,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Carpetas específicas de tu nube serán sincronizadas con una carpeta local.</translation>
+        <translation type="unfinished">Carpetas específicas de tu nube serán sincronizadas con las correspondientes carpetas locales.</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
@@ -3926,6 +3934,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
         <translation type="unfinished">Los límites de tamaño no pueden ser cero</translation>
+    </message>
+    <message>
+        <source>Bytes</source>
+        <translatorcomment>Label to indicate bytes unit.</translatorcomment>
+        <translation type="unfinished">Bytes</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
+        <translation type="unfinished">KB</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
+        <translation type="unfinished">MB</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
+        <translation type="unfinished">GB</translation>
     </message>
 </context>
 <context>
@@ -4422,7 +4450,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Carpetas compartidas entrantes</translation>
+        <translation type="unfinished">Compartido conmigo</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -4445,7 +4473,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Carpetas compartidas entrantes</translation>
+        <translation type="unfinished">Compartido conmigo</translation>
     </message>
     <message>
         <source>Inbox</source>
@@ -4521,6 +4549,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 years ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %1 years ago</translatorcomment>
         <translation type="unfinished">hace %1 años</translation>
+    </message>
+    <message>
+        <source>TB</source>
+        <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
+        <translation type="unfinished">TB</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
+        <translation type="unfinished">GB</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
+        <translation type="unfinished">MB</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
+        <translation type="unfinished">KB</translation>
     </message>
 </context>
 <context>
