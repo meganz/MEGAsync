@@ -157,6 +157,7 @@ public slots:
     void changeProxy();
     void importLinks();
     void officialWeb();
+    void goToMyCloud();
     void pauseTransfers();
     void showChangeLog();
     void uploadActionClicked();
@@ -282,6 +283,7 @@ protected:
     MenuItemAction *downloadAction;
     MenuItemAction *streamAction;
     MenuItemAction *webAction;
+    MenuItemAction *myCloudAction;
     MenuItemAction *addSyncAction;
 
     MenuItemAction *updateAction;

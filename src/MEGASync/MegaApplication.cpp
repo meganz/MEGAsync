@@ -615,6 +615,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     downloadAction = NULL;
     streamAction = NULL;
     webAction = NULL;
+    myCloudAction = NULL;
     addSyncAction = NULL;
     waiting = false;
     updated = false;
@@ -4100,6 +4101,12 @@ void MegaApplication::officialWeb()
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(webUrl));
 }
 
+void MegaApplication::goToMyCloud()
+{
+    QString url = QString::fromUtf8("");
+    megaApi->getSessionTransferURL(url.toUtf8().constData());
+}
+
 //Called when the "Import links" menu item is clicked
 void MegaApplication::importLinks()
 {
@@ -5760,6 +5767,15 @@ void MegaApplication::createTrayMenu()
     webAction = new MenuItemAction(tr("MEGA website"), QIcon(QString::fromAscii("://images/ico_MEGA_website.png")), true);
     connect(webAction, SIGNAL(triggered()), this, SLOT(officialWeb()), Qt::QueuedConnection);
 
+    if (myCloudAction)
+    {
+        myCloudAction->deleteLater();
+        myCloudAction = NULL;
+    }
+
+    myCloudAction = new MenuItemAction(tr("Cloud drive"), QIcon(QString::fromAscii("://images/ico_cloud_drive.png")), true);
+    connect(myCloudAction, SIGNAL(triggered()), this, SLOT(goToMyCloud()), Qt::QueuedConnection);
+
     if (addSyncAction)
     {
         addSyncAction->deleteLater();
@@ -5898,6 +5914,7 @@ void MegaApplication::createTrayMenu()
 
     trayMenu->addAction(updateAction);
     trayMenu->addAction(webAction);
+    trayMenu->addAction(myCloudAction);
     trayMenu->addSeparator();
     trayMenu->addAction(addSyncAction);
     trayMenu->addAction(importLinksAction);
