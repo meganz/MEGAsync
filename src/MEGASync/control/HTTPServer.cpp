@@ -757,7 +757,15 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                 RequestTransferData* tData = webTransferStateRequests.value(handle);
                 if (!tData->tPath.isNull())
                 {
-                    emit onExternalShowInFolderRequested(tData->tPath);
+                    if (QFile(tData->tPath).exists())
+                    {
+                        emit onExternalShowInFolderRequested(tData->tPath);
+                    }
+                    else
+                    {
+                        emit onExternalShowInFolderRequested(QFileInfo(tData->tPath).dir().absolutePath());
+                    }
+
                     response = QString::number(MegaError::API_OK);
                 }
                 else
