@@ -229,6 +229,7 @@ public slots:
 #endif
 private slots:
     void showInFolder(int activationButton);
+    void openFolderPath(QString path);
     void redirectToUpgrade(int activationButton);
     void registerUserActivity();
     void PSAseen(int id);

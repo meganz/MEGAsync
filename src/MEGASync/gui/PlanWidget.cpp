@@ -91,32 +91,32 @@ void PlanWidget::updatePlanInfo()
     {
         case PRO_LITE:
             ui->bcrest->setIcon(QIcon(QString::fromAscii("://images/litecrest.png")));
-            ui->bcrest->setIconSize(QSize(58, 58));
+            ui->bcrest->setIconSize(QSize(64, 64));
             ui->lProPlan->setText(QString::fromUtf8("PRO LITE"));
             ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ffa500;"));
             break;
         case PRO_I:
             ui->lTip->setText(tr("popular!"));
             ui->bcrest->setIcon(QIcon(QString::fromAscii("://images/proicrest.png")));
-            ui->bcrest->setIconSize(QSize(58, 58));
+            ui->bcrest->setIconSize(QSize(64, 64));
             ui->lProPlan->setText(QString::fromUtf8("PRO I"));
             ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ff333a;"));
             break;
         case PRO_II:
             ui->bcrest->setIcon(QIcon(QString::fromAscii("://images/proiicrest.png")));
-            ui->bcrest->setIconSize(QSize(58, 58));
+            ui->bcrest->setIconSize(QSize(64, 64));
             ui->lProPlan->setText(QString::fromUtf8("PRO II"));
             ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ff333a;"));
             break;
         case PRO_III:
             ui->bcrest->setIcon(QIcon(QString::fromAscii("://images/proiiicrest.png")));
-            ui->bcrest->setIconSize(QSize(58, 58));
+            ui->bcrest->setIconSize(QSize(64, 64));
             ui->lProPlan->setText(QString::fromUtf8("PRO III"));
             ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ff333a;"));
             break;
         default:
             ui->bcrest->setIcon(QIcon(QString::fromAscii("://images/litecrest.png")));
-            ui->bcrest->setIconSize(QSize(58, 58));
+            ui->bcrest->setIconSize(QSize(64, 64));
             ui->lProPlan->setText(QString::fromUtf8("PRO"));
             ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ffa500;"));
             break;

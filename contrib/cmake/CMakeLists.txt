@@ -56,8 +56,6 @@ include_directories( "${MEGAsyncDir}/gui/win" )
 set (FORMS
     ${MEGAsyncDir}/gui/win/InfoDialog.ui
 	${MEGAsyncDir}/gui/win/CustomTransferItem.ui
-	${MEGAsyncDir}/gui/win/TransferProgressBar.ui
-	${MEGAsyncDir}/gui/win/UsageProgressBar.ui
 	${MEGAsyncDir}/gui/win/NodeSelector.ui
 	${MEGAsyncDir}/gui/win/FolderBinder.ui
 	${MEGAsyncDir}/gui/win/BindFolderDialog.ui
@@ -173,14 +171,12 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/TransferItem.h
     ${MEGAsyncDir}/gui/TransferManager.h
     ${MEGAsyncDir}/gui/TransferManagerItem.h
-    ${MEGAsyncDir}/gui/TransferProgressBar.h
     ${MEGAsyncDir}/gui/TransfersStateInfoWidget.h
     ${MEGAsyncDir}/gui/TransfersWidget.h
     ${MEGAsyncDir}/gui/UpgradeDialog.h
     ${MEGAsyncDir}/gui/UpgradeOverStorage.h
     ${MEGAsyncDir}/gui/UpgradeWidget.h
     ${MEGAsyncDir}/gui/UploadToMegaDialog.h
-    ${MEGAsyncDir}/gui/UsageProgressBar.h
     ${MEGAsyncDir}/gui/UsageWidget.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -236,8 +232,6 @@ set (SRCS
 	
 	${MEGAsyncDir}/gui/SettingsDialog.cpp
     ${MEGAsyncDir}/gui/InfoDialog.cpp
-    ${MEGAsyncDir}/gui/TransferProgressBar.cpp
-    ${MEGAsyncDir}/gui/UsageProgressBar.cpp
     ${MEGAsyncDir}/gui/SetupWizard.cpp
     ${MEGAsyncDir}/gui/NodeSelector.cpp
     ${MEGAsyncDir}/gui/FolderBinder.cpp

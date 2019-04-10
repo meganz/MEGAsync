@@ -12,6 +12,11 @@ Packager:	MEGA Linux Team <linux@mega.co.nz>
 BuildRequires: openssl-devel, sqlite-devel, zlib-devel, autoconf, automake, libtool, gcc-c++
 BuildRequires: hicolor-icon-theme, unzip, wget
 BuildRequires: ffmpeg-mega
+
+%if %{_target_cpu} != "i586" &&  %{_target_cpu} != "i686"
+BuildRequires: pdfium-mega
+%endif
+
 %if 0%{?sle_version} >= 150000
 BuildRequires: libcurl4
 %endif

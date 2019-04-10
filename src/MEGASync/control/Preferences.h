@@ -318,7 +318,8 @@ public:
         ACCOUNT_TYPE_PROI = 1,
         ACCOUNT_TYPE_PROII = 2,
         ACCOUNT_TYPE_PROIII = 3,
-        ACCOUNT_TYPE_LITE = 4
+        ACCOUNT_TYPE_LITE = 4,
+        ACCOUNT_TYPE_BUSINESS = 100
     };
 
     enum {

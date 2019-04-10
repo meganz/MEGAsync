@@ -31,6 +31,19 @@ AccountDetailsDialog::~AccountDetailsDialog()
 void AccountDetailsDialog::refresh(Preferences *preferences)
 {
 
+    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+        setMinimumHeight(280);
+        setMaximumHeight(280);
+        ui->sHeader->hide();
+    }
+    else
+    {
+        setMinimumHeight(320);
+        setMaximumHeight(320);
+        ui->sHeader->show();
+    }
+
     if (preferences->totalStorage() == 0)
     {
         ui->pUsageStorage->setValue(0);

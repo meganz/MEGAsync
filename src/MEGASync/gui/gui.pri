@@ -2,8 +2,6 @@ QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/InfoDialog.cpp \
-    $$PWD/TransferProgressBar.cpp \
-    $$PWD/UsageProgressBar.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
@@ -61,8 +59,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
-    $$PWD/TransferProgressBar.h \
-    $$PWD/UsageProgressBar.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
@@ -129,8 +125,6 @@ win32 {
     INCLUDEPATH += $$PWD/win
     FORMS    += $$PWD/win/InfoDialog.ui \
                 $$PWD/win/CustomTransferItem.ui \
-                $$PWD/win/TransferProgressBar.ui \
-                $$PWD/win/UsageProgressBar.ui \
                 $$PWD/win/NodeSelector.ui \
                 $$PWD/win/FolderBinder.ui \
                 $$PWD/win/BindFolderDialog.ui \
@@ -173,8 +167,6 @@ macx {
     RESOURCES += $$PWD/Resources_macx.qrc
     INCLUDEPATH += $$PWD/macx
     FORMS    += $$PWD/macx/InfoDialog.ui \
-                $$PWD/macx/TransferProgressBar.ui \
-                $$PWD/macx/UsageProgressBar.ui \
                 $$PWD/macx/NodeSelector.ui \
                 $$PWD/macx/FolderBinder.ui \
                 $$PWD/macx/BindFolderDialog.ui \
@@ -230,8 +222,6 @@ unix:!macx {
     INCLUDEPATH += $$PWD/linux
     FORMS    += $$PWD/linux/InfoDialog.ui \
                 $$PWD/linux/CustomTransferItem.ui \
-                $$PWD/linux/TransferProgressBar.ui \
-                $$PWD/linux/UsageProgressBar.ui \
                 $$PWD/linux/NodeSelector.ui \
                 $$PWD/linux/FolderBinder.ui \
                 $$PWD/linux/BindFolderDialog.ui \
