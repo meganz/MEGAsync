@@ -46,7 +46,9 @@ public:
     static QByteArray encrypt(QByteArray data, QByteArray key);
     static QByteArray decrypt(QByteArray data, QByteArray key);
     static QByteArray getLocalStorageKey();
+    static QString getDefaultFileBrowserApp();
     static QString getDefaultOpenApp(QString extension);
+    static QString getDefaultOpenAppByMimeType(QString mimeType);
     static void enableDialogBlur(QDialog *dialog);
     static void activateBackgroundWindow(QDialog *window);
     static void execBackgroundWindow(QDialog *window);
