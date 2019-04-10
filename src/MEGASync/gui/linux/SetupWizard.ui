@@ -189,6 +189,18 @@
          </item>
          <item>
           <widget class="QPushButton" name="wHelp">
+           <property name="minimumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">border: none;
 </string>
