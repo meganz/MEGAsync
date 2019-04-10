@@ -32,6 +32,7 @@ RequestTransferData::RequestTransferData()
     speed = 0;
     tsStart = QDateTime::currentMSecsSinceEpoch() / 1000;
     tsEnd = -1;
+    tPath = QString();
 }
 
 bool HTTPServer::isFirstWebDownloadDone = false;
@@ -185,7 +186,7 @@ void HTTPServer::onUploadSelectionDiscarded()
     }
 }
 
-void HTTPServer::onTransferDataUpdate(MegaHandle handle, int state, long long progress, long long size, long long speed)
+void HTTPServer::onTransferDataUpdate(MegaHandle handle, int state, long long progress, long long size, long long speed, QString localPath)
 {
     QMap<MegaHandle, RequestTransferData*>::iterator it = webTransferStateRequests.find(handle);
     if (it == webTransferStateRequests.end())
@@ -198,6 +199,11 @@ void HTTPServer::onTransferDataUpdate(MegaHandle handle, int state, long long pr
     tData->progress = progress;
     tData->size = size;
     tData->speed = speed;
+    if (tData->tPath.isEmpty() && !localPath.isEmpty())
+    {
+        tData->tPath = localPath;
+    }
+
     if (state == MegaTransfer::STATE_CANCELLED
             || state == MegaTransfer::STATE_COMPLETED
             || state == MegaTransfer::STATE_FAILED)
@@ -353,6 +359,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
     QString externalOpenTransferManagerStart   = QString::fromUtf8("{\"a\":\"tm\",");
     QString externalUploadSelectionStatusStart = QString::fromUtf8("{\"a\":\"uss\",");
     QString externalTransferQueryProgressStart = QString::fromUtf8("{\"a\":\"t\",");
+    QString externalShowInFolder = QString::fromUtf8("{\"a\":\"sf\",");
 
     QPointer<QAbstractSocket> safeSocket = socket;
     QPointer<HTTPServer> safeServer = this;
@@ -723,6 +730,49 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
         {
             emit onExternalOpenTransferManagerRequested(tab);
             response = QString::number(MegaError::API_OK);
+        }
+    }
+    else if (request.data.startsWith(externalShowInFolder))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Show in folder command received from the webclient");
+        QString targetHandle = Utilities::extractJSONString(request.data, QString::fromUtf8("h"));
+        MegaHandle handle = ::mega::INVALID_HANDLE;
+        if (targetHandle.size())
+        {
+            handle = MegaApi::base64ToHandle(targetHandle.toUtf8().constData());
+        }
+
+        if (handle == ::mega::INVALID_HANDLE)
+        {
+            response = QString::number(MegaError::API_EARGS);
+        }
+        else
+        {
+            if (!webTransferStateRequests.contains(handle))
+            {
+                response = QString::number(MegaError::API_ENOENT);
+            }
+            else
+            {
+                RequestTransferData* tData = webTransferStateRequests.value(handle);
+                if (!tData->tPath.isNull())
+                {
+                    if (QFile(tData->tPath).exists())
+                    {
+                        emit onExternalShowInFolderRequested(tData->tPath);
+                    }
+                    else
+                    {
+                        emit onExternalShowInFolderRequested(QFileInfo(tData->tPath).dir().absolutePath());
+                    }
+
+                    response = QString::number(MegaError::API_OK);
+                }
+                else
+                {
+                    response = QString::number(MegaError::API_ENOENT);
+                }
+            }
         }
     }
     else if (request.data.startsWith(externalTransferQueryProgressStart))
