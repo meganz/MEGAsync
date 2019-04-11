@@ -137,11 +137,7 @@ QPushButton
       <item>
        <widget class="QPushButton" name="bChange">
         <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../Resources_win.qrc">
-          <normaloff>:/images/import_cloud_ico.png</normaloff>:/images/import_cloud_ico.png</iconset>
+         <string>Choose</string>
         </property>
         <property name="iconSize">
          <size>
@@ -150,7 +146,7 @@ QPushButton
          </size>
         </property>
         <property name="flat">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -238,9 +234,7 @@ QPushButton
   <tabstop>bOK</tabstop>
   <tabstop>bCancel</tabstop>
  </tabstops>
- <resources>
-  <include location="../Resources_win.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>bCancel</sender>

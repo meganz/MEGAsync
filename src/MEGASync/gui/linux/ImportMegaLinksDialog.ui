@@ -55,11 +55,6 @@ height: 16px;
 {
 	background-color: #f1f1f1;
 }
-
-#bLocalFolder, #bMegaFolder
-{
-    border: none;
-}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0">
@@ -187,19 +182,15 @@ height: 16px;
            </property>
            <property name="maximumSize">
             <size>
-             <width>24</width>
-             <height>24</height>
+             <width>16777215</width>
+             <height>16777215</height>
             </size>
            </property>
            <property name="styleSheet">
             <string notr="true"/>
            </property>
            <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="Resources.qrc">
-             <normaloff>:/images/import_computer_ico.png</normaloff>:/images/import_computer_ico.png</iconset>
+            <string>Choose</string>
            </property>
            <property name="iconSize">
             <size>
@@ -208,7 +199,7 @@ height: 16px;
             </size>
            </property>
            <property name="flat">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -269,16 +260,12 @@ height: 16px;
            </property>
            <property name="maximumSize">
             <size>
-             <width>24</width>
-             <height>24</height>
+             <width>16777215</width>
+             <height>16777215</height>
             </size>
            </property>
            <property name="text">
-            <string/>
-           </property>
-           <property name="icon">
-            <iconset resource="Resources.qrc">
-             <normaloff>:/images/import_cloud_ico.png</normaloff>:/images/import_cloud_ico.png</iconset>
+            <string>Choose</string>
            </property>
            <property name="iconSize">
             <size>
@@ -287,7 +274,7 @@ height: 16px;
             </size>
            </property>
            <property name="flat">
-            <bool>true</bool>
+            <bool>false</bool>
            </property>
           </widget>
          </item>
@@ -362,9 +349,7 @@ height: 16px;
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="Resources.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>bCancel</sender>
