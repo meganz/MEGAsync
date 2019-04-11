@@ -32,7 +32,12 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#wHeader
+   <string notr="true">QPushButton, QLabel
+{
+font-size: 13px;
+}
+
+#wHeader
 {
  background-color:  #FAFAFA;
  border-top-left-radius: 2px;

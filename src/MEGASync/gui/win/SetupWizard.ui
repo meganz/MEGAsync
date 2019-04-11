@@ -26,7 +26,12 @@
    <string>Setup Assistant - MEGAsync</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lTypicalDesc, #lAdvancedDesc
+   <string notr="true">QPushButton, QLabel, QLineEdit
+{
+font-size: 11px;
+}
+
+#lTypicalDesc, #lAdvancedDesc
 {
 	font-size:13px; 
 	color:#666666;
@@ -1805,6 +1810,9 @@ font-size: 13px;
           </item>
           <item row="0" column="1">
            <layout class="QHBoxLayout" name="hMegaFolder">
+            <property name="spacing">
+             <number>0</number>
+            </property>
             <item>
              <widget class="QLineEdit" name="eLocalFolder">
               <property name="enabled">
@@ -1818,6 +1826,9 @@ font-size: 13px;
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">margin-right: 6px;</string>
               </property>
               <property name="readOnly">
                <bool>true</bool>
@@ -1853,7 +1864,7 @@ font-size: 13px;
           <item row="2" column="1">
            <layout class="QHBoxLayout" name="hLocalFolder">
             <property name="spacing">
-             <number>6</number>
+             <number>0</number>
             </property>
             <item>
              <widget class="QLineEdit" name="eMegaFolder">
@@ -1862,6 +1873,9 @@ font-size: 13px;
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">margin-right: 6px;</string>
               </property>
               <property name="readOnly">
                <bool>true</bool>
