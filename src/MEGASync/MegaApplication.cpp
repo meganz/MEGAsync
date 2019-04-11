@@ -111,8 +111,8 @@ int main(int argc, char *argv[])
 #ifndef Q_OS_MACX
 #if QT_VERSION >= 0x050600
    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-#endif
    QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
+#endif
 #endif
 
 #ifdef Q_OS_MACX
