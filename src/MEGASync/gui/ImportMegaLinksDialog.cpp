@@ -125,6 +125,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
     finished = false;
     linkProcessor->requestLinkInfo();
     ui->bOk->setDefault(true);
+    highDpiResize.init(this);
 }
 
 ImportMegaLinksDialog::~ImportMegaLinksDialog()

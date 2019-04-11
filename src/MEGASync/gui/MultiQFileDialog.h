@@ -8,6 +8,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QDialogButtonBox>
+#include "HighDpiResize.h"
 
 class MultiQFileDialog : public QFileDialog
 {
@@ -23,6 +24,7 @@ protected:
     bool eventFilter(QObject *obj, QEvent *e);
     bool showHidden;
     bool multiSelect;
+    HighDpiResize highDpiResize;
 
 signals:
 

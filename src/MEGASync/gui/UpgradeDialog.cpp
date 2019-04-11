@@ -4,6 +4,7 @@
 #include "Preferences.h"
 #include <QDateTime>
 #include <QUrl>
+#include "HighDpiResize.h"
 
 using namespace mega;
 
@@ -43,6 +44,7 @@ UpgradeDialog::UpgradeDialog(MegaApi *megaApi, MegaPricing *pricing, QWidget *pa
     timer = new QTimer(this);
     timer->setSingleShot(false);
     connect(timer, SIGNAL(timeout()), this, SLOT(unitTimeElapsed()));
+    highDpiResize.init(this);
 }
 
 void UpgradeDialog::setTimestamp(long long time)

@@ -662,6 +662,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     almostOQ = false;
     storageState = MegaApi::STORAGE_STATE_GREEN;
     appliedStorageState = MegaApi::STORAGE_STATE_GREEN;;
+#ifdef _WIN32    
+    lastApplicationDeactivation = chrono::steady_clock::now() - 5s;
+    installEventFilter(this);
+#endif
 
 #ifdef __APPLE__
     scanningTimer = NULL;
@@ -2637,6 +2641,7 @@ void MegaApplication::showInfoDialog()
             infoDialog->updateDialogState();
             infoDialog->raise();
             infoDialog->activateWindow();
+            infoDialog->highDpiResize.queueRedraw();
         }
         else
         {
@@ -2896,6 +2901,13 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
             }
         }
     }
+
+#ifdef _WIN32    
+    if (e->type() == QEvent::ApplicationDeactivate)
+    {
+        lastApplicationDeactivation = chrono::steady_clock::now();
+    }
+#endif
 
     return QApplication::eventFilter(obj, e);
 }
@@ -5311,7 +5323,14 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
                 trayMenu->close();
             }
         }
-        infoDialogTimer->start(200);
+#ifdef _WIN32
+        // in windows, a second click on the task bar icon first deactivates the app which closes the infoDialg.  
+        // This statement prevents us opening it again, so that we have one-click to open the infoDialog, and a second closes it.
+        if (chrono::steady_clock::now() - lastApplicationDeactivation > 500ms)
+#endif
+        {
+            infoDialogTimer->start(200);
+        }
 #else
         showInfoDialog();
 #endif
@@ -6962,7 +6981,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         infoDialog->onTransferFinish(megaApi, transfer, e);
     }
 
-    if (finishedTransferOrder.size() > Preferences::MAX_COMPLETED_ITEMS)
+    if (finishedTransferOrder.size() > (int)Preferences::MAX_COMPLETED_ITEMS)
     {
         removeFinishedTransfer(finishedTransferOrder.first()->getTag());
     }

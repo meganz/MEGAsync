@@ -54,7 +54,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/ElidedLabel.cpp \
     $$PWD/UpgradeOverStorage.cpp \
     $$PWD/UpgradeWidget.cpp \
-    $$PWD/Login2FA.cpp
+    $$PWD/Login2FA.cpp \
+    $$PWD/HighDpiResize.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
@@ -110,7 +111,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/UpgradeOverStorage.h \
     $$PWD/UpgradeWidget.h \
     $$PWD/ChangePassword.h \
-    $$PWD/Login2FA.h
+    $$PWD/Login2FA.h \
+    $$PWD/HighDpiResize.h
 
 INCLUDEPATH += $$PWD
 

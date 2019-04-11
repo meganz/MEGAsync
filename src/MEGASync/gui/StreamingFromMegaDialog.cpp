@@ -4,6 +4,7 @@
 
 #include "platform/Platform.h"
 #include "control/Utilities.h"
+#include "HighDpiResize.h"
 
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
@@ -39,6 +40,7 @@ StreamingFromMegaDialog::StreamingFromMegaDialog(mega::MegaApi *megaApi, QWidget
     ui->bCopyLink->setEnabled(false);
     ui->sFileInfo->setCurrentWidget(ui->pNothingSelected);
     delegateListener = new QTMegaRequestListener(this->megaApi, this);
+    highDpiResize.init(this);
 }
 
 StreamingFromMegaDialog::~StreamingFromMegaDialog()

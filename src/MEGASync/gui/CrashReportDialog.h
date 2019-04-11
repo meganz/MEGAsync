@@ -2,6 +2,7 @@
 #define CRASHREPORTDIALOG_H
 
 #include <QDialog>
+#include "HighDpiResize.h"
 
 namespace Ui {
 class CrashReportDialog;
@@ -18,6 +19,7 @@ public:
 
 private:
     Ui::CrashReportDialog *ui;
+    HighDpiResize highDpiResize;
 };
 
 #endif // CRASHREPORTDIALOG_H

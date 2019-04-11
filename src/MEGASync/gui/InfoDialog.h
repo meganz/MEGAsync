@@ -12,6 +12,7 @@
 #include "MenuItemAction.h"
 #include "control/Preferences.h"
 #include <QGraphicsOpacityEffect>
+#include "HighDpiResize.h"
 
 namespace Ui {
 class InfoDialog;
@@ -55,6 +56,7 @@ public:
 #endif
 
     void regenerateLayout();
+    HighDpiResize highDpiResize;
 
 private:
     void drawAvatar(QString email);

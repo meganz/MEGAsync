@@ -33,6 +33,7 @@ DownloadFromMegaDialog::DownloadFromMegaDialog(QString defaultPath, QWidget *par
     ui->bChange->setEnabled(true);
     ui->bOK->setEnabled(true);
     ui->bOK->setDefault(true);
+    highDpiResize.init(this);
 }
 
 DownloadFromMegaDialog::~DownloadFromMegaDialog()

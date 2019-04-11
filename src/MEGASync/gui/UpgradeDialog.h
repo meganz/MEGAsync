@@ -6,6 +6,7 @@
 #include "gui/PlanWidget.h"
 #include <QHBoxLayout>
 #include <megaapi.h>
+#include "HighDpiResize.h"
 
 namespace Ui {
 class UpgradeDialog;
@@ -40,6 +41,7 @@ protected:
 
     mega::MegaPricing *pricing;
     mega::MegaApi *megaApi;
+    HighDpiResize highDpiResize;
 };
 
 #endif // UPGRADEDIALOG_H

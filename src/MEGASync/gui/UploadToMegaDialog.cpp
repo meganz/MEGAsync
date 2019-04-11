@@ -3,6 +3,7 @@
 #include "gui/NodeSelector.h"
 #include "control/Utilities.h"
 #include <QPointer>
+#include "HighDpiResize.h"
 
 using namespace mega;
 
@@ -23,6 +24,7 @@ UploadToMegaDialog::UploadToMegaDialog(MegaApi *megaApi, QWidget *parent) :
     ui->bChange->setEnabled(true);
     ui->bOK->setEnabled(true);
     ui->bOK->setDefault(true);
+    highDpiResize.init(this);
 }
 
 UploadToMegaDialog::~UploadToMegaDialog()

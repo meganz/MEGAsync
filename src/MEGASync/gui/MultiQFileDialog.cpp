@@ -77,6 +77,7 @@ MultiQFileDialog::MultiQFileDialog(QWidget *parent, const QString &caption, cons
        (*it)->installEventFilter(this);
     }
     installEventFilter(this);
+    highDpiResize.init(this);
 }
 
 bool MultiQFileDialog::eventFilter(QObject *obj, QEvent *e)

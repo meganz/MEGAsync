@@ -137,6 +137,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/ElidedLabel.h
     ${MEGAsyncDir}/gui/FolderBinder.h
     ${MEGAsyncDir}/gui/GuestWidget.h
+    ${MEGAsyncDir}/gui/HighDpiResize.h
     ${MEGAsyncDir}/gui/ImportListWidgetItem.h
     ${MEGAsyncDir}/gui/ImportMegaLinksDialog.h
     ${MEGAsyncDir}/gui/InfoDialog.h
@@ -251,6 +252,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/MegaItem.cpp
     ${MEGAsyncDir}/gui/ChangeLogDialog.cpp
     ${MEGAsyncDir}/gui/GuestWidget.cpp
+    ${MEGAsyncDir}/gui/HighDpiResize.cpp
     ${MEGAsyncDir}/gui/StreamingFromMegaDialog.cpp
     ${MEGAsyncDir}/gui/ConfirmSSLexception.cpp
     ${MEGAsyncDir}/gui/UpgradeDialog.cpp

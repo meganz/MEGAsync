@@ -17,6 +17,7 @@
 #include "control/Utilities.h"
 #include "platform/Platform.h"
 #include "gui/AddExclusionDialog.h"
+#include <assert.h>
 
 #ifdef __APPLE__
     #include "gui/CocoaHelpButton.h"
@@ -281,6 +282,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     ui->lOQWarning->setText(QString::fromUtf8(""));
     ui->wOQError->hide();
+
+    highDpiResize.init(this);
 }
 
 SettingsDialog::~SettingsDialog()
