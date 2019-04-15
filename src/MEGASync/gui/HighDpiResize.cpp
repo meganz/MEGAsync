@@ -13,10 +13,12 @@ void HighDpiResize::init(QDialog* d)
 
 bool HighDpiResize::eventFilter(QObject *obj, QEvent *event)
 {
+#if QT_VERSION >= 0x050000
     if (event->type() == QEvent::ScreenChangeInternal)
     {
         queueRedraw();
     }
+#endif
     return QObject::eventFilter(obj, event);
 }
 
