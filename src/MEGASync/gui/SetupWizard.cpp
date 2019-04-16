@@ -1218,6 +1218,13 @@ void SetupWizard::lTermsLink_clicked()
     ui->cAgreeWithTerms->toggle();
 }
 
+#ifdef Q_OS_LINUX
+void SetupWizard::on_lTermsLink_linkActivated(const QString &link)
+{
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("https://mega.nz/terms")));
+}
+#endif
+
 void SetupWizard::on_bLearMore_clicked()
 {
     QString helpUrl = QString::fromAscii("https://mega.nz/help/client/megasync/syncing/how-to-setup-sync-client-can-i-specify-which-folder-s-to-sync-576c80e2886688e6028b4591\\");
