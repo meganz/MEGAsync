@@ -335,8 +335,7 @@ target_link_libraries(MEGAsync Mega
 			"${QT_DIR}/lib/Qt5Networkd.lib" 
 			"${QT_DIR}/lib/Qt5Widgetsd.lib" 
             "${QT_DIR}/lib/Qt5WinExtrasd.lib" 
-			ole32 Shell32 crypt32 taskschd Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib
-            "${MEGAsyncDir}/mega/bindings/qt/3rdparty/libs/x32d/libuv.lib")
+			ole32 Shell32 crypt32 taskschd Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib )
 
 # Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
 IF (MSVC)
@@ -347,3 +346,7 @@ IF (MSVC)
 		COMMENT "Adding display aware manifest..." 
 	)
 ENDIF(MSVC)
+
+if (WIN32)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4127")  # 4127: conditional expression is constant  (occurs in QT headers)
+ENDIF()

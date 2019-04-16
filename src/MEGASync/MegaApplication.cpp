@@ -7375,10 +7375,33 @@ void MegaApplication::onReloadNeeded(MegaApi*)
     preferences->setCrashed(true);
 }
 
-void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
+void MegaApplication::onGlobalSyncStateChangedTimeout()
+{
+    onGlobalSyncStateChanged(NULL, true);
+}
+
+void MegaApplication::onGlobalSyncStateChanged(MegaApi *, bool timeout)
 {
     if (appfinished)
     {
+        return;
+    }
+
+    // don't execute too often or the dialog locks up, eg. queueing a folder with 1k items for upload/download
+    if (timeout)
+    {
+        onGlobalSyncStateChangedTimer.reset();
+    }
+    else 
+    {
+        if (!onGlobalSyncStateChangedTimer)
+        {
+            onGlobalSyncStateChangedTimer.reset(new QTimer(this));
+            connect(onGlobalSyncStateChangedTimer.get(), SIGNAL(timeout()), this, SLOT(onGlobalSyncStateChangedTimeout()));
+
+            onGlobalSyncStateChangedTimer->setSingleShot(true);
+            onGlobalSyncStateChangedTimer->setInterval(200);
+        }
         return;
     }
 
