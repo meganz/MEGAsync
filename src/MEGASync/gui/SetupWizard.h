@@ -49,9 +49,7 @@ private slots:
     void wTypicalSetup_clicked();
     void wAdvancedSetup_clicked();
     void lTermsLink_clicked();
-#ifdef Q_OS_LINUX
     void on_lTermsLink_linkActivated( const QString &link);
-#endif
     void on_bLearMore_clicked();
     void on_bFinish_clicked();
     void showErrorMessage(QString error);

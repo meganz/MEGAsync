@@ -1218,12 +1218,10 @@ void SetupWizard::lTermsLink_clicked()
     ui->cAgreeWithTerms->toggle();
 }
 
-#ifdef Q_OS_LINUX
 void SetupWizard::on_lTermsLink_linkActivated(const QString &link)
 {
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("https://mega.nz/terms")));
 }
-#endif
 
 void SetupWizard::on_bLearMore_clicked()
 {
