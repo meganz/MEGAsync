@@ -47,6 +47,10 @@ QGroupBox {
 	border:none;
 }
 
+QComboBox::drop-down {
+width: 16px;
+}
+
 QCheckBox::indicator, QRadioButton::indicator {
      width: 16px;
      height: 16px;
