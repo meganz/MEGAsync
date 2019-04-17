@@ -119,8 +119,8 @@ void MenuItemAction::setupActionWidget(QSize iconSize)
     iconButton->setText(QString::fromUtf8(""));
     iconButton->setMinimumSize(iconSize);
     iconButton->setMaximumSize(iconSize);
-    QList<QSize> sizes = icon->availableSizes();
-    if (sizes.size())
+    const QList<QSize> sizes = icon->availableSizes();
+    if (!sizes.empty())
     {
         iconButton->setIconSize(sizes.at(0));
     }
