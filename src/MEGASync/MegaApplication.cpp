@@ -34,6 +34,10 @@
 #include <Shellapi.h>
 #endif
 
+#if defined(WIN32) && QT_VERSION >= 0x050000
+#include <QScreen>
+#endif
+
 using namespace mega;
 using namespace std;
 
@@ -199,6 +203,23 @@ int main(int argc, char *argv[])
     if (!(getenv("DO_NOT_SET_DESKTOP_SETTINGS_UNAWARE")))
     {
         QApplication::setDesktopSettingsAware(false);
+    }
+#endif
+
+#if defined(WIN32) && QT_VERSION >= 0x050000
+    {
+        MegaApplication appaux(argc, argv);
+        for (QScreen *s : appaux.screens())
+        {
+            qreal ratio = s->devicePixelRatio();
+            int height = s->availableGeometry().height();
+            if (ratio > 1 && 600 > height) // if height is not enough to hold settings dialog
+            {
+                qDebug() << " Screen too small to apply automatic DPI scaling, enforcing QT_SCALE_FACTOR=" << (ratio -1);
+                qputenv("QT_SCALE_FACTOR", QString::number(ratio-1).toUtf8().constData());
+                QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false);
+            }
+        }
     }
 #endif
 
