@@ -5527,6 +5527,32 @@ void MegaApplication::changeProxy()
         megaApi->retryPendingConnections();
     }
 
+#ifndef __MACH__
+    if (preferences && !proxyOnly)
+    {
+        updateUserStats(true);
+        if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
+        {
+            openBwOverquotaDialog();
+            return;
+        }
+        else if (bwOverquotaTimestamp)
+        {
+            bwOverquotaTimestamp = 0;
+            preferences->clearTemporalBandwidth();
+            if (bwOverquotaDialog)
+            {
+                bwOverquotaDialog->refreshAccountDetails();
+            }
+    #ifdef __MACH__
+            trayIcon->setContextMenu(&emptyMenu);
+    #elif defined(_WIN32)
+            trayIcon->setContextMenu(windowsMenu);
+    #endif
+        }
+    }
+#endif
+
     if (settingsDialog)
     {
         settingsDialog->setProxyOnly(proxyOnly);
