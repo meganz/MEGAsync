@@ -33,15 +33,21 @@ void AccountDetailsDialog::refresh(Preferences *preferences)
 
     if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
-        setMinimumHeight(280);
-        setMaximumHeight(280);
+        setMinimumHeight(220);
+        setMaximumHeight(220);
+        setContentsMargins(0, 0, 0, 24);
         ui->sHeader->hide();
+        ui->wAvailable->hide();
+        ui->wInbox->hide();
     }
     else
     {
         setMinimumHeight(320);
         setMaximumHeight(320);
+        setContentsMargins(0, 24, 0, 24);
         ui->sHeader->show();
+        ui->wAvailable->show();
+        ui->wInbox->show();
     }
 
     if (preferences->totalStorage() == 0)
