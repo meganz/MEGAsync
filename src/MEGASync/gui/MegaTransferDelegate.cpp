@@ -85,6 +85,8 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                             {
                                 ti->setIsLinkAvailable(true);
                             }
+
+                            ti->setNodeAccess(access);
                             delete ownNode;
                         }
                     }
