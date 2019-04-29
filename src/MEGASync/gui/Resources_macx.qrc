@@ -195,7 +195,6 @@
         <file>translations/MEGASyncStrings_ru.qm</file>
         <file>translations/MEGASyncStrings_th.qm</file>
         <file>translations/MEGASyncStrings_tl.qm</file>
-        <file>translations/MEGASyncStrings_tr.qm</file>
         <file>translations/MEGASyncStrings_uk.qm</file>
         <file>translations/MEGASyncStrings_vi.qm</file>
         <file>translations/MEGASyncStrings_zh_CN.qm</file>
@@ -486,5 +485,7 @@
         <file>images/img_wizard_2@2x.png</file>
         <file>images/img_wizard_3.png</file>
         <file>images/img_wizard_3@2x.png</file>
+        <file>images/business.png</file>
+        <file>images/business@2x.png</file>
     </qresource>
 </RCC>
