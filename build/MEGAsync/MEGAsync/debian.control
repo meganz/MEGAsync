@@ -14,7 +14,7 @@ Build-Depends:  debhelper,
                 libtool,
                 dh-autoreconf,
                 cdbs,
-                libqt4-dbus | libqt5dbus5
+                libqt4-dbus | libqt5dbus5 | qt-mega
 
 Package: megasync
 Architecture: any
