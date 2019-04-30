@@ -1077,7 +1077,7 @@ void SettingsDialog::loadSettings()
                 break;
             case Preferences::ACCOUNT_TYPE_BUSINESS:
                 icon.addFile(QString::fromUtf8(":/images/business.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->lAccountType->setText(tr("BUSINESS"));
+                ui->lAccountType->setText(QString::fromUtf8("BUSINESS"));
                 break;
             default:
                 icon.addFile(QString::fromUtf8(":/images/Pro_I.png"), QSize(), QIcon::Normal, QIcon::Off);
