@@ -127,7 +127,7 @@ public:
     void startUpdateTask();
     void stopUpdateTask();
     void applyProxySettings();
-    void updateUserStats(bool force = false);
+    void updateUserStats(bool storage, bool transfer, bool pro, bool force);
     void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
     void showTrayMenu(QPoint *point = NULL);
@@ -325,8 +325,9 @@ protected:
     unsigned int activeTransferTag[2];
     unsigned long long activeTransferPriority[2];
     unsigned int activeTransferState[2];
-    long long queuedUserStats;
-    bool inflightUserStats;
+    bool queuedUserStats[3];
+    long long userStatsLastRequest[3];
+    bool inflightUserStats[3];
     long long cleaningSchedulerExecution;
     long long lastUserActivityExecution;
     bool almostOQ;
