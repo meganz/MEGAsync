@@ -429,7 +429,7 @@ background-color: #FFFFFF;
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout">
             <property name="spacing">
-             <number>20</number>
+             <number>10</number>
             </property>
             <property name="leftMargin">
              <number>15</number>
@@ -454,6 +454,37 @@ background-color: #FFFFFF;
              </widget>
             </item>
             <item>
+             <widget class="QPushButton" name="bUpgrade">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="cursor">
+               <cursorShape>ArrowCursor</cursorShape>
+              </property>
+              <property name="mouseTracking">
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true"/>
+              </property>
+              <property name="text">
+               <string>Upgrade to PRO</string>
+              </property>
+              <property name="flat">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="horizontalSpacer_2">
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
@@ -467,13 +498,7 @@ background-color: #FFFFFF;
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="bTransferManager">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
+             <widget class="QPushButton" name="bAddSync">
               <property name="minimumSize">
                <size>
                 <width>24</width>
@@ -486,11 +511,38 @@ background-color: #FFFFFF;
                 <height>24</height>
                </size>
               </property>
-              <property name="cursor">
-               <cursorShape>ArrowCursor</cursorShape>
+              <property name="styleSheet">
+               <string notr="true">border: none;
+</string>
               </property>
-              <property name="toolTip">
-               <string>Open Transfer Manager</string>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/ico_add_sync_folder.png</normaloff>:/images/ico_add_sync_folder.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="bUpload">
+              <property name="minimumSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
               </property>
               <property name="styleSheet">
                <string notr="true">border: none;
@@ -501,7 +553,7 @@ background-color: #FFFFFF;
               </property>
               <property name="icon">
                <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/tray_transfer_manager_ico.png</normaloff>:/images/tray_transfer_manager_ico.png</iconset>
+                <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -509,8 +561,38 @@ background-color: #FFFFFF;
                 <height>24</height>
                </size>
               </property>
-              <property name="flat">
-               <bool>true</bool>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="bDownload">
+              <property name="minimumSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">border: none;
+</string>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
               </property>
              </widget>
             </item>
@@ -549,7 +631,7 @@ background-color: #FFFFFF;
               </property>
               <property name="icon">
                <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
+                <normaloff>:/images/more_settings.png</normaloff>:/images/more_settings.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -2014,30 +2096,47 @@ color: #333333;
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="bUpgrade">
+             <widget class="QPushButton" name="bTransferManager">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
-                <width>0</width>
-                <height>32</height>
+                <width>24</width>
+                <height>24</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>16777215</width>
-                <height>32</height>
+                <width>24</width>
+                <height>24</height>
                </size>
               </property>
               <property name="cursor">
                <cursorShape>ArrowCursor</cursorShape>
               </property>
-              <property name="mouseTracking">
-               <bool>false</bool>
+              <property name="toolTip">
+               <string>Open Transfer Manager</string>
               </property>
               <property name="styleSheet">
-               <string notr="true"/>
+               <string notr="true">border: none;
+</string>
               </property>
               <property name="text">
-               <string>Upgrade to PRO</string>
+               <string/>
+              </property>
+              <property name="icon">
+               <iconset resource="../Resources_linux.qrc">
+                <normaloff>:/images/tray_transfer_manager_ico.png</normaloff>:/images/tray_transfer_manager_ico.png</iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>24</width>
+                <height>24</height>
+               </size>
               </property>
               <property name="flat">
                <bool>true</bool>
@@ -2085,7 +2184,6 @@ color: #333333;
   <tabstop>bSettings</tabstop>
   <tabstop>lTotalUsedStorage</tabstop>
   <tabstop>lPercentageUsedStorage</tabstop>
-  <tabstop>bUpgrade</tabstop>
  </tabstops>
  <resources>
   <include location="../Resources_macx.qrc"/>

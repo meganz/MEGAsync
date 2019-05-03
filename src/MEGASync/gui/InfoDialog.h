@@ -77,6 +77,9 @@ private slots:
     void on_bChats_clicked();
     void onOverlayClicked();
     void on_bTransferManager_clicked();
+    void on_bAddSync_clicked();
+    void on_bUpload_clicked();
+    void on_bDownload_clicked();
     void onUserAction(int action);
 
     void on_bDotUsedStorage_clicked();
