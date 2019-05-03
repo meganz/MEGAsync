@@ -729,5 +729,8 @@
         <file>images/business.png</file>
         <file>images/business@2x.png</file>
         <file>images/business@3x.png</file>
+        <file>images/more_settings.png</file>
+        <file>images/more_settings@2x.png</file>
+        <file>images/more_settings@3x.png</file>
     </qresource>
 </RCC>
