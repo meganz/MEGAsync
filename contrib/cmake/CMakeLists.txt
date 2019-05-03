@@ -56,7 +56,6 @@ include_directories( "${MEGAsyncDir}/gui/win" )
 set (FORMS
     ${MEGAsyncDir}/gui/win/InfoDialog.ui
 	${MEGAsyncDir}/gui/win/CustomTransferItem.ui
-	${MEGAsyncDir}/gui/win/UsageProgressBar.ui
 	${MEGAsyncDir}/gui/win/NodeSelector.ui
 	${MEGAsyncDir}/gui/win/FolderBinder.ui
 	${MEGAsyncDir}/gui/win/BindFolderDialog.ui
@@ -139,6 +138,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/ElidedLabel.h
     ${MEGAsyncDir}/gui/FolderBinder.h
     ${MEGAsyncDir}/gui/GuestWidget.h
+    ${MEGAsyncDir}/gui/HighDpiResize.h
     ${MEGAsyncDir}/gui/ImportListWidgetItem.h
     ${MEGAsyncDir}/gui/ImportMegaLinksDialog.h
     ${MEGAsyncDir}/gui/InfoDialog.h
@@ -179,7 +179,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/UpgradeOverStorage.h
     ${MEGAsyncDir}/gui/UpgradeWidget.h
     ${MEGAsyncDir}/gui/UploadToMegaDialog.h
-    ${MEGAsyncDir}/gui/UsageProgressBar.h
     ${MEGAsyncDir}/gui/UsageWidget.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.h
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.h
@@ -235,7 +234,6 @@ set (SRCS
 	
 	${MEGAsyncDir}/gui/SettingsDialog.cpp
     ${MEGAsyncDir}/gui/InfoDialog.cpp
-    ${MEGAsyncDir}/gui/UsageProgressBar.cpp
     ${MEGAsyncDir}/gui/SetupWizard.cpp
     ${MEGAsyncDir}/gui/NodeSelector.cpp
     ${MEGAsyncDir}/gui/FolderBinder.cpp
@@ -256,6 +254,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/MegaItem.cpp
     ${MEGAsyncDir}/gui/ChangeLogDialog.cpp
     ${MEGAsyncDir}/gui/GuestWidget.cpp
+    ${MEGAsyncDir}/gui/HighDpiResize.cpp
     ${MEGAsyncDir}/gui/StreamingFromMegaDialog.cpp
     ${MEGAsyncDir}/gui/ConfirmSSLexception.cpp
     ${MEGAsyncDir}/gui/UpgradeDialog.cpp

@@ -24,6 +24,7 @@ PasteMegaLinksDialog::PasteMegaLinksDialog(QWidget *parent) :
     }
 
     ui->bSubmit->setDefault(true);
+    highDpiResize.init(this);
 }
 
 PasteMegaLinksDialog::~PasteMegaLinksDialog()

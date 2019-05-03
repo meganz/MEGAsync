@@ -19,6 +19,7 @@
 #include "ChangePassword.h"
 #include "Preferences.h"
 #include "megaapi.h"
+#include "HighDpiResize.h"
 
 namespace Ui {
 class SettingsDialog;
@@ -74,6 +75,10 @@ private slots:
     void on_bOk_clicked();
 
     void on_bHelp_clicked();
+
+#ifndef __APPLE__
+    void on_bHelpIco_clicked();
+#endif
 
     void on_rProxyManual_clicked();
 
@@ -136,6 +141,7 @@ private:
     MegaApplication *app;
     Preferences *preferences;
     mega::MegaApi *megaApi;
+    HighDpiResize highDpiResize;
     bool syncsChanged;
     bool excludedNamesChanged;
     QStringList syncNames;

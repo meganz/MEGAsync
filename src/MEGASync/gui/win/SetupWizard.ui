@@ -26,7 +26,12 @@
    <string>Setup Assistant - MEGAsync</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">#lTypicalDesc, #lAdvancedDesc
+   <string notr="true">QPushButton, QLabel, QLineEdit
+{
+font-size: 11px;
+}
+
+#lTypicalDesc, #lAdvancedDesc
 {
 	font-size:13px; 
 	color:#666666;
@@ -184,6 +189,18 @@
          </item>
          <item>
           <widget class="QPushButton" name="wHelp">
+           <property name="minimumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
            <property name="cursor">
             <cursorShape>PointingHandCursor</cursorShape>
            </property>
@@ -449,7 +466,7 @@
      <property name="maximumSize">
       <size>
        <width>560</width>
-       <height>16777215</height>
+       <height>258</height>
       </size>
      </property>
      <property name="currentIndex">
@@ -843,7 +860,7 @@
                 <bool>true</bool>
                </property>
                <property name="openExternalLinks">
-                <bool>true</bool>
+                <bool>false</bool>
                </property>
               </widget>
              </item>
@@ -1793,6 +1810,9 @@ font-size: 13px;
           </item>
           <item row="0" column="1">
            <layout class="QHBoxLayout" name="hMegaFolder">
+            <property name="spacing">
+             <number>0</number>
+            </property>
             <item>
              <widget class="QLineEdit" name="eLocalFolder">
               <property name="enabled">
@@ -1806,6 +1826,9 @@ font-size: 13px;
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">margin-right: 6px;</string>
               </property>
               <property name="readOnly">
                <bool>true</bool>
@@ -1841,7 +1864,7 @@ font-size: 13px;
           <item row="2" column="1">
            <layout class="QHBoxLayout" name="hLocalFolder">
             <property name="spacing">
-             <number>6</number>
+             <number>0</number>
             </property>
             <item>
              <widget class="QLineEdit" name="eMegaFolder">
@@ -1850,6 +1873,9 @@ font-size: 13px;
               </property>
               <property name="focusPolicy">
                <enum>Qt::NoFocus</enum>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">margin-right: 6px;</string>
               </property>
               <property name="readOnly">
                <bool>true</bool>

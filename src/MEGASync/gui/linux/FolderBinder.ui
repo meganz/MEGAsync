@@ -41,7 +41,16 @@ QPushButton
 </string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <property name="margin">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
     <number>0</number>
    </property>
    <property name="spacing">
@@ -62,11 +71,23 @@ QPushButton
       <property name="verticalSpacing">
        <number>6</number>
       </property>
-      <property name="margin">
+      <property name="leftMargin">
+       <number>9</number>
+      </property>
+      <property name="topMargin">
+       <number>9</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
        <number>9</number>
       </property>
       <item row="2" column="0">
        <widget class="QLabel" name="lMegaFolder">
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="text">
          <string>MEGA folder:</string>
         </property>
@@ -82,6 +103,9 @@ QPushButton
           <property name="enabled">
            <bool>true</bool>
           </property>
+          <property name="accessibleName">
+           <string>MEGA folder:</string>
+          </property>
           <property name="readOnly">
            <bool>true</bool>
           </property>
@@ -92,28 +116,32 @@ QPushButton
           <property name="enabled">
            <bool>true</bool>
           </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="styleSheet">
-           <string notr="true">margin: 4px;
-border: none;</string>
+           <string notr="true"/>
           </property>
           <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="Resources.qrc">
-            <normaloff>:/images/import_cloud_ico.png</normaloff>:/images/import_cloud_ico.png</iconset>
+           <string>Choose</string>
           </property>
           <property name="iconSize">
            <size>
-            <width>24</width>
-            <height>24</height>
+            <width>16</width>
+            <height>16</height>
            </size>
+          </property>
+          <property name="autoDefault">
+           <bool>true</bool>
           </property>
           <property name="default">
            <bool>false</bool>
           </property>
           <property name="flat">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -121,6 +149,9 @@ border: none;</string>
       </item>
       <item row="0" column="0">
        <widget class="QLabel" name="lLocalFolder">
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
         <property name="text">
          <string>Local folder:</string>
         </property>
@@ -136,6 +167,15 @@ border: none;</string>
           <property name="enabled">
            <bool>true</bool>
           </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="accessibleName">
+           <string>Local folder:</string>
+          </property>
           <property name="readOnly">
            <bool>true</bool>
           </property>
@@ -143,29 +183,45 @@ border: none;</string>
         </item>
         <item>
          <widget class="QPushButton" name="bLocalFolder">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>26</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="styleSheet">
-           <string notr="true">margin: 4px;
-border: none;
+           <string notr="true">
 </string>
           </property>
           <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset resource="Resources.qrc">
-            <normaloff>:/images/import_computer_ico.png</normaloff>:/images/import_computer_ico.png</iconset>
+           <string>Choose</string>
           </property>
           <property name="iconSize">
            <size>
-            <width>24</width>
-            <height>24</height>
+            <width>16</width>
+            <height>16</height>
            </size>
+          </property>
+          <property name="autoDefault">
+           <bool>true</bool>
           </property>
           <property name="default">
            <bool>false</bool>
           </property>
           <property name="flat">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -177,13 +233,13 @@ border: none;
   </layout>
  </widget>
  <tabstops>
+  <tabstop>lLocalFolder</tabstop>
   <tabstop>eLocalFolder</tabstop>
   <tabstop>bLocalFolder</tabstop>
+  <tabstop>lMegaFolder</tabstop>
   <tabstop>eMegaFolder</tabstop>
   <tabstop>bMegaFolder</tabstop>
  </tabstops>
- <resources>
-  <include location="Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

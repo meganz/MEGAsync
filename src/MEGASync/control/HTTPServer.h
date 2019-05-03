@@ -39,6 +39,7 @@ public:
     long long speed;
     long long tsStart;
     long long tsEnd;
+    QString tPath;
 };
 
 class HTTPRequest
@@ -70,7 +71,7 @@ class HTTPServer: public QTcpServer
         static void checkAndPurgeRequests();
         static void onUploadSelectionAccepted(int files, int folders);
         static void onUploadSelectionDiscarded();
-        static void onTransferDataUpdate(mega::MegaHandle handle, int state, long long progress, long long size, long long speed);
+        static void onTransferDataUpdate(mega::MegaHandle handle, int state, long long progress, long long size, long long speed, QString localPath);
 
     signals:
         void onLinkReceived(QString link, QString auth);
@@ -80,6 +81,7 @@ class HTTPServer: public QTcpServer
         void onExternalFolderUploadRequested(qlonglong targetHandle);
         void onExternalFolderSyncRequested(qlonglong targetHandle);
         void onExternalOpenTransferManagerRequested(int tab);
+        void onExternalShowInFolderRequested(QString path);
         void onConnectionError();
 
     public slots:

@@ -57,6 +57,9 @@ QPushButton
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QLabel" name="infoLabel">
      <property name="minimumSize">
@@ -92,7 +95,7 @@ QPushButton
        <number>0</number>
       </property>
       <property name="rightMargin">
-       <number>9</number>
+       <number>0</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -117,20 +120,10 @@ QPushButton
       <item>
        <widget class="QPushButton" name="bChange">
         <property name="text">
-         <string/>
-        </property>
-        <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
-          <normaloff>:/images/import_computer_ico.png</normaloff>:/images/import_computer_ico.png</iconset>
-        </property>
-        <property name="iconSize">
-         <size>
-          <width>24</width>
-          <height>24</height>
-         </size>
+         <string>Choose</string>
         </property>
         <property name="flat">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
       </item>
@@ -209,9 +202,7 @@ QPushButton
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="../Resources_linux.qrc"/>
- </resources>
+ <resources/>
  <connections>
   <connection>
    <sender>bCancel</sender>

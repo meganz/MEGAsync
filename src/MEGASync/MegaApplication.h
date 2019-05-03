@@ -36,6 +36,9 @@
 #include "control/MegaSyncLogger.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
+#ifdef _WIN32    
+#include <chrono>
+#endif
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -227,6 +230,7 @@ public slots:
 #endif
 private slots:
     void showInFolder(int activationButton);
+    void openFolderPath(QString path);
     void redirectToUpgrade(int activationButton);
     void registerUserActivity();
     void PSAseen(int id);
@@ -398,6 +402,9 @@ protected:
     bool updatingSSLcert;
     long long lastSSLcertUpdate;
     bool nodescurrent;
+#ifdef _WIN32    
+    std::chrono::steady_clock::time_point lastApplicationDeactivation;
+#endif
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener

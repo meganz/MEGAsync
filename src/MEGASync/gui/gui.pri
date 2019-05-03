@@ -2,7 +2,6 @@ QT       += network
 
 SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/InfoDialog.cpp \
-    $$PWD/UsageProgressBar.cpp \
     $$PWD/SetupWizard.cpp \
     $$PWD/NodeSelector.cpp \
     $$PWD/FolderBinder.cpp \
@@ -57,11 +56,11 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/UpgradeWidget.cpp \
     $$PWD/Login2FA.cpp \
     $$PWD/TransfersStatusWidget.cpp \
-    $$PWD/CircularUsageProgressBar.cpp
+    $$PWD/CircularUsageProgressBar.cpp \
+    $$PWD/HighDpiResize.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
-    $$PWD/UsageProgressBar.h \
     $$PWD/SetupWizard.h \
     $$PWD/NodeSelector.h \
     $$PWD/FolderBinder.h \
@@ -116,7 +115,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ChangePassword.h \
     $$PWD/Login2FA.h \
     $$PWD/TransfersStatusWidget.h \
-    $$PWD/CircularUsageProgressBar.h
+    $$PWD/CircularUsageProgressBar.h \
+    $$PWD/HighDpiResize.h
 
 INCLUDEPATH += $$PWD
 
@@ -129,7 +129,6 @@ win32 {
     INCLUDEPATH += $$PWD/win
     FORMS    += $$PWD/win/InfoDialog.ui \
                 $$PWD/win/CustomTransferItem.ui \
-                $$PWD/win/UsageProgressBar.ui \
                 $$PWD/win/NodeSelector.ui \
                 $$PWD/win/FolderBinder.ui \
                 $$PWD/win/BindFolderDialog.ui \
@@ -173,7 +172,6 @@ macx {
     RESOURCES += $$PWD/Resources_macx.qrc
     INCLUDEPATH += $$PWD/macx
     FORMS    += $$PWD/macx/InfoDialog.ui \
-                $$PWD/macx/UsageProgressBar.ui \
                 $$PWD/macx/NodeSelector.ui \
                 $$PWD/macx/FolderBinder.ui \
                 $$PWD/macx/BindFolderDialog.ui \
@@ -230,7 +228,6 @@ unix:!macx {
     INCLUDEPATH += $$PWD/linux
     FORMS    += $$PWD/linux/InfoDialog.ui \
                 $$PWD/linux/CustomTransferItem.ui \
-                $$PWD/linux/UsageProgressBar.ui \
                 $$PWD/linux/NodeSelector.ui \
                 $$PWD/linux/FolderBinder.ui \
                 $$PWD/linux/BindFolderDialog.ui \

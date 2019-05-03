@@ -6,6 +6,7 @@
 #include "megaapi.h"
 #include "control/LinkProcessor.h"
 #include "control/Preferences.h"
+#include "HighDpiResize.h"
 
 namespace Ui {
 class ImportMegaLinksDialog;
@@ -43,6 +44,7 @@ private:
     mega::MegaApi *megaApi;
     LinkProcessor *linkProcessor;
     bool finished;
+    HighDpiResize highDpiResize;
 };
 
 #endif // IMPORTMEGALINKSDIALOG_H

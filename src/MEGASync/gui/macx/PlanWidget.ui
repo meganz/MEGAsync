@@ -227,8 +227,8 @@ QPushButton
              </property>
              <property name="iconSize">
               <size>
-               <width>58</width>
-               <height>58</height>
+               <width>64</width>
+               <height>64</height>
               </size>
              </property>
             </widget>

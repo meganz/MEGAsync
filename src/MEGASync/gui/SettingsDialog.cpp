@@ -17,6 +17,7 @@
 #include "control/Utilities.h"
 #include "platform/Platform.h"
 #include "gui/AddExclusionDialog.h"
+#include <assert.h>
 
 #ifdef __APPLE__
     #include "gui/CocoaHelpButton.h"
@@ -281,6 +282,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     ui->lOQWarning->setText(QString::fromUtf8(""));
     ui->wOQError->hide();
+
+    highDpiResize.init(this);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -811,6 +814,13 @@ void SettingsDialog::on_bHelp_clicked()
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
 
+#ifndef __APPLE__
+void SettingsDialog::on_bHelpIco_clicked()
+{
+    on_bHelp_clicked();
+}
+#endif
+
 void SettingsDialog::on_rProxyManual_clicked()
 {
     ui->cProxyType->setEnabled(true);
@@ -1066,6 +1076,7 @@ void SettingsDialog::loadSettings()
                 ui->lAccountType->setText(tr("PRO Lite"));
                 break;
             case Preferences::ACCOUNT_TYPE_BUSINESS:
+                icon.addFile(QString::fromUtf8(":/images/business.png"), QSize(), QIcon::Normal, QIcon::Off);
                 ui->lAccountType->setText(tr("BUSINESS"));
                 break;
             default:
@@ -1074,18 +1085,8 @@ void SettingsDialog::loadSettings()
                 break;
         }
 
-        if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
-        {
-            ui->lAccountImage->hide();
-            ui->horizontalLayout_3->setContentsMargins(29, 15, 22, 15);
-        }
-        else
-        {
-            ui->horizontalLayout_3->setContentsMargins(22, 15, 22, 15);
-            ui->lAccountImage->show();
-            ui->lAccountImage->setIcon(icon);
-            ui->lAccountImage->setIconSize(QSize(32, 32));
-        }
+        ui->lAccountImage->setIcon(icon);
+        ui->lAccountImage->setIconSize(QSize(32, 32));
 
         MegaNode *node = megaApi->getNodeByHandle(preferences->uploadFolder());
         if (!node)
