@@ -138,7 +138,7 @@ int main(int argc, char *argv[])
 
     if (!(getenv("DO_NOT_SET_QT_PLUGIN_PATH")))
     {
-        if (QDir("/opt/mega/plugins").exists())
+        if (QDir(QString::fromUtf8("/opt/mega/plugins")).exists())
         {
             qputenv("QT_PLUGIN_PATH","/opt/mega/plugins");
         }
