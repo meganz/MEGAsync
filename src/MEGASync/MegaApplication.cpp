@@ -7401,6 +7401,7 @@ void MegaApplication::onGlobalSyncStateChanged(MegaApi *, bool timeout)
 
             onGlobalSyncStateChangedTimer->setSingleShot(true);
             onGlobalSyncStateChangedTimer->setInterval(200);
+            onGlobalSyncStateChangedTimer->start();
         }
         return;
     }
