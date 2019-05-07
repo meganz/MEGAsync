@@ -50,7 +50,10 @@ wget http://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/5.9/5.9.7/single/qt-ever
 fi
 
 [ $download_only -eq 1 ] && exit 0
-#TODO: include checksum
+echo "CHECKSUM ... "
+if ! echo 1c3852aa48b5a1310108382fb8f6185560cefc3802e81ecc099f4e62ee38516c qt-everywhere-opensource-src-5.9.7.tar.xz | sha256sum -c - ; then
+exit 1
+fi
 
 tar xvf qt-everywhere-opensource-src-5.9.7.tar.xz
 cd qt-everywhere-opensource-src-5.9.7

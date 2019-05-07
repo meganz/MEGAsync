@@ -20,10 +20,6 @@ install: build
 	find `pwd`
 	for i in `find target/ -type f -o -type l`; do a=`echo $$i | awk -F "/" 'BEGIN{OFS="/"}{NF--;print $$0}' | sed "s#target/##g"`; dh_install $$i /$$a; done
 
-
-#	dh_install target/lib/lib*a /usr/lib/
-#	for i in `find target/include -type f | grep -v openssl | grep -v time.h `; do a=`echo $$i | awk -F "/" 'BEGIN{OFS="/"}{NF--;print $$0}' | sed "s#target/include/##g"`; dh_install $$i /usr/include/qt-mega/$$a; done
-
 # Build architecture-independent files here.
 binary-indep: build install
 	# We have nothing to do by default.
