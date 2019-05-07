@@ -351,5 +351,5 @@ IF (MSVC)
 ENDIF(MSVC)
 
 if (WIN32)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4127")  # n conditional expression is constant (occurs a lot in QT headers)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4127")  # 4127: conditional expression is constant  (occurs in QT headers)
 endif()

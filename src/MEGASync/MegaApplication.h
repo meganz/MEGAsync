@@ -106,7 +106,7 @@ public:
     virtual void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users);
     virtual void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes);
     virtual void onReloadNeeded(mega::MegaApi* api);
-    virtual void onGlobalSyncStateChanged(mega::MegaApi *api);
+    virtual void onGlobalSyncStateChanged(mega::MegaApi *api, bool timeout = false);
     virtual void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync);
     virtual void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState);
 
@@ -224,6 +224,7 @@ public slots:
     void onDismissOQ(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
     void renewLocalSSLcert();
+    void onGlobalSyncStateChangedTimeout();
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
@@ -301,6 +302,7 @@ protected:
 #endif
 
     QTimer *connectivityTimer;
+    std::unique_ptr<QTimer> onGlobalSyncStateChangedTimer;
     int scanningAnimationIndex;
     SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
