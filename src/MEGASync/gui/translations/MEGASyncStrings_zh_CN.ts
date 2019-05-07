@@ -1205,35 +1205,35 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
-        <translation type="unfinished">[S]MEGAsync：[/S] 轻松自动同步你的电脑和MEGA云端文件</translation>
+        <translation type="obsolete">[S]MEGAsync：[/S] 轻松自动同步你的电脑和MEGA云端文件</translation>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
-        <translation type="unfinished">[S]充满弹性的：[/S] 同步您电脑中的文件夹至云盘。亦可同时同步无限多个文件夹。</translation>
+        <translation type="obsolete">[S]充满弹性的：[/S] 同步您电脑中的文件夹至云盘。亦可同时同步无限多个文件夹。</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
-        <translation type="unfinished">更快的传输速度</translation>
+        <translation type="obsolete">更快的传输速度</translation>
     </message>
     <message>
         <source>MEGAsync takes full advantage of MEGA&apos;s high-powered infrastructure and multi-connection transfers.</source>
-        <translation type="unfinished">MEGAsync充分展现MEGA的高效能架构与多点连接传输功能。</translation>
+        <translation type="obsolete">MEGAsync充分展现MEGA的高效能架构与多点连接传输功能。</translation>
     </message>
     <message>
         <source>Lean &amp; mean resource usage</source>
-        <translation type="unfinished">资源运用最佳化</translation>
+        <translation type="obsolete">资源运用最佳化</translation>
     </message>
     <message>
         <source>Run MEGA&apos;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
-        <translation type="unfinished">在您的电脑上运行MEGA终端至终端加密技术，而不依赖于速度较慢的浏览器。</translation>
+        <translation type="obsolete">在您的电脑上运行MEGA终端至终端加密技术，而不依赖于速度较慢的浏览器。</translation>
     </message>
     <message>
         <source>Unlimited file size</source>
-        <translation type="unfinished">文件大小无限制</translation>
+        <translation type="obsolete">文件大小无限制</translation>
     </message>
     <message>
         <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
-        <translation type="unfinished">虽然浏览器技术可能会限制传输文件大小，但使用MEGAsync，您可以下载或上传任何文件。</translation>
+        <translation type="obsolete">虽然浏览器技术可能会限制传输文件大小，但使用MEGAsync，您可以下载或上传任何文件。</translation>
     </message>
     <message>
         <source>Login</source>
@@ -1245,7 +1245,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
-        <translation type="unfinished">享受50GB云端空间与由用户控制的安全端对端加密，并注册一个免费账户或使用我们的[A]PRO方案[/A]。</translation>
+        <translation type="obsolete">享受50GB云端空间与由用户控制的安全端对端加密，并注册一个免费账户或使用我们的[A]PRO方案[/A]。</translation>
+    </message>
+    <message>
+        <source>MEGA Desktop app</source>
+        <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
+        <translation type="unfinished">MEGA桌面应用程序</translation>
+    </message>
+    <message>
+        <source>Login or create an account to start using MEGA Desktop app.</source>
+        <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
+        <translation type="unfinished">Login or create an account to start using the MEGA Desktop App.</translation>
+    </message>
+    <message>
+        <source>You need to login MEGA account to run MEGA desktop app.</source>
+        <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
+        <translation type="unfinished">You need to login to your MEGA account to run the MEGA Desktop App.</translation>
+    </message>
+    <message>
+        <source>Create account</source>
+        <translatorcomment>Button label to offer the user the option to create an account</translatorcomment>
+        <translation type="unfinished">创建账号</translation>
+    </message>
+    <message>
+        <source>Create account to join MEGA collaboration platform.</source>
+        <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
+        <translation type="unfinished">Create an account to join the MEGA collaboration platform.</translation>
+    </message>
+    <message>
+        <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
+        <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
+        <translation type="unfinished">Learn more about the MEGA Desktop App. [A]Read more[/A]</translation>
     </message>
 </context>
 <context>
@@ -1281,7 +1311,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 定时清理</translation>
+        <translation type="obsolete">[$17607]</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1344,7 +1374,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Next</source>
         <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
-        <translation type="unfinished">下一步</translation>
+        <translation type="unfinished">次一</translation>
     </message>
     <message>
         <source>Invalid code</source>
@@ -2142,6 +2172,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Not enough quota</source>
         <translatorcomment>Label shown when current account does not have enough quota to complete the operation</translatorcomment>
         <translation type="unfinished">流量不足</translation>
+    </message>
+    <message>
+        <source>Terms of Service breached</source>
+        <translatorcomment>Error shown when terms of service are breached during download.</translatorcomment>
+        <translation type="unfinished">Terms of Service breached</translation>
+    </message>
+    <message>
+        <source>Not accessible due to ToS/AUP violation</source>
+        <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
+        <translation type="unfinished">Not accessible due to ToS/AUP violation</translation>
     </message>
 </context>
 <context>
@@ -3318,7 +3358,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 定时清理</translation>
+        <translation type="obsolete">[$17607]</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3373,6 +3413,11 @@ when the application starts again</source>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
         <translation type="unfinished">%1 定时清理</translation>
+    </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">%1 used</translation>
     </message>
 </context>
 <context>
@@ -3506,7 +3551,7 @@ when the application starts again</source>
     <message>
         <source>Next</source>
         <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>下一步</translation>
+        <translation>次一</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3795,7 +3840,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">您云盘中的指定文件夹将与本地文件夹同步。</translation>
+        <translation type="unfinished">Specific folders in your Cloud Drive will be synchronised with a matching local folder.</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
@@ -4444,19 +4489,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">收件箱</translation>
+        <translation type="obsolete">收件箱</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">传入的分享</translation>
+        <translation type="obsolete">传入的分享</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">云盘</translation>
+        <translation type="obsolete">云盘</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">垃圾桶</translation>
+        <translation type="obsolete">垃圾桶</translation>
     </message>
 </context>
 <context>
