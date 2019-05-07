@@ -34,6 +34,10 @@
 #include <Shellapi.h>
 #endif
 
+#if defined(WIN32) && QT_VERSION >= 0x050000
+#include <QScreen>
+#endif
+
 using namespace mega;
 using namespace std;
 
@@ -199,6 +203,23 @@ int main(int argc, char *argv[])
     if (!(getenv("DO_NOT_SET_DESKTOP_SETTINGS_UNAWARE")))
     {
         QApplication::setDesktopSettingsAware(false);
+    }
+#endif
+
+#if defined(WIN32) && QT_VERSION >= 0x050000
+    {
+        MegaApplication appaux(argc, argv);
+        for (QScreen *s : appaux.screens())
+        {
+            qreal ratio = s->devicePixelRatio();
+            int height = s->availableGeometry().height();
+            if (ratio > 1 && 600 > height) // if height is not enough to hold settings dialog
+            {
+                qDebug() << " Screen too small to apply automatic DPI scaling, enforcing QT_SCALE_FACTOR=" << (ratio -1);
+                qputenv("QT_SCALE_FACTOR", QString::number(ratio-1).toUtf8().constData());
+                QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false);
+            }
+        }
     }
 #endif
 
@@ -426,6 +447,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaError", "Failed permanently");
     QT_TRANSLATE_NOOP("MegaError", "Too many concurrent connections or transfers");
     QT_TRANSLATE_NOOP("MegaError", "Terms of Service breached");
+    QT_TRANSLATE_NOOP("MegaError", "Not accessible due to ToS/AUP violation");
     QT_TRANSLATE_NOOP("MegaError", "Out of range");
     QT_TRANSLATE_NOOP("MegaError", "Expired");
     QT_TRANSLATE_NOOP("MegaError", "Not found");
@@ -5526,6 +5548,32 @@ void MegaApplication::changeProxy()
         proxyOnly = !megaApi->isFilesystemAvailable() || !preferences->logged();
         megaApi->retryPendingConnections();
     }
+
+#ifndef __MACH__
+    if (preferences && !proxyOnly)
+    {
+        updateUserStats(true);
+        if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
+        {
+            openBwOverquotaDialog();
+            return;
+        }
+        else if (bwOverquotaTimestamp)
+        {
+            bwOverquotaTimestamp = 0;
+            preferences->clearTemporalBandwidth();
+            if (bwOverquotaDialog)
+            {
+                bwOverquotaDialog->refreshAccountDetails();
+            }
+    #ifdef __MACH__
+            trayIcon->setContextMenu(&emptyMenu);
+    #elif defined(_WIN32)
+            trayIcon->setContextMenu(windowsMenu);
+    #endif
+        }
+    }
+#endif
 
     if (settingsDialog)
     {

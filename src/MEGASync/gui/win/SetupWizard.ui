@@ -466,7 +466,7 @@ font-size: 11px;
      <property name="maximumSize">
       <size>
        <width>560</width>
-       <height>16777215</height>
+       <height>258</height>
       </size>
      </property>
      <property name="currentIndex">
@@ -860,7 +860,7 @@ font-size: 11px;
                 <bool>true</bool>
                </property>
                <property name="openExternalLinks">
-                <bool>true</bool>
+                <bool>false</bool>
                </property>
               </widget>
              </item>

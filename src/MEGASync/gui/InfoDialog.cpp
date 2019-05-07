@@ -1058,12 +1058,15 @@ void InfoDialog::createQuotaUsedMenu()
     }
     cloudItem = new MenuItemAction(tr("Cloud Drive"), Utilities::getSizeString(preferences->cloudDriveStorage()), QIcon(QString::fromAscii("://images/ic_small_cloud_drive.png")), false, QSize(16,16));
 
-    if (inboxItem)
+    if (actualAccountType != Preferences::ACCOUNT_TYPE_BUSINESS)
     {
-        inboxItem->deleteLater();
-        inboxItem = NULL;
+        if (inboxItem)
+        {
+            inboxItem->deleteLater();
+            inboxItem = NULL;
+        }
+        inboxItem = new MenuItemAction(tr("Inbox"), Utilities::getSizeString(preferences->inboxStorage()), QIcon(QString::fromAscii("://images/ic_small_inbox.png")), false, QSize(16,16));
     }
-    inboxItem = new MenuItemAction(tr("Inbox"), Utilities::getSizeString(preferences->inboxStorage()), QIcon(QString::fromAscii("://images/ic_small_inbox.png")), false, QSize(16,16));
 
     if (sharesItem)
     {
@@ -1080,7 +1083,12 @@ void InfoDialog::createQuotaUsedMenu()
     rubbishItem = new MenuItemAction(tr("Rubbish bin"), Utilities::getSizeString(preferences->rubbishStorage()), QIcon(QString::fromAscii("://images/ic_small_rubbish.png")), false, QSize(16,16));
 
     storageUsedMenu->addAction(cloudItem);
-    storageUsedMenu->addAction(inboxItem);
+
+    if (actualAccountType != Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+        storageUsedMenu->addAction(inboxItem);
+    }
+
     storageUsedMenu->addAction(sharesItem);
     storageUsedMenu->addAction(rubbishItem);
 }

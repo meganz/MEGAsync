@@ -80,7 +80,13 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                         MegaNode *ownNode = ((MegaApplication*)qApp)->getMegaApi()->getNodeByHandle(transfer->getNodeHandle());
                         if (ownNode)
                         {
-                            ti->setIsLinkAvailable(true);
+                            int access = ((MegaApplication*)qApp)->getMegaApi()->getAccess(ownNode);
+                            if (access == MegaShare::ACCESS_OWNER)
+                            {
+                                ti->setIsLinkAvailable(true);
+                            }
+
+                            ti->setNodeAccess(access);
                             delete ownNode;
                         }
                     }

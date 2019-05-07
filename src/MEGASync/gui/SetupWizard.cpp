@@ -179,7 +179,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 else if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
                 {
                     QPointer<SetupWizard> dialog = this;
-                    QPointer<Login2FA> verification = new Login2FA(this);
+                    QPointer<Login2FA> verification = new Login2FA();
                     int result = verification->exec();
                     if (!dialog || !verification || result != QDialog::Accepted)
                     {
@@ -216,7 +216,7 @@ void SetupWizard::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 else if (error->getErrorCode() == MegaError::API_EFAILED || error->getErrorCode() == MegaError::API_EEXPIRED)
                 {
                     QPointer<SetupWizard> dialog = this;
-                    QPointer<Login2FA> verification = new Login2FA(this);
+                    QPointer<Login2FA> verification = new Login2FA();
                     verification->invalidCode(true);
                     int result = verification->exec();
                     if (!dialog || !verification || result != QDialog::Accepted)
@@ -1216,6 +1216,11 @@ void SetupWizard::setLevelStrength(int level)
 void SetupWizard::lTermsLink_clicked()
 {
     ui->cAgreeWithTerms->toggle();
+}
+
+void SetupWizard::on_lTermsLink_linkActivated(const QString &link)
+{
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("https://mega.nz/terms")));
 }
 
 void SetupWizard::on_bLearMore_clicked()

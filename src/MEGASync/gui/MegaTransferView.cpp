@@ -451,6 +451,8 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
             {
                 bool failed = false;
                 bool linkAvailable = true;
+                bool showInMega = true;
+
                 MegaTransfer *transfer = NULL;
                 QTransfersModel *model = (QTransfersModel*)this->model();
                 if (model)
@@ -471,7 +473,12 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
 
                         if (!model->transferItems[transferTagSelected[i]]->getIsLinkAvailable())
                         {
-                             linkAvailable = false;
+                            linkAvailable = false;
+                        }
+
+                        if (model->transferItems[transferTagSelected[i]]->getNodeAccess() == MegaShare::ACCESS_UNKNOWN)
+                        {
+                            showInMega = false;
                         }
 
                         delete transfer;
@@ -482,13 +489,9 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                 {
                     customizeCompletedContextMenu(false, false, false, false);
                 }
-                else if (!linkAvailable)
-                {
-                    customizeCompletedContextMenu(false, true, true, false);
-                }
                 else
                 {
-                    customizeCompletedContextMenu();
+                    customizeCompletedContextMenu(linkAvailable, true, true, showInMega);
                 }
                 contextCompleted->exec(mapToGlobal(point));
             }

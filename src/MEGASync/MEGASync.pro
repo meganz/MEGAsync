@@ -110,7 +110,6 @@ TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ru.ts \
     gui/translations/MEGASyncStrings_th.ts \
     gui/translations/MEGASyncStrings_tl.ts \
-    gui/translations/MEGASyncStrings_tr.ts \
     gui/translations/MEGASyncStrings_uk.ts \
     gui/translations/MEGASyncStrings_vi.ts \
     gui/translations/MEGASyncStrings_zh_CN.ts \
