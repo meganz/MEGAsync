@@ -2,7 +2,10 @@
 FMEDIAINFO := $(shell dpkg -l | grep mediainfo >/dev/null && echo "-i" || echo " ")
 EXTRAQMAKE := $(shell cat /etc/issue | grep "Ubuntu 1[2357]\|Debian.* 7\|Ubuntu 1[46].10" >/dev/null && echo "DEFINES+=MEGASYNC_DEPRECATED_OS" || echo "")
 FULLREQS := $(shell cat /etc/issue | grep "Ubuntu 12.04" >/dev/null && echo "" || echo '"CONFIG += FULLREQUIREMENTS"')
-
+export PATH := /opt/mega/bin:$(PATH)
+QMAKESPEC := $(shell cat /etc/issue | grep "Ubuntu 16.04" >/dev/null && echo "QMAKESPEC" || echo "NONQMAKESPEC")
+QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 16.04" >/dev/null && echo "installqt" || echo "")
+export $(QMAKESPEC) := /opt/mega/mkspecs/linux-g++
 
 build: build-stamp
 build-stamp:
@@ -24,8 +27,38 @@ install: build
 	dh_install MEGASync/megasync /usr/bin/
 	dh_install 100-megasync-inotify-limit.conf /etc/sysctl.d/
 
+installqt:
+	for i in `ldd MEGASync/megasync | grep opt | awk '{print $$3}'`; do a=`echo $$i | awk -F "/" 'BEGIN{OFS="/"}{NF--;print $$0}' | sed "s#target/##g"`; mkdir -p $(CURDIR)/debian/megasync/$$a; install $$i $(CURDIR)/debian/megasync/$$a; done
+	mkdir -p $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
+	mkdir -p $(CURDIR)/debian/megasync/opt/mega/plugins/platforminputcontexts/
+	mkdir -p $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
+	mkdir -p $(CURDIR)/debian/megasync/opt/mega/plugins/iconengines/
+	mkdir -p $(CURDIR)/debian/megasync/opt/mega/plugins/bearer/
+	install -p /opt/mega/lib/libQt5XcbQpa.so.5.9.7 $(CURDIR)/debian/megasync/opt/mega/lib/libQt5XcbQpa.so.5
+	install /opt/mega/plugins/platforms/libqxcb.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
+	install /opt/mega/plugins/platforms/libqvnc.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
+	install /opt/mega/plugins/platforms/libqoffscreen.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
+	install /opt/mega/plugins/platforms/libqminimal.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
+	install /opt/mega/plugins/platforms/libqlinuxfb.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforms/
+	install /opt/mega/plugins/platforminputcontexts/libqtvirtualkeyboardplugin.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforminputcontexts/
+	install /opt/mega/plugins/platforminputcontexts/libibusplatforminputcontextplugin.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforminputcontexts/
+	install /opt/mega/plugins/platforminputcontexts/libcomposeplatforminputcontextplugin.so $(CURDIR)/debian/megasync/opt/mega/plugins/platforminputcontexts/
+	install /opt/mega/plugins/imageformats/libqwebp.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
+	install /opt/mega/plugins/imageformats/libqwbmp.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
+	install /opt/mega/plugins/imageformats/libqtiff.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
+	install /opt/mega/plugins/imageformats/libqtga.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
+	install /opt/mega/plugins/imageformats/libqsvg.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
+	install /opt/mega/plugins/imageformats/libqjpeg.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
+	install /opt/mega/plugins/imageformats/libqico.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
+	install /opt/mega/plugins/imageformats/libqicns.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
+	install /opt/mega/plugins/imageformats/libqgif.so $(CURDIR)/debian/megasync/opt/mega/plugins/imageformats/
+	install /opt/mega/plugins/iconengines/libqsvgicon.so $(CURDIR)/debian/megasync/opt/mega/plugins/iconengines/
+	install /opt/mega/plugins/bearer/libqnmbearer.so $(CURDIR)/debian/megasync/opt/mega/plugins/bearer/
+	install /opt/mega/plugins/bearer/libqgenericbearer.so $(CURDIR)/debian/megasync/opt/mega/plugins/bearer/
+	install /opt/mega/plugins/bearer/libqconnmanbearer.so $(CURDIR)/debian/megasync/opt/mega/plugins/bearer/
+
 # Build architecture-independent files here.
-binary-indep: build install
+binary-indep: build install $(QTINSTALL)
 	# We have nothing to do by default.
 
 # Build architecture-dependent files here.
@@ -53,7 +86,7 @@ binary-arch: build install
 #	dh_makeshlibs
 	dh_installdeb
 #	dh_perl
-	dh_shlibdeps
+	dh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info
 	dh_gencontrol
 	dh_md5sums
 	dh_builddeb

@@ -135,6 +135,15 @@ int main(int argc, char *argv[])
 
 #ifdef Q_OS_LINUX
 #if QT_VERSION >= 0x050600
+
+    if (!(getenv("DO_NOT_SET_QT_PLUGIN_PATH")))
+    {
+        if (QDir(QString::fromUtf8("/opt/mega/plugins")).exists())
+        {
+            qputenv("QT_PLUGIN_PATH","/opt/mega/plugins");
+        }
+    }
+
     qreal ratio = 1.0;
     int xrdbdpi = 0;
     if (!(getenv("DO_NOT_OVERRIDE_XDG_CURRENT_DESKTOP")))
