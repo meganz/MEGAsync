@@ -12,6 +12,7 @@
 #include <QQueue>
 #include <QNetworkConfigurationManager>
 #include <QNetworkInterface>
+#include <memory>
 
 #include "gui/TransferManager.h"
 #include "gui/NodeSelector.h"
@@ -36,6 +37,7 @@
 #include "control/MegaSyncLogger.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
+
 #ifdef _WIN32    
 #include <chrono>
 #endif
