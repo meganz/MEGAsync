@@ -202,6 +202,8 @@ const QString Preferences::FINDER_EXT_BUNDLE_ID = QString::fromUtf8("mega.mac.ME
 QStringList Preferences::HTTPS_ALLOWED_ORIGINS;
 bool Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
 
+QString Preferences::BASE_URL = QString::fromAscii("https://mega.nz");
+
 #ifdef WIN32
     const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");
 #else
@@ -382,7 +384,7 @@ Preferences *Preferences::instance()
 {
     if (!preferences)
     {
-        Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("https://mega.nz"));
+        Preferences::HTTPS_ALLOWED_ORIGINS.append(Preferences::BASE_URL);
         Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("https://mega.co.nz"));
         Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("chrome-extension://*"));
         Preferences::HTTPS_ALLOWED_ORIGINS.append(QString::fromUtf8("moz-extension://*"));
@@ -3062,4 +3064,9 @@ void Preferences::writeFolders()
     settings->endGroup();
     settings->sync();
     mutex.unlock();
+}
+
+void Preferences::setBaseUrl(const QString &value)
+{
+    BASE_URL = value;
 }

@@ -243,7 +243,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
                             char *key = node->getBase64Key();
                             if (handle && key)
                             {
-                                QString link = QString::fromUtf8("https://mega.nz/#!%1!%2")
+                                QString link = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2")
                                         .arg(QString::fromUtf8(handle)).arg(QString::fromUtf8(key));
                                 linkList.append(link);
                             }

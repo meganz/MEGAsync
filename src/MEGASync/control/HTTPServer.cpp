@@ -395,7 +395,7 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
 
         if (handle.size() == 8 && key.size() == 43)
         {
-            QString link = QString::fromUtf8("https://mega.nz/#!%1!%2").arg(handle).arg(key);
+            QString link = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2").arg(handle).arg(key);
             emit onLinkReceived(link, auth);
             response = QString::fromUtf8("0");
 

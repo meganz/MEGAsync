@@ -14,6 +14,7 @@
 #include <QDesktopWidget>
 #include <QFontDatabase>
 #include <QNetworkProxy>
+#include <QSettings>
 #include <assert.h>
 
 #ifdef Q_OS_LINUX
@@ -800,9 +801,18 @@ void MegaApplication::initialize()
     QFile fstagingPath(stagingPath);
     if (fstagingPath.exists())
     {
-        megaApi->changeApiUrl("https://staging.api.mega.co.nz/");
-        megaApiFolders->changeApiUrl("https://staging.api.mega.co.nz/");
-        QMegaMessageBox::warning(NULL, QString::fromUtf8("MEGAsync"), QString::fromUtf8("API URL changed to staging"), Utilities::getDevicePixelRatio());
+        QSettings settings(stagingPath, QSettings::IniFormat);
+        QString apiURL = settings.value(QString::fromUtf8("apiurl"), QString::fromUtf8("https://staging.api.mega.co.nz/")).toString();
+        megaApi->changeApiUrl(apiURL.toUtf8());
+        megaApiFolders->changeApiUrl(apiURL.toUtf8());
+        QMegaMessageBox::warning(NULL, QString::fromUtf8("MEGAsync"), QString::fromUtf8("API URL changed to ")+ apiURL, Utilities::getDevicePixelRatio());
+
+        QString baseURL = settings.value(QString::fromUtf8("baseurl"), QString::fromUtf8("https://mega.nz")).toString();
+        Preferences::setBaseUrl(baseURL);
+        if (baseURL.compare(QString::fromUtf8("https://mega.nz")))
+        {
+            QMegaMessageBox::warning(NULL, QString::fromUtf8("MEGAsync"), QString::fromUtf8("base URL changed to ") + Preferences::BASE_URL, Utilities::getDevicePixelRatio());
+        }
         Preferences::SDK_ID.append(QString::fromUtf8(" - STAGING"));
     }
 
@@ -4192,7 +4202,7 @@ void MegaApplication::pauseTransfers()
 
 void MegaApplication::officialWeb()
 {
-    QString webUrl = QString::fromAscii("https://mega.nz/");
+    QString webUrl = Preferences::BASE_URL;
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(webUrl));
 }
 
@@ -4789,7 +4799,7 @@ void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
         //Public node
         const char* base64Handle = MegaApi::handleToBase64(fileHandle);
         QString handle = QString::fromUtf8(base64Handle);
-        QString linkForClipboard = QString::fromUtf8("https://mega.nz/#!%1!%2").arg(handle).arg(nodeKey);
+        QString linkForClipboard = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2").arg(handle).arg(nodeKey);
         delete [] base64Handle;
         QApplication::clipboard()->setText(linkForClipboard);
         showInfoMessage(tr("The link has been copied to the clipboard"));
