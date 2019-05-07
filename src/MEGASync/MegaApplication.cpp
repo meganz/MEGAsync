@@ -6512,9 +6512,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
-        bool storage = (request->getNumber() & 0x01) != 0;
-        bool transfer = (request->getNumber() & 0x02) != 0;
-        bool pro = (request->getNumber() & 0x04) != 0;
+        bool storage = (request->getNumDetails() & 0x01) != 0;
+        bool transfer = (request->getNumDetails() & 0x02) != 0;
+        bool pro = (request->getNumDetails() & 0x04) != 0;
 
         if (storage)  inflightUserStats[0] = false;
         if (transfer) inflightUserStats[1] = false;
