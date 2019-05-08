@@ -6542,47 +6542,64 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             break;
         }
 
-        MegaNode *root = megaApi->getRootNode();
-        MegaNode *inbox = megaApi->getInboxNode();
-        MegaNode *rubbish = megaApi->getRubbishNode();
-        MegaNodeList *inShares = megaApi->getInShares();
+        unique_ptr<MegaNode> root(megaApi->getRootNode());
+        unique_ptr<MegaNode> inbox(megaApi->getInboxNode());
+        unique_ptr<MegaNode> rubbish(megaApi->getRubbishNode());
+        unique_ptr<MegaNodeList> inShares(megaApi->getInShares());
+
         if (!root || !inbox || !rubbish || !inShares)
         {
             preferences->setCrashed(true);
-            delete root;
-            delete inbox;
-            delete rubbish;
-            delete inShares;
             break;
         }
 
         //Account details retrieved, update the preferences and the information dialog
-        MegaAccountDetails *details = request->getMegaAccountDetails();
-        preferences->setAccountType(details->getProLevel());
-        preferences->setTotalStorage(details->getStorageMax());
-        preferences->setUsedStorage(details->getStorageUsed());
-        preferences->setTotalBandwidth(details->getTransferMax());
-        preferences->setBandwidthInterval(details->getTemporalBandwidthInterval());
-        preferences->setUsedBandwidth(details->getProLevel() ? details->getTransferOwnUsed() : details->getTemporalBandwidth());
-        preferences->setVersionsStorage(details->getVersionStorageUsed());
+        unique_ptr<MegaAccountDetails> details(request->getMegaAccountDetails());
 
-        MegaHandle rootHandle = root->getHandle();
-        preferences->setCloudDriveStorage(details->getStorageUsed(rootHandle));
-        preferences->setCloudDriveFiles(details->getNumFiles(rootHandle));
-        preferences->setCloudDriveFolders(details->getNumFolders(rootHandle));
-        delete root;
+        if (pro)
+        {
+            preferences->setAccountType(details->getProLevel());
+        }
 
-        MegaHandle inboxHandle = inbox->getHandle();
-        preferences->setInboxStorage(details->getStorageUsed(inboxHandle));
-        preferences->setInboxFiles(details->getNumFiles(inboxHandle));
-        preferences->setInboxFolders(details->getNumFolders(inboxHandle));
-        delete inbox;
+        if (storage)
+        {
+            preferences->setTotalStorage(details->getStorageMax());
+            preferences->setUsedStorage(details->getStorageUsed());
+            preferences->setVersionsStorage(details->getVersionStorageUsed());
 
-        MegaHandle rubbishHandle = rubbish->getHandle();
-        preferences->setRubbishStorage(details->getStorageUsed(rubbishHandle));
-        preferences->setRubbishFiles(details->getNumFiles(rubbishHandle));
-        preferences->setRubbishFolders(details->getNumFolders(rubbishHandle));
-        delete rubbish;
+            MegaHandle rootHandle = root->getHandle();
+            preferences->setCloudDriveStorage(details->getStorageUsed(rootHandle));
+            preferences->setCloudDriveFiles(details->getNumFiles(rootHandle));
+            preferences->setCloudDriveFolders(details->getNumFolders(rootHandle));
+
+            MegaHandle inboxHandle = inbox->getHandle();
+            preferences->setInboxStorage(details->getStorageUsed(inboxHandle));
+            preferences->setInboxFiles(details->getNumFiles(inboxHandle));
+            preferences->setInboxFolders(details->getNumFolders(inboxHandle));
+
+            MegaHandle rubbishHandle = rubbish->getHandle();
+            preferences->setRubbishStorage(details->getStorageUsed(rubbishHandle));
+            preferences->setRubbishFiles(details->getNumFiles(rubbishHandle));
+            preferences->setRubbishFolders(details->getNumFolders(rubbishHandle));
+
+            long long inShareSize = 0, inShareFiles = 0, inShareFolders = 0;
+            for (int i = 0; i < inShares->size(); i++)
+            {
+                MegaNode *node = inShares->get(i);
+                if (!node)
+                {
+                    continue;
+                }
+
+                MegaHandle handle = node->getHandle();
+                inShareSize += details->getStorageUsed(handle);
+                inShareFiles += details->getNumFiles(handle);
+                inShareFolders += details->getNumFolders(handle);
+            }
+            preferences->setInShareStorage(inShareSize);
+            preferences->setInShareFiles(inShareFiles);
+            preferences->setInShareFolders(inShareFolders);
+        }
 
         if (!megaApi->getBandwidthOverquotaDelay() && preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
         {
@@ -6599,28 +6616,16 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
 
-        preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
-        preferences->setTemporalBandwidth(details->getTemporalBandwidth());
-        preferences->setTemporalBandwidthValid(details->isTemporalBandwidthValid());
+        if (transfer)
+        {            
+            preferences->setTotalBandwidth(details->getTransferMax());
+            preferences->setBandwidthInterval(details->getTemporalBandwidthInterval());
+            preferences->setUsedBandwidth(preferences->accountType() ? details->getTransferOwnUsed() : details->getTemporalBandwidth());
 
-        long long inShareSize = 0, inShareFiles = 0, inShareFolders  = 0;
-        for (int i = 0; i < inShares->size(); i++)
-        {
-            MegaNode *node = inShares->get(i);
-            if (!node)
-            {
-                continue;
-            }
-
-            MegaHandle handle = node->getHandle();
-            inShareSize    += details->getStorageUsed(handle);
-            inShareFiles   += details->getNumFiles(handle);
-            inShareFolders += details->getNumFolders(handle);
+            preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
+            preferences->setTemporalBandwidth(details->getTemporalBandwidth());
+            preferences->setTemporalBandwidthValid(details->isTemporalBandwidthValid());
         }
-        preferences->setInShareStorage(inShareSize);
-        preferences->setInShareFiles(inShareFiles);
-        preferences->setInShareFolders(inShareFolders);
-        delete inShares;
 
         preferences->sync();
 
@@ -6644,8 +6649,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             storageOverquotaDialog->refreshUsedStorage();
         }
-
-        delete details;
         break;
     }
     case MegaRequest::TYPE_PAUSE_TRANSFERS:
@@ -7015,7 +7018,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             if (it != transferAppData.end())
             {
                 TransferMetaData *data = it.value();
-                if ((endptr - notificationKey) != strlen(notificationKey))
+                if ((endptr - notificationKey) != (int64_t)strlen(notificationKey))
                 {
                     if (e->getErrorCode() == MegaError::API_EINCOMPLETE)
                     {
