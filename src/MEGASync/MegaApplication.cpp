@@ -130,20 +130,20 @@ void setScaleFactors()
 {
     int argc = 0;
     QGuiApplication app{argc, nullptr};
-    std::string scale_factors;
+    QString scale_factors;
     const auto screens = app.screens();
     for (const auto& screen : screens)
     {
-        double computedscale = computeScale(*screen);
-        scale_factors += screen->name().toStdString() + "=" + QString::number(computedscale).toStdString();
+        const double computed_scale = computeScale(*screen);
+        scale_factors += screen->name() + QString::fromAscii("=") + QString::number(computed_scale);
         if (screen != screens.back())
         {
-            scale_factors += ";";
+            scale_factors += QString::fromAscii(";");
         }
     }
-    if (!scale_factors.empty())
+    if (!scale_factors.isEmpty())
     {
-        qputenv("QT_SCREEN_SCALE_FACTORS", QByteArray::fromStdString(scale_factors));
+        qputenv("QT_SCREEN_SCALE_FACTORS", scale_factors.toAscii());
     }
     else
     {
