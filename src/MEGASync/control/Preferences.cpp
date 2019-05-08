@@ -30,29 +30,29 @@ const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
 
-const int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
-const int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
+int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
+int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
 
-const long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
-const long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 129600000; // 36 hours
-const long long Preferences::ALMOST_OS_INTERVAL_MS = 259200000; // 72 hours
-const long long Preferences::OS_INTERVAL_MS = 129600000; // 36 hours
-const long long Preferences::USER_INACTIVITY_MS = 20000; // 20 secs
+long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
+long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 129600000; // 36 hours
+long long Preferences::ALMOST_OS_INTERVAL_MS = 259200000; // 72 hours
+long long Preferences::OS_INTERVAL_MS = 129600000; // 36 hours
+long long Preferences::USER_INACTIVITY_MS = 20000; // 20 secs
 
-const long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
-const long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS  = 7200000;
-const long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
-const long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
-const long long Preferences::MIN_EXTERNAL_NODES_WARNING_MS          = 60000;
-const long long Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS  = 10000;
+long long Preferences::MIN_UPDATE_STATS_INTERVAL  = 300000;
+long long Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS  = 7200000;
+long long Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS    = 172800000;
+long long Preferences::MIN_REBOOT_INTERVAL_MS                 = 300000;
+long long Preferences::MIN_EXTERNAL_NODES_WARNING_MS          = 60000;
+long long Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS  = 10000;
 
-const unsigned int Preferences::UPDATE_INITIAL_DELAY_SECS           = 60;
-const unsigned int Preferences::UPDATE_RETRY_INTERVAL_SECS          = 7200;
-const unsigned int Preferences::UPDATE_TIMEOUT_SECS                 = 600;
-const unsigned int Preferences::MAX_LOGIN_TIME_MS                   = 40000;
-const unsigned int Preferences::PROXY_TEST_TIMEOUT_MS               = 10000;
-const unsigned int Preferences::MAX_IDLE_TIME_MS                    = 600000;
-const unsigned int Preferences::MAX_COMPLETED_ITEMS                 = 1000;
+unsigned int Preferences::UPDATE_INITIAL_DELAY_SECS           = 60;
+unsigned int Preferences::UPDATE_RETRY_INTERVAL_SECS          = 7200;
+unsigned int Preferences::UPDATE_TIMEOUT_SECS                 = 600;
+unsigned int Preferences::MAX_LOGIN_TIME_MS                   = 40000;
+unsigned int Preferences::PROXY_TEST_TIMEOUT_MS               = 10000;
+unsigned int Preferences::MAX_IDLE_TIME_MS                    = 600000;
+unsigned int Preferences::MAX_COMPLETED_ITEMS                 = 1000;
 
 const qint16 Preferences::HTTP_PORT  = 6341;
 const qint16 Preferences::HTTPS_PORT = 6342;
@@ -3069,4 +3069,28 @@ void Preferences::writeFolders()
 void Preferences::setBaseUrl(const QString &value)
 {
     BASE_URL = value;
+}
+
+void Preferences::overridePreferences(const QSettings &settings)
+{
+    Preferences::OQ_DIALOG_INTERVAL_MS = settings.value(QString::fromUtf8("OQ_DIALOG_INTERVAL_MS"), Preferences::OQ_DIALOG_INTERVAL_MS).toLongLong();
+    Preferences::OQ_NOTIFICATION_INTERVAL_MS = settings.value(QString::fromUtf8("OQ_NOTIFICATION_INTERVAL_MS"), Preferences::OQ_NOTIFICATION_INTERVAL_MS).toLongLong();
+    Preferences::ALMOST_OS_INTERVAL_MS = settings.value(QString::fromUtf8("ALMOST_OS_INTERVAL_MS"), Preferences::ALMOST_OS_INTERVAL_MS).toLongLong();
+    Preferences::OS_INTERVAL_MS = settings.value(QString::fromUtf8("OS_INTERVAL_MS"), Preferences::OS_INTERVAL_MS).toLongLong();
+    Preferences::USER_INACTIVITY_MS = settings.value(QString::fromUtf8("USER_INACTIVITY_MS"), Preferences::USER_INACTIVITY_MS).toLongLong();
+
+    Preferences::MIN_UPDATE_STATS_INTERVAL = settings.value(QString::fromUtf8("MIN_UPDATE_STATS_INTERVAL"), Preferences::MIN_UPDATE_STATS_INTERVAL).toLongLong();
+    Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS = settings.value(QString::fromUtf8("MIN_UPDATE_CLEANING_INTERVAL_MS"), Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS).toLongLong();
+    Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS = settings.value(QString::fromUtf8("MIN_UPDATE_NOTIFICATION_INTERVAL_MS"), Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS).toLongLong();
+    Preferences::MIN_REBOOT_INTERVAL_MS = settings.value(QString::fromUtf8("MIN_REBOOT_INTERVAL_MS"), Preferences::MIN_REBOOT_INTERVAL_MS).toLongLong();
+    Preferences::MIN_EXTERNAL_NODES_WARNING_MS = settings.value(QString::fromUtf8("MIN_EXTERNAL_NODES_WARNING_MS"), Preferences::MIN_EXTERNAL_NODES_WARNING_MS).toLongLong();
+    Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS = settings.value(QString::fromUtf8("MIN_TRANSFER_NOTIFICATION_INTERVAL_MS"), Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS).toLongLong();
+
+    Preferences::UPDATE_INITIAL_DELAY_SECS = settings.value(QString::fromUtf8("UPDATE_INITIAL_DELAY_SECS"), Preferences::UPDATE_INITIAL_DELAY_SECS).toLongLong();
+    Preferences::UPDATE_RETRY_INTERVAL_SECS = settings.value(QString::fromUtf8("UPDATE_RETRY_INTERVAL_SECS"), Preferences::UPDATE_RETRY_INTERVAL_SECS).toLongLong();
+    Preferences::UPDATE_TIMEOUT_SECS = settings.value(QString::fromUtf8("UPDATE_TIMEOUT_SECS"), Preferences::UPDATE_TIMEOUT_SECS).toLongLong();
+    Preferences::MAX_LOGIN_TIME_MS = settings.value(QString::fromUtf8("MAX_LOGIN_TIME_MS"), Preferences::MAX_LOGIN_TIME_MS).toLongLong();
+    Preferences::PROXY_TEST_TIMEOUT_MS = settings.value(QString::fromUtf8("PROXY_TEST_TIMEOUT_MS"), Preferences::PROXY_TEST_TIMEOUT_MS).toLongLong();
+    Preferences::MAX_IDLE_TIME_MS = settings.value(QString::fromUtf8("MAX_IDLE_TIME_MS"), Preferences::MAX_IDLE_TIME_MS).toLongLong();
+    Preferences::MAX_COMPLETED_ITEMS = settings.value(QString::fromUtf8("MAX_COMPLETED_ITEMS"), Preferences::MAX_COMPLETED_ITEMS).toLongLong();
 }
