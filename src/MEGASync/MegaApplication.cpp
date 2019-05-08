@@ -134,7 +134,8 @@ void setScaleFactors()
     const auto screens = app.screens();
     for (const auto& screen : screens)
     {
-        scale_factors += screen->name().toStdString() + "=" + std::to_string(computeScale(*screen));
+        double computedscale = computeScale(*screen);
+        scale_factors += screen->name().toStdString() + "=" + QString::number(computedscale).toStdString();
         if (screen != screens.back())
         {
             scale_factors += ";";
