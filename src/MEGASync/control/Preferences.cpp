@@ -11,20 +11,18 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.0.2.0";
-const int Preferences::VERSION_CODE = 4002;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.1.0.0";
+const int Preferences::VERSION_CODE = 4100;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.0.2");
-QString Preferences::SDK_ID = QString::fromAscii("4dea1c");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.1.0");
+QString Preferences::SDK_ID = QString::fromAscii("fc5b36c");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-            "- Fix bug with selection of transfer manager items\n"
-            "- Fix bug of context menu not shown over transfer manager items\n"
-            "- New design for the main dialog\n"
-            "- Improved setup assistant\n"
-            "- Support to show Public Service Announcements\n"
-            "- Modern notifications\n"
-            "- Updated third-party libraries\n"
+            "- Improved look&feel for high resolution displays on Windows and Linux\n"
+            "- Enable thumbnail support for PDF\n"
+            "- Improved GUI performance during addition of many downloads\n"
+            "- Restyling of initial information wizard, new icons and interface improvements\n"
+            "- Support for business accounts\n"
             "- Other minor bug fixes and improvements"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
