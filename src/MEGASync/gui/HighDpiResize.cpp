@@ -5,7 +5,7 @@
 
 void HighDpiResize::init(QDialog* d)
 {
-#ifdef WIN32
+#if defined(WIN32) || defined(Q_OS_LINUX)
     dialog = d;
     d->installEventFilter(this);
 #endif
@@ -24,7 +24,7 @@ bool HighDpiResize::eventFilter(QObject *obj, QEvent *event)
 
 void HighDpiResize::queueRedraw()
 {
-#ifdef WIN32
+#if defined(WIN32) || defined(Q_OS_LINUX)
     // waiting one second means we don't cause the window to be resized multiple times when dragged from one screen to another with a different scaling
     QTimer::singleShot(1000, this, SLOT(forceRedraw()));
 #endif

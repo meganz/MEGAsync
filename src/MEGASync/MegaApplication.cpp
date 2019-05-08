@@ -108,15 +108,22 @@ namespace {
 
 double computeScale(const QScreen& screen)
 {
-    if (screen.size().width() > 0)
+    constexpr auto base_dpi = 96.;
+    auto scale = screen.logicalDotsPerInch();
+    if (scale > base_dpi) // high dpi screen
     {
-        return screen.virtualSize().width() / screen.size().width();
+        scale /= base_dpi;
+        scale = min(3., scale);
     }
-    else
+    else // low dpi screen
     {
-        Q_ASSERT(false); // Screen width must be valid
-        return 1;
+        const auto geom = screen.availableGeometry();
+        scale = min(geom.width() / 1920., geom.height() / 1080.) * 0.75;
+        scale = max(1., scale);
     }
+    constexpr auto increment = 1. / 6.; // this seems to work fine with 24x24 images at least
+    scale = qRound(scale / increment) * increment;
+    return scale;
 }
 
 void setScaleFactors()
