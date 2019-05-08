@@ -773,7 +773,6 @@ void MegaApplication::initialize()
     installTranslator(&translator);
     QString language = preferences->language();
     changeLanguage(language);
-    trayIcon->show();
 
 #ifdef __APPLE__
     notificator = new Notificator(applicationName(), NULL, this);
@@ -807,14 +806,17 @@ void MegaApplication::initialize()
         megaApiFolders->changeApiUrl(apiURL.toUtf8());
         QMegaMessageBox::warning(NULL, QString::fromUtf8("MEGAsync"), QString::fromUtf8("API URL changed to ")+ apiURL, Utilities::getDevicePixelRatio());
 
-        QString baseURL = settings.value(QString::fromUtf8("baseurl"), QString::fromUtf8("https://mega.nz")).toString();
+        QString baseURL = settings.value(QString::fromUtf8("baseurl"), Preferences::BASE_URL).toString();
         Preferences::setBaseUrl(baseURL);
         if (baseURL.compare(QString::fromUtf8("https://mega.nz")))
         {
             QMegaMessageBox::warning(NULL, QString::fromUtf8("MEGAsync"), QString::fromUtf8("base URL changed to ") + Preferences::BASE_URL, Utilities::getDevicePixelRatio());
         }
+
+        Preferences::overridePreferences(settings);
         Preferences::SDK_ID.append(QString::fromUtf8(" - STAGING"));
     }
+    trayIcon->show();
 
     megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGAsync is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
              .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
