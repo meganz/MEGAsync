@@ -3071,26 +3071,38 @@ void Preferences::setBaseUrl(const QString &value)
     BASE_URL = value;
 }
 
+template<typename T>
+void Preferences::overridePreference(const QSettings &settings, QString &&name, T &value)
+{
+    T previous = value;
+    QVariant variant = settings.value(name, previous);
+    value = variant.value<T>();
+    if (previous != value)
+    {
+        qDebug() << "Preference " << name << " overridden: " << value;
+    }
+}
+
 void Preferences::overridePreferences(const QSettings &settings)
 {
-    Preferences::OQ_DIALOG_INTERVAL_MS = settings.value(QString::fromUtf8("OQ_DIALOG_INTERVAL_MS"), Preferences::OQ_DIALOG_INTERVAL_MS).toLongLong();
-    Preferences::OQ_NOTIFICATION_INTERVAL_MS = settings.value(QString::fromUtf8("OQ_NOTIFICATION_INTERVAL_MS"), Preferences::OQ_NOTIFICATION_INTERVAL_MS).toLongLong();
-    Preferences::ALMOST_OS_INTERVAL_MS = settings.value(QString::fromUtf8("ALMOST_OS_INTERVAL_MS"), Preferences::ALMOST_OS_INTERVAL_MS).toLongLong();
-    Preferences::OS_INTERVAL_MS = settings.value(QString::fromUtf8("OS_INTERVAL_MS"), Preferences::OS_INTERVAL_MS).toLongLong();
-    Preferences::USER_INACTIVITY_MS = settings.value(QString::fromUtf8("USER_INACTIVITY_MS"), Preferences::USER_INACTIVITY_MS).toLongLong();
+    overridePreference(settings, QString::fromUtf8("OQ_DIALOG_INTERVAL_MS"), Preferences::OQ_DIALOG_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("OQ_NOTIFICATION_INTERVAL_MS"), Preferences::OQ_NOTIFICATION_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("ALMOST_OS_INTERVAL_MS"), Preferences::ALMOST_OS_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("OS_INTERVAL_MS"), Preferences::OS_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("USER_INACTIVITY_MS"), Preferences::USER_INACTIVITY_MS);
 
-    Preferences::MIN_UPDATE_STATS_INTERVAL = settings.value(QString::fromUtf8("MIN_UPDATE_STATS_INTERVAL"), Preferences::MIN_UPDATE_STATS_INTERVAL).toLongLong();
-    Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS = settings.value(QString::fromUtf8("MIN_UPDATE_CLEANING_INTERVAL_MS"), Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS).toLongLong();
-    Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS = settings.value(QString::fromUtf8("MIN_UPDATE_NOTIFICATION_INTERVAL_MS"), Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS).toLongLong();
-    Preferences::MIN_REBOOT_INTERVAL_MS = settings.value(QString::fromUtf8("MIN_REBOOT_INTERVAL_MS"), Preferences::MIN_REBOOT_INTERVAL_MS).toLongLong();
-    Preferences::MIN_EXTERNAL_NODES_WARNING_MS = settings.value(QString::fromUtf8("MIN_EXTERNAL_NODES_WARNING_MS"), Preferences::MIN_EXTERNAL_NODES_WARNING_MS).toLongLong();
-    Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS = settings.value(QString::fromUtf8("MIN_TRANSFER_NOTIFICATION_INTERVAL_MS"), Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS).toLongLong();
+    overridePreference(settings, QString::fromUtf8("MIN_UPDATE_STATS_INTERVAL"), Preferences::MIN_UPDATE_STATS_INTERVAL);
+    overridePreference(settings, QString::fromUtf8("MIN_UPDATE_CLEANING_INTERVAL_MS"), Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("MIN_UPDATE_NOTIFICATION_INTERVAL_MS"), Preferences::MIN_UPDATE_NOTIFICATION_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("MIN_REBOOT_INTERVAL_MS"), Preferences::MIN_REBOOT_INTERVAL_MS);
+    overridePreference(settings, QString::fromUtf8("MIN_EXTERNAL_NODES_WARNING_MS"), Preferences::MIN_EXTERNAL_NODES_WARNING_MS);
+    overridePreference(settings, QString::fromUtf8("MIN_TRANSFER_NOTIFICATION_INTERVAL_MS"), Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS);
 
-    Preferences::UPDATE_INITIAL_DELAY_SECS = settings.value(QString::fromUtf8("UPDATE_INITIAL_DELAY_SECS"), Preferences::UPDATE_INITIAL_DELAY_SECS).toLongLong();
-    Preferences::UPDATE_RETRY_INTERVAL_SECS = settings.value(QString::fromUtf8("UPDATE_RETRY_INTERVAL_SECS"), Preferences::UPDATE_RETRY_INTERVAL_SECS).toLongLong();
-    Preferences::UPDATE_TIMEOUT_SECS = settings.value(QString::fromUtf8("UPDATE_TIMEOUT_SECS"), Preferences::UPDATE_TIMEOUT_SECS).toLongLong();
-    Preferences::MAX_LOGIN_TIME_MS = settings.value(QString::fromUtf8("MAX_LOGIN_TIME_MS"), Preferences::MAX_LOGIN_TIME_MS).toLongLong();
-    Preferences::PROXY_TEST_TIMEOUT_MS = settings.value(QString::fromUtf8("PROXY_TEST_TIMEOUT_MS"), Preferences::PROXY_TEST_TIMEOUT_MS).toLongLong();
-    Preferences::MAX_IDLE_TIME_MS = settings.value(QString::fromUtf8("MAX_IDLE_TIME_MS"), Preferences::MAX_IDLE_TIME_MS).toLongLong();
-    Preferences::MAX_COMPLETED_ITEMS = settings.value(QString::fromUtf8("MAX_COMPLETED_ITEMS"), Preferences::MAX_COMPLETED_ITEMS).toLongLong();
+    overridePreference(settings, QString::fromUtf8("UPDATE_INITIAL_DELAY_SECS"), Preferences::UPDATE_INITIAL_DELAY_SECS);
+    overridePreference(settings, QString::fromUtf8("UPDATE_RETRY_INTERVAL_SECS"), Preferences::UPDATE_RETRY_INTERVAL_SECS);
+    overridePreference(settings, QString::fromUtf8("UPDATE_TIMEOUT_SECS"), Preferences::UPDATE_TIMEOUT_SECS);
+    overridePreference(settings, QString::fromUtf8("MAX_LOGIN_TIME_MS"), Preferences::MAX_LOGIN_TIME_MS);
+    overridePreference(settings, QString::fromUtf8("PROXY_TEST_TIMEOUT_MS"), Preferences::PROXY_TEST_TIMEOUT_MS);
+    overridePreference(settings, QString::fromUtf8("MAX_IDLE_TIME_MS"), Preferences::MAX_IDLE_TIME_MS);
+    overridePreference(settings, QString::fromUtf8("MAX_COMPLETED_ITEMS"), Preferences::MAX_COMPLETED_ITEMS);
 }

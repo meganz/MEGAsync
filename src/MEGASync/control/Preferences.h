@@ -394,6 +394,8 @@ public:
     static QString BASE_URL;
 
     static void setBaseUrl(const QString &value);
+    template<typename T>
+    static void overridePreference(const QSettings &settings, QString &&name, T &value);
     static void overridePreferences(const QSettings &settings);
 
 protected:
