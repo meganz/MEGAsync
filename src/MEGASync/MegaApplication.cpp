@@ -14,7 +14,6 @@
 #include <QDesktopWidget>
 #include <QFontDatabase>
 #include <QNetworkProxy>
-#include <QScreen>
 #include <QSettings>
 
 #include <assert.h>
@@ -37,7 +36,7 @@
 #include <Shellapi.h>
 #endif
 
-#if defined(WIN32) && QT_VERSION >= 0x050000
+#if ( defined(WIN32) && QT_VERSION >= 0x050000 ) || (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
 #include <QScreen>
 #endif
 
@@ -110,6 +109,7 @@ void msgHandler(QtMsgType type, const char *msg)
     }
 #endif
 
+#if defined(Q_OS_LINUX) && QT_VERSION >= 0x050600
 namespace {
 
 constexpr auto dpiScreensSuitableIncrement = 1. / 6.; // this seems to work fine with 24x24 images at least
@@ -273,6 +273,7 @@ void setScaleFactors()
 }
 
 }
+#endif
 
 int main(int argc, char *argv[])
 {
