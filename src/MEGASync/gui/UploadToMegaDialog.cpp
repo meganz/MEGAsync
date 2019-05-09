@@ -84,7 +84,7 @@ void UploadToMegaDialog::onRequestFinish(MegaApi *, MegaRequest *request, MegaEr
 
 void UploadToMegaDialog::on_bChange_clicked()
 {
-    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, NodeSelector::UPLOAD_SELECT, this);
+    QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, NodeSelector::UPLOAD_SELECT, this->parentWidget());
     MegaNode *defaultNode = megaApi->getNodeByPath(ui->eFolderPath->text().toUtf8().constData());
     if (defaultNode)
     {

@@ -1076,7 +1076,8 @@ void SettingsDialog::loadSettings()
                 ui->lAccountType->setText(tr("PRO Lite"));
                 break;
             case Preferences::ACCOUNT_TYPE_BUSINESS:
-                ui->lAccountType->setText(tr("BUSINESS"));
+                icon.addFile(QString::fromUtf8(":/images/business.png"), QSize(), QIcon::Normal, QIcon::Off);
+                ui->lAccountType->setText(QString::fromUtf8("BUSINESS"));
                 break;
             default:
                 icon.addFile(QString::fromUtf8(":/images/Pro_I.png"), QSize(), QIcon::Normal, QIcon::Off);
@@ -1084,18 +1085,8 @@ void SettingsDialog::loadSettings()
                 break;
         }
 
-        if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
-        {
-            ui->lAccountImage->hide();
-            ui->horizontalLayout_3->setContentsMargins(29, 15, 22, 15);
-        }
-        else
-        {
-            ui->horizontalLayout_3->setContentsMargins(22, 15, 22, 15);
-            ui->lAccountImage->show();
-            ui->lAccountImage->setIcon(icon);
-            ui->lAccountImage->setIconSize(QSize(32, 32));
-        }
+        ui->lAccountImage->setIcon(icon);
+        ui->lAccountImage->setIconSize(QSize(32, 32));
 
         MegaNode *node = megaApi->getNodeByHandle(preferences->uploadFolder());
         if (!node)
@@ -2558,7 +2549,7 @@ void SettingsDialog::onAnimationFinished()
 void SettingsDialog::on_bStorageDetails_clicked()
 {
     accountDetailsDialog = new AccountDetailsDialog(megaApi, this);
-    app->updateUserStats(true);
+    app->updateUserStats(true, true, true, true);
     QPointer<AccountDetailsDialog> dialog = accountDetailsDialog;
     dialog->exec();
     if (!dialog)

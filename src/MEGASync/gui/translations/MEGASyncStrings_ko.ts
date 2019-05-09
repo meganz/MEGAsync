@@ -623,7 +623,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
         <translatorcomment>Label to inform a user about the incompatibility of sync a shared folder without Full Access permissions</translatorcomment>
-        <translation type="unfinished">완전 접근 권한 없이 공유된 폴더를 동기화할 수 없습니다</translation>
+        <translation type="unfinished">전체 액세스 권한 없이 공유된 폴더를 동기화할 수 없습니다</translation>
     </message>
 </context>
 <context>
@@ -1206,35 +1206,35 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
-        <translation type="unfinished">[S]MEGAsync:[/S]당신의 컴퓨터들과 MEGA 클라우드 드라이브 사이의 쉬운 자동 동기화</translation>
+        <translation type="obsolete">[S]MEGAsync:[/S]당신의 컴퓨터들과 MEGA 클라우드 드라이브 사이의 쉬운 자동 동기화</translation>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
-        <translation type="unfinished">[S]유연성:[/S]PC의 아무 폴더를 클라우드의 아무 폴더에 동기화하세요. 어떠한 수의 폴더를 병렬로 동기화하세요.</translation>
+        <translation type="obsolete">[S]유연성:[/S]PC의 아무 폴더를 클라우드의 아무 폴더에 동기화하세요. 어떠한 수의 폴더를 병렬로 동기화하세요.</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
-        <translation type="unfinished">더 빠른 전송 속도</translation>
+        <translation type="obsolete">더 빠른 전송 속도</translation>
     </message>
     <message>
         <source>MEGAsync takes full advantage of MEGA&apos;s high-powered infrastructure and multi-connection transfers.</source>
-        <translation type="unfinished">MEGAsync는 MEGA의 강력한 인프라와 다중연결 전송의 장점을 모두 이용할 수 있습니다.</translation>
+        <translation type="obsolete">MEGAsync는 MEGA의 강력한 인프라와 다중연결 전송의 장점을 모두 이용할 수 있습니다.</translation>
     </message>
     <message>
         <source>Lean &amp; mean resource usage</source>
-        <translation type="unfinished">효율적인 자원 사용</translation>
+        <translation type="obsolete">효율적인 자원 사용</translation>
     </message>
     <message>
         <source>Run MEGA&apos;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
-        <translation type="unfinished">MEGA의 종단간 암호화 알고리즘을 느린 브라우저에 의존하지 않고 기기에서 직접 실행하세요.</translation>
+        <translation type="obsolete">MEGA의 종단간 암호화 알고리즘을 느린 브라우저에 의존하지 않고 기기에서 직접 실행하세요.</translation>
     </message>
     <message>
         <source>Unlimited file size</source>
-        <translation type="unfinished">파일 크기 무제한</translation>
+        <translation type="obsolete">파일 크기 무제한</translation>
     </message>
     <message>
         <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
-        <translation type="unfinished">브라우저 기술이 전송하는 파일의 크기를 제한할 때, MEGAsync는 어떠한 파일도 다운로드하거나 업로드할 수 있습니다.</translation>
+        <translation type="obsolete">브라우저 기술이 전송하는 파일의 크기를 제한할 때, MEGAsync는 어떠한 파일도 다운로드하거나 업로드할 수 있습니다.</translation>
     </message>
     <message>
         <source>Login</source>
@@ -1246,7 +1246,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
-        <translation type="unfinished">안전한 이용자 제어 종단간 암호화를 갖춘 50 GB 클라우드 저장소를 얻고 무료 계정이나 우리의 [A]PRO 요금제[/A]에 가입하세요.</translation>
+        <translation type="obsolete">안전한 이용자 제어 종단간 암호화를 갖춘 50 GB 클라우드 저장소를 얻고 무료 계정이나 우리의 [A]PRO 요금제[/A]에 가입하세요.</translation>
+    </message>
+    <message>
+        <source>MEGA Desktop app</source>
+        <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
+        <translation type="unfinished">MEGA 데스크톱 앱</translation>
+    </message>
+    <message>
+        <source>Login or create an account to start using MEGA Desktop app.</source>
+        <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
+        <translation type="unfinished">Login or create an account to start using the MEGA Desktop App.</translation>
+    </message>
+    <message>
+        <source>You need to login MEGA account to run MEGA desktop app.</source>
+        <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
+        <translation type="unfinished">You need to login to your MEGA account to run the MEGA Desktop App.</translation>
+    </message>
+    <message>
+        <source>Create account</source>
+        <translatorcomment>Button label to offer the user the option to create an account</translatorcomment>
+        <translation type="unfinished">계정 생성</translation>
+    </message>
+    <message>
+        <source>Create account to join MEGA collaboration platform.</source>
+        <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
+        <translation type="unfinished">Create an account to join the MEGA collaboration platform.</translation>
+    </message>
+    <message>
+        <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
+        <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
+        <translation type="unfinished">Learn more about the MEGA Desktop App. [A]Read more[/A]</translation>
     </message>
 </context>
 <context>
@@ -1282,7 +1312,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 정리 스케줄러</translation>
+        <translation type="obsolete">[$17607]</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1690,7 +1720,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled. The remote folder (or part of it) doesn&apos;t have full access</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the access problems. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">동기화 &quot;%1&quot;가 해제되었습니다. 원격 폴더(또는 일부)가 완전 접근 권한이 없습니다</translation>
+        <translation type="unfinished">동기화 &quot;%1&quot;가 해제되었습니다. 원격 폴더(또는 일부)가 전체 액세스 권한이 없습니다</translation>
     </message>
     <message>
         <source>Over quota</source>
@@ -2144,6 +2174,16 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label shown when current account does not have enough quota to complete the operation</translatorcomment>
         <translation type="unfinished">충분하지 않은 할당량</translation>
     </message>
+    <message>
+        <source>Terms of Service breached</source>
+        <translatorcomment>Error shown when terms of service are breached during download.</translatorcomment>
+        <translation type="unfinished">Terms of Service breached</translation>
+    </message>
+    <message>
+        <source>Not accessible due to ToS/AUP violation</source>
+        <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
+        <translation type="unfinished">Not accessible due to ToS/AUP violation</translation>
+    </message>
 </context>
 <context>
     <name>MegaNodeNames</name>
@@ -2372,12 +2412,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>You need Read &amp; Write or Full access rights to be able to upload to the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying upload files to a non compatible folder</translatorcomment>
-        <translation type="unfinished">선택한 폴더에 업로드하려면 읽기 &amp; 쓰기 또는 완전 접근 권한이 있어야합니다.</translation>
+        <translation type="unfinished">선택한 폴더에 업로드하려면 읽기 &amp; 쓰기 또는 전체 액세스 권한이 있어야합니다.</translation>
     </message>
     <message>
         <source>You need Full access right to be able to sync the selected folder.</source>
         <translatorcomment>Error message shown when an user is trying sync a non compatible folder</translatorcomment>
-        <translation type="unfinished">선택한 폴더를 동기화하려면 모든 접근 권한이 필요합니다.</translation>
+        <translation type="unfinished">선택한 폴더를 동기화하려면 전체 액세스 권한이 필요합니다.</translation>
     </message>
     <message>
         <source>Please enter a valid folder name</source>
@@ -3319,12 +3359,12 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 정리 스케줄러</translation>
+        <translation type="obsolete">[$17607]</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
         <translatorcomment>Checkbox label to enable/disable file versioning feature</translatorcomment>
-        <translation type="unfinished">파일 기록 해제</translation>
+        <translation type="unfinished">파일 버전 기록 해제</translation>
     </message>
     <message>
         <source>Local folder with a backup of files deleted in MEGA</source>
@@ -3339,7 +3379,7 @@ when the application starts again</source>
     <message>
         <source>Disabling file versioning will prevent the creation and storage of new file versions. Do you want to continue?</source>
         <translatorcomment>Informative text shown when user is trying to disable file versioning before proceed.</translatorcomment>
-        <translation type="unfinished">파일 기록을 해제하면 파일 기록의 생성과 보관을 하지 않습니다. 계속하시겠습니까?</translation>
+        <translation type="unfinished">파일 버전 기록을 해제하면 파일 버전 기록의 생성과 보관을 하지 않습니다. 계속하시겠습니까?</translation>
     </message>
     <message>
         <source>Remove files older than %1 days</source>
@@ -3354,12 +3394,12 @@ when the application starts again</source>
     <message>
         <source>You are about to permanently remove all file versions. Would you like to proceed?</source>
         <translatorcomment>Informative text asking for confirmation when user is trying to remove all file versions of the actual account.</translatorcomment>
-        <translation type="unfinished">모든 파일 기록을 삭제하려고 합니다. 계속하시겠습니까?</translation>
+        <translation type="unfinished">모든 파일 버전 기록을 삭제하려고 합니다. 계속하시겠습니까?</translation>
     </message>
     <message>
         <source>File versions: %1</source>
         <translatorcomment>Label to indicate the total file size taken by versions. Keep %1 placeholder. It will be replaced at runtime with the total size. Keep string as short as possible.</translatorcomment>
-        <translation type="unfinished">파일 기록: %1</translation>
+        <translation type="unfinished">파일 버전 기록: %1</translation>
     </message>
     <message>
         <source>Change password</source>
@@ -3374,6 +3414,11 @@ when the application starts again</source>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
         <translation type="unfinished">%1 정리 스케줄러</translation>
+    </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">%1 used</translation>
     </message>
 </context>
 <context>
@@ -3797,7 +3842,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">클라우드 드라이브의 특정 폴더가 일치하는 로컬 폴더와 동기화될 것입니다.</translation>
+        <translation type="unfinished">당신의 클라우드 드라이브 내의 특정 폴더가 일치하는 로컬 폴더와 동기화될 것입니다.</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
@@ -3938,7 +3983,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Bytes</source>
         <translatorcomment>Label to indicate bytes unit.</translatorcomment>
-        <translation type="unfinished">Bytes</translation>
+        <translation type="unfinished">바이트</translation>
     </message>
     <message>
         <source>KB</source>
@@ -4446,19 +4491,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">수신함</translation>
+        <translation type="obsolete">수신함</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">들어오는 공유</translation>
+        <translation type="obsolete">들어오는 공유</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">클라우드 드라이브</translation>
+        <translation type="obsolete">클라우드 드라이브</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">휴지통</translation>
+        <translation type="obsolete">휴지통</translation>
     </message>
 </context>
 <context>

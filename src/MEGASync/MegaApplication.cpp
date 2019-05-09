@@ -35,6 +35,10 @@
 #include <Shellapi.h>
 #endif
 
+#if defined(WIN32) && QT_VERSION >= 0x050000
+#include <QScreen>
+#endif
+
 using namespace mega;
 using namespace std;
 
@@ -205,6 +209,23 @@ int main(int argc, char *argv[])
     if (!(getenv("DO_NOT_SET_DESKTOP_SETTINGS_UNAWARE")))
     {
         QApplication::setDesktopSettingsAware(false);
+    }
+#endif
+
+#if defined(WIN32) && QT_VERSION >= 0x050000
+    {
+        MegaApplication appaux(argc, argv);
+        for (QScreen *s : appaux.screens())
+        {
+            qreal ratio = s->devicePixelRatio();
+            int height = s->availableGeometry().height();
+            if (ratio > 1 && 600 > height) // if height is not enough to hold settings dialog
+            {
+                qDebug() << " Screen too small to apply automatic DPI scaling, enforcing QT_SCALE_FACTOR=" << (ratio -1);
+                qputenv("QT_SCALE_FACTOR", QString::number(ratio-1).toUtf8().constData());
+                QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false);
+            }
+        }
     }
 #endif
 
@@ -435,6 +456,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaError", "Failed permanently");
     QT_TRANSLATE_NOOP("MegaError", "Too many concurrent connections or transfers");
     QT_TRANSLATE_NOOP("MegaError", "Terms of Service breached");
+    QT_TRANSLATE_NOOP("MegaError", "Not accessible due to ToS/AUP violation");
     QT_TRANSLATE_NOOP("MegaError", "Out of range");
     QT_TRANSLATE_NOOP("MegaError", "Expired");
     QT_TRANSLATE_NOOP("MegaError", "Not found");
@@ -660,13 +682,11 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     isFirstSyncDone = false;
     isFirstFileSynced = false;
     transferManager = NULL;
-    queuedUserStats = 0;
     cleaningSchedulerExecution = 0;
     lastUserActivityExecution = 0;
     maxMemoryUsage = 0;
     nUnviewedTransfers = 0;
     completedTabActive = false;
-    inflightUserStats = false;
     nodescurrent = false;
     almostOQ = false;
     storageState = MegaApi::STORAGE_STATE_GREEN;
@@ -675,6 +695,13 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     lastApplicationDeactivation = chrono::steady_clock::now() - 5s;
     installEventFilter(this);
 #endif
+
+    for (unsigned i = 3; i--; )
+    {
+        inflightUserStats[i] = false;
+        userStatsLastRequest[i] = 0;
+        queuedUserStats[i] = false;
+    }
 
 #ifdef __APPLE__
     scanningTimer = NULL;
@@ -1213,13 +1240,19 @@ void MegaApplication::start()
 
     indexing = false;
     paused = false;
-    inflightUserStats = false;
     nodescurrent = false;
     infoOverQuota = false;
     almostOQ = false;
     storageState = MegaApi::STORAGE_STATE_GREEN;
     appliedStorageState = MegaApi::STORAGE_STATE_GREEN;;
     bwOverquotaTimestamp = 0;
+
+    for (unsigned i = 3; i--; )
+    {
+        inflightUserStats[i] = false;
+        userStatsLastRequest[i] = 0;
+        queuedUserStats[i] = false;
+    }
 
     if (!isLinux || !trayIcon->contextMenu())
     {
@@ -1400,10 +1433,16 @@ void MegaApplication::loggedIn()
         infoWizard = NULL;
     }
 
+    for (unsigned i = 3; i--; )
+    {
+        inflightUserStats[i] = false;
+        userStatsLastRequest[i] = 0;
+        queuedUserStats[i] = false;
+    }
+
     registerUserActivity();
     pauseTransfers(paused);
-    inflightUserStats = false;
-    updateUserStats(true);
+    updateUserStats(true, true, true, true);
     megaApi->getPricing();
     megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
     megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
@@ -1572,7 +1611,9 @@ void MegaApplication::applyStorageState(int state)
 {
     if (state == MegaApi::STORAGE_STATE_CHANGE)
     {
-        updateUserStats(true);
+        // this one is requested with force=false so it can't possibly occur to often.
+        // It will in turn result in another call of this function with the actual new state (if it changed), which is taken care of below with force=true (so that one does not have to wait further)
+        updateUserStats(true, false, false, false);
         return;
     }
 
@@ -1581,7 +1622,7 @@ void MegaApplication::applyStorageState(int state)
     {
         if (storageState != appliedStorageState)
         {
-            updateUserStats(true);
+            updateUserStats(true, false, false, true);
             appliedStorageState = storageState;
             if (state == MegaApi::STORAGE_STATE_RED)
             {
@@ -2383,10 +2424,11 @@ void MegaApplication::periodicTasks()
         cleanLocalCaches();
     }
 
-    if (queuedUserStats && queuedUserStats < QDateTime::currentMSecsSinceEpoch())
+    if (queuedUserStats[0] || queuedUserStats[1] || queuedUserStats[2])
     {
-        queuedUserStats = 0;
-        updateUserStats(true);
+        bool storage = queuedUserStats[0], transfer = queuedUserStats[1], pro = queuedUserStats[2];
+        queuedUserStats[0] = queuedUserStats[1] = queuedUserStats[3] = false;
+        updateUserStats(storage, transfer, pro, false);
     }
 
     checkNetworkInterfaces();
@@ -2589,7 +2631,7 @@ void MegaApplication::showInfoDialog()
 
     if (preferences && preferences->logged())
     {
-        updateUserStats(true);
+        updateUserStats(true, true, true, true);
         if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
         {
             openBwOverquotaDialog();
@@ -3960,32 +4002,46 @@ void MegaApplication::onDismissOQ(bool overStorage)
     }
 }
 
-void MegaApplication::updateUserStats(bool force)
+void MegaApplication::updateUserStats(bool storage, bool transfer, bool pro, bool force)
 {
     if (appfinished)
     {
         return;
     }
 
-    long long interval = Preferences::MIN_UPDATE_STATS_INTERVAL;
-    long long lastRequest = preferences->lastStatsRequest();
-    if (force || (QDateTime::currentMSecsSinceEpoch() - lastRequest) > interval)
+    // if any are already pending, we don't need to fetch again
+    if (inflightUserStats[0]) storage = false;
+    if (inflightUserStats[1]) transfer = false;
+    if (inflightUserStats[2]) pro = false;
+
+    if (!storage && !transfer && !pro)
     {
-        preferences->setLastStatsRequest(QDateTime::currentMSecsSinceEpoch());
-        if (!inflightUserStats)
-        {
-            inflightUserStats = true;
-            megaApi->getAccountDetails();
-        }
-        else
-        {
-            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Skipped call to getAccountDetails()");
-        }
-        queuedUserStats = 0;
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, "Skipped call to getSpecificAccountDetails()");
+        return;
+    }
+
+    // if the oldest of the ones we want is too recent, skip (unless force)
+    long long lastRequest = 0;
+    if (storage  && (!lastRequest || lastRequest > userStatsLastRequest[0])) lastRequest = userStatsLastRequest[0];
+    if (transfer && (!lastRequest || lastRequest > userStatsLastRequest[1])) lastRequest = userStatsLastRequest[1];
+    if (pro      && (!lastRequest || lastRequest > userStatsLastRequest[2])) lastRequest = userStatsLastRequest[2];
+
+    if (force || !lastRequest || (QDateTime::currentMSecsSinceEpoch() - lastRequest) > Preferences::MIN_UPDATE_STATS_INTERVAL)
+    {
+        megaApi->getSpecificAccountDetails(storage, transfer, pro);
+        if (storage)  inflightUserStats[0] = true;
+        if (transfer) inflightUserStats[1] = true;
+        if (pro)      inflightUserStats[2] = true;
+
+        if (storage)  userStatsLastRequest[0] = QDateTime::currentMSecsSinceEpoch();
+        if (transfer) userStatsLastRequest[1] = QDateTime::currentMSecsSinceEpoch();
+        if (pro)      userStatsLastRequest[2] = QDateTime::currentMSecsSinceEpoch();
     }
     else
     {
-        queuedUserStats = lastRequest + interval;
+        if (storage)  queuedUserStats[0] = true;
+        if (transfer) queuedUserStats[1] = true;
+        if (pro)      queuedUserStats[2] = true;
     }
 }
 
@@ -5536,6 +5592,32 @@ void MegaApplication::changeProxy()
         megaApi->retryPendingConnections();
     }
 
+#ifndef __MACH__
+    if (preferences && !proxyOnly)
+    {
+        updateUserStats(true, true, true, true);
+        if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
+        {
+            openBwOverquotaDialog();
+            return;
+        }
+        else if (bwOverquotaTimestamp)
+        {
+            bwOverquotaTimestamp = 0;
+            preferences->clearTemporalBandwidth();
+            if (bwOverquotaDialog)
+            {
+                bwOverquotaDialog->refreshAccountDetails();
+            }
+    #ifdef __MACH__
+            trayIcon->setContextMenu(&emptyMenu);
+    #elif defined(_WIN32)
+            trayIcon->setContextMenu(windowsMenu);
+    #endif
+        }
+    }
+#endif
+
     if (settingsDialog)
     {
         settingsDialog->setProxyOnly(proxyOnly);
@@ -6430,7 +6512,14 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     }
     case MegaRequest::TYPE_ACCOUNT_DETAILS:
     {
-        inflightUserStats = false;
+        bool storage = (request->getNumDetails() & 0x01) != 0;
+        bool transfer = (request->getNumDetails() & 0x02) != 0;
+        bool pro = (request->getNumDetails() & 0x04) != 0;
+
+        if (storage)  inflightUserStats[0] = false;
+        if (transfer) inflightUserStats[1] = false;
+        if (pro)      inflightUserStats[2] = false;
+
         if (!preferences->logged())
         {
             break;
@@ -7146,7 +7235,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     {
         preferences->clearTemporalBandwidth();
         megaApi->getPricing();
-        updateUserStats(true);
+        updateUserStats(false, true, false, false);  // just get udpated transfer quota, and with !force, just in case
         bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
 #ifdef __MACH__
         trayIcon->setContextMenu(initialMenu);
@@ -7171,7 +7260,7 @@ void MegaApplication::onAccountUpdate(MegaApi *)
         bwOverquotaDialog->refreshAccountDetails();
     }
 
-    updateUserStats(true);
+    updateUserStats(true, true, true, false);
 }
 
 //Called when contacts have been updated in MEGA
@@ -7384,10 +7473,34 @@ void MegaApplication::onReloadNeeded(MegaApi*)
     preferences->setCrashed(true);
 }
 
-void MegaApplication::onGlobalSyncStateChanged(MegaApi *)
+void MegaApplication::onGlobalSyncStateChangedTimeout()
+{
+    onGlobalSyncStateChanged(NULL, true);
+}
+
+void MegaApplication::onGlobalSyncStateChanged(MegaApi *, bool timeout)
 {
     if (appfinished)
     {
+        return;
+    }
+
+    // don't execute too often or the dialog locks up, eg. queueing a folder with 1k items for upload/download
+    if (timeout)
+    {
+        onGlobalSyncStateChangedTimer.reset();
+    }
+    else 
+    {
+        if (!onGlobalSyncStateChangedTimer)
+        {
+            onGlobalSyncStateChangedTimer.reset(new QTimer(this));
+            connect(onGlobalSyncStateChangedTimer.get(), SIGNAL(timeout()), this, SLOT(onGlobalSyncStateChangedTimeout()));
+
+            onGlobalSyncStateChangedTimer->setSingleShot(true);
+            onGlobalSyncStateChangedTimer->setInterval(200);
+            onGlobalSyncStateChangedTimer->start();
+        }
         return;
     }
 

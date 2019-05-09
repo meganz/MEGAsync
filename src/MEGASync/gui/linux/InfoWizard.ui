@@ -75,7 +75,7 @@ QPushButton
 color: #333333;
 font-family: Lato;
 font-size: 16px;
-font-weight: 900;
+font-weight: bold;
 }
 
 #lDescMEGAdesktopApp
