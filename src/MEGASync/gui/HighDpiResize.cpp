@@ -24,9 +24,12 @@ bool HighDpiResize::eventFilter(QObject *obj, QEvent *event)
 
 void HighDpiResize::queueRedraw()
 {
-#if defined(WIN32) || defined(Q_OS_LINUX)
+#if defined(WIN32)
     // waiting one second means we don't cause the window to be resized multiple times when dragged from one screen to another with a different scaling
     QTimer::singleShot(1000, this, SLOT(forceRedraw()));
+#elif defined(Q_OS_LINUX)
+    // in linux multiple resizes seems more or less bearable, whereas the 1s delay appears buggy when moving between screens
+    QTimer::singleShot(100, this, SLOT(forceRedraw()));
 #endif
 }
 

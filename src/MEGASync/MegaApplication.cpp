@@ -110,13 +110,43 @@ void msgHandler(QtMsgType type, const char *msg)
 
 namespace {
 
+constexpr auto dpiScreensSuitableIncrement = 1. / 6.; // this seems to work fine with 24x24 images at least
+
+double getXrdbdpi( bool enforce = false)
+{
+    static int calculated = 0;
+    if (calculated && !enforce) //avoid multiple calls
+    {
+        return calculated;
+    }
+
+    QProcess p;
+    p.start(QString::fromUtf8("bash -c \"xrdb -query | grep dpi | awk '{print $2}'\""));
+    p.waitForFinished(2000);
+    QString output = QString::fromUtf8(p.readAllStandardOutput().constData()).trimmed();
+    QString e = QString::fromUtf8(p.readAllStandardError().constData());
+    if (e.size())
+    {
+        qDebug() << "Error for \"xrdb -query\" command:" << e;
+    }
+
+    calculated = qRound(output.toDouble());
+    return calculated;
+}
+
 double computeScale(const QScreen& screen)
 {
     constexpr auto base_dpi = 96.;
-    auto scale = screen.logicalDotsPerInch();
-    if (scale > base_dpi) // high dpi screen
+    auto scale = 1.;
+    auto screendpi = getXrdbdpi(); //the best cross platform solution found (caveat: screen agnostic)
+    if (screendpi <= 0) //failsafe: in case xrdb fails to retrieve a valid value
     {
-        scale /= base_dpi;
+        screendpi = screen.logicalDotsPerInch(); //Use Qt to get dpi value (faulty in certain environments)
+    }
+
+    if (screendpi > base_dpi) // high dpi screen | zoom configured ...
+    {
+        scale = screendpi / base_dpi;
         scale = min(3., scale);
     }
     else // low dpi screen
@@ -125,33 +155,118 @@ double computeScale(const QScreen& screen)
         scale = min(geom.width() / 1920., geom.height() / 1080.) * 0.75;
         scale = max(1., scale);
     }
-    constexpr auto increment = 1. / 6.; // this seems to work fine with 24x24 images at least
-    scale = qRound(scale / increment) * increment;
+
+    scale = qRound(scale / dpiScreensSuitableIncrement) * dpiScreensSuitableIncrement;
+
     return scale;
 }
 
-void setScaleFactors()
+void setScreenScaleFactors(QMap<QString, double> screenscales)
 {
-    int argc = 0;
-    QGuiApplication app{argc, nullptr};
     QString scale_factors;
-    const auto screens = app.screens();
-    for (const auto& screen : screens)
+    for (auto ss = screenscales.begin(); ss != screenscales.end(); ++ss)
     {
-        const double computed_scale = computeScale(*screen);
-        scale_factors += screen->name() + QString::fromAscii("=") + QString::number(computed_scale);
-        if (screen != screens.back())
+        if (scale_factors.size())
         {
             scale_factors += QString::fromAscii(";");
         }
+        scale_factors += ss.key() + QString::fromAscii("=") + QString::number(ss.value());
     }
-    if (!scale_factors.isEmpty())
+
+    if (scale_factors.size())
     {
+        qDebug() << "Setting QT_SCREEN_SCALE_FACTORS=" << scale_factors;
         qputenv("QT_SCREEN_SCALE_FACTORS", scale_factors.toAscii());
     }
     else
     {
-        Q_ASSERT(false); // Must have at least one screen present
+        assert(false && "No screen found");
+    }
+
+    return;
+}
+
+void setScaleFactors()
+{
+    constexpr auto minTitleBarHeight = 20; // give some pixels to the tittle bar
+    constexpr auto biggestDialogHeight = minTitleBarHeight + 600; //This is the height of the biggest dialog in megassync (Settings)
+
+    if (getenv("QT_SCALE_FACTOR"))
+    {
+        qDebug() << "Not setting scale factors. Using predefined QT_SCALE_FACTOR=" << getenv("QT_SCALE_FACTOR");
+        return;
+    }
+
+    if (getenv("QT_SCREEN_SCALE_FACTORS"))
+    {
+        const QString &&predefScreenScaleFactors = QString::fromUtf8(getenv("QT_SCREEN_SCALE_FACTORS"));
+        int argc = 0;
+        QGuiApplication app{argc, nullptr};
+        const auto screens = app.screens();
+        bool screen_scale_factors_valid = predefScreenScaleFactors.size();
+        for (const auto& screen : screens)
+        {
+            if (!predefScreenScaleFactors.contains(screen->name()))
+            {
+                screen_scale_factors_valid = false;
+                break;
+            }
+        }
+
+        if (screen_scale_factors_valid)
+        {
+            qDebug() << "Not setting scale factors. Using predefined QT_SCREEN_SCALE_FACTORS=" << getenv("QT_SCREEN_SCALE_FACTORS");
+            return;
+        }
+    }
+
+
+    QMap<QString, double> screenscales;
+
+    {
+        int argc = 0;
+        QGuiApplication app{argc, nullptr};
+        const auto screens = app.screens();
+        for (const auto& screen : screens)
+        {
+            const double computed_scale = computeScale(*screen);
+            screenscales.insert(screen->name(), computed_scale);
+        }
+    }
+
+    setScreenScaleFactors(screenscales);
+
+    for (auto ssname : screenscales.keys())
+    {
+        if (screenscales[ssname] > 1)
+        {
+            auto &ssvalue = screenscales[ssname];
+            auto sprevious = ssvalue;
+
+            do
+            {
+                sprevious = ssvalue;
+
+                int argc = 0;
+                QGuiApplication app{argc, nullptr};
+                const auto screens = app.screens();
+                for (const auto& s : screens)
+                {
+                    if (s->name() == ssname)
+                    {
+                        auto height = s->availableGeometry().height();
+
+                        if (biggestDialogHeight > height)
+                        {
+                            ssvalue = max(1., ssvalue - dpiScreensSuitableIncrement); //Qt don't like scale factors below 1
+                            qDebug() << "Screen \"" << ssname << "\" too small for calculated scaling, reducing from " << sprevious << " to " << ssvalue;
+                            setScreenScaleFactors(screenscales);
+                        }
+                        break;
+                    }
+                }
+            } while(screenscales[ssname] > 1 && ssvalue != sprevious);
+        }
     }
 }
 
@@ -186,6 +301,22 @@ int main(int argc, char *argv[])
 #endif
 
 #if defined(Q_OS_LINUX) && QT_VERSION >= 0x050600
+    if (!(getenv("DO_NOT_SET_QT_PLUGIN_PATH")))
+    {
+        if (QDir(QString::fromUtf8("/opt/mega/plugins")).exists())
+        {
+            qputenv("QT_PLUGIN_PATH","/opt/mega/plugins");
+        }
+    }
+
+    if (!(getenv("DO_NOT_OVERRIDE_XDG_CURRENT_DESKTOP")))
+    {
+        if (getenv("XDG_CURRENT_DESKTOP") && !strcmp(getenv("XDG_CURRENT_DESKTOP"),"KDE") && (!getenv("XDG_SESSION_TYPE") || strcmp(getenv("XDG_SESSION_TYPE"),"wayland") ) )
+        {
+            qputenv("XDG_CURRENT_DESKTOP","GNOME");
+        }
+    }
+
     setScaleFactors();
 #endif
 
