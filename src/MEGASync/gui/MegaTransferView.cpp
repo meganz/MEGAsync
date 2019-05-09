@@ -631,7 +631,7 @@ void MegaTransferView::getLinkClicked()
                     char *key = node->getBase64Key();
                     if (handle && key)
                     {
-                        QString link = QString::fromUtf8("https://mega.nz/#!%1!%2")
+                        QString link = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2")
                                 .arg(QString::fromUtf8(handle)).arg(QString::fromUtf8(key));
                         linkList.append(link);
                     }
@@ -708,7 +708,7 @@ void MegaTransferView::showInMEGAClicked()
                 if (handle != INVALID_HANDLE)
                 {
                     const char *b64handle = MegaApi::handleToBase64(handle);
-                    QString url = QString::fromAscii("https://mega.nz/fm/") + QString::fromUtf8(b64handle);
+                    QString url = Preferences::BASE_URL + QString::fromAscii("/fm/") + QString::fromUtf8(b64handle);
                     QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
                     delete [] b64handle;
                 }

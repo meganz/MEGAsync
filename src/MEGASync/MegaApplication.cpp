@@ -15,6 +15,8 @@
 #include <QFontDatabase>
 #include <QNetworkProxy>
 #include <QScreen>
+#include <QSettings>
+
 #include <assert.h>
 
 #ifdef Q_OS_LINUX
@@ -903,7 +905,6 @@ void MegaApplication::initialize()
     installTranslator(&translator);
     QString language = preferences->language();
     changeLanguage(language);
-    trayIcon->show();
 
 #ifdef __APPLE__
     notificator = new Notificator(applicationName(), NULL, this);
@@ -931,11 +932,23 @@ void MegaApplication::initialize()
     QFile fstagingPath(stagingPath);
     if (fstagingPath.exists())
     {
-        megaApi->changeApiUrl("https://staging.api.mega.co.nz/");
-        megaApiFolders->changeApiUrl("https://staging.api.mega.co.nz/");
-        QMegaMessageBox::warning(NULL, QString::fromUtf8("MEGAsync"), QString::fromUtf8("API URL changed to staging"), Utilities::getDevicePixelRatio());
+        QSettings settings(stagingPath, QSettings::IniFormat);
+        QString apiURL = settings.value(QString::fromUtf8("apiurl"), QString::fromUtf8("https://staging.api.mega.co.nz/")).toString();
+        megaApi->changeApiUrl(apiURL.toUtf8());
+        megaApiFolders->changeApiUrl(apiURL.toUtf8());
+        QMegaMessageBox::warning(NULL, QString::fromUtf8("MEGAsync"), QString::fromUtf8("API URL changed to ")+ apiURL, Utilities::getDevicePixelRatio());
+
+        QString baseURL = settings.value(QString::fromUtf8("baseurl"), Preferences::BASE_URL).toString();
+        Preferences::setBaseUrl(baseURL);
+        if (baseURL.compare(QString::fromUtf8("https://mega.nz")))
+        {
+            QMegaMessageBox::warning(NULL, QString::fromUtf8("MEGAsync"), QString::fromUtf8("base URL changed to ") + Preferences::BASE_URL, Utilities::getDevicePixelRatio());
+        }
+
+        Preferences::overridePreferences(settings);
         Preferences::SDK_ID.append(QString::fromUtf8(" - STAGING"));
     }
+    trayIcon->show();
 
     megaApi->log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("MEGAsync is starting. Version string: %1   Version code: %2.%3   User-Agent: %4").arg(Preferences::VERSION_STRING)
              .arg(Preferences::VERSION_CODE).arg(Preferences::BUILD_ID).arg(QString::fromUtf8(megaApi->getUserAgent())).toUtf8().constData());
@@ -4323,7 +4336,7 @@ void MegaApplication::pauseTransfers()
 
 void MegaApplication::officialWeb()
 {
-    QString webUrl = QString::fromAscii("https://mega.nz/");
+    QString webUrl = Preferences::BASE_URL;
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(webUrl));
 }
 
@@ -4920,7 +4933,7 @@ void MegaApplication::copyFileLink(MegaHandle fileHandle, QString nodeKey)
         //Public node
         const char* base64Handle = MegaApi::handleToBase64(fileHandle);
         QString handle = QString::fromUtf8(base64Handle);
-        QString linkForClipboard = QString::fromUtf8("https://mega.nz/#!%1!%2").arg(handle).arg(nodeKey);
+        QString linkForClipboard = Preferences::BASE_URL + QString::fromUtf8("/#!%1!%2").arg(handle).arg(nodeKey);
         delete [] base64Handle;
         QApplication::clipboard()->setText(linkForClipboard);
         showInfoMessage(tr("The link has been copied to the clipboard"));
@@ -6661,47 +6674,64 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             break;
         }
 
-        MegaNode *root = megaApi->getRootNode();
-        MegaNode *inbox = megaApi->getInboxNode();
-        MegaNode *rubbish = megaApi->getRubbishNode();
-        MegaNodeList *inShares = megaApi->getInShares();
+        unique_ptr<MegaNode> root(megaApi->getRootNode());
+        unique_ptr<MegaNode> inbox(megaApi->getInboxNode());
+        unique_ptr<MegaNode> rubbish(megaApi->getRubbishNode());
+        unique_ptr<MegaNodeList> inShares(megaApi->getInShares());
+
         if (!root || !inbox || !rubbish || !inShares)
         {
             preferences->setCrashed(true);
-            delete root;
-            delete inbox;
-            delete rubbish;
-            delete inShares;
             break;
         }
 
         //Account details retrieved, update the preferences and the information dialog
-        MegaAccountDetails *details = request->getMegaAccountDetails();
-        preferences->setAccountType(details->getProLevel());
-        preferences->setTotalStorage(details->getStorageMax());
-        preferences->setUsedStorage(details->getStorageUsed());
-        preferences->setTotalBandwidth(details->getTransferMax());
-        preferences->setBandwidthInterval(details->getTemporalBandwidthInterval());
-        preferences->setUsedBandwidth(details->getProLevel() ? details->getTransferOwnUsed() : details->getTemporalBandwidth());
-        preferences->setVersionsStorage(details->getVersionStorageUsed());
+        unique_ptr<MegaAccountDetails> details(request->getMegaAccountDetails());
 
-        MegaHandle rootHandle = root->getHandle();
-        preferences->setCloudDriveStorage(details->getStorageUsed(rootHandle));
-        preferences->setCloudDriveFiles(details->getNumFiles(rootHandle));
-        preferences->setCloudDriveFolders(details->getNumFolders(rootHandle));
-        delete root;
+        if (pro)
+        {
+            preferences->setAccountType(details->getProLevel());
+        }
 
-        MegaHandle inboxHandle = inbox->getHandle();
-        preferences->setInboxStorage(details->getStorageUsed(inboxHandle));
-        preferences->setInboxFiles(details->getNumFiles(inboxHandle));
-        preferences->setInboxFolders(details->getNumFolders(inboxHandle));
-        delete inbox;
+        if (storage)
+        {
+            preferences->setTotalStorage(details->getStorageMax());
+            preferences->setUsedStorage(details->getStorageUsed());
+            preferences->setVersionsStorage(details->getVersionStorageUsed());
 
-        MegaHandle rubbishHandle = rubbish->getHandle();
-        preferences->setRubbishStorage(details->getStorageUsed(rubbishHandle));
-        preferences->setRubbishFiles(details->getNumFiles(rubbishHandle));
-        preferences->setRubbishFolders(details->getNumFolders(rubbishHandle));
-        delete rubbish;
+            MegaHandle rootHandle = root->getHandle();
+            preferences->setCloudDriveStorage(details->getStorageUsed(rootHandle));
+            preferences->setCloudDriveFiles(details->getNumFiles(rootHandle));
+            preferences->setCloudDriveFolders(details->getNumFolders(rootHandle));
+
+            MegaHandle inboxHandle = inbox->getHandle();
+            preferences->setInboxStorage(details->getStorageUsed(inboxHandle));
+            preferences->setInboxFiles(details->getNumFiles(inboxHandle));
+            preferences->setInboxFolders(details->getNumFolders(inboxHandle));
+
+            MegaHandle rubbishHandle = rubbish->getHandle();
+            preferences->setRubbishStorage(details->getStorageUsed(rubbishHandle));
+            preferences->setRubbishFiles(details->getNumFiles(rubbishHandle));
+            preferences->setRubbishFolders(details->getNumFolders(rubbishHandle));
+
+            long long inShareSize = 0, inShareFiles = 0, inShareFolders = 0;
+            for (int i = 0; i < inShares->size(); i++)
+            {
+                MegaNode *node = inShares->get(i);
+                if (!node)
+                {
+                    continue;
+                }
+
+                MegaHandle handle = node->getHandle();
+                inShareSize += details->getStorageUsed(handle);
+                inShareFiles += details->getNumFiles(handle);
+                inShareFolders += details->getNumFolders(handle);
+            }
+            preferences->setInShareStorage(inShareSize);
+            preferences->setInShareFiles(inShareFiles);
+            preferences->setInShareFolders(inShareFolders);
+        }
 
         if (!megaApi->getBandwidthOverquotaDelay() && preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
         {
@@ -6718,28 +6748,16 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             }
         }
 
-        preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
-        preferences->setTemporalBandwidth(details->getTemporalBandwidth());
-        preferences->setTemporalBandwidthValid(details->isTemporalBandwidthValid());
+        if (transfer)
+        {            
+            preferences->setTotalBandwidth(details->getTransferMax());
+            preferences->setBandwidthInterval(details->getTemporalBandwidthInterval());
+            preferences->setUsedBandwidth(preferences->accountType() ? details->getTransferOwnUsed() : details->getTemporalBandwidth());
 
-        long long inShareSize = 0, inShareFiles = 0, inShareFolders  = 0;
-        for (int i = 0; i < inShares->size(); i++)
-        {
-            MegaNode *node = inShares->get(i);
-            if (!node)
-            {
-                continue;
-            }
-
-            MegaHandle handle = node->getHandle();
-            inShareSize    += details->getStorageUsed(handle);
-            inShareFiles   += details->getNumFiles(handle);
-            inShareFolders += details->getNumFolders(handle);
+            preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
+            preferences->setTemporalBandwidth(details->getTemporalBandwidth());
+            preferences->setTemporalBandwidthValid(details->isTemporalBandwidthValid());
         }
-        preferences->setInShareStorage(inShareSize);
-        preferences->setInShareFiles(inShareFiles);
-        preferences->setInShareFolders(inShareFolders);
-        delete inShares;
 
         preferences->sync();
 
@@ -6763,8 +6781,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {
             storageOverquotaDialog->refreshUsedStorage();
         }
-
-        delete details;
         break;
     }
     case MegaRequest::TYPE_PAUSE_TRANSFERS:
@@ -7134,7 +7150,7 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
             if (it != transferAppData.end())
             {
                 TransferMetaData *data = it.value();
-                if ((endptr - notificationKey) != strlen(notificationKey))
+                if ((endptr - notificationKey) != (int64_t)strlen(notificationKey))
                 {
                     if (e->getErrorCode() == MegaError::API_EINCOMPLETE)
                     {

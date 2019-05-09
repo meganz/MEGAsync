@@ -810,7 +810,7 @@ void SettingsDialog::on_bOk_clicked()
 
 void SettingsDialog::on_bHelp_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://mega.nz/help/client/megasync");
+    QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/help/client/megasync");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
 
@@ -2007,7 +2007,7 @@ void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
         if (node)
         {
             const char *handle = node->getBase64Handle();
-            QString url = QString::fromAscii("https://mega.nz/fm/") + QString::fromAscii(handle);
+            QString url = Preferences::BASE_URL + QString::fromAscii("/fm/") + QString::fromAscii(handle);
             QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
             delete [] handle;
             delete node;
