@@ -163,7 +163,7 @@ double computeScale(const QScreen& screen)
     return scale;
 }
 
-void setScreenScaleFactors(QMap<QString, double> screenscales)
+void setScreenScaleFactorsEnvVar(const QMap<QString, double> &screenscales)
 {
     QString scale_factors;
     for (auto ss = screenscales.begin(); ss != screenscales.end(); ++ss)
@@ -188,11 +188,47 @@ void setScreenScaleFactors(QMap<QString, double> screenscales)
     return;
 }
 
-void setScaleFactors()
+void adjustScreenScaleFactors(QMap<QString, double> &screenscales)
 {
     constexpr auto minTitleBarHeight = 20; // give some pixels to the tittle bar
     constexpr auto biggestDialogHeight = minTitleBarHeight + 600; //This is the height of the biggest dialog in megassync (Settings)
 
+    for (auto ssname : screenscales.keys())
+    {
+        if (screenscales[ssname] > 1)
+        {
+            auto &ssvalue = screenscales[ssname];
+            auto sprevious = ssvalue;
+
+            do
+            {
+                sprevious = ssvalue;
+
+                int argc = 0;
+                QGuiApplication app{argc, nullptr};
+                const auto screens = app.screens();
+                for (const auto& s : screens)
+                {
+                    if (s->name() == ssname)
+                    {
+                        auto height = s->availableGeometry().height();
+
+                        if (biggestDialogHeight > height)
+                        {
+                            ssvalue = max(1., ssvalue - dpiScreensSuitableIncrement); //Qt don't like scale factors below 1
+                            qDebug() << "Screen \"" << ssname << "\" too small for calculated scaling, reducing from " << sprevious << " to " << ssvalue;
+                            setScreenScaleFactorsEnvVar(screenscales);
+                        }
+                        break;
+                    }
+                }
+            } while(screenscales[ssname] > 1 && ssvalue != sprevious);
+        }
+    }
+}
+
+void setScaleFactors()
+{
     if (getenv("QT_SCALE_FACTOR"))
     {
         qDebug() << "Not setting scale factors. Using predefined QT_SCALE_FACTOR=" << getenv("QT_SCALE_FACTOR");
@@ -201,7 +237,7 @@ void setScaleFactors()
 
     if (getenv("QT_SCREEN_SCALE_FACTORS"))
     {
-        const QString &&predefScreenScaleFactors = QString::fromUtf8(getenv("QT_SCREEN_SCALE_FACTORS"));
+        const QString predefScreenScaleFactors = QString::fromUtf8(getenv("QT_SCREEN_SCALE_FACTORS"));
         int argc = 0;
         QGuiApplication app{argc, nullptr};
         const auto screens = app.screens();
@@ -236,40 +272,8 @@ void setScaleFactors()
         }
     }
 
-    setScreenScaleFactors(screenscales);
-
-    for (auto ssname : screenscales.keys())
-    {
-        if (screenscales[ssname] > 1)
-        {
-            auto &ssvalue = screenscales[ssname];
-            auto sprevious = ssvalue;
-
-            do
-            {
-                sprevious = ssvalue;
-
-                int argc = 0;
-                QGuiApplication app{argc, nullptr};
-                const auto screens = app.screens();
-                for (const auto& s : screens)
-                {
-                    if (s->name() == ssname)
-                    {
-                        auto height = s->availableGeometry().height();
-
-                        if (biggestDialogHeight > height)
-                        {
-                            ssvalue = max(1., ssvalue - dpiScreensSuitableIncrement); //Qt don't like scale factors below 1
-                            qDebug() << "Screen \"" << ssname << "\" too small for calculated scaling, reducing from " << sprevious << " to " << ssvalue;
-                            setScreenScaleFactors(screenscales);
-                        }
-                        break;
-                    }
-                }
-            } while(screenscales[ssname] > 1 && ssvalue != sprevious);
-        }
-    }
+    setScreenScaleFactorsEnvVar(screenscales);
+    adjustScreenScaleFactors(screenscales);
 }
 
 }
