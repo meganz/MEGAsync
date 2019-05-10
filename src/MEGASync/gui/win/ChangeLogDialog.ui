@@ -39,7 +39,7 @@ border-radius: 5px;
 #lMEGAsync
 {
   font-family: &quot;Helvetica-Bold&quot;;
-  font-size: 14px;
+  font-size: 16px;
   color: #333333;
 }
 #bPolicy, #bTerms, #bAck, #bGDPR
@@ -97,6 +97,12 @@ border-radius: 5px;
       </property>
       <item>
        <widget class="QPushButton" name="pushButton">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="focusPolicy">
          <enum>Qt::NoFocus</enum>
         </property>
@@ -139,7 +145,7 @@ border-radius: 5px;
       <enum>Qt::StrongFocus</enum>
      </property>
      <property name="text">
-      <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:14pt; font-weight:600;&quot;&gt;MEGAsync&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string notr="true">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot;font-weight:600;&quot;&gt;MEGAsync&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>

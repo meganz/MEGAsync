@@ -40,6 +40,8 @@ QPushButton
 {
     min-height: 14px;
 	height: 14px;
+	padding-right: 12px;
+	padding-left: 12px;
 }
 
 #cbAlwaysUploadToLocation
@@ -84,7 +86,7 @@ QPushButton
       <bool>true</bool>
      </property>
      <attribute name="headerDefaultSectionSize">
-      <number>0</number>
+      <number>23</number>
      </attribute>
     </widget>
    </item>
@@ -131,6 +133,12 @@ QPushButton
       </item>
       <item>
        <widget class="QPushButton" name="bNewFolder">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>22</height>
+         </size>
+        </property>
         <property name="text">
          <string>New folder</string>
         </property>
@@ -138,6 +146,12 @@ QPushButton
       </item>
       <item>
        <widget class="QPushButton" name="bOk">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>22</height>
+         </size>
+        </property>
         <property name="text">
          <string>OK</string>
         </property>
@@ -145,6 +159,12 @@ QPushButton
       </item>
       <item>
        <widget class="QPushButton" name="bCancel">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>22</height>
+         </size>
+        </property>
         <property name="text">
          <string>Cancel</string>
         </property>
