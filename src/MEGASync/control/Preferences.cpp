@@ -16,7 +16,7 @@ const int Preferences::VERSION_CODE = 4100;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.1.0");
-QString Preferences::SDK_ID = QString::fromAscii("fc5b36c");
+QString Preferences::SDK_ID = QString::fromAscii("f0186e0");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
             "- Improved look&feel for high resolution displays on Windows and Linux\n"
             "- Enable thumbnail support for PDF\n"
