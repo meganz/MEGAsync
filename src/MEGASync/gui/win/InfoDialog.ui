@@ -320,6 +320,12 @@ color: #999999;
 {
   background-color: #FFFFFF;
 }
+
+QPushButton
+{
+	padding-right: 12px;
+	padding-left: 12px;
+}
 </string>
   </property>
   <property name="sizeGripEnabled">
