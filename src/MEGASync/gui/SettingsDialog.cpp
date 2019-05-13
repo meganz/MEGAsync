@@ -1286,7 +1286,7 @@ void SettingsDialog::refreshAccountDetails()
             ui->pStorage->setValue((percentage < 100) ? percentage : 100);
             ui->lStorage->setText(tr("%1 (%2%) of %3 used")
                   .arg(Utilities::getSizeString(preferences->usedStorage()))
-                  .arg(QString::number(percentage))
+                  .arg(QString::number(percentage > 100 ? 100 : percentage))
                   .arg(Utilities::getSizeString(preferences->totalStorage())));
         }
     }
@@ -1309,7 +1309,7 @@ void SettingsDialog::refreshAccountDetails()
             ui->pUsedBandwidth->setValue((percentage < 100) ? percentage : 100);
             ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
                   .arg(Utilities::getSizeString(preferences->usedBandwidth()))
-                  .arg(QString::number(percentage))
+                  .arg(QString::number(percentage > 100 ? 100 : percentage))
                   .arg(Utilities::getSizeString(preferences->totalBandwidth())));
         }
     }

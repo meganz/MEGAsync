@@ -262,7 +262,7 @@ void InfoDialog::setUsage()
         ui->pUsageQuota->style()->polish(ui->pUsageQuota);
 
         QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1&nbsp;</span>")
-                                     .arg(QString::number(percentage).append(QString::fromAscii("%"))))
+                                     .arg(QString::number(percentage > 100 ? 100 : percentage).append(QString::fromAscii("%"))))
                                      .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(preferences->totalBandwidth())));
         ui->lPercentageUsedQuota->setText(used);
