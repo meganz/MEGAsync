@@ -73,6 +73,12 @@
    color: #333333;
 }
 
+#lRemainingTime
+{
+   font: &quot;Source Sans Pro&quot;;
+   font-size: 12px;
+}
+
 </string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_2">
