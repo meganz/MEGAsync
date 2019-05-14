@@ -17,6 +17,14 @@ const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.1.0");
 QString Preferences::SDK_ID = QString::fromAscii("f0186e0");
+#ifdef _WIN32
+const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
+    "- Improved look&feel for high resolution displays on Windows and Linux\n"
+    "- Improved GUI performance during addition of many downloads\n"
+    "- Restyling of initial information wizard, new icons and interface improvements\n"
+    "- Support for business accounts\n"
+    "- Other minor bug fixes and improvements"));
+#else
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
             "- Improved look&feel for high resolution displays on Windows and Linux\n"
             "- Enable thumbnail support for PDF\n"
@@ -24,6 +32,7 @@ const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
             "- Restyling of initial information wizard, new icons and interface improvements\n"
             "- Support for business accounts\n"
             "- Other minor bug fixes and improvements"));
+#endif
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");

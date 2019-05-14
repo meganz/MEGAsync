@@ -54,8 +54,8 @@ VIAddVersionKey "ProductVersion" "4.1.0.0"
 !endif
 !endif
 
-!define BUILDPATH_X86 "Release_x32"
-!define BUILDPATH_X64 "Release_x64"
+!define BUILDPATH_X86 "build-MEGA-Desktop_Qt_5_6_3_MSVC2015_32bit-Release"
+!define BUILDPATH_X64 "build-MEGA-Desktop_Qt_5_6_3_MSVC2015_64bit-Release"
 
 !ifdef BUILD_X64_VERSION
 !define SRCDIR_MEGASYNC "${BUILDPATH_X64}\MEGAsync\release"
@@ -830,9 +830,9 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\swresample-2.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\swresample-2.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-  File "${SRCDIR_MEGASYNC}\pdfium.dll"
-  AccessControl::SetFileOwner "$INSTDIR\pdfium.dll" "$USERNAME"
-  AccessControl::GrantOnFile "$INSTDIR\pdfium.dll" "$USERNAME" "GenericRead + GenericWrite"
+;  File "${SRCDIR_MEGASYNC}\pdfium.dll"
+;  AccessControl::SetFileOwner "$INSTDIR\pdfium.dll" "$USERNAME"
+;  AccessControl::GrantOnFile "$INSTDIR\pdfium.dll" "$USERNAME" "GenericRead + GenericWrite"
 
 ;!ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
   File "${UNINSTALLER_NAME}"
@@ -1105,7 +1105,7 @@ Section Uninstall
   Delete "$INSTDIR\avutil-55.dll"
   Delete "$INSTDIR\swscale-4.dll"
   Delete "$INSTDIR\swresample-2.dll"
-  Delete "$INSTDIR\pdfium.dll"
+;  Delete "$INSTDIR\pdfium.dll"
 
   !define LIBRARY_COM
   !define LIBRARY_SHELL_EXTENSION
