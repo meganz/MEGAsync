@@ -15,6 +15,7 @@ QT_BEGIN_NAMESPACE
 class QSystemTrayIcon;
 
 #ifdef USE_DBUS
+#include <QDBusMessage>
 class QDBusInterface;
 #endif
 QT_END_NAMESPACE
@@ -79,10 +80,20 @@ protected:
     int64_t id;
     QString data;
 
+#ifdef USE_DBUS
+    int dbusId;
+#endif
 signals:
     void activated(int action);
     void closed(int reason);
     void failed();
+
+#ifdef USE_DBUS
+public slots:
+    void dBusNotificationSentCallback(QDBusMessage dbusMssage);
+    void dbusNotificationSentErrorCallback();
+    void dBusNotificationCallback(QDBusMessage dbusMssage);
+#endif
 };
 
 #ifdef _WIN32
@@ -158,8 +169,9 @@ private:
 
 #ifdef USE_DBUS
     QDBusInterface *interface;
+    bool dbussSupportsActions;
 
-    void notifyDBus(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout);
+    void notifyDBus(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout, QStringList actions = QStringList(), MegaNotification *notification = NULL);
 #endif
     void notifySystray(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout, bool forceQt = false);
     void notifySystray(MegaNotification *notification);

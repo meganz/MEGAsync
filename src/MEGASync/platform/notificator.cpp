@@ -22,6 +22,7 @@
 #ifdef USE_DBUS
 #include <stdint.h>
 #include <QtDBus/QtDBus>
+#include <assert.h>
 #endif
 // Include ApplicationServices.h after QtDbus to avoid redefinition of check().
 // This affects at least OSX 10.6. See /usr/include/AssertMacros.h for details.
@@ -36,6 +37,8 @@
 #include "platform/win/wintoastlib.h"
 using namespace WinToastLib;
 #endif
+
+using namespace mega;
 
 // https://wiki.ubuntu.com/NotificationDevelopmentGuidelines recommends at least 128
 const int FREEDESKTOP_NOTIFICATION_ICON_SIZE = 128;
@@ -64,6 +67,16 @@ Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, 
     if (interface->isValid())
     {
         mode = Freedesktop;
+        if (!getenv("XDG_CURRENT_DESKTOP") || strcmp(getenv("XDG_CURRENT_DESKTOP"), "Unity") ) //unity shows notification with actions as a popup
+        {
+            dbussSupportsActions = true;
+        }
+        else
+        {
+            qDebug() << getenv("XDG_CURRENT_DESKTOP") << " !getnve=" << !getenv("XDG_CURRENT_DESKTOP") << " strcmpg=" << strcmp(getenv("XDG_CURRENT_DESKTOP"), "Unity"); //TODO; delete
+            dbussSupportsActions = false;
+        }
+
     }
 #endif
 #ifdef Q_OS_MAC
@@ -176,7 +189,7 @@ QVariant FreedesktopImage::toVariant(const QImage &img)
     return QVariant(FreedesktopImage::metaType(), &fimg);
 }
 
-void Notificator::notifyDBus(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout)
+void Notificator::notifyDBus(Class cls, const QString &title, const QString &text, const QIcon &icon, int millisTimeout, QStringList actions, MegaNotification *notification)
 {
     Q_UNUSED(cls);
     // Arguments for DBus call:
@@ -197,8 +210,7 @@ void Notificator::notifyDBus(Class cls, const QString &title, const QString &tex
     // Body
     args.append(text);
 
-    // Actions (none, actions are deprecated)
-    QStringList actions;
+    // Actions
     args.append(actions);
 
     // Hints
@@ -238,8 +250,17 @@ void Notificator::notifyDBus(Class cls, const QString &title, const QString &tex
     // Timeout (in msec)
     args.append(millisTimeout);
 
-    // "Fire and forget"
-    interface->callWithArgumentList(QDBus::NoBlock, QString::fromUtf8("Notify"), args);
+    if(dbussSupportsActions)
+    {
+        // fire with callback to gather ID
+        interface->callWithCallback(QString::fromUtf8("Notify"), args, notification,
+                                    SLOT(dBusNotificationSentCallback(QDBusMessage)), SLOT(dbusNotificationSentErrorCallback()));
+    }
+    else
+    {
+        // "Fire and forget"
+        interface->callWithArgumentList(QDBus::NoBlock, QString::fromUtf8("Notify"), args);
+    }
 }
 #endif
 
@@ -431,9 +452,28 @@ void Notificator::notify(MegaNotification *notification)
     }
 #endif
 
-    notify((Class)notification->getType(), notification->getTitle(), notification->getText(),
-           notification->getImage(), notification->getExpirationTime());
-    delete notification;
+#ifdef USE_DBUS
+    if (mode == Freedesktop && dbussSupportsActions)
+    {
+        QStringList actions;
+        for (auto a : notification->getActions())
+        {
+            //Dbus likes pairs (Text and argument for the callback)
+            actions.append(a);
+            actions.append(a);
+        }
+        QDBusConnection::sessionBus().connect(QString::fromUtf8("org.freedesktop.Notifications"),QString::fromUtf8("/org/freedesktop/Notifications"),
+                                              QString::fromUtf8("org.freedesktop.Notifications"),QString::fromUtf8(""), notification, SLOT(dBusNotificationCallback(QDBusMessage)));
+        notifyDBus((Class)notification->getType(), notification->getTitle(), notification->getText(),
+                   notification->getImage(), notification->getExpirationTime(), actions, notification);
+    }
+    else
+#endif
+    {
+        notify((Class)notification->getType(), notification->getTitle(), notification->getText(),
+               notification->getImage(), notification->getExpirationTime());
+        delete notification;
+    }
 }
 
 int MegaNotification::getStyle() const
@@ -501,6 +541,50 @@ void MegaNotification::emitlLegacyNotificationActivated()
     emit activated(ActivationLegacyNotificationClicked);
 }
 
+#ifdef USE_DBUS
+void MegaNotification::dBusNotificationSentCallback(QDBusMessage dbusMssage)
+{
+    if (dbusMssage.arguments().size())
+    {
+        dbusId = dbusMssage.arguments().at(0).toInt();
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Notification sent to DBUS. Id = %1").arg(dbusId).toUtf8().constData());
+    }
+    else
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Notification sent to DBUS: missing id").arg(dbusId).toUtf8().constData());
+        assert(false && "QDBusMessage missing id");
+    }
+}
+
+void MegaNotification::dbusNotificationSentErrorCallback()
+{
+    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Notification to DBUS failed").toUtf8().constData());
+    deleteLater();
+}
+
+void MegaNotification::dBusNotificationCallback(QDBusMessage dbusMssage)
+{
+    if (dbusMssage.arguments().size() && dbusId != dbusMssage.arguments().at(0).toInt() )
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Received notification corresponding to another notification. current = %1. Received = %1").arg(dbusId).arg(dbusMssage.member()).toUtf8().constData());
+        return;
+    }
+    else if (!dbusMssage.arguments().size())
+    {
+        assert(false && "QDBusMessage missing id");
+    }
+
+    if (dbusMssage.member() == QString::fromUtf8("ActionInvoked"))
+    {
+        emit activated(ActivationActionButtonClicked); // we might want to parse dbusMssage.arguments().at(1) to emit an alternative action if several added
+    }
+    else if (dbusMssage.member() == QString::fromUtf8("NotificationClosed"))
+    {
+        emit closed(ActivationActionButtonClicked);
+    }
+}
+#endif
+
 MegaNotification::MegaNotification()
 {
     title = QString::fromUtf8("MEGA");
@@ -509,6 +593,9 @@ MegaNotification::MegaNotification()
     style = -1;
     type = Notificator::Information;
     id = -1;
+#if USE_DBUS
+    dbusId = -1;
+#endif
 
     connect(this, SIGNAL(activated(int)), this, SLOT(deleteLater()), Qt::QueuedConnection);
     connect(this, SIGNAL(closed(int)), this, SLOT(deleteLater()), Qt::QueuedConnection);
