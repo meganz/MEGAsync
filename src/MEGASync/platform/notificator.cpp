@@ -73,7 +73,8 @@ Notificator::Notificator(const QString &programName, QSystemTrayIcon *trayicon, 
         }
         else
         {
-            qDebug() << getenv("XDG_CURRENT_DESKTOP") << " !getnve=" << !getenv("XDG_CURRENT_DESKTOP") << " strcmpg=" << strcmp(getenv("XDG_CURRENT_DESKTOP"), "Unity"); //TODO; delete
+            MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Disabling actions for DBUS notifications: not supported for your desktop environment. XDG_CURRENT_DESKTOP=%1")
+                         .arg(QString::fromUtf8(getenv("XDG_CURRENT_DESKTOP")?getenv("XDG_CURRENT_DESKTOP"):"unset")).toUtf8().constData());
             dbussSupportsActions = false;
         }
 
