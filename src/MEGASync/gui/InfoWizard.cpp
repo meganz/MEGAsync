@@ -1,5 +1,6 @@
 #include "InfoWizard.h"
 #include "ui_InfoWizard.h"
+#include "Preferences.h"
 
 InfoWizard::InfoWizard(QWidget *parent) :
     QDialog(parent),
@@ -84,7 +85,7 @@ void InfoWizard::tweakStrings()
 {
     ui->lDesckKnowMore->setText(ui->lDesckKnowMore->text()
                                  .replace(QString::fromUtf8("[A]"),
-                                          QString::fromUtf8("&nbsp;&nbsp;<a href=\"https://mega.nz/sync\"><span style=\"color:#df4843;\">"))
+                                          QString::fromUtf8("&nbsp;&nbsp;<a href=\"") + Preferences::BASE_URL + QString::fromUtf8("/sync\"><span style=\"color:#df4843;\">"))
                                  .replace(QString::fromUtf8("[/A]"),
                                           QString::fromUtf8("</span></a>")));
 }

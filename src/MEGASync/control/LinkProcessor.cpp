@@ -179,7 +179,7 @@ void LinkProcessor::requestLinkInfo()
     }
 
     QString link = linkList[currentIndex];
-    if (link.startsWith(QString::fromUtf8("https://mega.nz/#F!")))
+    if (link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/#F!")))
     {
         megaApiFolders->loginToFolder(link.toUtf8().constData(), delegateListener);
     }

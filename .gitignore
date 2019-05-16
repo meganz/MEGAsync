@@ -60,9 +60,11 @@ CMakeTmp
 CTestTestfile.cmake
 cmake_install.cmake
 *automoc*
+src/build-MEGASync-Desktop-*
 
 *.pro.user.*
 ecm_uninstall.cmake
 install_manifest.txt
+src/.qmake.stash
 
 *.orig

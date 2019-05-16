@@ -810,7 +810,7 @@ void SettingsDialog::on_bOk_clicked()
 
 void SettingsDialog::on_bHelp_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://mega.nz/help/client/megasync");
+    QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/help/client/megasync");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
 
@@ -1286,7 +1286,7 @@ void SettingsDialog::refreshAccountDetails()
             ui->pStorage->setValue((percentage < 100) ? percentage : 100);
             ui->lStorage->setText(tr("%1 (%2%) of %3 used")
                   .arg(Utilities::getSizeString(preferences->usedStorage()))
-                  .arg(QString::number(percentage))
+                  .arg(QString::number(percentage > 100 ? 100 : percentage))
                   .arg(Utilities::getSizeString(preferences->totalStorage())));
         }
     }
@@ -1309,7 +1309,7 @@ void SettingsDialog::refreshAccountDetails()
             ui->pUsedBandwidth->setValue((percentage < 100) ? percentage : 100);
             ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
                   .arg(Utilities::getSizeString(preferences->usedBandwidth()))
-                  .arg(QString::number(percentage))
+                  .arg(QString::number(percentage > 100 ? 100 : percentage))
                   .arg(Utilities::getSizeString(preferences->totalBandwidth())));
         }
     }
@@ -2007,7 +2007,7 @@ void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
         if (node)
         {
             const char *handle = node->getBase64Handle();
-            QString url = QString::fromAscii("https://mega.nz/fm/") + QString::fromAscii(handle);
+            QString url = Preferences::BASE_URL + QString::fromAscii("/fm/") + QString::fromAscii(handle);
             QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
             delete [] handle;
             delete node;

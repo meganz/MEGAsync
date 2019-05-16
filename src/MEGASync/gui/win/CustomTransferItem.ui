@@ -68,6 +68,12 @@
   font-family: &quot;Source Sans Pro&quot;;
   font-size: 12px;
   color: #999999;
+}
+
+#lRemainingTime
+{
+  font-family: &quot;Source Sans Pro&quot;;
+  font-size: 13px;
 }</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">

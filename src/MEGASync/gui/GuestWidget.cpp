@@ -100,7 +100,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             {
                 if (error->getErrorCode() == MegaError::API_ENOENT)
                 {
-                    QMessageBox::warning(NULL, tr("Error"), tr("Incorrect email and/or password."), QMessageBox::Ok);
+                    QMessageBox::warning(this, tr("Error"), tr("Incorrect email and/or password."), QMessageBox::Ok);
                 }
                 else if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
                 {
