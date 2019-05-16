@@ -20,6 +20,7 @@ AccountDetailsDialog::AccountDetailsDialog(MegaApi *megaApi, QWidget *parent) :
     this->megaApi = megaApi;
     ui->lLoading->setText(ui->lLoading->text().toUpper());
     refresh(Preferences::instance());
+    highDpiResize.init(this);
 }
 
 AccountDetailsDialog::~AccountDetailsDialog()
@@ -29,6 +30,25 @@ AccountDetailsDialog::~AccountDetailsDialog()
 
 void AccountDetailsDialog::refresh(Preferences *preferences)
 {
+
+    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+        setMinimumHeight(220);
+        setMaximumHeight(220);
+        setContentsMargins(0, 0, 0, 24);
+        ui->sHeader->hide();
+        ui->wAvailable->hide();
+        ui->wInbox->hide();
+    }
+    else
+    {
+        setMinimumHeight(320);
+        setMaximumHeight(320);
+        setContentsMargins(0, 24, 0, 24);
+        ui->sHeader->show();
+        ui->wAvailable->show();
+        ui->wInbox->show();
+    }
 
     if (preferences->totalStorage() == 0)
     {
@@ -54,7 +74,7 @@ void AccountDetailsDialog::refresh(Preferences *preferences)
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
 
         QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 18px; text-decoration:none;\">%1&nbsp;</span>")
-                                     .arg(QString::number(percentage).append(QString::fromAscii(" %"))))
+                                     .arg(QString::number(percentage > 100 ? 100 : percentage).append(QString::fromAscii(" %"))))
                                      .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 18px; text-decoration:none;\">&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(preferences->totalStorage())));
         ui->lPercentageUsedStorage->setText(used);

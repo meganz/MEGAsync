@@ -1,6 +1,8 @@
 #include "TransferItem.h"
 #include "megaapi.h"
 
+using namespace mega;
+
 TransferItem::TransferItem(QWidget *parent) : QWidget(parent)
 {
     type = -1;
@@ -10,6 +12,8 @@ TransferItem::TransferItem(QWidget *parent) : QWidget(parent)
     transferSpeed = 0;
     meanTransferSpeed = 0;
     regular = false;
+    isLinkAvailable = false;
+    nodeAccess = MegaShare::ACCESS_UNKNOWN;
     cancelButtonEnabled = false;
     isSyncTransfer = false;
     priority = 0;
@@ -140,3 +144,22 @@ void TransferItem::setRegular(bool value)
     regular = value;    
 }
 
+bool TransferItem::getIsLinkAvailable()
+{
+    return isLinkAvailable;
+}
+
+void TransferItem::setIsLinkAvailable(bool value)
+{
+    isLinkAvailable = value;
+}
+
+int TransferItem::getNodeAccess()
+{
+    return nodeAccess;
+}
+
+void TransferItem::setNodeAccess(int value)
+{
+    nodeAccess = value;
+}

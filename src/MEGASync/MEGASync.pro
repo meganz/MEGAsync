@@ -58,6 +58,16 @@ CONFIG += USE_MEDIAINFO
 CONFIG += USE_LIBRAW
 CONFIG += USE_FFMPEG
 
+macx {
+CONFIG += USE_PDFIUM
+}
+else:win32 {
+#CONFIG += USE_PDFIUM
+}
+else:contains(QMAKE_CFLAGS, -m64) { #Notice this might not work for clang!
+CONFIG += USE_PDFIUM
+}
+
 unix:!macx {
         exists(/usr/include/ffmpeg-mega)|exists(mega/bindings/qt/3rdparty/include/ffmpeg)|packagesExist(ffmpeg)|packagesExist(libavcodec) {
             CONFIG += USE_FFMPEG
@@ -100,7 +110,6 @@ TRANSLATIONS = \
     gui/translations/MEGASyncStrings_ru.ts \
     gui/translations/MEGASyncStrings_th.ts \
     gui/translations/MEGASyncStrings_tl.ts \
-    gui/translations/MEGASyncStrings_tr.ts \
     gui/translations/MEGASyncStrings_uk.ts \
     gui/translations/MEGASyncStrings_vi.ts \
     gui/translations/MEGASyncStrings_zh_CN.ts \
@@ -145,9 +154,31 @@ DEFINES += REQUIRE_HAVE_FFMPEG
 DEFINES += REQUIRE_HAVE_LIBUV
 DEFINES += REQUIRE_HAVE_LIBRAW
 DEFINES += REQUIRE_USE_MEDIAINFO
+
+macx {
+DEFINES += REQUIRE_HAVE_PDFIUM
+}
+else:win32 {
+#DEFINES += REQUIRE_HAVE_PDFIUM
+}
+else:contains(QMAKE_CFLAGS, -m64) { #Notice this might not work for clang!
+DEFINES += REQUIRE_HAVE_PDFIUM
+}
+
 #DEFINES += REQUIRE_ENABLE_CHAT
 #DEFINES += REQUIRE_ENABLE_BACKUPS
 #DEFINES += REQUIRE_ENABLE_WEBRTC
 #DEFINES += REQUIRE_ENABLE_EVT_TLS
 #DEFINES += REQUIRE_USE_PCRE
+}
+
+CONFIG(debug) {
+    OUTPATH=debug
+}
+CONFIG(release) {
+    OUTPATH=release
+}
+
+win32 {
+    QMAKE_POST_LINK = $$quote(mt.exe -nologo -manifest $$shell_path($$PWD/../../contrib/cmake/MEGAsync.exe.manifest) -outputresource:$$shell_path($${OUTPATH}/$${TARGET}.exe);1$$escape_expand(\n\t))
 }

@@ -8,6 +8,7 @@
 
 #include "megaapi.h"
 #include "control/LinkProcessor.h"
+#include "HighDpiResize.h"
 
 namespace Ui {
 class StreamingFromMegaDialog;
@@ -42,6 +43,7 @@ private:
     mega::QTMegaRequestListener *delegateListener;
     mega::MegaNode *selectedMegaNode;
     QString streamURL;
+    HighDpiResize highDpiResize;
 
     bool generateStreamURL();
     void updateFileInfo(QString fileName, linkstatus status);

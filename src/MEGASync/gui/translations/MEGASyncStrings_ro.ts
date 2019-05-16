@@ -473,7 +473,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please select the download folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be downloaded (MAX 50 characters)</translatorcomment>
-        <translation>Te rugăm să selectezi folderul cu descărcări pentru fișierele tale:</translation>
+        <translation>Selectează folderul de descărcare pentru fișiere:</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -971,7 +971,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Pause</source>
-        <translation type="obsolete">Pauză</translation>
+        <translation type="obsolete">Pune pe pauză</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1107,12 +1107,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA now</source>
         <translatorcomment>Label shown at main dialog when the user is already logged in to inform that he can start uploading files to MEGA</translatorcomment>
-        <translation type="unfinished">Încarcă pe MEGA acum</translation>
+        <translation type="unfinished">Încarcă acum pe MEGA</translation>
     </message>
     <message>
         <source>Dismiss</source>
         <translatorcomment>Button label to dismiss (hide) overquota dialogs.</translatorcomment>
-        <translation type="unfinished">Îndepărtează</translation>
+        <translation type="unfinished">Înlătură</translation>
     </message>
     <message>
         <source>Buy more space</source>
@@ -1205,35 +1205,35 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
-        <translation type="unfinished">[S]MEGAsync:[/S] Sincronizare ușoară și automată între calculatoarele tale și unitatea ta cloud MEGA.</translation>
+        <translation type="obsolete">[S]MEGAsync:[/S] Sincronizare ușoară și automată între calculatoarele tale și unitatea ta cloud MEGA.</translation>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
-        <translation type="unfinished">[S]Flexibil:[/S] Sincronizează orice folder de pe PC pe orice folder din unitatea cloud. Sincronizează orice număr de foldere în paralel.</translation>
+        <translation type="obsolete">[S]Flexibil:[/S] Sincronizează orice folder de pe PC cu orice folder din unitatea cloud. Sincronizează orice număr de foldere în paralel.</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
-        <translation type="unfinished">Viteze mai rapide de transfer</translation>
+        <translation type="obsolete">Viteze mai rapide de transfer</translation>
     </message>
     <message>
         <source>MEGAsync takes full advantage of MEGA&apos;s high-powered infrastructure and multi-connection transfers.</source>
-        <translation type="unfinished">MEGAsync beneficiază pe deplin de infrastructura super puternică MEGA și transferurile multi-conexiuni.</translation>
+        <translation type="obsolete">MEGAsync beneficiază pe deplin de infrastructura super puternică MEGA și transferurile pe multiple conexiuni.</translation>
     </message>
     <message>
         <source>Lean &amp; mean resource usage</source>
-        <translation type="unfinished">Utilizare a resurselor ușoară și medie</translation>
+        <translation type="obsolete">Utilizare a resurselor ușoară și medie</translation>
     </message>
     <message>
         <source>Run MEGA&apos;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
-        <translation type="unfinished">Rulează algoritmii de criptare capăt-la-capăt MEGA tocmai de pe mașinărie fără a te baza pe browserele mai lente.</translation>
+        <translation type="obsolete">Rulează algoritmii de criptare capăt-la-capăt MEGA tocmai de pe mașinărie fără a te baza pe browserele mai lente.</translation>
     </message>
     <message>
         <source>Unlimited file size</source>
-        <translation type="unfinished">Mărime nelimitată pentru fișiere</translation>
+        <translation type="obsolete">Mărime nelimitată pentru fișiere</translation>
     </message>
     <message>
         <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
-        <translation type="unfinished">În timp ce tehnologia browserului poate limita mărimea fișierelor transferurilor tale, ai certitudinea că descarci și încarci orice fișier cu MEGAsync.</translation>
+        <translation type="obsolete">În timp ce tehnologia browserului poate limita mărimea fișierelor transferurilor tale, ai certitudinea că descarci și încarci orice fișier cu MEGAsync.</translation>
     </message>
     <message>
         <source>Login</source>
@@ -1245,7 +1245,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
-        <translation type="unfinished">Beneficiază de 50GB spațiu de stocare în cloud cu criptare capăt-la-capăt securizată controlată de utilizatori și înregistrează-te pentru un cont gratuit sau unul dintre [A]planurile noastre PRO[/A].</translation>
+        <translation type="obsolete">Beneficiază de 50GB spațiu de stocare în cloud cu criptare capăt-la-capăt securizată controlată de utilizatori și înregistrează-te pentru un cont gratuit sau unul dintre [A]planurile noastre PRO[/A].</translation>
+    </message>
+    <message>
+        <source>MEGA Desktop app</source>
+        <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
+        <translation type="unfinished">Aplicația desktop MEGA</translation>
+    </message>
+    <message>
+        <source>Login or create an account to start using MEGA Desktop app.</source>
+        <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
+        <translation type="unfinished">Login or create an account to start using the MEGA Desktop App.</translation>
+    </message>
+    <message>
+        <source>You need to login MEGA account to run MEGA desktop app.</source>
+        <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
+        <translation type="unfinished">You need to login to your MEGA account to run the MEGA Desktop App.</translation>
+    </message>
+    <message>
+        <source>Create account</source>
+        <translatorcomment>Button label to offer the user the option to create an account</translatorcomment>
+        <translation type="unfinished">Creează un cont</translation>
+    </message>
+    <message>
+        <source>Create account to join MEGA collaboration platform.</source>
+        <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
+        <translation type="unfinished">Create an account to join the MEGA collaboration platform.</translation>
+    </message>
+    <message>
+        <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
+        <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
+        <translation type="unfinished">Learn more about the MEGA Desktop App. [A]Read more[/A]</translation>
     </message>
 </context>
 <context>
@@ -1281,7 +1311,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">Planificatorul de golire %1</translation>
+        <translation type="obsolete">[$17607]</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1454,7 +1484,7 @@ Exit anyway?</source>
     </message>
     <message>
         <source>Pause</source>
-        <translation type="obsolete">Pauză</translation>
+        <translation type="obsolete">Pune pe pauză</translation>
     </message>
     <message>
         <source>Resume</source>
@@ -1521,7 +1551,7 @@ Exit anyway?</source>
     <message>
         <source>An update will be applied during the next application restart</source>
         <translatorcomment>Notification message launched when an update is already downloaded but not applied yet. It will be applied during the next application restart.</translatorcomment>
-        <translation>O actualizare va fi aplicată următoarea dată când aplicația va fi pornită</translation>
+        <translation>Se va aplica o actualizare în timpul următoarei reporniri a aplicației.</translation>
     </message>
     <message>
         <source>Installing update...</source>
@@ -1896,7 +1926,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Folder Upload</source>
         <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
-        <translation type="unfinished">Încărcare de folder</translation>
+        <translation type="unfinished">Încarcă un folder</translation>
     </message>
     <message>
         <source>1 folder was successfully uploaded</source>
@@ -1911,7 +1941,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>File Upload</source>
         <translatorcomment>Title of system notifications related to a file upload</translatorcomment>
-        <translation type="unfinished">Încărcare de fișier</translation>
+        <translation type="unfinished">Încarcă fișier(e)</translation>
     </message>
     <message>
         <source>1 file was successfully uploaded</source>
@@ -1991,7 +2021,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get PRO</source>
         <translatorcomment>Button label to redirecto to PRO web page for upgrade an account</translatorcomment>
-        <translation type="unfinished">Obține PRO</translation>
+        <translation type="unfinished">Obține planul PRO</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -2143,6 +2173,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label shown when current account does not have enough quota to complete the operation</translatorcomment>
         <translation type="unfinished">Cotă insuficientă</translation>
     </message>
+    <message>
+        <source>Terms of Service breached</source>
+        <translatorcomment>Error shown when terms of service are breached during download.</translatorcomment>
+        <translation type="unfinished">Terms of Service breached</translation>
+    </message>
+    <message>
+        <source>Not accessible due to ToS/AUP violation</source>
+        <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
+        <translation type="unfinished">Not accessible due to ToS/AUP violation</translation>
+    </message>
+</context>
+<context>
+    <name>MegaNodeNames</name>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Title of the Cloud Drive section</translatorcomment>
+        <translation type="unfinished">Unitate cloud</translation>
+    </message>
 </context>
 <context>
     <name>MegaTransferDelegate</name>
@@ -2227,7 +2275,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Clear All</source>
         <translatorcomment>Label of context menu option to clear all transfer items of completed view</translatorcomment>
-        <translation type="unfinished">Curăță toate</translation>
+        <translation type="unfinished">Șterge toate</translation>
     </message>
     <message>
         <source>Resume Transfer</source>
@@ -2419,7 +2467,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Dismiss</source>
         <translatorcomment>Button label to dismiss and hide a PSA announcement</translatorcomment>
-        <translation type="unfinished">Îndepărtează</translation>
+        <translation type="unfinished">Înlătură</translation>
     </message>
 </context>
 <context>
@@ -2432,7 +2480,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Enter one or multiple MEGA file links</source>
         <translatorcomment>Label to indicate the user to write down the links to be imported. String as short as possible.</translatorcomment>
-        <translation>Introdu unul sau mai multe linkuri pentru fișiere MEGA</translation>
+        <translation>Introdu unul sau mai multe linkuri ale fișierelor MEGA</translation>
     </message>
     <message>
         <source>Submit</source>
@@ -2580,7 +2628,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Suport pentru a afișa anunțurile de interes general
 - Notificări moderne
 - Biblioteci terțe actualizate
--Alte remedieri minore de erori și îmbunătățiri</translation>
+- Alte remedieri minore de erori și îmbunătățiri</translation>
     </message>
 </context>
 <context>
@@ -2841,7 +2889,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Limit to:</source>
         <translatorcomment>Label to indicate that there is rate upload limit. Keep colon.</translatorcomment>
-        <translation>Limită la:</translation>
+        <translation>Limitează la:</translation>
     </message>
     <message>
         <source>KB</source>
@@ -2851,7 +2899,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Auto</source>
         <translatorcomment>Label to indicate that management of rate upload limit is automatic.</translatorcomment>
-        <translation>Auto</translation>
+        <translation>Automată</translation>
     </message>
     <message>
         <source>(about 90% of the available bandwidth)</source>
@@ -2889,7 +2937,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Auto-detect</source>
         <translatorcomment>Label to indicate auto detect. Keep capital letters.</translatorcomment>
-        <translation>Autodetectează</translation>
+        <translation>Detectează automat</translation>
     </message>
     <message>
         <source>Proxy</source>
@@ -2934,7 +2982,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>%1 (%2%) of %3 used</source>
         <translatorcomment>Label to indicate the user the amount and percentage of used space and total space available. Keep %1 (%2%) and %3 codes because they will be filled with the required amounts of storage space.</translatorcomment>
-        <translation>%1 (%2%) din %3 folosit</translation>
+        <translation>%1 (%2%) din %3 folosiți</translation>
     </message>
     <message>
         <source>PRO I</source>
@@ -3187,7 +3235,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exclude by size</source>
         <translatorcomment>Button label to let the user exclude files from being synced by its size. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Exclude după mărime</translation>
+        <translation type="unfinished">Exclude în funcție de mărime</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -3310,7 +3358,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">Planificatorul de golire %1</translation>
+        <translation type="obsolete">[$17607]</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3365,6 +3413,11 @@ when the application starts again</source>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
         <translation type="unfinished">Planificatorul de golire %1</translation>
+    </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">%1 used</translation>
     </message>
 </context>
 <context>
@@ -3427,7 +3480,7 @@ when the application starts again</source>
     <message>
         <source>Logging in ...</source>
         <translatorcomment>Label displayed while logging process.</translatorcomment>
-        <translation>Autentificare ...</translation>
+        <translation>Se autentifică ...</translation>
     </message>
     <message>
         <source>Choose install type</source>
@@ -3787,7 +3840,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Foldere specifice din unitatea ta cloud vor fi sincronizate cu un folder local.</translation>
+        <translation type="unfinished">Foldere specifice din unitatea ta cloud vor fi sincronizate cu un folder local care corespunde.</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
@@ -3893,7 +3946,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Exclude by size</source>
         <translatorcomment>Title of the dialog to set exclusion based on file size.</translatorcomment>
-        <translation type="unfinished">Exclude după mărime</translation>
+        <translation type="unfinished">Exclude în funcție de mărime</translation>
     </message>
     <message>
         <source>Exclude files bigger than</source>
@@ -3924,6 +3977,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
         <translation type="unfinished">Limitele de mărime nu pot fi zero</translation>
+    </message>
+    <message>
+        <source>Bytes</source>
+        <translatorcomment>Label to indicate bytes unit.</translatorcomment>
+        <translation type="unfinished">Byți</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
+        <translation type="unfinished">KB</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
+        <translation type="unfinished">MB</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
+        <translation type="unfinished">GB</translation>
     </message>
 </context>
 <context>
@@ -3974,7 +4047,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Stream from MEGA</source>
         <translatorcomment>Title of the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">Transmite de la MEGA</translation>
+        <translation type="unfinished">Transmite din MEGA</translation>
     </message>
     <message>
         <source>Select media from...</source>
@@ -4087,7 +4160,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>completing</source>
         <translatorcomment>Label to indicate a completing state for a transfer item (upload/download)</translatorcomment>
-        <translation type="obsolete">se completează</translation>
+        <translation type="obsolete">se încheie</translation>
     </message>
     <message>
         <source>just now</source>
@@ -4173,12 +4246,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Pause</source>
         <translatorcomment>Button label to pause visible transfers</translatorcomment>
-        <translation type="unfinished">Pauză</translation>
+        <translation type="unfinished">Pune pe pauză</translation>
     </message>
     <message>
         <source>Clear all</source>
         <translatorcomment>Button label to clear all items of completed transfers view</translatorcomment>
-        <translation type="unfinished">Curăță toate</translation>
+        <translation type="unfinished">Șterge toate</translation>
     </message>
     <message>
         <source>Close</source>
@@ -4263,7 +4336,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>completing</source>
         <translatorcomment>Label to indicate that a transfer is being completed</translatorcomment>
-        <translation type="unfinished">se completează</translation>
+        <translation type="unfinished">se încheie</translation>
     </message>
     <message>
         <source>Out of storage space</source>
@@ -4374,7 +4447,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please, select the upload folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be uploaded (MAX 50 characters)</translatorcomment>
-        <translation>Te rugăm să selectezi folderul de încărcare pentru fișierele tale:</translation>
+        <translation>Selectează folderul de încărcare pentru fișiere:</translation>
     </message>
     <message>
         <source>MEGA folder:</source>
@@ -4416,19 +4489,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">Conținut media primit</translation>
+        <translation type="obsolete">Conținut media primit</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Partajări primite</translation>
+        <translation type="obsolete">Partajări primite</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">Unitate cloud</translation>
+        <translation type="obsolete">Unitate cloud</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">Coș de gunoi</translation>
+        <translation type="obsolete">Coș de gunoi</translation>
     </message>
 </context>
 <context>
@@ -4519,6 +4592,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 years ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %1 years ago</translatorcomment>
         <translation type="unfinished">acum %1 ani</translation>
+    </message>
+    <message>
+        <source>TB</source>
+        <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
+        <translation type="unfinished">TB</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
+        <translation type="unfinished">GB</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
+        <translation type="unfinished">MB</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
+        <translation type="unfinished">KB</translation>
     </message>
 </context>
 <context>

@@ -111,7 +111,9 @@ QString CustomTransferItem::getTransferName()
 
 bool CustomTransferItem::getLinkButtonClicked(QPoint pos)
 {
-    if (!getLinkButtonEnabled)
+    if (!getLinkButtonEnabled
+            || (!isLinkAvailable && !transferError) //retry action needs to be triggered for failed transfers even when !isLinkAvailable (e.g: inshare)
+            )
     {
         return false;
     }
@@ -138,14 +140,20 @@ void CustomTransferItem::mouseHoverTransfer(bool isHover)
     if (isHover)
     {
         getLinkButtonEnabled = true;
-        ui->lGetLink->removeEventFilter(this);
-        ui->lGetLink->update();
+        if (isLinkAvailable || transferError < 0)
+        {
+            ui->lGetLink->removeEventFilter(this);
+            ui->lGetLink->update();
+        }
     }
     else
     {
         getLinkButtonEnabled = false;
-        ui->lGetLink->installEventFilter(this);
-        ui->lGetLink->update();
+        if (isLinkAvailable || transferError < 0)
+        {
+            ui->lGetLink->installEventFilter(this);
+            ui->lGetLink->update();
+        }
     }
 
     emit refreshTransfer(this->getTransferTag());
@@ -175,7 +183,7 @@ void CustomTransferItem::finishTransfer()
         ui->lGetLink->setIcon(QIcon(QString::fromAscii("://images/ico_item_retry.png")));
         ui->lGetLink->setIconSize(QSize(24,24));
         ui->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
-        ui->lElapsedTime->setText(tr("failed:") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", MegaError::getErrorString(transferError)));
+        ui->lElapsedTime->setText(tr("failed:") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", MegaError::getErrorString(transferError, this->getType() == MegaTransfer::TYPE_DOWNLOAD ? MegaError::API_EC_DOWNLOAD : MegaError::API_EC_DEFAULT)));
     }
 }
 

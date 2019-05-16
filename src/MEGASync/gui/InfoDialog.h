@@ -12,6 +12,7 @@
 #include "MenuItemAction.h"
 #include "control/Preferences.h"
 #include <QGraphicsOpacityEffect>
+#include "HighDpiResize.h"
 
 namespace Ui {
 class InfoDialog;
@@ -42,6 +43,7 @@ public:
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
     void setOverQuotaMode(bool state);
+    void setAccountType(int accType);
     void addSync(mega::MegaHandle h);
     void clearUserAttributes();
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
@@ -54,6 +56,7 @@ public:
 #endif
 
     void regenerateLayout();
+    HighDpiResize highDpiResize;
 
 private:
     void drawAvatar(QString email);
@@ -114,6 +117,7 @@ private:
     int state;
     bool overQuotaState;
     int storageState;
+    int actualAccountType;
 
     QPropertyAnimation *animation;
     QGraphicsOpacityEffect *opacityEffect;

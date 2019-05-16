@@ -1205,35 +1205,35 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
-        <translation type="unfinished">[S]MEGAsync:[/S] Простая автоматическая синхронизация между вашими компьютерами и облачным диском MEGA</translation>
+        <translation type="obsolete">[S]MEGAsync:[/S] Простая автоматическая синхронизация между вашими компьютерами и облачным диском MEGA</translation>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
-        <translation type="unfinished">[S]Гибкость:[/S] Синхронизируйте любую папку на ПК с папкой в облаке. Сколько угодно папок одновременно.</translation>
+        <translation type="obsolete">[S]Гибкость:[/S] Синхронизируйте любую папку на ПК с папкой в облаке. Сколько угодно папок одновременно.</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
-        <translation type="unfinished">Ускоренная передача</translation>
+        <translation type="obsolete">Ускоренная передача</translation>
     </message>
     <message>
         <source>MEGAsync takes full advantage of MEGA&apos;s high-powered infrastructure and multi-connection transfers.</source>
-        <translation type="unfinished">MEGAsync в полной мере раскрывает возможности высокоскоростной инфраструктуры MEGA и мультисоединений.</translation>
+        <translation type="obsolete">MEGAsync в полной мере раскрывает возможности высокоскоростной инфраструктуры MEGA и мультисоединений.</translation>
     </message>
     <message>
         <source>Lean &amp; mean resource usage</source>
-        <translation type="unfinished">Эффективное использование ресурсов</translation>
+        <translation type="obsolete">Эффективное использование ресурсов</translation>
     </message>
     <message>
         <source>Run MEGA&apos;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
-        <translation type="unfinished">Запустите сквозное шифрование MEGA прямо на своей машине, не полагаясь на медленные браузеры.</translation>
+        <translation type="obsolete">Запустите сквозное шифрование MEGA прямо на своей машине, не полагаясь на медленные браузеры.</translation>
     </message>
     <message>
         <source>Unlimited file size</source>
-        <translation type="unfinished">Неограниченный размер файлов</translation>
+        <translation type="obsolete">Неограниченный размер файлов</translation>
     </message>
     <message>
         <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
-        <translation type="unfinished">В то время как браузеры ограничивают размер передаваемых файлов, вы можете загружать любые через MEGAsync.</translation>
+        <translation type="obsolete">В то время как браузеры ограничивают размер передаваемых файлов, вы можете загружать любые через MEGAsync.</translation>
     </message>
     <message>
         <source>Login</source>
@@ -1245,7 +1245,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
-        <translation type="unfinished">Воспользуйтесь 50 ГБ в облачном хранилище данных с безопасным, управляемым пользователем сквозным шифрованием, создав БЕСПЛАТНУЮ учётную запись, или подпишитесь на один из наших [A]PRO-планов[/A].</translation>
+        <translation type="obsolete">Воспользуйтесь 50 ГБ в облачном хранилище данных с безопасным, управляемым пользователем сквозным шифрованием, создав БЕСПЛАТНУЮ учётную запись, или подпишитесь на один из наших [A]PRO-планов[/A].</translation>
+    </message>
+    <message>
+        <source>MEGA Desktop app</source>
+        <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
+        <translation type="unfinished">Настольное приложение MEGA</translation>
+    </message>
+    <message>
+        <source>Login or create an account to start using MEGA Desktop app.</source>
+        <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
+        <translation type="unfinished">Войдите или зарегистрируйтесь, чтобы начать пользоваться настольным приложением MEGA.</translation>
+    </message>
+    <message>
+        <source>You need to login MEGA account to run MEGA desktop app.</source>
+        <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
+        <translation type="unfinished">Вам необходимо войти в аккаунт, чтобы запустить настольное приложение MEGA.</translation>
+    </message>
+    <message>
+        <source>Create account</source>
+        <translatorcomment>Button label to offer the user the option to create an account</translatorcomment>
+        <translation type="unfinished">Зарегистрироваться</translation>
+    </message>
+    <message>
+        <source>Create account to join MEGA collaboration platform.</source>
+        <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
+        <translation type="unfinished">Создайте аккаунт, чтобы присоединиться к платформе MEGA.</translation>
+    </message>
+    <message>
+        <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
+        <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
+        <translation type="unfinished">Узнайте больше о настольном приложении MEGA. [A]Подробнее[/A]</translation>
     </message>
 </context>
 <context>
@@ -1281,7 +1311,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 планировщик очистки</translation>
+        <translation type="obsolete">[$17607]</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -2142,6 +2172,24 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Not enough quota</source>
         <translatorcomment>Label shown when current account does not have enough quota to complete the operation</translatorcomment>
         <translation type="unfinished">Недостаточно квоты</translation>
+    </message>
+    <message>
+        <source>Terms of Service breached</source>
+        <translatorcomment>Error shown when terms of service are breached during download.</translatorcomment>
+        <translation type="unfinished">Нарушены условия предоставления услуг</translation>
+    </message>
+    <message>
+        <source>Not accessible due to ToS/AUP violation</source>
+        <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
+        <translation type="unfinished">Недоступно из-за нарушения условий предоставления услуг/политики допустимого использования</translation>
+    </message>
+</context>
+<context>
+    <name>MegaNodeNames</name>
+    <message>
+        <source>Cloud Drive</source>
+        <translatorcomment>Title of the Cloud Drive section</translatorcomment>
+        <translation type="unfinished">Облачный диск</translation>
     </message>
 </context>
 <context>
@@ -3310,7 +3358,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 планировщик очистки</translation>
+        <translation type="obsolete">[$17607]</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3365,6 +3413,11 @@ when the application starts again</source>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
         <translation type="unfinished">%1 планировщик очистки</translation>
+    </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">%1 использовано</translation>
     </message>
 </context>
 <context>
@@ -3787,7 +3840,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Определённые папки на вашем облачном диске будут синхронизированы с локальной папкой.</translation>
+        <translation type="unfinished">Определённые папки на вашем облачном диске будут синхронизированы с соответствующей локальной папкой.</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
@@ -3924,6 +3977,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
         <translation type="unfinished">Ограничения на размер не могут быть нулевыми</translation>
+    </message>
+    <message>
+        <source>Bytes</source>
+        <translatorcomment>Label to indicate bytes unit.</translatorcomment>
+        <translation type="unfinished">Байт</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
+        <translation type="unfinished">КБ</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
+        <translation type="unfinished">МБ</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
+        <translation type="unfinished">ГБ</translation>
     </message>
 </context>
 <context>
@@ -4416,19 +4489,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">Входящие</translation>
+        <translation type="obsolete">Входящие</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">Входящие общие папки</translation>
+        <translation type="obsolete">Входящие общие папки</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">Облачный диск</translation>
+        <translation type="obsolete">Облачный диск</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">Корзина</translation>
+        <translation type="obsolete">Корзина</translation>
     </message>
 </context>
 <context>
@@ -4519,6 +4592,26 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>%1 years ago</source>
         <translatorcomment>Label to indicate that a transfer has finished %1 years ago</translatorcomment>
         <translation type="unfinished">%1 лет назад</translation>
+    </message>
+    <message>
+        <source>TB</source>
+        <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
+        <translation type="unfinished">ТБ</translation>
+    </message>
+    <message>
+        <source>GB</source>
+        <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
+        <translation type="unfinished">ГБ</translation>
+    </message>
+    <message>
+        <source>MB</source>
+        <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
+        <translation type="unfinished">МБ</translation>
+    </message>
+    <message>
+        <source>KB</source>
+        <translatorcomment>Label to indicate Kilo byte unit.</translatorcomment>
+        <translation type="unfinished">КБ</translation>
     </message>
 </context>
 <context>

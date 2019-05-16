@@ -15,6 +15,8 @@ NodeSelector::NodeSelector(MegaApi *megaApi, int selectMode, QWidget *parent) :
 {
     ui->setupUi(this);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    this->setWindowModality(Qt::ApplicationModal);
+
 
     this->megaApi = megaApi;
     this->model = NULL;

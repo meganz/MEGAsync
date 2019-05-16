@@ -35,6 +35,12 @@ public:
     virtual bool getRegular();
     virtual void setRegular(bool value);
 
+    virtual bool getIsLinkAvailable();
+    virtual void setIsLinkAvailable(bool value);
+
+    virtual int getNodeAccess();
+    virtual void setNodeAccess(int value);
+
     virtual void updateTransfer() = 0;
     virtual void updateFinishedTime() = 0;
 
@@ -62,6 +68,8 @@ protected:
     long long totalSize;
     long long totalTransferredBytes;
     bool regular;
+    bool isLinkAvailable;
+    int nodeAccess;
     unsigned long long priority;
     bool cancelButtonEnabled;
     bool isSyncTransfer;

@@ -5,6 +5,7 @@
 
 #include "megaapi.h"
 #include "Preferences.h"
+#include "HighDpiResize.h"
 
 namespace Ui {
 class AccountDetailsDialog;
@@ -22,6 +23,7 @@ public:
 private:
     Ui::AccountDetailsDialog *ui;
     mega::MegaApi *megaApi;
+    HighDpiResize highDpiResize;
 
 private:
     void usageDataAvailable(bool isAvailable);

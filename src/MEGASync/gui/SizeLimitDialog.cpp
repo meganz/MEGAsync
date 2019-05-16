@@ -11,17 +11,18 @@ SizeLimitDialog::SizeLimitDialog(QWidget *parent) :
     ui->eLowerThan->setMaximum(9999);
     ui->eUpperThan->setMaximum(9999);
 
-    ui->cbExcludeUpperUnit->addItem(QString::fromUtf8("Bytes"));
-    ui->cbExcludeUpperUnit->addItem(QString::fromUtf8("KB"));
-    ui->cbExcludeUpperUnit->addItem(QString::fromUtf8("MB"));
-    ui->cbExcludeUpperUnit->addItem(QString::fromUtf8("GB"));
+    ui->cbExcludeUpperUnit->addItem(tr("Bytes"));
+    ui->cbExcludeUpperUnit->addItem(tr("KB"));
+    ui->cbExcludeUpperUnit->addItem(tr("MB"));
+    ui->cbExcludeUpperUnit->addItem(tr("GB"));
 
-    ui->cbExcludeLowerUnit->addItem(QString::fromUtf8("Bytes"));
-    ui->cbExcludeLowerUnit->addItem(QString::fromUtf8("KB"));
-    ui->cbExcludeLowerUnit->addItem(QString::fromUtf8("MB"));
-    ui->cbExcludeLowerUnit->addItem(QString::fromUtf8("GB"));
+    ui->cbExcludeLowerUnit->addItem(tr("Bytes"));
+    ui->cbExcludeLowerUnit->addItem(tr("KB"));
+    ui->cbExcludeLowerUnit->addItem(tr("MB"));
+    ui->cbExcludeLowerUnit->addItem(tr("GB"));
 
     ui->bOK->setDefault(true);
+    highDpiResize.init(this);
 }
 
 bool SizeLimitDialog::upperSizeLimit()

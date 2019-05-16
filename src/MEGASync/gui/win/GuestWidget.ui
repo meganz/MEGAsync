@@ -32,7 +32,12 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#wHeader
+   <string notr="true">QPushButton, QLabel
+{
+font-size: 13px;
+}
+
+#wHeader
 {
  background-color:  #FAFAFA;
  border-top-left-radius: 2px;
@@ -97,7 +102,11 @@ QPushButton#bSettings:hover
 	font-size: 16px;
 }
 
-</string>
+QPushButton
+{
+	padding-right: 12px;
+	padding-left: 12px;
+}</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
@@ -183,7 +192,7 @@ margin-top: -1px;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/tray_preferences_ico.png</normaloff>:/images/tray_preferences_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -222,7 +231,7 @@ margin-top: -1px;</string>
 </string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pLogin">
       <property name="minimumSize">
@@ -341,7 +350,7 @@ image: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
                </property>
                <property name="iconSize">
@@ -528,7 +537,7 @@ image: none;</string>
                      <property name="minimumSize">
                       <size>
                        <width>120</width>
-                       <height>0</height>
+                       <height>22</height>
                       </size>
                      </property>
                      <property name="styleSheet">
@@ -721,7 +730,7 @@ image: none;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
             </property>
             <property name="iconSize">
@@ -915,7 +924,7 @@ image: none;</string>
                   <property name="minimumSize">
                    <size>
                     <width>81</width>
-                    <height>0</height>
+                    <height>22</height>
                    </size>
                   </property>
                   <property name="styleSheet">
@@ -1043,7 +1052,7 @@ image: none;</string>
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../Resources_macx.qrc">
+             <iconset resource="../Resources_win.qrc">
               <normaloff>:/images/app_64.png</normaloff>:/images/app_64.png</iconset>
             </property>
             <property name="iconSize">
@@ -1102,7 +1111,7 @@ image: none;</string>
   <tabstop>bCancel</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

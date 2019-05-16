@@ -51,6 +51,11 @@ QScrollBar:horizontal {
 height: 16px;
 }
 
+QRadioButton::indicator, QCheckBox::indicator{
+width: 16px;
+height: 16px;
+}
+
 #SettingsDialog
 {
 	background-color: #f1f1f1;
@@ -71,6 +76,11 @@ color: #333333;
 {
 border: none;
 text-decoration: underline;
+}
+
+#bHelpIco
+{
+border: none;
 }
 
 #lSyncType
@@ -105,7 +115,7 @@ margin-left: 5px;
 spacing: 11px;
 
 padding-top: 1px;
-padding-bottom: -1px;
+padding-bottom: 0px;
 }
 
 #lStorage
@@ -485,12 +495,34 @@ background:transparent;</string>
        <number>13</number>
       </property>
       <item>
-       <widget class="QLabel" name="lHelp">
+       <widget class="QPushButton" name="bHelpIco">
+        <property name="minimumSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
         <property name="text">
          <string/>
         </property>
-        <property name="pixmap">
-         <pixmap>://images/help_ico.png</pixmap>
+        <property name="icon">
+         <iconset resource="../Resources_linux.qrc">
+          <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -789,7 +821,7 @@ background:transparent;</string>
                    <enum>Qt::StrongFocus</enum>
                   </property>
                   <property name="text">
-                   <string>FREE</string>
+                   <string/>
                   </property>
                  </widget>
                 </item>
@@ -841,7 +873,7 @@ background:transparent;</string>
                    <enum>Qt::StrongFocus</enum>
                   </property>
                   <property name="text">
-                   <string notr="true">sample@email.com</string>
+                   <string notr="true"/>
                   </property>
                  </widget>
                 </item>
@@ -1218,7 +1250,7 @@ border: none;</string>
 </string>
                </property>
                <property name="text">
-                <string notr="true">1.21 GB (1%) of 500 GB used</string>
+                <string notr="true"/>
                </property>
               </widget>
              </item>
@@ -2806,7 +2838,7 @@ border: none;</string>
            <widget class="QSpinBox" name="eMaxDownloadConnections">
             <property name="minimumSize">
              <size>
-              <width>40</width>
+              <width>45</width>
               <height>0</height>
              </size>
             </property>
@@ -2835,7 +2867,7 @@ border: none;</string>
            <widget class="QSpinBox" name="eMaxUploadConnections">
             <property name="minimumSize">
              <size>
-              <width>40</width>
+              <width>45</width>
               <height>0</height>
              </size>
             </property>

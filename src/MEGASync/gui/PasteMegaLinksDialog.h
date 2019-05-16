@@ -2,6 +2,7 @@
 #define PASTEMEGALINKSDIALOG_H
 
 #include <QDialog>
+#include "HighDpiResize.h"
 
 namespace Ui {
 class PasteMegaLinksDialog;
@@ -32,6 +33,8 @@ private:
 
     QStringList extractLinks(QString text);
     QString checkLink(QString link);
+
+    HighDpiResize highDpiResize;
 };
 
 #endif // PASTEMEGALINKSDIALOG_H

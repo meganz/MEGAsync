@@ -17,6 +17,7 @@
 #include "control/Utilities.h"
 #include "platform/Platform.h"
 #include "gui/AddExclusionDialog.h"
+#include <assert.h>
 
 #ifdef __APPLE__
     #include "gui/CocoaHelpButton.h"
@@ -96,6 +97,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     remoteCacheSize = -1;
     fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
 
+    reloadUIpage = false;
     hasUpperLimit = false;
     hasLowerLimit = false;
     upperLimit = 0;
@@ -280,6 +282,8 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     ui->lOQWarning->setText(QString::fromUtf8(""));
     ui->wOQError->hide();
+
+    highDpiResize.init(this);
 }
 
 SettingsDialog::~SettingsDialog()
@@ -524,11 +528,13 @@ void SettingsDialog::on_bAccount_clicked()
 {
     emit userActivity();
 
-    if (ui->wStack->currentWidget() == ui->pAccount)
+    if (ui->wStack->currentWidget() == ui->pAccount && !reloadUIpage)
     {
         ui->bAccount->setChecked(true);
         return;
     }
+
+    reloadUIpage = false;
 
 #ifdef __APPLE__
     ui->bApply->hide();
@@ -555,8 +561,20 @@ void SettingsDialog::on_bAccount_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(485);
-    maxHeightAnimation->setEndValue(485);
+    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+        minHeightAnimation->setEndValue(465);
+        maxHeightAnimation->setEndValue(465);
+
+        ui->gStorageSpace->setMinimumHeight(83);
+    }
+    else
+    {
+        minHeightAnimation->setEndValue(485);
+        maxHeightAnimation->setEndValue(485);
+
+        ui->gStorageSpace->setMinimumHeight(103);
+    }
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
@@ -640,7 +658,6 @@ void SettingsDialog::on_bBandwidth_clicked()
     int bwHeight;
     ui->gBandwidthQuota->show();
     ui->bSeparatorBandwidth->show();
-    bwHeight = 540;
 
     minHeightAnimation->setTargetObject(this);
     maxHeightAnimation->setTargetObject(this);
@@ -648,8 +665,20 @@ void SettingsDialog::on_bBandwidth_clicked()
     maxHeightAnimation->setPropertyName("maximumHeight");
     minHeightAnimation->setStartValue(minimumHeight());
     maxHeightAnimation->setStartValue(maximumHeight());
-    minHeightAnimation->setEndValue(bwHeight);
-    maxHeightAnimation->setEndValue(bwHeight);
+    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+        minHeightAnimation->setEndValue(520);
+        maxHeightAnimation->setEndValue(520);
+
+        ui->gBandwidthQuota->setMinimumHeight(59);
+    }
+    else
+    {
+        minHeightAnimation->setEndValue(540);
+        maxHeightAnimation->setEndValue(540);
+
+        ui->gBandwidthQuota->setMinimumHeight(79);
+    }
     minHeightAnimation->setDuration(150);
     maxHeightAnimation->setDuration(150);
     animationGroup->start();
@@ -781,9 +810,16 @@ void SettingsDialog::on_bOk_clicked()
 
 void SettingsDialog::on_bHelp_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://mega.nz/help/client/megasync");
+    QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/help/client/megasync");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
+
+#ifndef __APPLE__
+void SettingsDialog::on_bHelpIco_clicked()
+{
+    on_bHelp_clicked();
+}
+#endif
 
 void SettingsDialog::on_rProxyManual_clicked()
 {
@@ -990,6 +1026,18 @@ void SettingsDialog::loadSettings()
             ui->lUploadAutoLimit->setText(QString::fromAscii("(%1)").arg(ui->lUploadAutoLimit->text().trimmed()));
         }
 
+        // Disable Upgrade buttons for business accounts
+        if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
+        {
+            ui->bUpgrade->hide();
+            ui->bUpgradeBandwidth->hide();
+        }
+        else
+        {
+            ui->bUpgrade->show();
+            ui->bUpgradeBandwidth->show();
+        }
+
         //Account
         char *email = megaApi->getMyEmail();
         if (email)
@@ -1004,7 +1052,8 @@ void SettingsDialog::loadSettings()
         refreshAccountDetails();
 
         QIcon icon;
-        switch(preferences->accountType())
+        int accType = preferences->accountType();
+        switch(accType)
         {
             case Preferences::ACCOUNT_TYPE_FREE:
                 icon.addFile(QString::fromUtf8(":/images/Free.png"), QSize(), QIcon::Normal, QIcon::Off);
@@ -1025,6 +1074,10 @@ void SettingsDialog::loadSettings()
             case Preferences::ACCOUNT_TYPE_LITE:
                 icon.addFile(QString::fromUtf8(":/images/Lite.png"), QSize(), QIcon::Normal, QIcon::Off);
                 ui->lAccountType->setText(tr("PRO Lite"));
+                break;
+            case Preferences::ACCOUNT_TYPE_BUSINESS:
+                icon.addFile(QString::fromUtf8(":/images/business.png"), QSize(), QIcon::Normal, QIcon::Off);
+                ui->lAccountType->setText(QString::fromUtf8("BUSINESS"));
                 break;
             default:
                 icon.addFile(QString::fromUtf8(":/images/Pro_I.png"), QSize(), QIcon::Normal, QIcon::Off);
@@ -1090,14 +1143,23 @@ void SettingsDialog::loadSettings()
 
         ui->cbUseHttps->setChecked(preferences->usingHttpsOnly());
 
-        if (preferences->accountType() == 0) //Free user
+        if (accType == Preferences::ACCOUNT_TYPE_FREE) //Free user
         {
             ui->gBandwidthQuota->show();
             ui->bSeparatorBandwidth->show();
+            ui->pUsedBandwidth->show();
             ui->pUsedBandwidth->setValue(0);
             ui->lBandwidth->setText(tr("Used quota for the last %1 hours: %2")
                     .arg(preferences->bandwidthInterval())
                     .arg(Utilities::getSizeString(preferences->usedBandwidth())));
+        }
+        else if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
+        {
+            ui->gBandwidthQuota->show();
+            ui->bSeparatorBandwidth->show();
+            ui->pUsedBandwidth->hide();
+            ui->lBandwidth->setText(tr("%1 used")
+                  .arg(Utilities::getSizeString(preferences->usedBandwidth())));
         }
         else
         {
@@ -1106,6 +1168,7 @@ void SettingsDialog::loadSettings()
             {
                 ui->gBandwidthQuota->hide();
                 ui->bSeparatorBandwidth->hide();
+                ui->pUsedBandwidth->show();
                 ui->pUsedBandwidth->setValue(0);
                 ui->lBandwidth->setText(tr("Data temporarily unavailable"));
             }
@@ -1114,6 +1177,7 @@ void SettingsDialog::loadSettings()
                 ui->gBandwidthQuota->show();
                 ui->bSeparatorBandwidth->show();
                 int bandwidthPercentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+                ui->pUsedBandwidth->show();
                 ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
                 ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
                         .arg(Utilities::getSizeString(preferences->usedBandwidth()))
@@ -1189,6 +1253,18 @@ void SettingsDialog::loadSettings()
 
 void SettingsDialog::refreshAccountDetails()
 {
+
+    if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+        ui->pStorage->hide();
+        ui->pUsedBandwidth->hide();
+    }
+    else
+    {
+        ui->pStorage->show();
+        ui->pUsedBandwidth->show();
+    }
+
     if (preferences->totalStorage() == 0)
     {
         ui->pStorage->setValue(0);
@@ -1198,12 +1274,21 @@ void SettingsDialog::refreshAccountDetails()
     else
     {
         ui->bStorageDetails->setEnabled(true);
-        int percentage = floor(100*((double)preferences->usedStorage()/preferences->totalStorage()));
-        ui->pStorage->setValue((percentage < 100) ? percentage : 100);
-        ui->lStorage->setText(tr("%1 (%2%) of %3 used")
-              .arg(Utilities::getSizeString(preferences->usedStorage()))
-              .arg(QString::number(percentage))
-              .arg(Utilities::getSizeString(preferences->totalStorage())));
+
+        if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
+        {
+            ui->lStorage->setText(tr("%1 used")
+                  .arg(Utilities::getSizeString(preferences->usedStorage())));
+        }
+        else
+        {
+            int percentage = floor(100*((double)preferences->usedStorage()/preferences->totalStorage()));
+            ui->pStorage->setValue((percentage < 100) ? percentage : 100);
+            ui->lStorage->setText(tr("%1 (%2%) of %3 used")
+                  .arg(Utilities::getSizeString(preferences->usedStorage()))
+                  .arg(QString::number(percentage > 100 ? 100 : percentage))
+                  .arg(Utilities::getSizeString(preferences->totalStorage())));
+        }
     }
 
     if (preferences->totalBandwidth() == 0)
@@ -1213,12 +1298,20 @@ void SettingsDialog::refreshAccountDetails()
     }
     else
     {
-        int percentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
-        ui->pUsedBandwidth->setValue((percentage < 100) ? percentage : 100);
-        ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
-              .arg(Utilities::getSizeString(preferences->usedBandwidth()))
-              .arg(QString::number(percentage))
-              .arg(Utilities::getSizeString(preferences->totalBandwidth())));
+        if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
+        {
+            ui->lBandwidth->setText(tr("%1 used")
+                  .arg(Utilities::getSizeString(preferences->usedBandwidth())));
+        }
+        else
+        {
+            int percentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+            ui->pUsedBandwidth->setValue((percentage < 100) ? percentage : 100);
+            ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
+                  .arg(Utilities::getSizeString(preferences->usedBandwidth()))
+                  .arg(QString::number(percentage > 100 ? 100 : percentage))
+                  .arg(Utilities::getSizeString(preferences->totalBandwidth())));
+        }
     }
 
     if (accountDetailsDialog)
@@ -1914,7 +2007,7 @@ void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
         if (node)
         {
             const char *handle = node->getBase64Handle();
-            QString url = QString::fromAscii("https://mega.nz/fm/") + QString::fromAscii(handle);
+            QString url = Preferences::BASE_URL + QString::fromAscii("/fm/") + QString::fromAscii(handle);
             QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
             delete [] handle;
             delete node;
@@ -2456,7 +2549,7 @@ void SettingsDialog::onAnimationFinished()
 void SettingsDialog::on_bStorageDetails_clicked()
 {
     accountDetailsDialog = new AccountDetailsDialog(megaApi, this);
-    app->updateUserStats(true);
+    app->updateUserStats(true, true, true, true);
     QPointer<AccountDetailsDialog> dialog = accountDetailsDialog;
     dialog->exec();
     if (!dialog)
@@ -2485,6 +2578,7 @@ void SettingsDialog::openSettingsTab(int tab)
     switch (tab)
     {
     case ACCOUNT_TAB:
+        reloadUIpage = true;
         on_bAccount_clicked();
         break;
 
