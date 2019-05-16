@@ -676,6 +676,21 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     setOrganizationDomain(QString::fromAscii("mega.co.nz"));
     setApplicationName(QString::fromAscii("MEGAsync"));
     setApplicationVersion(QString::number(Preferences::VERSION_CODE));
+
+#ifdef _WIN32
+    setStyleSheet(QString::fromUtf8("QMessageBox QLabel {font-size: 13px;}"
+                                    "QMessageBox QPushButton "
+                                    "{font-size: 13px; padding-right: 12px;"
+                                    "padding-left: 12px;}"
+                                    "QMenu {font-size: 13px;}"
+                                    "QToolTip {font-size: 13px;}"
+                                    "QFileDialog QPushButton "
+                                    "{font-size: 13px; padding-right: 12px;"
+                                    "padding-left: 12px;}"
+                                    "QFileDialog QWidget"
+                                    "{font-size: 13px;}"));
+#endif
+
     appPath = QDir::toNativeSeparators(QCoreApplication::applicationFilePath());
     appDirPath = QDir::toNativeSeparators(QCoreApplication::applicationDirPath());
 
