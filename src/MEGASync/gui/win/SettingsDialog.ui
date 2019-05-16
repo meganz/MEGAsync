@@ -741,6 +741,18 @@ background:transparent;</string>
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
             </property>
