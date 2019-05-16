@@ -109,10 +109,11 @@ void msgHandler(QtMsgType type, const char *msg)
     }
 #endif
 
-#if defined(Q_OS_LINUX) && QT_VERSION >= 0x050600
+#if ( defined(WIN32) && QT_VERSION >= 0x050000 ) || (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
 namespace {
 
 constexpr auto dpiScreensSuitableIncrement = 1. / 6.; // this seems to work fine with 24x24 images at least
+#ifdef Q_OS_LINUX
 
 double getXrdbdpi( bool enforce = false)
 {
@@ -162,6 +163,7 @@ double computeScale(const QScreen& screen)
 
     return scale;
 }
+#endif
 
 void setScreenScaleFactorsEnvVar(const QMap<QString, double> &screenscales)
 {
@@ -188,10 +190,12 @@ void setScreenScaleFactorsEnvVar(const QMap<QString, double> &screenscales)
     return;
 }
 
-void adjustScreenScaleFactors(QMap<QString, double> &screenscales)
+bool adjustScreenScaleFactors(QMap<QString, double> &screenscales)
 {
     constexpr auto minTitleBarHeight = 20; // give some pixels to the tittle bar
     constexpr auto biggestDialogHeight = minTitleBarHeight + 600; //This is the height of the biggest dialog in megassync (Settings)
+
+    bool adjusted = false;
 
     for (auto ssname : screenscales.keys())
     {
@@ -218,6 +222,10 @@ void adjustScreenScaleFactors(QMap<QString, double> &screenscales)
                             ssvalue = max(1., ssvalue - dpiScreensSuitableIncrement); //Qt don't like scale factors below 1
                             qDebug() << "Screen \"" << ssname << "\" too small for calculated scaling, reducing from " << sprevious << " to " << ssvalue;
                             setScreenScaleFactorsEnvVar(screenscales);
+#if !defined(Q_OS_LINUX)
+                            QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false);
+#endif
+                            adjusted = true;
                         }
                         break;
                     }
@@ -225,6 +233,8 @@ void adjustScreenScaleFactors(QMap<QString, double> &screenscales)
             } while(screenscales[ssname] > 1 && ssvalue != sprevious);
         }
     }
+
+    return adjusted;
 }
 
 void setScaleFactors()
@@ -258,7 +268,6 @@ void setScaleFactors()
         }
     }
 
-
     QMap<QString, double> screenscales;
 
     {
@@ -267,13 +276,23 @@ void setScaleFactors()
         const auto screens = app.screens();
         for (const auto& screen : screens)
         {
+#ifdef Q_OS_LINUX
             const double computed_scale = computeScale(*screen);
+#else
+            // In windows, devicePixelRatio is calculated according to zoom level when AA_EnableHighDpiScaling
+            const double computed_scale = screen->devicePixelRatio();
+#endif
             screenscales.insert(screen->name(), computed_scale);
         }
     }
 
+#ifdef Q_OS_LINUX
     setScreenScaleFactorsEnvVar(screenscales);
-    adjustScreenScaleFactors(screenscales);
+#endif
+    if (adjustScreenScaleFactors(screenscales))
+    {
+        qDebug() << "Some screen is too small to apply automatic DPI scaling, enforced QT_SCREEN_SCALE_FACTORS=" << QString::fromUtf8(getenv("QT_SCREEN_SCALE_FACTORS"));;
+    }
 }
 
 }
@@ -324,6 +343,10 @@ int main(int argc, char *argv[])
         }
     }
 
+
+#endif
+
+#if ( defined(WIN32) && QT_VERSION >= 0x050000 ) || (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
     setScaleFactors();
 #endif
 
@@ -350,22 +373,6 @@ int main(int argc, char *argv[])
     }
 #endif
 
-#if defined(WIN32) && QT_VERSION >= 0x050000
-    {
-        MegaApplication appaux(argc, argv);
-        for (QScreen *s : appaux.screens())
-        {
-            qreal ratio = s->devicePixelRatio();
-            int height = s->availableGeometry().height();
-            if (ratio > 1 && 600 > height) // if height is not enough to hold settings dialog
-            {
-                qDebug() << " Screen too small to apply automatic DPI scaling, enforcing QT_SCALE_FACTOR=" << (ratio -1);
-                qputenv("QT_SCALE_FACTOR", QString::number(ratio-1).toUtf8().constData());
-                QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false);
-            }
-        }
-    }
-#endif
 
     MegaApplication app(argc, argv);
 
