@@ -48,13 +48,14 @@ void HighDpiResize::forceRedraw()
             r.setRight(r.right() + 100);
             dialog->update(r); // going from 200% to 100% leaves some artifacts otherwise, some of the background is not repainted, very visible in About dialog
         }
+        else
+        {
+            // adjustsize() for sizable windows does something odd, eg upload dialog goes from landscape shape to narrow portrait
+            // so try changing the size down one pixel and then up again
+            QSize s = dialog->size();
+            dialog->resize(s.width() - 1, s.height() - 1);
+            dialog->resize(s);
+        }
     }
-    else
-    {
-        // adjustsize() for sizable windows does something odd, eg upload dialog goes from landscape shape to narrow portrait
-        // so try changing the size down one pixel and then up again
-        QSize s = dialog->size();
-        dialog->resize(s.width() - 1, s.height() - 1);
-        dialog->resize(s);
-    }
+
 }

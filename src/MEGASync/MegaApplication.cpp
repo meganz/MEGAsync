@@ -829,10 +829,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     almostOQ = false;
     storageState = MegaApi::STORAGE_STATE_GREEN;
     appliedStorageState = MegaApi::STORAGE_STATE_GREEN;;
-#ifdef _WIN32    
-    lastApplicationDeactivation = chrono::steady_clock::now() - 5s;
-    installEventFilter(this);
-#endif
 
     for (unsigned i = 3; i--; )
     {
@@ -1405,7 +1401,7 @@ void MegaApplication::start()
 
     if (!isLinux || !trayIcon->contextMenu())
     {
-        trayIcon->setContextMenu(initialMenu);
+        trayIcon->setContextMenu(initialMenu.get());
     }
 
 #ifndef __APPLE__
@@ -2675,17 +2671,12 @@ void MegaApplication::cleanAll()
     pricing = NULL;
 
     // Delete menus and menu items
-    deleteMenu(initialMenu);
-    initialMenu = NULL;
-    deleteMenu(trayMenu);
-    trayMenu = NULL;
-    deleteMenu(syncsMenu);
-    syncsMenu = NULL;
-    deleteMenu(trayGuestMenu);
-    trayGuestMenu = NULL;
+    deleteMenu(initialMenu.release());
+    deleteMenu(trayMenu.release());
+    deleteMenu(syncsMenu.release());
+    deleteMenu(trayGuestMenu.release());
 #ifdef _WIN32
-    deleteMenu(windowsMenu);
-    windowsMenu = NULL;
+    deleteMenu(windowsMenu.release());
 #endif
 
     // Ensure that there aren't objects deleted with deleteLater()
@@ -2778,6 +2769,21 @@ void MegaApplication::showInfoDialog()
         megaApi->retryPendingConnections();
     }
 
+#ifdef WIN32
+    if (infoDialog)
+    {
+        // in case the screens have changed, eg. laptop with 2 monitors attached (200%, main:100%, 150%), lock screen, unplug monitors, wait 30s, plug monitors, unlock screen:  infoDialog may be double size and only showing 1/4 or 1/2
+        delete infoDialog;
+        infoDialog = new InfoDialog(this);
+        connect(infoDialog, SIGNAL(dismissOQ(bool)), this, SLOT(onDismissOQ(bool)));
+        connect(infoDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
+
+        // recreate the cog menu (with correct scaling after monitor changes)
+        trayMenu.reset();
+        createTrayMenu();  
+    }
+#endif
+
     if (preferences && preferences->logged())
     {
         updateUserStats(true, true, true, true);
@@ -2797,13 +2803,14 @@ void MegaApplication::showInfoDialog()
     #ifdef __MACH__
             trayIcon->setContextMenu(&emptyMenu);
     #elif defined(_WIN32)
-            trayIcon->setContextMenu(windowsMenu);
+            trayIcon->setContextMenu(windowsMenu.get());
     #endif
         }
     }
 
     if (infoDialog)
     {
+
         if (!infoDialog->isVisible())
         {
             if (storageState == MegaApi::STORAGE_STATE_RED)
@@ -3090,7 +3097,7 @@ void MegaApplication::sendOverStorageNotification(int state)
 
 bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 {
-    if (obj == trayMenu)
+    if (obj == trayMenu.get())
     {
         if (e->type() == QEvent::Leave)
         {
@@ -3101,13 +3108,6 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
             }
         }
     }
-
-#ifdef _WIN32    
-    if (e->type() == QEvent::ApplicationDeactivate)
-    {
-        lastApplicationDeactivation = chrono::steady_clock::now();
-    }
-#endif
 
     return QApplication::eventFilter(obj, e);
 }
@@ -4720,11 +4720,11 @@ void MegaApplication::createTrayIcon()
     if (preferences && preferences->logged() && megaApi && megaApi->isFilesystemAvailable()
             && bwOverquotaTimestamp <= QDateTime::currentMSecsSinceEpoch() / 1000)
     {
-        trayIcon->setContextMenu(windowsMenu);
+        trayIcon->setContextMenu(windowsMenu.get());
     }
     else
     {
-        trayIcon->setContextMenu(initialMenu);
+        trayIcon->setContextMenu(initialMenu.get());
     }
 #else
     trayIcon->setContextMenu(&emptyMenu);
@@ -5540,7 +5540,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 #ifdef _WIN32
         // in windows, a second click on the task bar icon first deactivates the app which closes the infoDialg.  
         // This statement prevents us opening it again, so that we have one-click to open the infoDialog, and a second closes it.
-        if (chrono::steady_clock::now() - lastApplicationDeactivation > 500ms)
+        if (!infoDialog || (chrono::steady_clock::now() - infoDialog->lastWindowHideTime > 100ms))
 #endif
         {
             infoDialogTimer->start(200);
@@ -5761,7 +5761,7 @@ void MegaApplication::changeProxy()
     #ifdef __MACH__
             trayIcon->setContextMenu(&emptyMenu);
     #elif defined(_WIN32)
-            trayIcon->setContextMenu(windowsMenu);
+            trayIcon->setContextMenu(windowsMenu.get());
     #endif
         }
     }
@@ -5828,7 +5828,7 @@ void MegaApplication::createTrayMenu()
 
     if (!initialMenu)
     {
-        initialMenu = new QMenu();
+        initialMenu.reset(new QMenu());
     }
     else
     {
@@ -5877,7 +5877,7 @@ void MegaApplication::createTrayMenu()
 #ifdef _WIN32
     if (!windowsMenu)
     {
-        windowsMenu = new QMenu();
+        windowsMenu.reset(new QMenu());
     }
     else
     {
@@ -5981,7 +5981,7 @@ void MegaApplication::createTrayMenu()
 
     if (!trayMenu)
     {
-        trayMenu = new QMenu();
+        trayMenu.reset(new QMenu());
 #ifdef __APPLE__
         trayMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #else
@@ -5989,7 +5989,7 @@ void MegaApplication::createTrayMenu()
 #endif
 
         //Highlight menu entry on mouse over
-        connect(trayMenu, SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
+        connect(trayMenu.get(), SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
 
         //Hide highlighted menu entry when mouse over
         trayMenu->installEventFilter(this);
@@ -6060,7 +6060,7 @@ void MegaApplication::createTrayMenu()
             syncsMenu = NULL;
         }
 
-        syncsMenu = new QMenu();
+        syncsMenu.reset(new QMenu());
 
 #ifdef __APPLE__
         syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
@@ -6120,7 +6120,7 @@ void MegaApplication::createTrayMenu()
                 delete rootNode;
             }
 
-            addSyncAction->setMenu(syncsMenu);
+            addSyncAction->setMenu(syncsMenu.get());
         }
     }
 
@@ -6198,7 +6198,7 @@ void MegaApplication::createGuestMenu()
 
     if (!trayGuestMenu)
     {
-        trayGuestMenu = new QMenu();
+        trayGuestMenu.reset(new QMenu());
 
 #ifdef __APPLE__
         trayGuestMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
@@ -6745,7 +6745,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 #ifdef __MACH__
             trayIcon->setContextMenu(&emptyMenu);
 #elif defined(_WIN32)
-            trayIcon->setContextMenu(windowsMenu);
+            trayIcon->setContextMenu(windowsMenu.get());
 #endif
             if (bwOverquotaDialog)
             {
@@ -7389,10 +7389,8 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         megaApi->getPricing();
         updateUserStats(false, true, false, false);  // just get udpated transfer quota, and with !force, just in case
         bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
-#ifdef __MACH__
-        trayIcon->setContextMenu(initialMenu);
-#elif defined(_WIN32)
-        trayIcon->setContextMenu(initialMenu);
+#if defined(__MACH__) || defined(_WIN32)
+        trayIcon->setContextMenu(initialMenu.get());
 #endif
         closeDialogs(true);
         openBwOverquotaDialog();
