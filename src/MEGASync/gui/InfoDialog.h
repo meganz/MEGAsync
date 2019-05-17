@@ -136,7 +136,6 @@ protected:
     bool eventFilter(QObject *obj, QEvent *e);
 #ifdef __APPLE__
     void paintEvent( QPaintEvent * e);
-    void hideEvent(QHideEvent *event);
 #endif
 
 protected:

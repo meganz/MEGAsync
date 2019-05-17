@@ -184,7 +184,12 @@ InfoDialog::~InfoDialog()
 
 void InfoDialog::hideEvent(QHideEvent *event)
 {
+#ifdef __APPLE__
+    arrow->hide();
+#endif
+
     QDialog::hideEvent(event);
+
 #ifdef _WIN32
     lastWindowHideTime = std::chrono::steady_clock::now();
 #endif
@@ -1226,11 +1231,5 @@ void InfoDialog::paintEvent( QPaintEvent * e)
     QPainter p( this );
     p.setCompositionMode( QPainter::CompositionMode_Clear);
     p.fillRect( ui->wArrow->rect(), Qt::transparent );
-}
-
-void InfoDialog::hideEvent(QHideEvent *event)
-{
-    arrow->hide();
-    QDialog::hideEvent(event);
 }
 #endif
