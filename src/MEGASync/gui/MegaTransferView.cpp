@@ -473,12 +473,12 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
 
                         TransferItem *item = model->transferItems[transferTagSelected[i]];
 
-                        if (!item || !model->transferItems[transferTagSelected[i]]->getIsLinkAvailable())
+                        if (!item || !item->getIsLinkAvailable())
                         {
                             linkAvailable = false;
                         }
 
-                        if (!item || model->transferItems[transferTagSelected[i]]->getNodeAccess() == MegaShare::ACCESS_UNKNOWN)
+                        if (!item || item->getNodeAccess() == MegaShare::ACCESS_UNKNOWN)
                         {
                             showInMega = false;
                         }
