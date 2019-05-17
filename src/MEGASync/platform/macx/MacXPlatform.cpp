@@ -322,3 +322,8 @@ bool MacXPlatform::isUserActive()
 {
     return userActive();
 }
+
+double MacXPlatform::getUpTime()
+{
+    return uptime();
+}

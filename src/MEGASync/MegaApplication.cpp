@@ -7753,6 +7753,9 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
         }
 #endif
 
+#ifdef __APPLE__
+        bool waitForLoad = true;
+#endif
         //Start syncs
         for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
         {
@@ -7776,6 +7779,19 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
                 QString name = preferences->getSyncName(i);
                 QString uuid = preferences->getSyncID(i);
                 Platform::addSyncToLeftPane(localFolder, name, uuid);
+            }
+#endif
+
+#ifdef __APPLE__
+            if (waitForLoad)
+            {
+                double time = Platform::getUpTime();
+                waitForLoad = false;
+
+                if (time >= 0 && time < Preferences::FIRST_SYNC_DELAY_S)
+                {
+                    sleep(Preferences::FIRST_SYNC_DELAY_S - time);
+                }
             }
 #endif
 
