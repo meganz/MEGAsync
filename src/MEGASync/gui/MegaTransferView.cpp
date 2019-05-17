@@ -471,12 +471,14 @@ void MegaTransferView::onCustomContextMenu(const QPoint &point)
                             failed = true;
                         }
 
-                        if (!model->transferItems[transferTagSelected[i]]->getIsLinkAvailable())
+                        TransferItem *item = model->transferItems[transferTagSelected[i]];
+
+                        if (!item || !item->getIsLinkAvailable())
                         {
                             linkAvailable = false;
                         }
 
-                        if (model->transferItems[transferTagSelected[i]]->getNodeAccess() == MegaShare::ACCESS_UNKNOWN)
+                        if (!item || item->getNodeAccess() == MegaShare::ACCESS_UNKNOWN)
                         {
                             showInMega = false;
                         }
