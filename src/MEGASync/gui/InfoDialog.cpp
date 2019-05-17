@@ -16,6 +16,11 @@
 #include "MenuItemAction.h"
 #include "platform/Platform.h"
 
+#ifdef _WIN32    
+#include <chrono>
+using namespace std::chrono;
+#endif
+
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
 #endif
@@ -162,6 +167,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
         regenerateLayout();
     }
     highDpiResize.init(this);
+
+#ifdef _WIN32
+    lastWindowHideTime = std::chrono::steady_clock::now() - 5s;
+#endif
 }
 
 InfoDialog::~InfoDialog()
@@ -171,6 +180,19 @@ InfoDialog::~InfoDialog()
     delete activeDownload;
     delete activeUpload;
     delete animation;
+}
+
+void InfoDialog::hideEvent(QHideEvent *event)
+{
+#ifdef __APPLE__
+    arrow->hide();
+#endif
+
+    QDialog::hideEvent(event);
+
+#ifdef _WIN32
+    lastWindowHideTime = std::chrono::steady_clock::now();
+#endif
 }
 
 void InfoDialog::setAvatar()
@@ -1209,11 +1231,5 @@ void InfoDialog::paintEvent( QPaintEvent * e)
     QPainter p( this );
     p.setCompositionMode( QPainter::CompositionMode_Clear);
     p.fillRect( ui->wArrow->rect(), Qt::transparent );
-}
-
-void InfoDialog::hideEvent(QHideEvent *event)
-{
-    arrow->hide();
-    QDialog::hideEvent(event);
 }
 #endif

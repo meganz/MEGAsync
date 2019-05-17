@@ -13,6 +13,9 @@
 #include "control/Preferences.h"
 #include <QGraphicsOpacityEffect>
 #include "HighDpiResize.h"
+#ifdef _WIN32
+#include <chrono>
+#endif
 
 namespace Ui {
 class InfoDialog;
@@ -57,11 +60,15 @@ public:
 
     void regenerateLayout();
     HighDpiResize highDpiResize;
+#ifdef _WIN32
+    std::chrono::steady_clock::time_point lastWindowHideTime;
+#endif
 
 private:
     void drawAvatar(QString email);
     void createQuotaUsedMenu();
     void animateStates(bool opt);
+    void hideEvent(QHideEvent *event) override;
 
 public slots:
    void addSync();
@@ -129,7 +136,6 @@ protected:
     bool eventFilter(QObject *obj, QEvent *e);
 #ifdef __APPLE__
     void paintEvent( QPaintEvent * e);
-    void hideEvent(QHideEvent *event);
 #endif
 
 protected:
