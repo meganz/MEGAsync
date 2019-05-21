@@ -125,6 +125,7 @@ private:
     bool overQuotaState;
     int storageState;
     int actualAccountType;
+    bool loggedInMode = true;
 
     QPropertyAnimation *animation;
     QGraphicsOpacityEffect *opacityEffect;
