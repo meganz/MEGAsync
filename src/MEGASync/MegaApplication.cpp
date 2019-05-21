@@ -2795,10 +2795,12 @@ void MegaApplication::showInfoDialog()
     if (infoDialog)
     {
         // in case the screens have changed, eg. laptop with 2 monitors attached (200%, main:100%, 150%), lock screen, unplug monitors, wait 30s, plug monitors, unlock screen:  infoDialog may be double size and only showing 1/4 or 1/2
-        delete infoDialog;
-        infoDialog = new InfoDialog(this);
+        auto oldDialog = infoDialog;
+        infoDialog = new InfoDialog(this, NULL, oldDialog);
+        delete oldDialog;
         connect(infoDialog, SIGNAL(dismissOQ(bool)), this, SLOT(onDismissOQ(bool)));
         connect(infoDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
+        infoDialog->setAvatar();
 
         // recreate the cog menu (with correct scaling after monitor changes)
         trayMenu.reset();
