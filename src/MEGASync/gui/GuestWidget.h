@@ -40,7 +40,7 @@ public:
     void initialize();
 
     void setTexts(const QString& s1, const QString& s2);
-    std::pair<QString, QString> GuestWidget::getTexts();
+    std::pair<QString, QString> getTexts();
 
 signals:
     void forwardAction(int action);
