@@ -170,7 +170,7 @@
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a waring during the process of setting a exclusion for the synchronizations.</translatorcomment>
-        <translation type="unfinished">Cảnh báo</translation>
+        <translation type="unfinished">Chú Ý</translation>
     </message>
     <message>
         <source>Please enter a valid file name or absolute path.</source>
@@ -226,7 +226,7 @@
     </message>
     <message>
         <source>Warning</source>
-        <translation type="obsolete">Cảnh báo</translation>
+        <translation type="obsolete">Chú Ý</translation>
     </message>
     <message>
         <source>Sync name</source>
@@ -334,7 +334,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Warning</source>
-        <translation type="obsolete">Cảnh báo</translation>
+        <translation type="obsolete">Chú Ý</translation>
     </message>
     <message>
         <source>Please enter your password</source>
@@ -359,7 +359,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Warning</source>
         <translatorcomment>Title of the dialog that allows to disable a security check to prevent atacks that could intercept the communications of MEGAsync</translatorcomment>
-        <translation type="unfinished">Cảnh báo</translation>
+        <translation type="unfinished">Chú Ý</translation>
     </message>
     <message>
         <source>Are you sure you want to continue?</source>
@@ -588,7 +588,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a waring during the process of stablish a synchronization.</translatorcomment>
-        <translation>Cảnh báo</translation>
+        <translation>Chú Ý</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this folder.</source>
@@ -825,7 +825,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a warning during the process of importing a MEGA link.</translatorcomment>
-        <translation type="vanished">Cảnh báo</translation>
+        <translation type="vanished">Chú Ý</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -1336,7 +1336,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Warning</source>
         <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation type="unfinished">Cảnh báo</translation>
+        <translation type="unfinished">Chú Ý</translation>
     </message>
     <message>
         <source>Please enter a valid value</source>
@@ -2028,6 +2028,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
         <translation type="unfinished">Mở thư mục chứa tệp này</translation>
     </message>
+    <message>
+        <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
+        <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
+        <translation type="unfinished">MEGA không thực hiện đuợc kết nối bảo mật thông qua xác thực SSL. Có thể do thiết bị đang dùng mạng WiFi công cộng cần được phải chỉnh thêm.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2296,7 +2301,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Warning</source>
         <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation type="obsolete">Cảnh báo</translation>
+        <translation type="obsolete">Chú Ý</translation>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file
@@ -2311,7 +2316,7 @@ Are you sure?</source>
     <name>MessageBox</name>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Cảnh báo</translation>
+        <translation type="unfinished">Chú Ý</translation>
     </message>
     <message>
         <source>Do not ask me again</source>
@@ -2390,7 +2395,7 @@ Please, select a subfolder.</source>
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a Warning message.</translatorcomment>
-        <translation>Cảnh báo</translation>
+        <translation>Chú Ý</translation>
     </message>
     <message>
         <source>You have %1 in this folder.
@@ -2495,7 +2500,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Warning</source>
         <translatorcomment>Label displayed for a Warning message. Keep capital letter.</translatorcomment>
-        <translation>Cảnh báo</translation>
+        <translation>Chú Ý</translation>
     </message>
     <message>
         <source>Enter one or more MEGA file links</source>
@@ -2621,7 +2626,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
-        <translation type="unfinished">- Sửa lỗi phát sinh khi lựa chọn trong bộ quản lý truyền tải
+        <translation type="obsolete">- Sửa lỗi phát sinh khi lựa chọn trong bộ quản lý truyền tải
 - Sưa lỗi phát sinh khi menu không hiện ra mục truyền tải
 - Hộp thoại giao diện được thiết kế mới
 - Trình trợ giúp cài đặt được cải tiến hơn
@@ -2629,6 +2634,34 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Các thông báo được hiện đại hơn
 - Nâng cấp thêm thư viện từ bên thứ ba
 - Sửa lại các lỗi nhỏ và hoàn thiện thêm</translation>
+    </message>
+    <message>
+        <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
+- Improved GUI performance during addition of many downloads
+- Restyling of initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
+        <translation type="unfinished">- Improved look and feel for high resolution displays on Windows and Linux
+- Improved GUI performance during the addition of a large number of downloads
+- Restyling of the initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</translation>
+    </message>
+    <message>
+        <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
+- Enable thumbnail support for PDF
+- Improved GUI performance during addition of many downloads
+- Restyling of initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
+        <translation type="unfinished">- Improved look and feel for high resolution displays on Windows and Linux
+- Enabled thumbnail support for PDF documents
+- Improved GUI performance during the addition of a large number of downloads
+- Restyling of the initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</translation>
     </message>
 </context>
 <context>
@@ -3007,7 +3040,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Warning</source>
         <translatorcomment>Label to indicate a Warning message. Keep capital letter.</translatorcomment>
-        <translation>Cảnh báo</translation>
+        <translation>Chú Ý</translation>
     </message>
     <message>
         <source>You are already syncing your entire Cloud Drive.</source>
@@ -3636,7 +3669,7 @@ when the application starts again</source>
     <message>
         <source>Warning</source>
         <translatorcomment>Label warning.</translatorcomment>
-        <translation>Cảnh báo</translation>
+        <translation>Chú Ý</translation>
     </message>
     <message>
         <source>You have %1 in your Cloud Drive.
@@ -3971,7 +4004,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Warning</source>
         <translatorcomment>Label warning.</translatorcomment>
-        <translation type="unfinished">Cảnh báo</translation>
+        <translation type="unfinished">Chú Ý</translation>
     </message>
     <message>
         <source>Size limits cannot be zero</source>
