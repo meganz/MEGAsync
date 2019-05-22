@@ -22,5 +22,6 @@ bool registerUpdateDaemon();
 bool runHttpServer();
 bool runHttpsServer();
 bool userActive();
+double uptime();
 
 #endif // MACXFUNCTIONS_H

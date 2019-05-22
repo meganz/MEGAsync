@@ -56,6 +56,7 @@ public:
     static bool shouldRunHttpServer();
     static bool shouldRunHttpsServer();
     static bool isUserActive();
+    static double getUpTime();
 
     static int fd;
 };
