@@ -7788,9 +7788,9 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
                 double time = Platform::getUpTime();
                 waitForLoad = false;
 
-                if (time >= 0 && time < Preferences::FIRST_SYNC_DELAY_S)
+                if (time >= 0 && time < Preferences::MAX_FIRST_SYNC_DELAY_S)
                 {
-                    sleep(Preferences::FIRST_SYNC_DELAY_S - time);
+                    sleep(std::min(Preferences::MIN_FIRST_SYNC_DELAY_S, Preferences::MAX_FIRST_SYNC_DELAY_S - (int)time));
                 }
             }
 #endif

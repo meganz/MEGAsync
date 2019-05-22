@@ -352,7 +352,8 @@ public:
     static int STATE_REFRESH_INTERVAL_MS;
     static int FINISHED_TRANSFER_REFRESH_INTERVAL_MS;
 
-    static int FIRST_SYNC_DELAY_S;
+    static int MAX_FIRST_SYNC_DELAY_S;
+    static int MIN_FIRST_SYNC_DELAY_S;
 
     static long long MIN_UPDATE_NOTIFICATION_INTERVAL_MS;
     static unsigned int UPDATE_INITIAL_DELAY_SECS;
