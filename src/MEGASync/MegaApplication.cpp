@@ -242,6 +242,9 @@ void setScaleFactors()
     if (getenv("QT_SCALE_FACTOR"))
     {
         qDebug() << "Not setting scale factors. Using predefined QT_SCALE_FACTOR=" << getenv("QT_SCALE_FACTOR");
+#if !defined(Q_OS_LINUX)
+        QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false);
+#endif
         return;
     }
 
@@ -259,6 +262,12 @@ void setScaleFactors()
                 screen_scale_factors_valid = false;
                 break;
             }
+#if !defined(Q_OS_LINUX)
+            else
+            {
+                QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false);
+            }
+#endif
         }
 
         if (screen_scale_factors_valid)
