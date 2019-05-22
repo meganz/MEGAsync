@@ -2642,7 +2642,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Windows and Linux
+        <translation type="unfinished">- Improved look and feel for high resolution displays on Windows
 - Improved GUI performance during the addition of a large number of downloads
 - Restyling of the initial information wizard, new icons and interface improvements
 - Support for business accounts
@@ -2656,7 +2656,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Windows and Linux
+        <translation type="unfinished">- Improved look and feel for high resolution displays on Linux
 - Enabled thumbnail support for PDF documents
 - Improved GUI performance during the addition of a large number of downloads
 - Restyling of the initial information wizard, new icons and interface improvements

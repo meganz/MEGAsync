@@ -2642,11 +2642,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Windows and Linux
-- Improved GUI performance during the addition of a large number of downloads
-- Restyling of the initial information wizard, new icons and interface improvements
-- Support for business accounts
-- Other minor bug fixes and improvements</translation>
+        <translation type="unfinished">- Poprawiony wygląd i jakość wyświetlania w wysokiej rozdzielczości w systemie Windows
+- Poprawiona wydajność GUI podczas dodawania dużej liczby pobrań
+- Restylowanie kreatora informacji początkowych, nowe ikony i ulepszenia interfejsu
+- Wsparcie dla kont biznesowych
+- Inne drobne poprawki i ulepszenia</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -2656,12 +2656,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Windows and Linux
-- Enabled thumbnail support for PDF documents
-- Improved GUI performance during the addition of a large number of downloads
-- Restyling of the initial information wizard, new icons and interface improvements
-- Support for business accounts
-- Other minor bug fixes and improvements</translation>
+        <translation type="unfinished">- Ulepszony wygląd ekranów wysokiej rozdzielczości w systemie Linux
+- Włączona obsługa miniatur dla dokumentów PDF
+- Poprawiona wydajność GUI podczas dodawania dużej liczby pobrań
+- Restylowanie kreatora informacji początkowych, nowe ikony i ulepszenia interfejsu
+- Wsparcie dla kont biznesowych
+- Inne drobne poprawki i ulepszenia</translation>
     </message>
 </context>
 <context>

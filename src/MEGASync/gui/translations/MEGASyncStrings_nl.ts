@@ -2643,11 +2643,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Windows and Linux
-- Improved GUI performance during the addition of a large number of downloads
-- Restyling of the initial information wizard, new icons and interface improvements
-- Support for business accounts
-- Other minor bug fixes and improvements</translation>
+        <translation type="unfinished">-Geïmproviseerde uiterlijk en gevoel voor hoge resolutieschermen op Windows
+- Verbeterde GUI-prestaties tijdens de toevoeging van een groot aantal downloads 
+- Restyling van de initiële informatiewizard, nieuwe pictogrammen en interface-verbeteringen 
+- Ondersteuning voor zakelijke accounts 
+- Andere kleine bugfixes en verbeteringen</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -2657,12 +2657,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Windows and Linux
-- Enabled thumbnail support for PDF documents
-- Improved GUI performance during the addition of a large number of downloads
-- Restyling of the initial information wizard, new icons and interface improvements
-- Support for business accounts
-- Other minor bug fixes and improvements</translation>
+        <translation type="unfinished">- Verbeterd uiterlijk en gevoel voor hoge resolutieschermen op Linux 
+- Ondersteuning voor miniatuurweergave voor PDF-documenten 
+- Verbeterde GUI-prestaties tijdens de toevoeging van een groot aantal downloads 
+- Restyling van de initiële informatiewizard, nieuwe pictogrammen en interface-verbeteringen 
+- Ondersteuning voor zakelijke accounts 
+- Andere kleine bugfixes en verbeteringen</translation>
     </message>
 </context>
 <context>
