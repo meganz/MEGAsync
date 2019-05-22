@@ -2792,6 +2792,15 @@ void MegaApplication::showInfoDialog()
     }
 
 #ifdef WIN32
+
+    if (QWidget *anyModalWindow = QApplication::activeModalWidget())
+    {
+        // If the InfoDialog has opened any MessageBox (eg. enter your email), those must be closed first (as we are executing from that dialog's message loop!)
+        // Bring that dialog to the front for the user to dismiss.
+        anyModalWindow->activateWindow();
+        return;
+    }
+
     if (infoDialog)
     {
         // in case the screens have changed, eg. laptop with 2 monitors attached (200%, main:100%, 150%), lock screen, unplug monitors, wait 30s, plug monitors, unlock screen:  infoDialog may be double size and only showing 1/4 or 1/2
