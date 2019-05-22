@@ -27,7 +27,7 @@ using namespace std::chrono;
 
 using namespace mega;
 
-InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
+InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
     QDialog(parent),
     ui(new Ui::InfoDialog)
 {
@@ -164,7 +164,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     }
     else
     {
-        regenerateLayout();
+        regenerateLayout(olddialog);
     }
     highDpiResize.init(this);
 
@@ -915,7 +915,7 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
     return QDialog::eventFilter(obj, e);
 }
 
-void InfoDialog::regenerateLayout()
+void InfoDialog::regenerateLayout(InfoDialog* olddialog)
 {
     bool logged = preferences->logged();
 
@@ -932,6 +932,11 @@ void InfoDialog::regenerateLayout()
         {
             gWidget = new GuestWidget();
             connect(gWidget, SIGNAL(forwardAction(int)), this, SLOT(onUserAction(int)));
+            if (olddialog)
+            {
+                auto t = olddialog->gWidget->getTexts();
+                gWidget->setTexts(t.first, t.second);
+            }
         }
         else
         {

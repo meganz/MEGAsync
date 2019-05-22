@@ -35,7 +35,7 @@ class InfoDialog : public QDialog, public mega::MegaTransferListener
     };
 
 public:
-    explicit InfoDialog(MegaApplication *app, QWidget *parent = 0);
+    explicit InfoDialog(MegaApplication *app, QWidget *parent = 0, InfoDialog* olddialog = nullptr);
     ~InfoDialog();
 
     void setUsage();
@@ -58,7 +58,7 @@ public:
     void moveArrow(QPoint p);
 #endif
 
-    void regenerateLayout();
+    void regenerateLayout(InfoDialog* olddialog = nullptr);
     HighDpiResize highDpiResize;
 #ifdef _WIN32
     std::chrono::steady_clock::time_point lastWindowHideTime;
