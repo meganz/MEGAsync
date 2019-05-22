@@ -3108,7 +3108,8 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("MIN_EXTERNAL_NODES_WARNING_MS"), Preferences::MIN_EXTERNAL_NODES_WARNING_MS);
     overridePreference(settings, QString::fromUtf8("MIN_TRANSFER_NOTIFICATION_INTERVAL_MS"), Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS);
 
-    overridePreference(settings, QString::fromUtf8("FIRST_SYNC_DELAY_S"), Preferences::MAX_FIRST_SYNC_DELAY_S);
+    overridePreference(settings, QString::fromUtf8("MAX_FIRST_SYNC_DELAY_S"), Preferences::MAX_FIRST_SYNC_DELAY_S);
+    overridePreference(settings, QString::fromUtf8("MIN_FIRST_SYNC_DELAY_S"), Preferences::MIN_FIRST_SYNC_DELAY_S);
 
     overridePreference(settings, QString::fromUtf8("UPDATE_INITIAL_DELAY_SECS"), Preferences::UPDATE_INITIAL_DELAY_SECS);
     overridePreference(settings, QString::fromUtf8("UPDATE_RETRY_INTERVAL_SECS"), Preferences::UPDATE_RETRY_INTERVAL_SECS);
