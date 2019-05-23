@@ -124,7 +124,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->bDotUsedStorage->hide();
     ui->sUsedData->setCurrentWidget(ui->pStorage);
 
-    ui->wListTransfers->setupTransfers();
+
+    ui->wListTransfers->setupTransfers(olddialog?olddialog->stealModel():nullptr);
+
 
 
 #ifdef __APPLE__
@@ -327,7 +329,10 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
 
 void InfoDialog::refreshTransferItems()
 {
-    ui->wListTransfers->getModel()->refreshTransfers();
+    if (ui->wListTransfers->getModel())
+    {
+        ui->wListTransfers->getModel()->refreshTransfers();
+    }
 }
 
 void InfoDialog::transferFinished(int error)
@@ -650,7 +655,7 @@ void InfoDialog::updateDialogState()
             remainingUploads = megaApi->getNumPendingUploads();
             remainingDownloads = megaApi->getNumPendingDownloads();
 
-            if (remainingUploads || remainingDownloads || ui->wListTransfers->getModel()->rowCount(QModelIndex()) || ui->wPSA->isPSAready())
+            if (remainingUploads || remainingDownloads || (ui->wListTransfers->getModel() && ui->wListTransfers->getModel()->rowCount(QModelIndex())) || ui->wPSA->isPSAready())
             {
                 overlay->setVisible(false);
                 ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
@@ -823,6 +828,13 @@ bool InfoDialog::updateOverStorageState(int state)
         return true;
     }
     return false;
+}
+
+QCustomTransfersModel *InfoDialog::stealModel()
+{
+    QCustomTransfersModel *toret = ui->wListTransfers->getModel();
+    ui->wListTransfers->setModel(new QCustomTransfersModel(QTransfersModel::TYPE_CUSTOM_TRANSFERS)); //TODO: pass nullptr and review all use cases of getModel()
+    return toret;
 }
 
 void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton)
