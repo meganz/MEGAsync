@@ -17,7 +17,9 @@ public:
     MegaUploader(mega::MegaApi *megaApi);
     virtual ~MegaUploader();
     void upload(QString path, mega::MegaNode *parent, unsigned long long appDataID);
-    void uploadRecursively(QString srcPath, QString dstPath, mega::MegaNode *parent, unsigned long long appDataID);
+    void uploadWithOptimizedLocalRecursiveCopy(QString currentPath, QString destPath, mega::MegaNode *parent, unsigned long long appDataID);
+    bool filesdiffer(QFileInfo &source, QFileInfo &destination);
+    void copyRecursivelyIfSyncable(QString srcPath, QString dstPath);
 
 protected:
     void upload(QFileInfo info, mega::MegaNode *parent, unsigned long long appDataID);

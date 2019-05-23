@@ -34,16 +34,59 @@ void MegaUploader::upload(QString path, MegaNode *parent, unsigned long long app
     return upload(QFileInfo(path), parent, appDataID);
 }
 
+void MegaUploader::uploadWithOptimizedLocalRecursiveCopy(QString currentPath, QString destPath, MegaNode *parent, unsigned long long appDataID)
+{
+    //first copy recursively attending to sync exclusion criteria
+    MegaUploader::copyRecursivelyIfSyncable(currentPath, destPath);
 
-void MegaUploader::uploadRecursively(QString srcPath, QString dstPath, MegaNode *parent, unsigned long long appDataID)
+    // then, do manual upload (we want files to be uploaded nevertheless)
+    // notice, sync engine might revert changes afterwards for corner cases:
+    //      e.g: uploading an older version that doesn't match size criteria
+    //     Still, the same would happen if uploading with another client
+    megaApi->startUploadWithData(currentPath.toUtf8().constData(), parent, (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8().constData());
+    delete parent;
+}
+
+bool MegaUploader::filesdiffer(QFileInfo &source, QFileInfo &destination)
+{
+    if ( source.size() != destination.size()
+            || source.lastModified().toTime_t() != destination.lastModified().toTime_t())
+    {
+        return true;
+    }
+
+    QCryptographicHash hashsrc( QCryptographicHash::Sha1 );
+    QFile filesrc( source.absoluteFilePath() );
+    if ( filesrc.open( QIODevice::ReadOnly ) ) {
+        hashsrc.addData( filesrc.readAll() );
+    } else {
+        return true;
+    }
+
+    QCryptographicHash hashdst( QCryptographicHash::Sha1 );
+    QFile filedst( destination.absoluteFilePath() );
+    if ( filedst.open( QIODevice::ReadOnly ) ) {
+        hashdst.addData( filedst.readAll() );
+    } else {
+        return true;
+    }
+
+    if (hashdst.result() != hashsrc.result())
+    {
+        return true;
+    }
+    return false;
+}
+
+void MegaUploader::copyRecursivelyIfSyncable(QString srcPath, QString dstPath)
 {
     if (!srcPath.size() || !dstPath.size())
     {
         return;
     }
 
-    QFileInfo srcInfo(srcPath);
-    if (!srcInfo.exists())
+    QFileInfo source(srcPath);
+    if (!source.exists())
     {
         return;
     }
@@ -52,65 +95,52 @@ void MegaUploader::uploadRecursively(QString srcPath, QString dstPath, MegaNode 
     {
         return;
     }
-    QFileInfo dstInfo(dstPath);
-    QFile dst(dstPath);
 
-    if (megaApi->isSyncable(dstPath.toUtf8().constData(), srcInfo.size()))
+
+    if (!source.isFile() && !source.isDir()) //review if ever symlinks are supported
     {
-        if (srcInfo.isFile())
-        {
-            if (dst.exists())
-            {
-                megaApi->moveToLocalDebris(dstPath.toUtf8().constData());
-            }
-
-            QFile src(srcPath);
-
-            //do copy it!
-            src.copy(dstPath);
-#ifndef _WIN32
-            QFileInfo info(src);
-            time_t t = info.lastModified().toTime_t();
-            struct utimbuf times = { t, t };
-            utime(dstPath.toUtf8().constData(), &times);
-#endif
-            return;
-        }
-        else if (srcInfo.isDir())
-        {
-            QDir dstDir(dstPath);
-            if (dst.exists() && dstInfo.isFile())
-            {
-                megaApi->moveToLocalDebris(dstPath.toUtf8().constData());
-            }
-            if (!dst.exists())
-            {
-                dstDir.mkpath(QString::fromAscii("."));
-            }
-
-            QDirIterator di(srcPath, QDir::AllEntries | QDir::Hidden | QDir::NoDotAndDotDot);
-            while (di.hasNext())
-            {
-                di.next();
-                if (!di.fileInfo().isSymLink())
-                {
-                    MegaNode *newparent = megaApi->getNodeByPath(di.fileName().toUtf8(), parent);
-                    //TODO: problem: parent might not exist (it hasn't been created yet!!!!)
-                    // we'd need something with listeners and subfolder creations and the like (too overcomplicated perhaps)
-                    //TODO: non ascii filenames?
-                    uploadRecursively(di.filePath(), dstPath + QDir::separator() + di.fileName(), newparent, appDataID);
-                    delete newparent;
-                }
-            }
-        }
+        return;
     }
-    else
+
+    if (!megaApi->isSyncable(dstPath.toUtf8().constData(), source.size()))
     {
-        megaApi->startUploadWithData(srcPath.toUtf8().constData(), parent, (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8().constData());
+        return;
+    }
+    QFileInfo dstfileinfo(dstPath);
+
+    if (source.isFile())
+    {
+        if (!dstfileinfo.exists() || dstfileinfo.isDir() || filesdiffer(source, dstfileinfo))
+        {
+            megaApi->moveToLocalDebris(dstPath.toUtf8().constData());
+        }
+        QFile src(srcPath);
+        src.copy(dstPath); //This will fail if file exists, which should only happen if they don't differ
+#ifndef _WIN32
+       time_t t = source.lastModified().toTime_t();
+       struct utimbuf times = { t, t };
+       utime(dstPath.toUtf8().constData(), &times);
+#endif
+    }
+    else if (source.isDir())
+    {
+        if (dstfileinfo.exists() && !dstfileinfo.isDir())
+        {
+            megaApi->moveToLocalDebris(dstPath.toUtf8().constData());
+        }
+        QDir dstDir(dstPath);
+        dstDir.mkpath(QString::fromAscii("."));
+        QDirIterator di(srcPath, QDir::AllEntries | QDir::Hidden | QDir::NoDotAndDotDot);
+        while (di.hasNext())
+        {
+            di.next();
+            if (!di.fileInfo().isSymLink() )
+            {
+                copyRecursivelyIfSyncable(di.filePath(), dstPath + QDir::separator() + di.fileName());
+            }
+        }
     }
 }
-
-
 
 void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long appDataID)
 {
@@ -149,11 +179,7 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
 
     if (localPath.size() && currentPath != destPath && megaApi->isSyncable(destPath.toUtf8().constData(), info.size()))
     {
-        //QtConcurrent::run(this, &MegaUploader::uploadRecursively, currentPath, destPath, parent, appDataID);
-        megaApi->moveToLocalDebris(destPath.toUtf8().constData());
-        QtConcurrent::run(Utilities::copyRecursively, currentPath, destPath);
-        //TODO: add this
-        megaApi->startUploadWithData(currentPath.toUtf8().constData(), parent, (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8().constData());
+        QtConcurrent::run(this, &MegaUploader::uploadWithOptimizedLocalRecursiveCopy, currentPath, destPath, parent->copy(), appDataID);
     }
     else if (info.isFile() || info.isDir())
     {
