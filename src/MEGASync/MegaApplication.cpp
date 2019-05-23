@@ -2818,6 +2818,7 @@ void MegaApplication::showInfoDialog()
 
     if (infoDialog)
     {
+#ifdef MEGA_WINDOWS_HIDPI_EXPERIMENTAL_OPTIMIZATION
         bool screenschanged = false;
 
         auto screens = this->screens();
@@ -2837,6 +2838,9 @@ void MegaApplication::showInfoDialog()
                 }
             }
         }
+#else
+        bool screenschanged = true;
+#endif
 
         if (screenschanged)
         {
