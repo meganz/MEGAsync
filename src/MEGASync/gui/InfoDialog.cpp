@@ -833,7 +833,7 @@ bool InfoDialog::updateOverStorageState(int state)
 QCustomTransfersModel *InfoDialog::stealModel()
 {
     QCustomTransfersModel *toret = ui->wListTransfers->getModel();
-    ui->wListTransfers->setModel(new QCustomTransfersModel(QTransfersModel::TYPE_CUSTOM_TRANSFERS)); //TODO: pass nullptr and review all use cases of getModel()
+    ui->wListTransfers->setupTransfers(); // this will create a new empty model
     return toret;
 }
 

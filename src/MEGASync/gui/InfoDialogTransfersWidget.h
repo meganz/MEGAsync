@@ -19,7 +19,6 @@ public:
     explicit InfoDialogTransfersWidget(QWidget *parent = 0);
     void setupTransfers(QCustomTransfersModel * model = nullptr);
     QCustomTransfersModel *getModel();
-    void setModel(QCustomTransfersModel *value);
     ~InfoDialogTransfersWidget();
 
 private:

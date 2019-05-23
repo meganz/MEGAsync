@@ -46,11 +46,6 @@ InfoDialogTransfersWidget::~InfoDialogTransfersWidget()
     delete tDelegate;
 }
 
-void InfoDialogTransfersWidget::setModel(QCustomTransfersModel *value)
-{
-    model = value;
-}
-
 void InfoDialogTransfersWidget::configureTransferView()
 {
     if (!model)
