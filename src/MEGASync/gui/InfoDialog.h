@@ -11,6 +11,7 @@
 #include "DataUsageMenu.h"
 #include "MenuItemAction.h"
 #include "control/Preferences.h"
+#include "QCustomTransfersModel.h"
 #include <QGraphicsOpacityEffect>
 #include "HighDpiResize.h"
 #ifdef _WIN32
@@ -51,6 +52,9 @@ public:
     void clearUserAttributes();
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
+
+
+    QCustomTransfersModel *stealModel();
 
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
 

@@ -648,6 +648,12 @@ int main(int argc, char *argv[])
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
+#ifdef _WIN32
+    for (QScreen *s: this->screens() )
+    {
+        lastCheckedScreens.insert(s->name(), s->devicePixelRatio());
+    }
+#endif
     appfinished = false;
     logger = new MegaSyncLogger(this);
 
@@ -2812,17 +2818,46 @@ void MegaApplication::showInfoDialog()
 
     if (infoDialog)
     {
-        // in case the screens have changed, eg. laptop with 2 monitors attached (200%, main:100%, 150%), lock screen, unplug monitors, wait 30s, plug monitors, unlock screen:  infoDialog may be double size and only showing 1/4 or 1/2
-        auto oldDialog = infoDialog;
-        infoDialog = new InfoDialog(this, NULL, oldDialog);
-        delete oldDialog;
-        connect(infoDialog, SIGNAL(dismissOQ(bool)), this, SLOT(onDismissOQ(bool)));
-        connect(infoDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
-        infoDialog->setAvatar();
+        bool screenschanged = false;
 
-        // recreate the cog menu (with correct scaling after monitor changes)
-        trayMenu.reset();
-        createTrayMenu();  
+        auto screens = this->screens();
+        if (screens.size() != lastCheckedScreens.size())
+        {
+            screenschanged = true;
+        }
+        else
+        {
+            for (auto s : screens)
+            {
+                if (lastCheckedScreens.find(s->name()) == lastCheckedScreens.end()
+                        || lastCheckedScreens[s->name()] != s->devicePixelRatio())
+                {
+                    screenschanged = true;
+                    break;
+                }
+            }
+        }
+
+        if (screenschanged)
+        {
+            lastCheckedScreens.clear();
+            for (QScreen *s: this->screens() )
+            {
+                lastCheckedScreens.insert(s->name(), s->devicePixelRatio());
+            }
+
+            // in case the screens have changed, eg. laptop with 2 monitors attached (200%, main:100%, 150%), lock screen, unplug monitors, wait 30s, plug monitors, unlock screen:  infoDialog may be double size and only showing 1/4 or 1/2
+            auto oldDialog = infoDialog;
+            infoDialog = new InfoDialog(this, NULL, oldDialog);
+            delete oldDialog;
+            connect(infoDialog, SIGNAL(dismissOQ(bool)), this, SLOT(onDismissOQ(bool)));
+            connect(infoDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
+            infoDialog->setAvatar();
+
+            // recreate the cog menu (with correct scaling after monitor changes)
+            trayMenu.reset();
+            createTrayMenu();
+        }
     }
 #endif
 
