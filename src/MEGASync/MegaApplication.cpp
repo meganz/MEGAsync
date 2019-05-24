@@ -2857,8 +2857,13 @@ void MegaApplication::showInfoDialog()
             connect(infoDialog, SIGNAL(dismissOQ(bool)), this, SLOT(onDismissOQ(bool)));
             connect(infoDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
             infoDialog->setAvatar();
-            infoDialog->setUsage();
-            infoDialog->setAccountType(preferences->accountType());
+
+            if (preferences->logged())
+            {
+                infoDialog->setUsage();
+                infoDialog->setAccountType(preferences->accountType());
+            }
+
             infoDialog->setOverQuotaMode(infoOverQuota);
 
             onGlobalSyncStateChanged(megaApi);
