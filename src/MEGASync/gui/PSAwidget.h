@@ -7,6 +7,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
+#include "Utilities.h"
 
 namespace Ui {
 class PSAwidget;
@@ -22,7 +23,9 @@ public:
 
     void setAnnounce(int id, QString title, QString desc, QString urlImage, QString textButton, QString urlClick);
     bool isPSAready();
+    bool isPSAshown();
     void showPSA();
+    PSA_info getPSAdata();
     void hidePSA(bool animated = false);
     void removeAnnounce();
 
@@ -44,12 +47,7 @@ protected slots:
 private:
     Ui::PSAwidget *ui;
 
-    int idPSA;
-    QString title;
-    QString desc;
-    QString urlImage;
-    QString textButton;
-    QString urlClick;
+    PSA_info info;
     bool ready;
     bool shown;
 

@@ -184,6 +184,17 @@ InfoDialog::~InfoDialog()
     delete animation;
 }
 
+PSA_info *InfoDialog::getPSAdata()
+{
+    if (ui->wPSA->isPSAshown())
+    {
+        PSA_info* info = new PSA_info(ui->wPSA->getPSAdata());
+        return info;
+    }
+
+    return nullptr;
+}
+
 void InfoDialog::hideEvent(QHideEvent *event)
 {
 #ifdef __APPLE__

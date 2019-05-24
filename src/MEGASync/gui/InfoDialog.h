@@ -14,6 +14,7 @@
 #include "QCustomTransfersModel.h"
 #include <QGraphicsOpacityEffect>
 #include "HighDpiResize.h"
+#include "Utilities.h"
 #ifdef _WIN32
 #include <chrono>
 #endif
@@ -39,6 +40,7 @@ public:
     explicit InfoDialog(MegaApplication *app, QWidget *parent = 0, InfoDialog* olddialog = nullptr);
     ~InfoDialog();
 
+    PSA_info* getPSAdata();
     void setUsage();
     void setAvatar();
     void setTransfer(mega::MegaTransfer *transfer);
