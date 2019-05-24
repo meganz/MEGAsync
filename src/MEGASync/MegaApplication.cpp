@@ -2856,10 +2856,10 @@ void MegaApplication::showInfoDialog()
             delete oldDialog;
             connect(infoDialog, SIGNAL(dismissOQ(bool)), this, SLOT(onDismissOQ(bool)));
             connect(infoDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
-            infoDialog->setAvatar();
 
             if (preferences->logged())
             {
+                infoDialog->setAvatar();
                 infoDialog->setUsage();
                 infoDialog->setAccountType(preferences->accountType());
             }
