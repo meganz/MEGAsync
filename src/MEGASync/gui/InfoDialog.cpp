@@ -173,7 +173,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 #ifdef _WIN32
     lastWindowHideTime = std::chrono::steady_clock::now() - 5s;
 
-    PSA_info *psaData = oldDialog ? oldDialog->getPSAdata() : nullptr;
+    PSA_info *psaData = olddialog ? olddialog->getPSAdata() : nullptr;
     if (psaData)
     {
         this->setPSAannouncement(psaData->idPSA, psaData->title, psaData->desc,
