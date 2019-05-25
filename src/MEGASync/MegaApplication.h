@@ -278,6 +278,8 @@ protected:
     std::unique_ptr<QMenu> trayGuestMenu;
     QMenu emptyMenu;
     std::unique_ptr<QMenu> syncsMenu;
+    QSignalMapper *menuSignalMapper;
+
     MenuItemAction *exitAction;
     MenuItemAction *settingsAction;
     MenuItemAction *importLinksAction;

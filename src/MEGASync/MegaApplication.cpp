@@ -756,6 +756,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     trayMenu = NULL;
     trayGuestMenu = NULL;
     syncsMenu = NULL;
+    menuSignalMapper = NULL;
     megaApi = NULL;
     megaApiFolders = NULL;
     delegateListener = NULL;
@@ -6134,11 +6135,15 @@ void MegaApplication::createTrayMenu()
     else
     {
         addSyncAction = new MenuItemAction(tr("Syncs"), QIcon(QString::fromAscii("://images/ico_syncs_out.png")), QIcon(QString::fromAscii("://images/ico_syncs_over.png")), true);
-
         if (syncsMenu)
         {
+            for (QAction *a: syncsMenu->actions())
+            {
+                a->deleteLater();
+            }
+
             syncsMenu->deleteLater();
-            syncsMenu = NULL;
+            syncsMenu.release();
         }
 
         syncsMenu.reset(new QMenu());
@@ -6149,8 +6154,15 @@ void MegaApplication::createTrayMenu()
         syncsMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #endif
 
-        QSignalMapper *menuSignalMapper = new QSignalMapper();
-        connect(menuSignalMapper, SIGNAL(mapped(QString)), infoDialog, SLOT(openFolder(QString)));
+
+        if (menuSignalMapper)
+        {
+            menuSignalMapper->deleteLater();
+            menuSignalMapper = NULL;
+        }
+
+        menuSignalMapper = new QSignalMapper();
+        connect(menuSignalMapper, SIGNAL(mapped(QString)), infoDialog, SLOT(openFolder(QString)), Qt::QueuedConnection);
 
         int activeFolders = 0;
         for (int i = 0; i < num; i++)
@@ -6163,7 +6175,7 @@ void MegaApplication::createTrayMenu()
             activeFolders++;
             MenuItemAction *action = new MenuItemAction(preferences->getSyncName(i), QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")),
                                                         QIcon(QString::fromAscii("://images/ico_drop_synched_folder_over.png")), true);
-            connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()));
+            connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()), Qt::QueuedConnection);
 
             syncsMenu->addAction(action);
             menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
@@ -6190,7 +6202,7 @@ void MegaApplication::createTrayMenu()
                 {
                     MenuItemAction *addAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_add_sync.png")),
                                                                        QIcon(QString::fromAscii("://images/ico_drop_add_sync_over.png")), true);
-                    connect(addAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()));
+                    connect(addAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()), Qt::QueuedConnection);
 
                     if (activeFolders)
                     {
