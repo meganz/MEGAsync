@@ -172,6 +172,14 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
 #ifdef _WIN32
     lastWindowHideTime = std::chrono::steady_clock::now() - 5s;
+
+    PSA_info *psaData = olddialog ? olddialog->getPSAdata() : nullptr;
+    if (psaData)
+    {
+        this->setPSAannouncement(psaData->idPSA, psaData->title, psaData->desc,
+                                 psaData->urlImage, psaData->textButton, psaData->urlClick);
+        delete psaData;
+    }
 #endif
 }
 
@@ -182,6 +190,17 @@ InfoDialog::~InfoDialog()
     delete activeDownload;
     delete activeUpload;
     delete animation;
+}
+
+PSA_info *InfoDialog::getPSAdata()
+{
+    if (ui->wPSA->isPSAshown())
+    {
+        PSA_info* info = new PSA_info(ui->wPSA->getPSAdata());
+        return info;
+    }
+
+    return nullptr;
 }
 
 void InfoDialog::hideEvent(QHideEvent *event)
