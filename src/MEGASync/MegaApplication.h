@@ -209,6 +209,7 @@ public slots:
     void onConnectivityCheckError();
     void userAction(int action);
     void changeState();
+    void changeDisplay(QScreen *disp);
     void showUpdatedMessage(int lastVersion);
     void handleMEGAurl(const QUrl &url);
     void handleLocalPath(const QUrl &url);
