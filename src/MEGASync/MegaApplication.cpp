@@ -2824,63 +2824,9 @@ void MegaApplication::showInfoDialog()
 
     if (infoDialog)
     {
-#ifdef MEGA_WINDOWS_HIDPI_EXPERIMENTAL_OPTIMIZATION
-        bool screenschanged = false;
-
-        auto screens = this->screens();
-        if (screens.size() != lastCheckedScreens.size())
-        {
-            screenschanged = true;
-        }
-        else
-        {
-            for (auto s : screens)
-            {
-                if (lastCheckedScreens.find(s->name()) == lastCheckedScreens.end()
-                        || lastCheckedScreens[s->name()] != s->devicePixelRatio())
-                {
-                    screenschanged = true;
-                    break;
-                }
-            }
-        }
-#else
-        bool screenschanged = true;
-#endif
-
-	infoDialog->setWindowFlags(Qt::FramelessWindowHint);
-	infoDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
-
-        if (false && screenschanged) //TODO: remove all code asociated with reconstruction
-        {
-            lastCheckedScreens.clear();
-            for (QScreen *s: this->screens() )
-            {
-                lastCheckedScreens.insert(s->name(), s->devicePixelRatio());
-            }
-
-            // in case the screens have changed, eg. laptop with 2 monitors attached (200%, main:100%, 150%), lock screen, unplug monitors, wait 30s, plug monitors, unlock screen:  infoDialog may be double size and only showing 1/4 or 1/2
-            auto oldDialog = infoDialog;
-            infoDialog = new InfoDialog(this, NULL, oldDialog);
-            delete oldDialog;
-            connect(infoDialog, SIGNAL(dismissOQ(bool)), this, SLOT(onDismissOQ(bool)));
-            connect(infoDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
-
-            if (preferences->logged())
-            {
-                infoDialog->setAvatar();
-                infoDialog->setUsage();
-                infoDialog->setAccountType(preferences->accountType());
-            }
-
-            infoDialog->setOverQuotaMode(infoOverQuota);
-
-            onGlobalSyncStateChanged(megaApi);
-
-            // recreate the cog menu (with correct scaling after monitor changes)
-            trayMenu.reset();
-            createTrayMenu();
-        }
+        // in case the screens have changed, eg. laptop with 2 monitors attached (200%, main:100%, 150%), lock screen, unplug monitors, wait 30s, plug monitors, unlock screen:  infoDialog may be double size and only showing 1/4 or 1/2
+        infoDialog->setWindowFlags(Qt::FramelessWindowHint);
+        infoDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
     }
 #endif
 
