@@ -209,7 +209,9 @@ public slots:
     void onConnectivityCheckError();
     void userAction(int action);
     void changeState();
+#ifdef _WIN32
     void changeDisplay(QScreen *disp);
+#endif
     void showUpdatedMessage(int lastVersion);
     void handleMEGAurl(const QUrl &url);
     void handleLocalPath(const QUrl &url);
