@@ -693,6 +693,11 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
     MegaApi::addLoggerObject(logger);
 
+#ifdef _WIN32
+    connect(this, SIGNAL(screenAdded(QScreen *)), this, SLOT(changeDisplay(QScreen *)));
+    connect(this, SIGNAL(screenRemoved(QScreen *)), this, SLOT(changeDisplay(QScreen *)));
+#endif
+
     //Set QApplication fields
     setOrganizationName(QString::fromAscii("Mega Limited"));
     setOrganizationDomain(QString::fromAscii("mega.co.nz"));
@@ -2819,60 +2824,9 @@ void MegaApplication::showInfoDialog()
 
     if (infoDialog)
     {
-#ifdef MEGA_WINDOWS_HIDPI_EXPERIMENTAL_OPTIMIZATION
-        bool screenschanged = false;
-
-        auto screens = this->screens();
-        if (screens.size() != lastCheckedScreens.size())
-        {
-            screenschanged = true;
-        }
-        else
-        {
-            for (auto s : screens)
-            {
-                if (lastCheckedScreens.find(s->name()) == lastCheckedScreens.end()
-                        || lastCheckedScreens[s->name()] != s->devicePixelRatio())
-                {
-                    screenschanged = true;
-                    break;
-                }
-            }
-        }
-#else
-        bool screenschanged = true;
-#endif
-
-        if (screenschanged)
-        {
-            lastCheckedScreens.clear();
-            for (QScreen *s: this->screens() )
-            {
-                lastCheckedScreens.insert(s->name(), s->devicePixelRatio());
-            }
-
-            // in case the screens have changed, eg. laptop with 2 monitors attached (200%, main:100%, 150%), lock screen, unplug monitors, wait 30s, plug monitors, unlock screen:  infoDialog may be double size and only showing 1/4 or 1/2
-            auto oldDialog = infoDialog;
-            infoDialog = new InfoDialog(this, NULL, oldDialog);
-            delete oldDialog;
-            connect(infoDialog, SIGNAL(dismissOQ(bool)), this, SLOT(onDismissOQ(bool)));
-            connect(infoDialog, SIGNAL(userActivity()), this, SLOT(registerUserActivity()));
-
-            if (preferences->logged())
-            {
-                infoDialog->setAvatar();
-                infoDialog->setUsage();
-                infoDialog->setAccountType(preferences->accountType());
-            }
-
-            infoDialog->setOverQuotaMode(infoOverQuota);
-
-            onGlobalSyncStateChanged(megaApi);
-
-            // recreate the cog menu (with correct scaling after monitor changes)
-            trayMenu.reset();
-            createTrayMenu();
-        }
+        // in case the screens have changed, eg. laptop with 2 monitors attached (200%, main:100%, 150%), lock screen, unplug monitors, wait 30s, plug monitors, unlock screen:  infoDialog may be double size and only showing 1/4 or 1/2
+        infoDialog->setWindowFlags(Qt::FramelessWindowHint);
+        infoDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
     }
 #endif
 
@@ -4311,7 +4265,11 @@ void MegaApplication::showTrayMenu(QPoint *point)
     {
         return;
     }
-
+#ifdef _WIN32
+    // recreate menus to fix some qt scaling issues in windows
+    createTrayMenu();
+    createGuestMenu();
+#endif
     if (trayGuestMenu && !preferences->logged())
     {
         if (trayGuestMenu->isVisible())
@@ -4776,6 +4734,25 @@ void MegaApplication::changeState()
     }
 }
 
+#ifdef _WIN32
+void MegaApplication::changeDisplay(QScreen *disp)
+{
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromAscii("DISPLAY CHANGED").toUtf8().constData());
+
+    if (infoDialog)
+    {
+        infoDialog->setWindowFlags(Qt::FramelessWindowHint);
+        infoDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    }
+    if (transferManager && transferManager->isVisible())
+    {
+        //hack to force qt to reconsider zoom/sizes/etc ...
+        //this closes the window
+        transferManager->setWindowFlags(Qt::Window);
+        transferManager->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+    }
+}
+#endif
 void MegaApplication::createTrayIcon()
 {
     if (appfinished)
@@ -5918,11 +5895,7 @@ void MegaApplication::createTrayMenu()
 
     lastHovered = NULL;
 
-    if (!initialMenu)
-    {
-        initialMenu.reset(new QMenu());
-    }
-    else
+    if (initialMenu)
     {
         QList<QAction *> actions = initialMenu->actions();
         for (int i = 0; i < actions.size(); i++)
@@ -5930,6 +5903,13 @@ void MegaApplication::createTrayMenu()
             initialMenu->removeAction(actions[i]);
         }
     }
+#ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
+    else
+#endif
+    {
+        initialMenu.reset(new QMenu());
+    }
+
 
     if (changeProxyAction)
     {
@@ -6071,7 +6051,17 @@ void MegaApplication::createTrayMenu()
     windowsMenu->addAction(windowsExitAction);
 #endif
 
-    if (!trayMenu)
+    if (trayMenu)
+    {
+        QList<QAction *> actions = trayMenu->actions();
+        for (int i = 0; i < actions.size(); i++)
+        {
+            trayMenu->removeAction(actions[i]);
+        }
+    }
+#ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
+    else
+#endif
     {
         trayMenu.reset(new QMenu());
 #ifdef __APPLE__
@@ -6085,14 +6075,6 @@ void MegaApplication::createTrayMenu()
 
         //Hide highlighted menu entry when mouse over
         trayMenu->installEventFilter(this);
-    }
-    else
-    {
-        QList<QAction *> actions = trayMenu->actions();
-        for (int i = 0; i < actions.size(); i++)
-        {
-            trayMenu->removeAction(actions[i]);
-        }
     }
 
     if (exitAction)
@@ -6299,7 +6281,17 @@ void MegaApplication::createGuestMenu()
         return;
     }
 
-    if (!trayGuestMenu)
+    if (trayGuestMenu)
+    {
+        QList<QAction *> actions = trayGuestMenu->actions();
+        for (int i = 0; i < actions.size(); i++)
+        {
+            trayGuestMenu->removeAction(actions[i]);
+        }
+    }
+#ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
+    else
+#endif
     {
         trayGuestMenu.reset(new QMenu());
 
@@ -6308,14 +6300,6 @@ void MegaApplication::createGuestMenu()
 #else
         trayGuestMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
 #endif
-    }
-    else
-    {
-        QList<QAction *> actions = trayGuestMenu->actions();
-        for (int i = 0; i < actions.size(); i++)
-        {
-            trayGuestMenu->removeAction(actions[i]);
-        }
     }
 
     if (exitActionGuest)
