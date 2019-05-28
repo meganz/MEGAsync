@@ -361,6 +361,7 @@ void MegaTransferView::mouseReleaseEvent(QMouseEvent *event)
     {
         emit showContextMenu(QPoint(event->x(), event->y()));
     }
+    QTreeView::mouseReleaseEvent(event);
 }
 
 void MegaTransferView::leaveEvent(QEvent *event)
