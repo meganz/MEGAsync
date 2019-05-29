@@ -1761,7 +1761,11 @@ int SettingsDialog::saveSettings()
         if (result == QMessageBox::Yes)
         {
             // Restart MEGAsync
+#ifdef Q_OS_MACX
             ((MegaApplication*)qApp)->rebootApplication(false);
+#else
+            QTimer::singleShot(0, [] () {((MegaApplication*)qApp)->rebootApplication(false); }); //we enqueue this call, so as not to close before properly handling the exit of Settings Dialog
+#endif
             return 2;
         }
 
