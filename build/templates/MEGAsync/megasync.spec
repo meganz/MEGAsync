@@ -220,7 +220,7 @@ echo "fs.inotify.max_user_watches = 524288" > %{buildroot}/etc/sysctl.d/100-mega
 %endif
 
 %if 0%{?rhel_version} == 800
-# RHEL 7
+# RHEL 8
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
 [MEGAsync]
