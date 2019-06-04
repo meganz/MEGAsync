@@ -1,4 +1,4 @@
-#version=4101
+#version=4110
 #baseurl=http://g.static.mega.co.nz/upd/wsync/
 #Hash: note this is the hash of the public key assuming an "\n" at the end
 #pubkeysha256sum=381fac98f5c3329ef5c0d9b6768d9f8d0bbc77bfa38256ac6f3da7452e0dc241
