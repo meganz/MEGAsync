@@ -72,6 +72,10 @@ unix:!macx {
         exists(/usr/include/ffmpeg-mega)|exists(mega/bindings/qt/3rdparty/include/ffmpeg)|packagesExist(ffmpeg)|packagesExist(libavcodec) {
             CONFIG += USE_FFMPEG
         }
+        GCC_VERSION = $$system("g++ -dumpversion")
+        lessThan(GCC_VERSION, 5) {
+            LIBS -= -lstdc++fs
+        }
 }
 else {
     CONFIG += USE_FFMPEG
