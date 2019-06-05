@@ -72,10 +72,6 @@ unix:!macx {
         exists(/usr/include/ffmpeg-mega)|exists(mega/bindings/qt/3rdparty/include/ffmpeg)|packagesExist(ffmpeg)|packagesExist(libavcodec) {
             CONFIG += USE_FFMPEG
         }
-        GCC_VERSION = $$system("g++ -dumpversion")
-        lessThan(GCC_VERSION, 5) {
-            LIBS -= -lstdc++fs
-        }
 }
 else {
     CONFIG += USE_FFMPEG
@@ -87,6 +83,13 @@ include(control/control.pri)
 include(platform/platform.pri)
 include(google_breakpad/google_breakpad.pri)
 include(qtlockedfile/qtlockedfile.pri)
+
+unix:!macx {
+    GCC_VERSION = $$system("g++ -dumpversion")
+    lessThan(GCC_VERSION, 5) {
+        LIBS -= -lstdc++fs
+    }
+}
 
 DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD
