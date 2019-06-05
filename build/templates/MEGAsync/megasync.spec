@@ -17,6 +17,10 @@ BuildRequires: ffmpeg-mega
 BuildRequires: pdfium-mega
 %endif
 
+%if 0%{?fedora_version} && 0%{?fedora_version}==25
+BuildRequires: lz4-libs
+%endif
+
 %if 0%{?sle_version} >= 150000
 BuildRequires: libcurl4
 %endif

@@ -1761,7 +1761,7 @@ int SettingsDialog::saveSettings()
         if (result == QMessageBox::Yes)
         {
             // Restart MEGAsync
-#ifdef Q_OS_MACX
+#if defined(Q_OS_MACX) || QT_VERSION < 0x050000
             ((MegaApplication*)qApp)->rebootApplication(false);
 #else
             QTimer::singleShot(0, [] () {((MegaApplication*)qApp)->rebootApplication(false); }); //we enqueue this call, so as not to close before properly handling the exit of Settings Dialog
@@ -2087,6 +2087,7 @@ void SettingsDialog::on_bDownloadFolder_clicked()
         if (!test.open())
         {
             QMessageBox::critical(NULL, tr("Error"), tr("You don't have write permissions in this local folder."));
+            delete dialog;
             return;
         }
 
