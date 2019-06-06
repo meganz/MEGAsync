@@ -109,7 +109,7 @@ if [ "$createdmg" = "1" ]; then
 	echo "DMG CREATION PROCESS..."
 	echo "Creating temporary Disk Image (1/7)"
 	#Create a temporary Disk Image
-	/usr/bin/hdiutil create -srcfolder $APP_NAME.app/ -volname $APP_NAME -ov $APP_NAME-tmp.dmg -format UDRW >/dev/null
+	/usr/bin/hdiutil create -srcfolder $APP_NAME.app/ -volname $APP_NAME -ov $APP_NAME-tmp.dmg -fs HFS+ -format UDRW >/dev/null
 
 	echo "Attaching the temporary image (2/7)"
 	#Attach the temporary image
