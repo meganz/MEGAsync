@@ -75,6 +75,9 @@ then
 	exit 1
 fi
 
+buildNumber=`cat build/version`
+/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildNumber" "MEGASync/MEGAsync.app/Contents/Info.plist"
+
 install_name_tool -change @loader_path/$AVCODEC_VERSION @executable_path/../Frameworks/$AVCODEC_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
 install_name_tool -change @loader_path/$AVFORMAT_VERSION @executable_path/../Frameworks/$AVFORMAT_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
 install_name_tool -change @loader_path/$AVUTIL_VERSION @executable_path/../Frameworks/$AVUTIL_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
