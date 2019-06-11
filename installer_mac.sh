@@ -1,10 +1,11 @@
-#!/bin/sh -e
+#!/bin/bash -e
 
 Usage () {
-    echo "Usage: installer_mac.sh [[--sign] | [--create-dmg]]"
+    echo "Usage: installer_mac.sh [[--sign] | [--create-dmg] | [--notarize]]"
 }
 
 APP_NAME=MEGAsync
+ID_BUNDLE=mega.mac
 MOUNTDIR=tmp
 RESOURCES=installer/resourcesDMG
 QTBASE=/QT/qt5/qtbase
@@ -24,12 +25,15 @@ SWSCALE_PATH=src/MEGASync/mega/bindings/qt/3rdparty/libs/$SWSCALE_VERSION
 
 sign=0
 createdmg=0
+notarize=0
 
 while [ "$1" != "" ]; do
     case $1 in
         --sign )		sign=1
                                 ;;
         --create-dmg )		createdmg=1
+                                ;;
+        --notarize )		notarize=1
                                 ;;
         -h | --help )           Usage
                                 exit
@@ -137,6 +141,65 @@ if [ "$createdmg" = "1" ]; then
 	#Delete the temporary image
 	rm $APP_NAME-tmp.dmg
 	rmdir $MOUNTDIR
+fi
+
+if [ "$notarize" = "1" ]; then
+
+	rm querystatus.txt staple.txt || :
+
+	echo "NOTARIZATION PROCESS..."
+	echo "Getting USERNAME for notarization commands (1/7)"
+
+	AC_USERNAME=$(security find-generic-password -s AC_PASSWORD | grep  acct | cut -d '"' -f 4)
+	if [[ -z "$AC_USERNAME" ]]; then
+		echo "Error USERNAME not found for notarization process. You should add item named AC_PASSWORD with and account value matching the username to macOS keychain"
+		false
+	fi
+
+	echo "Sending dmg for notarization (2/7)"
+	xcrun altool --notarize-app -t osx -f $APP_NAME.dmg --primary-bundle-id $ID_BUNDLE -u $AC_USERNAME -p "@keychain:AC_PASSWORD" --output-format xml 2>&1 > staple.txt
+	RUUID=$(cat staple.txt | grep RequestUUID -A 1 | tail -n 1 | awk -F "[<>]" '{print $3}')
+	echo $RUUID
+	if [ ! -z "$RUUID" ] ; then
+		echo "Received UUID for notarization request. Checking state... (3/7)"
+		attempts=60
+		while [ $attempts -gt 0 ]
+		do
+			echo "Querying state of notarization..."
+			xcrun altool --notarization-info $RUUID -u $AC_USERNAME -p "@keychain:AC_PASSWORD" --output-format xml  2>&1 > querystatus.txt
+			RUUIDQUERY=$(cat querystatus.txt | grep RequestUUID -A 1 | tail -n 1 | awk -F "[<>]" '{print $3}')
+			if [[ "$RUUID" != "$RUUIDQUERY" ]]; then
+				echo "UUIDs missmatch"
+				false
+			fi
+
+			STATUS=$(cat querystatus.txt  | grep -i ">Status<" -A 1 | tail -n 1  | awk -F "[<>]" '{print $3}')
+
+			if [[ $STATUS == "invalid" ]]; then
+				echo "INVALID status. Check file querystatus.txt for further information"
+				cat querystatus.txt  | grep -i ">Status Message<" -A 1 | tail -n 1  | awk -F "[<>]" '{print $3}'
+				break
+			elif [[ $STATUS == "success" ]]; then
+				echo "Notarized ok. Stapling dmg file..."
+				xcrun stapler staple -v $APP_NAME.dmg
+				echo "Stapling ok"
+
+				#Mount dmg volume to check if app bundle is notarized
+				echo "Checking signature and notarization"
+				mkdir $MOUNTDIR || :
+				hdiutil attach $APP_NAME.dmg -mountroot $MOUNTDIR >/dev/null
+				spctl -v -a $MOUNTDIR/$APP_NAME/$APP_NAME.app
+				hdiutil detach $MOUNTDIR/$APP_NAME >/dev/null
+				rmdir $MOUNTDIR
+				break
+			else
+				echo $STATUS
+			fi
+
+			attempts=$((attempts - 1))
+			sleep 30
+		done
+    	fi
 fi
 
 echo "Cleaning"
