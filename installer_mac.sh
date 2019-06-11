@@ -79,6 +79,9 @@ then
 	exit 1
 fi
 
+MEGASYNC_VERSION=`grep "const QString Preferences::VERSION_STRING" ../src/MEGASync/control/Preferences.cpp | awk -F '"' '{print $2}'`
+/usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $MEGASYNC_VERSION" "$APP_NAME/$APP_NAME.app/Contents/Info.plist"
+ 
 install_name_tool -change @loader_path/$AVCODEC_VERSION @executable_path/../Frameworks/$AVCODEC_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
 install_name_tool -change @loader_path/$AVFORMAT_VERSION @executable_path/../Frameworks/$AVFORMAT_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
 install_name_tool -change @loader_path/$AVUTIL_VERSION @executable_path/../Frameworks/$AVUTIL_VERSION MEGASync/MEGAsync.app/Contents/MacOS/MEGAclient
