@@ -11,12 +11,12 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.1.0.0";
-const int Preferences::VERSION_CODE = 4100;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.1.1.0";
+const int Preferences::VERSION_CODE = 4110;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.1.0");
-QString Preferences::SDK_ID = QString::fromAscii("f0186e0");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.1.1");
+QString Preferences::SDK_ID = QString::fromAscii("30853f9");
 #ifdef _WIN32
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
     "- Improved look&feel for high resolution displays on Windows and Linux\n"
@@ -39,6 +39,9 @@ const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStri
 
 int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
 int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
+
+int Preferences::MAX_FIRST_SYNC_DELAY_S = 120; // Max delay time to wait for local paths before trying to restore syncs
+int Preferences::MIN_FIRST_SYNC_DELAY_S = 40; // Min delay time to wait for local paths before trying to restore syncs
 
 long long Preferences::OQ_DIALOG_INTERVAL_MS = 604800000; // 7 days
 long long Preferences::OQ_NOTIFICATION_INTERVAL_MS = 129600000; // 36 hours
@@ -3104,6 +3107,9 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("MIN_REBOOT_INTERVAL_MS"), Preferences::MIN_REBOOT_INTERVAL_MS);
     overridePreference(settings, QString::fromUtf8("MIN_EXTERNAL_NODES_WARNING_MS"), Preferences::MIN_EXTERNAL_NODES_WARNING_MS);
     overridePreference(settings, QString::fromUtf8("MIN_TRANSFER_NOTIFICATION_INTERVAL_MS"), Preferences::MIN_TRANSFER_NOTIFICATION_INTERVAL_MS);
+
+    overridePreference(settings, QString::fromUtf8("MAX_FIRST_SYNC_DELAY_S"), Preferences::MAX_FIRST_SYNC_DELAY_S);
+    overridePreference(settings, QString::fromUtf8("MIN_FIRST_SYNC_DELAY_S"), Preferences::MIN_FIRST_SYNC_DELAY_S);
 
     overridePreference(settings, QString::fromUtf8("UPDATE_INITIAL_DELAY_SECS"), Preferences::UPDATE_INITIAL_DELAY_SECS);
     overridePreference(settings, QString::fromUtf8("UPDATE_RETRY_INTERVAL_SECS"), Preferences::UPDATE_RETRY_INTERVAL_SECS);

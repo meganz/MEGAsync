@@ -2028,6 +2028,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
         <translation type="unfinished">フォルダ表示</translation>
     </message>
+    <message>
+        <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
+        <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
+        <translation type="unfinished">MEGAはSSL経由では安全に接続できません。あなたは追加要件があるパブリックWiFi上にいるかもしれません。</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2621,7 +2626,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
-        <translation type="unfinished">－転送マネージャ項目の選択に関するバグを修正
+        <translation type="obsolete">－転送マネージャ項目の選択に関するバグを修正
 －転送マネージャ項目に対して表示されていないコンテキストメニューのバグを修正
 －メインダイアログ用の新しいデザイン
 －セットアップアシスタントの改善
@@ -2629,6 +2634,34 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 －最新の通知
 －更新されたサードパーティライブラリ
 －その他のマイナーバグの修正および改善</translation>
+    </message>
+    <message>
+        <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
+- Improved GUI performance during addition of many downloads
+- Restyling of initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
+        <translation type="unfinished">－WindowsとLinuxでの高解像度ディスプレイのルックアンドフィールの改善
+－多数のダウンロードの追加中のGUIパフォーマンスの改善
+－初期情報ウィザードの再設計、新しいアイコンとインターフェイスの改善
+－ビジネスアカウントのサポート
+－その他のマイナーなバグ修正と改善</translation>
+    </message>
+    <message>
+        <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
+- Enable thumbnail support for PDF
+- Improved GUI performance during addition of many downloads
+- Restyling of initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
+        <translation type="unfinished">－WindowsとLinuxでの高解像度ディスプレイのルックアンドフィールの改善
+－PDF文書のサムネイルサポートの有効化
+－多数のダウンロードの追加中のGUIパフォーマンスの改善
+－初期情報ウィザードの再設計、新しいアイコンとインターフェイスの改善
+－ビジネスアカウントのサポート
+－その他のマイナーなバグ修正と改善</translation>
     </message>
 </context>
 <context>

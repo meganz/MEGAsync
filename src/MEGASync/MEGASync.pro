@@ -84,6 +84,13 @@ include(platform/platform.pri)
 include(google_breakpad/google_breakpad.pri)
 include(qtlockedfile/qtlockedfile.pri)
 
+unix:!macx {
+    GCC_VERSION = $$system("g++ -dumpversion")
+    lessThan(GCC_VERSION, 5) {
+        LIBS -= -lstdc++fs
+    }
+}
+
 DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD
 

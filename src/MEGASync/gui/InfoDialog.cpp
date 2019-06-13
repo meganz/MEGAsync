@@ -16,13 +16,18 @@
 #include "MenuItemAction.h"
 #include "platform/Platform.h"
 
+#ifdef _WIN32    
+#include <chrono>
+using namespace std::chrono;
+#endif
+
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
 #endif
 
 using namespace mega;
 
-InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
+InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
     QDialog(parent),
     ui(new Ui::InfoDialog)
 {
@@ -119,7 +124,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->bDotUsedStorage->hide();
     ui->sUsedData->setCurrentWidget(ui->pStorage);
 
-    ui->wListTransfers->setupTransfers();
+
+    ui->wListTransfers->setupTransfers(olddialog?olddialog->stealModel():nullptr);
+
 
 
 #ifdef __APPLE__
@@ -159,9 +166,21 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     }
     else
     {
-        regenerateLayout();
+        regenerateLayout(olddialog);
     }
     highDpiResize.init(this);
+
+#ifdef _WIN32
+    lastWindowHideTime = std::chrono::steady_clock::now() - 5s;
+
+    PSA_info *psaData = olddialog ? olddialog->getPSAdata() : nullptr;
+    if (psaData)
+    {
+        this->setPSAannouncement(psaData->idPSA, psaData->title, psaData->desc,
+                                 psaData->urlImage, psaData->textButton, psaData->urlClick);
+        delete psaData;
+    }
+#endif
 }
 
 InfoDialog::~InfoDialog()
@@ -171,6 +190,30 @@ InfoDialog::~InfoDialog()
     delete activeDownload;
     delete activeUpload;
     delete animation;
+}
+
+PSA_info *InfoDialog::getPSAdata()
+{
+    if (ui->wPSA->isPSAshown())
+    {
+        PSA_info* info = new PSA_info(ui->wPSA->getPSAdata());
+        return info;
+    }
+
+    return nullptr;
+}
+
+void InfoDialog::hideEvent(QHideEvent *event)
+{
+#ifdef __APPLE__
+    arrow->hide();
+#endif
+
+    QDialog::hideEvent(event);
+
+#ifdef _WIN32
+    lastWindowHideTime = std::chrono::steady_clock::now();
+#endif
 }
 
 void InfoDialog::setAvatar()
@@ -305,7 +348,10 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
 
 void InfoDialog::refreshTransferItems()
 {
-    ui->wListTransfers->getModel()->refreshTransfers();
+    if (ui->wListTransfers->getModel())
+    {
+        ui->wListTransfers->getModel()->refreshTransfers();
+    }
 }
 
 void InfoDialog::transferFinished(int error)
@@ -628,7 +674,7 @@ void InfoDialog::updateDialogState()
             remainingUploads = megaApi->getNumPendingUploads();
             remainingDownloads = megaApi->getNumPendingDownloads();
 
-            if (remainingUploads || remainingDownloads || ui->wListTransfers->getModel()->rowCount(QModelIndex()) || ui->wPSA->isPSAready())
+            if (remainingUploads || remainingDownloads || (ui->wListTransfers->getModel() && ui->wListTransfers->getModel()->rowCount(QModelIndex())) || ui->wPSA->isPSAready())
             {
                 overlay->setVisible(false);
                 ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
@@ -803,6 +849,13 @@ bool InfoDialog::updateOverStorageState(int state)
     return false;
 }
 
+QCustomTransfersModel *InfoDialog::stealModel()
+{
+    QCustomTransfersModel *toret = ui->wListTransfers->getModel();
+    ui->wListTransfers->setupTransfers(); // this will create a new empty model
+    return toret;
+}
+
 void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton)
 {
     ui->wPSA->setAnnounce(id, title, text, urlImage, textButton, linkButton);
@@ -893,9 +946,8 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
     return QDialog::eventFilter(obj, e);
 }
 
-void InfoDialog::regenerateLayout()
+void InfoDialog::regenerateLayout(InfoDialog* olddialog)
 {
-    static bool loggedInMode = true;
     bool logged = preferences->logged();
 
     if (loggedInMode == logged)
@@ -911,6 +963,11 @@ void InfoDialog::regenerateLayout()
         {
             gWidget = new GuestWidget();
             connect(gWidget, SIGNAL(forwardAction(int)), this, SLOT(onUserAction(int)));
+            if (olddialog)
+            {
+                auto t = olddialog->gWidget->getTexts();
+                gWidget->setTexts(t.first, t.second);
+            }
         }
         else
         {
@@ -1209,11 +1266,5 @@ void InfoDialog::paintEvent( QPaintEvent * e)
     QPainter p( this );
     p.setCompositionMode( QPainter::CompositionMode_Clear);
     p.fillRect( ui->wArrow->rect(), Qt::transparent );
-}
-
-void InfoDialog::hideEvent(QHideEvent *event)
-{
-    arrow->hide();
-    QDialog::hideEvent(event);
 }
 #endif
