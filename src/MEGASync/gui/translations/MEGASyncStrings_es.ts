@@ -41,7 +41,7 @@
     <message>
         <source>Refresh</source>
         <translatorcomment>Label for Refresh button. Used to retrieve all usage account details from the server.</translatorcomment>
-        <translation type="vanished">Actualizar</translation>
+        <translation type="vanished">Recargar</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2029,6 +2029,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
         <translation type="unfinished">Ver carpeta contenedora</translation>
     </message>
+    <message>
+        <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
+        <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
+        <translation type="unfinished">MEGA no se puede conectar de forma segura a través de SSL. Es posible que estés conectado a una WiFi pública con requisitos adicionales.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2622,7 +2627,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
-        <translation type="unfinished">- Arreglado error durante la selección de celdas en la ventana del gestor de transferencias
+        <translation type="obsolete">- Arreglado error durante la selección de celdas en la ventana del gestor de transferencias
 - Arreglado error al mostrar el menú contextual sobre las celdas en la ventana del gestor de transferencias
 - Nuevo diseño para la ventana principal
 - Mejorado el asistente de configuración inicial
@@ -2630,6 +2635,34 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Notificaciones de sistema mejoradas
 - Actualizadas varias bibliotecas de terceros
 - Arreglados errores menores y añadidas otras pequeñas mejoras</translation>
+    </message>
+    <message>
+        <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
+- Improved GUI performance during addition of many downloads
+- Restyling of initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
+        <translation type="unfinished">- Mejorado el soporte para pantallas de alta resolución en sistemas Windows y Linux
+- Mejorado el rendimiento de la interfaz de usuario al añadir un gran número de descargas
+- Nuevo diseño para el asistente informativo inicial, nuevos iconos y mejoras en la interfaz de usuario
+- Soporte para cuentas business
+- Otras mejoras y correcciones de errores</translation>
+    </message>
+    <message>
+        <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
+- Enable thumbnail support for PDF
+- Improved GUI performance during addition of many downloads
+- Restyling of initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
+        <translation type="unfinished">- Mejorado el soporte para pantallas de alta resolución en sistemas Windows y Linux
+- Soporte para la creación de vistas en miniatura en documentos PDF
+- Mejorado el rendimiento de la interfaz de usuario al añadir un gran número de descargas
+- Nuevo diseño para el asistente informativo inicial, nuevos iconos y mejoras en la interfaz de usuario
+- Soporte para cuentas business
+- Otras mejoras y correcciones de errores</translation>
     </message>
 </context>
 <context>

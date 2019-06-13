@@ -42,6 +42,17 @@ GuestWidget::~GuestWidget()
     delete ui;
 }
 
+void GuestWidget::setTexts(const QString& s1, const QString& s2)
+{
+    ui->lEmail->setText(s1); 
+    ui->lPassword->setText(s2);
+}
+
+std::pair<QString, QString> GuestWidget::getTexts()
+{
+    return std::make_pair(ui->lEmail->text(), ui->lPassword->text());
+}
+
 void GuestWidget::onRequestStart(MegaApi *api, MegaRequest *request)
 {
     if (request->getType() == MegaRequest::TYPE_LOGIN)

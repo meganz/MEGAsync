@@ -201,6 +201,12 @@ void HTTPServer::onTransferDataUpdate(MegaHandle handle, int state, long long pr
     tData->speed = speed;
     if (tData->tPath.isEmpty() && !localPath.isEmpty())
     {
+        #ifdef WIN32
+        if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+        {
+            localPath = localPath.mid(4);
+        }
+        #endif
         tData->tPath = localPath;
     }
 

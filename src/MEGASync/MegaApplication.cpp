@@ -109,10 +109,11 @@ void msgHandler(QtMsgType type, const char *msg)
     }
 #endif
 
-#if defined(Q_OS_LINUX) && QT_VERSION >= 0x050600
+#if ( defined(WIN32) && QT_VERSION >= 0x050000 ) || (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
 namespace {
 
 constexpr auto dpiScreensSuitableIncrement = 1. / 6.; // this seems to work fine with 24x24 images at least
+#ifdef Q_OS_LINUX
 
 double getXrdbdpi( bool enforce = false)
 {
@@ -162,6 +163,7 @@ double computeScale(const QScreen& screen)
 
     return scale;
 }
+#endif
 
 void setScreenScaleFactorsEnvVar(const QMap<QString, double> &screenscales)
 {
@@ -188,10 +190,12 @@ void setScreenScaleFactorsEnvVar(const QMap<QString, double> &screenscales)
     return;
 }
 
-void adjustScreenScaleFactors(QMap<QString, double> &screenscales)
+bool adjustScreenScaleFactors(QMap<QString, double> &screenscales)
 {
     constexpr auto minTitleBarHeight = 20; // give some pixels to the tittle bar
     constexpr auto biggestDialogHeight = minTitleBarHeight + 600; //This is the height of the biggest dialog in megassync (Settings)
+
+    bool adjusted = false;
 
     for (auto ssname : screenscales.keys())
     {
@@ -218,6 +222,10 @@ void adjustScreenScaleFactors(QMap<QString, double> &screenscales)
                             ssvalue = max(1., ssvalue - dpiScreensSuitableIncrement); //Qt don't like scale factors below 1
                             qDebug() << "Screen \"" << ssname << "\" too small for calculated scaling, reducing from " << sprevious << " to " << ssvalue;
                             setScreenScaleFactorsEnvVar(screenscales);
+#if !defined(Q_OS_LINUX)
+                            QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false);
+#endif
+                            adjusted = true;
                         }
                         break;
                     }
@@ -225,6 +233,8 @@ void adjustScreenScaleFactors(QMap<QString, double> &screenscales)
             } while(screenscales[ssname] > 1 && ssvalue != sprevious);
         }
     }
+
+    return adjusted;
 }
 
 void setScaleFactors()
@@ -232,6 +242,9 @@ void setScaleFactors()
     if (getenv("QT_SCALE_FACTOR"))
     {
         qDebug() << "Not setting scale factors. Using predefined QT_SCALE_FACTOR=" << getenv("QT_SCALE_FACTOR");
+#if !defined(Q_OS_LINUX)
+        QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false);
+#endif
         return;
     }
 
@@ -249,6 +262,12 @@ void setScaleFactors()
                 screen_scale_factors_valid = false;
                 break;
             }
+#if !defined(Q_OS_LINUX)
+            else
+            {
+                QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false);
+            }
+#endif
         }
 
         if (screen_scale_factors_valid)
@@ -258,7 +277,6 @@ void setScaleFactors()
         }
     }
 
-
     QMap<QString, double> screenscales;
 
     {
@@ -267,13 +285,23 @@ void setScaleFactors()
         const auto screens = app.screens();
         for (const auto& screen : screens)
         {
+#ifdef Q_OS_LINUX
             const double computed_scale = computeScale(*screen);
+#else
+            // In windows, devicePixelRatio is calculated according to zoom level when AA_EnableHighDpiScaling
+            const double computed_scale = screen->devicePixelRatio();
+#endif
             screenscales.insert(screen->name(), computed_scale);
         }
     }
 
+#ifdef Q_OS_LINUX
     setScreenScaleFactorsEnvVar(screenscales);
-    adjustScreenScaleFactors(screenscales);
+#endif
+    if (adjustScreenScaleFactors(screenscales))
+    {
+        qDebug() << "Some screen is too small to apply automatic DPI scaling, enforced QT_SCREEN_SCALE_FACTORS=" << QString::fromUtf8(getenv("QT_SCREEN_SCALE_FACTORS"));;
+    }
 }
 
 }
@@ -324,6 +352,10 @@ int main(int argc, char *argv[])
         }
     }
 
+
+#endif
+
+#if ( defined(WIN32) && QT_VERSION >= 0x050000 ) || (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
     setScaleFactors();
 #endif
 
@@ -350,22 +382,6 @@ int main(int argc, char *argv[])
     }
 #endif
 
-#if defined(WIN32) && QT_VERSION >= 0x050000
-    {
-        MegaApplication appaux(argc, argv);
-        for (QScreen *s : appaux.screens())
-        {
-            qreal ratio = s->devicePixelRatio();
-            int height = s->availableGeometry().height();
-            if (ratio > 1 && 600 > height) // if height is not enough to hold settings dialog
-            {
-                qDebug() << " Screen too small to apply automatic DPI scaling, enforcing QT_SCALE_FACTOR=" << (ratio -1);
-                qputenv("QT_SCALE_FACTOR", QString::number(ratio-1).toUtf8().constData());
-                QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling, false);
-            }
-        }
-    }
-#endif
 
     MegaApplication app(argc, argv);
 
@@ -632,6 +648,12 @@ int main(int argc, char *argv[])
 MegaApplication::MegaApplication(int &argc, char **argv) :
     QApplication(argc, argv)
 {
+#ifdef _WIN32
+    for (QScreen *s: this->screens() )
+    {
+        lastCheckedScreens.insert(s->name(), s->devicePixelRatio());
+    }
+#endif
     appfinished = false;
     logger = new MegaSyncLogger(this);
 
@@ -671,11 +693,31 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
     MegaApi::addLoggerObject(logger);
 
+#ifdef _WIN32
+    connect(this, SIGNAL(screenAdded(QScreen *)), this, SLOT(changeDisplay(QScreen *)));
+    connect(this, SIGNAL(screenRemoved(QScreen *)), this, SLOT(changeDisplay(QScreen *)));
+#endif
+
     //Set QApplication fields
     setOrganizationName(QString::fromAscii("Mega Limited"));
     setOrganizationDomain(QString::fromAscii("mega.co.nz"));
     setApplicationName(QString::fromAscii("MEGAsync"));
     setApplicationVersion(QString::number(Preferences::VERSION_CODE));
+
+#ifdef _WIN32
+    setStyleSheet(QString::fromUtf8("QMessageBox QLabel {font-size: 13px;}"
+                                    "QMessageBox QPushButton "
+                                    "{font-size: 13px; padding-right: 12px;"
+                                    "padding-left: 12px;}"
+                                    "QMenu {font-size: 13px;}"
+                                    "QToolTip {font-size: 13px;}"
+                                    "QFileDialog QPushButton "
+                                    "{font-size: 13px; padding-right: 12px;"
+                                    "padding-left: 12px;}"
+                                    "QFileDialog QWidget"
+                                    "{font-size: 13px;}"));
+#endif
+
     appPath = QDir::toNativeSeparators(QCoreApplication::applicationFilePath());
     appDirPath = QDir::toNativeSeparators(QCoreApplication::applicationDirPath());
 
@@ -719,6 +761,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     trayMenu = NULL;
     trayGuestMenu = NULL;
     syncsMenu = NULL;
+    menuSignalMapper = NULL;
     megaApi = NULL;
     megaApiFolders = NULL;
     delegateListener = NULL;
@@ -829,10 +872,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     almostOQ = false;
     storageState = MegaApi::STORAGE_STATE_GREEN;
     appliedStorageState = MegaApi::STORAGE_STATE_GREEN;;
-#ifdef _WIN32    
-    lastApplicationDeactivation = chrono::steady_clock::now() - 5s;
-    installEventFilter(this);
-#endif
 
     for (unsigned i = 3; i--; )
     {
@@ -1405,7 +1444,7 @@ void MegaApplication::start()
 
     if (!isLinux || !trayIcon->contextMenu())
     {
-        trayIcon->setContextMenu(initialMenu);
+        trayIcon->setContextMenu(initialMenu.get());
     }
 
 #ifndef __APPLE__
@@ -2675,17 +2714,12 @@ void MegaApplication::cleanAll()
     pricing = NULL;
 
     // Delete menus and menu items
-    deleteMenu(initialMenu);
-    initialMenu = NULL;
-    deleteMenu(trayMenu);
-    trayMenu = NULL;
-    deleteMenu(syncsMenu);
-    syncsMenu = NULL;
-    deleteMenu(trayGuestMenu);
-    trayGuestMenu = NULL;
+    deleteMenu(initialMenu.release());
+    deleteMenu(trayMenu.release());
+    deleteMenu(syncsMenu.release());
+    deleteMenu(trayGuestMenu.release());
 #ifdef _WIN32
-    deleteMenu(windowsMenu);
-    windowsMenu = NULL;
+    deleteMenu(windowsMenu.release());
 #endif
 
     // Ensure that there aren't objects deleted with deleteLater()
@@ -2778,6 +2812,24 @@ void MegaApplication::showInfoDialog()
         megaApi->retryPendingConnections();
     }
 
+#ifdef WIN32
+
+    if (QWidget *anyModalWindow = QApplication::activeModalWidget())
+    {
+        // If the InfoDialog has opened any MessageBox (eg. enter your email), those must be closed first (as we are executing from that dialog's message loop!)
+        // Bring that dialog to the front for the user to dismiss.
+        anyModalWindow->activateWindow();
+        return;
+    }
+
+    if (infoDialog)
+    {
+        // in case the screens have changed, eg. laptop with 2 monitors attached (200%, main:100%, 150%), lock screen, unplug monitors, wait 30s, plug monitors, unlock screen:  infoDialog may be double size and only showing 1/4 or 1/2
+        infoDialog->setWindowFlags(Qt::FramelessWindowHint);
+        infoDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    }
+#endif
+
     if (preferences && preferences->logged())
     {
         updateUserStats(true, true, true, true);
@@ -2797,13 +2849,14 @@ void MegaApplication::showInfoDialog()
     #ifdef __MACH__
             trayIcon->setContextMenu(&emptyMenu);
     #elif defined(_WIN32)
-            trayIcon->setContextMenu(windowsMenu);
+            trayIcon->setContextMenu(windowsMenu.get());
     #endif
         }
     }
 
     if (infoDialog)
     {
+
         if (!infoDialog->isVisible())
         {
             if (storageState == MegaApi::STORAGE_STATE_RED)
@@ -3090,7 +3143,7 @@ void MegaApplication::sendOverStorageNotification(int state)
 
 bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 {
-    if (obj == trayMenu)
+    if (obj == trayMenu.get())
     {
         if (e->type() == QEvent::Leave)
         {
@@ -3101,13 +3154,6 @@ bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
             }
         }
     }
-
-#ifdef _WIN32    
-    if (e->type() == QEvent::ApplicationDeactivate)
-    {
-        lastApplicationDeactivation = chrono::steady_clock::now();
-    }
-#endif
 
     return QApplication::eventFilter(obj, e);
 }
@@ -4219,7 +4265,11 @@ void MegaApplication::showTrayMenu(QPoint *point)
     {
         return;
     }
-
+#ifdef _WIN32
+    // recreate menus to fix some qt scaling issues in windows
+    createTrayMenu();
+    createGuestMenu();
+#endif
     if (trayGuestMenu && !preferences->logged())
     {
         if (trayGuestMenu->isVisible())
@@ -4684,6 +4734,25 @@ void MegaApplication::changeState()
     }
 }
 
+#ifdef _WIN32
+void MegaApplication::changeDisplay(QScreen *disp)
+{
+    MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromAscii("DISPLAY CHANGED").toUtf8().constData());
+
+    if (infoDialog)
+    {
+        infoDialog->setWindowFlags(Qt::FramelessWindowHint);
+        infoDialog->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    }
+    if (transferManager && transferManager->isVisible())
+    {
+        //hack to force qt to reconsider zoom/sizes/etc ...
+        //this closes the window
+        transferManager->setWindowFlags(Qt::Window);
+        transferManager->setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
+    }
+}
+#endif
 void MegaApplication::createTrayIcon()
 {
     if (appfinished)
@@ -4720,11 +4789,11 @@ void MegaApplication::createTrayIcon()
     if (preferences && preferences->logged() && megaApi && megaApi->isFilesystemAvailable()
             && bwOverquotaTimestamp <= QDateTime::currentMSecsSinceEpoch() / 1000)
     {
-        trayIcon->setContextMenu(windowsMenu);
+        trayIcon->setContextMenu(windowsMenu.get());
     }
     else
     {
-        trayIcon->setContextMenu(initialMenu);
+        trayIcon->setContextMenu(initialMenu.get());
     }
 #else
     trayIcon->setContextMenu(&emptyMenu);
@@ -5540,7 +5609,7 @@ void MegaApplication::trayIconActivated(QSystemTrayIcon::ActivationReason reason
 #ifdef _WIN32
         // in windows, a second click on the task bar icon first deactivates the app which closes the infoDialg.  
         // This statement prevents us opening it again, so that we have one-click to open the infoDialog, and a second closes it.
-        if (chrono::steady_clock::now() - lastApplicationDeactivation > 500ms)
+        if (!infoDialog || (chrono::steady_clock::now() - infoDialog->lastWindowHideTime > 100ms))
 #endif
         {
             infoDialogTimer->start(200);
@@ -5761,7 +5830,7 @@ void MegaApplication::changeProxy()
     #ifdef __MACH__
             trayIcon->setContextMenu(&emptyMenu);
     #elif defined(_WIN32)
-            trayIcon->setContextMenu(windowsMenu);
+            trayIcon->setContextMenu(windowsMenu.get());
     #endif
         }
     }
@@ -5826,11 +5895,7 @@ void MegaApplication::createTrayMenu()
 
     lastHovered = NULL;
 
-    if (!initialMenu)
-    {
-        initialMenu = new QMenu();
-    }
-    else
+    if (initialMenu)
     {
         QList<QAction *> actions = initialMenu->actions();
         for (int i = 0; i < actions.size(); i++)
@@ -5838,6 +5903,13 @@ void MegaApplication::createTrayMenu()
             initialMenu->removeAction(actions[i]);
         }
     }
+#ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
+    else
+#endif
+    {
+        initialMenu.reset(new QMenu());
+    }
+
 
     if (changeProxyAction)
     {
@@ -5877,7 +5949,7 @@ void MegaApplication::createTrayMenu()
 #ifdef _WIN32
     if (!windowsMenu)
     {
-        windowsMenu = new QMenu();
+        windowsMenu.reset(new QMenu());
     }
     else
     {
@@ -5979,9 +6051,19 @@ void MegaApplication::createTrayMenu()
     windowsMenu->addAction(windowsExitAction);
 #endif
 
-    if (!trayMenu)
+    if (trayMenu)
     {
-        trayMenu = new QMenu();
+        QList<QAction *> actions = trayMenu->actions();
+        for (int i = 0; i < actions.size(); i++)
+        {
+            trayMenu->removeAction(actions[i]);
+        }
+    }
+#ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
+    else
+#endif
+    {
+        trayMenu.reset(new QMenu());
 #ifdef __APPLE__
         trayMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #else
@@ -5989,18 +6071,10 @@ void MegaApplication::createTrayMenu()
 #endif
 
         //Highlight menu entry on mouse over
-        connect(trayMenu, SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
+        connect(trayMenu.get(), SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
 
         //Hide highlighted menu entry when mouse over
         trayMenu->installEventFilter(this);
-    }
-    else
-    {
-        QList<QAction *> actions = trayMenu->actions();
-        for (int i = 0; i < actions.size(); i++)
-        {
-            trayMenu->removeAction(actions[i]);
-        }
     }
 
     if (exitAction)
@@ -6053,14 +6127,18 @@ void MegaApplication::createTrayMenu()
     else
     {
         addSyncAction = new MenuItemAction(tr("Syncs"), QIcon(QString::fromAscii("://images/ico_syncs_out.png")), QIcon(QString::fromAscii("://images/ico_syncs_over.png")), true);
-
         if (syncsMenu)
         {
+            for (QAction *a: syncsMenu->actions())
+            {
+                a->deleteLater();
+            }
+
             syncsMenu->deleteLater();
-            syncsMenu = NULL;
+            syncsMenu.release();
         }
 
-        syncsMenu = new QMenu();
+        syncsMenu.reset(new QMenu());
 
 #ifdef __APPLE__
         syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
@@ -6068,8 +6146,15 @@ void MegaApplication::createTrayMenu()
         syncsMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #endif
 
-        QSignalMapper *menuSignalMapper = new QSignalMapper();
-        connect(menuSignalMapper, SIGNAL(mapped(QString)), infoDialog, SLOT(openFolder(QString)));
+
+        if (menuSignalMapper)
+        {
+            menuSignalMapper->deleteLater();
+            menuSignalMapper = NULL;
+        }
+
+        menuSignalMapper = new QSignalMapper();
+        connect(menuSignalMapper, SIGNAL(mapped(QString)), infoDialog, SLOT(openFolder(QString)), Qt::QueuedConnection);
 
         int activeFolders = 0;
         for (int i = 0; i < num; i++)
@@ -6082,7 +6167,7 @@ void MegaApplication::createTrayMenu()
             activeFolders++;
             MenuItemAction *action = new MenuItemAction(preferences->getSyncName(i), QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")),
                                                         QIcon(QString::fromAscii("://images/ico_drop_synched_folder_over.png")), true);
-            connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()));
+            connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()), Qt::QueuedConnection);
 
             syncsMenu->addAction(action);
             menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
@@ -6109,7 +6194,7 @@ void MegaApplication::createTrayMenu()
                 {
                     MenuItemAction *addAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_add_sync.png")),
                                                                        QIcon(QString::fromAscii("://images/ico_drop_add_sync_over.png")), true);
-                    connect(addAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()));
+                    connect(addAction, SIGNAL(triggered()), infoDialog, SLOT(addSync()), Qt::QueuedConnection);
 
                     if (activeFolders)
                     {
@@ -6120,7 +6205,7 @@ void MegaApplication::createTrayMenu()
                 delete rootNode;
             }
 
-            addSyncAction->setMenu(syncsMenu);
+            addSyncAction->setMenu(syncsMenu.get());
         }
     }
 
@@ -6196,23 +6281,25 @@ void MegaApplication::createGuestMenu()
         return;
     }
 
-    if (!trayGuestMenu)
-    {
-        trayGuestMenu = new QMenu();
-
-#ifdef __APPLE__
-        trayGuestMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
-#else
-        trayGuestMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
-#endif
-    }
-    else
+    if (trayGuestMenu)
     {
         QList<QAction *> actions = trayGuestMenu->actions();
         for (int i = 0; i < actions.size(); i++)
         {
             trayGuestMenu->removeAction(actions[i]);
         }
+    }
+#ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
+    else
+#endif
+    {
+        trayGuestMenu.reset(new QMenu());
+
+#ifdef __APPLE__
+        trayGuestMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+#else
+        trayGuestMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
+#endif
     }
 
     if (exitActionGuest)
@@ -6485,7 +6572,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 if (!sslKeyPinningError)
                 {
                     sslKeyPinningError = new QMessageBox(QMessageBox::Critical, QString::fromAscii("MEGAsync"),
-                                                tr("Our SSL key can't be verified. You could be affected by a man-in-the-middle attack or your antivirus software could be intercepting your communications and causing this problem. Please disable it and try again.")
+                                                tr("MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.")
                                                 + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")),
                                                          QMessageBox::Retry | QMessageBox::Yes | QMessageBox::Cancel);
 
@@ -6745,7 +6832,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 #ifdef __MACH__
             trayIcon->setContextMenu(&emptyMenu);
 #elif defined(_WIN32)
-            trayIcon->setContextMenu(windowsMenu);
+            trayIcon->setContextMenu(windowsMenu.get());
 #endif
             if (bwOverquotaDialog)
             {
@@ -7389,10 +7476,8 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         megaApi->getPricing();
         updateUserStats(false, true, false, false);  // just get udpated transfer quota, and with !force, just in case
         bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
-#ifdef __MACH__
-        trayIcon->setContextMenu(initialMenu);
-#elif defined(_WIN32)
-        trayIcon->setContextMenu(initialMenu);
+#if defined(__MACH__) || defined(_WIN32)
+        trayIcon->setContextMenu(initialMenu.get());
 #endif
         closeDialogs(true);
         openBwOverquotaDialog();
@@ -7738,6 +7823,9 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
         }
 #endif
 
+#ifdef __APPLE__
+        bool waitForLoad = true;
+#endif
         //Start syncs
         for (int i = 0; i < preferences->getNumSyncedFolders(); i++)
         {
@@ -7761,6 +7849,19 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
                 QString name = preferences->getSyncName(i);
                 QString uuid = preferences->getSyncID(i);
                 Platform::addSyncToLeftPane(localFolder, name, uuid);
+            }
+#endif
+
+#ifdef __APPLE__
+            if (waitForLoad)
+            {
+                double time = Platform::getUpTime();
+                waitForLoad = false;
+
+                if (time >= 0 && time < Preferences::MAX_FIRST_SYNC_DELAY_S)
+                {
+                    sleep(std::min(Preferences::MIN_FIRST_SYNC_DELAY_S, Preferences::MAX_FIRST_SYNC_DELAY_S - (int)time));
+                }
             }
 #endif
 

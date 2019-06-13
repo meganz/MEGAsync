@@ -24,6 +24,41 @@ struct PlanInfo
     int level;
 };
 
+struct PSA_info
+{
+    int idPSA;
+    QString title;
+    QString desc;
+    QString urlImage;
+    QString textButton;
+    QString urlClick;
+
+    PSA_info()
+    {
+        clear();
+    }
+
+    PSA_info(const PSA_info& info)
+    {
+        idPSA = info.idPSA;
+        title = info.title;
+        desc = info.desc;
+        urlImage = info.urlImage;
+        textButton = info.textButton;
+        urlClick = info.urlClick;
+    }
+
+    void clear()
+    {
+        idPSA = -1;
+        title = QString();
+        desc = QString();
+        urlImage = QString();
+        textButton = QString();
+        urlClick = QString();
+    }
+};
+
 class Utilities
 {
 public:

@@ -17,7 +17,7 @@ class InfoDialogTransfersWidget : public QWidget
 
 public:
     explicit InfoDialogTransfersWidget(QWidget *parent = 0);
-    void setupTransfers();
+    void setupTransfers(QCustomTransfersModel * model = nullptr);
     QCustomTransfersModel *getModel();
     ~InfoDialogTransfersWidget();
 

@@ -1256,12 +1256,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation type="unfinished">Login or create an account to start using the MEGA Desktop App.</translation>
+        <translation type="unfinished">MEGA 데스크톱 앱 이용을 시작하려면 로그인하거나 계정을 생성하세요.</translation>
     </message>
     <message>
         <source>You need to login MEGA account to run MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
-        <translation type="unfinished">You need to login to your MEGA account to run the MEGA Desktop App.</translation>
+        <translation type="unfinished">MEGA 데스크톱 앱을 실행하려면 MEGA 계정으로 로그인해야 합니다.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1271,12 +1271,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Create account to join MEGA collaboration platform.</source>
         <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
-        <translation type="unfinished">Create an account to join the MEGA collaboration platform.</translation>
+        <translation type="unfinished">MEGA 협업 플랫폼에 참여하려면 계정을 생성하세요.</translation>
     </message>
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation type="unfinished">Learn more about the MEGA Desktop App. [A]Read more[/A]</translation>
+        <translation type="unfinished">MEGA 데스크톱 앱에 대해 더 알아보기. [A]자세히 읽어보기[/A]</translation>
     </message>
 </context>
 <context>
@@ -2029,6 +2029,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
         <translation type="unfinished">폴더 안에 보이기</translation>
     </message>
+    <message>
+        <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
+        <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
+        <translation type="unfinished">MEGA가 SSL을 통하여 안전하게 연결할 수 없습니다. 추가 요구사항이 있는 공개 WiFi에 연결되어 있을 수 있습니다.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2177,12 +2182,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Terms of Service breached</source>
         <translatorcomment>Error shown when terms of service are breached during download.</translatorcomment>
-        <translation type="unfinished">Terms of Service breached</translation>
+        <translation type="unfinished">이용 약관 침해됨</translation>
     </message>
     <message>
         <source>Not accessible due to ToS/AUP violation</source>
         <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation type="unfinished">Not accessible due to ToS/AUP violation</translation>
+        <translation type="unfinished">이용 약관 위반으로 인하여 접근 불가</translation>
     </message>
 </context>
 <context>
@@ -2622,7 +2627,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
-        <translation type="unfinished">- 전송 관리자 항목 선택 버그 수정
+        <translation type="obsolete">- 전송 관리자 항목 선택 버그 수정
 -전송 관리자 항목의 컨텍스트 메뉴 미노출 버그 수정
 -주 대화창 디자인 변경
 -설정 도우미 향상
@@ -2630,6 +2635,34 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 -최신식 알림
 -제3자 라이브러리 업데이트
 -자잘한 버그 수정 및 향상</translation>
+    </message>
+    <message>
+        <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
+- Improved GUI performance during addition of many downloads
+- Restyling of initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
+        <translation type="unfinished">- Windows와 Linux의 고해상도 디스플레이에서 사용자 경험 향상
+- 많은 수의 다운로드를 추가할 때 GUI 성능 향상
+- 초기 정보 마법사의 스타일 변경, 새 아이콘과 인터페이스 향상
+- 비즈니스 계정 지원
+- 기타 사소한 버그 수정과 향상</translation>
+    </message>
+    <message>
+        <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
+- Enable thumbnail support for PDF
+- Improved GUI performance during addition of many downloads
+- Restyling of initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
+        <translation type="unfinished">- Windows와 Linux의 고해상도 디스플레이에서 사용자 경험 향상
+- PDF 문서에 대한 미리 보기 지원 활성화
+- 많은 수의 다운로드를 추가할 때 GUI 성능 향상
+- 초기 정보 마법사의 스타일 변경, 새 아이콘과 인터페이스 향상
+- 비즈니스 계정 지원
+- 기타 사소한 버그 수정과 향상</translation>
     </message>
 </context>
 <context>
@@ -3418,7 +3451,7 @@ when the application starts again</source>
     <message>
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
-        <translation type="unfinished">%1 used</translation>
+        <translation type="unfinished">%1 사용됨</translation>
     </message>
 </context>
 <context>

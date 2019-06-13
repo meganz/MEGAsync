@@ -2028,6 +2028,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
         <translation type="unfinished">Показать в папке</translation>
     </message>
+    <message>
+        <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
+        <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
+        <translation type="unfinished">MEGA не удаётся подключиться в защищённом режиме по SSL. Возможно, вы используете общественный WiFi с дополнительными требованиями.</translation>
+    </message>
 </context>
 <context>
     <name>MegaError</name>
@@ -2621,13 +2626,41 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
-        <translation type="unfinished">- Исправлена ошибка с выбором элементов менеджера передач
+        <translation type="obsolete">- Исправлена ошибка с выбором элементов менеджера передач
 - Исправлена ошибка, при которой контекстное меню не отображалось над элементами менеджера передач
 - Новый дизайн главного диалога
 - Улучшен помощник настройки
 - Поддержка отображения публичных сервисных объявлений
 - Современные уведомления
 - Обновлены сторонние библиотеки
+- Другие мелкие исправления и улучшения</translation>
+    </message>
+    <message>
+        <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
+- Improved GUI performance during addition of many downloads
+- Restyling of initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
+        <translation type="unfinished">- Улучшено отображение на дисплеях с высоким разрешением в Windows и Linux
+- Улучшена производительность графического интерфейса при большом количестве скачиваний
+- Рестайлинг стартового мастера настройки, новые иконки и улучшения интерфейса
+- Поддержка бизнес-аккаунтов
+- Другие мелкие исправления и улучшения</translation>
+    </message>
+    <message>
+        <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
+- Enable thumbnail support for PDF
+- Improved GUI performance during addition of many downloads
+- Restyling of initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
+        <translation type="unfinished">- Улучшено отображение на дисплеях с высоким разрешением в Windows и Linux
+- Добавлена поддержка эскизов для документов PDF
+- Улучшена производительность графического интерфейса при большом количестве скачиваний
+- Рестайлинг стартового мастера настройки, новые иконки и улучшения интерфейса
+- Поддержка бизнес-аккаунтов
 - Другие мелкие исправления и улучшения</translation>
     </message>
 </context>

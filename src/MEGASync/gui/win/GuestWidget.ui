@@ -726,6 +726,9 @@ image: none;</string>
               <height>64</height>
              </size>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -1045,6 +1048,9 @@ image: none;</string>
               <height>64</height>
              </size>
             </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
             <property name="styleSheet">
              <string notr="true"/>
             </property>
@@ -1100,15 +1106,14 @@ image: none;</string>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>lEmail</tabstop>
-  <tabstop>lPassword</tabstop>
+  <tabstop>bSettings</tabstop>
+  <tabstop>bCancel</tabstop>
   <tabstop>bLogin</tabstop>
   <tabstop>bForgotPassword</tabstop>
   <tabstop>bCreateAccount</tabstop>
-  <tabstop>bSettings</tabstop>
-  <tabstop>bLogoLogging</tabstop>
+  <tabstop>lEmail</tabstop>
   <tabstop>bLogoSettingUp</tabstop>
-  <tabstop>bCancel</tabstop>
+  <tabstop>lPassword</tabstop>
  </tabstops>
  <resources>
   <include location="../Resources_win.qrc"/>

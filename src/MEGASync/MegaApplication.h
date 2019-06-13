@@ -38,10 +38,6 @@
 #include "megaapi.h"
 #include "QTMegaListener.h"
 
-#ifdef _WIN32    
-#include <chrono>
-#endif
-
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
     #include <mach/mach.h>
@@ -213,6 +209,9 @@ public slots:
     void onConnectivityCheckError();
     void userAction(int action);
     void changeState();
+#ifdef _WIN32
+    void changeDisplay(QScreen *disp);
+#endif
     void showUpdatedMessage(int lastVersion);
     void handleMEGAurl(const QUrl &url);
     void handleLocalPath(const QUrl &url);
@@ -264,10 +263,10 @@ protected:
 
     QAction *changeProxyAction;
     QAction *initialExitAction;
-    QMenu *initialMenu;
+    std::unique_ptr<QMenu> initialMenu;
 
 #ifdef _WIN32
-    QMenu *windowsMenu;
+    std::unique_ptr<QMenu> windowsMenu;
     QAction *windowsExitAction;
     QAction *windowsUpdateAction;
     QAction *windowsImportLinksAction;
@@ -278,10 +277,12 @@ protected:
     QAction *windowsSettingsAction;
 #endif
 
-    QMenu *trayMenu;
-    QMenu *trayGuestMenu;
+    std::unique_ptr<QMenu> trayMenu;
+    std::unique_ptr<QMenu> trayGuestMenu;
     QMenu emptyMenu;
-    QMenu *syncsMenu;
+    std::unique_ptr<QMenu> syncsMenu;
+    QSignalMapper *menuSignalMapper;
+
     MenuItemAction *exitAction;
     MenuItemAction *settingsAction;
     MenuItemAction *importLinksAction;
@@ -309,6 +310,9 @@ protected:
     SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
     InfoDialog *infoDialog;
+#ifdef _WIN32
+    QMap<QString, double> lastCheckedScreens;
+#endif
     bool infoOverQuota;
     Preferences *preferences;
     mega::MegaApi *megaApi;
@@ -405,9 +409,6 @@ protected:
     bool updatingSSLcert;
     long long lastSSLcertUpdate;
     bool nodescurrent;
-#ifdef _WIN32    
-    std::chrono::steady_clock::time_point lastApplicationDeactivation;
-#endif
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener
