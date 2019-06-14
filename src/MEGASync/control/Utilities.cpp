@@ -8,6 +8,7 @@
 #include <QTextStream>
 #include <QDateTime>
 #include <iostream>
+#include "MegaApplication.h"
 
 #ifndef WIN32
 #include "megaapi.h"
@@ -475,27 +476,29 @@ QString Utilities::getSizeString(unsigned long long bytes)
     unsigned long long GB = 1024 * MB;
     unsigned long long TB = 1024 * GB;
 
+    QString language = ((MegaApplication*)qApp)->getCurrentLanguageCode();
+    QLocale locale(language);
     if (bytes >= TB)
     {
-        return QString::number( ((int)((100 * bytes) / TB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "TB");
+        return locale.toString( ((int)((100 * bytes) / TB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "TB");
     }
 
     if (bytes >= GB)
     {
-        return QString::number( ((int)((100 * bytes) / GB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "GB");
+        return locale.toString( ((int)((100 * bytes) / GB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "GB");
     }
 
     if (bytes >= MB)
     {
-        return QString::number( ((int)((100 * bytes) / MB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "MB");
+        return locale.toString( ((int)((100 * bytes) / MB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "MB");
     }
 
     if (bytes >= KB)
     {
-        return QString::number( ((int)((100 * bytes) / KB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "KB");
+        return locale.toString( ((int)((100 * bytes) / KB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "KB");
     }
 
-    return QString::number(bytes) + QString::fromAscii(" bytes");
+    return locale.toString(bytes) + QString::fromAscii(" bytes");
 }
 
 QString Utilities::extractJSONString(QString json, QString name)
