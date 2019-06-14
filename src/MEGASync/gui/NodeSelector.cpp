@@ -32,6 +32,11 @@ NodeSelector::NodeSelector(MegaApi *megaApi, int selectMode, QWidget *parent) :
     {
         setWindowTitle(tr("Select items"));
         ui->label->setText(tr("Select just one file."));
+        ui->bNewFolder->setVisible(false);
+    }
+    else if (selectMode == NodeSelector::DOWNLOAD_SELECT)
+    {
+        ui->bNewFolder->setVisible(false);
     }
 
     nodesReady();
