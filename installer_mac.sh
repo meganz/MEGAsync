@@ -180,7 +180,7 @@ if [ "$notarize" = "1" ]; then
 
 			if [[ $STATUS == "invalid" ]]; then
 				echo "INVALID status. Check file querystatus.txt for further information"
-				cat querystatus.txt  | grep -i ">Status Message<" -A 1 | tail -n 1  | awk -F "[<>]" '{print $3}'
+				echo $STATUS
 				break
 			elif [[ $STATUS == "success" ]]; then
 				echo "Notarized ok. Stapling dmg file..."
@@ -202,7 +202,12 @@ if [ "$notarize" = "1" ]; then
 			attempts=$((attempts - 1))
 			sleep 30
 		done
-    	fi
+
+		if [[ $attempts -eq 0 ]]; then
+			echo "Notarization still in process, timed out waiting for the process to end"
+			false
+		fi
+	fi
 fi
 
 echo "Cleaning"
