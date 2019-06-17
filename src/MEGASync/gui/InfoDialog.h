@@ -15,6 +15,7 @@
 #include <QGraphicsOpacityEffect>
 #include "HighDpiResize.h"
 #include "Utilities.h"
+#include <memory>
 #ifdef _WIN32
 #include <chrono>
 #endif
