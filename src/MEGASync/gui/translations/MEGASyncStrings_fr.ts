@@ -67,7 +67,7 @@
     </message>
     <message>
         <source>Total size taken up by file versions:</source>
-        <translation type="unfinished">Taille totale occupée par les versions de fichier :</translation>
+        <translation type="unfinished">Taille totale occupée par les versions de fichiers :</translation>
     </message>
     <message>
         <source>USED STORAGE %1</source>
@@ -862,7 +862,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation type="vanished">Synchros</translation>
+        <translation>Synchros</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -927,7 +927,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation type="vanished">Ajouter une synchro</translation>
+        <translation>Ajouter une synchro</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -1518,7 +1518,7 @@ Exit anyway?</source>
     <message>
         <source>Temporary transmission error: </source>
         <translatorcomment>Notification message launched when there is a temporal problem with a transfer. Keep colon.</translatorcomment>
-        <translation type="vanished">Erreur temporaire de transmission :</translation>
+        <translation type="vanished">Erreur temporaire de transmission :</translation>
     </message>
     <message>
         <source>You have new or updated files in your account</source>
@@ -1694,7 +1694,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Login error: %1</source>
         <translatorcomment>Message displayed during a login operation. Keep &quot;%1&quot; code because it will be fill with the error message.</translatorcomment>
-        <translation type="unfinished">Erreur de connexion : %1</translation>
+        <translation type="unfinished">Erreur de connexion : %1</translation>
     </message>
     <message>
         <source>You have been logged out on this computer from another location</source>
@@ -2596,7 +2596,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
-        <translation type="unfinished">populaire !</translation>
+        <translation type="unfinished">Populaire !</translation>
     </message>
 </context>
 <context>
@@ -2642,7 +2642,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">– Amélioration de l’aspect et de la convivialité pour les affichages à haute résolution sous Windows et Linux
+        <translation type="unfinished">– Amélioration de l’aspect et de la convivialité pour les affichages à haute résolution sous Windows
 – Amélioration des performances de l’IUG lors de l’ajout d’un nombre important de téléchargements
 – Restylage de l’assistant initial d’information, nouvelles icônes et améliorations de l’interface
 – Prise en charge des comptes d’entreprise
@@ -2656,7 +2656,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">– Amélioration de l’aspect et de la convivialité pour les affichages à haute résolution sous Windows et Linux
+        <translation type="unfinished">– Amélioration de l’aspect et de la convivialité pour les affichages à haute résolution sous Linux
 – Prise en charge des imagettes pour les documents PDF
 – Amélioration des performances de l’IUG lors de l’ajout d’un nombre important de téléchargements
 – Restylage de l’assistant initial d’information, nouvelles icônes et améliorations de l’interface
@@ -3451,6 +3451,11 @@ when the application starts again</source>
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
         <translation type="unfinished">%1 utilisés</translation>
+    </message>
+    <message>
+        <source>MEGA-RECOVERYKEY</source>
+        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
+        <translation type="unfinished">MEGA-RECOVERYKEY</translation>
     </message>
 </context>
 <context>

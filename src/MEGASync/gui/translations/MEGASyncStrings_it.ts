@@ -862,7 +862,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation type="vanished">Sincronizzazioni</translation>
+        <translation>Sincronizzazioni</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -927,7 +927,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation type="vanished">Aggiungi sincronizzazione</translation>
+        <translation>Aggiungi sincronizzazione</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -2596,7 +2596,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
-        <translation type="unfinished">popolare!</translation>
+        <translation type="unfinished">Popolare!</translation>
     </message>
 </context>
 <context>
@@ -2642,7 +2642,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Migliorato il look e l&apos;atmosfera per i display ad alta risoluzione su Windows e Linux
+        <translation type="unfinished">- Migliorato il look e l&apos;atmosfera per i display ad alta risoluzione su Windows
 - Migliorata la performance della GUI durante l&apos;aggiunta di un gran numero di download
 - Restyling della schermata di informazioni iniziale, nuove icone e miglioramenti dell&apos;interfaccia
 - Supporto per gli account Business
@@ -2656,7 +2656,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Migliorato il look e l&apos;atmosfera per i display ad alta risoluzione su Windows e Linux
+        <translation type="unfinished">- Migliorato il look e l&apos;atmosfera per i display ad alta risoluzione su Linux
 - Attivato il supporto dell&apos;anteprima per i documenti PDF
 - Migliorata la performance della GUI durante l&apos;aggiunta di un gran numero di download
 - Restyling della schermata di informazioni iniziale, nuove icone e miglioramenti dell&apos;interfaccia
@@ -3451,6 +3451,11 @@ when the application starts again</source>
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
         <translation type="unfinished">%1 utilizzato</translation>
+    </message>
+    <message>
+        <source>MEGA-RECOVERYKEY</source>
+        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
+        <translation type="unfinished">MEGA-RECOVERYKEY</translation>
     </message>
 </context>
 <context>

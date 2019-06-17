@@ -863,7 +863,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation type="vanished">동기화</translation>
+        <translation>동기화</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -928,7 +928,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation type="vanished">동기화 추가</translation>
+        <translation>동기화 추가</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -2643,7 +2643,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Windows와 Linux의 고해상도 디스플레이에서 사용자 경험 향상
+        <translation type="unfinished">- Windows의 고해상도 디스플레이에서 사용자 경험 향상
 - 많은 수의 다운로드를 추가할 때 GUI 성능 향상
 - 초기 정보 마법사의 스타일 변경, 새 아이콘과 인터페이스 향상
 - 비즈니스 계정 지원
@@ -2657,7 +2657,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Windows와 Linux의 고해상도 디스플레이에서 사용자 경험 향상
+        <translation type="unfinished">- Linux의 고해상도 디스플레이에서 사용자 경험 향상
 - PDF 문서에 대한 미리 보기 지원 활성화
 - 많은 수의 다운로드를 추가할 때 GUI 성능 향상
 - 초기 정보 마법사의 스타일 변경, 새 아이콘과 인터페이스 향상
@@ -3452,6 +3452,11 @@ when the application starts again</source>
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
         <translation type="unfinished">%1 사용됨</translation>
+    </message>
+    <message>
+        <source>MEGA-RECOVERYKEY</source>
+        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
+        <translation type="unfinished">MEGA-RECOVERYKEY</translation>
     </message>
 </context>
 <context>
