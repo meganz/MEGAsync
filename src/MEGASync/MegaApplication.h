@@ -71,7 +71,7 @@ public:
 class Notificator;
 class MEGASyncDelegateListener;
 
-enum GetUserStatsReason { UserStats_loggedIn, UserStats_storageStateChange, UserStats_trafficLight, UserStats_showDialog, UserStats_changeProxy, UserStats_transferTempError, UserStats_accountUpdate, UserStats_storageClicked };
+enum GetUserStatsReason { USERSTATS_LOGGEDIN, USERSTATS_STORAGESTATECHANGE, USERSTATS_TRAFFICLIGHT, USERSTATS_SHOWDIALOG, USERSTATS_CHANGEPROXY, USERSTATS_TRANSFERTEMPERROR, USERSTATS_ACCOUNTUPDATE, USERSTATS_STORAGECLICKED };
 
 class MegaApplication : public QApplication, public mega::MegaListener
 {
@@ -336,7 +336,7 @@ protected:
     unsigned long long activeTransferPriority[2];
     unsigned int activeTransferState[2];
     bool queuedUserStats[3];
-    int queuedStorageUserStatsReason = 0;
+    int queuedStorageUserStatsReason;
     long long userStatsLastRequest[3];
     bool inflightUserStats[3];
     long long cleaningSchedulerExecution;

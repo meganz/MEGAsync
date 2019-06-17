@@ -879,6 +879,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
         userStatsLastRequest[i] = 0;
         queuedUserStats[i] = false;
     }
+    queuedStorageUserStatsReason = 0;
 
 #ifdef __APPLE__
     scanningTimer = NULL;
@@ -1441,6 +1442,7 @@ void MegaApplication::start()
         userStatsLastRequest[i] = 0;
         queuedUserStats[i] = false;
     }
+    queuedStorageUserStatsReason = 0;
 
     if (!isLinux || !trayIcon->contextMenu())
     {
@@ -1627,10 +1629,11 @@ void MegaApplication::loggedIn()
         userStatsLastRequest[i] = 0;
         queuedUserStats[i] = false;
     }
+    queuedStorageUserStatsReason = 0;
 
     registerUserActivity();
     pauseTransfers(paused);
-    updateUserStats(true, true, true, true, UserStats_loggedIn);
+    updateUserStats(true, true, true, true, USERSTATS_LOGGEDIN);
     megaApi->getPricing();
     megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
     megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
@@ -1801,7 +1804,7 @@ void MegaApplication::applyStorageState(int state)
     {
         // this one is requested with force=false so it can't possibly occur to often.
         // It will in turn result in another call of this function with the actual new state (if it changed), which is taken care of below with force=true (so that one does not have to wait further)
-        updateUserStats(true, false, false, false, UserStats_storageStateChange);
+        updateUserStats(true, false, false, false, USERSTATS_STORAGESTATECHANGE);
         return;
     }
 
@@ -1810,7 +1813,7 @@ void MegaApplication::applyStorageState(int state)
     {
         if (storageState != appliedStorageState)
         {
-            updateUserStats(true, false, false, true, UserStats_trafficLight);
+            updateUserStats(true, false, false, true, USERSTATS_TRAFFICLIGHT);
             appliedStorageState = storageState;
             if (state == MegaApi::STORAGE_STATE_RED)
             {
@@ -2832,7 +2835,7 @@ void MegaApplication::showInfoDialog()
 
     if (preferences && preferences->logged())
     {
-        updateUserStats(true, true, true, true, UserStats_showDialog);
+        updateUserStats(true, true, true, true, USERSTATS_SHOWDIALOG);
         if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
         {
             openBwOverquotaDialog();
@@ -4225,7 +4228,7 @@ void MegaApplication::updateUserStats(bool storage, bool transfer, bool pro, boo
 
     if (force || !lastRequest || (QDateTime::currentMSecsSinceEpoch() - lastRequest) > Preferences::MIN_UPDATE_STATS_INTERVAL)
     {
-        megaApi->getSpecificAccountDetails(storage, transfer, pro, NULL, storage ? queuedStorageUserStatsReason : -1);
+        megaApi->getSpecificAccountDetails(storage, transfer, pro, storage ? queuedStorageUserStatsReason : -1);
         if (storage) queuedStorageUserStatsReason = 0;
 
         if (storage)  inflightUserStats[0] = true;
@@ -5817,7 +5820,7 @@ void MegaApplication::changeProxy()
 #ifndef __MACH__
     if (preferences && !proxyOnly)
     {
-        updateUserStats(true, true, true, true, UserStats_changeProxy);
+        updateUserStats(true, true, true, true, USERSTATS_CHANGEPROXY);
         if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
         {
             openBwOverquotaDialog();
@@ -7478,7 +7481,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     {
         preferences->clearTemporalBandwidth();
         megaApi->getPricing();
-        updateUserStats(false, true, false, false, UserStats_transferTempError);  // just get udpated transfer quota, and with !force, just in case
+        updateUserStats(false, true, false, false, USERSTATS_TRANSFERTEMPERROR);  // just get udpated transfer quota, and with !force, just in case
         bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
 #if defined(__MACH__) || defined(_WIN32)
         trayIcon->setContextMenu(initialMenu.get());
@@ -7501,7 +7504,7 @@ void MegaApplication::onAccountUpdate(MegaApi *)
         bwOverquotaDialog->refreshAccountDetails();
     }
 
-    updateUserStats(true, true, true, false, UserStats_accountUpdate);
+    updateUserStats(true, true, true, false, USERSTATS_ACCOUNTUPDATE);
 }
 
 //Called when contacts have been updated in MEGA
