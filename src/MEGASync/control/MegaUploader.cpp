@@ -37,7 +37,7 @@ void MegaUploader::upload(QString path, MegaNode *parent, unsigned long long app
 void MegaUploader::uploadWithOptimizedLocalRecursiveCopy(QString currentPath, QString destPath, MegaNode *parent, unsigned long long appDataID)
 {
     //first copy recursively attending to sync exclusion criteria
-    if (!destPath.startsWith(currentPath))//to avoid recurses
+    if (!destPath.startsWith(QFileInfo(currentPath).canonicalFilePath()))//to avoid recurses //note: destPath should have been cannonicalized already
     {
         MegaUploader::copyRecursivelyIfSyncable(currentPath, destPath);
     }
