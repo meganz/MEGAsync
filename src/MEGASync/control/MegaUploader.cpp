@@ -97,7 +97,7 @@ void MegaUploader::copyRecursivelyIfSyncable(QString srcPath, QString dstPath)
     }
 
 
-    if (!source.isFile() && !source.isDir()) //review if ever symlinks are supported
+    if (source.isSymLink() || (!source.isFile() && !source.isDir()) ) //review if ever symlinks are supported
     {
         return;
     }
@@ -110,7 +110,7 @@ void MegaUploader::copyRecursivelyIfSyncable(QString srcPath, QString dstPath)
 
     if (source.isFile())
     {
-        if (!dstfileinfo.exists() || dstfileinfo.isDir() || filesdiffer(source, dstfileinfo))
+        if (dstfileinfo.exists() && (dstfileinfo.isDir() || filesdiffer(source, dstfileinfo)))
         {
             megaApi->moveToLocalDebris(dstPath.toUtf8().constData());
         }
