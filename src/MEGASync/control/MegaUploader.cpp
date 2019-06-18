@@ -37,7 +37,14 @@ void MegaUploader::upload(QString path, MegaNode *parent, unsigned long long app
 void MegaUploader::uploadWithOptimizedLocalRecursiveCopy(QString currentPath, QString destPath, MegaNode *parent, unsigned long long appDataID)
 {
     //first copy recursively attending to sync exclusion criteria
-    MegaUploader::copyRecursivelyIfSyncable(currentPath, destPath);
+    if (!destPath.startsWith(currentPath))//to avoid recurses
+    {
+        MegaUploader::copyRecursivelyIfSyncable(currentPath, destPath);
+    }
+    else
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Skiping local recursive copy to self contained path %1 to %2").arg(currentPath).arg(destPath).toUtf8().constData());
+    }
 
     // then, do manual upload (we want files to be uploaded nevertheless)
     // notice, sync engine might revert changes afterwards for corner cases:
@@ -134,7 +141,7 @@ void MegaUploader::copyRecursivelyIfSyncable(QString srcPath, QString dstPath)
         while (di.hasNext())
         {
             di.next();
-            if (!di.fileInfo().isSymLink() )
+            if (!di.fileInfo().isSymLink() && (di.filePath() != dstPath))
             {
                 copyRecursivelyIfSyncable(di.filePath(), dstPath + QDir::separator() + di.fileName());
             }
