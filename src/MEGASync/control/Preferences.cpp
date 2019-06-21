@@ -11,28 +11,18 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.1.1.0";
-const int Preferences::VERSION_CODE = 4110;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.2.0.0";
+const int Preferences::VERSION_CODE = 4200;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.1.1");
-QString Preferences::SDK_ID = QString::fromAscii("30853f9");
-#ifdef _WIN32
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.2.0");
+QString Preferences::SDK_ID = QString::fromAscii("5bb233c");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- Improved look&feel for high resolution displays on Windows and Linux\n"
-    "- Improved GUI performance during addition of many downloads\n"
-    "- Restyling of initial information wizard, new icons and interface improvements\n"
-    "- Support for business accounts\n"
+    "- Fix UI glitch with unaligned borders in MacOS\n"
+    "- Fix show in folder when saved in root folder in Windows (drive letter)\n"
+    "- Localized separator for decimal values in sizes\n"
+    "- Disable option to create new folders when downloading/streaming from MEGA\n"
     "- Other minor bug fixes and improvements"));
-#else
-const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-            "- Improved look&feel for high resolution displays on Windows and Linux\n"
-            "- Enable thumbnail support for PDF\n"
-            "- Improved GUI performance during addition of many downloads\n"
-            "- Restyling of initial information wizard, new icons and interface improvements\n"
-            "- Support for business accounts\n"
-            "- Other minor bug fixes and improvements"));
-#endif
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
 const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
