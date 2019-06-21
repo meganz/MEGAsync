@@ -707,7 +707,7 @@ void WindowsPlatform::showInFolder(QString pathIn)
 
     QString param;
     param = QString::fromUtf8("/select,");
-    param += QString::fromAscii("\"\"") + QDir::toNativeSeparators(pathIn) + QString::fromAscii("\"\"");
+    param += QString::fromAscii("\"\"") + QDir::toNativeSeparators(QDir(pathIn).canonicalPath()) + QString::fromAscii("\"\"");
     QProcess::startDetached(QString::fromAscii("explorer ") + param);
 }
 

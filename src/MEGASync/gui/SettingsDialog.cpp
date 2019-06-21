@@ -1967,7 +1967,7 @@ void SettingsDialog::on_bExportMasterKey_clicked()
 
     QDir dir(defaultPath);
     QString fileName = QFileDialog::getSaveFileName(0,
-             tr("Export Master key"), dir.filePath(QString::fromUtf8("MEGA-RECOVERYKEY")),
+             tr("Export Master key"), dir.filePath(tr("MEGA-RECOVERYKEY")),
              QString::fromUtf8("Txt file (*.txt)"), NULL, QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
 
@@ -2554,7 +2554,7 @@ void SettingsDialog::onAnimationFinished()
 void SettingsDialog::on_bStorageDetails_clicked()
 {
     accountDetailsDialog = new AccountDetailsDialog(megaApi, this);
-    app->updateUserStats(true, true, true, true);
+    app->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
     QPointer<AccountDetailsDialog> dialog = accountDetailsDialog;
     dialog->exec();
     if (!dialog)

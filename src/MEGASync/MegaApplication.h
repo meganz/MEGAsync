@@ -71,6 +71,8 @@ public:
 class Notificator;
 class MEGASyncDelegateListener;
 
+enum GetUserStatsReason { USERSTATS_LOGGEDIN, USERSTATS_STORAGESTATECHANGE, USERSTATS_TRAFFICLIGHT, USERSTATS_SHOWDIALOG, USERSTATS_CHANGEPROXY, USERSTATS_TRANSFERTEMPERROR, USERSTATS_ACCOUNTUPDATE, USERSTATS_STORAGECLICKED };
+
 class MegaApplication : public QApplication, public mega::MegaListener
 {
     Q_OBJECT
@@ -125,7 +127,7 @@ public:
     void startUpdateTask();
     void stopUpdateTask();
     void applyProxySettings();
-    void updateUserStats(bool storage, bool transfer, bool pro, bool force);
+    void updateUserStats(bool storage, bool transfer, bool pro, bool force, int source);
     void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
     void showTrayMenu(QPoint *point = NULL);
@@ -334,6 +336,7 @@ protected:
     unsigned long long activeTransferPriority[2];
     unsigned int activeTransferState[2];
     bool queuedUserStats[3];
+    int queuedStorageUserStatsReason;
     long long userStatsLastRequest[3];
     bool inflightUserStats[3];
     long long cleaningSchedulerExecution;
