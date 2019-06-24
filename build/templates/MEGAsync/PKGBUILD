@@ -37,7 +37,7 @@ provides=("megasync=${pkgver}" 'ffmpeg-mega')
 conflicts=('megatools')
 replaces=()
 backup=()
-options=()
+options=(debug strip)
 install=megasync.install
 changelog= #TODO
 source=("./${pkgname}_$pkgver.tar.gz"
