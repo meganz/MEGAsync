@@ -1,6 +1,7 @@
 #include "MegaUploader.h"
 #include <QThread>
 #include "control/Utilities.h"
+#include "MegaApplication.h"
 #include <QMessageBox>
 #include <QtCore>
 #include <QApplication>
@@ -34,26 +35,6 @@ void MegaUploader::upload(QString path, MegaNode *parent, unsigned long long app
     return upload(QFileInfo(path), parent, appDataID);
 }
 
-void MegaUploader::uploadWithOptimizedLocalRecursiveCopy(QString currentPath, QString destPath, MegaNode *parent, unsigned long long appDataID)
-{
-    //first copy recursively attending to sync exclusion criteria
-    if (!destPath.startsWith(QFileInfo(currentPath).canonicalFilePath()))//to avoid recurses //note: destPath should have been cannonicalized already
-    {
-        MegaUploader::copyRecursivelyIfSyncable(currentPath, destPath);
-    }
-    else
-    {
-        MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Skiping local recursive copy to self contained path %1 to %2").arg(currentPath).arg(destPath).toUtf8().constData());
-    }
-
-    // then, do manual upload (we want files to be uploaded nevertheless)
-    // notice, sync engine might revert changes afterwards for corner cases:
-    //      e.g: uploading an older version that doesn't match size criteria
-    //     Still, the same would happen if uploading with another client
-    megaApi->startUploadWithData(currentPath.toUtf8().constData(), parent, (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8().constData());
-    delete parent;
-}
-
 bool MegaUploader::filesdiffer(QFileInfo &source, QFileInfo &destination)
 {
     if ( source.size() != destination.size()
@@ -85,65 +66,88 @@ bool MegaUploader::filesdiffer(QFileInfo &source, QFileInfo &destination)
     return false;
 }
 
-void MegaUploader::copyRecursivelyIfSyncable(QString srcPath, QString dstPath)
+void MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, QString destPath, MegaNode *parent, unsigned long long appDataID)
 {
-    if (!srcPath.size() || !dstPath.size())
+    QString srcPath = QDir::toNativeSeparators(srcFileInfo.absoluteFilePath());
+
+    if (!srcPath.size() || !destPath.size())
     {
         return;
     }
 
-    QFileInfo source(srcPath);
-    if (!source.exists())
+   if (!srcFileInfo.exists())
     {
         return;
     }
 
-    if (srcPath == dstPath)
+//    if (srcPath == destPath) // returning here would discard uploading excluded files. e.g: I want to force a remote folder to have the same as in local (regardless of exclusions), by uploading into it's remote parent
+//    {
+//        return;
+//    }
+
+    if (srcFileInfo.isSymLink() || (!srcFileInfo.isFile() && !srcFileInfo.isDir()) ) //review if ever symlinks are supported
     {
         return;
     }
 
-
-    if (source.isSymLink() || (!source.isFile() && !source.isDir()) ) //review if ever symlinks are supported
+    if (!megaApi->isSyncable(destPath.toUtf8().constData(), srcFileInfo.size())) //if not syncable, do not copy locally, but simply upload
     {
+        //start upload to parent
+        megaApi->startUploadWithData(srcPath.toUtf8().constData(), parent, (QString::number(appDataID) + QString::fromUtf8("*")).toUtf8().constData());
         return;
     }
+    QFileInfo dstfileinfo(destPath);
 
-    if (!megaApi->isSyncable(dstPath.toUtf8().constData(), source.size()))
+    if (srcFileInfo.isFile()) //if copying a file: replace (moving to debris if existing and different)
     {
-        return;
-    }
-    QFileInfo dstfileinfo(dstPath);
-
-    if (source.isFile())
-    {
-        if (dstfileinfo.exists() && (dstfileinfo.isDir() || filesdiffer(source, dstfileinfo)))
+        if (dstfileinfo.exists() && (dstfileinfo.isDir() || filesdiffer(srcFileInfo, dstfileinfo)))
         {
-            megaApi->moveToLocalDebris(dstPath.toUtf8().constData());
+            megaApi->moveToLocalDebris(destPath.toUtf8().constData());
         }
         QFile src(srcPath);
-        src.copy(dstPath); //This will fail if file exists, which should only happen if they don't differ
+        src.copy(destPath); //This will fail if file exists, which should only happen if they don't differ
 #ifndef _WIN32
-       time_t t = source.lastModified().toTime_t();
+       time_t t = srcFileInfo.lastModified().toTime_t();
        struct utimbuf times = { t, t };
-       utime(dstPath.toUtf8().constData(), &times);
+       utime(destPath.toUtf8().constData(), &times);
 #endif
     }
-    else if (source.isDir())
+    else if (srcFileInfo.isDir())
     {
-        if (dstfileinfo.exists() && !dstfileinfo.isDir())
+        if (dstfileinfo.exists() && !dstfileinfo.isDir()) //if local destiny is a file, move it to debris
         {
-            megaApi->moveToLocalDebris(dstPath.toUtf8().constData());
+            megaApi->moveToLocalDebris(destPath.toUtf8().constData());
         }
-        QDir dstDir(dstPath);
-        dstDir.mkpath(QString::fromAscii("."));
+        QDir dstDir(destPath);
+        dstDir.mkpath(QString::fromAscii(".")); //this will do nothing if already exists
         QDirIterator di(srcPath, QDir::AllEntries | QDir::Hidden | QDir::NoDotAndDotDot);
         while (di.hasNext())
         {
             di.next();
-            if (!di.fileInfo().isSymLink() && (di.filePath() != dstPath))
+            if (!di.fileInfo().isSymLink() && (di.filePath() != destPath))
             {
-                copyRecursivelyIfSyncable(di.filePath(), dstPath + QDir::separator() + di.fileName());
+                MegaNode *newParent = megaApi->getNodeByPath(srcFileInfo.fileName().toUtf8().constData(), parent);
+                if (!newParent || !newParent->isFolder()) //for files it will leave the file and create a folder, same as regular upload
+                {
+                    delete newParent; //for files, we don't want them
+                    newParent = NULL;
+
+                    SynchronousRequestListener *srl = new SynchronousRequestListener();
+                    megaApi->createFolder(srcFileInfo.fileName().toUtf8().constData(), parent,srl);
+                    srl->wait();
+                    if (srl->getError()->getErrorCode() == MegaError::API_OK)
+                    {
+                        newParent=megaApi->getNodeByHandle(srl->getRequest()->getNodeHandle());
+                    }
+                    delete srl;
+
+                }
+                if (newParent)
+                {
+                    uploadRecursivelyIntoASyncedLocation(di.fileInfo(), QDir::toNativeSeparators(destPath + QDir::separator() + di.fileName()), newParent, appDataID);
+                }
+
+                delete newParent;
             }
         }
     }
@@ -186,7 +190,16 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
 
     if (localPath.size() && currentPath != destPath && megaApi->isSyncable(destPath.toUtf8().constData(), info.size()))
     {
-        QtConcurrent::run(this, &MegaUploader::uploadWithOptimizedLocalRecursiveCopy, currentPath, destPath, parent->copy(), appDataID);
+        if (!destPath.startsWith(QFileInfo(currentPath).canonicalFilePath()))//to avoid recurses //note: destPath should have been cannonicalized already
+        {
+            QtConcurrent::run(this, &MegaUploader::uploadRecursivelyIntoASyncedLocation, QFileInfo(currentPath), destPath, parent->copy(), appDataID);
+        }
+        else
+        {
+            MegaApi::log(MegaApi::LOG_LEVEL_WARNING, QString::fromUtf8("Skiping local recursive copy to self contained path %1 to %2").arg(currentPath).arg(destPath).toUtf8().constData());
+            ((MegaApplication*)qApp)->showErrorMessage(tr("Upload failed") + QString::fromUtf8(": ") + QString::fromUtf8("Cannot upload to location synced with a descendant") );
+        }
+
     }
     else if (info.isFile() || info.isDir())
     {
