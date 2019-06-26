@@ -1,5 +1,7 @@
 #include "Login2FA.h"
 #include "ui_Login2FA.h"
+#include "Preferences.h"
+
 #include <QRegExp>
 #include <QDesktopServices>
 #include <QUrl>
@@ -79,7 +81,7 @@ void Login2FA::inputCodeChanged()
 
 void Login2FA::on_bHelp_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://mega.nz/recovery");
+    QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/recovery");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
 

@@ -42,6 +42,17 @@ GuestWidget::~GuestWidget()
     delete ui;
 }
 
+void GuestWidget::setTexts(const QString& s1, const QString& s2)
+{
+    ui->lEmail->setText(s1); 
+    ui->lPassword->setText(s2);
+}
+
+std::pair<QString, QString> GuestWidget::getTexts()
+{
+    return std::make_pair(ui->lEmail->text(), ui->lPassword->text());
+}
+
 void GuestWidget::onRequestStart(MegaApi *api, MegaRequest *request)
 {
     if (request->getType() == MegaRequest::TYPE_LOGIN)
@@ -100,12 +111,12 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
             {
                 if (error->getErrorCode() == MegaError::API_ENOENT)
                 {
-                    QMessageBox::warning(NULL, tr("Error"), tr("Incorrect email and/or password."), QMessageBox::Ok);
+                    QMessageBox::warning(this, tr("Error"), tr("Incorrect email and/or password."), QMessageBox::Ok);
                 }
                 else if (error->getErrorCode() == MegaError::API_EMFAREQUIRED)
                 {
                     QPointer<GuestWidget> dialog = this;
-                    QPointer<Login2FA> verification = new Login2FA(this);
+                    QPointer<Login2FA> verification = new Login2FA();
                     int result = verification->exec();
                     if (!dialog || !verification || result != QDialog::Accepted)
                     {
@@ -144,7 +155,7 @@ void GuestWidget::onRequestFinish(MegaApi *, MegaRequest *request, MegaError *er
                 else if (error->getErrorCode() == MegaError::API_EFAILED || error->getErrorCode() == MegaError::API_EEXPIRED)
                 {
                     QPointer<GuestWidget> dialog = this;
-                    QPointer<Login2FA> verification = new Login2FA(this);
+                    QPointer<Login2FA> verification = new Login2FA();
                     verification->invalidCode(true);
                     int result = verification->exec();
                     if (!dialog || !verification || result != QDialog::Accepted)

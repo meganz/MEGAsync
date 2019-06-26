@@ -12,6 +12,7 @@
 #include <QQueue>
 #include <QNetworkConfigurationManager>
 #include <QNetworkInterface>
+#include <memory>
 
 #include "gui/TransferManager.h"
 #include "gui/NodeSelector.h"
@@ -36,9 +37,6 @@
 #include "control/MegaSyncLogger.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
-#ifdef _WIN32    
-#include <chrono>
-#endif
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -73,6 +71,8 @@ public:
 class Notificator;
 class MEGASyncDelegateListener;
 
+enum GetUserStatsReason { USERSTATS_LOGGEDIN, USERSTATS_STORAGESTATECHANGE, USERSTATS_TRAFFICLIGHT, USERSTATS_SHOWDIALOG, USERSTATS_CHANGEPROXY, USERSTATS_TRANSFERTEMPERROR, USERSTATS_ACCOUNTUPDATE, USERSTATS_STORAGECLICKED };
+
 class MegaApplication : public QApplication, public mega::MegaListener
 {
     Q_OBJECT
@@ -106,7 +106,7 @@ public:
     virtual void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users);
     virtual void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes);
     virtual void onReloadNeeded(mega::MegaApi* api);
-    virtual void onGlobalSyncStateChanged(mega::MegaApi *api);
+    virtual void onGlobalSyncStateChanged(mega::MegaApi *api, bool timeout = false);
     virtual void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync);
     virtual void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState);
 
@@ -127,7 +127,7 @@ public:
     void startUpdateTask();
     void stopUpdateTask();
     void applyProxySettings();
-    void updateUserStats(bool force = false);
+    void updateUserStats(bool storage, bool transfer, bool pro, bool force, int source);
     void addRecentFile(QString fileName, long long fileHandle, QString localPath = QString(), QString nodeKey = QString());
     void checkForUpdates();
     void showTrayMenu(QPoint *point = NULL);
@@ -211,6 +211,9 @@ public slots:
     void onConnectivityCheckError();
     void userAction(int action);
     void changeState();
+#ifdef _WIN32
+    void changeDisplay(QScreen *disp);
+#endif
     void showUpdatedMessage(int lastVersion);
     void handleMEGAurl(const QUrl &url);
     void handleLocalPath(const QUrl &url);
@@ -224,6 +227,7 @@ public slots:
     void onDismissOQ(bool overStorage);
     void showNotificationFinishedTransfers(unsigned long long appDataId);
     void renewLocalSSLcert();
+    void onGlobalSyncStateChangedTimeout();
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
@@ -261,10 +265,10 @@ protected:
 
     QAction *changeProxyAction;
     QAction *initialExitAction;
-    QMenu *initialMenu;
+    std::unique_ptr<QMenu> initialMenu;
 
 #ifdef _WIN32
-    QMenu *windowsMenu;
+    std::unique_ptr<QMenu> windowsMenu;
     QAction *windowsExitAction;
     QAction *windowsUpdateAction;
     QAction *windowsImportLinksAction;
@@ -275,10 +279,12 @@ protected:
     QAction *windowsSettingsAction;
 #endif
 
-    QMenu *trayMenu;
-    QMenu *trayGuestMenu;
+    std::unique_ptr<QMenu> trayMenu;
+    std::unique_ptr<QMenu> trayGuestMenu;
     QMenu emptyMenu;
-    QMenu *syncsMenu;
+    std::unique_ptr<QMenu> syncsMenu;
+    QSignalMapper *menuSignalMapper;
+
     MenuItemAction *exitAction;
     MenuItemAction *settingsAction;
     MenuItemAction *importLinksAction;
@@ -301,10 +307,14 @@ protected:
 #endif
 
     QTimer *connectivityTimer;
+    std::unique_ptr<QTimer> onGlobalSyncStateChangedTimer;
     int scanningAnimationIndex;
     SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
     InfoDialog *infoDialog;
+#ifdef _WIN32
+    QMap<QString, double> lastCheckedScreens;
+#endif
     bool infoOverQuota;
     Preferences *preferences;
     mega::MegaApi *megaApi;
@@ -322,11 +332,13 @@ protected:
     QQueue<QString> uploadQueue;
     QQueue<mega::MegaNode *> downloadQueue;
     int numTransfers[2];
-    unsigned int activeTransferTag[2];
+    int activeTransferTag[2];
     unsigned long long activeTransferPriority[2];
     unsigned int activeTransferState[2];
-    long long queuedUserStats;
-    bool inflightUserStats;
+    bool queuedUserStats[3];
+    int queuedStorageUserStatsReason;
+    long long userStatsLastRequest[3];
+    bool inflightUserStats[3];
     long long cleaningSchedulerExecution;
     long long lastUserActivityExecution;
     bool almostOQ;
@@ -400,9 +412,6 @@ protected:
     bool updatingSSLcert;
     long long lastSSLcertUpdate;
     bool nodescurrent;
-#ifdef _WIN32    
-    std::chrono::steady_clock::time_point lastApplicationDeactivation;
-#endif
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener

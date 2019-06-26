@@ -62,7 +62,7 @@ macx {
 CONFIG += USE_PDFIUM
 }
 else:win32 {
-CONFIG += USE_PDFIUM
+#CONFIG += USE_PDFIUM
 }
 else:contains(QMAKE_CFLAGS, -m64) { #Notice this might not work for clang!
 CONFIG += USE_PDFIUM
@@ -83,6 +83,13 @@ include(control/control.pri)
 include(platform/platform.pri)
 include(google_breakpad/google_breakpad.pri)
 include(qtlockedfile/qtlockedfile.pri)
+
+unix:!macx {
+    GCC_VERSION = $$system("g++ -dumpversion")
+    lessThan(GCC_VERSION, 5) {
+        LIBS -= -lstdc++fs
+    }
+}
 
 DEPENDPATH += $$PWD
 INCLUDEPATH += $$PWD
@@ -159,7 +166,7 @@ macx {
 DEFINES += REQUIRE_HAVE_PDFIUM
 }
 else:win32 {
-DEFINES += REQUIRE_HAVE_PDFIUM
+#DEFINES += REQUIRE_HAVE_PDFIUM
 }
 else:contains(QMAKE_CFLAGS, -m64) { #Notice this might not work for clang!
 DEFINES += REQUIRE_HAVE_PDFIUM

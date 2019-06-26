@@ -11,8 +11,13 @@
 #include "DataUsageMenu.h"
 #include "MenuItemAction.h"
 #include "control/Preferences.h"
+#include "QCustomTransfersModel.h"
 #include <QGraphicsOpacityEffect>
 #include "HighDpiResize.h"
+#include "Utilities.h"
+#ifdef _WIN32
+#include <chrono>
+#endif
 
 namespace Ui {
 class InfoDialog;
@@ -32,9 +37,10 @@ class InfoDialog : public QDialog, public mega::MegaTransferListener
     };
 
 public:
-    explicit InfoDialog(MegaApplication *app, QWidget *parent = 0);
+    explicit InfoDialog(MegaApplication *app, QWidget *parent = 0, InfoDialog* olddialog = nullptr);
     ~InfoDialog();
 
+    PSA_info* getPSAdata();
     void setUsage();
     void setAvatar();
     void setTransfer(mega::MegaTransfer *transfer);
@@ -49,19 +55,26 @@ public:
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
 
+
+    QCustomTransfersModel *stealModel();
+
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
 
 #ifdef __APPLE__
     void moveArrow(QPoint p);
 #endif
 
-    void regenerateLayout();
+    void regenerateLayout(InfoDialog* olddialog = nullptr);
     HighDpiResize highDpiResize;
+#ifdef _WIN32
+    std::chrono::steady_clock::time_point lastWindowHideTime;
+#endif
 
 private:
     void drawAvatar(QString email);
     void createQuotaUsedMenu();
     void animateStates(bool opt);
+    void hideEvent(QHideEvent *event) override;
 
 public slots:
    void addSync();
@@ -118,6 +131,7 @@ private:
     bool overQuotaState;
     int storageState;
     int actualAccountType;
+    bool loggedInMode = true;
 
     QPropertyAnimation *animation;
     QGraphicsOpacityEffect *opacityEffect;
@@ -129,7 +143,6 @@ protected:
     bool eventFilter(QObject *obj, QEvent *e);
 #ifdef __APPLE__
     void paintEvent( QPaintEvent * e);
-    void hideEvent(QHideEvent *event);
 #endif
 
 protected:

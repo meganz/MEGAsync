@@ -64,13 +64,13 @@ void ChangeLogDialog::setChangeLogNotes(QString notes)
 
 void ChangeLogDialog::on_bTerms_clicked()
 {
-    QString temsUrl = QString::fromAscii("https://mega.nz/terms");
+    QString temsUrl = Preferences::BASE_URL + QString::fromAscii("/terms");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(temsUrl));
 }
 
 void ChangeLogDialog::on_bPolicy_clicked()
 {
-    QString policyUrl = QString::fromAscii("https://mega.nz/privacy");
+    QString policyUrl = Preferences::BASE_URL + QString::fromAscii("/privacy");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(policyUrl));
 }
 
@@ -82,7 +82,7 @@ void ChangeLogDialog::on_bAck_clicked()
 
 void ChangeLogDialog::on_bGDPR_clicked()
 {
-    QString gdprUrl = QString::fromAscii("https://mega.nz/gdpr");
+    QString gdprUrl = Preferences::BASE_URL + QString::fromAscii("/gdpr");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(gdprUrl));
 }
 

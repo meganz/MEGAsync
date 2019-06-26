@@ -51,6 +51,11 @@ QScrollBar:horizontal {
 height: 16px;
 }
 
+QPushButton
+{
+    padding-right: 12px;
+    padding-left: 12px;
+}
 </string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,0">

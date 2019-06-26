@@ -810,7 +810,7 @@ void SettingsDialog::on_bOk_clicked()
 
 void SettingsDialog::on_bHelp_clicked()
 {
-    QString helpUrl = QString::fromAscii("https://mega.nz/help/client/megasync");
+    QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/help/client/megasync");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
 
@@ -1077,7 +1077,7 @@ void SettingsDialog::loadSettings()
                 break;
             case Preferences::ACCOUNT_TYPE_BUSINESS:
                 icon.addFile(QString::fromUtf8(":/images/business.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->lAccountType->setText(tr("BUSINESS"));
+                ui->lAccountType->setText(QString::fromUtf8("BUSINESS"));
                 break;
             default:
                 icon.addFile(QString::fromUtf8(":/images/Pro_I.png"), QSize(), QIcon::Normal, QIcon::Off);
@@ -1286,7 +1286,7 @@ void SettingsDialog::refreshAccountDetails()
             ui->pStorage->setValue((percentage < 100) ? percentage : 100);
             ui->lStorage->setText(tr("%1 (%2%) of %3 used")
                   .arg(Utilities::getSizeString(preferences->usedStorage()))
-                  .arg(QString::number(percentage))
+                  .arg(QString::number(percentage > 100 ? 100 : percentage))
                   .arg(Utilities::getSizeString(preferences->totalStorage())));
         }
     }
@@ -1309,7 +1309,7 @@ void SettingsDialog::refreshAccountDetails()
             ui->pUsedBandwidth->setValue((percentage < 100) ? percentage : 100);
             ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
                   .arg(Utilities::getSizeString(preferences->usedBandwidth()))
-                  .arg(QString::number(percentage))
+                  .arg(QString::number(percentage > 100 ? 100 : percentage))
                   .arg(Utilities::getSizeString(preferences->totalBandwidth())));
         }
     }
@@ -1761,7 +1761,11 @@ int SettingsDialog::saveSettings()
         if (result == QMessageBox::Yes)
         {
             // Restart MEGAsync
+#if defined(Q_OS_MACX) || QT_VERSION < 0x050000
             ((MegaApplication*)qApp)->rebootApplication(false);
+#else
+            QTimer::singleShot(0, [] () {((MegaApplication*)qApp)->rebootApplication(false); }); //we enqueue this call, so as not to close before properly handling the exit of Settings Dialog
+#endif
             return 2;
         }
 
@@ -1963,7 +1967,7 @@ void SettingsDialog::on_bExportMasterKey_clicked()
 
     QDir dir(defaultPath);
     QString fileName = QFileDialog::getSaveFileName(0,
-             tr("Export Master key"), dir.filePath(QString::fromUtf8("MEGA-RECOVERYKEY")),
+             tr("Export Master key"), dir.filePath(tr("MEGA-RECOVERYKEY")),
              QString::fromUtf8("Txt file (*.txt)"), NULL, QFileDialog::ShowDirsOnly
                                                     | QFileDialog::DontResolveSymlinks);
 
@@ -2007,7 +2011,7 @@ void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
         if (node)
         {
             const char *handle = node->getBase64Handle();
-            QString url = QString::fromAscii("https://mega.nz/fm/") + QString::fromAscii(handle);
+            QString url = Preferences::BASE_URL + QString::fromAscii("/fm/") + QString::fromAscii(handle);
             QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
             delete [] handle;
             delete node;
@@ -2083,6 +2087,7 @@ void SettingsDialog::on_bDownloadFolder_clicked()
         if (!test.open())
         {
             QMessageBox::critical(NULL, tr("Error"), tr("You don't have write permissions in this local folder."));
+            delete dialog;
             return;
         }
 
@@ -2549,7 +2554,7 @@ void SettingsDialog::onAnimationFinished()
 void SettingsDialog::on_bStorageDetails_clicked()
 {
     accountDetailsDialog = new AccountDetailsDialog(megaApi, this);
-    app->updateUserStats(true);
+    app->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
     QPointer<AccountDetailsDialog> dialog = accountDetailsDialog;
     dialog->exec();
     if (!dialog)

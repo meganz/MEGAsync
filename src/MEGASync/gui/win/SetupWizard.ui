@@ -92,6 +92,12 @@ font-size: 11px;
 #wErrorMessage
 {
 	background-color: #333333;
+}
+
+QPushButton
+{
+	padding-right: 12px;
+	padding-left: 12px;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
@@ -212,7 +218,7 @@ font-size: 11px;
             <string/>
            </property>
            <property name="icon">
-            <iconset resource="../Resources_macx.qrc">
+            <iconset resource="../Resources_win.qrc">
              <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
            </property>
            <property name="iconSize">
@@ -1304,7 +1310,9 @@ background-color: #E2E2E2;
                 </size>
                </property>
                <property name="font">
-                <font/>
+                <font>
+                 <pointsize>-1</pointsize>
+                </font>
                </property>
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
@@ -1314,7 +1322,7 @@ background-color: #E2E2E2;
 border: none;</string>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/full_sync_ico.png</normaloff>:/images/full_sync_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -1519,7 +1527,9 @@ color: #E2574C;
                 </size>
                </property>
                <property name="font">
-                <font/>
+                <font>
+                 <pointsize>-1</pointsize>
+                </font>
                </property>
                <property name="focusPolicy">
                 <enum>Qt::NoFocus</enum>
@@ -1532,7 +1542,7 @@ border: none;</string>
                 <string/>
                </property>
                <property name="icon">
-                <iconset resource="../Resources_macx.qrc">
+                <iconset resource="../Resources_win.qrc">
                  <normaloff>:/images/selective_sync_ico.png</normaloff>:/images/selective_sync_ico.png</iconset>
                </property>
                <property name="iconSize">
@@ -1837,6 +1847,12 @@ font-size: 13px;
             </item>
             <item>
              <widget class="QPushButton" name="bLocalFolder">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>22</height>
+               </size>
+              </property>
               <property name="text">
                <string>Change</string>
               </property>
@@ -1884,6 +1900,12 @@ font-size: 13px;
             </item>
             <item>
              <widget class="QPushButton" name="bMegaFolder">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>22</height>
+               </size>
+              </property>
               <property name="text">
                <string>Change</string>
               </property>
@@ -2220,7 +2242,7 @@ image: url(://images/desktop_app_TM.png);
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
-                  <height>0</height>
+                  <height>22</height>
                  </size>
                 </property>
                 <property name="text">
@@ -2271,6 +2293,12 @@ image: url(://images/desktop_app_TM.png);
       </property>
       <item>
        <widget class="QPushButton" name="bSkip">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>22</height>
+         </size>
+        </property>
         <property name="text">
          <string>Skip</string>
         </property>
@@ -2291,6 +2319,12 @@ image: url(://images/desktop_app_TM.png);
       </item>
       <item>
        <widget class="QPushButton" name="bCancel">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>22</height>
+         </size>
+        </property>
         <property name="text">
          <string>Cancel</string>
         </property>
@@ -2298,6 +2332,12 @@ image: url(://images/desktop_app_TM.png);
       </item>
       <item>
        <widget class="QPushButton" name="bBack">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>22</height>
+         </size>
+        </property>
         <property name="text">
          <string>Back</string>
         </property>
@@ -2305,6 +2345,12 @@ image: url(://images/desktop_app_TM.png);
       </item>
       <item>
        <widget class="QPushButton" name="bNext">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>22</height>
+         </size>
+        </property>
         <property name="text">
          <string>Next</string>
         </property>
@@ -2336,7 +2382,7 @@ image: url(://images/desktop_app_TM.png);
   <tabstop>bFinish</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
  <slots>

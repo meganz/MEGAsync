@@ -47,6 +47,11 @@ QGroupBox {
 	border:none;
 }
 
+QPushButton {
+padding-right: 12px;
+padding-left: 12px;
+}
+
 QComboBox::drop-down {
 width: 16px;
 }
@@ -514,7 +519,7 @@ background:transparent;</string>
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -562,6 +567,12 @@ background:transparent;</string>
       </item>
       <item>
        <widget class="QPushButton" name="bOk">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>22</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true"/>
         </property>
@@ -581,6 +592,12 @@ background:transparent;</string>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>22</height>
+         </size>
+        </property>
         <property name="text">
          <string>Cancel</string>
         </property>
@@ -597,7 +614,7 @@ background:transparent;</string>
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>0</height>
+          <height>22</height>
          </size>
         </property>
         <property name="maximumSize">
@@ -641,7 +658,7 @@ background:transparent;</string>
       <string notr="true"/>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>3</number>
      </property>
      <widget class="QWidget" name="pAccount">
       <property name="sizePolicy">
@@ -723,6 +740,18 @@ background:transparent;</string>
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>32</width>
+              <height>32</height>
+             </size>
             </property>
             <property name="focusPolicy">
              <enum>Qt::NoFocus</enum>
@@ -942,7 +971,7 @@ background:transparent;</string>
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>23</height>
+                    <height>22</height>
                    </size>
                   </property>
                   <property name="maximumSize">
@@ -967,7 +996,7 @@ background:transparent;</string>
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>23</height>
+                    <height>22</height>
                    </size>
                   </property>
                   <property name="maximumSize">
@@ -1016,7 +1045,7 @@ background:transparent;</string>
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>23</height>
+                    <height>22</height>
                    </size>
                   </property>
                   <property name="maximumSize">
@@ -1578,7 +1607,7 @@ border: none;</string>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>0</height>
+                       <height>22</height>
                       </size>
                      </property>
                      <property name="maximumSize">
@@ -3332,7 +3361,7 @@ background:transparent;</string>
                 <enum>Qt::ScrollBarAlwaysOn</enum>
                </property>
                <property name="horizontalScrollBarPolicy">
-                <enum>Qt::ScrollBarAlwaysOff</enum>
+                <enum>Qt::ScrollBarAsNeeded</enum>
                </property>
                <property name="selectionMode">
                 <enum>QAbstractItemView::ExtendedSelection</enum>
@@ -3371,6 +3400,12 @@ background:transparent;</string>
              </property>
              <item>
               <widget class="QPushButton" name="bExcludeSize">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="text">
                 <string>Exclude by size</string>
                </property>
@@ -3402,7 +3437,7 @@ background:transparent;</string>
              <item>
               <widget class="QPushButton" name="bDeleteName">
                <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                  <horstretch>0</horstretch>
                  <verstretch>0</verstretch>
                 </sizepolicy>
@@ -3575,7 +3610,7 @@ background:transparent;</string>
                <property name="minimumSize">
                 <size>
                  <width>0</width>
-                 <height>0</height>
+                 <height>22</height>
                 </size>
                </property>
                <property name="maximumSize">
@@ -3660,6 +3695,12 @@ background:transparent;</string>
              </item>
              <item>
               <widget class="QPushButton" name="bClearRemoteCache">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>22</height>
+                </size>
+               </property>
                <property name="maximumSize">
                 <size>
                  <width>70</width>
@@ -3694,6 +3735,12 @@ background:transparent;</string>
           </property>
           <item>
            <widget class="QPushButton" name="bLocalCleaner">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>22</height>
+             </size>
+            </property>
             <property name="text">
              <string>%1 clearing scheduler</string>
             </property>
@@ -3805,6 +3852,12 @@ background:transparent;</string>
           </item>
           <item>
            <widget class="QPushButton" name="bClearFileVersions">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>22</height>
+             </size>
+            </property>
             <property name="text">
              <string>Clear</string>
             </property>
@@ -3912,7 +3965,7 @@ background:transparent;</string>
             <property name="minimumSize">
              <size>
               <width>0</width>
-              <height>0</height>
+              <height>22</height>
              </size>
             </property>
             <property name="text">
