@@ -36,7 +36,14 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 #ifdef Q_OS_LINUX
     if (true || !QSystemTrayIcon::isSystemTrayAvailable()) //To avoid issues with text input we implement popup ourselves by listening to WindowDeactivate event
     {
-        setWindowFlags(Qt::FramelessWindowHint);
+        if (!QSystemTrayIcon::isSystemTrayAvailable())
+        {
+            setWindowFlags(0);
+        }
+        else
+        {
+            setWindowFlags(Qt::FramelessWindowHint);
+        }
     }
     else
 #endif
@@ -889,9 +896,18 @@ void InfoDialog::changeEvent(QEvent *event)
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 {
 #ifdef Q_OS_LINUX
-    if (obj == this && e->type() == QEvent::WindowDeactivate)
+    if (!QSystemTrayIcon::isSystemTrayAvailable())
     {
-        close();
+        if (obj == this && e->type() == QEvent::Close)
+        {
+            e->ignore();
+            ((MegaApplication*)qApp)->exitApplication();
+            return true;
+        }
+    }
+    else if (obj == this && e->type() == QEvent::WindowDeactivate)
+    {
+        hide();
         return true;
     }
 #endif
