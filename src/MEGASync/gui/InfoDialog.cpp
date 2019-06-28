@@ -34,22 +34,13 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->setupUi(this);
     //Set window properties
 #ifdef Q_OS_LINUX
-    if (true || !QSystemTrayIcon::isSystemTrayAvailable()) //To avoid issues with text input we implement popup ourselves by listening to WindowDeactivate event
+    if (QSystemTrayIcon::isSystemTrayAvailable())
     {
-        if (!QSystemTrayIcon::isSystemTrayAvailable())
-        {
-            setWindowFlags(0);
-        }
-        else
-        {
-            setWindowFlags(Qt::FramelessWindowHint);
-        }
+        setWindowFlags(Qt::FramelessWindowHint); //To avoid issues with text input we implement a popup (instead of using Qt::Popup) ourselves by listening to WindowDeactivate event
     }
-    else
+#else
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
 #endif
-    {
-        setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
-    }
 
 #ifdef __APPLE__
     setAttribute(Qt::WA_TranslucentBackground);
@@ -900,7 +891,6 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
     {
         if (obj == this && e->type() == QEvent::Close)
         {
-            e->ignore();
             ((MegaApplication*)qApp)->exitApplication();
             return true;
         }
