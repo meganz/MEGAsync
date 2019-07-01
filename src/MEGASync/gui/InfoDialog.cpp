@@ -34,9 +34,20 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->setupUi(this);
     //Set window properties
 #ifdef Q_OS_LINUX
-    if (QSystemTrayIcon::isSystemTrayAvailable())
+    doNotActAsPopup = false;
+    if (getenv("USE_MEGASYNC_AS_REGULAR_WINDOW"))
+    {
+        doNotActAsPopup = true;
+    }
+
+    if (!doNotActAsPopup && QSystemTrayIcon::isSystemTrayAvailable())
     {
         setWindowFlags(Qt::FramelessWindowHint); //To avoid issues with text input we implement a popup (instead of using Qt::Popup) ourselves by listening to WindowDeactivate event
+    }
+    else
+    {
+        setWindowFlags(Qt::Window);
+        doNotActAsPopup = true; //the first time systray is not available will set this flag to true to disallow popup until restarting
     }
 #else
     setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
@@ -887,11 +898,12 @@ void InfoDialog::changeEvent(QEvent *event)
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 {
 #ifdef Q_OS_LINUX
-    if (!QSystemTrayIcon::isSystemTrayAvailable())
+    if (doNotActAsPopup)
     {
         if (obj == this && e->type() == QEvent::Close)
         {
-            ((MegaApplication*)qApp)->exitApplication();
+            e->ignore(); //This prevents the dialog from closing
+            app->exitApplication();
             return true;
         }
     }

@@ -2893,11 +2893,20 @@ void MegaApplication::showInfoDialog()
                 infoDialog->moveArrow(localCoordinates);
             #endif
 
-            infoDialog->show();
-            infoDialog->updateDialogState();
-            infoDialog->raise();
-            infoDialog->activateWindow();
-            infoDialog->highDpiResize.queueRedraw();
+            static bool firsttime = true;
+            if (getenv("START_MEGASYNC_MINIMIZED") && firsttime)
+            {
+                infoDialog->showMinimized();
+                firsttime = false;
+            }
+            else
+            {
+                infoDialog->show();
+                infoDialog->updateDialogState();
+                infoDialog->raise();
+                infoDialog->activateWindow();
+                infoDialog->highDpiResize.queueRedraw();
+            }
         }
         else
         {
