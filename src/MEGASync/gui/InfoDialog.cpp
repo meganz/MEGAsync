@@ -898,6 +898,14 @@ void InfoDialog::changeEvent(QEvent *event)
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 {
 #ifdef Q_OS_LINUX
+    static bool firstime = true;
+    if (getenv("START_MEGASYNC_MINIMIZED") && firstime && (obj == this && e->type() == QEvent::Paint))
+    {
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Minimizing info dialog ...").arg(e->type()).toUtf8().constData());
+        showMinimized();
+        firstime = false;
+    }
+
     if (doNotActAsPopup)
     {
         if (obj == this && e->type() == QEvent::Close)

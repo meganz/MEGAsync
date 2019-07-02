@@ -1549,6 +1549,10 @@ void MegaApplication::start()
             megaApi->sendEvent(99500, "MEGAsync first start");
             openInfoWizard();
         }
+        else if (!QSystemTrayIcon::isSystemTrayAvailable() && !getenv("START_MEGASYNC_IN_BACKGROUND"))
+        {
+            showInfoDialog();
+        }
 
         onGlobalSyncStateChanged(megaApi);
         return;
@@ -1708,7 +1712,10 @@ void MegaApplication::loggedIn()
                                         "If you want to open the interface, just try to open MEGAsync again."));
                 preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
             }
-            showInfoDialog();
+            if (!getenv("START_MEGASYNC_IN_BACKGROUND"))
+            {
+                showInfoDialog();
+            }
         }
     }
     infoDialog->setUsage();
@@ -2893,20 +2900,11 @@ void MegaApplication::showInfoDialog()
                 infoDialog->moveArrow(localCoordinates);
             #endif
 
-            static bool firsttime = true;
-            if (getenv("START_MEGASYNC_MINIMIZED") && firsttime)
-            {
-                infoDialog->showMinimized();
-                firsttime = false;
-            }
-            else
-            {
-                infoDialog->show();
-                infoDialog->updateDialogState();
-                infoDialog->raise();
-                infoDialog->activateWindow();
-                infoDialog->highDpiResize.queueRedraw();
-            }
+            infoDialog->show();
+            infoDialog->updateDialogState();
+            infoDialog->raise();
+            infoDialog->activateWindow();
+            infoDialog->highDpiResize.queueRedraw();
         }
         else
         {
