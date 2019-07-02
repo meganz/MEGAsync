@@ -2866,8 +2866,7 @@ void MegaApplication::showInfoDialog()
 
     if (infoDialog)
     {
-
-        if (!infoDialog->isVisible())
+        if (!infoDialog->isVisible() || ((infoDialog->windowState() & Qt::WindowMinimized)) )
         {
             if (storageState == MegaApi::STORAGE_STATE_RED)
             {
