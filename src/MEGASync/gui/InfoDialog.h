@@ -88,12 +88,14 @@ private slots:
     void on_bUpgrade_clicked();
     void openFolder(QString path);
     void on_bChats_clicked();
-    void onOverlayClicked();
     void on_bTransferManager_clicked();
     void on_bAddSync_clicked();
     void on_bUpload_clicked();
     void on_bDownload_clicked();
     void onUserAction(int action);
+
+    void on_tTransfers_clicked();
+    void on_tRecents_clicked();
 
     void on_bDotUsedStorage_clicked();
     void on_bDotUsedQuota_clicked();
@@ -111,7 +113,6 @@ signals:
 
 private:
     Ui::InfoDialog *ui;
-    QPushButton *overlay;
 #ifdef __APPLE__
     QPushButton *arrow;
     QWidget *dummy; // Patch to let text input on line edits of GuestWidget

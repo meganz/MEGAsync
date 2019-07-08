@@ -26,7 +26,16 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#bAvatar, #bState, #bDotUsedQuota, #bDotUsedStorage, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon
+   <string notr="true">#tTransfers, #tRecents
+{
+  font-family: &quot;Lato&quot;;
+  font-size: 15px;
+  color: rgba(0, 0, 0, 40%);;
+  padding: 0px 8px 0px 8px;
+  border: none;
+}
+
+#bAvatar, #bState, #bDotUsedQuota, #bDotUsedStorage, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon
 {
 	border: none;
 }
@@ -93,7 +102,7 @@ color: #333333;
 padding-right: 0px;
 }
 
-#wSeparator, #wHeaderSeparator
+#wSeparator
 {
 background-color:  rgb(231, 231, 231);
 }
@@ -519,7 +528,7 @@ background-color: #FFFFFF;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+               <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/ico_add_sync_folder.png</normaloff>:/images/ico_add_sync_folder.png</iconset>
               </property>
               <property name="iconSize">
@@ -552,7 +561,7 @@ background-color: #FFFFFF;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+               <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
               </property>
               <property name="iconSize">
@@ -585,7 +594,7 @@ background-color: #FFFFFF;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+               <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
               </property>
               <property name="iconSize">
@@ -630,7 +639,7 @@ background-color: #FFFFFF;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+               <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/more_settings.png</normaloff>:/images/more_settings.png</iconset>
               </property>
               <property name="iconSize">
@@ -664,31 +673,6 @@ background-color: #FFFFFF;
           </widget>
          </item>
          <item>
-          <widget class="QWidget" name="wHeaderSeparator" native="true">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>400</width>
-             <height>1</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>400</width>
-             <height>1</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true"/>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QWidget" name="wActiveTransfersContainer" native="true">
            <property name="minimumSize">
             <size>
@@ -705,7 +689,7 @@ background-color: #FFFFFF;
            <property name="styleSheet">
             <string notr="true"/>
            </property>
-           <layout class="QHBoxLayout" name="horizontalLayout_8">
+           <layout class="QVBoxLayout" name="verticalLayout_15">
             <property name="spacing">
              <number>0</number>
             </property>
@@ -721,6 +705,246 @@ background-color: #FFFFFF;
             <property name="bottomMargin">
              <number>0</number>
             </property>
+            <item>
+             <widget class="QWidget" name="wTabOptions" native="true">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>30</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#wTabOptions
+{
+   border-bottom: 1px solid rgb(231, 231, 231);
+}
+QToolButton
+{
+   border: none;
+}
+</string>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout_18">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QWidget" name="wContainerTabOptions" native="true">
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>16777215</width>
+                   <height>30</height>
+                  </size>
+                 </property>
+                 <layout class="QHBoxLayout" name="horizontalLayout_13">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
+                  <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
+                  </property>
+                  <item>
+                   <widget class="QWidget" name="wTransfers" native="true">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout_16">
+                     <property name="spacing">
+                      <number>5</number>
+                     </property>
+                     <property name="leftMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <spacer name="verticalSpacer_3">
+                       <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>20</width>
+                         <height>40</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                     <item>
+                      <widget class="QToolButton" name="tTransfers">
+                       <property name="text">
+                        <string>Transfers</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="lTransfers">
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>2</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>2</height>
+                        </size>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QWidget" name="wRecents" native="true">
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>30</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true"/>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout_17">
+                     <property name="spacing">
+                      <number>5</number>
+                     </property>
+                     <property name="leftMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="rightMargin">
+                      <number>0</number>
+                     </property>
+                     <property name="bottomMargin">
+                      <number>0</number>
+                     </property>
+                     <item>
+                      <spacer name="verticalSpacer_2">
+                       <property name="orientation">
+                        <enum>Qt::Vertical</enum>
+                       </property>
+                       <property name="sizeHint" stdset="0">
+                        <size>
+                         <width>20</width>
+                         <height>40</height>
+                        </size>
+                       </property>
+                      </spacer>
+                     </item>
+                     <item>
+                      <widget class="QToolButton" name="tRecents">
+                       <property name="text">
+                        <string>Recents</string>
+                       </property>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QLabel" name="lRecents">
+                       <property name="minimumSize">
+                        <size>
+                         <width>0</width>
+                         <height>2</height>
+                        </size>
+                       </property>
+                       <property name="maximumSize">
+                        <size>
+                         <width>16777215</width>
+                         <height>2</height>
+                        </size>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true"/>
+                       </property>
+                       <property name="text">
+                        <string/>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="horizontalSpacer_12">
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>213</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
             <item>
              <widget class="QStackedWidget" name="sActiveTransfers">
               <property name="minimumSize">
@@ -816,7 +1040,7 @@ border: none;</string>
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset resource="../Resources_linux.qrc">
+                     <iconset resource="../Resources_macx.qrc">
                       <normaloff>:/images/upload_to_mega.png</normaloff>:/images/upload_to_mega.png</iconset>
                     </property>
                     <property name="iconSize">
@@ -1419,7 +1643,7 @@ background-color: #FFFFFF;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+               <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/Nav_Dot_inactive.png</normaloff>
                 <normalon>:/images/Nav_Dot_inactive.png</normalon>
                 <disabledoff>:/images/Nav_Dot_inactive.png</disabledoff>
@@ -1455,7 +1679,7 @@ background-color: #FFFFFF;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+               <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/Nav_Dot_inactive.png</normaloff>:/images/Nav_Dot_inactive.png</iconset>
               </property>
               <property name="iconSize">
@@ -2129,7 +2353,7 @@ color: #333333;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
+               <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/tray_transfer_manager_ico.png</normaloff>:/images/tray_transfer_manager_ico.png</iconset>
               </property>
               <property name="iconSize">

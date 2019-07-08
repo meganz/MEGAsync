@@ -142,22 +142,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     on_bDotUsedStorage_clicked();
 
-    //Create the overlay widget with a semi-transparent background
-    //that will be shown over the transfers when they are paused
-    overlay = new QPushButton(this);
-    overlay->setStyleSheet(QString::fromAscii("background-color: transparent; "
-                                              "border: none; "));
-    overlay->resize(ui->pUpdated->size());
-    overlay->setCursor(Qt::PointingHandCursor);
-
-#ifdef __APPLE__
-    overlay->move(1, 72);
-#else
-    overlay->move(2, 60);
-    overlay->resize(overlay->width()-4, overlay->height());
-#endif
-    overlay->show();
-    connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
     connect(this, SIGNAL(openTransferManager(int)), app, SLOT(externalOpenTransferManager(int)));
 
     if (preferences->logged())
@@ -654,7 +638,6 @@ void InfoDialog::updateDialogState()
             ui->lOQTitle->setText(tr("You're running out of storage space."));
             ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
             ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
-            overlay->setVisible(false);
             ui->wPSA->hidePSA();
             break;
         case Preferences::STATE_OVER_STORAGE:
@@ -665,7 +648,6 @@ void InfoDialog::updateDialogState()
                                     + QString::fromUtf8("<br>")
                                     + tr("Please upgrade to PRO."));
             ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
-            overlay->setVisible(false);
             ui->wPSA->hidePSA();
             break;
         case Preferences::STATE_BELOW_OVER_STORAGE:
@@ -676,7 +658,6 @@ void InfoDialog::updateDialogState()
 
             if (remainingUploads || remainingDownloads || (ui->wListTransfers->getModel() && ui->wListTransfers->getModel()->rowCount(QModelIndex())) || ui->wPSA->isPSAready())
             {
-                overlay->setVisible(false);
                 ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
                 ui->wPSA->showPSA();
             }
@@ -684,14 +665,6 @@ void InfoDialog::updateDialogState()
             {
                 ui->wPSA->hidePSA();
                 ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
-                if (!waiting && !indexing)
-                {
-                    overlay->setVisible(true);
-                }
-                else
-                {
-                    overlay->setVisible(false);
-                }
             }
             break;
     }
@@ -820,11 +793,6 @@ void InfoDialog::on_bChats_clicked()
     QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
     QString url = QString::fromUtf8("").arg(userAgent);
     megaApi->getSessionTransferURL(url.toUtf8().constData());
-}
-
-void InfoDialog::onOverlayClicked()
-{
-    app->uploadActionClicked();
 }
 
 void InfoDialog::on_bTransferManager_clicked()
@@ -1219,6 +1187,18 @@ void InfoDialog::animateStates(bool opt)
 void InfoDialog::onUserAction(int action)
 {
     app->userAction(action);
+}
+
+void InfoDialog::on_tTransfers_clicked()
+{
+    ui->lTransfers->setStyleSheet(QString::fromUtf8("background-color: #3C434D;"));
+    ui->lRecents->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
+}
+
+void InfoDialog::on_tRecents_clicked()
+{
+    ui->lTransfers->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
+    ui->lRecents->setStyleSheet(QString::fromUtf8("background-color: #3C434D;"));
 }
 
 void InfoDialog::on_bDotUsedStorage_clicked()
