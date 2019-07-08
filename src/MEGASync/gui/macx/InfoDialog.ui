@@ -394,7 +394,7 @@ color: #999999;
 {
 border-top-left-radius: 16px;
 border-top-right-radius: 16px;
-background-color: #FFFFFF;
+background-color: #F7F8F9;
 }</string>
         </property>
         <property name="frameShape">
@@ -670,6 +670,9 @@ background-color: #FFFFFF;
              <height>120</height>
             </size>
            </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: #F7F8F9;</string>
+           </property>
           </widget>
          </item>
          <item>
@@ -723,6 +726,7 @@ background-color: #FFFFFF;
                <string notr="true">#wTabOptions
 {
    border-bottom: 1px solid rgb(231, 231, 231);
+   background-color: #F7F8F9;
 }
 QToolButton
 {
@@ -979,7 +983,7 @@ QToolButton
                 </size>
                </property>
                <property name="styleSheet">
-                <string notr="true">background-color: #f5f5f5;</string>
+                <string notr="true">background-color: #FFFFFF;</string>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_8">
                 <property name="spacing">
@@ -1511,7 +1515,7 @@ margin-right: 20px;</string>
 {
 border-bottom-left-radius: 16px;
 border-bottom-right-radius: 16px;
-background-color: #FFFFFF;
+background-color: #F7F8F9;
 }</string>
         </property>
         <property name="frameShape">
