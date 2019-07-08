@@ -77,6 +77,12 @@ background-color:  rgba(0, 0, 0, 10%);
     color: #666666;
 	font-family: &quot;SF UI Text&quot;;
 	font-size: 11px;
+}
+
+QPushButton
+{
+	padding-right: 12px;
+	padding-left: 12px;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -538,7 +544,7 @@ background-color:  rgba(0, 0, 0, 10%);
          <string notr="true"/>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_macx.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/help_ico.png</normaloff>:/images/help_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -604,7 +610,7 @@ background-color:  rgba(0, 0, 0, 10%);
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>20</height>
+          <height>22</height>
          </size>
         </property>
         <property name="focusPolicy">
@@ -620,7 +626,7 @@ background-color:  rgba(0, 0, 0, 10%);
         <property name="minimumSize">
          <size>
           <width>0</width>
-          <height>20</height>
+          <height>22</height>
          </size>
         </property>
         <property name="focusPolicy">
@@ -642,7 +648,7 @@ background-color:  rgba(0, 0, 0, 10%);
   <tabstop>bCancel</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

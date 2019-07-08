@@ -1,3 +1,14 @@
+megasync (4.1.1) stable; urgency=low
+
+  * Improved look&feel for high resolution displays on Windows and Linux
+  * Improved GUI performance during addition of many downloads
+  * Restyling of initial information wizard, new icons and interface improvements
+  * Support for business accounts
+  * Other minor bug fixes and improvements"));
+  * Enable thumbnail support for PDF
+
+ -- MEGA Team <linux@mega.co.nz>  Thu, 16 May 2019 12:27:20 +0200
+
 megasync (4.0.2) stable; urgency=low
 
   * Fix bug with selection of transfer manager items

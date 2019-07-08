@@ -16,13 +16,18 @@
 #include "MenuItemAction.h"
 #include "platform/Platform.h"
 
+#ifdef _WIN32    
+#include <chrono>
+using namespace std::chrono;
+#endif
+
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
 #endif
 
 using namespace mega;
 
-InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
+InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
     QDialog(parent),
     ui(new Ui::InfoDialog)
 {
@@ -119,7 +124,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     ui->bDotUsedStorage->hide();
     ui->sUsedData->setCurrentWidget(ui->pStorage);
 
-    ui->wListTransfers->setupTransfers();
+
+    ui->wListTransfers->setupTransfers(olddialog?olddialog->stealModel():nullptr);
+
 
 
 #ifdef __APPLE__
@@ -159,9 +166,21 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent) :
     }
     else
     {
-        regenerateLayout();
+        regenerateLayout(olddialog);
     }
     highDpiResize.init(this);
+
+#ifdef _WIN32
+    lastWindowHideTime = std::chrono::steady_clock::now() - 5s;
+
+    PSA_info *psaData = olddialog ? olddialog->getPSAdata() : nullptr;
+    if (psaData)
+    {
+        this->setPSAannouncement(psaData->idPSA, psaData->title, psaData->desc,
+                                 psaData->urlImage, psaData->textButton, psaData->urlClick);
+        delete psaData;
+    }
+#endif
 }
 
 InfoDialog::~InfoDialog()
@@ -171,6 +190,30 @@ InfoDialog::~InfoDialog()
     delete activeDownload;
     delete activeUpload;
     delete animation;
+}
+
+PSA_info *InfoDialog::getPSAdata()
+{
+    if (ui->wPSA->isPSAshown())
+    {
+        PSA_info* info = new PSA_info(ui->wPSA->getPSAdata());
+        return info;
+    }
+
+    return nullptr;
+}
+
+void InfoDialog::hideEvent(QHideEvent *event)
+{
+#ifdef __APPLE__
+    arrow->hide();
+#endif
+
+    QDialog::hideEvent(event);
+
+#ifdef _WIN32
+    lastWindowHideTime = std::chrono::steady_clock::now();
+#endif
 }
 
 void InfoDialog::setAvatar()
@@ -212,7 +255,7 @@ void InfoDialog::setUsage()
         int percentage = floor((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
         ui->pUsageStorage->setValue((percentage < 100) ? percentage : 100);
 
-        if (percentage > 100)
+        if (percentage >= 100)
         {
             ui->pUsageStorage->setProperty("almostoq", false);
             ui->pUsageStorage->setProperty("crossedge", true);
@@ -232,7 +275,7 @@ void InfoDialog::setUsage()
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
 
         QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1</span>")
-                                     .arg(QString::number(percentage).append(QString::fromAscii("%"))))
+                                     .arg(QString::number(percentage > 100 ? 100 : percentage).append(QString::fromAscii("%"))))
                                      .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(preferences->totalStorage())));
         ui->lPercentageUsedStorage->setText(used);
@@ -262,7 +305,7 @@ void InfoDialog::setUsage()
         ui->pUsageQuota->style()->polish(ui->pUsageQuota);
 
         QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1&nbsp;</span>")
-                                     .arg(QString::number(percentage).append(QString::fromAscii("%"))))
+                                     .arg(QString::number(percentage > 100 ? 100 : percentage).append(QString::fromAscii("%"))))
                                      .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(preferences->totalBandwidth())));
         ui->lPercentageUsedQuota->setText(used);
@@ -305,7 +348,10 @@ void InfoDialog::setTransfer(MegaTransfer *transfer)
 
 void InfoDialog::refreshTransferItems()
 {
-    ui->wListTransfers->getModel()->refreshTransfers();
+    if (ui->wListTransfers->getModel())
+    {
+        ui->wListTransfers->getModel()->refreshTransfers();
+    }
 }
 
 void InfoDialog::transferFinished(int error)
@@ -628,7 +674,7 @@ void InfoDialog::updateDialogState()
             remainingUploads = megaApi->getNumPendingUploads();
             remainingDownloads = megaApi->getNumPendingDownloads();
 
-            if (remainingUploads || remainingDownloads || ui->wListTransfers->getModel()->rowCount(QModelIndex()) || ui->wPSA->isPSAready())
+            if (remainingUploads || remainingDownloads || (ui->wListTransfers->getModel() && ui->wListTransfers->getModel()->rowCount(QModelIndex())) || ui->wPSA->isPSAready())
             {
                 overlay->setVisible(false);
                 ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
@@ -818,6 +864,13 @@ bool InfoDialog::updateOverStorageState(int state)
     return false;
 }
 
+QCustomTransfersModel *InfoDialog::stealModel()
+{
+    QCustomTransfersModel *toret = ui->wListTransfers->getModel();
+    ui->wListTransfers->setupTransfers(); // this will create a new empty model
+    return toret;
+}
+
 void InfoDialog::setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton)
 {
     ui->wPSA->setAnnounce(id, title, text, urlImage, textButton, linkButton);
@@ -908,9 +961,8 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
     return QDialog::eventFilter(obj, e);
 }
 
-void InfoDialog::regenerateLayout()
+void InfoDialog::regenerateLayout(InfoDialog* olddialog)
 {
-    static bool loggedInMode = true;
     bool logged = preferences->logged();
 
     if (loggedInMode == logged)
@@ -926,6 +978,11 @@ void InfoDialog::regenerateLayout()
         {
             gWidget = new GuestWidget();
             connect(gWidget, SIGNAL(forwardAction(int)), this, SLOT(onUserAction(int)));
+            if (olddialog)
+            {
+                auto t = olddialog->gWidget->getTexts();
+                gWidget->setTexts(t.first, t.second);
+            }
         }
         else
         {
@@ -1073,12 +1130,15 @@ void InfoDialog::createQuotaUsedMenu()
     }
     cloudItem = new MenuItemAction(tr("Cloud Drive"), Utilities::getSizeString(preferences->cloudDriveStorage()), QIcon(QString::fromAscii("://images/ic_small_cloud_drive.png")), false, QSize(16,16));
 
-    if (inboxItem)
+    if (actualAccountType != Preferences::ACCOUNT_TYPE_BUSINESS)
     {
-        inboxItem->deleteLater();
-        inboxItem = NULL;
+        if (inboxItem)
+        {
+            inboxItem->deleteLater();
+            inboxItem = NULL;
+        }
+        inboxItem = new MenuItemAction(tr("Inbox"), Utilities::getSizeString(preferences->inboxStorage()), QIcon(QString::fromAscii("://images/ic_small_inbox.png")), false, QSize(16,16));
     }
-    inboxItem = new MenuItemAction(tr("Inbox"), Utilities::getSizeString(preferences->inboxStorage()), QIcon(QString::fromAscii("://images/ic_small_inbox.png")), false, QSize(16,16));
 
     if (sharesItem)
     {
@@ -1095,7 +1155,12 @@ void InfoDialog::createQuotaUsedMenu()
     rubbishItem = new MenuItemAction(tr("Rubbish bin"), Utilities::getSizeString(preferences->rubbishStorage()), QIcon(QString::fromAscii("://images/ic_small_rubbish.png")), false, QSize(16,16));
 
     storageUsedMenu->addAction(cloudItem);
-    storageUsedMenu->addAction(inboxItem);
+
+    if (actualAccountType != Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+        storageUsedMenu->addAction(inboxItem);
+    }
+
     storageUsedMenu->addAction(sharesItem);
     storageUsedMenu->addAction(rubbishItem);
 }
@@ -1216,11 +1281,5 @@ void InfoDialog::paintEvent( QPaintEvent * e)
     QPainter p( this );
     p.setCompositionMode( QPainter::CompositionMode_Clear);
     p.fillRect( ui->wArrow->rect(), Qt::transparent );
-}
-
-void InfoDialog::hideEvent(QHideEvent *event)
-{
-    arrow->hide();
-    QDialog::hideEvent(event);
 }
 #endif

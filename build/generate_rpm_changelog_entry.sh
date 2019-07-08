@@ -38,6 +38,8 @@ out4=$(sed "s#\\\\n\$##g" <<< "$out3")
 out5=$(awk '!/New in this version/' <<< "$out4")
 # replace "- " by *
 out6=$(sed 's#^- #  * #g' <<< "$out5")
+# remove duplicates
+out7=$(awk '!x[$0]++' <<< "$out6")
 
 #get version number
 new_version=$(awk 'f; /const QString Preferences::VERSION_STRING = QString::fromAscii/' $in_file | \
@@ -49,6 +51,6 @@ awk -F'\\("' '{print $2}' \
 NOW=$(LANG=en_us_8859_1;date)
 echo $NOW - linux@mega.co.nz
 echo "- Update to version $new_version:"
-echo "$out6"
+echo "$out7"
 echo ""
 echo "-------------------------------------------------------------------"

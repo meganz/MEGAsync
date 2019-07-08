@@ -182,7 +182,17 @@ void TransferManager::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
 
 void TransferManager::createAddMenu()
 {
-    if (!addMenu)
+    if (addMenu)
+    {
+        QList<QAction *> actions = addMenu->actions();
+        for (int i = 0; i < actions.size(); i++)
+        {
+            addMenu->removeAction(actions[i]);
+        }
+    }
+#ifndef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
+    else
+#endif
     {
         addMenu = new QMenu(this);
 #ifdef __APPLE__
@@ -190,14 +200,6 @@ void TransferManager::createAddMenu()
 #else
         addMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
 #endif
-    }
-    else
-    {
-        QList<QAction *> actions = addMenu->actions();
-        for (int i = 0; i < actions.size(); i++)
-        {
-            addMenu->removeAction(actions[i]);
-        }
     }
 
     if (importLinksAction)
@@ -370,6 +372,10 @@ void TransferManager::on_bAdd_clicked()
 
     QPoint point = ui->bAdd->mapToGlobal(QPoint(ui->bAdd->width() , ui->bAdd->height() + 4));
     QPoint p = !point.isNull() ? point - QPoint(addMenu->sizeHint().width(), 0) : QCursor::pos();
+
+#ifdef _WIN32 // win32 needs to recreate menu to fix scaling qt issue
+    createAddMenu();
+#endif
 
 #ifdef __APPLE__
     addMenu->exec(p);

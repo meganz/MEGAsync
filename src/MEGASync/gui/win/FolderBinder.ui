@@ -37,6 +37,8 @@ QPushButton
 {
     min-height: 24px;
 	height: 24px;
+	padding-right: 12px;
+	padding-left: 12px;
 }
 </string>
   </property>
@@ -117,7 +119,7 @@ QPushButton
            <bool>true</bool>
           </property>
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -184,7 +186,7 @@ QPushButton
         <item>
          <widget class="QPushButton" name="bLocalFolder">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -202,8 +204,7 @@ QPushButton
            </size>
           </property>
           <property name="styleSheet">
-           <string notr="true">
-</string>
+           <string notr="true"/>
           </property>
           <property name="text">
            <string>Choose</string>

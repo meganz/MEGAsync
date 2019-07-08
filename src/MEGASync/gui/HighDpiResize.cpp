@@ -5,7 +5,7 @@
 
 void HighDpiResize::init(QDialog* d)
 {
-#ifdef WIN32
+#if defined(WIN32) || defined(Q_OS_LINUX)
     dialog = d;
     d->installEventFilter(this);
 #endif
@@ -24,9 +24,12 @@ bool HighDpiResize::eventFilter(QObject *obj, QEvent *event)
 
 void HighDpiResize::queueRedraw()
 {
-#ifdef WIN32
+#if defined(WIN32)
     // waiting one second means we don't cause the window to be resized multiple times when dragged from one screen to another with a different scaling
     QTimer::singleShot(1000, this, SLOT(forceRedraw()));
+#elif defined(Q_OS_LINUX)
+    // in linux multiple resizes seems more or less bearable, whereas the 1s delay appears buggy when moving between screens
+    QTimer::singleShot(100, this, SLOT(forceRedraw()));
 #endif
 }
 
@@ -45,13 +48,14 @@ void HighDpiResize::forceRedraw()
             r.setRight(r.right() + 100);
             dialog->update(r); // going from 200% to 100% leaves some artifacts otherwise, some of the background is not repainted, very visible in About dialog
         }
+        else
+        {
+            // adjustsize() for sizable windows does something odd, eg upload dialog goes from landscape shape to narrow portrait
+            // so try changing the size down one pixel and then up again
+            QSize s = dialog->size();
+            dialog->resize(s.width() - 1, s.height() - 1);
+            dialog->resize(s);
+        }
     }
-    else
-    {
-        // adjustsize() for sizable windows does something odd, eg upload dialog goes from landscape shape to narrow portrait
-        // so try changing the size down one pixel and then up again
-        QSize s = dialog->size();
-        dialog->resize(s.width() - 1, s.height() - 1);
-        dialog->resize(s);
-    }
+
 }

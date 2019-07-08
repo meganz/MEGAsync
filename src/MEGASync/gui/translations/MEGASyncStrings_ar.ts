@@ -21,7 +21,7 @@
     <message>
         <source>Rubbish Bin</source>
         <translatorcomment>Label for Rubbish Bin space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">سلة المهملات</translation>
+        <translation type="obsolete">سلة المحذوفات</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>Rubbish bin</source>
-        <translation type="unfinished">سلة المهملات</translation>
+        <translation type="unfinished">سلة المحذوفات</translation>
     </message>
     <message>
         <source>Available</source>
@@ -420,7 +420,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>failed:</source>
         <translatorcomment>Label to indicate that the transfer failed. The reason will be appended after colon symbol.</translatorcomment>
-        <translation type="unfinished">failed:</translation>
+        <translation type="unfinished">فشل:</translation>
     </message>
     <message>
         <source>%1 of %2</source>
@@ -430,7 +430,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>starting...</source>
         <translatorcomment>Label to indicate that a transfer is starting.</translatorcomment>
-        <translation type="unfinished">starting…</translation>
+        <translation type="unfinished">البدء...</translation>
     </message>
     <message>
         <source>PAUSED</source>
@@ -445,17 +445,17 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>retrying...</source>
         <translatorcomment>Label to indicate that a transfer is being retried.</translatorcomment>
-        <translation type="unfinished">retrying…</translation>
+        <translation type="unfinished">إعادة المحاولة...</translation>
     </message>
     <message>
         <source>completing...</source>
         <translatorcomment>Label to indicate that a transfer is being completed.</translatorcomment>
-        <translation type="unfinished">completing…</translation>
+        <translation type="unfinished">إتمام...</translation>
     </message>
     <message>
         <source>Added [A]</source>
         <translatorcomment>Label to indicate that a transfer finished (added to the list of recently finished transfers) [A] time ago. [A] will be updated with the time since the transfer finished.</translatorcomment>
-        <translation type="unfinished">Added [A]</translation>
+        <translation type="unfinished">أضيفت [A]</translation>
     </message>
     <message>
         <source>Out of storage space</source>
@@ -661,12 +661,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login to MEGA</source>
         <translatorcomment>Label shown at main dialog before logging in</translatorcomment>
-        <translation type="unfinished">Login to MEGA</translation>
+        <translation type="unfinished">تسجيل الدخول الى MEGA</translation>
     </message>
     <message>
         <source>Email address</source>
         <translatorcomment>Tip shown in email line edit before typing the user email address.</translatorcomment>
-        <translation type="unfinished">Email address</translation>
+        <translation type="unfinished">البريد الالكتروني</translation>
     </message>
     <message>
         <source>Password</source>
@@ -686,7 +686,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Setting up your account...</source>
         <translatorcomment>Label shown at main dialog during the initial setup of synced folders.</translatorcomment>
-        <translation type="unfinished">Setting up your account…</translation>
+        <translation type="unfinished">جاري اعداد حسابك...</translation>
     </message>
     <message>
         <source>Logging in...</source>
@@ -1090,7 +1090,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">سلة المهملات</translation>
+        <translation type="unfinished">سلة المحذوفات</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1108,7 +1108,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload to MEGA now</source>
         <translatorcomment>Label shown at main dialog when the user is already logged in to inform that he can start uploading files to MEGA</translatorcomment>
-        <translation type="unfinished">Upload to MEGA now</translation>
+        <translation type="unfinished">الترفيع الى MEGA الآن</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -1118,12 +1118,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Buy more space</source>
         <translatorcomment>Button label to redirect the user to upgrade the account in the website.</translatorcomment>
-        <translation type="unfinished">Buy more space</translation>
+        <translation type="unfinished">شراء المزيد من مساحة التخزين</translation>
     </message>
     <message>
         <source>TRANSFER QUOTA %1</source>
         <translatorcomment>Label shown to indicate the actual transfer quota used by the current account. %1 will be replaced with the used bandwidth quota</translatorcomment>
-        <translation type="unfinished">TRANSFER QUOTA %1</translation>
+        <translation type="unfinished">حجم التراسل %1</translation>
     </message>
     <message>
         <source>You&apos;re running out of storage space.</source>
@@ -1133,17 +1133,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO now before your account runs full and your uploads to MEGA stop.</source>
         <translatorcomment>Label to encourage the user to upgrade his account before uploads stop</translatorcomment>
-        <translation type="unfinished">Upgrade to PRO now before your account becomes full and your uploads to MEGA stop.</translation>
+        <translation type="unfinished">قم بالترقية الى حساب احترافي PRO الآن قبل أن يمتلئ حسابك وتتوقف عمليات الترفيع الى MEGA.</translation>
     </message>
     <message>
         <source>Your MEGA account is full.</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation type="unfinished">Your MEGA account is full.</translation>
+        <translation type="unfinished">حسابك لدى MEGA ممتلئ.</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled. Please upgrade to PRO</source>
         <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
-        <translation type="obsolete">All file uploads are currently disabled. Please upgrade to PRO.</translation>
+        <translation type="obsolete">تم تعطيل كل عمليات الترفيع الآن، يرجى الترقية الى حساب احترافي PRO.</translation>
     </message>
     <message>
         <source>All file uploads are currently disabled.</source>
@@ -1206,35 +1206,35 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>[S]MEGAsync:[/S] Easy automated syncing between your computers and your MEGA cloud drive</source>
-        <translation type="unfinished">[S]MEGAsync:[/S] مزامنة سهلة وتلقائية بين أجهزة حاسوبك و محرك التخزين السحابي MEGA</translation>
+        <translation type="obsolete">[S]MEGAsync:[/S] مزامنة سهلة وتلقائية بين أجهزة حاسوبك و محرك التخزين السحابي MEGA</translation>
     </message>
     <message>
         <source>[S]Flexible:[/S] Sync any folder from your PC to any folder in the cloud. Sync any number of folders in parallel.</source>
-        <translation type="unfinished">[S]المرونة:[/S] زامن مع أي مجلد من كمبيوترك إلى أي مجلد في السحابة. زامن أي عدد من المجلدات بشكل متواز</translation>
+        <translation type="obsolete">[S]المرونة:[/S] زامن مع أي مجلد من كمبيوترك إلى أي مجلد في السحابة. زامن أي عدد من المجلدات بشكل متواز</translation>
     </message>
     <message>
         <source>Faster transfer speeds</source>
-        <translation type="unfinished">تسريع عملية النقل</translation>
+        <translation type="obsolete">تسريع عملية النقل</translation>
     </message>
     <message>
         <source>MEGAsync takes full advantage of MEGA&apos;s high-powered infrastructure and multi-connection transfers.</source>
-        <translation type="unfinished">تستفيد MEGAsync من الإمتيازات الكاملة لMEGA من بنية تحتية قوية و عمليات نقل باتصال متعدد.</translation>
+        <translation type="obsolete">تستفيد MEGAsync من الإمتيازات الكاملة لMEGA من بنية تحتية قوية و عمليات نقل باتصال متعدد.</translation>
     </message>
     <message>
         <source>Lean &amp; mean resource usage</source>
-        <translation type="unfinished">مصادر سهلة وآمنة للاستخداام</translation>
+        <translation type="obsolete">مصادر سهلة وآمنة للاستخداام</translation>
     </message>
     <message>
         <source>Run MEGA&apos;s end-to-end encryption algorithms right down on your machine without relying on slower browsers.</source>
-        <translation type="unfinished">شغّل خوارزميات التشفير من البداية إلى النهاية على جهازك دون الاعتماد على المتصفحات البطيئة</translation>
+        <translation type="obsolete">شغّل خوارزميات التشفير من البداية إلى النهاية على جهازك دون الاعتماد على المتصفحات البطيئة</translation>
     </message>
     <message>
         <source>Unlimited file size</source>
-        <translation type="unfinished">ملف بحجم لامحدود</translation>
+        <translation type="obsolete">ملف بحجم لامحدود</translation>
     </message>
     <message>
         <source>While browser technology can limit the file size of your transfers, you can be sure to download or upload any file with MEGAsync.</source>
-        <translation type="unfinished">بينما  المتصفحات لديها القدرة على تحديد حجم عمليات النقل، فإننا نضمن لك بتحميل أو رفع أي ملف مع MEGAsync.</translation>
+        <translation type="obsolete">بينما  المتصفحات لديها القدرة على تحديد حجم عمليات النقل، فإننا نضمن لك بتحميل أو رفع أي ملف مع MEGAsync.</translation>
     </message>
     <message>
         <source>Login</source>
@@ -1246,7 +1246,37 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
-        <translation type="unfinished">للاستفادة من 50 غيغابايت كتخزين سحابي مع التشفير من النهاية إلى النهاية والتسجيل للحصول على حساب مجاني أو الاستفادة من [A]باقات الPRO[/A].</translation>
+        <translation type="obsolete">للاستفادة من 50 غيغابايت كتخزين سحابي مع التشفير من النهاية إلى النهاية والتسجيل للحصول على حساب مجاني أو الاستفادة من [A]باقات الPRO[/A].</translation>
+    </message>
+    <message>
+        <source>MEGA Desktop app</source>
+        <translatorcomment>Title of MEGA Desktop app within initial information wizard.</translatorcomment>
+        <translation type="unfinished">تطبيق MEGA للحواسيب</translation>
+    </message>
+    <message>
+        <source>Login or create an account to start using MEGA Desktop app.</source>
+        <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
+        <translation type="unfinished">Login or create an account to start using the MEGA Desktop App.</translation>
+    </message>
+    <message>
+        <source>You need to login MEGA account to run MEGA desktop app.</source>
+        <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
+        <translation type="unfinished">You need to login to your MEGA account to run the MEGA Desktop App.</translation>
+    </message>
+    <message>
+        <source>Create account</source>
+        <translatorcomment>Button label to offer the user the option to create an account</translatorcomment>
+        <translation type="unfinished">إنشاء حساب</translation>
+    </message>
+    <message>
+        <source>Create account to join MEGA collaboration platform.</source>
+        <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
+        <translation type="unfinished">Create an account to join the MEGA collaboration platform.</translation>
+    </message>
+    <message>
+        <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
+        <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
+        <translation type="unfinished">Learn more about the MEGA Desktop App. [A]Read more[/A]</translation>
     </message>
 </context>
 <context>
@@ -1282,7 +1312,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 clearing scheduler</translation>
+        <translation type="obsolete">[$17607]</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1862,52 +1892,52 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is almost full.</source>
         <translatorcomment>Title of the system notification when the account is almost full.</translatorcomment>
-        <translation type="unfinished">Your account is almost full.</translation>
+        <translation type="unfinished">حسابك لدى MEGA شبه ممتلئ.</translation>
     </message>
     <message>
         <source>Upgrade now to a PRO account.</source>
         <translatorcomment>Notification message shown to encourage the user to upgrade his account</translatorcomment>
-        <translation type="unfinished">Upgrade now to a PRO account.</translation>
+        <translation type="unfinished">قم بالترقية الى حساب محترف PRO الآن.</translation>
     </message>
     <message>
         <source>Your account is full.</source>
         <translatorcomment>Title of the system notification when the account is full.</translatorcomment>
-        <translation type="unfinished">Your account is full.</translation>
+        <translation type="unfinished">حسابك ممتلئ.</translation>
     </message>
     <message>
         <source>1 file and 1 folder were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that 1 files and 1 folder were successfully uploaded</translatorcomment>
-        <translation type="unfinished">1 file and 1 folder were successfully uploaded</translation>
+        <translation type="unfinished">تم ترفيع ملف واحد ومجلد واحد بنجاح</translation>
     </message>
     <message>
         <source>%1 files and 1 folder were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files and 1 folder were successfully uploaded</translatorcomment>
-        <translation type="unfinished">%1 files and 1 folder were successfully uploaded</translation>
+        <translation type="unfinished">تم ترفيع %1 ملف ومجلد واحد بنجاح</translation>
     </message>
     <message>
         <source>1 file and %1 folders were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that 1 files and %1 folders were successfully uploaded</translatorcomment>
-        <translation type="unfinished">1 file and %1 folders were successfully uploaded</translation>
+        <translation type="unfinished">تم ترفيع ملف واحد و %1 مجلد بنجاح</translation>
     </message>
     <message>
         <source>%1 files and %2 folders were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folder were successfully uploaded</translatorcomment>
-        <translation type="unfinished">%1 files and %2 folders were successfully uploaded</translation>
+        <translation type="unfinished">تم ترفيع %1 ملف و %2 مجلد بنجاح</translation>
     </message>
     <message>
         <source>Folder Upload</source>
         <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
-        <translation type="unfinished">رفع المجلد</translation>
+        <translation type="unfinished">رفع مجلّد</translation>
     </message>
     <message>
         <source>1 folder was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that 1 folder was successfully uploaded</translatorcomment>
-        <translation type="unfinished">1 folder was successfully uploaded</translation>
+        <translation type="unfinished">تم ترفيع مجلد واحد بنجاح</translation>
     </message>
     <message>
         <source>%1 folders were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 folders were successfully uploaded</translatorcomment>
-        <translation type="unfinished">%1 folders were successfully uploaded</translation>
+        <translation type="unfinished">تم ترفيع %1 مجلد بنجاح</translation>
     </message>
     <message>
         <source>File Upload</source>
@@ -1917,62 +1947,62 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 file was successfully uploaded</source>
         <translatorcomment>System notification to inform the user that 1 file was successfully uploaded</translatorcomment>
-        <translation type="unfinished">1 file was successfully uploaded</translation>
+        <translation type="unfinished">تم ترفيع ملف واحد بنجاح</translation>
     </message>
     <message>
         <source>%1 files were successfully uploaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully uploaded</translatorcomment>
-        <translation type="unfinished">%1 files were successfully uploaded</translation>
+        <translation type="unfinished">تم ترفيع %1 ملف بنجاح</translation>
     </message>
     <message>
         <source>1 file and 1 folder were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that 1 files and 1 folder were successfully downloaded</translatorcomment>
-        <translation type="unfinished">1 file and 1 folder were successfully downloaded</translation>
+        <translation type="unfinished">تم تنزيل ملف واحد ومجلد واحد بنجاح</translation>
     </message>
     <message>
         <source>%1 files and 1 folder were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and 1 folder were successfully downloaded</translatorcomment>
-        <translation type="unfinished">%1 files and 1 folder were successfully downloaded</translation>
+        <translation type="unfinished">تم تنزيل %1 ملف ومجلد واحد بنجاح</translation>
     </message>
     <message>
         <source>1 file and %1 folders were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that 1 files and %1 folders were successfully downloaded</translatorcomment>
-        <translation type="unfinished">1 file and %1 folders were successfully downloaded</translation>
+        <translation type="unfinished">تم تنزيل ملف واحد و %1 مجلد بنجاح</translation>
     </message>
     <message>
         <source>%1 files and %2 folders were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files and %2 folder were successfully downloaded</translatorcomment>
-        <translation type="unfinished">%1 files and %2 folders were successfully downloaded</translation>
+        <translation type="unfinished">تم تنزيل %1 ملف و %2 مجلد بنجاح</translation>
     </message>
     <message>
         <source>Folder Download</source>
         <translatorcomment>Title of system notifications related to a folder download</translatorcomment>
-        <translation type="unfinished">Folder Download</translation>
+        <translation type="unfinished">تنزيل مجلد</translation>
     </message>
     <message>
         <source>1 folder was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that 1 folder was successfully downloaded</translatorcomment>
-        <translation type="unfinished">1 folder was successfully downloaded</translation>
+        <translation type="unfinished">تم تنزيل مجلد واحد بنجاح</translation>
     </message>
     <message>
         <source>%1 folders were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 folders were successfully downloaded</translatorcomment>
-        <translation type="unfinished">%1 folders were successfully downloaded</translation>
+        <translation type="unfinished">تم تنزيل %1 مجلد بنجاح</translation>
     </message>
     <message>
         <source>File Download</source>
         <translatorcomment>Title of system notifications related to a file download</translatorcomment>
-        <translation type="unfinished">File Download</translation>
+        <translation type="unfinished">تنزيل ملف</translation>
     </message>
     <message>
         <source>1 file was successfully downloaded</source>
         <translatorcomment>System notification to inform the user that 1 file was successfully downloaded</translatorcomment>
-        <translation type="unfinished">1 file was successfully downloaded</translation>
+        <translation type="unfinished">تم تنزيل ملف واحد بنجاح</translation>
     </message>
     <message>
         <source>%1 files were successfully downloaded</source>
         <translatorcomment>System notification to inform the user that %1 files were successfully downloaded</translatorcomment>
-        <translation type="unfinished">%1 files were successfully downloaded</translation>
+        <translation type="unfinished">تم تنزيل %1 ملف بنجاح</translation>
     </message>
     <message>
         <source>Add Sync</source>
@@ -1998,6 +2028,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Show in folder</source>
         <translatorcomment>Button label of system notification to open the selected completed transfer using the specific file browser</translatorcomment>
         <translation type="unfinished">العرض في المجلد</translation>
+    </message>
+    <message>
+        <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
+        <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
+        <translation type="unfinished">لم ينجح تطبيق MEGA بالاتصال الآمن ببروتوكول الاتصال الآمن SSL. قد تكون متصلا بشبكة لاسلكية WiFi عمومية بمتطلبات خاصة إضافية.</translation>
     </message>
 </context>
 <context>
@@ -2137,12 +2172,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>SSL verification failed</source>
         <translatorcomment>Error shown when SSL check has failed</translatorcomment>
-        <translation type="unfinished">SSL verification failed</translation>
+        <translation type="unfinished">فشل مصادقة شهادة التشفير SSL</translation>
     </message>
     <message>
         <source>Not enough quota</source>
         <translatorcomment>Label shown when current account does not have enough quota to complete the operation</translatorcomment>
-        <translation type="unfinished">Not enough quota</translation>
+        <translation type="unfinished">لا يوجد حجم متاح كافي</translation>
+    </message>
+    <message>
+        <source>Terms of Service breached</source>
+        <translatorcomment>Error shown when terms of service are breached during download.</translatorcomment>
+        <translation type="unfinished">Terms of Service breached</translation>
+    </message>
+    <message>
+        <source>Not accessible due to ToS/AUP violation</source>
+        <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
+        <translation type="unfinished">Not accessible due to ToS/AUP violation</translation>
     </message>
 </context>
 <context>
@@ -2173,7 +2218,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get link</source>
         <translatorcomment>Tooltip shown when the mouse is over the &quot;Get link&quot; button related to a completed transfer</translatorcomment>
-        <translation type="unfinished">الحصول على الرابط</translation>
+        <translation type="unfinished">الحصول على الرّابط</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -2423,7 +2468,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Know More</source>
         <translatorcomment>Button label to redirect the user to the website with information related to a PSA announcement</translatorcomment>
-        <translation type="obsolete">Know More</translation>
+        <translation type="obsolete">لمعرفة المزيد</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2582,13 +2627,41 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Updated third-party libraries
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.0.2.0</translatorcomment>
-        <translation type="unfinished">- Fix bug with selection of transfer manager items
+        <translation type="obsolete">- Fix bug with selection of transfer manager items
 - Fix bug of context menu not shown over transfer manager items
 - New design for the main dialog
 - Improved setup assistant
 - Support to show Public Service Announcements
 - Modern notifications
 - Updated third-party libraries
+- Other minor bug fixes and improvements</translation>
+    </message>
+    <message>
+        <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
+- Improved GUI performance during addition of many downloads
+- Restyling of initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
+        <translation type="unfinished">- Improved look and feel for high resolution displays on Windows
+- Improved GUI performance during the addition of a large number of downloads
+- Restyling of the initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</translation>
+    </message>
+    <message>
+        <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
+- Enable thumbnail support for PDF
+- Improved GUI performance during addition of many downloads
+- Restyling of initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
+        <translation type="unfinished">- Improved look and feel for high resolution displays on Linux
+- Enabled thumbnail support for PDF documents
+- Improved GUI performance during the addition of a large number of downloads
+- Restyling of the initial information wizard, new icons and interface improvements
+- Support for business accounts
 - Other minor bug fixes and improvements</translation>
     </message>
 </context>
@@ -2781,7 +2854,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Language</source>
         <translatorcomment>Label to let the user select the desired language for the application.</translatorcomment>
-        <translation>لغة</translation>
+        <translation>اللغة</translation>
     </message>
     <message>
         <source>English</source>
@@ -3236,7 +3309,7 @@ when the application starts again</source>
     <message>
         <source>Permissions</source>
         <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">صلاحيات</translation>
+        <translation type="unfinished">الرّخص</translation>
     </message>
     <message>
         <source>Don&apos;t use HTTP</source>
@@ -3319,7 +3392,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">%1 clearing scheduler</translation>
+        <translation type="obsolete">[$17607]</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3374,6 +3447,11 @@ when the application starts again</source>
         <source>%1 clearing scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
         <translation type="unfinished">%1 clearing scheduler</translation>
+    </message>
+    <message>
+        <source>%1 used</source>
+        <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
+        <translation type="unfinished">%1 used</translation>
     </message>
 </context>
 <context>
@@ -3757,17 +3835,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>First name:</source>
         <translatorcomment>Label for first name field in the create account form</translatorcomment>
-        <translation type="unfinished">First name:</translation>
+        <translation type="unfinished">الاسم الأول:</translation>
     </message>
     <message>
         <source>Last name:</source>
         <translatorcomment>Label for last name field in the create account form</translatorcomment>
-        <translation type="unfinished">Last name:</translation>
+        <translation type="unfinished">الكنية:</translation>
     </message>
     <message>
         <source>Check your inbox</source>
         <translatorcomment>Label shown when the user has just created an account and needs to check his inbox to verify it</translatorcomment>
-        <translation type="unfinished">Check your inbox</translation>
+        <translation type="unfinished">تحقق من صندوق البريد الوارد ببريدك الالكتروني</translation>
     </message>
     <message>
         <source>Sync specific folders in your cloud drive</source>
@@ -3782,22 +3860,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Enjoy MEGAsync!</source>
         <translatorcomment>Label displayed when user completes the setup wizard</translatorcomment>
-        <translation type="unfinished">Enjoy MEGAsync!</translation>
+        <translation type="unfinished">استمتع مع MEGAsync</translation>
     </message>
     <message>
         <source>Please, enter your last name</source>
         <translatorcomment>Label displayed when the user has not filled the last name field.</translatorcomment>
-        <translation type="unfinished">Please, enter your last name</translation>
+        <translation type="unfinished">يرجى ادخال الكنية</translation>
     </message>
     <message>
         <source>Setup selective sync</source>
         <translatorcomment>Label shown when user is setting up the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Setup selective sync</translation>
+        <translation type="unfinished">اعداد مزامنة انتقائية</translation>
     </message>
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Specific folders in your Cloud Drive will be synchronised with matching local folders.</translation>
+        <translation type="unfinished">سوف يتم مزامنة المجلدات المحددة بسواقتك السحابية مع المجلدات النظيرة لها على سواقتك بجهازك الشخصي.</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
@@ -3807,7 +3885,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Setup full sync</source>
         <translatorcomment>Label shown when user is setting up full sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Setup full sync</translation>
+        <translation type="unfinished">اعداد مزامنة كاملة</translation>
     </message>
     <message>
         <source>Full Sync</source>
@@ -3817,12 +3895,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your entire Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Label with information about the full sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Your entire Cloud Drive will be synchronized with a local folder.</translation>
+        <translation type="unfinished">سيتم مزامنة كامل سواقتك السحابية مع مجلد على سواقتك بجهازك الشخصي.</translation>
     </message>
     <message>
         <source>We are all done!</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
-        <translation type="unfinished">We are all done!</translation>
+        <translation type="unfinished">تم انتهاء الاعداد بنجاح!</translation>
     </message>
     <message>
         <source>Login</source>
@@ -3948,12 +4026,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MB</source>
         <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
-        <translation type="unfinished">MB</translation>
+        <translation type="unfinished">ميغابايب</translation>
     </message>
     <message>
         <source>GB</source>
         <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
-        <translation type="unfinished">جيجا بايت</translation>
+        <translation type="unfinished">جيجابايت</translation>
     </message>
 </context>
 <context>
@@ -3981,7 +4059,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Account full</source>
         <translatorcomment>Information label in the main dialog to show that the current account is full.</translatorcomment>
-        <translation type="unfinished">Account full</translation>
+        <translation type="unfinished">الحساب ممتلئ</translation>
     </message>
     <message>
         <source>Up to date</source>
@@ -4358,12 +4436,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Earn more storage quota with [A]Achievements[/A].</source>
         <translatorcomment>Label to inform the user about achievements and the benefit of earning more storage quota. Achievements label will redirect to the achievements section in the webclient when clicked.</translatorcomment>
-        <translation type="unfinished">Earn more storage quota with [A]Achievements[/A].</translation>
+        <translation type="unfinished">اكسب المزيد من الحجم المتاح عن طريق [A]برنامج الإنجازات[/A].</translation>
     </message>
     <message>
         <source>Your MEGA account is full</source>
         <translatorcomment>Label shown to inform the user that the actual account is over storage.</translatorcomment>
-        <translation type="unfinished">Your MEGA account is full.</translation>
+        <translation type="unfinished">حسابك لدى MEGA ممتلئ.</translation>
     </message>
     <message>
         <source>%1 of %2</source>
@@ -4446,19 +4524,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">صندوق الوارد</translation>
+        <translation type="obsolete">صندوق الوارد</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
-        <translation type="unfinished">مشاركات واردة</translation>
+        <translation type="obsolete">مشاركات واردة</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">سحابة التخزين</translation>
+        <translation type="obsolete">سحابة التخزين</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">سلة المهملات</translation>
+        <translation type="obsolete">سلة المحذوفات</translation>
     </message>
 </context>
 <context>
@@ -4469,7 +4547,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">سلة المهملات</translation>
+        <translation type="unfinished">سلة المحذوفات</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -4553,17 +4631,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>TB</source>
         <translatorcomment>Label to indicate Tera byte unit.</translatorcomment>
-        <translation type="unfinished">TB</translation>
+        <translation type="unfinished">تيرابايت</translation>
     </message>
     <message>
         <source>GB</source>
         <translatorcomment>Label to indicate Giga byte unit.</translatorcomment>
-        <translation type="unfinished">جيجا بايت</translation>
+        <translation type="unfinished">جيجابايت</translation>
     </message>
     <message>
         <source>MB</source>
         <translatorcomment>Label to indicate Mega byte unit.</translatorcomment>
-        <translation type="unfinished">MB</translation>
+        <translation type="unfinished">ميغابايب</translation>
     </message>
     <message>
         <source>KB</source>
