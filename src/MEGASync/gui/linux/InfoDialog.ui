@@ -531,7 +531,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_add_sync_folder.png</normaloff>:/images/ico_add_sync_folder.png</iconset>
               </property>
               <property name="iconSize">
@@ -567,7 +567,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
               </property>
               <property name="iconSize">
@@ -603,7 +603,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
               </property>
               <property name="iconSize">
@@ -648,7 +648,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/more_settings.png</normaloff>:/images/more_settings.png</iconset>
               </property>
               <property name="iconSize">
@@ -1010,7 +1010,7 @@ QToolButton
                  </property>
                  <layout class="QHBoxLayout" name="horizontalLayout_3">
                   <property name="spacing">
-                   <number>-1</number>
+                   <number>7</number>
                   </property>
                   <property name="leftMargin">
                    <number>10</number>
@@ -1349,7 +1349,7 @@ border: none;</string>
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset resource="../Resources_macx.qrc">
+                     <iconset resource="../Resources_linux.qrc">
                       <normaloff>:/images/upload_to_mega.png</normaloff>:/images/upload_to_mega.png</iconset>
                     </property>
                     <property name="iconSize">
@@ -1954,50 +1954,24 @@ background-color: #F7F8F9;
              </spacer>
             </item>
             <item>
-             <widget class="QPushButton" name="bTransferManager">
+             <widget class="TransfersSummaryWidget" name="bTransferManager" native="true">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+               <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
               <property name="minimumSize">
                <size>
-                <width>24</width>
-                <height>24</height>
+                <width>182</width>
+                <height>28</height>
                </size>
               </property>
               <property name="maximumSize">
                <size>
-                <width>24</width>
-                <height>24</height>
+                <width>182</width>
+                <height>28</height>
                </size>
-              </property>
-              <property name="cursor">
-               <cursorShape>ArrowCursor</cursorShape>
-              </property>
-              <property name="toolTip">
-               <string>Open Transfer Manager</string>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">border: none;
-</string>
-              </property>
-              <property name="text">
-               <string/>
-              </property>
-              <property name="icon">
-               <iconset resource="../Resources_macx.qrc">
-                <normaloff>:/images/tray_transfer_manager_ico.png</normaloff>:/images/tray_transfer_manager_ico.png</iconset>
-              </property>
-              <property name="iconSize">
-               <size>
-                <width>24</width>
-                <height>24</height>
-               </size>
-              </property>
-              <property name="flat">
-               <bool>true</bool>
               </property>
              </widget>
             </item>
@@ -2041,6 +2015,12 @@ background-color: #F7F8F9;
    <class>CircularUsageProgressBar</class>
    <extends>QWidget</extends>
    <header>CircularUsageProgressBar.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>TransfersSummaryWidget</class>
+   <extends>QWidget</extends>
+   <header location="global">TransfersSummaryWidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

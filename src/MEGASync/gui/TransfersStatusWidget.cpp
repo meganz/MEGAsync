@@ -9,7 +9,7 @@ void TransfersStatusWidget::updateSizes()
     if (lastwidth != this->width() || lastheigth != this->height())
     {
         int minwidthheight = qMin(this->width(), this->height());
-        wpen = floor(minwidthheight/48.0*4);
+        wpen = qFloor(minwidthheight/48.0*4);
         diamoutside = minwidthheight-wpen;
         spacing = minwidthheight/48.0*2;
         diaminside = diamoutside-wpen*2-spacing*2;
@@ -30,7 +30,6 @@ void TransfersStatusWidget::updateSizes()
 
         int sizeinnterimage = minwidthheight - 4 * spacing - 4 * wpen;
 
-        qDebug() << " minwidthheight = " << minwidthheight << " sizeinnterimage= " << sizeinnterimage;
         ui->bTransferManager->move(minwidthheight/2-sizeinnterimage/2,minwidthheight/2-sizeinnterimage/2);
         ui->bTransferManager->resize(sizeinnterimage, sizeinnterimage);
         ui->bTransferManager->setIconSize(QSize(sizeinnterimage, sizeinnterimage));
@@ -86,6 +85,7 @@ void TransfersStatusWidget::setPercentInnerCircle(const qreal &value)
 {
     percentInnerCircle = value;
     inpoint=360*16*percentInnerCircle>residualin?360*16*percentInnerCircle-residualin:360*16*percentInnerCircle;
+    update();
 }
 
 qreal TransfersStatusWidget::getPercentOuterCircle() const
@@ -97,4 +97,5 @@ void TransfersStatusWidget::setPercentOuterCircle(const qreal &value)
 {
     percentOuterCircle = value;
     outpoint=360*16*percentOuterCircle>residualout?360*16*percentOuterCircle-residualout:360*16*percentOuterCircle;
+    update();
 }
