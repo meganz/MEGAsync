@@ -73,7 +73,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     ui->lSDKblock->setText(QString::fromUtf8(""));
     ui->wBlocked->setVisible(false);
-    ui->wContainerBottom->setFixedHeight(120);
+    ui->wContainerBottom->setFixedHeight(56);
 
     //Initialize header dialog and disable chat features
     ui->wHeader->setStyleSheet(QString::fromUtf8("#wHeader {border: none;}"));
@@ -120,14 +120,11 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(ui->wStatus, SIGNAL(clicked()), app, SLOT(pauseTransfers()), Qt::QueuedConnection);
     connect(ui->wPSA, SIGNAL(PSAseen(int)), app, SLOT(PSAseen(int)), Qt::QueuedConnection);
 
-    ui->bDotUsedQuota->hide();
-    ui->bDotUsedStorage->hide();
+    on_tTransfers_clicked();
+
     ui->sUsedData->setCurrentWidget(ui->pStorage);
 
-
     ui->wListTransfers->setupTransfers(olddialog?olddialog->stealModel():nullptr);
-
-
 
 #ifdef __APPLE__
     arrow = new QPushButton(this);
@@ -139,8 +136,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     dummy = NULL;
 #endif
-
-    on_bDotUsedStorage_clicked();
 
     connect(this, SIGNAL(openTransferManager(int)), app, SLOT(externalOpenTransferManager(int)));
 
@@ -212,17 +207,16 @@ void InfoDialog::setAvatar()
 
 void InfoDialog::setUsage()
 {
+    // TODO: Hide controls of usage if needed according to design. If not needed, just remove below lines
     int accType = preferences->accountType();
     if (accType == Preferences::ACCOUNT_TYPE_FREE)
     {
-        ui->bDotUsedQuota->hide();
-        ui->bDotUsedStorage->hide();
+
     }
     else
     {
-        ui->bDotUsedQuota->show();
-        ui->bDotUsedStorage->show();
     }
+    // ///////
 
     if (preferences->totalStorage() == 0)
     {
@@ -483,7 +477,7 @@ void InfoDialog::updateBlockedState()
 
             if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
             {
-                ui->wContainerBottom->setFixedHeight(150);
+                ui->wContainerBottom->setFixedHeight(86);
                 ui->wBlocked->setVisible(true);
                 ui->lSDKblock->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a href=\"local://#%1\">%2</a>")
                                                                   .arg(fileBlocked.absoluteFilePath())
@@ -493,7 +487,7 @@ void InfoDialog::updateBlockedState()
             {
                  ui->lSDKblock->setText(QString::fromUtf8(""));
                  ui->wBlocked->setVisible(false);
-                 ui->wContainerBottom->setFixedHeight(120);
+                 ui->wContainerBottom->setFixedHeight(56);
             }
 
             ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
@@ -507,7 +501,7 @@ void InfoDialog::updateBlockedState()
 
             if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
             {
-                ui->wContainerBottom->setFixedHeight(150);
+                ui->wContainerBottom->setFixedHeight(86);
                 ui->wBlocked->setVisible(true);
                 ui->lSDKblock->setText(tr("The process is taking longer than expected. Please wait..."));
             }
@@ -515,7 +509,7 @@ void InfoDialog::updateBlockedState()
             {
                  ui->lSDKblock->setText(QString::fromUtf8(""));
                  ui->wBlocked->setVisible(false);
-                 ui->wContainerBottom->setFixedHeight(120);
+                 ui->wContainerBottom->setFixedHeight(56);
             }
 
             ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
@@ -527,7 +521,7 @@ void InfoDialog::updateBlockedState()
             {
                 ui->lSDKblock->setText(QString::fromUtf8(""));
                 ui->wBlocked->setVisible(false);
-                ui->wContainerBottom->setFixedHeight(120);
+                ui->wContainerBottom->setFixedHeight(56);
             }
 
             ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
@@ -959,7 +953,6 @@ void InfoDialog::regenerateLayout(InfoDialog* olddialog)
 
         updateOverStorageState(Preferences::STATE_BELOW_OVER_STORAGE);
         setOverQuotaMode(false);
-        on_bDotUsedStorage_clicked();
         ui->wPSA->removeAnnounce();
 
         ui->bTransferManager->setVisible(false);
@@ -1193,32 +1186,18 @@ void InfoDialog::on_tTransfers_clicked()
 {
     ui->lTransfers->setStyleSheet(QString::fromUtf8("background-color: #3C434D;"));
     ui->lRecents->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
+
+    ui->tTransfers->setStyleSheet(QString::fromUtf8("color : #1D1D1D;"));
+    ui->tRecents->setStyleSheet(QString::fromUtf8("color : #989899;"));
 }
 
 void InfoDialog::on_tRecents_clicked()
 {
     ui->lTransfers->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
     ui->lRecents->setStyleSheet(QString::fromUtf8("background-color: #3C434D;"));
-}
 
-void InfoDialog::on_bDotUsedStorage_clicked()
-{
-    ui->bDotUsedStorage->setIcon(QIcon(QString::fromAscii("://images/Nav_Dot_active.png")));
-    ui->bDotUsedStorage->setIconSize(QSize(6,6));
-    ui->bDotUsedQuota->setIcon(QIcon(QString::fromAscii("://images/Nav_Dot_inactive.png")));
-    ui->bDotUsedQuota->setIconSize(QSize(6,6));
-
-    ui->sUsedData->setCurrentWidget(ui->pStorage);
-}
-
-void InfoDialog::on_bDotUsedQuota_clicked()
-{
-    ui->bDotUsedStorage->setIcon(QIcon(QString::fromAscii("://images/Nav_Dot_inactive.png")));
-    ui->bDotUsedStorage->setIconSize(QSize(6,6));
-    ui->bDotUsedQuota->setIcon(QIcon(QString::fromAscii("://images/Nav_Dot_active.png")));
-    ui->bDotUsedQuota->setIconSize(QSize(6,6));
-
-    ui->sUsedData->setCurrentWidget(ui->pQuota);
+    ui->tRecents->setStyleSheet(QString::fromUtf8("color : #1D1D1D;"));
+    ui->tTransfers->setStyleSheet(QString::fromUtf8("color : #989899;"));
 }
 
 void InfoDialog::on_bDiscard_clicked()

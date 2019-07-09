@@ -97,9 +97,6 @@ private slots:
     void on_tTransfers_clicked();
     void on_tRecents_clicked();
 
-    void on_bDotUsedStorage_clicked();
-    void on_bDotUsedQuota_clicked();
-
     void on_bDiscard_clicked();
     void on_bBuyQuota_clicked();
 
