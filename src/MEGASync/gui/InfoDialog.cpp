@@ -57,7 +57,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     activeDownload = NULL;
     activeUpload = NULL;
     transferMenu = NULL;
-    storageUsedMenu = NULL;
     cloudItem = NULL;
     inboxItem = NULL;
     sharesItem = NULL;
@@ -80,7 +79,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
-    ui->pUsageStorage->setAttribute(Qt::WA_TransparentForMouseEvents);
 
 #ifdef __APPLE__
     if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //Issues with mavericks and popup management
@@ -92,8 +90,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 #ifdef Q_OS_LINUX
     installEventFilter(this);
 #endif
-    ui->wUsageStorage->installEventFilter(this);
-    ui->wUsageStorage->setMouseTracking(true);
 
     ui->lOQDesc->setTextFormat(Qt::RichText);
 
@@ -121,8 +117,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(ui->wPSA, SIGNAL(PSAseen(int)), app, SLOT(PSAseen(int)), Qt::QueuedConnection);
 
     on_tTransfers_clicked();
-
-    ui->sUsedData->setCurrentWidget(ui->pStorage);
 
     ui->wListTransfers->setupTransfers(olddialog?olddialog->stealModel():nullptr);
 
@@ -207,89 +201,77 @@ void InfoDialog::setAvatar()
 
 void InfoDialog::setUsage()
 {
-    // TODO: Hide controls of usage if needed according to design. If not needed, just remove below lines
     int accType = preferences->accountType();
     if (accType == Preferences::ACCOUNT_TYPE_FREE)
     {
+        ui->wQuotaDetails->hide();
+        ui->wCircularQuota->hide();
+    }
+    else
+    {
+        ui->wQuotaDetails->show();
+        ui->wCircularQuota->show();
+    }
+
+    QString usedStorage;
+    if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
+    {
+        ui->wCircularStorage->setValue(0);
+        ui->lUsedStorage->setText(QString::fromUtf8(""));
+        usedStorage = QString::fromUtf8("%1 used").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 12px; text-decoration:none;\">%1</span>")
+                                     .arg(Utilities::getSizeString(preferences->usedStorage())));
 
     }
     else
     {
-    }
-    // ///////
+        if (preferences->totalStorage() == 0)
+        {
+            ui->wCircularStorage->setValue(0);
+            usedStorage = QString::fromUtf8("");
+        }
+        else
+        {
 
-    if (preferences->totalStorage() == 0)
-    {
-        ui->pUsageStorage->setValue(0);
-        ui->lPercentageUsedStorage->setText(QString::fromUtf8(""));
-        ui->lTotalUsedStorage->setText(QString::fromUtf8(""));
-        ui->pUsageStorage->setProperty("crossedge", false);
-        ui->pUsageStorage->setProperty("almostoq", false);
-        ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
-        ui->pUsageStorage->style()->polish(ui->pUsageStorage);
-    }
-    else
-    {
         int percentage = floor((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
-        ui->pUsageStorage->setValue((percentage < 100) ? percentage : 100);
+        ui->wCircularStorage->setValue((percentage < 100) ? percentage : 100);
 
-        if (percentage >= 100)
-        {
-            ui->pUsageStorage->setProperty("almostoq", false);
-            ui->pUsageStorage->setProperty("crossedge", true);
-        }
-        else if (percentage > 90)
-        {
-            ui->pUsageStorage->setProperty("crossedge", false);
-            ui->pUsageStorage->setProperty("almostoq", true);
-        }
-        else
-        {
-            ui->pUsageStorage->setProperty("crossedge", false);
-            ui->pUsageStorage->setProperty("almostoq", false);
-        }
-
-        ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
-        ui->pUsageStorage->style()->polish(ui->pUsageStorage);
-
-        QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1</span>")
-                                     .arg(QString::number(percentage > 100 ? 100 : percentage).append(QString::fromAscii("%"))))
-                                     .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
+        usedStorage = QString::fromUtf8("%1 /%2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 12px; text-decoration:none;\">%1</span>")
+                                     .arg(Utilities::getSizeString(preferences->usedStorage())))
+                                     .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 12px; text-decoration:none;\">&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(preferences->totalStorage())));
-        ui->lPercentageUsedStorage->setText(used);
-        ui->lTotalUsedStorage->setText(tr("USED STORAGE %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
-                                       .arg(Utilities::getSizeString(preferences->usedStorage()))));
+        }
     }
 
-    if (preferences->totalBandwidth() == 0)
+    ui->lUsedStorage->setText(usedStorage);
+
+    QString usedQuota;
+    if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
-        ui->pUsageQuota->setValue(0);
-        ui->lPercentageUsedQuota->setText(QString::fromUtf8(""));
-        ui->lTotalUsedQuota->setText(tr("TRANSFER QUOTA %1").arg(tr("Data temporarily unavailable")));
+        ui->wCircularQuota->setValue(0);
+        ui->lUsedQuota->setText(QString::fromUtf8(""));
+        usedQuota = QString::fromUtf8("%1 used").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 12px; text-decoration:none;\">%1</span>")
+                                     .arg(Utilities::getSizeString(preferences->usedBandwidth())));
     }
     else
     {
-        int percentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
-        ui->pUsageQuota->setValue((percentage < 100) ? percentage : 100);
-        if (percentage > 100)
+        if (preferences->totalBandwidth() == 0)
         {
-            ui->pUsageQuota->setProperty("crossedge", true);
+            ui->wCircularQuota->setValue(0);
+            usedQuota = QString::fromUtf8("");
         }
         else
         {
-            ui->pUsageQuota->setProperty("crossedge", false);
-        }
-        ui->pUsageQuota->style()->unpolish(ui->pUsageQuota);
-        ui->pUsageQuota->style()->polish(ui->pUsageQuota);
+            int percentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+            ui->wCircularQuota->setValue((percentage < 100) ? percentage : 100);
 
-        QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1&nbsp;</span>")
-                                     .arg(QString::number(percentage > 100 ? 100 : percentage).append(QString::fromAscii("%"))))
-                                     .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
-                                     .arg(Utilities::getSizeString(preferences->totalBandwidth())));
-        ui->lPercentageUsedQuota->setText(used);
-        ui->lTotalUsedQuota->setText(tr("TRANSFER QUOTA %1").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;&nbsp;%1</span>")
-                                                              .arg(Utilities::getSizeString(preferences->usedBandwidth()))));
+            usedQuota = QString::fromUtf8("%1 /%2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 12px; text-decoration:none;\">%1</span>")
+                                         .arg(Utilities::getSizeString(preferences->usedBandwidth())))
+                                         .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 12px; text-decoration:none;\">&nbsp;%1</span>")
+                                         .arg(Utilities::getSizeString(preferences->totalBandwidth())));
+        }
     }
+
+    ui->lUsedQuota->setText(usedQuota);
 }
 
 void InfoDialog::setTransfer(MegaTransfer *transfer)
@@ -395,19 +377,6 @@ void InfoDialog::setOverQuotaMode(bool state)
 
     overQuotaState = state;
     ui->wStatus->setOverQuotaState(state);
-
-    if (state)
-    {
-        ui->pUsageStorage->setProperty("overquota", true);
-        ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
-        ui->pUsageStorage->style()->polish(ui->pUsageStorage);
-    }
-    else
-    {
-        ui->pUsageStorage->setProperty("overquota", false);
-        ui->pUsageStorage->style()->unpolish(ui->pUsageStorage);
-        ui->pUsageStorage->style()->polish(ui->pUsageStorage);
-    }
 }
 
 void InfoDialog::setAccountType(int accType)
@@ -420,35 +389,11 @@ void InfoDialog::setAccountType(int accType)
     actualAccountType = accType;
     if (actualAccountType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
-         ui->lTotalUsedStorage->installEventFilter(this);
-         ui->lTotalUsedStorage->setMouseTracking(true);
-         ui->wUsageStorage->removeEventFilter(this);
-         ui->wUsageStorage->setMouseTracking(false);
          ui->bUpgrade->hide();
-
-         ui->pUsageStorage->hide();
-         ui->wUsageStorage->setCursor(Qt::ArrowCursor);
-         ui->pUsageStorage->setCursor(Qt::ArrowCursor);
-         ui->lPercentageUsedStorage->hide();
-
-         ui->pUsageQuota->hide();
-         ui->lPercentageUsedQuota->hide();
     }
     else
     {
-         ui->lTotalUsedStorage->removeEventFilter(this);
-         ui->lTotalUsedStorage->setMouseTracking(false);
-         ui->wUsageStorage->installEventFilter(this);
-         ui->wUsageStorage->setMouseTracking(true);
          ui->bUpgrade->show();
-
-         ui->pUsageStorage->show();
-         ui->wUsageStorage->setCursor(Qt::PointingHandCursor);
-         ui->pUsageStorage->setCursor(Qt::PointingHandCursor);
-         ui->lPercentageUsedStorage->show();
-
-         ui->pUsageQuota->show();
-         ui->lPercentageUsedQuota->show();
     }
 }
 
@@ -881,45 +826,6 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
         }
     }
 #endif
-
-    if (obj != ui->wUsageStorage && obj != ui->lTotalUsedStorage)
-    {
-        return false;
-    }
-
-    QPoint mousePos;
-    switch (e->type())
-    {
-    case QEvent::Hide:
-    case QEvent::Enter:
-         hideUsageBalloon();
-         break;
-
-    case QEvent::MouseButtonPress:
-    {
-         QMouseEvent *me = dynamic_cast<QMouseEvent*>(e);
-         mousePos = me->pos();
-         break;
-    }
-    case QEvent::ToolTip:
-    {
-         QHelpEvent *me = static_cast<QHelpEvent*>(e);
-         mousePos = me->pos();
-         break;
-    }
-    default:
-         break;
-
-    }
-
-    if (!mousePos.isNull() && preferences && preferences->totalStorage())
-    {
-        createQuotaUsedMenu();
-        QPoint p = ((QWidget *)obj)->mapToGlobal(mousePos);
-        QSize s = storageUsedMenu->sizeHint();
-        storageUsedMenu->exec(QPoint(p.x() - s.width() / 2, p.y() - s.height()));
-    }
-
     return QDialog::eventFilter(obj, e);
 }
 
@@ -1069,63 +975,6 @@ void InfoDialog::drawAvatar(QString email)
     }
 }
 
-void InfoDialog::createQuotaUsedMenu()
-{
-    if (!storageUsedMenu)
-    {
-        storageUsedMenu = new DataUsageMenu(this);
-    }
-    else
-    {
-        QList<QAction *> actions = storageUsedMenu->actions();
-        for (int i = 0; i < actions.size(); i++)
-        {
-            storageUsedMenu->removeAction(actions[i]);
-        }
-    }
-
-    if (cloudItem)
-    {
-        cloudItem->deleteLater();
-        cloudItem = NULL;
-    }
-    cloudItem = new MenuItemAction(tr("Cloud Drive"), Utilities::getSizeString(preferences->cloudDriveStorage()), QIcon(QString::fromAscii("://images/ic_small_cloud_drive.png")), false, QSize(16,16));
-
-    if (actualAccountType != Preferences::ACCOUNT_TYPE_BUSINESS)
-    {
-        if (inboxItem)
-        {
-            inboxItem->deleteLater();
-            inboxItem = NULL;
-        }
-        inboxItem = new MenuItemAction(tr("Inbox"), Utilities::getSizeString(preferences->inboxStorage()), QIcon(QString::fromAscii("://images/ic_small_inbox.png")), false, QSize(16,16));
-    }
-
-    if (sharesItem)
-    {
-        sharesItem->deleteLater();
-        sharesItem = NULL;
-    }
-    sharesItem = new MenuItemAction(tr("Incoming Shares"), Utilities::getSizeString(preferences->inShareStorage()), QIcon(QString::fromAscii("://images/ic_small_shares.png")), false, QSize(16,16));
-
-    if (rubbishItem)
-    {
-        rubbishItem->deleteLater();
-        rubbishItem = NULL;
-    }
-    rubbishItem = new MenuItemAction(tr("Rubbish bin"), Utilities::getSizeString(preferences->rubbishStorage()), QIcon(QString::fromAscii("://images/ic_small_rubbish.png")), false, QSize(16,16));
-
-    storageUsedMenu->addAction(cloudItem);
-
-    if (actualAccountType != Preferences::ACCOUNT_TYPE_BUSINESS)
-    {
-        storageUsedMenu->addAction(inboxItem);
-    }
-
-    storageUsedMenu->addAction(sharesItem);
-    storageUsedMenu->addAction(rubbishItem);
-}
-
 void InfoDialog::animateStates(bool opt)
 {
     if (opt) //Enable animation for scanning/waiting states
@@ -1209,14 +1058,6 @@ void InfoDialog::on_bDiscard_clicked()
 void InfoDialog::on_bBuyQuota_clicked()
 {
     on_bUpgrade_clicked();
-}
-
-void InfoDialog::hideUsageBalloon()
-{
-    if (storageUsedMenu)
-    {
-        storageUsedMenu->hide();
-    }
 }
 
 void InfoDialog::onAnimationFinished()
