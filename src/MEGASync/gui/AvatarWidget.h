@@ -19,6 +19,7 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event);
+    void mousePressEvent(QMouseEvent *event);
 
 private:
     QChar letter;

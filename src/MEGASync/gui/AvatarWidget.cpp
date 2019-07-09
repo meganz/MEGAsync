@@ -2,6 +2,7 @@
 #include "control/Utilities.h"
 #include <QPainter>
 #include <math.h>
+#include "MegaApplication.h"
 
 AvatarWidget::AvatarWidget(QWidget *parent) :
     QWidget(parent)
@@ -102,6 +103,15 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
     }
 }
 
+void AvatarWidget::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        ((MegaApplication *)qApp)->openSettings(SettingsDialog::ACCOUNT_TAB);
+    }
+}
+
 AvatarWidget::~AvatarWidget()
 {
+
 }
