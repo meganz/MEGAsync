@@ -13,6 +13,8 @@ CircularUsageProgressBar::CircularUsageProgressBar(QWidget *parent) :
     oqColor = QColor(QString::fromUtf8(DEFAULT_OQCOLOR));
     almostOqColor = QColor(QString::fromUtf8(DEFAULT_ALMOSTOQCOLOR));
 
+    textValue = QString::fromUtf8("-");
+
     mark_warning.addFile(QString::fromUtf8(":/images/strong_mark.png"));
 }
 
@@ -87,7 +89,7 @@ void CircularUsageProgressBar::drawText(QPainter &p, const QRectF &innerRect, do
     p.setFont(f);
 
     QRectF textRect(innerRect);
-    p.setPen(fgColor);
+    p.setPen(!value ? bkColor : fgColor);
     p.drawText(textRect, Qt::AlignCenter, textValue);
 }
 
@@ -133,10 +135,10 @@ void CircularUsageProgressBar::setValue(int value)
 {
     if (pbValue != value)
     {
-        if (value < MIN_VALUE)
+        if (value <= MIN_VALUE)
         {
             pbValue = MIN_VALUE;
-            textValue = QString::fromUtf8("");
+            textValue = QString::fromUtf8("-");
             setPenColor(fgPen, fgColor, false);
         }
         else
