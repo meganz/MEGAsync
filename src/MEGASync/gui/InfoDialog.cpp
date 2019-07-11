@@ -207,7 +207,7 @@ void InfoDialog::setUsage()
     {
         ui->wCircularStorage->setValue(0);
         ui->lUsedStorage->setText(QString::fromUtf8(""));
-        usedStorage = QString::fromUtf8("%1 used").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 12px; text-decoration:none;\">%1</span>")
+        usedStorage = QString::fromUtf8("%1 used").arg(QString::fromUtf8("<span style=\"color:#333333; font-family: \"Lato\"; text-decoration:none;\">%1</span>")
                                      .arg(Utilities::getSizeString(preferences->usedStorage())));
     }
     else
@@ -223,9 +223,13 @@ void InfoDialog::setUsage()
         int percentage = floor((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
         ui->wCircularStorage->setValue((percentage < 100) ? percentage : 100);
 
-        usedStorage = QString::fromUtf8("%1 /%2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 12px; text-decoration:none;\">%1</span>")
-                                     .arg(Utilities::getSizeString(preferences->usedStorage())))
-                                     .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 12px; text-decoration:none;\">&nbsp;%1</span>")
+        QString usageColorS = (percentage < 90 ? QString::fromUtf8("#6D6D6D")
+                                                      : percentage >= MAX_VALUE ? QString::fromUtf8("#DF4843")
+                                                      : QString::fromUtf8("#FF6F00"));
+
+        usedStorage = QString::fromUtf8("%1 /%2").arg(QString::fromUtf8("<span style=\"color:%1; font-family: \"Lato\"; text-decoration:none;\">%2</span>")
+                                     .arg(usageColorS).arg(Utilities::getSizeString(preferences->usedStorage())))
+                                     .arg(QString::fromUtf8("<span style=\" font-family: \"Lato\"; text-decoration:none;\">&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(preferences->totalStorage())));
         }
     }
@@ -237,7 +241,7 @@ void InfoDialog::setUsage()
     {
         ui->wCircularQuota->setValue(0);
         ui->lUsedQuota->setText(QString::fromUtf8(""));
-        usedQuota = QString::fromUtf8("%1 used").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 12px; text-decoration:none;\">%1</span>")
+        usedQuota = QString::fromUtf8("%1 used").arg(QString::fromUtf8("<span style=\"color:#333333; font-family: \"Lato\"; text-decoration:none;\">%1</span>")
                                      .arg(Utilities::getSizeString(preferences->usedBandwidth())));
     }
     else
@@ -252,9 +256,13 @@ void InfoDialog::setUsage()
             int percentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
             ui->wCircularQuota->setValue((percentage < 100) ? percentage : 100);
 
-            usedQuota = QString::fromUtf8("%1 /%2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 12px; text-decoration:none;\">%1</span>")
-                                         .arg(Utilities::getSizeString(preferences->usedBandwidth())))
-                                         .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 12px; text-decoration:none;\">&nbsp;%1</span>")
+            QString usageColorB = (percentage < 90 ? QString::fromUtf8("#6D6D6D")
+                                                          : percentage >= MAX_VALUE ? QString::fromUtf8("#DF4843")
+                                                          : QString::fromUtf8("#FF6F00"));
+
+            usedQuota = QString::fromUtf8("%1 /%2").arg(QString::fromUtf8("<span style=\"color:%1; font-family: \"Lato\"; text-decoration:none;\">%2</span>")
+                                         .arg(usageColorB).arg(Utilities::getSizeString(preferences->usedBandwidth())))
+                                         .arg(QString::fromUtf8("<span style=\"font-family: \"Lato\"; text-decoration:none;\">&nbsp;%1</span>")
                                          .arg(Utilities::getSizeString(preferences->totalBandwidth())));
         }
     }
