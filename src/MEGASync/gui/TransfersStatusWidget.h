@@ -40,6 +40,7 @@ private:
     int spacing;
     int diaminside;
     int marginoutside;
+    int margininside;
     int residualin; //related to the width of the pen (0 for FlatCap)
     int residualout;
 

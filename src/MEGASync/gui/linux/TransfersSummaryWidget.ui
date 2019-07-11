@@ -103,7 +103,7 @@ background: rgba(0,0,0,0.01);
      <property name="minimumSize">
       <size>
        <width>24</width>
-       <height>18</height>
+       <height>24</height>
       </size>
      </property>
      <property name="maximumSize">
