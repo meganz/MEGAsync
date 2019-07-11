@@ -35,7 +35,7 @@
    <string notr="true">#lStatusDesc
 {
 color: #666666;	
-font-family: &quot;Source Sans Pro&quot;;	
+font-family: &quot;Lato&quot;;
 font-size: 13px;	
 }
 #bIconState

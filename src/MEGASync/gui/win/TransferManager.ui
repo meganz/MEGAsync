@@ -291,8 +291,8 @@
                <string>Add...</string>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_linux.qrc">
-                <normaloff>:/images/add_ico.png</normaloff>:/images/add_ico.png</iconset>
+               <iconset resource="../Resources_win.qrc">
+                <normaloff>:/images/ico_drop_add_sync.png</normaloff>:/images/ico_drop_add_sync.png</iconset>
               </property>
               <property name="iconSize">
                <size>
@@ -760,7 +760,7 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
          <string>Pause</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/pause_ico.png</normaloff>:/images/pause_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -795,7 +795,7 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
          <string>Clear all</string>
         </property>
         <property name="icon">
-         <iconset resource="../Resources_linux.qrc">
+         <iconset resource="../Resources_win.qrc">
           <normaloff>:/images/clear_ico.png</normaloff>:/images/clear_ico.png</iconset>
         </property>
         <property name="iconSize">
@@ -871,7 +871,7 @@ border-top: 1px solid rgba(0, 0, 0, 10%);
   <tabstop>bClose</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_linux.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>

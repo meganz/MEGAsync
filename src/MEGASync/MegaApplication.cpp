@@ -583,6 +583,11 @@ int main(int argc, char *argv[])
     QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/SourceSansPro-Regular.ttf"));
     QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/SourceSansPro-Semibold.ttf"));
 
+    QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/Lato-Light.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/Lato-Bold.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/Lato-Regular.ttf"));
+    QFontDatabase::addApplicationFont(QString::fromAscii("://fonts/Lato-Semibold.ttf"));
+
     app.initialize();
     app.start();
     return app.exec();
