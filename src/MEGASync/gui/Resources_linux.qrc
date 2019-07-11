@@ -732,5 +732,9 @@
         <file>images/more_settings.png</file>
         <file>images/more_settings@2x.png</file>
         <file>images/more_settings@3x.png</file>
+        <file>fonts/Lato-Light.ttf</file>
+        <file>fonts/Lato-Regular.ttf</file>
+        <file>fonts/Lato-Semibold.ttf</file>
+        <file>fonts/Lato-Bold.ttf</file>
     </qresource>
 </RCC>
