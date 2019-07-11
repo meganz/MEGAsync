@@ -202,17 +202,6 @@ void InfoDialog::setAvatar()
 void InfoDialog::setUsage()
 {
     int accType = preferences->accountType();
-    if (accType == Preferences::ACCOUNT_TYPE_FREE)
-    {
-        ui->wQuotaDetails->hide();
-        ui->wCircularQuota->hide();
-    }
-    else
-    {
-        ui->wQuotaDetails->show();
-        ui->wCircularQuota->show();
-    }
-
     QString usedStorage;
     if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
@@ -220,7 +209,6 @@ void InfoDialog::setUsage()
         ui->lUsedStorage->setText(QString::fromUtf8(""));
         usedStorage = QString::fromUtf8("%1 used").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 12px; text-decoration:none;\">%1</span>")
                                      .arg(Utilities::getSizeString(preferences->usedStorage())));
-
     }
     else
     {
@@ -245,7 +233,7 @@ void InfoDialog::setUsage()
     ui->lUsedStorage->setText(usedStorage);
 
     QString usedQuota;
-    if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
+    if (accType == Preferences::ACCOUNT_TYPE_BUSINESS || accType == Preferences::ACCOUNT_TYPE_FREE)
     {
         ui->wCircularQuota->setValue(0);
         ui->lUsedQuota->setText(QString::fromUtf8(""));

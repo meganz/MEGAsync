@@ -1078,8 +1078,16 @@ QToolButton
                         </property>
                         <item>
                          <widget class="QLabel" name="lTotalUsedStorage">
+                          <property name="styleSheet">
+                           <string notr="true">#lTotalUsedStorage
+{
+font-weight: bold;
+font-size: 13px;
+}
+</string>
+                          </property>
                           <property name="text">
-                           <string>Storage usage</string>
+                           <string>Storage</string>
                           </property>
                          </widget>
                         </item>
@@ -1098,8 +1106,11 @@ QToolButton
                            </size>
                           </property>
                           <property name="styleSheet">
-                           <string notr="true">color: rgba(0,0,0,0.3);
+                           <string notr="true">#lUsedStorage
+{
+color: rgba(0,0,0,0.3);
 font-size: 10px;
+}
 </string>
                           </property>
                           <property name="text">
@@ -1195,8 +1206,16 @@ margin-bottom: 12px;
                         </property>
                         <item>
                          <widget class="QLabel" name="lTotalUsedQuota">
+                          <property name="styleSheet">
+                           <string notr="true">#lTotalUsedQuota
+{
+font-weight: bold;
+font-size: 13px;
+}
+</string>
+                          </property>
                           <property name="text">
-                           <string>Transfer usage</string>
+                           <string>Transfer</string>
                           </property>
                          </widget>
                         </item>
@@ -1215,8 +1234,11 @@ margin-bottom: 12px;
                            </size>
                           </property>
                           <property name="styleSheet">
-                           <string notr="true">color: rgba(0,0,0,0.3);
-font-size: 10px;</string>
+                           <string notr="true">#lUsedQuota
+{
+color: rgba(0,0,0,0.3);
+font-size: 10px;
+}</string>
                           </property>
                           <property name="text">
                            <string/>
