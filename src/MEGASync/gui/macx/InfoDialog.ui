@@ -35,71 +35,9 @@
   border: none;
 }
 
-#bAvatar, #bState, #bDotUsedQuota, #bDotUsedStorage, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon
+#bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon
 {
 	border: none;
-}
-
-#lSyncUpdated
-{
-font-family: &quot;Source Sans Pro&quot;;
-font-size: 16px;
-color: rgba(51, 51, 51, 70%);
-}
-
-#sActiveTransfers
-{
-background-color: transparent;
-}
-
-#lQueued
-{
-color: rgb(102, 102, 102);
-}
-
-#lDownloads, #lUploads
-{
-    font-family: &quot;Source Sans Pro&quot;;
-    font-size: 13px;
-    color: #777777;
-    border: none;
-}
-
-#bUploads
-{
-color: rgb(102, 102, 102);
-}
-
-#bDownloads
-{
-color: rgb(102, 102, 102);
-}
-
-#lTotalUsed
-{
-font-size: 12px;
-}
-
-#lPercentageUsed
-{
-font-size: 12px;
-}
-
-#bOfficialWeb
-{
-font-size: 12px;
-}
-
-#lRemainingTimeD, #lRemainingTimeU
-{
-font-family: &quot;Source Sans Pro&quot;;
-font-size: 16px;
-color: #333333;
-}
-
-#lPercentageUsed
-{
-padding-right: 0px;
 }
 
 #wSeparator, #wSeparatorStats
@@ -107,197 +45,13 @@ padding-right: 0px;
 background-color:  rgb(231, 231, 231);
 }
 
-QProgressBar#pUsageStorage, QProgressBar#pUsageQuota
-{
-background-color: #E6E6E6;
-border-radius: 2px;
-}
-
-QProgressBar#pUsageStorage[overquota=true], QProgressBar#pUsageQuota[overquota=true]
-{
-background-color: #EB4444;
-border-radius: 2px;
-}
-                                                            
-QProgressBar#pUsageStorage::chunk
-{
-background-color: #2BA6DE;
-border-top-left-radius: 2px;
-border-bottom-left-radius: 2px;
-}
-QProgressBar#pUsageQuota::chunk
-{
-background-color: #31B500;
-border-top-left-radius: 2px;
-border-bottom-left-radius: 2px;
-}
-
-QProgressBar#pUsageStorage::chunk[almostoq=true] {
-background-color: #FFA500;
-border-top-left-radius: 2px;
-border-bottom-left-radius: 2px;
-}
-
-QProgressBar#pUsageStorage::chunk[crossedge=true] {
-background-color: #EB4444;
-border-radius: 2px;
-}
-
-QProgressBar#pUsageQuota::chunk[crossedge=true]
-{
-background-color: #EB4444;
-border-radius: 2px;
-}
-
-QProgressBar#pUsageStorage::chunk[overquota=true] , QProgressBar#pUsageQuota::chunk[overquota=true]{
-background-color: #EB4444;
-border-radius: 2px;
-}
-
-#lHeader
-{
-	padding-top: 2px;
-}
-
-#lName
-{
-    font-family: &quot;Source Sans Pro&quot;;
-    font-size: 14px;
-    color: #666666;
-    border: none;
-}
-
-#bUpgrade[overquota=true]
-{
- background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #999999, stop: 1 #aaaaaa);
- border-radius: 3px;
- border: 1px solid rgba(0, 0, 0, 45%);
- padding: 7px 12px 7px 6px;
- font-family: &quot;Source Sans Pro&quot;;
- font-size: 13px;
- color: #ffffff;
-}
-#bUpgrade::hover[overquota=true]
-{
-  border: 1px solid rgba(0, 0, 0, 60%);
-  border-radius: 3px;
-  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #999999, stop: 1 #aaaaaa);
-}
-
-#bUpgrade::pressed[overquota=true]
-{
-  border: 1px solid rgba(0, 0, 0, 60%);
-  border-radius: 3px;
-  background-color: rgba(0, 0, 0, 50%);
-}
-
-#bSyncFolder, #bUpgrade
-{
- background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #ffffff, stop: 1 #fafafa);
- border-radius: 3px;
- border: 1px solid rgba(0, 0, 0, 15%);
- padding: 7px 12px 7px 12px;
- font-family: &quot;Source Sans Pro&quot;;
- font-size: 13px;
- color: #777777;
-}
-
-#bDiscard
-{
-
- background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #ffffff, stop: 1 #fcfcfc);
- border-radius: 3px;
- border: 1px solid rgba(0, 0, 0, 5%);
- padding: 16px 25px 16px 25px;
- font-family: &quot;Source Sans Pro&quot;;
- font-size: 14px;
- color: #777777;
-
-}
-
-#bBuyQuota
-{
-
- background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #ff666b, stop: 1 #ec5257);
- border-radius: 3px;
- border: 1px solid rgba(0, 0, 0, 5%);
- padding: 16px 25px 16px 25px;
- font-family: &quot;Source Sans Pro&quot;;
- font-size: 14px;
- color: #ffffff;
-
-}
-
-#lOQTitle
-{
-	color: #333333;
-	font-family: &quot;Source Sans Pro&quot;;
-	font-size: 16px;
-}
-
-#lOQDesc
-{
-	color: #F0373A;
-	font-family: &quot;Source Sans Pro&quot;;
-	font-size: 14px;
-}
-
-
-#bSyncFolder:hover, #bUpgrade::hover
-{
-  border: 1px solid rgba(0, 0, 0, 20%);
-  border-radius: 3px;
-  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #ffffff, stop: 1 #fafafa);
-
-}
-
-#bSyncFolder:pressed, #bUpgrade::pressed
-{
-  background-color: rgba(0, 0, 0, 10%);
-  border: 1px solid rgba(0, 0, 0, 20%);
-  border-radius: 3px;
-}
-
 #lTotalUsedStorage,  #lTotalUsedQuota
 {
-font-family: &quot;Source Sans Pro&quot;;
+font-family: &quot;Lato&quot;;
 font-size: 13px;
 font-weight: normal;
 border: none;
 color: #333333;
-}
-
-#lDisabled
-{
-  font-family: &quot;Source Sans Pro&quot;;
-  font-size: 18px;
-  color: rgba(51, 51, 51, 70%);
-}
-
-#lDescDisabled
-{
-  font-family: &quot;Source Sans Pros&quot;;
-  font-size: 13px;
-  color: #666666;
-}
-
-#lUploadToMegaDesc
-{
-	color: #333333;
-	font-family: &quot;Source Sans Pro&quot;;
-}
-
-#lSDKblock
-{
-	color: #333333;
-	font-family: &quot;Source Sans Pro&quot;;
-    font-size: 13px;
 }
 </string>
   </property>
@@ -483,7 +237,59 @@ background-color: #F7F8F9;
                <bool>false</bool>
               </property>
               <property name="styleSheet">
-               <string notr="true"/>
+               <string notr="true">#bUpgrade[overquota=true]
+{
+ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #999999, stop: 1 #aaaaaa);
+ border-radius: 3px;
+ border: 1px solid rgba(0, 0, 0, 45%);
+ padding: 7px 12px 7px 6px;
+ font-family: &quot;Lato&quot;;
+ font-size: 13px;
+ color: #ffffff;
+}
+#bUpgrade::hover[overquota=true]
+{
+  border: 1px solid rgba(0, 0, 0, 60%);
+  border-radius: 3px;
+  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #999999, stop: 1 #aaaaaa);
+}
+
+#bUpgrade::pressed[overquota=true]
+{
+  border: 1px solid rgba(0, 0, 0, 60%);
+  border-radius: 3px;
+  background-color: rgba(0, 0, 0, 50%);
+}
+
+#bUpgrade
+{
+ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #ffffff, stop: 1 #fafafa);
+ border-radius: 3px;
+ border: 1px solid rgba(0, 0, 0, 15%);
+ padding: 7px 12px 7px 12px;
+ font-family: &quot;Lato&quot;;
+ font-size: 13px;
+ color: #777777;
+}
+
+#bUpgrade::hover
+{
+  border: 1px solid rgba(0, 0, 0, 20%);
+  border-radius: 3px;
+  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #ffffff, stop: 1 #fafafa);
+
+}
+
+#bUpgrade::pressed
+{
+  background-color: rgba(0, 0, 0, 10%);
+  border: 1px solid rgba(0, 0, 0, 20%);
+  border-radius: 3px;
+}</string>
               </property>
               <property name="text">
                <string>Upgrade to PRO</string>
@@ -1081,6 +887,7 @@ QToolButton
                           <property name="styleSheet">
                            <string notr="true">#lTotalUsedStorage
 {
+font-family: &quot;Lato&quot;;
 font-weight: bold;
 font-size: 13px;
 }
@@ -1110,6 +917,7 @@ font-size: 13px;
 {
 color: rgba(0,0,0,0.3);
 font-size: 10px;
+font-family: &quot;Lato&quot;;
 }
 </string>
                           </property>
@@ -1209,6 +1017,7 @@ margin-bottom: 12px;
                           <property name="styleSheet">
                            <string notr="true">#lTotalUsedQuota
 {
+font-family: &quot;Lato&quot;;
 font-weight: bold;
 font-size: 13px;
 }
@@ -1238,6 +1047,7 @@ font-size: 13px;
 {
 color: rgba(0,0,0,0.3);
 font-size: 10px;
+font-family: &quot;Lato&quot;;
 }</string>
                           </property>
                           <property name="text">
@@ -1291,10 +1101,13 @@ font-size: 10px;
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true"/>
+               <string notr="true">#sActiveTransfers
+{
+background-color: transparent;
+}</string>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
               <widget class="QWidget" name="pUpdated">
                <property name="minimumSize">
@@ -1424,9 +1237,15 @@ border: none;</string>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">margin-top: 20px;
+                   <string notr="true">#lUploadToMegaDesc
+{
+margin-top: 20px;
 margin-left: 20px;
-margin-right: 20px;</string>
+margin-right: 20px;
+color: #333333;
+font-family: &quot;Lato&quot;;
+}
+</string>
                   </property>
                   <property name="text">
                    <string>Upload to MEGA now</string>
@@ -1611,6 +1430,14 @@ margin-right: 20px;</string>
                        <height>16777215</height>
                       </size>
                      </property>
+                     <property name="styleSheet">
+                      <string notr="true">#lOQTitle
+{
+	color: #333333;
+  font-family: &quot;Lato&quot;;
+	font-size: 16px;
+}</string>
+                     </property>
                      <property name="text">
                       <string/>
                      </property>
@@ -1624,6 +1451,15 @@ margin-right: 20px;</string>
                    </item>
                    <item>
                     <widget class="QLabel" name="lOQDesc">
+                     <property name="styleSheet">
+                      <string notr="true">#lOQDesc
+{
+	color: #F0373A;
+  font-family: &quot;Lato&quot;;
+	font-size: 14px;
+}
+</string>
+                     </property>
                      <property name="text">
                       <string/>
                      </property>
@@ -1683,6 +1519,20 @@ margin-right: 20px;</string>
                        <height>50</height>
                       </size>
                      </property>
+                     <property name="styleSheet">
+                      <string notr="true">#bDiscard
+{
+
+ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #ffffff, stop: 1 #fcfcfc);
+ border-radius: 3px;
+ border: 1px solid rgba(0, 0, 0, 5%);
+ padding: 16px 25px 16px 25px;
+ font-family: &quot;Lato&quot;;
+ font-size: 14px;
+ color: #777777;
+}</string>
+                     </property>
                      <property name="text">
                       <string>Dismiss</string>
                      </property>
@@ -1701,6 +1551,20 @@ margin-right: 20px;</string>
                        <width>16777215</width>
                        <height>50</height>
                       </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">#bBuyQuota
+{
+
+ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+                                      stop: 0 #ff666b, stop: 1 #ec5257);
+ border-radius: 3px;
+ border: 1px solid rgba(0, 0, 0, 5%);
+ padding: 16px 25px 16px 25px;
+ font-family: &quot;Lato&quot;;
+ font-size: 14px;
+ color: #ffffff;
+}</string>
                      </property>
                      <property name="text">
                       <string>Buy more space</string>
@@ -1902,6 +1766,14 @@ background-color: #F7F8F9;
             </property>
             <item>
              <widget class="QLabel" name="lSDKblock">
+              <property name="styleSheet">
+               <string notr="true">#lSDKblock
+{
+	color: #333333;
+  font-family: &quot;Lato&quot;;
+  font-size: 13px;
+}</string>
+              </property>
               <property name="text">
                <string/>
               </property>
