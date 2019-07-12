@@ -355,7 +355,7 @@ protected:
     bool almostOQ;
     int storageState;
     int appliedStorageState;
-    long long receivedStorateSum;
+    long long receivedStorageSum;
     long long maxMemoryUsage;
     int exportOps;
     int syncState;

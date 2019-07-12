@@ -1435,7 +1435,7 @@ void MegaApplication::start()
     storageState = MegaApi::STORAGE_STATE_GREEN;
     appliedStorageState = MegaApi::STORAGE_STATE_GREEN;;
     bwOverquotaTimestamp = 0;
-    receivedStorateSum = 0;
+    receivedStorageSum = 0;
 
     for (unsigned i = 3; i--; )
     {
@@ -1745,13 +1745,13 @@ void MegaApplication::loggedIn()
     }
 
 
-    if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorateSum < preferences->totalStorage())
+    if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
     {
         preferences->setUsedStorage(preferences->totalStorage());
     }
     else
     {
-        preferences->setUsedStorage(receivedStorateSum);
+        preferences->setUsedStorage(receivedStorageSum);
     }
     preferences->sync();
     refreshStorageUIs();
@@ -1867,7 +1867,7 @@ void MegaApplication::applyStorageState(int state)
             {
                 if (appliedStorageState == MegaApi::STORAGE_STATE_RED)
                 {
-                    preferences->setUsedStorage(receivedStorateSum);
+                    preferences->setUsedStorage(receivedStorageSum);
                     preferences->sync();
                     refreshStorageUIs();
                 }
@@ -6408,19 +6408,19 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     }
     else if (event->getType() == MegaEvent::EVENT_STORAGE_SUM_CHANGED)
     {
-        receivedStorateSum = event->getNumber();
+        receivedStorageSum = event->getNumber();
         if (!preferences->logged())
         {
             return;
         }
 
-        if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorateSum < preferences->totalStorage())
+        if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
         {
             preferences->setUsedStorage(preferences->totalStorage());
         }
         else
         {
-            preferences->setUsedStorage(receivedStorateSum);
+            preferences->setUsedStorage(receivedStorageSum);
         }
         preferences->sync();
         refreshStorageUIs();
