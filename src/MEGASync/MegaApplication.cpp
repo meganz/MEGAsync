@@ -1435,6 +1435,7 @@ void MegaApplication::start()
     storageState = MegaApi::STORAGE_STATE_GREEN;
     appliedStorageState = MegaApi::STORAGE_STATE_GREEN;;
     bwOverquotaTimestamp = 0;
+    receivedStorateSum = 0;
 
     for (unsigned i = 3; i--; )
     {
@@ -1743,6 +1744,19 @@ void MegaApplication::loggedIn()
         megaApi->getPublicNode(link.toUtf8().constData());
     }
 
+
+    if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorateSum < preferences->totalStorage())
+    {
+        preferences->setUsedStorage(preferences->totalStorage());
+    }
+    else
+    {
+        preferences->setUsedStorage(receivedStorateSum);
+    }
+    preferences->sync();
+    refreshStorageUIs();
+
+
     onGlobalSyncStateChanged(megaApi);
 }
 
@@ -1804,7 +1818,7 @@ void MegaApplication::applyStorageState(int state)
     {
         // this one is requested with force=false so it can't possibly occur to often.
         // It will in turn result in another call of this function with the actual new state (if it changed), which is taken care of below with force=true (so that one does not have to wait further)
-        updateUserStats(true, false, false, false, USERSTATS_STORAGESTATECHANGE);
+        updateUserStats(true, false, false, true, USERSTATS_STORAGESTATECHANGE);
         return;
     }
 
@@ -1814,42 +1828,23 @@ void MegaApplication::applyStorageState(int state)
         if (storageState != appliedStorageState)
         {
             updateUserStats(true, false, false, true, USERSTATS_TRAFFICLIGHT);
-            appliedStorageState = storageState;
             if (state == MegaApi::STORAGE_STATE_RED)
             {
                 almostOQ = false;
+
+
+                if (preferences->usedStorage() < preferences->totalStorage())
+                {
+                    preferences->setUsedStorage(preferences->totalStorage());
+                    preferences->sync();
+                    refreshStorageUIs();
+                }
 
                 //Disable syncs
                 disableSyncs();
                 if (!infoOverQuota)
                 {
                     infoOverQuota = true;
-
-                    if (preferences->usedStorage() < preferences->totalStorage())
-                    {
-                        preferences->setUsedStorage(preferences->totalStorage());
-                        preferences->sync();
-
-                        if (infoDialog)
-                        {
-                            infoDialog->setUsage();
-                        }
-
-                        if (settingsDialog)
-                        {
-                            settingsDialog->refreshAccountDetails();
-                        }
-
-                        if (bwOverquotaDialog)
-                        {
-                            bwOverquotaDialog->refreshAccountDetails();
-                        }
-
-                        if (storageOverquotaDialog)
-                        {
-                            storageOverquotaDialog->refreshUsedStorage();
-                        }
-                    }
 
                     if (trayMenu && trayMenu->isVisible())
                     {
@@ -1870,6 +1865,13 @@ void MegaApplication::applyStorageState(int state)
             }
             else
             {
+                if (appliedStorageState == MegaApi::STORAGE_STATE_RED)
+                {
+                    preferences->setUsedStorage(receivedStorateSum);
+                    preferences->sync();
+                    refreshStorageUIs();
+                }
+
                 if (state == MegaApi::STORAGE_STATE_GREEN)
                 {
                     almostOQ = false;
@@ -1897,6 +1899,9 @@ void MegaApplication::applyStorageState(int state)
                 }
             }
             checkOverStorageStates();
+
+            appliedStorageState = storageState;
+
         }
     }
 }
@@ -2835,7 +2840,6 @@ void MegaApplication::showInfoDialog()
 
     if (preferences && preferences->logged())
     {
-        updateUserStats(true, true, true, true, USERSTATS_SHOWDIALOG);
         if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
         {
             openBwOverquotaDialog();
@@ -2854,6 +2858,7 @@ void MegaApplication::showInfoDialog()
     #elif defined(_WIN32)
             trayIcon->setContextMenu(windowsMenu.get());
     #endif
+            updateUserStats(false, true, false, true, USERSTATS_BANDWIDTH_TIMEOUT_SHOWINFODIALOG);
         }
     }
 
@@ -6358,6 +6363,29 @@ void MegaApplication::createGuestMenu()
     trayGuestMenu->addAction(exitActionGuest);
 }
 
+void MegaApplication::refreshStorageUIs()
+{
+    if (infoDialog)
+    {
+        infoDialog->setUsage();
+    }
+
+    if (settingsDialog)
+    {
+        settingsDialog->refreshAccountDetails();
+    }
+
+    if (bwOverquotaDialog)
+    {
+        bwOverquotaDialog->refreshAccountDetails();
+    }
+
+    if (storageOverquotaDialog)
+    {
+        storageOverquotaDialog->refreshUsedStorage();
+    }
+}
+
 void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
 {
     if (event->getType() == MegaEvent::EVENT_CHANGE_TO_HTTPS)
@@ -6377,6 +6405,25 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     else if (event->getType() == MegaEvent::EVENT_STORAGE)
     {
         applyStorageState(event->getNumber());
+    }
+    else if (event->getType() == MegaEvent::EVENT_STORAGE_SUM_CHANGED)
+    {
+        receivedStorateSum = event->getNumber();
+        if (!preferences->logged())
+        {
+            return;
+        }
+
+        if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorateSum < preferences->totalStorage())
+        {
+            preferences->setUsedStorage(preferences->totalStorage());
+        }
+        else
+        {
+            preferences->setUsedStorage(receivedStorateSum);
+        }
+        preferences->sync();
+        refreshStorageUIs();
     }
 }
 
@@ -6795,7 +6842,6 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (storage)
         {
             preferences->setTotalStorage(details->getStorageMax());
-            preferences->setUsedStorage(details->getStorageUsed());
             preferences->setVersionsStorage(details->getVersionStorageUsed());
 
             MegaHandle rootHandle = root->getHandle();
@@ -7665,32 +7711,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                 rebootApplication(false);
             }
             noKeyDetected++;
-        }
-    }
-
-    if (nodesRemoved || newNodes)
-    {
-        preferences->setUsedStorage(usedStorage);
-        preferences->sync();
-
-        if (infoDialog)
-        {
-            infoDialog->setUsage();
-        }
-
-        if (settingsDialog)
-        {
-            settingsDialog->refreshAccountDetails();
-        }
-
-        if (bwOverquotaDialog)
-        {
-            bwOverquotaDialog->refreshAccountDetails();
-        }
-
-        if (storageOverquotaDialog)
-        {
-            storageOverquotaDialog->refreshUsedStorage();
         }
     }
 
