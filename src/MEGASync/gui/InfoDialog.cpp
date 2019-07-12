@@ -62,6 +62,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     inboxItem = NULL;
     sharesItem = NULL;
     syncsMenu = NULL;
+    menuSignalMapper = NULL;
     rubbishItem = NULL;
     gWidget = NULL;
     opacityEffect = NULL;
@@ -838,7 +839,13 @@ void InfoDialog::on_bSyncFolder_clicked()
 #else
         syncsMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #endif
-        QSignalMapper *menuSignalMapper = new QSignalMapper();
+        if (menuSignalMapper)
+        {
+            menuSignalMapper->deleteLater();
+            menuSignalMapper = NULL;
+        }
+
+        menuSignalMapper = new QSignalMapper();
         connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
 
         int activeFolders = 0;

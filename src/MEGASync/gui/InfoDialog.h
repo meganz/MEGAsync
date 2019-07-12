@@ -118,6 +118,7 @@ private:
 #endif
 
     std::unique_ptr<QMenu> syncsMenu;
+    QSignalMapper *menuSignalMapper;
     QMenu *transferMenu;
     DataUsageMenu *storageUsedMenu;
 
