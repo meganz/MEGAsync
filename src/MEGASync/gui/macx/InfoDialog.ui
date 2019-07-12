@@ -35,7 +35,7 @@
   border: none;
 }
 
-#bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon
+#bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage
 {
 	border: none;
 }
@@ -337,7 +337,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../Resources_win.qrc">
                 <normaloff>:/images/ico_add_sync_folder.png</normaloff>:/images/ico_add_sync_folder.png</iconset>
               </property>
               <property name="iconSize">
@@ -373,7 +373,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../Resources_win.qrc">
                 <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
               </property>
               <property name="iconSize">
@@ -409,7 +409,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../Resources_win.qrc">
                 <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
               </property>
               <property name="iconSize">
@@ -454,7 +454,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../Resources_win.qrc">
                 <normaloff>:/images/more_settings.png</normaloff>:/images/more_settings.png</iconset>
               </property>
               <property name="iconSize">
@@ -832,6 +832,12 @@ QToolButton
                   </property>
                   <item>
                    <widget class="QWidget" name="wStorageUsage" native="true">
+                    <property name="maximumSize">
+                     <size>
+                      <width>199</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
                     <layout class="QHBoxLayout" name="horizontalLayout_4">
                      <property name="spacing">
                       <number>5</number>
@@ -849,7 +855,7 @@ QToolButton
                       <number>0</number>
                      </property>
                      <item>
-                      <widget class="CircularUsageProgressBar" name="wCircularStorage" native="true">
+                      <widget class="QStackedWidget" name="sStorage">
                        <property name="minimumSize">
                         <size>
                          <width>52</width>
@@ -862,6 +868,72 @@ QToolButton
                          <height>44</height>
                         </size>
                        </property>
+                       <property name="currentIndex">
+                        <number>0</number>
+                       </property>
+                       <widget class="CircularUsageProgressBar" name="wCircularStorage">
+                        <property name="minimumSize">
+                         <size>
+                          <width>52</width>
+                          <height>44</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>52</width>
+                          <height>44</height>
+                         </size>
+                        </property>
+                       </widget>
+                       <widget class="QWidget" name="wBusinessStorage">
+                        <layout class="QHBoxLayout" name="horizontalLayout_10">
+                         <property name="spacing">
+                          <number>0</number>
+                         </property>
+                         <property name="leftMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <widget class="QPushButton" name="bBusinessStorage">
+                           <property name="minimumSize">
+                            <size>
+                             <width>44</width>
+                             <height>44</height>
+                            </size>
+                           </property>
+                           <property name="maximumSize">
+                            <size>
+                             <width>44</width>
+                             <height>44</height>
+                            </size>
+                           </property>
+                           <property name="text">
+                            <string/>
+                           </property>
+                           <property name="icon">
+                            <iconset>
+                             <normalon>:/images/storage_for_business.png</normalon>
+                            </iconset>
+                           </property>
+                           <property name="iconSize">
+                            <size>
+                             <width>44</width>
+                             <height>44</height>
+                            </size>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
                       </widget>
                      </item>
                      <item>
@@ -915,8 +987,8 @@ font-size: 13px;
                           <property name="styleSheet">
                            <string notr="true">#lUsedStorage
 {
-color: rgba(0,0,0,0.3);
-font-size: 13px;
+color: #999999;
+font-size: 14px;
 font-family: &quot;Lato&quot;;
 }
 </string>
@@ -979,7 +1051,7 @@ margin-bottom: 12px;
                       <number>0</number>
                      </property>
                      <item>
-                      <widget class="CircularUsageProgressBar" name="wCircularQuota" native="true">
+                      <widget class="QStackedWidget" name="sQuota">
                        <property name="minimumSize">
                         <size>
                          <width>52</width>
@@ -992,6 +1064,72 @@ margin-bottom: 12px;
                          <height>44</height>
                         </size>
                        </property>
+                       <property name="currentIndex">
+                        <number>1</number>
+                       </property>
+                       <widget class="CircularUsageProgressBar" name="wCircularQuota">
+                        <property name="minimumSize">
+                         <size>
+                          <width>52</width>
+                          <height>44</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>52</width>
+                          <height>44</height>
+                         </size>
+                        </property>
+                       </widget>
+                       <widget class="QWidget" name="wBusinessQuota">
+                        <layout class="QHBoxLayout" name="horizontalLayout_8">
+                         <property name="spacing">
+                          <number>0</number>
+                         </property>
+                         <property name="leftMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <widget class="QPushButton" name="bBusinessQuota">
+                           <property name="minimumSize">
+                            <size>
+                             <width>44</width>
+                             <height>44</height>
+                            </size>
+                           </property>
+                           <property name="maximumSize">
+                            <size>
+                             <width>44</width>
+                             <height>44</height>
+                            </size>
+                           </property>
+                           <property name="text">
+                            <string/>
+                           </property>
+                           <property name="icon">
+                            <iconset>
+                             <normalon>:/images/transfer_for_business.png</normalon>
+                            </iconset>
+                           </property>
+                           <property name="iconSize">
+                            <size>
+                             <width>44</width>
+                             <height>44</height>
+                            </size>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
                       </widget>
                      </item>
                      <item>
@@ -1045,8 +1183,8 @@ font-size: 13px;
                           <property name="styleSheet">
                            <string notr="true">#lUsedQuota
 {
-color: rgba(0,0,0,0.3);
-font-size: 13px;
+color: #999999;
+font-size: 14px;
 font-family: &quot;Lato&quot;;
 }</string>
                           </property>
@@ -1107,7 +1245,7 @@ background-color: transparent;
 }</string>
               </property>
               <property name="currentIndex">
-               <number>1</number>
+               <number>0</number>
               </property>
               <widget class="QWidget" name="pUpdated">
                <property name="minimumSize">
@@ -1177,14 +1315,13 @@ background-color: transparent;
                      </size>
                     </property>
                     <property name="styleSheet">
-                     <string notr="true">padding-top: 26px;
-border: none;</string>
+                     <string notr="true">border: none;</string>
                     </property>
                     <property name="text">
                      <string/>
                     </property>
                     <property name="icon">
-                     <iconset resource="../Resources_macx.qrc">
+                     <iconset resource="../Resources_win.qrc">
                       <normaloff>:/images/upload_to_mega.png</normaloff>:/images/upload_to_mega.png</iconset>
                     </property>
                     <property name="iconSize">
@@ -1239,7 +1376,7 @@ border: none;</string>
                   <property name="styleSheet">
                    <string notr="true">#lUploadToMegaDesc
 {
-margin-top: 20px;
+margin-top: 10px;
 margin-left: 20px;
 margin-right: 20px;
 color: #3C434D;
@@ -1882,7 +2019,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../Resources_win.qrc">
                 <normaloff>:/images/tray_transfer_manager_ico.png</normaloff>:/images/tray_transfer_manager_ico.png</iconset>
               </property>
               <property name="iconSize">
@@ -1943,7 +2080,7 @@ background-color: #F7F8F9;
   <tabstop>bSettings</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_win.qrc"/>
  </resources>
  <connections/>
 </ui>
