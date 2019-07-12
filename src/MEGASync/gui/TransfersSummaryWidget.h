@@ -53,6 +53,8 @@ public:
 
     void initialize();
 
+    void showAnimated();
+
 private slots:
     void resizeAnimation();
 

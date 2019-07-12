@@ -370,6 +370,13 @@
         <file>images/pause_big_ico@2x.png</file>
         <file>images/pause_big_ico@3x.png</file>
         <file>images/mbox-warning.png</file>
+        <file>images/pause_big_ico@3x.png</file>
+        <file>images/pause.png</file>
+        <file>images/pause@2x.png</file>
+        <file>images/pause@3x.png</file>
+        <file>images/resume.png</file>
+        <file>images/resume@2x.png</file>
+        <file>images/resume@3x.png</file>
         <file>images/mbox-warning@2x.png</file>
         <file>images/mbox-warning@3x.png</file>
         <file>images/tray_transfer_manager_ico.png</file>

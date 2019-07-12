@@ -806,6 +806,11 @@ void InfoDialog::changeEvent(QEvent *event)
 
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 {
+    if (obj == this && e->type() == QEvent::WindowActivate)
+    {
+        ui->bTransferManager->showAnimated();
+        return true;
+    }
 #ifdef Q_OS_LINUX
     if (obj == this && e->type() == QEvent::WindowDeactivate)
     {

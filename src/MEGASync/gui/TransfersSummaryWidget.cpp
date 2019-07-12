@@ -22,6 +22,8 @@ TransfersSummaryWidget::TransfersSummaryWidget(QWidget *parent) :
 
     fontUploads.setFamily(QString::fromUtf8("Lato"));
     fontDownloads.setFamily(QString::fromUtf8("Lato"));
+    fontUploads.setBold(true);
+    fontDownloads.setBold(true);
 
     brushgreyspeeds = QBrush(QColor(QString::fromUtf8("#E5E5E5")));
     brushwhitebackground = QBrush(QColor(QString::fromUtf8("#FFFFFF")));
@@ -148,6 +150,12 @@ void TransfersSummaryWidget::setPercentOuterCircle(const qreal &value)
 }
 
 // This should only be called after width() and height() are valid
+void TransfersSummaryWidget::showAnimated()
+{
+    this->shrink(true);
+    QTimer::singleShot(10, this, SLOT(expand()));
+}
+
 void TransfersSummaryWidget::initialize()
 {
     originalheight = this->height();
@@ -156,11 +164,11 @@ void TransfersSummaryWidget::initialize()
 
     calculateSpeed();
 
-    this->shrink(true);
+    showAnimated();
+
     updateSizes();
     update();
 
-    QTimer::singleShot(10, this, SLOT(expand()));
 
 }
 
