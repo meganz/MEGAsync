@@ -448,8 +448,6 @@ void InfoDialog::setAccountType(int accType)
          ui->bUpgrade->hide();
 
          ui->pUsageStorage->hide();
-         ui->wUsageStorage->setCursor(Qt::ArrowCursor);
-         ui->pUsageStorage->setCursor(Qt::ArrowCursor);
          ui->lPercentageUsedStorage->hide();
 
          ui->pUsageQuota->hide();
@@ -464,8 +462,6 @@ void InfoDialog::setAccountType(int accType)
          ui->bUpgrade->show();
 
          ui->pUsageStorage->show();
-         ui->wUsageStorage->setCursor(Qt::PointingHandCursor);
-         ui->pUsageStorage->setCursor(Qt::PointingHandCursor);
          ui->lPercentageUsedStorage->show();
 
          ui->pUsageQuota->show();
