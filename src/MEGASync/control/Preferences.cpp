@@ -21,6 +21,7 @@ const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
     "- Fix UI glitch with unaligned borders in MacOS\n"
     "- Fix show in folder when saved in root folder in Windows (drive letter)\n"
     "- Localized separator for decimal values in sizes\n"
+    "- Include option to add synchronizations from the main dialog\n"
     "- Disable option to create new folders when downloading/streaming from MEGA\n"
     "- Other minor bug fixes and improvements"));
 

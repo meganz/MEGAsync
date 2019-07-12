@@ -3457,6 +3457,11 @@ when the application starts again</source>
         <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
         <translation type="unfinished">CHEIEDERECUPERARE-MEGA</translation>
     </message>
+    <message>
+        <source>MEGA-RECOVERYKEY</source>
+        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
+        <translation type="unfinished">MEGA-RECOVERYKEY</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>

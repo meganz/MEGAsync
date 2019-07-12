@@ -15,6 +15,7 @@
 #include <QGraphicsOpacityEffect>
 #include "HighDpiResize.h"
 #include "Utilities.h"
+#include <memory>
 #ifdef _WIN32
 #include <chrono>
 #endif
@@ -46,6 +47,7 @@ public:
     void setTransfer(mega::MegaTransfer *transfer);
     void refreshTransferItems();
     void transferFinished(int error);
+    void updateSyncsButton();
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
     void setOverQuotaMode(bool state);
@@ -86,6 +88,7 @@ public slots:
 private slots:
     void on_bSettings_clicked();
     void on_bUpgrade_clicked();
+    void on_bSyncFolder_clicked();
     void openFolder(QString path);
     void on_bChats_clicked();
     void onOverlayClicked();
@@ -114,6 +117,8 @@ private:
     QWidget *dummy; // Patch to let text input on line edits of GuestWidget
 #endif
 
+    std::unique_ptr<QMenu> syncsMenu;
+    QSignalMapper *menuSignalMapper;
     QMenu *transferMenu;
     DataUsageMenu *storageUsedMenu;
 
