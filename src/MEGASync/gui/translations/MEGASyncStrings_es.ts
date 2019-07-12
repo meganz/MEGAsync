@@ -769,7 +769,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation type="unfinished">Por favor espera...</translation>
+        <translation type="unfinished">Por favor, espere...</translation>
     </message>
 </context>
 <context>
@@ -1242,7 +1242,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Create Account</source>
-        <translation type="unfinished">Crear Cuenta</translation>
+        <translation type="unfinished">Crear cuenta</translation>
     </message>
     <message>
         <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
@@ -1312,7 +1312,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1416,7 +1416,7 @@ because the remote folder doesn&apos;t exist</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">Tu sincronización &quot;%1&quot; ha sido desactivada porque la carpeta remota se encuentra en la Papelera</translation>
+        <translation type="obsolete">Tu sincronización &quot;%1&quot; se ha desactivado porque la carpeta remota está en la Papelera</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1710,7 +1710,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Tu sincronización &quot;%1&quot; ha sido desactivada porque la carpeta remota se encuentra en la Papelera</translation>
+        <translation type="unfinished">Tu sincronización &quot;%1&quot; se ha desactivado porque la carpeta remota está en la Papelera</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -2065,7 +2065,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Failed permanently</source>
         <translatorcomment>Label to show that a SDK operation has failed permanently.</translatorcomment>
-        <translation>Archivo no disponible temporalmente</translation>
+        <translation>Fallo permanente</translation>
     </message>
     <message>
         <source>Too many concurrent connections or transfers</source>
@@ -3104,7 +3104,7 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>Por favor espera...</translation>
+        <translation>Por favor, espere...</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -3392,7 +3392,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Disable file versioning</source>

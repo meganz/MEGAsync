@@ -11,7 +11,7 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">คลาวด์ไดรฟ์</translation>
+        <translation type="unfinished">คลาวด์ไดร์ฟ</translation>
     </message>
     <message>
         <source>Inbox</source>
@@ -374,7 +374,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>No</source>
         <translatorcomment>Negative response to a question. The text will be inside a button.</translatorcomment>
-        <translation type="unfinished">ไม่ใช่</translation>
+        <translation type="unfinished">ไม่</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -551,7 +551,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>1 folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected a folder</translatorcomment>
-        <translation type="unfinished">1 โฟลเดอร์</translation>
+        <translation type="unfinished">1 โฟล์เดอร์</translation>
     </message>
     <message>
         <source>%i folders</source>
@@ -1074,7 +1074,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">คลาวด์ไดรฟ์</translation>
+        <translation type="unfinished">คลาวด์ไดร์ฟ</translation>
     </message>
     <message>
         <source>Inbox</source>
@@ -1311,7 +1311,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1374,7 +1374,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Next</source>
         <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
-        <translation type="unfinished">ต่อไป</translation>
+        <translation type="unfinished">ถัดไป</translation>
     </message>
     <message>
         <source>Invalid code</source>
@@ -1415,7 +1415,7 @@ because the remote folder doesn&apos;t exist</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">การซิงค์ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) อยู่ในถังขยะ</translation>
+        <translation type="obsolete">การซิงค์ &quot;%1&quot; ของคุณได้ถูกปิดการใช้งาน เนื่องจากโฟลเดอร์ระยะไกลอยู่ในถังขยะ</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1709,7 +1709,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">การซิงค์ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) อยู่ในถังขยะ</translation>
+        <translation type="unfinished">การซิงค์ &quot;%1&quot; ของคุณได้ถูกปิดการใช้งาน เนื่องจากโฟลเดอร์ระยะไกลอยู่ในถังขยะ</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -1777,7 +1777,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="obsolete">เกิดการผิดพลาดขึ้นชั่วขณะ, กำลังลองใหม่.</translation>
+        <translation type="obsolete">มีข้อผิดพลาดชั่วคราว กรุณาลองใหม่</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -2044,7 +2044,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>ผิดพลาดภายใน</translation>
+        <translation>เกิดข้อผิดพลาดภายใน</translation>
     </message>
     <message>
         <source>Invalid argument</source>
@@ -2194,7 +2194,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
-        <translation type="unfinished">คลาวด์ไดรฟ์</translation>
+        <translation type="unfinished">คลาวด์ไดร์ฟ</translation>
     </message>
 </context>
 <context>
@@ -2374,7 +2374,7 @@ Are you sure?</source>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
-        <translation type="obsolete">คลาวด์ไดรฟ์</translation>
+        <translation type="obsolete">คลาวด์ไดร์ฟ</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
@@ -3391,7 +3391,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3589,7 +3589,7 @@ when the application starts again</source>
     <message>
         <source>Next</source>
         <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>ต่อไป</translation>
+        <translation>ถัดไป</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3946,7 +3946,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 folder</source>
         <translatorcomment>Label to indicate one folder.</translatorcomment>
-        <translation>1 โฟลเดอร์</translation>
+        <translation>1 โฟล์เดอร์</translation>
     </message>
     <message>
         <source>%1 folders</source>
@@ -4095,7 +4095,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation type="unfinished">คลาวด์ไดรฟ์</translation>
+        <translation type="unfinished">คลาวด์ไดร์ฟ</translation>
     </message>
     <message>
         <source>Public link</source>
@@ -4535,7 +4535,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="obsolete">คลาวด์ไดรฟ์</translation>
+        <translation type="obsolete">คลาวด์ไดร์ฟ</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -4546,7 +4546,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageWidget</name>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">คลาวด์ไดรฟ์</translation>
+        <translation type="unfinished">คลาวด์ไดร์ฟ</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>

@@ -952,7 +952,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">Téléchargement en cours</translation>
+        <translation type="vanished">Téléchargement</translation>
     </message>
     <message>
         <source>Uploading </source>
@@ -1029,7 +1029,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Passez PRO</translation>
+        <translation type="unfinished">Passer à un compte PRO</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -1311,7 +1311,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1410,17 +1410,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation type="obsolete">Votre synchro « %1 » a été désactivée, car le dossier distant n’existe pas</translation>
+        <translation type="obsolete">Votre synchro « %1 » a été désactivée, car le dossier distant n&apos;existe pas</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">Votre synchro « %1 » a été désactivée, car le dossier distant est dans la corbeille</translation>
+        <translation type="obsolete">Votre synchro « %1 » a été désactivée, car le dossier distant est dans la corbeille</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation type="obsolete">Votre synchro « %1 » a été désactivée, car le dossier local n’existe pas</translation>
+        <translation type="obsolete">Votre synchro « %1 » a été désactivée, car le dossier local n&apos;existe pas</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1679,12 +1679,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Votre synchro « %1 » a été désactivée, car le dossier distant n’existe pas</translation>
+        <translation type="unfinished">Votre synchro « %1 » a été désactivée, car le dossier distant n&apos;existe pas</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Votre synchro « %1 » a été désactivée, car le dossier local n’existe pas</translation>
+        <translation type="unfinished">Votre synchro « %1 » a été désactivée, car le dossier local n&apos;existe pas</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -1709,7 +1709,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Votre synchro « %1 » a été désactivée, car le dossier distant est dans la corbeille</translation>
+        <translation type="unfinished">Votre synchro « %1 » a été désactivée, car le dossier distant est dans la corbeille</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -2731,7 +2731,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
-        <translation type="vanished">Il y a une minute</translation>
+        <translation type="vanished">il y a 1 minute</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -2741,12 +2741,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
-        <translation type="vanished">Il y a 1 heure</translation>
+        <translation type="vanished">il y a 1 heure</translation>
     </message>
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
-        <translation type="vanished">Il y a 1 jour</translation>
+        <translation type="vanished">il y a 1 jour</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -2813,7 +2813,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Advanced</source>
         <translatorcomment>Tab label of Advanced settings dialog. Max 15 characters.</translatorcomment>
-        <translation>Paramètres avancés</translation>
+        <translation>Avancés</translation>
     </message>
     <message>
         <source>Help</source>
@@ -3391,7 +3391,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3455,7 +3455,7 @@ when the application starts again</source>
     <message>
         <source>MEGA-RECOVERYKEY</source>
         <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
-        <translation type="unfinished">MEGA-RECOVERYKEY</translation>
+        <translation type="unfinished">MEGA-CLÉdeRÉCUPÉRATION</translation>
     </message>
 </context>
 <context>
@@ -4210,7 +4210,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 minute ago</source>
-        <translation type="obsolete">Il y a une minute</translation>
+        <translation type="obsolete">il y a 1 minute</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -4218,7 +4218,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 hour ago</source>
-        <translation type="obsolete">Il y a 1 heure</translation>
+        <translation type="obsolete">il y a 1 heure</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
@@ -4226,7 +4226,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="obsolete">Il y a 1 jour</translation>
+        <translation type="obsolete">il y a 1 jour</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -4412,7 +4412,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Veuillez surclasser votre compte vers un compte PRO pour continuer immédiatement ou patienter %1 pour continuer gratuitement.</translation>
+        <translation type="unfinished">Veuillez passer à un compte PRO pour continuer immédiatement ou attendez %1 pour continuer gratuitement.</translation>
     </message>
     <message>
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
@@ -4584,7 +4584,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished 1 minute ago</translatorcomment>
-        <translation type="unfinished">Il y a une minute</translation>
+        <translation type="unfinished">il y a 1 minute</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -4594,7 +4594,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished 1 hour ago</translatorcomment>
-        <translation type="unfinished">Il y a 1 heure</translation>
+        <translation type="unfinished">il y a 1 heure</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
@@ -4604,7 +4604,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished 1 day ago</translatorcomment>
-        <translation type="unfinished">Il y a 1 jour</translation>
+        <translation type="unfinished">il y a 1 jour</translation>
     </message>
     <message>
         <source>%1 days ago</source>
