@@ -862,7 +862,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation type="vanished">Syncs</translation>
+        <translation>Syncs</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -927,7 +927,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation type="vanished">Add Sync</translation>
+        <translation>Add Sync</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -1311,7 +1311,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1415,7 +1415,7 @@ because the remote folder doesn&apos;t exist</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">Ang sync na &quot;%1&quot; ay tinanggal dahil walang remote folder sa basurahan</translation>
+        <translation type="obsolete">Ang inyong &quot;%1&quot; ay itinigil dahil ang remote folder ay nasa basurahan na.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1709,7 +1709,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Ang sync na &quot;%1&quot; ay tinanggal dahil walang remote folder sa basurahan</translation>
+        <translation type="unfinished">Ang inyong &quot;%1&quot; ay itinigil dahil ang remote folder ay nasa basurahan na.</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -2596,7 +2596,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
-        <translation type="unfinished">sikat!</translation>
+        <translation type="unfinished">Sikat!</translation>
     </message>
 </context>
 <context>
@@ -3391,7 +3391,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3451,6 +3451,11 @@ when the application starts again</source>
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
         <translation type="unfinished">%1 used</translation>
+    </message>
+    <message>
+        <source>MEGA-RECOVERYKEY</source>
+        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
+        <translation type="unfinished">MEGA-RECOVERYKEY</translation>
     </message>
 </context>
 <context>

@@ -16,7 +16,7 @@
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">Inbox</translation>
+        <translation type="unfinished">Postvak IN</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -26,7 +26,7 @@
     <message>
         <source>Storage</source>
         <translatorcomment>Label for Storage space used. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">Opslag</translation>
+        <translation type="obsolete">Opslagruimte</translation>
     </message>
     <message>
         <source>Files</source>
@@ -276,7 +276,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished">Privacybeleid</translation>
+        <translation type="unfinished">Privacy Policy</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -636,7 +636,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Login</translation>
+        <translation type="unfinished">Inloggen</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
@@ -816,7 +816,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Decryptie fout</translation>
+        <translation>Decryption probleem</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -863,7 +863,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation type="vanished">Synchronisaties</translation>
+        <translation>Synchronisaties</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -928,7 +928,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation type="vanished">Voeg een Synchronisatie toe</translation>
+        <translation>Voeg een Synchronisatie toe</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -953,7 +953,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">Aan het downloaden</translation>
+        <translation type="vanished">Downloaden</translation>
     </message>
     <message>
         <source>Uploading </source>
@@ -1030,7 +1030,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Upgraden naar PRO</translation>
+        <translation type="unfinished">Schakel over naar PRO</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -1080,7 +1080,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Inbox</translation>
+        <translation type="unfinished">Postvak IN</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -1238,7 +1238,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished">Login</translation>
+        <translation type="unfinished">Inloggen</translation>
     </message>
     <message>
         <source>Create Account</source>
@@ -1312,7 +1312,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1416,7 +1416,7 @@ because the remote folder doesn&apos;t exist</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">Uw synchronisatie &quot;%1&quot; is gestopt omdat de externe map in de prullenbak zit</translation>
+        <translation type="obsolete">Uw sync &quot;%1&quot; is uitgeschakeldomdat de externe map zich in de vuilnisbak bevindt</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1710,7 +1710,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Uw synchronisatie &quot;%1&quot; is gestopt omdat de externe map in de prullenbak zit</translation>
+        <translation type="unfinished">Uw sync &quot;%1&quot; is uitgeschakeldomdat de externe map zich in de vuilnisbak bevindt</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -2045,7 +2045,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>Interne fout</translation>
+        <translation>Interne foutmelding</translation>
     </message>
     <message>
         <source>Invalid argument</source>
@@ -2588,7 +2588,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Storage</source>
-        <translation type="unfinished">Opslag</translation>
+        <translation type="unfinished">Opslagruimte</translation>
     </message>
     <message>
         <source>Bandwidth</source>
@@ -2597,7 +2597,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
-        <translation type="unfinished">populair!</translation>
+        <translation type="unfinished">Populair!</translation>
     </message>
 </context>
 <context>
@@ -3249,7 +3249,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Herstelsleutel Exporteren</translation>
+        <translation type="unfinished">Exporteer Herstel Sleutel</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -3392,7 +3392,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3452,6 +3452,11 @@ when the application starts again</source>
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
         <translation type="unfinished">%1 gebruikt</translation>
+    </message>
+    <message>
+        <source>MEGA-RECOVERYKEY</source>
+        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
+        <translation type="unfinished">MEGA-HERSTELSLEUTEL</translation>
     </message>
 </context>
 <context>
@@ -3905,7 +3910,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Login</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation type="unfinished">Login</translation>
+        <translation type="unfinished">Inloggen</translation>
     </message>
 </context>
 <context>
@@ -4167,7 +4172,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">Decryptie fout</translation>
+        <translation type="unfinished">Decryption probleem</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -4464,7 +4469,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="unfinished">Opslag</translation>
+        <translation type="unfinished">Opslagruimte</translation>
     </message>
     <message>
         <source>transfer</source>
@@ -4524,7 +4529,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="obsolete">Inbox</translation>
+        <translation type="obsolete">Postvak IN</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -4555,7 +4560,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">Inbox</translation>
+        <translation type="unfinished">Postvak IN</translation>
     </message>
     <message>
         <source>Used</source>

@@ -51,7 +51,7 @@
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation type="unfinished">加载中</translation>
+        <translation type="unfinished">载入中</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -322,7 +322,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Your password has been changed.</source>
-        <translation type="obsolete">您的密码已被更改。</translation>
+        <translation type="obsolete">您的密码已变更。</translation>
     </message>
     <message>
         <source>Error</source>
@@ -862,7 +862,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation type="vanished">同步</translation>
+        <translation>同步</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -927,7 +927,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation type="vanished">新增同步</translation>
+        <translation>新增同步</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -1029,7 +1029,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">升级到Pro计划</translation>
+        <translation type="unfinished">升级到专业版</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -1241,7 +1241,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Create Account</source>
-        <translation type="unfinished">创建账号</translation>
+        <translation type="unfinished">建立帐号</translation>
     </message>
     <message>
         <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
@@ -1255,12 +1255,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation type="unfinished">Login or create an account to start using the MEGA Desktop App.</translation>
+        <translation type="unfinished">登录或创建一个帐户即可开始使用MEGA桌面App</translation>
     </message>
     <message>
         <source>You need to login MEGA account to run MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
-        <translation type="unfinished">You need to login to your MEGA account to run the MEGA Desktop App.</translation>
+        <translation type="unfinished">您需要登录您的MEGA帐户运行MEGA桌面App</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1270,12 +1270,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Create account to join MEGA collaboration platform.</source>
         <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
-        <translation type="unfinished">Create an account to join the MEGA collaboration platform.</translation>
+        <translation type="unfinished">创建一个帐户即可加入MEGA云协作平台。</translation>
     </message>
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation type="unfinished">Learn more about the MEGA Desktop App. [A]Read more[/A]</translation>
+        <translation type="unfinished">了解更多MEGA桌面App，[A]阅读更多[/A]</translation>
     </message>
 </context>
 <context>
@@ -1311,7 +1311,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1374,7 +1374,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Next</source>
         <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
-        <translation type="unfinished">次一</translation>
+        <translation type="unfinished">下一步</translation>
     </message>
     <message>
         <source>Invalid code</source>
@@ -1415,7 +1415,7 @@ because the remote folder doesn&apos;t exist</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">因远程文件夹已于垃圾桶内，您的同步&quot;%1&quot; 已被停用。</translation>
+        <translation type="obsolete">您的同步&quot;%1&quot;因远程文件夹在垃圾桶中故已被停用</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1709,7 +1709,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">因远程文件夹已于垃圾桶内，您的同步&quot;%1&quot; 已被停用。</translation>
+        <translation type="unfinished">您的同步&quot;%1&quot;因远程文件夹在垃圾桶中故已被停用</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -1881,7 +1881,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your password has been changed.</source>
         <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation type="unfinished">您的密码已被更改。</translation>
+        <translation type="unfinished">您的密码已变更。</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
@@ -2181,12 +2181,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Terms of Service breached</source>
         <translatorcomment>Error shown when terms of service are breached during download.</translatorcomment>
-        <translation type="unfinished">Terms of Service breached</translation>
+        <translation type="unfinished">已违反服务条款</translation>
     </message>
     <message>
         <source>Not accessible due to ToS/AUP violation</source>
         <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation type="unfinished">Not accessible due to ToS/AUP violation</translation>
+        <translation type="unfinished">由于违反ToS服务条款或AUP可接受的使用政策而无法访问</translation>
     </message>
 </context>
 <context>
@@ -2642,11 +2642,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Windows
-- Improved GUI performance during the addition of a large number of downloads
-- Restyling of the initial information wizard, new icons and interface improvements
-- Support for business accounts
-- Other minor bug fixes and improvements</translation>
+        <translation type="unfinished">- 优化了在Windows上高分辨率显示的外观
+- 优化了用户在大量下载时的GUI性能
+- 改进了初始信息向导、新图标和界面
+- 支持企业帐户
+- 其他若干bug修复与改进</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -2656,12 +2656,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Linux
-- Enabled thumbnail support for PDF documents
-- Improved GUI performance during the addition of a large number of downloads
-- Restyling of the initial information wizard, new icons and interface improvements
-- Support for business accounts
-- Other minor bug fixes and improvements</translation>
+        <translation type="unfinished">- 优化了在Linux上高分辨率显示的外观
+- 可支持PDF文档的缩略图显示
+- 优化了用户在大量下载时的GUI性能
+- 改进了初始信息向导、新图标和界面
+- 支持企业帐户
+- 其他若干bug修复与改进</translation>
     </message>
 </context>
 <context>
@@ -3248,7 +3248,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">导出恢复金匙</translation>
+        <translation type="unfinished">导出恢复秘钥</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -3391,7 +3391,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3450,7 +3450,17 @@ when the application starts again</source>
     <message>
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
-        <translation type="unfinished">%1 used</translation>
+        <translation type="unfinished">已使用%1</translation>
+    </message>
+    <message>
+        <source>MEGA-RECOVERYKEY</source>
+        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
+        <translation type="unfinished">MEGA-恢复密钥</translation>
+    </message>
+    <message>
+        <source>MEGA-RECOVERYKEY</source>
+        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
+        <translation type="unfinished">MEGA-RECOVERYKEY</translation>
     </message>
 </context>
 <context>
@@ -3584,7 +3594,7 @@ when the application starts again</source>
     <message>
         <source>Next</source>
         <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>次一</translation>
+        <translation>下一步</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3873,7 +3883,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Specific folders in your Cloud Drive will be synchronized with a local folder.</source>
         <translatorcomment>Information label to explain the user the selective sync mode of MEGAsync</translatorcomment>
-        <translation type="unfinished">Specific folders in your Cloud Drive will be synchronised with a matching local folder.</translation>
+        <translation type="unfinished">您云盘中的特定文件夹将与匹配的本地文件夹同步。</translation>
     </message>
     <message>
         <source>Select Local folder:</source>
@@ -4014,7 +4024,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Bytes</source>
         <translatorcomment>Label to indicate bytes unit.</translatorcomment>
-        <translation type="unfinished">Bytes</translation>
+        <translation type="unfinished">字节</translation>
     </message>
     <message>
         <source>KB</source>

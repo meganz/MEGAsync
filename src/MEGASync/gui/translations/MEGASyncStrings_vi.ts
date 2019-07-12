@@ -21,7 +21,7 @@
     <message>
         <source>Rubbish Bin</source>
         <translatorcomment>Label for Rubbish Bin space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">Thùng rác</translation>
+        <translation type="obsolete">Thùng Rác</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>Rubbish bin</source>
-        <translation type="unfinished">Thùng rác</translation>
+        <translation type="unfinished">Thùng Rác</translation>
     </message>
     <message>
         <source>Available</source>
@@ -155,7 +155,7 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">Hủy</translation>
+        <translation type="unfinished">Hủy bỏ</translation>
     </message>
     <message>
         <source>OK</source>
@@ -247,7 +247,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Hủy</translation>
+        <translation>Hủy bỏ</translation>
     </message>
     <message>
         <source>Error</source>
@@ -310,7 +310,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Hủy</translation>
+        <translation type="unfinished">Hủy bỏ</translation>
     </message>
     <message>
         <source>OK</source>
@@ -322,7 +322,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Your password has been changed.</source>
-        <translation type="obsolete">Bạn vừa đổi mật khẩu.</translation>
+        <translation type="obsolete">Mật khẩu của bạn đã được đổi.</translation>
     </message>
     <message>
         <source>Error</source>
@@ -407,7 +407,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Hủy</translation>
+        <translation>Hủy bỏ</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -493,7 +493,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Hủy</translation>
+        <translation>Hủy bỏ</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -681,7 +681,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to cancel the current operation</translatorcomment>
-        <translation type="unfinished">Hủy</translation>
+        <translation type="unfinished">Hủy bỏ</translation>
     </message>
     <message>
         <source>Setting up your account...</source>
@@ -768,7 +768,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation type="unfinished">Vui lòng chớ...</translation>
+        <translation type="unfinished">Xin chờ...</translation>
     </message>
 </context>
 <context>
@@ -796,7 +796,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Hủy</translation>
+        <translation>Hủy bỏ</translation>
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
@@ -815,7 +815,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Lỗi giải mã</translation>
+        <translation>Giải mã sai</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -862,7 +862,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation type="vanished">Đồng bộ</translation>
+        <translation>Đồng bộ</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -927,7 +927,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation type="vanished">Thêm đồng bộ</translation>
+        <translation>Thêm đồng bộ</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -952,7 +952,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">Đang tải về</translation>
+        <translation type="vanished">Đang tải</translation>
     </message>
     <message>
         <source>Uploading </source>
@@ -1029,7 +1029,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Nâng cấp lên hạng PRO</translation>
+        <translation type="unfinished">Nâng cấp lên PRO</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -1089,7 +1089,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Thùng rác</translation>
+        <translation type="unfinished">Thùng Rác</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1311,7 +1311,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1326,7 +1326,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">Hủy</translation>
+        <translation type="unfinished">Hủy bỏ</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1369,7 +1369,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text to cancel 2FA dialog</translatorcomment>
-        <translation type="unfinished">Hủy</translation>
+        <translation type="unfinished">Hủy bỏ</translation>
     </message>
     <message>
         <source>Next</source>
@@ -1415,7 +1415,7 @@ because the remote folder doesn&apos;t exist</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">Đồng bộ &quot;%1&quot; của bạn đã bị ngắt do thư mục bạn chọn đang nằm trong thùng rác</translation>
+        <translation type="obsolete">Đồng bộ cho &quot;%1&quot; đã bị tắtvì thư mục đã bị chuyển vào thùng rác ở nơi khác</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1709,7 +1709,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Đồng bộ &quot;%1&quot; của bạn đã bị ngắt do thư mục bạn chọn đang nằm trong thùng rác</translation>
+        <translation type="unfinished">Đồng bộ cho &quot;%1&quot; đã bị tắtvì thư mục đã bị chuyển vào thùng rác ở nơi khác</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -1777,7 +1777,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="obsolete">Tạm thời bị lỗi, hãy thử lại</translation>
+        <translation type="obsolete">Tạm thời có lỗi, đang thử lại.</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -1833,7 +1833,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download</source>
         <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
-        <translation type="unfinished">Tải xuống</translation>
+        <translation type="unfinished">Tải về</translation>
     </message>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
@@ -1881,7 +1881,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your password has been changed.</source>
         <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation type="unfinished">Bạn vừa đổi mật khẩu.</translation>
+        <translation type="unfinished">Mật khẩu của bạn đã được đổi.</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
@@ -2044,7 +2044,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>Nỗi nội bộ</translation>
+        <translation>Lỗi nội bộ</translation>
     </message>
     <message>
         <source>Invalid argument</source>
@@ -2255,7 +2255,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label of context menu option to cancel selected transfer</translatorcomment>
-        <translation type="unfinished">Hủy</translation>
+        <translation type="unfinished">Hủy bỏ</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -2326,7 +2326,7 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">Hủy</translation>
+        <translation type="unfinished">Hủy bỏ</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2369,7 +2369,7 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Hủy</translation>
+        <translation>Hủy bỏ</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -2495,7 +2495,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>Hủy</translation>
+        <translation>Hủy bỏ</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2596,7 +2596,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
-        <translation type="unfinished">ưa chuộng!</translation>
+        <translation type="unfinished">Ưa chuộng!</translation>
     </message>
 </context>
 <context>
@@ -2642,11 +2642,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Windows
-- Improved GUI performance during the addition of a large number of downloads
-- Restyling of the initial information wizard, new icons and interface improvements
-- Support for business accounts
-- Other minor bug fixes and improvements</translation>
+        <translation type="unfinished">- Cải thiện giao diện và cảm giác sử dụng trên các màn hình có độ phân giải cao sử dụng Windows
+- Cải thiện hiệu suất GUI trong quá trình thực hiện thêm nhiều các phiên truyền tải
+- Thay đổi kiểu cách yêu cầu thông tin khi thiết lập việc sử dụng lần đầu, thêm icons mới và giao diện tốt hơn
+- Hỗ trợ tài khoản doanh nghiệp
+- Sửa lại các lỗi nhỏ và hoàn thiện thêm</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -2656,12 +2656,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Linux
-- Enabled thumbnail support for PDF documents
-- Improved GUI performance during the addition of a large number of downloads
-- Restyling of the initial information wizard, new icons and interface improvements
-- Support for business accounts
-- Other minor bug fixes and improvements</translation>
+        <translation type="unfinished">- Cải thiện giao diện và cảm giác sử dụng trên các màn hình có độ phân giải cao sử dụng Linux
+- Hiển thị ảnh nhỏ nội dung xem trước cho các tài liệu PDF
+- Cải thiện hiệu suất GUI trong quá trình thực hiện thêm nhiều các phiên truyền tải
+- Thay đổi kiểu cách yêu cầu thông tin khi thiết lập việc sử dụng lần đầu, thêm icons mới và giao diện tốt hơn
+- Hỗ trợ tài khoản doanh nghiệp
+- Sửa lại các lỗi nhỏ và hoàn thiện thêmts</translation>
     </message>
 </context>
 <context>
@@ -2703,7 +2703,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Hủy</translation>
+        <translation type="unfinished">Hủy bỏ</translation>
     </message>
 </context>
 <context>
@@ -2828,7 +2828,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Hủy</translation>
+        <translation>Hủy bỏ</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -3103,7 +3103,7 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>Vui lòng chớ...</translation>
+        <translation>Xin chờ...</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -3308,7 +3308,7 @@ when the application starts again</source>
     <message>
         <source>Permissions</source>
         <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Cấp phép</translation>
+        <translation type="unfinished">Quyền sử dụng</translation>
     </message>
     <message>
         <source>Don&apos;t use HTTP</source>
@@ -3391,7 +3391,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3451,6 +3451,11 @@ when the application starts again</source>
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
         <translation type="unfinished">Đang dùng %1</translation>
+    </message>
+    <message>
+        <source>MEGA-RECOVERYKEY</source>
+        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
+        <translation type="unfinished">MAPHUCHOI-MEGA</translation>
     </message>
 </context>
 <context>
@@ -3589,7 +3594,7 @@ when the application starts again</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>Hủy</translation>
+        <translation>Hủy bỏ</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3994,7 +3999,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">Hủy</translation>
+        <translation type="unfinished">Hủy bỏ</translation>
     </message>
     <message>
         <source>OK</source>
@@ -4165,7 +4170,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">Lỗi giải mã</translation>
+        <translation type="unfinished">Giải mã sai</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -4341,7 +4346,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished">Tải xuống</translation>
+        <translation type="unfinished">Tải về</translation>
     </message>
 </context>
 <context>
@@ -4510,7 +4515,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>Hủy</translation>
+        <translation>Hủy bỏ</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4534,7 +4539,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="obsolete">Thùng rác</translation>
+        <translation type="obsolete">Thùng Rác</translation>
     </message>
 </context>
 <context>
@@ -4545,7 +4550,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">Thùng rác</translation>
+        <translation type="unfinished">Thùng Rác</translation>
     </message>
     <message>
         <source>Incoming Shares</source>

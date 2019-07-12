@@ -487,5 +487,7 @@
         <file>images/img_wizard_3@2x.png</file>
         <file>images/business.png</file>
         <file>images/business@2x.png</file>
+        <file>images/ico_add_sync_folder.png</file>
+        <file>images/ico_add_sync_folder@2x.png</file>
     </qresource>
 </RCC>
