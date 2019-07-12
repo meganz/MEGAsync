@@ -16,7 +16,7 @@
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">صندوق الوارد</translation>
+        <translation type="unfinished">صندوق الواردات</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -155,7 +155,7 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">الغاء</translation>
+        <translation type="unfinished">إلغاء</translation>
     </message>
     <message>
         <source>OK</source>
@@ -247,7 +247,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>الغاء</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>Error</source>
@@ -310,7 +310,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">الغاء</translation>
+        <translation type="unfinished">إلغاء</translation>
     </message>
     <message>
         <source>OK</source>
@@ -407,7 +407,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>الغاء</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -493,7 +493,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>الغاء</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -681,7 +681,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to cancel the current operation</translatorcomment>
-        <translation type="unfinished">الغاء</translation>
+        <translation type="unfinished">إلغاء</translation>
     </message>
     <message>
         <source>Setting up your account...</source>
@@ -769,7 +769,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation type="unfinished">يُرجى الانتظار...</translation>
+        <translation type="unfinished">يرجى الإنتظار...</translation>
     </message>
 </context>
 <context>
@@ -797,7 +797,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>الغاء</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
@@ -816,7 +816,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>خطأ فك التشفير</translation>
+        <translation>خطأ في فك التشفير</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -863,7 +863,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation type="vanished">مزامنات</translation>
+        <translation>مزامنات</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -928,7 +928,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation type="vanished">اضافة المزامنة</translation>
+        <translation>اضافة المزامنة</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -1030,7 +1030,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">رق حسابك إلى برو</translation>
+        <translation type="unfinished">الترقية إلى بريميوم.</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -1080,7 +1080,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">صندوق الوارد</translation>
+        <translation type="unfinished">صندوق الواردات</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -1148,12 +1148,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All file uploads are currently disabled.</source>
         <translatorcomment>Label to inform the user that all uploads are stopped because the account is over storage.</translatorcomment>
-        <translation type="unfinished">All file uploads are currently disabled.</translation>
+        <translation type="unfinished">كل عمليات ترفيع الملفات موقفة.</translation>
     </message>
     <message>
         <source>Please upgrade to PRO.</source>
         <translatorcomment>Label to encourage the user to upgrade to PRO</translatorcomment>
-        <translation type="unfinished">Please upgrade to PRO.</translation>
+        <translation type="unfinished">يرجى الترقية الى PRO.</translation>
     </message>
 </context>
 <context>
@@ -1312,7 +1312,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1327,7 +1327,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">الغاء</translation>
+        <translation type="unfinished">إلغاء</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1370,7 +1370,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text to cancel 2FA dialog</translatorcomment>
-        <translation type="unfinished">الغاء</translation>
+        <translation type="unfinished">إلغاء</translation>
     </message>
     <message>
         <source>Next</source>
@@ -1416,7 +1416,7 @@ because the remote folder doesn&apos;t exist</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">تم تعطيل المزامنة &quot;%1&quot; بسبب  وجود المجلد البعيد في سلة المهملات</translation>
+        <translation type="obsolete">تم تعطيل المزامنة &quot;%1&quot;لأن المجلد البعيد في سلة المهملات</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1476,7 +1476,7 @@ Exit anyway?</source>
     <message>
         <source>About</source>
         <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
-        <translation type="unfinished">حول</translation>
+        <translation type="unfinished">عن</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1710,7 +1710,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">تم تعطيل المزامنة &quot;%1&quot; بسبب  وجود المجلد البعيد في سلة المهملات</translation>
+        <translation type="unfinished">تم تعطيل المزامنة &quot;%1&quot;لأن المجلد البعيد في سلة المهملات</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -1778,7 +1778,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="obsolete">خطأ مؤقت، جاري إعادة المحاولة.</translation>
+        <translation type="obsolete">خطأ وقتي، أعد العملية.</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -2256,7 +2256,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label of context menu option to cancel selected transfer</translatorcomment>
-        <translation type="unfinished">الغاء</translation>
+        <translation type="unfinished">إلغاء</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -2327,7 +2327,7 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">الغاء</translation>
+        <translation type="unfinished">إلغاء</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2370,7 +2370,7 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>الغاء</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -2496,7 +2496,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>الغاء</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2597,7 +2597,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
-        <translation type="unfinished">الأكثر شيوعا</translation>
+        <translation type="unfinished">الأكثر شيوعاً</translation>
     </message>
 </context>
 <context>
@@ -2704,7 +2704,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">الغاء</translation>
+        <translation type="unfinished">إلغاء</translation>
     </message>
 </context>
 <context>
@@ -2829,7 +2829,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>الغاء</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -2898,7 +2898,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Add</source>
         <translatorcomment>Button lable to add a synchronization. String as short as possible.</translatorcomment>
-        <translation>اضافة</translation>
+        <translation>أضف</translation>
     </message>
     <message>
         <source>Local Folder</source>
@@ -3104,7 +3104,7 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>يُرجى الانتظار...</translation>
+        <translation>يرجى الإنتظار...</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -3392,7 +3392,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3452,6 +3452,11 @@ when the application starts again</source>
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
         <translation type="unfinished">%1 used</translation>
+    </message>
+    <message>
+        <source>MEGA-RECOVERYKEY</source>
+        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
+        <translation type="unfinished">MEGA-RECOVERYKEY</translation>
     </message>
 </context>
 <context>
@@ -3590,7 +3595,7 @@ when the application starts again</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>الغاء</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3996,7 +4001,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">الغاء</translation>
+        <translation type="unfinished">إلغاء</translation>
     </message>
     <message>
         <source>OK</source>
@@ -4016,7 +4021,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Bytes</source>
         <translatorcomment>Label to indicate bytes unit.</translatorcomment>
-        <translation type="unfinished">Bytes</translation>
+        <translation type="unfinished">بايت</translation>
     </message>
     <message>
         <source>KB</source>
@@ -4127,7 +4132,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Close</source>
         <translatorcomment>Text of the button to close the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">إغلاق</translation>
+        <translation type="unfinished">إغلق</translation>
     </message>
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
@@ -4167,7 +4172,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">خطأ فك التشفير</translation>
+        <translation type="unfinished">خطأ في فك التشفير</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -4291,7 +4296,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Close</source>
         <translatorcomment>Button label to close transfer manager dialog</translatorcomment>
-        <translation type="unfinished">إغلاق</translation>
+        <translation type="unfinished">إغلق</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -4512,7 +4517,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>الغاء</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4524,7 +4529,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="obsolete">صندوق الوارد</translation>
+        <translation type="obsolete">صندوق الواردات</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -4555,7 +4560,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">صندوق الوارد</translation>
+        <translation type="unfinished">صندوق الواردات</translation>
     </message>
     <message>
         <source>Used</source>
