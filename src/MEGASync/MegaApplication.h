@@ -252,7 +252,7 @@ protected:
     void createTrayIcon();
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
-    void loggedIn();
+    void loggedIn(bool fromWizard);
     void startSyncs();
     void applyStorageState(int state);
     void processUploadQueue(mega::MegaHandle nodeHandle);

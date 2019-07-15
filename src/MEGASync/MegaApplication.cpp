@@ -1611,7 +1611,7 @@ void MegaApplication::start()
     }
 }
 
-void MegaApplication::loggedIn()
+void MegaApplication::loggedIn(bool fromWizard)
 {
     if (appfinished)
     {
@@ -1634,7 +1634,7 @@ void MegaApplication::loggedIn()
 
     registerUserActivity();
     pauseTransfers(paused);
-    updateUserStats(true, true, true, true, USERSTATS_LOGGEDIN);
+    updateUserStats(fromWizard, true, true, fromWizard, USERSTATS_LOGGEDIN);  // loggedIn() is called once on startup if the user is already logged in, or twice when the user supplies username/password to log in.
     megaApi->getPricing();
     megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
     megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
@@ -3384,7 +3384,7 @@ void MegaApplication::setupWizardFinished(int result)
         infoDialog->hide();
     }
 
-    loggedIn();
+    loggedIn(true);
     startSyncs();
     applyStorageState(storageState);
 }
@@ -6775,7 +6775,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 if (megaApi->isFilesystemAvailable())
                 {
                     //If we have got the filesystem, start the app
-                    loggedIn();
+                    loggedIn(false);
                     restoreSyncs();
                 }
                 else
