@@ -337,7 +337,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/ico_add_sync_folder.png</normaloff>:/images/ico_add_sync_folder.png</iconset>
               </property>
               <property name="iconSize">
@@ -373,7 +373,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
               </property>
               <property name="iconSize">
@@ -409,7 +409,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
               </property>
               <property name="iconSize">
@@ -454,7 +454,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/more_settings.png</normaloff>:/images/more_settings.png</iconset>
               </property>
               <property name="iconSize">
@@ -765,505 +765,18 @@ QToolButton
              </widget>
             </item>
             <item>
-             <widget class="QWidget" name="wUsageContainer" native="true">
+             <widget class="QStackedWidget" name="sTabs">
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>69</height>
+                <height>50</height>
                </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>69</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true"/>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_3">
-               <property name="spacing">
-                <number>0</number>
-               </property>
-               <property name="leftMargin">
-                <number>0</number>
-               </property>
-               <property name="topMargin">
-                <number>0</number>
-               </property>
-               <property name="rightMargin">
-                <number>0</number>
-               </property>
-               <property name="bottomMargin">
-                <number>0</number>
-               </property>
-               <item>
-                <widget class="QWidget" name="wUsageStats" native="true">
-                 <property name="minimumSize">
-                  <size>
-                   <width>400</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>400</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">background-color: #FFFFFF;</string>
-                 </property>
-                 <layout class="QHBoxLayout" name="horizontalLayout_3">
-                  <property name="spacing">
-                   <number>-1</number>
-                  </property>
-                  <property name="leftMargin">
-                   <number>10</number>
-                  </property>
-                  <property name="topMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="rightMargin">
-                   <number>10</number>
-                  </property>
-                  <property name="bottomMargin">
-                   <number>0</number>
-                  </property>
-                  <item>
-                   <widget class="QWidget" name="wStorageUsage" native="true">
-                    <property name="maximumSize">
-                     <size>
-                      <width>199</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                    <layout class="QHBoxLayout" name="horizontalLayout_4">
-                     <property name="spacing">
-                      <number>5</number>
-                     </property>
-                     <property name="leftMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="topMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="rightMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="bottomMargin">
-                      <number>0</number>
-                     </property>
-                     <item>
-                      <widget class="QStackedWidget" name="sStorage">
-                       <property name="minimumSize">
-                        <size>
-                         <width>52</width>
-                         <height>44</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>52</width>
-                         <height>44</height>
-                        </size>
-                       </property>
-                       <property name="currentIndex">
-                        <number>0</number>
-                       </property>
-                       <widget class="CircularUsageProgressBar" name="wCircularStorage">
-                        <property name="minimumSize">
-                         <size>
-                          <width>52</width>
-                          <height>44</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>52</width>
-                          <height>44</height>
-                         </size>
-                        </property>
-                       </widget>
-                       <widget class="QWidget" name="wBusinessStorage">
-                        <layout class="QHBoxLayout" name="horizontalLayout_10">
-                         <property name="spacing">
-                          <number>0</number>
-                         </property>
-                         <property name="leftMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="topMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="rightMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="bottomMargin">
-                          <number>0</number>
-                         </property>
-                         <item>
-                          <widget class="QPushButton" name="bBusinessStorage">
-                           <property name="minimumSize">
-                            <size>
-                             <width>44</width>
-                             <height>44</height>
-                            </size>
-                           </property>
-                           <property name="maximumSize">
-                            <size>
-                             <width>44</width>
-                             <height>44</height>
-                            </size>
-                           </property>
-                           <property name="text">
-                            <string/>
-                           </property>
-                           <property name="icon">
-                            <iconset>
-                             <normalon>:/images/storage_for_business.png</normalon>
-                            </iconset>
-                           </property>
-                           <property name="iconSize">
-                            <size>
-                             <width>44</width>
-                             <height>44</height>
-                            </size>
-                           </property>
-                          </widget>
-                         </item>
-                        </layout>
-                       </widget>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QWidget" name="wStorageDetails" native="true">
-                       <layout class="QVBoxLayout" name="verticalLayout_7">
-                        <property name="spacing">
-                         <number>0</number>
-                        </property>
-                        <property name="leftMargin">
-                         <number>0</number>
-                        </property>
-                        <property name="topMargin">
-                         <number>8</number>
-                        </property>
-                        <property name="rightMargin">
-                         <number>0</number>
-                        </property>
-                        <property name="bottomMargin">
-                         <number>8</number>
-                        </property>
-                        <item>
-                         <widget class="QLabel" name="lTotalUsedStorage">
-                          <property name="styleSheet">
-                           <string notr="true">#lTotalUsedStorage
-{
-font-family: &quot;Lato&quot;;
-font-weight: bold;
-font-size: 13px;
-}
-</string>
-                          </property>
-                          <property name="text">
-                           <string>Storage</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QLabel" name="lUsedStorage">
-                          <property name="minimumSize">
-                           <size>
-                            <width>0</width>
-                            <height>24</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>16777215</width>
-                            <height>24</height>
-                           </size>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true">#lUsedStorage
-{
-color: #999999;
-font-size: 14px;
-font-family: &quot;Lato&quot;;
-}
-</string>
-                          </property>
-                          <property name="text">
-                           <string/>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
-                      </widget>
-                     </item>
-                    </layout>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QWidget" name="wVerticalSeparator" native="true">
-                    <property name="minimumSize">
-                     <size>
-                      <width>2</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>2</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color:  rgba(0, 0, 0, 0.1);
-margin-top: 12px;
-margin-bottom: 12px;
-</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QWidget" name="wQuotaUsage" native="true">
-                    <property name="maximumSize">
-                     <size>
-                      <width>199</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                    <layout class="QHBoxLayout" name="horizontalLayout_7">
-                     <property name="spacing">
-                      <number>5</number>
-                     </property>
-                     <property name="leftMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="topMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="rightMargin">
-                      <number>0</number>
-                     </property>
-                     <property name="bottomMargin">
-                      <number>0</number>
-                     </property>
-                     <item>
-                      <widget class="QStackedWidget" name="sQuota">
-                       <property name="minimumSize">
-                        <size>
-                         <width>52</width>
-                         <height>44</height>
-                        </size>
-                       </property>
-                       <property name="maximumSize">
-                        <size>
-                         <width>52</width>
-                         <height>44</height>
-                        </size>
-                       </property>
-                       <property name="currentIndex">
-                        <number>1</number>
-                       </property>
-                       <widget class="CircularUsageProgressBar" name="wCircularQuota">
-                        <property name="minimumSize">
-                         <size>
-                          <width>52</width>
-                          <height>44</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>52</width>
-                          <height>44</height>
-                         </size>
-                        </property>
-                       </widget>
-                       <widget class="QWidget" name="wBusinessQuota">
-                        <layout class="QHBoxLayout" name="horizontalLayout_8">
-                         <property name="spacing">
-                          <number>0</number>
-                         </property>
-                         <property name="leftMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="topMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="rightMargin">
-                          <number>0</number>
-                         </property>
-                         <property name="bottomMargin">
-                          <number>0</number>
-                         </property>
-                         <item>
-                          <widget class="QPushButton" name="bBusinessQuota">
-                           <property name="minimumSize">
-                            <size>
-                             <width>44</width>
-                             <height>44</height>
-                            </size>
-                           </property>
-                           <property name="maximumSize">
-                            <size>
-                             <width>44</width>
-                             <height>44</height>
-                            </size>
-                           </property>
-                           <property name="text">
-                            <string/>
-                           </property>
-                           <property name="icon">
-                            <iconset>
-                             <normalon>:/images/transfer_for_business.png</normalon>
-                            </iconset>
-                           </property>
-                           <property name="iconSize">
-                            <size>
-                             <width>44</width>
-                             <height>44</height>
-                            </size>
-                           </property>
-                          </widget>
-                         </item>
-                        </layout>
-                       </widget>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QWidget" name="wQuotaDetails" native="true">
-                       <layout class="QVBoxLayout" name="verticalLayout_9">
-                        <property name="spacing">
-                         <number>0</number>
-                        </property>
-                        <property name="leftMargin">
-                         <number>0</number>
-                        </property>
-                        <property name="topMargin">
-                         <number>8</number>
-                        </property>
-                        <property name="rightMargin">
-                         <number>0</number>
-                        </property>
-                        <property name="bottomMargin">
-                         <number>8</number>
-                        </property>
-                        <item>
-                         <widget class="QLabel" name="lTotalUsedQuota">
-                          <property name="styleSheet">
-                           <string notr="true">#lTotalUsedQuota
-{
-font-family: &quot;Lato&quot;;
-font-weight: bold;
-font-size: 13px;
-}
-</string>
-                          </property>
-                          <property name="text">
-                           <string>Transfer</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item>
-                         <widget class="QLabel" name="lUsedQuota">
-                          <property name="minimumSize">
-                           <size>
-                            <width>0</width>
-                            <height>24</height>
-                           </size>
-                          </property>
-                          <property name="maximumSize">
-                           <size>
-                            <width>16777215</width>
-                            <height>24</height>
-                           </size>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true">#lUsedQuota
-{
-color: #999999;
-font-size: 14px;
-font-family: &quot;Lato&quot;;
-}</string>
-                          </property>
-                          <property name="text">
-                           <string/>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
-                      </widget>
-                     </item>
-                    </layout>
-                   </widget>
-                  </item>
-                 </layout>
-                </widget>
-               </item>
-               <item>
-                <widget class="QWidget" name="wSeparatorStats" native="true">
-                 <property name="minimumSize">
-                  <size>
-                   <width>400</width>
-                   <height>1</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>400</width>
-                   <height>1</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true"/>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
-            </item>
-            <item>
-             <widget class="QStackedWidget" name="sActiveTransfers">
-              <property name="minimumSize">
-               <size>
-                <width>0</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>330</height>
-               </size>
-              </property>
-              <property name="styleSheet">
-               <string notr="true">#sActiveTransfers
-{
-background-color: transparent;
-}</string>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
-              <widget class="QWidget" name="pUpdated">
-               <property name="minimumSize">
-                <size>
-                 <width>400</width>
-                 <height>211</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>400</width>
-                 <height>330</height>
-                </size>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: #FFFFFF;</string>
-               </property>
-               <layout class="QVBoxLayout" name="verticalLayout_8">
+              <widget class="QWidget" name="pTransfersTab">
+               <layout class="QVBoxLayout" name="verticalLayout_10">
                 <property name="spacing">
                  <number>0</number>
                 </property>
@@ -1280,101 +793,613 @@ background-color: transparent;
                  <number>0</number>
                 </property>
                 <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_9">
-                  <property name="spacing">
-                   <number>0</number>
-                  </property>
-                  <property name="bottomMargin">
-                   <number>5</number>
-                  </property>
-                  <item>
-                   <spacer name="horizontalSpacer_9">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>0</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="lUploadToMega">
-                    <property name="minimumSize">
-                     <size>
-                      <width>352</width>
-                      <height>234</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>352</width>
-                      <height>234</height>
-                     </size>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">border: none;</string>
-                    </property>
-                    <property name="text">
-                     <string/>
-                    </property>
-                    <property name="icon">
-                     <iconset resource="../Resources_win.qrc">
-                      <normaloff>:/images/upload_to_mega.png</normaloff>:/images/upload_to_mega.png</iconset>
-                    </property>
-                    <property name="iconSize">
-                     <size>
-                      <width>352</width>
-                      <height>234</height>
-                     </size>
-                    </property>
-                    <property name="default">
-                     <bool>false</bool>
-                    </property>
-                    <property name="flat">
-                     <bool>false</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <spacer name="horizontalSpacer_10">
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                    <property name="sizeHint" stdset="0">
-                     <size>
-                      <width>0</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                   </spacer>
-                  </item>
-                 </layout>
-                </item>
-                <item>
-                 <widget class="QLabel" name="lUploadToMegaDesc">
-                  <property name="sizePolicy">
-                   <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                    <horstretch>0</horstretch>
-                    <verstretch>0</verstretch>
-                   </sizepolicy>
-                  </property>
+                 <widget class="QWidget" name="wUsageContainer" native="true">
                   <property name="minimumSize">
                    <size>
-                    <width>400</width>
-                    <height>60</height>
+                    <width>0</width>
+                    <height>69</height>
                    </size>
                   </property>
                   <property name="maximumSize">
                    <size>
                     <width>16777215</width>
-                    <height>60</height>
+                    <height>16777215</height>
                    </size>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">#lUploadToMegaDesc
+                   <string notr="true"/>
+                  </property>
+                  <layout class="QVBoxLayout" name="verticalLayout_3">
+                   <property name="spacing">
+                    <number>0</number>
+                   </property>
+                   <property name="leftMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="topMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="rightMargin">
+                    <number>0</number>
+                   </property>
+                   <property name="bottomMargin">
+                    <number>0</number>
+                   </property>
+                   <item>
+                    <widget class="QWidget" name="wUsageStats" native="true">
+                     <property name="minimumSize">
+                      <size>
+                       <width>400</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>400</width>
+                       <height>16777215</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">background-color: #FFFFFF;</string>
+                     </property>
+                     <layout class="QHBoxLayout" name="horizontalLayout_3">
+                      <property name="spacing">
+                       <number>-1</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>10</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>10</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
+                      <item>
+                       <widget class="QWidget" name="wStorageUsage" native="true">
+                        <property name="maximumSize">
+                         <size>
+                          <width>199</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <layout class="QHBoxLayout" name="horizontalLayout_4">
+                         <property name="spacing">
+                          <number>5</number>
+                         </property>
+                         <property name="leftMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <widget class="QStackedWidget" name="sStorage">
+                           <property name="minimumSize">
+                            <size>
+                             <width>52</width>
+                             <height>44</height>
+                            </size>
+                           </property>
+                           <property name="maximumSize">
+                            <size>
+                             <width>52</width>
+                             <height>44</height>
+                            </size>
+                           </property>
+                           <property name="currentIndex">
+                            <number>0</number>
+                           </property>
+                           <widget class="CircularUsageProgressBar" name="wCircularStorage">
+                            <property name="minimumSize">
+                             <size>
+                              <width>52</width>
+                              <height>44</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>52</width>
+                              <height>44</height>
+                             </size>
+                            </property>
+                           </widget>
+                           <widget class="QWidget" name="wBusinessStorage">
+                            <layout class="QHBoxLayout" name="horizontalLayout_10">
+                             <property name="spacing">
+                              <number>0</number>
+                             </property>
+                             <property name="leftMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="topMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="rightMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="bottomMargin">
+                              <number>0</number>
+                             </property>
+                             <item>
+                              <widget class="QPushButton" name="bBusinessStorage">
+                               <property name="minimumSize">
+                                <size>
+                                 <width>44</width>
+                                 <height>44</height>
+                                </size>
+                               </property>
+                               <property name="maximumSize">
+                                <size>
+                                 <width>44</width>
+                                 <height>44</height>
+                                </size>
+                               </property>
+                               <property name="text">
+                                <string/>
+                               </property>
+                               <property name="icon">
+                                <iconset>
+                                 <normalon>:/images/storage_for_business.png</normalon>
+                                </iconset>
+                               </property>
+                               <property name="iconSize">
+                                <size>
+                                 <width>44</width>
+                                 <height>44</height>
+                                </size>
+                               </property>
+                              </widget>
+                             </item>
+                            </layout>
+                           </widget>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QWidget" name="wStorageDetails" native="true">
+                           <layout class="QVBoxLayout" name="verticalLayout_7">
+                            <property name="spacing">
+                             <number>0</number>
+                            </property>
+                            <property name="leftMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>8</number>
+                            </property>
+                            <property name="rightMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>8</number>
+                            </property>
+                            <item>
+                             <widget class="QLabel" name="lTotalUsedStorage">
+                              <property name="styleSheet">
+                               <string notr="true">#lTotalUsedStorage
+{
+font-family: &quot;Lato&quot;;
+font-weight: bold;
+font-size: 13px;
+}
+</string>
+                              </property>
+                              <property name="text">
+                               <string>Storage</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QLabel" name="lUsedStorage">
+                              <property name="minimumSize">
+                               <size>
+                                <width>0</width>
+                                <height>24</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16777215</width>
+                                <height>24</height>
+                               </size>
+                              </property>
+                              <property name="styleSheet">
+                               <string notr="true">#lUsedStorage
+{
+color: #999999;
+font-size: 14px;
+font-family: &quot;Lato&quot;;
+}
+</string>
+                              </property>
+                              <property name="text">
+                               <string/>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QWidget" name="wVerticalSeparator" native="true">
+                        <property name="minimumSize">
+                         <size>
+                          <width>2</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>2</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true">background-color:  rgba(0, 0, 0, 0.1);
+margin-top: 12px;
+margin-bottom: 12px;
+</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QWidget" name="wQuotaUsage" native="true">
+                        <property name="maximumSize">
+                         <size>
+                          <width>199</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <layout class="QHBoxLayout" name="horizontalLayout_7">
+                         <property name="spacing">
+                          <number>5</number>
+                         </property>
+                         <property name="leftMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <widget class="QStackedWidget" name="sQuota">
+                           <property name="minimumSize">
+                            <size>
+                             <width>52</width>
+                             <height>44</height>
+                            </size>
+                           </property>
+                           <property name="maximumSize">
+                            <size>
+                             <width>52</width>
+                             <height>44</height>
+                            </size>
+                           </property>
+                           <property name="currentIndex">
+                            <number>1</number>
+                           </property>
+                           <widget class="CircularUsageProgressBar" name="wCircularQuota">
+                            <property name="minimumSize">
+                             <size>
+                              <width>52</width>
+                              <height>44</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>52</width>
+                              <height>44</height>
+                             </size>
+                            </property>
+                           </widget>
+                           <widget class="QWidget" name="wBusinessQuota">
+                            <layout class="QHBoxLayout" name="horizontalLayout_8">
+                             <property name="spacing">
+                              <number>0</number>
+                             </property>
+                             <property name="leftMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="topMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="rightMargin">
+                              <number>0</number>
+                             </property>
+                             <property name="bottomMargin">
+                              <number>0</number>
+                             </property>
+                             <item>
+                              <widget class="QPushButton" name="bBusinessQuota">
+                               <property name="minimumSize">
+                                <size>
+                                 <width>44</width>
+                                 <height>44</height>
+                                </size>
+                               </property>
+                               <property name="maximumSize">
+                                <size>
+                                 <width>44</width>
+                                 <height>44</height>
+                                </size>
+                               </property>
+                               <property name="text">
+                                <string/>
+                               </property>
+                               <property name="icon">
+                                <iconset>
+                                 <normalon>:/images/transfer_for_business.png</normalon>
+                                </iconset>
+                               </property>
+                               <property name="iconSize">
+                                <size>
+                                 <width>44</width>
+                                 <height>44</height>
+                                </size>
+                               </property>
+                              </widget>
+                             </item>
+                            </layout>
+                           </widget>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QWidget" name="wQuotaDetails" native="true">
+                           <layout class="QVBoxLayout" name="verticalLayout_9">
+                            <property name="spacing">
+                             <number>0</number>
+                            </property>
+                            <property name="leftMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>8</number>
+                            </property>
+                            <property name="rightMargin">
+                             <number>0</number>
+                            </property>
+                            <property name="bottomMargin">
+                             <number>8</number>
+                            </property>
+                            <item>
+                             <widget class="QLabel" name="lTotalUsedQuota">
+                              <property name="styleSheet">
+                               <string notr="true">#lTotalUsedQuota
+{
+font-family: &quot;Lato&quot;;
+font-weight: bold;
+font-size: 13px;
+}
+</string>
+                              </property>
+                              <property name="text">
+                               <string>Transfer</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QLabel" name="lUsedQuota">
+                              <property name="minimumSize">
+                               <size>
+                                <width>0</width>
+                                <height>24</height>
+                               </size>
+                              </property>
+                              <property name="maximumSize">
+                               <size>
+                                <width>16777215</width>
+                                <height>24</height>
+                               </size>
+                              </property>
+                              <property name="styleSheet">
+                               <string notr="true">#lUsedQuota
+{
+color: #999999;
+font-size: 14px;
+font-family: &quot;Lato&quot;;
+}</string>
+                              </property>
+                              <property name="text">
+                               <string/>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QWidget" name="wSeparatorStats" native="true">
+                     <property name="minimumSize">
+                      <size>
+                       <width>400</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>400</width>
+                       <height>1</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true"/>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QStackedWidget" name="sActiveTransfers">
+                     <property name="minimumSize">
+                      <size>
+                       <width>0</width>
+                       <height>0</height>
+                      </size>
+                     </property>
+                     <property name="maximumSize">
+                      <size>
+                       <width>16777215</width>
+                       <height>330</height>
+                      </size>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true">#sActiveTransfers
+{
+background-color: transparent;
+}</string>
+                     </property>
+                     <property name="currentIndex">
+                      <number>0</number>
+                     </property>
+                     <widget class="QWidget" name="pUpdated">
+                      <property name="minimumSize">
+                       <size>
+                        <width>400</width>
+                        <height>211</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>400</width>
+                        <height>330</height>
+                       </size>
+                      </property>
+                      <property name="styleSheet">
+                       <string notr="true">background-color: #FFFFFF;</string>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_8">
+                       <property name="spacing">
+                        <number>0</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <layout class="QHBoxLayout" name="horizontalLayout_9">
+                         <property name="spacing">
+                          <number>0</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>5</number>
+                         </property>
+                         <item>
+                          <spacer name="horizontalSpacer_9">
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>0</width>
+                             <height>20</height>
+                            </size>
+                           </property>
+                          </spacer>
+                         </item>
+                         <item>
+                          <widget class="QPushButton" name="lUploadToMega">
+                           <property name="minimumSize">
+                            <size>
+                             <width>352</width>
+                             <height>234</height>
+                            </size>
+                           </property>
+                           <property name="maximumSize">
+                            <size>
+                             <width>352</width>
+                             <height>234</height>
+                            </size>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">border: none;</string>
+                           </property>
+                           <property name="text">
+                            <string/>
+                           </property>
+                           <property name="icon">
+                            <iconset resource="../Resources_macx.qrc">
+                             <normaloff>:/images/upload_to_mega.png</normaloff>:/images/upload_to_mega.png</iconset>
+                           </property>
+                           <property name="iconSize">
+                            <size>
+                             <width>352</width>
+                             <height>234</height>
+                            </size>
+                           </property>
+                           <property name="default">
+                            <bool>false</bool>
+                           </property>
+                           <property name="flat">
+                            <bool>false</bool>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <spacer name="horizontalSpacer_10">
+                           <property name="orientation">
+                            <enum>Qt::Horizontal</enum>
+                           </property>
+                           <property name="sizeHint" stdset="0">
+                            <size>
+                             <width>0</width>
+                             <height>20</height>
+                            </size>
+                           </property>
+                          </spacer>
+                         </item>
+                        </layout>
+                       </item>
+                       <item>
+                        <widget class="QLabel" name="lUploadToMegaDesc">
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
+                         </property>
+                         <property name="minimumSize">
+                          <size>
+                           <width>400</width>
+                           <height>60</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>60</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true">#lUploadToMegaDesc
 {
 margin-top: 10px;
 margin-left: 20px;
@@ -1384,281 +1409,281 @@ font-family: &quot;Lato&quot;;
 font-size: 16px;
 }
 </string>
-                  </property>
-                  <property name="text">
-                   <string>Upload to MEGA now</string>
-                  </property>
-                  <property name="alignment">
-                   <set>Qt::AlignCenter</set>
-                  </property>
-                  <property name="wordWrap">
-                   <bool>true</bool>
-                  </property>
-                  <property name="openExternalLinks">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
-                </item>
-                <item>
-                 <spacer name="verticalSpacer">
-                  <property name="orientation">
-                   <enum>Qt::Vertical</enum>
-                  </property>
-                  <property name="sizeHint" stdset="0">
-                   <size>
-                    <width>20</width>
-                    <height>40</height>
-                   </size>
-                  </property>
-                 </spacer>
-                </item>
-               </layout>
-              </widget>
-              <widget class="QWidget" name="pOverquota">
-               <property name="minimumSize">
-                <size>
-                 <width>400</width>
-                 <height>211</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>400</width>
-                 <height>330</height>
-                </size>
-               </property>
-               <layout class="QVBoxLayout" name="verticalLayout_2">
-                <property name="spacing">
-                 <number>18</number>
-                </property>
-                <property name="leftMargin">
-                 <number>20</number>
-                </property>
-                <property name="topMargin">
-                 <number>32</number>
-                </property>
-                <property name="rightMargin">
-                 <number>20</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>30</number>
-                </property>
-                <item>
-                 <widget class="QWidget" name="wOQIcon" native="true">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>75</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>75</height>
-                   </size>
-                  </property>
-                  <property name="styleSheet">
-                   <string notr="true"/>
-                  </property>
-                  <layout class="QHBoxLayout" name="horizontalLayout_5">
-                   <property name="spacing">
-                    <number>0</number>
-                   </property>
-                   <property name="leftMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>2</number>
-                   </property>
-                   <item>
-                    <spacer name="horizontalSpacer_5">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>146</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="bOQIcon">
-                     <property name="maximumSize">
-                      <size>
-                       <width>64</width>
-                       <height>64</height>
-                      </size>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                     <property name="iconSize">
-                      <size>
-                       <width>64</width>
-                       <height>64</height>
-                      </size>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <spacer name="horizontalSpacer_6">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>145</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QWidget" name="wOQlabels" native="true">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>16777215</height>
-                   </size>
-                  </property>
-                  <layout class="QVBoxLayout" name="verticalLayout_13">
-                   <property name="spacing">
-                    <number>10</number>
-                   </property>
-                   <property name="leftMargin">
-                    <number>6</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>6</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>0</number>
-                   </property>
-                   <item>
-                    <widget class="QLabel" name="lOQTitle">
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>19</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>16777215</height>
-                      </size>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">#lOQTitle
+                         </property>
+                         <property name="text">
+                          <string>Upload to MEGA now</string>
+                         </property>
+                         <property name="alignment">
+                          <set>Qt::AlignCenter</set>
+                         </property>
+                         <property name="wordWrap">
+                          <bool>true</bool>
+                         </property>
+                         <property name="openExternalLinks">
+                          <bool>true</bool>
+                         </property>
+                        </widget>
+                       </item>
+                       <item>
+                        <spacer name="verticalSpacer">
+                         <property name="orientation">
+                          <enum>Qt::Vertical</enum>
+                         </property>
+                         <property name="sizeHint" stdset="0">
+                          <size>
+                           <width>20</width>
+                           <height>40</height>
+                          </size>
+                         </property>
+                        </spacer>
+                       </item>
+                      </layout>
+                     </widget>
+                     <widget class="QWidget" name="pOverquota">
+                      <property name="minimumSize">
+                       <size>
+                        <width>400</width>
+                        <height>211</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>400</width>
+                        <height>330</height>
+                       </size>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_2">
+                       <property name="spacing">
+                        <number>18</number>
+                       </property>
+                       <property name="leftMargin">
+                        <number>20</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>32</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>20</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>30</number>
+                       </property>
+                       <item>
+                        <widget class="QWidget" name="wOQIcon" native="true">
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>75</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>75</height>
+                          </size>
+                         </property>
+                         <property name="styleSheet">
+                          <string notr="true"/>
+                         </property>
+                         <layout class="QHBoxLayout" name="horizontalLayout_5">
+                          <property name="spacing">
+                           <number>0</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>2</number>
+                          </property>
+                          <item>
+                           <spacer name="horizontalSpacer_5">
+                            <property name="orientation">
+                             <enum>Qt::Horizontal</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>146</width>
+                              <height>20</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
+                          <item>
+                           <widget class="QPushButton" name="bOQIcon">
+                            <property name="maximumSize">
+                             <size>
+                              <width>64</width>
+                              <height>64</height>
+                             </size>
+                            </property>
+                            <property name="text">
+                             <string/>
+                            </property>
+                            <property name="iconSize">
+                             <size>
+                              <width>64</width>
+                              <height>64</height>
+                             </size>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <spacer name="horizontalSpacer_6">
+                            <property name="orientation">
+                             <enum>Qt::Horizontal</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>145</width>
+                              <height>20</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QWidget" name="wOQlabels" native="true">
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>16777215</height>
+                          </size>
+                         </property>
+                         <layout class="QVBoxLayout" name="verticalLayout_13">
+                          <property name="spacing">
+                           <number>10</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>6</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>6</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                          <item>
+                           <widget class="QLabel" name="lOQTitle">
+                            <property name="minimumSize">
+                             <size>
+                              <width>0</width>
+                              <height>19</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>16777215</width>
+                              <height>16777215</height>
+                             </size>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">#lOQTitle
 {
 	color: #333333;
   font-family: &quot;Lato&quot;;
 	font-size: 16px;
 }</string>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                     <property name="alignment">
-                      <set>Qt::AlignCenter</set>
-                     </property>
-                     <property name="wordWrap">
-                      <bool>true</bool>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QLabel" name="lOQDesc">
-                     <property name="styleSheet">
-                      <string notr="true">#lOQDesc
+                            </property>
+                            <property name="text">
+                             <string/>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignCenter</set>
+                            </property>
+                            <property name="wordWrap">
+                             <bool>true</bool>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QLabel" name="lOQDesc">
+                            <property name="styleSheet">
+                             <string notr="true">#lOQDesc
 {
 	color: #F0373A;
   font-family: &quot;Lato&quot;;
 	font-size: 14px;
 }
 </string>
-                     </property>
-                     <property name="text">
-                      <string/>
-                     </property>
-                     <property name="alignment">
-                      <set>Qt::AlignCenter</set>
-                     </property>
-                     <property name="wordWrap">
-                      <bool>true</bool>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QWidget" name="wQQButtons" native="true">
-                  <layout class="QHBoxLayout" name="horizontalLayout_6">
-                   <property name="spacing">
-                    <number>10</number>
-                   </property>
-                   <property name="leftMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>0</number>
-                   </property>
-                   <item>
-                    <spacer name="horizontalSpacer_7">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>1</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="bDiscard">
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>50</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>50</height>
-                      </size>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">#bDiscard
+                            </property>
+                            <property name="text">
+                             <string/>
+                            </property>
+                            <property name="alignment">
+                             <set>Qt::AlignCenter</set>
+                            </property>
+                            <property name="wordWrap">
+                             <bool>true</bool>
+                            </property>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                       <item>
+                        <widget class="QWidget" name="wQQButtons" native="true">
+                         <layout class="QHBoxLayout" name="horizontalLayout_6">
+                          <property name="spacing">
+                           <number>10</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
+                          <item>
+                           <spacer name="horizontalSpacer_7">
+                            <property name="orientation">
+                             <enum>Qt::Horizontal</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>1</width>
+                              <height>20</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
+                          <item>
+                           <widget class="QPushButton" name="bDiscard">
+                            <property name="minimumSize">
+                             <size>
+                              <width>0</width>
+                              <height>50</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>16777215</width>
+                              <height>50</height>
+                             </size>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">#bDiscard
 {
 
  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
@@ -1670,28 +1695,28 @@ font-size: 16px;
  font-size: 14px;
  color: #777777;
 }</string>
-                     </property>
-                     <property name="text">
-                      <string>Dismiss</string>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="bBuyQuota">
-                     <property name="minimumSize">
-                      <size>
-                       <width>0</width>
-                       <height>50</height>
-                      </size>
-                     </property>
-                     <property name="maximumSize">
-                      <size>
-                       <width>16777215</width>
-                       <height>50</height>
-                      </size>
-                     </property>
-                     <property name="styleSheet">
-                      <string notr="true">#bBuyQuota
+                            </property>
+                            <property name="text">
+                             <string>Dismiss</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <widget class="QPushButton" name="bBuyQuota">
+                            <property name="minimumSize">
+                             <size>
+                              <width>0</width>
+                              <height>50</height>
+                             </size>
+                            </property>
+                            <property name="maximumSize">
+                             <size>
+                              <width>16777215</width>
+                              <height>50</height>
+                             </size>
+                            </property>
+                            <property name="styleSheet">
+                             <string notr="true">#bBuyQuota
 {
 
  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
@@ -1703,74 +1728,82 @@ font-size: 16px;
  font-size: 14px;
  color: #ffffff;
 }</string>
-                     </property>
-                     <property name="text">
-                      <string>Buy more space</string>
-                     </property>
+                            </property>
+                            <property name="text">
+                             <string>Buy more space</string>
+                            </property>
+                           </widget>
+                          </item>
+                          <item>
+                           <spacer name="horizontalSpacer_8">
+                            <property name="orientation">
+                             <enum>Qt::Horizontal</enum>
+                            </property>
+                            <property name="sizeHint" stdset="0">
+                             <size>
+                              <width>1</width>
+                              <height>20</height>
+                             </size>
+                            </property>
+                           </spacer>
+                          </item>
+                         </layout>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
+                     <widget class="QWidget" name="pTransfers">
+                      <property name="minimumSize">
+                       <size>
+                        <width>400</width>
+                        <height>0</height>
+                       </size>
+                      </property>
+                      <property name="maximumSize">
+                       <size>
+                        <width>400</width>
+                        <height>330</height>
+                       </size>
+                      </property>
+                      <layout class="QVBoxLayout" name="verticalLayout_12">
+                       <property name="leftMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="topMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="rightMargin">
+                        <number>0</number>
+                       </property>
+                       <property name="bottomMargin">
+                        <number>0</number>
+                       </property>
+                       <item>
+                        <widget class="InfoDialogTransfersWidget" name="wListTransfers" native="true">
+                         <property name="minimumSize">
+                          <size>
+                           <width>0</width>
+                           <height>0</height>
+                          </size>
+                         </property>
+                         <property name="maximumSize">
+                          <size>
+                           <width>16777215</width>
+                           <height>331</height>
+                          </size>
+                         </property>
+                        </widget>
+                       </item>
+                      </layout>
+                     </widget>
                     </widget>
-                   </item>
-                   <item>
-                    <spacer name="horizontalSpacer_8">
-                     <property name="orientation">
-                      <enum>Qt::Horizontal</enum>
-                     </property>
-                     <property name="sizeHint" stdset="0">
-                      <size>
-                       <width>1</width>
-                       <height>20</height>
-                      </size>
-                     </property>
-                    </spacer>
                    </item>
                   </layout>
                  </widget>
                 </item>
                </layout>
               </widget>
-              <widget class="QWidget" name="pTransfers">
-               <property name="minimumSize">
-                <size>
-                 <width>400</width>
-                 <height>0</height>
-                </size>
-               </property>
-               <property name="maximumSize">
-                <size>
-                 <width>400</width>
-                 <height>330</height>
-                </size>
-               </property>
-               <layout class="QVBoxLayout" name="verticalLayout_12">
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="topMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
-                <property name="bottomMargin">
-                 <number>0</number>
-                </property>
-                <item>
-                 <widget class="InfoDialogTransfersWidget" name="wListTransfers" native="true">
-                  <property name="minimumSize">
-                   <size>
-                    <width>0</width>
-                    <height>0</height>
-                   </size>
-                  </property>
-                  <property name="maximumSize">
-                   <size>
-                    <width>16777215</width>
-                    <height>331</height>
-                   </size>
-                  </property>
-                 </widget>
-                </item>
-               </layout>
-              </widget>
+              <widget class="QWidget" name="pNotificationsTab"/>
              </widget>
             </item>
            </layout>
@@ -2019,7 +2052,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_win.qrc">
+               <iconset resource="../Resources_macx.qrc">
                 <normaloff>:/images/tray_transfer_manager_ico.png</normaloff>:/images/tray_transfer_manager_ico.png</iconset>
               </property>
               <property name="iconSize">
@@ -2080,7 +2113,7 @@ background-color: #F7F8F9;
   <tabstop>bSettings</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_win.qrc"/>
+  <include location="../Resources_macx.qrc"/>
  </resources>
  <connections/>
 </ui>
