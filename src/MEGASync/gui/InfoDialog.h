@@ -8,7 +8,6 @@
 #include <QPainter>
 #include "GuestWidget.h"
 #include "SettingsDialog.h"
-#include "DataUsageMenu.h"
 #include "MenuItemAction.h"
 #include "control/Preferences.h"
 #include "QCustomTransfersModel.h"
@@ -74,7 +73,6 @@ public:
 
 private:
     void drawAvatar(QString email);
-    void createQuotaUsedMenu();
     void animateStates(bool opt);
     void hideEvent(QHideEvent *event) override;
 
@@ -101,7 +99,6 @@ private slots:
     void on_bDiscard_clicked();
     void on_bBuyQuota_clicked();
 
-    void hideUsageBalloon();
     void onAnimationFinished();
 
 signals:
@@ -120,7 +117,6 @@ private:
     std::unique_ptr<QMenu> syncsMenu;
     QSignalMapper *menuSignalMapper;
     QMenu *transferMenu;
-    DataUsageMenu *storageUsedMenu;
 
     MenuItemAction *cloudItem;
     MenuItemAction *inboxItem;

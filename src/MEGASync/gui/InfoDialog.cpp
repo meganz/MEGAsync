@@ -57,7 +57,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     activeDownload = NULL;
     activeUpload = NULL;
     transferMenu = NULL;
-    storageUsedMenu = NULL;
     cloudItem = NULL;
     inboxItem = NULL;
     sharesItem = NULL;
@@ -506,8 +505,6 @@ void InfoDialog::setAccountType(int accType)
          ui->bUpgrade->hide();
 
          ui->pUsageStorage->hide();
-         ui->wUsageStorage->setCursor(Qt::ArrowCursor);
-         ui->pUsageStorage->setCursor(Qt::ArrowCursor);
          ui->lPercentageUsedStorage->hide();
 
          ui->pUsageQuota->hide();
@@ -522,8 +519,6 @@ void InfoDialog::setAccountType(int accType)
          ui->bUpgrade->show();
 
          ui->pUsageStorage->show();
-         ui->wUsageStorage->setCursor(Qt::PointingHandCursor);
-         ui->pUsageStorage->setCursor(Qt::PointingHandCursor);
          ui->lPercentageUsedStorage->show();
 
          ui->pUsageQuota->show();
@@ -1072,44 +1067,6 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
     }
 #endif
 
-    if (obj != ui->wUsageStorage && obj != ui->lTotalUsedStorage)
-    {
-        return false;
-    }
-
-    QPoint mousePos;
-    switch (e->type())
-    {
-    case QEvent::Hide:
-    case QEvent::Enter:
-         hideUsageBalloon();
-         break;
-
-    case QEvent::MouseButtonPress:
-    {
-         QMouseEvent *me = dynamic_cast<QMouseEvent*>(e);
-         mousePos = me->pos();
-         break;
-    }
-    case QEvent::ToolTip:
-    {
-         QHelpEvent *me = static_cast<QHelpEvent*>(e);
-         mousePos = me->pos();
-         break;
-    }
-    default:
-         break;
-
-    }
-
-    if (!mousePos.isNull() && preferences && preferences->totalStorage())
-    {
-        createQuotaUsedMenu();
-        QPoint p = ((QWidget *)obj)->mapToGlobal(mousePos);
-        QSize s = storageUsedMenu->sizeHint();
-        storageUsedMenu->exec(QPoint(p.x() - s.width() / 2, p.y() - s.height()));
-    }
-
     return QDialog::eventFilter(obj, e);
 }
 
@@ -1260,63 +1217,6 @@ void InfoDialog::drawAvatar(QString email)
     }
 }
 
-void InfoDialog::createQuotaUsedMenu()
-{
-    if (!storageUsedMenu)
-    {
-        storageUsedMenu = new DataUsageMenu(this);
-    }
-    else
-    {
-        QList<QAction *> actions = storageUsedMenu->actions();
-        for (int i = 0; i < actions.size(); i++)
-        {
-            storageUsedMenu->removeAction(actions[i]);
-        }
-    }
-
-    if (cloudItem)
-    {
-        cloudItem->deleteLater();
-        cloudItem = NULL;
-    }
-    cloudItem = new MenuItemAction(tr("Cloud Drive"), Utilities::getSizeString(preferences->cloudDriveStorage()), QIcon(QString::fromAscii("://images/ic_small_cloud_drive.png")), false, QSize(16,16));
-
-    if (actualAccountType != Preferences::ACCOUNT_TYPE_BUSINESS)
-    {
-        if (inboxItem)
-        {
-            inboxItem->deleteLater();
-            inboxItem = NULL;
-        }
-        inboxItem = new MenuItemAction(tr("Inbox"), Utilities::getSizeString(preferences->inboxStorage()), QIcon(QString::fromAscii("://images/ic_small_inbox.png")), false, QSize(16,16));
-    }
-
-    if (sharesItem)
-    {
-        sharesItem->deleteLater();
-        sharesItem = NULL;
-    }
-    sharesItem = new MenuItemAction(tr("Incoming Shares"), Utilities::getSizeString(preferences->inShareStorage()), QIcon(QString::fromAscii("://images/ic_small_shares.png")), false, QSize(16,16));
-
-    if (rubbishItem)
-    {
-        rubbishItem->deleteLater();
-        rubbishItem = NULL;
-    }
-    rubbishItem = new MenuItemAction(tr("Rubbish bin"), Utilities::getSizeString(preferences->rubbishStorage()), QIcon(QString::fromAscii("://images/ic_small_rubbish.png")), false, QSize(16,16));
-
-    storageUsedMenu->addAction(cloudItem);
-
-    if (actualAccountType != Preferences::ACCOUNT_TYPE_BUSINESS)
-    {
-        storageUsedMenu->addAction(inboxItem);
-    }
-
-    storageUsedMenu->addAction(sharesItem);
-    storageUsedMenu->addAction(rubbishItem);
-}
-
 void InfoDialog::animateStates(bool opt)
 {
     if (opt) //Enable animation for scanning/waiting states
@@ -1402,14 +1302,6 @@ void InfoDialog::on_bDiscard_clicked()
 void InfoDialog::on_bBuyQuota_clicked()
 {
     on_bUpgrade_clicked();
-}
-
-void InfoDialog::hideUsageBalloon()
-{
-    if (storageUsedMenu)
-    {
-        storageUsedMenu->hide();
-    }
 }
 
 void InfoDialog::onAnimationFinished()

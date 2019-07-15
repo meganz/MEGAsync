@@ -1591,9 +1591,6 @@ margin-right: 20px;</string>
                     <height>12</height>
                    </size>
                   </property>
-                  <property name="cursor">
-                   <cursorShape>PointingHandCursor</cursorShape>
-                  </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_10">
                    <property name="leftMargin">
                     <number>0</number>
@@ -1626,9 +1623,6 @@ margin-right: 20px;</string>
                        <width>368</width>
                        <height>4</height>
                       </size>
-                     </property>
-                     <property name="cursor">
-                      <cursorShape>PointingHandCursor</cursorShape>
                      </property>
                      <property name="styleSheet">
                       <string notr="true"/>

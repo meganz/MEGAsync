@@ -71,7 +71,17 @@ public:
 class Notificator;
 class MEGASyncDelegateListener;
 
-enum GetUserStatsReason { USERSTATS_LOGGEDIN, USERSTATS_STORAGESTATECHANGE, USERSTATS_TRAFFICLIGHT, USERSTATS_SHOWDIALOG, USERSTATS_CHANGEPROXY, USERSTATS_TRANSFERTEMPERROR, USERSTATS_ACCOUNTUPDATE, USERSTATS_STORAGECLICKED };
+enum GetUserStatsReason {
+    USERSTATS_LOGGEDIN,
+    USERSTATS_STORAGESTATECHANGE,
+    USERSTATS_TRAFFICLIGHT,
+    USERSTATS_SHOWDIALOG,
+    USERSTATS_CHANGEPROXY,
+    USERSTATS_TRANSFERTEMPERROR,
+    USERSTATS_ACCOUNTUPDATE,
+    USERSTATS_STORAGECLICKED,
+    USERSTATS_BANDWIDTH_TIMEOUT_SHOWINFODIALOG,
+};
 
 class MegaApplication : public QApplication, public mega::MegaListener
 {
@@ -256,6 +266,7 @@ protected:
     void startHttpServer();
     void startHttpsServer();
     void initLocalServer();
+    void refreshStorageUIs();
 
     void sendOverStorageNotification(int state);
 
@@ -344,6 +355,7 @@ protected:
     bool almostOQ;
     int storageState;
     int appliedStorageState;
+    long long receivedStorageSum;
     long long maxMemoryUsage;
     int exportOps;
     int syncState;
