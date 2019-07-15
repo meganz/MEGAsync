@@ -1,6 +1,8 @@
 
 cmake_minimum_required(VERSION 3.0)
-project(MEGAsync)
+set(MEGA_PROJECT_NAME "MEGAsync-desktop-" CACHE STRING "Project name, SDK will declare and append 32/64")
+
+PROJECT(${MEGA_PROJECT_NAME})
 
 if (WIN32)
     if("${CMAKE_GENERATOR}" MATCHES "(Win64|IA64)")
@@ -9,31 +11,31 @@ if (WIN32)
         SET(build_64_bit 0)
     endif()
 else()
-    set (build_64_bit 1 CACHE TYPE BOOL)
+    set (build_64_bit 1 CACHE STRING "")
 endif()
 
-set (UNCHECKED_ITERATORS 0 CACHE TYPE BOOL)
+set (UNCHECKED_ITERATORS 0 CACHE STRING "")
 
-set (USE_LIBUV 1 CACHE TYPE BOOL)
-set (USE_MEGAAPI 1 CACHE TYPE BOOL)
-set (USE_MEDIAINFO 1 CACHE TYPE BOOL)
-set (USE_LIBRAW 1 CACHE TYPE BOOL)
-set (USE_SODIUM 1 CACHE TYPE BOOL)
-set (USE_FFMPEG 1 CACHE TYPE BOOL)
-set (USE_FREEIMAGE 0 CACHE TYPE BOOL) # thumbnail generation etc done with QT, so no need for freeimage
+set (USE_LIBUV 1 CACHE STRING "")
+set (USE_MEGAAPI 1 CACHE STRING "")
+set (USE_MEDIAINFO 1 CACHE STRING "")
+set (USE_LIBRAW 1 CACHE STRING "")
+set (USE_SODIUM 1 CACHE STRING "")
+set (USE_FFMPEG 1 CACHE STRING "")
+set (USE_FREEIMAGE 0 CACHE STRING "") # thumbnail generation etc done with QT, so no need for freeimage
 set (USE_QT 1)
-set (QT_DIR "C:/Qt/Qt5.6.3/5.6.3/msvc2015" CACHE TYPE STRING)
+set (QT_DIR "C:/Qt/Qt5.6.3/5.6.3/msvc2015" CACHE STRING "")
 
 
-set (USE_PREBUILT_3RDPARTY 1 CACHE TYPE BOOL)
+set (USE_PREBUILT_3RDPARTY 1 CACHE STRING "")
 
-set(RepoDir "${CMAKE_CURRENT_LIST_DIR}/../.."  CACHE TYPE STRING)
+set(RepoDir "${CMAKE_CURRENT_LIST_DIR}/../.."  CACHE STRING "")
 set(MEGAsyncDir "${RepoDir}/src/MEGASync")
 
 set(prebuilt_dir "${MEGAsyncDir}/mega/third_party/3rdparty")
 
 #specify where 3rd party libraries are available
-set(Mega3rdPartyDir "${RepoDir}/../3rdParty_sdk"  CACHE TYPE STRING)
+set(Mega3rdPartyDir "${RepoDir}/../3rdParty_sdk"  CACHE STRING "")
 
 
 message("CONFIG: ${CONFIG}")
@@ -57,59 +59,59 @@ include_directories( "${MEGAsyncDir}/gui/win" )
 
 set (FORMS
     ${MEGAsyncDir}/gui/win/InfoDialog.ui
-	${MEGAsyncDir}/gui/win/CustomTransferItem.ui
-	${MEGAsyncDir}/gui/win/NodeSelector.ui
-	${MEGAsyncDir}/gui/win/FolderBinder.ui
-	${MEGAsyncDir}/gui/win/BindFolderDialog.ui
-	${MEGAsyncDir}/gui/win/UploadToMegaDialog.ui
-	${MEGAsyncDir}/gui/win/PasteMegaLinksDialog.ui
-	${MEGAsyncDir}/gui/win/ImportMegaLinksDialog.ui
-	${MEGAsyncDir}/gui/win/ImportListWidgetItem.ui
-	${MEGAsyncDir}/gui/win/CrashReportDialog.ui
-	${MEGAsyncDir}/gui/win/SetupWizard.ui
-	${MEGAsyncDir}/gui/win/SettingsDialog.ui
-	${MEGAsyncDir}/gui/win/AccountDetailsDialog.ui
-	${MEGAsyncDir}/gui/win/DownloadFromMegaDialog.ui
-	${MEGAsyncDir}/gui/win/SizeLimitDialog.ui
-	${MEGAsyncDir}/gui/win/MessageBox.ui
-	${MEGAsyncDir}/gui/win/ChangeLogDialog.ui
-	${MEGAsyncDir}/gui/win/GuestWidget.ui
-	${MEGAsyncDir}/gui/win/StreamingFromMegaDialog.ui
-	${MEGAsyncDir}/gui/win/ConfirmSSLexception.ui
-	${MEGAsyncDir}/gui/win/PlanWidget.ui
-	${MEGAsyncDir}/gui/win/UpgradeDialog.ui
-	${MEGAsyncDir}/gui/win/InfoWizard.ui
-	${MEGAsyncDir}/gui/win/TransferManagerItem.ui
-	${MEGAsyncDir}/gui/win/TransferManager.ui
-	${MEGAsyncDir}/gui/win/TransfersWidget.ui
-	${MEGAsyncDir}/gui/win/TransfersStateInfoWidget.ui
-	${MEGAsyncDir}/gui/win/MegaSpeedGraph.ui
-	${MEGAsyncDir}/gui/win/ActiveTransfersWidget.ui
-	${MEGAsyncDir}/gui/win/AddExclusionDialog.ui
-	${MEGAsyncDir}/gui/win/LocalCleanScheduler.ui
-	${MEGAsyncDir}/gui/win/InfoDialogTransfersWidget.ui
-	${MEGAsyncDir}/gui/win/StatusInfo.ui
-	${MEGAsyncDir}/gui/win/PSAwidget.ui
-	${MEGAsyncDir}/gui/win/UpgradeOverStorage.ui
-	${MEGAsyncDir}/gui/win/UpgradeWidget.ui
-	${MEGAsyncDir}/gui/win/ChangePassword.ui
-	${MEGAsyncDir}/gui/win/Login2FA.ui )
+    ${MEGAsyncDir}/gui/win/CustomTransferItem.ui
+    ${MEGAsyncDir}/gui/win/NodeSelector.ui
+    ${MEGAsyncDir}/gui/win/FolderBinder.ui
+    ${MEGAsyncDir}/gui/win/BindFolderDialog.ui
+    ${MEGAsyncDir}/gui/win/UploadToMegaDialog.ui
+    ${MEGAsyncDir}/gui/win/PasteMegaLinksDialog.ui
+    ${MEGAsyncDir}/gui/win/ImportMegaLinksDialog.ui
+    ${MEGAsyncDir}/gui/win/ImportListWidgetItem.ui
+    ${MEGAsyncDir}/gui/win/CrashReportDialog.ui
+    ${MEGAsyncDir}/gui/win/SetupWizard.ui
+    ${MEGAsyncDir}/gui/win/SettingsDialog.ui
+    ${MEGAsyncDir}/gui/win/AccountDetailsDialog.ui
+    ${MEGAsyncDir}/gui/win/DownloadFromMegaDialog.ui
+    ${MEGAsyncDir}/gui/win/SizeLimitDialog.ui
+    ${MEGAsyncDir}/gui/win/MessageBox.ui
+    ${MEGAsyncDir}/gui/win/ChangeLogDialog.ui
+    ${MEGAsyncDir}/gui/win/GuestWidget.ui
+    ${MEGAsyncDir}/gui/win/StreamingFromMegaDialog.ui
+    ${MEGAsyncDir}/gui/win/ConfirmSSLexception.ui
+    ${MEGAsyncDir}/gui/win/PlanWidget.ui
+    ${MEGAsyncDir}/gui/win/UpgradeDialog.ui
+    ${MEGAsyncDir}/gui/win/InfoWizard.ui
+    ${MEGAsyncDir}/gui/win/TransferManagerItem.ui
+    ${MEGAsyncDir}/gui/win/TransferManager.ui
+    ${MEGAsyncDir}/gui/win/TransfersWidget.ui
+    ${MEGAsyncDir}/gui/win/TransfersStateInfoWidget.ui
+    ${MEGAsyncDir}/gui/win/MegaSpeedGraph.ui
+    ${MEGAsyncDir}/gui/win/ActiveTransfersWidget.ui
+    ${MEGAsyncDir}/gui/win/AddExclusionDialog.ui
+    ${MEGAsyncDir}/gui/win/LocalCleanScheduler.ui
+    ${MEGAsyncDir}/gui/win/InfoDialogTransfersWidget.ui
+    ${MEGAsyncDir}/gui/win/StatusInfo.ui
+    ${MEGAsyncDir}/gui/win/PSAwidget.ui
+    ${MEGAsyncDir}/gui/win/UpgradeOverStorage.ui
+    ${MEGAsyncDir}/gui/win/UpgradeWidget.ui
+    ${MEGAsyncDir}/gui/win/ChangePassword.ui
+    ${MEGAsyncDir}/gui/win/Login2FA.ui )
 
 set(FORMS_HEADERS "")
 foreach(F ${FORMS})
-	get_filename_component(D ${F} PATH)
-	get_filename_component(N ${F} NAME_WE)
-	set (T ${D}/ui_${N}.h)
-	add_custom_command(
-		OUTPUT ${T}
-		COMMAND "${QT_DIR}/bin/uic.exe" -o ${T} ${F}
-		DEPENDS ${F}
-		WORKING_DIRECTORY ${MEGAsyncDir}/gui/win
-	)
-	SET(FORMS_HEADERS ${FORMS_HEADERS} ${T} )
+    get_filename_component(D ${F} PATH)
+    get_filename_component(N ${F} NAME_WE)
+    set (T ${D}/ui_${N}.h)
+    add_custom_command(
+        OUTPUT ${T}
+        COMMAND "${QT_DIR}/bin/uic.exe" -o ${T} ${F}
+        DEPENDS ${F}
+        WORKING_DIRECTORY ${MEGAsyncDir}/gui/win
+    )
+    SET(FORMS_HEADERS ${FORMS_HEADERS} ${T} )
 endforeach(F)
-	
-	
+    
+    
 set (MOC_INPUT
     ${MEGAsyncDir}/MegaApplication.h
     ${MEGAsyncDir}/control/ConnectivityChecker.h
@@ -134,7 +136,6 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/ConfirmSSLexception.h
     ${MEGAsyncDir}/gui/CrashReportDialog.h
     ${MEGAsyncDir}/gui/CustomTransferItem.h
-    ${MEGAsyncDir}/gui/DataUsageMenu.h
     ${MEGAsyncDir}/gui/DownloadFromMegaDialog.h
     ${MEGAsyncDir}/gui/ElidedLabel.h
     ${MEGAsyncDir}/gui/FolderBinder.h
@@ -198,41 +199,41 @@ set (MOC_INPUT
 
 set(MOC_OUTPUT "")
 foreach(F ${MOC_INPUT})
-	get_filename_component(D ${F} PATH)
-	get_filename_component(N ${F} NAME_WE)
-	set (T ${D}/moc_${N}.cpp)
-	add_custom_command(
-		OUTPUT ${T}
-		COMMAND "${QT_DIR}/bin/moc.exe" -DWIN32 -DENABLE_SYNC -o ${T} ${F}
-		DEPENDS ${F}
-		WORKING_DIRECTORY ${MEGAsyncDir}/gui
-	)
-	SET(MOC_OUTPUT ${MOC_OUTPUT} ${T} )
+    get_filename_component(D ${F} PATH)
+    get_filename_component(N ${F} NAME_WE)
+    set (T ${D}/moc_${N}.cpp)
+    add_custom_command(
+        OUTPUT ${T}
+        COMMAND "${QT_DIR}/bin/moc.exe" -DWIN32 -DENABLE_SYNC -o ${T} ${F}
+        DEPENDS ${F}
+        WORKING_DIRECTORY ${MEGAsyncDir}/gui
+    )
+    SET(MOC_OUTPUT ${MOC_OUTPUT} ${T} )
 endforeach(F)
 
 set (RCC_INPUT ${MEGAsyncDir}/gui/Resources_win.qrc)
 set(RCC_OUTPUT "")
 foreach(F ${RCC_INPUT})
-	get_filename_component(D ${F} PATH)
-	get_filename_component(N ${F} NAME_WE)
-	set (T ${D}/qrc_${N}.cpp)
-	add_custom_command(
-		OUTPUT ${T}
-		COMMAND "${QT_DIR}/bin/rcc.exe" -o ${T} ${F}
-		DEPENDS ${F}
-		WORKING_DIRECTORY ${MEGAsyncDir}/gui
-	)
-	SET(RCC_OUTPUT ${RCC_OUTPUT} ${T} )
+    get_filename_component(D ${F} PATH)
+    get_filename_component(N ${F} NAME_WE)
+    set (T ${D}/qrc_${N}.cpp)
+    add_custom_command(
+        OUTPUT ${T}
+        COMMAND "${QT_DIR}/bin/rcc.exe" -o ${T} ${F}
+        DEPENDS ${F}
+        WORKING_DIRECTORY ${MEGAsyncDir}/gui
+    )
+    SET(RCC_OUTPUT ${RCC_OUTPUT} ${T} )
 endforeach(F)
 
 set (SRCS 
-	${MEGAsyncDir}/MegaApplication.cpp
+    ${MEGAsyncDir}/MegaApplication.cpp
 
-	${FORMS_HEADERS}
+    ${FORMS_HEADERS}
     ${MOC_OUTPUT}
     ${RCC_OUTPUT}
-	
-	${MEGAsyncDir}/gui/SettingsDialog.cpp
+    
+    ${MEGAsyncDir}/gui/SettingsDialog.cpp
     ${MEGAsyncDir}/gui/InfoDialog.cpp
     ${MEGAsyncDir}/gui/SetupWizard.cpp
     ${MEGAsyncDir}/gui/NodeSelector.cpp
@@ -274,7 +275,6 @@ set (SRCS
     ${MEGAsyncDir}/gui/ActiveTransfersWidget.cpp
     ${MEGAsyncDir}/gui/AvatarWidget.cpp
     ${MEGAsyncDir}/gui/MenuItemAction.cpp
-    ${MEGAsyncDir}/gui/DataUsageMenu.cpp
     ${MEGAsyncDir}/gui/AddExclusionDialog.cpp
     ${MEGAsyncDir}/gui/LocalCleanScheduler.cpp
     ${MEGAsyncDir}/gui/TransferManagerItem.cpp
@@ -289,15 +289,15 @@ set (SRCS
     ${MEGAsyncDir}/gui/UpgradeOverStorage.cpp
     ${MEGAsyncDir}/gui/UpgradeWidget.cpp
     ${MEGAsyncDir}/gui/Login2FA.cpp
-	
+    
     ${MEGAsyncDir}/mega/bindings/qt/QTMegaRequestListener.cpp
-	${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
-	${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.cpp
-	${MEGAsyncDir}/mega/bindings/qt/QTMegaSyncListener.cpp
-	${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.cpp
-	${MEGAsyncDir}/mega/bindings/qt/QTMegaEvent.cpp
+    ${MEGAsyncDir}/mega/bindings/qt/QTMegaTransferListener.cpp
+    ${MEGAsyncDir}/mega/bindings/qt/QTMegaGlobalListener.cpp
+    ${MEGAsyncDir}/mega/bindings/qt/QTMegaSyncListener.cpp
+    ${MEGAsyncDir}/mega/bindings/qt/QTMegaListener.cpp
+    ${MEGAsyncDir}/mega/bindings/qt/QTMegaEvent.cpp
 
-	${MEGAsyncDir}/control/HTTPServer.cpp
+    ${MEGAsyncDir}/control/HTTPServer.cpp
     ${MEGAsyncDir}/control/Preferences.cpp
     ${MEGAsyncDir}/control/LinkProcessor.cpp
     ${MEGAsyncDir}/control/MegaUploader.cpp
@@ -310,19 +310,19 @@ set (SRCS
     ${MEGAsyncDir}/control/MegaSyncLogger.cpp
     ${MEGAsyncDir}/control/ConnectivityChecker.cpp
 
-	${MEGAsyncDir}/platform/notificator.cpp
-	${MEGAsyncDir}/platform/win/WindowsPlatform.cpp
-	${MEGAsyncDir}/platform/win/WinShellDispatcherTask.cpp
-	${MEGAsyncDir}/platform/win/WinTrayReceiver.cpp
-	${MEGAsyncDir}/platform/win/wintoastlib.cpp
+    ${MEGAsyncDir}/platform/notificator.cpp
+    ${MEGAsyncDir}/platform/win/WindowsPlatform.cpp
+    ${MEGAsyncDir}/platform/win/WinShellDispatcherTask.cpp
+    ${MEGAsyncDir}/platform/win/WinTrayReceiver.cpp
+    ${MEGAsyncDir}/platform/win/wintoastlib.cpp
 
-	${MEGAsyncDir}/google_breakpad/client/windows/handler/exception_handler.cc
-	${MEGAsyncDir}/google_breakpad/common/windows/string_utils.cc
-	${MEGAsyncDir}/google_breakpad/common/windows/guid_string.cc
-	${MEGAsyncDir}/google_breakpad/client/windows/crash_generation/crash_generation_client.cc
+    ${MEGAsyncDir}/google_breakpad/client/windows/handler/exception_handler.cc
+    ${MEGAsyncDir}/google_breakpad/common/windows/string_utils.cc
+    ${MEGAsyncDir}/google_breakpad/common/windows/guid_string.cc
+    ${MEGAsyncDir}/google_breakpad/client/windows/crash_generation/crash_generation_client.cc
 
-	${MEGAsyncDir}/qtlockedfile/qtlockedfile.cpp
-	${MEGAsyncDir}/qtlockedfile/qtlockedfile_win.cpp
+    ${MEGAsyncDir}/qtlockedfile/qtlockedfile.cpp
+    ${MEGAsyncDir}/qtlockedfile/qtlockedfile_win.cpp
 )
 
 add_definitions( -DQT_DISABLE_DEPRECATED_BEFORE=0x000000 -DQT_NO_CAST_FROM_ASCII -DQT_NO_CAST_TO_ASCII -DUNICODE -D_UNICODE -DNTDDI_VERSION=0x05010000 -D_WIN32_WINNT=0x0501 -DQT_WIDGETS_LIB )
@@ -333,21 +333,29 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DCREATE_COMPATIBLE_MINIDUMP
 add_executable(MEGAsync ${SRCS})
 target_include_directories(MEGAsync PRIVATE ${MEGAsyncDir} ${MEGAsyncDir}/google_breakpad )
 target_link_libraries(MEGAsync Mega
-			"${QT_DIR}/lib/Qt5Cored.lib" 
-			"${QT_DIR}/lib/Qt5Guid.lib"
-			"${QT_DIR}/lib/Qt5Networkd.lib" 
-			"${QT_DIR}/lib/Qt5Widgetsd.lib" 
-            "${QT_DIR}/lib/Qt5WinExtrasd.lib" 
-			ole32 Shell32 crypt32 taskschd Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib )
+            debug "${QT_DIR}/lib/Qt5Cored.lib" 
+            debug "${QT_DIR}/lib/Qt5Guid.lib"
+            debug "${QT_DIR}/lib/Qt5Networkd.lib" 
+            debug "${QT_DIR}/lib/Qt5Widgetsd.lib" 
+            debug "${QT_DIR}/lib/Qt5WinExtrasd.lib" 
+            optimized "${QT_DIR}/lib/Qt5Core.lib" 
+            optimized "${QT_DIR}/lib/Qt5Gui.lib"
+            optimized "${QT_DIR}/lib/Qt5Network.lib" 
+            optimized "${QT_DIR}/lib/Qt5Widgets.lib" 
+            optimized "${QT_DIR}/lib/Qt5WinExtras.lib" 
+            ole32 Shell32 crypt32 taskschd Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib )
+
+#set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS "/ENTRY:\"wWinMainCRTStartup\" /SUBSYSTEM:WINDOWS" )
+
 
 # Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)
 IF (MSVC)
-	ADD_CUSTOM_COMMAND(
-		TARGET MEGAsync
-		POST_BUILD
-		COMMAND "mt.exe" -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\MEGAsync.exe.manifest\" -inputresource:\"$<TARGET_FILE:MEGAsync>\"\;\#1 -outputresource:\"$<TARGET_FILE:MEGAsync>\"\;\#1
-		COMMENT "Adding display aware manifest..." 
-	)
+    ADD_CUSTOM_COMMAND(
+        TARGET MEGAsync
+        POST_BUILD
+        COMMAND "mt.exe" -manifest \"${CMAKE_CURRENT_SOURCE_DIR}\\MEGAsync.exe.manifest\" -inputresource:\"$<TARGET_FILE:MEGAsync>\"\;\#1 -outputresource:\"$<TARGET_FILE:MEGAsync>\"\;\#1
+        COMMENT "Adding display aware manifest..." 
+    )
 ENDIF(MSVC)
 
 if (WIN32)
