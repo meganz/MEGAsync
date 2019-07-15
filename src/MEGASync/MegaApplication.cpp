@@ -7605,9 +7605,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
     }
 
     bool externalNodes = false;
-    bool newNodes = false;
-    bool nodesRemoved = false;
-    long long usedStorage = preferences->usedStorage();
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("%1 updated files/folders").arg(nodes->size()).toUtf8().constData());
 
     //Check all modified nodes
@@ -7659,12 +7656,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             }
         }
 
-        if (nodescurrent && node->isRemoved() && (node->getType() == MegaNode::TYPE_FILE) && node->getSize())
-        {
-            usedStorage -= node->getSize();
-            nodesRemoved = true;
-        }
-
         if (nodescurrent && !node->isRemoved() && !node->isSyncDeleted()
                 && (node->getType() == MegaNode::TYPE_FILE)
                 && node->getSize() && node->hasChanged(MegaNode::CHANGE_TYPE_NEW))
@@ -7678,9 +7669,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             {
                 preferences->setCloudDriveStorage(preferences->cloudDriveStorage() + bytes);
             }
-
-            usedStorage += bytes;
-            newNodes = true;
 
             if (!externalNodes && !node->getTag()
                     && ((lastExit / 1000) < node->getCreationTime())
