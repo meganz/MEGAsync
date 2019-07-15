@@ -7527,7 +7527,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     {
         preferences->clearTemporalBandwidth();
         megaApi->getPricing();
-        updateUserStats(false, true, false, false, USERSTATS_TRANSFERTEMPERROR);  // just get udpated transfer quota, and with !force, just in case
+        updateUserStats(false, true, false, true, USERSTATS_TRANSFERTEMPERROR);  // just get udpated transfer quota
         bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
 #if defined(__MACH__) || defined(_WIN32)
         trayIcon->setContextMenu(initialMenu.get());
@@ -7550,7 +7550,7 @@ void MegaApplication::onAccountUpdate(MegaApi *)
         bwOverquotaDialog->refreshAccountDetails();
     }
 
-    updateUserStats(true, true, true, false, USERSTATS_ACCOUNTUPDATE);
+    updateUserStats(true, true, true, true, USERSTATS_ACCOUNTUPDATE);
 }
 
 //Called when contacts have been updated in MEGA
