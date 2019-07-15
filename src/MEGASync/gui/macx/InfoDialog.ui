@@ -26,11 +26,11 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">#tTransfers, #tRecents
+   <string notr="true">#tTransfers, #tNotifications
 {
   font-family: &quot;Lato&quot;;
   font-size: 15px;
-  color: rgba(0, 0, 0, 40%);;
+  color: rgba(0, 0, 0, 40%);
   padding: 0px 8px 0px 8px;
   border: none;
 }
@@ -714,9 +714,9 @@ QToolButton
                       </spacer>
                      </item>
                      <item>
-                      <widget class="QToolButton" name="tRecents">
+                      <widget class="QToolButton" name="tNotifications">
                        <property name="text">
-                        <string>Recents</string>
+                        <string>Notifications</string>
                        </property>
                       </widget>
                      </item>

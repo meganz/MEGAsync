@@ -1046,16 +1046,20 @@ void InfoDialog::on_tTransfers_clicked()
     ui->lRecents->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
 
     ui->tTransfers->setStyleSheet(QString::fromUtf8("color : #1D1D1D;"));
-    ui->tRecents->setStyleSheet(QString::fromUtf8("color : #989899;"));
+    ui->tNotifications->setStyleSheet(QString::fromUtf8("color : #989899;"));
+
+    ui->sTabs->setCurrentWidget(ui->pTransfersTab);
 }
 
-void InfoDialog::on_tRecents_clicked()
+void InfoDialog::on_tNotifications_clicked()
 {
     ui->lTransfers->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
     ui->lRecents->setStyleSheet(QString::fromUtf8("background-color: #3C434D;"));
 
-    ui->tRecents->setStyleSheet(QString::fromUtf8("color : #1D1D1D;"));
+    ui->tNotifications->setStyleSheet(QString::fromUtf8("color : #1D1D1D;"));
     ui->tTransfers->setStyleSheet(QString::fromUtf8("color : #989899;"));
+
+    ui->sTabs->setCurrentWidget(ui->pNotificationsTab);
 }
 
 void InfoDialog::on_bDiscard_clicked()
