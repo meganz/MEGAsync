@@ -11,18 +11,16 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.2.0.0";
-const int Preferences::VERSION_CODE = 4200;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.2.2.0";
+const int Preferences::VERSION_CODE = 4202;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.2.0");
-QString Preferences::SDK_ID = QString::fromAscii("5bb233c");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.2.2");
+QString Preferences::SDK_ID = QString::fromAscii("2c92c8f");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- Fix UI glitch with unaligned borders in MacOS\n"
-    "- Fix show in folder when saved in root folder in Windows (drive letter)\n"
-    "- Localized separator for decimal values in sizes\n"
+    "- Fix a crash during processing of some PDF files\n"
+    "- Resume pending transfers after a crash on next startup\n"
     "- Include option to add synchronizations from the main dialog\n"
-    "- Disable option to create new folders when downloading/streaming from MEGA\n"
     "- Other minor bug fixes and improvements"));
 
 const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");

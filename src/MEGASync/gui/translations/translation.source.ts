@@ -1074,22 +1074,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Cloud Drive</translation>
+        <translation type="obsolete">Cloud Drive</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Inbox</translation>
+        <translation type="obsolete">Inbox</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Incoming Shares</translation>
+        <translation type="obsolete">Incoming Shares</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Rubbish Bin</translation>
+        <translation type="obsolete">Rubbish Bin</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -2642,7 +2642,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Improved look&amp;feel for high resolution displays on Windows and Linux
+        <translation type="obsolete">- Improved look&amp;feel for high resolution displays on Windows and Linux
 - Improved GUI performance during addition of many downloads
 - Restyling of initial information wizard, new icons and interface improvements
 - Support for business accounts
@@ -2656,11 +2656,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Improved look&amp;feel for high resolution displays on Windows and Linux
+        <translation type="obsolete">- Improved look&amp;feel for high resolution displays on Windows and Linux
 - Enable thumbnail support for PDF
 - Improved GUI performance during addition of many downloads
 - Restyling of initial information wizard, new icons and interface improvements
 - Support for business accounts
+- Other minor bug fixes and improvements</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="unfinished">- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</translation>
     </message>
 </context>
