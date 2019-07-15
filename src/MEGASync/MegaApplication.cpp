@@ -1624,14 +1624,6 @@ void MegaApplication::loggedIn(bool fromWizard)
         infoWizard = NULL;
     }
 
-    for (unsigned i = 3; i--; )
-    {
-        inflightUserStats[i] = false;
-        userStatsLastRequest[i] = 0;
-        queuedUserStats[i] = false;
-    }
-    queuedStorageUserStatsReason = 0;
-
     registerUserActivity();
     pauseTransfers(paused);
     updateUserStats(fromWizard, true, true, fromWizard, USERSTATS_LOGGEDIN);  // loggedIn() is called once on startup if the user is already logged in, or twice when the user supplies username/password to log in.
