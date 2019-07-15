@@ -2021,7 +2021,7 @@ color: #333333;
               <string notr="true"/>
              </property>
              <property name="text">
-              <string>Add sync</string>
+              <string>Add Sync</string>
              </property>
              <property name="icon">
               <iconset>
