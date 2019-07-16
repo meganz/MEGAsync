@@ -16,8 +16,7 @@ class TransfersSummaryWidget : public QWidget
 
 public:
 
-    enum class Status { EXPANDING, EXPANDED, SHRINKING, SHRUNK };
-
+    enum class Status { EXPANDING, EXPANDED, SHRINKING, SHRUNK, RESIZING, RESIZED };
 
     explicit TransfersSummaryWidget(QWidget *parent = 0);
     ~TransfersSummaryWidget();
@@ -45,23 +44,31 @@ public:
     void setAnimationTimeMS(const qreal &value);
 
     void adjustFontSizeToText(QFont *font, int maxWidth, QString uploadText, int fontsize = 12.0);
+    int adjustSizeToText(QFont *font, int maxWidth, int minWidth, int margins, long long partial, long long total, int &posDotsPartial, int &posDotsTotal, QString &text, int fontsize);
 
-    void setTotalUploads(int value);
-    void setCompletedDownloads(int value);
-    void setTotalDownloads(int value);
-    void setCompletedUploads(int value);
+
+    void setTotalUploads(long long  value);
+    void setCompletedDownloads(long long  value);
+    void setTotalDownloads(long long  value);
+    void setCompletedUploads(long long  value);
 
     void initialize();
 
     void showAnimated();
+signals:
+    void pauseResumeClicked();
+    void generalAreaClicked();
+    void dlAreaClicked();
+    void upAreaClicked();
+    void transferStatusClicked();
 
 private slots:
     void resizeAnimation();
 
-
 public slots:
     void expand(bool noAnimate = false);
     void shrink(bool noAnimate = false);
+    void doResize(int futureWidth, bool noAnimate = false);
 
 private:
 
@@ -73,11 +80,14 @@ private:
     void setPercentInnerCircle(const qreal &value);
     void setPercentOuterCircle(const qreal &value);
 
+    void drawEllipse(int x, int y,  int diam, int width, QPainter *painter);
+
     Ui::TransfersSummaryWidget *ui;
     QElapsedTimer qe;
     QPen pengrey; //outer border
     QPen pentext;
-    QBrush brushgreyspeeds;
+    QBrush brushspeedUp;
+    QBrush brushspeedDown;
     QBrush brushwhitebackground;
 
     int lastwidth;
@@ -90,32 +100,74 @@ private:
     int marginoutside;
     int margininside;
     int residualin; //related to the width of the pen (0 for FlatCap)
-    int displacement;
+
+    int firstellipseX;
+    int ellipsesMargin;
+    int afterEllipsesMargin;
+
+    int fontMarginXLeft;
+    int fontMarginXRight;
+    int fontY;
+    int fontHeight;
+    int pixmapArrowMarginX;
+    int pixmapArrowY;
+    int pixmapWidth;
+    QPixmap upArrowPixmapOrig;
+    QPixmap dlArrowPixmapOrig;
+    QPixmap upArrowPixmap;
+    QPixmap dlArrowPixmap;
+
+
+    int dlEllipseWidth;
+    int dlEllipseWidthMin;
+    int dlEllipseWidthMax;
+    int upEllipseWidth;
+    int upEllipseWidthMin;
+    int upEllipseWidthMax;
+
+
 
     Status status;
+    int initialwidth;
+    int goalwidth;
 
     int originalwidth;
     int originalheight;
     int minwidth;
-    int maxWidthText;
+    int upMaxWidthText;
+    int dlMaxWidthText;
     int maxFontSize;
+
+    const int trailingChars = 1;
+    int upPosDotsPartial;
+    int upPosDotsTotal;
+    int dlPosDotsPartial;
+    int dlPosDotsTotal;
 
     qreal acceleration;
     qreal animationTimeMS;
 
     qreal speed;
 
-    int totalUploads;
-    int completedUploads;
-    int totalDownloads;
-    int completedDownloads;
+    long long totalUploads;
+    long long completedUploads;
+    long long totalDownloads;
+    long long completedDownloads;
 
     QFont fontUploads;
     QFont fontDownloads;
     QString uploadsText;
     QString downloadsText;
+    QString uploadsTextToRender;
+    QString downloadsTextToRender;
 
-    void calculateSpeed();
+    void calculateSpeed(int initWidth = -1, int endWidth = -1);
+
+    bool isWithinPseudoEllipse(QPoint pos, int x, int margin, int w, int diam);
+
+protected:
+    virtual void mouseMoveEvent(QMouseEvent *event);
+    virtual void mouseReleaseEvent(QMouseEvent *event);
 };
 
 

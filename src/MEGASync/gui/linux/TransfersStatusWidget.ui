@@ -36,6 +36,9 @@
    <property name="cursor">
     <cursorShape>PointingHandCursor</cursorShape>
    </property>
+   <property name="mouseTracking">
+    <bool>true</bool>
+   </property>
    <property name="styleSheet">
     <string notr="true">border: none;
 </string>

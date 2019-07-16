@@ -235,6 +235,8 @@
         <file>images/cloud_upload_item_ico@2x.png</file>
         <file>images/download_item_ico.png</file>
         <file>images/download_item_ico@2x.png</file>
+        <file>images/download_item_ico_white.png</file>
+        <file>images/download_item_ico_white@2x.png</file>
         <file>images/no_downloads.png</file>
         <file>images/no_downloads@2x.png</file>
         <file>images/no_transfers.png</file>
@@ -251,6 +253,8 @@
         <file>images/sync_item_ico@2x.png</file>
         <file>images/upload_item_ico.png</file>
         <file>images/upload_item_ico@2x.png</file>
+        <file>images/upload_item_ico_white.png</file>
+        <file>images/upload_item_ico_white@2x.png</file>
         <file>fonts/SourceSansPro-Regular.ttf</file>
         <file>fonts/SourceSansPro-Light.ttf</file>
         <file>fonts/SourceSansPro-Semibold.ttf</file>

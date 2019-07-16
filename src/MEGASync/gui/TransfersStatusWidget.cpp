@@ -50,6 +50,8 @@ TransfersStatusWidget::TransfersStatusWidget(QWidget *parent) :
     lastheigth = -1;
 
     updateSizes();
+
+    installEventFilter(this);
 }
 
 TransfersStatusWidget::~TransfersStatusWidget()

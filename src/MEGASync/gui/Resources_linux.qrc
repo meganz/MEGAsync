@@ -311,6 +311,9 @@
         <file>images/download_item_ico.png</file>
         <file>images/download_item_ico@2x.png</file>
         <file>images/download_item_ico@3x.png</file>
+        <file>images/download_item_ico_white.png</file>
+        <file>images/download_item_ico_white@2x.png</file>
+        <file>images/download_item_ico_white@3x.png</file>
         <file>images/get_link_ico.png</file>
         <file>images/get_link_ico@2x.png</file>
         <file>images/get_link_ico@3x.png</file>
@@ -339,6 +342,9 @@
         <file>images/upload_item_ico.png</file>
         <file>images/upload_item_ico@2x.png</file>
         <file>images/upload_item_ico@3x.png</file>
+        <file>images/upload_item_ico_white.png</file>
+        <file>images/upload_item_ico_white@2x.png</file>
+        <file>images/upload_item_ico_white@3x.png</file>
         <file>images/upload_to_mega_ico@3x.png</file>
         <file>images/completed_item_ico.png</file>
         <file>images/completed_item_ico@2x.png</file>
