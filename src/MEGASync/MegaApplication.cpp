@@ -1611,7 +1611,7 @@ void MegaApplication::start()
     }
 }
 
-void MegaApplication::loggedIn()
+void MegaApplication::loggedIn(bool fromWizard)
 {
     if (appfinished)
     {
@@ -1624,17 +1624,9 @@ void MegaApplication::loggedIn()
         infoWizard = NULL;
     }
 
-    for (unsigned i = 3; i--; )
-    {
-        inflightUserStats[i] = false;
-        userStatsLastRequest[i] = 0;
-        queuedUserStats[i] = false;
-    }
-    queuedStorageUserStatsReason = 0;
-
     registerUserActivity();
     pauseTransfers(paused);
-    updateUserStats(true, true, true, true, USERSTATS_LOGGEDIN);
+    updateUserStats(fromWizard, true, true, true, USERSTATS_LOGGEDIN);  // loggedIn() is called once on startup if the user is already logged in, or twice when the user supplies username/password to log in.
     megaApi->getPricing();
     megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
     megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
@@ -3384,7 +3376,7 @@ void MegaApplication::setupWizardFinished(int result)
         infoDialog->hide();
     }
 
-    loggedIn();
+    loggedIn(true);
     startSyncs();
     applyStorageState(storageState);
 }
@@ -3460,6 +3452,14 @@ void MegaApplication::unlink()
     downloadQueue.clear();
     megaApi->logout();
     Platform::notifyAllSyncFoldersRemoved();
+
+    for (unsigned i = 3; i--; )
+    {
+        inflightUserStats[i] = false;
+        userStatsLastRequest[i] = 0;
+        queuedUserStats[i] = false;
+    }
+    queuedStorageUserStatsReason = 0;
 }
 
 void MegaApplication::cleanLocalCaches(bool all)
@@ -6775,7 +6775,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 if (megaApi->isFilesystemAvailable())
                 {
                     //If we have got the filesystem, start the app
-                    loggedIn();
+                    loggedIn(false);
                     restoreSyncs();
                 }
                 else
