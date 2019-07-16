@@ -733,14 +733,14 @@ background-color: rgba(0, 0, 0, 10%);
                      <widget class="QPushButton" name="bDownClock">
                       <property name="minimumSize">
                        <size>
-                        <width>24</width>
-                        <height>24</height>
+                        <width>15</width>
+                        <height>15</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>24</width>
-                        <height>24</height>
+                        <width>15</width>
+                        <height>15</height>
                        </size>
                       </property>
                       <property name="text">
@@ -752,8 +752,8 @@ background-color: rgba(0, 0, 0, 10%);
                       </property>
                       <property name="iconSize">
                        <size>
-                        <width>24</width>
-                        <height>24</height>
+                        <width>15</width>
+                        <height>15</height>
                        </size>
                       </property>
                      </widget>
@@ -1439,14 +1439,14 @@ background-color: rgba(0, 0, 0, 10%);
                      <widget class="QPushButton" name="bUpClock">
                       <property name="minimumSize">
                        <size>
-                        <width>24</width>
-                        <height>24</height>
+                        <width>15</width>
+                        <height>15</height>
                        </size>
                       </property>
                       <property name="maximumSize">
                        <size>
-                        <width>24</width>
-                        <height>24</height>
+                        <width>15</width>
+                        <height>15</height>
                        </size>
                       </property>
                       <property name="text">
@@ -1458,8 +1458,8 @@ background-color: rgba(0, 0, 0, 10%);
                       </property>
                       <property name="iconSize">
                        <size>
-                        <width>24</width>
-                        <height>24</height>
+                        <width>15</width>
+                        <height>15</height>
                        </size>
                       </property>
                      </widget>

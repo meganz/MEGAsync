@@ -80,6 +80,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     //Set properties of some widgets
     ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
 
+    ui->sStorage->setCurrentWidget(ui->wCircularStorage);
+    ui->sQuota->setCurrentWidget(ui->wCircularQuota);
+
 #ifdef __APPLE__
     if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //Issues with mavericks and popup management
     {
@@ -205,17 +208,18 @@ void InfoDialog::setUsage()
     QString usedStorage;
     if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
+        ui->sStorage->setCurrentWidget(ui->wBusinessStorage);
         ui->wCircularStorage->setValue(0);
-        ui->lUsedStorage->setText(QString::fromUtf8(""));
-        usedStorage = QString::fromUtf8("%1 used").arg(QString::fromUtf8("<span style=\"color:#333333; font-family: \"Lato\"; text-decoration:none;\">%1</span>")
+        usedStorage = QString::fromUtf8("%1").arg(QString::fromUtf8("<span style=\"color: #333333; font-size:20px; font-family: \"Lato\"; text-decoration:none;\">%1</span>")
                                      .arg(Utilities::getSizeString(preferences->usedStorage())));
     }
     else
     {
+        ui->sStorage->setCurrentWidget(ui->wCircularStorage);
         if (preferences->totalStorage() == 0)
         {
             ui->wCircularStorage->setValue(0);
-            usedStorage = QString::fromUtf8("");
+            usedStorage = Utilities::getSizeString(preferences->totalStorage());
         }
         else
         {
@@ -223,7 +227,7 @@ void InfoDialog::setUsage()
         int percentage = floor((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
         ui->wCircularStorage->setValue((percentage < 100) ? percentage : 100);
 
-        QString usageColorS = (percentage < 90 ? QString::fromUtf8("#6D6D6D")
+        QString usageColorS = (percentage < 90 ? QString::fromUtf8("#666666")
                                                       : percentage >= MAX_VALUE ? QString::fromUtf8("#DF4843")
                                                       : QString::fromUtf8("#FF6F00"));
 
@@ -237,26 +241,35 @@ void InfoDialog::setUsage()
     ui->lUsedStorage->setText(usedStorage);
 
     QString usedQuota;
-    if (accType == Preferences::ACCOUNT_TYPE_BUSINESS || accType == Preferences::ACCOUNT_TYPE_FREE)
+    if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
+        ui->sQuota->setCurrentWidget(ui->wBusinessQuota);
+        ui->wCircularStorage->setValue(0);
+        usedQuota = QString::fromUtf8("%1").arg(QString::fromUtf8("<span style=\"color: #333333; font-size:20px; font-family: \"Lato\"; text-decoration:none;\">%1</span>")
+                                     .arg(Utilities::getSizeString(preferences->usedBandwidth())));
+
+    }
+    else if(accType == Preferences::ACCOUNT_TYPE_FREE)
+    {
+        ui->sQuota->setCurrentWidget(ui->wCircularQuota);
         ui->wCircularQuota->setValue(0);
-        ui->lUsedQuota->setText(QString::fromUtf8(""));
-        usedQuota = QString::fromUtf8("%1 used").arg(QString::fromUtf8("<span style=\"color:#333333; font-family: \"Lato\"; text-decoration:none;\">%1</span>")
+        usedQuota = QString::fromUtf8("%1 used").arg(QString::fromUtf8("<span style=\"color:#666666; font-family: \"Lato\"; text-decoration:none;\">%1</span>")
                                      .arg(Utilities::getSizeString(preferences->usedBandwidth())));
     }
     else
     {
+        ui->sQuota->setCurrentWidget(ui->wCircularQuota);
         if (preferences->totalBandwidth() == 0)
         {
             ui->wCircularQuota->setValue(0);
-            usedQuota = QString::fromUtf8("");
+            usedQuota = Utilities::getSizeString(preferences->totalBandwidth());
         }
         else
         {
             int percentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
             ui->wCircularQuota->setValue((percentage < 100) ? percentage : 100);
 
-            QString usageColorB = (percentage < 90 ? QString::fromUtf8("#6D6D6D")
+            QString usageColorB = (percentage < 90 ? QString::fromUtf8("#666666")
                                                           : percentage >= MAX_VALUE ? QString::fromUtf8("#DF4843")
                                                           : QString::fromUtf8("#FF6F00"));
 
@@ -1038,16 +1051,20 @@ void InfoDialog::on_tTransfers_clicked()
     ui->lRecents->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
 
     ui->tTransfers->setStyleSheet(QString::fromUtf8("color : #1D1D1D;"));
-    ui->tRecents->setStyleSheet(QString::fromUtf8("color : #989899;"));
+    ui->tNotifications->setStyleSheet(QString::fromUtf8("color : #989899;"));
+
+    ui->sTabs->setCurrentWidget(ui->pTransfersTab);
 }
 
-void InfoDialog::on_tRecents_clicked()
+void InfoDialog::on_tNotifications_clicked()
 {
     ui->lTransfers->setStyleSheet(QString::fromUtf8("background-color : transparent;"));
     ui->lRecents->setStyleSheet(QString::fromUtf8("background-color: #3C434D;"));
 
-    ui->tRecents->setStyleSheet(QString::fromUtf8("color : #1D1D1D;"));
+    ui->tNotifications->setStyleSheet(QString::fromUtf8("color : #1D1D1D;"));
     ui->tTransfers->setStyleSheet(QString::fromUtf8("color : #989899;"));
+
+    ui->sTabs->setCurrentWidget(ui->pNotificationsTab);
 }
 
 void InfoDialog::on_bDiscard_clicked()

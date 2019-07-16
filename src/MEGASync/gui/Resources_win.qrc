@@ -698,5 +698,11 @@
         <file>fonts/Lato-Regular.ttf</file>
         <file>fonts/Lato-Semibold.ttf</file>
         <file>fonts/Lato-Bold.ttf</file>
+        <file>images/storage_for_business.png</file>
+        <file>images/storage_for_business@2x.png</file>
+        <file>images/storage_for_business@3x.png</file>
+        <file>images/transfer_for_business.png</file>
+        <file>images/transfer_for_business@2x.png</file>
+        <file>images/transfer_for_business@3x.png</file>
     </qresource>
 </RCC>
