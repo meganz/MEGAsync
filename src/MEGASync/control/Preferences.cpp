@@ -16,7 +16,7 @@ const int Preferences::VERSION_CODE = 4202;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.2.2");
-QString Preferences::SDK_ID = QString::fromAscii("2c92c8f");
+QString Preferences::SDK_ID = QString::fromAscii("473b8ed");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
     "- Fix a crash during processing of some PDF files\n"
     "- Resume pending transfers after a crash on next startup\n"
