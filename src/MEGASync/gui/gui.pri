@@ -168,7 +168,7 @@ win32 {
                 $$PWD/win/ChangePassword.ui \
                 $$PWD/win/Login2FA.ui \
                 $$PWD/win/TransfersStatusWidget.ui \
-                $$PWD/win/TransfersStatusWidget.ui
+                $$PWD/win/TransfersSummaryWidget.ui
 }
 
 macx {
