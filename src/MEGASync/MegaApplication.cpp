@@ -7231,6 +7231,11 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
     {
         transferManager->onTransferStart(megaApi, transfer);
     }
+    if (infoDialog)
+    {
+        infoDialog->transferStarted();
+    }
+
 
     onTransferUpdate(api, transfer);
     if (!numTransfers[MegaTransfer::TYPE_DOWNLOAD]

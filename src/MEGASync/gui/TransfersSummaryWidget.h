@@ -55,12 +55,18 @@ public:
     void initialize();
 
     void showAnimated();
+    void setPaused(bool value);
+
 signals:
     void pauseResumeClicked();
     void generalAreaClicked();
     void dlAreaClicked();
     void upAreaClicked();
-    void transferStatusClicked();
+
+    void pauseResumeHovered(QMouseEvent *event);
+    void generalAreaHovered(QMouseEvent *event);
+    void dlAreaHovered(QMouseEvent *event);
+    void upAreaHovered(QMouseEvent *event);
 
 private slots:
     void resizeAnimation();
@@ -126,7 +132,7 @@ private:
     int upEllipseWidthMax;
 
 
-
+    bool paused = false;
     Status status;
     int initialwidth;
     int goalwidth;

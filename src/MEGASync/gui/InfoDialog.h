@@ -44,6 +44,7 @@ public:
     void setAvatar();
     void setTransfer(mega::MegaTransfer *transfer);
     void refreshTransferItems();
+    void transferStarted();
     void transferFinished(int error);
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
@@ -72,9 +73,21 @@ public:
 private:
     void drawAvatar(QString email);
     void animateStates(bool opt);
+    void updateTransfersCount();
     void hideEvent(QHideEvent *event) override;
 
 public slots:
+
+    void pauseResumeClicked();
+    void generalAreaClicked();
+    void dlAreaClicked();
+    void upAreaClicked();
+
+    void pauseResumeHovered(QMouseEvent *event);
+    void generalAreaHovered(QMouseEvent *event);
+    void dlAreaHovered(QMouseEvent *event);
+    void upAreaHovered(QMouseEvent *event);
+
    void addSync();
    void onAllUploadsFinished();
    void onAllDownloadsFinished();
@@ -121,6 +134,7 @@ private:
 
     int activeDownloadState, activeUploadState;
     int remainingUploads, remainingDownloads;
+    int totalUploads, totalDownloads;
     bool indexing;
     bool waiting;
     GuestWidget *gWidget;

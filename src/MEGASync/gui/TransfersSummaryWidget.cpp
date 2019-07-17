@@ -59,6 +59,29 @@ void TransfersSummaryWidget::drawEllipse(int x, int y,  int diam, int width, QPa
     painter->drawPie(  x + width - diam ,y,  diam, diam, 360*12, 360*8 );
 }
 
+void TransfersSummaryWidget::setPaused(bool value)
+{
+    if (value != paused)
+    {
+        paused = value;
+        if (paused)
+        {
+            QIcon icon;
+            icon.addFile(QString::fromUtf8(":/images/resume.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->bpause->setIcon(icon);
+            ui->bpause->setIconSize(QSize(minwidth / 28.0 * 20, minwidth / 28.0 * 20));
+        }
+        else
+        {
+            QIcon icon;
+            icon.addFile(QString::fromUtf8(":/images/pause.png"), QSize(), QIcon::Normal, QIcon::Off);
+            ui->bpause->setIcon(icon);
+            ui->bpause->setIconSize(QSize(minwidth / 28.0 * 20, minwidth / 28.0 * 20));
+
+        }
+    }
+}
+
 void TransfersSummaryWidget::paintEvent(QPaintEvent *event)
 {
     updateSizes();
@@ -277,7 +300,9 @@ bool TransfersSummaryWidget::isWithinPseudoEllipse(QPoint pos, int x, int y, int
 
 void TransfersSummaryWidget::mouseMoveEvent(QMouseEvent *event)
 {
-    if (isWithinPseudoEllipse(this->mapFromGlobal(QCursor::pos()), marginoutside, marginoutside,  this->width() - 2 * marginoutside, diamoutside))
+    QPoint pos = this->mapFromGlobal(QCursor::pos());
+
+    if (isWithinPseudoEllipse(pos, marginoutside, marginoutside,  this->width() - 2 * marginoutside, diamoutside))
     {
         this->setCursor(Qt::PointingHandCursor);
     }
@@ -285,28 +310,67 @@ void TransfersSummaryWidget::mouseMoveEvent(QMouseEvent *event)
     {
         this->setCursor(Qt::ArrowCursor);
     }
+
+    int arcx = firstellipseX;
+
+    if (upEllipseWidth && isWithinPseudoEllipse(pos, arcx, margininside,  upEllipseWidth, diaminside))
+    {
+        emit upAreaHovered(event);
+        return;
+    }
+
+    arcx = firstellipseX + upEllipseWidth + (upEllipseWidth?ellipsesMargin:0);
+    if (dlEllipseWidth && isWithinPseudoEllipse(pos, arcx, margininside,  dlEllipseWidth, diaminside))
+    {
+        emit dlAreaHovered(event);
+        return;
+    }
+
+    if (isWithinPseudoEllipse(pos, marginoutside, marginoutside,  this->width() - 2 * marginoutside, diamoutside))
+    {
+        if ((!upEllipseWidth && !dlEllipseWidth) || sqrt(pow( pos.x() - (ui->bpause->x() + ui->bpause->size().width() / 2.0),2.0)
+                          + pow( pos.y() - (ui->bpause->y() + ui->bpause->size().height() / 2.0), 2.0))
+                          > (ui->bpause->iconSize().width()/2.0) )
+
+        {
+            emit generalAreaHovered(event);
+        }
+        else
+        {
+            emit pauseResumeHovered(event);
+        }
+    }
 }
 
 void TransfersSummaryWidget::mouseReleaseEvent(QMouseEvent *event)
 {
+    QPoint pos = this->mapFromGlobal(QCursor::pos());
+
     int arcx = firstellipseX;
 
-    if (isWithinPseudoEllipse(this->mapFromGlobal(QCursor::pos()), arcx, margininside,  upEllipseWidth, diaminside))
+    if (upEllipseWidth && isWithinPseudoEllipse(pos, arcx, margininside,  upEllipseWidth, diaminside))
     {
         emit upAreaClicked();
         return;
     }
 
     arcx = firstellipseX + upEllipseWidth + (upEllipseWidth?ellipsesMargin:0);
-    if (isWithinPseudoEllipse(this->mapFromGlobal(QCursor::pos()), arcx, margininside,  dlEllipseWidth, diaminside))
+    if (dlEllipseWidth && isWithinPseudoEllipse(pos, arcx, margininside,  dlEllipseWidth, diaminside))
     {
         emit dlAreaClicked();
         return;
     }
 
-    if (isWithinPseudoEllipse(this->mapFromGlobal(QCursor::pos()), marginoutside, marginoutside,  this->width() - 2 * marginoutside, diamoutside))
+    if (isWithinPseudoEllipse(pos, marginoutside, marginoutside,  this->width() - 2 * marginoutside, diamoutside))
     {
-        emit generalAreaClicked();
+        //This is not necessary: bpause captures the click otherwise
+//        if ((!upEllipseWidth && !dlEllipseWidth) || sqrt(pow( pos.x() - (ui->bpause->x() + ui->bpause->size().width() / 2.0),2.0)
+//                          + pow( pos.y() - (ui->bpause->y() + ui->bpause->size().height() / 2.0), 2.0))
+//                          > (ui->bpause->iconSize().width()/2.0) )
+
+        {
+            emit generalAreaClicked();
+        }
     }
 }
 
@@ -460,7 +524,7 @@ void TransfersSummaryWidget::updateUploadsText(bool force)
         return;
     }
 
-    if (force || uploadsText.size() != previousText.size())
+    if (force || uploadsText.size() != previousText.size() || !upEllipseWidth)
     {
         uploadsTextToRender = uploadsText;
 
@@ -506,7 +570,7 @@ void TransfersSummaryWidget::updateDownloadsText(bool force)
         return;
     }
 
-    if (force || downloadsText.size() != previousText.size())
+    if (force || downloadsText.size() != previousText.size() || !dlEllipseWidth)
     {
         downloadsTextToRender = downloadsText;
 
@@ -566,26 +630,38 @@ void TransfersSummaryWidget::updateDownloads()
 
 void TransfersSummaryWidget::setTotalDownloads(long long  value)
 {
-    totalDownloads = value;
-    updateDownloads();
+    if (totalDownloads != value)
+    {
+        totalDownloads = value;
+        updateDownloads();
+    }
 }
 
 void TransfersSummaryWidget::setCompletedDownloads(long long  value)
 {
-    completedDownloads = value;
-    updateDownloads();
+    if (completedDownloads != value)
+    {
+        completedDownloads = value;
+        updateDownloads();
+    }
 }
 
 void TransfersSummaryWidget::setTotalUploads(long long  value)
 {
-    totalUploads = value;
-    updateUploads();
+    if (totalUploads != value)
+    {
+        totalUploads = value;
+        updateUploads();
+    }
 }
 
 void TransfersSummaryWidget::setCompletedUploads(long long  value)
 {
-    completedUploads = value;
-    updateUploads();
+    if (completedUploads != value)
+    {
+        completedUploads = value;
+        updateUploads();
+    }
 }
 
 void TransfersSummaryWidget::expand(bool noAnimate)
@@ -682,8 +758,11 @@ void TransfersSummaryWidget::updateSizes()
             ui->bpause->setMinimumHeight(minwidthheight /28.0*24);
             ui->bpause->setMaximumWidth(minwidthheight /28.0*24);
             ui->bpause->setMinimumWidth(minwidthheight /28.0*24);
+
             this->layout()->setContentsMargins(minwidthheight /28.0*2, 0, minwidthheight /28.0*2, 0);
         }
+        ui->bpause->setIconSize(QSize(minwidth / 28.0 * 20, minwidth / 28.0 * 20));
+
     }
 
     lastwidth = this->width();

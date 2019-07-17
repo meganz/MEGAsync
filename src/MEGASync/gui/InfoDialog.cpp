@@ -27,11 +27,62 @@ using namespace std::chrono;
 
 using namespace mega;
 
+
+void InfoDialog::pauseResumeClicked()
+{
+    app->pauseTransfers();
+}
+
+void InfoDialog::generalAreaClicked()
+{
+    app->transferManagerActionClicked();
+}
+
+void InfoDialog::dlAreaClicked()
+{
+    app->transferManagerActionClicked(TransferManager::DOWNLOADS_TAB);
+}
+
+void InfoDialog::upAreaClicked()
+{
+    app->transferManagerActionClicked(TransferManager::UPLOADS_TAB);
+}
+
+void InfoDialog::pauseResumeHovered(QMouseEvent *event)
+{
+    QToolTip::showText(event->globalPos(), tr("Pause/Resume"));
+}
+
+void InfoDialog::generalAreaHovered(QMouseEvent *event)
+{
+    QToolTip::showText(event->globalPos(), tr("Open Transfer Manager"));
+}
+void InfoDialog::dlAreaHovered(QMouseEvent *event)
+{
+    QToolTip::showText(event->globalPos(), tr("Open Downloads"));
+}
+
+void InfoDialog::upAreaHovered(QMouseEvent *event)
+{
+    QToolTip::showText(event->globalPos(), tr("Open Uploads"));
+}
+
 InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddialog) :
     QDialog(parent),
     ui(new Ui::InfoDialog)
 {
     ui->setupUi(this);
+
+    connect(ui->bTransferManager, SIGNAL(pauseResumeClicked()), this, SLOT(pauseResumeClicked()));
+    connect(ui->bTransferManager, SIGNAL(generalAreaClicked()), this, SLOT(generalAreaClicked()));
+    connect(ui->bTransferManager, SIGNAL(upAreaClicked()), this, SLOT(upAreaClicked()));
+    connect(ui->bTransferManager, SIGNAL(dlAreaClicked()), this, SLOT(dlAreaClicked()));
+
+    connect(ui->bTransferManager, SIGNAL(pauseResumeHovered(QMouseEvent *)), this, SLOT(pauseResumeHovered(QMouseEvent *)));
+    connect(ui->bTransferManager, SIGNAL(generalAreaHovered(QMouseEvent *)), this, SLOT(generalAreaHovered(QMouseEvent *)));
+    connect(ui->bTransferManager, SIGNAL(upAreaHovered(QMouseEvent *)), this, SLOT(upAreaHovered(QMouseEvent*)));
+    connect(ui->bTransferManager, SIGNAL(dlAreaHovered(QMouseEvent *)), this, SLOT(dlAreaHovered(QMouseEvent *)));
+
     //Set window properties
 #ifdef Q_OS_LINUX
     if (true || !QSystemTrayIcon::isSystemTrayAvailable()) //To avoid issues with text input we implement popup ourselves by listening to WindowDeactivate event
@@ -52,6 +103,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     this->app = app;
     activeDownloadState = activeUploadState = MegaTransfer::STATE_NONE;
     remainingUploads = remainingDownloads = 0;
+    totalUploads = totalDownloads = 0;
     indexing = false;
     waiting = false;
     activeDownload = NULL;
@@ -323,8 +375,32 @@ void InfoDialog::refreshTransferItems()
     }
 }
 
+void InfoDialog::updateTransfersCount()
+{
+    remainingUploads = megaApi->getNumPendingUploads();
+    remainingDownloads = megaApi->getNumPendingDownloads();
+
+    totalUploads = megaApi->getTotalUploads();
+    totalDownloads = megaApi->getTotalDownloads();
+
+    int currentDownload = totalDownloads - remainingDownloads + 1;
+    int currentUpload = totalUploads - remainingUploads + 1;
+
+    ui->bTransferManager->setCompletedDownloads(qMax(0,qMin(totalDownloads, currentDownload)));
+    ui->bTransferManager->setCompletedUploads(qMax(0,qMin(totalUploads,currentUpload)));
+    ui->bTransferManager->setTotalDownloads(megaApi->getTotalDownloads());
+    ui->bTransferManager->setTotalUploads(megaApi->getTotalUploads());
+}
+
+void InfoDialog::transferStarted()
+{
+    updateTransfersCount();
+}
+
 void InfoDialog::transferFinished(int error)
 {
+    updateTransfersCount();
+
     remainingUploads = megaApi->getNumPendingUploads();
     remainingDownloads = megaApi->getNumPendingDownloads();
 
@@ -533,6 +609,7 @@ void InfoDialog::updateState()
     }
 
     ui->wStatus->setState(state);
+    ui->bTransferManager->setPaused(preferences->getGlobalPaused());
 }
 
 void InfoDialog::addSync()
