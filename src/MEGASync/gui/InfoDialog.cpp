@@ -398,8 +398,8 @@ void InfoDialog::updateTransfersCount()
 
     ui->bTransferManager->setCompletedDownloads(qMax(0,qMin(totalDownloads, currentDownload)));
     ui->bTransferManager->setCompletedUploads(qMax(0,qMin(totalUploads,currentUpload)));
-    ui->bTransferManager->setTotalDownloads(megaApi->getTotalDownloads());
-    ui->bTransferManager->setTotalUploads(megaApi->getTotalUploads());
+    ui->bTransferManager->setTotalDownloads(totalDownloads);
+    ui->bTransferManager->setTotalUploads(totalUploads);
 }
 
 void InfoDialog::transferFinished(int error)
@@ -914,7 +914,7 @@ void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaErro
                 }
             }
 
-            if (!remainingDownloads)
+            if (remainingDownloads <= 0)
             {
                 leftDownloadBytes = 0;
                 completedDownloadBytes = 0;
@@ -938,7 +938,7 @@ void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaErro
                 }
             }
 
-            if (!remainingUploads)
+            if (remainingUploads <= 0)
             {
                 leftUploadBytes = 0;
                 completedUploadBytes = 0;
