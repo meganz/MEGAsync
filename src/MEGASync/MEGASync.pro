@@ -62,7 +62,7 @@ macx {
 CONFIG += USE_PDFIUM
 }
 else:win32 {
-#CONFIG += USE_PDFIUM
+CONFIG += USE_PDFIUM
 }
 else:contains(QMAKE_CFLAGS, -m64) { #Notice this might not work for clang!
 CONFIG += USE_PDFIUM
@@ -166,7 +166,7 @@ macx {
 DEFINES += REQUIRE_HAVE_PDFIUM
 }
 else:win32 {
-#DEFINES += REQUIRE_HAVE_PDFIUM
+DEFINES += REQUIRE_HAVE_PDFIUM
 }
 else:contains(QMAKE_CFLAGS, -m64) { #Notice this might not work for clang!
 DEFINES += REQUIRE_HAVE_PDFIUM

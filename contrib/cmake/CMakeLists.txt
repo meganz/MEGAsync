@@ -1,4 +1,3 @@
-
 cmake_minimum_required(VERSION 3.0)
 set(MEGA_PROJECT_NAME "MEGAsync-desktop-" CACHE STRING "Project name, SDK will declare and append 32/64")
 
@@ -22,6 +21,7 @@ set (USE_MEDIAINFO 1 CACHE STRING "")
 set (USE_LIBRAW 1 CACHE STRING "")
 set (USE_SODIUM 1 CACHE STRING "")
 set (USE_FFMPEG 1 CACHE STRING "")
+set (HAVE_PDFIUM 1 CACHE STRING "")
 set (USE_FREEIMAGE 0 CACHE STRING "") # thumbnail generation etc done with QT, so no need for freeimage
 set (USE_QT 1)
 set (QT_DIR "C:/Qt/Qt5.6.3/5.6.3/msvc2015" CACHE STRING "")
