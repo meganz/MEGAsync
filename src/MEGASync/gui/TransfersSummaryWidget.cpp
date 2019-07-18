@@ -162,12 +162,12 @@ void TransfersSummaryWidget::paintEvent(QPaintEvent *event)
 
 }
 
-void TransfersSummaryWidget::setPercentInnerCircle(const qreal &value)
+void TransfersSummaryWidget::setPercentUploads(const qreal &value)
 {
     ui->bTransfersStatus->setPercentInnerCircle(value);
 }
 
-void TransfersSummaryWidget::setPercentOuterCircle(const qreal &value)
+void TransfersSummaryWidget::setPercentDownloads(const qreal &value)
 {
     ui->bTransfersStatus->setPercentOuterCircle(value);
 }
@@ -602,28 +602,12 @@ void TransfersSummaryWidget::updateDownloadsText(bool force)
 
 void TransfersSummaryWidget::updateUploads()
 {
-    if (totalUploads)
-    {
-        setPercentInnerCircle(completedUploads * 1.0 / totalUploads);
-    }
-    else
-    {
-        setPercentInnerCircle(0.0);
-    }
     updateUploadsText();
     update();
 }
 
 void TransfersSummaryWidget::updateDownloads()
 {
-    if (totalDownloads)
-    {
-        setPercentOuterCircle(completedDownloads * 1.0 / totalDownloads);
-    }
-    else
-    {
-        setPercentOuterCircle(0.0);
-    }
     updateDownloadsText();
     update();
 }

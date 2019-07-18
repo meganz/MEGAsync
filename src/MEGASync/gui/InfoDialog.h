@@ -44,7 +44,6 @@ public:
     void setAvatar();
     void setTransfer(mega::MegaTransfer *transfer);
     void refreshTransferItems();
-    void transferStarted();
     void transferFinished(int error);
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
@@ -55,10 +54,13 @@ public:
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
 
+    void reset();
 
     QCustomTransfersModel *stealModel();
 
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
+    virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);
+    virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
 
 #ifdef __APPLE__
     void moveArrow(QPoint p);
@@ -135,6 +137,15 @@ private:
     int activeDownloadState, activeUploadState;
     int remainingUploads, remainingDownloads;
     int totalUploads, totalDownloads;
+    long long leftUploadBytes, completedUploadBytes;
+    long long leftDownloadBytes, completedDownloadBytes;
+    long long currentUploadBytes, currentCompletedUploadBytes;
+    long long currentDownloadBytes, currentCompletedDownloadBytes;
+    bool circlesShowAllActiveTransfersProgress;
+    unsigned long long uploadActiveTransferPriority, downloadActiveTransferPriority;
+    int uploadActiveTransferTag, downloadActiveTransferTag;
+    int uploadActiveTransferState, downloadActiveTransferState;
+
     bool indexing;
     bool waiting;
     GuestWidget *gWidget;

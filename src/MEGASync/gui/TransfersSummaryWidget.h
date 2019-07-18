@@ -57,6 +57,8 @@ public:
     void showAnimated();
     void setPaused(bool value);
 
+    void setPercentUploads(const qreal &value);
+    void setPercentDownloads(const qreal &value);
 signals:
     void pauseResumeClicked();
     void generalAreaClicked();
@@ -83,8 +85,6 @@ private:
     void updateUploads();
     void updateDownloads();
 
-    void setPercentInnerCircle(const qreal &value);
-    void setPercentOuterCircle(const qreal &value);
 
     void drawEllipse(int x, int y,  int diam, int width, QPainter *painter);
 

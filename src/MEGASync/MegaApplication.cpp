@@ -1450,6 +1450,11 @@ void MegaApplication::start()
     }
     queuedStorageUserStatsReason = 0;
 
+    if (infoDialog)
+    {
+        infoDialog->reset();
+    }
+
     if (!isLinux || !trayIcon->contextMenu())
     {
         trayIcon->setContextMenu(initialMenu.get());
@@ -7233,7 +7238,7 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
     }
     if (infoDialog)
     {
-        infoDialog->transferStarted();
+        infoDialog->onTransferStart(megaApi, transfer);
     }
 
 
@@ -7442,6 +7447,11 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     if (transferManager)
     {
         transferManager->onTransferUpdate(megaApi, transfer);
+    }
+
+    if (infoDialog)
+    {
+        infoDialog->onTransferUpdate(megaApi, transfer);
     }
 
     int type = transfer->getType();

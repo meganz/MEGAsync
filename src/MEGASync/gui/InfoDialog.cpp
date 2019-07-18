@@ -101,9 +101,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     //Initialize fields
     this->app = app;
-    activeDownloadState = activeUploadState = MegaTransfer::STATE_NONE;
-    remainingUploads = remainingDownloads = 0;
-    totalUploads = totalDownloads = 0;
+    reset();
+
+    circlesShowAllActiveTransfersProgress = true;
+
     indexing = false;
     waiting = false;
     activeDownload = NULL;
@@ -386,21 +387,23 @@ void InfoDialog::updateTransfersCount()
     int currentDownload = totalDownloads - remainingDownloads + 1;
     int currentUpload = totalUploads - remainingUploads + 1;
 
+    if (remainingDownloads <= 0)
+    {
+        totalDownloads = 0;
+    }
+    if (remainingUploads <= 0)
+    {
+        totalUploads = 0;
+    }
+
     ui->bTransferManager->setCompletedDownloads(qMax(0,qMin(totalDownloads, currentDownload)));
     ui->bTransferManager->setCompletedUploads(qMax(0,qMin(totalUploads,currentUpload)));
     ui->bTransferManager->setTotalDownloads(megaApi->getTotalDownloads());
     ui->bTransferManager->setTotalUploads(megaApi->getTotalUploads());
 }
 
-void InfoDialog::transferStarted()
-{
-    updateTransfersCount();
-}
-
 void InfoDialog::transferFinished(int error)
 {
-    updateTransfersCount();
-
     remainingUploads = megaApi->getNumPendingUploads();
     remainingDownloads = megaApi->getNumPendingDownloads();
 
@@ -857,6 +860,18 @@ bool InfoDialog::updateOverStorageState(int state)
     return false;
 }
 
+void InfoDialog::reset()
+{
+    activeDownloadState = activeUploadState = MegaTransfer::STATE_NONE;
+    remainingUploads = remainingDownloads = 0;
+    totalUploads = totalDownloads = 0;
+    leftUploadBytes = completedUploadBytes = 0;
+    leftDownloadBytes = completedDownloadBytes = 0;
+    uploadActiveTransferPriority = downloadActiveTransferPriority = 0xFFFFFFFFFFFFFFFFULL;
+    uploadActiveTransferTag = downloadActiveTransferTag = -1;
+
+}
+
 QCustomTransfersModel *InfoDialog::stealModel()
 {
     QCustomTransfersModel *toret = ui->wListTransfers->getModel();
@@ -877,7 +892,133 @@ void InfoDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, MegaErro
     }
 
     ui->wListTransfers->getModel()->onTransferFinish(api, transfer, e);
+
+
+    updateTransfersCount();
+    if (transfer)
+    {
+        if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
+        {
+            if (downloadActiveTransferTag == transfer->getTag())
+            {
+                downloadActiveTransferTag = -1;
+            }
+
+            if (e->getErrorCode() != MegaError::API_OK)
+            {
+                leftDownloadBytes -= transfer->getTotalBytes();
+                completedDownloadBytes -= transfer->getTransferredBytes();
+                if (circlesShowAllActiveTransfersProgress)
+                {
+                    ui->bTransferManager->setPercentDownloads( completedDownloadBytes *1.0 / leftDownloadBytes);
+                }
+            }
+
+            if (!remainingDownloads)
+            {
+                leftDownloadBytes = 0;
+                completedDownloadBytes = 0;
+                ui->bTransferManager->setPercentDownloads(0.0);
+            }
+        }
+        else if (transfer->getType() == MegaTransfer::TYPE_UPLOAD)
+        {
+            if (uploadActiveTransferTag == transfer->getTag())
+            {
+                uploadActiveTransferTag = -1;
+            }
+
+            if (e->getErrorCode() != MegaError::API_OK)
+            {
+                leftUploadBytes -= transfer->getTotalBytes();
+                completedUploadBytes -= transfer->getTransferredBytes();
+                if (circlesShowAllActiveTransfersProgress)
+                {
+                    ui->bTransferManager->setPercentUploads( completedUploadBytes *1.0 / leftUploadBytes);
+                }
+            }
+
+            if (!remainingUploads)
+            {
+                leftUploadBytes = 0;
+                completedUploadBytes = 0;
+                ui->bTransferManager->setPercentUploads(0.0);
+            }
+        }
+    }
 }
+
+void InfoDialog::onTransferStart(MegaApi *api, MegaTransfer *transfer)
+{
+    updateTransfersCount();
+    if (transfer)
+    {
+        if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
+        {
+            leftDownloadBytes += transfer->getTotalBytes();
+        }
+        else if (transfer->getType() == MegaTransfer::TYPE_UPLOAD)
+        {
+            leftUploadBytes += transfer->getTotalBytes();
+        }
+    }
+}
+
+void InfoDialog::onTransferUpdate(MegaApi *api, MegaTransfer *transfer)
+{
+    if (transfer)
+    {
+        if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
+        {
+            completedDownloadBytes += transfer->getDeltaSize();
+            currentDownloadBytes = transfer->getTotalBytes();
+            currentCompletedDownloadBytes = transfer->getTransferredBytes();
+            if (circlesShowAllActiveTransfersProgress)
+            {
+                ui->bTransferManager->setPercentDownloads( completedDownloadBytes *1.0 / leftDownloadBytes);
+            }
+            else
+            {
+                if (downloadActiveTransferTag == -1 || transfer->getPriority() <= downloadActiveTransferPriority
+                        || downloadActiveTransferState == MegaTransfer::STATE_PAUSED)
+                {
+                    downloadActiveTransferTag = transfer->getTag();
+                }
+                if (downloadActiveTransferTag == transfer->getTag())
+                {
+                    downloadActiveTransferPriority = transfer->getPriority();
+                    downloadActiveTransferState = transfer->getState();
+                    ui->bTransferManager->setPercentDownloads(currentCompletedDownloadBytes *1.0 /currentDownloadBytes);
+                }
+            }
+        }
+        else if (transfer->getType() == MegaTransfer::TYPE_UPLOAD)
+        {
+            completedUploadBytes += transfer->getDeltaSize();
+            currentUploadBytes = transfer->getTotalBytes();
+            currentCompletedUploadBytes = transfer->getTransferredBytes();
+            if (circlesShowAllActiveTransfersProgress)
+            {
+                ui->bTransferManager->setPercentUploads( completedUploadBytes *1.0 / leftUploadBytes);
+            }
+            else
+            {
+                if (uploadActiveTransferTag == -1 || transfer->getPriority() <= uploadActiveTransferPriority
+                         || uploadActiveTransferState == MegaTransfer::STATE_PAUSED)
+                {
+                    uploadActiveTransferTag = transfer->getTag();
+                }
+                if (uploadActiveTransferTag == transfer->getTag())
+                {
+                    uploadActiveTransferPriority = transfer->getPriority();
+                    uploadActiveTransferState = transfer->getState();
+                    ui->bTransferManager->setPercentUploads(currentCompletedUploadBytes *1.0 /currentUploadBytes);
+                }
+            }
+        }
+    }
+}
+
 
 void InfoDialog::changeEvent(QEvent *event)
 {
