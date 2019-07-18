@@ -136,16 +136,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->sStorage->setCurrentWidget(ui->wCircularStorage);
     ui->sQuota->setCurrentWidget(ui->wCircularQuota);
 
-#ifdef __APPLE__
-    if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //Issues with mavericks and popup management
-    {
-        installEventFilter(this);
-    }
-#endif
-
-#ifdef Q_OS_LINUX
     installEventFilter(this);
-#endif
 
     ui->lOQDesc->setTextFormat(Qt::RichText);
 
@@ -1037,11 +1028,19 @@ void InfoDialog::changeEvent(QEvent *event)
 
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 {
-    if (obj == this && e->type() == QEvent::WindowActivate)
+    if (obj == this)
     {
-        ui->bTransferManager->showAnimated();
-        return true;
+        if (e->type() == QEvent::Show)
+        {
+            ui->bTransferManager->showAnimated();
+        }
+        else if (e->type() == QEvent::Hide)
+        {
+            ui->bTransferManager->shrink(true);
+        }
+        return QDialog::eventFilter(obj, e);
     }
+
 #ifdef Q_OS_LINUX
     if (obj == this && e->type() == QEvent::WindowDeactivate)
     {
