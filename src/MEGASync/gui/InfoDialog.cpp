@@ -34,15 +34,24 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->setupUi(this);
     //Set window properties
 #ifdef Q_OS_LINUX
-    if (true || !QSystemTrayIcon::isSystemTrayAvailable()) //To avoid issues with text input we implement popup ourselves by listening to WindowDeactivate event
+    doNotActAsPopup = false;
+    if (getenv("USE_MEGASYNC_AS_REGULAR_WINDOW"))
     {
-        setWindowFlags(Qt::FramelessWindowHint);
+        doNotActAsPopup = true;
+    }
+
+    if (!doNotActAsPopup && QSystemTrayIcon::isSystemTrayAvailable())
+    {
+        setWindowFlags(Qt::FramelessWindowHint); //To avoid issues with text input we implement a popup (instead of using Qt::Popup) ourselves by listening to WindowDeactivate event
     }
     else
-#endif
     {
-        setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+        setWindowFlags(Qt::Window);
+        doNotActAsPopup = true; //the first time systray is not available will set this flag to true to disallow popup until restarting
     }
+#else
+    setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+#endif
 
 #ifdef __APPLE__
     setAttribute(Qt::WA_TranslucentBackground);
@@ -1051,9 +1060,26 @@ void InfoDialog::changeEvent(QEvent *event)
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 {
 #ifdef Q_OS_LINUX
-    if (obj == this && e->type() == QEvent::WindowDeactivate)
+    static bool firstime = true;
+    if (getenv("START_MEGASYNC_MINIMIZED") && firstime && (obj == this && e->type() == QEvent::Paint))
     {
-        close();
+        MegaApi::log(MegaApi::LOG_LEVEL_DEBUG, QString::fromUtf8("Minimizing info dialog ...").arg(e->type()).toUtf8().constData());
+        showMinimized();
+        firstime = false;
+    }
+
+    if (doNotActAsPopup)
+    {
+        if (obj == this && e->type() == QEvent::Close)
+        {
+            e->ignore(); //This prevents the dialog from closing
+            app->exitApplication();
+            return true;
+        }
+    }
+    else if (obj == this && e->type() == QEvent::WindowDeactivate)
+    {
+        hide();
         return true;
     }
 #endif

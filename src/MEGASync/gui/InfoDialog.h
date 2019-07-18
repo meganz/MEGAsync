@@ -134,6 +134,10 @@ private:
     int actualAccountType;
     bool loggedInMode = true;
 
+#ifdef Q_OS_LINUX
+    bool doNotActAsPopup;
+#endif
+
     QPropertyAnimation *animation;
     QGraphicsOpacityEffect *opacityEffect;
 
