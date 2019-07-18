@@ -48,6 +48,8 @@ TransfersStatusWidget::TransfersStatusWidget(QWidget *parent) :
 
     lastwidth = -1;
     lastheigth = -1;
+    percentInnerCircle = 0;
+    percentOuterCircle = 0;
 
     updateSizes();
 

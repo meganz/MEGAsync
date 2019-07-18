@@ -15,6 +15,7 @@ TransfersSummaryWidget::TransfersSummaryWidget(QWidget *parent) :
     ui->bTransfersStatus->setAttribute(Qt::WA_TransparentForMouseEvents);
 
     status = Status::EXPANDED;
+    minwidth = 0;
     originalwidth = -1;
 
     animationTimeMS = 0.8*1000;
