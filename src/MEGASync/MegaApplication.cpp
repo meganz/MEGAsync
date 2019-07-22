@@ -1817,7 +1817,8 @@ void MegaApplication::applyStorageState(int state)
     {
         // this one is requested with force=false so it can't possibly occur to often.
         // It will in turn result in another call of this function with the actual new state (if it changed), which is taken care of below with force=true (so that one does not have to wait further)
-        updateUserStats(true, false, false, true, USERSTATS_STORAGESTATECHANGE);
+        // Also request pro state (low cost) in case the storage status is due to expiration of paid period etc.
+        updateUserStats(true, false, true, true, USERSTATS_STORAGESTATECHANGE);
         return;
     }
 
@@ -1826,7 +1827,7 @@ void MegaApplication::applyStorageState(int state)
     {
         if (storageState != appliedStorageState)
         {
-            updateUserStats(true, false, false, true, USERSTATS_TRAFFICLIGHT);
+            updateUserStats(true, false, true, true, USERSTATS_TRAFFICLIGHT);
             if (state == MegaApi::STORAGE_STATE_RED)
             {
                 almostOQ = false;
@@ -6848,19 +6849,25 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (storage)
         {
             preferences->setTotalStorage(details->getStorageMax());
-            preferences->setVersionsStorage(details->getVersionStorageUsed());
 
             MegaHandle rootHandle = root->getHandle();
+            MegaHandle inboxHandle = inbox->getHandle();
+            MegaHandle rubbishHandle = rubbish->getHandle();
+
+            // For versions, match the webclient by only counting the user's own nodes.  Versions in inshares are not cleared by 'clear versions'
+            // Also the no-parameter getVersionStorageUsed() double counts the versions in outshares.  Inshare storage count should include versions.
+            preferences->setVersionsStorage(details->getVersionStorageUsed(rootHandle) 
+                                          + details->getVersionStorageUsed(inboxHandle) 
+                                          + details->getVersionStorageUsed(rubbishHandle));
+
             preferences->setCloudDriveStorage(details->getStorageUsed(rootHandle));
             preferences->setCloudDriveFiles(details->getNumFiles(rootHandle));
             preferences->setCloudDriveFolders(details->getNumFolders(rootHandle));
 
-            MegaHandle inboxHandle = inbox->getHandle();
             preferences->setInboxStorage(details->getStorageUsed(inboxHandle));
             preferences->setInboxFiles(details->getNumFiles(inboxHandle));
             preferences->setInboxFolders(details->getNumFolders(inboxHandle));
 
-            MegaHandle rubbishHandle = rubbish->getHandle();
             preferences->setRubbishStorage(details->getStorageUsed(rubbishHandle));
             preferences->setRubbishFiles(details->getNumFiles(rubbishHandle));
             preferences->setRubbishFolders(details->getNumFolders(rubbishHandle));
@@ -7533,7 +7540,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     {
         preferences->clearTemporalBandwidth();
         megaApi->getPricing();
-        updateUserStats(false, true, false, true, USERSTATS_TRANSFERTEMPERROR);  // just get udpated transfer quota
+        updateUserStats(false, true, true, true, USERSTATS_TRANSFERTEMPERROR);  // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry)
         bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
 #if defined(__MACH__) || defined(_WIN32)
         trayIcon->setContextMenu(initialMenu.get());
