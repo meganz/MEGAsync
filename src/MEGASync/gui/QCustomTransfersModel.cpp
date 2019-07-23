@@ -165,7 +165,7 @@ void QCustomTransfersModel::updateTransferInfo(MegaTransfer *transfer)
         int tError = transfer->getLastError().getErrorCode();
         if (tError != MegaError::API_OK)
         {
-            item->setTransferError(tError);
+            item->setTransferError(tError, transfer->getLastError().getErrorCode());
         }
     }
 
