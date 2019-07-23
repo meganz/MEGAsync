@@ -60,7 +60,7 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
                 int tError = transfer->getLastError().getErrorCode();
                 if (tError != MegaError::API_OK)
                 {
-                    ti->setTransferError(tError);
+                    ti->setTransferError(tError, transfer->getLastError().getValue());
                 }
 
                 ti->setTransferState(transfer->getState());

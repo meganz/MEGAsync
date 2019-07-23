@@ -1023,6 +1023,9 @@ void MegaApplication::initialize()
     connectivityTimer->setInterval(Preferences::MAX_LOGIN_TIME_MS);
     connect(connectivityTimer, SIGNAL(timeout()), this, SLOT(runConnectivityCheck()));
 
+    proExpirityTimer.setSingleShot(true);
+    connect(&proExpirityTimer, SIGNAL(timeout()), this, SLOT(proExpirityTimedOut()));
+
 #ifdef _WIN32
     if (isPublic && prevVersion <= 3104 && preferences->canUpdate(appPath))
     {
@@ -1832,14 +1835,6 @@ void MegaApplication::applyStorageState(int state)
             {
                 almostOQ = false;
 
-
-                if (preferences->usedStorage() < preferences->totalStorage())
-                {
-                    preferences->setUsedStorage(preferences->totalStorage());
-                    preferences->sync();
-                    refreshStorageUIs();
-                }
-
                 //Disable syncs
                 disableSyncs();
                 if (!infoOverQuota)
@@ -1865,13 +1860,6 @@ void MegaApplication::applyStorageState(int state)
             }
             else
             {
-                if (appliedStorageState == MegaApi::STORAGE_STATE_RED)
-                {
-                    preferences->setUsedStorage(receivedStorageSum);
-                    preferences->sync();
-                    refreshStorageUIs();
-                }
-
                 if (state == MegaApi::STORAGE_STATE_GREEN)
                 {
                     almostOQ = false;
@@ -3303,6 +3291,11 @@ void MegaApplication::onConnectivityCheckError()
     }
 
     showErrorMessage(tr("MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall."));
+}
+
+void MegaApplication::proExpirityTimedOut()
+{
+    updateUserStats(true, true, true, true, USERSTATS_PRO_EXPIRED);
 }
 
 void MegaApplication::setupWizardFinished(int result)
@@ -6846,11 +6839,35 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (pro)
         {
             preferences->setAccountType(details->getProLevel());
+            if (details->getProLevel() != Preferences::ACCOUNT_TYPE_FREE)
+            {
+                if (details->getProExpiration() && preferences->proExpirityTime() != details->getProExpiration())
+                {
+                    preferences->setProExpirityTime(details->getProExpiration());
+                    proExpirityTimer.stop();
+                    proExpirityTimer.setInterval(qMax(0LL, details->getProExpiration() * 1000 - QDateTime::currentMSecsSinceEpoch()));
+                    proExpirityTimer.start();
+                }
+            }
+            else
+            {
+                preferences->setProExpirityTime(0);
+                proExpirityTimer.stop();
+            }
         }
 
         if (storage)
         {
             preferences->setTotalStorage(details->getStorageMax());
+
+            if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
+            {
+                preferences->setUsedStorage(preferences->totalStorage());
+            }
+            else
+            {
+                preferences->setUsedStorage(receivedStorageSum);
+            }
 
             MegaHandle rootHandle = root->getHandle();
             MegaHandle inboxHandle = inbox->getHandle();

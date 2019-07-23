@@ -81,6 +81,7 @@ enum GetUserStatsReason {
     USERSTATS_ACCOUNTUPDATE,
     USERSTATS_STORAGECLICKED,
     USERSTATS_BANDWIDTH_TIMEOUT_SHOWINFODIALOG,
+    USERSTATS_PRO_EXPIRED,
     USERSTATS_OPENSETTINGSDIALOG,
 };
 
@@ -220,6 +221,7 @@ public slots:
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();
+    void proExpirityTimedOut();
     void userAction(int action);
     void changeState();
 #ifdef _WIN32
@@ -320,6 +322,7 @@ protected:
 
     QTimer *connectivityTimer;
     std::unique_ptr<QTimer> onGlobalSyncStateChangedTimer;
+    QTimer proExpirityTimer;
     int scanningAnimationIndex;
     SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;

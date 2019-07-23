@@ -109,6 +109,8 @@ public:
     void setUsedBandwidth(long long value);
     int accountType();
     void setAccountType(int value);
+    long long proExpirityTime();
+    void setProExpirityTime(long long value);
     bool showNotifications();
     void setShowNotifications(bool value);
     bool startOnStartup();
@@ -465,6 +467,7 @@ protected:
     static const QString almostOverStorageDismissExecutionKey;
     static const QString overStorageDismissExecutionKey;
     static const QString accountTypeKey;
+    static const QString proExpirityTimeKey;
     static const QString setupWizardCompletedKey;
     static const QString showNotificationsKey;
     static const QString startOnStartupKey;

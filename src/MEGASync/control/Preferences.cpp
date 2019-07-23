@@ -248,6 +248,7 @@ const QString Preferences::almostOverStorageDismissExecutionKey = QString::fromA
 const QString Preferences::overStorageDismissExecutionKey = QString::fromAscii("overStorageDismissExecution");
 
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
+const QString Preferences::proExpirityTimeKey       = QString::fromAscii("proExpirityTime");
 const QString Preferences::showNotificationsKey     = QString::fromAscii("showNotifications");
 const QString Preferences::startOnStartupKey        = QString::fromAscii("startOnStartup");
 const QString Preferences::languageKey              = QString::fromAscii("language");
@@ -1078,6 +1079,23 @@ void Preferences::setAccountType(int value)
     mutex.lock();
     assert(logged());
     settings->setValue(accountTypeKey, value);
+    mutex.unlock();
+}
+
+long long Preferences::proExpirityTime()
+{
+    mutex.lock();
+    assert(logged());
+    long long value = settings->value(proExpirityTimeKey).toLongLong();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setProExpirityTime(long long value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(proExpirityTimeKey, value);
     mutex.unlock();
 }
 
