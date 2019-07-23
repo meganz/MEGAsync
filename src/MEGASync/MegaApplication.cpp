@@ -5715,6 +5715,8 @@ void MegaApplication::openSettings(int tab)
         return;
     }
 
+    updateUserStats(true, true, true, true, USERSTATS_OPENSETTINGSDIALOG);  // update all info for up to date data (expecially storage of versions)
+
     if (settingsDialog)
     {
         //If the dialog is active
@@ -6889,6 +6891,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             preferences->setInShareStorage(inShareSize);
             preferences->setInShareFiles(inShareFiles);
             preferences->setInShareFolders(inShareFolders);
+
+            // update settings dialog if it exists, to show the correct versions size
+            if (settingsDialog)
+            {
+                settingsDialog->storageChanged();
+            }
         }
 
         if (!megaApi->getBandwidthOverquotaDelay() && preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)

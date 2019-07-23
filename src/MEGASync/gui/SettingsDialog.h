@@ -58,6 +58,7 @@ public slots:
     void proxyStateChanged();
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
+    void storageChanged();
     
 private slots:
     void on_bAccount_clicked();
