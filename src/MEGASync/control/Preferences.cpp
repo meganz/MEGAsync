@@ -1086,7 +1086,7 @@ long long Preferences::proExpirityTime()
 {
     mutex.lock();
     assert(logged());
-    int value = settings->value(proExpirityTimeKey).toInt();
+    long long value = settings->value(proExpirityTimeKey).toLongLong();
     mutex.unlock();
     return value;
 }
