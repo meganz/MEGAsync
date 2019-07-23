@@ -50,6 +50,7 @@ public:
     void refreshAccountDetails();
     void setUpdateAvailable(bool updateAvailable);
     void openSettingsTab(int tab);
+    void storageChanged();
 
 public slots:
     void stateChanged();
