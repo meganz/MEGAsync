@@ -5708,7 +5708,10 @@ void MegaApplication::openSettings(int tab)
         return;
     }
 
-    updateUserStats(true, true, true, true, USERSTATS_OPENSETTINGSDIALOG);  // update all info for up to date data (expecially storage of versions)
+    if (preferences->logged())
+    {
+        updateUserStats(true, true, true, true, USERSTATS_OPENSETTINGSDIALOG);  // update all info for up to date data (expecially account status & storage of versions on advanced tab)
+    }
 
     if (settingsDialog)
     {
