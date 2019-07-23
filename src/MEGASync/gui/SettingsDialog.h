@@ -50,6 +50,7 @@ public:
     void refreshAccountDetails();
     void setUpdateAvailable(bool updateAvailable);
     void openSettingsTab(int tab);
+    void storageChanged();
 
 public slots:
     void stateChanged();
@@ -58,7 +59,6 @@ public slots:
     void proxyStateChanged();
     void onLocalCacheSizeAvailable();
     void onRemoteCacheSizeAvailable();
-    void storageChanged();
     
 private slots:
     void on_bAccount_clicked();
