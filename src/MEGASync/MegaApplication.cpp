@@ -1023,6 +1023,9 @@ void MegaApplication::initialize()
     connectivityTimer->setInterval(Preferences::MAX_LOGIN_TIME_MS);
     connect(connectivityTimer, SIGNAL(timeout()), this, SLOT(runConnectivityCheck()));
 
+    proExpirityTimer.setSingleShot(true);
+    connect(&proExpirityTimer, SIGNAL(timeout()), this, SLOT(proExpirityTimedOut()));
+
 #ifdef _WIN32
     if (isPublic && prevVersion <= 3104 && preferences->canUpdate(appPath))
     {
@@ -3303,6 +3306,11 @@ void MegaApplication::onConnectivityCheckError()
     }
 
     showErrorMessage(tr("MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall."));
+}
+
+void MegaApplication::proExpirityTimedOut()
+{
+    updateUserStats(true, true, true, true, USERSTATS_PRO_EXPIRED);
 }
 
 void MegaApplication::setupWizardFinished(int result)
@@ -6844,6 +6852,21 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (pro)
         {
             preferences->setAccountType(details->getProLevel());
+            if (details->getProLevel() != Preferences::ACCOUNT_TYPE_FREE)
+            {
+                if (details->getProExpiration() && preferences->proExpirityTime() != details->getProExpiration())
+                {
+                    preferences->setProExpirityTime(details->getProExpiration());
+                    proExpirityTimer.stop();
+                    proExpirityTimer.setInterval(qMax(0LL, details->getProExpiration() * 1000 - QDateTime::currentMSecsSinceEpoch()));
+                    proExpirityTimer.start();
+                }
+            }
+            else
+            {
+                preferences->setProExpirityTime(0);
+                proExpirityTimer.stop();
+            }
         }
 
         if (storage)
