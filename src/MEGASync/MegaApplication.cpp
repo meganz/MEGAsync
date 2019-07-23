@@ -1832,14 +1832,6 @@ void MegaApplication::applyStorageState(int state)
             {
                 almostOQ = false;
 
-
-                if (preferences->usedStorage() < preferences->totalStorage())
-                {
-                    preferences->setUsedStorage(preferences->totalStorage());
-                    preferences->sync();
-                    refreshStorageUIs();
-                }
-
                 //Disable syncs
                 disableSyncs();
                 if (!infoOverQuota)
@@ -1865,13 +1857,6 @@ void MegaApplication::applyStorageState(int state)
             }
             else
             {
-                if (appliedStorageState == MegaApi::STORAGE_STATE_RED)
-                {
-                    preferences->setUsedStorage(receivedStorageSum);
-                    preferences->sync();
-                    refreshStorageUIs();
-                }
-
                 if (state == MegaApi::STORAGE_STATE_GREEN)
                 {
                     almostOQ = false;
@@ -6849,6 +6834,15 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (storage)
         {
             preferences->setTotalStorage(details->getStorageMax());
+
+            if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
+            {
+                preferences->setUsedStorage(preferences->totalStorage());
+            }
+            else
+            {
+                preferences->setUsedStorage(receivedStorageSum);
+            }
 
             MegaHandle rootHandle = root->getHandle();
             MegaHandle inboxHandle = inbox->getHandle();
