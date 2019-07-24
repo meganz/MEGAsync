@@ -276,7 +276,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished">Politică de confidențialitate</translation>
+        <translation type="unfinished">Politica de confidențialitate</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -461,6 +461,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Fără spațiu de stocare disponibil</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Cota de transfer depășită</translation>
     </message>
 </context>
 <context>
@@ -815,7 +820,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Eroare de decriptare</translation>
+        <translation>Eroare la decriptare</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -1074,22 +1079,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Unitate cloud</translation>
+        <translation type="obsolete">Unitate cloud</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Conținut media primit</translation>
+        <translation type="obsolete">Conținut media primit</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Partajări primite</translation>
+        <translation type="obsolete">Partajări primite</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Coș de gunoi</translation>
+        <translation type="obsolete">Coș de gunoi</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1926,7 +1931,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Folder Upload</source>
         <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
-        <translation type="unfinished">Încarcă un folder</translation>
+        <translation type="unfinished">Încarcă folder</translation>
     </message>
     <message>
         <source>1 folder was successfully uploaded</source>
@@ -2217,7 +2222,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get link</source>
         <translatorcomment>Tooltip shown when the mouse is over the &quot;Get link&quot; button related to a completed transfer</translatorcomment>
-        <translation type="unfinished">Obține legatura</translation>
+        <translation type="unfinished">Obține linkul</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -2642,7 +2647,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- A fost îmbunătățit aspectul pe Windows pentru display-urile cu rezoluție înaltă
+        <translation type="obsolete">- A fost îmbunătățit aspectul pe Windows pentru display-urile cu rezoluție înaltă
 - A fost îmbunătățită performanța GUI în timpul adăugării unui număr mare de descărcări
 - Restilizarea asistentului inițial de informare, pictograme noi și îmbunătățiri ale interfeței
 - Suport pentru conturile business
@@ -2656,12 +2661,23 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- A fost îmbunătățit aspectul pe Windows pentru display-urile cu rezoluție înaltă
+        <translation type="obsolete">- A fost îmbunătățit aspectul pe Windows pentru display-urile cu rezoluție înaltă
 - A fost activat suportul pentru minunaturi în cazul documentelor PDF
 - A fost îmbunătățită performanța GUI în timpul adăugării unui număr mare de descărcări
 - Restilizarea asistentului inițial de informare, pictograme noi și îmbunătățiri ale interfeței
 - Suport pentru conturile business
 - Alte remedieri minore de erori și îmbunătățiri</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="unfinished">- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include an option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</translation>
     </message>
 </context>
 <context>
@@ -3457,11 +3473,6 @@ when the application starts again</source>
         <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
         <translation type="unfinished">CHEIEDERECUPERARE-MEGA</translation>
     </message>
-    <message>
-        <source>MEGA-RECOVERYKEY</source>
-        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
-        <translation type="unfinished">MEGA-RECOVERYKEY</translation>
-    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -4175,7 +4186,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">Eroare de decriptare</translation>
+        <translation type="unfinished">Eroare la decriptare</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -4385,6 +4396,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Fără spațiu de stocare disponibil</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Cota de transfer depășită</translation>
     </message>
 </context>
 <context>

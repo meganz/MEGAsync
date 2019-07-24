@@ -11,12 +11,12 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">Cloud-Drive</translation>
+        <translation type="unfinished">Cloud Drive</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">Inbox</translation>
+        <translation type="unfinished">Posteingang</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -26,7 +26,7 @@
     <message>
         <source>Storage</source>
         <translatorcomment>Label for Storage space used. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">Speicherplatz</translation>
+        <translation type="obsolete">Speicher</translation>
     </message>
     <message>
         <source>Files</source>
@@ -271,7 +271,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">Allgemeine Geschäftsbedingungen</translation>
+        <translation type="unfinished">Allgemeinen Geschäftsbedingungen zu</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
@@ -462,6 +462,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Speicherplatz vollständig belegt</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Transfervolumen erschöpft</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -551,7 +556,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>1 folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected a folder</translatorcomment>
-        <translation type="unfinished">1 Ordner</translation>
+        <translation type="unfinished">Ein Ordner</translation>
     </message>
     <message>
         <source>%i folders</source>
@@ -636,7 +641,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Anmelden</translation>
+        <translation type="unfinished">Login</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
@@ -952,7 +957,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">Herunterladen...</translation>
+        <translation type="vanished">Downloade</translation>
     </message>
     <message>
         <source>Uploading </source>
@@ -1074,22 +1079,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Cloud-Drive</translation>
+        <translation type="obsolete">Cloud Drive</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Inbox</translation>
+        <translation type="obsolete">Posteingang</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">An Sie freigegebene Ordner</translation>
+        <translation type="obsolete">An Sie freigegebene Ordner</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Papierkorb</translation>
+        <translation type="obsolete">Papierkorb</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1237,7 +1242,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished">Anmelden</translation>
+        <translation type="unfinished">Login</translation>
     </message>
     <message>
         <source>Create Account</source>
@@ -1275,7 +1280,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation type="unfinished">Learn more about the MEGA Desktop App. [A]Read more[/A]</translation>
+        <translation type="unfinished">[A]Weitere Informationen[/A] über die MEGA Desktop-App.</translation>
     </message>
 </context>
 <context>
@@ -1777,7 +1782,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="obsolete">Temporärer Fehler, versuche erneut...</translation>
+        <translation type="obsolete">Temporärer Fehler, versuche es erneut</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -2194,7 +2199,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
-        <translation type="unfinished">Cloud-Drive</translation>
+        <translation type="unfinished">Cloud Drive</translation>
     </message>
 </context>
 <context>
@@ -2374,7 +2379,7 @@ Are you sure?</source>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
-        <translation type="obsolete">Cloud-Drive</translation>
+        <translation type="obsolete">Cloud Drive</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
@@ -2587,7 +2592,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Storage</source>
-        <translation type="unfinished">Speicherplatz</translation>
+        <translation type="unfinished">Speicher</translation>
     </message>
     <message>
         <source>Bandwidth</source>
@@ -2642,7 +2647,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Windows
+        <translation type="obsolete">- Improved look and feel for high resolution displays on Windows
 - Improved GUI performance during the addition of a large number of downloads
 - Restyling of the initial information wizard, new icons and interface improvements
 - Support for business accounts
@@ -2656,11 +2661,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Linux
+        <translation type="obsolete">- Improved look and feel for high resolution displays on Linux
 - Enabled thumbnail support for PDF documents
 - Improved GUI performance during the addition of a large number of downloads
 - Restyling of the initial information wizard, new icons and interface improvements
 - Support for business accounts
+- Other minor bug fixes and improvements</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="unfinished">- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include an option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</translation>
     </message>
 </context>
@@ -2731,7 +2747,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
-        <translation type="vanished">Vor einer Minute</translation>
+        <translation type="vanished">vor einer Minute</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -2741,12 +2757,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
-        <translation type="vanished">Vor einer Stunde</translation>
+        <translation type="vanished">vor einer Stunde</translation>
     </message>
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
-        <translation type="vanished">Vor einem Tag</translation>
+        <translation type="vanished">gestern</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -2798,7 +2814,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Account</source>
         <translatorcomment>Tab label of Account dialog. Max 15 characters.</translatorcomment>
-        <translation>Benutzerkonto</translation>
+        <translation>Account</translation>
     </message>
     <message>
         <source>Syncs</source>
@@ -2868,7 +2884,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>FREE</source>
         <translatorcomment>Label to indicate that the current user has a FREE account.</translatorcomment>
-        <translation>KOSTENLOS</translation>
+        <translation>GRATIS</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -2883,7 +2899,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
-        <translation>Upgraden</translation>
+        <translation>Account erweitern</translation>
     </message>
     <message>
         <source>Synced folders</source>
@@ -3308,7 +3324,7 @@ when the application starts again</source>
     <message>
         <source>Permissions</source>
         <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Berechtigungen</translation>
+        <translation type="unfinished">Zugriffsrechte</translation>
     </message>
     <message>
         <source>Don&apos;t use HTTP</source>
@@ -3908,7 +3924,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Login</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation type="unfinished">Anmelden</translation>
+        <translation type="unfinished">Login</translation>
     </message>
 </context>
 <context>
@@ -3946,7 +3962,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 folder</source>
         <translatorcomment>Label to indicate one folder.</translatorcomment>
-        <translation>1 Ordner</translation>
+        <translation>Ein Ordner</translation>
     </message>
     <message>
         <source>%1 folders</source>
@@ -4095,7 +4111,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation type="unfinished">Cloud-Drive</translation>
+        <translation type="unfinished">Cloud Drive</translation>
     </message>
     <message>
         <source>Public link</source>
@@ -4210,7 +4226,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 minute ago</source>
-        <translation type="obsolete">Vor einer Minute</translation>
+        <translation type="obsolete">vor einer Minute</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -4218,7 +4234,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 hour ago</source>
-        <translation type="obsolete">Vor einer Stunde</translation>
+        <translation type="obsolete">vor einer Stunde</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
@@ -4226,7 +4242,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="obsolete">Vor einem Tag</translation>
+        <translation type="obsolete">gestern</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -4381,6 +4397,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Speicherplatz vollständig belegt</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Transfervolumen erschöpft</translation>
+    </message>
 </context>
 <context>
     <name>TransfersStateInfoWidget</name>
@@ -4467,7 +4488,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="unfinished">Speicherplatz</translation>
+        <translation type="unfinished">Speicher</translation>
     </message>
     <message>
         <source>transfer</source>
@@ -4527,7 +4548,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="obsolete">Inbox</translation>
+        <translation type="obsolete">Posteingang</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -4535,7 +4556,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="obsolete">Cloud-Drive</translation>
+        <translation type="obsolete">Cloud Drive</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -4546,7 +4567,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageWidget</name>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">Cloud-Drive</translation>
+        <translation type="unfinished">Cloud Drive</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -4558,7 +4579,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">Inbox</translation>
+        <translation type="unfinished">Posteingang</translation>
     </message>
     <message>
         <source>Used</source>
@@ -4584,7 +4605,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished 1 minute ago</translatorcomment>
-        <translation type="unfinished">Vor einer Minute</translation>
+        <translation type="unfinished">vor einer Minute</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -4594,7 +4615,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished 1 hour ago</translatorcomment>
-        <translation type="unfinished">Vor einer Stunde</translation>
+        <translation type="unfinished">vor einer Stunde</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
@@ -4604,7 +4625,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished 1 day ago</translatorcomment>
-        <translation type="unfinished">Vor einem Tag</translation>
+        <translation type="unfinished">gestern</translation>
     </message>
     <message>
         <source>%1 days ago</source>

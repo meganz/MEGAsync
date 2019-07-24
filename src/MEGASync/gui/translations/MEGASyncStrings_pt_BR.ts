@@ -462,6 +462,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Espaço de armazenamento excedido</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Cota de transferência excedida</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -551,7 +556,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>1 folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected a folder</translatorcomment>
-        <translation type="unfinished">uma pasta</translation>
+        <translation type="unfinished">1 pasta</translation>
     </message>
     <message>
         <source>%i folders</source>
@@ -768,7 +773,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation type="unfinished">Por favor aguarde...</translation>
+        <translation type="unfinished">Por favor, aguarde...</translation>
     </message>
 </context>
 <context>
@@ -1074,22 +1079,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Nuvem de arquivos</translation>
+        <translation type="obsolete">Nuvem de arquivos</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Caixa de entrada</translation>
+        <translation type="obsolete">Caixa de entrada</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Compartilhado comigo</translation>
+        <translation type="obsolete">Compartilhado comigo</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Lixeira</translation>
+        <translation type="obsolete">Lixeira</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1410,7 +1415,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation type="obsolete">O seu sync &quot;%1&quot; foi desabilitado porque a pasta remota não existe</translation>
+        <translation type="obsolete">A sua sincronização &quot;%1&quot; foi desativada porque a pasta remota não existe</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1679,7 +1684,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">O seu sync &quot;%1&quot; foi desabilitado porque a pasta remota não existe</translation>
+        <translation type="unfinished">A sua sincronização &quot;%1&quot; foi desativada porque a pasta remota não existe</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
@@ -1833,7 +1838,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download</source>
         <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
-        <translation type="unfinished">Download</translation>
+        <translation type="unfinished">Fazer download</translation>
     </message>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
@@ -2642,7 +2647,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Aprimoramento na aparência em telas de alta resolução no Windows
+        <translation type="obsolete">- Aprimoramento na aparência em telas de alta resolução no Windows
 - Melhor desempenho da interface gráfica ao adicionar um grande número de downloads
 - Novo estilo do assistente de informação inicial, novos ícones e melhorias na interface
 - Suporte para contas Business
@@ -2656,11 +2661,21 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Aprimoramento na aparência em telas de alta resolução no Linux
+        <translation type="obsolete">- Aprimoramento na aparência em telas de alta resolução no Linux
 - Suporte a miniaturas de documentos PDF
 - Melhor desempenho da interface gráfica ao adicionar um grande número de downloads
 - Novo estilo do assistente de informação inicial, novos ícones e melhorias na interface
 - Suporte para contas Business
+- Outras pequenas correções de bugs e melhorias</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="unfinished">- Correção de erro durante o processamento de alguns arquivos PDF
+- Retomada de transferências pendentes ao reiniciar o aplicativo depois de um erro[BR]- Possibilidade de adicionar sincronizações na caixa de diálogo principal
 - Outras pequenas correções de bugs e melhorias</translation>
     </message>
 </context>
@@ -3103,7 +3118,7 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>Por favor aguarde...</translation>
+        <translation>Por favor, aguarde...</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -3248,7 +3263,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Exportar a Chave de recuperação</translation>
+        <translation type="unfinished">Exportar chave de recuperação</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -3946,7 +3961,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 folder</source>
         <translatorcomment>Label to indicate one folder.</translatorcomment>
-        <translation>uma pasta</translation>
+        <translation>1 pasta</translation>
     </message>
     <message>
         <source>%1 folders</source>
@@ -4346,7 +4361,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished">Download</translation>
+        <translation type="unfinished">Fazer download</translation>
     </message>
 </context>
 <context>
@@ -4381,6 +4396,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Espaço de armazenamento excedido</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Cota de transferência excedida</translation>
+    </message>
 </context>
 <context>
     <name>TransfersStateInfoWidget</name>
@@ -4412,7 +4432,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Por favor, faça o upgrade da sua conta a PRO para continuar imediatamente, ou aguarde %1 para continuar gratuitamente.</translation>
+        <translation type="unfinished">Por favor, faça o upgrade para um plano PRO para continuar imediatamente, ou aguarde %1 para continuar usando a conta gratuita.</translation>
     </message>
     <message>
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>

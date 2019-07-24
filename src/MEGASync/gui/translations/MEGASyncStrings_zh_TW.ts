@@ -16,7 +16,7 @@
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">收件箱</translation>
+        <translation type="unfinished">收件夾</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -461,6 +461,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">儲存空間不足</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">已超過傳輸配額</translation>
     </message>
 </context>
 <context>
@@ -957,7 +962,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Uploading </source>
         <translatorcomment>Label to indicate that MEGAsync is Uploading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">上載中</translation>
+        <translation type="vanished">上傳中</translation>
     </message>
     <message>
         <source>MEGAsync is waiting</source>
@@ -975,7 +980,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Settings</source>
-        <translation type="obsolete">設置</translation>
+        <translation type="obsolete">設定</translation>
     </message>
     <message>
         <source>Resume downloads</source>
@@ -1029,7 +1034,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">升級至專業會藉</translation>
+        <translation type="unfinished">升級至PRO專業版</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -1074,22 +1079,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">雲端硬碟</translation>
+        <translation type="obsolete">雲端硬碟</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">收件箱</translation>
+        <translation type="obsolete">收件夾</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">傳入的分享</translation>
+        <translation type="obsolete">傳入的分享</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">垃圾桶</translation>
+        <translation type="obsolete">垃圾桶</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1170,7 +1175,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade your account</source>
         <translatorcomment>Button label to redirect the user to upgrade web page.</translatorcomment>
-        <translation type="obsolete">升級您的帳戶</translation>
+        <translation type="obsolete">升級您的帳號</translation>
     </message>
     <message>
         <source>Usage: Data temporarily unavailable</source>
@@ -1194,7 +1199,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Settings</source>
-        <translation type="obsolete">設置</translation>
+        <translation type="obsolete">設定</translation>
     </message>
 </context>
 <context>
@@ -1374,7 +1379,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Next</source>
         <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
-        <translation type="unfinished">下一步</translation>
+        <translation type="unfinished">次一</translation>
     </message>
     <message>
         <source>Invalid code</source>
@@ -1480,7 +1485,7 @@ Exit anyway?</source>
     <message>
         <source>Settings</source>
         <translatorcomment>Label to indicate the Settings option for the application (MAX 20 characters)</translatorcomment>
-        <translation>設置</translation>
+        <translation>設定</translation>
     </message>
     <message>
         <source>Pause</source>
@@ -1734,7 +1739,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Logout</source>
         <translatorcomment>Label to indicate Logout action</translatorcomment>
-        <translation type="unfinished">註銷</translation>
+        <translation type="unfinished">登出</translation>
     </message>
     <message>
         <source>Transfer failed:</source>
@@ -1828,7 +1833,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
-        <translation type="unfinished">上載</translation>
+        <translation type="unfinished">上傳</translation>
     </message>
     <message>
         <source>Download</source>
@@ -2265,7 +2270,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open</source>
         <translatorcomment>Label of context menu option to open selected completed transfer</translatorcomment>
-        <translation type="unfinished">打開</translation>
+        <translation type="unfinished">開啟</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -2642,7 +2647,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- 改進在Windows上高解析度顯示的外觀與體驗
+        <translation type="obsolete">- 改進在Windows上高解析度顯示的外觀與體驗
 - 改良在加入大量下載時的GUI性能
 - 初始訊息導覽，新圖示與介面改良有新風格設計
 - 支援企業帳戶 
@@ -2656,12 +2661,23 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- 改進在Linux上高解析度顯示的外觀與體驗
+        <translation type="obsolete">- 改進在Linux上高解析度顯示的外觀與體驗
 - 支援PDF文件縮圖
 - 改良在加入大量下載時的GUI性能
 - 初始訊息導覽，新圖示與介面改良有新風格設計
 - 支援企業帳戶 
 - 修復並改良其他小錯誤</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="unfinished">- 修正處理某些PDF檔案時的一個錯誤
+ - 在下次啟動時恢復因錯誤產生的待處理傳輸
+ - 包括從主對話框加入同步選項
+ - 其他小錯誤修正和改進</translation>
     </message>
 </context>
 <context>
@@ -2731,7 +2747,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
-        <translation type="vanished">1分鐘前</translation>
+        <translation type="vanished">1 分鐘前</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -2741,12 +2757,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
-        <translation type="vanished">1小時前</translation>
+        <translation type="vanished">1 小時前</translation>
     </message>
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
-        <translation type="vanished">1天前</translation>
+        <translation type="vanished">1 天前</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -2776,7 +2792,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Open</source>
         <translatorcomment>Label to let the user open the selected file.String as short as possible.</translatorcomment>
-        <translation type="vanished">打開</translation>
+        <translation type="vanished">開啟</translation>
     </message>
     <message>
         <source>Show in folder</source>
@@ -2873,7 +2889,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Logout</source>
         <translatorcomment>Button label to logout of the application. Strins as short as possible.</translatorcomment>
-        <translation>註銷</translation>
+        <translation>登出</translation>
     </message>
     <message>
         <source>Storage space</source>
@@ -3078,7 +3094,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="obsolete">暫存</translation>
+        <translation type="obsolete">快取</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -3589,7 +3605,7 @@ when the application starts again</source>
     <message>
         <source>Next</source>
         <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>下一步</translation>
+        <translation>次一</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3810,7 +3826,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Good</source>
         <translatorcomment>Label displayed during checking the strength of the password introduced. Represents Good security </translatorcomment>
-        <translation type="unfinished">良好</translation>
+        <translation type="unfinished">好</translation>
     </message>
     <message>
         <source>Strong</source>
@@ -4100,7 +4116,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Public link</source>
         <translatorcomment>Text of the button to select a file from a public link for streaming</translatorcomment>
-        <translation type="unfinished">公開鏈接</translation>
+        <translation type="unfinished">公開連結</translation>
     </message>
     <message>
         <source>File info:</source>
@@ -4210,7 +4226,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 minute ago</source>
-        <translation type="obsolete">1分鐘前</translation>
+        <translation type="obsolete">1 分鐘前</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -4218,7 +4234,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 hour ago</source>
-        <translation type="obsolete">1小時前</translation>
+        <translation type="obsolete">1 小時前</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
@@ -4226,7 +4242,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="obsolete">1天前</translation>
+        <translation type="obsolete">1 天前</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -4314,7 +4330,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Settings</source>
         <translatorcomment>Label to indicate the Settings option for the application</translatorcomment>
-        <translation type="unfinished">設置</translation>
+        <translation type="unfinished">設定</translation>
     </message>
     <message>
         <source>Preferences</source>
@@ -4342,7 +4358,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload</source>
-        <translation type="unfinished">上載</translation>
+        <translation type="unfinished">上傳</translation>
     </message>
     <message>
         <source>Download</source>
@@ -4380,6 +4396,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">儲存空間不足</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">已超過傳輸配額</translation>
     </message>
 </context>
 <context>
@@ -4527,7 +4548,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="obsolete">收件箱</translation>
+        <translation type="obsolete">收件夾</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -4558,7 +4579,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">收件箱</translation>
+        <translation type="unfinished">收件夾</translation>
     </message>
     <message>
         <source>Used</source>
@@ -4584,7 +4605,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished 1 minute ago</translatorcomment>
-        <translation type="unfinished">1分鐘前</translation>
+        <translation type="unfinished">1 分鐘前</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -4594,7 +4615,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished 1 hour ago</translatorcomment>
-        <translation type="unfinished">1小時前</translation>
+        <translation type="unfinished">1 小時前</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
@@ -4604,7 +4625,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished 1 day ago</translatorcomment>
-        <translation type="unfinished">1天前</translation>
+        <translation type="unfinished">1 天前</translation>
     </message>
     <message>
         <source>%1 days ago</source>

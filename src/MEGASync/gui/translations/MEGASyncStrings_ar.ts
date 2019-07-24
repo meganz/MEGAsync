@@ -16,7 +16,7 @@
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">صندوق الواردات</translation>
+        <translation type="unfinished">صندوق الوارد</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -155,7 +155,7 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">إلغاء</translation>
+        <translation type="unfinished">الغاء</translation>
     </message>
     <message>
         <source>OK</source>
@@ -247,7 +247,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>إلغاء</translation>
+        <translation>الغاء</translation>
     </message>
     <message>
         <source>Error</source>
@@ -310,7 +310,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+        <translation type="unfinished">الغاء</translation>
     </message>
     <message>
         <source>OK</source>
@@ -407,7 +407,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>إلغاء</translation>
+        <translation>الغاء</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -462,6 +462,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Out of storage space</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">حصة النقل تجاوزت المسموح</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -493,7 +498,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>إلغاء</translation>
+        <translation>الغاء</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -681,7 +686,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to cancel the current operation</translatorcomment>
-        <translation type="unfinished">إلغاء</translation>
+        <translation type="unfinished">الغاء</translation>
     </message>
     <message>
         <source>Setting up your account...</source>
@@ -769,7 +774,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation type="unfinished">يرجى الإنتظار...</translation>
+        <translation type="unfinished">يُرجى الانتظار...</translation>
     </message>
 </context>
 <context>
@@ -797,7 +802,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>إلغاء</translation>
+        <translation>الغاء</translation>
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
@@ -816,7 +821,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>خطأ في فك التشفير</translation>
+        <translation>خطأ فك التشفير</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -1030,7 +1035,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">الترقية إلى بريميوم.</translation>
+        <translation type="unfinished">رق حسابك إلى برو</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -1075,22 +1080,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">سحابة التخزين</translation>
+        <translation type="obsolete">سحابة التخزين</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">صندوق الواردات</translation>
+        <translation type="obsolete">صندوق الوارد</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">مشاركات واردة</translation>
+        <translation type="obsolete">مشاركات واردة</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">سلة المحذوفات</translation>
+        <translation type="obsolete">سلة المحذوفات</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1327,7 +1332,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">إلغاء</translation>
+        <translation type="unfinished">الغاء</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1370,7 +1375,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text to cancel 2FA dialog</translatorcomment>
-        <translation type="unfinished">إلغاء</translation>
+        <translation type="unfinished">الغاء</translation>
     </message>
     <message>
         <source>Next</source>
@@ -1476,7 +1481,7 @@ Exit anyway?</source>
     <message>
         <source>About</source>
         <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
-        <translation type="unfinished">عن</translation>
+        <translation type="unfinished">حول</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1778,7 +1783,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="obsolete">خطأ وقتي، أعد العملية.</translation>
+        <translation type="obsolete">خطأ مؤقت، جاري إعادة المحاولة.</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -2256,7 +2261,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label of context menu option to cancel selected transfer</translatorcomment>
-        <translation type="unfinished">إلغاء</translation>
+        <translation type="unfinished">الغاء</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -2327,7 +2332,7 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">إلغاء</translation>
+        <translation type="unfinished">الغاء</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2370,7 +2375,7 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>إلغاء</translation>
+        <translation>الغاء</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -2496,7 +2501,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>إلغاء</translation>
+        <translation>الغاء</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2643,7 +2648,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Windows
+        <translation type="obsolete">- Improved look and feel for high resolution displays on Windows
 - Improved GUI performance during the addition of a large number of downloads
 - Restyling of the initial information wizard, new icons and interface improvements
 - Support for business accounts
@@ -2657,11 +2662,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Linux
+        <translation type="obsolete">- Improved look and feel for high resolution displays on Linux
 - Enabled thumbnail support for PDF documents
 - Improved GUI performance during the addition of a large number of downloads
 - Restyling of the initial information wizard, new icons and interface improvements
 - Support for business accounts
+- Other minor bug fixes and improvements</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="unfinished">- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include an option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</translation>
     </message>
 </context>
@@ -2704,7 +2720,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">إلغاء</translation>
+        <translation type="unfinished">الغاء</translation>
     </message>
 </context>
 <context>
@@ -2829,7 +2845,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>إلغاء</translation>
+        <translation>الغاء</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -2898,7 +2914,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Add</source>
         <translatorcomment>Button lable to add a synchronization. String as short as possible.</translatorcomment>
-        <translation>أضف</translation>
+        <translation>اضافة</translation>
     </message>
     <message>
         <source>Local Folder</source>
@@ -3104,7 +3120,7 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>يرجى الإنتظار...</translation>
+        <translation>يُرجى الانتظار...</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -3595,7 +3611,7 @@ when the application starts again</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>إلغاء</translation>
+        <translation>الغاء</translation>
     </message>
     <message>
         <source>Error</source>
@@ -4001,7 +4017,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">إلغاء</translation>
+        <translation type="unfinished">الغاء</translation>
     </message>
     <message>
         <source>OK</source>
@@ -4132,7 +4148,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Close</source>
         <translatorcomment>Text of the button to close the dialog to stream files from MEGA</translatorcomment>
-        <translation type="unfinished">إغلق</translation>
+        <translation type="unfinished">إغلاق</translation>
     </message>
     <message>
         <source>Are you sure that you want to stop the streaming?</source>
@@ -4172,7 +4188,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">خطأ في فك التشفير</translation>
+        <translation type="unfinished">خطأ فك التشفير</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -4296,7 +4312,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Close</source>
         <translatorcomment>Button label to close transfer manager dialog</translatorcomment>
-        <translation type="unfinished">إغلق</translation>
+        <translation type="unfinished">إغلاق</translation>
     </message>
     <message>
         <source>Import links</source>
@@ -4382,6 +4398,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Out of storage space</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">حصة النقل تجاوزت المسموح</translation>
     </message>
 </context>
 <context>
@@ -4517,7 +4538,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>إلغاء</translation>
+        <translation>الغاء</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4529,7 +4550,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="obsolete">صندوق الواردات</translation>
+        <translation type="obsolete">صندوق الوارد</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -4560,7 +4581,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">صندوق الواردات</translation>
+        <translation type="unfinished">صندوق الوارد</translation>
     </message>
     <message>
         <source>Used</source>

@@ -11,7 +11,7 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">คลาวด์ไดร์ฟ</translation>
+        <translation type="unfinished">คลาวด์ไดรฟ์</translation>
     </message>
     <message>
         <source>Inbox</source>
@@ -374,7 +374,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>No</source>
         <translatorcomment>Negative response to a question. The text will be inside a button.</translatorcomment>
-        <translation type="unfinished">ไม่</translation>
+        <translation type="unfinished">ไม่ใช่</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -461,6 +461,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">พื้นที่จัดเก็บไม่เพียงพอ</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">เกินโควต้าการถ่ายโอนแล้ว</translation>
     </message>
 </context>
 <context>
@@ -551,7 +556,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>1 folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected a folder</translatorcomment>
-        <translation type="unfinished">1 โฟล์เดอร์</translation>
+        <translation type="unfinished">1 โฟลเดอร์</translation>
     </message>
     <message>
         <source>%i folders</source>
@@ -1074,22 +1079,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">คลาวด์ไดร์ฟ</translation>
+        <translation type="obsolete">คลาวด์ไดรฟ์</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">กล่องขาเข้า</translation>
+        <translation type="obsolete">กล่องขาเข้า</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">แชร์ขาเข้า</translation>
+        <translation type="obsolete">แชร์ขาเข้า</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">ถังขยะ</translation>
+        <translation type="obsolete">ถังขยะ</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1374,7 +1379,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Next</source>
         <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
-        <translation type="unfinished">ถัดไป</translation>
+        <translation type="unfinished">ต่อไป</translation>
     </message>
     <message>
         <source>Invalid code</source>
@@ -1777,7 +1782,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="obsolete">มีข้อผิดพลาดชั่วคราว กรุณาลองใหม่</translation>
+        <translation type="obsolete">เกิดการผิดพลาดขึ้นชั่วขณะ, กำลังลองใหม่.</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -2044,7 +2049,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>เกิดข้อผิดพลาดภายใน</translation>
+        <translation>ผิดพลาดภายใน</translation>
     </message>
     <message>
         <source>Invalid argument</source>
@@ -2194,7 +2199,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
-        <translation type="unfinished">คลาวด์ไดร์ฟ</translation>
+        <translation type="unfinished">คลาวด์ไดรฟ์</translation>
     </message>
 </context>
 <context>
@@ -2374,7 +2379,7 @@ Are you sure?</source>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
-        <translation type="obsolete">คลาวด์ไดร์ฟ</translation>
+        <translation type="obsolete">คลาวด์ไดรฟ์</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
@@ -2642,7 +2647,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Windows
+        <translation type="obsolete">- Improved look and feel for high resolution displays on Windows
 - Improved GUI performance during the addition of a large number of downloads
 - Restyling of the initial information wizard, new icons and interface improvements
 - Support for business accounts
@@ -2656,11 +2661,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Linux
+        <translation type="obsolete">- Improved look and feel for high resolution displays on Linux
 - Enabled thumbnail support for PDF documents
 - Improved GUI performance during the addition of a large number of downloads
 - Restyling of the initial information wizard, new icons and interface improvements
 - Support for business accounts
+- Other minor bug fixes and improvements</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="unfinished">- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include an option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</translation>
     </message>
 </context>
@@ -3589,7 +3605,7 @@ when the application starts again</source>
     <message>
         <source>Next</source>
         <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>ถัดไป</translation>
+        <translation>ต่อไป</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3946,7 +3962,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 folder</source>
         <translatorcomment>Label to indicate one folder.</translatorcomment>
-        <translation>1 โฟล์เดอร์</translation>
+        <translation>1 โฟลเดอร์</translation>
     </message>
     <message>
         <source>%1 folders</source>
@@ -4095,7 +4111,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation type="unfinished">คลาวด์ไดร์ฟ</translation>
+        <translation type="unfinished">คลาวด์ไดรฟ์</translation>
     </message>
     <message>
         <source>Public link</source>
@@ -4381,6 +4397,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">พื้นที่จัดเก็บไม่เพียงพอ</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">เกินโควต้าการถ่ายโอนแล้ว</translation>
+    </message>
 </context>
 <context>
     <name>TransfersStateInfoWidget</name>
@@ -4535,7 +4556,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="obsolete">คลาวด์ไดร์ฟ</translation>
+        <translation type="obsolete">คลาวด์ไดรฟ์</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -4546,7 +4567,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageWidget</name>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">คลาวด์ไดร์ฟ</translation>
+        <translation type="unfinished">คลาวด์ไดรฟ์</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>

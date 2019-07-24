@@ -51,7 +51,7 @@
     <message>
         <source>Loading...</source>
         <translatorcomment>Label to show when an account detail request is waiting for the server response.</translatorcomment>
-        <translation type="unfinished">载入中</translation>
+        <translation type="unfinished">加载中</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -322,7 +322,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Your password has been changed.</source>
-        <translation type="obsolete">您的密码已变更。</translation>
+        <translation type="obsolete">您的密码已被更改。</translation>
     </message>
     <message>
         <source>Error</source>
@@ -461,6 +461,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">存储空间不足</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">传输配额超标</translation>
     </message>
 </context>
 <context>
@@ -1029,7 +1034,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">升级到专业版</translation>
+        <translation type="unfinished">升级到Pro计划</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -1074,22 +1079,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">云盘</translation>
+        <translation type="obsolete">云盘</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">收件箱</translation>
+        <translation type="obsolete">收件箱</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">传入的分享</translation>
+        <translation type="obsolete">传入的分享</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">垃圾桶</translation>
+        <translation type="obsolete">垃圾桶</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1241,7 +1246,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Create Account</source>
-        <translation type="unfinished">建立帐号</translation>
+        <translation type="unfinished">创建账号</translation>
     </message>
     <message>
         <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
@@ -1374,7 +1379,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Next</source>
         <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
-        <translation type="unfinished">下一步</translation>
+        <translation type="unfinished">次一</translation>
     </message>
     <message>
         <source>Invalid code</source>
@@ -1881,7 +1886,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your password has been changed.</source>
         <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation type="unfinished">您的密码已变更。</translation>
+        <translation type="unfinished">您的密码已被更改。</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
@@ -2642,7 +2647,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- 优化了在Windows上高分辨率显示的外观
+        <translation type="obsolete">- 优化了在Windows上高分辨率显示的外观
 - 优化了用户在大量下载时的GUI性能
 - 改进了初始信息向导、新图标和界面
 - 支持企业帐户
@@ -2656,12 +2661,23 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- 优化了在Linux上高分辨率显示的外观
+        <translation type="obsolete">- 优化了在Linux上高分辨率显示的外观
 - 可支持PDF文档的缩略图显示
 - 优化了用户在大量下载时的GUI性能
 - 改进了初始信息向导、新图标和界面
 - 支持企业帐户
 - 其他若干bug修复与改进</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="unfinished">- 修复了处理PDF文件时的崩溃问题
+- 修复了崩溃后再重启时的断点续传问题
+- 在主对话框中添加了同步的选项
+- 其他的bug修复与改进</translation>
     </message>
 </context>
 <context>
@@ -3248,7 +3264,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">导出恢复秘钥</translation>
+        <translation type="unfinished">导出恢复金匙</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -3457,11 +3473,6 @@ when the application starts again</source>
         <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
         <translation type="unfinished">MEGA-恢复密钥</translation>
     </message>
-    <message>
-        <source>MEGA-RECOVERYKEY</source>
-        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
-        <translation type="unfinished">MEGA-RECOVERYKEY</translation>
-    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -3594,7 +3605,7 @@ when the application starts again</source>
     <message>
         <source>Next</source>
         <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>下一步</translation>
+        <translation>次一</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4385,6 +4396,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">存储空间不足</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">传输配额超标</translation>
     </message>
 </context>
 <context>

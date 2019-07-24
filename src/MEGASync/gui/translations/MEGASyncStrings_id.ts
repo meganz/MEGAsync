@@ -11,17 +11,17 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">Cakram Penyimpanan Awan</translation>
+        <translation type="unfinished">Cloud Drive</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">Kotak masuk</translation>
+        <translation type="unfinished">Kotak Masuk</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
         <translatorcomment>Label for Rubbish Bin space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="obsolete">Sampah</translation>
+        <translation type="obsolete">Tempat Sampah</translation>
     </message>
     <message>
         <source>Storage</source>
@@ -46,7 +46,7 @@
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation type="vanished">Oke</translation>
+        <translation type="vanished">OK</translation>
     </message>
     <message>
         <source>Loading...</source>
@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>Rubbish bin</source>
-        <translation type="unfinished">Sampah</translation>
+        <translation type="unfinished">Tempat Sampah</translation>
     </message>
     <message>
         <source>Available</source>
@@ -160,7 +160,7 @@
     <message>
         <source>OK</source>
         <translatorcomment>Label for confirmation button.</translatorcomment>
-        <translation type="unfinished">Oke</translation>
+        <translation type="unfinished">OK</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -242,7 +242,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>Oke</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -252,7 +252,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label for status of an error performing an operation.</translatorcomment>
-        <translation>Kesalahan</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Local folder too large (this version is limited to %1 folders or %2 files.
@@ -271,7 +271,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">Ketentuan Penggunaan</translation>
+        <translation type="unfinished">persyaratan layanan</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
@@ -314,7 +314,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">Oke</translation>
+        <translation type="unfinished">OK</translation>
     </message>
     <message>
         <source>Password changed</source>
@@ -326,7 +326,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Kesalahan</translation>
+        <translation type="unfinished">Error</translation>
     </message>
     <message>
         <source>Wrong password</source>
@@ -462,6 +462,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Kehabisan ruang penyimpanan</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Quota transfer telah terlewati</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -488,7 +493,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>Oke</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -508,7 +513,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Error</source>
         <translatorcomment>Title of dialog if an error occurs selecting the download local folder.</translatorcomment>
-        <translation>Kesalahan</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -618,7 +623,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">Kesalahan</translation>
+        <translation type="unfinished">Error</translation>
     </message>
     <message>
         <source>You can not sync a shared folder without Full Access permissions</source>
@@ -701,7 +706,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Error</source>
         <translatorcomment>Label shown to show an error</translatorcomment>
-        <translation type="unfinished">Kesalahan</translation>
+        <translation type="unfinished">Error</translation>
     </message>
     <message>
         <source>Incorrect email and/or password.</source>
@@ -768,7 +773,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation type="unfinished">Silahkan tunggu...</translation>
+        <translation type="unfinished">Mohon tunggu...</translation>
     </message>
 </context>
 <context>
@@ -791,7 +796,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>Oke</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -815,7 +820,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Kesalahan dekripsi</translation>
+        <translation>Decryption error</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -834,7 +839,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Error</source>
-        <translation>Kesalahan</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>You don&apos;t have write permissions in this local folder.</source>
@@ -1029,7 +1034,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Tingkatkan ke PRO</translation>
+        <translation type="unfinished">Upgrade ke PRO</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -1074,22 +1079,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Cakram Penyimpanan Awan</translation>
+        <translation type="obsolete">Cloud Drive</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Kotak masuk</translation>
+        <translation type="obsolete">Kotak Masuk</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Incoming Shares</translation>
+        <translation type="obsolete">Incoming Shares</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Sampah</translation>
+        <translation type="obsolete">Tempat Sampah</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1255,12 +1260,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation type="unfinished">Login or create an account to start using the MEGA Desktop App.</translation>
+        <translation type="unfinished">Masuk atau buat akun untuk mulai menggunakan Aplikasi MEGA Desktop.</translation>
     </message>
     <message>
         <source>You need to login MEGA account to run MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
-        <translation type="unfinished">You need to login to your MEGA account to run the MEGA Desktop App.</translation>
+        <translation type="unfinished">Anda harus masuk ke akun MEGA Anda untuk menjalankan Aplikasi MEGA Desktop.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1270,12 +1275,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Create account to join MEGA collaboration platform.</source>
         <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
-        <translation type="unfinished">Create an account to join the MEGA collaboration platform.</translation>
+        <translation type="unfinished">Buat akun untuk bergabung dengan platform kolaborasi MEGA.</translation>
     </message>
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation type="unfinished">Learn more about the MEGA Desktop App. [A]Read more[/A]</translation>
+        <translation type="unfinished">Pelajari lebih lanjut tentang Aplikasi Desktop MEGA. [A]Baca selengkapnya[/A]</translation>
     </message>
 </context>
 <context>
@@ -1331,7 +1336,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>OK</source>
         <translatorcomment>Label for OK button.</translatorcomment>
-        <translation type="unfinished">Oke</translation>
+        <translation type="unfinished">OK</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1597,7 +1602,7 @@ https://mega.co.nz/#sync</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an error. Keep capital letter.</translatorcomment>
-        <translation type="vanished">Kesalahan</translation>
+        <translation type="vanished">Error</translation>
     </message>
     <message>
         <source>Synchronization will stop.
@@ -1777,7 +1782,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="obsolete">Pengguna sementara, mencoba kembali.</translation>
+        <translation type="obsolete">Kesalahan sementara, mencoba ulang.</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -1833,7 +1838,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Download</source>
         <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
-        <translation type="unfinished">Unduh</translation>
+        <translation type="unfinished">Download</translation>
     </message>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
@@ -1926,7 +1931,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Folder Upload</source>
         <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
-        <translation type="unfinished">Unggah Folder</translation>
+        <translation type="unfinished">Unggah folder</translation>
     </message>
     <message>
         <source>1 folder was successfully uploaded</source>
@@ -1941,7 +1946,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>File Upload</source>
         <translatorcomment>Title of system notifications related to a file upload</translatorcomment>
-        <translation type="unfinished">Unggah Berkas</translation>
+        <translation type="unfinished">Unggah berkas</translation>
     </message>
     <message>
         <source>1 file was successfully uploaded</source>
@@ -2044,7 +2049,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>Kesalahan internal</translation>
+        <translation>Internal error</translation>
     </message>
     <message>
         <source>Invalid argument</source>
@@ -2158,7 +2163,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Error</source>
-        <translation type="obsolete">Kesalahan</translation>
+        <translation type="obsolete">Error</translation>
     </message>
     <message>
         <source>Your account has been suspended due to multiple breaches of MEGA’s Terms of Service. Please check your email inbox.</source>
@@ -2181,12 +2186,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Terms of Service breached</source>
         <translatorcomment>Error shown when terms of service are breached during download.</translatorcomment>
-        <translation type="unfinished">Terms of Service breached</translation>
+        <translation type="unfinished">Ketentuan Layanan dilanggar</translation>
     </message>
     <message>
         <source>Not accessible due to ToS/AUP violation</source>
         <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation type="unfinished">Not accessible due to ToS/AUP violation</translation>
+        <translation type="unfinished">Tidak dapat diakses karena pelanggaran ToS / AUP</translation>
     </message>
 </context>
 <context>
@@ -2194,7 +2199,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
-        <translation type="unfinished">Cakram Penyimpanan Awan</translation>
+        <translation type="unfinished">Cloud Drive</translation>
     </message>
 </context>
 <context>
@@ -2217,7 +2222,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get link</source>
         <translatorcomment>Tooltip shown when the mouse is over the &quot;Get link&quot; button related to a completed transfer</translatorcomment>
-        <translation type="unfinished">Dapatkan tautan</translation>
+        <translation type="unfinished">Dapatkan pranala</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -2331,7 +2336,7 @@ Are you sure?</source>
     <message>
         <source>OK</source>
         <translatorcomment>Label for OK button.</translatorcomment>
-        <translation type="unfinished">Oke</translation>
+        <translation type="unfinished">OK</translation>
     </message>
     <message>
         <source>The destination folder is synced and you already have a file inside it with the same name. If you continue the upload, the previous file will be overwritten. Are you sure?</source>
@@ -2364,7 +2369,7 @@ Are you sure?</source>
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>Oke</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2374,7 +2379,7 @@ Are you sure?</source>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
-        <translation type="obsolete">Cakram Penyimpanan Awan</translation>
+        <translation type="obsolete">Cloud Drive</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
@@ -2384,7 +2389,7 @@ Are you sure?</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an Error</translatorcomment>
-        <translation>Kesalahan</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>The root folder can&apos;t be synced.
@@ -2642,11 +2647,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Windows
-- Improved GUI performance during the addition of a large number of downloads
-- Restyling of the initial information wizard, new icons and interface improvements
-- Support for business accounts
-- Other minor bug fixes and improvements</translation>
+        <translation type="obsolete">- Tampilan dan nuansa yang ditingkatkan untuk tampilan resolusi tinggi pada Windows
+- Peningkatan kinerja GUI selama penambahan sejumlah besar unduha 
+- Pembenahan kembali wizard informasi awal, ikon baru dan peningkatan antarmuka
+- Dukungan untuk akun bisnis
+- Perbaikan dan peningkatan bug minor lainnya</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -2656,11 +2661,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Linux
-- Enabled thumbnail support for PDF documents
-- Improved GUI performance during the addition of a large number of downloads
-- Restyling of the initial information wizard, new icons and interface improvements
-- Support for business accounts
+        <translation type="obsolete">- Tampilan dan nuansa yang ditingkatkan untuk tampilan resolusi tinggi di Linux 
+- Dukungan thumbnail yang diaktifkan untuk dokumen PDF
+- Peningkatan kinerja GUI selama penambahan sejumlah besar unduhan
+- Pembenahan kembali wizard informasi awal, ikon baru dan peningkatan antarmuka
+- Dukungan untuk akun bisnis
+- Perbaikan dan peningkatan bug minor lainnya</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="unfinished">- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include an option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</translation>
     </message>
 </context>
@@ -2699,7 +2715,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">Oke</translation>
+        <translation type="unfinished">OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2823,7 +2839,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>Oke</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3064,7 +3080,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Error</source>
         <translatorcomment>Label to indicate an Error message. Keep capital letter.</translatorcomment>
-        <translation>Kesalahan</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>Transfers</source>
@@ -3103,7 +3119,7 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>Silahkan tunggu...</translation>
+        <translation>Mohon tunggu...</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -3308,7 +3324,7 @@ when the application starts again</source>
     <message>
         <source>Permissions</source>
         <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Hak Akses</translation>
+        <translation type="unfinished">Izin</translation>
     </message>
     <message>
         <source>Don&apos;t use HTTP</source>
@@ -3450,7 +3466,7 @@ when the application starts again</source>
     <message>
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
-        <translation type="unfinished">%1 used</translation>
+        <translation type="unfinished">%1 digunakan</translation>
     </message>
     <message>
         <source>MEGA-RECOVERYKEY</source>
@@ -3599,7 +3615,7 @@ when the application starts again</source>
     <message>
         <source>Error</source>
         <translatorcomment>Label of error.</translatorcomment>
-        <translation>Kesalahan</translation>
+        <translation>Error</translation>
     </message>
     <message>
         <source>User already exists</source>
@@ -4004,7 +4020,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation type="unfinished">Oke</translation>
+        <translation type="unfinished">OK</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -4095,7 +4111,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation type="unfinished">Cakram Penyimpanan Awan</translation>
+        <translation type="unfinished">Cloud Drive</translation>
     </message>
     <message>
         <source>Public link</source>
@@ -4140,7 +4156,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error</source>
         <translatorcomment>Title for dialogs with error messages</translatorcomment>
-        <translation type="unfinished">Kesalahan</translation>
+        <translation type="unfinished">Error</translation>
     </message>
     <message>
         <source>File not found</source>
@@ -4170,7 +4186,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">Kesalahan dekripsi</translation>
+        <translation type="unfinished">Decryption error</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -4346,7 +4362,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished">Unduh</translation>
+        <translation type="unfinished">Download</translation>
     </message>
 </context>
 <context>
@@ -4380,6 +4396,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Kehabisan ruang penyimpanan</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Quota transfer telah terlewati</translation>
     </message>
 </context>
 <context>
@@ -4510,7 +4531,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>OK</source>
         <translatorcomment>Label for accept button.</translatorcomment>
-        <translation>Oke</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -4527,7 +4548,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="obsolete">Kotak masuk</translation>
+        <translation type="obsolete">Kotak Masuk</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -4535,22 +4556,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="obsolete">Cakram Penyimpanan Awan</translation>
+        <translation type="obsolete">Cloud Drive</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="obsolete">Sampah</translation>
+        <translation type="obsolete">Tempat Sampah</translation>
     </message>
 </context>
 <context>
     <name>UsageWidget</name>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">Cakram Penyimpanan Awan</translation>
+        <translation type="unfinished">Cloud Drive</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
-        <translation type="unfinished">Sampah</translation>
+        <translation type="unfinished">Tempat Sampah</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -4558,7 +4579,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">Kotak masuk</translation>
+        <translation type="unfinished">Kotak Masuk</translation>
     </message>
     <message>
         <source>Used</source>

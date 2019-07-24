@@ -16,7 +16,7 @@
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">받은 편지함</translation>
+        <translation type="unfinished">수신함</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -155,7 +155,7 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">최소</translation>
+        <translation type="unfinished">취소</translation>
     </message>
     <message>
         <source>OK</source>
@@ -247,7 +247,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>최소</translation>
+        <translation>취소</translation>
     </message>
     <message>
         <source>Error</source>
@@ -271,7 +271,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">서비스 약관</translation>
+        <translation type="unfinished">이용 약관</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
@@ -310,7 +310,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">최소</translation>
+        <translation type="unfinished">취소</translation>
     </message>
     <message>
         <source>OK</source>
@@ -374,12 +374,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>No</source>
         <translatorcomment>Negative response to a question. The text will be inside a button.</translatorcomment>
-        <translation type="unfinished">아니요</translation>
+        <translation type="unfinished">아니오</translation>
     </message>
     <message>
         <source>Yes</source>
         <translatorcomment>Positive response to a question. The text will be inside a button.</translatorcomment>
-        <translation type="unfinished">네</translation>
+        <translation type="unfinished">예</translation>
     </message>
     <message>
         <source>You are about to allow that your communications could be intercepted. Your data would be still inaccessible for attackers due to our end-to-end encryption, but they could blindly move your files and folders in MEGA, delete them or deny your access to your account.</source>
@@ -407,7 +407,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>최소</translation>
+        <translation>취소</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -462,6 +462,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">저장 공간 부족</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">전송 할당량 초과</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -493,7 +498,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>최소</translation>
+        <translation>취소</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -551,7 +556,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>1 folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected a folder</translatorcomment>
-        <translation type="unfinished">1 개의 폴더</translation>
+        <translation type="unfinished">폴더 1개</translation>
     </message>
     <message>
         <source>%i folders</source>
@@ -681,7 +686,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to cancel the current operation</translatorcomment>
-        <translation type="unfinished">최소</translation>
+        <translation type="unfinished">취소</translation>
     </message>
     <message>
         <source>Setting up your account...</source>
@@ -769,7 +774,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation type="unfinished">기다려 주십시요</translation>
+        <translation type="unfinished">잠시만 기다리세요...</translation>
     </message>
 </context>
 <context>
@@ -797,7 +802,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>최소</translation>
+        <translation>취소</translation>
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
@@ -816,7 +821,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>암호 해독 오류</translation>
+        <translation>해독 오류</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -953,7 +958,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">다운로드 하는 중</translation>
+        <translation type="vanished">다운로드중</translation>
     </message>
     <message>
         <source>Uploading </source>
@@ -1030,7 +1035,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">프로로 업그레이드</translation>
+        <translation type="unfinished">PRO로 업그레이드</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -1075,22 +1080,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">클라우드 드라이브</translation>
+        <translation type="obsolete">클라우드 드라이브</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">받은 편지함</translation>
+        <translation type="obsolete">수신함</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">들어오는 공유</translation>
+        <translation type="obsolete">들어오는 공유</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">휴지통</translation>
+        <translation type="obsolete">휴지통</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1327,7 +1332,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">최소</translation>
+        <translation type="unfinished">취소</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1370,7 +1375,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text to cancel 2FA dialog</translatorcomment>
-        <translation type="unfinished">최소</translation>
+        <translation type="unfinished">취소</translation>
     </message>
     <message>
         <source>Next</source>
@@ -1927,7 +1932,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Folder Upload</source>
         <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
-        <translation type="unfinished">폴더 업로드</translation>
+        <translation type="unfinished">폴더 올리기</translation>
     </message>
     <message>
         <source>1 folder was successfully uploaded</source>
@@ -1942,7 +1947,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>File Upload</source>
         <translatorcomment>Title of system notifications related to a file upload</translatorcomment>
-        <translation type="unfinished">파일 업로드</translation>
+        <translation type="unfinished">파일 올리기</translation>
     </message>
     <message>
         <source>1 file was successfully uploaded</source>
@@ -2256,7 +2261,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label of context menu option to cancel selected transfer</translatorcomment>
-        <translation type="unfinished">최소</translation>
+        <translation type="unfinished">취소</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -2327,7 +2332,7 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">최소</translation>
+        <translation type="unfinished">취소</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2370,7 +2375,7 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>최소</translation>
+        <translation>취소</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
@@ -2496,7 +2501,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>최소</translation>
+        <translation>취소</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2643,7 +2648,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Windows의 고해상도 디스플레이에서 사용자 경험 향상
+        <translation type="obsolete">- Windows의 고해상도 디스플레이에서 사용자 경험 향상
 - 많은 수의 다운로드를 추가할 때 GUI 성능 향상
 - 초기 정보 마법사의 스타일 변경, 새 아이콘과 인터페이스 향상
 - 비즈니스 계정 지원
@@ -2657,11 +2662,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Linux의 고해상도 디스플레이에서 사용자 경험 향상
+        <translation type="obsolete">- Linux의 고해상도 디스플레이에서 사용자 경험 향상
 - PDF 문서에 대한 미리 보기 지원 활성화
 - 많은 수의 다운로드를 추가할 때 GUI 성능 향상
 - 초기 정보 마법사의 스타일 변경, 새 아이콘과 인터페이스 향상
 - 비즈니스 계정 지원
+- 기타 사소한 버그 수정과 향상</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="unfinished">- 일부 PDF 파일 처리 중 튕김 수정
+- 튕긴 후 시작할 때 보류중인 전송 재개
+- 주 대화창에서 동기화 추가하는 옵션 포함
 - 기타 사소한 버그 수정과 향상</translation>
     </message>
 </context>
@@ -2704,7 +2720,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">최소</translation>
+        <translation type="unfinished">취소</translation>
     </message>
 </context>
 <context>
@@ -2829,7 +2845,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>최소</translation>
+        <translation>취소</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -3104,7 +3120,7 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>기다려 주십시요</translation>
+        <translation>잠시만 기다리세요...</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -3595,7 +3611,7 @@ when the application starts again</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>최소</translation>
+        <translation>취소</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3948,7 +3964,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 folder</source>
         <translatorcomment>Label to indicate one folder.</translatorcomment>
-        <translation>1 개의 폴더</translation>
+        <translation>폴더 1개</translation>
     </message>
     <message>
         <source>%1 folders</source>
@@ -4001,7 +4017,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">최소</translation>
+        <translation type="unfinished">취소</translation>
     </message>
     <message>
         <source>OK</source>
@@ -4172,7 +4188,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">암호 해독 오류</translation>
+        <translation type="unfinished">해독 오류</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -4383,6 +4399,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">저장 공간 부족</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">전송 할당량 초과</translation>
+    </message>
 </context>
 <context>
     <name>TransfersStateInfoWidget</name>
@@ -4517,7 +4538,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>최소</translation>
+        <translation>취소</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4529,7 +4550,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="obsolete">받은 편지함</translation>
+        <translation type="obsolete">수신함</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -4560,7 +4581,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">받은 편지함</translation>
+        <translation type="unfinished">수신함</translation>
     </message>
     <message>
         <source>Used</source>

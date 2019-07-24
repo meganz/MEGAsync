@@ -11,12 +11,12 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">クラウドドライブ</translation>
+        <translation type="unfinished">クラウド・ドライブ</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">受信トレイ</translation>
+        <translation type="unfinished">受信</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -155,7 +155,7 @@
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">キャンセル</translation>
+        <translation type="unfinished">キャンセルする</translation>
     </message>
     <message>
         <source>OK</source>
@@ -247,7 +247,7 @@ Please enter a different name to identify this synced folder:</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>キャンセル</translation>
+        <translation>キャンセルする</translation>
     </message>
     <message>
         <source>Error</source>
@@ -306,11 +306,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Confirm new password</source>
-        <translation type="unfinished">新しいパスワードを確認する</translation>
+        <translation type="unfinished">新しいパスワードの確認</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">キャンセル</translation>
+        <translation type="unfinished">キャンセルする</translation>
     </message>
     <message>
         <source>OK</source>
@@ -322,7 +322,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>Your password has been changed.</source>
-        <translation type="obsolete">あなたのパスワードは変更されました。</translation>
+        <translation type="obsolete">パスワードを変更しました。</translation>
     </message>
     <message>
         <source>Error</source>
@@ -407,7 +407,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>キャンセル</translation>
+        <translation>キャンセルする</translation>
     </message>
     <message>
         <source>Send report</source>
@@ -462,6 +462,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">ストレージ容量不足です</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">転送容量制限を超しました。</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -493,7 +498,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>キャンセル</translation>
+        <translation>キャンセルする</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -551,7 +556,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>1 folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected a folder</translatorcomment>
-        <translation type="unfinished">フォルダー1個</translation>
+        <translation type="unfinished">フォルダ1こ</translation>
     </message>
     <message>
         <source>%i folders</source>
@@ -681,7 +686,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to cancel the current operation</translatorcomment>
-        <translation type="unfinished">キャンセル</translation>
+        <translation type="unfinished">キャンセルする</translation>
     </message>
     <message>
         <source>Setting up your account...</source>
@@ -768,7 +773,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation type="unfinished">しばらくお待ちください...</translation>
+        <translation type="unfinished">しばらくお待ちください…</translation>
     </message>
 </context>
 <context>
@@ -796,7 +801,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>キャンセル</translation>
+        <translation>キャンセルする</translation>
     </message>
     <message>
         <source>/MEGAsync Downloads</source>
@@ -815,7 +820,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>復号化エラー</translation>
+        <translation>複合化エラー</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -1074,22 +1079,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">クラウドドライブ</translation>
+        <translation type="obsolete">クラウド・ドライブ</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">受信トレイ</translation>
+        <translation type="obsolete">受信</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">共有フォルダ受信</translation>
+        <translation type="obsolete">共有フォルダ受信</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">ゴミ箱</translation>
+        <translation type="obsolete">ゴミ箱</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1321,12 +1326,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>days</source>
         <translatorcomment>Label to indicate number of days in context of scheduled deletions</translatorcomment>
-        <translation type="unfinished">日間</translation>
+        <translation type="unfinished">日</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">キャンセル</translation>
+        <translation type="unfinished">キャンセルする</translation>
     </message>
     <message>
         <source>OK</source>
@@ -1369,12 +1374,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Button text to cancel 2FA dialog</translatorcomment>
-        <translation type="unfinished">キャンセル</translation>
+        <translation type="unfinished">キャンセルする</translation>
     </message>
     <message>
         <source>Next</source>
         <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
-        <translation type="unfinished">次</translation>
+        <translation type="unfinished">次へ</translation>
     </message>
     <message>
         <source>Invalid code</source>
@@ -1475,7 +1480,7 @@ Exit anyway?</source>
     <message>
         <source>About</source>
         <translatorcomment>Label to indicate the About option for the application (MAX 20 characters)</translatorcomment>
-        <translation type="unfinished">説明</translation>
+        <translation type="unfinished">概要</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1881,7 +1886,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your password has been changed.</source>
         <translatorcomment>Success message shown when the password has been changed</translatorcomment>
-        <translation type="unfinished">あなたのパスワードは変更されました。</translation>
+        <translation type="unfinished">パスワードを変更しました。</translation>
     </message>
     <message>
         <source>Temporarily not available</source>
@@ -2044,7 +2049,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>エラーが発生しました</translation>
+        <translation>内部エラー</translation>
     </message>
     <message>
         <source>Invalid argument</source>
@@ -2194,7 +2199,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
-        <translation type="unfinished">クラウドドライブ</translation>
+        <translation type="unfinished">クラウド・ドライブ</translation>
     </message>
 </context>
 <context>
@@ -2255,7 +2260,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label of context menu option to cancel selected transfer</translatorcomment>
-        <translation type="unfinished">キャンセル</translation>
+        <translation type="unfinished">キャンセルする</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -2326,7 +2331,7 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for Cancel button.</translatorcomment>
-        <translation type="unfinished">キャンセル</translation>
+        <translation type="unfinished">キャンセルする</translation>
     </message>
     <message>
         <source>OK</source>
@@ -2369,12 +2374,12 @@ Are you sure?</source>
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>キャンセル</translation>
+        <translation>キャンセルする</translation>
     </message>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
-        <translation type="obsolete">クラウドドライブ</translation>
+        <translation type="obsolete">クラウド・ドライブ</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
@@ -2495,7 +2500,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button. Keep capital letter.</translatorcomment>
-        <translation>キャンセル</translation>
+        <translation>キャンセルする</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -2642,7 +2647,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">－Windowsでの高解像度ディスプレイのルックアンドフィールの改善
+        <translation type="obsolete">－Windowsでの高解像度ディスプレイのルックアンドフィールの改善
 －多数のダウンロードの追加中のGUIパフォーマンスの改善
 －初期情報ウィザードの再設計、新しいアイコンとインターフェイスの改善
 －ビジネスアカウントのサポート
@@ -2656,11 +2661,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">－Linuxでの高解像度ディスプレイのルックアンドフィールの改善
+        <translation type="obsolete">－Linuxでの高解像度ディスプレイのルックアンドフィールの改善
 －PDF文書のサムネイルサポートの有効化
 －多数のダウンロードの追加中のGUIパフォーマンスの改善
 －初期情報ウィザードの再設計、新しいアイコンとインターフェイスの改善
 －ビジネスアカウントのサポート
+－その他のマイナーなバグ修正と改善</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="unfinished">－一部のPDFファイルの処理中にクラッシュするのを修正しました。
+－次回の起動時にクラッシュ後に保留中の転送を再開します
+－メインダイアログから同期を追加するオプションを含めました
 －その他のマイナーなバグ修正と改善</translation>
     </message>
 </context>
@@ -2703,7 +2719,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">キャンセル</translation>
+        <translation type="unfinished">キャンセルする</translation>
     </message>
 </context>
 <context>
@@ -2828,7 +2844,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>キャンセル</translation>
+        <translation>キャンセルする</translation>
     </message>
     <message>
         <source>Apply</source>
@@ -3078,7 +3094,7 @@ when the application starts again.</source>
     </message>
     <message>
         <source>Cache</source>
-        <translation type="obsolete">キャッシュメモリ</translation>
+        <translation type="obsolete">キャッシュ</translation>
     </message>
     <message>
         <source>Current cache size: %1</source>
@@ -3103,7 +3119,7 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>しばらくお待ちください...</translation>
+        <translation>しばらくお待ちください…</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -3248,7 +3264,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">リカバリーキーをエクスポート</translation>
+        <translation type="unfinished">回復キーをエクスポート</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -3258,7 +3274,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exporting the master key and keeping it in a secure location enables you to set a new password without data loss.</source>
         <translatorcomment>Label to inform the user to keep the master key in a secure location.</translatorcomment>
-        <translation type="unfinished">親鍵を安全な場所にエキスポートしておけば、データを失わずにパスワードを変更できます。</translation>
+        <translation type="unfinished">回復キーをエクスポートして安全な場所に保管すると、データを失うことなく新しいパスワードを設定できます。</translation>
     </message>
     <message>
         <source>Always keep physical control of your master key (e.g. on a client device, external storage, or print).</source>
@@ -3589,12 +3605,12 @@ when the application starts again</source>
     <message>
         <source>Next</source>
         <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>次</translation>
+        <translation>次へ</translation>
     </message>
     <message>
         <source>Cancel</source>
         <translatorcomment>Button label to let the user cancel the wizard assistant.</translatorcomment>
-        <translation>キャンセル</translation>
+        <translation>キャンセルする</translation>
     </message>
     <message>
         <source>Error</source>
@@ -3946,7 +3962,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 folder</source>
         <translatorcomment>Label to indicate one folder.</translatorcomment>
-        <translation>フォルダー1個</translation>
+        <translation>フォルダ1こ</translation>
     </message>
     <message>
         <source>%1 folders</source>
@@ -3999,7 +4015,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation type="unfinished">キャンセル</translation>
+        <translation type="unfinished">キャンセルする</translation>
     </message>
     <message>
         <source>OK</source>
@@ -4095,7 +4111,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation type="unfinished">クラウドドライブ</translation>
+        <translation type="unfinished">クラウド・ドライブ</translation>
     </message>
     <message>
         <source>Public link</source>
@@ -4170,7 +4186,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">復号化エラー</translation>
+        <translation type="unfinished">複合化エラー</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -4381,6 +4397,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">ストレージ容量不足です</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">転送容量制限を超しました。</translation>
+    </message>
 </context>
 <context>
     <name>TransfersStateInfoWidget</name>
@@ -4515,7 +4536,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cancel</source>
         <translatorcomment>Label for cancel button.</translatorcomment>
-        <translation>キャンセル</translation>
+        <translation>キャンセルする</translation>
     </message>
     <message>
         <source>Choose</source>
@@ -4527,7 +4548,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="obsolete">受信トレイ</translation>
+        <translation type="obsolete">受信</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -4535,7 +4556,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="obsolete">クラウドドライブ</translation>
+        <translation type="obsolete">クラウド・ドライブ</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -4546,7 +4567,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageWidget</name>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">クラウドドライブ</translation>
+        <translation type="unfinished">クラウド・ドライブ</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -4558,7 +4579,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">受信トレイ</translation>
+        <translation type="unfinished">受信</translation>
     </message>
     <message>
         <source>Used</source>

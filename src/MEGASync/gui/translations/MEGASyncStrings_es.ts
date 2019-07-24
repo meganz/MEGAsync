@@ -462,6 +462,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Almacenamiento agotado</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Cuota de transferencia excedida</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -769,7 +774,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that needs to wait until MEGAsync fetches link information from the server</translatorcomment>
-        <translation type="unfinished">Por favor, espere...</translation>
+        <translation type="unfinished">Por favor espera...</translation>
     </message>
 </context>
 <context>
@@ -1075,22 +1080,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Mi nube</translation>
+        <translation type="obsolete">Mi nube</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Buzón de entrada</translation>
+        <translation type="obsolete">Buzón de entrada</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Compartido conmigo</translation>
+        <translation type="obsolete">Compartido conmigo</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Papelera</translation>
+        <translation type="obsolete">Papelera</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1242,7 +1247,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Create Account</source>
-        <translation type="unfinished">Crear cuenta</translation>
+        <translation type="unfinished">Crear Cuenta</translation>
     </message>
     <message>
         <source>Take advantage of 50 GB cloud storage with secure user-controlled end-to-end encryption and sign up for a FREE account or one of our [A]PRO plans[/A].</source>
@@ -2643,11 +2648,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Mejorado el soporte para pantallas de alta resolución en sistemas Windows y Linux
-- Mejorado el rendimiento de la interfaz de usuario al añadir un gran número de descargas
-- Nuevo diseño para el asistente informativo inicial, nuevos iconos y mejoras en la interfaz de usuario
-- Soporte para cuentas business
-- Otras mejoras y correcciones de errores</translation>
+        <translation type="obsolete">- Improved look and feel for high resolution displays on Windows
+- Improved GUI performance during the addition of a large number of downloads
+- Restyling of the initial information wizard, new icons and interface improvements
+- Support for business accounts
+- Other minor bug fixes and improvements</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -2657,12 +2662,23 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Mejorado el soporte para pantallas de alta resolución en sistemas Windows y Linux
+        <translation type="obsolete">- Mejorado el soporte para pantallas de alta resolución en sistemas Windows y Linux
 - Soporte para la creación de vistas en miniatura en documentos PDF
 - Mejorado el rendimiento de la interfaz de usuario al añadir un gran número de descargas
 - Nuevo diseño para el asistente informativo inicial, nuevos iconos y mejoras en la interfaz de usuario
 - Soporte para cuentas business
 - Otras mejoras y correcciones de errores</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="unfinished">- Arreglado un fallo durante el procesamiento de algunos archivos PDF
+- Continuar con las transferencias pendientes después de un fallo de la aplicación en el siguiente arranque
+- Incluida una nueva opción para añadir sincronizaciones desde la ventana principal de la aplicación
+- Otras mejoras y arreglos menores</translation>
     </message>
 </context>
 <context>
@@ -3104,7 +3120,7 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>Por favor, espere...</translation>
+        <translation>Por favor espera...</translation>
     </message>
     <message>
         <source>Check for updates</source>
@@ -3456,7 +3472,7 @@ when the application starts again</source>
     <message>
         <source>MEGA-RECOVERYKEY</source>
         <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
-        <translation type="unfinished">MEGA-RECOVERYKEY</translation>
+        <translation type="unfinished">MEGA-CLAVEDERECUPERACION</translation>
     </message>
 </context>
 <context>
@@ -4382,6 +4398,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Almacenamiento agotado</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Cuota de transferencia excedida</translation>
     </message>
 </context>
 <context>

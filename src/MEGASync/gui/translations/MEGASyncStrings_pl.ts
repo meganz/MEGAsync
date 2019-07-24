@@ -11,7 +11,7 @@
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label for Cloud Drive space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">Cloud Dysk</translation>
+        <translation type="unfinished">Dysk</translation>
     </message>
     <message>
         <source>Inbox</source>
@@ -26,7 +26,7 @@
     <message>
         <source>Storage</source>
         <translatorcomment>Label for Storage space used. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">Pojemność</translation>
+        <translation type="obsolete">Pojemności</translation>
     </message>
     <message>
         <source>Files</source>
@@ -271,12 +271,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Terms of Service</source>
         <translatorcomment>Label for Terms of Service link.</translatorcomment>
-        <translation type="unfinished">Warunki korzystania z Serwisu</translation>
+        <translation type="unfinished">Regulamin serwisu</translation>
     </message>
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished">Polityka prywatności</translation>
+        <translation type="unfinished">Polityka Prywatności</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -462,6 +462,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Brak przestrzeni dyskowej</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Transfer przekroczony</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -551,7 +556,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>1 folder</source>
         <translatorcomment>Context menu option label to indicate the user has selected a folder</translatorcomment>
-        <translation type="unfinished">1 folder</translation>
+        <translation type="unfinished">1 katalog</translation>
     </message>
     <message>
         <source>%i folders</source>
@@ -815,7 +820,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Błąd przy deszyfrowaniu</translation>
+        <translation>Błąd opisu</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -952,7 +957,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">Ściąganie</translation>
+        <translation type="vanished">Pobieranie</translation>
     </message>
     <message>
         <source>Uploading </source>
@@ -1029,7 +1034,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Wykup usługę PRO</translation>
+        <translation type="unfinished">Zmień na PRO</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -1074,22 +1079,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Cloud Dysk</translation>
+        <translation type="obsolete">Dysk</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Skrzynka</translation>
+        <translation type="obsolete">Skrzynka</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Udostępnienia</translation>
+        <translation type="obsolete">Udostępnienia</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Kosz</translation>
+        <translation type="obsolete">Kosz</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1374,7 +1379,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Next</source>
         <translatorcomment>Button text to confirm 2FA dialog</translatorcomment>
-        <translation type="unfinished">Następny</translation>
+        <translation type="unfinished">Dalej</translation>
     </message>
     <message>
         <source>Invalid code</source>
@@ -1777,7 +1782,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Temporary error, retrying.</source>
-        <translation type="obsolete">Chwilowy problem, ponawianie.</translation>
+        <translation type="obsolete">Wystąpił tymczasowy błąd, próbujemy ponownie.</translation>
     </message>
     <message>
         <source>I don&apos;t care</source>
@@ -1828,12 +1833,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload</source>
         <translatorcomment>Label for the menu item that opens the dialog to upload files to MEGA</translatorcomment>
-        <translation type="unfinished">Załaduj</translation>
+        <translation type="unfinished">Wgrywane</translation>
     </message>
     <message>
         <source>Download</source>
         <translatorcomment>Label for the menu item that opens the dialog to download files from MEGA</translatorcomment>
-        <translation type="unfinished">Ściągnij</translation>
+        <translation type="unfinished">Pobierz</translation>
     </message>
     <message>
         <source>You are syncing a local folder formatted with a FAT filesystem. That filesystem has deficiencies managing big files and modification times that can cause synchronization problems (e.g. when daylight saving changes), so it&apos;s strongly recommended that you only sync folders formatted with more reliable filesystems like NTFS (more information [A]here[/A]).</source>
@@ -2044,7 +2049,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>Wystąpił błąd wewnętrzny</translation>
+        <translation>Błąd wewnętrztny</translation>
     </message>
     <message>
         <source>Invalid argument</source>
@@ -2194,7 +2199,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
-        <translation type="unfinished">Cloud Dysk</translation>
+        <translation type="unfinished">Dysk</translation>
     </message>
 </context>
 <context>
@@ -2217,7 +2222,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Get link</source>
         <translatorcomment>Tooltip shown when the mouse is over the &quot;Get link&quot; button related to a completed transfer</translatorcomment>
-        <translation type="unfinished">Pobierz link</translation>
+        <translation type="unfinished">Utwórz link</translation>
     </message>
     <message>
         <source>Retry</source>
@@ -2374,7 +2379,7 @@ Are you sure?</source>
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate the root folder of your MEGA cloud drive.</translatorcomment>
-        <translation type="obsolete">Cloud Dysk</translation>
+        <translation type="obsolete">Dysk</translation>
     </message>
     <message>
         <source>Enter the new folder name:</source>
@@ -2587,7 +2592,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Storage</source>
-        <translation type="unfinished">Pojemność</translation>
+        <translation type="unfinished">Pojemności</translation>
     </message>
     <message>
         <source>Bandwidth</source>
@@ -2642,7 +2647,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Poprawiony wygląd i jakość wyświetlania w wysokiej rozdzielczości w systemie Windows
+        <translation type="obsolete">- Poprawiony wygląd i jakość wyświetlania w wysokiej rozdzielczości w systemie Windows
 - Poprawiona wydajność GUI podczas dodawania dużej liczby pobrań
 - Restylowanie kreatora informacji początkowych, nowe ikony i ulepszenia interfejsu
 - Wsparcie dla kont biznesowych
@@ -2656,11 +2661,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Ulepszony wygląd ekranów wysokiej rozdzielczości w systemie Linux
+        <translation type="obsolete">- Ulepszony wygląd ekranów wysokiej rozdzielczości w systemie Linux
 - Włączona obsługa miniatur dla dokumentów PDF
 - Poprawiona wydajność GUI podczas dodawania dużej liczby pobrań
 - Restylowanie kreatora informacji początkowych, nowe ikony i ulepszenia interfejsu
 - Wsparcie dla kont biznesowych
+- Inne drobne poprawki i ulepszenia</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="unfinished">- Napraw awarię podczas przetwarzania niektórych plików PDF
+- Wznów oczekujące przelewy po awarii przy następnym uruchomieniu
+- Dołącz opcję dodawania synchronizacji z głównego okna dialogowego
 - Inne drobne poprawki i ulepszenia</translation>
     </message>
 </context>
@@ -2883,7 +2899,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Upgrade</source>
         <translatorcomment>Button label to let the user upgrade the account. String as short as possible.</translatorcomment>
-        <translation>Zakup</translation>
+        <translation>Zmień</translation>
     </message>
     <message>
         <source>Synced folders</source>
@@ -3308,7 +3324,7 @@ when the application starts again</source>
     <message>
         <source>Permissions</source>
         <translatorcomment>Text of a button that opens a dialog to set the default permissions for new files and folders. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Uprawnienia</translation>
+        <translation type="unfinished">Prawa dostępu</translation>
     </message>
     <message>
         <source>Don&apos;t use HTTP</source>
@@ -3589,7 +3605,7 @@ when the application starts again</source>
     <message>
         <source>Next</source>
         <translatorcomment>Button label to let the user go next through the wizard assistant.</translatorcomment>
-        <translation>Następny</translation>
+        <translation>Dalej</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -3946,7 +3962,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 folder</source>
         <translatorcomment>Label to indicate one folder.</translatorcomment>
-        <translation>1 folder</translation>
+        <translation>1 katalog</translation>
     </message>
     <message>
         <source>%1 folders</source>
@@ -4095,7 +4111,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Text of the button to select a file from the Cloud Drive for streaming</translatorcomment>
-        <translation type="unfinished">Cloud Dysk</translation>
+        <translation type="unfinished">Dysk</translation>
     </message>
     <message>
         <source>Public link</source>
@@ -4170,7 +4186,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">Błąd przy deszyfrowaniu</translation>
+        <translation type="unfinished">Błąd opisu</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -4342,11 +4358,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Upload</source>
-        <translation type="unfinished">Załaduj</translation>
+        <translation type="unfinished">Wgrywane</translation>
     </message>
     <message>
         <source>Download</source>
-        <translation type="unfinished">Ściągnij</translation>
+        <translation type="unfinished">Pobierz</translation>
     </message>
 </context>
 <context>
@@ -4380,6 +4396,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Brak przestrzeni dyskowej</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Transfer przekroczony</translation>
     </message>
 </context>
 <context>
@@ -4467,7 +4488,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="unfinished">Pojemność</translation>
+        <translation type="unfinished">Pojemności</translation>
     </message>
     <message>
         <source>transfer</source>
@@ -4535,7 +4556,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Cloud Drive</source>
-        <translation type="obsolete">Cloud Dysk</translation>
+        <translation type="obsolete">Dysk</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -4546,7 +4567,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageWidget</name>
     <message>
         <source>Cloud Drive</source>
-        <translation type="unfinished">Cloud Dysk</translation>
+        <translation type="unfinished">Dysk</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>

@@ -16,7 +16,7 @@
     <message>
         <source>Inbox</source>
         <translatorcomment>Label for Inbox space used. Maintain capital letters in each word.(Max 18 characters)</translatorcomment>
-        <translation type="unfinished">Postvak IN</translation>
+        <translation type="unfinished">Inbox</translation>
     </message>
     <message>
         <source>Rubbish Bin</source>
@@ -26,7 +26,7 @@
     <message>
         <source>Storage</source>
         <translatorcomment>Label for Storage space used. Maintain capital letters in each word.</translatorcomment>
-        <translation type="obsolete">Opslagruimte</translation>
+        <translation type="obsolete">Opslag</translation>
     </message>
     <message>
         <source>Files</source>
@@ -276,7 +276,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Privacy Policy</source>
         <translatorcomment>Label for Privacy Policy link.</translatorcomment>
-        <translation type="unfinished">Privacy Policy</translation>
+        <translation type="unfinished">Privacybeleid</translation>
     </message>
     <message>
         <source>New in this version:</source>
@@ -462,6 +462,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Geen opslag ruimte meer</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Overdracht tegoed overschreden</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -636,7 +641,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Login</source>
         <translatorcomment>Button label to start the Login process. (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Inloggen</translation>
+        <translation type="unfinished">Login</translation>
     </message>
     <message>
         <source>Cancel all downloads</source>
@@ -816,7 +821,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Label to indicate a Decryption error due to a problem with the KEYS</translatorcomment>
-        <translation>Decryption probleem</translation>
+        <translation>Decryptie fout</translation>
     </message>
     <message>
         <source>Not found</source>
@@ -953,7 +958,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">Downloaden</translation>
+        <translation type="vanished">Aan het downloaden</translation>
     </message>
     <message>
         <source>Uploading </source>
@@ -1030,7 +1035,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Schakel over naar PRO</translation>
+        <translation type="unfinished">Upgraden naar PRO</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -1075,22 +1080,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Cloud Schijf</translation>
+        <translation type="obsolete">Cloud Schijf</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Postvak IN</translation>
+        <translation type="obsolete">Inbox</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Binnenkomende Mappen</translation>
+        <translation type="obsolete">Binnenkomende Mappen</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Prullenbak</translation>
+        <translation type="obsolete">Prullenbak</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1238,7 +1243,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Login</source>
-        <translation type="unfinished">Inloggen</translation>
+        <translation type="unfinished">Login</translation>
     </message>
     <message>
         <source>Create Account</source>
@@ -2045,7 +2050,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Internal error</source>
         <translatorcomment>Label to show that an Internal error occurs during a SDK operation.</translatorcomment>
-        <translation>Interne foutmelding</translation>
+        <translation>Interne fout</translation>
     </message>
     <message>
         <source>Invalid argument</source>
@@ -2588,7 +2593,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Storage</source>
-        <translation type="unfinished">Opslagruimte</translation>
+        <translation type="unfinished">Opslag</translation>
     </message>
     <message>
         <source>Bandwidth</source>
@@ -2643,7 +2648,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">-Geïmproviseerde uiterlijk en gevoel voor hoge resolutieschermen op Windows
+        <translation type="obsolete">-Geïmproviseerde uiterlijk en gevoel voor hoge resolutieschermen op Windows
 - Verbeterde GUI-prestaties tijdens de toevoeging van een groot aantal downloads 
 - Restyling van de initiële informatiewizard, nieuwe pictogrammen en interface-verbeteringen 
 - Ondersteuning voor zakelijke accounts 
@@ -2657,12 +2662,23 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Verbeterd uiterlijk en gevoel voor hoge resolutieschermen op Linux 
+        <translation type="obsolete">- Verbeterd uiterlijk en gevoel voor hoge resolutieschermen op Linux 
 - Ondersteuning voor miniatuurweergave voor PDF-documenten 
 - Verbeterde GUI-prestaties tijdens de toevoeging van een groot aantal downloads 
 - Restyling van de initiële informatiewizard, nieuwe pictogrammen en interface-verbeteringen 
 - Ondersteuning voor zakelijke accounts 
 - Andere kleine bugfixes en verbeteringen</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="unfinished">-Repareer een crash tijdens het verwerken van sommige PDF bestanden
+-Hervat afwachtende overdrachten na een crash bij de volgende opstart
+- Voeg een optie toe om synchronisaties toe te voegen vanuit het hoofdvenster 
+- Andere kleine bugreparaties en verbeteringen</translation>
     </message>
 </context>
 <context>
@@ -3249,7 +3265,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Export Master key</source>
         <translatorcomment>Title of dialog to export master key for the current user.</translatorcomment>
-        <translation type="unfinished">Exporteer Herstel Sleutel</translation>
+        <translation type="unfinished">Herstelsleutel Exporteren</translation>
     </message>
     <message>
         <source>Unable to write file</source>
@@ -3910,7 +3926,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Login</source>
         <translatorcomment>Button label to open Login form</translatorcomment>
-        <translation type="unfinished">Inloggen</translation>
+        <translation type="unfinished">Login</translation>
     </message>
 </context>
 <context>
@@ -4172,7 +4188,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Decryption error</source>
         <translatorcomment>Text shown when there is an error decrypting a public link for streaming</translatorcomment>
-        <translation type="unfinished">Decryption probleem</translation>
+        <translation type="unfinished">Decryptie fout</translation>
     </message>
     <message>
         <source>Error getting link information</source>
@@ -4383,6 +4399,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Geen opslag ruimte meer</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Overdracht tegoed overschreden</translation>
+    </message>
 </context>
 <context>
     <name>TransfersStateInfoWidget</name>
@@ -4469,7 +4490,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="unfinished">Opslagruimte</translation>
+        <translation type="unfinished">Opslag</translation>
     </message>
     <message>
         <source>transfer</source>
@@ -4529,7 +4550,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <name>UsageProgressBar</name>
     <message>
         <source>Inbox</source>
-        <translation type="obsolete">Postvak IN</translation>
+        <translation type="obsolete">Inbox</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -4560,7 +4581,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Inbox</source>
-        <translation type="unfinished">Postvak IN</translation>
+        <translation type="unfinished">Inbox</translation>
     </message>
     <message>
         <source>Used</source>

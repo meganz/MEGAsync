@@ -462,6 +462,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">L’espace de stockage est épuisé</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Le quota de transfert a été dépassé</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -952,7 +957,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Downloading </source>
         <translatorcomment>Label to indicate that MEGAsync is Downloading files (String as short as possible and keep capitar letters)</translatorcomment>
-        <translation type="vanished">Téléchargement</translation>
+        <translation type="vanished">Téléchargement en cours</translation>
     </message>
     <message>
         <source>Uploading </source>
@@ -1029,7 +1034,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upgrade to PRO</source>
         <translatorcomment>Button label to start the process of upgrading an account (String as short as possible)</translatorcomment>
-        <translation type="unfinished">Passer à un compte PRO</translation>
+        <translation type="unfinished">Passez PRO</translation>
     </message>
     <message>
         <source>Open Transfer Manager</source>
@@ -1074,22 +1079,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Disque nuagique</translation>
+        <translation type="obsolete">Disque nuagique</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Boîte de réception</translation>
+        <translation type="obsolete">Boîte de réception</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Partages entrants</translation>
+        <translation type="obsolete">Partages entrants</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Corbeille</translation>
+        <translation type="obsolete">Corbeille</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1410,7 +1415,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder doesn&apos;t exist</source>
-        <translation type="obsolete">Votre synchro « %1 » a été désactivée, car le dossier distant n&apos;existe pas</translation>
+        <translation type="obsolete">Votre synchro « %1 » a été désactivée, car le dossier distant n’existe pas</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1420,7 +1425,7 @@ because the remote folder is in the rubbish bin</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the local folder doesn&apos;t exist</source>
-        <translation type="obsolete">Votre synchro « %1 » a été désactivée, car le dossier local n&apos;existe pas</translation>
+        <translation type="obsolete">Votre synchro « %1 » a été désactivée, car le dossier local n’existe pas</translation>
     </message>
     <message>
         <source>Error: Invalid destination folder. The upload has been cancelled</source>
@@ -1679,12 +1684,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  remote synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Votre synchro « %1 » a été désactivée, car le dossier distant n&apos;existe pas</translation>
+        <translation type="unfinished">Votre synchro « %1 » a été désactivée, car le dossier distant n’existe pas</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder doesn&apos;t exist</source>
         <translatorcomment>Notification message launched checking  local synchronization folders. Keep &quot;%1&quot; code because is filled with the name of folder at runtime.</translatorcomment>
-        <translation type="unfinished">Votre synchro « %1 » a été désactivée, car le dossier local n&apos;existe pas</translation>
+        <translation type="unfinished">Votre synchro « %1 » a été désactivée, car le dossier local n’existe pas</translation>
     </message>
     <message>
         <source>Your account has been blocked. Please contact support@mega.co.nz</source>
@@ -1941,7 +1946,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>File Upload</source>
         <translatorcomment>Title of system notifications related to a file upload</translatorcomment>
-        <translation type="unfinished">Téléversement de fichier</translation>
+        <translation type="unfinished">Téléversement de fichiers</translation>
     </message>
     <message>
         <source>1 file was successfully uploaded</source>
@@ -2642,7 +2647,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">– Amélioration de l’aspect et de la convivialité pour les affichages à haute résolution sous Windows
+        <translation type="obsolete">– Amélioration de l’aspect et de la convivialité pour les affichages à haute résolution sous Windows
 – Amélioration des performances de l’IUG lors de l’ajout d’un nombre important de téléchargements
 – Restylage de l’assistant initial d’information, nouvelles icônes et améliorations de l’interface
 – Prise en charge des comptes d’entreprise
@@ -2656,11 +2661,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">– Amélioration de l’aspect et de la convivialité pour les affichages à haute résolution sous Linux
+        <translation type="obsolete">– Amélioration de l’aspect et de la convivialité pour les affichages à haute résolution sous Linux
 – Prise en charge des imagettes pour les documents PDF
 – Amélioration des performances de l’IUG lors de l’ajout d’un nombre important de téléchargements
 – Restylage de l’assistant initial d’information, nouvelles icônes et améliorations de l’interface
 – Prise en charge des comptes d’entreprise
+– Autres correctifs de bogues mineurs et améliorations</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="unfinished">– Corriger un plantage durant le traitement de certains fichiers PDF
+– Reprendre les transferts en attente, après un plantage, lors du prochain lancement
+– Inclure une option pour ajouter des synchronisations à partir de la fenêtre de dialogue prinicaple
 – Autres correctifs de bogues mineurs et améliorations</translation>
     </message>
 </context>
@@ -2731,7 +2747,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one minute ago.</translatorcomment>
-        <translation type="vanished">il y a 1 minute</translation>
+        <translation type="vanished">Il y a une minute</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -2741,12 +2757,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one hour ago.</translatorcomment>
-        <translation type="vanished">il y a 1 heure</translation>
+        <translation type="vanished">Il y a 1 heure</translation>
     </message>
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to inform the user that the indicated file has been updated one day ago.</translatorcomment>
-        <translation type="vanished">il y a 1 jour</translation>
+        <translation type="vanished">Il y a 1 jour</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -3005,7 +3021,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Password:</source>
         <translatorcomment>Label to indicate the password of the proxy. String as short as possible.</translatorcomment>
-        <translation>Mot de passe :</translation>
+        <translation>Mot de passe :</translation>
     </message>
     <message>
         <source>Data temporarily unavailable</source>
@@ -3488,17 +3504,17 @@ when the application starts again</source>
     <message>
         <source>Email:</source>
         <translatorcomment>Label for field email at create account. String as short as possible.</translatorcomment>
-        <translation>Courriel :</translation>
+        <translation>Adresse courriel :</translation>
     </message>
     <message>
         <source>Password:</source>
         <translatorcomment>Label for field password at create account. String as short as possible.</translatorcomment>
-        <translation>Mot de passe :</translation>
+        <translation>Mot de passe :</translation>
     </message>
     <message>
         <source>Repeat password:</source>
         <translatorcomment>Label for field repeat password at create account. String as short as possible.</translatorcomment>
-        <translation>Répéter le mot de passe :</translation>
+        <translation>Répéter le mot de passe :</translation>
     </message>
     <message>
         <source>I agree with the MEGA &lt;a href=&quot;https://mega.co.nz/#terms&quot;&gt;Terms of Service&lt;/a&gt;</source>
@@ -4210,7 +4226,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 minute ago</source>
-        <translation type="obsolete">il y a 1 minute</translation>
+        <translation type="obsolete">Il y a une minute</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -4218,7 +4234,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 hour ago</source>
-        <translation type="obsolete">il y a 1 heure</translation>
+        <translation type="obsolete">Il y a 1 heure</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
@@ -4226,7 +4242,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>1 day ago</source>
-        <translation type="obsolete">il y a 1 jour</translation>
+        <translation type="obsolete">Il y a 1 jour</translation>
     </message>
     <message>
         <source>%1 days ago</source>
@@ -4381,6 +4397,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">L’espace de stockage est épuisé</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Le quota de transfert a été dépassé</translation>
+    </message>
 </context>
 <context>
     <name>TransfersStateInfoWidget</name>
@@ -4412,7 +4433,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Please upgrade to Pro to continue immediately, or wait %1 to continue for free. </source>
-        <translation type="unfinished">Veuillez passer à un compte PRO pour continuer immédiatement ou attendez %1 pour continuer gratuitement.</translation>
+        <translation type="unfinished">Veuillez surclasser votre compte vers un compte PRO pour continuer immédiatement ou patienter %1 pour continuer gratuitement.</translation>
     </message>
     <message>
         <source>The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. </source>
@@ -4472,7 +4493,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the amount of transfer quota of a PRO plan</translatorcomment>
-        <translation type="unfinished">Transférer</translation>
+        <translation type="unfinished">Transfert</translation>
     </message>
 </context>
 <context>
@@ -4584,7 +4605,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 minute ago</source>
         <translatorcomment>Label to indicate that a transfer has finished 1 minute ago</translatorcomment>
-        <translation type="unfinished">il y a 1 minute</translation>
+        <translation type="unfinished">Il y a une minute</translation>
     </message>
     <message>
         <source>%1 minutes ago</source>
@@ -4594,7 +4615,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 hour ago</source>
         <translatorcomment>Label to indicate that a transfer has finished 1 hour ago</translatorcomment>
-        <translation type="unfinished">il y a 1 heure</translation>
+        <translation type="unfinished">Il y a 1 heure</translation>
     </message>
     <message>
         <source>%1 hours ago</source>
@@ -4604,7 +4625,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>1 day ago</source>
         <translatorcomment>Label to indicate that a transfer has finished 1 day ago</translatorcomment>
-        <translation type="unfinished">il y a 1 jour</translation>
+        <translation type="unfinished">Il y a 1 jour</translation>
     </message>
     <message>
         <source>%1 days ago</source>
