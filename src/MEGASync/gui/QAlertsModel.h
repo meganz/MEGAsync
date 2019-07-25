@@ -12,7 +12,7 @@ class QAlertsModel : public QAbstractItemModel
     Q_OBJECT
 
 public:
-    explicit QAlertsModel(mega::MegaUserAlertList* alerts, QObject *parent = 0);
+    explicit QAlertsModel(mega::MegaUserAlertList* alerts, bool copy = false, QObject *parent = 0);
     virtual ~QAlertsModel();
 
     void refreshAlerts();
@@ -27,6 +27,8 @@ public:
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
     QCache<int, AlertItem> alertItems;
+
+    void insertAlerts(mega::MegaUserAlertList *alerts, bool copy = false);
 
 private:
     QMap<int, mega::MegaUserAlert*> alertsMap;

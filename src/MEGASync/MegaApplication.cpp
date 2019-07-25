@@ -8,6 +8,7 @@
 #include "control/ExportProcessor.h"
 #include "platform/Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
+#include "gui/MegaAlertDelegate.h"
 
 #include <QTranslator>
 #include <QClipboard>
@@ -793,6 +794,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updatingSSLcert = false;
     lastSSLcertUpdate = 0;
 
+    model = NULL;
+    proxyModel = NULL;
+
 #ifdef _WIN32
     windowsMenu = NULL;
     windowsExitAction = NULL;
@@ -1454,6 +1458,11 @@ void MegaApplication::start()
     {
         trayIcon->setContextMenu(initialMenu.get());
     }
+
+    delete model;
+    model = NULL;
+    delete proxyModel;
+    proxyModel = NULL;
 
 #ifndef __APPLE__
     #ifdef _WIN32
@@ -7526,6 +7535,56 @@ void MegaApplication::onAccountUpdate(MegaApi *)
 
     updateUserStats(true, true, true, false, USERSTATS_ACCOUNTUPDATE);
 }
+
+
+void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
+{
+    if (appfinished || !preferences->logged())
+    {
+        return;
+    }
+
+    bool copyRequired = true;
+    if (!list)//User alerts already loaded: get the list from MegaApi::getUserAlerts
+    {
+        list = megaApi->getUserAlerts();
+        copyRequired = false;
+    }
+    else
+    {
+        assert(model && "onUserAlertsUpdate with !alerts should have happened before!");
+    }
+
+
+    static QTreeView *tv = new QTreeView(); //TODO: this should be included in InfoDialog
+    if (!model)
+    {
+        model = new QAlertsModel(list, copyRequired);
+        proxyModel = new QFilterAlertsModel();
+        proxyModel->setSourceModel(model);
+        proxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
+
+        MegaAlertDelegate *tDelegate = new MegaAlertDelegate(model, true, this);
+
+        tv->setItemDelegate((QAbstractItemDelegate *)tDelegate);
+        tv->setSelectionMode(QAbstractItemView::NoSelection);
+        tv->setDragEnabled(false);
+        tv->setSortingEnabled(true);
+        tv->viewport()->setAcceptDrops(false);
+        tv->setDropIndicatorShown(false);
+        tv->setDragDropMode(QAbstractItemView::InternalMove);
+        tv->setModel(proxyModel);
+        tv->setFocusPolicy(Qt::NoFocus);
+
+        tv->show();
+    }
+    else
+    {
+        model->insertAlerts(list, copyRequired);
+        //TODO: update view
+    }
+}
+
 
 //Called when contacts have been updated in MEGA
 void MegaApplication::onUsersUpdate(MegaApi *, MegaUserList *userList)

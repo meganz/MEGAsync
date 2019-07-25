@@ -3,21 +3,61 @@
 
 using namespace mega;
 
-QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, QObject *parent)
+QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, bool copy, QObject *parent)
     : QAbstractItemModel(parent)
 {
     alertItems.setMaxCost(16);
+    insertAlerts(alerts, copy);
+}
 
+void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
+{
     int numAlerts = alerts->size();
+    int actualnumberofalertstoinsert = 0;
     if (numAlerts)
     {
-        beginInsertRows(QModelIndex(), 0, numAlerts - 1);
+//        for (int i = 0; i < numAlerts; i++)
+//        {
+//            if (alertsMap.find(alerts->get(i)->getId()) != alertsMap.end())
+//            {
+//                actualnumberofalertstoinsert ++;
+//            }
+//        }
+//        beginInsertRows(QModelIndex(), 0, actualnumberofalertstoinsert - 1);
+//        actualnumberofalertstoinsert = 0;
+
         for (int i = 0; i < numAlerts; i++)
         {
-            MegaUserAlert *alert = alerts->get(i);
-            alertOrder.push_front(alert->getId());
-            alertsMap.insert(alert->getId(), alert);
+            if (!copy) //first time, alertsMap should be empty
+            {
+                MegaUserAlert *alert = alerts->get(i);
+                alertOrder.push_front(alert->getId());
+                alertsMap.insert(alert->getId(), alert);
+                actualnumberofalertstoinsert++;
+            }
+            else
+            {
+                MegaUserAlert *alert = alerts->get(i)->copy();
+                QMap<int, mega::MegaUserAlert*>::iterator existing = alertsMap.find(alert->getId());
+                if (existing != alertsMap.end())
+                {
+                    MegaUserAlert *old = existing.value();
+                    alertsMap.erase(existing);
+                    delete old;
+                    alertsMap.insert(alert->getId(), alert);
+                }
+                else
+                {
+                    alertOrder.push_front(alert->getId());
+                    alertsMap.insert(alert->getId(), alert);
+                    actualnumberofalertstoinsert++;
+                }
+            }
         }
+
+        // this might actually be problematic, but since the change on the underlying data is done synchrnously
+        // it seems we don't need to call beginInsert before actually doing it
+        beginInsertRows(QModelIndex(), 0, actualnumberofalertstoinsert - 1);
         endInsertRows();
     }
 }

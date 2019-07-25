@@ -2,7 +2,8 @@
 #include <QPainter>
 #include "megaapi.h"
 #include <QDebug>
-#include "QSortFilterProxyModel.h"
+#include <QSortFilterProxyModel>
+#include "assert.h"
 
 using namespace mega;
 
@@ -28,6 +29,12 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
         else
         {
             alert = (MegaUserAlert *)index.internalPointer();
+        }
+        if (!alert)
+        {
+            assert(false || "No alert found");
+            QStyledItemDelegate::paint(painter, option, index);
+            return;
         }
 
         AlertItem *ti = model->alertItems[alert->getId()];
