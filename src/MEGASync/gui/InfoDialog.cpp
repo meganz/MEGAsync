@@ -1077,10 +1077,22 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
             return true;
         }
     }
-    else if (obj == this && e->type() == QEvent::WindowDeactivate)
+    else if (obj == this)
     {
-        hide();
-        return true;
+        static bool in = false;
+        if (e->type() == QEvent::Enter)
+        {
+            in = true;
+        }
+        if (e->type() == QEvent::Leave)
+        {
+            in = false;
+        }
+        if (e->type() == QEvent::WindowDeactivate && !in)
+        {
+            hide();
+            return true;
+        }
     }
 #endif
 #ifdef __APPLE__
