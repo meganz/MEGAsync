@@ -2,7 +2,7 @@
 #include <QPainter>
 #include "megaapi.h"
 #include <QDebug>
-#include <QSortFilterProxyModel>
+#include "QSortFilterProxyModel.h"
 
 using namespace mega;
 
@@ -21,7 +21,7 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
         //Map index when we are using QSortFilterProxyModel
         // if we are using QAbstractItemModel just access internalPointer casting to MegaAlert
         MegaUserAlert *alert = NULL;
-        if (((MegaAlertsModel*)index.model())->isProxyModel())
+        if (useProxy)
         {
             alert = (MegaUserAlert *)((((QSortFilterProxyModel*)index.model())->mapToSource(index)).internalPointer());
         }

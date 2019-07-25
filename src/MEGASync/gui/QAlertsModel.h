@@ -1,20 +1,13 @@
 #ifndef QALERTSMODEL_H
 #define QALERTSMODEL_H
 
-#include <QAbstractItemModel>
 #include <QCache>
 #include <megaapi.h>
 #include <deque>
 #include "AlertItem.h"
+#include <QAbstractItemModel>
 
-class MegaAlertsModel : public QAbstractItemModel
-{
-public:
-    explicit MegaAlertsModel(QObject *parent = 0);
-    virtual bool isProxyModel() const = 0;
-};
-
-class QAlertsModel : public MegaAlertsModel
+class QAlertsModel : public QAbstractItemModel
 {
     Q_OBJECT
 
@@ -23,7 +16,6 @@ public:
     virtual ~QAlertsModel();
 
     void refreshAlerts();
-    bool isProxyModel() const {return false;};
 
     QModelIndex index(int row, int column,
                       const QModelIndex &parent = QModelIndex()) const override;

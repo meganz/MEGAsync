@@ -5,12 +5,11 @@
 #include "QAlertsModel.h"
 #include <megaapi.h>
 
-class QFilterAlertsModel : public QSortFilterProxyModel, public MegaAlertsModel
+class QFilterAlertsModel : public QSortFilterProxyModel
 {
     Q_OBJECT
 
 public:
-    using  QSortFilterProxyModel::d_ptr;
 
     enum {
         FILTER_CONTACTS = 0,
@@ -22,8 +21,6 @@ public:
 
     QFilterAlertsModel(QObject *parent = 0);
     virtual ~QFilterAlertsModel();
-
-    bool isProxyModel() const override {return true;}
 
     int filterAlertType();
     void setFilterAlertType(int filterType);

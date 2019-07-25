@@ -3,14 +3,8 @@
 
 using namespace mega;
 
-MegaAlertsModel::MegaAlertsModel(QObject *parent)
-    : QAbstractItemModel(parent)
-{
-
-}
-
 QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, QObject *parent)
-    : MegaAlertsModel(parent)
+    : QAbstractItemModel(parent)
 {
     alertItems.setMaxCost(16);
 

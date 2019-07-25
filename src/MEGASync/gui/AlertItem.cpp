@@ -329,7 +329,7 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                 else
                 {
                     notificationContent = tr("Your PRO membership plan expired [A] days ago")
-                            .replace(QString::fromUtf8("[A]"), formatRichString(QString::number(daysExpired)));
+                            .replace(QString::fromUtf8("[A]"), formatRichString(QString::number(-daysExpired)));
                 }
                 break;
             }

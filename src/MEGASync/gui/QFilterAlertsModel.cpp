@@ -4,7 +4,7 @@
 using namespace mega;
 
 QFilterAlertsModel::QFilterAlertsModel(QObject *parent)
-    :  MegaAlertsModel(parent), QSortFilterProxyModel(parent)
+    :  QSortFilterProxyModel(parent)
 {
     actualFilter = NO_FILTER;
 }
@@ -46,25 +46,25 @@ bool QFilterAlertsModel::checkFilterType(int typeToCheck) const
             case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED:
             case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
             case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
-                return actualFilter == FILTER_CONTACTS ? true : false;
+                return actualFilter == FILTER_CONTACTS;
                 break;
 
             case MegaUserAlert::TYPE_NEWSHARE:
             case MegaUserAlert::TYPE_DELETEDSHARE:
             case MegaUserAlert::TYPE_NEWSHAREDNODES:
             case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
-                return actualFilter == FILTER_SHARES ? true : false;
+                return actualFilter == FILTER_SHARES;
                 break;
 
             case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
             case MegaUserAlert::TYPE_PAYMENT_FAILED:
             case MegaUserAlert::TYPE_PAYMENTREMINDER:
-                return actualFilter == FILTER_PAYMENT ? true : false;
+                return actualFilter == FILTER_PAYMENT;
                 break;
 
             case MegaUserAlert::TYPE_TAKEDOWN:
             case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
-                return actualFilter == FILTER_TAKEDOWNS ? true : false;
+                return actualFilter == FILTER_TAKEDOWNS;
                 break;
 
             default:
