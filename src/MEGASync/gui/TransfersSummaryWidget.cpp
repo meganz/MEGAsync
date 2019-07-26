@@ -396,27 +396,6 @@ void TransfersSummaryWidget::shrink(bool noAnimate)
 {
     int goalwidth = minwidth;
     return doResize(goalwidth, noAnimate);
-
-    if (noAnimate)
-    {
-        this->setMaximumSize(minwidth, this->height());
-        this->setMinimumSize(minwidth, this->height());
-        status = Status::SHRUNK;
-        return;
-    }
-    if (status == Status::SHRUNK)
-    {
-        return;
-    }
-
-    if (status != Status::SHRINKING)
-    {
-        qe.start();
-        update();
-
-        QTimer::singleShot(1, this, SLOT(resizeAnimation()));
-    }
-    status = Status::SHRINKING;
 }
 
 
