@@ -1,5 +1,6 @@
 #include "QAlertsModel.h"
 #include <QDateTime>
+#include <assert.h>
 
 using namespace mega;
 
@@ -16,15 +17,18 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
     int actualnumberofalertstoinsert = 0;
     if (numAlerts)
     {
-//        for (int i = 0; i < numAlerts; i++)
-//        {
-//            if (alertsMap.find(alerts->get(i)->getId()) != alertsMap.end())
-//            {
-//                actualnumberofalertstoinsert ++;
-//            }
-//        }
-//        beginInsertRows(QModelIndex(), 0, actualnumberofalertstoinsert - 1);
-//        actualnumberofalertstoinsert = 0;
+        for (int i = 0; i < numAlerts; i++)
+        {
+            if (alertsMap.find(alerts->get(i)->getId()) == alertsMap.end())
+            {
+                actualnumberofalertstoinsert ++;
+            }
+        }
+        if (actualnumberofalertstoinsert > 0)
+        {
+            beginInsertRows(QModelIndex(), 0, actualnumberofalertstoinsert - 1);
+        }
+        actualnumberofalertstoinsert = 0;
 
         for (int i = 0; i < numAlerts; i++)
         {
@@ -42,9 +46,24 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                 if (existing != alertsMap.end())
                 {
                     MegaUserAlert *old = existing.value();
-                    alertsMap.erase(existing);
+                    alertsMap[alert->getId()] = alert;
                     delete old;
-                    alertsMap.insert(alert->getId(), alert);
+
+                    //update row element
+                    std::deque<int>::iterator orderIter = std::find(alertOrder.begin(), alertOrder.end(),alert->getId());
+                    assert(orderIter != alertOrder.end() && (*orderIter) == alert->getId());
+                    if (orderIter != alertOrder.end() && (*orderIter) == alert->getId())
+                    {
+                        int row = std::distance(alertOrder.begin(),orderIter);
+                        if (row < alertOrder.size())
+                        {
+                            emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
+                        }
+                        else
+                        {
+                            assert(false || "unexpected row to update");
+                        }
+                    }
                 }
                 else
                 {
@@ -55,10 +74,13 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
             }
         }
 
-        // this might actually be problematic, but since the change on the underlying data is done synchrnously
-        // it seems we don't need to call beginInsert before actually doing it
-        beginInsertRows(QModelIndex(), 0, actualnumberofalertstoinsert - 1);
-        endInsertRows();
+        if (actualnumberofalertstoinsert > 0)
+        {
+            // this might actually be problematic, but since the change on the underlying data seems to be done synchronously
+            // it seems we might not need to call beginInsert before actually doing it
+//            beginInsertRows(QModelIndex(), 0, actualnumberofalertstoinsert - 1);
+            endInsertRows();
+        }
     }
 }
 

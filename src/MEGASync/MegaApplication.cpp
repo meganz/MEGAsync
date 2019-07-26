@@ -8,7 +8,6 @@
 #include "control/ExportProcessor.h"
 #include "platform/Platform.h"
 #include "qtlockedfile/qtlockedfile.h"
-#include "gui/MegaAlertDelegate.h"
 
 #include <QTranslator>
 #include <QClipboard>
@@ -794,8 +793,20 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updatingSSLcert = false;
     lastSSLcertUpdate = 0;
 
-    model = NULL;
-    proxyModel = NULL;
+    notificationsModel = NULL;
+    notificationsProxyModel = NULL;
+    notificationsTreeView = NULL;
+    notificationsDelegate = NULL;
+
+    notificationsTreeView = new QTreeView();
+    notificationsTreeView->setSelectionMode(QAbstractItemView::NoSelection);
+    notificationsTreeView->setDragEnabled(false);
+    notificationsTreeView->setSortingEnabled(true);
+    notificationsTreeView->viewport()->setAcceptDrops(false);
+    notificationsTreeView->setDropIndicatorShown(false);
+    notificationsTreeView->setDragDropMode(QAbstractItemView::InternalMove);
+    notificationsTreeView->setFocusPolicy(Qt::NoFocus);
+
 
 #ifdef _WIN32
     windowsMenu = NULL;
@@ -1459,10 +1470,12 @@ void MegaApplication::start()
         trayIcon->setContextMenu(initialMenu.get());
     }
 
-    delete model;
-    model = NULL;
-    delete proxyModel;
-    proxyModel = NULL;
+    if(notificationsModel) notificationsModel->deleteLater();
+    notificationsModel = NULL;
+    if (notificationsProxyModel) notificationsProxyModel->deleteLater();
+    notificationsProxyModel = NULL;
+    if (notificationsDelegate) notificationsDelegate->deleteLater();
+    notificationsDelegate = NULL;
 
 #ifndef __APPLE__
     #ifdef _WIN32
@@ -2730,6 +2743,16 @@ void MegaApplication::cleanAll()
     delegateListener = NULL;
     delete pricing;
     pricing = NULL;
+
+    // Delete notifications stuff
+    delete notificationsModel;
+    notificationsModel = NULL;
+    delete notificationsProxyModel;
+    notificationsProxyModel = NULL;
+    delete notificationsDelegate;
+    notificationsDelegate = NULL;
+    delete notificationsTreeView;
+    notificationsTreeView = NULL;
 
     // Delete menus and menu items
     deleteMenu(initialMenu.release());
@@ -7552,36 +7575,36 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
     }
     else
     {
-        assert(model && "onUserAlertsUpdate with !alerts should have happened before!");
+        assert(notificationsModel && "onUserAlertsUpdate with !alerts should have happened before!");
     }
 
 
-    static QTreeView *tv = new QTreeView(); //TODO: this should be included in InfoDialog
-    if (!model)
+    }
+
+    if (!notificationsModel)
     {
-        model = new QAlertsModel(list, copyRequired);
-        proxyModel = new QFilterAlertsModel();
-        proxyModel->setSourceModel(model);
-        proxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
+        notificationsModel = new QAlertsModel(list, copyRequired);
+        notificationsProxyModel = new QFilterAlertsModel();
+        notificationsProxyModel->setSourceModel(notificationsModel);
+        notificationsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
 
-        MegaAlertDelegate *tDelegate = new MegaAlertDelegate(model, true, this);
+        notificationsDelegate = new MegaAlertDelegate(notificationsModel, true, this);
 
-        tv->setItemDelegate((QAbstractItemDelegate *)tDelegate);
-        tv->setSelectionMode(QAbstractItemView::NoSelection);
-        tv->setDragEnabled(false);
-        tv->setSortingEnabled(true);
-        tv->viewport()->setAcceptDrops(false);
-        tv->setDropIndicatorShown(false);
-        tv->setDragDropMode(QAbstractItemView::InternalMove);
-        tv->setModel(proxyModel);
-        tv->setFocusPolicy(Qt::NoFocus);
+        notificationsTreeView->setModel(notificationsProxyModel);
+        notificationsTreeView->setItemDelegate((QAbstractItemDelegate *)notificationsDelegate);
 
-        tv->show();
+
+        notificationsTreeView->show();
     }
     else
     {
-        model->insertAlerts(list, copyRequired);
-        //TODO: update view
+        notificationsModel->insertAlerts(list, copyRequired);
+    }
+
+    if (!copyRequired) //list requires deletion
+    {
+        //list->clear(); //TODO: implement this in SDK
+        //delete list; //TODO: call this once implemented clear();
     }
 }
 

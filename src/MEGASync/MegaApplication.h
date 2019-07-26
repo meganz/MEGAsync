@@ -38,6 +38,7 @@
 #include "megaapi.h"
 #include "QTMegaListener.h"
 #include "QFilterAlertsModel.h"
+#include "gui/MegaAlertDelegate.h"
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -323,8 +324,11 @@ protected:
     Preferences *preferences;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
-    QFilterAlertsModel *proxyModel;
-    QAlertsModel *model;
+    QFilterAlertsModel *notificationsProxyModel;
+    QAlertsModel *notificationsModel;
+    QTreeView *notificationsTreeView;
+    MegaAlertDelegate *notificationsDelegate;
+
     HTTPServer *httpServer;
     HTTPServer *httpsServer;
     UploadToMegaDialog *uploadFolderSelector;
