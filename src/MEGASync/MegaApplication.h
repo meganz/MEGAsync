@@ -144,6 +144,7 @@ public:
 
     TransferMetaData* getTransferAppData(unsigned long long appDataID);
 
+    bool notificationsAreFiltered();
 signals:
     void startUpdaterThread();
     void tryUpdate();
@@ -326,7 +327,6 @@ protected:
     mega::MegaApi *megaApiFolders;
     QFilterAlertsModel *notificationsProxyModel;
     QAlertsModel *notificationsModel;
-    QTreeView *notificationsTreeView;
     MegaAlertDelegate *notificationsDelegate;
 
     HTTPServer *httpServer;

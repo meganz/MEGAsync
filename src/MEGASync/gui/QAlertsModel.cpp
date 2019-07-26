@@ -8,6 +8,7 @@ QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, bool copy, QObject *parent
     : QAbstractItemModel(parent)
 {
     alertItems.setMaxCost(16);
+    unseenNotifications = 0;
     insertAlerts(alerts, copy);
 }
 
@@ -37,6 +38,10 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                 MegaUserAlert *alert = alerts->get(i);
                 alertOrder.push_front(alert->getId());
                 alertsMap.insert(alert->getId(), alert);
+                if (!alert->getSeen())
+                {
+                    unseenNotifications++;
+                }
                 actualnumberofalertstoinsert++;
             }
             else
@@ -47,6 +52,10 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                 {
                     MegaUserAlert *old = existing.value();
                     alertsMap[alert->getId()] = alert;
+                    if (alert->getSeen() != old->getSeen())
+                    {
+                        unseenNotifications+=alert->getSeen()?-1:1;
+                    }
                     delete old;
 
                     //update row element
@@ -70,6 +79,10 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                     alertOrder.push_front(alert->getId());
                     alertsMap.insert(alert->getId(), alert);
                     actualnumberofalertstoinsert++;
+                    if (!alert->getSeen())
+                    {
+                        unseenNotifications++;
+                    }
                 }
             }
         }
@@ -148,4 +161,9 @@ void QAlertsModel::refreshAlerts()
     {
         emit dataChanged(index(0, 0, QModelIndex()), index(alertOrder.size() - 1, 0, QModelIndex()));
     }
+}
+
+long long QAlertsModel::getUnseenNotifications() const
+{
+    return unseenNotifications;
 }

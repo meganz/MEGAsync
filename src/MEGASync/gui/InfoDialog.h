@@ -54,6 +54,8 @@ public:
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
 
+    void updateNotificationsTreeView(QAbstractItemModel *model, QAbstractItemDelegate *delegate);
+
 
     QCustomTransfersModel *stealModel();
 
@@ -68,6 +70,10 @@ public:
 #ifdef _WIN32
     std::chrono::steady_clock::time_point lastWindowHideTime;
 #endif
+
+    void setUnseenNotifications(long long value);
+
+    long long getUnseenNotifications() const;
 
 private:
     void drawAvatar(QString email);
@@ -99,6 +105,7 @@ private slots:
     void on_bBuyQuota_clicked();
 
     void onAnimationFinished();
+    void sTabsChanged(int tab);
 
 signals:
     void openTransferManager(int tab);
@@ -129,6 +136,7 @@ private:
     int storageState;
     int actualAccountType;
     bool loggedInMode = true;
+    long long unseenNotifications = 0;
 
     QPropertyAnimation *animation;
     QGraphicsOpacityEffect *opacityEffect;

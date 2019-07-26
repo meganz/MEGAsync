@@ -30,9 +30,13 @@ public:
 
     void insertAlerts(mega::MegaUserAlertList *alerts, bool copy = false);
 
+    long long getUnseenNotifications() const;
+
 private:
     QMap<int, mega::MegaUserAlert*> alertsMap;
     std::deque<int> alertOrder;
+
+    long long unseenNotifications;
 };
 
 #endif // QALERTSMODEL_H

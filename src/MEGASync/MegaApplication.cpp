@@ -795,18 +795,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
     notificationsModel = NULL;
     notificationsProxyModel = NULL;
-    notificationsTreeView = NULL;
     notificationsDelegate = NULL;
-
-    notificationsTreeView = new QTreeView();
-    notificationsTreeView->setSelectionMode(QAbstractItemView::NoSelection);
-    notificationsTreeView->setDragEnabled(false);
-    notificationsTreeView->setSortingEnabled(true);
-    notificationsTreeView->viewport()->setAcceptDrops(false);
-    notificationsTreeView->setDropIndicatorShown(false);
-    notificationsTreeView->setDragDropMode(QAbstractItemView::InternalMove);
-    notificationsTreeView->setFocusPolicy(Qt::NoFocus);
-
 
 #ifdef _WIN32
     windowsMenu = NULL;
@@ -2751,8 +2740,6 @@ void MegaApplication::cleanAll()
     notificationsProxyModel = NULL;
     delete notificationsDelegate;
     notificationsDelegate = NULL;
-    delete notificationsTreeView;
-    notificationsTreeView = NULL;
 
     // Delete menus and menu items
     deleteMenu(initialMenu.release());
@@ -7560,6 +7547,11 @@ void MegaApplication::onAccountUpdate(MegaApi *)
 }
 
 
+bool MegaApplication::notificationsAreFiltered()
+{
+    return notificationsProxyModel->filterAlertType() != QFilterAlertsModel::NO_FILTER;
+}
+
 void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
 {
     if (appfinished || !preferences->logged())
@@ -7590,16 +7582,16 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
 
         notificationsDelegate = new MegaAlertDelegate(notificationsModel, true, this);
 
-        notificationsTreeView->setModel(notificationsProxyModel);
-        notificationsTreeView->setItemDelegate((QAbstractItemDelegate *)notificationsDelegate);
-
-
-        notificationsTreeView->show();
+        if (infoDialog)
+        {
+            infoDialog->updateNotificationsTreeView(notificationsProxyModel, notificationsDelegate);
+        }
     }
     else
     {
         notificationsModel->insertAlerts(list, copyRequired);
     }
+    infoDialog->setUnseenNotifications(notificationsModel->getUnseenNotifications());
 
     if (!copyRequired) //list requires deletion
     {

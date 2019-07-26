@@ -780,6 +780,12 @@ bool InfoDialog::updateOverStorageState(int state)
     return false;
 }
 
+void InfoDialog::updateNotificationsTreeView(QAbstractItemModel *model, QAbstractItemDelegate *delegate)
+{
+    ui->tvNotifications->setModel(model);
+    ui->tvNotifications->setItemDelegate(delegate);
+}
+
 QCustomTransfersModel *InfoDialog::stealModel()
 {
     QCustomTransfersModel *toret = ui->wListTransfers->getModel();
@@ -824,6 +830,16 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
     {
         close();
         return true;
+    }
+
+    if (obj == this && e->type() == QEvent::Show)
+    {
+        emit ui->sTabs->currentChanged(ui->sTabs->currentIndex());
+    }
+
+    if (obj == this && e->type() == QEvent::Hide)
+    {
+        emit ui->sTabs->currentChanged(-1);
     }
 #endif
 #ifdef __APPLE__
@@ -1085,6 +1101,39 @@ void InfoDialog::onAnimationFinished()
         animation->setDirection(QAbstractAnimation::Forward);
         animation->start();
     }
+}
+
+void InfoDialog::sTabsChanged(int tab)
+{
+    static int lasttab = -1;
+    if (tab != ui->sTabs->indexOf(ui->pNotificationsTab))
+    {
+        if (lasttab == ui->sTabs->indexOf(ui->pNotificationsTab))
+        {
+            if (!app->notificationsAreFiltered())
+            {
+                megaApi->acknowledgeUserAlerts();
+            }
+        }
+    }
+    lasttab = tab;
+}
+
+long long InfoDialog::getUnseenNotifications() const
+{
+    return unseenNotifications;
+}
+
+void InfoDialog::setUnseenNotifications(long long value)
+{
+    unseenNotifications = value;
+    if (!unseenNotifications)
+    {
+        ui->bNumberUnseenNotifications->hide();
+        return;
+    }
+    ui->bNumberUnseenNotifications->show();
+    ui->bNumberUnseenNotifications->setText(QString::number(unseenNotifications));
 }
 
 #ifdef __APPLE__

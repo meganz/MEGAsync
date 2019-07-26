@@ -51,6 +51,9 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
 
         painter->save();
         painter->translate(option.rect.topLeft());
+
+        ti->resize(option.rect.width(), option.rect.height());
+
         ti->render(painter, QPoint(0, 0), QRegion(0, 0, option.rect.width(), option.rect.height()));
         painter->restore();
     }
