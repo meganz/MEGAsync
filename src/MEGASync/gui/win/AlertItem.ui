@@ -298,6 +298,7 @@ color: #FFFFFF;
 font-weight: bold;
 font-family: Lato;
 font-size: 10px;
+border-radius: 4px;
 }</string>
         </property>
         <property name="text">
