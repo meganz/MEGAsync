@@ -32,6 +32,13 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui(new Ui::InfoDialog)
 {
     ui->setupUi(this);
+
+#if QT_VERSION > 0x050200
+    QSizePolicy sp_retain = ui->bNumberUnseenNotifications->sizePolicy();
+    sp_retain.setRetainSizeWhenHidden(true);
+    ui->bNumberUnseenNotifications->setSizePolicy(sp_retain);
+#endif
+
     //Set window properties
 #ifdef Q_OS_LINUX
     if (true || !QSystemTrayIcon::isSystemTrayAvailable()) //To avoid issues with text input we implement popup ourselves by listening to WindowDeactivate event
@@ -118,6 +125,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     connect(ui->wStatus, SIGNAL(clicked()), app, SLOT(pauseTransfers()), Qt::QueuedConnection);
     connect(ui->wPSA, SIGNAL(PSAseen(int)), app, SLOT(PSAseen(int)), Qt::QueuedConnection);
+
+    connect(ui->sTabs, SIGNAL(currentChanged(int)), this, SLOT(sTabsChanged(int)), Qt::QueuedConnection);
 
     on_tTransfers_clicked();
 
@@ -780,6 +789,12 @@ bool InfoDialog::updateOverStorageState(int state)
     return false;
 }
 
+void InfoDialog::updateNotificationsTreeView(QAbstractItemModel *model, QAbstractItemDelegate *delegate)
+{
+    ui->tvNotifications->setModel(model);
+    ui->tvNotifications->setItemDelegate(delegate);
+}
+
 QCustomTransfersModel *InfoDialog::stealModel()
 {
     QCustomTransfersModel *toret = ui->wListTransfers->getModel();
@@ -824,6 +839,16 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
     {
         close();
         return true;
+    }
+
+    if (obj == this && e->type() == QEvent::Show)
+    {
+        emit ui->sTabs->currentChanged(ui->sTabs->currentIndex());
+    }
+
+    if (obj == this && e->type() == QEvent::Hide)
+    {
+        emit ui->sTabs->currentChanged(-1);
     }
 #endif
 #ifdef __APPLE__
@@ -1085,6 +1110,39 @@ void InfoDialog::onAnimationFinished()
         animation->setDirection(QAbstractAnimation::Forward);
         animation->start();
     }
+}
+
+void InfoDialog::sTabsChanged(int tab)
+{
+    static int lasttab = -1;
+    if (tab != ui->sTabs->indexOf(ui->pNotificationsTab))
+    {
+        if (lasttab == ui->sTabs->indexOf(ui->pNotificationsTab))
+        {
+            if (app->hasNotifications() && !app->notificationsAreFiltered())
+            {
+                megaApi->acknowledgeUserAlerts();
+            }
+        }
+    }
+    lasttab = tab;
+}
+
+long long InfoDialog::getUnseenNotifications() const
+{
+    return unseenNotifications;
+}
+
+void InfoDialog::setUnseenNotifications(long long value)
+{
+    unseenNotifications = value;
+    if (!unseenNotifications)
+    {
+        ui->bNumberUnseenNotifications->hide();
+        return;
+    }
+    ui->bNumberUnseenNotifications->show();
+    ui->bNumberUnseenNotifications->setText(QString::number(unseenNotifications));
 }
 
 #ifdef __APPLE__

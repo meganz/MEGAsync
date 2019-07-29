@@ -1,24 +1,99 @@
 #include "QAlertsModel.h"
 #include <QDateTime>
+#include <assert.h>
 
 using namespace mega;
 
-QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, QObject *parent)
+QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, bool copy, QObject *parent)
     : QAbstractItemModel(parent)
 {
     alertItems.setMaxCost(16);
+    unseenNotifications = 0;
+    insertAlerts(alerts, copy);
+}
 
+void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
+{
     int numAlerts = alerts->size();
+    int actualnumberofalertstoinsert = 0;
     if (numAlerts)
     {
-        beginInsertRows(QModelIndex(), 0, numAlerts - 1);
         for (int i = 0; i < numAlerts; i++)
         {
-            MegaUserAlert *alert = alerts->get(i);
-            alertOrder.push_front(alert->getId());
-            alertsMap.insert(alert->getId(), alert);
+            if (alertsMap.find(alerts->get(i)->getId()) == alertsMap.end())
+            {
+                actualnumberofalertstoinsert ++;
+            }
         }
-        endInsertRows();
+        if (actualnumberofalertstoinsert > 0)
+        {
+            beginInsertRows(QModelIndex(), 0, actualnumberofalertstoinsert - 1);
+        }
+        actualnumberofalertstoinsert = 0;
+
+        for (int i = 0; i < numAlerts; i++)
+        {
+            if (!copy) //first time, alertsMap should be empty
+            {
+                MegaUserAlert *alert = alerts->get(i);
+                alertOrder.push_front(alert->getId());
+                alertsMap.insert(alert->getId(), alert);
+                if (!alert->getSeen())
+                {
+                    unseenNotifications++;
+                }
+                actualnumberofalertstoinsert++;
+            }
+            else
+            {
+                MegaUserAlert *alert = alerts->get(i)->copy();
+                QMap<int, mega::MegaUserAlert*>::iterator existing = alertsMap.find(alert->getId());
+                if (existing != alertsMap.end())
+                {
+                    MegaUserAlert *old = existing.value();
+                    alertsMap[alert->getId()] = alert;
+                    if (alert->getSeen() != old->getSeen())
+                    {
+                        unseenNotifications+=alert->getSeen()?-1:1;
+                    }
+                    delete old;
+
+                    //update row element
+                    std::deque<int>::iterator orderIter = std::find(alertOrder.begin(), alertOrder.end(),alert->getId());
+                    assert(orderIter != alertOrder.end() && (*orderIter) == alert->getId());
+                    if (orderIter != alertOrder.end() && (*orderIter) == alert->getId())
+                    {
+                        int row = std::distance(alertOrder.begin(),orderIter);
+                        if (row < alertOrder.size())
+                        {
+                            emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
+                        }
+                        else
+                        {
+                            assert(false || "unexpected row to update");
+                        }
+                    }
+                }
+                else
+                {
+                    alertOrder.push_front(alert->getId());
+                    alertsMap.insert(alert->getId(), alert);
+                    actualnumberofalertstoinsert++;
+                    if (!alert->getSeen())
+                    {
+                        unseenNotifications++;
+                    }
+                }
+            }
+        }
+
+        if (actualnumberofalertstoinsert > 0)
+        {
+            // this might actually be problematic, but since the change on the underlying data seems to be done synchronously
+            // it seems we might not need to call beginInsert before actually doing it
+//            beginInsertRows(QModelIndex(), 0, actualnumberofalertstoinsert - 1);
+            endInsertRows();
+        }
     }
 }
 
@@ -86,4 +161,9 @@ void QAlertsModel::refreshAlerts()
     {
         emit dataChanged(index(0, 0, QModelIndex()), index(alertOrder.size() - 1, 0, QModelIndex()));
     }
+}
+
+long long QAlertsModel::getUnseenNotifications() const
+{
+    return unseenNotifications;
 }

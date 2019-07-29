@@ -27,6 +27,7 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
     setAlertHeading(alert);
     setAlertContent(alert);
     setAlertTimeStamp(alert->getTimestamp(0));
+    alert->getSeen() ? ui->lNew->hide() : ui->lNew->show();
 }
 
 void AlertItem::setAlertType(int type)

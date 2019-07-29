@@ -37,6 +37,8 @@
 #include "control/MegaSyncLogger.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
+#include "QFilterAlertsModel.h"
+#include "gui/MegaAlertDelegate.h"
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -103,6 +105,7 @@ public:
     virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
     virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e);
     virtual void onAccountUpdate(mega::MegaApi *api);
+    virtual void onUserAlertsUpdate(mega::MegaApi *api, mega::MegaUserAlertList *list);
     virtual void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users);
     virtual void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes);
     virtual void onReloadNeeded(mega::MegaApi* api);
@@ -141,6 +144,8 @@ public:
 
     TransferMetaData* getTransferAppData(unsigned long long appDataID);
 
+    bool notificationsAreFiltered();
+    bool hasNotifications();
 signals:
     void startUpdaterThread();
     void tryUpdate();
@@ -321,6 +326,10 @@ protected:
     Preferences *preferences;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
+    QFilterAlertsModel *notificationsProxyModel;
+    QAlertsModel *notificationsModel;
+    MegaAlertDelegate *notificationsDelegate;
+
     HTTPServer *httpServer;
     HTTPServer *httpsServer;
     UploadToMegaDialog *uploadFolderSelector;
