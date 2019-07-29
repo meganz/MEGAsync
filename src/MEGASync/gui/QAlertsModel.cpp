@@ -22,7 +22,7 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
         {
             if (alertsMap.find(alerts->get(i)->getId()) == alertsMap.end())
             {
-                actualnumberofalertstoinsert ++;
+                actualnumberofalertstoinsert++;
             }
         }
         if (actualnumberofalertstoinsert > 0)
