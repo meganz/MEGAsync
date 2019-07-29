@@ -7570,9 +7570,6 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
         assert(notificationsModel && "onUserAlertsUpdate with !alerts should have happened before!");
     }
 
-
-    }
-
     if (!notificationsModel)
     {
         notificationsModel = new QAlertsModel(list, copyRequired);
