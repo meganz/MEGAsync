@@ -7549,7 +7549,12 @@ void MegaApplication::onAccountUpdate(MegaApi *)
 
 bool MegaApplication::notificationsAreFiltered()
 {
-    return notificationsProxyModel->filterAlertType() != QFilterAlertsModel::NO_FILTER;
+    return notificationsProxyModel && notificationsProxyModel->filterAlertType() != QFilterAlertsModel::NO_FILTER;
+}
+
+bool MegaApplication::hasNotifications()
+{
+    return notificationsModel && notificationsModel->rowCount(QModelIndex());
 }
 
 void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)

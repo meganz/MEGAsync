@@ -145,6 +145,7 @@ public:
     TransferMetaData* getTransferAppData(unsigned long long appDataID);
 
     bool notificationsAreFiltered();
+    bool hasNotifications();
 signals:
     void startUpdaterThread();
     void tryUpdate();
