@@ -34,6 +34,10 @@
   padding: 0px 8px 0px 8px;
   border: none;
 }
+#tNotifications
+{
+  padding: 0px 4px 0px 16px;
+}
 
 #bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage
 {
@@ -717,7 +721,7 @@ QToolButton
                       <widget class="QWidget" name="wNotificationsTab" native="true">
                        <property name="minimumSize">
                         <size>
-                         <width>130</width>
+                         <width>40</width>
                          <height>0</height>
                         </size>
                        </property>
@@ -752,10 +756,16 @@ QToolButton
                         </item>
                         <item>
                          <widget class="QPushButton" name="bNumberUnseenNotifications">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
                           <property name="minimumSize">
                            <size>
                             <width>6</width>
-                            <height>15</height>
+                            <height>14</height>
                            </size>
                           </property>
                           <property name="maximumSize">
@@ -763,6 +773,20 @@ QToolButton
                             <width>16777215</width>
                             <height>15</height>
                            </size>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">#bNumberUnseenNotifications
+{
+background-color: #FF333A;
+color: #FFFFFF;
+font-weight: bold;
+font-family: Lato;
+font-size: 11px;
+border-radius: 4px;
+padding-left: 4px;
+padding-right: 4px;
+margin-right: 4px;
+}</string>
                           </property>
                           <property name="text">
                            <string>0</string>
@@ -804,7 +828,7 @@ QToolButton
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>213</width>
+                      <width>2</width>
                       <height>20</height>
                      </size>
                     </property>

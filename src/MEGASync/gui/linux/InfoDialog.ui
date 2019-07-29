@@ -34,6 +34,10 @@
   padding: 0px 8px 0px 8px;
   border: none;
 }
+#tNotifications
+{
+  padding: 0px 4px 0px 16px;
+}
 
 #bAvatar, #bState, #bMEGAheader, #bClockDown, #bClockUp, #bOQIcon, #bBusinessQuota, #bBusinessStorage
 {
@@ -53,6 +57,7 @@ font-weight: normal;
 border: none;
 color: #333333;
 }
+
 </string>
   </property>
   <property name="sizeGripEnabled">
@@ -337,7 +342,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_add_sync_folder.png</normaloff>:/images/ico_add_sync_folder.png</iconset>
               </property>
               <property name="iconSize">
@@ -373,7 +378,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_upload.png</normaloff>:/images/ico_upload.png</iconset>
               </property>
               <property name="iconSize">
@@ -409,7 +414,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/ico_download.png</normaloff>:/images/ico_download.png</iconset>
               </property>
               <property name="iconSize">
@@ -454,7 +459,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/more_settings.png</normaloff>:/images/more_settings.png</iconset>
               </property>
               <property name="iconSize">
@@ -717,7 +722,7 @@ QToolButton
                       <widget class="QWidget" name="wNotificationsTab" native="true">
                        <property name="minimumSize">
                         <size>
-                         <width>130</width>
+                         <width>40</width>
                          <height>0</height>
                         </size>
                        </property>
@@ -752,10 +757,16 @@ QToolButton
                         </item>
                         <item>
                          <widget class="QPushButton" name="bNumberUnseenNotifications">
+                          <property name="sizePolicy">
+                           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                            <horstretch>0</horstretch>
+                            <verstretch>0</verstretch>
+                           </sizepolicy>
+                          </property>
                           <property name="minimumSize">
                            <size>
                             <width>6</width>
-                            <height>15</height>
+                            <height>14</height>
                            </size>
                           </property>
                           <property name="maximumSize">
@@ -763,6 +774,20 @@ QToolButton
                             <width>16777215</width>
                             <height>15</height>
                            </size>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true">#bNumberUnseenNotifications
+{
+background-color: #FF333A;
+color: #FFFFFF;
+font-weight: bold;
+font-family: Lato;
+font-size: 11px;
+border-radius: 4px;
+padding-left: 4px;
+padding-right: 4px;
+margin-right: 4px;
+}</string>
                           </property>
                           <property name="text">
                            <string>0</string>
@@ -804,7 +829,7 @@ QToolButton
                     </property>
                     <property name="sizeHint" stdset="0">
                      <size>
-                      <width>213</width>
+                      <width>2</width>
                       <height>20</height>
                      </size>
                     </property>
@@ -1398,7 +1423,7 @@ background-color: transparent;
                             <string/>
                            </property>
                            <property name="icon">
-                            <iconset resource="../Resources_macx.qrc">
+                            <iconset resource="../Resources_linux.qrc">
                              <normaloff>:/images/upload_to_mega.png</normaloff>:/images/upload_to_mega.png</iconset>
                            </property>
                            <property name="iconSize">
@@ -2163,7 +2188,7 @@ background-color: #F7F8F9;
                <string/>
               </property>
               <property name="icon">
-               <iconset resource="../Resources_macx.qrc">
+               <iconset resource="../Resources_linux.qrc">
                 <normaloff>:/images/tray_transfer_manager_ico.png</normaloff>:/images/tray_transfer_manager_ico.png</iconset>
               </property>
               <property name="iconSize">
@@ -2224,7 +2249,7 @@ background-color: #F7F8F9;
   <tabstop>bSettings</tabstop>
  </tabstops>
  <resources>
-  <include location="../Resources_macx.qrc"/>
+  <include location="../Resources_linux.qrc"/>
  </resources>
  <connections/>
 </ui>

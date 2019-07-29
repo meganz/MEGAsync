@@ -32,6 +32,13 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui(new Ui::InfoDialog)
 {
     ui->setupUi(this);
+
+#if QT_VERSION > 0x050200
+    QSizePolicy sp_retain = ui->bNumberUnseenNotifications->sizePolicy();
+    sp_retain.setRetainSizeWhenHidden(true);
+    ui->bNumberUnseenNotifications->setSizePolicy(sp_retain);
+#endif
+
     //Set window properties
 #ifdef Q_OS_LINUX
     if (true || !QSystemTrayIcon::isSystemTrayAvailable()) //To avoid issues with text input we implement popup ourselves by listening to WindowDeactivate event
@@ -118,6 +125,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     connect(ui->wStatus, SIGNAL(clicked()), app, SLOT(pauseTransfers()), Qt::QueuedConnection);
     connect(ui->wPSA, SIGNAL(PSAseen(int)), app, SLOT(PSAseen(int)), Qt::QueuedConnection);
+
+    connect(ui->sTabs, SIGNAL(currentChanged(int)), this, SLOT(sTabsChanged(int)), Qt::QueuedConnection);
 
     on_tTransfers_clicked();
 
