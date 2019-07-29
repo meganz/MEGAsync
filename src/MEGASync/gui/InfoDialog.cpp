@@ -90,16 +90,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->sStorage->setCurrentWidget(ui->wCircularStorage);
     ui->sQuota->setCurrentWidget(ui->wCircularQuota);
 
-#ifdef __APPLE__
-    if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //Issues with mavericks and popup management
-    {
-        installEventFilter(this);
-    }
-#endif
-
-#ifdef Q_OS_LINUX
     installEventFilter(this);
-#endif
 
     ui->lOQDesc->setTextFormat(Qt::RichText);
 
@@ -841,6 +832,7 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
         return true;
     }
 
+#endif
     if (obj == this && e->type() == QEvent::Show)
     {
         emit ui->sTabs->currentChanged(ui->sTabs->currentIndex());
@@ -850,7 +842,6 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
     {
         emit ui->sTabs->currentChanged(-1);
     }
-#endif
 #ifdef __APPLE__
     if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //manage spontaneus mouse press events
     {
@@ -1135,14 +1126,15 @@ long long InfoDialog::getUnseenNotifications() const
 
 void InfoDialog::setUnseenNotifications(long long value)
 {
-    unseenNotifications = value;
+    assert(value >= 0);
+    unseenNotifications = value > 0 ? value : 0;
     if (!unseenNotifications)
     {
         ui->bNumberUnseenNotifications->hide();
         return;
     }
-    ui->bNumberUnseenNotifications->show();
     ui->bNumberUnseenNotifications->setText(QString::number(unseenNotifications));
+    ui->bNumberUnseenNotifications->show();
 }
 
 #ifdef __APPLE__
