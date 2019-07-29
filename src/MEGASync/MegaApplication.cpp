@@ -7593,7 +7593,11 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
     {
         notificationsModel->insertAlerts(list, copyRequired);
     }
-    infoDialog->setUnseenNotifications(notificationsModel->getUnseenNotifications());
+
+    if (infoDialog)
+    {
+        infoDialog->setUnseenNotifications(notificationsModel->getUnseenNotifications());
+    }
 
     if (!copyRequired) //list requires deletion
     {
