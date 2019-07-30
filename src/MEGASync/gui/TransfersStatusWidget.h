@@ -4,7 +4,6 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QPen>
-#include <QElapsedTimer>
 
 namespace Ui {
 class TransfersStatusWidget;
@@ -13,12 +12,12 @@ class TransfersStatusWidget;
 class TransfersStatusWidget : public QWidget
 {
     Q_OBJECT
-public slots:
-     void updateSizes();
 public:
     explicit TransfersStatusWidget(QWidget *parent = 0);
     ~TransfersStatusWidget();
     void paintEvent(QPaintEvent *);
+
+    void updateSizes();
 
     qreal getPercentInnerCircle() const;
     void setPercentInnerCircle(const qreal &value);
@@ -41,6 +40,7 @@ private:
     int spacing;
     int diaminside;
     int marginoutside;
+    int margininside;
     int residualin; //related to the width of the pen (0 for FlatCap)
     int residualout;
 

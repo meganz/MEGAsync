@@ -311,6 +311,9 @@
         <file>images/download_item_ico.png</file>
         <file>images/download_item_ico@2x.png</file>
         <file>images/download_item_ico@3x.png</file>
+        <file>images/download_item_ico_white.png</file>
+        <file>images/download_item_ico_white@2x.png</file>
+        <file>images/download_item_ico_white@3x.png</file>
         <file>images/get_link_ico.png</file>
         <file>images/get_link_ico@2x.png</file>
         <file>images/get_link_ico@3x.png</file>
@@ -338,6 +341,9 @@
         <file>images/upload_item_ico.png</file>
         <file>images/upload_item_ico@2x.png</file>
         <file>images/upload_item_ico@3x.png</file>
+        <file>images/upload_item_ico_white.png</file>
+        <file>images/upload_item_ico_white@2x.png</file>
+        <file>images/upload_item_ico_white@3x.png</file>
         <file>images/completed_item_ico.png</file>
         <file>images/completed_item_ico@2x.png</file>
         <file>images/completed_item_ico@3x.png</file>
@@ -356,8 +362,6 @@
         <file>images/get_link_ico_white.png</file>
         <file>images/get_link_ico_white@2x.png</file>
         <file>images/get_link_ico_white@3x.png</file>
-        <file>images/settings_ico_white@3x.png</file>
-        <file>images/upload_to_mega_ico_white@3x.png</file>
         <file>images/clock_ico.png</file>
         <file>images/clock_ico@2x.png</file>
         <file>images/clock_ico@3x.png</file>
@@ -367,6 +371,12 @@
         <file>images/pause_big_ico.png</file>
         <file>images/pause_big_ico@2x.png</file>
         <file>images/pause_big_ico@3x.png</file>
+        <file>images/pause.png</file>
+        <file>images/pause@2x.png</file>
+        <file>images/pause@3x.png</file>
+        <file>images/resume.png</file>
+        <file>images/resume@2x.png</file>
+        <file>images/resume@3x.png</file>
         <file>images/mbox-warning.png</file>
         <file>images/mbox-warning@2x.png</file>
         <file>images/mbox-warning@3x.png</file>

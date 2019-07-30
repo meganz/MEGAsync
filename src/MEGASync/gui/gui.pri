@@ -56,6 +56,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/UpgradeWidget.cpp \
     $$PWD/Login2FA.cpp \
     $$PWD/TransfersStatusWidget.cpp \
+    $$PWD/TransfersSummaryWidget.cpp \
     $$PWD/CircularUsageProgressBar.cpp \
     $$PWD/HighDpiResize.cpp \
     $$PWD/AlertItem.cpp \
@@ -119,6 +120,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ChangePassword.h \
     $$PWD/Login2FA.h \
     $$PWD/TransfersStatusWidget.h \
+    $$PWD/TransfersSummaryWidget.h \
     $$PWD/CircularUsageProgressBar.h \
     $$PWD/HighDpiResize.h \
     $$PWD/AlertItem.h \
@@ -174,7 +176,8 @@ win32 {
                 $$PWD/win/ChangePassword.ui \
                 $$PWD/win/Login2FA.ui \
                 $$PWD/win/TransfersStatusWidget.ui \
-                $$PWD/win/AlertItem.ui
+                $$PWD/win/AlertItem.ui \
+                $$PWD/win/TransfersSummaryWidget.ui
 }
 
 macx {
@@ -222,6 +225,7 @@ macx {
                 $$PWD/macx/Login2FA.ui \
                 $$PWD/macx/TransfersStatusWidget.ui \
                 $$PWD/macx/AlertItem.ui \
+                $$PWD/macx/TransfersSummaryWidget.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -277,7 +281,8 @@ unix:!macx {
                 $$PWD/linux/ChangePassword.ui \
                 $$PWD/linux/Login2FA.ui \
                 $$PWD/linux/TransfersStatusWidget.ui \
-                $$PWD/linux/AlertItem.ui
+                $$PWD/linux/AlertItem.ui \
+                $$PWD/linux/TransfersSummaryWidget.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h

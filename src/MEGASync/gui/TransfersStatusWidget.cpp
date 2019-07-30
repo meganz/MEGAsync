@@ -9,16 +9,17 @@ void TransfersStatusWidget::updateSizes()
     if (lastwidth != this->width() || lastheigth != this->height())
     {
         int minwidthheight = qMin(this->width(), this->height());
-        wpen = floor(minwidthheight/48.0*4);
-        diamoutside = minwidthheight-wpen;
+        wpen = qFloor(minwidthheight/48.0*5);
         spacing = minwidthheight/48.0*2;
-        diaminside = diamoutside-wpen*2-spacing*2;
-        marginoutside = wpen/2;
+        marginoutside = qRound(wpen/2.0);
+        diamoutside = minwidthheight-marginoutside*2;
+        diaminside = diamoutside-wpen*2.0-spacing*2;
+        margininside = qRound((diamoutside-diaminside)/2.0);
 
         residualin = 0;
         residualout = 0;
 
-        pengrey = QPen(QBrush(QColor(QString::fromUtf8("#DADBDB"))),wpen);
+        pengrey = QPen(QBrush(QColor(QString::fromUtf8("#CCCCCC"))),wpen);
         penblue = QPen(QBrush(QColor(97,210,255)),wpen);
         pengreen = QPen(QBrush(QColor(91,217,87)),wpen);
         pengrey.setCapStyle(Qt::FlatCap);
@@ -30,7 +31,6 @@ void TransfersStatusWidget::updateSizes()
 
         int sizeinnterimage = minwidthheight - 4 * spacing - 4 * wpen;
 
-        qDebug() << " minwidthheight = " << minwidthheight << " sizeinnterimage= " << sizeinnterimage;
         ui->bTransferManager->move(minwidthheight/2-sizeinnterimage/2,minwidthheight/2-sizeinnterimage/2);
         ui->bTransferManager->resize(sizeinnterimage, sizeinnterimage);
         ui->bTransferManager->setIconSize(QSize(sizeinnterimage, sizeinnterimage));
@@ -48,6 +48,8 @@ TransfersStatusWidget::TransfersStatusWidget(QWidget *parent) :
 
     lastwidth = -1;
     lastheigth = -1;
+    percentInnerCircle = 0;
+    percentOuterCircle = 0;
 
     updateSizes();
 }
@@ -56,7 +58,6 @@ TransfersStatusWidget::~TransfersStatusWidget()
 {
     delete ui;
 }
-
 
 void TransfersStatusWidget::paintEvent(QPaintEvent *event)
 {
@@ -67,11 +68,11 @@ void TransfersStatusWidget::paintEvent(QPaintEvent *event)
                            | QPainter::SmoothPixmapTransform
                            | QPainter::HighQualityAntialiasing);
     painter.setPen(pengrey);
-    painter.drawArc(marginoutside+(diamoutside-diaminside)/2, marginoutside+(diamoutside-diaminside)/2,diaminside, diaminside, 0, 360*16);
+    painter.drawArc(marginoutside+margininside, marginoutside+margininside,diaminside, diaminside, 0, 360*16);
     painter.drawArc(marginoutside, marginoutside, diamoutside, diamoutside, 0, 360*16);
 
     painter.setPen(penblue);
-    painter.drawArc(marginoutside+(diamoutside-diaminside)/2, marginoutside+(diamoutside-diaminside)/2,diaminside, diaminside, 360*4, -inpoint);
+    painter.drawArc(marginoutside+margininside, marginoutside+margininside,diaminside, diaminside, 360*4, -inpoint);
 
     painter.setPen(pengreen);
     painter.drawArc(marginoutside, marginoutside, diamoutside, diamoutside, 360*4, -outpoint);
@@ -86,6 +87,7 @@ void TransfersStatusWidget::setPercentInnerCircle(const qreal &value)
 {
     percentInnerCircle = value;
     inpoint=360*16*percentInnerCircle>residualin?360*16*percentInnerCircle-residualin:360*16*percentInnerCircle;
+    update();
 }
 
 qreal TransfersStatusWidget::getPercentOuterCircle() const
@@ -97,4 +99,5 @@ void TransfersStatusWidget::setPercentOuterCircle(const qreal &value)
 {
     percentOuterCircle = value;
     outpoint=360*16*percentOuterCircle>residualout?360*16*percentOuterCircle-residualout:360*16*percentOuterCircle;
+    update();
 }

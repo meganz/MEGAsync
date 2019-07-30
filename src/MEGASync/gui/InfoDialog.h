@@ -56,10 +56,13 @@ public:
 
     void updateNotificationsTreeView(QAbstractItemModel *model, QAbstractItemDelegate *delegate);
 
+    void reset();
 
     QCustomTransfersModel *stealModel();
 
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* e);
+    virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);
+    virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
 
 #ifdef __APPLE__
     void moveArrow(QPoint p);
@@ -78,10 +81,22 @@ public:
 private:
     void drawAvatar(QString email);
     void animateStates(bool opt);
+    void updateTransfersCount();
     void hideEvent(QHideEvent *event) override;
     void showEvent(QShowEvent *event) override;
 
 public slots:
+
+    void pauseResumeClicked();
+    void generalAreaClicked();
+    void dlAreaClicked();
+    void upAreaClicked();
+
+    void pauseResumeHovered(QMouseEvent *event);
+    void generalAreaHovered(QMouseEvent *event);
+    void dlAreaHovered(QMouseEvent *event);
+    void upAreaHovered(QMouseEvent *event);
+
    void addSync();
    void onAllUploadsFinished();
    void onAllDownloadsFinished();
@@ -129,6 +144,16 @@ private:
 
     int activeDownloadState, activeUploadState;
     int remainingUploads, remainingDownloads;
+    int totalUploads, totalDownloads;
+    long long leftUploadBytes, completedUploadBytes;
+    long long leftDownloadBytes, completedDownloadBytes;
+    long long currentUploadBytes, currentCompletedUploadBytes;
+    long long currentDownloadBytes, currentCompletedDownloadBytes;
+    bool circlesShowAllActiveTransfersProgress;
+    unsigned long long uploadActiveTransferPriority, downloadActiveTransferPriority;
+    int uploadActiveTransferTag, downloadActiveTransferTag;
+    int uploadActiveTransferState, downloadActiveTransferState;
+
     bool indexing;
     bool waiting;
     GuestWidget *gWidget;
