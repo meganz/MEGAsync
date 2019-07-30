@@ -52,15 +52,12 @@ TransfersStatusWidget::TransfersStatusWidget(QWidget *parent) :
     percentOuterCircle = 0;
 
     updateSizes();
-
-    installEventFilter(this);
 }
 
 TransfersStatusWidget::~TransfersStatusWidget()
 {
     delete ui;
 }
-
 
 void TransfersStatusWidget::paintEvent(QPaintEvent *event)
 {
