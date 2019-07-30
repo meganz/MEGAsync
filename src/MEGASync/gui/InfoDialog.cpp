@@ -80,6 +80,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     sp_retain.setRetainSizeWhenHidden(true);
     ui->bNumberUnseenNotifications->setSizePolicy(sp_retain);
 #endif
+    ui->tvNotifications->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
 
     connect(ui->bTransferManager, SIGNAL(pauseResumeClicked()), this, SLOT(pauseResumeClicked()));
     connect(ui->bTransferManager, SIGNAL(generalAreaClicked()), this, SLOT(generalAreaClicked()));
