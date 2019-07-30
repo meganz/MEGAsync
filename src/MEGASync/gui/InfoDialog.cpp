@@ -15,6 +15,7 @@
 #include "MegaApplication.h"
 #include "MenuItemAction.h"
 #include "platform/Platform.h"
+#include "assert.h"
 
 #ifdef _WIN32    
 #include <chrono>
@@ -32,6 +33,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui(new Ui::InfoDialog)
 {
     ui->setupUi(this);
+    setUnseenNotifications(0);
 
 #if QT_VERSION > 0x050200
     QSizePolicy sp_retain = ui->bNumberUnseenNotifications->sizePolicy();
@@ -90,7 +92,16 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->sStorage->setCurrentWidget(ui->wCircularStorage);
     ui->sQuota->setCurrentWidget(ui->wCircularQuota);
 
+#ifdef __APPLE__
+    if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //Issues with mavericks and popup management
+    {
+        installEventFilter(this);
+    }
+#endif
+
+#ifdef Q_OS_LINUX
     installEventFilter(this);
+#endif
 
     ui->lOQDesc->setTextFormat(Qt::RichText);
 
@@ -179,12 +190,19 @@ PSA_info *InfoDialog::getPSAdata()
     return nullptr;
 }
 
+void InfoDialog::showEvent(QShowEvent *event)
+{
+    emit ui->sTabs->currentChanged(ui->sTabs->currentIndex());
+    QDialog::showEvent(event);
+}
+
 void InfoDialog::hideEvent(QHideEvent *event)
 {
 #ifdef __APPLE__
     arrow->hide();
 #endif
 
+    emit ui->sTabs->currentChanged(-1);
     QDialog::hideEvent(event);
 
 #ifdef _WIN32
@@ -833,15 +851,6 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
     }
 
 #endif
-    if (obj == this && e->type() == QEvent::Show)
-    {
-        emit ui->sTabs->currentChanged(ui->sTabs->currentIndex());
-    }
-
-    if (obj == this && e->type() == QEvent::Hide)
-    {
-        emit ui->sTabs->currentChanged(-1);
-    }
 #ifdef __APPLE__
     if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //manage spontaneus mouse press events
     {

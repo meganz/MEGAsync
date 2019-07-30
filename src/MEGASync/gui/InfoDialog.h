@@ -79,6 +79,7 @@ private:
     void drawAvatar(QString email);
     void animateStates(bool opt);
     void hideEvent(QHideEvent *event) override;
+    void showEvent(QShowEvent *event) override;
 
 public slots:
    void addSync();
