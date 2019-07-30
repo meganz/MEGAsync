@@ -103,9 +103,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
         setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
     }
 
-#ifdef __APPLE__
     setAttribute(Qt::WA_TranslucentBackground);
-#endif
 
     //Initialize fields
     this->app = app;
@@ -144,7 +142,17 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->sStorage->setCurrentWidget(ui->wCircularStorage);
     ui->sQuota->setCurrentWidget(ui->wCircularQuota);
 
+
+#ifdef __APPLE__
+    if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //Issues with mavericks and popup management
+    {
+        installEventFilter(this);
+    }
+#endif
+
+#ifdef Q_OS_LINUX
     installEventFilter(this);
+#endif
 
     ui->lOQDesc->setTextFormat(Qt::RichText);
 
@@ -236,6 +244,7 @@ PSA_info *InfoDialog::getPSAdata()
 void InfoDialog::showEvent(QShowEvent *event)
 {
     emit ui->sTabs->currentChanged(ui->sTabs->currentIndex());
+    ui->bTransferManager->showAnimated();
     QDialog::showEvent(event);
 }
 
@@ -246,6 +255,7 @@ void InfoDialog::hideEvent(QHideEvent *event)
 #endif
 
     emit ui->sTabs->currentChanged(-1);
+    ui->bTransferManager->shrink(true);
     QDialog::hideEvent(event);
 
 #ifdef _WIN32
@@ -1050,18 +1060,6 @@ void InfoDialog::changeEvent(QEvent *event)
 
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 {
-    if (obj == this)
-    {
-        if (e->type() == QEvent::Show)
-        {
-            ui->bTransferManager->showAnimated();
-        }
-        else if (e->type() == QEvent::Hide)
-        {
-            ui->bTransferManager->shrink(true);
-        }
-    }
-
 #ifdef Q_OS_LINUX
     if (obj == this && e->type() == QEvent::WindowDeactivate)
     {
