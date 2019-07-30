@@ -71,7 +71,7 @@ bool QFilterAlertsModel::checkFilterType(int typeToCheck) const
                 break;
     }
 
-    return true;
+    return false;
 }
 
 bool QFilterAlertsModel::filterAcceptsRow(int row, const QModelIndex &sourceParent) const
