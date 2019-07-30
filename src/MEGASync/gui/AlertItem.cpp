@@ -81,6 +81,10 @@ void AlertItem::setAlertType(int type)
                 break;
             }
             default:
+            {
+                notificationTitle = QString::fromUtf8("");
+                notificationColor = QString::fromUtf8("#000000");
+            }
                 break;
     }
 
@@ -100,7 +104,7 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
             case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
             case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
             {
-                drawAvatar(alert);
+                setAvatar(alert);
                 notificationHeading = tr("New Contact Request");
                 ui->sIconWidget->setCurrentWidget(ui->pContact);
                 ui->sIconWidget->show();
@@ -109,7 +113,7 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
             case MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU:
             case MegaUserAlert::TYPE_CONTACTCHANGE_ACCOUNTDELETED:
             {
-                drawAvatar(alert);
+                setAvatar(alert);
                 notificationHeading = tr("Contact Deleted");
                 ui->sIconWidget->setCurrentWidget(ui->pContact);
                 ui->sIconWidget->show();
@@ -117,7 +121,7 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
             }
             case MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
             {
-                drawAvatar(alert);
+                setAvatar(alert);
                 notificationHeading = tr("Contact Established");
                 ui->sIconWidget->setCurrentWidget(ui->pContact);
                 ui->sIconWidget->show();
@@ -125,7 +129,7 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
             }
             case MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU:
             {
-                drawAvatar(alert);
+                setAvatar(alert);
                 notificationHeading = tr("Contact Blocked");
                 ui->sIconWidget->setCurrentWidget(ui->pContact);
                 ui->sIconWidget->show();
@@ -135,7 +139,7 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
             case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED:
             case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED:
             {
-                drawAvatar(alert);
+                setAvatar(alert);
                 notificationHeading = tr("Contact Updated");
                 ui->sIconWidget->setCurrentWidget(ui->pContact);
                 ui->sIconWidget->show();
@@ -143,7 +147,7 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
             }
             case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
             {
-                drawAvatar(alert);
+                setAvatar(alert);
                 notificationHeading = tr("Contact Accepted");
                 ui->sIconWidget->setCurrentWidget(ui->pContact);
                 ui->sIconWidget->show();
@@ -151,7 +155,7 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
             }
             case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
             {
-                drawAvatar(alert);
+                setAvatar(alert);
                 notificationHeading = tr("Contact Denied");
                 ui->sIconWidget->setCurrentWidget(ui->pContact);
                 ui->sIconWidget->show();
@@ -385,7 +389,7 @@ void AlertItem::setAlertTimeStamp(int64_t ts)
     {
         QDateTime date;
         date.setMSecsSinceEpoch(ts * 1000);
-        ui->lTimeStamp->setText(date.toString(QString::fromUtf8("h:mm ap , d MMMM yyyy")));
+        ui->lTimeStamp->setText(date.toString(QString::fromUtf8("h:mm ap, d MMMM yyyy")));
 
     }
     else
@@ -404,7 +408,7 @@ QSize AlertItem::sizeHint() const
     return QSize(400, 122);
 }
 
-void AlertItem::drawAvatar(MegaUserAlert *alert)
+void AlertItem::setAvatar(MegaUserAlert *alert)
 {
     QString color;
     MegaHandle userHandle = alert->getUserHandle();

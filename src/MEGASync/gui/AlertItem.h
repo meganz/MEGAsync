@@ -26,7 +26,7 @@ public:
     QSize sizeHint() const;
 
 private:
-    void drawAvatar(mega::MegaUserAlert *alert);
+    void setAvatar(mega::MegaUserAlert *alert);
     QString formatRichString(QString str);
 
 private:
