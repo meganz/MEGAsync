@@ -24,12 +24,20 @@ void MegaAlertDelegate::paint(QPainter *painter, const QStyleOptionViewItem &opt
         MegaUserAlert *alert = NULL;
         if (useProxy)
         {
-            alert = (MegaUserAlert *)((((QSortFilterProxyModel*)index.model())->mapToSource(index)).internalPointer());
+            QModelIndex actualId = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
+            if (!(actualId.isValid()))
+            {
+                QStyledItemDelegate::paint(painter, option, index);
+                return;
+            }
+
+            alert = (MegaUserAlert *)actualId.internalPointer();
         }
         else
         {
             alert = (MegaUserAlert *)index.internalPointer();
         }
+
         if (!alert)
         {
             assert(false || "No alert found");
