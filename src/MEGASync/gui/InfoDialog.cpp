@@ -1038,7 +1038,6 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
         {
             ui->bTransferManager->shrink(true);
         }
-        return QDialog::eventFilter(obj, e);
     }
 
 #ifdef Q_OS_LINUX
