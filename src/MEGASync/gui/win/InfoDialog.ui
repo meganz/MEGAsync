@@ -1907,13 +1907,13 @@ font-size: 16px;
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
-                       <height>32</height>
+                       <height>33</height>
                       </size>
                      </property>
                      <property name="maximumSize">
                       <size>
                        <width>16777215</width>
-                       <height>32</height>
+                       <height>33</height>
                       </size>
                      </property>
                     </widget>
@@ -1923,6 +1923,9 @@ font-size: 16px;
                      <property name="focusPolicy">
                       <enum>Qt::NoFocus</enum>
                      </property>
+                     <property name="frameShape">
+                      <enum>QFrame::NoFrame</enum>
+                     </property>
                      <property name="showDropIndicator" stdset="0">
                       <bool>false</bool>
                      </property>
@@ -1931,6 +1934,9 @@ font-size: 16px;
                      </property>
                      <property name="selectionMode">
                       <enum>QAbstractItemView::NoSelection</enum>
+                     </property>
+                     <property name="rootIsDecorated">
+                      <bool>false</bool>
                      </property>
                      <property name="sortingEnabled">
                       <bool>true</bool>
