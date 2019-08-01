@@ -55,9 +55,9 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
                            | QPainter::SmoothPixmapTransform
                            | QPainter::HighQualityAntialiasing);
 
-    qreal factor = width()/36.0;
-    int backgroundUnscaledWidth = qFloor(36.0 * factor/2)*2;
-    int backgroundUnscaledHeight = qFloor(36.0 * factor/2)*2;
+    qreal factor = width() / 36.0;
+    int backgroundUnscaledWidth = qFloor(36.0 * factor/2) * 2;
+    int backgroundUnscaledHeight = qFloor(36.0 * factor/2) * 2;
 
     if (!lastloadedwidth || lastloadedwidth != width())
     {
@@ -76,17 +76,15 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
     #endif
         {
             backgroundPixmap = backgroundPixmapOriginal;
-            backgroundPixmap = backgroundPixmapOriginal;
         }
 
         lastloadedwidth = width();
     }
 
-    int innercirclediam = qFloor(24.0 * factor/2)*2;
+    int innercirclediam = qFloor(24.0 * factor / 2) * 2;
 
-
-    painter.translate(width()/2, height()/2);
-    painter.drawPixmap(- qRound(backgroundUnscaledWidth / 2.0 ), - qRound(backgroundUnscaledHeight/2.0), backgroundPixmap);
+    painter.translate(width() / 2, height() / 2);
+    painter.drawPixmap(- qRound(backgroundUnscaledWidth / 2.0 ), - qRound(backgroundUnscaledHeight / 2.0), backgroundPixmap);
 
     if (QFileInfo(pathToFile).exists())
     {
