@@ -27,10 +27,10 @@ VIAddVersionKey "LegalCopyright" "MEGA Limited 2019"
 VIAddVersionKey "ProductName" "MEGAsync"
 
 ; Version info
-VIProductVersion "4.2.0.0"
-VIAddVersionKey "FileVersion" "4.2.0.0"
-VIAddVersionKey "ProductVersion" "4.2.0.0"
-!define PRODUCT_VERSION "4.2.0"
+VIProductVersion "4.2.2.0"
+VIAddVersionKey "FileVersion" "4.2.2.0"
+VIAddVersionKey "ProductVersion" "4.2.2.0"
+!define PRODUCT_VERSION "4.2.2"
 
 !define PRODUCT_PUBLISHER "Mega Limited"
 !define PRODUCT_WEB_SITE "http://www.mega.nz"
@@ -830,9 +830,9 @@ modeselected:
   AccessControl::SetFileOwner "$INSTDIR\swresample-2.dll" "$USERNAME"
   AccessControl::GrantOnFile "$INSTDIR\swresample-2.dll" "$USERNAME" "GenericRead + GenericWrite"
 
-;  File "${SRCDIR_MEGASYNC}\pdfium.dll"
-;  AccessControl::SetFileOwner "$INSTDIR\pdfium.dll" "$USERNAME"
-;  AccessControl::GrantOnFile "$INSTDIR\pdfium.dll" "$USERNAME" "GenericRead + GenericWrite"
+  File "${SRCDIR_MEGASYNC}\pdfium.dll"
+  AccessControl::SetFileOwner "$INSTDIR\pdfium.dll" "$USERNAME"
+  AccessControl::GrantOnFile "$INSTDIR\pdfium.dll" "$USERNAME" "GenericRead + GenericWrite"
 
 ;!ifndef BUILD_UNINSTALLER  ; if building uninstaller, skip this check
   File "${UNINSTALLER_NAME}"
@@ -1105,7 +1105,7 @@ Section Uninstall
   Delete "$INSTDIR\avutil-55.dll"
   Delete "$INSTDIR\swscale-4.dll"
   Delete "$INSTDIR\swresample-2.dll"
-;  Delete "$INSTDIR\pdfium.dll"
+  Delete "$INSTDIR\pdfium.dll"
 
   !define LIBRARY_COM
   !define LIBRARY_SHELL_EXTENSION

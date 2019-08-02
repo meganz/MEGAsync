@@ -302,7 +302,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     </message>
     <message>
         <source>New password</source>
-        <translation type="unfinished">Parola nouă</translation>
+        <translation type="unfinished">Parolă nouă</translation>
     </message>
     <message>
         <source>Confirm new password</source>
@@ -461,6 +461,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Fără spațiu de stocare disponibil</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Cota de transfer depășită</translation>
     </message>
 </context>
 <context>
@@ -862,7 +867,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation type="vanished">Sincronizări</translation>
+        <translation>Sincronizări</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -927,7 +932,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation type="vanished">Adaugă sincronizare</translation>
+        <translation>Adaugă sincronizare</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -1074,22 +1079,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Unitate cloud</translation>
+        <translation type="obsolete">Unitate cloud</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Conținut media primit</translation>
+        <translation type="obsolete">Conținut media primit</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Partajări primite</translation>
+        <translation type="obsolete">Partajări primite</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Coș de gunoi</translation>
+        <translation type="obsolete">Coș de gunoi</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1255,12 +1260,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation type="unfinished">Login or create an account to start using the MEGA Desktop App.</translation>
+        <translation type="unfinished">Autentifică-te sau creează un cont pentru a începe să folosești aplicația desktop MEGA.</translation>
     </message>
     <message>
         <source>You need to login MEGA account to run MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
-        <translation type="unfinished">You need to login to your MEGA account to run the MEGA Desktop App.</translation>
+        <translation type="unfinished">Trebuie să te autentifici în contul tău MEGA pentru a rula aplicația desktop MEGA.</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1270,12 +1275,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Create account to join MEGA collaboration platform.</source>
         <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
-        <translation type="unfinished">Create an account to join the MEGA collaboration platform.</translation>
+        <translation type="unfinished">Creează un cont pentru a te alătura platformei colaborative MEGA.</translation>
     </message>
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation type="unfinished">Learn more about the MEGA Desktop App. [A]Read more[/A]</translation>
+        <translation type="unfinished">Află mai multe despre aplicația desktop MEGA.[A]Citește mai multe[/A]</translation>
     </message>
 </context>
 <context>
@@ -1311,7 +1316,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1926,7 +1931,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Folder Upload</source>
         <translatorcomment>Title of system notifications related to a folder upload</translatorcomment>
-        <translation type="unfinished">Încarcă un folder</translation>
+        <translation type="unfinished">Încarcă folder</translation>
     </message>
     <message>
         <source>1 folder was successfully uploaded</source>
@@ -2181,12 +2186,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Terms of Service breached</source>
         <translatorcomment>Error shown when terms of service are breached during download.</translatorcomment>
-        <translation type="unfinished">Terms of Service breached</translation>
+        <translation type="unfinished">Au fost încălcați Termenii de utilizare a serviciului</translation>
     </message>
     <message>
         <source>Not accessible due to ToS/AUP violation</source>
         <translatorcomment>Error shown when import a link that has violated ToS/AUP.</translatorcomment>
-        <translation type="unfinished">Not accessible due to ToS/AUP violation</translation>
+        <translation type="unfinished">Indisponibil din cauza încălcării ToS/AUP</translation>
     </message>
 </context>
 <context>
@@ -2596,7 +2601,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
-        <translation type="unfinished">popular!</translation>
+        <translation type="unfinished">Popular!</translation>
     </message>
 </context>
 <context>
@@ -2642,11 +2647,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Windows
-- Improved GUI performance during the addition of a large number of downloads
-- Restyling of the initial information wizard, new icons and interface improvements
-- Support for business accounts
-- Other minor bug fixes and improvements</translation>
+        <translation type="obsolete">- A fost îmbunătățit aspectul pe Windows pentru display-urile cu rezoluție înaltă
+- A fost îmbunătățită performanța GUI în timpul adăugării unui număr mare de descărcări
+- Restilizarea asistentului inițial de informare, pictograme noi și îmbunătățiri ale interfeței
+- Suport pentru conturile business
+- Alte remedieri minore de erori și îmbunătățiri</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -2656,11 +2661,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Linux
-- Enabled thumbnail support for PDF documents
-- Improved GUI performance during the addition of a large number of downloads
-- Restyling of the initial information wizard, new icons and interface improvements
-- Support for business accounts
+        <translation type="obsolete">- A fost îmbunătățit aspectul pe Windows pentru display-urile cu rezoluție înaltă
+- A fost activat suportul pentru minunaturi în cazul documentelor PDF
+- A fost îmbunătățită performanța GUI în timpul adăugării unui număr mare de descărcări
+- Restilizarea asistentului inițial de informare, pictograme noi și îmbunătățiri ale interfeței
+- Suport pentru conturile business
+- Alte remedieri minore de erori și îmbunătățiri</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="unfinished">- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include an option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</translation>
     </message>
 </context>
@@ -3391,7 +3407,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3450,7 +3466,12 @@ when the application starts again</source>
     <message>
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
-        <translation type="unfinished">%1 used</translation>
+        <translation type="unfinished">%1 folosiți</translation>
+    </message>
+    <message>
+        <source>MEGA-RECOVERYKEY</source>
+        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
+        <translation type="unfinished">CHEIEDERECUPERARE-MEGA</translation>
     </message>
 </context>
 <context>
@@ -4375,6 +4396,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Fără spațiu de stocare disponibil</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Cota de transfer depășită</translation>
     </message>
 </context>
 <context>

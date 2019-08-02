@@ -462,6 +462,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">พื้นที่จัดเก็บไม่เพียงพอ</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">เกินโควต้าการถ่ายโอนแล้ว</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -862,7 +867,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation type="vanished">ซิงค์</translation>
+        <translation>ซิงค์</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -927,7 +932,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation type="vanished">เพิ่มซิงค์</translation>
+        <translation>เพิ่มซิงค์</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -1074,22 +1079,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">คลาวด์ไดรฟ์</translation>
+        <translation type="obsolete">คลาวด์ไดรฟ์</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">กล่องขาเข้า</translation>
+        <translation type="obsolete">กล่องขาเข้า</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">แชร์ขาเข้า</translation>
+        <translation type="obsolete">แชร์ขาเข้า</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">ถังขยะ</translation>
+        <translation type="obsolete">ถังขยะ</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1255,12 +1260,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Login or create an account to start using MEGA Desktop app.</source>
         <translatorcomment>Description label to inform the user about next step in order to use MEGA Desktop app. Users will need to login or create an account.</translatorcomment>
-        <translation type="unfinished">Login or create an account to start using the MEGA Desktop App.</translation>
+        <translation type="unfinished">เข้าสู่ระบบหรือสร้างบัญชีเพื่อเริ่มใช้แอป MEGA บนเดสก์ท็อป</translation>
     </message>
     <message>
         <source>You need to login MEGA account to run MEGA desktop app.</source>
         <translatorcomment>Description label to indicate the user needs to login in order to run and fully use MEGA desktop app.</translatorcomment>
-        <translation type="unfinished">You need to login to your MEGA account to run the MEGA Desktop App.</translation>
+        <translation type="unfinished">คุณต้องลงชื่อเข้าใช้บัญชี MEGA ของคุณเพื่อเรียกใช้แอป MEGA บนเดสก์ท็อป</translation>
     </message>
     <message>
         <source>Create account</source>
@@ -1270,12 +1275,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Create account to join MEGA collaboration platform.</source>
         <translatorcomment>Description label to encourage user to create a MEGA account.</translatorcomment>
-        <translation type="unfinished">Create an account to join the MEGA collaboration platform.</translation>
+        <translation type="unfinished">สร้างบัญชีเพื่อเข้าร่วมแพลตฟอร์มการทำงานร่วมกันของ MEGA</translation>
     </message>
     <message>
         <source>Know more about MEGA desktop app. [A]Read more[/A]</source>
         <translatorcomment>Label with hyperlink to sync client webpage to know more about MEGA desktop app. Keep placeholders.</translatorcomment>
-        <translation type="unfinished">Learn more about the MEGA Desktop App. [A]Read more[/A]</translation>
+        <translation type="unfinished">เรียนรู้เพิ่มเติมเกี่ยวกับแอป MEGA บนเดสก์ท็อป [A]อ่านเพิ่มเติม[/A]</translation>
     </message>
 </context>
 <context>
@@ -1311,7 +1316,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1415,7 +1420,7 @@ because the remote folder doesn&apos;t exist</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">การซิงค์ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) อยู่ในถังขยะ</translation>
+        <translation type="obsolete">การซิงค์ &quot;%1&quot; ของคุณได้ถูกปิดการใช้งาน เนื่องจากโฟลเดอร์ระยะไกลอยู่ในถังขยะ</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1709,7 +1714,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">การซิงค์ของคุณ &quot;%1&quot; ถูกปิดใช้งานแล้ว เนื่องจากโฟลเดอร์ระยะไกล (remote) อยู่ในถังขยะ</translation>
+        <translation type="unfinished">การซิงค์ &quot;%1&quot; ของคุณได้ถูกปิดการใช้งาน เนื่องจากโฟลเดอร์ระยะไกลอยู่ในถังขยะ</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -2642,7 +2647,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Windows
+        <translation type="obsolete">- Improved look and feel for high resolution displays on Windows
 - Improved GUI performance during the addition of a large number of downloads
 - Restyling of the initial information wizard, new icons and interface improvements
 - Support for business accounts
@@ -2656,11 +2661,22 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Improved look and feel for high resolution displays on Linux
+        <translation type="obsolete">- Improved look and feel for high resolution displays on Linux
 - Enabled thumbnail support for PDF documents
 - Improved GUI performance during the addition of a large number of downloads
 - Restyling of the initial information wizard, new icons and interface improvements
 - Support for business accounts
+- Other minor bug fixes and improvements</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="unfinished">- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include an option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</translation>
     </message>
 </context>
@@ -3391,7 +3407,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3451,6 +3467,11 @@ when the application starts again</source>
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
         <translation type="unfinished">%1 used</translation>
+    </message>
+    <message>
+        <source>MEGA-RECOVERYKEY</source>
+        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
+        <translation type="unfinished">MEGA-RECOVERYKEY</translation>
     </message>
 </context>
 <context>
@@ -4375,6 +4396,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">พื้นที่จัดเก็บไม่เพียงพอ</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">เกินโควต้าการถ่ายโอนแล้ว</translation>
     </message>
 </context>
 <context>
