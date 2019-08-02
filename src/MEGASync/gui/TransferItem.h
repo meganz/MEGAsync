@@ -27,7 +27,7 @@ public:
     virtual bool isTransferFinished();
 
     virtual int getTransferError();
-    virtual void setTransferError(int error);
+    virtual void setTransferError(int error, long long value);
 
     virtual int getTransferTag();
     virtual void setTransferTag(int value);
@@ -63,6 +63,7 @@ protected:
     int transferState;
     int transferTag;
     int transferError;
+    long long transferErrorValue;
     long long transferSpeed;
     long long meanTransferSpeed;
     long long totalSize;

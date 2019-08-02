@@ -451,6 +451,10 @@ void SettingsDialog::onRemoteCacheSizeAvailable()
     onCacheSizeAvailable();
 }
 
+void SettingsDialog::storageChanged()
+{
+    onCacheSizeAvailable();
+}
 
 void SettingsDialog::onCacheSizeAvailable()
 {
@@ -493,6 +497,7 @@ void SettingsDialog::onCacheSizeAvailable()
             ui->bClearRemoteCache->hide();
         }
 
+        fileVersionsSize = preferences->logged() ? preferences->versionsStorage() : 0;
         if (fileVersionsSize)
         {
             ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));

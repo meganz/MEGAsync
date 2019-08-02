@@ -8,13 +8,13 @@
 #include <QPainter>
 #include "GuestWidget.h"
 #include "SettingsDialog.h"
-#include "DataUsageMenu.h"
 #include "MenuItemAction.h"
 #include "control/Preferences.h"
 #include "QCustomTransfersModel.h"
 #include <QGraphicsOpacityEffect>
 #include "HighDpiResize.h"
 #include "Utilities.h"
+#include <memory>
 #ifdef _WIN32
 #include <chrono>
 #endif
@@ -46,6 +46,7 @@ public:
     void setTransfer(mega::MegaTransfer *transfer);
     void refreshTransferItems();
     void transferFinished(int error);
+    void updateSyncsButton();
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
     void setOverQuotaMode(bool state);
@@ -72,7 +73,6 @@ public:
 
 private:
     void drawAvatar(QString email);
-    void createQuotaUsedMenu();
     void animateStates(bool opt);
     void hideEvent(QHideEvent *event) override;
 
@@ -86,6 +86,7 @@ public slots:
 private slots:
     void on_bSettings_clicked();
     void on_bUpgrade_clicked();
+    void on_bSyncFolder_clicked();
     void openFolder(QString path);
     void on_bChats_clicked();
     void onOverlayClicked();
@@ -98,7 +99,6 @@ private slots:
     void on_bDiscard_clicked();
     void on_bBuyQuota_clicked();
 
-    void hideUsageBalloon();
     void onAnimationFinished();
 
 signals:
@@ -114,8 +114,9 @@ private:
     QWidget *dummy; // Patch to let text input on line edits of GuestWidget
 #endif
 
+    std::unique_ptr<QMenu> syncsMenu;
+    QSignalMapper *menuSignalMapper;
     QMenu *transferMenu;
-    DataUsageMenu *storageUsedMenu;
 
     MenuItemAction *cloudItem;
     MenuItemAction *inboxItem;
@@ -132,6 +133,10 @@ private:
     int storageState;
     int actualAccountType;
     bool loggedInMode = true;
+
+#ifdef Q_OS_LINUX
+    bool doNotActAsPopup;
+#endif
 
     QPropertyAnimation *animation;
     QGraphicsOpacityEffect *opacityEffect;
