@@ -3898,7 +3898,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>We are all done!</source>
         <translatorcomment>Label shown when the user completes the initial setup wizard</translatorcomment>
-        <translation type="unfinished">Wszyscy jesteśmy skończeni!</translation>
+        <translation type="unfinished">Wszystko gotowe!</translation>
     </message>
     <message>
         <source>Login</source>
