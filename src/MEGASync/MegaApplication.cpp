@@ -4764,6 +4764,14 @@ void MegaApplication::userAction(int action)
     }
 }
 
+void MegaApplication::applyNotificationFilter(int opt)
+{
+    if (notificationsProxyModel)
+    {
+        notificationsProxyModel->setFilterAlertType(opt);
+    }
+}
+
 void MegaApplication::changeState()
 {
     if (appfinished)
@@ -7611,7 +7619,10 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
 
     if (infoDialog)
     {
-        infoDialog->setUnseenNotifications(notificationsModel->getUnseenNotifications());
+        infoDialog->setUnseenNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL));
+        infoDialog->setNotificationFilters(notificationsModel->existsNotifications(QAlertsModel::ALERT_CONTACTS),
+                                           notificationsModel->existsNotifications(QAlertsModel::ALERT_SHARES),
+                                           notificationsModel->existsNotifications(QAlertsModel::ALERT_PAYMENT));
     }
 
     if (!copyRequired) //list requires deletion

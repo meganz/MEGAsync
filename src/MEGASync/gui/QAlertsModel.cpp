@@ -1,4 +1,5 @@
 #include "QAlertsModel.h"
+#include "QFilterAlertsModel.h"
 #include <QDateTime>
 #include <assert.h>
 
@@ -7,8 +8,14 @@ using namespace mega;
 QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, bool copy, QObject *parent)
     : QAbstractItemModel(parent)
 {
+
+    for(int i = 0; i < ALERT_TYPES; i++)
+    {
+        hasNotificationsOfType[i] = false;
+        unSeenNotifications[i] = 0;
+    }
+
     alertItems.setMaxCost(16);
-    unseenNotifications = 0;
     insertAlerts(alerts, copy);
 }
 
@@ -20,9 +27,11 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
     {
         for (int i = 0; i < numAlerts; i++)
         {
-            if (alertsMap.find(alerts->get(i)->getId()) == alertsMap.end())
+            MegaUserAlert *alert = alerts->get(i);
+            if (alertsMap.find(alert->getId()) == alertsMap.end())
             {
                 actualnumberofalertstoinsert++;
+                hasNotificationsOfType[checkAlertType(alert->getType())] = true;
             }
         }
         if (actualnumberofalertstoinsert > 0)
@@ -40,7 +49,10 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                 alertsMap.insert(alert->getId(), alert);
                 if (!alert->getSeen())
                 {
-                    unseenNotifications++;
+                    if (checkAlertType(alert->getType()) != -1)
+                    {
+                        unSeenNotifications[checkAlertType(alert->getType())]++;
+                    }
                 }
                 actualnumberofalertstoinsert++;
             }
@@ -53,8 +65,11 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                     MegaUserAlert *old = existing.value();
                     alertsMap[alert->getId()] = alert;
                     if (alert->getSeen() != old->getSeen())
-                    {
-                        unseenNotifications+=alert->getSeen()?-1:1;
+                    {                       
+                        if (checkAlertType(alert->getType()) != -1)
+                        {
+                            unSeenNotifications[checkAlertType(alert->getType())] += alert->getSeen() ? -1 : 1;
+                        }
                     }
                     delete old;
 
@@ -81,7 +96,10 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                     actualnumberofalertstoinsert++;
                     if (!alert->getSeen())
                     {
-                        unseenNotifications++;
+                        if (checkAlertType(alert->getType()) != -1)
+                        {
+                            unSeenNotifications[checkAlertType(alert->getType())]++;
+                        }
                     }
                 }
             }
@@ -163,7 +181,56 @@ void QAlertsModel::refreshAlerts()
     }
 }
 
-long long QAlertsModel::getUnseenNotifications() const
+long long QAlertsModel::getUnseenNotifications(int type) const
 {
-    return unseenNotifications;
+    return type == ALERT_ALL ? std::accumulate(unSeenNotifications.begin(), unSeenNotifications.end(), 0) : unSeenNotifications[type];
+}
+
+bool QAlertsModel::existsNotifications(int type) const
+{
+    return hasNotificationsOfType[type];
+}
+
+int QAlertsModel::checkAlertType(int alertType) const
+{
+    switch (alertType)
+    {
+            case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
+            case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
+            case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
+            case MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU:
+            case MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
+            case MegaUserAlert::TYPE_CONTACTCHANGE_ACCOUNTDELETED:
+            case MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU:
+            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED:
+            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED:
+            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED:
+            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
+            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
+                return ALERT_CONTACTS;
+                break;
+
+            case MegaUserAlert::TYPE_NEWSHARE:
+            case MegaUserAlert::TYPE_DELETEDSHARE:
+            case MegaUserAlert::TYPE_NEWSHAREDNODES:
+            case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+                return ALERT_SHARES;
+                break;
+
+            case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
+            case MegaUserAlert::TYPE_PAYMENT_FAILED:
+            case MegaUserAlert::TYPE_PAYMENTREMINDER:
+                return ALERT_PAYMENT;
+                break;
+
+            case MegaUserAlert::TYPE_TAKEDOWN:
+            case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
+                return ALERT_TAKEDOWNS;
+                break;
+
+            default:
+                break;
+    }
+
+    return -1;
 }

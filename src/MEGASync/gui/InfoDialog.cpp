@@ -117,6 +117,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     activeDownload = NULL;
     activeUpload = NULL;
     transferMenu = NULL;
+    filterMenu = NULL;
     cloudItem = NULL;
     inboxItem = NULL;
     sharesItem = NULL;
@@ -143,6 +144,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->sStorage->setCurrentWidget(ui->wCircularStorage);
     ui->sQuota->setCurrentWidget(ui->wCircularQuota);
 
+    ui->lNotificationColor->hide();
 
 #ifdef __APPLE__
     if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //Issues with mavericks and popup management
@@ -229,6 +231,7 @@ InfoDialog::~InfoDialog()
     delete activeDownload;
     delete activeUpload;
     delete animation;
+    delete filterMenu;
 }
 
 PSA_info *InfoDialog::getPSAdata()
@@ -254,6 +257,11 @@ void InfoDialog::hideEvent(QHideEvent *event)
 #ifdef __APPLE__
     arrow->hide();
 #endif
+
+    if (filterMenu && filterMenu->isVisible())
+    {
+        filterMenu->hide();
+    }
 
     emit ui->sTabs->currentChanged(-1);
     ui->bTransferManager->shrink(true);
@@ -1305,6 +1313,61 @@ void InfoDialog::on_tNotifications_clicked()
     ui->sTabs->setCurrentWidget(ui->pNotificationsTab);
 }
 
+void InfoDialog::on_bActualFilter_clicked()
+{
+    if (!notificationsReady && !filterMenu)
+    {
+        return;
+    }
+
+    QPoint p = ui->wFilterAndSettings->mapToGlobal(QPoint(4, 4));
+    filterMenu->move(p);
+    filterMenu->show();
+}
+
+void InfoDialog::on_bActualFilterDropDown_clicked()
+{
+    on_bActualFilter_clicked();
+}
+
+void InfoDialog::applyFilterOption(int opt)
+{
+    if (filterMenu && filterMenu->isVisible())
+    {
+        filterMenu->hide();
+    }
+
+    switch (opt)
+    {
+        case QFilterAlertsModel::FILTER_CONTACTS:
+            ui->bActualFilter->setText(tr("Contacts"));
+            ui->lNotificationColor->show();
+            ui->lNotificationColor->setPixmap(QIcon(QString::fromUtf8(":/images/contacts.png")).pixmap(6.0, 6.0));
+            break;
+        case QFilterAlertsModel::FILTER_SHARES:
+            ui->bActualFilter->setText(tr("Incoming Shares"));
+            ui->lNotificationColor->show();
+            ui->lNotificationColor->setPixmap(QIcon(QString::fromUtf8(":/images/incoming_share.png")).pixmap(6.0, 6.0));
+            break;
+        case QFilterAlertsModel::FILTER_PAYMENT:
+            ui->bActualFilter->setText(tr("Payment"));
+            ui->lNotificationColor->show();
+            ui->lNotificationColor->setPixmap(QIcon(QString::fromUtf8(":/images/payments.png")).pixmap(6.0, 6.0));
+            break;
+        default:
+            ui->bActualFilter->setText(tr("All notifications"));
+            ui->lNotificationColor->hide();
+            break;
+    }
+
+    app->applyNotificationFilter(opt);
+}
+
+void InfoDialog::on_bNotificationsSettings_clicked()
+{
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/account/notifications")));
+}
+
 void InfoDialog::on_bDiscard_clicked()
 {
     updateOverStorageState(Preferences::STATE_OVER_STORAGE_DISMISSED);
@@ -1362,6 +1425,19 @@ void InfoDialog::setUnseenNotifications(long long value)
     }
     ui->bNumberUnseenNotifications->setText(QString::number(unseenNotifications));
     ui->bNumberUnseenNotifications->show();
+}
+
+void InfoDialog::setNotificationFilters(bool contacts, bool shares, bool payment)
+{
+    notificationsReady = true;
+
+    if (!filterMenu)
+    {
+        filterMenu = new FilterAlertWidget(this);
+        connect(filterMenu, SIGNAL(onFilterClicked(int)), this, SLOT(applyFilterOption(int)));
+    }
+
+    filterMenu->enableFilters(contacts, shares, payment);
 }
 
 #ifdef __APPLE__

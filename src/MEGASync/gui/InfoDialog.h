@@ -14,6 +14,7 @@
 #include <QGraphicsOpacityEffect>
 #include "HighDpiResize.h"
 #include "Utilities.h"
+#include "FilterAlertWidget.h"
 #ifdef _WIN32
 #include <chrono>
 #endif
@@ -75,6 +76,7 @@ public:
 #endif
 
     void setUnseenNotifications(long long value);
+    void setNotificationFilters(bool contacts, bool shares, bool payment);
 
     long long getUnseenNotifications() const;
 
@@ -117,6 +119,11 @@ private slots:
     void on_tTransfers_clicked();
     void on_tNotifications_clicked();
 
+    void on_bActualFilter_clicked();
+    void on_bActualFilterDropDown_clicked();
+    void applyFilterOption(int opt);
+    void on_bNotificationsSettings_clicked();
+
     void on_bDiscard_clicked();
     void on_bBuyQuota_clicked();
 
@@ -136,6 +143,8 @@ private:
 #endif
 
     QMenu *transferMenu;
+
+    FilterAlertWidget *filterMenu;
 
     MenuItemAction *cloudItem;
     MenuItemAction *inboxItem;
@@ -162,6 +171,7 @@ private:
     int storageState;
     int actualAccountType;
     bool loggedInMode = true;
+    bool notificationsReady = false;
     long long unseenNotifications = 0;
 
     QPropertyAnimation *animation;

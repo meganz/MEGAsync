@@ -62,7 +62,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/AlertItem.cpp \
     $$PWD/QAlertsModel.cpp \
     $$PWD/MegaAlertDelegate.cpp \
-    $$PWD/QFilterAlertsModel.cpp
+    $$PWD/QFilterAlertsModel.cpp \
+    $$PWD/FilterAlertWidget.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
@@ -126,7 +127,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/AlertItem.h \
     $$PWD/QAlertsModel.h \
     $$PWD/MegaAlertDelegate.h \
-    $$PWD/QFilterAlertsModel.h
+    $$PWD/QFilterAlertsModel.h \
+    $$PWD/FilterAlertWidget.h
 
 INCLUDEPATH += $$PWD
 
@@ -177,7 +179,8 @@ win32 {
                 $$PWD/win/Login2FA.ui \
                 $$PWD/win/TransfersStatusWidget.ui \
                 $$PWD/win/AlertItem.ui \
-                $$PWD/win/TransfersSummaryWidget.ui
+                $$PWD/win/TransfersSummaryWidget.ui \
+                $$PWD/win/FilterAlertWidget.ui
 }
 
 macx {
@@ -225,7 +228,8 @@ macx {
                 $$PWD/macx/Login2FA.ui \
                 $$PWD/macx/TransfersStatusWidget.ui \
                 $$PWD/macx/AlertItem.ui \
-                $$PWD/macx/TransfersSummaryWidget.ui
+                $$PWD/macx/TransfersSummaryWidget.ui \
+                $$PWD/macx/FilterAlertWidget.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -282,10 +286,11 @@ unix:!macx {
                 $$PWD/linux/Login2FA.ui \
                 $$PWD/linux/TransfersStatusWidget.ui \
                 $$PWD/linux/AlertItem.ui \
-                $$PWD/linux/TransfersSummaryWidget.ui
+                $$PWD/linux/TransfersSummaryWidget.ui \
+                $$PWD/linux/FilterAlertWidget.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
-}
+}   

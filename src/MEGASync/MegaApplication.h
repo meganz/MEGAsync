@@ -216,6 +216,7 @@ public slots:
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();
     void userAction(int action);
+    void applyNotificationFilter(int opt);
     void changeState();
 #ifdef _WIN32
     void changeDisplay(QScreen *disp);
