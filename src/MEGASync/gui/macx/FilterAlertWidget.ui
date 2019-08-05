@@ -143,6 +143,12 @@
          </item>
          <item>
           <widget class="QToolButton" name="bNumberNotifications">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="minimumSize">
             <size>
              <width>14</width>
@@ -165,8 +171,6 @@ font-weight: bold;
 font-family: Lato;
 font-size: 11px;
 border-radius: 4px;
-padding-left: 4px;
-padding-right: 4px;
 }</string>
            </property>
            <property name="text">
@@ -335,8 +339,6 @@ font-weight: bold;
 font-family: Lato;
 font-size: 11px;
 border-radius: 4px;
-padding-left: 4px;
-padding-right: 4px;
 }</string>
               </property>
               <property name="text">
@@ -431,6 +433,12 @@ padding-right: 4px;
             </item>
             <item>
              <widget class="QToolButton" name="bNumberNotificationsShares">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>14</width>
@@ -453,8 +461,6 @@ font-weight: bold;
 font-family: Lato;
 font-size: 11px;
 border-radius: 4px;
-padding-left: 4px;
-padding-right: 4px;
 }</string>
               </property>
               <property name="text">
@@ -539,6 +545,9 @@ padding-right: 4px;
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Expanding</enum>
+              </property>
               <property name="sizeHint" stdset="0">
                <size>
                 <width>2</width>
@@ -550,7 +559,7 @@ padding-right: 4px;
             <item>
              <widget class="QToolButton" name="bNumberNotificationsPayments">
               <property name="sizePolicy">
-               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
@@ -577,8 +586,6 @@ font-weight: bold;
 font-family: Lato;
 font-size: 11px;
 border-radius: 4px;
-padding-left: 4px;
-padding-right: 4px;
 }</string>
               </property>
               <property name="text">

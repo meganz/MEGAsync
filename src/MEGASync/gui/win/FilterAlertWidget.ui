@@ -28,99 +28,141 @@
   <property name="styleSheet">
    <string notr="true">#FilterAlertWidget
 {
-	border: 1px solid rgba(0,0,0,0.1);
-	border-radius: 6px;
-	background-color: #FFFFFF;
+	background-color: transparent;
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
-    <number>5</number>
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
    </property>
    <item>
-    <widget class="QWidget" name="wAllNotifications" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>32</height>
-      </size>
+    <widget class="QWidget" name="wFilterAlertContainer" native="true">
+     <property name="styleSheet">
+      <string notr="true">#wFilterAlertContainer
+{	
+	border: 1px solid rgba(0,0,0,0.1);
+	border-radius: 4px;
+	background-color: #FFFFFF;
+}</string>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>32</height>
-      </size>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <layout class="QVBoxLayout" name="verticalLayout_3">
       <property name="spacing">
        <number>0</number>
       </property>
       <property name="leftMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>10</number>
       </property>
       <item>
-       <widget class="QToolButton" name="bAll">
-        <property name="styleSheet">
-         <string notr="true">#bAll
+       <widget class="QWidget" name="wAllNotifications" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>32</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>32</height>
+         </size>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QToolButton" name="bAll">
+           <property name="styleSheet">
+            <string notr="true">#bAll
 {
      border: none;
 	color: #999999;
 	font-family: Lato;
-	font-size: 14px;
+	font-size: 12px;
 	line-height: 22px;
 }
 #bAll::hover
 {
 	color: #333333;
 	font-family: Lato;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: bold;
 	line-height: 22px;
 }</string>
-        </property>
-        <property name="text">
-         <string>All notifications</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_4">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
-       <widget class="QToolButton" name="bNumberNotifications">
-        <property name="minimumSize">
-         <size>
-          <width>14</width>
-          <height>14</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>14</height>
-         </size>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">#bNumberNotifications
+           </property>
+           <property name="text">
+            <string>All notifications</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>2</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QToolButton" name="bNumberNotifications">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>14</width>
+             <height>14</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>14</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">#bNumberNotifications
 {
 border: none;
 background-color: #FF333A;
@@ -129,61 +171,41 @@ font-weight: bold;
 font-family: Lato;
 font-size: 11px;
 border-radius: 4px;
-padding-left: 4px;
-padding-right: 4px;
 }</string>
-        </property>
-        <property name="text">
-         <string>0</string>
-        </property>
+           </property>
+           <property name="text">
+            <string>0</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="wSeparator" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>1</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>16777215</width>
-       <height>1</height>
-      </size>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">wSeparator
+      <item>
+       <widget class="QWidget" name="wSeparator" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>1</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>1</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">wSeparator
 {
 	background-color: rgba(0,0,0,0.1);
 }</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="wTypesNotifications" native="true">
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <property name="spacing">
-       <number>0</number>
-      </property>
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
+        </property>
+       </widget>
+      </item>
       <item>
-       <widget class="QWidget" name="wContactsNotifications" native="true">
-        <layout class="QHBoxLayout" name="horizontalLayout">
+       <widget class="QWidget" name="wTypesNotifications" native="true">
+        <layout class="QVBoxLayout" name="verticalLayout">
          <property name="spacing">
           <number>0</number>
          </property>
@@ -200,157 +222,389 @@ padding-right: 4px;
           <number>0</number>
          </property>
          <item>
-          <widget class="QToolButton" name="bContacts">
-           <property name="styleSheet">
-            <string notr="true">#bContacts
+          <widget class="QWidget" name="wContactsNotifications" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>36</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>36</height>
+            </size>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QToolButton" name="bContacts">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#bContacts
 {
      border: none;
 	color: #999999;
 	font-family: Lato;
-	font-size: 14px;
+	font-size: 12px;
 	line-height: 22px;
 }
 #bContacts::hover
 {
 	color: #333333;
 	font-family: Lato;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: bold;
 	line-height: 22px;
 }</string>
-           </property>
-           <property name="text">
-            <string>Contacts</string>
-           </property>
+              </property>
+              <property name="text">
+               <string>Contacts</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/images/contacts.png</normalon>
+               </iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>6</width>
+                <height>6</height>
+               </size>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextBesideIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>2</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QToolButton" name="bNumberNotificationsContacts">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>14</width>
+                <height>14</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>14</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#bNumberNotificationsContacts
+{
+border: none;
+background-color: #FF333A;
+color: #FFFFFF;
+font-weight: bold;
+font-family: Lato;
+font-size: 11px;
+border-radius: 4px;
+}</string>
+              </property>
+              <property name="text">
+               <string>0</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
+          <widget class="QWidget" name="wSharesNotifications" native="true">
+           <property name="minimumSize">
             <size>
-             <width>40</width>
-             <height>20</height>
+             <width>0</width>
+             <height>36</height>
             </size>
            </property>
-          </spacer>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QWidget" name="wSharesNotifications" native="true">
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QToolButton" name="bShares">
-           <property name="styleSheet">
-            <string notr="true">#bShares
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>36</height>
+            </size>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QToolButton" name="bShares">
+              <property name="styleSheet">
+               <string notr="true">#bShares
 {
      border: none;
 	color: #999999;
 	font-family: Lato;
-	font-size: 14px;
+	font-size: 12px;
 	line-height: 22px;
 }
 #bShares::hover
 {
 	color: #333333;
 	font-family: Lato;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: bold;
 	line-height: 22px;
 }</string>
-           </property>
-           <property name="text">
-            <string>Incoming Shares</string>
-           </property>
+              </property>
+              <property name="text">
+               <string>Incoming Shares</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/images/incoming_share.png</normalon>
+               </iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>6</width>
+                <height>6</height>
+               </size>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextBesideIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>2</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QToolButton" name="bNumberNotificationsShares">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>14</width>
+                <height>14</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>14</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#bNumberNotificationsShares
+{
+border: none;
+background-color: #FF333A;
+color: #FFFFFF;
+font-weight: bold;
+font-family: Lato;
+font-size: 11px;
+border-radius: 4px;
+}</string>
+              </property>
+              <property name="text">
+               <string>0</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer_2">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
+          <widget class="QWidget" name="wPaymentNotifications" native="true">
+           <property name="minimumSize">
             <size>
-             <width>40</width>
-             <height>20</height>
+             <width>0</width>
+             <height>36</height>
             </size>
            </property>
-          </spacer>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
-       <widget class="QWidget" name="wPaymentNotifications" native="true">
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <property name="spacing">
-          <number>0</number>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QToolButton" name="bPayment">
-           <property name="styleSheet">
-            <string notr="true">#bPayment
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>36</height>
+            </size>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QToolButton" name="bPayment">
+              <property name="styleSheet">
+               <string notr="true">#bPayment
 {
      border: none;
 	color: #999999;
 	font-family: Lato;
-	font-size: 14px;
+	font-size: 12px;
 	line-height: 22px;
 }
 #bPayment::hover
 {
 	color: #333333;
 	font-family: Lato;
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: bold;
 	line-height: 22px;
 }</string>
-           </property>
-           <property name="text">
-            <string>Payment</string>
-           </property>
+              </property>
+              <property name="text">
+               <string>Payment</string>
+              </property>
+              <property name="icon">
+               <iconset>
+                <normalon>:/images/payments.png</normalon>
+               </iconset>
+              </property>
+              <property name="iconSize">
+               <size>
+                <width>6</width>
+                <height>6</height>
+               </size>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextBesideIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <spacer name="horizontalSpacer_3">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeType">
+               <enum>QSizePolicy::Expanding</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>2</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QToolButton" name="bNumberNotificationsPayments">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>14</width>
+                <height>14</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>16777215</width>
+                <height>14</height>
+               </size>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">#bNumberNotificationsPayments
+{
+border: none;
+background-color: #FF333A;
+color: #FFFFFF;
+font-weight: bold;
+font-family: Lato;
+font-size: 11px;
+border-radius: 4px;
+}</string>
+              </property>
+              <property name="text">
+               <string>0</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer_3">
+          <spacer name="verticalSpacer">
            <property name="orientation">
-            <enum>Qt::Horizontal</enum>
+            <enum>Qt::Vertical</enum>
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>40</width>
-             <height>20</height>
+             <width>20</width>
+             <height>40</height>
             </size>
            </property>
           </spacer>
