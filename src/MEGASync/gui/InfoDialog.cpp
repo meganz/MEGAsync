@@ -108,7 +108,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     //Initialize fields
     this->app = app;
-    reset();
 
     circlesShowAllActiveTransfersProgress = true;
 
@@ -128,8 +127,12 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     actualAccountType = -1;
 
+    notificationsReady = false;
+
     overQuotaState = false;
     storageState = Preferences::STATE_BELOW_OVER_STORAGE;
+
+    reset();
 
     ui->lSDKblock->setText(QString::fromUtf8(""));
     ui->wBlocked->setVisible(false);
@@ -902,6 +905,14 @@ void InfoDialog::reset()
     leftDownloadBytes = completedDownloadBytes = 0;
     uploadActiveTransferPriority = downloadActiveTransferPriority = 0xFFFFFFFFFFFFFFFFULL;
     uploadActiveTransferTag = downloadActiveTransferTag = -1;
+    notificationsReady = false;
+
+    setUnseenNotifications(0);
+    if (filterMenu)
+    {
+        delete filterMenu;
+        filterMenu = NULL;
+    }
 }
 
 QCustomTransfersModel *InfoDialog::stealModel()
@@ -1315,7 +1326,7 @@ void InfoDialog::on_tNotifications_clicked()
 
 void InfoDialog::on_bActualFilter_clicked()
 {
-    if (!notificationsReady && !filterMenu)
+    if (!notificationsReady || !filterMenu)
     {
         return;
     }
@@ -1438,6 +1449,19 @@ void InfoDialog::setNotificationFilters(bool contacts, bool shares, bool payment
     }
 
     filterMenu->enableFilters(contacts, shares, payment);
+}
+
+void InfoDialog::setUnseenTypeNotifications(int all, int contacts, int shares, int payment)
+{
+    notificationsReady = true;
+
+    if (!filterMenu)
+    {
+        filterMenu = new FilterAlertWidget(this);
+        connect(filterMenu, SIGNAL(onFilterClicked(int)), this, SLOT(applyFilterOption(int)));
+    }
+
+    filterMenu->setUnseenNotifications(all, contacts, shares, payment);
 }
 
 #ifdef __APPLE__

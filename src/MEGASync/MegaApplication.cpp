@@ -7620,6 +7620,10 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
     if (infoDialog)
     {
         infoDialog->setUnseenNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL));
+        infoDialog->setUnseenTypeNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL),
+                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_CONTACTS),
+                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_SHARES),
+                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_PAYMENT));
         infoDialog->setNotificationFilters(notificationsModel->existsNotifications(QAlertsModel::ALERT_CONTACTS),
                                            notificationsModel->existsNotifications(QAlertsModel::ALERT_SHARES),
                                            notificationsModel->existsNotifications(QAlertsModel::ALERT_PAYMENT));

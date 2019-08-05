@@ -77,6 +77,7 @@ public:
 
     void setUnseenNotifications(long long value);
     void setNotificationFilters(bool contacts, bool shares, bool payment);
+    void setUnseenTypeNotifications(int all, int contacts, int shares, int payment);
 
     long long getUnseenNotifications() const;
 
