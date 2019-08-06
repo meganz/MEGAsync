@@ -793,6 +793,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     updatingSSLcert = false;
     lastSSLcertUpdate = 0;
 
+    notificationsModel = NULL;
+    notificationsProxyModel = NULL;
+    notificationsDelegate = NULL;
+
 #ifdef _WIN32
     windowsMenu = NULL;
     windowsExitAction = NULL;
@@ -1459,6 +1463,13 @@ void MegaApplication::start()
     {
         trayIcon->setContextMenu(initialMenu.get());
     }
+
+    if(notificationsModel) notificationsModel->deleteLater();
+    notificationsModel = NULL;
+    if (notificationsProxyModel) notificationsProxyModel->deleteLater();
+    notificationsProxyModel = NULL;
+    if (notificationsDelegate) notificationsDelegate->deleteLater();
+    notificationsDelegate = NULL;
 
 #ifndef __APPLE__
     #ifdef _WIN32
@@ -2726,6 +2737,14 @@ void MegaApplication::cleanAll()
     delegateListener = NULL;
     delete pricing;
     pricing = NULL;
+
+    // Delete notifications stuff
+    delete notificationsModel;
+    notificationsModel = NULL;
+    delete notificationsProxyModel;
+    notificationsProxyModel = NULL;
+    delete notificationsDelegate;
+    notificationsDelegate = NULL;
 
     // Delete menus and menu items
     deleteMenu(initialMenu.release());
@@ -4742,6 +4761,14 @@ void MegaApplication::userAction(int action)
                 setupWizard->show();
                 break;
         }
+    }
+}
+
+void MegaApplication::applyNotificationFilter(int opt)
+{
+    if (notificationsProxyModel)
+    {
+        notificationsProxyModel->setFilterAlertType(opt);
     }
 }
 
@@ -7541,6 +7568,76 @@ void MegaApplication::onAccountUpdate(MegaApi *)
 
     updateUserStats(true, true, true, false, USERSTATS_ACCOUNTUPDATE);
 }
+
+
+bool MegaApplication::notificationsAreFiltered()
+{
+    return notificationsProxyModel && notificationsProxyModel->filterAlertType() != QFilterAlertsModel::NO_FILTER;
+}
+
+bool MegaApplication::hasNotifications()
+{
+    return notificationsModel && notificationsModel->rowCount(QModelIndex());
+}
+
+bool MegaApplication::hasNotificationsOfType(int type)
+{
+    return notificationsModel && notificationsModel->existsNotifications(type);
+}
+
+void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
+{
+    if (appfinished || !preferences->logged())
+    {
+        return;
+    }
+
+    bool copyRequired = true;
+    if (!list)//User alerts already loaded: get the list from MegaApi::getUserAlerts
+    {
+        list = megaApi->getUserAlerts();
+        copyRequired = false;
+    }
+    else
+    {
+        assert(notificationsModel && "onUserAlertsUpdate with !alerts should have happened before!");
+    }
+
+    if (!notificationsModel)
+    {
+        notificationsModel = new QAlertsModel(list, copyRequired);
+        notificationsProxyModel = new QFilterAlertsModel();
+        notificationsProxyModel->setSourceModel(notificationsModel);
+        notificationsProxyModel->setSortRole(Qt::UserRole); //Role used to sort the model by date.
+
+        notificationsDelegate = new MegaAlertDelegate(notificationsModel, true, this);
+
+        if (infoDialog)
+        {
+            infoDialog->updateNotificationsTreeView(notificationsProxyModel, notificationsDelegate);
+        }
+    }
+    else
+    {
+        notificationsModel->insertAlerts(list, copyRequired);
+    }
+
+    if (infoDialog)
+    {
+        infoDialog->setUnseenNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL));
+        infoDialog->setUnseenTypeNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL),
+                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_CONTACTS),
+                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_SHARES),
+                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_PAYMENT));
+    }
+
+    if (!copyRequired) //list requires deletion
+    {
+        //list->clear(); //TODO: implement this in SDK
+        //delete list; //TODO: call this once implemented clear();
+    }
+}
+
 
 //Called when contacts have been updated in MEGA
 void MegaApplication::onUsersUpdate(MegaApi *, MegaUserList *userList)

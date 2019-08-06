@@ -15,6 +15,7 @@
 #include "MegaApplication.h"
 #include "MenuItemAction.h"
 #include "platform/Platform.h"
+#include "assert.h"
 
 #ifdef _WIN32    
 #include <chrono>
@@ -73,6 +74,18 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 {
     ui->setupUi(this);
 
+    filterMenu = new FilterAlertWidget(this);
+    connect(filterMenu, SIGNAL(onFilterClicked(int)), this, SLOT(applyFilterOption(int)));
+
+    setUnseenNotifications(0);
+
+#if QT_VERSION > 0x050200
+    QSizePolicy sp_retain = ui->bNumberUnseenNotifications->sizePolicy();
+    sp_retain.setRetainSizeWhenHidden(true);
+    ui->bNumberUnseenNotifications->setSizePolicy(sp_retain);
+#endif
+    ui->tvNotifications->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+
     connect(ui->bTransferManager, SIGNAL(pauseResumeClicked()), this, SLOT(pauseResumeClicked()));
     connect(ui->bTransferManager, SIGNAL(generalAreaClicked()), this, SLOT(generalAreaClicked()));
     connect(ui->bTransferManager, SIGNAL(upAreaClicked()), this, SLOT(upAreaClicked()));
@@ -95,13 +108,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
         setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
     }
 
-#ifdef __APPLE__
     setAttribute(Qt::WA_TranslucentBackground);
-#endif
 
     //Initialize fields
     this->app = app;
-    reset();
 
     circlesShowAllActiveTransfersProgress = true;
 
@@ -120,8 +130,15 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     actualAccountType = -1;
 
+    notificationsReady = false;
+    ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
+    ui->bActualFilter->setText(tr("All notifications"));
+    ui->lNotificationColor->hide();
+
     overQuotaState = false;
     storageState = Preferences::STATE_BELOW_OVER_STORAGE;
+
+    reset();
 
     ui->lSDKblock->setText(QString::fromUtf8(""));
     ui->wBlocked->setVisible(false);
@@ -136,7 +153,16 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->sStorage->setCurrentWidget(ui->wCircularStorage);
     ui->sQuota->setCurrentWidget(ui->wCircularQuota);
 
+#ifdef __APPLE__
+    if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //Issues with mavericks and popup management
+    {
+        installEventFilter(this);
+    }
+#endif
+
+#ifdef Q_OS_LINUX
     installEventFilter(this);
+#endif
 
     ui->lOQDesc->setTextFormat(Qt::RichText);
 
@@ -162,6 +188,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     connect(ui->wStatus, SIGNAL(clicked()), app, SLOT(pauseTransfers()), Qt::QueuedConnection);
     connect(ui->wPSA, SIGNAL(PSAseen(int)), app, SLOT(PSAseen(int)), Qt::QueuedConnection);
+
+    connect(ui->sTabs, SIGNAL(currentChanged(int)), this, SLOT(sTabsChanged(int)), Qt::QueuedConnection);
 
     on_tTransfers_clicked();
 
@@ -210,6 +238,7 @@ InfoDialog::~InfoDialog()
     delete activeDownload;
     delete activeUpload;
     delete animation;
+    delete filterMenu;
 }
 
 PSA_info *InfoDialog::getPSAdata()
@@ -223,12 +252,26 @@ PSA_info *InfoDialog::getPSAdata()
     return nullptr;
 }
 
+void InfoDialog::showEvent(QShowEvent *event)
+{
+    emit ui->sTabs->currentChanged(ui->sTabs->currentIndex());
+    ui->bTransferManager->showAnimated();
+    QDialog::showEvent(event);
+}
+
 void InfoDialog::hideEvent(QHideEvent *event)
 {
 #ifdef __APPLE__
     arrow->hide();
 #endif
 
+    if (filterMenu && filterMenu->isVisible())
+    {
+        filterMenu->hide();
+    }
+
+    emit ui->sTabs->currentChanged(-1);
+    ui->bTransferManager->shrink(true);
     QDialog::hideEvent(event);
 
 #ifdef _WIN32
@@ -254,7 +297,7 @@ void InfoDialog::setUsage()
     {
         ui->sStorage->setCurrentWidget(ui->wBusinessStorage);
         ui->wCircularStorage->setValue(0);
-        usedStorage = QString::fromUtf8("%1").arg(QString::fromUtf8("<span style=\"color: #333333; font-size:20px; font-family: \"Lato\"; text-decoration:none;\">%1</span>")
+        usedStorage = QString::fromUtf8("%1").arg(QString::fromUtf8("<span style='color: #333333; font-size:20px; font-family: Lato; text-decoration:none;'>%1</span>")
                                      .arg(Utilities::getSizeString(preferences->usedStorage())));
     }
     else
@@ -275,9 +318,9 @@ void InfoDialog::setUsage()
                                                       : percentage >= MAX_VALUE ? QString::fromUtf8("#DF4843")
                                                       : QString::fromUtf8("#FF6F00"));
 
-        usedStorage = QString::fromUtf8("%1 /%2").arg(QString::fromUtf8("<span style=\"color:%1; font-family: \"Lato\"; text-decoration:none;\">%2</span>")
+        usedStorage = QString::fromUtf8("%1 /%2").arg(QString::fromUtf8("<span style='color:%1; font-family: Lato; text-decoration:none;'>%2</span>")
                                      .arg(usageColorS).arg(Utilities::getSizeString(preferences->usedStorage())))
-                                     .arg(QString::fromUtf8("<span style=\" font-family: \"Lato\"; text-decoration:none;\">&nbsp;%1</span>")
+                                     .arg(QString::fromUtf8("<span style=' font-family: Lato; text-decoration:none;'>&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(preferences->totalStorage())));
         }
     }
@@ -289,7 +332,7 @@ void InfoDialog::setUsage()
     {
         ui->sQuota->setCurrentWidget(ui->wBusinessQuota);
         ui->wCircularStorage->setValue(0);
-        usedQuota = QString::fromUtf8("%1").arg(QString::fromUtf8("<span style=\"color: #333333; font-size:20px; font-family: \"Lato\"; text-decoration:none;\">%1</span>")
+        usedQuota = QString::fromUtf8("%1").arg(QString::fromUtf8("<span style='color: #333333; font-size:20px; font-family: Lato; text-decoration:none;'>%1</span>")
                                      .arg(Utilities::getSizeString(preferences->usedBandwidth())));
 
     }
@@ -297,7 +340,7 @@ void InfoDialog::setUsage()
     {
         ui->sQuota->setCurrentWidget(ui->wCircularQuota);
         ui->wCircularQuota->setValue(0);
-        usedQuota = QString::fromUtf8("%1 used").arg(QString::fromUtf8("<span style=\"color:#666666; font-family: \"Lato\"; text-decoration:none;\">%1</span>")
+        usedQuota = QString::fromUtf8("%1 used").arg(QString::fromUtf8("<span style='color:#666666; font-family: Lato; text-decoration:none;'>%1</span>")
                                      .arg(Utilities::getSizeString(preferences->usedBandwidth())));
     }
     else
@@ -317,9 +360,9 @@ void InfoDialog::setUsage()
                                                           : percentage >= MAX_VALUE ? QString::fromUtf8("#DF4843")
                                                           : QString::fromUtf8("#FF6F00"));
 
-            usedQuota = QString::fromUtf8("%1 /%2").arg(QString::fromUtf8("<span style=\"color:%1; font-family: \"Lato\"; text-decoration:none;\">%2</span>")
+            usedQuota = QString::fromUtf8("%1 /%2").arg(QString::fromUtf8("<span style='color:%1; font-family: Lato; text-decoration:none;'>%2</span>")
                                          .arg(usageColorB).arg(Utilities::getSizeString(preferences->usedBandwidth())))
-                                         .arg(QString::fromUtf8("<span style=\"font-family: \"Lato\"; text-decoration:none;\">&nbsp;%1</span>")
+                                         .arg(QString::fromUtf8("<span style='font-family: Lato; text-decoration:none;'>&nbsp;%1</span>")
                                          .arg(Utilities::getSizeString(preferences->totalBandwidth())));
         }
     }
@@ -851,6 +894,15 @@ bool InfoDialog::updateOverStorageState(int state)
     return false;
 }
 
+void InfoDialog::updateNotificationsTreeView(QAbstractItemModel *model, QAbstractItemDelegate *delegate)
+{
+    notificationsReady = true;
+    ui->tvNotifications->setModel(model);
+    ui->tvNotifications->setItemDelegate(delegate);
+
+    ui->sNotifications->setCurrentWidget(ui->pNotifications);
+}
+
 void InfoDialog::reset()
 {
     activeDownloadState = activeUploadState = MegaTransfer::STATE_NONE;
@@ -860,7 +912,16 @@ void InfoDialog::reset()
     leftDownloadBytes = completedDownloadBytes = 0;
     uploadActiveTransferPriority = downloadActiveTransferPriority = 0xFFFFFFFFFFFFFFFFULL;
     uploadActiveTransferTag = downloadActiveTransferTag = -1;
+    notificationsReady = false;
+    ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
+    ui->bActualFilter->setText(tr("All notifications"));
+    ui->lNotificationColor->hide();
 
+    setUnseenNotifications(0);
+    if (filterMenu)
+    {
+        filterMenu->reset();
+    }
 }
 
 QCustomTransfersModel *InfoDialog::stealModel()
@@ -1028,24 +1089,13 @@ void InfoDialog::changeEvent(QEvent *event)
 
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 {
-    if (obj == this)
-    {
-        if (e->type() == QEvent::Show)
-        {
-            ui->bTransferManager->showAnimated();
-        }
-        else if (e->type() == QEvent::Hide)
-        {
-            ui->bTransferManager->shrink(true);
-        }
-    }
-
 #ifdef Q_OS_LINUX
     if (obj == this && e->type() == QEvent::WindowDeactivate)
     {
         close();
         return true;
     }
+
 #endif
 #ifdef __APPLE__
     if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //manage spontaneus mouse press events
@@ -1283,6 +1333,111 @@ void InfoDialog::on_tNotifications_clicked()
     ui->sTabs->setCurrentWidget(ui->pNotificationsTab);
 }
 
+void InfoDialog::on_bActualFilter_clicked()
+{
+    if (!notificationsReady || !filterMenu)
+    {
+        return;
+    }
+
+    QPoint p = ui->wFilterAndSettings->mapToGlobal(QPoint(4, 4));
+    filterMenu->move(p);
+    filterMenu->show();
+}
+
+void InfoDialog::on_bActualFilterDropDown_clicked()
+{
+    on_bActualFilter_clicked();
+}
+
+void InfoDialog::applyFilterOption(int opt)
+{
+    if (filterMenu && filterMenu->isVisible())
+    {
+        filterMenu->hide();
+    }
+
+    switch (opt)
+    {
+        case QFilterAlertsModel::FILTER_CONTACTS:
+        {
+            ui->bActualFilter->setText(tr("Contacts"));
+            ui->lNotificationColor->show();
+            ui->lNotificationColor->setPixmap(QIcon(QString::fromUtf8(":/images/contacts.png")).pixmap(6.0, 6.0));
+
+            if (app->hasNotificationsOfType(QAlertsModel::ALERT_CONTACTS))
+            {
+                ui->sNotifications->setCurrentWidget(ui->pNotifications);
+            }
+            else
+            {
+                ui->lNoNotifications->setText(tr("No notifications for contacts"));
+                ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
+            }
+
+            break;
+        }
+        case QFilterAlertsModel::FILTER_SHARES:
+        {
+            ui->bActualFilter->setText(tr("Incoming Shares"));
+            ui->lNotificationColor->show();
+            ui->lNotificationColor->setPixmap(QIcon(QString::fromUtf8(":/images/incoming_share.png")).pixmap(6.0, 6.0));
+
+            if (app->hasNotificationsOfType(QAlertsModel::ALERT_SHARES))
+            {
+                ui->sNotifications->setCurrentWidget(ui->pNotifications);
+            }
+            else
+            {
+                ui->lNoNotifications->setText(tr("No notifications for incoming shares"));
+                ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
+            }
+
+            break;
+        }
+        case QFilterAlertsModel::FILTER_PAYMENT:
+        {
+            ui->bActualFilter->setText(tr("Payment"));
+            ui->lNotificationColor->show();
+            ui->lNotificationColor->setPixmap(QIcon(QString::fromUtf8(":/images/payments.png")).pixmap(6.0, 6.0));
+
+            if (app->hasNotificationsOfType(QAlertsModel::ALERT_PAYMENT))
+            {
+                ui->sNotifications->setCurrentWidget(ui->pNotifications);
+            }
+            else
+            {
+                ui->lNoNotifications->setText(tr("No notifications for payments"));
+                ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
+            }
+            break;
+        }
+        default:
+        {
+            ui->bActualFilter->setText(tr("All notifications"));
+            ui->lNotificationColor->hide();
+
+            if (app->hasNotifications())
+            {
+                ui->sNotifications->setCurrentWidget(ui->pNotifications);
+            }
+            else
+            {
+                ui->lNoNotifications->setText(tr("No notifications"));
+                ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
+            }
+            break;
+        }
+    }
+
+    app->applyNotificationFilter(opt);
+}
+
+void InfoDialog::on_bNotificationsSettings_clicked()
+{
+    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/account/notifications")));
+}
+
 void InfoDialog::on_bDiscard_clicked()
 {
     updateOverStorageState(Preferences::STATE_OVER_STORAGE_DISMISSED);
@@ -1306,6 +1461,45 @@ void InfoDialog::onAnimationFinished()
         animation->setDirection(QAbstractAnimation::Forward);
         animation->start();
     }
+}
+
+void InfoDialog::sTabsChanged(int tab)
+{
+    static int lasttab = -1;
+    if (tab != ui->sTabs->indexOf(ui->pNotificationsTab))
+    {
+        if (lasttab == ui->sTabs->indexOf(ui->pNotificationsTab))
+        {
+            if (app->hasNotifications() && !app->notificationsAreFiltered())
+            {
+                megaApi->acknowledgeUserAlerts();
+            }
+        }
+    }
+    lasttab = tab;
+}
+
+long long InfoDialog::getUnseenNotifications() const
+{
+    return unseenNotifications;
+}
+
+void InfoDialog::setUnseenNotifications(long long value)
+{
+    assert(value >= 0);
+    unseenNotifications = value > 0 ? value : 0;
+    if (!unseenNotifications)
+    {
+        ui->bNumberUnseenNotifications->hide();
+        return;
+    }
+    ui->bNumberUnseenNotifications->setText(QString::number(unseenNotifications));
+    ui->bNumberUnseenNotifications->show();
+}
+
+void InfoDialog::setUnseenTypeNotifications(int all, int contacts, int shares, int payment)
+{
+    filterMenu->setUnseenNotifications(all, contacts, shares, payment);
 }
 
 #ifdef __APPLE__

@@ -106,13 +106,13 @@ void UpgradeWidget::updatePlanInfo()
             ui->lPrice->setStyleSheet(QString::fromUtf8("color: #ffa500;"));
             break;
     }
-    ui->lPrice->setText(QString::fromUtf8("<span style='font-family:\"Lato\"; font-size:48px;'>%1</span><span style='font-family:\"Lato\"; font-size: 26px;'>.%2 %3</span>")
+    ui->lPrice->setText(QString::fromUtf8("<span style='font-family: Lato; font-size:48px;'>%1</span><span style='font-family: Lato; font-size: 26px;'>.%2 %3</span>")
                         .arg(details.amount / 100)
                         .arg(details.amount % 100)
                         .arg(details.currency));
 
-    QString maxStorage = QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; font-family:\"Source Sans Pro\"; text-decoration:none;\">%1&nbsp;</span>").arg(Utilities::getSizeString(details.gbStorage * TOBYTES)) + tr("storage");
-    QString maxTransfer = QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; font-family:\"Source Sans Pro\"; text-decoration:none;\">%1&nbsp;</span>").arg(Utilities::getSizeString(details.gbTransfer * TOBYTES)) + tr("transfer");
+    QString maxStorage = QString::fromUtf8("<span style='color:#333333; font-size: 16px; font-family:\"Source Sans Pro\"; text-decoration:none;'>%1&nbsp;</span>").arg(Utilities::getSizeString(details.gbStorage * TOBYTES)) + tr("storage");
+    QString maxTransfer = QString::fromUtf8("<span style='color:#333333; font-size: 16px; font-family:\"Source Sans Pro\"; text-decoration:none;'>%1&nbsp;</span>").arg(Utilities::getSizeString(details.gbTransfer * TOBYTES)) + tr("transfer");
 
     ui->lStorageInfo->setText(maxStorage);
     ui->lBandWidthInfo->setText(maxTransfer);

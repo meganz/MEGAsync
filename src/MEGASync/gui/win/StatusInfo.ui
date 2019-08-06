@@ -91,6 +91,9 @@ border: none;
    </item>
    <item>
     <widget class="ElidedLabel" name="lStatusDesc">
+     <property name="singleline">
+      <bool>true</bool>
+     </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>

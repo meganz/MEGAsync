@@ -14,6 +14,7 @@
 #include <QGraphicsOpacityEffect>
 #include "HighDpiResize.h"
 #include "Utilities.h"
+#include "FilterAlertWidget.h"
 #ifdef _WIN32
 #include <chrono>
 #endif
@@ -54,6 +55,8 @@ public:
     void setPSAannouncement(int id, QString title, QString text, QString urlImage, QString textButton, QString linkButton);
     bool updateOverStorageState(int state);
 
+    void updateNotificationsTreeView(QAbstractItemModel *model, QAbstractItemDelegate *delegate);
+
     void reset();
 
     QCustomTransfersModel *stealModel();
@@ -72,11 +75,17 @@ public:
     std::chrono::steady_clock::time_point lastWindowHideTime;
 #endif
 
+    void setUnseenNotifications(long long value);
+    void setUnseenTypeNotifications(int all, int contacts, int shares, int payment);
+
+    long long getUnseenNotifications() const;
+
 private:
     void drawAvatar(QString email);
     void animateStates(bool opt);
     void updateTransfersCount();
     void hideEvent(QHideEvent *event) override;
+    void showEvent(QShowEvent *event) override;
 
 public slots:
 
@@ -110,10 +119,16 @@ private slots:
     void on_tTransfers_clicked();
     void on_tNotifications_clicked();
 
+    void on_bActualFilter_clicked();
+    void on_bActualFilterDropDown_clicked();
+    void applyFilterOption(int opt);
+    void on_bNotificationsSettings_clicked();
+
     void on_bDiscard_clicked();
     void on_bBuyQuota_clicked();
 
     void onAnimationFinished();
+    void sTabsChanged(int tab);
 
 signals:
     void openTransferManager(int tab);
@@ -128,6 +143,8 @@ private:
 #endif
 
     QMenu *transferMenu;
+
+    FilterAlertWidget *filterMenu;
 
     MenuItemAction *cloudItem;
     MenuItemAction *inboxItem;
@@ -154,6 +171,8 @@ private:
     int storageState;
     int actualAccountType;
     bool loggedInMode = true;
+    bool notificationsReady = false;
+    long long unseenNotifications = 0;
 
     QPropertyAnimation *animation;
     QGraphicsOpacityEffect *opacityEffect;

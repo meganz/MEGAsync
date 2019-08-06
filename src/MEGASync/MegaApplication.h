@@ -37,6 +37,8 @@
 #include "control/MegaSyncLogger.h"
 #include "megaapi.h"
 #include "QTMegaListener.h"
+#include "QFilterAlertsModel.h"
+#include "gui/MegaAlertDelegate.h"
 
 #ifdef __APPLE__
     #include "gui/MegaSystemTrayIcon.h"
@@ -103,6 +105,7 @@ public:
     virtual void onTransferUpdate(mega::MegaApi *api, mega::MegaTransfer *transfer);
     virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e);
     virtual void onAccountUpdate(mega::MegaApi *api);
+    virtual void onUserAlertsUpdate(mega::MegaApi *api, mega::MegaUserAlertList *list);
     virtual void onUsersUpdate(mega::MegaApi* api, mega::MegaUserList *users);
     virtual void onNodesUpdate(mega::MegaApi* api, mega::MegaNodeList *nodes);
     virtual void onReloadNeeded(mega::MegaApi* api);
@@ -140,6 +143,10 @@ public:
     mega::MegaTransfer* getFinishedTransferByTag(int tag);
 
     TransferMetaData* getTransferAppData(unsigned long long appDataID);
+
+    bool notificationsAreFiltered();
+    bool hasNotifications();
+    bool hasNotificationsOfType(int type);
 
 signals:
     void startUpdaterThread();
@@ -211,6 +218,7 @@ public slots:
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();
     void userAction(int action);
+    void applyNotificationFilter(int opt);
     void changeState();
 #ifdef _WIN32
     void changeDisplay(QScreen *disp);
@@ -321,6 +329,10 @@ protected:
     Preferences *preferences;
     mega::MegaApi *megaApi;
     mega::MegaApi *megaApiFolders;
+    QFilterAlertsModel *notificationsProxyModel;
+    QAlertsModel *notificationsModel;
+    MegaAlertDelegate *notificationsDelegate;
+
     HTTPServer *httpServer;
     HTTPServer *httpsServer;
     UploadToMegaDialog *uploadFolderSelector;
