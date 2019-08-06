@@ -7580,6 +7580,11 @@ bool MegaApplication::hasNotifications()
     return notificationsModel && notificationsModel->rowCount(QModelIndex());
 }
 
+bool MegaApplication::hasNotificationsOfType(int type)
+{
+    return notificationsModel && notificationsModel->existsNotifications(type);
+}
+
 void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
 {
     if (appfinished || !preferences->logged())
@@ -7624,9 +7629,6 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
                                            notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_CONTACTS),
                                            notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_SHARES),
                                            notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_PAYMENT));
-        infoDialog->setNotificationFilters(notificationsModel->existsNotifications(QAlertsModel::ALERT_CONTACTS),
-                                           notificationsModel->existsNotifications(QAlertsModel::ALERT_SHARES),
-                                           notificationsModel->existsNotifications(QAlertsModel::ALERT_PAYMENT));
     }
 
     if (!copyRequired) //list requires deletion

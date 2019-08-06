@@ -1358,24 +1358,74 @@ void InfoDialog::applyFilterOption(int opt)
     switch (opt)
     {
         case QFilterAlertsModel::FILTER_CONTACTS:
+        {
             ui->bActualFilter->setText(tr("Contacts"));
             ui->lNotificationColor->show();
             ui->lNotificationColor->setPixmap(QIcon(QString::fromUtf8(":/images/contacts.png")).pixmap(6.0, 6.0));
+
+            if (app->hasNotificationsOfType(QAlertsModel::ALERT_CONTACTS))
+            {
+                ui->sNotifications->setCurrentWidget(ui->pNotifications);
+            }
+            else
+            {
+                ui->lNoNotifications->setText(tr("No notifications for contacts"));
+                ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
+            }
+
             break;
+        }
         case QFilterAlertsModel::FILTER_SHARES:
+        {
             ui->bActualFilter->setText(tr("Incoming Shares"));
             ui->lNotificationColor->show();
             ui->lNotificationColor->setPixmap(QIcon(QString::fromUtf8(":/images/incoming_share.png")).pixmap(6.0, 6.0));
+
+            if (app->hasNotificationsOfType(QAlertsModel::ALERT_SHARES))
+            {
+                ui->sNotifications->setCurrentWidget(ui->pNotifications);
+            }
+            else
+            {
+                ui->lNoNotifications->setText(tr("No notifications for incoming shares"));
+                ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
+            }
+
             break;
+        }
         case QFilterAlertsModel::FILTER_PAYMENT:
+        {
             ui->bActualFilter->setText(tr("Payment"));
             ui->lNotificationColor->show();
             ui->lNotificationColor->setPixmap(QIcon(QString::fromUtf8(":/images/payments.png")).pixmap(6.0, 6.0));
+
+            if (app->hasNotificationsOfType(QAlertsModel::ALERT_PAYMENT))
+            {
+                ui->sNotifications->setCurrentWidget(ui->pNotifications);
+            }
+            else
+            {
+                ui->lNoNotifications->setText(tr("No notifications for payments"));
+                ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
+            }
             break;
+        }
         default:
+        {
             ui->bActualFilter->setText(tr("All notifications"));
             ui->lNotificationColor->hide();
+
+            if (app->hasNotifications())
+            {
+                ui->sNotifications->setCurrentWidget(ui->pNotifications);
+            }
+            else
+            {
+                ui->lNoNotifications->setText(tr("No notifications"));
+                ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
+            }
             break;
+        }
     }
 
     app->applyNotificationFilter(opt);
@@ -1443,11 +1493,6 @@ void InfoDialog::setUnseenNotifications(long long value)
     }
     ui->bNumberUnseenNotifications->setText(QString::number(unseenNotifications));
     ui->bNumberUnseenNotifications->show();
-}
-
-void InfoDialog::setNotificationFilters(bool contacts, bool shares, bool payment)
-{
-    filterMenu->enableFilters(contacts, shares, payment);
 }
 
 void InfoDialog::setUnseenTypeNotifications(int all, int contacts, int shares, int payment)

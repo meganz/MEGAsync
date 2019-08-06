@@ -146,6 +146,8 @@ public:
 
     bool notificationsAreFiltered();
     bool hasNotifications();
+    bool hasNotificationsOfType(int type);
+
 signals:
     void startUpdaterThread();
     void tryUpdate();
