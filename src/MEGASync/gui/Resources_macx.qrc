@@ -492,5 +492,9 @@
         <file>images/payments@2x.png</file>
         <file>images/takedown.png</file>
         <file>images/takedown@2x.png</file>
+        <file>images/empty-notifications.png</file>
+        <file>images/empty-notifications@2x.png</file>
+        <file>images/mega_notifications.png</file>
+        <file>images/mega_notifications@2x.png</file>
     </qresource>
 </RCC>
