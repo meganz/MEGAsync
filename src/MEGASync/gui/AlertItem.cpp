@@ -60,6 +60,10 @@ void AlertItem::setAlertType(int type)
             case MegaUserAlert::TYPE_NEWSHAREDNODES:
             case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
             {
+                ui->bShareArrow->setMinimumSize(QSize(10, 8));
+                ui->bShareArrow->setMaximumSize(QSize(10, 8));
+                ui->bShareArrow->setIconSize(QSize(10, 8));
+                ui->bShareArrow->setIcon(QIcon(QString::fromAscii("://images/share_arrow.png")));
                 ui->bShareArrow->show();
                 notificationTitle = tr("Incoming Shares").toUpper();
                 notificationColor = QString::fromUtf8("#F2C249");
@@ -83,7 +87,12 @@ void AlertItem::setAlertType(int type)
             default:
             {
                 notificationTitle = QString::fromUtf8("");
-                notificationColor = QString::fromUtf8("#000000");
+                notificationColor = QString::fromUtf8("#FFFFFF");
+                ui->bShareArrow->setMinimumSize(QSize(16, 16));
+                ui->bShareArrow->setMaximumSize(QSize(16, 16));
+                ui->bShareArrow->setIconSize(QSize(16, 16));
+                ui->bShareArrow->setIcon(QIcon(QString::fromAscii("://images/mega_notifications.png")));
+                ui->bShareArrow->show();
             }
                 break;
     }
@@ -190,11 +199,11 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
                 break;
 
             default:
+                notificationHeading = tr("Notification");
                 break;
     }
 
     ui->lHeading->setText(notificationHeading);
-
 }
 
 void AlertItem::setAlertContent(MegaUserAlert *alert)

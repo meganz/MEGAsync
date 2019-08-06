@@ -131,6 +131,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     actualAccountType = -1;
 
     notificationsReady = false;
+    ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
 
     overQuotaState = false;
     storageState = Preferences::STATE_BELOW_OVER_STORAGE;
@@ -898,6 +899,8 @@ void InfoDialog::updateNotificationsTreeView(QAbstractItemModel *model, QAbstrac
     notificationsReady = true;
     ui->tvNotifications->setModel(model);
     ui->tvNotifications->setItemDelegate(delegate);
+
+    ui->sNotifications->setCurrentWidget(ui->pNotifications);
 }
 
 void InfoDialog::reset()
@@ -910,6 +913,7 @@ void InfoDialog::reset()
     uploadActiveTransferPriority = downloadActiveTransferPriority = 0xFFFFFFFFFFFFFFFFULL;
     uploadActiveTransferTag = downloadActiveTransferTag = -1;
     notificationsReady = false;
+    ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
 
     setUnseenNotifications(0);
     if (filterMenu)
