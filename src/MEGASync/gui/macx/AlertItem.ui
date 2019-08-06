@@ -93,7 +93,7 @@ background-color: #FFFFFF;
           <number>0</number>
          </property>
          <item>
-          <widget class="QPushButton" name="bShareArrow">
+          <widget class="QPushButton" name="bNotificationIcon">
            <property name="minimumSize">
             <size>
              <width>10</width>
@@ -107,7 +107,7 @@ background-color: #FFFFFF;
             </size>
            </property>
            <property name="styleSheet">
-            <string notr="true">#bShareArrow
+            <string notr="true">#bNotificationIcon
 {
 border: none;
 }</string>

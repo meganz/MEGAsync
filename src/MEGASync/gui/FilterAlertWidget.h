@@ -17,7 +17,6 @@ public:
     ~FilterAlertWidget();
 
     void setUnseenNotifications(int all = 0, int contacts = 0, int shares = 0, int payment = 0);
-
     void reset();
 
 private slots:

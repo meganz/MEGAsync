@@ -1,6 +1,5 @@
 #include "FilterAlertWidget.h"
 #include "ui_FilterAlertWidget.h"
-#include "qdebug.h"
 
 FilterAlertWidget::FilterAlertWidget(QWidget *parent) :
     QWidget(parent),

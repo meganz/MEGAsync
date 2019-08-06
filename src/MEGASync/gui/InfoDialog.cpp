@@ -132,6 +132,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     notificationsReady = false;
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
+    ui->bActualFilter->setText(tr("All notifications"));
+    ui->lNotificationColor->hide();
 
     overQuotaState = false;
     storageState = Preferences::STATE_BELOW_OVER_STORAGE;
@@ -150,8 +152,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     ui->sStorage->setCurrentWidget(ui->wCircularStorage);
     ui->sQuota->setCurrentWidget(ui->wCircularQuota);
-
-    ui->lNotificationColor->hide();
 
 #ifdef __APPLE__
     if (QSysInfo::MacintoshVersion <= QSysInfo::MV_10_9) //Issues with mavericks and popup management
@@ -914,6 +914,8 @@ void InfoDialog::reset()
     uploadActiveTransferTag = downloadActiveTransferTag = -1;
     notificationsReady = false;
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
+    ui->bActualFilter->setText(tr("All notifications"));
+    ui->lNotificationColor->hide();
 
     setUnseenNotifications(0);
     if (filterMenu)
