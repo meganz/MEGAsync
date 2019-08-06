@@ -6,12 +6,22 @@
 #include <deque>
 #include "AlertItem.h"
 #include <QAbstractItemModel>
+#include <array>
 
 class QAlertsModel : public QAbstractItemModel
 {
     Q_OBJECT
 
 public:
+    enum {
+        ALERT_CONTACTS = 0,
+        ALERT_SHARES,
+        ALERT_PAYMENT,
+        ALERT_TAKEDOWNS,
+        ALERT_UNKNOWN,
+        ALERT_ALL, //this must be the last on the enum
+    };
+
     explicit QAlertsModel(mega::MegaUserAlertList* alerts, bool copy = false, QObject *parent = 0);
     virtual ~QAlertsModel();
 
@@ -30,13 +40,18 @@ public:
 
     void insertAlerts(mega::MegaUserAlertList *alerts, bool copy = false);
 
-    long long getUnseenNotifications() const;
+    long long getUnseenNotifications(int type) const;
+    bool existsNotifications(int type) const;
+
+private:
+    int checkAlertType(int alertType) const;
 
 private:
     QMap<int, mega::MegaUserAlert*> alertsMap;
-    std::deque<int> alertOrder;
+    std::deque<unsigned int> alertOrder;
+    std::array<int, ALERT_ALL> unSeenNotifications;
+    std::array<bool, ALERT_ALL> hasNotificationsOfType;
 
-    long long unseenNotifications;
 };
 
 #endif // QALERTSMODEL_H

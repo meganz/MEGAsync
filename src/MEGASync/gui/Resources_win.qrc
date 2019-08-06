@@ -709,5 +709,29 @@
         <file>images/share_arrow.png</file>
         <file>images/share_arrow@2x.png</file>
         <file>images/share_arrow@3x.png</file>
+        <file>images/notification_color.png</file>
+        <file>images/notification_color@2x.png</file>
+        <file>images/notification_color@3x.png</file>
+        <file>images/arrow-to-left.png</file>
+        <file>images/arrow-to-left@2x.png</file>
+        <file>images/arrow-to-left@3x.png</file>
+        <file>images/contacts.png</file>
+        <file>images/contacts@2x.png</file>
+        <file>images/contacts@3x.png</file>
+        <file>images/incoming_share.png</file>
+        <file>images/incoming_share@2x.png</file>
+        <file>images/incoming_share@3x.png</file>
+        <file>images/payments.png</file>
+        <file>images/payments@2x.png</file>
+        <file>images/payments@3x.png</file>
+        <file>images/takedown.png</file>
+        <file>images/takedown@2x.png</file>
+        <file>images/takedown@3x.png</file>
+        <file>images/empty-notifications.png</file>
+        <file>images/empty-notifications@2x.png</file>
+        <file>images/empty-notifications@3x.png</file>
+        <file>images/mega_notifications.png</file>
+        <file>images/mega_notifications@2x.png</file>
+        <file>images/mega_notifications@3x.png</file>
     </qresource>
 </RCC>

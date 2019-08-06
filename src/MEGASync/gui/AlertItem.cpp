@@ -13,7 +13,7 @@ AlertItem::AlertItem(QWidget *parent) :
     megaApi = ((MegaApplication *)qApp)->getMegaApi();
 
     ui->sIconWidget->hide();
-    ui->bShareArrow->hide();
+    ui->bNotificationIcon->hide();
 }
 
 AlertItem::~AlertItem()
@@ -32,7 +32,7 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
 
 void AlertItem::setAlertType(int type)
 {
-    ui->bShareArrow->hide();
+    ui->bNotificationIcon->hide();
 
     QString notificationTitle;
     QString notificationColor;
@@ -60,7 +60,11 @@ void AlertItem::setAlertType(int type)
             case MegaUserAlert::TYPE_NEWSHAREDNODES:
             case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
             {
-                ui->bShareArrow->show();
+                ui->bNotificationIcon->setMinimumSize(QSize(10, 8));
+                ui->bNotificationIcon->setMaximumSize(QSize(10, 8));
+                ui->bNotificationIcon->setIconSize(QSize(10, 8));
+                ui->bNotificationIcon->setIcon(QIcon(QString::fromAscii("://images/share_arrow.png")));
+                ui->bNotificationIcon->show();
                 notificationTitle = tr("Incoming Shares").toUpper();
                 notificationColor = QString::fromUtf8("#F2C249");
                 break;
@@ -83,7 +87,12 @@ void AlertItem::setAlertType(int type)
             default:
             {
                 notificationTitle = QString::fromUtf8("");
-                notificationColor = QString::fromUtf8("#000000");
+                notificationColor = QString::fromUtf8("#FFFFFF");
+                ui->bNotificationIcon->setMinimumSize(QSize(16, 16));
+                ui->bNotificationIcon->setMaximumSize(QSize(16, 16));
+                ui->bNotificationIcon->setIconSize(QSize(16, 16));
+                ui->bNotificationIcon->setIcon(QIcon(QString::fromAscii("://images/mega_notifications.png")));
+                ui->bNotificationIcon->show();
             }
                 break;
     }
@@ -190,11 +199,11 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
                 break;
 
             default:
+                notificationHeading = tr("Notification");
                 break;
     }
 
     ui->lHeading->setText(notificationHeading);
-
 }
 
 void AlertItem::setAlertContent(MegaUserAlert *alert)

@@ -4764,6 +4764,14 @@ void MegaApplication::userAction(int action)
     }
 }
 
+void MegaApplication::applyNotificationFilter(int opt)
+{
+    if (notificationsProxyModel)
+    {
+        notificationsProxyModel->setFilterAlertType(opt);
+    }
+}
+
 void MegaApplication::changeState()
 {
     if (appfinished)
@@ -7572,6 +7580,11 @@ bool MegaApplication::hasNotifications()
     return notificationsModel && notificationsModel->rowCount(QModelIndex());
 }
 
+bool MegaApplication::hasNotificationsOfType(int type)
+{
+    return notificationsModel && notificationsModel->existsNotifications(type);
+}
+
 void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
 {
     if (appfinished || !preferences->logged())
@@ -7611,7 +7624,11 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
 
     if (infoDialog)
     {
-        infoDialog->setUnseenNotifications(notificationsModel->getUnseenNotifications());
+        infoDialog->setUnseenNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL));
+        infoDialog->setUnseenTypeNotifications(notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_ALL),
+                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_CONTACTS),
+                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_SHARES),
+                                           notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_PAYMENT));
     }
 
     if (!copyRequired) //list requires deletion
