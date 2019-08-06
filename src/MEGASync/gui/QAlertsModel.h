@@ -18,10 +18,9 @@ public:
         ALERT_SHARES,
         ALERT_PAYMENT,
         ALERT_TAKEDOWNS,
-        ALERT_ALL,
+        ALERT_UNKNOWN,
+        ALERT_ALL, //this must be the last on the enum
     };
-
-    static const int ALERT_TYPES = 4;
 
     explicit QAlertsModel(mega::MegaUserAlertList* alerts, bool copy = false, QObject *parent = 0);
     virtual ~QAlertsModel();
@@ -49,9 +48,9 @@ private:
 
 private:
     QMap<int, mega::MegaUserAlert*> alertsMap;
-    std::deque<int> alertOrder;
-    std::array<int, ALERT_TYPES> unSeenNotifications;
-    std::array<bool, ALERT_TYPES> hasNotificationsOfType;
+    std::deque<unsigned int> alertOrder;
+    std::array<int, ALERT_ALL> unSeenNotifications;
+    std::array<bool, ALERT_ALL> hasNotificationsOfType;
 
 };
 

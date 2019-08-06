@@ -19,6 +19,8 @@ public:
     void enableFilters(bool contacts = true, bool shares = true, bool payment = true);
     void setUnseenNotifications(int all = 0, int contacts = 0, int shares = 0, int payment = 0);
 
+    void reset();
+
 private:
     void enableFilterContacts(bool opt);
     void enableFilterShares(bool opt);

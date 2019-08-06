@@ -73,6 +73,10 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui(new Ui::InfoDialog)
 {
     ui->setupUi(this);
+
+    filterMenu = new FilterAlertWidget(this);
+    connect(filterMenu, SIGNAL(onFilterClicked(int)), this, SLOT(applyFilterOption(int)));
+
     setUnseenNotifications(0);
 
 #if QT_VERSION > 0x050200
@@ -116,7 +120,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     activeDownload = NULL;
     activeUpload = NULL;
     transferMenu = NULL;
-    filterMenu = NULL;
     cloudItem = NULL;
     inboxItem = NULL;
     sharesItem = NULL;
@@ -892,6 +895,7 @@ bool InfoDialog::updateOverStorageState(int state)
 
 void InfoDialog::updateNotificationsTreeView(QAbstractItemModel *model, QAbstractItemDelegate *delegate)
 {
+    notificationsReady = true;
     ui->tvNotifications->setModel(model);
     ui->tvNotifications->setItemDelegate(delegate);
 }
@@ -910,8 +914,7 @@ void InfoDialog::reset()
     setUnseenNotifications(0);
     if (filterMenu)
     {
-        delete filterMenu;
-        filterMenu = NULL;
+        filterMenu->reset();
     }
 }
 
@@ -1440,27 +1443,11 @@ void InfoDialog::setUnseenNotifications(long long value)
 
 void InfoDialog::setNotificationFilters(bool contacts, bool shares, bool payment)
 {
-    notificationsReady = true;
-
-    if (!filterMenu)
-    {
-        filterMenu = new FilterAlertWidget(this);
-        connect(filterMenu, SIGNAL(onFilterClicked(int)), this, SLOT(applyFilterOption(int)));
-    }
-
     filterMenu->enableFilters(contacts, shares, payment);
 }
 
 void InfoDialog::setUnseenTypeNotifications(int all, int contacts, int shares, int payment)
 {
-    notificationsReady = true;
-
-    if (!filterMenu)
-    {
-        filterMenu = new FilterAlertWidget(this);
-        connect(filterMenu, SIGNAL(onFilterClicked(int)), this, SLOT(applyFilterOption(int)));
-    }
-
     filterMenu->setUnseenNotifications(all, contacts, shares, payment);
 }
 

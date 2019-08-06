@@ -1992,6 +1992,9 @@ font-size: 16px;
                              <height>21</height>
                             </size>
                            </property>
+                           <property name="cursor">
+                            <cursorShape>PointingHandCursor</cursorShape>
+                           </property>
                            <property name="styleSheet">
                             <string notr="true">#bActualFilter
 {
@@ -2029,6 +2032,9 @@ font-size: 16px;
                              <width>16</width>
                              <height>16</height>
                             </size>
+                           </property>
+                           <property name="cursor">
+                            <cursorShape>PointingHandCursor</cursorShape>
                            </property>
                            <property name="styleSheet">
                             <string notr="true">#bActualFilterDropDown
@@ -2070,6 +2076,9 @@ font-size: 16px;
                       </item>
                       <item>
                        <widget class="QPushButton" name="bNotificationsSettings">
+                        <property name="cursor">
+                         <cursorShape>PointingHandCursor</cursorShape>
+                        </property>
                         <property name="styleSheet">
                          <string notr="true">#bNotificationsSettings
 {

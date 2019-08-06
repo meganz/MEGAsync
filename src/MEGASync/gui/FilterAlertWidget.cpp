@@ -6,7 +6,7 @@ FilterAlertWidget::FilterAlertWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::FilterAlertWidget)
 {
-    isContactsAvailable, isSharesAvailable, isPaymentAvailable = false;
+    isContactsAvailable = isSharesAvailable = isPaymentAvailable = false;
 
     ui->setupUi(this);
     setUnseenNotifications(0, 0, 0, 0);
@@ -18,6 +18,11 @@ FilterAlertWidget::FilterAlertWidget(QWidget *parent) :
 FilterAlertWidget::~FilterAlertWidget()
 {
     delete ui;
+}
+
+void FilterAlertWidget::reset()
+{
+    setUnseenNotifications(0, 0, 0, 0);
 }
 
 void FilterAlertWidget::enableFilters(bool contacts, bool shares, bool payment)

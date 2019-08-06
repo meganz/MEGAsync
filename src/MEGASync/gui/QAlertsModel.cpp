@@ -1,6 +1,7 @@
 #include "QAlertsModel.h"
 #include "QFilterAlertsModel.h"
 #include <QDateTime>
+#include "Preferences.h"
 #include <assert.h>
 
 using namespace mega;
@@ -9,7 +10,7 @@ QAlertsModel::QAlertsModel(MegaUserAlertList *alerts, bool copy, QObject *parent
     : QAbstractItemModel(parent)
 {
 
-    for(int i = 0; i < ALERT_TYPES; i++)
+    for(int i = 0; i < ALERT_ALL; i++)
     {
         hasNotificationsOfType[i] = false;
         unSeenNotifications[i] = 0;
@@ -31,20 +32,49 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
             if (alertsMap.find(alert->getId()) == alertsMap.end())
             {
                 actualnumberofalertstoinsert++;
-                hasNotificationsOfType[checkAlertType(alert->getType())] = true;
+                if (checkAlertType(alert->getType()) != -1)
+                {
+                    hasNotificationsOfType[checkAlertType(alert->getType())] = true;
+                }
             }
         }
+
+        int deleted = 0;
+        while (copy && actualnumberofalertstoinsert - deleted + (int)alertsMap.size() >= (int)Preferences::MAX_COMPLETED_ITEMS)
+        {
+            MegaUserAlert *alertToDelete = alertsMap[alertOrder.back()];
+            assert(alertToDelete && "something went wrong: no alert to delete");
+            if (alertToDelete)
+            {
+                if (!alertToDelete->getSeen())
+                {
+                    if (checkAlertType(alertToDelete->getType()) != -1)
+                    {
+                        unSeenNotifications[checkAlertType(alertToDelete->getType())]--;
+                    }
+                }
+
+                int row = alertOrder.size() - 1;
+                beginRemoveRows(QModelIndex(), row, row);
+                alertsMap.remove(alertToDelete->getId());
+                alertOrder.pop_back();
+                endRemoveRows();
+                delete alertToDelete;
+                deleted++;
+            }
+        }
+
         if (actualnumberofalertstoinsert > 0)
         {
             beginInsertRows(QModelIndex(), 0, actualnumberofalertstoinsert - 1);
         }
-        actualnumberofalertstoinsert = 0;
 
-        for (int i = 0; i < numAlerts; i++)
+        for (int i = qMax(0, numAlerts - (int)Preferences::MAX_COMPLETED_ITEMS) ; i < numAlerts; i++)
         {
             if (!copy) //first time, alertsMap should be empty
             {
                 MegaUserAlert *alert = alerts->get(i);
+
                 alertOrder.push_front(alert->getId());
                 alertsMap.insert(alert->getId(), alert);
                 if (!alert->getSeen())
@@ -54,7 +84,6 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                         unSeenNotifications[checkAlertType(alert->getType())]++;
                     }
                 }
-                actualnumberofalertstoinsert++;
             }
             else
             {
@@ -74,12 +103,12 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                     delete old;
 
                     //update row element
-                    std::deque<int>::iterator orderIter = std::find(alertOrder.begin(), alertOrder.end(),alert->getId());
+                    std::deque<unsigned int>::iterator orderIter = std::find(alertOrder.begin(), alertOrder.end(),alert->getId());
                     assert(orderIter != alertOrder.end() && (*orderIter) == alert->getId());
                     if (orderIter != alertOrder.end() && (*orderIter) == alert->getId())
                     {
                         int row = std::distance(alertOrder.begin(),orderIter);
-                        if (row < alertOrder.size())
+                        if (row < (int)alertOrder.size())
                         {
                             emit dataChanged(index(row, 0, QModelIndex()), index(row, 0, QModelIndex()));
                         }
@@ -91,9 +120,9 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
                 }
                 else
                 {
+
                     alertOrder.push_front(alert->getId());
                     alertsMap.insert(alert->getId(), alert);
-                    actualnumberofalertstoinsert++;
                     if (!alert->getSeen())
                     {
                         if (checkAlertType(alert->getType()) != -1)
@@ -107,9 +136,6 @@ void QAlertsModel::insertAlerts(MegaUserAlertList *alerts, bool copy)
 
         if (actualnumberofalertstoinsert > 0)
         {
-            // this might actually be problematic, but since the change on the underlying data seems to be done synchronously
-            // it seems we might not need to call beginInsert before actually doing it
-//            beginInsertRows(QModelIndex(), 0, actualnumberofalertstoinsert - 1);
             endInsertRows();
         }
     }
@@ -151,7 +177,7 @@ int QAlertsModel::rowCount(const QModelIndex &parent) const
 
 QVariant QAlertsModel::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid() || (index.row() < 0 || alertOrder.size() <= index.row()))
+    if (!index.isValid() || (index.row() < 0 || (int)alertOrder.size() <= index.row()))
     {
         return QVariant();
     }
@@ -229,6 +255,7 @@ int QAlertsModel::checkAlertType(int alertType) const
                 break;
 
             default:
+                return ALERT_UNKNOWN;
                 break;
     }
 
