@@ -50,7 +50,7 @@
 {
 	border: none;
 	color: #666666;
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
     font-size: 13px;
 }
 QPushButton#bSettings:hover
@@ -61,27 +61,27 @@ QPushButton#bSettings:hover
 #lEmail, #lPassword
 {
      color:rgba(0, 0, 0, 0.4);
-	font-family: &quot;SF UI Text&quot;;
+	font-family: &quot;Lato&quot;;
 	font-size: 13px;
     padding-left: 10px;
 }
 
 #lDesc
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 18px;
   color:rgba(51, 51, 51, 0.7);
 }
 
 #lDescLogin
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 13px;
   color: #666666;
 }
 #lLogin
 {
-  font-family: &quot;Montserrat&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 16px;
   color: #333333;
 }
@@ -89,14 +89,14 @@ QPushButton#bSettings:hover
 #lProgress
 {
 	color: #333333;
-     font-family: &quot;Montserrat&quot;;
+     font-family: &quot;Lato&quot;;
 	font-size: 16px;
 	padding-top: 15px;
 }
 #lSettingUp
 {
 	color: #333333;
-     font-family: &quot;Montserrat&quot;;
+     font-family: &quot;Lato&quot;;
 	font-size: 16px;
 }
 

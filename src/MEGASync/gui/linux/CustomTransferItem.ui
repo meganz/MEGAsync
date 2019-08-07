@@ -44,35 +44,35 @@
 
 #lFileName, #lFileNameCompleted
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 13px;
   color: #333333;
 }
 
 #lSpeed
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 12px;
   color: #666666;
 }
 
 #lTransfers
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 12px;
   color: #666666;
 }
 
 #lElapsedTime
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 12px;
   color: #999999;
 }
 
 #lRemainingTime
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 13px;
 }</string>
   </property>
@@ -548,7 +548,7 @@
                      </property>
                      <property name="font">
                       <font>
-                       <family>Source Sans Pro</family>
+                       <family>Lato</family>
                        <pointsize>-1</pointsize>
                       </font>
                      </property>

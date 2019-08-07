@@ -121,7 +121,7 @@ void PlanWidget::updatePlanInfo()
             ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ffa500;"));
             break;
     }
-    ui->lPrice->setText(QString::fromUtf8("<span style='font-family:\"HelveticaNeue\"; font-size:44px;'>%1</span><span style='font-family:\"HelveticaNeue\"; font-size: 33px;'>.%2 %3</span>")
+    ui->lPrice->setText(QString::fromUtf8("<span style='font-family:\"Lato\"; font-size:44px;'>%1</span><span style='font-family:\"Lato\"; font-size: 33px;'>.%2 %3</span>")
                         .arg(details.amount / 100)
                         .arg(details.amount % 100)
                         .arg(details.currency));

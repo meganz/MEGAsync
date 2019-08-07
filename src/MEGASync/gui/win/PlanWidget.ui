@@ -53,40 +53,40 @@ QPushButton
 
 #lTip
 {
-  font-family: HelveticaNeue;
+  font-family: Lato;
   font-size: 13px;
   color: #fe2229;	
 }
 
 #lProPlan
 {
-  font-family: HelveticaNeue;
+  font-family: Lato;
   font-size: 18px;
   color: #666666;
 }
 
 #lPeriod
 {
-  font-family: HelveticaNeue;
+  font-family: Lato;
   font-size: 18px;
   color: #ff333a;
 }
 
 #lPrice
 {
-  font-family: HelveticaNeue;
+  font-family: Lato;
   color: #333333;
 }
 
 #lStorageInfo, #lBandWidthInfo
 {
-  font-family: HelveticaNeue;
+  font-family: Lato;
   font-size: 14px;
   color: #333333;
 }
 #lStorage, #lBandWidth
 {
-  font-family: HelveticaNeue;
+  font-family: Lato;
   font-size: 12px;
   color: #999999; 
 }

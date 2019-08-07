@@ -32,14 +32,14 @@
 }
 #lDescRecommendation, #lDescInfo
 {
-  font-family: HelveticaNeue;
+  font-family: Lato;
   font-size: 12px;
   line-height: 1.5;
   color: #333333;
 }
 #lRemainingTime
 {
-  font-family: HelveticaNeue;
+  font-family: Lato;
   font-size: 14px;
   color: #333333;
 }</string>
