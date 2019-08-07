@@ -340,7 +340,10 @@ background-color: #F7F8F9;
                   <string>Add Sync</string>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">border: none;
+                  <string notr="true">#bAddSync
+{
+border: none;
+}
 </string>
                  </property>
                  <property name="text">
@@ -376,7 +379,10 @@ background-color: #F7F8F9;
                   <string>Upload</string>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">border: none;
+                  <string notr="true">#bUpload
+{
+border: none;
+}
 </string>
                  </property>
                  <property name="text">
@@ -412,7 +418,10 @@ background-color: #F7F8F9;
                   <string>Download</string>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">border: none;
+                  <string notr="true">#bDownload
+{
+border: none;
+}
 </string>
                  </property>
                  <property name="text">
@@ -457,7 +466,10 @@ background-color: #F7F8F9;
                   <string>Show MEGAsync options</string>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">border: none;
+                  <string notr="true">#bSettings
+{
+border: none;
+}
 </string>
                  </property>
                  <property name="text">
@@ -2088,7 +2100,7 @@ background-color: #FFFFFF;
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
-                          <width>134</width>
+                          <width>2</width>
                           <height>20</height>
                          </size>
                         </property>
