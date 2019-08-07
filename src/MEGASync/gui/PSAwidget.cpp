@@ -90,10 +90,9 @@ bool PSAwidget::isPSAshown()
 
 void PSAwidget::setPSAImage(QImage image)
 {
-    QFont f = ui->lTitle->font();
-    QFontMetrics fm = QFontMetrics(f);
+    ui->lTitle->ensurePolished();
     int width = ui->lTitle->width();
-    ui->lTitle->setText(fm.elidedText(info.title, Qt::ElideRight, width));
+    ui->lTitle->setText(ui->lTitle->fontMetrics().elidedText(info.title, Qt::ElideRight, width));
 
     ui->lDesc->setFrameStyle(QFrame::Box);
     ui->lDesc->setText(info.desc);

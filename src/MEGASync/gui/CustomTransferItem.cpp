@@ -37,12 +37,12 @@ CustomTransferItem::~CustomTransferItem()
 void CustomTransferItem::setFileName(QString fileName)
 {
     TransferItem::setFileName(fileName);
-
-    QFont f = ui->lFileName->font();
-    QFontMetrics fm = QFontMetrics(f);
-    ui->lFileName->setText(fm.elidedText(fileName, Qt::ElideMiddle,ui->lFileName->width()));
+    ui->lFileName->ensurePolished();
+    ui->lFileName->setText(ui->lFileName->fontMetrics().elidedText(fileName, Qt::ElideMiddle,ui->lFileName->width()));
     ui->lFileName->setToolTip(fileName);
-    ui->lFileNameCompleted->setText(fm.elidedText(fileName, Qt::ElideMiddle,ui->lFileName->width()));
+
+    ui->lFileNameCompleted->ensurePolished();
+    ui->lFileNameCompleted->setText(ui->lFileNameCompleted->fontMetrics().elidedText(fileName, Qt::ElideMiddle,ui->lFileNameCompleted->width()));
     ui->lFileNameCompleted->setToolTip(fileName);
 
 
