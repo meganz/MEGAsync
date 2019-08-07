@@ -218,7 +218,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
             }
             return true; // click consumed
         }
-        else if (item && item->getLinkButtonClicked(((QMouseEvent *)event)->pos() - option.rect.topLeft()))
+        else if (item && item->checkButtonClicked(((QMouseEvent *)event)->pos() - option.rect.topLeft(), TransferItem::GET_LINK_BUTTON))
         {
             QList<MegaHandle> exportList;
             QStringList linkList;
@@ -267,26 +267,29 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
              }
              return true; // click consumed
         }
-        else if (model->getModelType() == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
+        else if (item && item->checkButtonClicked(((QMouseEvent *)event)->pos() - option.rect.topLeft(), TransferItem::SHOW_IN_FOLDER_BUTTON))
         {
-            MegaTransfer *transfer = NULL;
-            transfer = model->getTransferByTag(tag);
-            if (transfer && transfer->getState() == MegaTransfer::STATE_COMPLETED
-                         && transfer->getPath())
+            if (model->getModelType() == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
             {
-                QString localPath = QString::fromUtf8(transfer->getPath());
-                #ifdef WIN32
-                if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+                MegaTransfer *transfer = NULL;
+                transfer = model->getTransferByTag(tag);
+                if (transfer && transfer->getState() == MegaTransfer::STATE_COMPLETED
+                             && transfer->getPath())
                 {
-                    localPath = localPath.mid(4);
+                    QString localPath = QString::fromUtf8(transfer->getPath());
+                    #ifdef WIN32
+                    if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+                    {
+                        localPath = localPath.mid(4);
+                    }
+                    #endif
+                    Platform::showInFolder(localPath);
                 }
-                #endif
-                Platform::showInFolder(localPath);
+                delete transfer;
+                return true; // click consumed
             }
-            delete transfer;
-            return true; // click consumed
+            // we are not consuming the click; fall through to do the usual thing (of selecting the clicked row)
         }
-        // we are not consuming the click; fall through to do the usual thing (of selecting the clicked row)
     }
     else if (QEvent::MouseButtonDblClick == event->type() && model->getModelType() == QTransfersModel::TYPE_FINISHED)
     {
@@ -321,7 +324,7 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
         TransferItem *item = model->transferItems[tag];
         if (item)
         {
-            if (item->getLinkButtonClicked(event->pos() - option.rect.topLeft()))
+            if (item->checkButtonClicked(event->pos() - option.rect.topLeft(), TransferItem::GET_LINK_BUTTON))
             {
                 int modelType = model->getModelType();
                 if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
@@ -340,6 +343,15 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
                         delete transfer;
                         return true;
                     }
+                }
+            }
+            else if (item->checkButtonClicked(event->pos() - option.rect.topLeft(), TransferItem::SHOW_IN_FOLDER_BUTTON))
+            {
+                int modelType = model->getModelType();
+                if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
+                {
+                    QToolTip::showText(event->globalPos(), tr("Show in folder"));
+                    return true;
                 }
             }
 

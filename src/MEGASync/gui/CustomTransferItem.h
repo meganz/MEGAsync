@@ -26,7 +26,7 @@ public:
     void setTransferState(int value);
     QString getTransferName();
 
-    bool getLinkButtonClicked(QPoint pos);
+    bool checkButtonClicked(QPoint pos, int button);
     void mouseHoverTransfer(bool isHover);
     bool mouseHoverRetryingLabel(QPoint pos);
 
