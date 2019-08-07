@@ -137,9 +137,8 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
             activeDownload.tag = transfer->getTag();
             setType(&activeDownload, type, transfer->isSyncTransfer());
             activeDownload.fileName = QString::fromUtf8(transfer->getFileName());
-            QFont f = ui->lDownFilename->font();
-            QFontMetrics fm = QFontMetrics(f);
-            ui->lDownFilename->setText(fm.elidedText(activeDownload.fileName, Qt::ElideMiddle, ui->lDownFilename->width()));
+            ui->lDownFilename->ensurePolished();
+            ui->lDownFilename->setText(ui->lDownFilename->fontMetrics().elidedText(activeDownload.fileName, Qt::ElideMiddle, ui->lDownFilename->width()));
             ui->lDownFilename->setToolTip(activeDownload.fileName);
             QIcon icon;
             icon.addFile(Utilities::getExtensionPixmapSmall(activeDownload.fileName), QSize(), QIcon::Normal, QIcon::Off);
@@ -172,9 +171,8 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
             activeUpload.tag = transfer->getTag();
             setType(&activeUpload, type, transfer->isSyncTransfer());
             activeUpload.fileName = QString::fromUtf8(transfer->getFileName());
-            QFont f = ui->lUpFilename->font();
-            QFontMetrics fm = QFontMetrics(f);
-            ui->lUpFilename->setText(fm.elidedText(activeUpload.fileName, Qt::ElideMiddle, ui->lUpFilename->width()));
+            ui->lUpFilename->ensurePolished();
+            ui->lUpFilename->setText(ui->lUpFilename->fontMetrics().elidedText(activeUpload.fileName, Qt::ElideMiddle, ui->lUpFilename->width()));
             ui->lUpFilename->setToolTip(activeUpload.fileName);
             QIcon icon;
             icon.addFile(Utilities::getExtensionPixmapSmall(activeUpload.fileName), QSize(), QIcon::Normal, QIcon::Off);
