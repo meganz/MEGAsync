@@ -2106,6 +2106,9 @@ background-color: #FFFFFF;
                         <property name="cursor">
                          <cursorShape>PointingHandCursor</cursorShape>
                         </property>
+                        <property name="toolTip">
+                         <string>Open notification settings</string>
+                        </property>
                         <property name="styleSheet">
                          <string notr="true">#bNotificationsSettings
 {

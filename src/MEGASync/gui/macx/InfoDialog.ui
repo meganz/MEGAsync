@@ -2114,6 +2114,9 @@ background-color: #FFFFFF;
                       </item>
                       <item>
                        <widget class="QPushButton" name="bNotificationsSettings">
+                        <property name="toolTip">
+                         <string>Open notification settings</string>
+                        </property>
                         <property name="styleSheet">
                          <string notr="true">#bNotificationsSettings
 {
