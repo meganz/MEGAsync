@@ -56,7 +56,7 @@ TransfersSummaryWidget::~TransfersSummaryWidget()
 void TransfersSummaryWidget::drawEllipse(int x, int y,  int diam, int width, QPainter *painter)
 {
     painter->drawPie(  x, y,  diam, diam, 360*4, 360*8 );
-    painter->drawRect(  x + diam / 2 , y,  width - diam, diam);
+    painter->drawRect(  x + diam / 2 - 1 , y,  width - diam + 2, diam); //Notice we add one pixel per side to ensure no gaps are left
     painter->drawPie(  x + width - diam ,y,  diam, diam, 360*12, 360*8 );
 }
 

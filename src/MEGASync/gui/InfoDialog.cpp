@@ -108,7 +108,16 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
         setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
     }
 
-    setAttribute(Qt::WA_TranslucentBackground);
+#ifdef _WIN32
+    if(getenv("QT_SCREEN_SCALE_FACTORS"))
+    {
+        setStyleSheet(styleSheet().append(QString::fromUtf8("#wInfoDialogIn{border-radius: 0px;}" ) ));
+    }
+    else
+#endif
+    {
+        setAttribute(Qt::WA_TranslucentBackground);
+    }
 
     //Initialize fields
     this->app = app;
