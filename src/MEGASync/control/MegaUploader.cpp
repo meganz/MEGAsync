@@ -68,14 +68,14 @@ bool MegaUploader::filesdiffer(QFileInfo &source, QFileInfo &destination)
 
 void MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, QString destPath, MegaNode *parent, unsigned long long appDataID)
 {
-    QString srcPath = QDir::toNativeSeparators(srcFileInfo.absoluteFilePath());
-
-    if (!srcPath.size() || !destPath.size())
+    if (!srcFileInfo.exists())
     {
         return;
     }
 
-   if (!srcFileInfo.exists())
+    QString srcPath = QDir::toNativeSeparators(srcFileInfo.absoluteFilePath());
+
+    if (!srcPath.size() || !destPath.size())
     {
         return;
     }
@@ -138,6 +138,10 @@ void MegaUploader::uploadRecursivelyIntoASyncedLocation(QFileInfo srcFileInfo, Q
                     if (srl->getError()->getErrorCode() == MegaError::API_OK)
                     {
                         newParent=megaApi->getNodeByHandle(srl->getRequest()->getNodeHandle());
+                    }
+                    else
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Failed to create folder recursive upload: %1").arg(srcFileInfo.fileName()).toUtf8().constData());
                     }
                     delete srl;
 
