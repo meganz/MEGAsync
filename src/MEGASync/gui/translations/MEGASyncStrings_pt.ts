@@ -462,6 +462,11 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Espaço de armazenamento excedido</translation>
     </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Cota de transferência excedida</translation>
+    </message>
 </context>
 <context>
     <name>DownloadFromMegaDialog</name>
@@ -862,7 +867,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation type="vanished">Sincronizações</translation>
+        <translation>Sincronizações</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -927,7 +932,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Add Sync</source>
         <translatorcomment>Button label to add a new synchronization (String as short as possible)</translatorcomment>
-        <translation type="vanished">Adicionar sincronização</translation>
+        <translation>Adicionar sincronização</translation>
     </message>
     <message>
         <source>one file at %1/s</source>
@@ -1074,22 +1079,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Cloud Drive</source>
         <translatorcomment>Label to indicate Cloud drive section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Nuvem de arquivos</translation>
+        <translation type="obsolete">Nuvem de arquivos</translation>
     </message>
     <message>
         <source>Inbox</source>
         <translatorcomment>Label to indicate Inbox section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Caixa de entrada</translation>
+        <translation type="obsolete">Caixa de entrada</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Compartilhado comigo</translation>
+        <translation type="obsolete">Compartilhado comigo</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
         <translatorcomment>Label to indicate Rubbish bin section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Lixeira</translation>
+        <translation type="obsolete">Lixeira</translation>
     </message>
     <message>
         <source>Show MEGAsync options</source>
@@ -1311,7 +1316,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Title of cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Remove files older than</source>
@@ -1415,7 +1420,7 @@ because the remote folder doesn&apos;t exist</source>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
 because the remote folder is in the rubbish bin</source>
-        <translation type="obsolete">A sua sincronização &quot;%1&quot; foi desativada porque a pasta remota está na Lixeira</translation>
+        <translation type="obsolete">O seu sync &quot;%1&quot; foi desativadoporque a pasta remota esta no lixo</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled
@@ -1709,7 +1714,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the remote folder is in the rubbish bin</source>
         <translatorcomment>Notification message launched when a sync is disabled due to the remote folder has been deleted. Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">A sua sincronização &quot;%1&quot; foi desativada porque a pasta remota está na Lixeira</translation>
+        <translation type="unfinished">O seu sync &quot;%1&quot; foi desativadoporque a pasta remota esta no lixo</translation>
     </message>
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the local folder has changed</source>
@@ -2596,7 +2601,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
-        <translation type="unfinished">popular!</translation>
+        <translation type="unfinished">Popular!</translation>
     </message>
 </context>
 <context>
@@ -2642,7 +2647,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="unfinished">- Aprimoramento na aparência em telas de alta resolução no Windows
+        <translation type="obsolete">- Aprimoramento na aparência em telas de alta resolução no Windows
 - Melhor desempenho da interface gráfica ao adicionar um grande número de downloads
 - Novo estilo do assistente de informação inicial, novos ícones e melhorias na interface
 - Suporte para contas Business
@@ -2656,11 +2661,21 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="unfinished">- Aprimoramento na aparência em telas de alta resolução no Linux
+        <translation type="obsolete">- Aprimoramento na aparência em telas de alta resolução no Linux
 - Suporte a miniaturas de documentos PDF
 - Melhor desempenho da interface gráfica ao adicionar um grande número de downloads
 - Novo estilo do assistente de informação inicial, novos ícones e melhorias na interface
 - Suporte para contas Business
+- Outras pequenas correções de bugs e melhorias</translation>
+    </message>
+    <message>
+        <source>- Fix a crash during processing of some PDF files
+- Resume pending transfers after a crash on next startup
+- Include option to add synchronizations from the main dialog
+- Other minor bug fixes and improvements</source>
+        <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
+        <translation type="unfinished">- Correção de erro durante o processamento de alguns arquivos PDF
+- Retomada de transferências pendentes ao reiniciar o aplicativo depois de um erro[BR]- Possibilidade de adicionar sincronizações na caixa de diálogo principal
 - Outras pequenas correções de bugs e melhorias</translation>
     </message>
 </context>
@@ -3391,7 +3406,7 @@ when the application starts again</source>
     <message>
         <source>%1 cleaning scheduler</source>
         <translatorcomment>Button label to open cleaning scheduler dialog. Keep %1 placeholder. It will be replace at runtime.</translatorcomment>
-        <translation type="obsolete">[$17607]</translation>
+        <translation type="obsolete">%1 cleaning scheduler</translation>
     </message>
     <message>
         <source>Disable file versioning</source>
@@ -3451,6 +3466,11 @@ when the application starts again</source>
         <source>%1 used</source>
         <translatorcomment>Label to indicate the total amount of storage/bandwitdh used by the account. Keep placeholder %1</translatorcomment>
         <translation type="unfinished">%1 usado</translation>
+    </message>
+    <message>
+        <source>MEGA-RECOVERYKEY</source>
+        <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
+        <translation type="unfinished">MEGA-RECOVERYKEY</translation>
     </message>
 </context>
 <context>
@@ -4375,6 +4395,11 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Out of storage space</source>
         <translatorcomment>Label to indicate that a transfer is halted due to the account is out of storage space</translatorcomment>
         <translation type="unfinished">Espaço de armazenamento excedido</translation>
+    </message>
+    <message>
+        <source>Transfer quota exceeded</source>
+        <translatorcomment>Label to indicate that a transfer is halted due to the account is out of transfer quota</translatorcomment>
+        <translation type="unfinished">Cota de transferência excedida</translation>
     </message>
 </context>
 <context>

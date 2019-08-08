@@ -40,7 +40,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/ActiveTransfersWidget.cpp \
     $$PWD/AvatarWidget.cpp \
     $$PWD/MenuItemAction.cpp \
-    $$PWD/DataUsageMenu.cpp \
     $$PWD/AddExclusionDialog.cpp \
     $$PWD/LocalCleanScheduler.cpp \
     $$PWD/TransferManagerItem.cpp \
@@ -105,7 +104,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ActiveTransfersWidget.h \
     $$PWD/AvatarWidget.h \
     $$PWD/MenuItemAction.h \
-    $$PWD/DataUsageMenu.h \
     $$PWD/AddExclusionDialog.h \
     $$PWD/LocalCleanScheduler.h \
     $$PWD/TransferManagerItem.h \

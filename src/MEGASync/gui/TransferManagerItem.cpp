@@ -229,7 +229,14 @@ void TransferManagerItem::updateTransfer()
         case MegaTransfer::STATE_RETRYING:
             if (transferError == MegaError::API_EOVERQUOTA)
             {
-                ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("Out of storage space")));
+                if (transferErrorValue)
+                {
+                    ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("Transfer quota exceeded")));
+                }
+                else
+                {
+                    ui->lSpeed->setText(QString::fromUtf8("(%1)").arg(tr("Out of storage space")));
+                }
             }
             else
             {

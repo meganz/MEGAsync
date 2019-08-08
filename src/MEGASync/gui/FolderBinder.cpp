@@ -129,6 +129,9 @@ void FolderBinder::on_bLocalFolder_clicked()
 void FolderBinder::on_bMegaFolder_clicked()
 {
     QPointer<NodeSelector> nodeSelector = new NodeSelector(megaApi, NodeSelector::SYNC_SELECT, this->parentWidget());
+#ifdef Q_OS_LINUX
+    nodeSelector->setWindowFlags(nodeSelector->windowFlags() | (Qt::Tool));
+#endif
     int result = nodeSelector->exec();
     if (!nodeSelector || result != QDialog::Accepted)
     {

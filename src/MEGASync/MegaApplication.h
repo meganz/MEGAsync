@@ -73,7 +73,19 @@ public:
 class Notificator;
 class MEGASyncDelegateListener;
 
-enum GetUserStatsReason { USERSTATS_LOGGEDIN, USERSTATS_STORAGESTATECHANGE, USERSTATS_TRAFFICLIGHT, USERSTATS_SHOWDIALOG, USERSTATS_CHANGEPROXY, USERSTATS_TRANSFERTEMPERROR, USERSTATS_ACCOUNTUPDATE, USERSTATS_STORAGECLICKED };
+enum GetUserStatsReason {
+    USERSTATS_LOGGEDIN,
+    USERSTATS_STORAGESTATECHANGE,
+    USERSTATS_TRAFFICLIGHT,
+    USERSTATS_SHOWDIALOG,
+    USERSTATS_CHANGEPROXY,
+    USERSTATS_TRANSFERTEMPERROR,
+    USERSTATS_ACCOUNTUPDATE,
+    USERSTATS_STORAGECLICKED,
+    USERSTATS_BANDWIDTH_TIMEOUT_SHOWINFODIALOG,
+    USERSTATS_PRO_EXPIRED,
+    USERSTATS_OPENSETTINGSDIALOG,
+};
 
 class MegaApplication : public QApplication, public mega::MegaListener
 {
@@ -217,6 +229,7 @@ public slots:
     void runConnectivityCheck();
     void onConnectivityCheckSuccess();
     void onConnectivityCheckError();
+    void proExpirityTimedOut();
     void userAction(int action);
     void applyNotificationFilter(int opt);
     void changeState();
@@ -251,7 +264,7 @@ protected:
     void createTrayIcon();
     void createGuestMenu();
     bool showTrayIconAlwaysNEW();
-    void loggedIn();
+    void loggedIn(bool fromWizard);
     void startSyncs();
     void applyStorageState(int state);
     void processUploadQueue(mega::MegaHandle nodeHandle);
@@ -265,6 +278,7 @@ protected:
     void startHttpServer();
     void startHttpsServer();
     void initLocalServer();
+    void refreshStorageUIs();
 
     void sendOverStorageNotification(int state);
 
@@ -318,6 +332,7 @@ protected:
 
     QTimer *connectivityTimer;
     std::unique_ptr<QTimer> onGlobalSyncStateChangedTimer;
+    QTimer proExpirityTimer;
     int scanningAnimationIndex;
     SetupWizard *setupWizard;
     SettingsDialog *settingsDialog;
@@ -358,6 +373,7 @@ protected:
     bool almostOQ;
     int storageState;
     int appliedStorageState;
+    long long receivedStorageSum;
     long long maxMemoryUsage;
     int exportOps;
     int syncState;

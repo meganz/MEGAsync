@@ -620,6 +620,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaError", "Expired");
     QT_TRANSLATE_NOOP("MegaError", "Not found");
     QT_TRANSLATE_NOOP("MegaError", "Circular linkage detected");
+    QT_TRANSLATE_NOOP("MegaError", "Upload produces recursivity");
     QT_TRANSLATE_NOOP("MegaError", "Access denied");
     QT_TRANSLATE_NOOP("MegaError", "Already exists");
     QT_TRANSLATE_NOOP("MegaError", "Incomplete");
@@ -1033,6 +1034,9 @@ void MegaApplication::initialize()
     connectivityTimer->setInterval(Preferences::MAX_LOGIN_TIME_MS);
     connect(connectivityTimer, SIGNAL(timeout()), this, SLOT(runConnectivityCheck()));
 
+    proExpirityTimer.setSingleShot(true);
+    connect(&proExpirityTimer, SIGNAL(timeout()), this, SLOT(proExpirityTimedOut()));
+
 #ifdef _WIN32
     if (isPublic && prevVersion <= 3104 && preferences->canUpdate(appPath))
     {
@@ -1445,6 +1449,7 @@ void MegaApplication::start()
     storageState = MegaApi::STORAGE_STATE_GREEN;
     appliedStorageState = MegaApi::STORAGE_STATE_GREEN;;
     bwOverquotaTimestamp = 0;
+    receivedStorageSum = 0;
 
     for (unsigned i = 3; i--; )
     {
@@ -1571,6 +1576,10 @@ void MegaApplication::start()
             megaApi->sendEvent(99500, "MEGAsync first start");
             openInfoWizard();
         }
+        else if (!QSystemTrayIcon::isSystemTrayAvailable() && !getenv("START_MEGASYNC_IN_BACKGROUND"))
+        {
+            showInfoDialog();
+        }
 
         onGlobalSyncStateChanged(megaApi);
         return;
@@ -1632,7 +1641,7 @@ void MegaApplication::start()
     }
 }
 
-void MegaApplication::loggedIn()
+void MegaApplication::loggedIn(bool fromWizard)
 {
     if (appfinished)
     {
@@ -1645,17 +1654,9 @@ void MegaApplication::loggedIn()
         infoWizard = NULL;
     }
 
-    for (unsigned i = 3; i--; )
-    {
-        inflightUserStats[i] = false;
-        userStatsLastRequest[i] = 0;
-        queuedUserStats[i] = false;
-    }
-    queuedStorageUserStatsReason = 0;
-
     registerUserActivity();
     pauseTransfers(paused);
-    updateUserStats(true, true, true, true, USERSTATS_LOGGEDIN);
+    updateUserStats(fromWizard, true, true, true, USERSTATS_LOGGEDIN);  // loggedIn() is called once on startup if the user is already logged in, or twice when the user supplies username/password to log in.
     megaApi->getPricing();
     megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
     megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
@@ -1730,7 +1731,10 @@ void MegaApplication::loggedIn()
                                         "If you want to open the interface, just try to open MEGAsync again."));
                 preferences->setOneTimeActionDone(Preferences::ONE_TIME_ACTION_NO_SYSTRAY_AVAILABLE, true);
             }
-            showInfoDialog();
+            if (!getenv("START_MEGASYNC_IN_BACKGROUND"))
+            {
+                showInfoDialog();
+            }
         }
     }
     infoDialog->setUsage();
@@ -1764,6 +1768,19 @@ void MegaApplication::loggedIn()
         QString link = it.key();
         megaApi->getPublicNode(link.toUtf8().constData());
     }
+
+
+    if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
+    {
+        preferences->setUsedStorage(preferences->totalStorage());
+    }
+    else
+    {
+        preferences->setUsedStorage(receivedStorageSum);
+    }
+    preferences->sync();
+    refreshStorageUIs();
+
 
     onGlobalSyncStateChanged(megaApi);
 }
@@ -1826,7 +1843,8 @@ void MegaApplication::applyStorageState(int state)
     {
         // this one is requested with force=false so it can't possibly occur to often.
         // It will in turn result in another call of this function with the actual new state (if it changed), which is taken care of below with force=true (so that one does not have to wait further)
-        updateUserStats(true, false, false, false, USERSTATS_STORAGESTATECHANGE);
+        // Also request pro state (low cost) in case the storage status is due to expiration of paid period etc.
+        updateUserStats(true, false, true, true, USERSTATS_STORAGESTATECHANGE);
         return;
     }
 
@@ -1835,8 +1853,7 @@ void MegaApplication::applyStorageState(int state)
     {
         if (storageState != appliedStorageState)
         {
-            updateUserStats(true, false, false, true, USERSTATS_TRAFFICLIGHT);
-            appliedStorageState = storageState;
+            updateUserStats(true, false, true, true, USERSTATS_TRAFFICLIGHT);
             if (state == MegaApi::STORAGE_STATE_RED)
             {
                 almostOQ = false;
@@ -1846,32 +1863,6 @@ void MegaApplication::applyStorageState(int state)
                 if (!infoOverQuota)
                 {
                     infoOverQuota = true;
-
-                    if (preferences->usedStorage() < preferences->totalStorage())
-                    {
-                        preferences->setUsedStorage(preferences->totalStorage());
-                        preferences->sync();
-
-                        if (infoDialog)
-                        {
-                            infoDialog->setUsage();
-                        }
-
-                        if (settingsDialog)
-                        {
-                            settingsDialog->refreshAccountDetails();
-                        }
-
-                        if (bwOverquotaDialog)
-                        {
-                            bwOverquotaDialog->refreshAccountDetails();
-                        }
-
-                        if (storageOverquotaDialog)
-                        {
-                            storageOverquotaDialog->refreshUsedStorage();
-                        }
-                    }
 
                     if (trayMenu && trayMenu->isVisible())
                     {
@@ -1919,6 +1910,9 @@ void MegaApplication::applyStorageState(int state)
                 }
             }
             checkOverStorageStates();
+
+            appliedStorageState = storageState;
+
         }
     }
 }
@@ -2865,7 +2859,6 @@ void MegaApplication::showInfoDialog()
 
     if (preferences && preferences->logged())
     {
-        updateUserStats(true, true, true, true, USERSTATS_SHOWDIALOG);
         if (bwOverquotaTimestamp > QDateTime::currentMSecsSinceEpoch() / 1000)
         {
             openBwOverquotaDialog();
@@ -2884,13 +2877,13 @@ void MegaApplication::showInfoDialog()
     #elif defined(_WIN32)
             trayIcon->setContextMenu(windowsMenu.get());
     #endif
+            updateUserStats(false, true, false, true, USERSTATS_BANDWIDTH_TIMEOUT_SHOWINFODIALOG);
         }
     }
 
     if (infoDialog)
     {
-
-        if (!infoDialog->isVisible())
+        if (!infoDialog->isVisible() || ((infoDialog->windowState() & Qt::WindowMinimized)) )
         {
             if (storageState == MegaApi::STORAGE_STATE_RED)
             {
@@ -3331,6 +3324,11 @@ void MegaApplication::onConnectivityCheckError()
     showErrorMessage(tr("MEGAsync is unable to connect. Please check your Internet connectivity and local firewall configuration. Note that most antivirus software includes a firewall."));
 }
 
+void MegaApplication::proExpirityTimedOut()
+{
+    updateUserStats(true, true, true, true, USERSTATS_PRO_EXPIRED);
+}
+
 void MegaApplication::setupWizardFinished(int result)
 {
     if (appfinished)
@@ -3409,7 +3407,7 @@ void MegaApplication::setupWizardFinished(int result)
         infoDialog->hide();
     }
 
-    loggedIn();
+    loggedIn(true);
     startSyncs();
     applyStorageState(storageState);
 }
@@ -3485,6 +3483,14 @@ void MegaApplication::unlink()
     downloadQueue.clear();
     megaApi->logout();
     Platform::notifyAllSyncFoldersRemoved();
+
+    for (unsigned i = 3; i--; )
+    {
+        inflightUserStats[i] = false;
+        userStatsLastRequest[i] = 0;
+        queuedUserStats[i] = false;
+    }
+    queuedStorageUserStatsReason = 0;
 }
 
 void MegaApplication::cleanLocalCaches(bool all)
@@ -5747,6 +5753,11 @@ void MegaApplication::openSettings(int tab)
         return;
     }
 
+    if (preferences->logged())
+    {
+        updateUserStats(true, true, true, true, USERSTATS_OPENSETTINGSDIALOG);  // update all info for up to date data (expecially account status & storage of versions on advanced tab)
+    }
+
     if (settingsDialog)
     {
         //If the dialog is active
@@ -6410,6 +6421,29 @@ void MegaApplication::createGuestMenu()
     trayGuestMenu->addAction(exitActionGuest);
 }
 
+void MegaApplication::refreshStorageUIs()
+{
+    if (infoDialog)
+    {
+        infoDialog->setUsage();
+    }
+
+    if (settingsDialog)
+    {
+        settingsDialog->refreshAccountDetails();
+    }
+
+    if (bwOverquotaDialog)
+    {
+        bwOverquotaDialog->refreshAccountDetails();
+    }
+
+    if (storageOverquotaDialog)
+    {
+        storageOverquotaDialog->refreshUsedStorage();
+    }
+}
+
 void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
 {
     if (event->getType() == MegaEvent::EVENT_CHANGE_TO_HTTPS)
@@ -6429,6 +6463,25 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     else if (event->getType() == MegaEvent::EVENT_STORAGE)
     {
         applyStorageState(event->getNumber());
+    }
+    else if (event->getType() == MegaEvent::EVENT_STORAGE_SUM_CHANGED)
+    {
+        receivedStorageSum = event->getNumber();
+        if (!preferences->logged())
+        {
+            return;
+        }
+
+        if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
+        {
+            preferences->setUsedStorage(preferences->totalStorage());
+        }
+        else
+        {
+            preferences->setUsedStorage(receivedStorageSum);
+        }
+        preferences->sync();
+        refreshStorageUIs();
     }
 }
 
@@ -6780,7 +6833,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 if (megaApi->isFilesystemAvailable())
                 {
                     //If we have got the filesystem, start the app
-                    loggedIn();
+                    loggedIn(false);
                     restoreSyncs();
                 }
                 else
@@ -6842,25 +6895,54 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         if (pro)
         {
             preferences->setAccountType(details->getProLevel());
+            if (details->getProLevel() != Preferences::ACCOUNT_TYPE_FREE)
+            {
+                if (details->getProExpiration() && preferences->proExpirityTime() != details->getProExpiration())
+                {
+                    preferences->setProExpirityTime(details->getProExpiration());
+                    proExpirityTimer.stop();
+                    proExpirityTimer.setInterval(qMax(0LL, details->getProExpiration() * 1000 - QDateTime::currentMSecsSinceEpoch()));
+                    proExpirityTimer.start();
+                }
+            }
+            else
+            {
+                preferences->setProExpirityTime(0);
+                proExpirityTimer.stop();
+            }
         }
 
         if (storage)
         {
             preferences->setTotalStorage(details->getStorageMax());
-            preferences->setUsedStorage(details->getStorageUsed());
-            preferences->setVersionsStorage(details->getVersionStorageUsed());
+
+            if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
+            {
+                preferences->setUsedStorage(preferences->totalStorage());
+            }
+            else
+            {
+                preferences->setUsedStorage(receivedStorageSum);
+            }
 
             MegaHandle rootHandle = root->getHandle();
+            MegaHandle inboxHandle = inbox->getHandle();
+            MegaHandle rubbishHandle = rubbish->getHandle();
+
+            // For versions, match the webclient by only counting the user's own nodes.  Versions in inshares are not cleared by 'clear versions'
+            // Also the no-parameter getVersionStorageUsed() double counts the versions in outshares.  Inshare storage count should include versions.
+            preferences->setVersionsStorage(details->getVersionStorageUsed(rootHandle) 
+                                          + details->getVersionStorageUsed(inboxHandle) 
+                                          + details->getVersionStorageUsed(rubbishHandle));
+
             preferences->setCloudDriveStorage(details->getStorageUsed(rootHandle));
             preferences->setCloudDriveFiles(details->getNumFiles(rootHandle));
             preferences->setCloudDriveFolders(details->getNumFolders(rootHandle));
 
-            MegaHandle inboxHandle = inbox->getHandle();
             preferences->setInboxStorage(details->getStorageUsed(inboxHandle));
             preferences->setInboxFiles(details->getNumFiles(inboxHandle));
             preferences->setInboxFolders(details->getNumFolders(inboxHandle));
 
-            MegaHandle rubbishHandle = rubbish->getHandle();
             preferences->setRubbishStorage(details->getStorageUsed(rubbishHandle));
             preferences->setRubbishFiles(details->getNumFiles(rubbishHandle));
             preferences->setRubbishFolders(details->getNumFolders(rubbishHandle));
@@ -6882,6 +6964,12 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             preferences->setInShareStorage(inShareSize);
             preferences->setInShareFiles(inShareFiles);
             preferences->setInShareFolders(inShareFolders);
+
+            // update settings dialog if it exists, to show the correct versions size
+            if (settingsDialog)
+            {
+                settingsDialog->storageChanged();
+            }
         }
 
         if (!megaApi->getBandwidthOverquotaDelay() && preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)
@@ -7330,6 +7418,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
     if (transfer->isFolderTransfer())
     {
+        if (e->getErrorCode() != MegaError::API_OK)
+        {
+            showErrorMessage(tr("Error transferring folder: ") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", MegaError::getErrorString(e->getErrorCode(), MegaError::API_EC_UPLOAD)));
+        }
+
         return;
     }
 
@@ -7543,7 +7636,7 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     {
         preferences->clearTemporalBandwidth();
         megaApi->getPricing();
-        updateUserStats(false, true, false, false, USERSTATS_TRANSFERTEMPERROR);  // just get udpated transfer quota, and with !force, just in case
+        updateUserStats(false, true, true, true, USERSTATS_TRANSFERTEMPERROR);  // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry)
         bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
 #if defined(__MACH__) || defined(_WIN32)
         trayIcon->setContextMenu(initialMenu.get());
@@ -7566,7 +7659,7 @@ void MegaApplication::onAccountUpdate(MegaApi *)
         bwOverquotaDialog->refreshAccountDetails();
     }
 
-    updateUserStats(true, true, true, false, USERSTATS_ACCOUNTUPDATE);
+    updateUserStats(true, true, true, true, USERSTATS_ACCOUNTUPDATE);
 }
 
 
@@ -7691,9 +7784,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
     }
 
     bool externalNodes = false;
-    bool newNodes = false;
-    bool nodesRemoved = false;
-    long long usedStorage = preferences->usedStorage();
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("%1 updated files/folders").arg(nodes->size()).toUtf8().constData());
 
     //Check all modified nodes
@@ -7745,12 +7835,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             }
         }
 
-        if (nodescurrent && node->isRemoved() && (node->getType() == MegaNode::TYPE_FILE) && node->getSize())
-        {
-            usedStorage -= node->getSize();
-            nodesRemoved = true;
-        }
-
         if (nodescurrent && !node->isRemoved() && !node->isSyncDeleted()
                 && (node->getType() == MegaNode::TYPE_FILE)
                 && node->getSize() && node->hasChanged(MegaNode::CHANGE_TYPE_NEW))
@@ -7764,9 +7848,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             {
                 preferences->setCloudDriveStorage(preferences->cloudDriveStorage() + bytes);
             }
-
-            usedStorage += bytes;
-            newNodes = true;
 
             if (!externalNodes && !node->getTag()
                     && ((lastExit / 1000) < node->getCreationTime())
@@ -7797,32 +7878,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                 rebootApplication(false);
             }
             noKeyDetected++;
-        }
-    }
-
-    if (nodesRemoved || newNodes)
-    {
-        preferences->setUsedStorage(usedStorage);
-        preferences->sync();
-
-        if (infoDialog)
-        {
-            infoDialog->setUsage();
-        }
-
-        if (settingsDialog)
-        {
-            settingsDialog->refreshAccountDetails();
-        }
-
-        if (bwOverquotaDialog)
-        {
-            bwOverquotaDialog->refreshAccountDetails();
-        }
-
-        if (storageOverquotaDialog)
-        {
-            storageOverquotaDialog->refreshUsedStorage();
         }
     }
 
