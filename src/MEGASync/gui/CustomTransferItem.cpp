@@ -19,9 +19,9 @@ CustomTransferItem::CustomTransferItem(QWidget *parent) :
     ui->setupUi(this);
 
 #if QT_VERSION > 0x050200
-    QSizePolicy retainGetLink = ui->lGetLink->sizePolicy();
+    QSizePolicy retainGetLink = ui->lActionTransfer->sizePolicy();
     retainGetLink.setRetainSizeWhenHidden(true);
-    ui->lGetLink->setSizePolicy(retainGetLink);
+    ui->lActionTransfer->setSizePolicy(retainGetLink);
 
     QSizePolicy retainShowInFolder = ui->lShowInFolder->sizePolicy();
     retainShowInFolder.setRetainSizeWhenHidden(true);
@@ -120,7 +120,7 @@ QString CustomTransferItem::getTransferName()
     return ui->lFileName->text();
 }
 
-bool CustomTransferItem::checkButtonClicked(QPoint pos, int button)
+bool CustomTransferItem::checkIsInsideButton(QPoint pos, int button)
 {
     if (!getLinkButtonEnabled
             || (!isLinkAvailable && !transferError) //retry action needs to be triggered for failed transfers even when !isLinkAvailable (e.g: inshare)
@@ -134,7 +134,7 @@ bool CustomTransferItem::checkButtonClicked(QPoint pos, int button)
     case MegaTransfer::STATE_COMPLETED:
     case MegaTransfer::STATE_FAILED:
     {
-        if ((button == TransferItem::GET_LINK_BUTTON && ui->lGetLink->rect().contains(ui->lGetLink->mapFrom(this, pos)))
+        if ((button == TransferItem::ACTION_BUTTON && ui->lActionTransfer->rect().contains(ui->lActionTransfer->mapFrom(this, pos)))
                 || (button == TransferItem::SHOW_IN_FOLDER_BUTTON && ui->lShowInFolder->rect().contains(ui->lShowInFolder->mapFrom(this, pos))))
         {
             return true;
@@ -156,16 +156,16 @@ void CustomTransferItem::mouseHoverTransfer(bool isHover)
         getLinkButtonEnabled = true;
         if (isLinkAvailable)
         {
-            ui->lGetLink->setIcon(QIcon(QString::fromAscii("://images/ico_item_link.png")));
-            ui->lGetLink->setIconSize(QSize(24,24));
+            ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/ico_item_link.png")));
+            ui->lActionTransfer->setIconSize(QSize(24,24));
             ui->lShowInFolder->setIcon(QIcon(QString::fromAscii("://images/showinfolder.png")));
             ui->lShowInFolder->setIconSize(QSize(24,24));
             ui->lShowInFolder->show();
         }
         else if (transferError < 0)
         {
-            ui->lGetLink->setIcon(QIcon(QString::fromAscii("://images/ico_item_retry.png")));
-            ui->lGetLink->setIconSize(QSize(24,24));
+            ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/ico_item_retry.png")));
+            ui->lActionTransfer->setIconSize(QSize(24,24));
             ui->lShowInFolder->hide();
         }
     }
@@ -174,14 +174,14 @@ void CustomTransferItem::mouseHoverTransfer(bool isHover)
         getLinkButtonEnabled = false;
         if (isLinkAvailable)
         {
-            ui->lGetLink->setIcon(QIcon(QString::fromAscii("://images/success.png")));
-            ui->lGetLink->setIconSize(QSize(24,24));
+            ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/success.png")));
+            ui->lActionTransfer->setIconSize(QSize(24,24));
             ui->lShowInFolder->hide();
         }
         else if (transferError < 0)
         {
-            ui->lGetLink->setIcon(QIcon(QString::fromAscii("://images/error.png")));
-            ui->lGetLink->setIconSize(QSize(24,24));
+            ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/error.png")));
+            ui->lActionTransfer->setIconSize(QSize(24,24));
             ui->lShowInFolder->hide();
         }
     }
@@ -210,15 +210,15 @@ void CustomTransferItem::finishTransfer()
     ui->sTransferState->setCurrentWidget(ui->completedTransfer);
     if (transferError < 0)
     {
-        ui->lGetLink->setIcon(QIcon(QString::fromAscii("://images/error.png")));
-        ui->lGetLink->setIconSize(QSize(24,24));
+        ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/error.png")));
+        ui->lActionTransfer->setIconSize(QSize(24,24));
         ui->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
         ui->lElapsedTime->setText(tr("failed:") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", MegaError::getErrorString(transferError, this->getType() == MegaTransfer::TYPE_DOWNLOAD ? MegaError::API_EC_DOWNLOAD : MegaError::API_EC_DEFAULT)));
     }
     else
     {
-        ui->lGetLink->setIcon(QIcon(QString::fromAscii("://images/success.png")));
-        ui->lGetLink->setIconSize(QSize(24,24));
+        ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/success.png")));
+        ui->lActionTransfer->setIconSize(QSize(24,24));
     }
 }
 

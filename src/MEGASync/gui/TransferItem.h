@@ -9,7 +9,7 @@ class TransferItem : public QWidget
 public:
 
     enum {
-        GET_LINK_BUTTON = 0,
+        ACTION_BUTTON = 0,
         SHOW_IN_FOLDER_BUTTON,
     };
 
@@ -54,7 +54,7 @@ public:
     virtual void updateAnimation() = 0;
 
     virtual bool cancelButtonClicked(QPoint pos) = 0;
-    virtual bool checkButtonClicked(QPoint pos, int button) = 0;
+    virtual bool checkIsInsideButton(QPoint pos, int button) = 0;
     virtual bool mouseHoverRetryingLabel(QPoint pos) = 0;
     virtual void mouseHoverTransfer(bool isHover) = 0;
     virtual void setStateLabel(QString labelState) = 0;

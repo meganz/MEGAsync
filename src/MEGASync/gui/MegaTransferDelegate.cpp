@@ -218,7 +218,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
             }
             return true; // click consumed
         }
-        else if (item && item->checkButtonClicked(((QMouseEvent *)event)->pos() - option.rect.topLeft(), TransferItem::GET_LINK_BUTTON))
+        else if (item && item->checkIsInsideButton(((QMouseEvent *)event)->pos() - option.rect.topLeft(), TransferItem::ACTION_BUTTON))
         {
             QList<MegaHandle> exportList;
             QStringList linkList;
@@ -267,7 +267,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
              }
              return true; // click consumed
         }
-        else if (item && item->checkButtonClicked(((QMouseEvent *)event)->pos() - option.rect.topLeft(), TransferItem::SHOW_IN_FOLDER_BUTTON))
+        else if (item && item->checkIsInsideButton(((QMouseEvent *)event)->pos() - option.rect.topLeft(), TransferItem::SHOW_IN_FOLDER_BUTTON))
         {
             if (model->getModelType() == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
             {
@@ -324,7 +324,7 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
         TransferItem *item = model->transferItems[tag];
         if (item)
         {
-            if (item->checkButtonClicked(event->pos() - option.rect.topLeft(), TransferItem::GET_LINK_BUTTON))
+            if (item->checkIsInsideButton(event->pos() - option.rect.topLeft(), TransferItem::ACTION_BUTTON))
             {
                 int modelType = model->getModelType();
                 if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
@@ -345,7 +345,7 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
                     }
                 }
             }
-            else if (item->checkButtonClicked(event->pos() - option.rect.topLeft(), TransferItem::SHOW_IN_FOLDER_BUTTON))
+            else if (item->checkIsInsideButton(event->pos() - option.rect.topLeft(), TransferItem::SHOW_IN_FOLDER_BUTTON))
             {
                 int modelType = model->getModelType();
                 if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)

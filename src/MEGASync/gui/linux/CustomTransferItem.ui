@@ -37,7 +37,7 @@
 	background-color: transparent;
 }
 
-#lTransferType, #lTransferTypeActive, #lFileType, #lFileTypeActive, #lGetLink, #lFileTypeCompleted, #lTransferTypeCompleted, #pbTransfer, #bTransferType, #lShowInFolder
+#lTransferType, #lTransferTypeActive, #lFileType, #lFileTypeActive, #lActionTransfer, #lFileTypeCompleted, #lTransferTypeCompleted, #pbTransfer, #bTransferType, #lShowInFolder
 {
 	border: none;
 }
@@ -332,7 +332,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="lGetLink">
+           <widget class="QPushButton" name="lActionTransfer">
             <property name="minimumSize">
              <size>
               <width>24</width>
