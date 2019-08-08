@@ -35,14 +35,19 @@ protected:
 
 private slots:
     void scanningAnimationStep();
+    virtual void mouseMoveEvent(QMouseEvent *event);
 
 private:
+    void HoveredIn();
+
     Ui::StatusInfo *ui;
     int state;
     bool isHovered;
+    bool wasClickedLastTimeIn;
     bool isOverQuota;
     QTimer scanningTimer;
     int scanningAnimationIndex;
+    void HoveredOut();
 };
 
 #endif // STATUSINFO_H

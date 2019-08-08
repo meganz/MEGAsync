@@ -28,6 +28,9 @@
     <height>16777215</height>
    </size>
   </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
   <property name="windowTitle">
    <string notr="true"/>
   </property>
@@ -73,6 +76,9 @@ border: none;
        <height>24</height>
       </size>
      </property>
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -91,9 +97,6 @@ border: none;
    </item>
    <item>
     <widget class="ElidedLabel" name="lStatusDesc">
-     <property name="singleline">
-      <bool>true</bool>
-     </property>
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
        <horstretch>0</horstretch>
@@ -106,7 +109,13 @@ border: none;
        <height>0</height>
       </size>
      </property>
-     <property name="text">
+     <property name="mouseTracking">
+      <bool>true</bool>
+     </property>
+     <property name="singleline" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="text" stdset="0">
       <string>Starting</string>
      </property>
     </widget>
@@ -116,8 +125,9 @@ border: none;
  <customwidgets>
   <customwidget>
    <class>ElidedLabel</class>
-   <extends>QLabel</extends>
+   <extends>QFrame</extends>
    <header location="global">ElidedLabel.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

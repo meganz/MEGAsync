@@ -11,6 +11,7 @@ StatusInfo::StatusInfo(QWidget *parent) :
 
     isHovered = false;
     isOverQuota = false;
+    wasClickedLastTimeIn = false;
 
     scanningTimer.setSingleShot(false);
     scanningTimer.setInterval(60);
@@ -119,6 +120,30 @@ void StatusInfo::scanningAnimationStep()
     ui->bIconState->setIconSize(QSize(24, 24));
 }
 
+void StatusInfo::mouseMoveEvent(QMouseEvent *event)
+{
+    bool withintextarea = true;
+    ui->lStatusDesc->ensurePolished();
+    int textwidth = ui->lStatusDesc->fontMetrics().size(0, ui->lStatusDesc->text()).width(); //if it's elided width should exceed this widget's width
+    QPoint pos = this->mapFromGlobal(QCursor::pos());
+    if (pos.x() > ui->lStatusDesc->pos().x() + textwidth + ui->lStatusDesc->contentsRect().x())
+    {
+        withintextarea = false;
+    }
+
+    if (withintextarea)
+    {
+        if (!wasClickedLastTimeIn)
+        {
+            HoveredIn();
+        }
+    }
+    else
+    {
+        HoveredOut();
+    }
+}
+
 void StatusInfo::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
@@ -129,43 +154,70 @@ void StatusInfo::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
+void StatusInfo::HoveredIn()
+{
+    if (scanningTimer.isActive())
+    {
+        scanningTimer.stop();
+    }
+
+    isHovered = true;
+#ifndef Q_OS_MACX
+    setCursor(Qt::PointingHandCursor);
+#endif
+    if (state == STATE_PAUSED)
+    {
+        ui->lStatusDesc->setText(tr("Resume Transfers"));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/images/ico_resume_transfers_state.png"), QSize(), QIcon::Normal, QIcon::Off);
+        ui->bIconState->setIcon(icon);
+        ui->bIconState->setIconSize(QSize(24, 24));
+    }
+    else
+    {
+        ui->lStatusDesc->setText(tr("Pause Transfers"));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/images/ico_pause_transfers_state.png"), QSize(), QIcon::Normal, QIcon::Off);
+        ui->bIconState->setIcon(icon);
+        ui->bIconState->setIconSize(QSize(24, 24));
+    }
+}
+
+void StatusInfo::HoveredOut()
+{
+    isHovered = false;
+#ifndef Q_OS_MACX
+    setCursor(Qt::ArrowCursor);
+#endif
+
+    wasClickedLastTimeIn = false;
+    setState(state);
+}
+
 bool StatusInfo::eventFilter(QObject *obj, QEvent *e)
 {
+    bool withintextarea = true;
+    ui->lStatusDesc->ensurePolished();
+    int textwidth = ui->lStatusDesc->fontMetrics().size(0, ui->lStatusDesc->text()).width(); //if it's elided width should exceed this widget's width
+    QPoint pos = this->mapFromGlobal(QCursor::pos());
+    if (pos.x() > ui->lStatusDesc->pos().x() + textwidth + ui->lStatusDesc->contentsRect().x())
+    {
+        withintextarea = false;
+    }
+
     if (e->type() == QEvent::MouseButtonPress
-            && ((QMouseEvent *)e)->button() == Qt::LeftButton && isHovered)
+            && ((QMouseEvent *)e)->button() == Qt::LeftButton && isHovered && withintextarea)
     {
         isHovered = false;
+        wasClickedLastTimeIn = true;
+#ifndef Q_OS_MACX
+    setCursor(Qt::ArrowCursor);
+#endif
         emit clicked();
-    }
-    else if (e->type() == QEvent::Enter)
-    {
-        if (scanningTimer.isActive())
-        {
-            scanningTimer.stop();
-        }
-
-        isHovered = true;
-        if (state == STATE_PAUSED)
-        {
-            ui->lStatusDesc->setText(tr("Resume Transfers"));
-            QIcon icon;
-            icon.addFile(QString::fromUtf8(":/images/ico_resume_transfers_state.png"), QSize(), QIcon::Normal, QIcon::Off);
-            ui->bIconState->setIcon(icon);
-            ui->bIconState->setIconSize(QSize(24, 24));
-        }
-        else
-        {
-            ui->lStatusDesc->setText(tr("Pause Transfers"));
-            QIcon icon;
-            icon.addFile(QString::fromUtf8(":/images/ico_pause_transfers_state.png"), QSize(), QIcon::Normal, QIcon::Off);
-            ui->bIconState->setIcon(icon);
-            ui->bIconState->setIconSize(QSize(24, 24));
-        }
     }
     else if (e->type() == QEvent::Leave)
     {
-        isHovered = false;
-        setState(state);
+        HoveredOut();
     }
 
     return QWidget::eventFilter(obj, e);
