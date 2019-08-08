@@ -2462,8 +2462,22 @@ background-color: #FFFFFF;
           <number>0</number>
          </property>
          <item>
-          <widget class="QWidget" name="widget" native="true">
-           <layout class="QHBoxLayout" name="horizontalLayout_13">
+          <widget class="QFrame" name="wBottomFrame">
+           <property name="styleSheet">
+            <string notr="true">#wBottomFrame
+{
+border-bottom-left-radius: 16px;
+border-bottom-right-radius: 16px;
+background-color: #F7F8F9;
+}</string>
+           </property>
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_14">
             <property name="spacing">
              <number>0</number>
             </property>

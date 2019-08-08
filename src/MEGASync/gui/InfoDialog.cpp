@@ -141,8 +141,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     cloudItem = NULL;
     inboxItem = NULL;
     sharesItem = NULL;
-    syncsMenu = NULL;
-    menuSignalMapper = NULL;
     rubbishItem = NULL;
     gWidget = NULL;
     opacityEffect = NULL;
@@ -231,7 +229,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     if (preferences->logged())
     {
         setUsage();
-        updateSyncsButton();
     }
     else
     {
@@ -254,16 +251,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
 InfoDialog::~InfoDialog()
 {
-    if (syncsMenu)
-    {
-        QList<QAction *> actions = syncsMenu->actions();
-        for (int i = 0; i < actions.size(); i++)
-        {
-            syncsMenu->removeAction(actions[i]);
-            delete actions[i];
-        }
-    }
-
     delete ui;
     delete gWidget;
     delete activeDownload;
@@ -511,50 +498,6 @@ void InfoDialog::transferFinished(int error)
     }
 }
 
-void InfoDialog::updateSyncsButton()
-{
-    if (!preferences->logged())
-    {
-        return;
-    }
-
-    MegaNode *rootNode = megaApi->getRootNode();
-    if (!rootNode)
-    {
-        ui->bSyncFolder->setText(QString::fromAscii("MEGA"));
-        return;
-    }
-
-    int num = preferences->getNumSyncedFolders();
-    if (num == 0)
-    {
-        ui->bSyncFolder->setText(tr("Add Sync"));
-    }
-    else
-    {
-        bool found = false;
-        for (int i = 0; i < num; i++)
-        {
-            if (preferences->isFolderActive(i))
-            {
-                found = true;
-                break;
-            }
-        }
-
-        if (!found)
-        {
-            ui->bSyncFolder->setText(tr("Add Sync"));
-        }
-        else
-        {
-            ui->bSyncFolder->setText(tr("Syncs"));
-        }
-    }
-
-    delete rootNode;
-}
-
 void InfoDialog::setIndexing(bool indexing)
 {
     this->indexing = indexing;
@@ -587,22 +530,10 @@ void InfoDialog::setAccountType(int accType)
     if (actualAccountType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
          ui->bUpgrade->hide();
-
-         ui->pUsageStorage->hide();
-         ui->lPercentageUsedStorage->hide();
-
-         ui->pUsageQuota->hide();
-         ui->lPercentageUsedQuota->hide();
     }
     else
     {
          ui->bUpgrade->show();
-
-         ui->pUsageStorage->show();
-         ui->lPercentageUsedStorage->show();
-
-         ui->pUsageQuota->show();
-         ui->lPercentageUsedQuota->show();
     }
 }
 
@@ -686,8 +617,6 @@ void InfoDialog::updateBlockedState()
 
 void InfoDialog::updateState()
 {
-    updateSyncsButton();
-
     if (!preferences->logged())
     {
         if (gWidget)
@@ -866,112 +795,6 @@ void InfoDialog::on_bUpgrade_clicked()
     megaApi->getSessionTransferURL(url.toUtf8().constData());
 }
 
-void InfoDialog::on_bSyncFolder_clicked()
-{
-    if (!preferences->logged())
-    {
-        return;
-    }
-
-    MegaNode *rootNode = megaApi->getRootNode();
-    if (!rootNode)
-    {
-        return;
-    }
-
-    int num = preferences->getNumSyncedFolders();
-    if (num == 0)
-    {
-        addSync();
-    }
-    else
-    {
-        if (syncsMenu)
-        {
-            for (QAction *a: syncsMenu->actions())
-            {
-                a->deleteLater();
-            }
-
-            syncsMenu->deleteLater();
-            syncsMenu.release();
-        }
-
-        syncsMenu.reset(new QMenu());
-
-#ifdef __APPLE__
-        syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
-#else
-        syncsMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
-#endif
-        if (menuSignalMapper)
-        {
-            menuSignalMapper->deleteLater();
-            menuSignalMapper = NULL;
-        }
-
-        menuSignalMapper = new QSignalMapper();
-        connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
-
-        int activeFolders = 0;
-        for (int i = 0; i < num; i++)
-        {
-            if (!preferences->isFolderActive(i))
-            {
-                continue;
-            }
-
-            activeFolders++;
-            MenuItemAction *action = new MenuItemAction(preferences->getSyncName(i), QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")),
-                                                        QIcon(QString::fromAscii("://images/ico_drop_synched_folder_over.png")));
-            connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()));
-            syncsMenu->addAction(action);
-            menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
-        }
-
-        if (activeFolders)
-        {
-            long long firstSyncHandle = INVALID_HANDLE;
-            if (num == 1)
-            {
-                firstSyncHandle = preferences->getMegaFolderHandle(0);
-            }
-
-            if (rootNode)
-            {
-                long long rootHandle = rootNode->getHandle();
-                if ((num > 1) || (firstSyncHandle != rootHandle))
-                {
-                    MenuItemAction *addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_add_sync.png")),
-                                                                       QIcon(QString::fromAscii("://images/ico_drop_add_sync_over.png")));
-                    connect(addSyncAction, SIGNAL(triggered()), this, SLOT(addSync()), Qt::QueuedConnection);
-
-                    if (activeFolders)
-                    {
-                        syncsMenu->addSeparator();
-                    }
-                    syncsMenu->addAction(addSyncAction);
-                }
-            }
-        }
-        else
-        {
-            addSync();
-        }
-
-#ifdef __APPLE__
-        syncsMenu->exec(this->mapToGlobal(QPoint(20, this->height() - (activeFolders + 1) * 28 - (activeFolders ? 16 : 8))));
-        if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
-        {
-            this->hide();
-        }
-#else
-        syncsMenu->popup(ui->bSyncFolder->mapToGlobal(QPoint(-5, (activeFolders ? -21 : -12) - activeFolders * 32)));
-#endif
-    }
-    delete rootNode;
-}
-
 void InfoDialog::openFolder(QString path)
 {
     QtConcurrent::run(QDesktopServices::openUrl, QUrl::fromLocalFile(path));
@@ -1035,7 +858,6 @@ void InfoDialog::addSync(MegaHandle h)
    delete [] nPath;
    megaApi->syncFolder(localFolderPath.toUtf8().constData(), node);
    delete node;
-   updateSyncsButton();
 }
 
 #ifdef __APPLE__
@@ -1278,7 +1100,6 @@ void InfoDialog::changeEvent(QEvent *event)
             setUsage();
             state = STATE_STARTING;
             updateDialogState();
-            updateSyncsButton();
         }
     }
     QDialog::changeEvent(event);

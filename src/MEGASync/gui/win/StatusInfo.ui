@@ -48,7 +48,7 @@ border: none;
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
-    <number>4</number>
+    <number>6</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -62,19 +62,6 @@ border: none;
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item>
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
    <item>
     <widget class="QPushButton" name="bIconState">
      <property name="minimumSize">
