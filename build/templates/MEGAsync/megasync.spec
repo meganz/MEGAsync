@@ -86,7 +86,12 @@ BuildRequires: qt, qt-x11, qt-devel
 
 %if 0%{?rhel_version}
 BuildRequires: desktop-file-utils
+%if 0%{?rhel_version} < 800
 BuildRequires: qt, qt-x11, qt-devel
+%endif
+%else
+BuildRequires: bzip2-devel
+%endif
 %endif
 
 
@@ -169,9 +174,9 @@ sed -i "s/USE_LIBRAW/NOT_USE_LIBRAW/" MEGASync/MEGASync.pro
 %endif
 
 
-%if 0%{?fedora} || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
+%if 0%{?fedora} || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320 || 0%{?rhel_version} >=800
 
-%if 0%{?fedora_version} >= 23 || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320
+%if 0%{?fedora_version} >= 23 || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320 || 0%{?rhel_version} >=800
 qmake-qt5 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
 lrelease-qt5  MEGASync/MEGASync.pro
 %else
@@ -216,6 +221,19 @@ echo "fs.inotify.max_user_watches = 524288" > %{buildroot}/etc/sysctl.d/100-mega
 %else
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 /bin/touch --no-create %{_datadir}/icons/ubuntu-mono-dark &>/dev/null || :
+%endif
+
+%if 0%{?rhel_version} == 800
+# RHEL 8
+YUM_FILE="/etc/yum.repos.d/megasync.repo"
+cat > "$YUM_FILE" << DATA
+[MEGAsync]
+name=MEGAsync
+baseurl=https://mega.nz/linux/MEGAsync/RHEL_8/
+gpgkey=https://mega.nz/linux/MEGAsync/RHEL_8/repodata/repomd.xml.key
+gpgcheck=1
+enabled=1
+DATA
 %endif
 
 %if 0%{?rhel_version} == 700
