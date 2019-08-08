@@ -85,7 +85,7 @@ void CircularUsageProgressBar::drawText(QPainter &p, const QRectF &innerRect, do
 {
     QFont f(font());
     f.setPixelSize(innerRadius * 0.33);
-    f.setFamily(QString::fromUtf8("Source Sans Pro"));
+    f.setFamily(QString::fromUtf8("Lato"));
     p.setFont(f);
 
     QRectF textRect(innerRect);

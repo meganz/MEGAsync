@@ -111,8 +111,8 @@ void UpgradeWidget::updatePlanInfo()
                         .arg(details.amount % 100)
                         .arg(details.currency));
 
-    QString maxStorage = QString::fromUtf8("<span style='color:#333333; font-size: 16px; font-family:\"Source Sans Pro\"; text-decoration:none;'>%1&nbsp;</span>").arg(Utilities::getSizeString(details.gbStorage * TOBYTES)) + tr("storage");
-    QString maxTransfer = QString::fromUtf8("<span style='color:#333333; font-size: 16px; font-family:\"Source Sans Pro\"; text-decoration:none;'>%1&nbsp;</span>").arg(Utilities::getSizeString(details.gbTransfer * TOBYTES)) + tr("transfer");
+    QString maxStorage = QString::fromUtf8("<span style='color:#333333; font-size: 16px; font-family:\"Lato\"; text-decoration:none;'>%1&nbsp;</span>").arg(Utilities::getSizeString(details.gbStorage * TOBYTES)) + tr("storage");
+    QString maxTransfer = QString::fromUtf8("<span style='color:#333333; font-size: 16px; font-family:\"Lato\"; text-decoration:none;'>%1&nbsp;</span>").arg(Utilities::getSizeString(details.gbTransfer * TOBYTES)) + tr("transfer");
 
     ui->lStorageInfo->setText(maxStorage);
     ui->lBandWidthInfo->setText(maxTransfer);

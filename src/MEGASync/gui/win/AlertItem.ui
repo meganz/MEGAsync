@@ -359,6 +359,7 @@ border-radius: 4px;
 font-family: Lato;
 margin-left: 16px;
 margin-right: 16px;
+font-size: 14px;
 }</string>
         </property>
         <property name="text">

@@ -56,7 +56,7 @@
 
 #lDownStatus, #lUpStatus, #lNoTransfers
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 24px;
   font-weight: 300;
   color: rgb(170, 170, 170)
@@ -64,20 +64,20 @@
 
 #lRemainingDownloads
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 56px;
   color: #31B500;
 }
 
 #lRemainingUploads
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 56px;
   color: #2BA6DE;
 }
 #lDescRemainingDown, #lDescRemainingUp, #lDownSpeed, #lUpSpeed
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 14px;
   color: #666666;
 }
@@ -90,28 +90,28 @@ background-color: rgba(0, 0, 0, 10%);
 
 #lDownFilename, #lUpFilename
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 13px;
   color: #333333;
 }
 
 #lDownCompletedSize, #lUpCompletedSize
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 14px;
   color: #999999;
 }
 
 #lCurrentDownSpeed, #lCurrentUpSpeed
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 15px;
   color: #999999;
 }
 
 #lDownRemainingTime, #lUpRemainingTime
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 14px;
   color: #333333;
 }

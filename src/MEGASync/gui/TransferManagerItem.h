@@ -35,7 +35,7 @@ public:
     QSize sizeHint() const;
     bool cancelButtonClicked(QPoint pos);
     bool mouseHoverRetryingLabel(QPoint pos);
-    bool getLinkButtonClicked(QPoint pos) { return false;}
+    bool checkIsInsideButton(QPoint pos, int button) { return false;}
 
     ~TransferManagerItem();
 

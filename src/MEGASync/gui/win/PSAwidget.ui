@@ -33,14 +33,14 @@
 
 #lTitle
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 14px;
   color: #333333;
 }
 
 #lDesc
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 12px;
   color: #666666;
 }

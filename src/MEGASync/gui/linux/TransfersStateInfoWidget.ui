@@ -28,7 +28,7 @@
   <property name="styleSheet">
    <string notr="true">#lStatus
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 24px;
   font-weight: 300;
   color: rgb(170, 170, 170)

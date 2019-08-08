@@ -496,5 +496,11 @@
         <file>images/empty-notifications@2x.png</file>
         <file>images/mega_notifications.png</file>
         <file>images/mega_notifications@2x.png</file>
+        <file>images/showinfolder.png</file>
+        <file>images/showinfolder@2x.png</file>
+        <file>images/error.png</file>
+        <file>images/error@2x.png</file>
+        <file>images/success.png</file>
+        <file>images/success@2x.png</file>
     </qresource>
 </RCC>

@@ -41,27 +41,27 @@ QPushButton
 
 #lProPlan
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 16px;
   color: #333333;
 }
 
 #lPeriod
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 16px;
   color: #333333;
 }
 
 #lPrice
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   color: #333333;
 }
 
 #lStorageInfo, #lBandWidthInfo
 {
-  font-family: &quot;Source Sans Pro&quot;;
+  font-family: &quot;Lato&quot;;
   font-size: 14px;
   color: #666666; 
 }

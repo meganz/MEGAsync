@@ -118,7 +118,7 @@ void AvatarWidget::paintEvent(QPaintEvent *event)
     {
         QFont font;
         font.setPixelSize(18.0 * factor);
-        font.setFamily(QString::fromUtf8("Source Sans Pro"));
+        font.setFamily(QString::fromUtf8("Lato"));
         painter.setFont(font);
         painter.setPen(Qt::NoPen);
         painter.setBrush(QBrush(QColor(color.size() ? color : QString::fromUtf8("#D90007"))));

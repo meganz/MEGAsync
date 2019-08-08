@@ -352,7 +352,10 @@ background-color: #F7F8F9;
                   <string>Add Sync</string>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">border: none;
+                  <string notr="true">#bAddSync
+{
+border: none;
+}
 </string>
                  </property>
                  <property name="text">
@@ -388,7 +391,10 @@ background-color: #F7F8F9;
                   <string>Upload</string>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">border: none;
+                  <string notr="true">#bUpload
+{
+border: none;
+}
 </string>
                  </property>
                  <property name="text">
@@ -424,7 +430,10 @@ background-color: #F7F8F9;
                   <string>Download</string>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">border: none;
+                  <string notr="true">#bDownload
+{
+border: none;
+}
 </string>
                  </property>
                  <property name="text">
@@ -469,7 +478,10 @@ background-color: #F7F8F9;
                   <string>Show MEGAsync options</string>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">border: none;
+                  <string notr="true">#bSettings
+{
+border: none;
+}
 </string>
                  </property>
                  <property name="text">
@@ -1546,6 +1558,9 @@ font-size: 16px;
                            <height>330</height>
                           </size>
                          </property>
+                         <property name="styleSheet">
+                          <string notr="true">background-color: #FFFFFF;</string>
+                         </property>
                          <layout class="QVBoxLayout" name="verticalLayout_2">
                           <property name="spacing">
                            <number>18</number>
@@ -1711,8 +1726,8 @@ font-size: 16px;
                                <property name="styleSheet">
                                 <string notr="true">#lOQDesc
 {
-	color: #F0373A;
-  font-family: &quot;Lato&quot;;
+	color: #666666;
+    font-family: &quot;Lato&quot;;
 	font-size: 14px;
 }
 </string>
@@ -1780,15 +1795,21 @@ font-size: 16px;
                                 <string notr="true">#bDiscard
 {
 
- background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #ffffff, stop: 1 #fcfcfc);
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+stop: 0 #ffffff, stop: 1 #fafafa);
  border-radius: 3px;
  border: 1px solid rgba(0, 0, 0, 5%);
  padding: 16px 25px 16px 25px;
  font-family: &quot;Lato&quot;;
  font-size: 14px;
- color: #777777;
-}</string>
+ color: #333333;
+}
+
+#bDiscard::hover
+{
+border: 1px solid rgba(0, 0, 0, 10%);
+}
+</string>
                                </property>
                                <property name="text">
                                 <string>Dismiss</string>
@@ -1812,15 +1833,20 @@ font-size: 16px;
                                <property name="styleSheet">
                                 <string notr="true">#bBuyQuota
 {
+font-family: Lato;
+font-size: 14px;
+border: 1px solid rgba(0,191, 165, 30%);
+border-radius: 3px;
+color: #ffffff;
+padding: 7px 12px 7px 12px;
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+							stop: 0 rgba(0, 204, 176, 1), stop: 1 rgba(0, 172,149,1));
+}
 
- background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #ff666b, stop: 1 #ec5257);
- border-radius: 3px;
- border: 1px solid rgba(0, 0, 0, 5%);
- padding: 16px 25px 16px 25px;
- font-family: &quot;Lato&quot;;
- font-size: 14px;
- color: #ffffff;
+
+#bBuyQuota:hover
+{
+	border: 1px solid rgba(0,191, 165, 80%);
 }</string>
                                </property>
                                <property name="text">
@@ -2080,7 +2106,7 @@ background-color: #FFFFFF;
                         </property>
                         <property name="sizeHint" stdset="0">
                          <size>
-                          <width>134</width>
+                          <width>2</width>
                           <height>20</height>
                          </size>
                         </property>
@@ -2088,6 +2114,9 @@ background-color: #FFFFFF;
                       </item>
                       <item>
                        <widget class="QPushButton" name="bNotificationsSettings">
+                        <property name="toolTip">
+                         <string>Open notification settings</string>
+                        </property>
                         <property name="styleSheet">
                          <string notr="true">#bNotificationsSettings
 {
