@@ -15,8 +15,7 @@ TransfersSummaryWidget::TransfersSummaryWidget(QWidget *parent) :
     ui->bTransfersStatus->setAttribute(Qt::WA_TransparentForMouseEvents);
 
     status = Status::EXPANDED;
-    minwidth = 0;
-    originalwidth = -1;
+    minwidth = 28;
 
     animationTimeMS = 0.8*1000;
     acceleration = 0.35;
@@ -37,10 +36,6 @@ TransfersSummaryWidget::TransfersSummaryWidget(QWidget *parent) :
     totalUploads = 0;
     totalDownloads = 0;
 
-    upEllipseWidthMin = 0;
-    dlEllipseWidthMin = 0;
-    upEllipseWidthMax = 0;
-    dlEllipseWidthMax = 0;
 
     upArrowPixmapOrig = QIcon(QString::fromUtf8(":/images/upload_item_ico_white.png")).pixmap(12.0, 12.0);
     dlArrowPixmapOrig = QIcon(QString::fromUtf8(":/images/download_item_ico_white.png")).pixmap(12.0, 12.0);

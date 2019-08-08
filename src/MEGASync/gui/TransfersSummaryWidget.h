@@ -96,64 +96,64 @@ private:
     QBrush brushspeedDown;
     QBrush brushwhitebackground;
 
-    int lastwidth;
-    int lastheigth;
+    int lastwidth = 0;
+    int lastheigth = 0;
 
-    int wpen;
-    int diamoutside;
-    int diaminside;
-    int spacing;
-    int marginoutside;
-    int margininside;
-    int residualin; //related to the width of the pen (0 for FlatCap)
+    int wpen = 0;
+    int diamoutside = 0;
+    int diaminside = 0;
+    int spacing = 0;
+    int marginoutside = 0;
+    int margininside = 0;
+    int residualin = 0; //related to the width of the pen (0 for FlatCap)
 
-    int firstellipseX;
-    int ellipsesMargin;
-    int afterEllipsesMargin;
+    int firstellipseX = 0;
+    int ellipsesMargin = 0;
+    int afterEllipsesMargin = 0;
 
-    int fontMarginXLeft;
-    int fontMarginXRight;
-    int fontY;
-    int fontHeight;
-    int pixmapArrowMarginX;
-    int pixmapArrowY;
-    int pixmapWidth;
+    int fontMarginXLeft = 0;
+    int fontMarginXRight = 0;
+    int fontY = 0;
+    int fontHeight = 0;
+    int pixmapArrowMarginX = 0;
+    int pixmapArrowY = 0;
+    int pixmapWidth = 0;
     QPixmap upArrowPixmapOrig;
     QPixmap dlArrowPixmapOrig;
     QPixmap upArrowPixmap;
     QPixmap dlArrowPixmap;
 
 
-    int dlEllipseWidth;
-    int dlEllipseWidthMin;
-    int dlEllipseWidthMax;
-    int upEllipseWidth;
-    int upEllipseWidthMin;
-    int upEllipseWidthMax;
+    int dlEllipseWidth = 0;
+    int dlEllipseWidthMin = 0;
+    int dlEllipseWidthMax = 0;
+    int upEllipseWidth = 0;
+    int upEllipseWidthMin = 0;
+    int upEllipseWidthMax = 0;
 
 
     bool paused = false;
     Status status;
-    int initialwidth;
-    int goalwidth;
+    int initialwidth = 0;
+    int goalwidth = 0;
 
-    int originalwidth;
-    int originalheight;
-    int minwidth;
-    int upMaxWidthText;
-    int dlMaxWidthText;
-    int maxFontSize;
+    int originalwidth = 0;
+    int originalheight = 0;
+    int minwidth = 28;
+    int upMaxWidthText = 0;
+    int dlMaxWidthText = 0;
+    int maxFontSize = 0;
 
     const int trailingChars = 1;
-    int upPosDotsPartial;
-    int upPosDotsTotal;
-    int dlPosDotsPartial;
-    int dlPosDotsTotal;
+    int upPosDotsPartial = 0;
+    int upPosDotsTotal = 0;
+    int dlPosDotsPartial = 0;
+    int dlPosDotsTotal = 0;
 
-    qreal acceleration;
-    qreal animationTimeMS;
+    qreal acceleration = 0;
+    qreal animationTimeMS = 0;
 
-    qreal speed;
+    qreal speed = 0;
 
     long long totalUploads;
     long long completedUploads;
