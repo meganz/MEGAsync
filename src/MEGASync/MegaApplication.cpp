@@ -615,6 +615,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaError", "Expired");
     QT_TRANSLATE_NOOP("MegaError", "Not found");
     QT_TRANSLATE_NOOP("MegaError", "Circular linkage detected");
+    QT_TRANSLATE_NOOP("MegaError", "Upload produces recursivity");
     QT_TRANSLATE_NOOP("MegaError", "Access denied");
     QT_TRANSLATE_NOOP("MegaError", "Already exists");
     QT_TRANSLATE_NOOP("MegaError", "Incomplete");
@@ -7360,6 +7361,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
     if (transfer->isFolderTransfer())
     {
+        if (e->getErrorCode() != MegaError::API_OK)
+        {
+            showErrorMessage(tr("Error transferring folder: ") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", MegaError::getErrorString(e->getErrorCode(), MegaError::API_EC_UPLOAD)));
+        }
+
         return;
     }
 
