@@ -331,6 +331,9 @@ background-color: #F7F8F9;
                    <height>24</height>
                   </size>
                  </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
                  <property name="toolTip">
                   <string>Add Sync</string>
                  </property>
@@ -367,6 +370,9 @@ background-color: #F7F8F9;
                    <height>24</height>
                   </size>
                  </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
+                 </property>
                  <property name="toolTip">
                   <string>Upload</string>
                  </property>
@@ -402,6 +408,9 @@ background-color: #F7F8F9;
                    <width>24</width>
                    <height>24</height>
                   </size>
+                 </property>
+                 <property name="cursor">
+                  <cursorShape>PointingHandCursor</cursorShape>
                  </property>
                  <property name="toolTip">
                   <string>Download</string>

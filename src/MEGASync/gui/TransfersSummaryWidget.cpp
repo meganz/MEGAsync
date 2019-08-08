@@ -303,6 +303,7 @@ void TransfersSummaryWidget::mouseMoveEvent(QMouseEvent *event)
 {
     QPoint pos = this->mapFromGlobal(QCursor::pos());
 
+#ifndef Q_OS_MACX
     if (isWithinPseudoEllipse(pos, marginoutside, marginoutside,  this->width() - 2 * marginoutside, diamoutside))
     {
         this->setCursor(Qt::PointingHandCursor);
@@ -311,7 +312,7 @@ void TransfersSummaryWidget::mouseMoveEvent(QMouseEvent *event)
     {
         this->setCursor(Qt::ArrowCursor);
     }
-
+#endif
     int arcx = firstellipseX;
 
     if (upEllipseWidth && isWithinPseudoEllipse(pos, arcx, margininside,  upEllipseWidth, diaminside))
