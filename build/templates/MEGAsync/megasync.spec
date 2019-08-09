@@ -92,7 +92,6 @@ BuildRequires: qt, qt-x11, qt-devel
 %else
 BuildRequires: bzip2-devel
 %endif
-%endif
 
 
 %description
