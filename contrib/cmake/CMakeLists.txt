@@ -58,6 +58,10 @@ include_directories( "${MEGAsyncDir}/gui" )
 include_directories( "${MEGAsyncDir}/gui/win" )
 
 set (FORMS
+    ${MEGAsyncDir}/gui/win/AlertItem.ui
+    ${MEGAsyncDir}/gui/win/FilterAlertWidget.ui
+    ${MEGAsyncDir}/gui/win/TransfersStatusWidget.ui
+    ${MEGAsyncDir}/gui/win/TransfersSummaryWidget.ui
     ${MEGAsyncDir}/gui/win/InfoDialog.ui
     ${MEGAsyncDir}/gui/win/CustomTransferItem.ui
     ${MEGAsyncDir}/gui/win/NodeSelector.ui
@@ -127,6 +131,14 @@ set (MOC_INPUT
     ${MEGAsyncDir}/control/MegaUploader.h
     ${MEGAsyncDir}/control/Preferences.h
     ${MEGAsyncDir}/control/UpdateTask.h
+    ${MEGAsyncDir}/gui/AlertItem.h
+    ${MEGAsyncDir}/gui/CircularUsageProgressBar.h
+    ${MEGAsyncDir}/gui/FilterAlertWidget.h
+    ${MEGAsyncDir}/gui/MegaAlertDelegate.h
+    ${MEGAsyncDir}/gui/QAlertsModel.h
+    ${MEGAsyncDir}/gui/QFilterAlertsModel.h
+    ${MEGAsyncDir}/gui/TransfersStatusWidget.h
+    ${MEGAsyncDir}/gui/TransfersSummaryWidget.h
     ${MEGAsyncDir}/gui/AccountDetailsDialog.h
     ${MEGAsyncDir}/gui/ActiveTransfersWidget.h
     ${MEGAsyncDir}/gui/AddExclusionDialog.h
@@ -167,6 +179,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/QActiveTransfersModel.h
     ${MEGAsyncDir}/gui/QCustomTransfersModel.h
     ${MEGAsyncDir}/gui/QFinishedTransfersModel.h
+    ${MEGAsyncDir}/gui/QAlertsModel.h
     ${MEGAsyncDir}/gui/QMegaModel.h
     ${MEGAsyncDir}/gui/QTransfersModel.h
     ${MEGAsyncDir}/gui/SettingsDialog.h
@@ -236,6 +249,14 @@ set (SRCS
     ${MOC_OUTPUT}
     ${RCC_OUTPUT}
     
+    ${MEGAsyncDir}/gui/AlertItem.cpp
+    ${MEGAsyncDir}/gui/CircularUsageProgressBar.cpp
+    ${MEGAsyncDir}/gui/FilterAlertWidget.cpp
+    ${MEGAsyncDir}/gui/MegaAlertDelegate.cpp
+    ${MEGAsyncDir}/gui/QAlertsModel.cpp
+    ${MEGAsyncDir}/gui/QFilterAlertsModel.cpp
+    ${MEGAsyncDir}/gui/TransfersStatusWidget.cpp
+    ${MEGAsyncDir}/gui/TransfersSummaryWidget.cpp
     ${MEGAsyncDir}/gui/SettingsDialog.cpp
     ${MEGAsyncDir}/gui/InfoDialog.cpp
     ${MEGAsyncDir}/gui/SetupWizard.cpp
