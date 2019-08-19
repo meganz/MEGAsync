@@ -91,6 +91,12 @@ color: #333333;
    </property>
    <item>
     <widget class="QWidget" name="wInfoDialogIn" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>402</width>
+       <height>564</height>
+      </size>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <property name="spacing">
        <number>0</number>

@@ -1189,15 +1189,8 @@ void InfoDialog::regenerateLayout(InfoDialog* olddialog)
         setOverQuotaMode(false);
         ui->wPSA->removeAnnounce();
 
-        ui->bTransferManager->setVisible(false);
-        ui->bAvatar->setVisible(false);
-        ui->bTransferManager->setVisible(false);
-        dialogLayout->removeWidget(ui->wContainerHeader);
-        ui->wContainerHeader->setVisible(false);
-        dialogLayout->removeWidget(ui->wSeparator);
-        ui->wSeparator->setVisible(false);
-        dialogLayout->removeWidget(ui->wContainerBottom);
-        ui->wContainerBottom->setVisible(false);
+        dialogLayout->removeWidget(ui->wInfoDialogIn);
+        ui->wInfoDialogIn->setVisible(false);
         dialogLayout->addWidget(gWidget);
         gWidget->setVisible(true);
 
@@ -1213,37 +1206,28 @@ void InfoDialog::regenerateLayout(InfoDialog* olddialog)
             dummy->setAttribute(Qt::WA_TranslucentBackground);
             dummy->show();
 
-            setMinimumHeight(404);
-            setMaximumHeight(404);
+            setMinimumHeight(gWidget->minimumHeight() + ui->wArrow->minimumHeight() * 2);
+            setMaximumHeight(gWidget->minimumHeight() + ui->wArrow->minimumHeight() * 2);
+
         #else
-            setMinimumHeight(394);
-            setMaximumHeight(394);
+            setMinimumHeight(gWidget->minimumHeight());
+            setMaximumHeight(gWidget->minimumHeight());
         #endif
+
+
     }
     else
     {
         gWidget->disableListener();
         gWidget->initialize();
 
-#ifdef __APPLE__
-        setMinimumHeight(524);
-        setMaximumHeight(524);
-#else
-        setMinimumHeight(514);
-        setMaximumHeight(514);
-#endif
+        setMinimumHeight(ui->wInfoDialogIn->minimumHeight());
+        setMaximumHeight(ui->wInfoDialogIn->minimumHeight());
 
-        ui->bTransferManager->setVisible(true);
-        ui->bAvatar->setVisible(true);
-        ui->bTransferManager->setVisible(true);
         dialogLayout->removeWidget(gWidget);
         gWidget->setVisible(false);
-        dialogLayout->addWidget(ui->wContainerHeader);
-        ui->wContainerHeader->setVisible(true);    
-        dialogLayout->addWidget(ui->wSeparator);
-        ui->wSeparator->setVisible(true);
-        dialogLayout->addWidget(ui->wContainerBottom);
-        ui->wContainerBottom->setVisible(true);
+        dialogLayout->addWidget(ui->wInfoDialogIn);
+        ui->wInfoDialogIn->setVisible(true);
 
         #ifdef __APPLE__
             if (dummy)
