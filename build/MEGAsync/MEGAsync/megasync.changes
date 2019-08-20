@@ -1,3 +1,11 @@
+Mon Aug 19 19:00:52 CEST 2019 - linux@mega.co.nz
+- Update to version 4.2.3:
+  * Fix a crash during processing of some PDF files
+  * Resume pending transfers after a crash on next startup
+  * Include option to add synchronizations from the main dialog
+  * Other minor bug fixes and improvements
+
+-------------------------------------------------------------------
 Thu May 16 12:27:20 CEST 2019 - linux@mega.co.nz
 - Update to version 4.1.1:
   * Improved look&feel for high resolution displays on Windows and Linux
