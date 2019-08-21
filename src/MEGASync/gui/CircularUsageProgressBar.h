@@ -45,7 +45,7 @@ protected:
 
     void setPenColor(QPen &pen, QColor color, bool forceRepaint = true);
 
-    int pbValue;
+    int pbValue = 0;
     double penWidth;
     double outerRadius;
 
