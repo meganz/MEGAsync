@@ -438,8 +438,6 @@ protected:
     long long almostOverStorageDismissExecution;
     long long overStorageDismissExecution;
     long long lastTransferNotification;
-    int storageState;
-
 
     static const QString currentAccountKey;
     static const QString syncsGroupKey;

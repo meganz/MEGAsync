@@ -475,7 +475,6 @@ Preferences::Preferences() : QObject(), mutex(QMutex::Recursive)
     almostOverStorageDismissExecution = -1;
     overStorageDismissExecution = -1;
     lastTransferNotification = 0;
-    storageState = -1;
     clearTemporalBandwidth();
 }
 
@@ -1030,14 +1029,13 @@ int Preferences::getStorageState()
 {
     mutex.lock();
     assert(logged());
-    storageState = settings->value(storageStateQKey, MegaApi::STORAGE_STATE_GREEN).toInt();
+    int value = settings->value(storageStateQKey, MegaApi::STORAGE_STATE_GREEN).toInt();
     mutex.unlock();
-    return storageState;
+    return value;
 }
 
 void Preferences::setStorageState(int value)
 {
-    storageState = value;
     mutex.lock();
     assert(logged());
     settings->setValue(storageStateQKey, value);
