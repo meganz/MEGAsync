@@ -246,6 +246,7 @@ const QString Preferences::overStorageNotificationExecutionKey = QString::fromAs
 const QString Preferences::almostOverStorageNotificationExecutionKey = QString::fromAscii("almostOverStorageNotificationExecution");
 const QString Preferences::almostOverStorageDismissExecutionKey = QString::fromAscii("almostOverStorageDismissExecution");
 const QString Preferences::overStorageDismissExecutionKey = QString::fromAscii("overStorageDismissExecution");
+const QString Preferences::storageStateQKey = QString::fromAscii("storageState");
 
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
 const QString Preferences::proExpirityTimeKey       = QString::fromAscii("proExpirityTime");
@@ -474,6 +475,7 @@ Preferences::Preferences() : QObject(), mutex(QMutex::Recursive)
     almostOverStorageDismissExecution = -1;
     overStorageDismissExecution = -1;
     lastTransferNotification = 0;
+    storageState = -1;
     clearTemporalBandwidth();
 }
 
@@ -1020,6 +1022,25 @@ void Preferences::setOverStorageDismissExecution(long long timestamp)
     mutex.lock();
     assert(logged());
     settings->setValue(overStorageDismissExecutionKey, timestamp);
+    mutex.unlock();
+}
+
+
+int Preferences::getStorageState()
+{
+    mutex.lock();
+    assert(logged());
+    storageState = settings->value(storageStateQKey, MegaApi::STORAGE_STATE_GREEN).toInt();
+    mutex.unlock();
+    return storageState;
+}
+
+void Preferences::setStorageState(int value)
+{
+    storageState = value;
+    mutex.lock();
+    assert(logged());
+    settings->setValue(storageStateQKey, value);
     mutex.unlock();
 }
 

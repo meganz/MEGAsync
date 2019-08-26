@@ -1761,6 +1761,7 @@ void MegaApplication::loggedIn(bool fromWizard)
 
 
     onGlobalSyncStateChanged(megaApi);
+    applyStorageState(preferences->getStorageState(), true);
 }
 
 void MegaApplication::startSyncs()
@@ -1815,7 +1816,7 @@ void MegaApplication::startSyncs()
     }
 }
 
-void MegaApplication::applyStorageState(int state)
+void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
 {
     if (state == MegaApi::STORAGE_STATE_CHANGE)
     {
@@ -1827,11 +1828,15 @@ void MegaApplication::applyStorageState(int state)
     }
 
     storageState = state;
+    preferences->setStorageState(storageState);
     if (preferences->logged())
     {
         if (storageState != appliedStorageState)
         {
-            updateUserStats(true, false, true, true, USERSTATS_TRAFFICLIGHT);
+            if (!doNotAskForUserStats)
+            {
+                updateUserStats(true, false, true, true, USERSTATS_TRAFFICLIGHT);
+            }
             if (state == MegaApi::STORAGE_STATE_RED)
             {
                 almostOQ = false;
