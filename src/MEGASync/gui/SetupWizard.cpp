@@ -995,6 +995,11 @@ void SetupWizard::closeEvent(QCloseEvent *event)
     }
 }
 
+void SetupWizard::reject()
+{
+
+}
+
 void SetupWizard::page_login()
 {
     closeBlocked = false;
