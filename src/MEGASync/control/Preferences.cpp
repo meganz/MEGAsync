@@ -3126,6 +3126,7 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("ALMOST_OS_INTERVAL_MS"), Preferences::ALMOST_OS_INTERVAL_MS);
     overridePreference(settings, QString::fromUtf8("OS_INTERVAL_MS"), Preferences::OS_INTERVAL_MS);
     overridePreference(settings, QString::fromUtf8("USER_INACTIVITY_MS"), Preferences::USER_INACTIVITY_MS);
+    overridePreference(settings, QString::fromUtf8("STATE_REFRESH_INTERVAL_MS"), Preferences::STATE_REFRESH_INTERVAL_MS);
 
     overridePreference(settings, QString::fromUtf8("MIN_UPDATE_STATS_INTERVAL"), Preferences::MIN_UPDATE_STATS_INTERVAL);
     overridePreference(settings, QString::fromUtf8("MIN_UPDATE_CLEANING_INTERVAL_MS"), Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS);
