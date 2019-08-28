@@ -6427,7 +6427,6 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
 
         if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
         {
-            megaApi->sendEvent(99525, "Red light does not match used storage");
             preferences->setUsedStorage(preferences->totalStorage());
         }
         else
