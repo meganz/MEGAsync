@@ -11,13 +11,14 @@ extern Q_CORE_EXPORT int qt_ntfs_permission_lookup;
 #endif
 
 const char Preferences::CLIENT_KEY[] = "FhMgXbqb";
-const char Preferences::USER_AGENT[] = "MEGAsync/4.2.3.0";
-const int Preferences::VERSION_CODE = 4203;
+const char Preferences::USER_AGENT[] = "MEGAsync/4.2.4.0";
+const int Preferences::VERSION_CODE = 4204;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.2.3");
-QString Preferences::SDK_ID = QString::fromAscii("21e6f1d");
+const QString Preferences::VERSION_STRING = QString::fromAscii("4.2.4");
+QString Preferences::SDK_ID = QString::fromAscii("8e041c4");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
+    "- Fix transfer resumption issues for webclient and public links downloads\n"
     "- Fix a crash during processing of some PDF files\n"
     "- Resume pending transfers after a crash on next startup\n"
     "- Include option to add synchronizations from the main dialog\n"
@@ -246,6 +247,7 @@ const QString Preferences::overStorageNotificationExecutionKey = QString::fromAs
 const QString Preferences::almostOverStorageNotificationExecutionKey = QString::fromAscii("almostOverStorageNotificationExecution");
 const QString Preferences::almostOverStorageDismissExecutionKey = QString::fromAscii("almostOverStorageDismissExecution");
 const QString Preferences::overStorageDismissExecutionKey = QString::fromAscii("overStorageDismissExecution");
+const QString Preferences::storageStateQKey = QString::fromAscii("storageState");
 
 const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
 const QString Preferences::proExpirityTimeKey       = QString::fromAscii("proExpirityTime");
@@ -1020,6 +1022,24 @@ void Preferences::setOverStorageDismissExecution(long long timestamp)
     mutex.lock();
     assert(logged());
     settings->setValue(overStorageDismissExecutionKey, timestamp);
+    mutex.unlock();
+}
+
+
+int Preferences::getStorageState()
+{
+    mutex.lock();
+    assert(logged());
+    int value = settings->value(storageStateQKey, MegaApi::STORAGE_STATE_GREEN).toInt();
+    mutex.unlock();
+    return value;
+}
+
+void Preferences::setStorageState(int value)
+{
+    mutex.lock();
+    assert(logged());
+    settings->setValue(storageStateQKey, value);
     mutex.unlock();
 }
 
@@ -3107,6 +3127,7 @@ void Preferences::overridePreferences(const QSettings &settings)
     overridePreference(settings, QString::fromUtf8("ALMOST_OS_INTERVAL_MS"), Preferences::ALMOST_OS_INTERVAL_MS);
     overridePreference(settings, QString::fromUtf8("OS_INTERVAL_MS"), Preferences::OS_INTERVAL_MS);
     overridePreference(settings, QString::fromUtf8("USER_INACTIVITY_MS"), Preferences::USER_INACTIVITY_MS);
+    overridePreference(settings, QString::fromUtf8("STATE_REFRESH_INTERVAL_MS"), Preferences::STATE_REFRESH_INTERVAL_MS);
 
     overridePreference(settings, QString::fromUtf8("MIN_UPDATE_STATS_INTERVAL"), Preferences::MIN_UPDATE_STATS_INTERVAL);
     overridePreference(settings, QString::fromUtf8("MIN_UPDATE_CLEANING_INTERVAL_MS"), Preferences::MIN_UPDATE_CLEANING_INTERVAL_MS);
