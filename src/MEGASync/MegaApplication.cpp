@@ -615,6 +615,7 @@ int main(int argc, char *argv[])
     QT_TRANSLATE_NOOP("MegaError", "Expired");
     QT_TRANSLATE_NOOP("MegaError", "Not found");
     QT_TRANSLATE_NOOP("MegaError", "Circular linkage detected");
+    QT_TRANSLATE_NOOP("MegaError", "Upload produces recursivity");
     QT_TRANSLATE_NOOP("MegaError", "Access denied");
     QT_TRANSLATE_NOOP("MegaError", "Already exists");
     QT_TRANSLATE_NOOP("MegaError", "Incomplete");
@@ -1760,6 +1761,7 @@ void MegaApplication::loggedIn(bool fromWizard)
 
 
     onGlobalSyncStateChanged(megaApi);
+    applyStorageState(preferences->getStorageState(), true);
 }
 
 void MegaApplication::startSyncs()
@@ -1814,7 +1816,7 @@ void MegaApplication::startSyncs()
     }
 }
 
-void MegaApplication::applyStorageState(int state)
+void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
 {
     if (state == MegaApi::STORAGE_STATE_CHANGE)
     {
@@ -1826,11 +1828,15 @@ void MegaApplication::applyStorageState(int state)
     }
 
     storageState = state;
+    preferences->setStorageState(storageState);
     if (preferences->logged())
     {
         if (storageState != appliedStorageState)
         {
-            updateUserStats(true, false, true, true, USERSTATS_TRAFFICLIGHT);
+            if (!doNotAskForUserStats)
+            {
+                updateUserStats(true, false, true, true, USERSTATS_TRAFFICLIGHT);
+            }
             if (state == MegaApi::STORAGE_STATE_RED)
             {
                 almostOQ = false;
@@ -6865,6 +6871,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
             if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
             {
+                megaApi->sendEvent(99525, "Red light does not match used storage");
                 preferences->setUsedStorage(preferences->totalStorage());
             }
             else
@@ -7360,6 +7367,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
 
     if (transfer->isFolderTransfer())
     {
+        if (e->getErrorCode() != MegaError::API_OK)
+        {
+            showErrorMessage(tr("Error transferring folder: ") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", MegaError::getErrorString(e->getErrorCode(), MegaError::API_EC_UPLOAD)));
+        }
+
         return;
     }
 
