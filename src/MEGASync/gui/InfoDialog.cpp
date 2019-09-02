@@ -9,6 +9,7 @@
 #include <QVBoxLayout>
 #include <QFileInfo>
 #include <QEvent>
+#include <QScrollBar>
 #include "InfoDialog.h"
 #include "ui_InfoDialog.h"
 #include "control/Utilities.h"
@@ -85,6 +86,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->bNumberUnseenNotifications->setSizePolicy(sp_retain);
 #endif
     ui->tvNotifications->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->tvNotifications->verticalScrollBar()->setSingleStep(12);
 
     connect(ui->bTransferManager, SIGNAL(pauseResumeClicked()), this, SLOT(pauseResumeClicked()));
     connect(ui->bTransferManager, SIGNAL(generalAreaClicked()), this, SLOT(generalAreaClicked()));
