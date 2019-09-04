@@ -88,9 +88,9 @@ BuildRequires: qt, qt-x11, qt-devel
 BuildRequires: desktop-file-utils
 %if 0%{?rhel_version} < 800
 BuildRequires: qt, qt-x11, qt-devel
-%endif
-%else
+%elif
 BuildRequires: bzip2-devel
+%endif
 %endif
 
 
