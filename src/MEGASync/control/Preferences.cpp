@@ -18,7 +18,7 @@ const int Preferences::BUILD_ID = 0;
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.2.5");
 QString Preferences::SDK_ID = QString::fromAscii("b79f2ab");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
-    "- Fix sync issues on macOS 10.15.\n"
+    "- Fix sync issues on macOS 10.15\n"
     "- Fix transfer resumption issues for webclient and public links downloads\n"
     "- Fix a crash during processing of some PDF files\n"
     "- Resume pending transfers after a crash on next startup\n"
