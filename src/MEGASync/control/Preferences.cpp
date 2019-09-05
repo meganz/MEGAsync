@@ -16,7 +16,7 @@ const int Preferences::VERSION_CODE = 4205;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
 const QString Preferences::VERSION_STRING = QString::fromAscii("4.2.5");
-QString Preferences::SDK_ID = QString::fromAscii("b79f2ab");
+QString Preferences::SDK_ID = QString::fromAscii("fcd2f0e");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
     "- Fix sync issues on macOS 10.15\n"
     "- Fix transfer resumption issues for webclient and public links downloads\n"
