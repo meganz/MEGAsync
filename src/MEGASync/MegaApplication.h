@@ -83,6 +83,7 @@ enum GetUserStatsReason {
     USERSTATS_BANDWIDTH_TIMEOUT_SHOWINFODIALOG,
     USERSTATS_PRO_EXPIRED,
     USERSTATS_OPENSETTINGSDIALOG,
+    USERSTATS_STORAGECACHEUNKNOWN,
 };
 
 class MegaApplication : public QApplication, public mega::MegaListener
