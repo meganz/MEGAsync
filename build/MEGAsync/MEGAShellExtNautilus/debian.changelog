@@ -1,6 +1,6 @@
 nautilus-megasync (1.1.0) stable; urgency=low
 
-  * 
+  * Changed path in order to avoid the inclusion of the current path during the package creation.
 
  -- MEGA Team <linux@mega.co.nz>  Tue, 10 Sep 2019 12:00:00 +0200
 
@@ -8,7 +8,7 @@ nautilus-megasync (1.0.29) beta; urgency=low
 
   * First Public Beta
 
- -- Javier Serrano <js@mega.co.nz>  Thu, 27 Aug 2014 12:00:00 +0100
+ -- Javier Serrano <js@mega.co.nz>  Wed, 27 Aug 2014 12:00:00 +0100
 
 nautilus-megasync (1.0) beta; urgency=low
 
