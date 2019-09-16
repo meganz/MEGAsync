@@ -143,6 +143,12 @@ void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaErro
                 MegaHandle handle = MegaApi::base64ToHandle(linkparts.last().toUtf8().constData());
                 rootNode = megaApiFolders->getNodeByHandle(handle);
             }
+            else if (linkList[currentIndex].count(QString::fromUtf8("/folder/")) == 2)
+            {
+                QStringList linkparts = linkList[currentIndex].split(QString::fromUtf8("/folder/"), QString::KeepEmptyParts);
+                MegaHandle handle = MegaApi::base64ToHandle(linkparts.last().toUtf8().constData());
+                rootNode = megaApiFolders->getNodeByHandle(handle);
+            }
             else
             {
                 rootNode = megaApiFolders->getRootNode();
@@ -179,7 +185,8 @@ void LinkProcessor::requestLinkInfo()
     }
 
     QString link = linkList[currentIndex];
-    if (link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/#F!")))
+    if (link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/#F!"))
+            || link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/folder/")))
     {
         megaApiFolders->loginToFolder(link.toUtf8().constData(), delegateListener);
     }
