@@ -23,7 +23,7 @@ public:
     ~CircularUsageProgressBar();
 
     int getValue() const;
-    void setValue(int pbValue);
+    void setValue(int value);
 
     QColor getBkColor() const;
     void setBkColor(const QColor &color);
@@ -32,10 +32,10 @@ public:
     void setFgColor(const QColor &color);
 
     QColor getOqColor() const;
-    void setOqColor(const QColor &pbValue);
+    void setOqColor(const QColor &color);
 
     QColor getAlmostOqColor() const;
-    void setAlmostOqColor(const QColor &value);
+    void setAlmostOqColor(const QColor &color);
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -45,7 +45,7 @@ protected:
 
     void setPenColor(QPen &pen, QColor color, bool forceRepaint = true);
 
-    int pbValue = 0;
+    int pbValue = -1;
     double penWidth;
     double outerRadius;
 

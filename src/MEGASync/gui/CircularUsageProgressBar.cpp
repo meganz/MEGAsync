@@ -3,7 +3,7 @@
 #include <QDebug>
 
 CircularUsageProgressBar::CircularUsageProgressBar(QWidget *parent) :
-    QWidget(parent), outerRadius(0), pbValue(0), penWidth(0)
+    QWidget(parent), outerRadius(0), penWidth(0)
 {
     setPenColor(bkPen, QColor(QString::fromUtf8(DEFAULT_BKCOLOR)));
     setPenColor(fgPen, QColor(QString::fromUtf8(DEFAULT_FGCOLOR)));
@@ -109,9 +109,9 @@ QColor CircularUsageProgressBar::getAlmostOqColor() const
     return almostOqColor;
 }
 
-void CircularUsageProgressBar::setAlmostOqColor(const QColor &value)
+void CircularUsageProgressBar::setAlmostOqColor(const QColor &color)
 {
-    almostOqColor = value;
+    almostOqColor = color;
     update();
 }
 
@@ -120,9 +120,9 @@ QColor CircularUsageProgressBar::getOqColor() const
     return oqColor;
 }
 
-void CircularUsageProgressBar::setOqColor(const QColor &value)
+void CircularUsageProgressBar::setOqColor(const QColor &color)
 {
-    oqColor = value;
+    oqColor = color;
     update();
 }
 
@@ -133,7 +133,11 @@ int CircularUsageProgressBar::getValue() const
 
 void CircularUsageProgressBar::setValue(int value)
 {
-    if (pbValue != value || textValue == QString::fromUtf8("-"))
+    if (value < 0)
+    {
+        value = 0;
+    }
+    if (pbValue != value || pbValue == -1 )
     {
         textValue = QString::number(value).append(QString::fromUtf8("%"));
         pbValue = value;
