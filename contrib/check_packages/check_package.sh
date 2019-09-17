@@ -339,7 +339,7 @@ elif [[ $VMNAME == *"ARCHLINUX"* ]]; then
 	$sshpasscommand ssh root@$IP_GUEST "cat >> /etc/pacman.conf" <<-EOF
 ###REPO for MEGA###
 [$archreponame]
-SigLevel = Optional TrustAll
+SigLevel = Required TrustedOnly
 Server = $REPO/\$arch
 ###END REPO for MEGA###
 EOF
