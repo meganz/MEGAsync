@@ -85,6 +85,7 @@ enum GetUserStatsReason {
     USERSTATS_BANDWIDTH_TIMEOUT_SHOWINFODIALOG,
     USERSTATS_PRO_EXPIRED,
     USERSTATS_OPENSETTINGSDIALOG,
+    USERSTATS_STORAGECACHEUNKNOWN,
 };
 
 class MegaApplication : public QApplication, public mega::MegaListener
@@ -266,7 +267,7 @@ protected:
     bool showTrayIconAlwaysNEW();
     void loggedIn(bool fromWizard);
     void startSyncs();
-    void applyStorageState(int state);
+    void applyStorageState(int state, bool doNotAskForUserStats = false);
     void processUploadQueue(mega::MegaHandle nodeHandle);
     void processDownloadQueue(QString path);
     void unityFix();
