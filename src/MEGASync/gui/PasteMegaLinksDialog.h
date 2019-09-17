@@ -20,6 +20,8 @@ public:
     static const int NEW_FOLDER_LINK_SIZE = 54;
 
     static const int FOLDER_LINK_WITH_SUBFOLDER_SIZE = 59;
+    static const int FOLDER_LINK_WITH_FILE_SIZE = 59;
+    static const int NEW_FOLDER_LINK_WITH_FILE_SIZE = 68;
     static const int NEW_FOLDER_LINK_WITH_SUBFOLDER_SIZE = 70;
 
     explicit PasteMegaLinksDialog(QWidget *parent = 0);

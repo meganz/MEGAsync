@@ -146,6 +146,11 @@ QString PasteMegaLinksDialog::checkLink(QString link)
         {
             link.truncate(FOLDER_LINK_WITH_SUBFOLDER_SIZE);
         }
+        else if (link.length() >= FOLDER_LINK_WITH_FILE_SIZE &&
+                 (link.count(QChar::fromAscii('!')) == 2 && link.count(QChar::fromAscii('?')) == 1))
+        {
+            link.truncate(FOLDER_LINK_WITH_FILE_SIZE);
+        }
         else
         {
             if (link.length() < FOLDER_LINK_SIZE)
@@ -160,9 +165,15 @@ QString PasteMegaLinksDialog::checkLink(QString link)
     }
     else if (link.contains(QString::fromUtf8("/folder/")))
     {
-        if (link.length() >= NEW_FOLDER_LINK_WITH_SUBFOLDER_SIZE && link.count(QString::fromUtf8("/folder/")) == 2)
+        if (link.length() >= NEW_FOLDER_LINK_WITH_SUBFOLDER_SIZE
+                && link.count(QString::fromUtf8("/folder/")) == 2)
         {
             link.truncate(NEW_FOLDER_LINK_WITH_SUBFOLDER_SIZE);
+        }
+        else if (link.length() >= NEW_FOLDER_LINK_WITH_FILE_SIZE &&
+                 (link.count(QString::fromUtf8("/folder/")) == 1 && link.count(QString::fromUtf8("/file/")) == 1))
+        {
+            link.truncate(NEW_FOLDER_LINK_WITH_FILE_SIZE);
         }
         else
         {
