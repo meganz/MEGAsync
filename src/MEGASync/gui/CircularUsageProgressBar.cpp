@@ -3,7 +3,7 @@
 #include <QDebug>
 
 CircularUsageProgressBar::CircularUsageProgressBar(QWidget *parent) :
-    QWidget(parent), outerRadius(0), pbValue(0), penWidth(0)
+    QWidget(parent), outerRadius(0), penWidth(0)
 {
     setPenColor(bkPen, QColor(QString::fromUtf8(DEFAULT_BKCOLOR)));
     setPenColor(fgPen, QColor(QString::fromUtf8(DEFAULT_FGCOLOR)));
@@ -89,7 +89,7 @@ void CircularUsageProgressBar::drawText(QPainter &p, const QRectF &innerRect, do
     p.setFont(f);
 
     QRectF textRect(innerRect);
-    p.setPen(!value ? bkColor : fgColor);
+    p.setPen(fgColor);
     p.drawText(textRect, Qt::AlignCenter, textValue);
 }
 
@@ -109,9 +109,9 @@ QColor CircularUsageProgressBar::getAlmostOqColor() const
     return almostOqColor;
 }
 
-void CircularUsageProgressBar::setAlmostOqColor(const QColor &value)
+void CircularUsageProgressBar::setAlmostOqColor(const QColor &color)
 {
-    almostOqColor = value;
+    almostOqColor = color;
     update();
 }
 
@@ -120,9 +120,9 @@ QColor CircularUsageProgressBar::getOqColor() const
     return oqColor;
 }
 
-void CircularUsageProgressBar::setOqColor(const QColor &value)
+void CircularUsageProgressBar::setOqColor(const QColor &color)
 {
-    oqColor = value;
+    oqColor = color;
     update();
 }
 
@@ -133,33 +133,28 @@ int CircularUsageProgressBar::getValue() const
 
 void CircularUsageProgressBar::setValue(int value)
 {
-    if (pbValue != value)
+    if (value < CircularUsageProgressBar::MINVALUE)
     {
-        if (value <= MIN_VALUE)
+        value = CircularUsageProgressBar::MINVALUE;
+    }
+    if (pbValue != value || pbValue == -1 )
+    {
+        textValue = QString::number(value).append(QString::fromUtf8("%"));
+        pbValue = value;
+        if (value >= CircularUsageProgressBar::MAXVALUE)
         {
-            pbValue = MIN_VALUE;
-            textValue = QString::fromUtf8("-");
-            setPenColor(fgPen, fgColor, false);
+            fgColor = oqColor;
+            setPenColor(fgPen, oqColor, false);
+        }
+        else if (value >= ALMOSTOVERQUOTA_VALUE)
+        {
+            fgColor = almostOqColor;
+            setPenColor(fgPen, almostOqColor, false);
         }
         else
         {
-            textValue = QString::number(value).append(QString::fromUtf8("%"));
-            pbValue = value;
-            if (value >= MAX_VALUE)
-            {
-                fgColor = oqColor;
-                setPenColor(fgPen, oqColor, false);
-            }
-            else if (value >= ALMOSTOVERQUOTA_VALUE)
-            {
-                fgColor = almostOqColor;
-                setPenColor(fgPen, almostOqColor, false);
-            }
-            else
-            {
-                fgColor = QColor(QString::fromUtf8(DEFAULT_FGCOLOR));
-                setPenColor(fgPen, fgColor, false);
-            }
+            fgColor = QColor(QString::fromUtf8(DEFAULT_FGCOLOR));
+            setPenColor(fgPen, fgColor, false);
         }
         update();
     }
