@@ -140,7 +140,6 @@ signals:
 private:
     Ui::InfoDialog *ui;
     QPushButton *overlay;
-    bool overlayshown = false;
 #ifdef __APPLE__
     QPushButton *arrow;
     QWidget *dummy; // Patch to let text input on line edits of GuestWidget

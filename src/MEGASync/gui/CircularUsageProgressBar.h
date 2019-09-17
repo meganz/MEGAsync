@@ -5,8 +5,6 @@
 #include <QPen>
 #include <QIcon>
 
-#define MAX_VALUE 100
-#define MIN_VALUE 0
 #define ALMOSTOVERQUOTA_VALUE 90
 
 const char DEFAULT_FGCOLOR[] = "#5969BD";
@@ -19,6 +17,10 @@ class CircularUsageProgressBar : public QWidget
 {
     Q_OBJECT
 public:
+    static const int MAXVALUE = 100;
+    static const int MINVALUE = 0;
+
+
     explicit CircularUsageProgressBar(QWidget *parent = 0);
     ~CircularUsageProgressBar();
 

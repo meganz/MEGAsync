@@ -346,7 +346,7 @@ void InfoDialog::setUsage()
         ui->wCircularStorage->setValue((percentage < 100) ? percentage : 100);
 
         QString usageColorS = (percentage < 90 ? QString::fromUtf8("#666666")
-                                                      : percentage >= MAX_VALUE ? QString::fromUtf8("#DF4843")
+                                                      : percentage >= CircularUsageProgressBar::MAXVALUE ? QString::fromUtf8("#DF4843")
                                                       : QString::fromUtf8("#FF6F00"));
 
         usedStorage = QString::fromUtf8("%1 /%2").arg(QString::fromUtf8("<span style='color:%1; font-family: Lato; text-decoration:none;'>%2</span>")
@@ -388,7 +388,7 @@ void InfoDialog::setUsage()
             ui->wCircularQuota->setValue((percentage < 100) ? percentage : 100);
 
             QString usageColorB = (percentage < 90 ? QString::fromUtf8("#666666")
-                                                          : percentage >= MAX_VALUE ? QString::fromUtf8("#DF4843")
+                                                          : percentage >= CircularUsageProgressBar::MAXVALUE ? QString::fromUtf8("#DF4843")
                                                           : QString::fromUtf8("#FF6F00"));
 
             usedQuota = QString::fromUtf8("%1 /%2").arg(QString::fromUtf8("<span style='color:%1; font-family: Lato; text-decoration:none;'>%2</span>")
@@ -744,7 +744,6 @@ void InfoDialog::updateDialogState()
             ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
             ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
             overlay->setVisible(false);
-            overlayshown = false;
             ui->wPSA->hidePSA();
             break;
         case Preferences::STATE_OVER_STORAGE:
@@ -756,7 +755,6 @@ void InfoDialog::updateDialogState()
                                     + tr("Please upgrade to PRO."));
             ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
             overlay->setVisible(false);
-            overlayshown = false;
             ui->wPSA->hidePSA();
             break;
         case Preferences::STATE_BELOW_OVER_STORAGE:
@@ -768,7 +766,6 @@ void InfoDialog::updateDialogState()
             if (remainingUploads || remainingDownloads || (ui->wListTransfers->getModel() && ui->wListTransfers->getModel()->rowCount(QModelIndex())) || ui->wPSA->isPSAready())
             {
                 overlay->setVisible(false);
-                overlayshown = false;
                 ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
                 ui->wPSA->showPSA();
             }
@@ -779,12 +776,10 @@ void InfoDialog::updateDialogState()
                 if (!waiting && !indexing)
                 {
                     overlay->setVisible(true);
-                    overlayshown = true;
                 }
                 else
                 {
                     overlay->setVisible(false);
-                    overlayshown = false;
                 }
             }
             break;
@@ -1414,10 +1409,6 @@ void InfoDialog::on_tTransfers_clicked()
     ui->tNotifications->setStyleSheet(QString::fromUtf8("color : #989899;"));
 
     ui->sTabs->setCurrentWidget(ui->pTransfersTab);
-    if (overlayshown)
-    {
-        overlay->show();
-    }
 }
 
 void InfoDialog::on_tNotifications_clicked()

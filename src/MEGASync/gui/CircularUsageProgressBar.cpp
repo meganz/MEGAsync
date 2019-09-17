@@ -133,15 +133,15 @@ int CircularUsageProgressBar::getValue() const
 
 void CircularUsageProgressBar::setValue(int value)
 {
-    if (value < 0)
+    if (value < CircularUsageProgressBar::MINVALUE)
     {
-        value = 0;
+        value = CircularUsageProgressBar::MINVALUE;
     }
     if (pbValue != value || pbValue == -1 )
     {
         textValue = QString::number(value).append(QString::fromUtf8("%"));
         pbValue = value;
-        if (value >= MAX_VALUE)
+        if (value >= CircularUsageProgressBar::MAXVALUE)
         {
             fgColor = oqColor;
             setPenColor(fgPen, oqColor, false);
