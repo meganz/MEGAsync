@@ -438,7 +438,7 @@ void NodeSelector::on_bNewFolder_clicked()
     }
     else
     {
-        QMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"), tr("Please enter a valid folder name.\n"
+        QMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"), tr("Invalid folder name.\n"
                                                                       "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names."));
         if (!id)
         {
