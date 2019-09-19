@@ -45,8 +45,6 @@ public:
 private:
     Ui::CustomTransferItem *ui;
     mega::MegaApi *megaApi;
-    int remainingUploads, remainingDownloads;
-    int totalUploads, totalDownloads;
 
 protected:
     bool getLinkButtonEnabled;

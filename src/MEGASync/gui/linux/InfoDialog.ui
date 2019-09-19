@@ -31,7 +31,7 @@
 {
  border-radius: 16px;
  border: 1px solid rgba(100, 100, 100);
- background-color:  #F7F8F9;
+ background-color:  #F4F6F8;
 
 }
 #tTransfers, #tNotifications
@@ -159,7 +159,7 @@ color: #333333;
 {
 border-top-left-radius: 16px;
 border-top-right-radius: 16px;
-background-color: #F7F8F9;
+background-color: #F4F6F8;
 }</string>
            </property>
            <property name="frameShape">
@@ -518,7 +518,10 @@ border: none;
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">background-color: #F7F8F9;</string>
+               <string notr="true">#wPSA
+{
+background-color: #F4F6F8;
+}</string>
               </property>
              </widget>
             </item>
@@ -573,7 +576,7 @@ border: none;
                   <string notr="true">#wTabOptions
 {
    border-bottom: 1px solid rgb(231, 231, 231);
-   background-color: #F7F8F9;
+   background-color: #F4F6F8;
 }
 QToolButton
 {
@@ -2474,7 +2477,7 @@ background-color: #FFFFFF;
 {
 border-bottom-left-radius: 16px;
 border-bottom-right-radius: 16px;
-background-color: #F7F8F9;
+background-color: #F4F6F8;
 }</string>
            </property>
            <property name="frameShape">

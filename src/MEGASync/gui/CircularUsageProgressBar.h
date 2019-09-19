@@ -5,8 +5,6 @@
 #include <QPen>
 #include <QIcon>
 
-#define MAX_VALUE 100
-#define MIN_VALUE 0
 #define ALMOSTOVERQUOTA_VALUE 90
 
 const char DEFAULT_FGCOLOR[] = "#5969BD";
@@ -19,11 +17,15 @@ class CircularUsageProgressBar : public QWidget
 {
     Q_OBJECT
 public:
+    static const int MAXVALUE = 100;
+    static const int MINVALUE = 0;
+
+
     explicit CircularUsageProgressBar(QWidget *parent = 0);
     ~CircularUsageProgressBar();
 
     int getValue() const;
-    void setValue(int pbValue);
+    void setValue(int value);
 
     QColor getBkColor() const;
     void setBkColor(const QColor &color);
@@ -32,10 +34,10 @@ public:
     void setFgColor(const QColor &color);
 
     QColor getOqColor() const;
-    void setOqColor(const QColor &pbValue);
+    void setOqColor(const QColor &color);
 
     QColor getAlmostOqColor() const;
-    void setAlmostOqColor(const QColor &value);
+    void setAlmostOqColor(const QColor &color);
 
 protected:
     void paintEvent(QPaintEvent *event);
@@ -45,7 +47,7 @@ protected:
 
     void setPenColor(QPen &pen, QColor color, bool forceRepaint = true);
 
-    int pbValue;
+    int pbValue = -1;
     double penWidth;
     double outerRadius;
 

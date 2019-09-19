@@ -9,6 +9,7 @@
 #include <QVBoxLayout>
 #include <QFileInfo>
 #include <QEvent>
+#include <QScrollBar>
 #include "InfoDialog.h"
 #include "ui_InfoDialog.h"
 #include "control/Utilities.h"
@@ -85,6 +86,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     ui->bNumberUnseenNotifications->setSizePolicy(sp_retain);
 #endif
     ui->tvNotifications->setVerticalScrollMode(QAbstractItemView::ScrollPerPixel);
+    ui->tvNotifications->verticalScrollBar()->setSingleStep(12);
 
     connect(ui->bTransferManager, SIGNAL(pauseResumeClicked()), this, SLOT(pauseResumeClicked()));
     connect(ui->bTransferManager, SIGNAL(generalAreaClicked()), this, SLOT(generalAreaClicked()));
@@ -224,6 +226,17 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     dummy = NULL;
 #endif
 
+    //Create the overlay widget with a transparent background
+    overlay = new QPushButton(ui->pUpdated);
+    overlay->setStyleSheet(QString::fromAscii("background-color: transparent; "
+                                              "border: none; "));
+    overlay->resize(ui->pUpdated->size());
+    overlay->setCursor(Qt::PointingHandCursor);
+
+    overlay->resize(overlay->width()-4, overlay->height());
+
+    overlay->show();
+    connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
     connect(this, SIGNAL(openTransferManager(int)), app, SLOT(externalOpenTransferManager(int)));
 
     if (preferences->logged())
@@ -333,7 +346,7 @@ void InfoDialog::setUsage()
         ui->wCircularStorage->setValue((percentage < 100) ? percentage : 100);
 
         QString usageColorS = (percentage < 90 ? QString::fromUtf8("#666666")
-                                                      : percentage >= MAX_VALUE ? QString::fromUtf8("#DF4843")
+                                                      : percentage >= CircularUsageProgressBar::MAXVALUE ? QString::fromUtf8("#DF4843")
                                                       : QString::fromUtf8("#FF6F00"));
 
         usedStorage = QString::fromUtf8("%1 /%2").arg(QString::fromUtf8("<span style='color:%1; font-family: Lato; text-decoration:none;'>%2</span>")
@@ -375,7 +388,7 @@ void InfoDialog::setUsage()
             ui->wCircularQuota->setValue((percentage < 100) ? percentage : 100);
 
             QString usageColorB = (percentage < 90 ? QString::fromUtf8("#666666")
-                                                          : percentage >= MAX_VALUE ? QString::fromUtf8("#DF4843")
+                                                          : percentage >= CircularUsageProgressBar::MAXVALUE ? QString::fromUtf8("#DF4843")
                                                           : QString::fromUtf8("#FF6F00"));
 
             usedQuota = QString::fromUtf8("%1 /%2").arg(QString::fromUtf8("<span style='color:%1; font-family: Lato; text-decoration:none;'>%2</span>")
@@ -441,11 +454,23 @@ void InfoDialog::updateTransfersCount()
 
     if (remainingDownloads <= 0)
     {
-        totalDownloads = 0;
+        QTimer::singleShot(5000, [this] () {
+            if (remainingDownloads <= 0)
+            {
+                ui->bTransferManager->setCompletedDownloads(0);
+                ui->bTransferManager->setTotalDownloads(0);
+            }
+        });
     }
     if (remainingUploads <= 0)
     {
-        totalUploads = 0;
+        QTimer::singleShot(5000, [this] () {
+            if (remainingUploads <= 0)
+            {
+                ui->bTransferManager->setCompletedUploads(0);
+                ui->bTransferManager->setTotalUploads(0);
+            }
+        });
     }
 
     ui->bTransferManager->setCompletedDownloads(qMax(0,qMin(totalDownloads, currentDownload)));
@@ -718,6 +743,7 @@ void InfoDialog::updateDialogState()
             ui->lOQTitle->setText(tr("You're running out of storage space."));
             ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
             ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
+            overlay->setVisible(false);
             ui->wPSA->hidePSA();
             break;
         case Preferences::STATE_OVER_STORAGE:
@@ -728,6 +754,7 @@ void InfoDialog::updateDialogState()
                                     + QString::fromUtf8("<br>")
                                     + tr("Please upgrade to PRO."));
             ui->sActiveTransfers->setCurrentWidget(ui->pOverquota);
+            overlay->setVisible(false);
             ui->wPSA->hidePSA();
             break;
         case Preferences::STATE_BELOW_OVER_STORAGE:
@@ -738,6 +765,7 @@ void InfoDialog::updateDialogState()
 
             if (remainingUploads || remainingDownloads || (ui->wListTransfers->getModel() && ui->wListTransfers->getModel()->rowCount(QModelIndex())) || ui->wPSA->isPSAready())
             {
+                overlay->setVisible(false);
                 ui->sActiveTransfers->setCurrentWidget(ui->pTransfers);
                 ui->wPSA->showPSA();
             }
@@ -745,6 +773,14 @@ void InfoDialog::updateDialogState()
             {
                 ui->wPSA->hidePSA();
                 ui->sActiveTransfers->setCurrentWidget(ui->pUpdated);
+                if (!waiting && !indexing)
+                {
+                    overlay->setVisible(true);
+                }
+                else
+                {
+                    overlay->setVisible(false);
+                }
             }
             break;
     }
@@ -873,6 +909,11 @@ void InfoDialog::on_bChats_clicked()
     QString userAgent = QString::fromUtf8(QUrl::toPercentEncoding(QString::fromUtf8(megaApi->getUserAgent())));
     QString url = QString::fromUtf8("").arg(userAgent);
     megaApi->getSessionTransferURL(url.toUtf8().constData());
+}
+
+void InfoDialog::onOverlayClicked()
+{
+    app->uploadActionClicked();
 }
 
 void InfoDialog::on_bTransferManager_clicked()

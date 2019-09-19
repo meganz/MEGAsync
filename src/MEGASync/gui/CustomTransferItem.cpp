@@ -31,8 +31,6 @@ CustomTransferItem::CustomTransferItem(QWidget *parent) :
     ui->bClockDown->setVisible(false);
 
     getLinkButtonEnabled = false;
-    remainingUploads = remainingDownloads = 0;
-    totalUploads = totalDownloads = 0;
     dsFinishedTime = 0;
 
     megaApi = ((MegaApplication *)qApp)->getMegaApi();
@@ -80,13 +78,13 @@ void CustomTransferItem::setType(int type, bool isSyncTransfer)
         case MegaTransfer::TYPE_UPLOAD:
             icon.addFile(QString::fromUtf8(":/images/upload_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
             iconCompleted.addFile(QString::fromUtf8(":/images/uploaded_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-            ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
+            ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: transparent;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
             break;
         case MegaTransfer::TYPE_DOWNLOAD:
             icon.addFile(QString::fromUtf8(":/images/download_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
             iconCompleted.addFile(QString::fromUtf8(":/images/downloaded_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
-            ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
+            ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: transparent;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
             break;
         default:
@@ -233,43 +231,6 @@ void CustomTransferItem::updateTransfer()
     else
     {
         ui->sTransferState->setCurrentWidget(ui->activeTransfer);
-
-        QString formattedValue(QString::fromUtf8("<span style=\"color:#333333; text-decoration:none;\">&nbsp;%1&nbsp;</span>"));
-        QString nTransfersPattern(tr("%1 of %2"));
-
-        switch (type)
-        {
-            case MegaTransfer::TYPE_UPLOAD:
-                remainingUploads = megaApi->getNumPendingUploads();
-                totalUploads = megaApi->getTotalUploads();
-
-                if (totalUploads < remainingUploads)
-                {
-                    totalUploads = remainingUploads;
-                }
-
-                currentUpload = totalUploads - remainingUploads + 1;
-                //Update current and total number of transfers
-                ui->lTransfers->setText(nTransfersPattern.arg(formattedValue.arg(currentUpload)).arg(formattedValue.arg(totalUploads)));
-
-                break;
-            case MegaTransfer::TYPE_DOWNLOAD:
-                remainingDownloads = megaApi->getNumPendingDownloads();
-                totalDownloads = megaApi->getTotalDownloads();
-
-                if (totalDownloads < remainingDownloads)
-                {
-                    totalDownloads = remainingDownloads;
-                }
-
-                currentDownload = totalDownloads - remainingDownloads + 1;
-                //Update current and total number of transfers
-                ui->lTransfers->setText(nTransfersPattern.arg(formattedValue.arg(currentDownload)).arg(formattedValue.arg(totalDownloads)));
-
-                break;
-            default:
-                break;
-        }
     }
 
     switch (transferState)
@@ -309,7 +270,7 @@ void CustomTransferItem::updateTransfer()
             }
             else
             {
-                QString pattern(QString::fromUtf8("(%1/s)"));
+                QString pattern(QString::fromUtf8("%1/s"));
                 downloadString = pattern.arg(Utilities::getSizeString(transferSpeed));
             }
 

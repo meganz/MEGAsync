@@ -7696,7 +7696,7 @@ bool MegaApplication::hasNotificationsOfType(int type)
 
 void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
 {
-    if (appfinished || !preferences->logged())
+    if (appfinished)
     {
         return;
     }
