@@ -221,7 +221,7 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                         .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alert->getEmail())));
                 break;
             case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
-                notificationContent = tr("Reminder:") + tr("You have a contact request");
+                notificationContent = tr("Reminder") + QString::fromUtf8(": ") + tr("You have a contact request");
                 break;
             case MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU:
                 notificationContent = tr("[A] deleted you as a contact")

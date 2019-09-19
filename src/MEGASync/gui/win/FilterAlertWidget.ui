@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string/>
   </property>
   <property name="styleSheet">
    <string notr="true">#FilterAlertWidget
@@ -174,7 +174,7 @@ border-radius: 4px;
 }</string>
            </property>
            <property name="text">
-            <string>0</string>
+            <string notr="true">0</string>
            </property>
           </widget>
          </item>
@@ -342,7 +342,7 @@ border-radius: 4px;
 }</string>
               </property>
               <property name="text">
-               <string>0</string>
+               <string notr="true">0</string>
               </property>
              </widget>
             </item>
@@ -464,7 +464,7 @@ border-radius: 4px;
 }</string>
               </property>
               <property name="text">
-               <string>0</string>
+               <string notr="true">0</string>
               </property>
              </widget>
             </item>
@@ -589,7 +589,7 @@ border-radius: 4px;
 }</string>
               </property>
               <property name="text">
-               <string>0</string>
+               <string notr="true">0</string>
               </property>
              </widget>
             </item>

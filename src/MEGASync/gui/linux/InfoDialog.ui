@@ -820,7 +820,7 @@ margin-right: 4px;
 }</string>
                              </property>
                              <property name="text">
-                              <string>0</string>
+                              <string notr="true">0</string>
                              </property>
                             </widget>
                            </item>
@@ -2317,7 +2317,7 @@ background-color: #FFFFFF;
 }</string>
                                   </property>
                                   <property name="text">
-                                   <string>...</string>
+                                   <string notr="true"/>
                                   </property>
                                   <property name="icon">
                                    <iconset>
