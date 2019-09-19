@@ -31,8 +31,6 @@ CustomTransferItem::CustomTransferItem(QWidget *parent) :
     ui->bClockDown->setVisible(false);
 
     getLinkButtonEnabled = false;
-    remainingUploads = remainingDownloads = 0;
-    totalUploads = totalDownloads = 0;
     dsFinishedTime = 0;
 
     megaApi = ((MegaApplication *)qApp)->getMegaApi();
