@@ -4312,7 +4312,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
     }
 }
 
-// TODO: This should go away
+// TODO: This should go away because we'll always have file logging
 void MegaApplication::toggleLogging()
 {
     if (appfinished)

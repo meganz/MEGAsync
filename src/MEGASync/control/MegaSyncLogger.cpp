@@ -61,6 +61,8 @@ MegaSyncLogger::~MegaSyncLogger()
 
 void MegaSyncLogger::init(const QString& dataPath)
 {
+    MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
+
     spdlog::init_thread_pool(8192, 1);
     spdlog::flush_every(std::chrono::seconds{3});
     spdlog::flush_on(spdlog::level::err);
@@ -76,6 +78,7 @@ void MegaSyncLogger::init(const QString& dataPath)
                                                     spdlog::thread_pool(),
                                                     spdlog::async_overflow_policy::overrun_oldest);
     logger->set_pattern("[%Y-%m-%dT%H:%M:%S.%u] [%l] [%t] %v");
+    logger->set_level(spdlog::level::trace);
 
     spdlog::register_logger(logger);
 }
