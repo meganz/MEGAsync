@@ -750,6 +750,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     }
     QDir::setCurrent(dataPath);
 
+    logger->init(dataPath);
+
     updateAvailable = false;
     networkConnectivity = true;
     activeTransferPriority[MegaTransfer::TYPE_DOWNLOAD] = 0xFFFFFFFFFFFFFFFFULL;
@@ -4310,6 +4312,7 @@ void MegaApplication::showTrayMenu(QPoint *point)
     }
 }
 
+// TODO: This should go away
 void MegaApplication::toggleLogging()
 {
     if (appfinished)

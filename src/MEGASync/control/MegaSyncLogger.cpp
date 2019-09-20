@@ -9,6 +9,11 @@
 #include <QDesktopServices>
 #include <QDir>
 
+#include <spdlog/spdlog.h>
+#include <spdlog/sinks/rotating_file_sink.h>
+#include <spdlog/sinks/stdout_sinks.h>
+#include <spdlog/async.h>
+
 #define MEGA_LOGGER QString::fromUtf8("MEGA_LOGGER")
 #define ENABLE_MEGASYNC_LOGS QString::fromUtf8("MEGA_ENABLE_LOGS")
 #define MAX_MESSAGE_SIZE 4096
@@ -43,6 +48,9 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent) : QObject(parent), MegaLogger()
 
 MegaSyncLogger::~MegaSyncLogger()
 {
+    running = false;
+    spdlog::shutdown();
+
     disconnected();
 
     if (megaServer)
@@ -51,10 +59,36 @@ MegaSyncLogger::~MegaSyncLogger()
     }
 }
 
-void MegaSyncLogger::log(const char *time, int loglevel, const char *source, const char *message)
+void MegaSyncLogger::init(const QString& dataPath)
 {
+    spdlog::init_thread_pool(8192, 1);
+    spdlog::flush_every(std::chrono::seconds{3});
+    spdlog::flush_on(spdlog::level::err);
+
+    auto rotating_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(dataPath.toStdString() + "/MEGAsync.log", 1024*1024*10, 10);
+    std::vector<spdlog::sink_ptr> sinks{rotating_sink};
+    if (logToStdout)
+    {
+        sinks.push_back(std::make_shared<spdlog::sinks::stdout_sink_mt>());
+    }
+    logger = std::make_shared<spdlog::async_logger>("async_file_logger",
+                                                    sinks.begin(), sinks.end(),
+                                                    spdlog::thread_pool(),
+                                                    spdlog::async_overflow_policy::overrun_oldest);
+    logger->set_pattern("[%Y-%m-%dT%H:%M:%S.%u] [%l] [%t] %v");
+
+    spdlog::register_logger(logger);
+}
+
+void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *message)
+{
+    if (!running)
+    {
+        return;
+    }
+
 #ifdef LOG_TO_LOGGER
-    if (connected)
+    if (connected) // TODO: Should be atomic
     {
         QString m = QString::fromUtf8(message);
         if (m.size() > MAX_MESSAGE_SIZE)
@@ -62,91 +96,24 @@ void MegaSyncLogger::log(const char *time, int loglevel, const char *source, con
             m = m.left(MAX_MESSAGE_SIZE - 3).append(QString::fromUtf8("..."));
         }
 
-#ifdef DEBUG
-        QString fileName;
-        QFileInfo info(QString::fromUtf8(source));
-        fileName = info.fileName();
-        if (fileName.size())
+        auto t = std::time(NULL);
+        char ts[50];
+        if (!std::strftime(ts, sizeof(ts), "%H:%M:%S", std::gmtime(&t)))
         {
-            m.append(QString::fromUtf8(" (%1)").arg(fileName));
+            ts[0] = '\0';
         }
-#endif
-
-        emit sendLog(QString::fromUtf8(time), loglevel, m);
+        emit sendLog(QString::fromUtf8(ts), loglevel, m);
     }
 #endif
 
-    if (logToFile || logToStdout)
+    switch (loglevel)
     {
-        QString fileName;
-        QFileInfo info(QString::fromUtf8(source));
-        fileName = info.fileName();
-
-        ostringstream oss;
-        oss << time;
-        switch(loglevel)
-        {
-            case MegaApi::LOG_LEVEL_DEBUG:
-                oss << " (debug): ";
-                break;
-            case MegaApi::LOG_LEVEL_ERROR:
-                oss << " (error): ";
-                break;
-            case MegaApi::LOG_LEVEL_FATAL:
-                oss << " (fatal): ";
-                break;
-            case MegaApi::LOG_LEVEL_INFO:
-                oss << " (info):  ";
-                break;
-            case MegaApi::LOG_LEVEL_MAX:
-                oss << " (verb):  ";
-                break;
-            case MegaApi::LOG_LEVEL_WARNING:
-                oss << " (warn):  ";
-                break;
-        }
-
-        oss << message;
-        if (fileName.size())
-        {
-            oss << " ("<< fileName.toUtf8().constData() << ")";
-        }
-
-        if (logToStdout)
-        {
-            cout << oss.str() << endl;
-        }
-
-        if (logToFile)
-        {
-            static QString filePath;
-            if (filePath.isEmpty())
-            {
-                QString dataPath;
-#if QT_VERSION < 0x050000
-                dataPath = QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
-#else
-                QStringList desktopPaths = QStandardPaths::standardLocations(QStandardPaths::DesktopLocation);
-                if (desktopPaths.size())
-                {
-                    dataPath = desktopPaths.at(0);
-                }
-                else
-                {
-                    dataPath = Utilities::getDefaultBasePath();
-                }
-#endif
-                filePath = dataPath + QDir::separator() + QString::fromAscii("MEGAsync.log");
-            }
-
-            QFile file(filePath);
-            if (file.open(QIODevice::WriteOnly | QIODevice::Append | QIODevice::Text))
-            {
-                QTextStream out(&file);
-                out.setCodec("UTF-8");
-                out << QString::fromUtf8(oss.str().c_str()) << endl;
-            }
-        }
+        case MegaApi::LOG_LEVEL_FATAL: logger->critical(message); break;
+        case MegaApi::LOG_LEVEL_ERROR: logger->error(message); break;
+        case MegaApi::LOG_LEVEL_WARNING: logger->warn(message); break;
+        case MegaApi::LOG_LEVEL_INFO: logger->info(message); break;
+        case MegaApi::LOG_LEVEL_DEBUG: logger->debug(message); break;
+        case MegaApi::LOG_LEVEL_MAX: logger->trace(message); break;
     }
 }
 

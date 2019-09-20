@@ -7,6 +7,8 @@
 
 #include "megaapi.h"
 
+#include <spdlog/spdlog.h>
+
 class MegaSyncLogger : public QObject, public mega::MegaLogger
 {
     Q_OBJECT
@@ -14,6 +16,7 @@ class MegaSyncLogger : public QObject, public mega::MegaLogger
 public:
     MegaSyncLogger(QObject *parent = NULL);
     ~MegaSyncLogger();
+    void init(const QString& dataPath);
     virtual void log(const char *time, int loglevel, const char *source, const char *message);
     void sendLogsToStdout(bool enable);
     void sendLogsToFile(bool enable);
@@ -35,6 +38,8 @@ protected:
     bool connected;
     bool logToStdout;
     bool logToFile;
+    std::atomic<bool> running{true};
+    std::shared_ptr<spdlog::logger> logger;
 };
 
 #endif // MEGASYNCLOGGER_H
