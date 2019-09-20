@@ -2471,6 +2471,24 @@ background-color: #FFFFFF;
          </property>
          <item>
           <widget class="QFrame" name="wBottomFrame">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>400</width>
+             <height>58</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>400</width>
+             <height>88</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">#wBottomFrame
 {
