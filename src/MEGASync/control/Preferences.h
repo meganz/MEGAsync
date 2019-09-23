@@ -100,6 +100,9 @@ public:
     long long getOverStorageDismissExecution();
     void setOverStorageDismissExecution(long long timestamp);
 
+    int getStorageState();
+    void setStorageState(int value);
+
     void setTemporalBandwidthValid(bool value);
     long long temporalBandwidth();
     void setTemporalBandwidth(long long value);
@@ -466,6 +469,7 @@ protected:
     static const QString almostOverStorageNotificationExecutionKey;
     static const QString almostOverStorageDismissExecutionKey;
     static const QString overStorageDismissExecutionKey;
+    static const QString storageStateQKey;
     static const QString accountTypeKey;
     static const QString proExpirityTimeKey;
     static const QString setupWizardCompletedKey;

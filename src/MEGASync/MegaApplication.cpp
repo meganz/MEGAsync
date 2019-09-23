@@ -873,8 +873,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     completedTabActive = false;
     nodescurrent = false;
     almostOQ = false;
-    storageState = MegaApi::STORAGE_STATE_GREEN;
-    appliedStorageState = MegaApi::STORAGE_STATE_GREEN;;
+    storageState = MegaApi::STORAGE_STATE_UNKNOWN;
+    appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;;
 
     for (unsigned i = 3; i--; )
     {
@@ -1438,8 +1438,8 @@ void MegaApplication::start()
     nodescurrent = false;
     infoOverQuota = false;
     almostOQ = false;
-    storageState = MegaApi::STORAGE_STATE_GREEN;
-    appliedStorageState = MegaApi::STORAGE_STATE_GREEN;;
+    storageState = MegaApi::STORAGE_STATE_UNKNOWN;
+    appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;;
     bwOverquotaTimestamp = 0;
     receivedStorageSum = 0;
 
@@ -1636,7 +1636,12 @@ void MegaApplication::loggedIn(bool fromWizard)
 
     registerUserActivity();
     pauseTransfers(paused);
-    updateUserStats(fromWizard, true, true, true, USERSTATS_LOGGEDIN);  // loggedIn() is called once on startup if the user is already logged in, or twice when the user supplies username/password to log in.
+
+    int cachedStorageState = preferences->getStorageState();
+
+    // ask for storage on first login (fromWizard), or when cached value is invalid
+    updateUserStats(fromWizard || cachedStorageState == MegaApi::STORAGE_STATE_UNKNOWN, true, true, true, fromWizard ? USERSTATS_LOGGEDIN : USERSTATS_STORAGECACHEUNKNOWN);
+
     megaApi->getPricing();
     megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
     megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
@@ -1763,6 +1768,12 @@ void MegaApplication::loggedIn(bool fromWizard)
 
 
     onGlobalSyncStateChanged(megaApi);
+
+    if (cachedStorageState != MegaApi::STORAGE_STATE_UNKNOWN)
+    {
+        applyStorageState(cachedStorageState, true);
+    }
+
 }
 
 void MegaApplication::startSyncs()
@@ -1817,7 +1828,7 @@ void MegaApplication::startSyncs()
     }
 }
 
-void MegaApplication::applyStorageState(int state)
+void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
 {
     if (state == MegaApi::STORAGE_STATE_CHANGE)
     {
@@ -1829,11 +1840,16 @@ void MegaApplication::applyStorageState(int state)
     }
 
     storageState = state;
+    int previousCachedStoragestate = preferences->getStorageState();
+    preferences->setStorageState(storageState);
     if (preferences->logged())
     {
         if (storageState != appliedStorageState)
         {
-            updateUserStats(true, false, true, true, USERSTATS_TRAFFICLIGHT);
+            if (!doNotAskForUserStats && previousCachedStoragestate!= MegaApi::STORAGE_STATE_UNKNOWN)
+            {
+                updateUserStats(true, false, true, true, USERSTATS_TRAFFICLIGHT);
+            }
             if (state == MegaApi::STORAGE_STATE_RED)
             {
                 almostOQ = false;
@@ -3381,7 +3397,6 @@ void MegaApplication::setupWizardFinished(int result)
 
     loggedIn(true);
     startSyncs();
-    applyStorageState(storageState);
 }
 
 void MegaApplication::overquotaDialogFinished(int)
@@ -6869,6 +6884,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
             if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
             {
+                megaApi->sendEvent(99525, "Red light does not match used storage");
                 preferences->setUsedStorage(preferences->totalStorage());
             }
             else

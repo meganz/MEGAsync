@@ -394,7 +394,7 @@ void NodeSelector::on_bNewFolder_clicked()
 
     QString text = id->textValue();
     text = text.trimmed();
-    if (!text.isEmpty())
+    if (!text.isEmpty() && !text.contains(QRegExp(QString::fromUtf8("[\/\\:]"), Qt::CaseInsensitive, QRegExp::Wildcard)))
     {
         MegaNode *parent = megaApi->getNodeByHandle(selectedFolder);
         if (!parent)
@@ -438,7 +438,8 @@ void NodeSelector::on_bNewFolder_clicked()
     }
     else
     {
-        QMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"), tr("Please enter a valid folder name"));
+        QMessageBox::critical(NULL, QString::fromUtf8("MEGAsync"), tr("Invalid folder name.\n"
+                                                                      "Please, ensure that you don't use characters like '\\' '/' or ':' in your folder names."));
         if (!id)
         {
             return;
