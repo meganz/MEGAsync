@@ -102,6 +102,9 @@ QPushButton
        <height>564</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <property name="spacing">
        <number>0</number>
@@ -2582,6 +2585,12 @@ background-color: #F4F6F8;
    <class>TransfersSummaryWidget</class>
    <extends>QWidget</extends>
    <header location="global">TransfersSummaryWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AlertFilterType</class>
+   <extends>QWidget</extends>
+   <header location="global">AlertFilterType.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
