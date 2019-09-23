@@ -140,6 +140,11 @@ string getDistroVersion()
     // signal handler
     void signal_handler(int sig, siginfo_t *info, void *secret)
     {
+        if (auto logger = spdlog::get("async_file_logger"))
+        {
+            logger->error("Signal received: {}", sig);
+        }
+
         int dump_file = open(dump_path.c_str(),  O_WRONLY | O_CREAT, 0400);
         if (dump_file<0)
         {
