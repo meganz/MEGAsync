@@ -751,6 +751,10 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
     logger = new MegaSyncLogger(this, dataPath, desktopPath, logToStdout);
 
+#if defined(LOG_TO_FILE)
+    logger->setDebug(true);
+#endif
+
     MegaApi::addLoggerObject(logger);
 
     updateAvailable = false;
