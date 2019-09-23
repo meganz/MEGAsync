@@ -253,58 +253,33 @@ background-color: #F4F6F8;
                   <bool>false</bool>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">#bUpgrade[overquota=true]
+                  <string notr="true">#bUpgrade
 {
- background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #999999, stop: 1 #aaaaaa);
- border-radius: 3px;
- border: 1px solid rgba(0, 0, 0, 45%);
- padding: 7px 12px 7px 6px;
- font-family: &quot;Lato&quot;;
- font-size: 13px;
- color: #ffffff;
-}
-#bUpgrade::hover[overquota=true]
-{
-  border: 1px solid rgba(0, 0, 0, 60%);
-  border-radius: 3px;
-  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #999999, stop: 1 #aaaaaa);
-}
-
-#bUpgrade::pressed[overquota=true]
-{
-  border: 1px solid rgba(0, 0, 0, 60%);
-  border-radius: 3px;
-  background-color: rgba(0, 0, 0, 50%);
-}
-
-#bUpgrade
-{
- background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #ffffff, stop: 1 #fafafa);
- border-radius: 3px;
- border: 1px solid rgba(0, 0, 0, 15%);
- padding: 7px 12px 7px 12px;
- font-family: &quot;Lato&quot;;
- font-size: 13px;
- color: #777777;
+font-family: Lato;
+font-size: 14px;
+border: 1px solid rgba(0, 0, 0, 5%);
+border-radius: 3px;
+color: #333333;
+padding: 7px 12px 7px 12px;
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+stop: 0 #ffffff, stop: 1 #fafafa);
 }
 
 #bUpgrade::hover
 {
-  border: 1px solid rgba(0, 0, 0, 20%);
-  border-radius: 3px;
-  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #ffffff, stop: 1 #fafafa);
-
+border: 1px solid rgba(0, 0, 0, 10%);
 }
 
 #bUpgrade::pressed
 {
-  background-color: rgba(0, 0, 0, 10%);
-  border: 1px solid rgba(0, 0, 0, 20%);
-  border-radius: 3px;
+font-family: Lato;
+font-size: 14px;
+border: 1px solid rgba(0, 0, 0, 5%);
+border-radius: 3px;
+color: #333333;
+padding: 7px 12px 7px 12px;
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+stop: 0 #ffffff, stop: 1 #fafafa);
 }</string>
                  </property>
                  <property name="text">
