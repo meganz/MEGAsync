@@ -6,6 +6,8 @@
 #include <sstream>
 #include "MegaApplication.h"
 
+#include <spdlog/spdlog.h>
+
 using namespace mega;
 using namespace std;
 
@@ -140,7 +142,11 @@ string getDistroVersion()
     // signal handler
     void signal_handler(int sig, siginfo_t *info, void *secret)
     {
-        if (auto logger = spdlog::get("async_file_logger"))
+        if (auto logger = spdlog::get("logger"))
+        {
+            logger->error("Signal received: {}", sig);
+        }
+        if (auto logger = spdlog::get("debug_logger"))
         {
             logger->error("Signal received: {}", sig);
         }

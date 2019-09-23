@@ -11,6 +11,7 @@
 
 #include <spdlog/spdlog.h>
 #include <spdlog/sinks/rotating_file_sink.h>
+#include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/sinks/stdout_sinks.h>
 #include <spdlog/async.h>
 
@@ -18,80 +19,86 @@
 #define ENABLE_MEGASYNC_LOGS QString::fromUtf8("MEGA_ENABLE_LOGS")
 #define MAX_MESSAGE_SIZE 4096
 
+namespace {
+
+const char* PATTERN = "[%Y-%m-%dT%H:%M:%S.%e] [%l] [%t] %v";
+const char* LOG_FILENAME = "/MEGAsync.log";
+
+}
+
 using namespace mega;
 using namespace std;
 
-MegaSyncLogger::MegaSyncLogger(QObject *parent) : QObject(parent), MegaLogger()
+MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const QString& desktopPath, bool logToStdout)
+: QObject{parent}, mDesktopPath{desktopPath}
 {
-    xmlWriter = NULL;
-    connected = true;
-    logToStdout = false;
-    logToFile = false;
-    client = NULL;
-    megaServer = NULL;
-
 #ifdef LOG_TO_LOGGER
     QLocalServer::removeServer(ENABLE_MEGASYNC_LOGS);
-    client = new QLocalSocket();
-    megaServer = new QLocalServer(this);
+    mClient = new QLocalSocket();
+    mMegaServer = new QLocalServer(this);
 
-    connect(megaServer,SIGNAL(newConnection()),this,SLOT(clientConnected()));
+    connect(mMegaServer,SIGNAL(newConnection()),this,SLOT(clientConnected()));
     connect(this, SIGNAL(sendLog(QString,int,QString)),
             this, SLOT(onLogAvailable(QString,int,QString)), Qt::QueuedConnection);
-    connect(client, SIGNAL(disconnected()), this, SLOT(disconnected()));
-    connect(client, SIGNAL(error(QLocalSocket::LocalSocketError)), SLOT(disconnected()));
+    connect(mClient, SIGNAL(disconnected()), this, SLOT(disconnected()));
+    connect(mClient, SIGNAL(error(QLocalSocket::LocalSocketError)), SLOT(disconnected()));
 
-    megaServer->listen(ENABLE_MEGASYNC_LOGS);
-    client->connectToServer(MEGA_LOGGER);
+    mMegaServer->listen(ENABLE_MEGASYNC_LOGS);
+    mClient->connectToServer(MEGA_LOGGER);
 #endif
-}
 
-MegaSyncLogger::~MegaSyncLogger()
-{
-    running = false;
-    spdlog::shutdown();
-
-    disconnected();
-
-    if (megaServer)
-    {
-        delete megaServer;
-    }
-}
-
-void MegaSyncLogger::init(const QString& dataPath)
-{
     MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
 
     spdlog::init_thread_pool(8192, 1);
     spdlog::flush_every(std::chrono::seconds{3});
     spdlog::flush_on(spdlog::level::err);
 
-    auto rotating_sink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(dataPath.toStdString() + "/MEGAsync.log", 1024*1024*10, 10);
-    std::vector<spdlog::sink_ptr> sinks{rotating_sink};
+    constexpr auto maxFileSizeMB = 10;
+    constexpr auto maxFileCount = 10;
+    auto rotatingFileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
+                dataPath.toStdString() + LOG_FILENAME, 1024 * 1024 * maxFileSizeMB, maxFileCount);
+    std::vector<spdlog::sink_ptr> sinks{rotatingFileSink};
     if (logToStdout)
     {
         sinks.push_back(std::make_shared<spdlog::sinks::stdout_sink_mt>());
     }
-    logger = std::make_shared<spdlog::async_logger>("async_file_logger",
+    mLogger = std::make_shared<spdlog::async_logger>("logger",
                                                     sinks.begin(), sinks.end(),
                                                     spdlog::thread_pool(),
                                                     spdlog::async_overflow_policy::overrun_oldest);
-    logger->set_pattern("[%Y-%m-%dT%H:%M:%S.%u] [%l] [%t] %v");
-    logger->set_level(spdlog::level::trace);
+    mLogger->set_pattern(PATTERN, spdlog::pattern_time_type::utc);
+    mLogger->set_level(spdlog::level::trace);
 
-    spdlog::register_logger(logger);
+    spdlog::register_logger(mLogger);
+}
+
+MegaSyncLogger::~MegaSyncLogger()
+{
+    mRunning = false;
+    mLogger->flush();
+    if (mDebugLogger)
+    {
+        mDebugLogger->flush();
+    }
+    spdlog::shutdown();
+
+    disconnected();
+
+    if (mMegaServer)
+    {
+        delete mMegaServer;
+    }
 }
 
 void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *message)
 {
-    if (!running)
+    if (!mRunning)
     {
         return;
     }
 
 #ifdef LOG_TO_LOGGER
-    if (connected) // TODO: Should be atomic
+    if (mConnected)
     {
         QString m = QString::fromUtf8(message);
         if (m.size() > MAX_MESSAGE_SIZE)
@@ -111,62 +118,88 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
 
     switch (loglevel)
     {
-        case MegaApi::LOG_LEVEL_FATAL: logger->critical(message); break;
-        case MegaApi::LOG_LEVEL_ERROR: logger->error(message); break;
-        case MegaApi::LOG_LEVEL_WARNING: logger->warn(message); break;
-        case MegaApi::LOG_LEVEL_INFO: logger->info(message); break;
-        case MegaApi::LOG_LEVEL_DEBUG: logger->debug(message); break;
-        case MegaApi::LOG_LEVEL_MAX: logger->trace(message); break;
+        case MegaApi::LOG_LEVEL_FATAL: mLogger->critical(message); break;
+        case MegaApi::LOG_LEVEL_ERROR: mLogger->error(message); break;
+        case MegaApi::LOG_LEVEL_WARNING: mLogger->warn(message); break;
+        case MegaApi::LOG_LEVEL_INFO: mLogger->info(message); break;
+        case MegaApi::LOG_LEVEL_DEBUG: mLogger->debug(message); break;
+        case MegaApi::LOG_LEVEL_MAX: mLogger->trace(message); break;
+    }
+
+    if (mDebug)
+    {
+        switch (loglevel)
+        {
+            case MegaApi::LOG_LEVEL_FATAL: mDebugLogger->critical(message); break;
+            case MegaApi::LOG_LEVEL_ERROR: mDebugLogger->error(message); break;
+            case MegaApi::LOG_LEVEL_WARNING: mDebugLogger->warn(message); break;
+            case MegaApi::LOG_LEVEL_INFO: mDebugLogger->info(message); break;
+            case MegaApi::LOG_LEVEL_DEBUG: mDebugLogger->debug(message); break;
+            case MegaApi::LOG_LEVEL_MAX: mDebugLogger->trace(message); break;
+        }
     }
 }
 
-void MegaSyncLogger::sendLogsToStdout(bool enable)
+void MegaSyncLogger::setDebug(const bool enable)
 {
-    this->logToStdout = enable;
+    mDebug = enable;
+    if (enable)
+    {
+        if (!mDebugLogger)
+        {
+            auto fileSink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(mDesktopPath.toStdString() + LOG_FILENAME);
+            std::vector<spdlog::sink_ptr> debugSinks{fileSink};
+            mDebugLogger = std::make_shared<spdlog::async_logger>("debug_logger",
+                                                                 debugSinks.begin(), debugSinks.end(),
+                                                                 spdlog::thread_pool(),
+                                                                 spdlog::async_overflow_policy::overrun_oldest);
+            mDebugLogger->set_pattern(PATTERN, spdlog::pattern_time_type::utc);
+            mDebugLogger->set_level(spdlog::level::trace);
+
+            spdlog::register_logger(mDebugLogger);
+        }
+    }
+    else
+    {
+        if (mDebugLogger)
+        {
+            mDebugLogger->flush();
+        }
+    }
 }
 
-void MegaSyncLogger::sendLogsToFile(bool enable)
+bool MegaSyncLogger::isDebug() const
 {
-    this->logToFile = enable;
-}
-
-bool MegaSyncLogger::isLogToStdoutEnabled()
-{
-    return logToStdout;
-}
-
-bool MegaSyncLogger::isLogToFileEnabled()
-{
-    return logToFile;
+    return mDebug.load();
 }
 
 void MegaSyncLogger::onLogAvailable(QString time, int loglevel, QString message)
 {
-    if (!connected)
+    if (!mConnected)
     {
         return;
     }
 
-    if (!xmlWriter)
+    if (!mXmlWriter)
     {
-        xmlWriter = new QXmlStreamWriter(client);
-        xmlWriter->writeStartDocument();
-        xmlWriter->writeStartElement(QString::fromUtf8("MEGA"));
+        mXmlWriter = new QXmlStreamWriter(mClient);
+        mXmlWriter->writeStartDocument();
+        mXmlWriter->writeStartElement(QString::fromUtf8("MEGA"));
 
-        xmlWriter->writeStartElement(QString::fromUtf8("log"));
-        xmlWriter->writeAttribute(QString::fromUtf8("timestamp"), time);
-        xmlWriter->writeAttribute(QString::fromUtf8("type"), QString::fromUtf8("info"));
-        xmlWriter->writeAttribute(QString::fromUtf8("content"), QString::fromUtf8("LOG START"));
-        xmlWriter->writeEndElement();
+        mXmlWriter->writeStartElement(QString::fromUtf8("log"));
+        mXmlWriter->writeAttribute(QString::fromUtf8("timestamp"), time);
+        mXmlWriter->writeAttribute(QString::fromUtf8("type"), QString::fromUtf8("info"));
+        mXmlWriter->writeAttribute(QString::fromUtf8("content"), QString::fromUtf8("LOG START"));
+        mXmlWriter->writeEndElement();
     }
 
-    if (xmlWriter->hasError())
+    if (mXmlWriter->hasError())
     {
-        connected = false;
-        delete xmlWriter;
-        xmlWriter = NULL;
-        client->deleteLater();
-        client = NULL;
+        mConnected = false;
+        delete mXmlWriter;
+        mXmlWriter = NULL;
+        mClient->deleteLater();
+        mClient = NULL;
         return;
     }
 
@@ -196,44 +229,44 @@ void MegaSyncLogger::onLogAvailable(QString time, int loglevel, QString message)
             break;
     }
 
-    xmlWriter->writeStartElement(QString::fromUtf8("log"));
-    xmlWriter->writeAttribute(QString::fromUtf8("timestamp"), time);
-    xmlWriter->writeAttribute(QString::fromUtf8("type"),level);
-    xmlWriter->writeAttribute(QString::fromUtf8("content"), message);
-    xmlWriter->writeEndElement();
-    client->flush();
+    mXmlWriter->writeStartElement(QString::fromUtf8("log"));
+    mXmlWriter->writeAttribute(QString::fromUtf8("timestamp"), time);
+    mXmlWriter->writeAttribute(QString::fromUtf8("type"),level);
+    mXmlWriter->writeAttribute(QString::fromUtf8("content"), message);
+    mXmlWriter->writeEndElement();
+    mClient->flush();
 }
 
 void MegaSyncLogger::clientConnected()
 {
     disconnected();
 
-    while (megaServer->hasPendingConnections())
+    while (mMegaServer->hasPendingConnections())
     {
-        QLocalSocket *socket = megaServer->nextPendingConnection();
+        QLocalSocket *socket = mMegaServer->nextPendingConnection();
         socket->disconnectFromServer();
         socket->deleteLater();
     }
 
-    client = new QLocalSocket();
-    connect(client, SIGNAL(disconnected()), this, SLOT(disconnected()));
-    connect(client, SIGNAL(error(QLocalSocket::LocalSocketError)), SLOT(disconnected()));
-    client->connectToServer(MEGA_LOGGER);
-    connected = true;
+    mClient = new QLocalSocket();
+    connect(mClient, SIGNAL(disconnected()), this, SLOT(disconnected()));
+    connect(mClient, SIGNAL(error(QLocalSocket::LocalSocketError)), SLOT(disconnected()));
+    mClient->connectToServer(MEGA_LOGGER);
+    mConnected = true;
 }
 
 void MegaSyncLogger::disconnected()
 {
-    connected = false;
-    if (xmlWriter)
+    mConnected = false;
+    if (mXmlWriter)
     {
-        delete xmlWriter;
-        xmlWriter = NULL;
+        delete mXmlWriter;
+        mXmlWriter = NULL;
     }
 
-    if (client)
+    if (mClient)
     {
-        client->deleteLater();
-        client = NULL;
+        mClient->deleteLater();
+        mClient = NULL;
     }
 }

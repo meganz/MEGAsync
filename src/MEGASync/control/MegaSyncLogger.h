@@ -1,5 +1,4 @@
-#ifndef MEGASYNCLOGGER_H
-#define MEGASYNCLOGGER_H
+#pragma once
 
 #include <QLocalSocket>
 #include <QLocalServer>
@@ -14,14 +13,11 @@ class MegaSyncLogger : public QObject, public mega::MegaLogger
     Q_OBJECT
 
 public:
-    MegaSyncLogger(QObject *parent = NULL);
+    MegaSyncLogger(QObject *parent, const QString& dataPath, const QString& mDesktopPath, bool logToStdout);
     ~MegaSyncLogger();
-    void init(const QString& dataPath);
-    virtual void log(const char *time, int loglevel, const char *source, const char *message);
-    void sendLogsToStdout(bool enable);
-    void sendLogsToFile(bool enable);
-    bool isLogToStdoutEnabled();
-    bool isLogToFileEnabled();
+    void log(const char *time, int loglevel, const char *source, const char *message) override;
+    void setDebug(bool enable);
+    bool isDebug() const;
 
 signals:
     void sendLog(QString time, int loglevel, QString message);
@@ -32,14 +28,13 @@ public slots:
     void disconnected();
 
 protected:
-    QLocalSocket* client;
-    QLocalServer* megaServer;
-    QXmlStreamWriter *xmlWriter;
-    bool connected;
-    bool logToStdout;
-    bool logToFile;
-    std::atomic<bool> running{true};
-    std::shared_ptr<spdlog::logger> logger;
+    QString mDesktopPath;
+    QLocalSocket* mClient = nullptr;
+    QLocalServer* mMegaServer = nullptr;
+    QXmlStreamWriter* mXmlWriter = nullptr;
+    std::atomic<bool> mConnected{true};
+    std::atomic<bool> mDebug{false};
+    std::atomic<bool> mRunning{true};
+    std::shared_ptr<spdlog::logger> mLogger;
+    std::shared_ptr<spdlog::logger> mDebugLogger;
 };
-
-#endif // MEGASYNCLOGGER_H

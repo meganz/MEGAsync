@@ -656,24 +656,11 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     }
 #endif
     appfinished = false;
-    logger = new MegaSyncLogger(this);
 
-    #if defined(LOG_TO_STDOUT) || defined(LOG_TO_FILE) || defined(LOG_TO_LOGGER)
-    #if defined(LOG_TO_STDOUT)
-        logger->sendLogsToStdout(true);
-    #endif
+    bool logToStdout = false;
 
-    #if defined(LOG_TO_FILE)
-        logger->sendLogsToFile(true);
-    #endif
-
-    #ifdef DEBUG
-        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
-    #else
-        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_DEBUG);
-    #endif
-#else
-    MegaApi::setLogLevel(MegaApi::LOG_LEVEL_WARNING);
+#if defined(LOG_TO_STDOUT)
+    logToStdout = true;
 #endif
 
 #ifdef Q_OS_LINUX
@@ -681,8 +668,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     {
          if (!strcmp("--debug", argv[1]))
          {
-             logger->sendLogsToStdout(true);
-             MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
+             logToStdout = true;
          }
          else if (!strcmp("--version", argv[1]))
          {
@@ -691,8 +677,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
          }
     }
 #endif
-
-    MegaApi::addLoggerObject(logger);
 
 #ifdef _WIN32
     connect(this, SIGNAL(screenAdded(QScreen *)), this, SLOT(changeDisplay(QScreen *)));
@@ -750,7 +734,24 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     }
     QDir::setCurrent(dataPath);
 
-    logger->init(dataPath);
+    QString desktopPath;
+#if QT_VERSION < 0x050000
+    desktopPath = QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
+#else
+    QStringList desktopPaths = QStandardPaths::standardLocations(QStandardPaths::DesktopLocation);
+    if (desktopPaths.size())
+    {
+        desktopPath = desktopPaths.at(0);
+    }
+    else
+    {
+        desktopPath = Utilities::getDefaultBasePath();
+    }
+#endif
+
+    logger = new MegaSyncLogger(this, dataPath, desktopPath, logToStdout);
+
+    MegaApi::addLoggerObject(logger);
 
     updateAvailable = false;
     networkConnectivity = true;
@@ -4327,7 +4328,6 @@ void MegaApplication::showTrayMenu(QPoint *point)
     }
 }
 
-// TODO: This should go away because we'll always have file logging
 void MegaApplication::toggleLogging()
 {
     if (appfinished)
@@ -4335,19 +4335,16 @@ void MegaApplication::toggleLogging()
         return;
     }
 
-    if (logger->isLogToFileEnabled() || logger->isLogToStdoutEnabled())
+    if (logger->isDebug())
     {
         Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
-        logger->sendLogsToFile(false);
-        logger->sendLogsToStdout(false);
-        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_WARNING);
+        logger->setDebug(false);
         showInfoMessage(tr("DEBUG mode disabled"));
     }
     else
     {
         Preferences::HTTPS_ORIGIN_CHECK_ENABLED = false;
-        logger->sendLogsToFile(true);
-        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
+        logger->setDebug(true);
         showInfoMessage(tr("DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)"));
         if (megaApi)
         {
