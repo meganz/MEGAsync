@@ -5009,6 +5009,13 @@ void MegaApplication::processDownloads()
         if (test->open())
         {
             delete test;
+
+            HTTPServer *webCom = qobject_cast<HTTPServer *>(sender());
+            if (webCom)
+            {
+                showInfoDialog();
+            }
+
             processDownloadQueue(defaultPath);
             return;
         }
@@ -5036,6 +5043,13 @@ void MegaApplication::processDownloads()
         {
             settingsDialog->loadSettings();
         }
+
+        HTTPServer *webCom = qobject_cast<HTTPServer *>(sender());
+        if (webCom)
+        {
+            showInfoDialog();
+        }
+
         processDownloadQueue(path);
     }
     else
