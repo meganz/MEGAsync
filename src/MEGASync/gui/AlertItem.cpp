@@ -60,6 +60,15 @@ void AlertItem::setAlertType(int type)
             case MegaUserAlert::TYPE_NEWSHAREDNODES:
             case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
             {
+                if (type == MegaUserAlert::TYPE_DELETEDSHARE)
+                {
+                    ui->bSharedFolder->setIcon(QIcon(QString::fromUtf8(":/images/grey_folder.png")).pixmap(24.0, 24.0));
+                }
+                else
+                {
+                    ui->bSharedFolder->setIcon(QIcon(QString::fromUtf8(":/images/color_folder.png")).pixmap(24.0, 24.0));
+                }
+
                 ui->bNotificationIcon->setMinimumSize(QSize(10, 8));
                 ui->bNotificationIcon->setMaximumSize(QSize(10, 8));
                 ui->bNotificationIcon->setIconSize(QSize(10, 8));

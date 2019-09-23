@@ -504,5 +504,7 @@
         <file>images/success@2x.png</file>
         <file>images/ico_add_sync_folder.png</file>
         <file>images/ico_add_sync_folder@2x.png</file>
+        <file>images/grey_folder.png</file>
+        <file>images/grey_folder@2x.png</file>
     </qresource>
 </RCC>
