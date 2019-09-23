@@ -1958,7 +1958,7 @@ background-color: #FFFFFF;
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QWidget" name="wSortNotifications" native="true">
+                       <widget class="AlertFilterType" name="wSortNotifications" native="true">
                         <property name="minimumSize">
                          <size>
                           <width>130</width>
@@ -1987,99 +1987,6 @@ background-color: #FFFFFF;
                          <property name="bottomMargin">
                           <number>0</number>
                          </property>
-                         <item>
-                          <widget class="QLabel" name="lNotificationColor">
-                           <property name="minimumSize">
-                            <size>
-                             <width>10</width>
-                             <height>10</height>
-                            </size>
-                           </property>
-                           <property name="maximumSize">
-                            <size>
-                             <width>6</width>
-                             <height>6</height>
-                            </size>
-                           </property>
-                           <property name="text">
-                            <string/>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QToolButton" name="bActualFilter">
-                           <property name="minimumSize">
-                            <size>
-                             <width>0</width>
-                             <height>21</height>
-                            </size>
-                           </property>
-                           <property name="maximumSize">
-                            <size>
-                             <width>16777215</width>
-                             <height>21</height>
-                            </size>
-                           </property>
-                           <property name="styleSheet">
-                            <string notr="true">#bActualFilter
-{
-	color: #666666;
-	font-family: Lato;
-	font-size: 14px;
-	text-align: center;
-     border: none;
-}</string>
-                           </property>
-                           <property name="text">
-                            <string>All notifications</string>
-                           </property>
-                           <property name="iconSize">
-                            <size>
-                             <width>0</width>
-                             <height>0</height>
-                            </size>
-                           </property>
-                           <property name="toolButtonStyle">
-                            <enum>Qt::ToolButtonTextOnly</enum>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QPushButton" name="bActualFilterDropDown">
-                           <property name="minimumSize">
-                            <size>
-                             <width>16</width>
-                             <height>16</height>
-                            </size>
-                           </property>
-                           <property name="maximumSize">
-                            <size>
-                             <width>16</width>
-                             <height>16</height>
-                            </size>
-                           </property>
-                           <property name="styleSheet">
-                            <string notr="true">#bActualFilterDropDown
-{
-     border: none;
-}</string>
-                           </property>
-                           <property name="text">
-                            <string/>
-                           </property>
-                           <property name="icon">
-                            <iconset>
-                             <normalon>:/images/arrow-to-left.png</normalon>
-                            </iconset>
-                           </property>
-                           <property name="iconSize">
-                            <size>
-                             <width>8</width>
-                             <height>5</height>
-                            </size>
-                           </property>
-                          </widget>
-                         </item>
                         </layout>
                        </widget>
                       </item>
@@ -2674,6 +2581,12 @@ background-color: #F4F6F8;
    <class>TransfersSummaryWidget</class>
    <extends>QWidget</extends>
    <header location="global">TransfersSummaryWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AlertFilterType</class>
+   <extends>QWidget</extends>
+   <header location="global">AlertFilterType.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -122,7 +122,6 @@ private slots:
     void on_tNotifications_clicked();
 
     void on_bActualFilter_clicked();
-    void on_bActualFilterDropDown_clicked();
     void applyFilterOption(int opt);
     void on_bNotificationsSettings_clicked();
 

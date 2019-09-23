@@ -98,6 +98,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     connect(ui->bTransferManager, SIGNAL(upAreaHovered(QMouseEvent *)), this, SLOT(upAreaHovered(QMouseEvent*)));
     connect(ui->bTransferManager, SIGNAL(dlAreaHovered(QMouseEvent *)), this, SLOT(dlAreaHovered(QMouseEvent *)));
 
+    connect(ui->wSortNotifications, SIGNAL(clicked()), this, SLOT(on_bActualFilter_clicked()));
+
+
     //Set window properties
 #ifdef Q_OS_LINUX
     doNotActAsPopup = false;
@@ -152,8 +155,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     notificationsReady = false;
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
-    ui->bActualFilter->setText(tr("All notifications"));
-    ui->lNotificationColor->hide();
+    ui->wSortNotifications->setActualFilter(AlertFilterType::ALL_TYPES);
 
     overQuotaState = false;
     storageState = Preferences::STATE_BELOW_OVER_STORAGE;
@@ -973,8 +975,7 @@ void InfoDialog::reset()
     uploadActiveTransferTag = downloadActiveTransferTag = -1;
     notificationsReady = false;
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
-    ui->bActualFilter->setText(tr("All notifications"));
-    ui->lNotificationColor->hide();
+    ui->wSortNotifications->setActualFilter(AlertFilterType::ALL_TYPES);
 
     setUnseenNotifications(0);
     if (filterMenu)
@@ -1418,11 +1419,6 @@ void InfoDialog::on_bActualFilter_clicked()
     filterMenu->show();
 }
 
-void InfoDialog::on_bActualFilterDropDown_clicked()
-{
-    on_bActualFilter_clicked();
-}
-
 void InfoDialog::applyFilterOption(int opt)
 {
     if (filterMenu && filterMenu->isVisible())
@@ -1434,9 +1430,7 @@ void InfoDialog::applyFilterOption(int opt)
     {
         case QFilterAlertsModel::FILTER_CONTACTS:
         {
-            ui->bActualFilter->setText(tr("Contacts"));
-            ui->lNotificationColor->show();
-            ui->lNotificationColor->setPixmap(QIcon(QString::fromUtf8(":/images/contacts.png")).pixmap(6.0, 6.0));
+            ui->wSortNotifications->setActualFilter(AlertFilterType::TYPE_CONTACTS);
 
             if (app->hasNotificationsOfType(QAlertsModel::ALERT_CONTACTS))
             {
@@ -1452,9 +1446,7 @@ void InfoDialog::applyFilterOption(int opt)
         }
         case QFilterAlertsModel::FILTER_SHARES:
         {
-            ui->bActualFilter->setText(tr("Incoming Shares"));
-            ui->lNotificationColor->show();
-            ui->lNotificationColor->setPixmap(QIcon(QString::fromUtf8(":/images/incoming_share.png")).pixmap(6.0, 6.0));
+            ui->wSortNotifications->setActualFilter(AlertFilterType::TYPE_SHARES);
 
             if (app->hasNotificationsOfType(QAlertsModel::ALERT_SHARES))
             {
@@ -1470,9 +1462,7 @@ void InfoDialog::applyFilterOption(int opt)
         }
         case QFilterAlertsModel::FILTER_PAYMENT:
         {
-            ui->bActualFilter->setText(tr("Payment"));
-            ui->lNotificationColor->show();
-            ui->lNotificationColor->setPixmap(QIcon(QString::fromUtf8(":/images/payments.png")).pixmap(6.0, 6.0));
+            ui->wSortNotifications->setActualFilter(AlertFilterType::TYPE_PAYMENTS);
 
             if (app->hasNotificationsOfType(QAlertsModel::ALERT_PAYMENT))
             {
@@ -1487,8 +1477,7 @@ void InfoDialog::applyFilterOption(int opt)
         }
         default:
         {
-            ui->bActualFilter->setText(tr("All notifications"));
-            ui->lNotificationColor->hide();
+            ui->wSortNotifications->setActualFilter(AlertFilterType::ALL_TYPES);
 
             if (app->hasNotifications())
             {
