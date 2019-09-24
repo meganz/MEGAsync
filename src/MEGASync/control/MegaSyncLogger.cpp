@@ -21,8 +21,8 @@
 
 namespace {
 
-const char* PATTERN = "[%Y-%m-%dT%H:%M:%S.%e] [%l] [%t] %v";
-const char* LOG_FILENAME = "/MEGAsync.log";
+const char* MEGA_LOG_PATTERN = "[%Y-%m-%dT%H:%M:%S.%e] [%l] [%t] %v";
+const char* MEGA_LOG_FILENAME = "/MEGAsync.log";
 
 }
 
@@ -56,7 +56,7 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
     constexpr auto maxFileSizeMB = 10;
     constexpr auto maxFileCount = 10;
     auto rotatingFileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-                dataPath.toStdString() + LOG_FILENAME, 1024 * 1024 * maxFileSizeMB, maxFileCount);
+                dataPath.toStdString() + MEGA_LOG_FILENAME, 1024 * 1024 * maxFileSizeMB, maxFileCount);
     std::vector<spdlog::sink_ptr> sinks{rotatingFileSink};
     if (logToStdout)
     {
@@ -66,7 +66,7 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
                                                     sinks.begin(), sinks.end(),
                                                     spdlog::thread_pool(),
                                                     spdlog::async_overflow_policy::overrun_oldest);
-    mLogger->set_pattern(PATTERN, spdlog::pattern_time_type::utc);
+    mLogger->set_pattern(MEGA_LOG_PATTERN, spdlog::pattern_time_type::utc);
     mLogger->set_level(spdlog::level::trace);
 
     spdlog::register_logger(mLogger);
@@ -147,13 +147,13 @@ void MegaSyncLogger::setDebug(const bool enable)
     {
         if (!mDebugLogger)
         {
-            auto fileSink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(mDesktopPath.toStdString() + LOG_FILENAME);
+            auto fileSink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(mDesktopPath.toStdString() + MEGA_LOG_FILENAME);
             std::vector<spdlog::sink_ptr> debugSinks{fileSink};
             mDebugLogger = std::make_shared<spdlog::async_logger>("debug_logger",
                                                                  debugSinks.begin(), debugSinks.end(),
                                                                  spdlog::thread_pool(),
                                                                  spdlog::async_overflow_policy::overrun_oldest);
-            mDebugLogger->set_pattern(PATTERN, spdlog::pattern_time_type::utc);
+            mDebugLogger->set_pattern(MEGA_LOG_PATTERN, spdlog::pattern_time_type::utc);
             mDebugLogger->set_level(spdlog::level::trace);
 
             spdlog::register_logger(mDebugLogger);
@@ -197,9 +197,9 @@ void MegaSyncLogger::onLogAvailable(QString time, int loglevel, QString message)
     {
         mConnected = false;
         delete mXmlWriter;
-        mXmlWriter = NULL;
+        mXmlWriter = nullptr;
         mClient->deleteLater();
-        mClient = NULL;
+        mClient = nullptr;
         return;
     }
 
