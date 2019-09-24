@@ -64,10 +64,9 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
                                                      spdlog::async_overflow_policy::overrun_oldest);
     mLogger->set_pattern(MEGA_LOG_PATTERN, spdlog::pattern_time_type::utc);
     mLogger->set_level(spdlog::level::trace);
+    mLogger->flush_on(spdlog::level::err);
 
     spdlog::register_logger(mLogger);
-    spdlog::flush_every(std::chrono::seconds{3});
-    spdlog::flush_on(spdlog::level::err);
 }
 
 MegaSyncLogger::~MegaSyncLogger()
@@ -153,6 +152,7 @@ void MegaSyncLogger::setDebug(const bool enable)
                                                                   spdlog::async_overflow_policy::overrun_oldest);
             mDebugLogger->set_pattern(MEGA_LOG_PATTERN, spdlog::pattern_time_type::utc);
             mDebugLogger->set_level(spdlog::level::trace);
+            mDebugLogger->flush_on(spdlog::level::err);
 
             spdlog::register_logger(mDebugLogger);
         }
