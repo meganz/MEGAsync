@@ -7021,7 +7021,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         {            
             preferences->setTotalBandwidth(details->getTransferMax());
             preferences->setBandwidthInterval(details->getTemporalBandwidthInterval());
-            preferences->setUsedBandwidth(details->getTemporalBandwidth() + details->getTransferSrvUsed() + details->getTransferOwnUsed());
+            preferences->setUsedBandwidth(details->getTransferUsed());
 
             preferences->setTemporalBandwidthInterval(details->getTemporalBandwidthInterval());
             preferences->setTemporalBandwidth(details->getTemporalBandwidth());
