@@ -21,7 +21,7 @@
 
 namespace {
 
-const char* MEGA_LOG_PATTERN = "[%Y-%m-%dT%H:%M:%S.%e] [%l] [%t] %v";
+const char* MEGA_LOG_PATTERN = "%m-%dT%H:%M:%S.%e %L %t %v";
 const char* MEGA_LOG_FILENAME = "/MEGAsync.log";
 
 }
