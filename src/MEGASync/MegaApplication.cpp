@@ -750,12 +750,11 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 #endif
 
     logger = new MegaSyncLogger(this, dataPath, desktopPath, logToStdout);
-
 #if defined(LOG_TO_FILE)
     logger->setDebug(true);
 #endif
-
     MegaApi::addLoggerObject(logger);
+    MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
 
     updateAvailable = false;
     networkConnectivity = true;

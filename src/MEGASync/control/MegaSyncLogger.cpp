@@ -30,7 +30,9 @@ using namespace mega;
 using namespace std;
 
 MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const QString& desktopPath, bool logToStdout)
-: QObject{parent}, mDesktopPath{desktopPath}
+: QObject{parent}
+, mDesktopPath{desktopPath}
+, mThreadPool{std::make_shared<spdlog::details::thread_pool>(8192, 1, []{})} // Queue size of 8192 and 1 thread in pool
 {
 #ifdef LOG_TO_LOGGER
     QLocalServer::removeServer(ENABLE_MEGASYNC_LOGS);
@@ -47,12 +49,6 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
     mClient->connectToServer(MEGA_LOGGER);
 #endif
 
-    MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
-
-    spdlog::init_thread_pool(8192, 1);
-    spdlog::flush_every(std::chrono::seconds{3});
-    spdlog::flush_on(spdlog::level::err);
-
     constexpr auto maxFileSizeMB = 10;
     constexpr auto maxFileCount = 10;
     auto rotatingFileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
@@ -63,13 +59,15 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
         sinks.push_back(std::make_shared<spdlog::sinks::stdout_sink_mt>());
     }
     mLogger = std::make_shared<spdlog::async_logger>("logger",
-                                                    sinks.begin(), sinks.end(),
-                                                    spdlog::thread_pool(),
-                                                    spdlog::async_overflow_policy::overrun_oldest);
+                                                     sinks.begin(), sinks.end(),
+                                                     mThreadPool,
+                                                     spdlog::async_overflow_policy::overrun_oldest);
     mLogger->set_pattern(MEGA_LOG_PATTERN, spdlog::pattern_time_type::utc);
     mLogger->set_level(spdlog::level::trace);
 
     spdlog::register_logger(mLogger);
+    spdlog::flush_every(std::chrono::seconds{3});
+    spdlog::flush_on(spdlog::level::err);
 }
 
 MegaSyncLogger::~MegaSyncLogger()
@@ -150,9 +148,9 @@ void MegaSyncLogger::setDebug(const bool enable)
             auto fileSink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(mDesktopPath.toStdString() + MEGA_LOG_FILENAME);
             std::vector<spdlog::sink_ptr> debugSinks{fileSink};
             mDebugLogger = std::make_shared<spdlog::async_logger>("debug_logger",
-                                                                 debugSinks.begin(), debugSinks.end(),
-                                                                 spdlog::thread_pool(),
-                                                                 spdlog::async_overflow_policy::overrun_oldest);
+                                                                  debugSinks.begin(), debugSinks.end(),
+                                                                  mThreadPool,
+                                                                  spdlog::async_overflow_policy::overrun_oldest);
             mDebugLogger->set_pattern(MEGA_LOG_PATTERN, spdlog::pattern_time_type::utc);
             mDebugLogger->set_level(spdlog::level::trace);
 
