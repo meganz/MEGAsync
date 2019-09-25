@@ -74,7 +74,6 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
 
 MegaSyncLogger::~MegaSyncLogger()
 {
-    mRunning = false;
     mLogger->flush();
     if (auto logger = std::atomic_load(&mDebugLogger))
     {
@@ -92,11 +91,6 @@ MegaSyncLogger::~MegaSyncLogger()
 
 void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *message)
 {
-    if (!mRunning)
-    {
-        return;
-    }
-
 #ifdef LOG_TO_LOGGER
     if (mConnected)
     {
