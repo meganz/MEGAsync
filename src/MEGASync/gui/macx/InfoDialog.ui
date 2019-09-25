@@ -272,7 +272,7 @@ font-size: 14px;
 border: 1px solid rgba(0, 0, 0, 5%);
 border-radius: 3px;
 color: #333333;
-padding: 7px 12px 7px 12px;
+padding: 6px 12px 6px 12px;
 background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 stop: 0 #ffffff, stop: 1 #fafafa);
 }
@@ -289,7 +289,7 @@ font-size: 14px;
 border: 1px solid rgba(0, 0, 0, 5%);
 border-radius: 3px;
 color: #333333;
-padding: 7px 12px 7px 12px;
+padding: 6px 12px 6px 12px;
 background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 stop: 0 #ffffff, stop: 1 #fafafa);
 }</string>
@@ -863,7 +863,7 @@ margin-right: 4px;
                   </size>
                  </property>
                  <property name="currentIndex">
-                  <number>1</number>
+                  <number>0</number>
                  </property>
                  <widget class="QWidget" name="pTransfersTab">
                   <layout class="QVBoxLayout" name="verticalLayout_10">
@@ -920,7 +920,7 @@ margin-right: 4px;
                         <property name="minimumSize">
                          <size>
                           <width>400</width>
-                          <height>0</height>
+                          <height>68</height>
                          </size>
                         </property>
                         <property name="maximumSize">
@@ -937,13 +937,13 @@ margin-right: 4px;
                           <number>7</number>
                          </property>
                          <property name="leftMargin">
-                          <number>10</number>
+                          <number>14</number>
                          </property>
                          <property name="topMargin">
                           <number>0</number>
                          </property>
                          <property name="rightMargin">
-                          <number>10</number>
+                          <number>14</number>
                          </property>
                          <property name="bottomMargin">
                           <number>0</number>
@@ -958,7 +958,7 @@ margin-right: 4px;
                            </property>
                            <layout class="QHBoxLayout" name="horizontalLayout_4">
                             <property name="spacing">
-                             <number>5</number>
+                             <number>4</number>
                             </property>
                             <property name="leftMargin">
                              <number>0</number>
@@ -1154,10 +1154,10 @@ margin-bottom: 12px;
                            </property>
                            <layout class="QHBoxLayout" name="horizontalLayout_7">
                             <property name="spacing">
-                             <number>5</number>
+                             <number>4</number>
                             </property>
                             <property name="leftMargin">
-                             <number>0</number>
+                             <number>5</number>
                             </property>
                             <property name="topMargin">
                              <number>0</number>
@@ -1183,7 +1183,7 @@ margin-bottom: 12px;
                                </size>
                               </property>
                               <property name="currentIndex">
-                               <number>1</number>
+                               <number>0</number>
                               </property>
                               <widget class="CircularUsageProgressBar" name="wCircularQuota">
                                <property name="minimumSize">
