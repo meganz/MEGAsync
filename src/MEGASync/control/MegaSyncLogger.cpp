@@ -70,10 +70,15 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
     mLogger->flush_on(spdlog::level::err);
 
     spdlog::register_logger(mLogger);
+
+    MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
+    MegaApi::addLoggerObject(this);
 }
 
 MegaSyncLogger::~MegaSyncLogger()
 {
+    MegaApi::removeLoggerObject(this);
+
     mLogger->flush();
     if (auto logger = std::atomic_load(&mDebugLogger))
     {

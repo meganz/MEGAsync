@@ -753,8 +753,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 #if defined(LOG_TO_FILE)
     logger->setDebug(true);
 #endif
-    MegaApi::addLoggerObject(logger);
-    MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
 
     updateAvailable = false;
     networkConnectivity = true;
@@ -897,7 +895,6 @@ MegaApplication::~MegaApplication()
 {
     if (logger)
     {
-        MegaApi::removeLoggerObject(logger);
         delete logger;
     }
 
@@ -2756,7 +2753,6 @@ void MegaApplication::cleanAll()
     trayIcon->deleteLater();
     trayIcon = NULL;
 
-    MegaApi::removeLoggerObject(logger);
     delete logger;
     logger = NULL;
 
