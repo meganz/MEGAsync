@@ -33,7 +33,6 @@ private:
     QLocalServer* mMegaServer = nullptr;
     QXmlStreamWriter* mXmlWriter = nullptr;
     std::atomic<bool> mConnected{true};
-    std::atomic<bool> mDebug{false};
     std::atomic<bool> mRunning{true};
     std::shared_ptr<spdlog::details::thread_pool> mThreadPool;
     std::shared_ptr<spdlog::logger> mLogger;

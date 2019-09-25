@@ -76,9 +76,9 @@ MegaSyncLogger::~MegaSyncLogger()
 {
     mRunning = false;
     mLogger->flush();
-    if (mDebugLogger)
+    if (auto logger = std::atomic_load(&mDebugLogger))
     {
-        mDebugLogger->flush();
+        logger->flush();
     }
     spdlog::shutdown();
 
@@ -126,55 +126,59 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
         case MegaApi::LOG_LEVEL_MAX: mLogger->trace(message); break;
     }
 
-    if (mDebug)
+    if (auto logger = std::atomic_load(&mDebugLogger))
     {
         switch (loglevel)
         {
-            case MegaApi::LOG_LEVEL_FATAL: mDebugLogger->critical(message); break;
-            case MegaApi::LOG_LEVEL_ERROR: mDebugLogger->error(message); break;
-            case MegaApi::LOG_LEVEL_WARNING: mDebugLogger->warn(message); break;
-            case MegaApi::LOG_LEVEL_INFO: mDebugLogger->info(message); break;
-            case MegaApi::LOG_LEVEL_DEBUG: mDebugLogger->debug(message); break;
-            case MegaApi::LOG_LEVEL_MAX: mDebugLogger->trace(message); break;
+            case MegaApi::LOG_LEVEL_FATAL: logger->critical(message); break;
+            case MegaApi::LOG_LEVEL_ERROR: logger->error(message); break;
+            case MegaApi::LOG_LEVEL_WARNING: logger->warn(message); break;
+            case MegaApi::LOG_LEVEL_INFO: logger->info(message); break;
+            case MegaApi::LOG_LEVEL_DEBUG: logger->debug(message); break;
+            case MegaApi::LOG_LEVEL_MAX: logger->trace(message); break;
         }
     }
 }
 
 void MegaSyncLogger::setDebug(const bool enable)
 {
-    mDebug = enable;
     if (enable)
     {
-        if (!mDebugLogger)
+        if (!std::atomic_load(&mDebugLogger))
         {
             const QDir desktopDir{mDesktopPath};
             const auto logPath = desktopDir.filePath(QString::fromUtf8("MEGAsync.log"));
 
             auto fileSink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(logPath.toStdString());
             std::vector<spdlog::sink_ptr> debugSinks{fileSink};
-            mDebugLogger = std::make_shared<spdlog::async_logger>("debug_logger",
-                                                                  debugSinks.begin(), debugSinks.end(),
-                                                                  mThreadPool,
-                                                                  spdlog::async_overflow_policy::overrun_oldest);
-            mDebugLogger->set_pattern(MEGA_LOG_PATTERN, spdlog::pattern_time_type::utc);
-            mDebugLogger->set_level(spdlog::level::trace);
-            mDebugLogger->flush_on(spdlog::level::err);
+            std::shared_ptr<spdlog::logger> logger = std::make_shared<spdlog::async_logger>(
+                                                        "debug_logger",
+                                                         debugSinks.begin(), debugSinks.end(),
+                                                         mThreadPool,
+                                                         spdlog::async_overflow_policy::overrun_oldest);
+            logger->set_pattern(MEGA_LOG_PATTERN, spdlog::pattern_time_type::utc);
+            logger->set_level(spdlog::level::trace);
+            logger->flush_on(spdlog::level::err);
 
-            spdlog::register_logger(mDebugLogger);
+            spdlog::register_logger(logger);
+            std::atomic_store(&mDebugLogger, logger);
         }
     }
     else
     {
-        if (mDebugLogger)
+        if (auto logger = std::atomic_load(&mDebugLogger))
         {
-            mDebugLogger->flush();
+            logger->flush();
+
+            spdlog::drop(logger->name());
+            std::atomic_store(&mDebugLogger, std::shared_ptr<spdlog::logger>{});
         }
     }
 }
 
 bool MegaSyncLogger::isDebug() const
 {
-    return mDebug.load();
+    return std::atomic_load(&mDebugLogger) != nullptr;
 }
 
 void MegaSyncLogger::onLogAvailable(QString time, int loglevel, QString message)
