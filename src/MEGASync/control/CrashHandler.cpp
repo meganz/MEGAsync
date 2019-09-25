@@ -150,6 +150,7 @@ string getDistroVersion()
         {
             logger->error("Signal received: {}", sig);
         }
+        spdlog::shutdown();
 
         int dump_file = open(dump_path.c_str(),  O_WRONLY | O_CREAT, 0400);
         if (dump_file<0)
