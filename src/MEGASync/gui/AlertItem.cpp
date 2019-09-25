@@ -13,7 +13,7 @@ AlertItem::AlertItem(QWidget *parent) :
     megaApi = ((MegaApplication *)qApp)->getMegaApi();
 
     ui->sIconWidget->hide();
-    ui->bNotificationIcon->hide();
+    ui->wNotificationIcon->hide();
 }
 
 AlertItem::~AlertItem()
@@ -32,7 +32,7 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
 
 void AlertItem::setAlertType(int type)
 {
-    ui->bNotificationIcon->hide();
+    ui->wNotificationIcon->hide();
 
     QString notificationTitle;
     QString notificationColor;
@@ -73,7 +73,7 @@ void AlertItem::setAlertType(int type)
                 ui->bNotificationIcon->setMaximumSize(QSize(10, 8));
                 ui->bNotificationIcon->setIconSize(QSize(10, 8));
                 ui->bNotificationIcon->setIcon(QIcon(QString::fromAscii("://images/share_arrow.png")));
-                ui->bNotificationIcon->show();
+                ui->wNotificationIcon->show();
                 notificationTitle = tr("Incoming Shares").toUpper();
                 notificationColor = QString::fromUtf8("#F2C249");
                 break;
@@ -101,7 +101,7 @@ void AlertItem::setAlertType(int type)
                 ui->bNotificationIcon->setMaximumSize(QSize(16, 16));
                 ui->bNotificationIcon->setIconSize(QSize(16, 16));
                 ui->bNotificationIcon->setIcon(QIcon(QString::fromAscii("://images/mega_notifications.png")));
-                ui->bNotificationIcon->show();
+                ui->wNotificationIcon->show();
             }
                 break;
     }
@@ -429,8 +429,8 @@ QSize AlertItem::sizeHint() const
 void AlertItem::setAvatar(MegaUserAlert *alert)
 {
     QString color;
-    MegaHandle userHandle = alert->getUserHandle();
-    const char* avatarColor = megaApi->getUserAvatarColor(megaApi->handleToBase64(userHandle));
+    const char* avatarColor = megaApi->getUserAvatarColor(megaApi->handleToBase64(qHash(QString::fromUtf8(alert->getEmail()))));
+
     if (avatarColor)
     {
         color = QString::fromUtf8(avatarColor);
