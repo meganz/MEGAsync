@@ -2952,6 +2952,8 @@ void MegaApplication::showInfoDialog()
             infoDialog->hide();
         }
     }
+
+    updateUserStats(false, true, false, true, USERSTATS_SHOWMAINDIALOG);
 }
 
 void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx, int *posy)

@@ -86,6 +86,7 @@ enum GetUserStatsReason {
     USERSTATS_PRO_EXPIRED,
     USERSTATS_OPENSETTINGSDIALOG,
     USERSTATS_STORAGECACHEUNKNOWN,
+    USERSTATS_SHOWMAINDIALOG,
 };
 
 class MegaApplication : public QApplication, public mega::MegaListener
