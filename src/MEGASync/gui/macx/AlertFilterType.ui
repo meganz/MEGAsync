@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>155</width>
+    <width>193</width>
     <height>21</height>
    </rect>
   </property>
@@ -31,9 +31,12 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QHBoxLayout" name="horizontalLayout_3">
    <property name="spacing">
-    <number>4</number>
+    <number>0</number>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -49,6 +52,9 @@
    </property>
    <item>
     <widget class="QWidget" name="wIconType" native="true">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
       <property name="spacing">
        <number>0</number>
@@ -60,7 +66,7 @@
        <number>2</number>
       </property>
       <property name="rightMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="bottomMargin">
        <number>0</number>
@@ -114,6 +120,7 @@
 	font-size: 14px;
 	text-align: center;
      border: none;
+	margin-left: -4px;
 }</string>
      </property>
      <property name="text">
