@@ -1,12 +1,19 @@
 #pragma once
 
+#include <memory>
+
 #include <QLocalSocket>
 #include <QLocalServer>
 #include <QXmlStreamWriter>
 
 #include "megaapi.h"
 
-#include <spdlog/spdlog.h>
+namespace spdlog {
+class logger;
+namespace details {
+class thread_pool;
+}
+}
 
 class MegaSyncLogger : public QObject, public mega::MegaLogger
 {
