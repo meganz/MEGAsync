@@ -174,6 +174,7 @@ private:
     int actualAccountType;
     bool loggedInMode = true;
     bool notificationsReady = false;
+    bool isShown = false;
     long long unseenNotifications = 0;
 
 #ifdef Q_OS_LINUX

@@ -289,6 +289,8 @@ void InfoDialog::showEvent(QShowEvent *event)
 {
     emit ui->sTabs->currentChanged(ui->sTabs->currentIndex());
     ui->bTransferManager->showAnimated();
+
+    isShown = true;
     QDialog::showEvent(event);
 }
 
@@ -303,7 +305,15 @@ void InfoDialog::hideEvent(QHideEvent *event)
         filterMenu->hide();
     }
 
-    emit ui->sTabs->currentChanged(-1);
+    QTimer::singleShot(1000, [this] () {
+        if (!isShown)
+        {
+            emit ui->sTabs->currentChanged(-1);
+        }
+    });
+
+
+    isShown = false;
     ui->bTransferManager->shrink(true);
     QDialog::hideEvent(event);
 
