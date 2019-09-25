@@ -22,7 +22,6 @@
 namespace {
 
 const char* MEGA_LOG_PATTERN = "%m-%dT%H:%M:%S.%e %L %t %v";
-const char* MEGA_LOG_FILENAME = "/MEGAsync.log";
 
 }
 
@@ -49,10 +48,14 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
     mClient->connectToServer(MEGA_LOGGER);
 #endif
 
+    const QDir dataDir{dataPath};
+    dataDir.mkdir(QString::fromUtf8("logs"));
+    const auto logPath = dataDir.filePath(QString::fromUtf8("logs/MEGAsync.log"));
+
     constexpr auto maxFileSizeMB = 10;
     constexpr auto maxFileCount = 10;
     auto rotatingFileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-                dataPath.toStdString() + MEGA_LOG_FILENAME, 1024 * 1024 * maxFileSizeMB, maxFileCount);
+                logPath.toStdString(), 1024 * 1024 * maxFileSizeMB, maxFileCount);
     std::vector<spdlog::sink_ptr> sinks{rotatingFileSink};
     if (logToStdout)
     {
@@ -144,7 +147,10 @@ void MegaSyncLogger::setDebug(const bool enable)
     {
         if (!mDebugLogger)
         {
-            auto fileSink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(mDesktopPath.toStdString() + MEGA_LOG_FILENAME);
+            const QDir desktopDir{mDesktopPath};
+            const auto logPath = desktopDir.filePath(QString::fromUtf8("MEGAsync.log"));
+
+            auto fileSink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(logPath.toStdString());
             std::vector<spdlog::sink_ptr> debugSinks{fileSink};
             mDebugLogger = std::make_shared<spdlog::async_logger>("debug_logger",
                                                                   debugSinks.begin(), debugSinks.end(),
