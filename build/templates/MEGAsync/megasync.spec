@@ -52,7 +52,7 @@ BuildRequires: libcryptopp-devel
 %endif
 
 %else
-%if 0%{?rhel_version} == 0
+%if 0%{?rhel_version} == 0 && 0%{?centos_version} < 800
 #if !RHEL
 BuildRequires: LibRaw-devel
 %endif
@@ -81,7 +81,14 @@ BuildRequires: terminus-fonts, fontpackages-filesystem
 %if 0%{?centos_version} || 0%{?scientificlinux_version}
 BuildRequires: c-ares-devel,
 BuildRequires: desktop-file-utils
+
+%if 0%{?centos_version} >= 800
+BuildRequires: bzip2-devel
+BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel
+%else
 BuildRequires: qt, qt-x11, qt-devel
+%endif
+
 %endif
 
 %if 0%{?rhel_version}
@@ -91,6 +98,7 @@ BuildRequires: desktop-file-utils
 %if 0%{?rhel_version} < 800
 BuildRequires: qt, qt-x11, qt-devel
 %else
+BuildRequires: qt5-qtbase-devel qt5-qttools-devel, qt5-qtsvg-devel
 BuildRequires: bzip2-devel
 %endif
 
@@ -132,6 +140,9 @@ Store up to 50 GB for free!
 %define flag_libraw -W
 %endif
 
+%if 0%{?centos_version} >= 800
+%define flag_libraw -W
+%endif
 
 %if 0%{?rhel_version}
 %define flag_cryptopp -q
@@ -176,9 +187,9 @@ sed -i "s/USE_LIBRAW/NOT_USE_LIBRAW/" MEGASync/MEGASync.pro
 %endif
 
 
-%if 0%{?fedora} || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320 || 0%{?rhel_version} >=800
+%if 0%{?fedora} || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320 || 0%{?rhel_version} >=800 || 0%{?centos_version} >=800
 
-%if 0%{?fedora_version} >= 23 || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320 || 0%{?rhel_version} >=800
+%if 0%{?fedora_version} >= 23 || 0%{?sle_version} >= 120200 || 0%{?suse_version} > 1320 || 0%{?rhel_version} >=800 || 0%{?centos_version} >=800
 qmake-qt5 %{fullreqs} DESTDIR=%{buildroot}%{_bindir} THE_RPM_BUILD_ROOT=%{buildroot} %{extraqmake}
 lrelease-qt5  MEGASync/MEGASync.pro
 %else
@@ -264,17 +275,27 @@ enabled=1
 DATA
 %endif
 
+%if 0%{?centos_version}
+
 %if 0%{?centos_version} == 700
-# CentOS 7
+%define reponame CentOS_7
+%endif
+
+%if 0%{?centos_version} == 800
+%define reponame CentOS_8
+%endif
+
+# CentOS
 YUM_FILE="/etc/yum.repos.d/megasync.repo"
 cat > "$YUM_FILE" << DATA
 [MEGAsync]
 name=MEGAsync
-baseurl=https://mega.nz/linux/MEGAsync/CentOS_7/
-gpgkey=https://mega.nz/linux/MEGAsync/CentOS_7/repodata/repomd.xml.key
+baseurl=https://mega.nz/linux/MEGAsync/%{reponame}/
+gpgkey=https://mega.nz/linux/MEGAsync/%{reponame}/repodata/repomd.xml.key
 gpgcheck=1
 enabled=1
 DATA
+
 %endif
 
 %if 0%{?fedora}
