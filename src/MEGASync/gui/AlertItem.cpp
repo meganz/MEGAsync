@@ -106,7 +106,7 @@ void AlertItem::setAlertType(int type)
                 break;
     }
 
-    ui->lTitle->setStyleSheet(QString::fromAscii("#lTitle { font-family: Lato; font-size: 10px; color: %1; } ").arg(notificationColor));
+    ui->lTitle->setStyleSheet(QString::fromAscii("#lTitle { font-family: Lato; font-weight: 900; font-size: 10px; color: %1; } ").arg(notificationColor));
     ui->lTitle->setText(notificationTitle);
 }
 
