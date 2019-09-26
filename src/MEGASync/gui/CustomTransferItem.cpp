@@ -30,7 +30,7 @@ CustomTransferItem::CustomTransferItem(QWidget *parent) :
 
     ui->bClockDown->setVisible(false);
 
-    getLinkButtonEnabled = false;
+    actionButtonsEnabled = false;
     dsFinishedTime = 0;
 
     megaApi = ((MegaApplication *)qApp)->getMegaApi();
@@ -120,9 +120,7 @@ QString CustomTransferItem::getTransferName()
 
 bool CustomTransferItem::checkIsInsideButton(QPoint pos, int button)
 {
-    if (!getLinkButtonEnabled
-            || (!isLinkAvailable && !transferError) //retry action needs to be triggered for failed transfers even when !isLinkAvailable (e.g: inshare)
-            )
+    if (!actionButtonsEnabled)
     {
         return false;
     }
@@ -151,8 +149,14 @@ void CustomTransferItem::mouseHoverTransfer(bool isHover)
 {
     if (isHover)
     {
-        getLinkButtonEnabled = true;
-        if (isLinkAvailable)
+        actionButtonsEnabled = true;
+        if (transferError < 0)
+        {
+            ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/ico_item_retry.png")));
+            ui->lActionTransfer->setIconSize(QSize(24,24));
+            ui->lShowInFolder->hide();
+        }
+        else if (isLinkAvailable)
         {
             ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/ico_item_link.png")));
             ui->lActionTransfer->setIconSize(QSize(24,24));
@@ -160,25 +164,24 @@ void CustomTransferItem::mouseHoverTransfer(bool isHover)
             ui->lShowInFolder->setIconSize(QSize(24,24));
             ui->lShowInFolder->show();
         }
-        else if (transferError < 0)
+        else
         {
-            ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/ico_item_retry.png")));
+            ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/showinfolder.png")));
             ui->lActionTransfer->setIconSize(QSize(24,24));
-            ui->lShowInFolder->hide();
         }
     }
     else
     {
-        getLinkButtonEnabled = false;
-        if (isLinkAvailable)
+        actionButtonsEnabled = false;
+        if (transferError < 0)
         {
-            ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/success.png")));
+            ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/error.png")));
             ui->lActionTransfer->setIconSize(QSize(24,24));
             ui->lShowInFolder->hide();
         }
-        else if (transferError < 0)
+        else
         {
-            ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/error.png")));
+            ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/success.png")));
             ui->lActionTransfer->setIconSize(QSize(24,24));
             ui->lShowInFolder->hide();
         }
