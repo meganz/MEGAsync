@@ -32,6 +32,7 @@ ActiveTransfersWidget::ActiveTransfersWidget(QWidget *parent) :
     ui->sTransfersContainer->setCurrentWidget(ui->pNoTransfers);
     ui->bGraphsSeparator->setStyleSheet(QString::fromAscii("background-color: transparent; "
                                                            "border: none; "));
+    mWhichGraphsStyleSheet = 1;
 }
 
 void ActiveTransfersWidget::init(MegaApi *megaApi, MegaTransfer *activeUpload, MegaTransfer *activeDownload)
@@ -106,6 +107,26 @@ void ActiveTransfersWidget::onTransferTemporaryError(mega::MegaApi *api, mega::M
 
 }
 
+struct IconCache
+{
+    std::map<QString, QIcon> mIcons;
+
+    QIcon& get(QString fileName)
+    {
+        QString file = Utilities::getExtensionPixmapSmall(fileName);
+        auto i = mIcons.find(file);
+        if (i == mIcons.end())
+        {
+            auto pair = mIcons.emplace(file, QIcon());
+            i = pair.first;
+            i->second.addFile(file, QSize(), QIcon::Normal, QIcon::Off);
+        }
+        return i->second;
+    }
+};
+
+IconCache gIconCache;
+
 void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
 {
     if (transfer->isStreamingTransfer() || transfer->isFolderTransfer())
@@ -141,9 +162,7 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
             QFontMetrics fm = QFontMetrics(f);
             ui->lDownFilename->setText(fm.elidedText(activeDownload.fileName, Qt::ElideMiddle, ui->lDownFilename->width()));
             ui->lDownFilename->setToolTip(activeDownload.fileName);
-            QIcon icon;
-            icon.addFile(Utilities::getExtensionPixmapSmall(activeDownload.fileName), QSize(), QIcon::Normal, QIcon::Off);
-            ui->bDownFileType->setIcon(icon);
+            ui->bDownFileType->setIcon(gIconCache.get(activeDownload.fileName));
             setTotalSize(&activeDownload, transfer->getTotalBytes());
         }
 
@@ -541,14 +560,22 @@ void ActiveTransfersWidget::updateNumberOfTransfers(mega::MegaApi *api)
     if (!totalDownloads && !totalUploads)
     {
         ui->sTransfersContainer->setCurrentWidget(ui->pNoTransfers);
-        ui->bGraphsSeparator->setStyleSheet(QString::fromAscii("background-color: transparent; "
-                                                               "border: none; "));
+        if (mWhichGraphsStyleSheet != 1)
+        {
+            ui->bGraphsSeparator->setStyleSheet(QString::fromAscii("background-color: transparent; "
+                "border: none; "));
+            mWhichGraphsStyleSheet = 1;
+        }
     }
     else
     {
         ui->sTransfersContainer->setCurrentWidget(ui->pTransfers);
-        ui->bGraphsSeparator->setStyleSheet(QString::fromAscii("background-color: rgba(0, 0, 0, 10%); "
-                                                               "border: none; "));
+        if (mWhichGraphsStyleSheet != 2)
+        {
+            ui->bGraphsSeparator->setStyleSheet(QString::fromAscii("background-color: rgba(0, 0, 0, 10%); "
+                "border: none; "));
+            mWhichGraphsStyleSheet = 2;
+        }
     }
 }
 
