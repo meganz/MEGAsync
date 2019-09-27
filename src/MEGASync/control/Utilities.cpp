@@ -166,7 +166,7 @@ qreal Utilities::getDevicePixelRatio()
 #endif
 }
 
-QString Utilities::getExtensionPixmap(QString fileName, QString prefix)
+QString Utilities::getExtensionPixmapName(QString fileName, QString prefix)
 {
     if (extensionIcons.isEmpty())
     {
@@ -187,9 +187,9 @@ QString Utilities::getExtensionPixmap(QString fileName, QString prefix)
 QString Utilities::languageCodeToString(QString code)
 {
     if (languageNames.isEmpty())
-    {       
+    {
         languageNames[QString::fromAscii("ar")] = QString::fromUtf8("العربية");
-        languageNames[QString::fromAscii("de")] = QString::fromUtf8("Deutsch");  
+        languageNames[QString::fromAscii("de")] = QString::fromUtf8("Deutsch");
         languageNames[QString::fromAscii("en")] = QString::fromUtf8("English");
         languageNames[QString::fromAscii("es")] = QString::fromUtf8("Español");
         languageNames[QString::fromAscii("fr")] = QString::fromUtf8("Français");
@@ -245,18 +245,8 @@ QString Utilities::languageCodeToString(QString code)
     return languageNames.value(code);
 }
 
-QString Utilities::getExtensionPixmapSmall(QString fileName)
-{
-    return getExtensionPixmap(fileName, QString::fromAscii(":/images/small_"));
-}
 
-QString Utilities::getExtensionPixmapMedium(QString fileName)
-{
-    return getExtensionPixmap(fileName, QString::fromAscii(":/images/drag_"));
-}
-
-
-struct SmallIconCache
+struct IconCache
 {
     std::map<QString, QIcon> mIcons;
 
@@ -272,23 +262,32 @@ struct SmallIconCache
         return i->second;
     }
 
-    QIcon& getByExtension(QString fileName)
+    QIcon& getByExtension(const QString &fileName, const QString &prefix)
     {
-        return getDirect(Utilities::getExtensionPixmapSmall(fileName));
+        return getDirect(Utilities::getExtensionPixmapName(fileName, prefix));
     }
 };
 
-SmallIconCache gSmallIconCache;
+IconCache gExtensionsIconCache;
 
-
-QIcon Utilities::getCachedExtensionPixmapSmall(QString fileName)
+QString Utilities::getExtensionPixmapNameSmall(QString fileName)
 {
-    return gSmallIconCache.getByExtension(fileName);
+    return getExtensionPixmapName(fileName, QString::fromAscii(":/images/small_"));
 }
 
-QIcon Utilities::getCachedPixmapSmall(QString resourceName)
+QString Utilities::getExtensionPixmapNameMedium(QString fileName)
 {
-    return gSmallIconCache.getDirect(resourceName);
+    return getExtensionPixmapName(fileName, QString::fromAscii(":/images/drag_"));
+}
+
+QIcon Utilities::getExtensionPixmapSmall(QString fileName)
+{
+    return gExtensionsIconCache.getDirect(getExtensionPixmapNameSmall(fileName));
+}
+
+QIcon Utilities::getExtensionPixmapMedium(QString fileName)
+{
+    return gExtensionsIconCache.getDirect(getExtensionPixmapNameMedium(fileName));
 }
 
 QString Utilities::getAvatarPath(QString email)

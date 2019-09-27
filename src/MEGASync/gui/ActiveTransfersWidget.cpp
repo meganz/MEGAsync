@@ -142,7 +142,7 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
             QFontMetrics fm = QFontMetrics(f);
             ui->lDownFilename->setText(fm.elidedText(activeDownload.fileName, Qt::ElideMiddle, ui->lDownFilename->width()));
             ui->lDownFilename->setToolTip(activeDownload.fileName);
-            ui->bDownFileType->setIcon(Utilities::getCachedExtensionPixmapSmall(activeDownload.fileName));
+            ui->bDownFileType->setIcon(Utilities::getExtensionPixmapSmall(activeDownload.fileName));
             setTotalSize(&activeDownload, transfer->getTotalBytes());
         }
 
@@ -175,7 +175,7 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
             QFontMetrics fm = QFontMetrics(f);
             ui->lUpFilename->setText(fm.elidedText(activeUpload.fileName, Qt::ElideMiddle, ui->lUpFilename->width()));
             ui->lUpFilename->setToolTip(activeUpload.fileName);
-            ui->bUpFileType->setIcon(Utilities::getCachedExtensionPixmapSmall(activeUpload.fileName));
+            ui->bUpFileType->setIcon(Utilities::getExtensionPixmapSmall(activeUpload.fileName));
             setTotalSize(&activeUpload, transfer->getTotalBytes());
         }
 

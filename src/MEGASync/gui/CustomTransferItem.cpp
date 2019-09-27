@@ -45,9 +45,7 @@ void CustomTransferItem::setFileName(QString fileName)
     ui->lFileNameCompleted->setText(fm.elidedText(fileName, Qt::ElideMiddle,ui->lFileName->width()));
     ui->lFileNameCompleted->setToolTip(fileName);
 
-
-    QIcon icon;
-    icon.addFile(Utilities::getExtensionPixmapMedium(fileName), QSize(), QIcon::Normal, QIcon::Off);
+    QIcon icon = Utilities::getExtensionPixmapMedium(fileName);
     ui->lFileType->setIcon(icon);
     ui->lFileType->setIconSize(QSize(48, 48));
     ui->lFileTypeCompleted->setIcon(icon);
