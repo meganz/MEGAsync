@@ -268,7 +268,7 @@ struct IconCache
     }
 };
 
-IconCache gExtensionsIconCache;
+IconCache gIconCache;
 
 QString Utilities::getExtensionPixmapNameSmall(QString fileName)
 {
@@ -280,14 +280,19 @@ QString Utilities::getExtensionPixmapNameMedium(QString fileName)
     return getExtensionPixmapName(fileName, QString::fromAscii(":/images/drag_"));
 }
 
+QIcon Utilities::getCachedPixmap(QString fileName)
+{
+    return gIconCache.getDirect(fileName);
+}
+
 QIcon Utilities::getExtensionPixmapSmall(QString fileName)
 {
-    return gExtensionsIconCache.getDirect(getExtensionPixmapNameSmall(fileName));
+    return gIconCache.getDirect(getExtensionPixmapNameSmall(fileName));
 }
 
 QIcon Utilities::getExtensionPixmapMedium(QString fileName)
 {
-    return gExtensionsIconCache.getDirect(getExtensionPixmapNameMedium(fileName));
+    return gIconCache.getDirect(getExtensionPixmapNameMedium(fileName));
 }
 
 QString Utilities::getAvatarPath(QString email)

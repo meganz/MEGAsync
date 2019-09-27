@@ -87,6 +87,7 @@ public:
     static void getFolderSize(QString folderPath, long long *size);
     static qreal getDevicePixelRatio();
 
+    static QIcon getCachedPixmap(QString fileName);
     static QIcon getExtensionPixmapSmall(QString fileName);
     static QIcon getExtensionPixmapMedium(QString fileName);
     static QString getExtensionPixmapName(QString fileName, QString prefix);

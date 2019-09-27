@@ -104,7 +104,7 @@ void TransferManagerItem::setType(int type, bool isSyncTransfer)
                 connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
             }
 
-            icon = Utilities::getExtensionPixmapSmall(QString::fromUtf8(":/images/upload_item_ico.png"));
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/upload_item_ico.png"));
             ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
             break;
@@ -118,7 +118,7 @@ void TransferManagerItem::setType(int type, bool isSyncTransfer)
                 connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
             }
 
-            icon = Utilities::getExtensionPixmapMedium(QString::fromUtf8(":/images/download_item_ico.png"));
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/download_item_ico.png"));
             ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
             break;
