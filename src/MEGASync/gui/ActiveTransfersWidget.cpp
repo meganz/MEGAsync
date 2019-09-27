@@ -107,26 +107,6 @@ void ActiveTransfersWidget::onTransferTemporaryError(mega::MegaApi *api, mega::M
 
 }
 
-struct IconCache
-{
-    std::map<QString, QIcon> mIcons;
-
-    QIcon& get(QString fileName)
-    {
-        QString file = Utilities::getExtensionPixmapSmall(fileName);
-        auto i = mIcons.find(file);
-        if (i == mIcons.end())
-        {
-            auto pair = mIcons.emplace(file, QIcon());
-            i = pair.first;
-            i->second.addFile(file, QSize(), QIcon::Normal, QIcon::Off);
-        }
-        return i->second;
-    }
-};
-
-IconCache gIconCache;
-
 void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
 {
     if (transfer->isStreamingTransfer() || transfer->isFolderTransfer())
@@ -162,7 +142,7 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
             QFontMetrics fm = QFontMetrics(f);
             ui->lDownFilename->setText(fm.elidedText(activeDownload.fileName, Qt::ElideMiddle, ui->lDownFilename->width()));
             ui->lDownFilename->setToolTip(activeDownload.fileName);
-            ui->bDownFileType->setIcon(gIconCache.get(activeDownload.fileName));
+            ui->bDownFileType->setIcon(Utilities::getCachedExtensionPixmapSmall(activeDownload.fileName));
             setTotalSize(&activeDownload, transfer->getTotalBytes());
         }
 
@@ -195,9 +175,7 @@ void ActiveTransfersWidget::updateTransferInfo(MegaTransfer *transfer)
             QFontMetrics fm = QFontMetrics(f);
             ui->lUpFilename->setText(fm.elidedText(activeUpload.fileName, Qt::ElideMiddle, ui->lUpFilename->width()));
             ui->lUpFilename->setToolTip(activeUpload.fileName);
-            QIcon icon;
-            icon.addFile(Utilities::getExtensionPixmapSmall(activeUpload.fileName), QSize(), QIcon::Normal, QIcon::Off);
-            ui->bUpFileType->setIcon(icon);
+            ui->bUpFileType->setIcon(Utilities::getCachedExtensionPixmapSmall(activeUpload.fileName));
             setTotalSize(&activeUpload, transfer->getTotalBytes());
         }
 

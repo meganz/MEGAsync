@@ -87,6 +87,9 @@ public:
     static void copyRecursively(QString srcPath, QString dstPath);
     static void getFolderSize(QString folderPath, long long *size);
     static qreal getDevicePixelRatio();
+
+    static QIcon getCachedExtensionPixmapSmall(QString fileName);
+    static QIcon getCachedPixmapSmall(QString resourceName);
 };
 
 #endif // UTILITIES_H

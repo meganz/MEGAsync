@@ -255,6 +255,42 @@ QString Utilities::getExtensionPixmapMedium(QString fileName)
     return getExtensionPixmap(fileName, QString::fromAscii(":/images/drag_"));
 }
 
+
+struct SmallIconCache
+{
+    std::map<QString, QIcon> mIcons;
+
+    QIcon& getDirect(QString resourceName)
+    {
+        auto i = mIcons.find(resourceName);
+        if (i == mIcons.end())
+        {
+            auto pair = mIcons.emplace(resourceName, QIcon());
+            i = pair.first;
+            i->second.addFile(resourceName, QSize(), QIcon::Normal, QIcon::Off);
+        }
+        return i->second;
+    }
+
+    QIcon& getByExtension(QString fileName)
+    {
+        return getDirect(Utilities::getExtensionPixmapSmall(fileName));
+    }
+};
+
+SmallIconCache gSmallIconCache;
+
+
+QIcon Utilities::getCachedExtensionPixmapSmall(QString fileName)
+{
+    return gSmallIconCache.getByExtension(fileName);
+}
+
+QIcon Utilities::getCachedPixmapSmall(QString resourceName)
+{
+    return gSmallIconCache.getDirect(resourceName);
+}
+
 QString Utilities::getAvatarPath(QString email)
 {
     if (!email.size())
