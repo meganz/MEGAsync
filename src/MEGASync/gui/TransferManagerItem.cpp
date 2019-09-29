@@ -40,7 +40,7 @@ void TransferManagerItem::setFileName(QString fileName)
     ui->lTransferName->setText(fm.elidedText(fileName, Qt::ElideMiddle,ui->lTransferName->width()));
     ui->lTransferName->setToolTip(fileName);
 
-    QIcon icon = Utilities::getCachedExtensionPixmapSmall(fileName);
+    QIcon icon = Utilities::getExtensionPixmapSmall(fileName);
     ui->lFileType->setIcon(icon);
     ui->lFileType->setIconSize(QSize(24, 24));
     ui->lFileTypeCompleted->setIcon(icon);
@@ -104,7 +104,7 @@ void TransferManagerItem::setType(int type, bool isSyncTransfer)
                 connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
             }
 
-            icon = Utilities::getCachedPixmapSmall(QString::fromUtf8(":/images/upload_item_ico.png"));
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/upload_item_ico.png"));
             ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
             break;
@@ -118,7 +118,7 @@ void TransferManagerItem::setType(int type, bool isSyncTransfer)
                 connect(animation, SIGNAL(frameChanged(int)), this, SLOT(frameChanged(int)));
             }
 
-            icon = Utilities::getCachedPixmapSmall(QString::fromUtf8(":/images/download_item_ico.png"));
+            icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/download_item_ico.png"));
             ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: #ececec;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
             break;

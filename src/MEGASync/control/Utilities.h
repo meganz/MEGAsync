@@ -75,21 +75,22 @@ private:
     static QHash<QString, QString> extensionIcons;
     static QHash<QString, QString> languageNames;
     static void initializeExtensions();
-    static QString getExtensionPixmap(QString fileName, QString prefix);
+    static QString getExtensionPixmapNameSmall(QString fileName);
+    static QString getExtensionPixmapNameMedium(QString fileName);
 
 //Platform dependent functions
 public:
     static QString languageCodeToString(QString code);
-    static QString getExtensionPixmapSmall(QString fileName);
-    static QString getExtensionPixmapMedium(QString fileName);
     static QString getAvatarPath(QString email);
     static bool removeRecursively(QString path);
     static void copyRecursively(QString srcPath, QString dstPath);
     static void getFolderSize(QString folderPath, long long *size);
     static qreal getDevicePixelRatio();
 
-    static QIcon getCachedExtensionPixmapSmall(QString fileName);
-    static QIcon getCachedPixmapSmall(QString resourceName);
+    static QIcon getCachedPixmap(QString fileName);
+    static QIcon getExtensionPixmapSmall(QString fileName);
+    static QIcon getExtensionPixmapMedium(QString fileName);
+    static QString getExtensionPixmapName(QString fileName, QString prefix);
 };
 
 #endif // UTILITIES_H
