@@ -7723,15 +7723,16 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                 && (node->getType() == MegaNode::TYPE_FILE)
                 && node->getSize() && node->hasChanged(MegaNode::CHANGE_TYPE_NEW))
         {
-            long long bytes = node->getSize();
-            if (!megaApi->isInCloud(node))
-            {
-                preferences->setInShareStorage(preferences->inShareStorage() + bytes);
-            }
-            else
-            {
-                preferences->setCloudDriveStorage(preferences->cloudDriveStorage() + bytes);
-            }
+            // isInCloud needs to lock the sdkMutex which can cause big delays - this data is only shown in settings->details which will be updated by uq response.
+            //long long bytes = node->getSize();
+            //if (!megaApi->isInCloud(node))
+            //{
+            //    preferences->setInShareStorage(preferences->inShareStorage() + bytes);
+            //}
+            //else
+            //{
+            //    preferences->setCloudDriveStorage(preferences->cloudDriveStorage() + bytes);
+            //}
 
             if (!externalNodes && !node->getTag()
                     && ((lastExit / 1000) < node->getCreationTime())

@@ -67,8 +67,11 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
 
                 if (ti->isTransferFinished())
                 {
-                    ti->setFinishedTime(transfer->getUpdateTime());
-                    ti->updateFinishedTime();
+                    if (transfer->getUpdateTime() != ti->getFinishedTime())
+                    {
+                        ti->setFinishedTime(transfer->getUpdateTime());
+                        ti->updateFinishedTime(); // applies styles which can be slow - just do it when the finished time changes
+                    }
 
                     MegaNode *node = transfer->getPublicMegaNode();
                     if (node && node->isPublic())
