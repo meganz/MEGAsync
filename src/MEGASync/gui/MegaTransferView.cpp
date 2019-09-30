@@ -393,6 +393,14 @@ void MegaTransferView::changeEvent(QEvent *event)
     QWidget::changeEvent(event);
 }
 
+void MegaTransferView::paintEvent(QPaintEvent * e)
+{
+    auto app = static_cast<MegaApplication*>(qApp);
+    app->megaApiLock.reset(new MegaApiLock(app->getMegaApi(), false));
+    QTreeView::paintEvent(e);
+    app->megaApiLock.reset();
+}
+
 void MegaTransferView::onCustomContextMenu(const QPoint &point)
 {
     QTransfersModel *model = (QTransfersModel*)this->model();

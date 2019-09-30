@@ -34,6 +34,14 @@ void MegaTransferDelegate::paint(QPainter *painter, const QStyleOptionViewItem &
         TransferItem *ti = model->transferItems[tag];
         if (!ti)
         {
+            if (static_cast<MegaApplication*>(qApp)->megaApiLock)
+            {
+                // We will call the SDK several times, and if there is one new transfer there may be many, and the SDK may be working a lot.  
+                // Here we lock the SDK mutex so we can make all these calls back into it in one go, and get the painting done.  
+                // The lock will be released at the end of the infoDialog or transferDialog paintEvent().
+                static_cast<MegaApplication*>(qApp)->megaApiLock->lockOnce();
+            }
+
             if (modelType == QTransfersModel::TYPE_CUSTOM_TRANSFERS)
             {
                 ti = new CustomTransferItem();

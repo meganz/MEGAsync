@@ -1356,12 +1356,15 @@ void InfoDialog::onAnimationFinished()
     }
 }
 
-#ifdef __APPLE__
-void InfoDialog::paintEvent( QPaintEvent * e)
+void InfoDialog::paintEvent(QPaintEvent * e)
 {
+    app->megaApiLock.reset(new MegaApiLock(app->getMegaApi(), false));
     QDialog::paintEvent(e);
-    QPainter p( this );
-    p.setCompositionMode( QPainter::CompositionMode_Clear);
-    p.fillRect( ui->wArrow->rect(), Qt::transparent );
-}
+    app->megaApiLock.reset();
+
+#ifdef __APPLE__
+    QPainter p(this);
+    p.setCompositionMode(QPainter::CompositionMode_Clear);
+    p.fillRect(ui->wArrow->rect(), Qt::transparent);
 #endif
+}

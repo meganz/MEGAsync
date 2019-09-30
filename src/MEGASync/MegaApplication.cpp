@@ -7734,6 +7734,7 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             //    preferences->setCloudDriveStorage(preferences->cloudDriveStorage() + bytes);
             //}
 
+            // TODO: this code block is blocked by the SDK quite often when uploading, due to the isInsideSync call.  Can we find a way to avoid that
             if (!externalNodes && !node->getTag()
                     && ((lastExit / 1000) < node->getCreationTime())
                     && megaApi->isInsideSync(node))

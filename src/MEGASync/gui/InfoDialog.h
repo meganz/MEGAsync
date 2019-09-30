@@ -146,9 +146,7 @@ protected:
     void updateState();
     void changeEvent(QEvent * event);
     bool eventFilter(QObject *obj, QEvent *e);
-#ifdef __APPLE__
     void paintEvent( QPaintEvent * e);
-#endif
 
 protected:
     QDateTime lastPopupUpdate;
