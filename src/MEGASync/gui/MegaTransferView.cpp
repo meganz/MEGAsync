@@ -396,7 +396,7 @@ void MegaTransferView::changeEvent(QEvent *event)
 void MegaTransferView::paintEvent(QPaintEvent * e)
 {
     auto app = static_cast<MegaApplication*>(qApp);
-    app->megaApiLock.reset(new MegaApiLock(app->getMegaApi(), false));
+    app->megaApiLock.reset(app->getMegaApi()->getMegaApiLock(false));
     QTreeView::paintEvent(e);
     app->megaApiLock.reset();
 }

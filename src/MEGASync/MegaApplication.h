@@ -86,49 +86,6 @@ enum GetUserStatsReason {
     USERSTATS_STORAGECACHEUNKNOWN,
 };
 
-class MegaApiLock
-{
-    ::mega::MegaApi* api;
-    bool locked = false;
-
-public:
-    MegaApiLock(::mega::MegaApi* ptr, bool lock) : api(ptr)
-    {
-        if (lock)
-        {
-            lockOnce();
-        }
-    }
-    ~MegaApiLock()
-    {
-        unlock();
-    }
-
-    void lockOnce()
-    {
-        if (!locked)
-        {
-#ifdef MEGA_API_HAS_LOCK_UNLOCK
-            api->lockMutex();
-#endif
-            locked = true;
-        }
-    }
-
-    void unlock()
-    {
-        if (locked)
-        {
-#ifdef MEGA_API_HAS_LOCK_UNLOCK
-            api->unlockMutex();
-#endif
-            locked = false;
-        }
-    }
-};
-
-
-
 class MegaApplication : public QApplication, public mega::MegaListener
 {
     Q_OBJECT
@@ -169,7 +126,7 @@ public:
 
     mega::MegaApi *getMegaApi() { return megaApi; }
 
-    std::unique_ptr<MegaApiLock> megaApiLock;
+    std::unique_ptr<mega::MegaApiLock> megaApiLock;
 
     void unlink();
     void cleanLocalCaches(bool all = false);

@@ -1358,7 +1358,7 @@ void InfoDialog::onAnimationFinished()
 
 void InfoDialog::paintEvent(QPaintEvent * e)
 {
-    app->megaApiLock.reset(new MegaApiLock(app->getMegaApi(), false));
+    app->megaApiLock.reset(app->getMegaApi()->getMegaApiLock(false));
     QDialog::paintEvent(e);
     app->megaApiLock.reset();
 
