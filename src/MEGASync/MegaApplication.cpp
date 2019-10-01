@@ -16,6 +16,8 @@
 #include <QNetworkProxy>
 #include <QSettings>
 
+#include <signal.h>
+
 #include <assert.h>
 
 #ifdef Q_OS_LINUX
@@ -47,6 +49,7 @@ QString MegaApplication::appPath = QString();
 QString MegaApplication::appDirPath = QString();
 QString MegaApplication::dataPath = QString();
 
+
 void msgHandler(QtMsgType type, const char *msg)
 {
     switch (type) {
@@ -64,6 +67,32 @@ void msgHandler(QtMsgType type, const char *msg)
         break;
     }
 }
+
+MegaApplication *theapp = NULL;
+bool keepdormant = false;
+void LinuxSignalHandler(int signum)
+{
+    if (signum == SIGUSR2)
+    {
+        printf("Received SIGUSR2!\n");
+        keepdormant = false;
+        if (theapp)
+        {
+            theapp->setKeepdormant(false);
+        }
+    }
+    if (signum == SIGUSR1)
+    {
+        printf("Received SIGUSR1!\n");
+        keepdormant = true;
+        if (theapp)
+        {
+            theapp->setKeepdormant(true);
+            theapp->exitApplication(true);
+        }
+    }
+}
+
 
 #if QT_VERSION >= 0x050000
     void messageHandler(QtMsgType type,const QMessageLogContext &context, const QString &msg)
@@ -384,6 +413,7 @@ int main(int argc, char *argv[])
 
 
     MegaApplication app(argc, argv);
+    theapp = &app;
 
 #if defined(Q_OS_LINUX) && QT_VERSION >= 0x050600
     for (const auto& screen : app.screens())
@@ -585,7 +615,23 @@ int main(int argc, char *argv[])
 
     app.initialize();
     app.start();
-    return app.exec();
+    int toret = app.exec();
+
+    int countslept = 100;
+    if (keepdormant)
+    {
+        while (keepdormant && countslept)
+        {
+            sleep(1); //alternative: do this via condition variable and sleep forever?
+            countslept--;
+        }
+        QString app = QString::fromUtf8("\"%1\"").arg(MegaApplication::applicationFilePath());
+        QProcess::startDetached(app);
+    }
+
+
+    theapp = NULL;
+    return toret;
 
 #if 0 //Strings for the translation system. These lines don't need to be built
     QT_TRANSLATE_NOOP("QDialogButtonBox", "&Yes");
@@ -691,6 +737,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
          }
     }
 #endif
+
+    signal(SIGUSR1, LinuxSignalHandler);
+    signal(SIGUSR2, LinuxSignalHandler);
 
     MegaApi::addLoggerObject(logger);
 
@@ -2155,7 +2204,7 @@ void MegaApplication::rebootApplication(bool update)
     QApplication::exit();
 }
 
-void MegaApplication::exitApplication()
+void MegaApplication::exitApplication(bool force)
 {
     if (appfinished)
     {
@@ -2163,7 +2212,7 @@ void MegaApplication::exitApplication()
     }
 
 #ifndef __APPLE__
-    if (!megaApi->isLoggedIn())
+    if (force || !megaApi->isLoggedIn())
     {
 #endif
         reboot = false;
