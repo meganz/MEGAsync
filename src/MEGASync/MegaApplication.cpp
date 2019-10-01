@@ -6446,6 +6446,76 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
         preferences->sync();
         refreshStorageUIs();
     }
+    else if (event->getType() == MegaEvent::EVENT_BUSINESS_STATUS)
+    {
+        switch (event->getNumber())
+        {
+            case MegaApi::BUSINESS_STATUS_GRACE_PERIOD:
+            {
+                QMessageBox msgBox;
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.setBaseSize(QSize(420, 165));
+                msgBox.setWindowTitle(tr("Something went wrong"));
+                msgBox.setText(tr("Something went wrong"));
+                msgBox.setInformativeText(tr("There has been a problem with your last payment. Please access MEGA in a desktop browser for more information."));
+                msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Yes);
+                msgBox.setButtonText(QMessageBox::Yes, tr("Visit MEGA.nz"));
+                msgBox.setButtonText(QMessageBox::Cancel, tr("Dismiss"));
+                msgBox.setDefaultButton(QMessageBox::Yes);
+                int ret = msgBox.exec();
+                if (ret == QMessageBox::Yes)
+                {
+                    QString url = QString::fromAscii("/repay");
+                    megaApi->getSessionTransferURL(url.toUtf8().constData());
+                }
+                break;
+            }
+            case MegaApi::BUSINESS_STATUS_EXPIRED:
+            {
+                QMessageBox msgBox;
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.setWindowTitle(tr("Account Suspended"));
+                msgBox.setText(tr("Account Suspended"));
+
+                if (megaApi->isMasterBusinessAccount())
+                {
+                    msgBox.setBaseSize(QSize(420, 165));
+                    msgBox.setInformativeText(tr("There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."));
+                    msgBox.setStandardButtons(QMessageBox::Cancel | QMessageBox::Yes);
+                    msgBox.setButtonText(QMessageBox::Yes, tr("Visit MEGA.nz"));
+                    msgBox.setButtonText(QMessageBox::Cancel, tr("Dismiss"));
+                    msgBox.setDefaultButton(QMessageBox::Yes);
+                    int ret = msgBox.exec();
+                    if (ret == QMessageBox::Yes)
+                    {
+                        QString url = QString::fromAscii("/repay");
+                        megaApi->getSessionTransferURL(url.toUtf8().constData());
+                    }
+                }
+                else
+                {
+                    msgBox.setBaseSize(QSize(420, 200));
+                    msgBox.setTextFormat(Qt::RichText);
+                    msgBox.setInformativeText(
+                                tr("Your account is on [A]suspended status[/A].")
+                                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
+                                    .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
+                                + QString::fromUtf8("<br>") + QString::fromUtf8("<br>") +
+                                tr("[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.")
+                                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; color:#DF4843; text-decoration:none;\">"))
+                                    .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) + QString::fromAscii("\n"));
+
+                    msgBox.setStandardButtons(QMessageBox::Cancel);
+                    msgBox.setButtonText(QMessageBox::Cancel, tr("Dismiss"));
+                    msgBox.exec();
+
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    }
 }
 
 //Called when a request is about to start
