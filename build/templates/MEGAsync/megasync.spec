@@ -104,6 +104,9 @@ BuildRequires: bzip2-devel
 
 %endif
 
+%if 0%{?fedora_version} >= 31
+BuildRequires: bzip2-devel
+%endif
 
 %description
 Secure:
