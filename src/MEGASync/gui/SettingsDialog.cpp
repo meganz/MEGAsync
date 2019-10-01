@@ -1708,7 +1708,7 @@ int SettingsDialog::saveSettings()
             delete proxySettings;
         }
 
-        proxyTestProgressDialog = new MegaProgressDialog(tr("Please wait..."), QString(), 0, 0, this, Qt::CustomizeWindowHint|Qt::WindowTitleHint);
+        proxyTestProgressDialog = new MegaProgressCustomDialog(this, 0, 0);
         proxyTestProgressDialog->setWindowModality(Qt::WindowModal);
         proxyTestProgressDialog->show();
 
@@ -2634,14 +2634,4 @@ void SettingsDialog::on_bChangePassword_clicked()
     }
 
     delete cPassword;
-}
-
-MegaProgressDialog::MegaProgressDialog(const QString &labelText, const QString &cancelButtonText,
-                                       int minimum, int maximum, QWidget *parent, Qt::WindowFlags f) :
-    QProgressDialog(labelText, cancelButtonText, minimum, maximum, parent, f) {}
-
-void MegaProgressDialog::reject() {}
-void MegaProgressDialog::closeEvent(QCloseEvent * event)
-{
-    event->ignore();
 }

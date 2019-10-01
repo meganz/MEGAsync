@@ -23,6 +23,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/ChangeLogDialog.cpp \
     $$PWD/GuestWidget.cpp \
     $$PWD/StreamingFromMegaDialog.cpp \
+    $$PWD/MegaProgressCustomDialog.cpp \
     $$PWD/ConfirmSSLexception.cpp \
     $$PWD/UpgradeDialog.cpp \
     $$PWD/PlanWidget.cpp \
@@ -88,6 +89,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ChangeLogDialog.h \
     $$PWD/GuestWidget.h \
     $$PWD/StreamingFromMegaDialog.h \
+    $$PWD/MegaProgressCustomDialog.h \
     $$PWD/ConfirmSSLexception.h \
     $$PWD/UpgradeDialog.h \
     $$PWD/PlanWidget.h \
@@ -158,7 +160,9 @@ win32 {
                 $$PWD/win/ChangeLogDialog.ui \
                 $$PWD/win/GuestWidget.ui \
                 $$PWD/win/StreamingFromMegaDialog.ui \
+                $$PWD/win/MegaProgressCustomDialog.ui \
                 $$PWD/win/ConfirmSSLexception.ui \
+                $$PWD/win/MegaProgressCustomDialog.ui \
                 $$PWD/win/PlanWidget.ui \
                 $$PWD/win/UpgradeDialog.ui \
                 $$PWD/win/InfoWizard.ui \
@@ -207,6 +211,7 @@ macx {
                 $$PWD/macx/StreamingFromMegaDialog.ui \
                 $$PWD/macx/PermissionsDialog.ui \
                 $$PWD/macx/PermissionsWidget.ui \
+                $$PWD/macx/MegaProgressCustomDialog.ui \
                 $$PWD/macx/ConfirmSSLexception.ui \
                 $$PWD/macx/PlanWidget.ui \
                 $$PWD/macx/UpgradeDialog.ui \
@@ -267,6 +272,7 @@ unix:!macx {
                 $$PWD/linux/StreamingFromMegaDialog.ui \
                 $$PWD/linux/PermissionsDialog.ui \
                 $$PWD/linux/PermissionsWidget.ui \
+                $$PWD/linux/MegaProgressCustomDialog.ui \
                 $$PWD/linux/ConfirmSSLexception.ui \
                 $$PWD/linux/PlanWidget.ui \
                 $$PWD/linux/UpgradeDialog.ui \
