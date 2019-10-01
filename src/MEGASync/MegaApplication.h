@@ -419,7 +419,6 @@ protected:
     bool appfinished;
     bool updateAvailable;
     bool isLinux;
-    long long externalNodesTimestamp;
     int noKeyDetected;
     bool isFirstSyncDone;
     bool isFirstFileSynced;

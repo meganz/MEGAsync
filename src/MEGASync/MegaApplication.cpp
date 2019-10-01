@@ -859,7 +859,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     storageOverquotaDialog = NULL;
     bwOverquotaEvent = false;
     infoWizard = NULL;
-    externalNodesTimestamp = 0;
     noKeyDetected = 0;
     isFirstSyncDone = false;
     isFirstFileSynced = false;
@@ -7719,30 +7718,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             }
         }
 
-        if (nodescurrent && !node->isRemoved() && !node->isSyncDeleted()
-                && (node->getType() == MegaNode::TYPE_FILE)
-                && node->getSize() && node->hasChanged(MegaNode::CHANGE_TYPE_NEW))
-        {
-            // isInCloud needs to lock the sdkMutex which can cause big delays - this data is only shown in settings->details which will be updated by uq response.
-            //long long bytes = node->getSize();
-            //if (!megaApi->isInCloud(node))
-            //{
-            //    preferences->setInShareStorage(preferences->inShareStorage() + bytes);
-            //}
-            //else
-            //{
-            //    preferences->setCloudDriveStorage(preferences->cloudDriveStorage() + bytes);
-            //}
-
-            // TODO: this code block is blocked by the SDK quite often when uploading, due to the isInsideSync call.  Can we find a way to avoid that
-            if (!externalNodes && !node->getTag()
-                    && ((lastExit / 1000) < node->getCreationTime())
-                    && megaApi->isInsideSync(node))
-            {
-                externalNodes = true;
-            }
-        }
-
         if (!node->isRemoved() && node->getTag()
                 && !node->isSyncDeleted()
                 && (node->getType() == MegaNode::TYPE_FILE)
@@ -7764,15 +7739,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                 rebootApplication(false);
             }
             noKeyDetected++;
-        }
-    }
-
-    if (externalNodes)
-    {
-        if (QDateTime::currentMSecsSinceEpoch() - externalNodesTimestamp > Preferences::MIN_EXTERNAL_NODES_WARNING_MS)
-        {
-            externalNodesTimestamp = QDateTime::currentMSecsSinceEpoch();
-            showNotificationMessage(tr("You have new or updated files in your account"));
         }
     }
 }
