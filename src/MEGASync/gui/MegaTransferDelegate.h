@@ -21,7 +21,7 @@ public:
 protected:
     QTransfersModel *model;
     void processCancel(int tag);
-    bool processShowInFolder(int tag);
+    void processShowInFolder(int tag);
 };
 
 #endif // MEGATRANSFERDELEGATE_H

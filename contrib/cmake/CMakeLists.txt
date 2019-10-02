@@ -81,6 +81,7 @@ set (FORMS
     ${MEGAsyncDir}/gui/win/ChangeLogDialog.ui
     ${MEGAsyncDir}/gui/win/GuestWidget.ui
     ${MEGAsyncDir}/gui/win/StreamingFromMegaDialog.ui
+    ${MEGAsyncDir}/gui/win/MegaProgressCustomDialog.ui
     ${MEGAsyncDir}/gui/win/ConfirmSSLexception.ui
     ${MEGAsyncDir}/gui/win/PlanWidget.ui
     ${MEGAsyncDir}/gui/win/UpgradeDialog.ui
@@ -147,6 +148,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/ChangeLogDialog.h
     ${MEGAsyncDir}/gui/ChangePassword.h
 #    ${MEGAsyncDir}/gui/CocoaHelpButton.h
+    ${MEGAsyncDir}/gui/MegaProgressCustomDialog.h
     ${MEGAsyncDir}/gui/ConfirmSSLexception.h
     ${MEGAsyncDir}/gui/CrashReportDialog.h
     ${MEGAsyncDir}/gui/CustomTransferItem.h
@@ -174,6 +176,7 @@ set (MOC_INPUT
     ${MEGAsyncDir}/gui/PasteMegaLinksDialog.h
 #    ${MEGAsyncDir}/gui/PermissionsDialog.h
 #    ${MEGAsyncDir}/gui/PermissionsWidget.h
+    ${MEGAsyncDir}/gui/MegaProgressCustomDialog.h
     ${MEGAsyncDir}/gui/PlanWidget.h
     ${MEGAsyncDir}/gui/PSAwidget.h
     ${MEGAsyncDir}/gui/QActiveTransfersModel.h
@@ -281,6 +284,7 @@ set (SRCS
     ${MEGAsyncDir}/gui/GuestWidget.cpp
     ${MEGAsyncDir}/gui/HighDpiResize.cpp
     ${MEGAsyncDir}/gui/StreamingFromMegaDialog.cpp
+    ${MEGAsyncDir}/gui/MegaProgressCustomDialog.cpp
     ${MEGAsyncDir}/gui/ConfirmSSLexception.cpp
     ${MEGAsyncDir}/gui/UpgradeDialog.cpp
     ${MEGAsyncDir}/gui/PlanWidget.cpp
