@@ -40,6 +40,6 @@ INSTALLS += emblems32  emblems64
 # update icons cache
 !contains(DEFINES, no_desktop) {
     update_cache.commands = gtk-update-icon-cache -f -t $${HICOLOR} || true
-    update_cache.path = $$PWD
+    update_cache.path = $${HICOLOR}
     INSTALLS += update_cache
 }
