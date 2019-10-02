@@ -12,6 +12,7 @@ MegaProgressCustomDialog::MegaProgressCustomDialog(QWidget *parent, int minimum,
     ui->progressBar->setMinimum(minimum);
     ui->progressBar->setMaximum(maximum);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
+    highDpiResize.init(this);
 }
 
 MegaProgressCustomDialog::~MegaProgressCustomDialog() {
@@ -26,4 +27,13 @@ void MegaProgressCustomDialog::reject()
 void MegaProgressCustomDialog::closeEvent(QCloseEvent * event)
 {
     event->ignore();
+}
+
+void MegaProgressCustomDialog::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+    QWidget::changeEvent(event);
 }

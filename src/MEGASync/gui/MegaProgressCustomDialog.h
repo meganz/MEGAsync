@@ -2,6 +2,7 @@
 #define MEGAPROGRESSCUSTOMDIALOG_H
 
 #include <QDialog>
+#include "HighDpiResize.h"
 
 namespace Ui {
 class MegaProgressCustomDialog;
@@ -14,12 +15,16 @@ class MegaProgressCustomDialog : public QDialog
 public:
     explicit MegaProgressCustomDialog(QWidget *parent = 0, int minimum = 0, int maximum = 0);
     ~MegaProgressCustomDialog();
+
 protected:
     void reject();
     void closeEvent(QCloseEvent * event);
+    void changeEvent(QEvent * event);
+
 
 private:
     Ui::MegaProgressCustomDialog *ui;
+    HighDpiResize highDpiResize;
 
 };
 
