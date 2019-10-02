@@ -352,7 +352,7 @@ bool MegaTransferDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view,
     return QStyledItemDelegate::helpEvent(event, view, option, index);
 }
 
-bool MegaTransferDelegate::processShowInFolder(int tag)
+void MegaTransferDelegate::processShowInFolder(int tag)
 {
     MegaTransfer *transfer = NULL;
     transfer = model->getTransferByTag(tag);

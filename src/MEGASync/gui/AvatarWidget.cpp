@@ -1,6 +1,7 @@
 #include "AvatarWidget.h"
 #include "control/Utilities.h"
 #include <QPainter>
+#include <QMouseEvent>
 #include <math.h>
 #include "MegaApplication.h"
 

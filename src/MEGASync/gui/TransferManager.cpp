@@ -4,6 +4,7 @@
 #include "MegaApplication.h"
 #include "Utilities.h"
 #include "platform/Platform.h"
+#include <QMouseEvent>
 
 using namespace mega;
 
