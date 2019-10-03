@@ -6525,6 +6525,11 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                         megaApi->getSessionTransferURL(url.toUtf8().constData());
                     }
                 }
+
+                if (businessStatus != -2 && businessStatus == MegaApi::BUSINESS_STATUS_EXPIRED)
+                {
+                    restoreSyncs();
+                }
                 break;
             }
             case MegaApi::BUSINESS_STATUS_EXPIRED:
