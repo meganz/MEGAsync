@@ -2041,6 +2041,7 @@ void MegaApplication::disableSyncs()
     if (syncsModified)
     {
         createTrayMenu();
+        showErrorMessage(tr("Your syncs have been temporarily disabled"));
     }
 }
 
@@ -6504,8 +6505,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
     }
     else if (event->getType() == MegaEvent::EVENT_BUSINESS_STATUS)
     {
-        businessStatus = event->getNumber();
-        switch (businessStatus)
+        switch (event->getNumber())
         {
             case MegaApi::BUSINESS_STATUS_GRACE_PERIOD:
             {
@@ -6561,11 +6561,23 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
                     msgBox.exec();
                 }
+
+                disableSyncs();
+                break;
+            }
+            case MegaApi::BUSINESS_STATUS_ACTIVE:
+            {
+                if (businessStatus != -2 && businessStatus != event->getNumber())
+                {
+                    restoreSyncs();
+                }
                 break;
             }
             default:
                 break;
         }
+
+        businessStatus = event->getNumber();
     }
 }
 
@@ -6600,8 +6612,9 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     if (e->getErrorCode() == MegaError::API_EBUSINESSPASTDUE
             && (!lastTsBusinessWarning || (QDateTime::currentMSecsSinceEpoch() - lastTsBusinessWarning) > 3000))//Notify only once within last five seconds
     {
-        lastTsBusinessWarning = QDateTime::currentMSecsSinceEpoch();;
+        lastTsBusinessWarning = QDateTime::currentMSecsSinceEpoch();
         sendBusinessWarningNotification();
+        disableSyncs();
     }
     
     switch (request->getType())
@@ -7572,8 +7585,9 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     if (e->getErrorCode() == MegaError::API_EBUSINESSPASTDUE
             && (!lastTsBusinessWarning || (QDateTime::currentMSecsSinceEpoch() - lastTsBusinessWarning) > 3000))//Notify only once within last five seconds
     {
-        lastTsBusinessWarning = QDateTime::currentMSecsSinceEpoch();;
+        lastTsBusinessWarning = QDateTime::currentMSecsSinceEpoch();
         sendBusinessWarningNotification();
+        disableSyncs();
     }
 
     //Show the transfer in the "recently updated" list
