@@ -120,7 +120,7 @@ QString CustomTransferItem::getTransferName()
 
 bool CustomTransferItem::checkIsInsideButton(QPoint pos, int button)
 {
-    if (!actionButtonsEnabled)
+    if (!actionButtonsEnabled || isSyncTransfer)
     {
         return false;
     }
@@ -147,12 +147,13 @@ bool CustomTransferItem::checkIsInsideButton(QPoint pos, int button)
 
 void CustomTransferItem::mouseHoverTransfer(bool isHover)
 {
+
     if (isHover)
     {
         actionButtonsEnabled = true;
         if (transferError < 0)
         {
-            ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/ico_item_retry.png")));
+            ui->lActionTransfer->setIcon(QIcon(QString::fromAscii(isSyncTransfer?"://images/error.png":"://images/ico_item_retry.png")));
             ui->lActionTransfer->setIconSize(QSize(24,24));
             ui->lShowInFolder->hide();
         }
