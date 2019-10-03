@@ -3165,7 +3165,7 @@ void MegaApplication::sendBusinessWarningNotification()
                 MegaNotification *notification = new MegaNotification();
                 notification->setTitle(tr("Something went wrong"));
                 notification->setText(tr("Please access MEGA in a desktop browser for more information."));
-                notification->setActions(QStringList() << tr("Continue"));
+                notification->setActions(QStringList() << tr("Pay Now"));
                 connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToPayBusiness(int)));
                 notificator->notify(notification);
             }
@@ -3174,12 +3174,12 @@ void MegaApplication::sendBusinessWarningNotification()
         case MegaApi::BUSINESS_STATUS_EXPIRED:
         {
             MegaNotification *notification = new MegaNotification();
-            notification->setTitle(tr("Account suspended"));
+            notification->setTitle(tr("Your Business account is expired"));
 
             if (megaApi->isMasterBusinessAccount())
             {
-                notification->setText(tr("MEGA is limited to view only until this issue has been fixed in a desktop browser."));
-                notification->setActions(QStringList() << tr("Continue"));
+                notification->setText(tr("Your account is suspended as read only until you proceed with the needed payments."));
+                notification->setActions(QStringList() << tr("Pay Now"));
                 connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToPayBusiness(int)));
             }
             else
@@ -6515,7 +6515,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     msgBox.setIcon(QMessageBox::Warning);
                     msgBox.setText(tr("Something went wrong"));
                     msgBox.setInformativeText(tr("There has been a problem with your last payment. Please access MEGA in a desktop browser for more information."));
-                    msgBox.addButton(tr("Visit MEGA"), QMessageBox::AcceptRole);
+                    msgBox.addButton(tr("Pay Now"), QMessageBox::AcceptRole);
                     msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
                     msgBox.setDefaultButton(QMessageBox::Yes);
                     int ret = msgBox.exec();
@@ -6531,12 +6531,12 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
             {
                 QMessageBox msgBox;
                 msgBox.setIcon(QMessageBox::Warning);
-                msgBox.setText(tr("Account Suspended"));
+                msgBox.setText(tr("Your Business account is expired"));
 
                 if (megaApi->isMasterBusinessAccount())
                 {
-                    msgBox.setInformativeText(tr("There has been a problem processing your payment. MEGA is limited to view only until this issue has been fixed in a desktop web browser."));
-                    msgBox.addButton(tr("Visit MEGA"), QMessageBox::AcceptRole);
+                    msgBox.setInformativeText(tr("It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments."));
+                    msgBox.addButton(tr("Pay Now"), QMessageBox::AcceptRole);
                     msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
                     msgBox.setDefaultButton(QMessageBox::Yes);
                     int ret = msgBox.exec();
