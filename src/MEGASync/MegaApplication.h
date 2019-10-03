@@ -259,6 +259,7 @@ private slots:
     void showInFolder(int activationButton);
     void openFolderPath(QString path);
     void redirectToUpgrade(int activationButton);
+    void redirectToPayBusiness(int activationButton);
     void registerUserActivity();
     void PSAseen(int id);
 
@@ -283,6 +284,7 @@ protected:
     void refreshStorageUIs();
 
     void sendOverStorageNotification(int state);
+    void sendBusinessWarningNotification();
 
     bool eventFilter(QObject *obj, QEvent *e);
 
@@ -372,6 +374,7 @@ protected:
     bool inflightUserStats[3];
     long long cleaningSchedulerExecution;
     long long lastUserActivityExecution;
+    long long lastTsBusinessWarning;
     bool almostOQ;
     int storageState;
     int appliedStorageState;
@@ -444,6 +447,7 @@ protected:
     bool updatingSSLcert;
     long long lastSSLcertUpdate;
     bool nodescurrent;
+    int businessStatus = -2;
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener

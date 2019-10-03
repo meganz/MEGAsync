@@ -876,6 +876,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     transferManager = NULL;
     cleaningSchedulerExecution = 0;
     lastUserActivityExecution = 0;
+    lastTsBusinessWarning = 0;
     maxMemoryUsage = 0;
     nUnviewedTransfers = 0;
     completedTabActive = false;
@@ -2062,6 +2063,7 @@ void MegaApplication::disableSyncs()
     if (syncsModified)
     {
         createTrayMenu();
+        showErrorMessage(tr("Your syncs have been temporarily disabled"));
     }
 }
 
@@ -3185,6 +3187,47 @@ void MegaApplication::sendOverStorageNotification(int state)
     }
 }
 
+void MegaApplication::sendBusinessWarningNotification()
+{
+    switch (businessStatus)
+    {
+        case MegaApi::BUSINESS_STATUS_GRACE_PERIOD:
+        {
+            if (megaApi->isMasterBusinessAccount())
+            {
+                MegaNotification *notification = new MegaNotification();
+                notification->setTitle(tr("Something went wrong"));
+                notification->setText(tr("Please access MEGA in a desktop browser for more information."));
+                notification->setActions(QStringList() << tr("Pay Now"));
+                connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToPayBusiness(int)));
+                notificator->notify(notification);
+            }
+            break;
+        }
+        case MegaApi::BUSINESS_STATUS_EXPIRED:
+        {
+            MegaNotification *notification = new MegaNotification();
+            notification->setTitle(tr("Your Business account is expired"));
+
+            if (megaApi->isMasterBusinessAccount())
+            {
+                notification->setText(tr("Your account is suspended as read only until you proceed with the needed payments."));
+                notification->setActions(QStringList() << tr("Pay Now"));
+                connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToPayBusiness(int)));
+            }
+            else
+            {
+                notification->setText(tr("Contact your business account administrator."));
+            }
+
+            notificator->notify(notification);
+            break;
+        }
+        default:
+            break;
+    }
+}
+
 bool MegaApplication::eventFilter(QObject *obj, QEvent *e)
 {
     if (obj == trayMenu.get())
@@ -4224,6 +4267,20 @@ void MegaApplication::redirectToUpgrade(int activationButton)
             }
         }
 
+        megaApi->getSessionTransferURL(url.toUtf8().constData());
+    }
+}
+
+void MegaApplication::redirectToPayBusiness(int activationButton)
+{
+    if (activationButton == MegaNotification::ActivationActionButtonClicked
+            || activationButton == MegaNotification::ActivationLegacyNotificationClicked
+        #ifndef _WIN32
+            || activationButton == MegaNotification::ActivationContentClicked
+        #endif
+            )
+    {
+        QString url = QString::fromUtf8("/repay");
         megaApi->getSessionTransferURL(url.toUtf8().constData());
     }
 }
@@ -6514,6 +6571,87 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
         preferences->sync();
         refreshStorageUIs();
     }
+    else if (event->getType() == MegaEvent::EVENT_BUSINESS_STATUS)
+    {
+        switch (event->getNumber())
+        {
+            case MegaApi::BUSINESS_STATUS_GRACE_PERIOD:
+            {
+                if (megaApi->isMasterBusinessAccount())
+                {
+                    QMessageBox msgBox;
+                    msgBox.setIcon(QMessageBox::Warning);
+                    msgBox.setText(tr("Something went wrong"));
+                    msgBox.setInformativeText(tr("There has been a problem with your last payment. Please access MEGA in a desktop browser for more information."));
+                    msgBox.addButton(tr("Pay Now"), QMessageBox::AcceptRole);
+                    msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
+                    msgBox.setDefaultButton(QMessageBox::Yes);
+                    int ret = msgBox.exec();
+                    if (ret == QMessageBox::AcceptRole)
+                    {
+                        QString url = QString::fromUtf8("/repay");
+                        megaApi->getSessionTransferURL(url.toUtf8().constData());
+                    }
+                }
+
+                if (businessStatus != -2 && businessStatus == MegaApi::BUSINESS_STATUS_EXPIRED)
+                {
+                    restoreSyncs();
+                }
+                break;
+            }
+            case MegaApi::BUSINESS_STATUS_EXPIRED:
+            {
+                QMessageBox msgBox;
+                msgBox.setIcon(QMessageBox::Warning);
+                msgBox.setText(tr("Your Business account is expired"));
+
+                if (megaApi->isMasterBusinessAccount())
+                {
+                    msgBox.setInformativeText(tr("It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments."));
+                    msgBox.addButton(tr("Pay Now"), QMessageBox::AcceptRole);
+                    msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
+                    msgBox.setDefaultButton(QMessageBox::Yes);
+                    int ret = msgBox.exec();
+                    if (ret == QMessageBox::AcceptRole)
+                    {
+                        QString url = QString::fromUtf8("/repay");
+                        megaApi->getSessionTransferURL(url.toUtf8().constData());
+                    }
+                }
+                else
+                {
+                    msgBox.setTextFormat(Qt::RichText);
+                    msgBox.setInformativeText(
+                                tr("Your account is on [A]suspended status[/A].")
+                                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
+                                    .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
+                                + QString::fromUtf8("<br>") + QString::fromUtf8("<br>") +
+                                tr("[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.")
+                                    .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; color:#DF4843; text-decoration:none;\">"))
+                                    .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>")) + QString::fromAscii("\n"));
+
+                    msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
+                    msgBox.exec();
+                }
+
+                disableSyncs();
+                break;
+            }
+            case MegaApi::BUSINESS_STATUS_ACTIVE:
+            {
+                if (businessStatus != -2 && businessStatus != event->getNumber())
+                {
+                    restoreSyncs();
+                }
+                break;
+            }
+            default:
+                break;
+        }
+
+        businessStatus = event->getNumber();
+    }
 }
 
 //Called when a request is about to start
@@ -6544,6 +6682,14 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
         sslKeyPinningError = NULL;
     }
 
+    if (e->getErrorCode() == MegaError::API_EBUSINESSPASTDUE
+            && (!lastTsBusinessWarning || (QDateTime::currentMSecsSinceEpoch() - lastTsBusinessWarning) > 3000))//Notify only once within last five seconds
+    {
+        lastTsBusinessWarning = QDateTime::currentMSecsSinceEpoch();
+        sendBusinessWarningNotification();
+        disableSyncs();
+    }
+    
     switch (request->getType())
     {
     case MegaRequest::TYPE_EXPORT:
@@ -6556,7 +6702,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             showInfoMessage(tr("The link has been copied to the clipboard"));
         }
 
-        if (e->getErrorCode() != MegaError::API_OK)
+        if (e->getErrorCode() != MegaError::API_OK
+                && e->getErrorCode() != MegaError::API_EBUSINESSPASTDUE)
         {
             showErrorMessage(tr("Error getting link: ") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", e->getErrorString()));
         }
@@ -7168,7 +7315,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                             megaApi->fetchNodes();
                         }
                     }
-                    else if (e->getErrorCode() != MegaError::API_ENOENT) // Managed in onNodesUpdate
+                    else if (e->getErrorCode() != MegaError::API_ENOENT
+                             && e->getErrorCode() != MegaError::API_EBUSINESSPASTDUE) // Managed in onNodesUpdate
                     {
                         showErrorMessage(QCoreApplication::translate("MegaError", e->getErrorString()));
                     }
@@ -7306,7 +7454,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                 processDownloads();
                 break;
             }
-            else
+            else if (e->getErrorCode() != MegaError::API_EBUSINESSPASTDUE)
             {
                 showErrorMessage(tr("Error getting link information"));
             }
@@ -7510,6 +7658,14 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     if (finishedTransferOrder.size() > (int)Preferences::MAX_COMPLETED_ITEMS)
     {
         removeFinishedTransfer(finishedTransferOrder.first()->getTag());
+    }
+
+    if (e->getErrorCode() == MegaError::API_EBUSINESSPASTDUE
+            && (!lastTsBusinessWarning || (QDateTime::currentMSecsSinceEpoch() - lastTsBusinessWarning) > 3000))//Notify only once within last five seconds
+    {
+        lastTsBusinessWarning = QDateTime::currentMSecsSinceEpoch();
+        sendBusinessWarningNotification();
+        disableSyncs();
     }
 
     //Show the transfer in the "recently updated" list
