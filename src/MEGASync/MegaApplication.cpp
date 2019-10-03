@@ -7666,7 +7666,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
         return;
     }
 
-    bool externalNodes = false;
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("%1 updated files/folders").arg(nodes->size()).toUtf8().constData());
 
     //Check all modified nodes
