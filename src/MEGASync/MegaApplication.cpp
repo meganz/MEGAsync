@@ -859,7 +859,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     storageOverquotaDialog = NULL;
     bwOverquotaEvent = false;
     infoWizard = NULL;
-    externalNodesTimestamp = 0;
     noKeyDetected = 0;
     isFirstSyncDone = false;
     isFirstFileSynced = false;
@@ -7667,7 +7666,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
         return;
     }
 
-    bool externalNodes = false;
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("%1 updated files/folders").arg(nodes->size()).toUtf8().constData());
 
     //Check all modified nodes
@@ -7719,28 +7717,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             }
         }
 
-        if (nodescurrent && !node->isRemoved() && !node->isSyncDeleted()
-                && (node->getType() == MegaNode::TYPE_FILE)
-                && node->getSize() && node->hasChanged(MegaNode::CHANGE_TYPE_NEW))
-        {
-            long long bytes = node->getSize();
-            if (!megaApi->isInCloud(node))
-            {
-                preferences->setInShareStorage(preferences->inShareStorage() + bytes);
-            }
-            else
-            {
-                preferences->setCloudDriveStorage(preferences->cloudDriveStorage() + bytes);
-            }
-
-            if (!externalNodes && !node->getTag()
-                    && ((lastExit / 1000) < node->getCreationTime())
-                    && megaApi->isInsideSync(node))
-            {
-                externalNodes = true;
-            }
-        }
-
         if (!node->isRemoved() && node->getTag()
                 && !node->isSyncDeleted()
                 && (node->getType() == MegaNode::TYPE_FILE)
@@ -7762,15 +7738,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                 rebootApplication(false);
             }
             noKeyDetected++;
-        }
-    }
-
-    if (externalNodes)
-    {
-        if (QDateTime::currentMSecsSinceEpoch() - externalNodesTimestamp > Preferences::MIN_EXTERNAL_NODES_WARNING_MS)
-        {
-            externalNodesTimestamp = QDateTime::currentMSecsSinceEpoch();
-            showNotificationMessage(tr("You have new or updated files in your account"));
         }
     }
 }
