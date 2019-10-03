@@ -160,7 +160,6 @@ win32 {
                 $$PWD/win/ChangeLogDialog.ui \
                 $$PWD/win/GuestWidget.ui \
                 $$PWD/win/StreamingFromMegaDialog.ui \
-                $$PWD/win/MegaProgressCustomDialog.ui \
                 $$PWD/win/ConfirmSSLexception.ui \
                 $$PWD/win/MegaProgressCustomDialog.ui \
                 $$PWD/win/PlanWidget.ui \
