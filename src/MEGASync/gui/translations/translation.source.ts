@@ -194,6 +194,29 @@
     </message>
 </context>
 <context>
+    <name>AlertFilterType</name>
+    <message>
+        <source>All notifications</source>
+        <translatorcomment>Label to indicate that the application is showing all types of notifications</translatorcomment>
+        <translation type="unfinished">All notifications</translation>
+    </message>
+    <message>
+        <source>Contacts</source>
+        <translatorcomment>Label to indicate that the application is showing only contact notifications</translatorcomment>
+        <translation type="unfinished">Contacts</translation>
+    </message>
+    <message>
+        <source>Payment</source>
+        <translatorcomment>Label to indicate that the application is showing only payment notifications</translatorcomment>
+        <translation type="unfinished">Payment</translation>
+    </message>
+    <message>
+        <source>Incoming Shares</source>
+        <translatorcomment>Label to indicate that the application is showing only incoming share notifications</translatorcomment>
+        <translation type="unfinished">Incoming Shares</translation>
+    </message>
+</context>
+<context>
     <name>AlertItem</name>
     <message>
         <source>NEW</source>
@@ -1355,7 +1378,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Incoming Shares</source>
         <translatorcomment>Label to indicate Incoming Shares section of a MEGA account. Keep capital letters.</translatorcomment>
-        <translation type="unfinished">Incoming Shares</translation>
+        <translation type="obsolete">Incoming Shares</translation>
     </message>
     <message>
         <source>Rubbish bin</source>
@@ -1458,7 +1481,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All notifications</source>
         <translatorcomment>Label to indicate that all notifications will be shown.</translatorcomment>
-        <translation type="unfinished">All notifications</translation>
+        <translation type="obsolete">All notifications</translation>
     </message>
     <message>
         <source>Open notification settings</source>
@@ -1488,7 +1511,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Contacts</source>
         <translatorcomment>Label to filter notifications  by contact type</translatorcomment>
-        <translation type="unfinished">Contacts</translation>
+        <translation type="obsolete">Contacts</translation>
     </message>
     <message>
         <source>No notifications for contacts</source>
@@ -1503,7 +1526,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Payment</source>
         <translatorcomment>Label to filter notifications  by payment type</translatorcomment>
-        <translation type="unfinished">Payment</translation>
+        <translation type="obsolete">Payment</translation>
     </message>
     <message>
         <source>No notifications for payments</source>
@@ -1879,7 +1902,7 @@ Exit anyway?</source>
     <message>
         <source>You have new or updated files in your account</source>
         <translatorcomment>Notification message launched when new or updated files have been added or modified to the current MEGA account.</translatorcomment>
-        <translation>You have new or updated files in your account</translation>
+        <translation type="vanished">You have new or updated files in your account</translation>
     </message>
     <message>
         <source>MEGAsync has been updated</source>
@@ -2387,7 +2410,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
         <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
-        <translation type="unfinished">MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</translation>
+        <translation type="unfinished">MEGA is unable to connect securely through SSL. You might be on public Wi-Fi with additional requirements.</translation>
     </message>
     <message>
         <source>Cloud drive</source>
@@ -2398,6 +2421,66 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Error transferring folder: </source>
         <translatorcomment>Label to indicate that has been an error during a folder transfer.</translatorcomment>
         <translation type="unfinished">Error transferring folder: </translation>
+    </message>
+    <message>
+        <source>Your syncs have been temporarily disabled</source>
+        <translatorcomment>Notification text to inform the user that the active syncs have been disabled due to overquota or expiration state for business accounts</translatorcomment>
+        <translation type="unfinished">Your syncs have been temporarily disabled</translation>
+    </message>
+    <message>
+        <source>Something went wrong</source>
+        <translatorcomment>Notification title shown to the user to inform that the current action has failed because the current business account is in grace period.</translatorcomment>
+        <translation type="unfinished">Something went wrong</translation>
+    </message>
+    <message>
+        <source>Please access MEGA in a desktop browser for more information.</source>
+        <translatorcomment>Notification message shown to the the user to inform that needs to access his account with webclient to check for pending payment issues.</translatorcomment>
+        <translation type="unfinished">Please access MEGA in a desktop browser for more information.</translation>
+    </message>
+    <message>
+        <source>Pay Now</source>
+        <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account.</translatorcomment>
+        <translation type="unfinished">Pay Now</translation>
+    </message>
+    <message>
+        <source>Your Business account is expired</source>
+        <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
+        <translation type="unfinished">Your Business account is expired</translation>
+    </message>
+    <message>
+        <source>Your account is suspended as read only until you proceed with the needed payments.</source>
+        <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
+        <translation type="unfinished">Your account is suspended as read only until you proceed with the needed payments.</translation>
+    </message>
+    <message>
+        <source>Contact your business account administrator.</source>
+        <translatorcomment>Notification message show to non-admin users for business accounts when there are issues that needs to be addressed by the business account admin.</translatorcomment>
+        <translation type="unfinished">Contact your business account administrator.</translation>
+    </message>
+    <message>
+        <source>There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.</source>
+        <translatorcomment>Notification message shown to admin business account about a failure with the last payment and the explain the way to deal with.</translatorcomment>
+        <translation type="unfinished">There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.</translation>
+    </message>
+    <message>
+        <source>Dismiss</source>
+        <translatorcomment>Button text to discard a notification or message box</translatorcomment>
+        <translation type="unfinished">Dismiss</translation>
+    </message>
+    <message>
+        <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
+        <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
+        <translation type="unfinished">It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</translation>
+    </message>
+    <message>
+        <source>Your account is on [A]suspended status[/A].</source>
+        <translatorcomment>Message shown when the current business account is suspended. Keep placeholders, will be replaced at runtime.</translatorcomment>
+        <translation type="unfinished">Your account is on [A]suspended status[/A].</translation>
+    </message>
+    <message>
+        <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
+        <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
+        <translation type="unfinished">[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</translation>
     </message>
 </context>
 <context>
@@ -2566,6 +2649,19 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
         <source>Cloud Drive</source>
         <translatorcomment>Title of the Cloud Drive section</translatorcomment>
         <translation type="unfinished">Cloud Drive</translation>
+    </message>
+</context>
+<context>
+    <name>MegaProgressCustomDialog</name>
+    <message>
+        <source>MEGAsync</source>
+        <translatorcomment>Title of MEGAsync dialog.</translatorcomment>
+        <translation type="unfinished">MEGAsync</translation>
+    </message>
+    <message>
+        <source>Please wait...</source>
+        <translatorcomment>Message shown when a proxy task is being processed</translatorcomment>
+        <translation type="unfinished">Please wait...</translation>
     </message>
 </context>
 <context>
@@ -3517,7 +3613,7 @@ when the application starts again.</source>
     <message>
         <source>Please wait...</source>
         <translatorcomment>Label to indicate the user that please wait.</translatorcomment>
-        <translation>Please wait…</translation>
+        <translation type="vanished">Please wait…</translation>
     </message>
     <message>
         <source>Check for updates</source>
