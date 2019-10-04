@@ -2679,7 +2679,6 @@ void MegaApplication::periodicTasks()
             checkOverStorageStates();
         }
 
-        megaApi->updateStats();
         onGlobalSyncStateChanged(megaApi);
 
         if (isLinux)
