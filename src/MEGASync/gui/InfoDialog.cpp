@@ -125,6 +125,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 #ifdef _WIN32
     if(getenv("QT_SCREEN_SCALE_FACTORS"))
     {
+        //do not use WA_TranslucentBackground when using custom scale factors in windows
         setStyleSheet(styleSheet().append(QString::fromUtf8("#wInfoDialogIn{border-radius: 0px;}" ) ));
     }
     else
