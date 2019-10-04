@@ -2503,13 +2503,13 @@ background-color: #F4F6F8;
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
-                   <height>32</height>
+                   <height>31</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
                    <width>16777215</width>
-                   <height>32</height>
+                   <height>31</height>
                   </size>
                  </property>
                 </widget>
