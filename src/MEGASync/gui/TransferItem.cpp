@@ -78,6 +78,11 @@ void TransferItem::setFinishedTime(long long time)
     dsFinishedTime = time;
 }
 
+long long TransferItem::getFinishedTime()
+{
+    return dsFinishedTime;
+}
+
 void TransferItem::setType(int type, bool isSyncTransfer)
 {
     this->type = type;

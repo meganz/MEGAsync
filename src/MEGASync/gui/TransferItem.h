@@ -21,6 +21,7 @@ public:
     virtual void setSpeed(long long transferSpeed, long long meanSpeed);
     virtual void setTotalSize(long long size);
     virtual void setFinishedTime(long long time);
+    virtual long long getFinishedTime();
 
     virtual void setType(int type, bool isSyncTransfer = false);
     virtual int getType();
