@@ -102,6 +102,9 @@ QPushButton
        <height>564</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <property name="spacing">
        <number>0</number>
@@ -253,58 +256,33 @@ background-color: #F4F6F8;
                   <bool>false</bool>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">#bUpgrade[overquota=true]
+                  <string notr="true">#bUpgrade
 {
- background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #999999, stop: 1 #aaaaaa);
- border-radius: 3px;
- border: 1px solid rgba(0, 0, 0, 45%);
- padding: 7px 12px 7px 6px;
- font-family: &quot;Lato&quot;;
- font-size: 13px;
- color: #ffffff;
-}
-#bUpgrade::hover[overquota=true]
-{
-  border: 1px solid rgba(0, 0, 0, 60%);
-  border-radius: 3px;
-  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #999999, stop: 1 #aaaaaa);
-}
-
-#bUpgrade::pressed[overquota=true]
-{
-  border: 1px solid rgba(0, 0, 0, 60%);
-  border-radius: 3px;
-  background-color: rgba(0, 0, 0, 50%);
-}
-
-#bUpgrade
-{
- background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #ffffff, stop: 1 #fafafa);
- border-radius: 3px;
- border: 1px solid rgba(0, 0, 0, 15%);
- padding: 7px 12px 7px 12px;
- font-family: &quot;Lato&quot;;
- font-size: 13px;
- color: #777777;
+font-family: Lato;
+font-size: 14px;
+border: 1px solid rgba(0, 0, 0, 5%);
+border-radius: 3px;
+color: #333333;
+padding: 6px 12px 6px 12px;
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+stop: 0 #ffffff, stop: 1 #fafafa);
 }
 
 #bUpgrade::hover
 {
-  border: 1px solid rgba(0, 0, 0, 20%);
-  border-radius: 3px;
-  background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
-                                      stop: 0 #ffffff, stop: 1 #fafafa);
-
+border: 1px solid rgba(0, 0, 0, 10%);
 }
 
 #bUpgrade::pressed
 {
-  background-color: rgba(0, 0, 0, 10%);
-  border: 1px solid rgba(0, 0, 0, 20%);
-  border-radius: 3px;
+font-family: Lato;
+font-size: 14px;
+border: 1px solid rgba(0, 0, 0, 5%);
+border-radius: 3px;
+color: #333333;
+padding: 6px 12px 6px 12px;
+background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
+stop: 0 #ffffff, stop: 1 #fafafa);
 }</string>
                  </property>
                  <property name="text">
@@ -943,7 +921,7 @@ margin-right: 4px;
                         <property name="minimumSize">
                          <size>
                           <width>400</width>
-                          <height>0</height>
+                          <height>68</height>
                          </size>
                         </property>
                         <property name="maximumSize">
@@ -960,13 +938,13 @@ margin-right: 4px;
                           <number>7</number>
                          </property>
                          <property name="leftMargin">
-                          <number>10</number>
+                          <number>14</number>
                          </property>
                          <property name="topMargin">
                           <number>0</number>
                          </property>
                          <property name="rightMargin">
-                          <number>10</number>
+                          <number>14</number>
                          </property>
                          <property name="bottomMargin">
                           <number>0</number>
@@ -981,7 +959,7 @@ margin-right: 4px;
                            </property>
                            <layout class="QHBoxLayout" name="horizontalLayout_4">
                             <property name="spacing">
-                             <number>5</number>
+                             <number>4</number>
                             </property>
                             <property name="leftMargin">
                              <number>0</number>
@@ -1177,10 +1155,10 @@ margin-bottom: 12px;
                            </property>
                            <layout class="QHBoxLayout" name="horizontalLayout_7">
                             <property name="spacing">
-                             <number>5</number>
+                             <number>4</number>
                             </property>
                             <property name="leftMargin">
-                             <number>0</number>
+                             <number>5</number>
                             </property>
                             <property name="topMargin">
                              <number>0</number>
@@ -1981,7 +1959,7 @@ background-color: #FFFFFF;
                        <number>0</number>
                       </property>
                       <item>
-                       <widget class="QWidget" name="wSortNotifications" native="true">
+                       <widget class="AlertFilterType" name="wSortNotifications" native="true">
                         <property name="minimumSize">
                          <size>
                           <width>130</width>
@@ -2010,105 +1988,6 @@ background-color: #FFFFFF;
                          <property name="bottomMargin">
                           <number>0</number>
                          </property>
-                         <item>
-                          <widget class="QLabel" name="lNotificationColor">
-                           <property name="minimumSize">
-                            <size>
-                             <width>10</width>
-                             <height>10</height>
-                            </size>
-                           </property>
-                           <property name="maximumSize">
-                            <size>
-                             <width>6</width>
-                             <height>6</height>
-                            </size>
-                           </property>
-                           <property name="text">
-                            <string/>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QToolButton" name="bActualFilter">
-                           <property name="minimumSize">
-                            <size>
-                             <width>0</width>
-                             <height>21</height>
-                            </size>
-                           </property>
-                           <property name="maximumSize">
-                            <size>
-                             <width>16777215</width>
-                             <height>21</height>
-                            </size>
-                           </property>
-                           <property name="cursor">
-                            <cursorShape>PointingHandCursor</cursorShape>
-                           </property>
-                           <property name="styleSheet">
-                            <string notr="true">#bActualFilter
-{
-	color: #666666;
-	font-family: Lato;
-	font-size: 14px;
-	text-align: center;
-     border: none;
-}</string>
-                           </property>
-                           <property name="text">
-                            <string>All notifications</string>
-                           </property>
-                           <property name="iconSize">
-                            <size>
-                             <width>0</width>
-                             <height>0</height>
-                            </size>
-                           </property>
-                           <property name="toolButtonStyle">
-                            <enum>Qt::ToolButtonTextOnly</enum>
-                           </property>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QPushButton" name="bActualFilterDropDown">
-                           <property name="minimumSize">
-                            <size>
-                             <width>16</width>
-                             <height>16</height>
-                            </size>
-                           </property>
-                           <property name="maximumSize">
-                            <size>
-                             <width>16</width>
-                             <height>16</height>
-                            </size>
-                           </property>
-                           <property name="cursor">
-                            <cursorShape>PointingHandCursor</cursorShape>
-                           </property>
-                           <property name="styleSheet">
-                            <string notr="true">#bActualFilterDropDown
-{
-     border: none;
-}</string>
-                           </property>
-                           <property name="text">
-                            <string/>
-                           </property>
-                           <property name="icon">
-                            <iconset>
-                             <normalon>:/images/arrow-to-left.png</normalon>
-                            </iconset>
-                           </property>
-                           <property name="iconSize">
-                            <size>
-                             <width>8</width>
-                             <height>5</height>
-                            </size>
-                           </property>
-                          </widget>
-                         </item>
                         </layout>
                        </widget>
                       </item>
@@ -2478,6 +2357,24 @@ background-color: #FFFFFF;
          </property>
          <item>
           <widget class="QFrame" name="wBottomFrame">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>400</width>
+             <height>58</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>400</width>
+             <height>88</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">#wBottomFrame
 {
@@ -2688,6 +2585,12 @@ background-color: #F4F6F8;
    <class>TransfersSummaryWidget</class>
    <extends>QWidget</extends>
    <header location="global">TransfersSummaryWidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>AlertFilterType</class>
+   <extends>QWidget</extends>
+   <header location="global">AlertFilterType.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

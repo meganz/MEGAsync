@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>392</height>
+    <width>402</width>
+    <height>394</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,21 +18,27 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>400</width>
-    <height>392</height>
+    <width>402</width>
+    <height>394</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>400</width>
-    <height>392</height>
+    <width>402</width>
+    <height>394</height>
    </size>
   </property>
   <property name="windowTitle">
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">QPushButton, QLabel
+   <string notr="true">#wGuestWidgetIn
+{
+ border: 1px solid rgba(100, 100, 100);
+ border-radius: 16px;
+}
+
+QPushButton, QLabel
 {
 font-size: 13px;
 }
@@ -40,9 +46,10 @@ font-size: 13px;
 #wHeader
 {
  background-color:  #FAFAFA;
- border-top-left-radius: 2px;
- border-top-right-radius: 2px;
+ border-top-left-radius: 16px;
+ border-top-right-radius: 16px;
 }
+
 #bMEGA, #bLogoLogging, #bLogoLogin, #bLogoSettingUp
 {
 	border: none;
@@ -125,6 +132,30 @@ QPushButton
     <number>0</number>
    </property>
    <item>
+    <widget class="QWidget" name="wGuestWidgetIn" native="true">
+     <property name="minimumSize">
+      <size>
+       <width>402</width>
+       <height>394</height>
+      </size>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_11">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>1</number>
+      </property>
+      <property name="topMargin">
+       <number>1</number>
+      </property>
+      <property name="rightMargin">
+       <number>1</number>
+      </property>
+      <property name="bottomMargin">
+       <number>1</number>
+      </property>
+      <item>
     <widget class="QWidget" name="wHeader" native="true">
      <property name="minimumSize">
       <size>
@@ -391,8 +422,7 @@ padding-top: 50px;</string>
           <item>
            <widget class="QWidget" name="wFormContainer" native="true">
             <property name="styleSheet">
-             <string notr="true">background: transparent;
-image: none;</string>
+                <string notr="true">image: none;</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout">
              <property name="spacing">
@@ -413,8 +443,7 @@ image: none;</string>
              <item>
               <widget class="QWidget" name="wInputData" native="true">
                <property name="styleSheet">
-                <string notr="true">background: transparent;
-image: none;</string>
+                   <string notr="true">image: none;</string>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_3">
                 <property name="spacing">
@@ -503,8 +532,7 @@ image: none;</string>
                 <item>
                  <widget class="QWidget" name="wLoginButton" native="true">
                   <property name="styleSheet">
-                   <string notr="true">background: transparent;
-image: none;</string>
+                      <string notr="true">image: none;</string>
                   </property>
                   <layout class="QHBoxLayout" name="horizontalLayout_4">
                    <property name="leftMargin">
@@ -611,6 +639,9 @@ border-bottom-right-radius: 2px;
              </property>
              <item>
               <widget class="QPushButton" name="bForgotPassword">
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
                <property name="styleSheet">
                 <string notr="true">background: transparent;
 image: none;
@@ -637,6 +668,9 @@ image: none;
              </item>
              <item>
               <widget class="QPushButton" name="bCreateAccount">
+                  <property name="cursor">
+                   <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
                <property name="styleSheet">
                 <string notr="true">background: transparent;
 image: none;
@@ -669,7 +703,7 @@ image: none;
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: white;</string>
+          <string notr="true"/>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <property name="spacing">
@@ -750,8 +784,7 @@ image: none;</string>
        <item>
         <widget class="QWidget" name="wStatusMessages" native="true">
          <property name="styleSheet">
-          <string notr="true">background: transparent;
-image: none;</string>
+             <string notr="true">image: none;</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
           <property name="leftMargin">
@@ -1105,6 +1138,9 @@ image: none;</string>
    </item>
   </layout>
  </widget>
+   </item>
+  </layout>
+ </widget>
  <tabstops>
   <tabstop>bSettings</tabstop>
   <tabstop>bCancel</tabstop>
@@ -1112,7 +1148,6 @@ image: none;</string>
   <tabstop>bForgotPassword</tabstop>
   <tabstop>bCreateAccount</tabstop>
   <tabstop>lEmail</tabstop>
-  <tabstop>bLogoSettingUp</tabstop>
   <tabstop>lPassword</tabstop>
  </tabstops>
  <resources>

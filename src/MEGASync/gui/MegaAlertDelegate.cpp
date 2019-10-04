@@ -1,8 +1,13 @@
 #include "MegaAlertDelegate.h"
 #include <QPainter>
 #include "megaapi.h"
+#include <QEvent>
 #include <QDebug>
 #include <QSortFilterProxyModel>
+#include <QDesktopServices>
+#include <QUrl>
+#include "MegaApplication.h"
+#include <QtConcurrent/QtConcurrent>
 #include "assert.h"
 
 using namespace mega;
@@ -80,5 +85,119 @@ QSize MegaAlertDelegate::sizeHint(const QStyleOptionViewItem &option, const QMod
     else
     {
         return QStyledItemDelegate::sizeHint(option, index);
+    }
+}
+
+bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &option, const QModelIndex &index)
+{
+    if (QEvent::MouseButtonPress ==  event->type())
+    {
+        MegaUserAlert *alert = NULL;
+        if (useProxy)
+        {
+            QModelIndex actualId = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
+            if (!(actualId.isValid()))
+            {
+                return true;
+            }
+
+            alert = (MegaUserAlert *)actualId.internalPointer();
+        }
+        else
+        {
+            alert = (MegaUserAlert *)index.internalPointer();
+        }
+
+        if (!alert)
+        {
+            return true;
+        }
+
+        MegaApi *api = ((MegaApplication*)qApp)->getMegaApi();
+
+        switch (alert->getType())
+        {
+            case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
+            case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
+                {
+                    bool found = false;
+                    std::unique_ptr<MegaContactRequestList> icr(api->getIncomingContactRequests());
+                    if (icr)
+                    {
+                        for (int i = 0; i < icr->size(); i++)
+                        {
+                            MegaContactRequest *request = icr->get(i);
+                            if (!request)
+                            {
+                                continue;
+                            }
+
+                            const char* email = request->getSourceEmail();
+                            if (!strcmp(alert->getEmail(), email))
+                            {
+                                found = true;
+                                QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/ipc")));
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!found)
+                    {
+                        QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/contacts")));
+                    }
+
+                    break;
+                }
+
+            case MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
+            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED:
+            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
+                {
+
+                    MegaUser *user = api->getContact(alert->getEmail());
+                    if (user && user->getVisibility() == MegaUser::VISIBILITY_VISIBLE)
+                    {
+                        QtConcurrent::run(QDesktopServices::openUrl,
+                                          QUrl(QString::fromUtf8("mega://#fm/%1").arg(QString::fromUtf8(api->userHandleToBase64(user->getHandle())))));
+                        delete user;
+                    }
+                    else
+                    {
+                        QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/contacts")));
+                    }
+
+                    break;
+                }
+            case MegaUserAlert::TYPE_NEWSHARE:
+            case MegaUserAlert::TYPE_DELETEDSHARE:
+            case MegaUserAlert::TYPE_NEWSHAREDNODES:
+            case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+            case MegaUserAlert::TYPE_TAKEDOWN:
+            case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
+                {
+                    MegaNode *node = api->getNodeByHandle(alert->getNodeHandle());
+                    if (node)
+                    {
+                        QtConcurrent::run(QDesktopServices::openUrl,
+                                          QUrl(QString::fromUtf8("mega://#fm/%1").arg(QString::fromUtf8(node->getBase64Handle()))));
+                        delete node;
+                    }
+
+                    break;
+                }
+
+            case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
+            case MegaUserAlert::TYPE_PAYMENT_FAILED:
+            case MegaUserAlert::TYPE_PAYMENTREMINDER:
+                {
+                    QtConcurrent::run(QDesktopServices::openUrl, QUrl(QString::fromUtf8("mega://#fm/account/plan")));
+                    break;
+                }
+
+            default:
+                break;
+
+        }
     }
 }

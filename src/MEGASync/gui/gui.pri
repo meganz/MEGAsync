@@ -23,6 +23,7 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/ChangeLogDialog.cpp \
     $$PWD/GuestWidget.cpp \
     $$PWD/StreamingFromMegaDialog.cpp \
+    $$PWD/MegaProgressCustomDialog.cpp \
     $$PWD/ConfirmSSLexception.cpp \
     $$PWD/UpgradeDialog.cpp \
     $$PWD/PlanWidget.cpp \
@@ -62,7 +63,8 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/QAlertsModel.cpp \
     $$PWD/MegaAlertDelegate.cpp \
     $$PWD/QFilterAlertsModel.cpp \
-    $$PWD/FilterAlertWidget.cpp
+    $$PWD/FilterAlertWidget.cpp \
+    $$PWD/AlertFilterType.cpp
 
 HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/InfoDialog.h \
@@ -87,6 +89,7 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/ChangeLogDialog.h \
     $$PWD/GuestWidget.h \
     $$PWD/StreamingFromMegaDialog.h \
+    $$PWD/MegaProgressCustomDialog.h \
     $$PWD/ConfirmSSLexception.h \
     $$PWD/UpgradeDialog.h \
     $$PWD/PlanWidget.h \
@@ -126,7 +129,8 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/QAlertsModel.h \
     $$PWD/MegaAlertDelegate.h \
     $$PWD/QFilterAlertsModel.h \
-    $$PWD/FilterAlertWidget.h
+    $$PWD/FilterAlertWidget.h \
+    $$PWD/AlertFilterType.h
 
 INCLUDEPATH += $$PWD
 
@@ -157,6 +161,7 @@ win32 {
                 $$PWD/win/GuestWidget.ui \
                 $$PWD/win/StreamingFromMegaDialog.ui \
                 $$PWD/win/ConfirmSSLexception.ui \
+                $$PWD/win/MegaProgressCustomDialog.ui \
                 $$PWD/win/PlanWidget.ui \
                 $$PWD/win/UpgradeDialog.ui \
                 $$PWD/win/InfoWizard.ui \
@@ -178,7 +183,8 @@ win32 {
                 $$PWD/win/TransfersStatusWidget.ui \
                 $$PWD/win/AlertItem.ui \
                 $$PWD/win/TransfersSummaryWidget.ui \
-                $$PWD/win/FilterAlertWidget.ui
+                $$PWD/win/FilterAlertWidget.ui \
+                $$PWD/win/AlertFilterType.ui
 }
 
 macx {
@@ -204,6 +210,7 @@ macx {
                 $$PWD/macx/StreamingFromMegaDialog.ui \
                 $$PWD/macx/PermissionsDialog.ui \
                 $$PWD/macx/PermissionsWidget.ui \
+                $$PWD/macx/MegaProgressCustomDialog.ui \
                 $$PWD/macx/ConfirmSSLexception.ui \
                 $$PWD/macx/PlanWidget.ui \
                 $$PWD/macx/UpgradeDialog.ui \
@@ -227,7 +234,8 @@ macx {
                 $$PWD/macx/TransfersStatusWidget.ui \
                 $$PWD/macx/AlertItem.ui \
                 $$PWD/macx/TransfersSummaryWidget.ui \
-                $$PWD/macx/FilterAlertWidget.ui
+                $$PWD/macx/FilterAlertWidget.ui \
+                $$PWD/macx/AlertFilterType.ui
 
     QT += macextras
     OBJECTIVE_SOURCES +=    gui/CocoaHelpButton.mm gui/MegaSystemTrayIcon.mm
@@ -263,6 +271,7 @@ unix:!macx {
                 $$PWD/linux/StreamingFromMegaDialog.ui \
                 $$PWD/linux/PermissionsDialog.ui \
                 $$PWD/linux/PermissionsWidget.ui \
+                $$PWD/linux/MegaProgressCustomDialog.ui \
                 $$PWD/linux/ConfirmSSLexception.ui \
                 $$PWD/linux/PlanWidget.ui \
                 $$PWD/linux/UpgradeDialog.ui \
@@ -285,10 +294,11 @@ unix:!macx {
                 $$PWD/linux/TransfersStatusWidget.ui \
                 $$PWD/linux/AlertItem.ui \
                 $$PWD/linux/TransfersSummaryWidget.ui \
-                $$PWD/linux/FilterAlertWidget.ui
+                $$PWD/linux/FilterAlertWidget.ui \
+                $$PWD/linux/AlertFilterType.ui
 
     HEADERS += $$PWD/PermissionsDialog.h \
                $$PWD/PermissionsWidget.h
     SOURCES += $$PWD/PermissionsDialog.cpp \
                $$PWD/PermissionsWidget.cpp
-}   
+}    

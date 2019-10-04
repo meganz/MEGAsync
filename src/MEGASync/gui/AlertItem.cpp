@@ -13,7 +13,7 @@ AlertItem::AlertItem(QWidget *parent) :
     megaApi = ((MegaApplication *)qApp)->getMegaApi();
 
     ui->sIconWidget->hide();
-    ui->bNotificationIcon->hide();
+    ui->wNotificationIcon->hide();
 }
 
 AlertItem::~AlertItem()
@@ -32,7 +32,7 @@ void AlertItem::setAlertData(MegaUserAlert *alert)
 
 void AlertItem::setAlertType(int type)
 {
-    ui->bNotificationIcon->hide();
+    ui->wNotificationIcon->hide();
 
     QString notificationTitle;
     QString notificationColor;
@@ -60,11 +60,20 @@ void AlertItem::setAlertType(int type)
             case MegaUserAlert::TYPE_NEWSHAREDNODES:
             case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
             {
+                if (type == MegaUserAlert::TYPE_DELETEDSHARE)
+                {
+                    ui->bSharedFolder->setIcon(QIcon(QString::fromUtf8(":/images/grey_folder.png")).pixmap(24.0, 24.0));
+                }
+                else
+                {
+                    ui->bSharedFolder->setIcon(QIcon(QString::fromUtf8(":/images/color_folder.png")).pixmap(24.0, 24.0));
+                }
+
                 ui->bNotificationIcon->setMinimumSize(QSize(10, 8));
                 ui->bNotificationIcon->setMaximumSize(QSize(10, 8));
                 ui->bNotificationIcon->setIconSize(QSize(10, 8));
                 ui->bNotificationIcon->setIcon(QIcon(QString::fromAscii("://images/share_arrow.png")));
-                ui->bNotificationIcon->show();
+                ui->wNotificationIcon->show();
                 notificationTitle = tr("Incoming Shares").toUpper();
                 notificationColor = QString::fromUtf8("#F2C249");
                 break;
@@ -92,12 +101,12 @@ void AlertItem::setAlertType(int type)
                 ui->bNotificationIcon->setMaximumSize(QSize(16, 16));
                 ui->bNotificationIcon->setIconSize(QSize(16, 16));
                 ui->bNotificationIcon->setIcon(QIcon(QString::fromAscii("://images/mega_notifications.png")));
-                ui->bNotificationIcon->show();
+                ui->wNotificationIcon->show();
             }
                 break;
     }
 
-    ui->lTitle->setStyleSheet(QString::fromAscii("#lTitle { font-family: Lato; font-size: 10px; color: %1; } ").arg(notificationColor));
+    ui->lTitle->setStyleSheet(QString::fromAscii("#lTitle { font-family: Lato; font-weight: 900; font-size: 10px; color: %1; } ").arg(notificationColor));
     ui->lTitle->setText(notificationTitle);
 }
 
@@ -420,8 +429,8 @@ QSize AlertItem::sizeHint() const
 void AlertItem::setAvatar(MegaUserAlert *alert)
 {
     QString color;
-    MegaHandle userHandle = alert->getUserHandle();
-    const char* avatarColor = megaApi->getUserAvatarColor(megaApi->handleToBase64(userHandle));
+    const char* avatarColor = megaApi->getUserAvatarColor(megaApi->handleToBase64(qHash(QString::fromUtf8(alert->getEmail()))));
+
     if (avatarColor)
     {
         color = QString::fromUtf8(avatarColor);

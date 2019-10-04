@@ -480,22 +480,22 @@ QString Utilities::getSizeString(unsigned long long bytes)
     QLocale locale(language);
     if (bytes >= TB)
     {
-        return locale.toString( ((int)((100 * bytes) / TB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "TB");
+        return locale.toString( ((int)((10 * bytes) / TB))/10.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "TB");
     }
 
     if (bytes >= GB)
     {
-        return locale.toString( ((int)((100 * bytes) / GB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "GB");
+        return locale.toString( ((int)((10 * bytes) / GB))/10.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "GB");
     }
 
     if (bytes >= MB)
     {
-        return locale.toString( ((int)((100 * bytes) / MB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "MB");
+        return locale.toString( ((int)((10 * bytes) / MB))/10.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "MB");
     }
 
     if (bytes >= KB)
     {
-        return locale.toString( ((int)((100 * bytes) / KB))/100.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "KB");
+        return locale.toString( ((int)((10 * bytes) / KB))/10.0) + QString::fromAscii(" ") + QCoreApplication::translate("Utilities", "KB");
     }
 
     return locale.toString(bytes) + QString::fromAscii(" bytes");

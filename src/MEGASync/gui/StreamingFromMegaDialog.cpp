@@ -6,6 +6,8 @@
 #include "control/Utilities.h"
 #include "HighDpiResize.h"
 
+#include <QCloseEvent>
+
 #if QT_VERSION >= 0x050000
 #include <QtConcurrent/QtConcurrent>
 #endif

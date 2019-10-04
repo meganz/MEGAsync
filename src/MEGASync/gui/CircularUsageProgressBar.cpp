@@ -13,6 +13,7 @@ CircularUsageProgressBar::CircularUsageProgressBar(QWidget *parent) :
     oqColor = QColor(QString::fromUtf8(DEFAULT_OQCOLOR));
     almostOqColor = QColor(QString::fromUtf8(DEFAULT_ALMOSTOQCOLOR));
 
+    currentColor = fgColor;
     textValue = QString::fromUtf8("-");
 
     mark_warning.addFile(QString::fromUtf8(":/images/strong_mark.png"));
@@ -34,7 +35,7 @@ void CircularUsageProgressBar::paintEvent(QPaintEvent *event)
         setPenColor(bkPen, bkColor, false);
         bkPen.setWidth(penWidth);
 
-        setPenColor(fgPen, fgColor, false);
+        setPenColor(fgPen, currentColor, false);
         fgPen.setWidth(penWidth);
     }
 
@@ -89,7 +90,7 @@ void CircularUsageProgressBar::drawText(QPainter &p, const QRectF &innerRect, do
     p.setFont(f);
 
     QRectF textRect(innerRect);
-    p.setPen(fgColor);
+    p.setPen(currentColor);
     p.drawText(textRect, Qt::AlignCenter, textValue);
 }
 
@@ -137,24 +138,24 @@ void CircularUsageProgressBar::setValue(int value)
     {
         value = CircularUsageProgressBar::MINVALUE;
     }
-    if (pbValue != value || pbValue == -1 )
+    if (pbValue != value || pbValue == -1)
     {
         textValue = QString::number(value).append(QString::fromUtf8("%"));
         pbValue = value;
         if (value >= CircularUsageProgressBar::MAXVALUE)
         {
-            fgColor = oqColor;
+            currentColor = oqColor;
             setPenColor(fgPen, oqColor, false);
         }
         else if (value >= ALMOSTOVERQUOTA_VALUE)
         {
-            fgColor = almostOqColor;
+            currentColor = almostOqColor;
             setPenColor(fgPen, almostOqColor, false);
         }
         else
         {
-            fgColor = QColor(QString::fromUtf8(DEFAULT_FGCOLOR));
-            setPenColor(fgPen, fgColor, false);
+            currentColor = fgColor;
+            setPenColor(fgPen, currentColor, false);
         }
         update();
     }

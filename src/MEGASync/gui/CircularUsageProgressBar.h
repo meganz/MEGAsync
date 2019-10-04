@@ -11,6 +11,7 @@ const char DEFAULT_FGCOLOR[] = "#5969BD";
 const char DEFAULT_BKCOLOR[] = "#E5E5E5";
 const char DEFAULT_OQCOLOR[] = "#DF4843";
 const char DEFAULT_ALMOSTOQCOLOR[] = "#FF6F00";
+const char DEFAULT_FGCOLOR_QUOTA[] = "#4A90E2";
 
 
 class CircularUsageProgressBar : public QWidget
@@ -57,6 +58,7 @@ protected:
     QColor fgColor;
     QColor oqColor;
     QColor almostOqColor;
+    QColor currentColor;
 
     QPen bkPen;
     QPen fgPen;

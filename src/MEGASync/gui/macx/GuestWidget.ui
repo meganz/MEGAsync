@@ -38,8 +38,8 @@
    <string notr="true">#wHeader
 {
  background-color:  #FAFAFA;
- border-top-left-radius: 2px;
- border-top-right-radius: 2px;
+ border-top-left-radius: 16px;
+ border-top-right-radius: 16px;
 }
 #bMEGA, #bLogoLogging, #bLogoLogin, #bLogoSettingUp
 {
@@ -689,7 +689,7 @@ image: none;
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: white;</string>
+       <string notr="true"/>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_6">
        <property name="spacing">

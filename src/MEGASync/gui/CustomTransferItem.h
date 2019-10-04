@@ -47,7 +47,7 @@ private:
     mega::MegaApi *megaApi;
 
 protected:
-    bool getLinkButtonEnabled;
+    bool actionButtonsEnabled;
 };
 
 #endif // CUSTOMTRANSFERITEM_H
