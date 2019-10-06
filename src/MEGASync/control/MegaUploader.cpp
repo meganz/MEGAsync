@@ -56,7 +56,7 @@ void MegaUploader::upload(QFileInfo info, MegaNode *parent, unsigned long long a
     string localPath = megaApi->getLocalPath(parent);
 #ifdef WIN32
         QString destPath = QDir::toNativeSeparators(QString::fromWCharArray((const wchar_t *)localPath.data()) + QDir::separator() + fileName);
-        if (destPath.startsWith(QString::fromAscii("\\\\?\\")))
+        if (destPath.startsWith(QString::fromLatin1("\\\\?\\")))
         {
             destPath = destPath.mid(4);
         }

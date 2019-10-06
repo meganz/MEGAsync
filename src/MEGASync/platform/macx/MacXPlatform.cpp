@@ -43,7 +43,7 @@ void MacXPlatform::initialize(int argc, char *argv[])
         QDir appPath(app);
         appPath.cdUp();
         appPath.cdUp();
-        args.append(QString::fromAscii("-n"));
+        args.append(QString::fromLatin1("-n"));
         args.append(appPath.absolutePath());
         QProcess::startDetached(launchCommand, args);
         sleep(2);
@@ -101,7 +101,7 @@ bool MacXPlatform::isFinderExtensionEnabled()
                << kFinderSyncBundleId;
 
     QProcess p;
-    p.start(QString::fromAscii("pluginkit"), scriptArgs);
+    p.start(QString::fromLatin1("pluginkit"), scriptArgs);
     if (!p.waitForFinished(2000))
     {
         return false;
@@ -113,7 +113,7 @@ bool MacXPlatform::isFinderExtensionEnabled()
         return false;
     }
 
-    if (out.at(0) != QChar::fromAscii('?') && out.at(0) != QChar::fromAscii('+'))
+    if (out.at(0) != QChar::fromLatin1('?') && out.at(0) != QChar::fromLatin1('+'))
     {
         return false;
     }
@@ -143,7 +143,7 @@ void MacXPlatform::reloadFinderExtension()
                << QString::fromUtf8("tell application \"MEGAShellExtFinder\" to quit");
 
     QProcess p;
-    p.start(QString::fromAscii("osascript"), scriptArgs);
+    p.start(QString::fromLatin1("osascript"), scriptArgs);
     if (!p.waitForFinished(2000))
     {
         return;
@@ -175,7 +175,7 @@ void MacXPlatform::showInFolder(QString pathIn)
     scriptArgs.clear();
     scriptArgs << QString::fromUtf8("-e")
                << QString::fromUtf8("tell application \"Finder\" to activate");
-    QProcess::startDetached(QString::fromAscii("osascript"), scriptArgs);
+    QProcess::startDetached(QString::fromLatin1("osascript"), scriptArgs);
 }
 
 void MacXPlatform::startShellDispatcher(MegaApplication *receiver)

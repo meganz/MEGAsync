@@ -91,10 +91,10 @@ void WindowsPlatform::prepareForSync()
         for (int i = 1; i < data.size(); i++)
         {
             QString drive = data.at(i).trimmed();
-            if (drive.size() && drive.contains(QChar::fromAscii(':')))
+            if (drive.size() && drive.contains(QChar::fromLatin1(':')))
             {
                 int index = drive.indexOf(QString::fromUtf8(":"));
-                if (index >= 2 && drive[index - 2] == QChar::fromAscii(' '))
+                if (index >= 2 && drive[index - 2] == QChar::fromLatin1(' '))
                 {
                     drive = drive.mid(index - 1);
                     QStringList parts = drive.split(QString::fromUtf8(" "), QString::SkipEmptyParts);
@@ -649,7 +649,7 @@ bool WindowsPlatform::startOnStartup(bool value)
     }
 
     QString startupPath = QString::fromWCharArray(path);
-    startupPath += QString::fromAscii("\\MEGAsync.lnk");
+    startupPath += QString::fromLatin1("\\MEGAsync.lnk");
 
     if (value)
     {
@@ -690,7 +690,7 @@ bool WindowsPlatform::isStartOnStartupActive()
     }
 
     QString startupPath = QString::fromWCharArray(path);
-    startupPath += QString::fromAscii("\\MEGAsync.lnk");
+    startupPath += QString::fromLatin1("\\MEGAsync.lnk");
     if (QFileInfo(startupPath).isSymLink())
     {
         return true;
@@ -707,8 +707,8 @@ void WindowsPlatform::showInFolder(QString pathIn)
 
     QString param;
     param = QString::fromUtf8("/select,");
-    param += QString::fromAscii("\"\"") + QDir::toNativeSeparators(QDir(pathIn).canonicalPath()) + QString::fromAscii("\"\"");
-    QProcess::startDetached(QString::fromAscii("explorer ") + param);
+    param += QString::fromLatin1("\"\"") + QDir::toNativeSeparators(QDir(pathIn).canonicalPath()) + QString::fromLatin1("\"\"");
+    QProcess::startDetached(QString::fromLatin1("explorer ") + param);
 }
 
 void WindowsPlatform::startShellDispatcher(MegaApplication *receiver)
@@ -734,7 +734,7 @@ void WindowsPlatform::stopShellDispatcher()
 
 void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName, QString syncID)
 {
-    if (syncPath.startsWith(QString::fromAscii("\\\\?\\")))
+    if (syncPath.startsWith(QString::fromLatin1("\\\\?\\")))
     {
         syncPath = syncPath.mid(4);
     }
@@ -776,14 +776,14 @@ void WindowsPlatform::syncFolderAdded(QString syncPath, QString syncName, QStrin
     }
 
     QString linksPath = QString::fromWCharArray(path);
-    linksPath += QString::fromAscii("\\Links");
+    linksPath += QString::fromLatin1("\\Links");
     QFileInfo info(linksPath);
     if (!info.isDir())
     {
         return;
     }
 
-    QString linkPath = linksPath + QString::fromAscii("\\") + syncName + QString::fromAscii(".lnk");
+    QString linkPath = linksPath + QString::fromLatin1("\\") + syncName + QString::fromLatin1(".lnk");
     if (QFile(linkPath).exists())
     {
         return;
@@ -817,7 +817,7 @@ void WindowsPlatform::syncFolderRemoved(QString syncPath, QString syncName, QStr
 
     removeSyncFromLeftPane(syncPath, syncName, syncID);
 
-    if (syncPath.startsWith(QString::fromAscii("\\\\?\\")))
+    if (syncPath.startsWith(QString::fromLatin1("\\\\?\\")))
     {
         syncPath = syncPath.mid(4);
     }
@@ -835,14 +835,14 @@ void WindowsPlatform::syncFolderRemoved(QString syncPath, QString syncName, QStr
     }
 
     QString linksPath = QString::fromWCharArray(path);
-    linksPath += QString::fromAscii("\\Links");
+    linksPath += QString::fromLatin1("\\Links");
     QFileInfo info(linksPath);
     if (!info.isDir())
     {
         return;
     }
 
-    QString linkPath = linksPath + QString::fromAscii("\\") + syncName + QString::fromAscii(".lnk");
+    QString linkPath = linksPath + QString::fromLatin1("\\") + syncName + QString::fromLatin1(".lnk");
 
     QFile::remove(linkPath);
 

@@ -137,14 +137,14 @@ void BindFolderDialog::on_bOK_clicked()
             QString p = QString::fromUtf8(nPath);
             delete [] nPath;
 
-            if (megaPath.startsWith(p) && ((p.size() == megaPath.size()) || p.size() == 1 || megaPath[p.size()] == QChar::fromAscii('/')))
+            if (megaPath.startsWith(p) && ((p.size() == megaPath.size()) || p.size() == 1 || megaPath[p.size()] == QChar::fromLatin1('/')))
             {
                 delete n;
                 delete node;
                 QMessageBox::warning(NULL, tr("Error"), tr("The selected MEGA folder is already synced"), QMessageBox::Ok);
                 return;
             }
-            else if (p.startsWith(megaPath) && ((p.size() == megaPath.size()) || megaPath.size() == 1 || p[megaPath.size()] == QChar::fromAscii('/')))
+            else if (p.startsWith(megaPath) && ((p.size() == megaPath.size()) || megaPath.size() == 1 || p[megaPath.size()] == QChar::fromLatin1('/')))
             {
                 delete n;
                 delete node;

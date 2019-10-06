@@ -202,7 +202,7 @@ void HTTPServer::onTransferDataUpdate(MegaHandle handle, int state, long long pr
     if (tData->tPath.isEmpty() && !localPath.isEmpty())
     {
         #ifdef WIN32
-        if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+        if (localPath.startsWith(QString::fromLatin1("\\\\?\\")))
         {
             localPath = localPath.mid(4);
         }
@@ -235,7 +235,7 @@ void HTTPServer::readClient()
     {
         QStringList tokens = request->data.split(QString::fromUtf8("\r\n\r\n"));
         QStringList headers = tokens[0].split(QString::fromUtf8("\r\n"));
-        if (!headers.size() || !headers[0].startsWith(QString::fromAscii("POST")))
+        if (!headers.size() || !headers[0].startsWith(QString::fromLatin1("POST")))
         {
             MegaApi::log(MegaApi::LOG_LEVEL_WARNING, "Method not allowed for webclient request");
             rejectRequest(socket, QString::fromUtf8("405 Method Not Allowed"));
@@ -460,9 +460,9 @@ void HTTPServer::processRequest(QAbstractSocket *socket, HTTPRequest request)
                 int end;
                 bool firstnode = true;
 
-                while (request.data[start] == QChar::fromAscii('{'))
+                while (request.data[start] == QChar::fromLatin1('{'))
                 {
-                    end = request.data.indexOf(QChar::fromAscii('}'), start);
+                    end = request.data.indexOf(QChar::fromLatin1('}'), start);
                     if (end < 0)
                     {
                         MegaApi::log(MegaApi::LOG_LEVEL_ERROR, "Error parsing webclient request");

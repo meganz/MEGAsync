@@ -356,7 +356,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             }
 
             bool ok;
-            QStringList parameters = QString::fromWCharArray(content).split(QChar::fromAscii(':'));
+            QStringList parameters = QString::fromWCharArray(content).split(QChar::fromLatin1(':'));
             if (parameters.size() < 1)
             {
                 break;
@@ -404,7 +404,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
                 break;
             }
             QString filePath = QString::fromWCharArray(content);
-            if (filePath.startsWith(QString::fromAscii("\\\\?\\")))
+            if (filePath.startsWith(QString::fromLatin1("\\\\?\\")))
             {
                 filePath = filePath.mid(4);
             }
@@ -425,7 +425,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             }
 
             QString filePath = QString::fromWCharArray(content);
-            if (filePath.startsWith(QString::fromAscii("\\\\?\\")))
+            if (filePath.startsWith(QString::fromLatin1("\\\\?\\")))
             {
                 filePath = filePath.mid(4);
             }
@@ -447,7 +447,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
             }
 
             bool overlayIcons = true;
-            QStringList parameters = QString::fromWCharArray(content).split(QChar::fromAscii('|'));
+            QStringList parameters = QString::fromWCharArray(content).split(QChar::fromLatin1('|'));
             if (parameters.size() > 1)
             {
                 bool ok;
@@ -465,7 +465,7 @@ VOID WinShellDispatcherTask::GetAnswerToRequest(LPPIPEINST pipe)
 
             int state;
             QString temp = parameters[0];
-            if (temp.startsWith(QString::fromAscii("\\\\?\\")))
+            if (temp.startsWith(QString::fromLatin1("\\\\?\\")))
             {
                 temp = temp.mid(4);
             }

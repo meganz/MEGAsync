@@ -101,7 +101,7 @@ void FolderBinder::on_bLocalFolder_clicked()
     if (path.length())
     {        
         QDir dir(path);
-        if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
+        if (!dir.exists() && !dir.mkpath(QString::fromLatin1(".")))
         {
             return;
         }

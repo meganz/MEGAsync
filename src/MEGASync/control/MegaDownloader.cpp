@@ -24,7 +24,7 @@ void MegaDownloader::download(MegaNode *parent, QString path, QString appData)
 bool MegaDownloader::processDownloadQueue(QQueue<MegaNode *> *downloadQueue, QString path, unsigned long long appDataId)
 {
     QDir dir(path);
-    if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
+    if (!dir.exists() && !dir.mkpath(QString::fromLatin1(".")))
     {
         qDeleteAll(*downloadQueue);
         downloadQueue->clear();
@@ -113,7 +113,7 @@ void MegaDownloader::download(MegaNode *parent, QFileInfo info, QString appData)
     #ifndef WIN32
                 if (!megaApi->createLocalFolder(dir.toNativeSeparators(destPath).toUtf8().constData()))
     #else
-                if (!dir.mkpath(QString::fromAscii(".")))
+                if (!dir.mkpath(QString::fromLatin1(".")))
     #endif
                 {
                     return;

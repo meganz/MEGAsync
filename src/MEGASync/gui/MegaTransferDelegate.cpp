@@ -276,7 +276,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
             {
                 QString localPath = QString::fromUtf8(transfer->getPath());
                 #ifdef WIN32
-                if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+                if (localPath.startsWith(QString::fromLatin1("\\\\?\\")))
                 {
                     localPath = localPath.mid(4);
                 }
@@ -299,7 +299,7 @@ bool MegaTransferDelegate::editorEvent(QEvent *event, QAbstractItemModel *, cons
         {
             QString localPath = QString::fromUtf8(transfer->getPath());
             #ifdef WIN32
-            if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+            if (localPath.startsWith(QString::fromLatin1("\\\\?\\")))
             {
                 localPath = localPath.mid(4);
             }

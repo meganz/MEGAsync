@@ -27,7 +27,7 @@ PlanWidget::PlanWidget(PlanInfo data, QString userAgent, QWidget *parent) :
     //that will be shown over the Plans to manage clicked() events
     overlay = new QPushButton(this);
     overlay->setObjectName(QString::fromUtf8("bOverlay"));
-    overlay->setStyleSheet(QString::fromAscii(
+    overlay->setStyleSheet(QString::fromLatin1(
                                "QPushButton#bOverlay:hover {border-image: url(://images/account_type_over.png);} "
                                "QPushButton#bOverlay {border-radius: 3px; border: 1px solid; border-color: rgba(0, 0, 0, 0.1); border: none;} "
                                "QPushButton#bOverlay:pressed {border-image: url(://images/account_type_press.png);}"));
@@ -90,32 +90,32 @@ void PlanWidget::updatePlanInfo()
     switch (details.level)
     {
         case PRO_LITE:
-            ui->bcrest->setIcon(QIcon(QString::fromAscii("://images/litecrest.png")));
+            ui->bcrest->setIcon(QIcon(QString::fromLatin1("://images/litecrest.png")));
             ui->bcrest->setIconSize(QSize(64, 64));
             ui->lProPlan->setText(QString::fromUtf8("PRO LITE"));
             ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ffa500;"));
             break;
         case PRO_I:
             ui->lTip->setText(tr("popular!"));
-            ui->bcrest->setIcon(QIcon(QString::fromAscii("://images/proicrest.png")));
+            ui->bcrest->setIcon(QIcon(QString::fromLatin1("://images/proicrest.png")));
             ui->bcrest->setIconSize(QSize(64, 64));
             ui->lProPlan->setText(QString::fromUtf8("PRO I"));
             ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ff333a;"));
             break;
         case PRO_II:
-            ui->bcrest->setIcon(QIcon(QString::fromAscii("://images/proiicrest.png")));
+            ui->bcrest->setIcon(QIcon(QString::fromLatin1("://images/proiicrest.png")));
             ui->bcrest->setIconSize(QSize(64, 64));
             ui->lProPlan->setText(QString::fromUtf8("PRO II"));
             ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ff333a;"));
             break;
         case PRO_III:
-            ui->bcrest->setIcon(QIcon(QString::fromAscii("://images/proiiicrest.png")));
+            ui->bcrest->setIcon(QIcon(QString::fromLatin1("://images/proiiicrest.png")));
             ui->bcrest->setIconSize(QSize(64, 64));
             ui->lProPlan->setText(QString::fromUtf8("PRO III"));
             ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ff333a;"));
             break;
         default:
-            ui->bcrest->setIcon(QIcon(QString::fromAscii("://images/litecrest.png")));
+            ui->bcrest->setIcon(QIcon(QString::fromLatin1("://images/litecrest.png")));
             ui->bcrest->setIconSize(QSize(64, 64));
             ui->lProPlan->setText(QString::fromUtf8("PRO"));
             ui->lPeriod->setStyleSheet(QString::fromUtf8("color: #ffa500;"));

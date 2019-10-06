@@ -9,7 +9,7 @@ LocalCleanScheduler::LocalCleanScheduler(QWidget *parent) :
     ui->setupUi(this);
     setAttribute(Qt::WA_QuitOnClose, false);
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
-    setWindowTitle(windowTitle().arg(QString::fromAscii(mega::MEGA_DEBRIS_FOLDER)));
+    setWindowTitle(windowTitle().arg(QString::fromLatin1(mega::MEGA_DEBRIS_FOLDER)));
 
     ui->eNumberDays->setMaximum(365);
     ui->bOK->setDefault(true);
@@ -45,7 +45,7 @@ void LocalCleanScheduler::changeEvent(QEvent *event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
-        setWindowTitle(windowTitle().arg(QString::fromAscii(mega::MEGA_DEBRIS_FOLDER)));
+        setWindowTitle(windowTitle().arg(QString::fromLatin1(mega::MEGA_DEBRIS_FOLDER)));
         ui->retranslateUi(this);
     }
     QDialog::changeEvent(event);

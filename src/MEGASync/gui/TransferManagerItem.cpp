@@ -197,7 +197,7 @@ void TransferManagerItem::updateTransfer()
             }
             else
             {
-                remainingTime = QString::fromAscii("");
+                remainingTime = QString::fromLatin1("");
             }
             ui->lRemainingTime->setText(remainingTime);
 
