@@ -356,7 +356,7 @@ int main(int argc, char *argv[])
 
 #endif
 
-#if defined(Q_OS_LINUX) && QT_VERSION >= 0x051200
+#if defined(Q_OS_LINUX) && QT_VERSION >= 0x050C00
     // Linux && Qt >= 5.12.0
     if (!(getenv("DO_NOT_UNSET_XDG_SESSION_TYPE")))
     {
