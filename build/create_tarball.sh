@@ -122,6 +122,7 @@ fi
 mkdir $MEGASYNC_NAME
 ln -s ../MEGAsync/MEGAsync/megasync.spec $MEGASYNC_NAME/megasync.spec
 ln -s ../MEGAsync/MEGAsync/debian.postinst $MEGASYNC_NAME/debian.postinst
+ln -s ../MEGAsync/MEGAsync/debian.prerm $MEGASYNC_NAME/debian.prerm
 ln -s ../MEGAsync/MEGAsync/debian.postrm $MEGASYNC_NAME/debian.postrm
 ln -s ../MEGAsync/MEGAsync/debian.copyright $MEGASYNC_NAME/debian.copyright
 ln -s ../../src/configure $MEGASYNC_NAME/configure

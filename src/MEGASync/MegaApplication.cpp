@@ -16,11 +16,12 @@
 #include <QNetworkProxy>
 #include <QSettings>
 
-#include <signal.h>
 
 #include <assert.h>
 
 #ifdef Q_OS_LINUX
+    #include <signal.h>
+    #include <condition_variable>
     #include <QSvgRenderer>
 #endif
 
@@ -68,31 +69,40 @@ void msgHandler(QtMsgType type, const char *msg)
     }
 }
 
+
+#ifdef Q_OS_LINUX
 MegaApplication *theapp = NULL;
-bool keepdormant = false;
+bool waitForRestartSignal = false;
+std::mutex mtxcondvar;
+std::condition_variable condVarRestart;
+QString appToWaitForSignal;
+
 void LinuxSignalHandler(int signum)
 {
     if (signum == SIGUSR2)
     {
-        printf("Received SIGUSR2!\n");
-        keepdormant = false;
-        if (theapp)
-        {
-            theapp->setKeepdormant(false);
-        }
+        std::unique_lock<std::mutex> lock(mtxcondvar);
+        condVarRestart.notify_one();
     }
-    if (signum == SIGUSR1)
+    else if (signum == SIGUSR1)
     {
-        printf("Received SIGUSR1!\n");
-        keepdormant = true;
+        waitForRestartSignal = true;
+        if (waitForRestartSignal)
+        {
+            appToWaitForSignal.append(QString::fromUtf8(" --waitforsignal"));
+            bool success = QProcess::startDetached(appToWaitForSignal);
+            cout << "Starting detached MEGAsync to wait for restart signal: " << appToWaitForSignal.toUtf8().toStdString() << " " << (success?"OK":"FAILED!") << endl;
+        }
+
         if (theapp)
         {
-            theapp->setKeepdormant(true);
             theapp->exitApplication(true);
         }
     }
 }
 
+void doNothing(int ) { }
+#endif
 
 #if QT_VERSION >= 0x050000
     void messageHandler(QtMsgType type,const QMessageLogContext &context, const QString &msg)
@@ -338,6 +348,51 @@ void setScaleFactors()
 
 int main(int argc, char *argv[])
 {
+#ifdef Q_OS_LINUX
+    appToWaitForSignal = QString::fromUtf8("\"%1\"").arg(MegaApplication::applicationFilePath());
+    for (int i = 1; i < argc; i++)
+    {
+        appToWaitForSignal.append(QString::fromUtf8(" \""));
+        appToWaitForSignal.append(QString::fromUtf8(argv[i]));
+        appToWaitForSignal.append(QString::fromUtf8("\""));
+    }
+
+    signal(SIGUSR1, LinuxSignalHandler);
+
+    for (int i = 1; i < argc ; i++)
+    {
+        if (!strcmp(argv[i],"--waitforsignal"))
+        {
+            std::unique_lock<std::mutex> lock(mtxcondvar);
+            signal(SIGUSR2, LinuxSignalHandler);
+
+            cout << "Waiting for signal to restart MEGAsync ... "<< endl;
+            if (condVarRestart.wait_for(lock, std::chrono::minutes(30)) == std::cv_status::no_timeout )
+            {
+                QString app;
+
+                for (int j = 0; j < argc; j++)
+                {
+                    if (strcmp(argv[j],"--waitforsignal"))
+                    {
+                        app.append(QString::fromUtf8(" \""));
+                        app.append(QString::fromUtf8(argv[j]));
+                        app.append(QString::fromUtf8("\""));
+                    }
+                }
+
+                bool success = QProcess::startDetached(app);
+                cout << "Restarting MEGAsync: " << app.toUtf8().toStdString() << " " << (success?"OK":"FAILED!") << endl;
+                exit(!success);
+            }
+            cout << "Timed out waiting for restart signal" << endl;
+            exit(2);
+        }
+    }
+    signal(SIGUSR2, doNothing);
+
+#endif
+
     // adds thread-safety to OpenSSL
     QSslSocket::supportsSsl();
 
@@ -615,22 +670,11 @@ int main(int argc, char *argv[])
 
     app.initialize();
     app.start();
+
     int toret = app.exec();
 
-    int countslept = 100;
-    if (keepdormant)
-    {
-        while (keepdormant && countslept)
-        {
-            sleep(1); //alternative: do this via condition variable and sleep forever?
-            countslept--;
-        }
-        QString app = QString::fromUtf8("\"%1\"").arg(MegaApplication::applicationFilePath());
-        QProcess::startDetached(app);
-    }
 
-
-    theapp = NULL;
+    theapp = nullptr;
     return toret;
 
 #if 0 //Strings for the translation system. These lines don't need to be built
@@ -737,9 +781,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
          }
     }
 #endif
-
-    signal(SIGUSR1, LinuxSignalHandler);
-    signal(SIGUSR2, LinuxSignalHandler);
 
     MegaApi::addLoggerObject(logger);
 

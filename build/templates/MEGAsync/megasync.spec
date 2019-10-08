@@ -493,6 +493,9 @@ sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf
 
 ### END of POSTINST
 
+%preun
+[ "$1" == "1" ] && killall -s SIGUSR1 megasync 2> /dev/null || true
+sleep 2
 
 %postun
 %if 0%{?suse_version} >= 1140
@@ -506,7 +509,9 @@ if [ $1 -eq 0 ] ; then
 fi
 %endif
 # kill running MEGAsync instance
-killall megasync 2> /dev/null || true
+
+# when uninstall (!upgrade)
+[ "$1" == "0" ] && killall megasync 2> /dev/null || true
 
 
 %if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version} || 0%{?scientificlinux_version}
@@ -514,6 +519,11 @@ killall megasync 2> /dev/null || true
 /bin/touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
 /bin/touch --no-create %{_datadir}/icons/ubuntu-mono-dark &>/dev/null || :
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/* &>/dev/null || :
+
+# to restore dormant MEGAsync upon updates
+killall -s SIGUSR2 megasync 2> /dev/null || true
+
+
 %endif
 
 %clean
