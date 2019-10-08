@@ -353,6 +353,19 @@ int main(int argc, char *argv[])
     }
 
 
+
+#endif
+
+#if defined(Q_OS_LINUX) && QT_VERSION >= 0x051200
+    // Linux && Qt >= 5.12.0
+    if (!(getenv("DO_NOT_UNSET_XDG_SESSION_TYPE")))
+    {
+        if ( getenv("XDG_SESSION_TYPE") && !strcmp(getenv("XDG_SESSION_TYPE"),"wayland") )
+        {
+            std::cerr << "Avoiding wayland" << std::endl;
+            unsetenv("XDG_SESSION_TYPE");
+        }
+    }
 #endif
 
 #if ( defined(WIN32) && QT_VERSION >= 0x050000 ) || (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
