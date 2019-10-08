@@ -83,6 +83,7 @@ enum GetUserStatsReason {
     USERSTATS_BANDWIDTH_TIMEOUT_SHOWINFODIALOG,
     USERSTATS_PRO_EXPIRED,
     USERSTATS_OPENSETTINGSDIALOG,
+    USERSTATS_STORAGECACHEUNKNOWN,
 };
 
 class MegaApplication : public QApplication, public mega::MegaListener
@@ -124,6 +125,8 @@ public:
 
 
     mega::MegaApi *getMegaApi() { return megaApi; }
+
+    std::unique_ptr<mega::MegaApiLock> megaApiLock;
 
     void unlink();
     void cleanLocalCaches(bool all = false);
@@ -257,7 +260,7 @@ protected:
     bool showTrayIconAlwaysNEW();
     void loggedIn(bool fromWizard);
     void startSyncs();
-    void applyStorageState(int state);
+    void applyStorageState(int state, bool doNotAskForUserStats = false);
     void processUploadQueue(mega::MegaHandle nodeHandle);
     void processDownloadQueue(QString path);
     void unityFix();
@@ -416,7 +419,6 @@ protected:
     bool appfinished;
     bool updateAvailable;
     bool isLinux;
-    long long externalNodesTimestamp;
     int noKeyDetected;
     bool isFirstSyncDone;
     bool isFirstFileSynced;
