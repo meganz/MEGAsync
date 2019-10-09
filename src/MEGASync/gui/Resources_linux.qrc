@@ -649,6 +649,9 @@
         <file>images/transfer_manager.png</file>
         <file>images/transfer_manager@2x.png</file>
         <file>images/transfer_manager@3x.png</file>
+        <file>images/transfer_manager_greyed.png</file>
+        <file>images/transfer_manager_greyed@2x.png</file>
+        <file>images/transfer_manager_greyed@3x.png</file>
         <file>images/strong_mark.png</file>
         <file>images/strong_mark@2x.png</file>
         <file>images/strong_mark@3x.png</file>

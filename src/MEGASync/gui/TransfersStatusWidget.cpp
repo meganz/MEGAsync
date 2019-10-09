@@ -52,6 +52,7 @@ TransfersStatusWidget::TransfersStatusWidget(QWidget *parent) :
     percentOuterCircle = 0;
 
     updateSizes();
+    installEventFilter(this);
 }
 
 TransfersStatusWidget::~TransfersStatusWidget()
@@ -76,6 +77,21 @@ void TransfersStatusWidget::paintEvent(QPaintEvent *event)
 
     painter.setPen(pengreen);
     painter.drawArc(marginoutside, marginoutside, diamoutside, diamoutside, 360*4, -outpoint);
+}
+
+
+bool TransfersStatusWidget::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::Enter)
+    {
+        ui->bTransferManager->setIcon(QIcon(QString::fromAscii(":/images/transfer_manager.png")));
+    }
+    else  if (event->type() == QEvent::Leave)
+    {
+        ui->bTransferManager->setIcon(QIcon(QString::fromAscii(":/images/transfer_manager_greyed.png")));
+    }
+
+    return QWidget::eventFilter(obj,event);
 }
 
 qreal TransfersStatusWidget::getPercentInnerCircle() const

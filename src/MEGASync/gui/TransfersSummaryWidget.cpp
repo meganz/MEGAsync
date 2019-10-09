@@ -12,7 +12,7 @@ TransfersSummaryWidget::TransfersSummaryWidget(QWidget *parent) :
     ui(new Ui::TransfersSummaryWidget)
 {
     ui->setupUi(this);
-    ui->bTransfersStatus->setAttribute(Qt::WA_TransparentForMouseEvents);
+//    ui->bTransfersStatus->setAttribute(Qt::WA_TransparentForMouseEvents);
 
     status = Status::EXPANDED;
     minwidth = 28;

@@ -48,7 +48,7 @@
    </property>
    <property name="icon">
     <iconset resource="../Resources_win.qrc">
-     <normaloff>:/images/transfer_manager.png</normaloff>:/images/transfer_manager.png</iconset>
+     <normaloff>:/images/transfer_manager_greyed.png</normaloff>:/images/transfer_manager_greyed.png</iconset>
    </property>
    <property name="iconSize">
     <size>
