@@ -522,6 +522,22 @@ int main(int argc, char *argv[])
     bool alreadyStarted = true;
     for (int i = 0; i < 10; i++)
     {
+        if (i > 0)
+        {
+            if (dataDir.exists(QString::fromAscii("megasync.show")))
+            {
+                QFile fappShowInterfacePath(dataDir.filePath(QString::fromAscii("megasync.show")));
+                if (fappShowInterfacePath.open(QIODevice::ReadOnly))
+                {
+                    if (fappShowInterfacePath.size() == 0)
+                    {
+                        // the file has been emptied; so the infoDialog was shown in the primary MEGAsync instance.  We can exit.
+                        alreadyStarted = true;
+                        break;
+                    }
+                }
+            }
+        }
         singleInstanceChecker.open(QtLockedFile::ReadWrite);
         if (singleInstanceChecker.lock(QtLockedFile::WriteLock, false))
         {
@@ -530,10 +546,10 @@ int main(int argc, char *argv[])
         }
         else if (i == 0)
         {
-             QString appShowInterfacePath = dataDir.filePath(QString::fromAscii("megasync.show"));
-             QFile fappShowInterfacePath(appShowInterfacePath);
+             QFile fappShowInterfacePath(dataDir.filePath(QString::fromAscii("megasync.show")));
              if (fappShowInterfacePath.open(QIODevice::WriteOnly))
              {
+                 fappShowInterfacePath.write("open");
                  fappShowInterfacePath.close();
              }
         }
@@ -907,7 +923,24 @@ void MegaApplication::showInterface(QString)
     {
         return;
     }
-    showInfoDialog();
+
+    QDir dataDir(dataPath);
+    if (dataDir.exists(QString::fromAscii("megasync.show")))
+    {
+        QFile showFile(dataDir.filePath(QString::fromAscii("megasync.show"))); 
+        if (showFile.open(QIODevice::ReadOnly))
+        {
+            if (showFile.size() > 0)
+            {
+                // clearing the file content will cause the instance that asked us to show the dialog to exit
+                showFile.close();
+                showFile.open(QIODevice::WriteOnly | QIODevice::Truncate);
+                showFile.close();
+
+                showInfoDialog();
+            }
+        }
+    }
 }
 
 void MegaApplication::initialize()
@@ -1108,8 +1141,9 @@ void MegaApplication::initialize()
         QString appShowInterfacePath = dataDir.filePath(QString::fromAscii("megasync.show"));
         QFileSystemWatcher *watcher = new QFileSystemWatcher(this);
         QFile fappShowInterfacePath(appShowInterfacePath);
-        if (fappShowInterfacePath.open(QIODevice::WriteOnly))
+        if (fappShowInterfacePath.open(QIODevice::WriteOnly | QIODevice::Truncate))
         {
+            // any text added to this file will cause the infoDialog to show
             fappShowInterfacePath.close();
         }
         watcher->addPath(appShowInterfacePath);
