@@ -143,7 +143,30 @@ bool CustomTransferItem::checkIsInsideButton(QPoint pos, int button)
     return false;
 }
 
-void CustomTransferItem::mouseHoverTransfer(bool isHover)
+
+void CustomTransferItem::setActionTransferIcon(const QString &name)
+{
+    if (name != lastActionTransferIconName)
+    {
+        ui->lActionTransfer->setIcon(Utilities::getCachedPixmap(name));
+        ui->lActionTransfer->setIconSize(QSize(24,24));
+        lastActionTransferIconName = name;
+    }
+}
+
+
+void CustomTransferItem::setShowInFolderIcon(const QString &name)
+{
+    if (name != lastShowInFolderIconName)
+    {
+        ui->lShowInFolder->setIcon(Utilities::getCachedPixmap(name));
+        ui->lShowInFolder->setIconSize(QSize(24,24));
+
+        lastShowInFolderIconName = name;
+    }
+}
+
+void CustomTransferItem::mouseHoverTransfer(bool isHover, const QPoint &pos)
 {
 
     if (isHover)
@@ -153,28 +176,30 @@ void CustomTransferItem::mouseHoverTransfer(bool isHover)
         {
             if (!isSyncTransfer)
             {
-                ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/ico_item_retry.png")));
+                bool in = ui->lActionTransfer->rect().contains(ui->lActionTransfer->mapFrom(this, pos));
+                setActionTransferIcon(QString::fromAscii("://images/ico_item_retry%1.png").arg(QString::fromAscii(in?"":"_greyed")));
             }
             else
             {
-                ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/error.png")));
+                setActionTransferIcon(QString::fromAscii("://images/error.png"));
                 actionButtonsEnabled = false;
             }
-            ui->lActionTransfer->setIconSize(QSize(24,24));
             ui->lShowInFolder->hide();
         }
         else if (isLinkAvailable)
         {
-            ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/ico_item_link.png")));
-            ui->lActionTransfer->setIconSize(QSize(24,24));
-            ui->lShowInFolder->setIcon(QIcon(QString::fromAscii("://images/showinfolder.png")));
-            ui->lShowInFolder->setIconSize(QSize(24,24));
+            bool in = ui->lActionTransfer->rect().contains(ui->lActionTransfer->mapFrom(this, pos));
+            setActionTransferIcon(QString::fromAscii("://images/ico_item_link%1.png").arg(QString::fromAscii(in?"":"_greyed")));
+
+            in = ui->lShowInFolder->rect().contains(ui->lShowInFolder->mapFrom(this, pos));
+            setShowInFolderIcon(QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(in?"":"_greyed")));
+
             ui->lShowInFolder->show();
         }
         else
         {
-            ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/showinfolder.png")));
-            ui->lActionTransfer->setIconSize(QSize(24,24));
+            bool in = ui->lActionTransfer->rect().contains(ui->lActionTransfer->mapFrom(this, pos));
+            setActionTransferIcon(QString::fromAscii("://images/showinfolder%1.png").arg(QString::fromAscii(in?"":"_greyed")));
         }
     }
     else
@@ -182,13 +207,13 @@ void CustomTransferItem::mouseHoverTransfer(bool isHover)
         actionButtonsEnabled = false;
         if (transferError < 0)
         {
-            ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/error.png")));
+            setActionTransferIcon(QString::fromAscii("://images/error.png"));
             ui->lActionTransfer->setIconSize(QSize(24,24));
             ui->lShowInFolder->hide();
         }
         else
         {
-            ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/success.png")));
+            setActionTransferIcon(QString::fromAscii("://images/success.png"));
             ui->lActionTransfer->setIconSize(QSize(24,24));
             ui->lShowInFolder->hide();
         }

@@ -27,7 +27,7 @@ public:
     QString getTransferName();
 
     bool checkIsInsideButton(QPoint pos, int button);
-    void mouseHoverTransfer(bool isHover);
+    void mouseHoverTransfer(bool isHover, const QPoint &pos);
     bool mouseHoverRetryingLabel(QPoint pos);
 
     void finishTransfer();
@@ -45,6 +45,12 @@ public:
 private:
     Ui::CustomTransferItem *ui;
     mega::MegaApi *megaApi;
+
+    QString lastActionTransferIconName;
+    QString lastShowInFolderIconName;
+
+    void setActionTransferIcon(const QString &name);
+    void setShowInFolderIcon(const QString &name);
 
 protected:
     bool actionButtonsEnabled;

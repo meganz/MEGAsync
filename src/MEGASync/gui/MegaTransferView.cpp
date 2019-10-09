@@ -309,27 +309,24 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
         if (index.isValid())
         {
             int tag = index.internalId();
-            if (tag != lastItemHoveredTag)
+            if (lastItemHoveredTag)
             {
-                if (lastItemHoveredTag)
+                TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
+                if (lastItemHovered)
                 {
-                    TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
-                    if (lastItemHovered)
-                    {
-                        lastItemHovered->mouseHoverTransfer(false);
-                    }
+                    lastItemHovered->mouseHoverTransfer(false, event->pos() - visualRect(index).topLeft());
                 }
+            }
 
-                TransferItem *item = model->transferItems[tag];
-                if (item)
-                {
-                    lastItemHoveredTag = item->getTransferTag();
-                    item->mouseHoverTransfer(true);
-                }
-                else
-                {
-                    lastItemHoveredTag = 0;
-                }
+            TransferItem *item = model->transferItems[tag];
+            if (item)
+            {
+                lastItemHoveredTag = item->getTransferTag();
+                item->mouseHoverTransfer(true, event->pos() - visualRect(index).topLeft());
+            }
+            else
+            {
+                lastItemHoveredTag = 0;
             }
         }
         else
@@ -339,7 +336,7 @@ void MegaTransferView::mouseMoveEvent(QMouseEvent *event)
                 TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
                 if (lastItemHovered)
                 {
-                    lastItemHovered->mouseHoverTransfer(false);
+                    lastItemHovered->mouseHoverTransfer(false, event->pos() - visualRect(index).topLeft());
                     update();
                 }
                 lastItemHoveredTag = 0;
@@ -374,7 +371,7 @@ void MegaTransferView::leaveEvent(QEvent *event)
             TransferItem *lastItemHovered = model->transferItems[lastItemHoveredTag];
             if (lastItemHovered)
             {
-                lastItemHovered->mouseHoverTransfer(false);
+                lastItemHovered->mouseHoverTransfer(false, QPoint(-1,-1));
                 update();
             }
             lastItemHoveredTag = 0;

@@ -57,7 +57,7 @@ public:
     virtual bool cancelButtonClicked(QPoint pos) = 0;
     virtual bool checkIsInsideButton(QPoint pos, int button) = 0;
     virtual bool mouseHoverRetryingLabel(QPoint pos) = 0;
-    virtual void mouseHoverTransfer(bool isHover) = 0;
+    virtual void mouseHoverTransfer(bool isHover, const QPoint &pos) = 0;
     virtual void setStateLabel(QString labelState) = 0;
     virtual QString getTransferName() = 0;
 
