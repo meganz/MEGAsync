@@ -2,18 +2,10 @@
 <ui version="4.0">
  <class>InfoDialog</class>
  <widget class="QDialog" name="InfoDialog">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>400</width>
-    <height>564</height>
-   </rect>
-  </property>
   <property name="minimumSize">
    <size>
-    <width>400</width>
-    <height>564</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -85,17 +77,11 @@ color: #333333;
     <widget class="QWidget" name="wInfoDialogIn" native="true">
      <property name="minimumSize">
       <size>
-       <width>400</width>
-       <height>564</height>
+       <width>0</width>
+       <height>0</height>
       </size>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>400</width>
-       <height>564</height>
-      </size>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout_4">
+     <layout class="QVBoxLayout" name="verticalLayout_wInfoDialogIn">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -146,8 +132,8 @@ color: #333333;
         </property>
         <property name="minimumSize">
          <size>
-          <width>400</width>
-          <height>464</height>
+          <width>0</width>
+          <height>0</height>
          </size>
         </property>
         <property name="maximumSize">
