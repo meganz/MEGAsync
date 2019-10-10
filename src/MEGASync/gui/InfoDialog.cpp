@@ -165,7 +165,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     ui->lSDKblock->setText(QString::fromUtf8(""));
     ui->wBlocked->setVisible(false);
-    ui->wContainerBottom->setFixedHeight(56);
+    ui->wContainerBottom->setFixedHeight(ui->wContainerBottom->minimumHeight());
 
     //Initialize header dialog and disable chat features
     ui->wHeader->setStyleSheet(QString::fromUtf8("#wHeader {border: none;}"));
@@ -588,9 +588,7 @@ void InfoDialog::updateBlockedState()
     {
         if (ui->wBlocked->isVisible())
         {
-            ui->lSDKblock->setText(QString::fromUtf8(""));
-            ui->wBlocked->setVisible(false);
-            ui->wContainerBottom->setFixedHeight(120);
+            setBlockedStateLabel(QString::fromUtf8(""));
         }
     }
     else
@@ -602,17 +600,13 @@ void InfoDialog::updateBlockedState()
 
             if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
             {
-                ui->wContainerBottom->setFixedHeight(86);
-                ui->wBlocked->setVisible(true);
-                ui->lSDKblock->setText(tr("Blocked file: %1").arg(QString::fromUtf8("<a href=\"local://#%1\">%2</a>")
-                                                                  .arg(fileBlocked.absoluteFilePath())
-                                                                  .arg(fileBlocked.fileName())));
+                setBlockedStateLabel(tr("Blocked file: %1").arg(QString::fromUtf8("<a href=\"local://#%1\">%2</a>")
+                                                                .arg(fileBlocked.absoluteFilePath())
+                                                                .arg(fileBlocked.fileName())));
             }
             else
             {
-                 ui->lSDKblock->setText(QString::fromUtf8(""));
-                 ui->wBlocked->setVisible(false);
-                 ui->wContainerBottom->setFixedHeight(56);
+                 setBlockedStateLabel(QString::fromUtf8(""));
             }
 
             ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
@@ -626,15 +620,11 @@ void InfoDialog::updateBlockedState()
 
             if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
             {
-                ui->wContainerBottom->setFixedHeight(86);
-                ui->wBlocked->setVisible(true);
-                ui->lSDKblock->setText(tr("The process is taking longer than expected. Please wait..."));
+                setBlockedStateLabel(tr("The process is taking longer than expected. Please wait..."));
             }
             else
             {
-                 ui->lSDKblock->setText(QString::fromUtf8(""));
-                 ui->wBlocked->setVisible(false);
-                 ui->wContainerBottom->setFixedHeight(56);
+                setBlockedStateLabel(QString::fromUtf8(""));
             }
 
             ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
@@ -644,9 +634,7 @@ void InfoDialog::updateBlockedState()
         {
             if (ui->sActiveTransfers->currentWidget() != ui->pUpdated)
             {
-                ui->lSDKblock->setText(QString::fromUtf8(""));
-                ui->wBlocked->setVisible(false);
-                ui->wContainerBottom->setFixedHeight(56);
+                setBlockedStateLabel(QString::fromUtf8(""));
             }
 
             ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
@@ -1552,6 +1540,22 @@ void InfoDialog::sTabsChanged(int tab)
         }
     }
     lasttab = tab;
+}
+
+void InfoDialog::setBlockedStateLabel(QString state)
+{
+    if (state.isEmpty())
+    {
+        ui->wContainerBottom->setFixedHeight(ui->wContainerBottom->minimumHeight());
+        ui->wBlocked->setVisible(false);
+    }
+    else
+    {
+        ui->wContainerBottom->setFixedHeight(ui->wContainerBottom->maximumHeight());
+        ui->wBlocked->setVisible(true);
+    }
+
+    ui->lSDKblock->setText(state);
 }
 
 long long InfoDialog::getUnseenNotifications() const

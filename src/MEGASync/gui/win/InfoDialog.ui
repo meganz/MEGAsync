@@ -102,6 +102,12 @@ QPushButton
        <height>564</height>
       </size>
      </property>
+     <property name="maximumSize">
+      <size>
+       <width>402</width>
+       <height>564</height>
+      </size>
+     </property>
      <property name="styleSheet">
       <string notr="true"/>
      </property>

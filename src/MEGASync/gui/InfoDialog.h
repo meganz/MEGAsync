@@ -185,6 +185,7 @@ private:
     QGraphicsOpacityEffect *opacityEffect;
 
 protected:
+    void setBlockedStateLabel(QString state);
     void updateBlockedState();
     void updateState();
     void changeEvent(QEvent * event);

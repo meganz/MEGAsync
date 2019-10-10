@@ -97,6 +97,12 @@ color: #333333;
        <height>564</height>
       </size>
      </property>
+     <property name="maximumSize">
+      <size>
+       <width>402</width>
+       <height>564</height>
+      </size>
+     </property>
      <layout class="QVBoxLayout" name="verticalLayout_4">
       <property name="spacing">
        <number>0</number>
