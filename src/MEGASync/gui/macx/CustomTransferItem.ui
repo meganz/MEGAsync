@@ -254,13 +254,13 @@
                 <widget class="QPushButton" name="lTransferTypeCompleted">
                  <property name="minimumSize">
                   <size>
-                   <width>12</width>
+                   <width>10</width>
                    <height>12</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>12</width>
+                   <width>10</width>
                    <height>12</height>
                   </size>
                  </property>
@@ -665,13 +665,13 @@ background-color: rgba(0, 0, 0, 8%);
                         </property>
                         <property name="minimumSize">
                          <size>
-                          <width>12</width>
+                          <width>10</width>
                           <height>12</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>12</width>
+                          <width>10</width>
                           <height>12</height>
                          </size>
                         </property>
