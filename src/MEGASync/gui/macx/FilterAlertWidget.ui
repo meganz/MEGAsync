@@ -282,12 +282,12 @@ border-radius: 4px;
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/images/contacts.png</normalon>
+                <normalon>:/images/contacts_padding.png</normalon>
                </iconset>
               </property>
               <property name="iconSize">
                <size>
-                <width>6</width>
+                <width>14</width>
                 <height>6</height>
                </size>
               </property>
@@ -404,12 +404,12 @@ border-radius: 4px;
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/images/incoming_share.png</normalon>
+                <normalon>:/images/Incoming_padding.png</normalon>
                </iconset>
               </property>
               <property name="iconSize">
                <size>
-                <width>6</width>
+                <width>14</width>
                 <height>6</height>
                </size>
               </property>
@@ -526,12 +526,12 @@ border-radius: 4px;
               </property>
               <property name="icon">
                <iconset>
-                <normalon>:/images/payments.png</normalon>
+                <normalon>:/images/payment_padding.png</normalon>
                </iconset>
               </property>
               <property name="iconSize">
                <size>
-                <width>6</width>
+                <width>14</width>
                 <height>6</height>
                </size>
               </property>

@@ -514,5 +514,13 @@
         <file>images/ico_add_sync_folder@2x.png</file>
         <file>images/grey_folder.png</file>
         <file>images/grey_folder@2x.png</file>
+        <file>images/contacts_padding.png</file>
+        <file>images/contacts_padding@2x.png</file>
+        <file>images/Incoming_padding.png</file>
+        <file>images/Incoming_padding@2x.png</file>
+        <file>images/payment_padding.png</file>
+        <file>images/payment_padding@2x.png</file>
+        <file>images/takedown_padding.png</file>
+        <file>images/takedown_padding@2x.png</file>
     </qresource>
 </RCC>
