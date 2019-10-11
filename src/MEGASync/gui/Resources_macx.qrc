@@ -522,5 +522,9 @@
         <file>images/payment_padding@2x.png</file>
         <file>images/takedown_padding.png</file>
         <file>images/takedown_padding@2x.png</file>
+        <file>images/download_fail_item_ico.png</file>
+        <file>images/download_fail_item_ico@2x.png</file>
+        <file>images/upload_fail_item_ico.png</file>
+        <file>images/upload_fail_item_ico@2x.png</file>
     </qresource>
 </RCC>

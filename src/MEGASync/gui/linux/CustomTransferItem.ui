@@ -269,7 +269,7 @@
                  </property>
                  <property name="iconSize">
                   <size>
-                   <width>12</width>
+                   <width>10</width>
                    <height>12</height>
                   </size>
                  </property>
@@ -686,7 +686,7 @@ background-color: rgba(0, 0, 0, 8%);
                         </property>
                         <property name="iconSize">
                          <size>
-                          <width>12</width>
+                          <width>10</width>
                           <height>12</height>
                          </size>
                         </property>
