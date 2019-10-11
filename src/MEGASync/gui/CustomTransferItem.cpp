@@ -75,13 +75,13 @@ void CustomTransferItem::setType(int type, bool isSyncTransfer)
     {
         case MegaTransfer::TYPE_UPLOAD:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/upload_item_ico.png"));
-            iconCompleted.addFile(QString::fromUtf8(":/images/uploaded_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            iconCompleted = Utilities::getCachedPixmap(QString::fromUtf8(":/images/uploaded_item_ico.png"));
             ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: transparent;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
             break;
         case MegaTransfer::TYPE_DOWNLOAD:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/download_item_ico.png"));
-            iconCompleted.addFile(QString::fromUtf8(":/images/downloaded_item_ico.png"), QSize(), QIcon::Normal, QIcon::Off);
+            iconCompleted = Utilities::getCachedPixmap(QString::fromUtf8(":/images/downloaded_item_ico.png"));
             ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: transparent;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
             break;
