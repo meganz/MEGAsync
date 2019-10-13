@@ -273,8 +273,8 @@ void InfoDialog::setUsage()
     }
     else
     {
-        int percentage = floor((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
-        ui->pUsageStorage->setValue((percentage < 100) ? percentage : 100);
+        auto percentage = Utilities::percentage(preferences->usedStorage() , preferences->totalStorage());
+        ui->pUsageStorage->setValue(percentage);
 
         if (percentage >= 100)
         {
@@ -312,9 +312,9 @@ void InfoDialog::setUsage()
     }
     else
     {
-        int percentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
-        ui->pUsageQuota->setValue((percentage < 100) ? percentage : 100);
-        if (percentage > 100)
+        auto percentage = Utilities::percentage(preferences->usedBandwidth(),preferences->totalBandwidth());
+        ui->pUsageQuota->setValue(percentage);
+        if (preferences->usedBandwidth() > preferences->totalBandwidth())
         {
             ui->pUsageQuota->setProperty("crossedge", true);
         }
