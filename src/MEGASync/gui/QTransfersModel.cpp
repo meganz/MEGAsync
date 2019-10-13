@@ -50,7 +50,7 @@ void QTransfersModel::refreshTransfers()
 {
     if (transferOrder.size())
     {
-        emit dataChanged(index(0, 0, QModelIndex()), index(transferOrder.size() - 1, 0, QModelIndex()));
+        emit dataChanged(index(0, 0, QModelIndex()), index(static_cast<int>(transferOrder.size()) - 1, 0, QModelIndex()));
     }
 }
 
@@ -60,7 +60,7 @@ int QTransfersModel::rowCount(const QModelIndex &parent) const
     {
         return 0;
     }
-    return transferOrder.size();
+    return static_cast<int>(transferOrder.size());
 }
 
 int QTransfersModel::getModelType()
