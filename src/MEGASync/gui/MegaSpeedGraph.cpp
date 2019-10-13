@@ -83,20 +83,20 @@ void MegaSpeedGraph::paintEvent(QPaintEvent *)
         return;
     }
 
-    float h = height() - 1;
-    float w = width() - 1;
+    double h = height() - 1;
+    double w = width() - 1;
 
     // Calculate graph points if needed
     if (polygon.isEmpty())
     {
-        float xStep = w / (float)(numPoints - 1);
-        float x = 0;
+        double xStep = w / static_cast<double>(numPoints - 1);
+        double x = 0;
         for (int i = 0; i < numPoints; i++)
         {
-            float y = h;
+            double y = h;
             if (max)
             {
-                y -= (((float)values[i] / max) * h);
+                y -= ((static_cast<double>(values[i]) / static_cast<double>(max)) * h);
             }
             polygon.push_back(QPointF(x, y));
             x += xStep;
@@ -110,20 +110,20 @@ void MegaSpeedGraph::paintEvent(QPaintEvent *)
             QPointF pt1 = polygon.at(i);
             QPointF pt2 = polygon.at(i + 1);
             QPointF pdist = pt2 - pt1;
-            float ratio = radius / sqrtf(pdist.x() * pdist.x() + pdist.y() * pdist.y());
-            if (ratio > 0.5f)
+            double ratio = radius / sqrt(pdist.x() * pdist.x() + pdist.y() * pdist.y());
+            if (ratio > 0.5)
             {
-                ratio = 0.5f;
+                ratio = 0.5;
             }
 
-            pt.setX((1.0f - ratio) * pt1.x() + ratio * pt2.x());
-            pt.setY((1.0f - ratio) * pt1.y() + ratio * pt2.y());
+            pt.setX((1.0 - ratio) * pt1.x() + ratio * pt2.x());
+            pt.setY((1.0 - ratio) * pt1.y() + ratio * pt2.y());
             linePath.quadTo(polygon.at(i), pt);
 
             if (i < (numPoints - 2))
             {
-                pt.setX(ratio * pt1.x() + (1.0f - ratio) * pt2.x());
-                pt.setY(ratio * pt1.y() + (1.0f - ratio) * pt2.y());
+                pt.setX(ratio * pt1.x() + (1.0 - ratio) * pt2.x());
+                pt.setY(ratio * pt1.y() + (1.0 - ratio) * pt2.y());
                 linePath.lineTo(pt);
             }
         }
@@ -154,8 +154,8 @@ void MegaSpeedGraph::paintEvent(QPaintEvent *)
     linePen.setWidth(1);
     linePen.setColor(verticalLineColor);
     painter.setPen(linePen);
-    float lineStep = w / 9.0;
-    float lineX = 0;
+    double lineStep = w / 9.0;
+    double lineX = 0;
     for (int i = 0; i < 10; i++)
     {
         QLineF line(QPointF(lineX, 0), QPointF(lineX, h));
