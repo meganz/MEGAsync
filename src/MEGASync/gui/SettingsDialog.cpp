@@ -1020,7 +1020,11 @@ void SettingsDialog::loadSettings()
         int width = ui->bBandwidth->width();
         QFont f = ui->bBandwidth->font();
         QFontMetrics fm = QFontMetrics(f);
+#if QT_VERSION < QT_VERSION_CHECK(5,11,0)
         int neededWidth = fm.width(tr("Bandwidth"));
+#else
+        int neededWidth = fm.horizontalAdvance(tr("Bandwidth"));
+#endif
         if (width < neededWidth)
         {
             ui->bBandwidth->setText(tr("Transfers"));
@@ -1774,7 +1778,7 @@ int SettingsDialog::saveSettings()
             return 2;
         }
 
-        QT_TR_NOOP("Do you want to restart MEGAsync now?");
+        //QT_TR_NOOP("Do you want to restart MEGAsync now?");
     }
 
     ui->bApply->setEnabled(false);
@@ -1805,7 +1809,11 @@ void SettingsDialog::loadSyncSettings()
 
     ui->tSyncs->horizontalHeader()->setVisible(true);
     int numFolders = preferences->getNumSyncedFolders();
+#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
     ui->tSyncs->horizontalHeader()->setResizeMode(QHeaderView::Fixed);
+#else
+    ui->tSyncs->horizontalHeader()->sectionResizeMode(QHeaderView::Fixed);
+#endif
     ui->tSyncs->setRowCount(numFolders);
     ui->tSyncs->setColumnCount(3);
     ui->tSyncs->setColumnWidth(2, 21);
