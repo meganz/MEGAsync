@@ -70,8 +70,8 @@ void UpgradeOverStorage::refreshUsedStorage()
     {
         ui->wUsage->show();
 
-        int percentage = floor((100 * ((double)usedStorage) / totalStorage));
-        ui->pUsageStorage->setValue((percentage < 100) ? percentage : 100);
+        auto percentage = Utilities::percentage(usedStorage,totalStorage);
+        ui->pUsageStorage->setValue(percentage);
 
         if (percentage >= 100)
         {
