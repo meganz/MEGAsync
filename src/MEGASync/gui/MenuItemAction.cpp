@@ -84,15 +84,15 @@ void MenuItemAction::setHighlight(bool highlight)
     if (highlight)
     {
         container->setStyleSheet(QString::fromUtf8("#wContainer { border: 2px solid #aaaaaa; border-radius: 2px; margin: 0px 8px 0px 8px; padding: 0px; background-color: #aaaaaa; }"));
-        title->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #ffffff;"));
-        iconButton->setStyleSheet(QString::fromAscii("border: none;"));
+        title->setStyleSheet(QString::fromLatin1("font-family: Source Sans Pro; font-size: 14px; color: #ffffff;"));
+        iconButton->setStyleSheet(QString::fromLatin1("border: none;"));
         hoverIcon ? iconButton->setIcon(*hoverIcon) : iconButton->setIcon(*icon);
     }
     else
     {
         container->setStyleSheet(QString::fromUtf8("#wContainer { border: none; margin: 0px 0px 0px 0px; padding: 0px; background-color: #ffffff; }"));
-        title->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #777777;"));
-        iconButton->setStyleSheet(QString::fromAscii("border: none;"));
+        title->setStyleSheet(QString::fromLatin1("font-family: Source Sans Pro; font-size: 14px; color: #777777;"));
+        iconButton->setStyleSheet(QString::fromLatin1("border: none;"));
         iconButton->setIcon(*icon);
     }
 }
@@ -112,7 +112,7 @@ void MenuItemAction::setupActionWidget(QSize iconSize)
 {
     container->setMinimumHeight(32);
     container->setMaximumHeight(32);
-    container->setStyleSheet(QString::fromAscii("#wContainer { margin-left: 20px; padding: 0px; }"));
+    container->setStyleSheet(QString::fromLatin1("#wContainer { margin-left: 20px; padding: 0px; }"));
 
     iconButton = new QPushButton();
     iconButton->setAttribute(Qt::WA_TransparentForMouseEvents, true);
@@ -127,7 +127,7 @@ void MenuItemAction::setupActionWidget(QSize iconSize)
     iconButton->setIcon(*icon);
     iconButton->setFlat(true);
 
-    title->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #777777;"));
+    title->setStyleSheet(QString::fromLatin1("font-family: Source Sans Pro; font-size: 14px; color: #777777;"));
 
     layout = new QHBoxLayout();
     layout->setContentsMargins(QMargins(16, 0, 8, 0));
@@ -138,7 +138,7 @@ void MenuItemAction::setupActionWidget(QSize iconSize)
 
     if (value)
     {
-        value->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #777777; padding-right: 6px;"));
+        value->setStyleSheet(QString::fromLatin1("font-family: Source Sans Pro; font-size: 14px; color: #777777; padding-right: 6px;"));
         layout->addWidget(value);
     }
     container->setLayout(layout);
@@ -151,16 +151,16 @@ bool MenuItemAction::eventFilter(QObject *obj, QEvent *event)
         if (event->type() == QEvent::Enter)
         {
             container->setStyleSheet(QString::fromUtf8("#wContainer { border: 2px solid #aaaaaa; border-radius: 2px; margin: 0px 8px 0px 8px; padding: 0px; background-color: #aaaaaa; }"));
-            title->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #ffffff;"));
-            iconButton->setStyleSheet(QString::fromAscii("border: none;"));
+            title->setStyleSheet(QString::fromLatin1("font-family: Source Sans Pro; font-size: 14px; color: #ffffff;"));
+            iconButton->setStyleSheet(QString::fromLatin1("border: none;"));
             hoverIcon ? iconButton->setIcon(*hoverIcon) : iconButton->setIcon(*icon);
         }
 
         if (event->type() == QEvent::Leave)
         {
             container->setStyleSheet(QString::fromUtf8("#wContainer { border: none; margin: 0px 0px 0px 0px; padding: 0px; background-color: #ffffff; }"));
-            title->setStyleSheet(QString::fromAscii("font-family: Source Sans Pro; font-size: 14px; color: #777777;"));
-            iconButton->setStyleSheet(QString::fromAscii("border: none;"));
+            title->setStyleSheet(QString::fromLatin1("font-family: Source Sans Pro; font-size: 14px; color: #777777;"));
+            iconButton->setStyleSheet(QString::fromLatin1("border: none;"));
             iconButton->setIcon(*icon);
         }
     }

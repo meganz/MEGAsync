@@ -136,7 +136,7 @@ void MegaSyncLogger::log(const char *time, int loglevel, const char *source, con
                     dataPath = Utilities::getDefaultBasePath();
                 }
 #endif
-                filePath = dataPath + QDir::separator() + QString::fromAscii("MEGAsync.log");
+                filePath = dataPath + QDir::separator() + QString::fromLatin1("MEGAsync.log");
             }
 
             QFile file(filePath);

@@ -70,7 +70,7 @@ void UploadToMegaDialog::onRequestFinish(MegaApi *, MegaRequest *request, MegaEr
     MegaNode *node = megaApi->getNodeByHandle(request->getNodeHandle());
     if (e->getErrorCode() != MegaError::API_OK || !node)
     {
-        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromAscii("Request error: %1")
+        MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromLatin1("Request error: %1")
                      .arg(QCoreApplication::translate("MegaError", e->getErrorString())).toUtf8().constData());
         this->reject();
         delete node;

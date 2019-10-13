@@ -92,7 +92,7 @@ void MegaTransferView::createContextMenu()
     if (!contextInProgressMenu)
     {
         contextInProgressMenu = new QMenu(this);
-        contextInProgressMenu->setStyleSheet(QString::fromAscii(
+        contextInProgressMenu->setStyleSheet(QString::fromLatin1(
 #ifdef __APPLE__
                                    "QMenu {background: #ffffff;}"
 #else
@@ -197,7 +197,7 @@ void MegaTransferView::createCompletedContextMenu()
     if (!contextCompleted)
     {
         contextCompleted = new QMenu(this);
-        contextCompleted->setStyleSheet(QString::fromAscii(
+        contextCompleted->setStyleSheet(QString::fromLatin1(
                                    "QMenu {background: #ffffff;}"
 #if QT_VERSION < 0x050000
                                    "QMenu::item {font-family: Source Sans Pro; margin: 5px 9px 5px 9px; margin-right: 8px; color: #777777; padding: 5px 16px 5px 8px;} "
@@ -684,7 +684,7 @@ void MegaTransferView::showInFolderClicked()
             {
                 QString localPath = QString::fromUtf8(transfer->getPath());
                 #ifdef WIN32
-                if (localPath.startsWith(QString::fromAscii("\\\\?\\")))
+                if (localPath.startsWith(QString::fromLatin1("\\\\?\\")))
                 {
                     localPath = localPath.mid(4);
                 }
@@ -711,7 +711,7 @@ void MegaTransferView::showInMEGAClicked()
                 if (handle != INVALID_HANDLE)
                 {
                     const char *b64handle = MegaApi::handleToBase64(handle);
-                    QString url = Preferences::BASE_URL + QString::fromAscii("/fm/") + QString::fromUtf8(b64handle);
+                    QString url = Preferences::BASE_URL + QString::fromLatin1("/fm/") + QString::fromUtf8(b64handle);
                     QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
                     delete [] b64handle;
                 }

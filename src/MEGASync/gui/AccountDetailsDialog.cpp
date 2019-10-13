@@ -60,9 +60,9 @@ void AccountDetailsDialog::refresh(Preferences *preferences)
     else
     {
         ui->sHeader->setCurrentWidget(ui->pUsedData);
-        int percentage = floor((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
-        ui->pUsageStorage->setValue((percentage < 100) ? percentage : 100);
-        if (percentage > 100)
+        auto percentage = Utilities::percentage(preferences->usedStorage(),preferences->totalStorage());
+        ui->pUsageStorage->setValue(percentage);
+        if (preferences->usedStorage() > preferences->totalStorage())
         {
             ui->pUsageStorage->setProperty("crossedge", true);
         }
@@ -74,7 +74,7 @@ void AccountDetailsDialog::refresh(Preferences *preferences)
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
 
         QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 18px; text-decoration:none;\">%1&nbsp;</span>")
-                                     .arg(QString::number(percentage > 100 ? 100 : percentage).append(QString::fromAscii(" %"))))
+                                     .arg(QString::number(percentage > 100 ? 100 : percentage).append(QString::fromLatin1(" %"))))
                                      .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 18px; text-decoration:none;\">&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(preferences->totalStorage())));
         ui->lPercentageUsedStorage->setText(used);

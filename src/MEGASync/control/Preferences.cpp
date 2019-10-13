@@ -15,8 +15,8 @@ const char Preferences::USER_AGENT[] = "MEGAsync/4.2.5.0";
 const int Preferences::VERSION_CODE = 4205;
 const int Preferences::BUILD_ID = 0;
 // Do not change the location of VERSION_STRING, create_tarball.sh parses this file
-const QString Preferences::VERSION_STRING = QString::fromAscii("4.2.5");
-QString Preferences::SDK_ID = QString::fromAscii("fcd2f0e");
+const QString Preferences::VERSION_STRING = QString::fromLatin1("4.2.5");
+QString Preferences::SDK_ID = QString::fromLatin1("fcd2f0e");
 const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
     "- Fix sync issues on macOS 10.15\n"
     "- Fix transfer resumption issues for webclient and public links downloads\n"
@@ -25,8 +25,8 @@ const QString Preferences::CHANGELOG = QString::fromUtf8(QT_TR_NOOP(
     "- Include option to add synchronizations from the main dialog\n"
     "- Other minor bug fixes and improvements"));
 
-const QString Preferences::TRANSLATION_FOLDER = QString::fromAscii("://translations/");
-const QString Preferences::TRANSLATION_PREFIX = QString::fromAscii("MEGASyncStrings_");
+const QString Preferences::TRANSLATION_FOLDER = QString::fromLatin1("://translations/");
+const QString Preferences::TRANSLATION_PREFIX = QString::fromLatin1("MEGASyncStrings_");
 
 int Preferences::STATE_REFRESH_INTERVAL_MS        = 10000;
 int Preferences::FINISHED_TRANSFER_REFRESH_INTERVAL_MS        = 10000;
@@ -203,7 +203,7 @@ const QString Preferences::FINDER_EXT_BUNDLE_ID = QString::fromUtf8("mega.mac.ME
 QStringList Preferences::HTTPS_ALLOWED_ORIGINS;
 bool Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
 
-QString Preferences::BASE_URL = QString::fromAscii("https://mega.nz");
+QString Preferences::BASE_URL = QString::fromLatin1("https://mega.nz");
 
 #ifdef WIN32
     const QString Preferences::UPDATE_CHECK_URL                 = QString::fromUtf8("http://g.static.mega.co.nz/upd/wsync/v.txt");
@@ -213,136 +213,136 @@ QString Preferences::BASE_URL = QString::fromAscii("https://mega.nz");
 
 const char Preferences::UPDATE_PUBLIC_KEY[] = "EACTzXPE8fdMhm6LizLe1FxV2DncybVh2cXpW3momTb8tpzRNT833r1RfySz5uHe8gdoXN1W0eM5Bk8X-LefygYYDS9RyXrRZ8qXrr9ITJ4r8ATnFIEThO5vqaCpGWTVi5pOPI5FUTJuhghVKTyAels2SpYT5CmfSQIkMKv7YVldaV7A-kY060GfrNg4--ETyIzhvaSZ_jyw-gmzYl_dwfT9kSzrrWy1vQG8JPNjKVPC4MCTZJx9SNvp1fVi77hhgT-Mc5PLcDIfjustlJkDBHtmGEjyaDnaWQf49rGq94q23mLc56MSjKpjOR1TtpsCY31d1Oy2fEXFgghM0R-1UkKswVuWhEEd8nO2PimJOl4u9ZJ2PWtJL1Ro0Hlw9OemJ12klIAxtGV-61Z60XoErbqThwWT5Uu3D2gjK9e6rL9dufSoqjC7UA2C0h7KNtfUcUHw0UWzahlR8XBNFXaLWx9Z8fRtA_a4seZcr0AhIA7JdQG5i8tOZo966KcFnkU77pfQTSprnJhCfEmYbWm9EZA122LJBWq2UrSQQN3pKc9goNaaNxy5PYU1yXyiAfMVsBDmDonhRWQh2XhdV-FWJ3rOGMe25zOwV4z1XkNBuW4T1JF2FgqGR6_q74B2ccFC8vrNGvlTEcs3MSxTI_EKLXQvBYy7hxG8EPUkrMVCaWzzTQAFEQ";
 const QString Preferences::CRASH_REPORT_URL                 = QString::fromUtf8("http://g.api.mega.co.nz/hb?crashdump");
-const QString Preferences::UPDATE_FOLDER_NAME               = QString::fromAscii("update");
-const QString Preferences::UPDATE_BACKUP_FOLDER_NAME        = QString::fromAscii("backup");
+const QString Preferences::UPDATE_FOLDER_NAME               = QString::fromLatin1("update");
+const QString Preferences::UPDATE_BACKUP_FOLDER_NAME        = QString::fromLatin1("backup");
 const QString Preferences::PROXY_TEST_URL                   = QString::fromUtf8("https://g.api.mega.co.nz/cs");
 const QString Preferences::PROXY_TEST_SUBSTRING             = QString::fromUtf8("-2");
-const QString Preferences::syncsGroupKey            = QString::fromAscii("Syncs");
-const QString Preferences::currentAccountKey        = QString::fromAscii("currentAccount");
-const QString Preferences::emailKey                 = QString::fromAscii("email");
-const QString Preferences::firstNameKey             = QString::fromAscii("firstName");
-const QString Preferences::lastNameKey              = QString::fromAscii("lastName");
-const QString Preferences::emailHashKey             = QString::fromAscii("emailHash");
-const QString Preferences::privatePwKey             = QString::fromAscii("privatePw");
-const QString Preferences::totalStorageKey          = QString::fromAscii("totalStorage");
-const QString Preferences::usedStorageKey           = QString::fromAscii("usedStorage");
-const QString Preferences::cloudDriveStorageKey     = QString::fromAscii("cloudDriveStorage");
-const QString Preferences::inboxStorageKey          = QString::fromAscii("inboxStorage");
-const QString Preferences::rubbishStorageKey        = QString::fromAscii("rubbishStorage");
-const QString Preferences::inShareStorageKey        = QString::fromAscii("inShareStorage");
-const QString Preferences::versionsStorageKey        = QString::fromAscii("versionsStorage");
-const QString Preferences::cloudDriveFilesKey       = QString::fromAscii("cloudDriveFiles");
-const QString Preferences::inboxFilesKey            = QString::fromAscii("inboxFiles");
-const QString Preferences::rubbishFilesKey          = QString::fromAscii("rubbishFiles");
-const QString Preferences::inShareFilesKey          = QString::fromAscii("inShareFiles");
-const QString Preferences::cloudDriveFoldersKey     = QString::fromAscii("cloudDriveFolders");
-const QString Preferences::inboxFoldersKey          = QString::fromAscii("inboxFolders");
-const QString Preferences::rubbishFoldersKey        = QString::fromAscii("rubbishFolders");
-const QString Preferences::inShareFoldersKey        = QString::fromAscii("inShareFolders");
-const QString Preferences::totalBandwidthKey        = QString::fromAscii("totalBandwidth");
-const QString Preferences::usedBandwidthIntervalKey        = QString::fromAscii("usedBandwidthInterval");
-const QString Preferences::usedBandwidthKey         = QString::fromAscii("usedBandwidth");
+const QString Preferences::syncsGroupKey            = QString::fromLatin1("Syncs");
+const QString Preferences::currentAccountKey        = QString::fromLatin1("currentAccount");
+const QString Preferences::emailKey                 = QString::fromLatin1("email");
+const QString Preferences::firstNameKey             = QString::fromLatin1("firstName");
+const QString Preferences::lastNameKey              = QString::fromLatin1("lastName");
+const QString Preferences::emailHashKey             = QString::fromLatin1("emailHash");
+const QString Preferences::privatePwKey             = QString::fromLatin1("privatePw");
+const QString Preferences::totalStorageKey          = QString::fromLatin1("totalStorage");
+const QString Preferences::usedStorageKey           = QString::fromLatin1("usedStorage");
+const QString Preferences::cloudDriveStorageKey     = QString::fromLatin1("cloudDriveStorage");
+const QString Preferences::inboxStorageKey          = QString::fromLatin1("inboxStorage");
+const QString Preferences::rubbishStorageKey        = QString::fromLatin1("rubbishStorage");
+const QString Preferences::inShareStorageKey        = QString::fromLatin1("inShareStorage");
+const QString Preferences::versionsStorageKey        = QString::fromLatin1("versionsStorage");
+const QString Preferences::cloudDriveFilesKey       = QString::fromLatin1("cloudDriveFiles");
+const QString Preferences::inboxFilesKey            = QString::fromLatin1("inboxFiles");
+const QString Preferences::rubbishFilesKey          = QString::fromLatin1("rubbishFiles");
+const QString Preferences::inShareFilesKey          = QString::fromLatin1("inShareFiles");
+const QString Preferences::cloudDriveFoldersKey     = QString::fromLatin1("cloudDriveFolders");
+const QString Preferences::inboxFoldersKey          = QString::fromLatin1("inboxFolders");
+const QString Preferences::rubbishFoldersKey        = QString::fromLatin1("rubbishFolders");
+const QString Preferences::inShareFoldersKey        = QString::fromLatin1("inShareFolders");
+const QString Preferences::totalBandwidthKey        = QString::fromLatin1("totalBandwidth");
+const QString Preferences::usedBandwidthIntervalKey        = QString::fromLatin1("usedBandwidthInterval");
+const QString Preferences::usedBandwidthKey         = QString::fromLatin1("usedBandwidth");
 
-const QString Preferences::overStorageDialogExecutionKey = QString::fromAscii("overStorageDialogExecution");
-const QString Preferences::overStorageNotificationExecutionKey = QString::fromAscii("overStorageNotificationExecution");
-const QString Preferences::almostOverStorageNotificationExecutionKey = QString::fromAscii("almostOverStorageNotificationExecution");
-const QString Preferences::almostOverStorageDismissExecutionKey = QString::fromAscii("almostOverStorageDismissExecution");
-const QString Preferences::overStorageDismissExecutionKey = QString::fromAscii("overStorageDismissExecution");
-const QString Preferences::storageStateQKey = QString::fromAscii("storageStopLight");
+const QString Preferences::overStorageDialogExecutionKey = QString::fromLatin1("overStorageDialogExecution");
+const QString Preferences::overStorageNotificationExecutionKey = QString::fromLatin1("overStorageNotificationExecution");
+const QString Preferences::almostOverStorageNotificationExecutionKey = QString::fromLatin1("almostOverStorageNotificationExecution");
+const QString Preferences::almostOverStorageDismissExecutionKey = QString::fromLatin1("almostOverStorageDismissExecution");
+const QString Preferences::overStorageDismissExecutionKey = QString::fromLatin1("overStorageDismissExecution");
+const QString Preferences::storageStateQKey = QString::fromLatin1("storageStopLight");
 
-const QString Preferences::accountTypeKey           = QString::fromAscii("accountType");
-const QString Preferences::proExpirityTimeKey       = QString::fromAscii("proExpirityTime");
-const QString Preferences::showNotificationsKey     = QString::fromAscii("showNotifications");
-const QString Preferences::startOnStartupKey        = QString::fromAscii("startOnStartup");
-const QString Preferences::languageKey              = QString::fromAscii("language");
-const QString Preferences::updateAutomaticallyKey   = QString::fromAscii("updateAutomatically");
-const QString Preferences::uploadLimitKBKey         = QString::fromAscii("uploadLimitKB");
-const QString Preferences::downloadLimitKBKey       = QString::fromAscii("downloadLimitKB");
-const QString Preferences::parallelUploadConnectionsKey       = QString::fromAscii("parallelUploadConnections");
-const QString Preferences::parallelDownloadConnectionsKey     = QString::fromAscii("parallelDownloadConnections");
+const QString Preferences::accountTypeKey           = QString::fromLatin1("accountType");
+const QString Preferences::proExpirityTimeKey       = QString::fromLatin1("proExpirityTime");
+const QString Preferences::showNotificationsKey     = QString::fromLatin1("showNotifications");
+const QString Preferences::startOnStartupKey        = QString::fromLatin1("startOnStartup");
+const QString Preferences::languageKey              = QString::fromLatin1("language");
+const QString Preferences::updateAutomaticallyKey   = QString::fromLatin1("updateAutomatically");
+const QString Preferences::uploadLimitKBKey         = QString::fromLatin1("uploadLimitKB");
+const QString Preferences::downloadLimitKBKey       = QString::fromLatin1("downloadLimitKB");
+const QString Preferences::parallelUploadConnectionsKey       = QString::fromLatin1("parallelUploadConnections");
+const QString Preferences::parallelDownloadConnectionsKey     = QString::fromLatin1("parallelDownloadConnections");
 
-const QString Preferences::upperSizeLimitKey        = QString::fromAscii("upperSizeLimit");
-const QString Preferences::lowerSizeLimitKey        = QString::fromAscii("lowerSizeLimit");
+const QString Preferences::upperSizeLimitKey        = QString::fromLatin1("upperSizeLimit");
+const QString Preferences::lowerSizeLimitKey        = QString::fromLatin1("lowerSizeLimit");
 
-const QString Preferences::lastCustomStreamingAppKey    = QString::fromAscii("lastCustomStreamingApp");
-const QString Preferences::transferDownloadMethodKey    = QString::fromAscii("transferDownloadMethod");
-const QString Preferences::transferUploadMethodKey      = QString::fromAscii("transferUploadMethod");
+const QString Preferences::lastCustomStreamingAppKey    = QString::fromLatin1("lastCustomStreamingApp");
+const QString Preferences::transferDownloadMethodKey    = QString::fromLatin1("transferDownloadMethod");
+const QString Preferences::transferUploadMethodKey      = QString::fromLatin1("transferUploadMethod");
 
-const QString Preferences::upperSizeLimitValueKey       = QString::fromAscii("upperSizeLimitValue");
-const QString Preferences::lowerSizeLimitValueKey       = QString::fromAscii("lowerSizeLimitValue");
-const QString Preferences::upperSizeLimitUnitKey        = QString::fromAscii("upperSizeLimitUnit");
-const QString Preferences::lowerSizeLimitUnitKey        = QString::fromAscii("lowerSizeLimitUnit");
+const QString Preferences::upperSizeLimitValueKey       = QString::fromLatin1("upperSizeLimitValue");
+const QString Preferences::lowerSizeLimitValueKey       = QString::fromLatin1("lowerSizeLimitValue");
+const QString Preferences::upperSizeLimitUnitKey        = QString::fromLatin1("upperSizeLimitUnit");
+const QString Preferences::lowerSizeLimitUnitKey        = QString::fromLatin1("lowerSizeLimitUnit");
 
 
-const QString Preferences::cleanerDaysLimitKey       = QString::fromAscii("cleanerDaysLimit");
-const QString Preferences::cleanerDaysLimitValueKey  = QString::fromAscii("cleanerDaysLimitValue");
+const QString Preferences::cleanerDaysLimitKey       = QString::fromLatin1("cleanerDaysLimit");
+const QString Preferences::cleanerDaysLimitValueKey  = QString::fromLatin1("cleanerDaysLimitValue");
 
-const QString Preferences::folderPermissionsKey         = QString::fromAscii("folderPermissions");
-const QString Preferences::filePermissionsKey           = QString::fromAscii("filePermissions");
+const QString Preferences::folderPermissionsKey         = QString::fromLatin1("folderPermissions");
+const QString Preferences::filePermissionsKey           = QString::fromLatin1("filePermissions");
 
-const QString Preferences::proxyTypeKey             = QString::fromAscii("proxyType");
-const QString Preferences::proxyProtocolKey         = QString::fromAscii("proxyProtocol");
-const QString Preferences::proxyServerKey           = QString::fromAscii("proxyServer");
-const QString Preferences::proxyPortKey             = QString::fromAscii("proxyPort");
-const QString Preferences::proxyRequiresAuthKey     = QString::fromAscii("proxyRequiresAuth");
-const QString Preferences::proxyUsernameKey         = QString::fromAscii("proxyUsername");
-const QString Preferences::proxyPasswordKey         = QString::fromAscii("proxyPassword");
-const QString Preferences::syncNameKey              = QString::fromAscii("syncName");
-const QString Preferences::syncIdKey                = QString::fromAscii("syncId");
-const QString Preferences::localFolderKey           = QString::fromAscii("localFolder");
-const QString Preferences::megaFolderKey            = QString::fromAscii("megaFolder");
-const QString Preferences::megaFolderHandleKey      = QString::fromAscii("megaFolderHandle");
-const QString Preferences::folderActiveKey          = QString::fromAscii("folderActive");
-const QString Preferences::temporaryInactiveKey     = QString::fromAscii("temporaryInactive");
-const QString Preferences::downloadFolderKey        = QString::fromAscii("downloadFolder");
-const QString Preferences::uploadFolderKey          = QString::fromAscii("uploadFolder");
-const QString Preferences::importFolderKey          = QString::fromAscii("importFolder");
-const QString Preferences::hasDefaultUploadFolderKey    = QString::fromAscii("hasDefaultUploadFolder");
-const QString Preferences::hasDefaultDownloadFolderKey  = QString::fromAscii("hasDefaultDownloadFolder");
-const QString Preferences::hasDefaultImportFolderKey    = QString::fromAscii("hasDefaultImportFolder");
-const QString Preferences::fileNameKey              = QString::fromAscii("fileName");
-const QString Preferences::fileHandleKey            = QString::fromAscii("fileHandle");
-const QString Preferences::localPathKey             = QString::fromAscii("localPath");
-const QString Preferences::localFingerprintKey      = QString::fromAscii("localFingerprint");
-const QString Preferences::fileTimeKey              = QString::fromAscii("fileTime");
-const QString Preferences::isCrashedKey             = QString::fromAscii("isCrashed");
-const QString Preferences::wasPausedKey             = QString::fromAscii("wasPaused");
-const QString Preferences::wasUploadsPausedKey      = QString::fromAscii("wasUploadsPaused");
-const QString Preferences::wasDownloadsPausedKey    = QString::fromAscii("wasDownloadsPaused");
-const QString Preferences::lastExecutionTimeKey     = QString::fromAscii("lastExecutionTime");
-const QString Preferences::excludedSyncNamesKey     = QString::fromAscii("excludedSyncNames");
-const QString Preferences::excludedSyncPathsKey     = QString::fromAscii("excludedSyncPaths");
-const QString Preferences::lastVersionKey           = QString::fromAscii("lastVersion");
-const QString Preferences::lastStatsRequestKey      = QString::fromAscii("lastStatsRequest");
-const QString Preferences::lastUpdateTimeKey        = QString::fromAscii("lastUpdateTime");
-const QString Preferences::lastUpdateVersionKey     = QString::fromAscii("lastUpdateVersion");
-const QString Preferences::previousCrashesKey       = QString::fromAscii("previousCrashes");
-const QString Preferences::lastRebootKey            = QString::fromAscii("lastReboot");
-const QString Preferences::lastExitKey              = QString::fromAscii("lastExit");
-const QString Preferences::disableOverlayIconsKey   = QString::fromAscii("disableOverlayIcons");
-const QString Preferences::disableFileVersioningKey = QString::fromAscii("disableFileVersioning");
-const QString Preferences::disableLeftPaneIconsKey  = QString::fromAscii("disableLeftPaneIcons");
-const QString Preferences::sessionKey               = QString::fromAscii("session");
-const QString Preferences::firstStartDoneKey        = QString::fromAscii("firstStartDone");
-const QString Preferences::firstSyncDoneKey         = QString::fromAscii("firstSyncDone");
-const QString Preferences::firstFileSyncedKey       = QString::fromAscii("firstFileSynced");
-const QString Preferences::firstWebDownloadKey      = QString::fromAscii("firstWebclientDownload");
-const QString Preferences::fatWarningShownKey       = QString::fromAscii("fatWarningShown");
-const QString Preferences::installationTimeKey      = QString::fromAscii("installationTime");
-const QString Preferences::accountCreationTimeKey   = QString::fromAscii("accountCreationTime");
-const QString Preferences::hasLoggedInKey           = QString::fromAscii("hasLoggedIn");
-const QString Preferences::useHttpsOnlyKey          = QString::fromAscii("useHttpsOnly");
-const QString Preferences::SSLcertificateExceptionKey  = QString::fromAscii("SSLcertificateException");
-const QString Preferences::maxMemoryUsageKey        = QString::fromAscii("maxMemoryUsage");
-const QString Preferences::maxMemoryReportTimeKey   = QString::fromAscii("maxMemoryReportTime");
-const QString Preferences::oneTimeActionDoneKey     = QString::fromAscii("oneTimeActionDone");
-const QString Preferences::httpsKeyKey              = QString::fromAscii("httpsKey2");
-const QString Preferences::httpsCertKey             = QString::fromAscii("httpsCert2");
-const QString Preferences::httpsCertIntermediateKey = QString::fromAscii("httpsCertIntermediate2");
-const QString Preferences::httpsCertExpirationKey   = QString::fromAscii("httpsCertExpiration2");
-const QString Preferences::transferIdentifierKey    = QString::fromAscii("transferIdentifier");
-const QString Preferences::lastPublicHandleKey      = QString::fromAscii("lastPublicHandle");
-const QString Preferences::lastPublicHandleTimestampKey = QString::fromAscii("lastPublicHandleTimestamp");
+const QString Preferences::proxyTypeKey             = QString::fromLatin1("proxyType");
+const QString Preferences::proxyProtocolKey         = QString::fromLatin1("proxyProtocol");
+const QString Preferences::proxyServerKey           = QString::fromLatin1("proxyServer");
+const QString Preferences::proxyPortKey             = QString::fromLatin1("proxyPort");
+const QString Preferences::proxyRequiresAuthKey     = QString::fromLatin1("proxyRequiresAuth");
+const QString Preferences::proxyUsernameKey         = QString::fromLatin1("proxyUsername");
+const QString Preferences::proxyPasswordKey         = QString::fromLatin1("proxyPassword");
+const QString Preferences::syncNameKey              = QString::fromLatin1("syncName");
+const QString Preferences::syncIdKey                = QString::fromLatin1("syncId");
+const QString Preferences::localFolderKey           = QString::fromLatin1("localFolder");
+const QString Preferences::megaFolderKey            = QString::fromLatin1("megaFolder");
+const QString Preferences::megaFolderHandleKey      = QString::fromLatin1("megaFolderHandle");
+const QString Preferences::folderActiveKey          = QString::fromLatin1("folderActive");
+const QString Preferences::temporaryInactiveKey     = QString::fromLatin1("temporaryInactive");
+const QString Preferences::downloadFolderKey        = QString::fromLatin1("downloadFolder");
+const QString Preferences::uploadFolderKey          = QString::fromLatin1("uploadFolder");
+const QString Preferences::importFolderKey          = QString::fromLatin1("importFolder");
+const QString Preferences::hasDefaultUploadFolderKey    = QString::fromLatin1("hasDefaultUploadFolder");
+const QString Preferences::hasDefaultDownloadFolderKey  = QString::fromLatin1("hasDefaultDownloadFolder");
+const QString Preferences::hasDefaultImportFolderKey    = QString::fromLatin1("hasDefaultImportFolder");
+const QString Preferences::fileNameKey              = QString::fromLatin1("fileName");
+const QString Preferences::fileHandleKey            = QString::fromLatin1("fileHandle");
+const QString Preferences::localPathKey             = QString::fromLatin1("localPath");
+const QString Preferences::localFingerprintKey      = QString::fromLatin1("localFingerprint");
+const QString Preferences::fileTimeKey              = QString::fromLatin1("fileTime");
+const QString Preferences::isCrashedKey             = QString::fromLatin1("isCrashed");
+const QString Preferences::wasPausedKey             = QString::fromLatin1("wasPaused");
+const QString Preferences::wasUploadsPausedKey      = QString::fromLatin1("wasUploadsPaused");
+const QString Preferences::wasDownloadsPausedKey    = QString::fromLatin1("wasDownloadsPaused");
+const QString Preferences::lastExecutionTimeKey     = QString::fromLatin1("lastExecutionTime");
+const QString Preferences::excludedSyncNamesKey     = QString::fromLatin1("excludedSyncNames");
+const QString Preferences::excludedSyncPathsKey     = QString::fromLatin1("excludedSyncPaths");
+const QString Preferences::lastVersionKey           = QString::fromLatin1("lastVersion");
+const QString Preferences::lastStatsRequestKey      = QString::fromLatin1("lastStatsRequest");
+const QString Preferences::lastUpdateTimeKey        = QString::fromLatin1("lastUpdateTime");
+const QString Preferences::lastUpdateVersionKey     = QString::fromLatin1("lastUpdateVersion");
+const QString Preferences::previousCrashesKey       = QString::fromLatin1("previousCrashes");
+const QString Preferences::lastRebootKey            = QString::fromLatin1("lastReboot");
+const QString Preferences::lastExitKey              = QString::fromLatin1("lastExit");
+const QString Preferences::disableOverlayIconsKey   = QString::fromLatin1("disableOverlayIcons");
+const QString Preferences::disableFileVersioningKey = QString::fromLatin1("disableFileVersioning");
+const QString Preferences::disableLeftPaneIconsKey  = QString::fromLatin1("disableLeftPaneIcons");
+const QString Preferences::sessionKey               = QString::fromLatin1("session");
+const QString Preferences::firstStartDoneKey        = QString::fromLatin1("firstStartDone");
+const QString Preferences::firstSyncDoneKey         = QString::fromLatin1("firstSyncDone");
+const QString Preferences::firstFileSyncedKey       = QString::fromLatin1("firstFileSynced");
+const QString Preferences::firstWebDownloadKey      = QString::fromLatin1("firstWebclientDownload");
+const QString Preferences::fatWarningShownKey       = QString::fromLatin1("fatWarningShown");
+const QString Preferences::installationTimeKey      = QString::fromLatin1("installationTime");
+const QString Preferences::accountCreationTimeKey   = QString::fromLatin1("accountCreationTime");
+const QString Preferences::hasLoggedInKey           = QString::fromLatin1("hasLoggedIn");
+const QString Preferences::useHttpsOnlyKey          = QString::fromLatin1("useHttpsOnly");
+const QString Preferences::SSLcertificateExceptionKey  = QString::fromLatin1("SSLcertificateException");
+const QString Preferences::maxMemoryUsageKey        = QString::fromLatin1("maxMemoryUsage");
+const QString Preferences::maxMemoryReportTimeKey   = QString::fromLatin1("maxMemoryReportTime");
+const QString Preferences::oneTimeActionDoneKey     = QString::fromLatin1("oneTimeActionDone");
+const QString Preferences::httpsKeyKey              = QString::fromLatin1("httpsKey2");
+const QString Preferences::httpsCertKey             = QString::fromLatin1("httpsCert2");
+const QString Preferences::httpsCertIntermediateKey = QString::fromLatin1("httpsCertIntermediate2");
+const QString Preferences::httpsCertExpirationKey   = QString::fromLatin1("httpsCertExpiration2");
+const QString Preferences::transferIdentifierKey    = QString::fromLatin1("transferIdentifier");
+const QString Preferences::lastPublicHandleKey      = QString::fromLatin1("lastPublicHandle");
+const QString Preferences::lastPublicHandleTimestampKey = QString::fromLatin1("lastPublicHandleTimestamp");
 
 const bool Preferences::defaultShowNotifications    = true;
 const bool Preferences::defaultStartOnStartup       = true;
@@ -375,11 +375,11 @@ const int  Preferences::defaultProxyType            = Preferences::PROXY_TYPE_AU
 const int  Preferences::defaultProxyType            = Preferences::PROXY_TYPE_NONE;
 #endif
 const int  Preferences::defaultProxyProtocol        = Preferences::PROXY_PROTOCOL_HTTP;
-const QString  Preferences::defaultProxyServer      = QString::fromAscii("127.0.0.1");
+const QString  Preferences::defaultProxyServer      = QString::fromLatin1("127.0.0.1");
 const int Preferences::defaultProxyPort             = 8080;
 const bool Preferences::defaultProxyRequiresAuth    = false;
-const QString Preferences::defaultProxyUsername     = QString::fromAscii("");
-const QString Preferences::defaultProxyPassword     = QString::fromAscii("");
+const QString Preferences::defaultProxyUsername     = QString::fromLatin1("");
+const QString Preferences::defaultProxyPassword     = QString::fromLatin1("");
 
 Preferences *Preferences::preferences = NULL;
 
@@ -402,14 +402,14 @@ void Preferences::initialize(QString dataPath)
 {
     this->dataPath = dataPath;
 #if QT_VERSION >= 0x050000
-    QString lockSettingsFile = QDir::toNativeSeparators(dataPath + QString::fromAscii("/MEGAsync.cfg.lock"));
+    QString lockSettingsFile = QDir::toNativeSeparators(dataPath + QString::fromLatin1("/MEGAsync.cfg.lock"));
     QFile::remove(lockSettingsFile);
 #endif
 
     QDir dir(dataPath);
-    dir.mkpath(QString::fromAscii("."));
-    QString settingsFile = QDir::toNativeSeparators(dataPath + QString::fromAscii("/MEGAsync.cfg"));
-    QString bakSettingsFile = QDir::toNativeSeparators(dataPath + QString::fromAscii("/MEGAsync.cfg.bak"));
+    dir.mkpath(QString::fromLatin1("."));
+    QString settingsFile = QDir::toNativeSeparators(dataPath + QString::fromLatin1("/MEGAsync.cfg"));
+    QString bakSettingsFile = QDir::toNativeSeparators(dataPath + QString::fromLatin1("/MEGAsync.cfg.bak"));
     bool retryFlag = false;
 
     errorFlag = false;
@@ -1703,11 +1703,11 @@ QString Preferences::proxyHostAndPort()
     QHostAddress ipAddress(hostname);
     if (ipAddress.protocol() == QAbstractSocket::IPv6Protocol)
     {
-        proxy = QString::fromUtf8("[") + hostname + QString::fromAscii("]:") + QString::number(proxyPort());
+        proxy = QString::fromUtf8("[") + hostname + QString::fromLatin1("]:") + QString::number(proxyPort());
     }
     else
     {
-        proxy = hostname + QString::fromAscii(":") + QString::number(proxyPort());
+        proxy = hostname + QString::fromLatin1(":") + QString::number(proxyPort());
     }
 
     mutex.unlock();
@@ -2242,7 +2242,7 @@ void Preferences::addSyncedFolder(QString localFolder, QString megaFolder, mega:
         syncName = QDir::toNativeSeparators(localFolder);
     }
 
-    syncName.remove(QChar::fromAscii(':')).remove(QDir::separator());
+    syncName.remove(QChar::fromLatin1(':')).remove(QDir::separator());
 
     localFolder = QDir::toNativeSeparators(localFolderInfo.canonicalFilePath());
     syncNames.append(syncName);
@@ -2330,7 +2330,7 @@ void Preferences::setExcludedSyncNames(QStringList names)
     }
     else
     {
-        settings->setValue(excludedSyncNamesKey, excludedSyncNames.join(QString::fromAscii("\n")));
+        settings->setValue(excludedSyncNamesKey, excludedSyncNames.join(QString::fromLatin1("\n")));
     }
 
     settings->sync();
@@ -2357,7 +2357,7 @@ void Preferences::setExcludedSyncPaths(QStringList paths)
     }
     else
     {
-        settings->setValue(excludedSyncPathsKey, excludedSyncPaths.join(QString::fromAscii("\n")));
+        settings->setValue(excludedSyncPathsKey, excludedSyncPaths.join(QString::fromLatin1("\n")));
     }
 
     settings->sync();
@@ -2374,7 +2374,7 @@ QStringList Preferences::getPreviousCrashes()
         settings->endGroup();
         currentAccount = settings->value(currentAccountKey).toString();
     }
-    previousCrashes = settings->value(previousCrashesKey).toString().split(QString::fromAscii("\n", QString::SkipEmptyParts));
+    previousCrashes = settings->value(previousCrashesKey).toString().split(QString::fromLatin1("\n", QString::SkipEmptyParts));
     if (!currentAccount.isEmpty())
     {
         settings->beginGroup(currentAccount);
@@ -2400,7 +2400,7 @@ void Preferences::setPreviousCrashes(QStringList crashes)
     }
     else
     {
-        settings->setValue(previousCrashesKey, crashes.join(QString::fromAscii("\n")));
+        settings->setValue(previousCrashesKey, crashes.join(QString::fromLatin1("\n")));
     }
 
     if (!currentAccount.isEmpty())
@@ -2959,7 +2959,7 @@ bool Preferences::hasEmail(QString email)
         value = !storedEmail.compare(email);
         if (!value)
         {
-            settings->remove(QString::fromAscii(""));
+            settings->remove(QString::fromLatin1(""));
         }
         settings->endGroup();
     }
@@ -2994,13 +2994,13 @@ static bool caseInsensitiveLessThan(const QString &s1, const QString &s2)
 void Preferences::loadExcludedSyncNames()
 {
     mutex.lock();
-    excludedSyncNames = settings->value(excludedSyncNamesKey).toString().split(QString::fromAscii("\n", QString::SkipEmptyParts));
+    excludedSyncNames = settings->value(excludedSyncNamesKey).toString().split(QString::fromLatin1("\n", QString::SkipEmptyParts));
     if (excludedSyncNames.size()==1 && excludedSyncNames.at(0).isEmpty())
     {
         excludedSyncNames.clear();
     }
 
-    excludedSyncPaths = settings->value(excludedSyncPathsKey).toString().split(QString::fromAscii("\n", QString::SkipEmptyParts));
+    excludedSyncPaths = settings->value(excludedSyncPathsKey).toString().split(QString::fromLatin1("\n", QString::SkipEmptyParts));
     if (excludedSyncPaths.size()==1 && excludedSyncPaths.at(0).isEmpty())
     {
         excludedSyncPaths.clear();
@@ -3082,7 +3082,7 @@ void Preferences::writeFolders()
 
     settings->beginGroup(syncsGroupKey);
 
-    settings->remove(QString::fromAscii(""));
+    settings->remove(QString::fromLatin1(""));
     for (int i = 0; i < localFolders.size(); i++)
     {
         settings->beginGroup(QString::number(i));

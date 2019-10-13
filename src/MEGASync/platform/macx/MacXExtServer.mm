@@ -60,7 +60,7 @@ void MacXExtServer::acceptConnection()
             }
 
             QString message = QString::fromUtf8("A:") + syncPath
-                    + QChar::fromAscii(':') + preferences->getSyncName(i);
+                    + QChar::fromLatin1(':') + preferences->getSyncName(i);
             client->writeData(message.toUtf8().constData(), message.length());
         }        
     }
@@ -134,7 +134,7 @@ bool MacXExtServer::GetAnswerToRequest(const char *buf, QByteArray *response)
             }
 
             bool ok;
-            QStringList parameters = QString::fromAscii(content).split(QChar::fromAscii(':'));
+            QStringList parameters = QString::fromLatin1(content).split(QChar::fromLatin1(':'));
             if (parameters.size() != 3)
             {
                 break;
@@ -370,7 +370,7 @@ void MacXExtServer::notifySyncAdd(QString path, QString syncName)
 {
     emit sendToAll((QString::fromUtf8("A:")
                    + path
-                   + QChar::fromAscii(':')
+                   + QChar::fromLatin1(':')
                    + syncName).toUtf8());
 }
 
@@ -378,7 +378,7 @@ void MacXExtServer::notifySyncDel(QString path, QString syncName)
 {
     emit sendToAll((QString::fromUtf8("D:")
                    + path
-                   + QChar::fromAscii(':')
+                   + QChar::fromLatin1(':')
                    + syncName).toUtf8());
 }
 
@@ -407,7 +407,7 @@ void MacXExtServer::notifyAllClients(int op)
             continue;
         }
 
-        QString message = command + syncPath + QChar::fromAscii(':') + preferences->getSyncName(i);
+        QString message = command + syncPath + QChar::fromLatin1(':') + preferences->getSyncName(i);
 
         emit sendToAll(message.toUtf8());
     }

@@ -40,7 +40,7 @@ ChangeLogDialog::ChangeLogDialog(QString version, QString SDKversion, QString ch
     ui->lCopyright->setText(ui->lCopyright->text().arg(QDate::currentDate().year()));
     ui->tChangelog->document()->setDocumentMargin(16.0);
     ui->lVersion->setText(version);
-    ui->lSDKVersion->setText(QString::fromAscii(" (") + SDKversion + QString::fromAscii(")"));
+    ui->lSDKVersion->setText(QString::fromLatin1(" (") + SDKversion + QString::fromLatin1(")"));
     setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
     setChangeLogNotes(changeLog);
     highDpiResize.init(this);
@@ -64,25 +64,25 @@ void ChangeLogDialog::setChangeLogNotes(QString notes)
 
 void ChangeLogDialog::on_bTerms_clicked()
 {
-    QString temsUrl = Preferences::BASE_URL + QString::fromAscii("/terms");
+    QString temsUrl = Preferences::BASE_URL + QString::fromLatin1("/terms");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(temsUrl));
 }
 
 void ChangeLogDialog::on_bPolicy_clicked()
 {
-    QString policyUrl = Preferences::BASE_URL + QString::fromAscii("/privacy");
+    QString policyUrl = Preferences::BASE_URL + QString::fromLatin1("/privacy");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(policyUrl));
 }
 
 void ChangeLogDialog::on_bAck_clicked()
 {
-    QString ackUrl = QString::fromAscii("https://github.com/meganz/MEGAsync/blob/master/CREDITS.md");
+    QString ackUrl = QString::fromLatin1("https://github.com/meganz/MEGAsync/blob/master/CREDITS.md");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(ackUrl));
 }
 
 void ChangeLogDialog::on_bGDPR_clicked()
 {
-    QString gdprUrl = Preferences::BASE_URL + QString::fromAscii("/gdpr");
+    QString gdprUrl = Preferences::BASE_URL + QString::fromLatin1("/gdpr");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(gdprUrl));
 }
 

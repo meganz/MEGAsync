@@ -25,7 +25,7 @@ UpgradeWidget::UpgradeWidget(PlanInfo data, QString userAgent, QWidget *parent) 
     //that will be shown over the Plans to manage clicked() events
     overlay = new QPushButton(this);
     overlay->setObjectName(QString::fromUtf8("bOverlay"));
-    overlay->setStyleSheet(QString::fromAscii(
+    overlay->setStyleSheet(QString::fromLatin1(
                                "QPushButton#bOverlay:hover {border-image: url(://images/card_border.png);} "
                                "QPushButton#bOverlay {border-radius: 3px; border: 1px solid; border-color: rgba(0, 0, 0, 0.1); border: none;} "
                                ));

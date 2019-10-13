@@ -261,7 +261,7 @@ void StreamingFromMegaDialog::onLinkInfoAvailable()
     if (selectedMegaNode)
     {
         QString name = QString::fromUtf8(selectedMegaNode->getName());
-        if (!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("CRYPTO_ERROR")))
+        if (!name.compare(QString::fromLatin1("NO_KEY")) || !name.compare(QString::fromLatin1("CRYPTO_ERROR")))
         {
             updateFileInfo(tr("Decryption error"), WARNING);
             delete selectedMegaNode;
@@ -294,8 +294,8 @@ void StreamingFromMegaDialog::openStreamWithApp(QString app)
 #else
     QString args;
     args = QString::fromUtf8("-a ");
-    args += QDir::toNativeSeparators(QString::fromUtf8("\"")+ app + QString::fromUtf8("\"")) + QString::fromAscii(" \"%1\"").arg(streamURL);
-    QProcess::startDetached(QString::fromAscii("open ") + args);
+    args += QDir::toNativeSeparators(QString::fromUtf8("\"")+ app + QString::fromUtf8("\"")) + QString::fromLatin1(" \"%1\"").arg(streamURL);
+    QProcess::startDetached(QString::fromLatin1("open ") + args);
 #endif
 }
 

@@ -51,12 +51,16 @@ void SizeLimitDialog::setLowerSizeLimit(bool value)
 
 void SizeLimitDialog::setUpperSizeLimitValue(long long limit)
 {
-    ui->eUpperThan->setValue(limit);
+    limit = (limit <= 9999) ? limit : 9999;
+    limit = (limit >= 0) ? limit : 0;
+    ui->eUpperThan->setValue(static_cast<int>(limit));
 }
 
 void SizeLimitDialog::setLowerSizeLimitValue(long long limit)
 {
-    ui->eLowerThan->setValue(limit);
+    limit = (limit <= 9999) ? limit : 9999;
+    limit = (limit >= 0) ? limit : 0;
+    ui->eLowerThan->setValue(static_cast<int>(limit));
 }
 
 long long SizeLimitDialog::upperSizeLimitValue()

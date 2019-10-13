@@ -30,7 +30,7 @@ ActiveTransfersWidget::ActiveTransfersWidget(QWidget *parent) :
     ui->sDownloads->setCurrentWidget(ui->wNoDownloads);
     ui->sUploads->setCurrentWidget(ui->wNoUploads);
     ui->sTransfersContainer->setCurrentWidget(ui->pNoTransfers);
-    ui->bGraphsSeparator->setStyleSheet(QString::fromAscii("background-color: transparent; "
+    ui->bGraphsSeparator->setStyleSheet(QString::fromLatin1("background-color: transparent; "
                                                            "border: none; "));
 }
 
@@ -473,7 +473,7 @@ void ActiveTransfersWidget::udpateTransferState(TransferData *td)
             }
             else
             {
-                remainingTime = QString::fromAscii("");
+                remainingTime = QString::fromLatin1("");
             }          
 
             break;
@@ -541,13 +541,13 @@ void ActiveTransfersWidget::updateNumberOfTransfers(mega::MegaApi *api)
     if (!totalDownloads && !totalUploads)
     {
         ui->sTransfersContainer->setCurrentWidget(ui->pNoTransfers);
-        ui->bGraphsSeparator->setStyleSheet(QString::fromAscii("background-color: transparent; "
+        ui->bGraphsSeparator->setStyleSheet(QString::fromLatin1("background-color: transparent; "
                                                                "border: none; "));
     }
     else
     {
         ui->sTransfersContainer->setCurrentWidget(ui->pTransfers);
-        ui->bGraphsSeparator->setStyleSheet(QString::fromAscii("background-color: rgba(0, 0, 0, 10%); "
+        ui->bGraphsSeparator->setStyleSheet(QString::fromLatin1("background-color: rgba(0, 0, 0, 10%); "
                                                                "border: none; "));
     }
 }

@@ -7,8 +7,8 @@ using namespace mega;
 ExtServer *LinuxPlatform::ext_server = NULL;
 NotifyServer *LinuxPlatform::notify_server = NULL;
 
-static QString autostart_dir = QDir::homePath() + QString::fromAscii("/.config/autostart/");
-QString LinuxPlatform::desktop_file = autostart_dir + QString::fromAscii("megasync.desktop");
+static QString autostart_dir = QDir::homePath() + QString::fromLatin1("/.config/autostart/");
+QString LinuxPlatform::desktop_file = autostart_dir + QString::fromLatin1("megasync.desktop");
 QString LinuxPlatform::set_icon = QString::fromUtf8("gvfs-set-attribute -t string \"%1\" metadata::custom-icon file://%2");
 QString LinuxPlatform::remove_icon = QString::fromUtf8("gvfs-set-attribute -t unset \"%1\" metadata::custom-icon");
 QString LinuxPlatform::custom_icon = QString::fromUtf8("/usr/share/icons/hicolor/256x256/apps/mega.png");
@@ -58,7 +58,7 @@ bool LinuxPlatform::startOnStartup(bool value)
                     return false;
                 }
             }
-            QString app_desktop = QString::fromAscii("/usr/share/applications/megasync.desktop");
+            QString app_desktop = QString::fromLatin1("/usr/share/applications/megasync.desktop");
             if (QFile(app_desktop).exists())
             {
                 return QFile::copy(app_desktop, desktop_file);
@@ -89,7 +89,7 @@ bool LinuxPlatform::isStartOnStartupActive()
 void LinuxPlatform::showInFolder(QString pathIn)
 {
     QString filebrowser = getDefaultFileBrowserApp();
-    QProcess::startDetached(filebrowser + QString::fromAscii(" \"") + pathIn + QString::fromUtf8("\""));
+    QProcess::startDetached(filebrowser + QString::fromLatin1(" \"") + pathIn + QString::fromUtf8("\""));
 }
 
 void LinuxPlatform::startShellDispatcher(MegaApplication *receiver)
@@ -242,7 +242,7 @@ QString LinuxPlatform::getDefaultOpenAppByMimeType(QString mimeType)
     }
 
     QString line = contents.at(contents.size() - 1);
-    int index = line.indexOf(QChar::fromAscii('%'));
+    int index = line.indexOf(QChar::fromLatin1('%'));
     int size = -1;
     if (index != -1)
     {

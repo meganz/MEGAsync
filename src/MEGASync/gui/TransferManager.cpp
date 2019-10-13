@@ -196,9 +196,9 @@ void TransferManager::createAddMenu()
     {
         addMenu = new QMenu(this);
 #ifdef __APPLE__
-        addMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+        addMenu->setStyleSheet(QString::fromLatin1("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #else
-        addMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
+        addMenu->setStyleSheet(QString::fromLatin1("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 5px; padding-bottom: 5px;}"));
 #endif
     }
 
@@ -208,7 +208,7 @@ void TransferManager::createAddMenu()
         importLinksAction = NULL;
     }
 
-    importLinksAction = new MenuItemAction(tr("Import links"), QIcon(QString::fromAscii("://images/get_link_ico.png")), QIcon(QString::fromAscii("://images/get_link_ico_white.png")));
+    importLinksAction = new MenuItemAction(tr("Import links"), QIcon(QString::fromLatin1("://images/get_link_ico.png")), QIcon(QString::fromLatin1("://images/get_link_ico_white.png")));
     connect(importLinksAction, SIGNAL(triggered()), qApp, SLOT(importLinks()), Qt::QueuedConnection);
 
     if (uploadAction)
@@ -217,7 +217,7 @@ void TransferManager::createAddMenu()
         uploadAction = NULL;
     }
 
-    uploadAction = new MenuItemAction(tr("Upload"), QIcon(QString::fromAscii("://images/upload_to_mega_ico.png")), QIcon(QString::fromAscii("://images/upload_to_mega_ico_white.png")));
+    uploadAction = new MenuItemAction(tr("Upload"), QIcon(QString::fromLatin1("://images/upload_to_mega_ico.png")), QIcon(QString::fromLatin1("://images/upload_to_mega_ico_white.png")));
     connect(uploadAction, SIGNAL(triggered()), qApp, SLOT(uploadActionClicked()), Qt::QueuedConnection);
 
     if (downloadAction)
@@ -226,7 +226,7 @@ void TransferManager::createAddMenu()
         downloadAction = NULL;
     }
 
-    downloadAction = new MenuItemAction(tr("Download"), QIcon(QString::fromAscii("://images/download_from_mega_ico.png")), QIcon(QString::fromAscii("://images/download_from_mega_ico_white.png")));
+    downloadAction = new MenuItemAction(tr("Download"), QIcon(QString::fromLatin1("://images/download_from_mega_ico.png")), QIcon(QString::fromLatin1("://images/download_from_mega_ico_white.png")));
     connect(downloadAction, SIGNAL(triggered()), qApp, SLOT(downloadActionClicked()), Qt::QueuedConnection);
 
     if (settingsAction)
@@ -236,9 +236,9 @@ void TransferManager::createAddMenu()
     }
 
 #ifndef __APPLE__
-    settingsAction = new MenuItemAction(tr("Settings"), QIcon(QString::fromAscii("://images/settings_ico.png")), QIcon(QString::fromAscii("://images/settings_ico_white.png")));
+    settingsAction = new MenuItemAction(tr("Settings"), QIcon(QString::fromLatin1("://images/settings_ico.png")), QIcon(QString::fromLatin1("://images/settings_ico_white.png")));
 #else
-    settingsAction = new MenuItemAction(tr("Preferences"), QIcon(QString::fromAscii("://images/settings_ico.png")), QIcon(QString::fromAscii("://images/settings_ico_white.png")));
+    settingsAction = new MenuItemAction(tr("Preferences"), QIcon(QString::fromLatin1("://images/settings_ico.png")), QIcon(QString::fromLatin1("://images/settings_ico_white.png")));
 #endif
     connect(settingsAction, SIGNAL(triggered()), qApp, SLOT(openSettings()), Qt::QueuedConnection);
 

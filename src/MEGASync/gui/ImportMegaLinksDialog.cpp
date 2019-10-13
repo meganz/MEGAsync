@@ -53,7 +53,7 @@ ImportMegaLinksDialog::ImportMegaLinksDialog(MegaApi *megaApi, Preferences *pref
     if (!test.isDir())
     {
         QDir defaultFolder(QDir::toNativeSeparators(Utilities::getDefaultBasePath() + QString::fromUtf8("/MEGAsync Downloads")));
-        defaultFolder.mkpath(QString::fromAscii("."));
+        defaultFolder.mkpath(QString::fromLatin1("."));
         defaultFolderPath = defaultFolder.absolutePath();
         defaultFolderPath = QDir::toNativeSeparators(defaultFolderPath);
     }
@@ -217,7 +217,7 @@ void ImportMegaLinksDialog::on_bLocalFolder_clicked()
     {
         path = QDir::toNativeSeparators(path);
         QDir dir(path);
-        if (!dir.exists() && !dir.mkpath(QString::fromAscii(".")))
+        if (!dir.exists() && !dir.mkpath(QString::fromLatin1(".")))
         {
             return;
         }
@@ -274,7 +274,7 @@ void ImportMegaLinksDialog::onLinkInfoAvailable(int id)
     if (node && (e == MegaError::API_OK))
     {
         QString name = QString::fromUtf8(node->getName());
-        if (!name.compare(QString::fromAscii("NO_KEY")) || !name.compare(QString::fromAscii("CRYPTO_ERROR")))
+        if (!name.compare(QString::fromLatin1("NO_KEY")) || !name.compare(QString::fromLatin1("CRYPTO_ERROR")))
         {
             item->setData(tr("Decryption error"), ImportListWidgetItem::WARNING, megaApi->getSize(node), !(node->getType() == MegaNode::TYPE_FILE));
         }

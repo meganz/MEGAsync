@@ -12,7 +12,7 @@ QMegaModel::QMegaModel(mega::MegaApi *megaApi, QObject *parent) :
     this->megaApi = megaApi;
     this->root = megaApi->getRootNode();
     this->rootItem = new MegaItem(root);
-    this->folderIcon =  QIcon(QString::fromAscii("://images/small_folder.png"));
+    this->folderIcon =  QIcon(QString::fromLatin1("://images/small_folder.png"));
 
     MegaUserList *contacts = megaApi->getContacts();
     for (int i = 0; i < contacts->size(); i++)
@@ -62,11 +62,11 @@ QVariant QMegaModel::data(const QModelIndex &index, int role) const
             {
                 if (node->isInShare())
                 {
-                    return QIcon(QString::fromAscii("://images/small_folder_incoming.png"));;
+                    return QIcon(QString::fromLatin1("://images/small_folder_incoming.png"));;
                 }
                 else if (node->isOutShare())
                 {
-                    return QIcon(QString::fromAscii("://images/small_folder_outgoing.png"));;
+                    return QIcon(QString::fromLatin1("://images/small_folder_outgoing.png"));;
                 }
 
                 return folderIcon;

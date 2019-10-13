@@ -41,7 +41,7 @@ long long calculateCacheSize()
         QString syncPath = preferences->getLocalFolder(i);
         if (!syncPath.isEmpty())
         {
-            Utilities::getFolderSize(syncPath + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER), &cacheSize);
+            Utilities::getFolderSize(syncPath + QDir::separator() + QString::fromLatin1(MEGA_DEBRIS_FOLDER), &cacheSize);
         }
     }
     return cacheSize;
@@ -251,7 +251,7 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
     ui->bAdvanced->setStyleSheet(QString::fromUtf8("QToolButton:checked { border-image: url(\":/images/menu_selected.png\"); }"));
 #endif
 
-    ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
+    ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromLatin1(MEGA_DEBRIS_FOLDER)));
 
     ui->gCache->setVisible(false);
     ui->lFileVersionsSize->setVisible(false);
@@ -815,7 +815,7 @@ void SettingsDialog::on_bOk_clicked()
 
 void SettingsDialog::on_bHelp_clicked()
 {
-    QString helpUrl = Preferences::BASE_URL + QString::fromAscii("/help/client/megasync");
+    QString helpUrl = Preferences::BASE_URL + QString::fromLatin1("/help/client/megasync");
     QtConcurrent::run(QDesktopServices::openUrl, QUrl(helpUrl));
 }
 
@@ -979,7 +979,7 @@ void SettingsDialog::loadSettings()
             QString file = it.next();
             if (file.startsWith(fullPrefix))
             {
-                int extensionIndex = file.lastIndexOf(QString::fromAscii("."));
+                int extensionIndex = file.lastIndexOf(QString::fromLatin1("."));
                 if ((extensionIndex - fullPrefix.size()) <= 0)
                 {
                     continue;
@@ -1011,7 +1011,7 @@ void SettingsDialog::loadSettings()
 
         if (currentIndex == -1)
         {
-            currentIndex = languageCodes.indexOf(QString::fromAscii("en"));
+            currentIndex = languageCodes.indexOf(QString::fromLatin1("en"));
         }
 
         ui->cLanguage->addItems(languages);
@@ -1020,15 +1020,19 @@ void SettingsDialog::loadSettings()
         int width = ui->bBandwidth->width();
         QFont f = ui->bBandwidth->font();
         QFontMetrics fm = QFontMetrics(f);
+#if QT_VERSION < QT_VERSION_CHECK(5,11,0)
         int neededWidth = fm.width(tr("Bandwidth"));
+#else
+        int neededWidth = fm.horizontalAdvance(tr("Bandwidth"));
+#endif
         if (width < neededWidth)
         {
             ui->bBandwidth->setText(tr("Transfers"));
         }
 
-        if (ui->lUploadAutoLimit->text().trimmed().at(0)!=QChar::fromAscii('('))
+        if (ui->lUploadAutoLimit->text().trimmed().at(0)!=QChar::fromLatin1('('))
         {
-            ui->lUploadAutoLimit->setText(QString::fromAscii("(%1)").arg(ui->lUploadAutoLimit->text().trimmed()));
+            ui->lUploadAutoLimit->setText(QString::fromLatin1("(%1)").arg(ui->lUploadAutoLimit->text().trimmed()));
         }
 
         // Disable Upgrade buttons for business accounts
@@ -1135,12 +1139,12 @@ void SettingsDialog::loadSettings()
         ui->rUploadAutoLimit->setChecked(preferences->uploadLimitKB()<0);
         ui->rUploadLimit->setChecked(preferences->uploadLimitKB()>0);
         ui->rUploadNoLimit->setChecked(preferences->uploadLimitKB()==0);
-        ui->eUploadLimit->setText((preferences->uploadLimitKB()<=0)? QString::fromAscii("0") : QString::number(preferences->uploadLimitKB()));
+        ui->eUploadLimit->setText((preferences->uploadLimitKB()<=0)? QString::fromLatin1("0") : QString::number(preferences->uploadLimitKB()));
         ui->eUploadLimit->setEnabled(ui->rUploadLimit->isChecked());
 
         ui->rDownloadLimit->setChecked(preferences->downloadLimitKB()>0);
         ui->rDownloadNoLimit->setChecked(preferences->downloadLimitKB()==0);
-        ui->eDownloadLimit->setText((preferences->downloadLimitKB()<=0)? QString::fromAscii("0") : QString::number(preferences->downloadLimitKB()));
+        ui->eDownloadLimit->setText((preferences->downloadLimitKB()<=0)? QString::fromLatin1("0") : QString::number(preferences->downloadLimitKB()));
         ui->eDownloadLimit->setEnabled(ui->rDownloadLimit->isChecked());
 
         ui->eMaxDownloadConnections->setValue(preferences->parallelDownloadConnections());
@@ -1168,7 +1172,7 @@ void SettingsDialog::loadSettings()
         }
         else
         {
-            double totalBandwidth = preferences->totalBandwidth();
+            auto totalBandwidth = preferences->totalBandwidth();
             if (totalBandwidth == 0)
             {
                 ui->gBandwidthQuota->hide();
@@ -1181,9 +1185,9 @@ void SettingsDialog::loadSettings()
             {
                 ui->gBandwidthQuota->show();
                 ui->bSeparatorBandwidth->show();
-                int bandwidthPercentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+                auto bandwidthPercentage = Utilities::percentage(preferences->usedBandwidth(),preferences->totalBandwidth());
                 ui->pUsedBandwidth->show();
-                ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
+                ui->pUsedBandwidth->setValue(bandwidthPercentage);
                 ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
                         .arg(Utilities::getSizeString(preferences->usedBandwidth()))
                         .arg(QString::number(bandwidthPercentage))
@@ -1287,11 +1291,11 @@ void SettingsDialog::refreshAccountDetails()
         }
         else
         {
-            int percentage = floor(100*((double)preferences->usedStorage()/preferences->totalStorage()));
-            ui->pStorage->setValue((percentage < 100) ? percentage : 100);
+            auto percentage = Utilities::percentage(preferences->usedStorage(),preferences->totalStorage());
+            ui->pStorage->setValue(percentage);
             ui->lStorage->setText(tr("%1 (%2%) of %3 used")
                   .arg(Utilities::getSizeString(preferences->usedStorage()))
-                  .arg(QString::number(percentage > 100 ? 100 : percentage))
+                  .arg(QString::number(percentage))
                   .arg(Utilities::getSizeString(preferences->totalStorage())));
         }
     }
@@ -1310,11 +1314,11 @@ void SettingsDialog::refreshAccountDetails()
         }
         else
         {
-            int percentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
-            ui->pUsedBandwidth->setValue((percentage < 100) ? percentage : 100);
+            auto percentage = Utilities::percentage(preferences->usedBandwidth(),preferences->totalBandwidth());
+            ui->pUsedBandwidth->setValue(percentage);
             ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
                   .arg(Utilities::getSizeString(preferences->usedBandwidth()))
-                  .arg(QString::number(percentage > 100 ? 100 : percentage))
+                  .arg(QString::number(percentage))
                   .arg(Utilities::getSizeString(preferences->totalBandwidth())));
         }
     }
@@ -1429,7 +1433,7 @@ int SettingsDialog::saveSettings()
 
                 if (j == ui->tSyncs->rowCount())
                 {
-                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Removing sync: %1").arg(preferences->getSyncName(i)).toUtf8().constData());
+                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Removing sync: %1").arg(preferences->getSyncName(i)).toUtf8().constData());
                     bool active = preferences->isFolderActive(i);
                     MegaNode *node = megaApi->getNodeByHandle(megaHandle);
                     if (active)
@@ -1497,7 +1501,7 @@ int SettingsDialog::saveSettings()
 
                 if (j == preferences->getNumSyncedFolders())
                 {
-                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromAscii("Adding sync: %1 - %2")
+                    MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromLatin1("Adding sync: %1 - %2")
                                  .arg(localFolderPath).arg(megaFolderPath).toUtf8().constData());
 
                     preferences->addSyncedFolder(localFolderPath,
@@ -1673,7 +1677,7 @@ int SettingsDialog::saveSettings()
             }
 
             proxy.setHostName(ui->eProxyServer->text().trimmed());
-            proxy.setPort(ui->eProxyPort->text().trimmed().toInt());
+            proxy.setPort(ui->eProxyPort->text().trimmed().toUShort());
             if (ui->cProxyRequiresPassword->isChecked())
             {
                 proxy.setUser(ui->eProxyUsername->text());
@@ -1688,7 +1692,7 @@ int SettingsDialog::saveSettings()
                 string sProxyURL = proxySettings->getProxyURL();
                 QString proxyURL = QString::fromUtf8(sProxyURL.data());
 
-                QStringList parts = proxyURL.split(QString::fromAscii("://"));
+                QStringList parts = proxyURL.split(QString::fromLatin1("://"));
                 if (parts.size() == 2 && parts[0].startsWith(QString::fromUtf8("socks")))
                 {
                     proxy.setType(QNetworkProxy::Socks5Proxy);
@@ -1698,11 +1702,11 @@ int SettingsDialog::saveSettings()
                     proxy.setType(QNetworkProxy::HttpProxy);
                 }
 
-                QStringList arguments = parts[parts.size()-1].split(QString::fromAscii(":"));
+                QStringList arguments = parts[parts.size()-1].split(QString::fromLatin1(":"));
                 if (arguments.size() == 2)
                 {
                     proxy.setHostName(arguments[0]);
-                    proxy.setPort(arguments[1].toInt());
+                    proxy.setPort(arguments[1].toUShort());
                 }
             }
             delete proxySettings;
@@ -1747,7 +1751,7 @@ int SettingsDialog::saveSettings()
         preferences->setCrashed(true);
         excludedNamesChanged = false;
 
-        QMessageBox* info = new QMessageBox(QMessageBox::Warning, QString::fromAscii("MEGAsync"),
+        QMessageBox* info = new QMessageBox(QMessageBox::Warning, QString::fromLatin1("MEGAsync"),
                                             tr("The new excluded file names will be taken into account\n"
                                                "when the application starts again"));
         info->setStandardButtons(QMessageBox::Ok | QMessageBox::Yes);
@@ -1774,7 +1778,7 @@ int SettingsDialog::saveSettings()
             return 2;
         }
 
-        QT_TR_NOOP("Do you want to restart MEGAsync now?");
+        //QT_TR_NOOP("Do you want to restart MEGAsync now?");
     }
 
     ui->bApply->setEnabled(false);
@@ -1805,7 +1809,11 @@ void SettingsDialog::loadSyncSettings()
 
     ui->tSyncs->horizontalHeader()->setVisible(true);
     int numFolders = preferences->getNumSyncedFolders();
+#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
     ui->tSyncs->horizontalHeader()->setResizeMode(QHeaderView::Fixed);
+#else
+    ui->tSyncs->horizontalHeader()->sectionResizeMode(QHeaderView::Fixed);
+#endif
     ui->tSyncs->setRowCount(numFolders);
     ui->tSyncs->setColumnCount(3);
     ui->tSyncs->setColumnWidth(2, 21);
@@ -1949,7 +1957,7 @@ void SettingsDialog::on_bUnlink_clicked()
 {
     QPointer<SettingsDialog> currentDialog = this;
     if (QMessageBox::question(NULL, tr("Logout"),
-            tr("Synchronization will stop working.") + QString::fromAscii(" ") + tr("Are you sure?"),
+            tr("Synchronization will stop working.") + QString::fromLatin1(" ") + tr("Are you sure?"),
             QMessageBox::Yes|QMessageBox::No) == QMessageBox::Yes)
     {
         if (currentDialog)
@@ -2016,7 +2024,7 @@ void SettingsDialog::on_tSyncs_doubleClicked(const QModelIndex &index)
         if (node)
         {
             const char *handle = node->getBase64Handle();
-            QString url = Preferences::BASE_URL + QString::fromAscii("/fm/") + QString::fromAscii(handle);
+            QString url = Preferences::BASE_URL + QString::fromLatin1("/fm/") + QString::fromLatin1(handle);
             QtConcurrent::run(QDesktopServices::openUrl, QUrl(url));
             delete [] handle;
             delete node;
@@ -2229,7 +2237,7 @@ void SettingsDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
-        ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromAscii(MEGA_DEBRIS_FOLDER)));
+        ui->bLocalCleaner->setText(ui->bLocalCleaner->text().arg(QString::fromLatin1(MEGA_DEBRIS_FOLDER)));
         ui->lFileVersionsSize->setText(tr("File versions: %1").arg(Utilities::getSizeString(fileVersionsSize)));
 
 
@@ -2255,7 +2263,7 @@ QString SettingsDialog::getFormatString()
 
         if (hasLowerLimit)
         {
-            format  += QString::fromUtf8("<") + Utilities::getSizeString(lowerLimit * pow((float)1024, lowerLimitUnit));
+            format  += QString::fromUtf8("<") + Utilities::getSizeString(lowerLimit * (1 << (10 * lowerLimitUnit)));
         }
 
         if (hasLowerLimit && hasUpperLimit)
@@ -2265,7 +2273,7 @@ QString SettingsDialog::getFormatString()
 
         if (hasUpperLimit)
         {
-            format  += QString::fromUtf8(">") + Utilities::getSizeString(upperLimit * pow((float)1024, upperLimitUnit));
+            format  += QString::fromUtf8(">") + Utilities::getSizeString(upperLimit * (1 << (10 * upperLimitUnit)));
         }
 
         format += QString::fromUtf8(")");
@@ -2304,7 +2312,7 @@ void SettingsDialog::on_bClearCache_clicked()
     int numFolders = preferences->getNumSyncedFolders();
     for (int i = 0; i < numFolders; i++)
     {
-        QFileInfo fi(preferences->getLocalFolder(i) + QDir::separator() + QString::fromAscii(MEGA_DEBRIS_FOLDER));
+        QFileInfo fi(preferences->getLocalFolder(i) + QDir::separator() + QString::fromLatin1(MEGA_DEBRIS_FOLDER));
         if (fi.exists() && fi.isDir())
         {
             syncs += QString::fromUtf8("<br/><a href=\"local://#%1\">%2</a>")

@@ -70,7 +70,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     inboxItem = NULL;
     sharesItem = NULL;
     syncsMenu = NULL;
+#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
     menuSignalMapper = NULL;
+#endif
     rubbishItem = NULL;
     gWidget = NULL;
     opacityEffect = NULL;
@@ -141,9 +143,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
 #ifdef __APPLE__
     arrow = new QPushButton(this);
-    arrow->setIcon(QIcon(QString::fromAscii("://images/top_arrow.png")));
+    arrow->setIcon(QIcon(QString::fromLatin1("://images/top_arrow.png")));
     arrow->setIconSize(QSize(30,10));
-    arrow->setStyleSheet(QString::fromAscii("border: none;"));
+    arrow->setStyleSheet(QString::fromLatin1("border: none;"));
     arrow->resize(30,10);
     arrow->hide();
 
@@ -155,7 +157,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     //Create the overlay widget with a semi-transparent background
     //that will be shown over the transfers when they are paused
     overlay = new QPushButton(this);
-    overlay->setStyleSheet(QString::fromAscii("background-color: transparent; "
+    overlay->setStyleSheet(QString::fromLatin1("background-color: transparent; "
                                               "border: none; "));
     overlay->resize(ui->pUpdated->size());
     overlay->setCursor(Qt::PointingHandCursor);
@@ -273,8 +275,8 @@ void InfoDialog::setUsage()
     }
     else
     {
-        int percentage = floor((100 * ((double)preferences->usedStorage()) / preferences->totalStorage()));
-        ui->pUsageStorage->setValue((percentage < 100) ? percentage : 100);
+        auto percentage = Utilities::percentage(preferences->usedStorage() , preferences->totalStorage());
+        ui->pUsageStorage->setValue(percentage);
 
         if (percentage >= 100)
         {
@@ -296,7 +298,7 @@ void InfoDialog::setUsage()
         ui->pUsageStorage->style()->polish(ui->pUsageStorage);
 
         QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1</span>")
-                                     .arg(QString::number(percentage > 100 ? 100 : percentage).append(QString::fromAscii("%"))))
+                                     .arg(QString::number(percentage > 100 ? 100 : percentage).append(QString::fromLatin1("%"))))
                                      .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(preferences->totalStorage())));
         ui->lPercentageUsedStorage->setText(used);
@@ -312,9 +314,9 @@ void InfoDialog::setUsage()
     }
     else
     {
-        int percentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
-        ui->pUsageQuota->setValue((percentage < 100) ? percentage : 100);
-        if (percentage > 100)
+        auto percentage = Utilities::percentage(preferences->usedBandwidth(),preferences->totalBandwidth());
+        ui->pUsageQuota->setValue(percentage);
+        if (preferences->usedBandwidth() > preferences->totalBandwidth())
         {
             ui->pUsageQuota->setProperty("crossedge", true);
         }
@@ -326,7 +328,7 @@ void InfoDialog::setUsage()
         ui->pUsageQuota->style()->polish(ui->pUsageQuota);
 
         QString used = tr("%1 of %2").arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">%1&nbsp;</span>")
-                                     .arg(QString::number(percentage > 100 ? 100 : percentage).append(QString::fromAscii("%"))))
+                                     .arg(QString::number(percentage > 100 ? 100 : percentage).append(QString::fromLatin1("%"))))
                                      .arg(QString::fromUtf8("<span style=\"color:#333333; font-size: 16px; text-decoration:none;\">&nbsp;%1</span>")
                                      .arg(Utilities::getSizeString(preferences->totalBandwidth())));
         ui->lPercentageUsedQuota->setText(used);
@@ -429,7 +431,7 @@ void InfoDialog::updateSyncsButton()
     MegaNode *rootNode = megaApi->getRootNode();
     if (!rootNode)
     {
-        ui->bSyncFolder->setText(QString::fromAscii("MEGA"));
+        ui->bSyncFolder->setText(QString::fromLatin1("MEGA"));
         return;
     }
 
@@ -712,7 +714,7 @@ void InfoDialog::updateDialogState()
     switch (storageState)
     {
         case Preferences::STATE_ALMOST_OVER_STORAGE:
-            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_almost_full.png")));
+            ui->bOQIcon->setIcon(QIcon(QString::fromLatin1("://images/storage_almost_full.png")));
             ui->bOQIcon->setIconSize(QSize(64,64));
             ui->lOQTitle->setText(tr("You're running out of storage space."));
             ui->lOQDesc->setText(tr("Upgrade to PRO now before your account runs full and your uploads to MEGA stop."));
@@ -721,7 +723,7 @@ void InfoDialog::updateDialogState()
             ui->wPSA->hidePSA();
             break;
         case Preferences::STATE_OVER_STORAGE:
-            ui->bOQIcon->setIcon(QIcon(QString::fromAscii("://images/storage_full.png")));
+            ui->bOQIcon->setIcon(QIcon(QString::fromLatin1("://images/storage_full.png")));
             ui->bOQIcon->setIconSize(QSize(64,64));
             ui->lOQTitle->setText(tr("Your MEGA account is full."));
             ui->lOQDesc->setText(tr("All file uploads are currently disabled.")
@@ -839,10 +841,12 @@ void InfoDialog::on_bSyncFolder_clicked()
         syncsMenu.reset(new QMenu());
 
 #ifdef __APPLE__
-        syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+        syncsMenu->setStyleSheet(QString::fromLatin1("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #else
-        syncsMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+        syncsMenu->setStyleSheet(QString::fromLatin1("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #endif
+
+#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
         if (menuSignalMapper)
         {
             menuSignalMapper->deleteLater();
@@ -851,7 +855,7 @@ void InfoDialog::on_bSyncFolder_clicked()
 
         menuSignalMapper = new QSignalMapper();
         connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
-
+#endif
         int activeFolders = 0;
         for (int i = 0; i < num; i++)
         {
@@ -861,11 +865,15 @@ void InfoDialog::on_bSyncFolder_clicked()
             }
 
             activeFolders++;
-            MenuItemAction *action = new MenuItemAction(preferences->getSyncName(i), QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")),
-                                                        QIcon(QString::fromAscii("://images/ico_drop_synched_folder_over.png")));
-            connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()));
+            MenuItemAction *action = new MenuItemAction(preferences->getSyncName(i), QIcon(QString::fromLatin1("://images/ico_drop_synched_folder.png")),
+                                                        QIcon(QString::fromLatin1("://images/ico_drop_synched_folder_over.png")));
             syncsMenu->addAction(action);
+#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
+            connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()));
             menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
+#else
+            connect(action, &MenuItemAction::triggered, [this,i]{this->openFolder(preferences->getLocalFolder(i));});
+#endif
         }
 
         if (activeFolders)
@@ -881,8 +889,8 @@ void InfoDialog::on_bSyncFolder_clicked()
                 long long rootHandle = rootNode->getHandle();
                 if ((num > 1) || (firstSyncHandle != rootHandle))
                 {
-                    MenuItemAction *addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_add_sync.png")),
-                                                                       QIcon(QString::fromAscii("://images/ico_drop_add_sync_over.png")));
+                    MenuItemAction *addSyncAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromLatin1("://images/ico_add_sync.png")),
+                                                                       QIcon(QString::fromLatin1("://images/ico_drop_add_sync_over.png")));
                     connect(addSyncAction, SIGNAL(triggered()), this, SLOT(addSync()), Qt::QueuedConnection);
 
                     if (activeFolders)
@@ -1259,7 +1267,7 @@ void InfoDialog::animateStates(bool opt)
 {
     if (opt) //Enable animation for scanning/waiting states
     {        
-        ui->lUploadToMega->setIcon(QIcon(QString::fromAscii("://images/init_scanning.png")));
+        ui->lUploadToMega->setIcon(QIcon(QString::fromLatin1("://images/init_scanning.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
         ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
 
@@ -1286,7 +1294,7 @@ void InfoDialog::animateStates(bool opt)
     }
     else //Disable animation
     {   
-        ui->lUploadToMega->setIcon(QIcon(QString::fromAscii("://images/upload_to_mega.png")));
+        ui->lUploadToMega->setIcon(QIcon(QString::fromLatin1("://images/upload_to_mega.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
         ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 18px;"));
         ui->lUploadToMegaDesc->setText(tr("Upload to MEGA now"));
@@ -1313,9 +1321,9 @@ void InfoDialog::onUserAction(int action)
 
 void InfoDialog::on_bDotUsedStorage_clicked()
 {
-    ui->bDotUsedStorage->setIcon(QIcon(QString::fromAscii("://images/Nav_Dot_active.png")));
+    ui->bDotUsedStorage->setIcon(QIcon(QString::fromLatin1("://images/Nav_Dot_active.png")));
     ui->bDotUsedStorage->setIconSize(QSize(6,6));
-    ui->bDotUsedQuota->setIcon(QIcon(QString::fromAscii("://images/Nav_Dot_inactive.png")));
+    ui->bDotUsedQuota->setIcon(QIcon(QString::fromLatin1("://images/Nav_Dot_inactive.png")));
     ui->bDotUsedQuota->setIconSize(QSize(6,6));
 
     ui->sUsedData->setCurrentWidget(ui->pStorage);
@@ -1323,9 +1331,9 @@ void InfoDialog::on_bDotUsedStorage_clicked()
 
 void InfoDialog::on_bDotUsedQuota_clicked()
 {
-    ui->bDotUsedStorage->setIcon(QIcon(QString::fromAscii("://images/Nav_Dot_inactive.png")));
+    ui->bDotUsedStorage->setIcon(QIcon(QString::fromLatin1("://images/Nav_Dot_inactive.png")));
     ui->bDotUsedStorage->setIconSize(QSize(6,6));
-    ui->bDotUsedQuota->setIcon(QIcon(QString::fromAscii("://images/Nav_Dot_active.png")));
+    ui->bDotUsedQuota->setIcon(QIcon(QString::fromLatin1("://images/Nav_Dot_active.png")));
     ui->bDotUsedQuota->setIconSize(QSize(6,6));
 
     ui->sUsedData->setCurrentWidget(ui->pQuota);

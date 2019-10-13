@@ -137,9 +137,9 @@ void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaErro
         if (e->getErrorCode() == MegaError::API_OK)
         {
             MegaNode *rootNode = NULL;
-            if (linkList[currentIndex].count(QChar::fromAscii('!')) == 3)
+            if (linkList[currentIndex].count(QChar::fromLatin1('!')) == 3)
             {
-                QStringList linkparts = linkList[currentIndex].split(QChar::fromAscii('!'), QString::KeepEmptyParts);
+                QStringList linkparts = linkList[currentIndex].split(QChar::fromLatin1('!'), QString::KeepEmptyParts);
                 MegaHandle handle = MegaApi::base64ToHandle(linkparts.last().toUtf8().constData());
                 rootNode = megaApiFolders->getNodeByHandle(handle);
             }

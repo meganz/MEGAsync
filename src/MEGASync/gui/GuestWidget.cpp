@@ -19,8 +19,8 @@ GuestWidget::GuestWidget(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    ui->lEmail->setStyleSheet(QString::fromAscii("QLineEdit {color: black;}"));
-    ui->lPassword->setStyleSheet(QString::fromAscii("QLineEdit {color: black;}"));
+    ui->lEmail->setStyleSheet(QString::fromLatin1("QLineEdit {color: black;}"));
+    ui->lPassword->setStyleSheet(QString::fromLatin1("QLineEdit {color: black;}"));
 
     app = (MegaApplication *)qApp;
     megaApi = app->getMegaApi();
@@ -264,8 +264,10 @@ void GuestWidget::onRequestUpdate(MegaApi *api, MegaRequest *request)
     {
         if (request->getTotalBytes() > 0)
         {
-            ui->progressBar->setMaximum(request->getTotalBytes());
-            ui->progressBar->setValue(request->getTransferredBytes());
+            //ui->progressBar->setMaximum(request->getTotalBytes());
+            //ui->progressBar->setValue(request->getTransferredBytes());
+            ui->progressBar->setMaximum(100);
+            ui->progressBar->setValue(Utilities::percentage(request->getTransferredBytes(),request->getTotalBytes()));
         }
     }
 }
@@ -320,7 +322,7 @@ void GuestWidget::on_bLogin_clicked()
         return;
     }
 
-    if (!email.contains(QChar::fromAscii('@')) || !email.contains(QChar::fromAscii('.')))
+    if (!email.contains(QChar::fromLatin1('@')) || !email.contains(QChar::fromLatin1('.')))
     {
         QMessageBox::warning(NULL, tr("Error"), tr("Please, enter a valid e-mail address"), QMessageBox::Ok);
         return;
