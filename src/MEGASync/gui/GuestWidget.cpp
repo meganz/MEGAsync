@@ -264,8 +264,10 @@ void GuestWidget::onRequestUpdate(MegaApi *api, MegaRequest *request)
     {
         if (request->getTotalBytes() > 0)
         {
-            ui->progressBar->setMaximum(request->getTotalBytes());
-            ui->progressBar->setValue(request->getTransferredBytes());
+            //ui->progressBar->setMaximum(request->getTotalBytes());
+            //ui->progressBar->setValue(request->getTransferredBytes());
+            ui->progressBar->setMaximum(100);
+            ui->progressBar->setValue(Utilities::percentage(request->getTransferredBytes(),request->getTotalBytes()));
         }
     }
 }
