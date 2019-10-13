@@ -1172,7 +1172,7 @@ void SettingsDialog::loadSettings()
         }
         else
         {
-            double totalBandwidth = preferences->totalBandwidth();
+            auto totalBandwidth = preferences->totalBandwidth();
             if (totalBandwidth == 0)
             {
                 ui->gBandwidthQuota->hide();
@@ -1185,9 +1185,9 @@ void SettingsDialog::loadSettings()
             {
                 ui->gBandwidthQuota->show();
                 ui->bSeparatorBandwidth->show();
-                int bandwidthPercentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
+                auto bandwidthPercentage = Utilities::percentage(preferences->usedBandwidth(),preferences->totalBandwidth());
                 ui->pUsedBandwidth->show();
-                ui->pUsedBandwidth->setValue((bandwidthPercentage < 100) ? bandwidthPercentage : 100);
+                ui->pUsedBandwidth->setValue(bandwidthPercentage);
                 ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
                         .arg(Utilities::getSizeString(preferences->usedBandwidth()))
                         .arg(QString::number(bandwidthPercentage))
@@ -1291,11 +1291,11 @@ void SettingsDialog::refreshAccountDetails()
         }
         else
         {
-            int percentage = floor(100*((double)preferences->usedStorage()/preferences->totalStorage()));
-            ui->pStorage->setValue((percentage < 100) ? percentage : 100);
+            auto percentage = Utilities::percentage(preferences->usedStorage(),preferences->totalStorage());
+            ui->pStorage->setValue(percentage);
             ui->lStorage->setText(tr("%1 (%2%) of %3 used")
                   .arg(Utilities::getSizeString(preferences->usedStorage()))
-                  .arg(QString::number(percentage > 100 ? 100 : percentage))
+                  .arg(QString::number(percentage))
                   .arg(Utilities::getSizeString(preferences->totalStorage())));
         }
     }
@@ -1314,11 +1314,11 @@ void SettingsDialog::refreshAccountDetails()
         }
         else
         {
-            int percentage = floor(100*((double)preferences->usedBandwidth()/preferences->totalBandwidth()));
-            ui->pUsedBandwidth->setValue((percentage < 100) ? percentage : 100);
+            auto percentage = Utilities::percentage(preferences->usedBandwidth(),preferences->totalBandwidth());
+            ui->pUsedBandwidth->setValue(percentage);
             ui->lBandwidth->setText(tr("%1 (%2%) of %3 used")
                   .arg(Utilities::getSizeString(preferences->usedBandwidth()))
-                  .arg(QString::number(percentage > 100 ? 100 : percentage))
+                  .arg(QString::number(percentage))
                   .arg(Utilities::getSizeString(preferences->totalBandwidth())));
         }
     }
@@ -1677,7 +1677,7 @@ int SettingsDialog::saveSettings()
             }
 
             proxy.setHostName(ui->eProxyServer->text().trimmed());
-            proxy.setPort(ui->eProxyPort->text().trimmed().toInt());
+            proxy.setPort(ui->eProxyPort->text().trimmed().toUShort());
             if (ui->cProxyRequiresPassword->isChecked())
             {
                 proxy.setUser(ui->eProxyUsername->text());
@@ -1706,7 +1706,7 @@ int SettingsDialog::saveSettings()
                 if (arguments.size() == 2)
                 {
                     proxy.setHostName(arguments[0]);
-                    proxy.setPort(arguments[1].toInt());
+                    proxy.setPort(arguments[1].toUShort());
                 }
             }
             delete proxySettings;
@@ -2263,7 +2263,7 @@ QString SettingsDialog::getFormatString()
 
         if (hasLowerLimit)
         {
-            format  += QString::fromUtf8("<") + Utilities::getSizeString(lowerLimit * pow((float)1024, lowerLimitUnit));
+            format  += QString::fromUtf8("<") + Utilities::getSizeString(lowerLimit * (1 << (10 * lowerLimitUnit)));
         }
 
         if (hasLowerLimit && hasUpperLimit)
@@ -2273,7 +2273,7 @@ QString SettingsDialog::getFormatString()
 
         if (hasUpperLimit)
         {
-            format  += QString::fromUtf8(">") + Utilities::getSizeString(upperLimit * pow((float)1024, upperLimitUnit));
+            format  += QString::fromUtf8(">") + Utilities::getSizeString(upperLimit * (1 << (10 * upperLimitUnit)));
         }
 
         format += QString::fromUtf8(")");

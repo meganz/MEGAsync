@@ -69,6 +69,7 @@ public:
     static QString extractJSONString(QString json, QString name);
     static long long extractJSONNumber(QString json, QString name);
     static QString getDefaultBasePath();
+    static int percentage(long long val, long long total);
 
 private:
     Utilities() {}

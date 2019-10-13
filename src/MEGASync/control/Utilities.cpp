@@ -641,3 +641,12 @@ QString Utilities::getDefaultBasePath()
     return QString();
 }
 
+int Utilities::percentage(long long val, long long total)
+{
+  auto aval = abs(val);
+  auto atotal = abs(total);
+
+  return (aval >= atotal) ? 100 : static_cast<int>(aval / (total / 100));
+  // static_cast to int is always safe because, when applied, result is always lower than 100...
+
+}
