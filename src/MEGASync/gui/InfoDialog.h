@@ -115,7 +115,9 @@ private:
 #endif
 
     std::unique_ptr<QMenu> syncsMenu;
+#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
     QSignalMapper *menuSignalMapper;
+#endif
     QMenu *transferMenu;
 
     MenuItemAction *cloudItem;

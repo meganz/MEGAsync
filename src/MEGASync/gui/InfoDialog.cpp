@@ -70,7 +70,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     inboxItem = NULL;
     sharesItem = NULL;
     syncsMenu = NULL;
+#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
     menuSignalMapper = NULL;
+#endif
     rubbishItem = NULL;
     gWidget = NULL;
     opacityEffect = NULL;
@@ -843,6 +845,8 @@ void InfoDialog::on_bSyncFolder_clicked()
 #else
         syncsMenu->setStyleSheet(QString::fromLatin1("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
 #endif
+
+#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
         if (menuSignalMapper)
         {
             menuSignalMapper->deleteLater();
@@ -851,7 +855,7 @@ void InfoDialog::on_bSyncFolder_clicked()
 
         menuSignalMapper = new QSignalMapper();
         connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)));
-
+#endif
         int activeFolders = 0;
         for (int i = 0; i < num; i++)
         {
@@ -863,9 +867,13 @@ void InfoDialog::on_bSyncFolder_clicked()
             activeFolders++;
             MenuItemAction *action = new MenuItemAction(preferences->getSyncName(i), QIcon(QString::fromLatin1("://images/ico_drop_synched_folder.png")),
                                                         QIcon(QString::fromLatin1("://images/ico_drop_synched_folder_over.png")));
-            connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()));
             syncsMenu->addAction(action);
+#if QT_VERSION < QT_VERSION_CHECK(5,0,0)
+            connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()));
             menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
+#else
+            connect(action, &MenuItemAction::triggered, [this,i]{this->openFolder(preferences->getLocalFolder(i));});
+#endif
         }
 
         if (activeFolders)
