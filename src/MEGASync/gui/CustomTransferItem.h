@@ -51,6 +51,7 @@ private:
 
     void setActionTransferIcon(const QString &name);
     void setShowInFolderIcon(const QString &name);
+    void updateFinishedIco(int transferType, bool transferErrors);
 
 protected:
     bool actionButtonsEnabled;

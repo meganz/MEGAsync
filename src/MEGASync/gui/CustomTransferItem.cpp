@@ -75,13 +75,11 @@ void CustomTransferItem::setType(int type, bool isSyncTransfer)
     {
         case MegaTransfer::TYPE_UPLOAD:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/upload_item_ico.png"));
-            iconCompleted = Utilities::getCachedPixmap(QString::fromUtf8(":/images/uploaded_item_ico.png"));
             ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: transparent;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #2ba6de;}"));
             break;
         case MegaTransfer::TYPE_DOWNLOAD:
             icon = Utilities::getCachedPixmap(QString::fromUtf8(":/images/download_item_ico.png"));
-            iconCompleted = Utilities::getCachedPixmap(QString::fromUtf8(":/images/downloaded_item_ico.png"));
             ui->pbTransfer->setStyleSheet(QString::fromUtf8("QProgressBar#pbTransfer{background-color: transparent;}"
                                                             "QProgressBar#pbTransfer::chunk {background-color: #31b500;}"));
             break;
@@ -90,9 +88,7 @@ void CustomTransferItem::setType(int type, bool isSyncTransfer)
     }
 
     ui->lTransferType->setIcon(icon);
-    ui->lTransferType->setIconSize(QSize(12, 12));
-    ui->lTransferTypeCompleted->setIcon(iconCompleted);
-    ui->lTransferTypeCompleted->setIconSize(QSize(12, 12));
+    ui->lTransferType->setIconSize(QSize(ui->lTransferType->width(), ui->lTransferType->height()));
 }
 
 void CustomTransferItem::setTransferState(int value)
@@ -164,6 +160,28 @@ void CustomTransferItem::setShowInFolderIcon(const QString &name)
 
         lastShowInFolderIconName = name;
     }
+}
+
+void CustomTransferItem::updateFinishedIco(int transferType, bool transferErrors)
+{
+    QIcon iconCompleted;
+
+    switch (transferType)
+    {
+        case MegaTransfer::TYPE_UPLOAD:
+            iconCompleted = Utilities::getCachedPixmap(transferErrors ? QString::fromUtf8(":/images/upload_fail_item_ico.png")
+                                                                      : QString::fromUtf8(":/images/uploaded_item_ico.png"));
+            break;
+        case MegaTransfer::TYPE_DOWNLOAD:
+            iconCompleted = Utilities::getCachedPixmap(transferErrors ? QString::fromUtf8(":/images/download_fail_item_ico.png")
+                                                                      : QString::fromUtf8(":/images/downloaded_item_ico.png"));
+            break;
+        default:
+            break;
+    }
+
+    ui->lTransferTypeCompleted->setIcon(iconCompleted);
+    ui->lTransferTypeCompleted->setIconSize(QSize(ui->lTransferTypeCompleted->width(), ui->lTransferTypeCompleted->height()));
 }
 
 void CustomTransferItem::mouseHoverTransfer(bool isHover, const QPoint &pos)
@@ -247,11 +265,13 @@ void CustomTransferItem::finishTransfer()
         ui->lActionTransfer->setIconSize(QSize(24,24));
         ui->lElapsedTime->setStyleSheet(QString::fromUtf8("color: #F0373A"));
         ui->lElapsedTime->setText(tr("failed:") + QString::fromUtf8(" ") + QCoreApplication::translate("MegaError", MegaError::getErrorString(transferError, this->getType() == MegaTransfer::TYPE_DOWNLOAD ? MegaError::API_EC_DOWNLOAD : MegaError::API_EC_DEFAULT)));
+        updateFinishedIco(type, true);
     }
     else
     {
         ui->lActionTransfer->setIcon(QIcon(QString::fromAscii("://images/success.png")));
         ui->lActionTransfer->setIconSize(QSize(24,24));
+        updateFinishedIco(type, false);
     }
 }
 
