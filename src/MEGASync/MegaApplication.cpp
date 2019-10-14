@@ -15,6 +15,7 @@
 #include <QFontDatabase>
 #include <QNetworkProxy>
 #include <QSettings>
+#include <QToolTip>
 
 #include <assert.h>
 
@@ -723,6 +724,11 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
                                     "QFileDialog QWidget"
                                     "{font-size: 13px;}"));
 #endif
+
+    QPalette palette = QToolTip::palette();
+    palette.setColor(QPalette::ToolTipBase,QColor("#333333"));
+    palette.setColor(QPalette::ToolTipText,QColor("#FAFAFA"));
+    QToolTip::setPalette(palette);
 
     appPath = QDir::toNativeSeparators(QCoreApplication::applicationFilePath());
     appDirPath = QDir::toNativeSeparators(QCoreApplication::applicationDirPath());
