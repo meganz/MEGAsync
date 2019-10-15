@@ -291,7 +291,10 @@ PSA_info *InfoDialog::getPSAdata()
 void InfoDialog::showEvent(QShowEvent *event)
 {
     emit ui->sTabs->currentChanged(ui->sTabs->currentIndex());
-    ui->bTransferManager->showAnimated();
+    if (ui->bTransferManager->alwaysAnimateOnShow || ui->bTransferManager->neverPainted )
+    {
+        ui->bTransferManager->showAnimated();
+    }
 
     isShown = true;
     QDialog::showEvent(event);
@@ -317,7 +320,10 @@ void InfoDialog::hideEvent(QHideEvent *event)
 
 
     isShown = false;
-    ui->bTransferManager->shrink(true);
+    if (ui->bTransferManager->alwaysAnimateOnShow || ui->bTransferManager->neverPainted )
+    {
+        ui->bTransferManager->shrink(true);
+    }
     QDialog::hideEvent(event);
 
 #ifdef _WIN32
