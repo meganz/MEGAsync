@@ -70,6 +70,7 @@ public:
     void moveArrow(QPoint p);
 #endif
 
+    void on_bStorageDetails_clicked();
     void regenerateLayout(InfoDialog* olddialog = nullptr);
     HighDpiResize highDpiResize;
 #ifdef _WIN32
@@ -176,6 +177,8 @@ private:
     bool notificationsReady = false;
     bool isShown = false;
     long long unseenNotifications = 0;
+
+    AccountDetailsDialog* accountDetailsDialog;
 
 #ifdef Q_OS_LINUX
     bool doNotActAsPopup;
