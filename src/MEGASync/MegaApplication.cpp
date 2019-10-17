@@ -90,7 +90,7 @@ void LinuxSignalHandler(int signum)
         {
             appToWaitForSignal.append(QString::fromUtf8(" --waitforsignal"));
             bool success = QProcess::startDetached(appToWaitForSignal);
-            cout << "Starting detached MEGAsync to wait for restart signal: " << appToWaitForSignal.toUtf8().toStdString() << " " << (success?"OK":"FAILED!") << endl;
+            cout << "Started detached MEGAsync to wait for restart signal: " << appToWaitForSignal.toUtf8().toStdString() << " " << (success?"OK":"FAILED!") << endl;
         }
 
         if (theapp)
@@ -100,7 +100,6 @@ void LinuxSignalHandler(int signum)
     }
 }
 
-void doNothing(int ) { }
 #endif
 
 #if QT_VERSION >= 0x050000
@@ -349,14 +348,27 @@ int main(int argc, char *argv[])
 {
 #ifdef Q_OS_LINUX
 
-    signal(SIGUSR1, LinuxSignalHandler);
+    // Ensure interesting signals are unblocked.
+    sigset_t signalstounblock;
+    sigemptyset (&signalstounblock);
+    sigaddset(&signalstounblock, SIGUSR1);
+    sigaddset(&signalstounblock, SIGUSR2);
+    sigprocmask(SIG_UNBLOCK, &signalstounblock, NULL);
+
+    if (signal(SIGUSR1, LinuxSignalHandler))
+    {
+        cerr << " Failed to register signal SIGUSR1 " << endl;
+    }
 
     for (int i = 1; i < argc ; i++)
     {
         if (!strcmp(argv[i],"--waitforsignal"))
         {
             std::unique_lock<std::mutex> lock(mtxcondvar);
-            signal(SIGUSR2, LinuxSignalHandler);
+            if (signal(SIGUSR2, LinuxSignalHandler))
+            {
+                cerr << " Failed to register signal SIGUSR2 " << endl;
+            }
 
             cout << "Waiting for signal to restart MEGAsync ... "<< endl;
             if (condVarRestart.wait_for(lock, std::chrono::minutes(30)) == std::cv_status::no_timeout )
@@ -381,8 +393,12 @@ int main(int argc, char *argv[])
             exit(2);
         }
     }
-    signal(SIGUSR2, doNothing);
 
+    // Block SIGUSR2 for normal execution: we don't want it to kill the process, in case there's a rogue update going on.
+    sigset_t signalstoblock;
+    sigemptyset (&signalstoblock);
+    sigaddset(&signalstoblock, SIGUSR2);
+    sigprocmask(SIG_BLOCK, &signalstoblock, NULL);
 #endif
 
     // adds thread-safety to OpenSSL
