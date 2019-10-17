@@ -16,9 +16,12 @@
 #include <QNetworkProxy>
 #include <QSettings>
 
+
 #include <assert.h>
 
 #ifdef Q_OS_LINUX
+    #include <signal.h>
+    #include <condition_variable>
     #include <QSvgRenderer>
 #endif
 
@@ -64,6 +67,40 @@ void msgHandler(QtMsgType type, const char *msg)
         break;
     }
 }
+
+
+#ifdef Q_OS_LINUX
+MegaApplication *theapp = NULL;
+bool waitForRestartSignal = false;
+std::mutex mtxcondvar;
+std::condition_variable condVarRestart;
+QString appToWaitForSignal;
+
+void LinuxSignalHandler(int signum)
+{
+    if (signum == SIGUSR2)
+    {
+        std::unique_lock<std::mutex> lock(mtxcondvar);
+        condVarRestart.notify_one();
+    }
+    else if (signum == SIGUSR1)
+    {
+        waitForRestartSignal = true;
+        if (waitForRestartSignal)
+        {
+            appToWaitForSignal.append(QString::fromUtf8(" --waitforsignal"));
+            bool success = QProcess::startDetached(appToWaitForSignal);
+            cout << "Started detached MEGAsync to wait for restart signal: " << appToWaitForSignal.toUtf8().toStdString() << " " << (success?"OK":"FAILED!") << endl;
+        }
+
+        if (theapp)
+        {
+            theapp->exitApplication(true);
+        }
+    }
+}
+
+#endif
 
 #if QT_VERSION >= 0x050000
     void messageHandler(QtMsgType type,const QMessageLogContext &context, const QString &msg)
@@ -309,6 +346,61 @@ void setScaleFactors()
 
 int main(int argc, char *argv[])
 {
+#ifdef Q_OS_LINUX
+
+    // Ensure interesting signals are unblocked.
+    sigset_t signalstounblock;
+    sigemptyset (&signalstounblock);
+    sigaddset(&signalstounblock, SIGUSR1);
+    sigaddset(&signalstounblock, SIGUSR2);
+    sigprocmask(SIG_UNBLOCK, &signalstounblock, NULL);
+
+    if (signal(SIGUSR1, LinuxSignalHandler))
+    {
+        cerr << " Failed to register signal SIGUSR1 " << endl;
+    }
+
+    for (int i = 1; i < argc ; i++)
+    {
+        if (!strcmp(argv[i],"--waitforsignal"))
+        {
+            std::unique_lock<std::mutex> lock(mtxcondvar);
+            if (signal(SIGUSR2, LinuxSignalHandler))
+            {
+                cerr << " Failed to register signal SIGUSR2 " << endl;
+            }
+
+            cout << "Waiting for signal to restart MEGAsync ... "<< endl;
+            if (condVarRestart.wait_for(lock, std::chrono::minutes(30)) == std::cv_status::no_timeout )
+            {
+                QString app;
+
+                for (int j = 0; j < argc; j++)
+                {
+                    if (strcmp(argv[j],"--waitforsignal"))
+                    {
+                        app.append(QString::fromUtf8(" \""));
+                        app.append(QString::fromUtf8(argv[j]));
+                        app.append(QString::fromUtf8("\""));
+                    }
+                }
+
+                bool success = QProcess::startDetached(app);
+                cout << "Restarting MEGAsync: " << app.toUtf8().toStdString() << " " << (success?"OK":"FAILED!") << endl;
+                exit(!success);
+            }
+            cout << "Timed out waiting for restart signal" << endl;
+            exit(2);
+        }
+    }
+
+    // Block SIGUSR2 for normal execution: we don't want it to kill the process, in case there's a rogue update going on.
+    sigset_t signalstoblock;
+    sigemptyset (&signalstoblock);
+    sigaddset(&signalstoblock, SIGUSR2);
+    sigprocmask(SIG_BLOCK, &signalstoblock, NULL);
+#endif
+
     // adds thread-safety to OpenSSL
     QSslSocket::supportsSsl();
 
@@ -352,7 +444,6 @@ int main(int argc, char *argv[])
         }
     }
 
-
 #endif
 
 #if ( defined(WIN32) && QT_VERSION >= 0x050000 ) || (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
@@ -384,6 +475,16 @@ int main(int argc, char *argv[])
 
 
     MegaApplication app(argc, argv);
+    theapp = &app;
+#if defined(Q_OS_LINUX)
+    appToWaitForSignal = QString::fromUtf8("\"%1\"").arg(MegaApplication::applicationFilePath());
+    for (int i = 1; i < argc; i++)
+    {
+        appToWaitForSignal.append(QString::fromUtf8(" \""));
+        appToWaitForSignal.append(QString::fromUtf8(argv[i]));
+        appToWaitForSignal.append(QString::fromUtf8("\""));
+    }
+#endif
 
 #if defined(Q_OS_LINUX) && QT_VERSION >= 0x050600
     for (const auto& screen : app.screens())
@@ -602,7 +703,12 @@ int main(int argc, char *argv[])
 
     app.initialize();
     app.start();
-    return app.exec();
+
+    int toret = app.exec();
+
+
+    theapp = nullptr;
+    return toret;
 
 #if 0 //Strings for the translation system. These lines don't need to be built
     QT_TRANSLATE_NOOP("QDialogButtonBox", "&Yes");
@@ -2212,7 +2318,7 @@ void MegaApplication::rebootApplication(bool update)
     QApplication::exit();
 }
 
-void MegaApplication::exitApplication()
+void MegaApplication::exitApplication(bool force)
 {
     if (appfinished)
     {
@@ -2220,7 +2326,7 @@ void MegaApplication::exitApplication()
     }
 
 #ifndef __APPLE__
-    if (!megaApi->isLoggedIn())
+    if (force || !megaApi->isLoggedIn())
     {
 #endif
         reboot = false;
