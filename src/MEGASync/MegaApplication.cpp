@@ -429,6 +429,7 @@ int main(int argc, char *argv[])
     QString crashPath = dataDir.filePath(QString::fromAscii("crashDumps"));
     QString avatarPath = dataDir.filePath(QString::fromAscii("avatars"));
     QString appLockPath = dataDir.filePath(QString::fromAscii("megasync.lock"));
+    QString appShowPath = dataDir.filePath(QString::fromAscii("megasync.show"));
     QDir crashDir(crashPath);
     if (!crashDir.exists())
     {
@@ -522,6 +523,22 @@ int main(int argc, char *argv[])
     bool alreadyStarted = true;
     for (int i = 0; i < 10; i++)
     {
+        if (i > 0)
+        {
+            if (dataDir.exists(appShowPath))
+            {
+                QFile appShowFile(appShowPath);
+                if (appShowFile.open(QIODevice::ReadOnly))
+                {
+                    if (appShowFile.size() == 0)
+                    {
+                        // the file has been emptied; so the infoDialog was shown in the primary MEGAsync instance.  We can exit.
+                        alreadyStarted = true;
+                        break;
+                    }
+                }
+            }
+        }
         singleInstanceChecker.open(QtLockedFile::ReadWrite);
         if (singleInstanceChecker.lock(QtLockedFile::WriteLock, false))
         {
@@ -530,11 +547,11 @@ int main(int argc, char *argv[])
         }
         else if (i == 0)
         {
-             QString appShowInterfacePath = dataDir.filePath(QString::fromAscii("megasync.show"));
-             QFile fappShowInterfacePath(appShowInterfacePath);
-             if (fappShowInterfacePath.open(QIODevice::WriteOnly))
+             QFile appShowFile(appShowPath);
+             if (appShowFile.open(QIODevice::WriteOnly))
              {
-                 fappShowInterfacePath.close();
+                 appShowFile.write("open");
+                 appShowFile.close();
              }
         }
 #ifdef __APPLE__
@@ -859,7 +876,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     storageOverquotaDialog = NULL;
     bwOverquotaEvent = false;
     infoWizard = NULL;
-    externalNodesTimestamp = 0;
     noKeyDetected = 0;
     isFirstSyncDone = false;
     isFirstFileSynced = false;
@@ -871,8 +887,8 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     completedTabActive = false;
     nodescurrent = false;
     almostOQ = false;
-    storageState = MegaApi::STORAGE_STATE_GREEN;
-    appliedStorageState = MegaApi::STORAGE_STATE_GREEN;;
+    storageState = MegaApi::STORAGE_STATE_UNKNOWN;
+    appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;;
 
     for (unsigned i = 3; i--; )
     {
@@ -908,7 +924,31 @@ void MegaApplication::showInterface(QString)
     {
         return;
     }
-    showInfoDialog();
+
+    bool show = true;
+
+    QDir dataDir(dataPath);
+    if (dataDir.exists(QString::fromAscii("megasync.show")))
+    {
+        QFile showFile(dataDir.filePath(QString::fromAscii("megasync.show"))); 
+        if (showFile.open(QIODevice::ReadOnly))
+        {
+            show = showFile.size() > 0;
+            if (show)
+            {
+                // clearing the file content will cause the instance that asked us to show the dialog to exit
+                showFile.close();
+                showFile.open(QIODevice::WriteOnly | QIODevice::Truncate);
+                showFile.close();
+            }
+        }
+    }
+
+    if (show)
+    {
+        // we saw the file had bytes in it, or if anything went wrong when trying to check that
+        showInfoDialog();
+    }
 }
 
 void MegaApplication::initialize()
@@ -1109,8 +1149,9 @@ void MegaApplication::initialize()
         QString appShowInterfacePath = dataDir.filePath(QString::fromAscii("megasync.show"));
         QFileSystemWatcher *watcher = new QFileSystemWatcher(this);
         QFile fappShowInterfacePath(appShowInterfacePath);
-        if (fappShowInterfacePath.open(QIODevice::WriteOnly))
+        if (fappShowInterfacePath.open(QIODevice::WriteOnly | QIODevice::Truncate))
         {
+            // any text added to this file will cause the infoDialog to show
             fappShowInterfacePath.close();
         }
         watcher->addPath(appShowInterfacePath);
@@ -1436,8 +1477,8 @@ void MegaApplication::start()
     nodescurrent = false;
     infoOverQuota = false;
     almostOQ = false;
-    storageState = MegaApi::STORAGE_STATE_GREEN;
-    appliedStorageState = MegaApi::STORAGE_STATE_GREEN;;
+    storageState = MegaApi::STORAGE_STATE_UNKNOWN;
+    appliedStorageState = MegaApi::STORAGE_STATE_UNKNOWN;;
     bwOverquotaTimestamp = 0;
     receivedStorageSum = 0;
 
@@ -1634,7 +1675,12 @@ void MegaApplication::loggedIn(bool fromWizard)
 
     registerUserActivity();
     pauseTransfers(paused);
-    updateUserStats(fromWizard, true, true, true, USERSTATS_LOGGEDIN);  // loggedIn() is called once on startup if the user is already logged in, or twice when the user supplies username/password to log in.
+
+    int cachedStorageState = preferences->getStorageState();
+
+    // ask for storage on first login (fromWizard), or when cached value is invalid
+    updateUserStats(fromWizard || cachedStorageState == MegaApi::STORAGE_STATE_UNKNOWN, true, true, true, fromWizard ? USERSTATS_LOGGEDIN : USERSTATS_STORAGECACHEUNKNOWN);
+
     megaApi->getPricing();
     megaApi->getUserAttribute(MegaApi::USER_ATTR_FIRSTNAME);
     megaApi->getUserAttribute(MegaApi::USER_ATTR_LASTNAME);
@@ -1761,6 +1807,12 @@ void MegaApplication::loggedIn(bool fromWizard)
 
 
     onGlobalSyncStateChanged(megaApi);
+
+    if (cachedStorageState != MegaApi::STORAGE_STATE_UNKNOWN)
+    {
+        applyStorageState(cachedStorageState, true);
+    }
+
 }
 
 void MegaApplication::startSyncs()
@@ -1815,7 +1867,7 @@ void MegaApplication::startSyncs()
     }
 }
 
-void MegaApplication::applyStorageState(int state)
+void MegaApplication::applyStorageState(int state, bool doNotAskForUserStats)
 {
     if (state == MegaApi::STORAGE_STATE_CHANGE)
     {
@@ -1827,11 +1879,16 @@ void MegaApplication::applyStorageState(int state)
     }
 
     storageState = state;
+    int previousCachedStoragestate = preferences->getStorageState();
+    preferences->setStorageState(storageState);
     if (preferences->logged())
     {
         if (storageState != appliedStorageState)
         {
-            updateUserStats(true, false, true, true, USERSTATS_TRAFFICLIGHT);
+            if (!doNotAskForUserStats && previousCachedStoragestate!= MegaApi::STORAGE_STATE_UNKNOWN)
+            {
+                updateUserStats(true, false, true, true, USERSTATS_TRAFFICLIGHT);
+            }
             if (state == MegaApi::STORAGE_STATE_RED)
             {
                 almostOQ = false;
@@ -3379,7 +3436,6 @@ void MegaApplication::setupWizardFinished(int result)
 
     loggedIn(true);
     startSyncs();
-    applyStorageState(storageState);
 }
 
 void MegaApplication::overquotaDialogFinished(int)
@@ -6866,6 +6922,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
 
             if (storageState == MegaApi::STORAGE_STATE_RED && receivedStorageSum < preferences->totalStorage())
             {
+                megaApi->sendEvent(99525, "Red light does not match used storage");
                 preferences->setUsedStorage(preferences->totalStorage());
             }
             else
@@ -7651,7 +7708,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
         return;
     }
 
-    bool externalNodes = false;
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("%1 updated files/folders").arg(nodes->size()).toUtf8().constData());
 
     //Check all modified nodes
@@ -7703,28 +7759,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             }
         }
 
-        if (nodescurrent && !node->isRemoved() && !node->isSyncDeleted()
-                && (node->getType() == MegaNode::TYPE_FILE)
-                && node->getSize() && node->hasChanged(MegaNode::CHANGE_TYPE_NEW))
-        {
-            long long bytes = node->getSize();
-            if (!megaApi->isInCloud(node))
-            {
-                preferences->setInShareStorage(preferences->inShareStorage() + bytes);
-            }
-            else
-            {
-                preferences->setCloudDriveStorage(preferences->cloudDriveStorage() + bytes);
-            }
-
-            if (!externalNodes && !node->getTag()
-                    && ((lastExit / 1000) < node->getCreationTime())
-                    && megaApi->isInsideSync(node))
-            {
-                externalNodes = true;
-            }
-        }
-
         if (!node->isRemoved() && node->getTag()
                 && !node->isSyncDeleted()
                 && (node->getType() == MegaNode::TYPE_FILE)
@@ -7746,15 +7780,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                 rebootApplication(false);
             }
             noKeyDetected++;
-        }
-    }
-
-    if (externalNodes)
-    {
-        if (QDateTime::currentMSecsSinceEpoch() - externalNodesTimestamp > Preferences::MIN_EXTERNAL_NODES_WARNING_MS)
-        {
-            externalNodesTimestamp = QDateTime::currentMSecsSinceEpoch();
-            showNotificationMessage(tr("You have new or updated files in your account"));
         }
     }
 }

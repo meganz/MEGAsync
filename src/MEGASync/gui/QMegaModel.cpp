@@ -72,7 +72,7 @@ QVariant QMegaModel::data(const QModelIndex &index, int role) const
                 return folderIcon;
             }
 
-            return QIcon(Utilities::getExtensionPixmapSmall(QString::fromUtf8(node->getName())));
+            return Utilities::getExtensionPixmapSmall(QString::fromUtf8(node->getName()));
         }
         case Qt::ForegroundRole:
         {

@@ -339,7 +339,7 @@ elif [[ $VMNAME == *"ARCHLINUX"* ]]; then
 	$sshpasscommand ssh root@$IP_GUEST "cat >> /etc/pacman.conf" <<-EOF
 ###REPO for MEGA###
 [$archreponame]
-SigLevel = Optional TrustAll
+SigLevel = Required TrustedOnly
 Server = $REPO/\$arch
 ###END REPO for MEGA###
 EOF
@@ -491,25 +491,48 @@ theDisplay="DISPLAY=:0.0"
 #theDisplay="DISPLAY=:1.0"
 #fi
 
-
 echo " relaunching megasync as user ..."
 VERSIONMEGASYNCREMOTERUNNING=`$sshpasscommand ssh -oStrictHostKeyChecking=no  mega@$IP_GUEST $theDisplay megasync --version | grep -i megasync | awk '{for(i=1;i<=NF;i++){ if(match($i,/[0-9].[0-9].[0-9]/)){print $i} } }'`
 logSth "running megasync ..." "$VERSIONMEGASYNCREMOTERUNNING"
 
 $sshpasscommand ssh -oStrictHostKeyChecking=no  mega@$IP_GUEST $theDisplay megasync &
-sleep 5 #TODO: sleep longer?
 
 echo " checking new megasync running ..."
 $sshpasscommand ssh root@$IP_GUEST pgrep megasync
+
 resultRunning=$?
+if [ $resultRunning -ne 0 ]; then
+	resultRunning=27
+	attempts=4
+	while [[ $attempts -ge 0 && $resultRunning -ne 0 ]]; do
+		sleep $((5*(4-$attempts)))
+		echo " check new megasync running ... attempts left="$attempts
+		$sshpasscommand ssh root@$IP_GUEST pgrep megasync
+		resultRunning=$?
+		attempts=$(($attempts - 1))
+	done
+fi
+
 logOperationResult "checking new megasync running ..." $resultRunning
 
 echo " forcing POST to dl test file ..."
 # https://mega.nz/#!FQ5miCCB!WkMOvzgPWhBtvE7tYQQv8urhwuYmuS74C3HnhboDE-I
 $sshpasscommand ssh root@$IP_GUEST "curl 'https://127.0.0.1:6342/' -H 'Origin: https://mega.nz' --data-binary '{\"a\":\"l\",\"h\":\"FQ5miCCB\",\"k\":\"WkMOvzgPWhBtvE7tYQQv8urhwuYmuS74C3HnhboDE-I\"}' --compressed --insecure"
+resultCurl=$?
+if [ $resultCurl -ne 0 ]; then
+	resultCurl=27
+	attempts=4
+	while [[ $attempts -ge 0 && $resultCurl -ne 0 ]]; do
+		sleep $((5*(4-$attempts)))
+		echo " forcing POST to dl test file ... attempts left="$attempts
+		$sshpasscommand ssh root@$IP_GUEST "curl 'https://127.0.0.1:6342/' -H 'Origin: https://mega.nz' --data-binary '{\"a\":\"l\",\"h\":\"FQ5miCCB\",\"k\":\"WkMOvzgPWhBtvE7tYQQv8urhwuYmuS74C3HnhboDE-I\"}' --compressed --insecure"
+		resultCurl=$?
+		attempts=$(($attempts - 1))
+	done
+fi
+logOperationResult "forcing POST to dl test file ..." $resultCurl
 
-resultDL=$?
-if [ $resultDL -eq 0 ]; then
+if [ $resultCurl -eq 0 ]; then
 	resultDL=27
 	attempts=13
 	while [[ $attempts -ge 0 && $resultDL -ne 0 ]]; do
@@ -519,6 +542,8 @@ if [ $resultDL -eq 0 ]; then
 		resultDL=$?
 		attempts=$(($attempts - 1))
 	done
+else
+	resultDL=22
 fi
 
 logOperationResult "check file dl correctly ..." $resultDL
@@ -553,6 +578,7 @@ elif [[ $VMNAME == *"DEBIAN"* ]] || [[ $VMNAME == *"UBUNTU"* ]] || [[ $VMNAME ==
 		if [[ x$ver == "x8"* ]]; then ver="8.0"; fi
 		if [[ x$ver == "x7"* ]]; then ver="7.0"; fi
 		if [[ x$ver == "x9"* ]]; then ver="9.0"; fi
+		if [[ x$ver == "x10"* ]]; then ver="10.0"; fi
 		if [[ x$ver == "xtesting"* ]]; then ver="10.0"; fi
 	fi
 	
@@ -592,6 +618,9 @@ else #FEDORA | CENTOS...
 
 
 	expected="baseurl=https://mega.nz/linux/MEGAsync/${distroDir}_$ver"
+	if [[ $VMNAME == "CENTOS_7-RHEL" ]]; then
+	expected="baseurl=https://mega.nz/linux/MEGAsync/RHEL_$ver"
+	fi
 	resultRepoConfiguredOk=0
 	if ! $sshpasscommand ssh root@$IP_GUEST cat /etc/yum.repos.d/megasync.repo | grep "$expected" > /dev/null; then
 		echo "WRONG repo configured. Read: <$($sshpasscommand ssh root@$IP_GUEST "cat /etc/yum.repos.d/megasync.repo" | grep baseurl)>"

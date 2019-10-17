@@ -652,11 +652,6 @@ void SetupWizard::on_bCancel_clicked()
             return;
         }
 
-        if (selectedMegaFolderHandle == rootNode->getHandle())
-        {
-            syncName = QString::fromUtf8("MEGA");
-        }
-
         delete rootNode;
 
         preferences->addSyncedFolder(ui->eLocalFolder->text(), ui->eMegaFolder->text(), selectedMegaFolderHandle, syncName);
@@ -993,6 +988,11 @@ void SetupWizard::closeEvent(QCloseEvent *event)
             done(QDialog::Rejected);
         }
     }
+}
+
+void SetupWizard::reject()
+{
+
 }
 
 void SetupWizard::page_login()

@@ -21,7 +21,12 @@ CONFIG(release, debug|release) {
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4) {
+    QT += widgets
+    BUILD_ARCH=$${QT_ARCH}
+} else {
+    BUILD_ARCH=$${QMAKE_HOST.arch}
+}
 
 unix:!macx {
     QT += svg
@@ -64,7 +69,7 @@ CONFIG += USE_PDFIUM
 else:win32 {
 CONFIG += USE_PDFIUM
 }
-else:contains(QMAKE_CFLAGS, -m64) { #Notice this might not work for clang!
+else:contains(BUILD_ARCH, x86_64) { #Notice this might not work for clang!
 CONFIG += USE_PDFIUM
 }
 
@@ -168,7 +173,7 @@ DEFINES += REQUIRE_HAVE_PDFIUM
 else:win32 {
 DEFINES += REQUIRE_HAVE_PDFIUM
 }
-else:contains(QMAKE_CFLAGS, -m64) { #Notice this might not work for clang!
+else:contains(BUILD_ARCH, x86_64) { #Notice this might not work for clang!
 DEFINES += REQUIRE_HAVE_PDFIUM
 }
 
