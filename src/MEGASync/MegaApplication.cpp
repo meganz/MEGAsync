@@ -50,7 +50,6 @@ QString MegaApplication::appPath = QString();
 QString MegaApplication::appDirPath = QString();
 QString MegaApplication::dataPath = QString();
 
-
 void msgHandler(QtMsgType type, const char *msg)
 {
     switch (type) {
@@ -349,13 +348,6 @@ void setScaleFactors()
 int main(int argc, char *argv[])
 {
 #ifdef Q_OS_LINUX
-    appToWaitForSignal = QString::fromUtf8("\"%1\"").arg(MegaApplication::applicationFilePath());
-    for (int i = 1; i < argc; i++)
-    {
-        appToWaitForSignal.append(QString::fromUtf8(" \""));
-        appToWaitForSignal.append(QString::fromUtf8(argv[i]));
-        appToWaitForSignal.append(QString::fromUtf8("\""));
-    }
 
     signal(SIGUSR1, LinuxSignalHandler);
 
@@ -436,7 +428,6 @@ int main(int argc, char *argv[])
         }
     }
 
-
 #endif
 
 #if ( defined(WIN32) && QT_VERSION >= 0x050000 ) || (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
@@ -469,6 +460,15 @@ int main(int argc, char *argv[])
 
     MegaApplication app(argc, argv);
     theapp = &app;
+#if defined(Q_OS_LINUX)
+    appToWaitForSignal = QString::fromUtf8("\"%1\"").arg(MegaApplication::applicationFilePath());
+    for (int i = 1; i < argc; i++)
+    {
+        appToWaitForSignal.append(QString::fromUtf8(" \""));
+        appToWaitForSignal.append(QString::fromUtf8(argv[i]));
+        appToWaitForSignal.append(QString::fromUtf8("\""));
+    }
+#endif
 
 #if defined(Q_OS_LINUX) && QT_VERSION >= 0x050600
     for (const auto& screen : app.screens())
