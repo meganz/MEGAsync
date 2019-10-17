@@ -183,9 +183,11 @@ int main(int argc, char *argv[])
         CryptoPP::Integer pubk[AsymmCipher::PUBKEY];
         string pubks;
         string privks;
+        // pseudo-random number generator
+        PrnGen rng;
 
         AsymmCipher asymkey;
-        asymkey.genkeypair(asymkey.key,pubk,KEY_LENGTH);
+        asymkey.genkeypair(rng, asymkey.key,pubk,KEY_LENGTH);
         AsymmCipher::serializeintarray(pubk,AsymmCipher::PUBKEY,&pubks);
         AsymmCipher::serializeintarray(asymkey.key,AsymmCipher::PRIVKEY,&privks);
 
