@@ -184,21 +184,13 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     {
         installEventFilter(this);
     }
-    else
 #endif
-    {
-        #ifdef Q_OS_LINUX
-            installEventFilter(this);
-        #else
-            {
-                ui->wStorageUsage->installEventFilter(this);
-            }
-        #endif
-    }
 
 #ifdef Q_OS_LINUX
     installEventFilter(this);
 #endif
+
+    ui->wStorageUsage->installEventFilter(this);
 
     ui->lOQDesc->setTextFormat(Qt::RichText);
 
