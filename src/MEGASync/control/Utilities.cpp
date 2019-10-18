@@ -681,11 +681,3 @@ QString Utilities::getDefaultBasePath()
     return QString();
 }
 
-
-void StorageDetailsObserver::notifyStorageObservers()
-{
-    for (AccountDetailsDialog* o : observers)
-    {
-        o->update();
-    }
-}

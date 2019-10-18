@@ -89,7 +89,7 @@ enum GetUserStatsReason {
     USERSTATS_SHOWMAINDIALOG,
 };
 
-class MegaApplication : public QApplication, public mega::MegaListener, public StorageDetailsObserver
+class MegaApplication : public QApplication, public mega::MegaListener, public StorageDetailsObserved
 {
     Q_OBJECT
 

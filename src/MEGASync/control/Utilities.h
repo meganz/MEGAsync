@@ -66,24 +66,29 @@ public:
     virtual void update() = 0;
 };
 
-class AccountDetailsDialog;
-class StorageDetailsObserver
+class StorageDetailsObserved
 {
 public:
-    virtual ~StorageDetailsObserver() = default;
-    void attachStorageObserver(AccountDetailsDialog& obs)
+    virtual ~StorageDetailsObserved() = default;
+    void attachStorageObserver(IObserver& obs)
     {
-        observers.push_back(&obs);
+        storageObservers.push_back(&obs);
     }
-    void dettachStorageObserver(AccountDetailsDialog& obs)
+    void dettachStorageObserver(IObserver& obs)
     {
-        observers.erase(std::remove(observers.begin(), observers.end(), &obs));
+        storageObservers.erase(std::remove(storageObservers.begin(), storageObservers.end(), &obs));
     }
 
-    void notifyStorageObservers();
+    void notifyStorageObservers()
+    {
+        for (IObserver* o : storageObservers)
+        {
+            o->update();
+        }
+    }
 
 private:
-    std::vector<AccountDetailsDialog*> observers;
+    std::vector<IObserver*> storageObservers;
 };
 
 
