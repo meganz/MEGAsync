@@ -287,7 +287,7 @@ DATA
 
 %endif
 
-%if 0%{?sle_version || 0%{?suse_version}
+%if 0%{?sle_version} || 0%{?suse_version}
     %if 0%{?sle_version} == 120300
         %define reponame openSUSE_Leap_42.3
     %endif
