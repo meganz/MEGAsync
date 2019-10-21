@@ -35,6 +35,7 @@ make distclean 2> /dev/null || true
 cd mega
 make distclean 2> /dev/null || true
 rm -fr bindings/qt/3rdparty || true
+mv include/mega/config.h $cwd/config.h_bktarball || true
 ./clean.sh || true
 cd $cwd
 
@@ -131,6 +132,8 @@ ln -s ../../src/MEGASync $MEGASYNC_NAME/MEGASync
 ln -s $archives $MEGASYNC_NAME/archives
 tar czfh $MEGASYNC_NAME.tar.gz $MEGASYNC_NAME
 rm -rf $MEGASYNC_NAME
+
+mv $cwd/config.h_bktarball $cwd/../src/MEGASync/mega/include/mega/config.h || true
 
 # delete any previous archive
 rm -fr MEGAsync/MEGAsync/megasync_*.tar.gz
