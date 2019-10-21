@@ -377,6 +377,7 @@ protected:
     long long cleaningSchedulerExecution;
     long long lastUserActivityExecution;
     long long lastTsBusinessWarning;
+    long long lastErrorMessageShown;
     bool almostOQ;
     int storageState;
     int appliedStorageState;
@@ -410,6 +411,7 @@ protected:
     static QString appPath;
     static QString appDirPath;
     static QString dataPath;
+    static QString lastNotificationError;
 
     QThread *updateThread;
     UpdateTask *updateTask;

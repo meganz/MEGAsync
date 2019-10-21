@@ -47,6 +47,7 @@ using namespace std;
 QString MegaApplication::appPath = QString();
 QString MegaApplication::appDirPath = QString();
 QString MegaApplication::dataPath = QString();
+QString MegaApplication::lastNotificationError = QString();
 
 void msgHandler(QtMsgType type, const char *msg)
 {
@@ -882,6 +883,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     cleaningSchedulerExecution = 0;
     lastUserActivityExecution = 0;
     lastTsBusinessWarning = 0;
+    lastErrorMessageShown = 0;
     maxMemoryUsage = 0;
     nUnviewedTransfers = 0;
     completedTabActive = false;
@@ -3652,6 +3654,17 @@ void MegaApplication::showErrorMessage(QString message, QString title)
     {
         return;
     }
+
+    // Avoid spamming user with repeated notifications.
+    if (!lastNotificationError.compare(message)
+        && (lastErrorMessageShown && (QDateTime::currentMSecsSinceEpoch() - lastErrorMessageShown) < 3000))
+
+    {
+        return;
+    }
+
+    lastNotificationError = message;
+    lastErrorMessageShown = QDateTime::currentMSecsSinceEpoch();
 
     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, message.toUtf8().constData());
     if (notificator)
@@ -7664,6 +7677,11 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
         removeFinishedTransfer(finishedTransferOrder.first()->getTag());
     }
 
+    if (e->getErrorCode() == MegaError::API_EOVERQUOTA && transfer->isForeignOverquota())
+    {
+        disableSyncs();
+    }
+
     if (e->getErrorCode() == MegaError::API_EBUSINESSPASTDUE
             && (!lastTsBusinessWarning || (QDateTime::currentMSecsSinceEpoch() - lastTsBusinessWarning) > 3000))//Notify only once within last five seconds
     {
@@ -7824,17 +7842,27 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     preferences->setTransferDownloadMethod(api->getDownloadMethod());
     preferences->setTransferUploadMethod(api->getUploadMethod());
 
-    if (e->getErrorCode() == MegaError::API_EOVERQUOTA && e->getValue() && bwOverquotaTimestamp <= (QDateTime::currentMSecsSinceEpoch() / 1000))
+    if (e->getErrorCode() == MegaError::API_EOVERQUOTA)
     {
-        preferences->clearTemporalBandwidth();
-        megaApi->getPricing();
-        updateUserStats(false, true, true, true, USERSTATS_TRANSFERTEMPERROR);  // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry)
-        bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
-#if defined(__MACH__) || defined(_WIN32)
-        trayIcon->setContextMenu(initialMenu.get());
-#endif
-        closeDialogs(true);
-        openBwOverquotaDialog();
+        if (e->getValue() && bwOverquotaTimestamp <= (QDateTime::currentMSecsSinceEpoch() / 1000))
+        {
+            preferences->clearTemporalBandwidth();
+            megaApi->getPricing();
+            updateUserStats(false, true, true, true, USERSTATS_TRANSFERTEMPERROR);  // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry)
+            bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
+        #if defined(__MACH__) || defined(_WIN32)
+            trayIcon->setContextMenu(initialMenu.get());
+        #endif
+            closeDialogs(true);
+            openBwOverquotaDialog();
+        }
+        else if (transfer->isForeignOverquota())
+        {
+            MegaUser *contact =  megaApi->getUserFromInShare(megaApi->getNodeByHandle(transfer->getParentHandle()), true);
+            showErrorMessage(tr("Your upload(s) cannot proceed because %1's account is full")
+                             .arg(QString::fromUtf8(contact->getEmail())));
+
+        }
     }
 }
 
