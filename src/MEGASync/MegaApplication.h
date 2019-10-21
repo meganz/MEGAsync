@@ -377,7 +377,7 @@ protected:
     long long cleaningSchedulerExecution;
     long long lastUserActivityExecution;
     long long lastTsBusinessWarning;
-    long long lastErrorMessageShown;
+    long long lastTsErrorMessageShown;
     bool almostOQ;
     int storageState;
     int appliedStorageState;

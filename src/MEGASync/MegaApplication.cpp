@@ -883,7 +883,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     cleaningSchedulerExecution = 0;
     lastUserActivityExecution = 0;
     lastTsBusinessWarning = 0;
-    lastErrorMessageShown = 0;
+    lastTsErrorMessageShown = 0;
     maxMemoryUsage = 0;
     nUnviewedTransfers = 0;
     completedTabActive = false;
@@ -3656,15 +3656,15 @@ void MegaApplication::showErrorMessage(QString message, QString title)
     }
 
     // Avoid spamming user with repeated notifications.
-    if (!lastNotificationError.compare(message)
-        && (lastErrorMessageShown && (QDateTime::currentMSecsSinceEpoch() - lastErrorMessageShown) < 3000))
+    if ((lastTsErrorMessageShown && (QDateTime::currentMSecsSinceEpoch() - lastTsErrorMessageShown) < 3000)
+            && !lastNotificationError.compare(message))
 
     {
         return;
     }
 
     lastNotificationError = message;
-    lastErrorMessageShown = QDateTime::currentMSecsSinceEpoch();
+    lastTsErrorMessageShown = QDateTime::currentMSecsSinceEpoch();
 
     MegaApi::log(MegaApi::LOG_LEVEL_ERROR, message.toUtf8().constData());
     if (notificator)
@@ -7844,24 +7844,24 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
 
     if (e->getErrorCode() == MegaError::API_EOVERQUOTA)
     {
-        if (e->getValue() && bwOverquotaTimestamp <= (QDateTime::currentMSecsSinceEpoch() / 1000))
+        if (transfer->isForeignOverquota())
+        {
+            MegaUser *contact =  megaApi->getUserFromInShare(megaApi->getNodeByHandle(transfer->getParentHandle()), true);
+            showErrorMessage(tr("Your upload(s) cannot proceed because %1's account is full")
+                             .arg(contact?QString::fromUtf8(contact->getEmail()):tr("contact")));
+
+        }
+        else if (e->getValue() && bwOverquotaTimestamp <= (QDateTime::currentMSecsSinceEpoch() / 1000))
         {
             preferences->clearTemporalBandwidth();
             megaApi->getPricing();
             updateUserStats(false, true, true, true, USERSTATS_TRANSFERTEMPERROR);  // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry)
             bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
-        #if defined(__MACH__) || defined(_WIN32)
+#if defined(__MACH__) || defined(_WIN32)
             trayIcon->setContextMenu(initialMenu.get());
-        #endif
+#endif
             closeDialogs(true);
             openBwOverquotaDialog();
-        }
-        else if (transfer->isForeignOverquota())
-        {
-            MegaUser *contact =  megaApi->getUserFromInShare(megaApi->getNodeByHandle(transfer->getParentHandle()), true);
-            showErrorMessage(tr("Your upload(s) cannot proceed because %1's account is full")
-                             .arg(QString::fromUtf8(contact->getEmail())));
-
         }
     }
 }
