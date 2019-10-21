@@ -90,7 +90,7 @@ void LinuxSignalHandler(int signum)
         {
             appToWaitForSignal.append(QString::fromUtf8(" --waitforsignal"));
             bool success = QProcess::startDetached(appToWaitForSignal);
-            cout << "Started detached MEGAsync to wait for restart signal: " << appToWaitForSignal.toUtf8().toStdString() << " " << (success?"OK":"FAILED!") << endl;
+            cout << "Started detached MEGAsync to wait for restart signal: " << appToWaitForSignal.toUtf8().constData() << " " << (success?"OK":"FAILED!") << endl;
         }
 
         if (theapp)
@@ -386,7 +386,7 @@ int main(int argc, char *argv[])
                 }
 
                 bool success = QProcess::startDetached(app);
-                cout << "Restarting MEGAsync: " << app.toUtf8().toStdString() << " " << (success?"OK":"FAILED!") << endl;
+                cout << "Restarting MEGAsync: " << app.toUtf8().constData() << " " << (success?"OK":"FAILED!") << endl;
                 exit(!success);
             }
             cout << "Timed out waiting for restart signal" << endl;
@@ -475,8 +475,8 @@ int main(int argc, char *argv[])
 
 
     MegaApplication app(argc, argv);
-    theapp = &app;
 #if defined(Q_OS_LINUX)
+    theapp = &app;
     appToWaitForSignal = QString::fromUtf8("\"%1\"").arg(MegaApplication::applicationFilePath());
     for (int i = 1; i < argc; i++)
     {
@@ -490,7 +490,7 @@ int main(int argc, char *argv[])
     for (const auto& screen : app.screens())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, ("Device pixel ratio on '" +
-                                               screen->name().toStdString() + "': " +
+                                               screen->name().constData() + "': " +
                                                std::to_string(screen->devicePixelRatio())).c_str());
     }
 #endif
@@ -707,7 +707,9 @@ int main(int argc, char *argv[])
     int toret = app.exec();
 
 
+#ifdef Q_OS_LINUX
     theapp = nullptr;
+#endif
     return toret;
 
 #if 0 //Strings for the translation system. These lines don't need to be built
@@ -7739,6 +7741,8 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         megaApi->getPricing();
         updateUserStats(false, true, true, true, USERSTATS_TRANSFERTEMPERROR);  // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry)
         bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
+        assert(bwOverquotaTimestamp > 0);
+
 #if defined(__MACH__) || defined(_WIN32)
         trayIcon->setContextMenu(initialMenu.get());
 #endif

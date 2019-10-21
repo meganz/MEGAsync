@@ -5,6 +5,7 @@
 #include <QHash>
 #include <QPixmap>
 #include <QDir>
+#include <QIcon>
 
 #include <sys/stat.h>
 
