@@ -7166,6 +7166,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
             {
                 settingsDialog->storageChanged();
             }
+
+            notifyStorageObservers();
         }
 
         if (!megaApi->getBandwidthOverquotaDelay() && preferences->accountType() != Preferences::ACCOUNT_TYPE_FREE)

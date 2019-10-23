@@ -151,6 +151,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     gWidget = NULL;
     opacityEffect = NULL;
     animation = NULL;
+    accountDetailsDialog = NULL;
 
     actualAccountType = -1;
 
@@ -188,6 +189,8 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 #ifdef Q_OS_LINUX
     installEventFilter(this);
 #endif
+
+    ui->wStorageUsage->installEventFilter(this);
 
     ui->lOQDesc->setTextFormat(Qt::RichText);
 
@@ -1156,6 +1159,12 @@ void InfoDialog::changeEvent(QEvent *event)
 
 bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 {
+    if (obj == ui->wStorageUsage && e->type() == QEvent::MouseButtonPress)
+    {
+        on_bStorageDetails_clicked();
+        return true;
+    }
+
 #ifdef Q_OS_LINUX
     static bool firstime = true;
     if (getenv("START_MEGASYNC_MINIMIZED") && firstime && (obj == this && e->type() == QEvent::Paint))
@@ -1204,6 +1213,27 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
 #endif
 
     return QDialog::eventFilter(obj, e);
+}
+
+void InfoDialog::on_bStorageDetails_clicked()
+{
+    if (accountDetailsDialog)
+    {
+        accountDetailsDialog->raise();
+        return;
+    }
+
+    accountDetailsDialog = new AccountDetailsDialog(megaApi, this);
+    app->updateUserStats(true, true, true, true, USERSTATS_STORAGECLICKED);
+    QPointer<AccountDetailsDialog> dialog = accountDetailsDialog;
+    dialog->exec();
+    if (!dialog)
+    {
+        return;
+    }
+
+    delete accountDetailsDialog;
+    accountDetailsDialog = NULL;
 }
 
 void InfoDialog::regenerateLayout(InfoDialog* olddialog)

@@ -59,6 +59,39 @@ struct PSA_info
     }
 };
 
+class IObserver
+{
+public:
+    virtual ~IObserver() = default;
+    virtual void update() = 0;
+};
+
+class StorageDetailsObserved
+{
+public:
+    virtual ~StorageDetailsObserved() = default;
+    void attachStorageObserver(IObserver& obs)
+    {
+        storageObservers.push_back(&obs);
+    }
+    void dettachStorageObserver(IObserver& obs)
+    {
+        storageObservers.erase(std::remove(storageObservers.begin(), storageObservers.end(), &obs));
+    }
+
+    void notifyStorageObservers()
+    {
+        for (IObserver* o : storageObservers)
+        {
+            o->update();
+        }
+    }
+
+private:
+    std::vector<IObserver*> storageObservers;
+};
+
+
 class Utilities
 {
 public:
