@@ -137,15 +137,37 @@ void LinkProcessor::onRequestFinish(MegaApi *api, MegaRequest *request, MegaErro
         if (e->getErrorCode() == MegaError::API_OK)
         {
             MegaNode *rootNode = NULL;
-            if (linkList[currentIndex].count(QChar::fromAscii('!')) == 3)
+            QString currentStr = linkList[currentIndex];
+            QString splitSeparator;
+
+            if (currentStr.count(QChar::fromAscii('!')) == 3)
             {
-                QStringList linkparts = linkList[currentIndex].split(QChar::fromAscii('!'), QString::KeepEmptyParts);
-                MegaHandle handle = MegaApi::base64ToHandle(linkparts.last().toUtf8().constData());
-                rootNode = megaApiFolders->getNodeByHandle(handle);
+                splitSeparator = QString::fromUtf8("!");
+            }
+            else if (currentStr.count(QChar::fromAscii('!')) == 2
+                     && currentStr.count(QChar::fromAscii('?')) == 1)
+            {
+                splitSeparator = QString::fromUtf8("?");
+            }
+            else if (currentStr.count(QString::fromUtf8("/folder/")) == 2)
+            {
+                splitSeparator = QString::fromUtf8("/folder/");
+            }
+            else if (currentStr.count(QString::fromUtf8("/folder/")) == 1
+                     && currentStr.count(QString::fromUtf8("/file/")) == 1)
+            {
+                splitSeparator = QString::fromUtf8("/file/");
+            }
+
+            if (splitSeparator.isEmpty())
+            {
+                rootNode = megaApiFolders->getRootNode();
             }
             else
             {
-                rootNode = megaApiFolders->getRootNode();
+                QStringList linkparts = currentStr.split(splitSeparator, QString::KeepEmptyParts);
+                MegaHandle handle = MegaApi::base64ToHandle(linkparts.last().toUtf8().constData());
+                rootNode = megaApiFolders->getNodeByHandle(handle);
             }
 
             Preferences::instance()->setLastPublicHandle(request->getNodeHandle());
@@ -179,7 +201,8 @@ void LinkProcessor::requestLinkInfo()
     }
 
     QString link = linkList[currentIndex];
-    if (link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/#F!")))
+    if (link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/#F!"))
+            || link.startsWith(Preferences::BASE_URL + QString::fromUtf8("/folder/")))
     {
         megaApiFolders->loginToFolder(link.toUtf8().constData(), delegateListener);
     }
