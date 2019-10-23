@@ -123,6 +123,12 @@ void UpgradeDialog::updatePlans()
     int products = pricing->getNumProducts();
     for (int it = 0; it < products; it++)
     {
+        //FIX ME: Avoid showing business plan until UI design is ready for the dialog
+        if (pricing->isBusinessType(it))
+        {
+            continue;
+        }
+
         if (pricing->getMonths(it) == 1)
         {
             PlanInfo data = {

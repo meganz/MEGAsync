@@ -20,8 +20,8 @@ struct PlanInfo
 {
     int amount;
     QString currency;
-    unsigned long long gbStorage;
-    unsigned long long gbTransfer;
+    int gbStorage;
+    int gbTransfer;
     int level;
 };
 
