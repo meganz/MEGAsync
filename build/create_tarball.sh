@@ -57,7 +57,7 @@ echo "MEGAsync version: $MEGASYNC_VERSION"
 rm -fr MEGAsync/MEGAsync/megasync*.dsc
 
 # fix version number in template files and copy to appropriate directories
-sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.spec > MEGAsync/MEGAsync/megasync.spec
+sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync.spec | sed "s#^ *##g" > MEGAsync/MEGAsync/megasync.spec
 for dist in xUbuntu_1{2,3,4,5,6,7,8,9}.{04,10} Debian_{7,8,9,10}.0; do
 if [ -f templates/MEGAsync/megasync-$dist.dsc ]; then
 	sed -e "s/MEGASYNC_VERSION/$MEGASYNC_VERSION/g" templates/MEGAsync/megasync-$dist.dsc > MEGAsync/MEGAsync/megasync-$dist.dsc
