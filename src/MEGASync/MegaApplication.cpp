@@ -3202,8 +3202,8 @@ void MegaApplication::sendBusinessWarningNotification()
             if (megaApi->isMasterBusinessAccount())
             {
                 MegaNotification *notification = new MegaNotification();
-                notification->setTitle(tr("Something went wrong"));
-                notification->setText(tr("Please access MEGA in a desktop browser for more information."));
+                notification->setTitle(tr("Payment Failed"));
+                notification->setText(tr("Please resolve your payment issue to avoid suspension of your account."));
                 notification->setActions(QStringList() << tr("Pay Now"));
                 connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToPayBusiness(int)));
                 notificator->notify(notification);
@@ -3213,17 +3213,18 @@ void MegaApplication::sendBusinessWarningNotification()
         case MegaApi::BUSINESS_STATUS_EXPIRED:
         {
             MegaNotification *notification = new MegaNotification();
-            notification->setTitle(tr("Your Business account is expired"));
 
             if (megaApi->isMasterBusinessAccount())
             {
+                notification->setTitle(tr("Your Business account is expired"));
                 notification->setText(tr("Your account is suspended as read only until you proceed with the needed payments."));
                 notification->setActions(QStringList() << tr("Pay Now"));
                 connect(notification, SIGNAL(activated(int)), this, SLOT(redirectToPayBusiness(int)));
             }
             else
             {
-                notification->setText(tr("Contact your business account administrator."));
+                notification->setTitle(tr("Account suspended"));
+                notification->setText(tr("Contact your business account administrator to resolve the issue and activate your account."));
             }
 
             notificator->notify(notification);
@@ -6598,8 +6599,8 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                 {
                     QMessageBox msgBox;
                     msgBox.setIcon(QMessageBox::Warning);
-                    msgBox.setText(tr("Something went wrong"));
-                    msgBox.setInformativeText(tr("There has been a problem with your last payment. Please access MEGA in a desktop browser for more information."));
+                    msgBox.setText(tr("Payment Failed"));
+                    msgBox.setInformativeText(tr("This month's payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account."));
                     msgBox.addButton(tr("Pay Now"), QMessageBox::AcceptRole);
                     msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
                     msgBox.setDefaultButton(QMessageBox::Yes);
@@ -6621,10 +6622,10 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
             {
                 QMessageBox msgBox;
                 msgBox.setIcon(QMessageBox::Warning);
-                msgBox.setText(tr("Your Business account is expired"));
 
                 if (megaApi->isMasterBusinessAccount())
                 {
+                    msgBox.setText(tr("Your Business account is expired"));
                     msgBox.setInformativeText(tr("It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments."));
                     msgBox.addButton(tr("Pay Now"), QMessageBox::AcceptRole);
                     msgBox.addButton(tr("Dismiss"), QMessageBox::RejectRole);
@@ -6638,9 +6639,10 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                 }
                 else
                 {
+                    msgBox.setText(tr("Account Suspended"));
                     msgBox.setTextFormat(Qt::RichText);
                     msgBox.setInformativeText(
-                                tr("Your account is on [A]suspended status[/A].")
+                                tr("Your account is currently [A]suspended[/A]. You can only browse your data.")
                                     .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<span style=\"font-weight: bold; text-decoration:none;\">"))
                                     .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span>"))
                                 + QString::fromUtf8("<br>") + QString::fromUtf8("<br>") +
