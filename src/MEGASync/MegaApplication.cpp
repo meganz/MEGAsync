@@ -971,7 +971,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     uploadAction = NULL;
     downloadAction = NULL;
     streamAction = NULL;
-    webAction = NULL;
     myCloudAction = NULL;
     addSyncAction = NULL;
     waiting = false;
@@ -6421,15 +6420,6 @@ void MegaApplication::createTrayMenu()
 #endif
     connect(settingsAction, SIGNAL(triggered()), this, SLOT(openSettings()), Qt::QueuedConnection);
 
-    if (webAction)
-    {
-        webAction->deleteLater();
-        webAction = NULL;
-    }
-
-    webAction = new MenuItemAction(tr("MEGA website"), QIcon(QString::fromAscii("://images/ico_MEGA_website.png")), true);
-    connect(webAction, SIGNAL(triggered()), this, SLOT(officialWeb()), Qt::QueuedConnection);
-
     if (myCloudAction)
     {
         myCloudAction->deleteLater();
@@ -6587,7 +6577,6 @@ void MegaApplication::createTrayMenu()
     connect(updateAction, SIGNAL(triggered()), this, SLOT(onInstallUpdateClicked()), Qt::QueuedConnection);
 
     trayMenu->addAction(updateAction);
-    trayMenu->addAction(webAction);
     trayMenu->addAction(myCloudAction);
     trayMenu->addSeparator();
     trayMenu->addAction(addSyncAction);

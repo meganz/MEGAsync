@@ -320,7 +320,6 @@ protected:
     MenuItemAction *uploadAction;
     MenuItemAction *downloadAction;
     MenuItemAction *streamAction;
-    MenuItemAction *webAction;
     MenuItemAction *myCloudAction;
     MenuItemAction *addSyncAction;
 
