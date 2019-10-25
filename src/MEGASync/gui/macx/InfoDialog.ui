@@ -1486,7 +1486,7 @@ background-color: transparent;
 margin-top: 10px;
 margin-left: 20px;
 margin-right: 20px;
-color: #3C434D;
+color: #666;
 font-family: &quot;Lato&quot;;
 font-size: 16px;
 }
