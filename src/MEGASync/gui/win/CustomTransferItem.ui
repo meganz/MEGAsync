@@ -67,7 +67,7 @@
 {
   font-family: &quot;Lato&quot;;
   font-size: 12px;
-  color: #999999;
+  color: #999;
 }
 
 #lRemainingTime
