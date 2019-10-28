@@ -142,15 +142,7 @@ string getDistroVersion()
     // signal handler
     void signal_handler(int sig, siginfo_t *info, void *secret)
     {
-        if (auto logger = spdlog::get("logger"))
-        {
-            logger->error("Signal received: {}", sig);
-        }
-        if (auto logger = spdlog::get("debug_logger"))
-        {
-            logger->error("Signal received: {}", sig);
-        }
-        spdlog::shutdown();
+        gLogger.reset();
 
         int dump_file = open(dump_path.c_str(),  O_WRONLY | O_CREAT, 0400);
         if (dump_file<0)

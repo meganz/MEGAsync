@@ -43,6 +43,8 @@
 #include <QScreen>
 #endif
 
+std::unique_ptr<MegaSyncLogger> gLogger;
+
 using namespace mega;
 using namespace std;
 
@@ -490,7 +492,7 @@ int main(int argc, char *argv[])
     for (const auto& screen : app.screens())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, ("Device pixel ratio on '" +
-                                               screen->name().constData() + "': " +
+                                               screen->name().toStdString() + "': " +
                                                std::to_string(screen->devicePixelRatio())).c_str());
     }
 #endif
@@ -874,9 +876,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     }
 #endif
 
-    logger = new MegaSyncLogger(this, dataPath, desktopPath, logToStdout);
+    gLogger.reset(new MegaSyncLogger(this, dataPath, desktopPath, logToStdout));
 #if defined(LOG_TO_FILE)
-    logger->setDebug(true);
+    gLogger->setDebug(true);
 #endif
 
     updateAvailable = false;
@@ -1017,10 +1019,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 MegaApplication::~MegaApplication()
 {
-    if (logger)
-    {
-        delete logger;
-    }
+    gLogger.reset();
 
     if (!translator.isEmpty())
     {
@@ -2902,8 +2901,7 @@ void MegaApplication::cleanAll()
     trayIcon->deleteLater();
     trayIcon = NULL;
 
-    delete logger;
-    logger = NULL;
+    gLogger.reset();
 
     if (reboot)
     {
@@ -4483,16 +4481,16 @@ void MegaApplication::toggleLogging()
         return;
     }
 
-    if (logger->isDebug())
+    if (gLogger->isDebug())
     {
         Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
-        logger->setDebug(false);
+        gLogger->setDebug(false);
         showInfoMessage(tr("DEBUG mode disabled"));
     }
     else
     {
         Preferences::HTTPS_ORIGIN_CHECK_ENABLED = false;
-        logger->setDebug(true);
+        gLogger->setDebug(true);
         showInfoMessage(tr("DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)"));
         if (megaApi)
         {
