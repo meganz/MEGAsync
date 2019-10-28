@@ -1284,24 +1284,15 @@ void InfoDialog::regenerateLayout(InfoDialog* olddialog)
             dummy->setAttribute(Qt::WA_NoSystemBackground);
             dummy->setAttribute(Qt::WA_TranslucentBackground);
             dummy->show();
-
-            setMinimumHeight(gWidget->minimumHeight() + ui->wArrow->minimumHeight() * 2);
-            setMaximumHeight(gWidget->minimumHeight() + ui->wArrow->minimumHeight() * 2);
-
-        #else
-            setMinimumHeight(gWidget->minimumHeight());
-            setMaximumHeight(gWidget->minimumHeight());
         #endif
 
+        adjustSize();
 
     }
     else
     {
         gWidget->disableListener();
         gWidget->initialize();
-
-        setMinimumHeight(ui->wInfoDialogIn->minimumHeight());
-        setMaximumHeight(ui->wInfoDialogIn->minimumHeight());
 
         dialogLayout->removeWidget(gWidget);
         gWidget->setVisible(false);
@@ -1316,6 +1307,9 @@ void InfoDialog::regenerateLayout(InfoDialog* olddialog)
                 dummy = NULL;
             }
         #endif
+
+        adjustSize();
+
     }
 
     app->onGlobalSyncStateChanged(NULL);
