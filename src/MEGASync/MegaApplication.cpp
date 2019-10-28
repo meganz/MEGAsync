@@ -16,9 +16,12 @@
 #include <QNetworkProxy>
 #include <QSettings>
 
+
 #include <assert.h>
 
 #ifdef Q_OS_LINUX
+    #include <signal.h>
+    #include <condition_variable>
     #include <QSvgRenderer>
 #endif
 
@@ -64,6 +67,40 @@ void msgHandler(QtMsgType type, const char *msg)
         break;
     }
 }
+
+
+#ifdef Q_OS_LINUX
+MegaApplication *theapp = NULL;
+bool waitForRestartSignal = false;
+std::mutex mtxcondvar;
+std::condition_variable condVarRestart;
+QString appToWaitForSignal;
+
+void LinuxSignalHandler(int signum)
+{
+    if (signum == SIGUSR2)
+    {
+        std::unique_lock<std::mutex> lock(mtxcondvar);
+        condVarRestart.notify_one();
+    }
+    else if (signum == SIGUSR1)
+    {
+        waitForRestartSignal = true;
+        if (waitForRestartSignal)
+        {
+            appToWaitForSignal.append(QString::fromUtf8(" --waitforsignal"));
+            bool success = QProcess::startDetached(appToWaitForSignal);
+            cout << "Started detached MEGAsync to wait for restart signal: " << appToWaitForSignal.toUtf8().constData() << " " << (success?"OK":"FAILED!") << endl;
+        }
+
+        if (theapp)
+        {
+            theapp->exitApplication(true);
+        }
+    }
+}
+
+#endif
 
 #if QT_VERSION >= 0x050000
     void messageHandler(QtMsgType type,const QMessageLogContext &context, const QString &msg)
@@ -309,6 +346,61 @@ void setScaleFactors()
 
 int main(int argc, char *argv[])
 {
+#ifdef Q_OS_LINUX
+
+    // Ensure interesting signals are unblocked.
+    sigset_t signalstounblock;
+    sigemptyset (&signalstounblock);
+    sigaddset(&signalstounblock, SIGUSR1);
+    sigaddset(&signalstounblock, SIGUSR2);
+    sigprocmask(SIG_UNBLOCK, &signalstounblock, NULL);
+
+    if (signal(SIGUSR1, LinuxSignalHandler))
+    {
+        cerr << " Failed to register signal SIGUSR1 " << endl;
+    }
+
+    for (int i = 1; i < argc ; i++)
+    {
+        if (!strcmp(argv[i],"--waitforsignal"))
+        {
+            std::unique_lock<std::mutex> lock(mtxcondvar);
+            if (signal(SIGUSR2, LinuxSignalHandler))
+            {
+                cerr << " Failed to register signal SIGUSR2 " << endl;
+            }
+
+            cout << "Waiting for signal to restart MEGAsync ... "<< endl;
+            if (condVarRestart.wait_for(lock, std::chrono::minutes(30)) == std::cv_status::no_timeout )
+            {
+                QString app;
+
+                for (int j = 0; j < argc; j++)
+                {
+                    if (strcmp(argv[j],"--waitforsignal"))
+                    {
+                        app.append(QString::fromUtf8(" \""));
+                        app.append(QString::fromUtf8(argv[j]));
+                        app.append(QString::fromUtf8("\""));
+                    }
+                }
+
+                bool success = QProcess::startDetached(app);
+                cout << "Restarting MEGAsync: " << app.toUtf8().constData() << " " << (success?"OK":"FAILED!") << endl;
+                exit(!success);
+            }
+            cout << "Timed out waiting for restart signal" << endl;
+            exit(2);
+        }
+    }
+
+    // Block SIGUSR2 for normal execution: we don't want it to kill the process, in case there's a rogue update going on.
+    sigset_t signalstoblock;
+    sigemptyset (&signalstoblock);
+    sigaddset(&signalstoblock, SIGUSR2);
+    sigprocmask(SIG_BLOCK, &signalstoblock, NULL);
+#endif
+
     // adds thread-safety to OpenSSL
     QSslSocket::supportsSsl();
 
@@ -352,7 +444,6 @@ int main(int argc, char *argv[])
         }
     }
 
-
 #endif
 
 #if ( defined(WIN32) && QT_VERSION >= 0x050000 ) || (defined(Q_OS_LINUX) && QT_VERSION >= 0x050600)
@@ -384,12 +475,22 @@ int main(int argc, char *argv[])
 
 
     MegaApplication app(argc, argv);
+#if defined(Q_OS_LINUX)
+    theapp = &app;
+    appToWaitForSignal = QString::fromUtf8("\"%1\"").arg(MegaApplication::applicationFilePath());
+    for (int i = 1; i < argc; i++)
+    {
+        appToWaitForSignal.append(QString::fromUtf8(" \""));
+        appToWaitForSignal.append(QString::fromUtf8(argv[i]));
+        appToWaitForSignal.append(QString::fromUtf8("\""));
+    }
+#endif
 
 #if defined(Q_OS_LINUX) && QT_VERSION >= 0x050600
     for (const auto& screen : app.screens())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, ("Device pixel ratio on '" +
-                                               screen->name().toStdString() + "': " +
+                                               screen->name().constData() + "': " +
                                                std::to_string(screen->devicePixelRatio())).c_str());
     }
 #endif
@@ -429,6 +530,7 @@ int main(int argc, char *argv[])
     QString crashPath = dataDir.filePath(QString::fromAscii("crashDumps"));
     QString avatarPath = dataDir.filePath(QString::fromAscii("avatars"));
     QString appLockPath = dataDir.filePath(QString::fromAscii("megasync.lock"));
+    QString appShowPath = dataDir.filePath(QString::fromAscii("megasync.show"));
     QDir crashDir(crashPath);
     if (!crashDir.exists())
     {
@@ -522,6 +624,22 @@ int main(int argc, char *argv[])
     bool alreadyStarted = true;
     for (int i = 0; i < 10; i++)
     {
+        if (i > 0)
+        {
+            if (dataDir.exists(appShowPath))
+            {
+                QFile appShowFile(appShowPath);
+                if (appShowFile.open(QIODevice::ReadOnly))
+                {
+                    if (appShowFile.size() == 0)
+                    {
+                        // the file has been emptied; so the infoDialog was shown in the primary MEGAsync instance.  We can exit.
+                        alreadyStarted = true;
+                        break;
+                    }
+                }
+            }
+        }
         singleInstanceChecker.open(QtLockedFile::ReadWrite);
         if (singleInstanceChecker.lock(QtLockedFile::WriteLock, false))
         {
@@ -530,11 +648,11 @@ int main(int argc, char *argv[])
         }
         else if (i == 0)
         {
-             QString appShowInterfacePath = dataDir.filePath(QString::fromAscii("megasync.show"));
-             QFile fappShowInterfacePath(appShowInterfacePath);
-             if (fappShowInterfacePath.open(QIODevice::WriteOnly))
+             QFile appShowFile(appShowPath);
+             if (appShowFile.open(QIODevice::WriteOnly))
              {
-                 fappShowInterfacePath.close();
+                 appShowFile.write("open");
+                 appShowFile.close();
              }
         }
 #ifdef __APPLE__
@@ -585,7 +703,14 @@ int main(int argc, char *argv[])
 
     app.initialize();
     app.start();
-    return app.exec();
+
+    int toret = app.exec();
+
+
+#ifdef Q_OS_LINUX
+    theapp = nullptr;
+#endif
+    return toret;
 
 #if 0 //Strings for the translation system. These lines don't need to be built
     QT_TRANSLATE_NOOP("QDialogButtonBox", "&Yes");
@@ -863,7 +988,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     storageOverquotaDialog = NULL;
     bwOverquotaEvent = false;
     infoWizard = NULL;
-    externalNodesTimestamp = 0;
     noKeyDetected = 0;
     isFirstSyncDone = false;
     isFirstFileSynced = false;
@@ -911,7 +1035,31 @@ void MegaApplication::showInterface(QString)
     {
         return;
     }
-    showInfoDialog();
+
+    bool show = true;
+
+    QDir dataDir(dataPath);
+    if (dataDir.exists(QString::fromAscii("megasync.show")))
+    {
+        QFile showFile(dataDir.filePath(QString::fromAscii("megasync.show"))); 
+        if (showFile.open(QIODevice::ReadOnly))
+        {
+            show = showFile.size() > 0;
+            if (show)
+            {
+                // clearing the file content will cause the instance that asked us to show the dialog to exit
+                showFile.close();
+                showFile.open(QIODevice::WriteOnly | QIODevice::Truncate);
+                showFile.close();
+            }
+        }
+    }
+
+    if (show)
+    {
+        // we saw the file had bytes in it, or if anything went wrong when trying to check that
+        showInfoDialog();
+    }
 }
 
 void MegaApplication::initialize()
@@ -1112,8 +1260,9 @@ void MegaApplication::initialize()
         QString appShowInterfacePath = dataDir.filePath(QString::fromAscii("megasync.show"));
         QFileSystemWatcher *watcher = new QFileSystemWatcher(this);
         QFile fappShowInterfacePath(appShowInterfacePath);
-        if (fappShowInterfacePath.open(QIODevice::WriteOnly))
+        if (fappShowInterfacePath.open(QIODevice::WriteOnly | QIODevice::Truncate))
         {
+            // any text added to this file will cause the infoDialog to show
             fappShowInterfacePath.close();
         }
         watcher->addPath(appShowInterfacePath);
@@ -2174,7 +2323,7 @@ void MegaApplication::rebootApplication(bool update)
     QApplication::exit();
 }
 
-void MegaApplication::exitApplication()
+void MegaApplication::exitApplication(bool force)
 {
     if (appfinished)
     {
@@ -2182,7 +2331,7 @@ void MegaApplication::exitApplication()
     }
 
 #ifndef __APPLE__
-    if (!megaApi->isLoggedIn())
+    if (force || !megaApi->isLoggedIn())
     {
 #endif
         reboot = false;
@@ -7591,6 +7740,8 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
         megaApi->getPricing();
         updateUserStats(false, true, true, true, USERSTATS_TRANSFERTEMPERROR);  // get udpated transfer quota (also pro status in case out of quota is due to account paid period expiry)
         bwOverquotaTimestamp = (QDateTime::currentMSecsSinceEpoch() / 1000) + e->getValue();
+        assert(bwOverquotaTimestamp > 0);
+
 #if defined(__MACH__) || defined(_WIN32)
         trayIcon->setContextMenu(initialMenu.get());
 #endif
@@ -7666,7 +7817,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
         return;
     }
 
-    bool externalNodes = false;
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("%1 updated files/folders").arg(nodes->size()).toUtf8().constData());
 
     //Check all modified nodes
@@ -7718,28 +7868,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
             }
         }
 
-        if (nodescurrent && !node->isRemoved() && !node->isSyncDeleted()
-                && (node->getType() == MegaNode::TYPE_FILE)
-                && node->getSize() && node->hasChanged(MegaNode::CHANGE_TYPE_NEW))
-        {
-            long long bytes = node->getSize();
-            if (!megaApi->isInCloud(node))
-            {
-                preferences->setInShareStorage(preferences->inShareStorage() + bytes);
-            }
-            else
-            {
-                preferences->setCloudDriveStorage(preferences->cloudDriveStorage() + bytes);
-            }
-
-            if (!externalNodes && !node->getTag()
-                    && ((lastExit / 1000) < node->getCreationTime())
-                    && megaApi->isInsideSync(node))
-            {
-                externalNodes = true;
-            }
-        }
-
         if (!node->isRemoved() && node->getTag()
                 && !node->isSyncDeleted()
                 && (node->getType() == MegaNode::TYPE_FILE)
@@ -7761,15 +7889,6 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
                 rebootApplication(false);
             }
             noKeyDetected++;
-        }
-    }
-
-    if (externalNodes)
-    {
-        if (QDateTime::currentMSecsSinceEpoch() - externalNodesTimestamp > Preferences::MIN_EXTERNAL_NODES_WARNING_MS)
-        {
-            externalNodesTimestamp = QDateTime::currentMSecsSinceEpoch();
-            showNotificationMessage(tr("You have new or updated files in your account"));
         }
     }
 }

@@ -45,6 +45,10 @@ sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf
 /usr/bin/gtk-update-icon-cache /usr/share/icons/* &>/dev/null
 }
 
+pre_upgrade() {
+killall -s SIGUSR1 megasync 2> /dev/null || true
+}
+
 post_remove() {
 sed -n '1h;1!H;${g;s/###REPO for MEGA###\n.*###END REPO for MEGA###//;p;}' -i /etc/pacman.conf 
 
@@ -59,4 +63,6 @@ sysctl -p /etc/sysctl.d/100-megasync-inotify-limit.conf
 /bin/touch --no-create /usr/share/icons/hicolor &>/dev/null
 /bin/touch --no-create /usr/share/icons/ubuntu-mono-dark &>/dev/null
 /usr/bin/gtk-update-icon-cache /usr/share/icons/* &>/dev/null
+
+killall -s SIGUSR2 megasync 2> /dev/null || true
 }

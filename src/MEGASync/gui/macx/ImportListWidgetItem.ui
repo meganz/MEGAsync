@@ -64,7 +64,7 @@ margin-left: 3px;
      <property name="maximumSize">
       <size>
        <width>18</width>
-       <height>34</height>
+       <height>18</height>
       </size>
      </property>
      <property name="styleSheet">

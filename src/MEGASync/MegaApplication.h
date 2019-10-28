@@ -126,6 +126,8 @@ public:
 
     mega::MegaApi *getMegaApi() { return megaApi; }
 
+    std::unique_ptr<mega::MegaApiLock> megaApiLock;
+
     void unlink();
     void cleanLocalCaches(bool all = false);
     void showInfoMessage(QString message, QString title = tr("MEGAsync"));
@@ -203,7 +205,7 @@ public slots:
     void onUpdateNotFound(bool requested);
     void onUpdateError();
     void rebootApplication(bool update = true);
-    void exitApplication();
+    void exitApplication(bool force = false);
     void highLightMenuEntry(QAction* action);
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
@@ -417,7 +419,6 @@ protected:
     bool appfinished;
     bool updateAvailable;
     bool isLinux;
-    long long externalNodesTimestamp;
     int noKeyDetected;
     bool isFirstSyncDone;
     bool isFirstFileSynced;
