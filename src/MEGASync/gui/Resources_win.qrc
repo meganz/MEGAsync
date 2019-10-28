@@ -778,5 +778,8 @@
         <file>images/upload_fail_item_ico.png</file>
         <file>images/upload_fail_item_ico@2x.png</file>
         <file>images/upload_fail_item_ico@3x.png</file>
+        <file>images/transfers_empty.png</file>
+        <file>images/transfers_empty@2x.png</file>
+        <file>images/transfers_empty@3x.png</file>
     </qresource>
 </RCC>
