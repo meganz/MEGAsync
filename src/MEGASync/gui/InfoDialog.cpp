@@ -143,7 +143,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     waiting = false;
     activeDownload = NULL;
     activeUpload = NULL;
-    transferMenu = NULL;
     cloudItem = NULL;
     inboxItem = NULL;
     sharesItem = NULL;
@@ -152,6 +151,9 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     opacityEffect = NULL;
     animation = NULL;
     accountDetailsDialog = NULL;
+    syncsMenu = NULL;
+    addSyncAction = NULL;
+    lastHovered = NULL;
 
     actualAccountType = -1;
 
@@ -278,6 +280,17 @@ InfoDialog::~InfoDialog()
     delete activeUpload;
     delete animation;
     delete filterMenu;
+
+    if (syncsMenu)
+    {
+        for (QAction *a: syncsMenu->actions())
+        {
+            a->deleteLater();
+        }
+
+        syncsMenu->deleteLater();
+        syncsMenu.release();
+    }
 }
 
 PSA_info *InfoDialog::getPSAdata()
@@ -936,7 +949,128 @@ void InfoDialog::on_bTransferManager_clicked()
 
 void InfoDialog::on_bAddSync_clicked()
 {
-    addSync();
+    if (!preferences->logged())
+    {
+        return;
+    }
+
+    lastHovered = NULL;
+
+    if (addSyncAction)
+    {
+        addSyncAction->deleteLater();
+        addSyncAction = NULL;
+    }
+
+    int num = (megaApi && preferences->logged()) ? preferences->getNumSyncedFolders() : 0;
+    if (num == 0)
+    {
+        addSync();
+    }
+    else
+    {
+        addSyncAction = new MenuItemAction(tr("Syncs"), QIcon(QString::fromAscii("://images/ico_add_sync_folder.png")), true);
+        if (syncsMenu)
+        {
+            for (QAction *a: syncsMenu->actions())
+            {
+                a->deleteLater();
+            }
+
+            syncsMenu->deleteLater();
+            syncsMenu.release();
+        }
+
+        syncsMenu.reset(new QMenu());
+
+#ifdef __APPLE__
+        syncsMenu->setStyleSheet(QString::fromAscii("QMenu {background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+#else
+        syncsMenu->setStyleSheet(QString::fromAscii("QMenu { border: 1px solid #B8B8B8; border-radius: 5px; background: #ffffff; padding-top: 8px; padding-bottom: 8px;}"));
+#endif
+
+        //Highlight menu entry on mouse over
+        connect(syncsMenu.get(), SIGNAL(hovered(QAction*)), this, SLOT(highLightMenuEntry(QAction*)), Qt::QueuedConnection);
+
+        //Hide highlighted menu entry when mouse over
+        syncsMenu->installEventFilter(this);
+
+        QSignalMapper *menuSignalMapper = new QSignalMapper();
+        connect(menuSignalMapper, SIGNAL(mapped(QString)), this, SLOT(openFolder(QString)), Qt::QueuedConnection);
+
+        int activeFolders = 0;
+        for (int i = 0; i < num; i++)
+        {
+            if (!preferences->isFolderActive(i))
+            {
+                continue;
+            }
+
+            activeFolders++;
+            MenuItemAction *action = new MenuItemAction(preferences->getSyncName(i), QIcon(QString::fromAscii("://images/ico_drop_synched_folder.png")), true);
+            connect(action, SIGNAL(triggered()), menuSignalMapper, SLOT(map()), Qt::QueuedConnection);
+
+            syncsMenu->addAction(action);
+            menuSignalMapper->setMapping(action, preferences->getLocalFolder(i));
+        }
+
+        if (!activeFolders)
+        {
+            addSync();
+            return;
+        }
+        else
+        {
+            long long firstSyncHandle = INVALID_HANDLE;
+            if (num == 1)
+            {
+                firstSyncHandle = preferences->getMegaFolderHandle(0);
+            }
+
+            MegaNode *rootNode = megaApi->getRootNode();
+            if (rootNode)
+            {
+                long long rootHandle = rootNode->getHandle();
+                if ((num > 1) || (firstSyncHandle != rootHandle))
+                {
+                    MenuItemAction *addAction = new MenuItemAction(tr("Add Sync"), QIcon(QString::fromAscii("://images/ico_drop_add_sync.png")), true);
+                    connect(addAction, SIGNAL(triggered()), this, SLOT(addSync()), Qt::QueuedConnection);
+
+                    if (activeFolders)
+                    {
+                        syncsMenu->addSeparator();
+                    }
+                    syncsMenu->addAction(addAction);
+                }
+                delete rootNode;
+            }
+
+            addSyncAction->setMenu(syncsMenu.get());
+        }
+
+#ifdef __APPLE__
+        QPoint p = ui->bAddSync->mapToGlobal(QPoint(ui->bAddSync->width() - 100, ui->bAddSync->height() + 3));
+        syncsMenu->exec(p);
+
+        if (!this->rect().contains(this->mapFromGlobal(QCursor::pos())))
+        {
+            this->hide();
+        }
+#else
+        //FIXME: CHECK AND PLACE CORRECT COORDINATES FOR WIN AND LINUX. Remove comment when done.
+        syncsMenu->popup(ui->bAddSync->mapToGlobal(QPoint(ui->bAddSync->width() - 100, ui->bAddSync->height() + 3));
+#endif
+    }
+}
+
+void InfoDialog::closeSyncsMenu()
+{
+#ifdef __APPLE__
+    if (syncsMenu && syncsMenu->isVisible())
+    {
+        syncsMenu->close();
+    }
+#endif
 }
 
 void InfoDialog::on_bUpload_clicked()
@@ -1163,6 +1297,18 @@ bool InfoDialog::eventFilter(QObject *obj, QEvent *e)
     {
         on_bStorageDetails_clicked();
         return true;
+    }
+
+    if (obj == syncsMenu.get())
+    {
+        if (e->type() == QEvent::Leave)
+        {
+            if (lastHovered)
+            {
+                lastHovered->setHighlight(false);
+                lastHovered = NULL;
+            }
+        }
     }
 
 #ifdef Q_OS_LINUX
@@ -1576,6 +1722,28 @@ void InfoDialog::sTabsChanged(int tab)
         }
     }
     lasttab = tab;
+}
+
+void InfoDialog::highLightMenuEntry(QAction *action)
+{
+    if (!action)
+    {
+        return;
+    }
+
+    MenuItemAction* pAction = (MenuItemAction*)action;
+    if (lastHovered && lastHovered != pAction)
+    {
+        lastHovered->setHighlight(false);
+        pAction->setHighlight(true);
+
+        lastHovered = pAction;
+    }
+    else
+    {
+        lastHovered = pAction;
+        lastHovered->setHighlight(true);
+    }
 }
 
 void InfoDialog::setBlockedStateLabel(QString state)
