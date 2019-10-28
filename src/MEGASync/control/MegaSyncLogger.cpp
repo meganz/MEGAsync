@@ -52,15 +52,31 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
     dataDir.mkdir(QString::fromUtf8("logs"));
     const auto logPath = dataDir.filePath(QString::fromUtf8("logs/MEGAsync.log"));
 
+    std::vector<spdlog::sink_ptr> sinks;
+
     constexpr auto maxFileSizeMB = 10;
     constexpr auto maxFileCount = 10;
-    auto rotatingFileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-                logPath.toStdString(), 1024 * 1024 * maxFileSizeMB, maxFileCount);
-    std::vector<spdlog::sink_ptr> sinks{rotatingFileSink};
+    spdlog::sink_ptr rotatingFileSink;
+    try
+    {
+        rotatingFileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
+                    logPath.toStdString(), 1024 * 1024 * maxFileSizeMB, maxFileCount);
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Exception constructing rotating file sink: " << e.what() << std::endl;
+    }
+
+    if (rotatingFileSink)
+    {
+        sinks.push_back(rotatingFileSink);
+    }
+
     if (logToStdout)
     {
         sinks.push_back(std::make_shared<spdlog::sinks::stdout_sink_mt>());
     }
+
     mLogger = std::make_shared<spdlog::async_logger>("logger",
                                                      sinks.begin(), sinks.end(),
                                                      mThreadPool,
