@@ -6,8 +6,6 @@
 #include <sstream>
 #include "MegaApplication.h"
 
-#include <spdlog/spdlog.h>
-
 using namespace mega;
 using namespace std;
 
