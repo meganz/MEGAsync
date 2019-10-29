@@ -22,7 +22,7 @@
 # Maintainer: Pablo Martin <pm@mega.nz>
 pkgname=megasync
 pkgver=MEGASYNC_VERSION
-pkgrel=1
+pkgrel=`cat MEGA_BUILD_ID || echo "1"`
 epoch=
 pkgdesc="Easy automated syncing between your computers and your MEGA cloud drive"
 arch=('i686' 'x86_64')
