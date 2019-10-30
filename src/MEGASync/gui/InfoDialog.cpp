@@ -1057,8 +1057,7 @@ void InfoDialog::on_bAddSync_clicked()
             this->hide();
         }
 #else
-        //FIXME: CHECK AND PLACE CORRECT COORDINATES FOR WIN AND LINUX. Remove comment when done.
-        syncsMenu->popup(ui->bAddSync->mapToGlobal(QPoint(ui->bAddSync->width() - 100, ui->bAddSync->height() + 3));
+        syncsMenu->popup(ui->bAddSync->mapToGlobal(QPoint(ui->bAddSync->width() - 100, ui->bAddSync->height() + 3)));
 #endif
     }
 }
