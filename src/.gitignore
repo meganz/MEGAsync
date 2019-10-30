@@ -13,3 +13,4 @@ MEGASync/MEGAsync
 MEGACrashAnalyzer/MEGACrashAnalyzer
 .*.py
 archives
+/build-MEGASync*

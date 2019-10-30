@@ -69,6 +69,7 @@ CONFIG += USE_PDFIUM
 }
 else:win32 {
 CONFIG += USE_PDFIUM
+DEFINES += NOMINMAX
 }
 else:contains(BUILD_ARCH, x86_64) { #Notice this might not work for clang!
 CONFIG += USE_PDFIUM
