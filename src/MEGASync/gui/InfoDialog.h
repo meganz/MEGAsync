@@ -34,7 +34,8 @@ class InfoDialog : public QDialog, public mega::MegaTransferListener
         STATE_PAUSED,
         STATE_WAITING,
         STATE_INDEXING,
-        STATE_UPDATED
+        STATE_UPDATED,
+        STATE_SYNCING,
     };
 
 public:
@@ -49,6 +50,7 @@ public:
     void transferFinished(int error);
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
+    void setSyncing(bool value);
     void setOverQuotaMode(bool state);
     void setAccountType(int accType);
     void addSync(mega::MegaHandle h);
@@ -81,6 +83,8 @@ public:
     void setUnseenTypeNotifications(int all, int contacts, int shares, int payment);
 
     long long getUnseenNotifications() const;
+
+    void closeSyncsMenu();
 
 private:
     void drawAvatar(QString email);
@@ -166,8 +170,9 @@ private:
     int uploadActiveTransferTag, downloadActiveTransferTag;
     int uploadActiveTransferState, downloadActiveTransferState;
 
-    bool indexing;
+    bool indexing; //scanning
     bool waiting;
+    bool syncing; //if any sync is in syncing state
     GuestWidget *gWidget;
     int state;
     bool overQuotaState;

@@ -1,5 +1,6 @@
 #include "StatusInfo.h"
 #include "ui_StatusInfo.h"
+#include "Utilities.h"
 #include <QMouseEvent>
 
 StatusInfo::StatusInfo(QWidget *parent) :
@@ -44,32 +45,8 @@ void StatusInfo::setState(int state)
             }
 
             ui->lStatusDesc->setText(tr("Paused"));
-            QIcon icon;
-            icon.addFile(QString::fromUtf8(":/images/ico_pause_transfers_state.png"), QSize(), QIcon::Normal, QIcon::Off);
-            ui->bIconState->setIcon(icon);
+            ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/ico_pause_transfers_state.png")));
             ui->bIconState->setIconSize(QSize(24, 24));
-            break;
-        }
-        case STATE_WAITING:
-        {
-            if (!scanningTimer.isActive())
-            {
-                scanningAnimationIndex = 1;
-                scanningTimer.start();
-            }
-
-            ui->lStatusDesc->setText(tr("Waiting"));
-            break;
-        }
-        case STATE_INDEXING:
-        {
-            if (!scanningTimer.isActive())
-            {
-                scanningAnimationIndex = 1;
-                scanningTimer.start();
-            }
-
-            ui->lStatusDesc->setText(tr("Scanning..."));
             break;
         }
         case STATE_UPDATED:
@@ -82,19 +59,49 @@ void StatusInfo::setState(int state)
             if (isOverQuota)
             {
                 ui->lStatusDesc->setText(tr("Account full"));
-                QIcon icon;
-                icon.addFile(QString::fromUtf8(":/images/ico_menu_full.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->bIconState->setIcon(icon);
+                ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/ico_menu_full.png")));
                 ui->bIconState->setIconSize(QSize(24, 24));
             }
             else
             {
                 ui->lStatusDesc->setText(tr("Up to date"));
-                QIcon icon;
-                icon.addFile(QString::fromUtf8(":/images/ico_menu_uptodate_state.png"), QSize(), QIcon::Normal, QIcon::Off);
-                ui->bIconState->setIcon(icon);
+                ui->bIconState->setIcon(Utilities::getCachedPixmap(QString::fromUtf8(":/images/ico_menu_uptodate_state.png")));
                 ui->bIconState->setIconSize(QSize(24, 24));
             }
+
+            break;
+        }
+        case STATE_SYNCING:
+        {
+            if (!scanningTimer.isActive())
+            {
+                scanningAnimationIndex = 1;
+                scanningTimer.start();
+            }
+
+            ui->lStatusDesc->setText(tr("Syncinc")+QString::fromUtf8("..."));
+            break;
+        }
+        case STATE_WAITING:
+        {
+            if (!scanningTimer.isActive())
+            {
+                scanningAnimationIndex = 1;
+                scanningTimer.start();
+            }
+
+            ui->lStatusDesc->setText(tr("Waiting")+QString::fromUtf8("..."));
+            break;
+        }
+        case STATE_INDEXING:
+        {
+            if (!scanningTimer.isActive())
+            {
+                scanningAnimationIndex = 1;
+                scanningTimer.start();
+            }
+
+            ui->lStatusDesc->setText(tr("Scanning")+QString::fromUtf8("..."));
             break;
         }
         default:
@@ -112,11 +119,8 @@ void StatusInfo::scanningAnimationStep()
 {
     scanningAnimationIndex = scanningAnimationIndex%12;
     scanningAnimationIndex++;
-    QIcon icon;
-    icon.addFile(QString::fromUtf8(":/images/ico_menu_scanning_")+
-                 QString::number(scanningAnimationIndex) + QString::fromUtf8(".png") , QSize(), QIcon::Normal, QIcon::Off);
-
-    ui->bIconState->setIcon(icon);
+    ui->bIconState->setIcon(Utilities::getCachedPixmap(
+                                QString::fromUtf8(":/images/ico_menu_scanning_%1.png").arg(scanningAnimationIndex)));
     ui->bIconState->setIconSize(QSize(24, 24));
 }
 
