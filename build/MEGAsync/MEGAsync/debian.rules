@@ -8,14 +8,14 @@ QMAKESPEC := $(shell cat /etc/issue | grep "Ubuntu 16.04" >/dev/null && echo "QM
 QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 16.04" >/dev/null && echo "installqt" || echo "")
 export $(QMAKESPEC) := /opt/mega/mkspecs/linux-g++
 
-MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "")
+MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
 
 build: build-stamp
 build-stamp:
 	dh_testdir
-	if [ -f "MEGA_BUILD_ID" ]; then sed -i -E "s/USER_AGENT([^\/]*)\/(([0-9][0-9]*\.){3})(.*)\";/USER_AGENT\1\/\2$(MEGA_BUILD_ID)\";/g" MEGASync/control/Preferences.cpp; fi
-	if [ -f "MEGA_BUILD_ID" ]; then sed -i -E "s/BUILD_ID = ([0-9]*)/BUILD_ID = $(MEGA_BUILD_ID)/g" MEGASync/control/Preferences.cpp; fi
-	if [ -f "MEGA_BUILD_ID" ]; then sed -i -E "0,/megasync \(([0-9.]*)\)/s//megasync \(\1-$(MEGA_BUILD_ID).1)/" debian.changelog; fi
+	sed -i -E "s/USER_AGENT([^\/]*)\/(([0-9][0-9]*\.){3})(.*)\";/USER_AGENT\1\/\2$(MEGA_BUILD_ID)\";/g" MEGASync/control/Preferences.cpp
+	sed -i -E "s/BUILD_ID = ([0-9]*)/BUILD_ID = $(MEGA_BUILD_ID)/g" MEGASync/control/Preferences.cpp
+	sed -i -E "0,/megasync \(([0-9.]*)\)/s//megasync \(\1-$(MEGA_BUILD_ID).1)/" debian.changelog
 	./configure -g $(FCRYPTOPP) $(FMEDIAINFO)
 	qmake-qt5 $(FULLREQS) $(EXTRAQMAKE) || qmake $(FULLREQS) $(EXTRAQMAKE) || /usr/lib/*/qt5/bin/qmake $(FULLREQS) $(EXTRAQMAKE)
 	lrelease-qt5 MEGASync/MEGASync.pro || lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt5/bin/lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt4/bin/lrelease MEGASync/MEGASync.pro
