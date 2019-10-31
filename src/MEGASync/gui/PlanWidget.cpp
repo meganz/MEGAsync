@@ -58,7 +58,7 @@ void PlanWidget::onOverlayClicked()
             url = QString::fromUtf8("mega://#propay_3/uao=%1").arg(escapedUserAgent);
             break;
         case BUSINESS:
-            url = QString::fromUtf8("mega://#registerb/").arg(escapedUserAgent);
+            url = QString::fromUtf8("mega://#registerb/uao=%1").arg(escapedUserAgent);
             break;
         default:
             url = QString::fromUtf8("mega://#pro/uao=%1").arg(escapedUserAgent);
