@@ -1732,18 +1732,12 @@ void InfoDialog::highLightMenuEntry(QAction *action)
     }
 
     MenuItemAction* pAction = (MenuItemAction*)action;
-    if (lastHovered && lastHovered != pAction)
+    if (lastHovered)
     {
         lastHovered->setHighlight(false);
-        pAction->setHighlight(true);
-
-        lastHovered = pAction;
     }
-    else
-    {
-        lastHovered = pAction;
-        lastHovered->setHighlight(true);
-    }
+    pAction->setHighlight(true);
+    lastHovered = pAction;
 }
 
 void InfoDialog::setBlockedStateLabel(QString state)
