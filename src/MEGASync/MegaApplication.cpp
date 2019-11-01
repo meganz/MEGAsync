@@ -43,6 +43,8 @@
 #include <QScreen>
 #endif
 
+std::unique_ptr<MegaSyncLogger> gLogger;
+
 using namespace mega;
 using namespace std;
 
@@ -501,7 +503,7 @@ int main(int argc, char *argv[])
     for (const auto& screen : app.screens())
     {
         MegaApi::log(MegaApi::LOG_LEVEL_INFO, ("Device pixel ratio on '" +
-                                               screen->name().constData() + "': " +
+                                               screen->name().toStdString() + "': " +
                                                std::to_string(screen->devicePixelRatio())).c_str());
     }
 #endif
@@ -792,24 +794,11 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     }
 #endif
     appfinished = false;
-    logger = new MegaSyncLogger(this);
 
-    #if defined(LOG_TO_STDOUT) || defined(LOG_TO_FILE) || defined(LOG_TO_LOGGER)
-    #if defined(LOG_TO_STDOUT)
-        logger->sendLogsToStdout(true);
-    #endif
+    bool logToStdout = false;
 
-    #if defined(LOG_TO_FILE)
-        logger->sendLogsToFile(true);
-    #endif
-
-    #ifdef DEBUG
-        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
-    #else
-        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_DEBUG);
-    #endif
-#else
-    MegaApi::setLogLevel(MegaApi::LOG_LEVEL_WARNING);
+#if defined(LOG_TO_STDOUT)
+    logToStdout = true;
 #endif
 
 #ifdef Q_OS_LINUX
@@ -817,8 +806,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     {
          if (!strcmp("--debug", argv[1]))
          {
-             logger->sendLogsToStdout(true);
-             MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
+             logToStdout = true;
          }
          else if (!strcmp("--version", argv[1]))
          {
@@ -827,8 +815,6 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
          }
     }
 #endif
-
-    MegaApi::addLoggerObject(logger);
 
 #ifdef _WIN32
     connect(this, SIGNAL(screenAdded(QScreen *)), this, SLOT(changeDisplay(QScreen *)));
@@ -885,6 +871,26 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
         currentDir.mkpath(QString::fromAscii("."));
     }
     QDir::setCurrent(dataPath);
+
+    QString desktopPath;
+#if QT_VERSION < 0x050000
+    desktopPath = QDesktopServices::storageLocation(QDesktopServices::DesktopLocation);
+#else
+    QStringList desktopPaths = QStandardPaths::standardLocations(QStandardPaths::DesktopLocation);
+    if (desktopPaths.size())
+    {
+        desktopPath = desktopPaths.at(0);
+    }
+    else
+    {
+        desktopPath = Utilities::getDefaultBasePath();
+    }
+#endif
+
+    gLogger.reset(new MegaSyncLogger(this, dataPath, desktopPath, logToStdout));
+#if defined(LOG_TO_FILE)
+    gLogger->setDebug(true);
+#endif
 
     updateAvailable = false;
     networkConnectivity = true;
@@ -1024,11 +1030,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 MegaApplication::~MegaApplication()
 {
-    if (logger)
-    {
-        MegaApi::removeLoggerObject(logger);
-        delete logger;
-    }
+    gLogger.reset();
 
     if (!translator.isEmpty())
     {
@@ -2910,9 +2912,7 @@ void MegaApplication::cleanAll()
     trayIcon->deleteLater();
     trayIcon = NULL;
 
-    MegaApi::removeLoggerObject(logger);
-    delete logger;
-    logger = NULL;
+    gLogger.reset();
 
     if (reboot)
     {
@@ -4492,19 +4492,16 @@ void MegaApplication::toggleLogging()
         return;
     }
 
-    if (logger->isLogToFileEnabled() || logger->isLogToStdoutEnabled())
+    if (gLogger->isDebug())
     {
         Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
-        logger->sendLogsToFile(false);
-        logger->sendLogsToStdout(false);
-        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_WARNING);
+        gLogger->setDebug(false);
         showInfoMessage(tr("DEBUG mode disabled"));
     }
     else
     {
         Preferences::HTTPS_ORIGIN_CHECK_ENABLED = false;
-        logger->sendLogsToFile(true);
-        MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
+        gLogger->setDebug(true);
         showInfoMessage(tr("DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)"));
         if (megaApi)
         {

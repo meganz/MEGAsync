@@ -48,6 +48,7 @@ TEMPLATE = app
 #DEFINES += LOG_TO_LOGGER
 #DEFINES += LOG_TO_FILE
 #DEFINES += LOG_TO_STDOUT
+DEFINES += ENABLE_LOG_PERFORMANCE
 
 debug {
     CONFIG += console
@@ -68,6 +69,7 @@ CONFIG += USE_PDFIUM
 }
 else:win32 {
 CONFIG += USE_PDFIUM
+DEFINES += NOMINMAX
 }
 else:contains(BUILD_ARCH, x86_64) { #Notice this might not work for clang!
 CONFIG += USE_PDFIUM

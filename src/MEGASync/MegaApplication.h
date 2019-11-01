@@ -47,6 +47,8 @@
 
 Q_DECLARE_METATYPE(QQueue<QString>)
 
+extern std::unique_ptr<MegaSyncLogger> gLogger;
+
 class TransferMetaData
 {
 public:
@@ -400,7 +402,6 @@ protected:
     QNetworkConfigurationManager networkConfigurationManager;
     QList<QNetworkInterface> activeNetworkInterfaces;
     QMap<QString, QString> pendingLinks;
-    MegaSyncLogger *logger;
     QPointer<TransferManager> transferManager;
     QMap<int, mega::MegaTransfer*> finishedTransfers;
     QList<mega::MegaTransfer*> finishedTransferOrder;
