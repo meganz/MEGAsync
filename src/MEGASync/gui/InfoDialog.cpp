@@ -269,6 +269,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
         delete psaData;
     }
 #endif
+    adjustSize();
 }
 
 InfoDialog::~InfoDialog()
