@@ -1,6 +1,7 @@
 #include "MegaSyncLogger.h"
 #include "Utilities.h"
 
+#include <fstream>
 #include <iostream>
 #include <sstream>
 
@@ -15,6 +16,8 @@
 #include <spdlog/sinks/stdout_sinks.h>
 #include <spdlog/async.h>
 
+#include <zlib.h>
+
 #define MEGA_LOGGER QString::fromUtf8("MEGA_LOGGER")
 #define ENABLE_MEGASYNC_LOGS QString::fromUtf8("MEGA_ENABLE_LOGS")
 #define MAX_MESSAGE_SIZE 4096
@@ -22,6 +25,94 @@
 namespace {
 
 const char* MEGA_LOG_PATTERN = "%m-%dT%H:%M:%S.%f %t %l %v";
+
+bool isGzipCompressed(const spdlog::filename_t& filename)
+{
+#ifdef _WIN32
+    using StreamType = std::wifstream;
+    constexpr size_t size = 1;
+#else
+    using StreamType = std::ifstream;
+    constexpr size_t size = 2;
+#endif
+    StreamType file{filename, std::ios::binary};
+    if (!file.is_open())
+    {
+        return false;
+    }
+    std::array<unsigned char, 2> buf{};
+    file.read(reinterpret_cast<StreamType::char_type*>(buf.data()), size);
+    if (!file.good())
+    {
+        return false;
+    }
+    return buf[0] == 0x1f && buf[1] == 0x8b; // checks for gzip bytes
+}
+
+void gzipCompressOnRotate(const spdlog::filename_t& filename)
+{
+    if (isGzipCompressed(filename))
+    {
+        // ignore file if it's already compressed
+        return;
+    }
+
+#ifdef _WIN32
+    std::wifstream file{filename};
+#else
+    std::ifstream file{filename};
+#endif
+    if (!file.is_open())
+    {
+        std::cerr << "Unable to open log file for reading: " << filename << std::endl;
+        return;
+    }
+
+#ifdef _WIN32
+    const auto gzfilename = filename + L".gz";
+#else
+    const auto gzfilename = filename + ".gz";
+#endif
+
+    auto gzdeleter = [](gzFile_s* f) { if (f) gzclose(f); };
+
+    std::unique_ptr<gzFile_s, decltype(gzdeleter)> gzfile{gzopen(gzfilename.c_str(), "wb"), gzdeleter};
+    if (!gzfile)
+    {
+        std::cerr << "Unable to open gzfile for writing: " << gzfilename << std::endl;
+        return;
+    }
+
+#ifdef _WIN32
+    std::wstring data;
+#else
+    std::string data;
+#endif
+    while (std::getline(file, data))
+    {
+#ifdef _WIN32
+        data += L"\n";
+#else
+        data += "\n";
+#endif
+        if (gzputs(gzfile.get(), reinterpret_cast<const char*>(data.c_str())) == -1)
+        {
+            std::cerr << "Unable to compress log file: " << filename << std::endl;
+            return;
+        }
+    }
+
+    if (spdlog::details::os::remove(filename))
+    {
+        std::cerr << "Unable to remove log file: " << filename << std::endl;
+        return;
+    }
+
+    if (spdlog::details::os::rename(gzfilename, filename))
+    {
+        std::cerr << "Unable to rename from: " << gzfilename << " to: " << filename << std::endl;
+    }
+}
 
 }
 
@@ -55,17 +146,16 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
     std::vector<spdlog::sink_ptr> sinks;
 
     constexpr auto maxFileSizeMB = 10;
-    constexpr auto maxFileCount = 10;
+    constexpr auto maxFileCount = 100;
     spdlog::sink_ptr rotatingFileSink;
     try
     {
-
 #ifdef _WIN32
         rotatingFileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-                    logPath.toStdWString(), 1024 * 1024 * maxFileSizeMB, maxFileCount);
+                    logPath.toStdWString(), 1024 * 1024 * maxFileSizeMB, maxFileCount, false, gzipCompressOnRotate);
 #else
         rotatingFileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-                    logPath.toStdString(), 1024 * 1024 * maxFileSizeMB, maxFileCount);
+                    logPath.toStdString(), 1024 * 1024 * maxFileSizeMB, maxFileCount, false, gzipCompressOnRotate);
 #endif
     }
     catch (const std::exception& e)
