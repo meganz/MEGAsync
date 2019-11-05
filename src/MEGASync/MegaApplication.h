@@ -431,6 +431,7 @@ protected:
     bool paused;
     bool indexing;
     bool waiting;
+    bool syncing; //if any sync is in syncing state
     bool updated;
     bool checkupdate;
     bool updateBlocked;

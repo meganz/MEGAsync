@@ -17,7 +17,8 @@ class StatusInfo : public QWidget
         STATE_PAUSED,
         STATE_WAITING,
         STATE_INDEXING,
-        STATE_UPDATED
+        STATE_UPDATED,
+        STATE_SYNCING,
     };
 
 public:

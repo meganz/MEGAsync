@@ -141,6 +141,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     indexing = false;
     waiting = false;
+    syncing = false;
     activeDownload = NULL;
     activeUpload = NULL;
     transferMenu = NULL;
@@ -268,6 +269,7 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
         delete psaData;
     }
 #endif
+    adjustSize();
 }
 
 InfoDialog::~InfoDialog()
@@ -557,6 +559,11 @@ void InfoDialog::setWaiting(bool waiting)
     this->waiting = waiting;
 }
 
+void InfoDialog::setSyncing(bool value)
+{
+    this->syncing = value;
+}
+
 void InfoDialog::setOverQuotaMode(bool state)
 {
     if (overQuotaState == state)
@@ -670,23 +677,31 @@ void InfoDialog::updateState()
     if (preferences->getGlobalPaused())
     {
         state = STATE_PAUSED;
-        animateStates(waiting || indexing);
+        animateStates(waiting || indexing || syncing);
     }
     else
     {
-        if (waiting)
-        {
-            if (state != STATE_WAITING)
-            {
-                state = STATE_WAITING;
-                animateStates(true);
-            }
-        }
-        else if (indexing)
+        if (indexing)
         {
             if (state != STATE_INDEXING)
             {
                 state = STATE_INDEXING;
+                animateStates(true);
+            }
+        }
+        else if (syncing)
+        {
+            if (state != STATE_SYNCING)
+            {
+                state = STATE_SYNCING;
+                animateStates(true);
+            }
+        }
+        else if (waiting)
+        {
+            if (state != STATE_WAITING)
+            {
+                state = STATE_WAITING;
                 animateStates(true);
             }
         }
@@ -1364,7 +1379,7 @@ void InfoDialog::animateStates(bool opt)
 {
     if (opt) //Enable animation for scanning/waiting states
     {        
-        ui->lUploadToMega->setIcon(QIcon(QString::fromAscii("://images/init_scanning.png")));
+        ui->lUploadToMega->setIcon(Utilities::getCachedPixmap(QString::fromUtf8("://images/init_scanning.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
         ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 14px;"));
 
@@ -1391,7 +1406,7 @@ void InfoDialog::animateStates(bool opt)
     }
     else //Disable animation
     {   
-        ui->lUploadToMega->setIcon(QIcon(QString::fromAscii("://images/upload_to_mega.png")));
+        ui->lUploadToMega->setIcon(Utilities::getCachedPixmap(QString::fromUtf8("://images/upload_to_mega.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
         ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 18px;"));
         ui->lUploadToMegaDesc->setText(tr("Upload to MEGA now"));
