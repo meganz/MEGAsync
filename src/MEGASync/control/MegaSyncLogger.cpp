@@ -57,6 +57,8 @@ void gzipCompressOnRotate(const spdlog::filename_t& filename)
         return;
     }
 
+    using spdlog::details::os::filename_to_str;
+
 #ifdef _WIN32
     std::wifstream file{filename};
 #else
@@ -64,7 +66,7 @@ void gzipCompressOnRotate(const spdlog::filename_t& filename)
 #endif
     if (!file.is_open())
     {
-        std::cerr << "Unable to open log file for reading: " << filename << std::endl;
+        std::cerr << "Unable to open log file for reading: " << filename_to_str(filename) << std::endl;
         return;
     }
 
@@ -76,10 +78,10 @@ void gzipCompressOnRotate(const spdlog::filename_t& filename)
 
     auto gzdeleter = [](gzFile_s* f) { if (f) gzclose(f); };
 
-    std::unique_ptr<gzFile_s, decltype(gzdeleter)> gzfile{gzopen(gzfilename.c_str(), "wb"), gzdeleter};
+    std::unique_ptr<gzFile_s, decltype(gzdeleter)> gzfile{gzopen(filename_to_str(gzfilename).c_str(), "wb"), gzdeleter};
     if (!gzfile)
     {
-        std::cerr << "Unable to open gzfile for writing: " << gzfilename << std::endl;
+        std::cerr << "Unable to open gzfile for writing: " << filename_to_str(gzfilename) << std::endl;
         return;
     }
 
@@ -97,20 +99,20 @@ void gzipCompressOnRotate(const spdlog::filename_t& filename)
 #endif
         if (gzputs(gzfile.get(), reinterpret_cast<const char*>(data.c_str())) == -1)
         {
-            std::cerr << "Unable to compress log file: " << filename << std::endl;
+            std::cerr << "Unable to compress log file: " << filename_to_str(filename) << std::endl;
             return;
         }
     }
 
     if (spdlog::details::os::remove(filename))
     {
-        std::cerr << "Unable to remove log file: " << filename << std::endl;
+        std::cerr << "Unable to remove log file: " << filename_to_str(filename) << std::endl;
         return;
     }
 
     if (spdlog::details::os::rename(gzfilename, filename))
     {
-        std::cerr << "Unable to rename from: " << gzfilename << " to: " << filename << std::endl;
+        std::cerr << "Unable to rename from: " << filename_to_str(gzfilename) << " to: " << filename_to_str(filename) << std::endl;
     }
 }
 
