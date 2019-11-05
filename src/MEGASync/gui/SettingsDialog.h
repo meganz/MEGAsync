@@ -116,6 +116,7 @@ private slots:
     void on_bStorageDetails_clicked();
     void on_lAccountImage_clicked();
     void on_bChangePassword_clicked();
+    void on_bSendBug_clicked();
 
     void onAnimationFinished();
 
