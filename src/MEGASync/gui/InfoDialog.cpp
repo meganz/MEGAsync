@@ -167,7 +167,6 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
 
     ui->lSDKblock->setText(QString::fromUtf8(""));
     ui->wBlocked->setVisible(false);
-    ui->wContainerBottom->setFixedHeight(ui->wContainerBottom->minimumHeight());
 
     //Initialize header dialog and disable chat features
     ui->wHeader->setStyleSheet(QString::fromUtf8("#wHeader {border: none;}"));
@@ -1591,12 +1590,10 @@ void InfoDialog::setBlockedStateLabel(QString state)
 {
     if (state.isEmpty())
     {
-        ui->wContainerBottom->setFixedHeight(ui->wContainerBottom->minimumHeight());
         ui->wBlocked->setVisible(false);
     }
     else
     {
-        ui->wContainerBottom->setFixedHeight(ui->wContainerBottom->maximumHeight());
         ui->wBlocked->setVisible(true);
     }
 
