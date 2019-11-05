@@ -268,6 +268,11 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
         delete psaData;
     }
 #endif
+
+    animationGroupBlockedError.addAnimation(&minHeightAnimationBlockedError);
+    animationGroupBlockedError.addAnimation(&maxHeightAnimationBlockedError);
+    connect(&animationGroupBlockedError, SIGNAL(finished()), this, SLOT(onAnimationFinishedBlockedError()));
+
     adjustSize();
 }
 
@@ -1001,6 +1006,9 @@ void InfoDialog::reset()
     ui->sNotifications->setCurrentWidget(ui->pNoNotifications);
     ui->wSortNotifications->setActualFilter(AlertFilterType::ALL_TYPES);
 
+    ui->wBlocked->hide();
+    shownBlockedError = false;
+
     setUnseenNotifications(0);
     if (filterMenu)
     {
@@ -1586,15 +1594,64 @@ void InfoDialog::sTabsChanged(int tab)
     lasttab = tab;
 }
 
+void InfoDialog::hideBlockedError(bool animated)
+{
+    if (!shownBlockedError)
+    {
+        return;
+    }
+
+    shownBlockedError = false;
+    minHeightAnimationBlockedError.setTargetObject(ui->wBlocked);
+    maxHeightAnimationBlockedError.setTargetObject(ui->wBlocked);
+    minHeightAnimationBlockedError.setPropertyName("minimumHeight");
+    maxHeightAnimationBlockedError.setPropertyName("maximumHeight");
+    minHeightAnimationBlockedError.setStartValue(30);
+    maxHeightAnimationBlockedError.setStartValue(30);
+    minHeightAnimationBlockedError.setEndValue(0);
+    maxHeightAnimationBlockedError.setEndValue(0);
+    minHeightAnimationBlockedError.setDuration(animated ? 250 : 1);
+    maxHeightAnimationBlockedError.setDuration(animated ? 250 : 1);
+    animationGroupBlockedError.start();
+    ui->wBlocked->show();
+}
+
+void InfoDialog::showBlockedError()
+{
+    if (shownBlockedError)
+    {
+        return;
+    }
+
+    ui->wBlocked->show();
+    minHeightAnimationBlockedError.setTargetObject(ui->wBlocked);
+    maxHeightAnimationBlockedError.setTargetObject(ui->wBlocked);
+    minHeightAnimationBlockedError.setPropertyName("minimumHeight");
+    maxHeightAnimationBlockedError.setPropertyName("maximumHeight");
+    minHeightAnimationBlockedError.setStartValue(0);
+    maxHeightAnimationBlockedError.setStartValue(0);
+    minHeightAnimationBlockedError.setEndValue(30);
+    maxHeightAnimationBlockedError.setEndValue(30);
+    minHeightAnimationBlockedError.setDuration(250);
+    maxHeightAnimationBlockedError.setDuration(250);
+    animationGroupBlockedError.start();
+    shownBlockedError = true;
+}
+
+void InfoDialog::onAnimationFinishedBlockedError()
+{
+    ui->wBlocked->setVisible(shownBlockedError);
+}
+
 void InfoDialog::setBlockedStateLabel(QString state)
 {
     if (state.isEmpty())
     {
-        ui->wBlocked->setVisible(false);
+        hideBlockedError(true);
     }
     else
     {
-        ui->wBlocked->setVisible(true);
+        showBlockedError();
     }
 
     ui->lSDKblock->setText(state);
