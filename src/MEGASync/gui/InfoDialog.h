@@ -136,6 +136,8 @@ private slots:
     void onAnimationFinished();
     void sTabsChanged(int tab);
 
+    void highLightMenuEntry(QAction* action);
+
 signals:
     void openTransferManager(int tab);
     void dismissOQ(bool oq);
@@ -148,8 +150,6 @@ private:
     QPushButton *arrow;
     QWidget *dummy; // Patch to let text input on line edits of GuestWidget
 #endif
-
-    QMenu *transferMenu;
 
     FilterAlertWidget *filterMenu;
 
@@ -191,6 +191,10 @@ private:
 
     QPropertyAnimation *animation;
     QGraphicsOpacityEffect *opacityEffect;
+
+    std::unique_ptr<QMenu> syncsMenu;
+    MenuItemAction *addSyncAction;
+    MenuItemAction *lastHovered;
 
 protected:
     void setBlockedStateLabel(QString state);
