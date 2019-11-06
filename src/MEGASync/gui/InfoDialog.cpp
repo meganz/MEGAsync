@@ -1286,7 +1286,7 @@ void InfoDialog::animateStates(bool opt)
     }
     else //Disable animation
     {   
-        ui->lUploadToMega->setIcon(QIcon(QString::fromAscii("://images/upload_to_mega.png")));
+        ui->lUploadToMega->setIcon(Utilities::getCachedPixmap(QString::fromAscii("://images/upload_to_mega.png")));
         ui->lUploadToMega->setIconSize(QSize(352,234));
         ui->lUploadToMegaDesc->setStyleSheet(QString::fromUtf8("font-size: 18px;"));
         ui->lUploadToMegaDesc->setText(tr("Upload to MEGA now"));

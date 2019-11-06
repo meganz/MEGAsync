@@ -256,6 +256,11 @@ void ActiveTransfersWidget::updateDownSpeed(long long speed)
                                            .arg(QString::fromUtf8("<span style=\"color:#666666; font-size: 28px; text-decoration:none;\">%1</span>")
                                            .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(0)))
                                            .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(1) + QString::fromUtf8("/s")));
+
+            megaApi->log(MegaApi::LOG_LEVEL_INFO, (QString::fromUtf8("DOWNLOAD SPEED %1 %2")
+                .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(0))
+                .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(1) + QString::fromUtf8("/s"))).toUtf8().constData());
+
         }
     }
 }
@@ -295,6 +300,10 @@ void ActiveTransfersWidget::updateUpSpeed(long long speed)
                                          .arg(QString::fromUtf8("<span style=\"color:#666666; font-size: 28px; text-decoration:none;\">%1</span>")
                                          .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(0)))
                                          .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(1) + QString::fromUtf8("/s")));
+
+            megaApi->log(MegaApi::LOG_LEVEL_INFO, (QString::fromUtf8("UPLOAD SPEED %1 %2")
+                .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(0))
+                .arg(Utilities::getSizeString(speed).split(QString::fromUtf8(" ")).at(1) + QString::fromUtf8("/s"))).toUtf8().constData());
         }
     }
 }
