@@ -45,7 +45,7 @@ bool isGzipCompressed(const spdlog::filename_t& filename)
     {
         return false;
     }
-    return buf[0] == 0x1f && buf[1] == 0x8b; // checks for gzip bytes
+    return buf[0] == static_cast<StreamType::char_type>(0x1f) && buf[1] == static_cast<StreamType::char_type>(0x8b); // checks for gzip bytes
 }
 
 void gzipCompressOnRotate(const spdlog::filename_t& filename)
@@ -58,7 +58,7 @@ void gzipCompressOnRotate(const spdlog::filename_t& filename)
         return;
     }
 
-    StreamType file{filename.c_str()};
+    StreamType file{filename};
     if (!file.is_open())
     {
         std::cerr << "Unable to open log file for reading: " << filename_to_str(filename) << std::endl;
@@ -109,6 +109,7 @@ void gzipCompressOnRotate(const spdlog::filename_t& filename)
     gzfile.reset();
     file.close();
 
+    // rename e.g. MEGAsync.1.log.gz to MEGAsync.1.log (necessary for the rotation logic to work)
     spdlog::details::os::remove(filename);
     if (spdlog::details::os::rename(gzfilename, filename))
     {
