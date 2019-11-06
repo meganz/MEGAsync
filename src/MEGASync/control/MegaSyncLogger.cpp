@@ -26,15 +26,21 @@ namespace {
 
 const char* MEGA_LOG_PATTERN = "%m-%dT%H:%M:%S.%f %t %l %v";
 
-bool isGzipCompressed(const std::string& filename)
+#ifdef _WIN32
+using StreamType = std::wifstream;
+#else
+using StreamType = std::ifstream;
+#endif
+
+bool isGzipCompressed(const spdlog::filename_t& filename)
 {
-    std::ifstream file{filename, std::ios::binary};
+    StreamType file{filename, std::ios::binary};
     if (!file.is_open())
     {
         return false;
     }
-    std::array<unsigned char, 2> buf{};
-    file.read(reinterpret_cast<char*>(buf.data()), buf.size());
+    std::array<StreamType::char_type, 2> buf{};
+    file.read(buf.data(), buf.size());
     if (!file.good())
     {
         return false;
@@ -42,39 +48,60 @@ bool isGzipCompressed(const std::string& filename)
     return buf[0] == 0x1f && buf[1] == 0x8b; // checks for gzip bytes
 }
 
-void gzipCompressOnRotate(const std::string& filename)
+void gzipCompressOnRotate(const spdlog::filename_t& filename)
 {
+    using spdlog::details::os::filename_to_str;
+
     if (isGzipCompressed(filename))
     {
         // ignore file if it's already compressed
         return;
     }
 
-    std::ifstream file{filename};
+    StreamType file{filename.c_str()};
     if (!file.is_open())
     {
-        std::cerr << "Unable to open log file for reading: " << filename << std::endl;
+        std::cerr << "Unable to open log file for reading: " << filename_to_str(filename) << std::endl;
         return;
     }
 
+#ifdef _WIN32
+    const auto gzfilename = filename + L".gz";
+    const auto gzopenFunc = gzopen_w;
+    std::wstring line;
+    spdlog::memory_buf_t buffer;
+    auto makeData = [&buffer](const std::wstring& line)
+    {
+        spdlog::details::os::wstr_to_utf8buf(line, buffer);
+        buffer.push_back('\n');
+        buffer.push_back('\0');
+        return buffer.data();
+    };
+#else
     const auto gzfilename = filename + ".gz";
+    const auto gzopenFunc = gzopen;
+    std::string line;
+    auto makeData = [](std::string& line)
+    {
+        line.push_back('\n');
+        return line.c_str();
+    };
+#endif
 
     auto gzdeleter = [](gzFile_s* f) { if (f) gzclose(f); };
 
-    std::unique_ptr<gzFile_s, decltype(gzdeleter)> gzfile{gzopen(gzfilename.c_str(), "wb"), gzdeleter};
+    std::unique_ptr<gzFile_s, decltype(gzdeleter)> gzfile{gzopenFunc(gzfilename.c_str(), "wb"), gzdeleter};
     if (!gzfile)
     {
-        std::cerr << "Unable to open gzfile for writing: " << gzfilename << std::endl;
+        std::cerr << "Unable to open gzfile for writing: " << filename_to_str(gzfilename) << std::endl;
         return;
     }
 
-    std::string data;
-    while (std::getline(file, data))
+    while (std::getline(file, line))
     {
-        data += "\n";
-        if (gzputs(gzfile.get(), data.c_str()) == -1)
+        if (gzputs(gzfile.get(), makeData(line)) == -1)
         {
-            std::cerr << "Unable to compress log file: " << filename << std::endl;
+            std::cerr << "Unable to compress log file: " << filename_to_str(filename) << std::endl;
             return;
         }
     }
@@ -82,21 +109,17 @@ void gzipCompressOnRotate(const std::string& filename)
     gzfile.reset();
     file.close();
 
-    // rename e.g. MEGAsync.1.log.gz to MEGAsync.1.log (necessary for the rotation logic to work)
-    const auto source = QString::fromUtf8(gzfilename.c_str());
-    const auto target = QString::fromUtf8(filename.c_str());
-
-    QFile::remove(target);
-    if (!QFile{source}.rename(target))
+    spdlog::details::os::remove(filename);
+    if (spdlog::details::os::rename(gzfilename, filename))
     {
         // if failed try again after a small delay.
         // this is a workaround to a windows issue, where very high rotation
         // rates can cause the rename to fail with permission denied (because of antivirus?).
         std::this_thread::sleep_for(std::chrono::milliseconds(100));
-        QFile::remove(target);
-        if (!QFile{source}.rename(target))
+        spdlog::details::os::remove(filename);
+        if (spdlog::details::os::rename(gzfilename, filename))
         {
-            std::cerr << "Unable to rename from: " << gzfilename << " to: " << filename << std::endl;
+            std::cerr << "Unable to rename from: " << filename_to_str(gzfilename) << " to: " << filename_to_str(filename) << std::endl;
             return;
         }
     }
