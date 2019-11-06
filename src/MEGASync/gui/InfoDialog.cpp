@@ -271,8 +271,11 @@ InfoDialog::InfoDialog(MegaApplication *app, QWidget *parent, InfoDialog* olddia
     }
 #endif
 
-    animationGroupBlockedError.addAnimation(&minHeightAnimationBlockedError);
-    animationGroupBlockedError.addAnimation(&maxHeightAnimationBlockedError);
+    minHeightAnimationBlockedError = new QPropertyAnimation();
+    maxHeightAnimationBlockedError = new QPropertyAnimation();
+
+    animationGroupBlockedError.addAnimation(minHeightAnimationBlockedError);
+    animationGroupBlockedError.addAnimation(maxHeightAnimationBlockedError);
     connect(&animationGroupBlockedError, SIGNAL(finished()), this, SLOT(onAnimationFinishedBlockedError()));
 
     adjustSize();
@@ -1749,16 +1752,16 @@ void InfoDialog::hideBlockedError(bool animated)
         return;
     }
     shownBlockedError = false;
-    minHeightAnimationBlockedError.setTargetObject(ui->wBlocked);
-    maxHeightAnimationBlockedError.setTargetObject(ui->wBlocked);
-    minHeightAnimationBlockedError.setPropertyName("minimumHeight");
-    maxHeightAnimationBlockedError.setPropertyName("maximumHeight");
-    minHeightAnimationBlockedError.setStartValue(30);
-    maxHeightAnimationBlockedError.setStartValue(30);
-    minHeightAnimationBlockedError.setEndValue(0);
-    maxHeightAnimationBlockedError.setEndValue(0);
-    minHeightAnimationBlockedError.setDuration(animated ? 250 : 1);
-    maxHeightAnimationBlockedError.setDuration(animated ? 250 : 1);
+    minHeightAnimationBlockedError->setTargetObject(ui->wBlocked);
+    maxHeightAnimationBlockedError->setTargetObject(ui->wBlocked);
+    minHeightAnimationBlockedError->setPropertyName("minimumHeight");
+    maxHeightAnimationBlockedError->setPropertyName("maximumHeight");
+    minHeightAnimationBlockedError->setStartValue(30);
+    maxHeightAnimationBlockedError->setStartValue(30);
+    minHeightAnimationBlockedError->setEndValue(0);
+    maxHeightAnimationBlockedError->setEndValue(0);
+    minHeightAnimationBlockedError->setDuration(animated ? 250 : 1);
+    maxHeightAnimationBlockedError->setDuration(animated ? 250 : 1);
     animationGroupBlockedError.start();
     ui->wBlocked->show();
 }
@@ -1771,16 +1774,16 @@ void InfoDialog::showBlockedError()
     }
 
     ui->wBlocked->show();
-    minHeightAnimationBlockedError.setTargetObject(ui->wBlocked);
-    maxHeightAnimationBlockedError.setTargetObject(ui->wBlocked);
-    minHeightAnimationBlockedError.setPropertyName("minimumHeight");
-    maxHeightAnimationBlockedError.setPropertyName("maximumHeight");
-    minHeightAnimationBlockedError.setStartValue(0);
-    maxHeightAnimationBlockedError.setStartValue(0);
-    minHeightAnimationBlockedError.setEndValue(30);
-    maxHeightAnimationBlockedError.setEndValue(30);
-    minHeightAnimationBlockedError.setDuration(250);
-    maxHeightAnimationBlockedError.setDuration(250);
+    minHeightAnimationBlockedError->setTargetObject(ui->wBlocked);
+    maxHeightAnimationBlockedError->setTargetObject(ui->wBlocked);
+    minHeightAnimationBlockedError->setPropertyName("minimumHeight");
+    maxHeightAnimationBlockedError->setPropertyName("maximumHeight");
+    minHeightAnimationBlockedError->setStartValue(0);
+    maxHeightAnimationBlockedError->setStartValue(0);
+    minHeightAnimationBlockedError->setEndValue(30);
+    maxHeightAnimationBlockedError->setEndValue(30);
+    minHeightAnimationBlockedError->setDuration(250);
+    maxHeightAnimationBlockedError->setDuration(250);
     animationGroupBlockedError.start();
     shownBlockedError = true;
 }

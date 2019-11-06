@@ -195,8 +195,8 @@ private:
     QGraphicsOpacityEffect *opacityEffect;
 
     bool shownBlockedError = false;
-    QPropertyAnimation minHeightAnimationBlockedError;
-    QPropertyAnimation maxHeightAnimationBlockedError;
+    QPropertyAnimation *minHeightAnimationBlockedError;
+    QPropertyAnimation *maxHeightAnimationBlockedError;
     QParallelAnimationGroup animationGroupBlockedError;
     void hideBlockedError(bool animated = false);
     void showBlockedError();
