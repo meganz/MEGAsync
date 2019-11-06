@@ -2426,18 +2426,12 @@ void MegaApplication::highLightMenuEntry(QAction *action)
     }
 
     MenuItemAction* pAction = (MenuItemAction*)action;
-    if (lastHovered && lastHovered != pAction)
+    if (lastHovered)
     {
         lastHovered->setHighlight(false);
-        pAction->setHighlight(true);
-
-        lastHovered = pAction;
     }
-    else
-    {
-        lastHovered = pAction;
-        lastHovered->setHighlight(true);
-    }
+    pAction->setHighlight(true);
+    lastHovered = pAction;
 }
 
 void MegaApplication::pauseTransfers(bool pause)
@@ -3106,6 +3100,7 @@ void MegaApplication::showInfoDialog()
         }
         else
         {
+            infoDialog->closeSyncsMenu();
             if (trayMenu && trayMenu->isVisible())
             {
                 trayMenu->close();
