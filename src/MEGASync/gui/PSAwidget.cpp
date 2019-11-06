@@ -43,12 +43,10 @@ PSAwidget::PSAwidget(QWidget *parent) :
 
 PSAwidget::~PSAwidget()
 {
-    delete ui;
-    delete minHeightAnimation;
-    delete maxHeightAnimation;
     delete animationGroup;
     delete networkAccess;
     delete timer;
+    delete ui;
 }
 
 void PSAwidget::setAnnounce(int id, QString title, QString desc, QString urlImage, QString textButton, QString urlClick)
