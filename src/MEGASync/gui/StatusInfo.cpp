@@ -69,7 +69,7 @@ void StatusInfo::setState(int state)
                 scanningTimer.start();
             }
 
-            ui->lStatusDesc->setText(tr("Syncinc")+QString::fromUtf8("..."));
+            ui->lStatusDesc->setText(tr("Syncing")+QString::fromUtf8("..."));
             break;
         }
         case STATE_WAITING:
