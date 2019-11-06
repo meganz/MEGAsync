@@ -134,6 +134,8 @@ private slots:
     void on_bBuyQuota_clicked();
 
     void onAnimationFinished();
+    void onAnimationFinishedBlockedError();
+
     void sTabsChanged(int tab);
 
     void highLightMenuEntry(QAction* action);
@@ -191,6 +193,13 @@ private:
 
     QPropertyAnimation *animation;
     QGraphicsOpacityEffect *opacityEffect;
+
+    bool shownBlockedError = false;
+    QPropertyAnimation *minHeightAnimationBlockedError;
+    QPropertyAnimation *maxHeightAnimationBlockedError;
+    QParallelAnimationGroup animationGroupBlockedError;
+    void hideBlockedError(bool animated = false);
+    void showBlockedError();
 
     std::unique_ptr<QMenu> syncsMenu;
     MenuItemAction *addSyncAction;
