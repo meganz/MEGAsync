@@ -1,14 +1,12 @@
 #include "StatusInfo.h"
 #include "ui_StatusInfo.h"
 #include "Utilities.h"
-#include <QMouseEvent>
 
 StatusInfo::StatusInfo(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::StatusInfo)
 {
     ui->setupUi(this);
-    ui->bIconState->setAttribute(Qt::WA_TransparentForMouseEvents);
 
     isOverQuota = false;
 
