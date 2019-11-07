@@ -24,9 +24,12 @@ class rotating_file_sink final : public base_sink<Mutex>
 {
 public:
     rotating_file_sink(filename_t base_filename, std::size_t max_size, std::size_t max_files,
-                       bool rotate_on_open, std::function<void(const filename_t& filename)> on_rotated);
+                       bool rotate_on_open, std::function<void(const filename_t& filename)> on_rotated
+                       , std::function<void()> on_all_rotated);
     static filename_t calc_filename(const filename_t &filename, std::size_t index);
     const filename_t &filename() const;
+    std::atomic_bool pauseRotation{false};
+    std::atomic_bool forcerotation{false};
 
 protected:
     void sink_it_(const details::log_msg &msg) override;
@@ -50,6 +53,8 @@ private:
     std::size_t current_size_;
     details::file_helper file_helper_;
     std::function<void(const filename_t& filename)> on_rotated_;
+    std::function<void()> on_all_rotated_;
+
 };
 
 using rotating_file_sink_mt = rotating_file_sink<std::mutex>;

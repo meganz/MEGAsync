@@ -24,6 +24,9 @@
 
 namespace {
 
+static bool awaiting_rotation = false;
+MegaSyncLogger *megaSyncLogger = nullptr;
+
 const char* MEGA_LOG_PATTERN = "%m-%dT%H:%M:%S.%f %t %l %v";
 
 #ifdef _WIN32
@@ -31,6 +34,17 @@ using StreamType = std::wifstream;
 #else
 using StreamType = std::ifstream;
 #endif
+
+void onAllRotated()
+{
+    if (awaiting_rotation)
+    {
+        if (megaSyncLogger)
+        {
+            emit megaSyncLogger->logReadyForReporting();
+        }
+    }
+}
 
 bool isGzipCompressed(const spdlog::filename_t& filename)
 {
@@ -164,10 +178,10 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
     {
 #ifdef _WIN32
         rotatingFileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-                    logPath.toStdWString(), 1024 * 1024 * maxFileSizeMB, maxFileCount, false, gzipCompressOnRotate);
+                    logPath.toStdWString(), 1024 * 1024 * maxFileSizeMB, maxFileCount, false, gzipCompressOnRotate, onAllRotated);
 #else
         rotatingFileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
-                    logPath.toStdString(), 1024 * 1024 * maxFileSizeMB, maxFileCount, false, gzipCompressOnRotate);
+                    logPath.toStdString(), 1024 * 1024 * maxFileSizeMB, maxFileCount, false, gzipCompressOnRotate, onAllRotated);
 #endif
     }
     catch (const std::exception& e)
@@ -216,6 +230,7 @@ MegaSyncLogger::~MegaSyncLogger()
     {
         delete mMegaServer;
     }
+    megaSyncLogger = nullptr;
 }
 
 void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *message)
@@ -305,6 +320,23 @@ void MegaSyncLogger::setDebug(const bool enable)
 bool MegaSyncLogger::isDebug() const
 {
     return std::atomic_load(&mDebugLogger) != nullptr;
+}
+
+void MegaSyncLogger::prepareForReporting()
+{
+    mLogger->flush();
+    rotatingFileSink->pauseRotation = true;
+    megaSyncLogger = this;
+    awaiting_rotation = true;
+
+    rotatingFileSink->forcerotation = true;
+    mLogger->error("Preparing logger to send bug repport"); //To ensure rotation is performed!
+    mLogger->flush();
+}
+
+void MegaSyncLogger::resumeAfterReporting()
+{
+    rotatingFileSink->pauseRotation = false;
 }
 
 void MegaSyncLogger::onLogAvailable(QString time, int loglevel, QString message)
