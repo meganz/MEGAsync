@@ -1,5 +1,6 @@
 #!/usr/bin/make -f
 FMEDIAINFO := $(shell dpkg -l | grep mediainfo >/dev/null && echo "-i" || echo " ")
+FCRYPTOPP := $(shell cat /etc/issue | grep "Ubuntu 19.10\|Ubuntu [2-9][0-9]" >/dev/null && echo "-q" || echo " ")
 EXTRAQMAKE := $(shell cat /etc/issue | grep "Ubuntu 1[2357]\|Debian.* 7\|Ubuntu 1[46].10" >/dev/null && echo "DEFINES+=MEGASYNC_DEPRECATED_OS" || echo "")
 FULLREQS := $(shell cat /etc/issue | grep "Ubuntu 12.04" >/dev/null && echo "" || echo '"CONFIG += FULLREQUIREMENTS"')
 export PATH := /opt/mega/bin:$(PATH)
@@ -7,10 +8,15 @@ QMAKESPEC := $(shell cat /etc/issue | grep "Ubuntu 16.04" >/dev/null && echo "QM
 QTINSTALL := $(shell cat /etc/issue | grep "Ubuntu 16.04" >/dev/null && echo "installqt" || echo "")
 export $(QMAKESPEC) := /opt/mega/mkspecs/linux-g++
 
+MEGA_BUILD_ID := $(shell cat MEGA_BUILD_ID || echo "1")
+
 build: build-stamp
 build-stamp:
 	dh_testdir
-	./configure -g $(FMEDIAINFO)
+	sed -i -E "s/USER_AGENT([^\/]*)\/(([0-9][0-9]*\.){3})(.*)\";/USER_AGENT\1\/\2$(MEGA_BUILD_ID)\";/g" MEGASync/control/Preferences.cpp
+	sed -i -E "s/BUILD_ID = ([0-9]*)/BUILD_ID = $(MEGA_BUILD_ID)/g" MEGASync/control/Preferences.cpp
+	sed -i -E "0,/megasync \(([0-9.]*)[^\)]*\)/s//megasync \(\1-$(MEGA_BUILD_ID).1)/" debian.changelog || :
+	./configure -g $(FCRYPTOPP) $(FMEDIAINFO)
 	qmake-qt5 $(FULLREQS) $(EXTRAQMAKE) || qmake $(FULLREQS) $(EXTRAQMAKE) || /usr/lib/*/qt5/bin/qmake $(FULLREQS) $(EXTRAQMAKE)
 	lrelease-qt5 MEGASync/MEGASync.pro || lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt5/bin/lrelease MEGASync/MEGASync.pro || /usr/lib/*/qt4/bin/lrelease MEGASync/MEGASync.pro
 	make

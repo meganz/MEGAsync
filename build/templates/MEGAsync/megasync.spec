@@ -1,6 +1,7 @@
 Name:		megasync
 Version:	MEGASYNC_VERSION
-Release:	1%{?dist}
+#Release:	1%{?dist}
+Release:	%(cat MEGA_BUILD_ID || echo "1").1
 Summary:	Easy automated syncing between your computers and your MEGA cloud drive
 License:	Freeware
 Group:		Applications/Others
@@ -164,6 +165,10 @@ Store up to 50 GB for free!
 
 %prep
 %setup -q
+
+mega_build_id=`echo %{release} | cut -d'.' -f 1`
+sed -i -E "s/USER_AGENT([^\/]*)\/(([0-9][0-9]*\.){3})(.*)\";/USER_AGENT\1\/\2${mega_build_id}\";/g" MEGASync/control/Preferences.cpp;
+sed -i -E "s/BUILD_ID = ([0-9]*)/BUILD_ID = ${mega_build_id}/g" MEGASync/control/Preferences.cpp;
 
 %build
 
