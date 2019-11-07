@@ -26,11 +26,7 @@ namespace {
 
 const char* MEGA_LOG_PATTERN = "%m-%dT%H:%M:%S.%f %t %l %v";
 
-#ifdef _WIN32
-using StreamType = std::wifstream;
-#else
 using StreamType = std::ifstream;
-#endif
 
 bool isGzipCompressed(const spdlog::filename_t& filename)
 {
@@ -68,25 +64,17 @@ void gzipCompressOnRotate(const spdlog::filename_t& filename)
 #ifdef _WIN32
     const auto gzfilename = filename + L".gz";
     const auto gzopenFunc = gzopen_w;
-    std::wstring line;
-    spdlog::memory_buf_t buffer;
-    auto makeData = [&buffer](const std::wstring& line)
-    {
-        spdlog::details::os::wstr_to_utf8buf(line, buffer);
-        buffer.push_back('\n');
-        buffer.push_back('\0');
-        return buffer.data();
-    };
 #else
     const auto gzfilename = filename + ".gz";
     const auto gzopenFunc = gzopen;
+#endif
+
     std::string line;
     auto makeData = [](std::string& line)
     {
         line.push_back('\n');
         return line.c_str();
     };
-#endif
 
     auto gzdeleter = [](gzFile_s* f) { if (f) gzclose(f); };
 
