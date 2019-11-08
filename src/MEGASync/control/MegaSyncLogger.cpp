@@ -29,12 +29,6 @@ MegaSyncLogger *megaSyncLogger = nullptr;
 
 const char* MEGA_LOG_PATTERN = "%m-%dT%H:%M:%S.%f %t %l %v";
 
-#ifdef _WIN32
-using StreamType = std::wifstream;
-#else
-using StreamType = std::ifstream;
-#endif
-
 void onAllRotated()
 {
     if (awaiting_rotation)
@@ -48,18 +42,18 @@ void onAllRotated()
 
 bool isGzipCompressed(const spdlog::filename_t& filename)
 {
-    StreamType file{filename, std::ios::binary};
+    std::ifstream file{filename, std::ios::binary}; // Windows: Rely on extension accepting a std::wstring
     if (!file.is_open())
     {
         return false;
     }
-    std::array<StreamType::char_type, 2> buf{};
+    std::array<char, 2> buf{};
     file.read(buf.data(), buf.size());
     if (!file.good())
     {
         return false;
     }
-    return buf[0] == static_cast<StreamType::char_type>(0x1f) && buf[1] == static_cast<StreamType::char_type>(0x8b); // checks for gzip bytes
+    return static_cast<unsigned char>(buf[0]) == 0x1f && static_cast<unsigned char>(buf[1]) == 0x8b; // checks for gzip bytes
 }
 
 void gzipCompressOnRotate(const spdlog::filename_t& filename)
@@ -72,7 +66,7 @@ void gzipCompressOnRotate(const spdlog::filename_t& filename)
         return;
     }
 
-    StreamType file{filename};
+    std::ifstream file{filename}; // Windows: Rely on extension accepting a std::wstring
     if (!file.is_open())
     {
         std::cerr << "Unable to open log file for reading: " << filename_to_str(filename) << std::endl;
@@ -82,24 +76,9 @@ void gzipCompressOnRotate(const spdlog::filename_t& filename)
 #ifdef _WIN32
     const auto gzfilename = filename + L".gz";
     const auto gzopenFunc = gzopen_w;
-    std::wstring line;
-    spdlog::memory_buf_t buffer;
-    auto makeData = [&buffer](const std::wstring& line)
-    {
-        spdlog::details::os::wstr_to_utf8buf(line, buffer);
-        buffer.push_back('\n');
-        buffer.push_back('\0');
-        return buffer.data();
-    };
 #else
     const auto gzfilename = filename + ".gz";
     const auto gzopenFunc = gzopen;
-    std::string line;
-    auto makeData = [](std::string& line)
-    {
-        line.push_back('\n');
-        return line.c_str();
-    };
 #endif
 
     auto gzdeleter = [](gzFile_s* f) { if (f) gzclose(f); };
@@ -111,9 +90,11 @@ void gzipCompressOnRotate(const spdlog::filename_t& filename)
         return;
     }
 
+    std::string line;
     while (std::getline(file, line))
     {
-        if (gzputs(gzfile.get(), makeData(line)) == -1)
+        line.push_back('\n');
+        if (gzputs(gzfile.get(), line.c_str()) == -1)
         {
             std::cerr << "Unable to compress log file: " << filename_to_str(filename) << std::endl;
             return;
@@ -141,9 +122,6 @@ void gzipCompressOnRotate(const spdlog::filename_t& filename)
 }
 
 }
-
-using namespace mega;
-using namespace std;
 
 MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const QString& desktopPath, bool logToStdout)
 : QObject{parent}
@@ -209,13 +187,13 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
 
     spdlog::register_logger(mLogger);
 
-    MegaApi::setLogLevel(MegaApi::LOG_LEVEL_MAX);
-    MegaApi::addLoggerObject(this);
+    mega::MegaApi::setLogLevel(mega::MegaApi::LOG_LEVEL_MAX);
+    mega::MegaApi::addLoggerObject(this);
 }
 
 MegaSyncLogger::~MegaSyncLogger()
 {
-    MegaApi::removeLoggerObject(this);
+    mega::MegaApi::removeLoggerObject(this);
 
     mLogger->flush();
     if (auto logger = std::atomic_load(&mDebugLogger))
@@ -256,24 +234,24 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
 
     switch (loglevel)
     {
-        case MegaApi::LOG_LEVEL_FATAL: mLogger->critical(message); break;
-        case MegaApi::LOG_LEVEL_ERROR: mLogger->error(message); break;
-        case MegaApi::LOG_LEVEL_WARNING: mLogger->warn(message); break;
-        case MegaApi::LOG_LEVEL_INFO: mLogger->info(message); break;
-        case MegaApi::LOG_LEVEL_DEBUG: mLogger->debug(message); break;
-        case MegaApi::LOG_LEVEL_MAX: mLogger->trace(message); break;
+        case mega::MegaApi::LOG_LEVEL_FATAL: mLogger->critical(message); break;
+        case mega::MegaApi::LOG_LEVEL_ERROR: mLogger->error(message); break;
+        case mega::MegaApi::LOG_LEVEL_WARNING: mLogger->warn(message); break;
+        case mega::MegaApi::LOG_LEVEL_INFO: mLogger->info(message); break;
+        case mega::MegaApi::LOG_LEVEL_DEBUG: mLogger->debug(message); break;
+        case mega::MegaApi::LOG_LEVEL_MAX: mLogger->trace(message); break;
     }
 
     if (auto logger = std::atomic_load(&mDebugLogger))
     {
         switch (loglevel)
         {
-            case MegaApi::LOG_LEVEL_FATAL: logger->critical(message); break;
-            case MegaApi::LOG_LEVEL_ERROR: logger->error(message); break;
-            case MegaApi::LOG_LEVEL_WARNING: logger->warn(message); break;
-            case MegaApi::LOG_LEVEL_INFO: logger->info(message); break;
-            case MegaApi::LOG_LEVEL_DEBUG: logger->debug(message); break;
-            case MegaApi::LOG_LEVEL_MAX: logger->trace(message); break;
+            case mega::MegaApi::LOG_LEVEL_FATAL: logger->critical(message); break;
+            case mega::MegaApi::LOG_LEVEL_ERROR: logger->error(message); break;
+            case mega::MegaApi::LOG_LEVEL_WARNING: logger->warn(message); break;
+            case mega::MegaApi::LOG_LEVEL_INFO: logger->info(message); break;
+            case mega::MegaApi::LOG_LEVEL_DEBUG: logger->debug(message); break;
+            case mega::MegaApi::LOG_LEVEL_MAX: logger->trace(message); break;
         }
     }
 }
@@ -372,22 +350,22 @@ void MegaSyncLogger::onLogAvailable(QString time, int loglevel, QString message)
     QString level;
     switch(loglevel)
     {
-        case MegaApi::LOG_LEVEL_DEBUG:
+        case mega::MegaApi::LOG_LEVEL_DEBUG:
             level = QString::fromUtf8("debug");
             break;
-        case MegaApi::LOG_LEVEL_ERROR:
+        case mega::MegaApi::LOG_LEVEL_ERROR:
             level = QString::fromUtf8("error");
             break;
-        case MegaApi::LOG_LEVEL_FATAL:
+        case mega::MegaApi::LOG_LEVEL_FATAL:
             level = QString::fromUtf8("fatal");
             break;
-        case MegaApi::LOG_LEVEL_INFO:
+        case mega::MegaApi::LOG_LEVEL_INFO:
             level = QString::fromUtf8("info");
             break;
-        case MegaApi::LOG_LEVEL_MAX:
+        case mega::MegaApi::LOG_LEVEL_MAX:
             level = QString::fromUtf8("verbose");
             break;
-        case MegaApi::LOG_LEVEL_WARNING:
+        case mega::MegaApi::LOG_LEVEL_WARNING:
             level = QString::fromUtf8("warning");
             break;
         default:
