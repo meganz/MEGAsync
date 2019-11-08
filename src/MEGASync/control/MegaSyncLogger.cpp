@@ -37,6 +37,7 @@ void onAllRotated()
         {
             emit megaSyncLogger->logReadyForReporting();
         }
+        awaiting_rotation = false;
     }
 }
 
