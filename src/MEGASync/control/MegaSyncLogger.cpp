@@ -302,14 +302,16 @@ bool MegaSyncLogger::isDebug() const
 
 void MegaSyncLogger::prepareForReporting()
 {
-    mLogger->flush();
-    rotatingFileSink->pauseRotation = true;
+    // The order here is important. We want spdlog to stop rotating,
+    // and then force one last rotation, so as to have all the logs compressed so far
+    // and we need to be notified when that last rotation finishes
+    rotatingFileSink->pauseRotation = true; // this will prevent regular rotations from now on.
     megaSyncLogger = this;
-    awaiting_rotation = true;
+    awaiting_rotation = true; //flag that we will use to emit a signal whenever there's a rotation from this moment on. i.e. the forced last rotation
 
-    rotatingFileSink->forcerotation = true;
+    rotatingFileSink->forcerotation = true; //to make sure spdlog rotates on the next logged message
     mLogger->error("Preparing logger to send bug repport"); //To ensure rotation is performed!
-    mLogger->flush();
+    mLogger->flush(); //to ensure the above log is flushed and hence, the rotation takes place
 }
 
 void MegaSyncLogger::resumeAfterReporting()
