@@ -40,6 +40,12 @@ SPDLOG_INLINE rotating_file_sink<Mutex>::rotating_file_sink(
     }
 }
 
+template<typename Mutex>
+SPDLOG_INLINE rotating_file_sink<Mutex>::~rotating_file_sink()
+{
+    rotate_();
+}
+
 // calc filename according to index and file extension if exists.
 // e.g. calc_filename("logs/mylog.txt, 3) => "logs/mylog.3.txt".
 template<typename Mutex>
