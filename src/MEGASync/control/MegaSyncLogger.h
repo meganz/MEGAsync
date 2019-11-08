@@ -34,8 +34,9 @@ public:
      * Prepare for reporting. Will pause logs and force a rotation.
      * Once the logs are rotated, a logReadyForReporting signal will be emitted.
      * Once logs are reported, call resumeAfterReporting.
+     * @returns true if preparation went well (if false, there is no need for resumeAfterReporting)
      */
-    void prepareForReporting();
+    bool prepareForReporting();
     void resumeAfterReporting();
 
 signals:

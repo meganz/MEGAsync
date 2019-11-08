@@ -151,7 +151,6 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
 
     constexpr auto maxFileSizeMB = 10;
     constexpr auto maxFileCount = 100;
-    spdlog::sink_ptr rotatingFileSink;
     try
     {
 #ifdef _WIN32
@@ -300,8 +299,12 @@ bool MegaSyncLogger::isDebug() const
     return std::atomic_load(&mDebugLogger) != nullptr;
 }
 
-void MegaSyncLogger::prepareForReporting()
+bool MegaSyncLogger::prepareForReporting()
 {
+    if (!rotatingFileSink)
+    {
+        return false;
+    }
     // The order here is important. We want spdlog to stop rotating,
     // and then force one last rotation, so as to have all the logs compressed so far
     // and we need to be notified when that last rotation finishes
@@ -312,10 +315,16 @@ void MegaSyncLogger::prepareForReporting()
     rotatingFileSink->forcerotation = true; //to make sure spdlog rotates on the next logged message
     mLogger->error("Preparing logger to send bug repport"); //To ensure rotation is performed!
     mLogger->flush(); //to ensure the above log is flushed and hence, the rotation takes place
+
+    return true;
 }
 
 void MegaSyncLogger::resumeAfterReporting()
 {
+    if (!rotatingFileSink)
+    {
+        return;
+    }
     rotatingFileSink->pauseRotation = false;
 }
 
