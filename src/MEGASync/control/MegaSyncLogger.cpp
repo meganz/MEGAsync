@@ -39,7 +39,7 @@ bool isGzipCompressed(const spdlog::filename_t& filename)
     {
         return false;
     }
-    return buf[0] == static_cast<char>(0x1f) && buf[1] == static_cast<char>(0x8b); // checks for gzip bytes
+    return static_cast<unsigned char>(buf[0]) == 0x1f && static_cast<unsigned char>(buf[1]) == 0x8b; // checks for gzip bytes
 }
 
 void gzipCompressOnRotate(const spdlog::filename_t& filename)
