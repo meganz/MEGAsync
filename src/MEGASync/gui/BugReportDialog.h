@@ -11,7 +11,7 @@ namespace Ui {
 class BugReportDialog;
 }
 
-class BugReportDialog : public QDialog, public mega::MegaTransferListener
+class BugReportDialog : public QDialog, public mega::MegaTransferListener, public mega::MegaRequestListener
 {
     Q_OBJECT
 
@@ -24,19 +24,28 @@ public:
     virtual void onTransferFinish(mega::MegaApi* api, mega::MegaTransfer *transfer, mega::MegaError* error);
     virtual void onTransferTemporaryError(mega::MegaApi *api, mega::MegaTransfer *transfer, mega::MegaError* e);
 
+    virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
+
 private:
     Ui::BugReportDialog *ui;
     int currentTransfer;
-    QProgressDialog sendProgress{this};
+    std::unique_ptr<QProgressDialog> sendProgress;
 
     long long totalBytes;
     long long transferredBytes;
+    int lastpermil;
 
     bool warningShown;
+    bool errorShown;
+    QString reportFileName;
 
 protected:
     mega::MegaApi *megaApi;
-    mega::QTMegaTransferListener *delegateListener;
+    mega::QTMegaTransferListener *delegateTransferListener;
+    mega::QTMegaRequestListener *delegateRequestListener;
+
+    void showErrorMessage();
+    void createSupportTicket();
 
 private slots:
     void on_bSubmit_clicked();
