@@ -29,11 +29,22 @@
    <property name="spacing">
     <number>0</number>
    </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QWidget" name="wHeaderBug" native="true">
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
        <widget class="QLabel" name="lDescInfoBug">
+        <property name="styleSheet">
+         <string notr="true">#lDescInfoBug
+{
+	color: rgba(0,0,0,0.85);
+	font-family: &quot;SF Pro Text&quot;;
+	font-size: 12px;
+}</string>
+        </property>
         <property name="text">
          <string>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</string>
         </property>
@@ -50,13 +61,31 @@
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
        <widget class="QLabel" name="lTitle">
+        <property name="styleSheet">
+         <string notr="true">#lTitle
+{
+	color: #242424;
+	font-family: &quot;SF Pro Text&quot;;
+	font-size: 13px;
+}</string>
+        </property>
         <property name="text">
          <string>Title</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="leTitleBug"/>
+       <widget class="QLineEdit" name="leTitleBug">
+        <property name="inputMask">
+         <string/>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="placeholderText">
+         <string>Optional</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -66,6 +95,14 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QLabel" name="lDescribeBug">
+        <property name="styleSheet">
+         <string notr="true">#lDescribeBug
+{
+	color: rgba(0,0,0,0.85);
+	font-family: &quot;SF Pro Text&quot;;
+	font-size: 13px;
+}</string>
+        </property>
         <property name="text">
          <string>Describe the problem</string>
         </property>
@@ -76,8 +113,20 @@
       </item>
       <item>
        <widget class="QCheckBox" name="cbAttachLogs">
+        <property name="styleSheet">
+         <string notr="true">#cbAttachLogs
+ {
+	color: rgba(0,0,0,0.85);
+	font-family: &quot;SF Pro Text&quot;;
+	font-size: 12px;
+
+}</string>
+        </property>
         <property name="text">
          <string>Attach diagnostic log files to assist with debugging</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -117,6 +166,9 @@
        <widget class="QPushButton" name="bSubmit">
         <property name="text">
          <string>Submit</string>
+        </property>
+        <property name="default">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
