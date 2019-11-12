@@ -37,6 +37,7 @@ private:
 
     bool warningShown;
     bool errorShown;
+    bool preparing = false;
     QString reportFileName;
 
 protected:

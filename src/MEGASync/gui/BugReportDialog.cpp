@@ -17,10 +17,12 @@ BugReportDialog::BugReportDialog(QWidget *parent) :
     ui->bSubmit->setEnabled(false);
 
     connect(ui->teDescribeBug, SIGNAL(textChanged()), this, SLOT(onDescriptionChanged()));
+    connect(gLogger.get(), SIGNAL(logReadyForReporting()), this, SLOT(onReadyForReporting()));
 
     currentTransfer = 0;
     warningShown = false;
     errorShown = false;
+    preparing = false;
     totalBytes = 0;
     transferredBytes = 0;
     lastpermil = -3;
@@ -54,7 +56,8 @@ void BugReportDialog::onTransferStart(MegaApi *api, MegaTransfer *transfer)
     sendProgress->setMinimumDuration(0);
     sendProgress->setMinimum(0);
     sendProgress->setMaximum(1000);
-    sendProgress->setAutoClose(true);
+    sendProgress->setValue(0);
+    lastpermil = 0;
     sendProgress->show();
 }
 
@@ -103,13 +106,19 @@ void BugReportDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
         showErrorMessage();
     }
 
+    if (error->getErrorCode() != MegaError::API_OK)
+    {
+        sendProgress->hide();
+    }
+
     gLogger->resumeAfterReporting();
 
 }
 
 void BugReportDialog::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError *e)
 {
-    showErrorMessage();
+    MegaApi::log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Temporary error at report dialog: %1")
+                 .arg(QString::fromUtf8(e->getErrorString())).toUtf8().constData());
 }
 
 void BugReportDialog::onRequestFinish(MegaApi *api, MegaRequest *request, MegaError *e)
@@ -135,6 +144,8 @@ void BugReportDialog::onRequestFinish(MegaApi *api, MegaRequest *request, MegaEr
             {
                 showErrorMessage();
             }
+
+            sendProgress->hide();
             break;
         }
         default:
@@ -184,8 +195,15 @@ void BugReportDialog::createSupportTicket()
 
 void BugReportDialog::on_bSubmit_clicked()
 {
-    connect(gLogger.get(), SIGNAL(logReadyForReporting()), this, SLOT(onReadyForReporting()));
-    gLogger->prepareForReporting();
+    if (preparing)
+    {
+        return;
+    }
+
+    if (gLogger->prepareForReporting())
+    {
+        preparing = true;
+    }
 }
 
 void BugReportDialog::onReadyForReporting()
@@ -207,6 +225,7 @@ void BugReportDialog::onReadyForReporting()
             {
                 std::cerr << "Error opening file for joining log zip files " << std::endl;
                 gLogger->resumeAfterReporting();
+                preparing = false;
                 return;
             }
 
@@ -232,6 +251,7 @@ void BugReportDialog::onReadyForReporting()
                     QFile::remove(joinLogsFile.absoluteFilePath());
                     showErrorMessage();
                     gLogger->resumeAfterReporting();
+                    preparing = false;
                     return;
                 }
             }
@@ -281,7 +301,15 @@ void BugReportDialog::cancelSendReport()
         {
             megaApi->cancelTransferByTag(currentTransfer);
         }
+        preparing = false;
         reject();
+    }
+    else if (ret == QMessageBox::AcceptRole)
+    {
+        if (currentTransfer)
+        {
+            sendProgress->setValue(lastpermil);
+        }
     }
 }
 
