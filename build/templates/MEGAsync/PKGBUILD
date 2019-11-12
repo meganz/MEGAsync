@@ -22,7 +22,7 @@
 # Maintainer: Pablo Martin <pm@mega.nz>
 pkgname=megasync
 pkgver=MEGASYNC_VERSION
-pkgrel=1
+pkgrel=`cat MEGA_BUILD_ID || echo "1"`
 epoch=
 pkgdesc="Easy automated syncing between your computers and your MEGA cloud drive"
 arch=('i686' 'x86_64')
@@ -48,6 +48,8 @@ validpgpkeys=()
 
 prepare() {
 	cd "$pkgname-$pkgver"
+	sed -i -E "s/USER_AGENT([^\/]*)\/(([0-9][0-9]*\.){3})(.*)\";/USER_AGENT\1\/\2${pkgrel}\";/g" MEGASync/control/Preferences.cpp
+	sed -i -E "s/BUILD_ID = ([0-9]*)/BUILD_ID = ${pkgrel}/g" MEGASync/control/Preferences.cpp
 }
 
 build() {
