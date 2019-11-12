@@ -236,7 +236,7 @@ void BugReportDialog::onReadyForReporting()
             int nLogFiles = logFiles.count();
 
             std::sort(logFiles.begin(), logFiles.end(), [](const QFileInfo &v1, const QFileInfo &v2){
-                return v1.fileName().remove(QRegExp(QString::fromUtf8("[^\\d]"))).toInt() < v2.fileName().remove(QRegExp(QString::fromUtf8("[^\\d]"))).toInt();} );
+                return v1.fileName().remove(QRegExp(QString::fromUtf8("[^\\d]"))).toInt() > v2.fileName().remove(QRegExp(QString::fromUtf8("[^\\d]"))).toInt();} );
 
             foreach (QFileInfo i, logFiles)
             {
