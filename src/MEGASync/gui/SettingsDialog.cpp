@@ -17,6 +17,7 @@
 #include "control/Utilities.h"
 #include "platform/Platform.h"
 #include "gui/AddExclusionDialog.h"
+#include "gui/BugReportDialog.h"
 #include <assert.h>
 
 #ifdef __APPLE__
@@ -568,15 +569,15 @@ void SettingsDialog::on_bAccount_clicked()
     maxHeightAnimation->setStartValue(maximumHeight());
     if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
-        minHeightAnimation->setEndValue(465);
-        maxHeightAnimation->setEndValue(465);
+        minHeightAnimation->setEndValue(522);
+        maxHeightAnimation->setEndValue(522);
 
         ui->gStorageSpace->setMinimumHeight(83);
     }
     else
     {
-        minHeightAnimation->setEndValue(485);
-        maxHeightAnimation->setEndValue(485);
+        minHeightAnimation->setEndValue(542);
+        maxHeightAnimation->setEndValue(542);
 
         ui->gStorageSpace->setMinimumHeight(103);
     }
@@ -2634,4 +2635,17 @@ void SettingsDialog::on_bChangePassword_clicked()
     }
 
     delete cPassword;
+}
+
+void SettingsDialog::on_bSendBug_clicked()
+{
+    QPointer<BugReportDialog> dialog = new BugReportDialog(this);
+    int result = dialog->exec();
+    if (!dialog || result != QDialog::Accepted)
+    {
+        delete dialog;
+        return;
+    }
+
+    delete dialog;
 }

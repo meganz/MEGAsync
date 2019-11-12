@@ -3387,7 +3387,7 @@ void MegaApplication::sendBusinessWarningNotification()
             }
             else
             {
-                notification->setTitle(tr("Account suspended"));
+                notification->setTitle(tr("Account Suspended"));
                 notification->setText(tr("Contact your business account administrator to resolve the issue and activate your account."));
             }
 
