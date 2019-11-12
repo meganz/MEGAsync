@@ -40,6 +40,8 @@ private:
     bool preparing = false;
     QString reportFileName;
 
+    const static int mMaxDescriptionLength = 3000;
+
 protected:
     mega::MegaApi *megaApi;
     mega::QTMegaTransferListener *delegateTransferListener;
@@ -54,6 +56,8 @@ private slots:
     void cancelSendReport();
     void onDescriptionChanged();
     void onReadyForReporting();
+    void on_teDescribeBug_textChanged();
+
 };
 
 #endif // BUGREPORTDIALOG_H

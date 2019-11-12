@@ -150,8 +150,8 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
 
     std::vector<spdlog::sink_ptr> sinks;
 
-    constexpr auto maxFileSizeMB = 10;
-    constexpr auto maxFileCount = 100;
+    constexpr auto maxFileSizeMB = 0.10;
+    constexpr auto maxFileCount = 6;
     try
     {
 #ifdef _WIN32

@@ -317,3 +317,17 @@ void BugReportDialog::onDescriptionChanged()
 {
     ui->bSubmit->setEnabled(ui->teDescribeBug->toPlainText().isEmpty() ? false : true);
 }
+
+void BugReportDialog::on_teDescribeBug_textChanged()
+{
+    if(ui->teDescribeBug->toPlainText().length() > mMaxDescriptionLength)
+    {
+        int diff = ui->teDescribeBug->toPlainText().length() - mMaxDescriptionLength; //m_maxTextEditLength - just an integer
+        QString newStr = ui->teDescribeBug->toPlainText();
+        newStr.chop(diff);
+        ui->teDescribeBug->setText(newStr);
+        QTextCursor cursor(ui->teDescribeBug->textCursor());
+        cursor.movePosition(QTextCursor::End, QTextCursor::MoveAnchor);
+        ui->teDescribeBug->setTextCursor(cursor);
+    }
+}

@@ -82,6 +82,9 @@
         <property name="text">
          <string/>
         </property>
+        <property name="maxLength">
+         <number>150</number>
+        </property>
         <property name="placeholderText">
          <string>Optional</string>
         </property>
