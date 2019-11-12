@@ -1,5 +1,6 @@
 #include "BugReportDialog.h"
 #include <QCloseEvent>
+#include <QRegExp>
 #include "ui_BugReportDialog.h"
 #include "control/gzjoin.h"
 
@@ -212,8 +213,11 @@ void BugReportDialog::onReadyForReporting()
             unsigned long crc, tot;
             gzinit(&crc, &tot, pFile);
 
-            QFileInfoList logFiles = logDir.entryInfoList(QStringList() << QString::fromUtf8("MEGAsync.[0-9]*.log"), QDir::Files, QDir::Name);
+            QFileInfoList logFiles = logDir.entryInfoList(QStringList() << QString::fromUtf8("MEGAsync.[0-9]*.log"), QDir::Files);
             int nLogFiles = logFiles.count();
+
+            std::sort(logFiles.begin(), logFiles.end(), [](const QFileInfo &v1, const QFileInfo &v2){
+                return v1.fileName().remove(QRegExp(QString::fromUtf8("[^\\d]"))).toInt() < v2.fileName().remove(QRegExp(QString::fromUtf8("[^\\d]"))).toInt();} );
 
             foreach (QFileInfo i, logFiles)
             {
