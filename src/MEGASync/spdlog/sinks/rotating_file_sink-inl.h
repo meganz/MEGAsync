@@ -24,11 +24,14 @@ namespace spdlog {
 namespace sinks {
 
 template<typename Mutex>
-SPDLOG_INLINE rotating_file_sink<Mutex>::rotating_file_sink(
-    filename_t base_filename, std::size_t max_size, std::size_t max_files, bool rotate_on_open)
+SPDLOG_INLINE rotating_file_sink<Mutex>::rotating_file_sink(filename_t base_filename, std::size_t max_size, std::size_t max_files,
+        bool rotate_on_open, std::function<void(const filename_t& filename)> on_rotated
+        , std::function<void()> on_all_rotated)
     : base_filename_(std::move(base_filename))
     , max_size_(max_size)
     , max_files_(max_files)
+    , on_rotated_(std::move(on_rotated))
+    , on_all_rotated_(std::move(on_all_rotated))
 {
     file_helper_.open(calc_filename(base_filename_, 0));
     current_size_ = file_helper_.size(); // expensive. called only once
@@ -65,10 +68,14 @@ SPDLOG_INLINE void rotating_file_sink<Mutex>::sink_it_(const details::log_msg &m
     memory_buf_t formatted;
     base_sink<Mutex>::formatter_->format(msg, formatted);
     current_size_ += formatted.size();
-    if (current_size_ > max_size_)
+    if (forcerotation || (!pauseRotation && current_size_ > max_size_) )
     {
         rotate_();
         current_size_ = formatted.size();
+        if (forcerotation)
+        {
+            forcerotation = false;
+        }
     }
     file_helper_.write(formatted);
 }
@@ -112,8 +119,12 @@ SPDLOG_INLINE void rotating_file_sink<Mutex>::rotate_()
                     spdlog_ex("rotating_file_sink: failed renaming " + filename_to_str(src) + " to " + filename_to_str(target), errno));
             }
         }
+
+        // Rename succeeded. Call rotate callback
+        on_rotated_(target);
     }
     file_helper_.reopen(true);
+    on_all_rotated_();
 }
 
 // delete the target if exists, and rename the src file  to target
