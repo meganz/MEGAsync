@@ -201,7 +201,7 @@ void BugReportDialog::onReadyForReporting()
                                                                          .arg(QString::fromUtf8(std::unique_ptr<MegaUser>(megaApi->getMyUser())->getEmail()))};
 
             QFileInfo joinLogsFile(logDir.absolutePath().append(fileFormat).append(QString::fromUtf8(".gz")));
-            FILE * pFile = fopen(joinLogsFile.absoluteFilePath().toStdString().c_str(), "a+");
+            FILE * pFile = fopen(joinLogsFile.absoluteFilePath().toStdString().c_str(), "a+b");
             if (pFile == NULL)
             {
                 std::cerr << "Error opening file for joining log zip files " << std::endl;
