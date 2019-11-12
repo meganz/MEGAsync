@@ -26,7 +26,7 @@ public:
     ~CircularUsageProgressBar();
 
     int getValue() const;
-    void setValue(int value);
+    void setValue(int value, bool unknownTotal = false );
 
     QColor getBkColor() const;
     void setBkColor(const QColor &color);
