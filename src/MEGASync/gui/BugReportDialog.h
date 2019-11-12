@@ -52,6 +52,7 @@ private slots:
     void on_bCancel_clicked();
     void cancelSendReport();
     void onDescriptionChanged();
+    void onReadyForReporting();
 };
 
 #endif // BUGREPORTDIALOG_H

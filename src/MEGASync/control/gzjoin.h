@@ -57,7 +57,11 @@
 #include <stdio.h>      /* fputs(), fprintf(), fwrite(), putc() */
 #include <stdlib.h>     /* exit(), malloc(), free() */
 #include <fcntl.h>      /* open() */
+#ifndef _WIN32
 #include <unistd.h>     /* close(), read(), lseek() */
+#else
+#include <io.h>         /* close(), read(), lseek() */
+#endif
 #include "zlib.h"
     /* crc32(), crc32_combine(), inflateInit2(), inflate(), inflateEnd() */
 
@@ -93,6 +97,9 @@ local int bail(const char *why1, const char *why2)
 typedef struct {
     const char *name;             /* name of file for error messages */
     int fd;                 /* file descriptor */
+#ifdef _WIN32
+    FILE *file;                 /* file descriptor */
+#endif
     unsigned left;          /* bytes remaining at next */
     unsigned char *next;    /* next byte to read */
     unsigned char *buf;     /* allocated buffer of length CHUNK */
@@ -102,8 +109,17 @@ typedef struct {
 local void bclose(bin_gz *in)
 {
     if (in != NULL) {
+#ifdef _WIN32
+        if (in->file)
+        {
+            fclose(in->file);
+        }
+        else
+#endif
         if (in->fd != -1)
+        {
             close(in->fd);
+        }
         if (in->buf != NULL)
             free(in->buf);
         free(in);
@@ -120,7 +136,12 @@ local bin_gz *bopen(const char *name)
     if (in == NULL)
         return NULL;
     in->buf = (unsigned char *)malloc(CHUNK);
+#ifdef _WIN32
+    in->file = fopen(name, "rb");
+    in->fd = fileno(in->file);
+#else
     in->fd = open(name, O_RDONLY, 0);
+#endif
     if (in->buf == NULL || in->fd == -1) {
         bclose(in);
         return NULL;

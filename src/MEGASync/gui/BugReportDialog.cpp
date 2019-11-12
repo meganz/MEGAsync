@@ -101,6 +101,9 @@ void BugReportDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
     {
         showErrorMessage();
     }
+
+    gLogger->resumeAfterReporting();
+
 }
 
 void BugReportDialog::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError *e)
@@ -180,6 +183,12 @@ void BugReportDialog::createSupportTicket()
 
 void BugReportDialog::on_bSubmit_clicked()
 {
+    connect(gLogger.get(), SIGNAL(logReadyForReporting()), this, SLOT(onReadyForReporting()));
+    gLogger->prepareForReporting();
+}
+
+void BugReportDialog::onReadyForReporting()
+{
     reportFileName.clear();
 
     //If send log file is enabled
@@ -196,6 +205,7 @@ void BugReportDialog::on_bSubmit_clicked()
             if (pFile == NULL)
             {
                 std::cerr << "Error opening file for joining log zip files " << std::endl;
+                gLogger->resumeAfterReporting();
                 return;
             }
 
@@ -217,6 +227,7 @@ void BugReportDialog::on_bSubmit_clicked()
                     fclose(pFile);
                     QFile::remove(joinLogsFile.absoluteFilePath());
                     showErrorMessage();
+                    gLogger->resumeAfterReporting();
                     return;
                 }
             }
@@ -224,7 +235,7 @@ void BugReportDialog::on_bSubmit_clicked()
             fclose(pFile);
 
             reportFileName = joinLogsFile.fileName();
-            megaApi->startUploadForSupport(joinLogsFile.absoluteFilePath().toUtf8().constData(), true, delegateTransferListener);
+            megaApi->startUploadForSupport(QDir::toNativeSeparators(joinLogsFile.absoluteFilePath()).toUtf8().constData(), true, delegateTransferListener);
         }
     }
     else
