@@ -1867,6 +1867,12 @@ border: none;</string>
           </item>
           <item>
            <widget class="QPushButton" name="bSendBug">
+            <property name="minimumSize">
+             <size>
+              <width>0</width>
+              <height>22</height>
+             </size>
+            </property>
             <property name="text">
              <string>Bug report</string>
             </property>
