@@ -408,7 +408,7 @@ void InfoDialog::setUsage()
     if (accType == Preferences::ACCOUNT_TYPE_BUSINESS)
     {
         ui->sQuota->setCurrentWidget(ui->wBusinessQuota);
-        ui->wCircularStorage->setValue(0);
+        ui->wCircularStorage->setValue(0, true);
         usedQuota = QString::fromUtf8("%1").arg(QString::fromUtf8("<span style='color: #333333; font-size:20px; font-family: Lato; text-decoration:none;'>%1</span>")
                                      .arg(Utilities::getSizeString(preferences->usedBandwidth())));
 
@@ -416,7 +416,7 @@ void InfoDialog::setUsage()
     else if(accType == Preferences::ACCOUNT_TYPE_FREE)
     {
         ui->sQuota->setCurrentWidget(ui->wCircularQuota);
-        ui->wCircularQuota->setValue(0);
+        ui->wCircularQuota->setValue(0, true);
         usedQuota = QString::fromUtf8("%1 used").arg(QString::fromUtf8("<span style='color:#666666; font-family: Lato; text-decoration:none;'>%1</span>")
                                      .arg(Utilities::getSizeString(preferences->usedBandwidth())));
     }
@@ -425,7 +425,7 @@ void InfoDialog::setUsage()
         ui->sQuota->setCurrentWidget(ui->wCircularQuota);
         if (preferences->totalBandwidth() == 0)
         {
-            ui->wCircularQuota->setValue(0);
+            ui->wCircularQuota->setValue(0, true);
             usedQuota = Utilities::getSizeString(preferences->totalBandwidth());
         }
         else

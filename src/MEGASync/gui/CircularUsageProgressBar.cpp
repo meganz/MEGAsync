@@ -132,15 +132,25 @@ int CircularUsageProgressBar::getValue() const
     return pbValue;
 }
 
-void CircularUsageProgressBar::setValue(int value)
+void CircularUsageProgressBar::setValue(int value, bool unknownTotal)
 {
     if (value < CircularUsageProgressBar::MINVALUE)
     {
         value = CircularUsageProgressBar::MINVALUE;
     }
-    if (pbValue != value || pbValue == -1)
+    if (pbValue != value || pbValue == -1
+            || (textValue == QString::fromUtf8("\u2014") && !unknownTotal)
+            || (textValue != QString::fromUtf8("\u2014") && unknownTotal)
+            )
     {
-        textValue = QString::number(value).append(QString::fromUtf8("%"));
+        if (unknownTotal)
+        {
+            textValue = QString::fromUtf8("\u2014");
+        }
+        else
+        {
+            textValue = QString::number(value).append(QString::fromUtf8("%"));
+        }
         pbValue = value;
         if (value >= CircularUsageProgressBar::MAXVALUE)
         {

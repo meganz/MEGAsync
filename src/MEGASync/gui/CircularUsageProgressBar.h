@@ -26,7 +26,7 @@ public:
     ~CircularUsageProgressBar();
 
     int getValue() const;
-    void setValue(int value);
+    void setValue(int value, bool unknownTotal = false );
 
     QColor getBkColor() const;
     void setBkColor(const QColor &color);
@@ -49,6 +49,7 @@ protected:
     void setPenColor(QPen &pen, QColor color, bool forceRepaint = true);
 
     int pbValue = -1;
+    bool mUnknownTotal = true;
     double penWidth;
     double outerRadius;
 
