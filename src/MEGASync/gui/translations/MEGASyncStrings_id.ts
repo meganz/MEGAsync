@@ -198,7 +198,7 @@
     <message>
         <source>All notifications</source>
         <translatorcomment>Label to indicate that the application is showing all types of notifications</translatorcomment>
-        <translation type="unfinished">All notifications</translation>
+        <translation type="unfinished">Semua notifikasi</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -208,7 +208,7 @@
     <message>
         <source>Payment</source>
         <translatorcomment>Label to indicate that the application is showing only payment notifications</translatorcomment>
-        <translation type="unfinished">Payment</translation>
+        <translation type="unfinished">Pembayaran</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -236,7 +236,7 @@
     <message>
         <source>Payment</source>
         <translatorcomment>Label title for Payment category of a notification</translatorcomment>
-        <translation type="unfinished">Payment</translation>
+        <translation type="unfinished">Pembayaran</translation>
     </message>
     <message>
         <source>Takedown notice</source>
@@ -246,47 +246,47 @@
     <message>
         <source>New Contact Request</source>
         <translatorcomment>Notification label that indicates the user has a new contact request </translatorcomment>
-        <translation type="unfinished">New Contact Request</translation>
+        <translation type="unfinished">Kontak request baru</translation>
     </message>
     <message>
         <source>Contact Deleted</source>
         <translatorcomment>Notification label that indicates the user has removed a contact</translatorcomment>
-        <translation type="unfinished">Contact Deleted</translation>
+        <translation type="unfinished">Kontak dihapus</translation>
     </message>
     <message>
         <source>Contact Established</source>
         <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
-        <translation type="unfinished">Contact Established</translation>
+        <translation type="unfinished">Kontak terjalin</translation>
     </message>
     <message>
         <source>Contact Blocked</source>
         <translatorcomment>Notification label that indicates the user has blocked a contact</translatorcomment>
-        <translation type="unfinished">Contact Blocked</translation>
+        <translation type="unfinished">Kontak diblokir</translation>
     </message>
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation type="unfinished">Contact Updated</translation>
+        <translation type="unfinished">Kontak diperbarui</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
         <translatorcomment>Notification label that indicates that the user has accepted a contact request</translatorcomment>
-        <translation type="unfinished">Contact Accepted</translation>
+        <translation type="unfinished">Kontak diterima</translation>
     </message>
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation type="unfinished">Contact Denied</translation>
+        <translation type="unfinished">Kontak ditolak</translation>
     </message>
     <message>
         <source>Payment Info</source>
         <translatorcomment>Notification label related to a payment.</translatorcomment>
-        <translation type="unfinished">Payment Info</translation>
+        <translation type="unfinished">Info pembayaran</translation>
     </message>
     <message>
         <source>Takedown Notice</source>
         <translatorcomment>Notification label related to takedown notice</translatorcomment>
-        <translation type="unfinished">Takedown Notice</translation>
+        <translation type="unfinished">Pemberitahuan pencopotan</translation>
     </message>
     <message>
         <source>Notification</source>
@@ -296,37 +296,37 @@
     <message>
         <source>[A] sent you a contact request</source>
         <translatorcomment>Label to indicate that [A] sent you a contact request. Placeholder will be replaced by email of user that sent the request.</translatorcomment>
-        <translation type="unfinished">[A] sent you a contact request</translation>
+        <translation type="unfinished">[A] mengirimi Anda permintaan kontak</translation>
     </message>
     <message>
         <source>[A] cancelled their contact request</source>
         <translatorcomment>Label to indicate that [A] cancelled a contact request. Placeholder will be replaced by email of user that cancelled the request.</translatorcomment>
-        <translation type="unfinished">[A] cancelled their contact request</translation>
+        <translation type="unfinished">[A] membatalkan permintaan kontak mereka</translation>
     </message>
     <message>
         <source>You have a contact request</source>
         <translatorcomment>Label to indicate that actual user has received a new contact request.</translatorcomment>
-        <translation type="unfinished">You have a contact request</translation>
+        <translation type="unfinished">Anda memiliki permintaan kontak</translation>
     </message>
     <message>
         <source>[A] deleted you as a contact</source>
         <translatorcomment>Label to indicate that [A] deleted you as a contact. Placeholder will be replaced by email of user that deleted the contact.</translatorcomment>
-        <translation type="unfinished">[A] deleted you as a contact</translation>
+        <translation type="unfinished">[A] menghapus Anda sebagai kontak</translation>
     </message>
     <message>
         <source>[A] has been deleted/deactivated</source>
         <translatorcomment>Label to indicate that [A] has been deleted from your contacts. Placeholder will be replaced by email of user deleted</translatorcomment>
-        <translation type="unfinished">[A] has been deleted/deactivated</translation>
+        <translation type="unfinished">[A] telah dihapus / dinonaktifkan</translation>
     </message>
     <message>
         <source>[A] established you as a contact</source>
         <translatorcomment>Label to indicate that [A] has established you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation type="unfinished">[A] established you as a contact</translation>
+        <translation type="unfinished">[A] menetapkan Anda sebagai kontak</translation>
     </message>
     <message>
         <source>[A] blocked you as contact</source>
         <translatorcomment>Label to indicate that [A] has blocked you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation type="unfinished">[A] blocked you as contact</translation>
+        <translation type="unfinished">[A] memblokir Anda sebagai kontak</translation>
     </message>
     <message>
         <source>You ignored a contact request</source>
@@ -346,67 +346,67 @@
     <message>
         <source>[A] accepted your contact request</source>
         <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request.</translatorcomment>
-        <translation type="unfinished">[A] accepted your contact request</translation>
+        <translation type="unfinished">[A] menerima permintaan kontak Anda</translation>
     </message>
     <message>
         <source>[A] denied your contact request</source>
         <translatorcomment>Label to indicate that [A] denied your contact request. Placeholder will be replaced by email of user that denied the request.</translatorcomment>
-        <translation type="unfinished">[A] denied your contact request</translation>
+        <translation type="unfinished">[A] menolak permintaan kontak Anda</translation>
     </message>
     <message>
         <source>New Shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished">New Shared folder from [A]</translation>
+        <translation type="unfinished">Folder Berbagi baru dari [A]</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
         <translatorcomment>Label to indicate that [A] has left a shared folder. Placeholder will be replaced by email of the user that left the folder.</translatorcomment>
-        <translation type="unfinished">[A] has left the shared folder</translation>
+        <translation type="unfinished">[A] telah meninggalkan folder bersama</translation>
     </message>
     <message>
         <source>Access to folders shared was removed</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed.</translatorcomment>
-        <translation type="unfinished">Access to folders shared was removed</translation>
+        <translation type="obsolete">Akses ke folder berbagi telah dihapus</translation>
     </message>
     <message>
         <source>[A] added 1 item</source>
         <translatorcomment>Label to indicate that [A] has added 1 item to a shared folder. Placeholder will be replaced by email of the user that made the addition.</translatorcomment>
-        <translation type="unfinished">[A] added 1 item</translation>
+        <translation type="unfinished">[A] menambahkan 1 item</translation>
     </message>
     <message>
         <source>[A] added [B] items</source>
         <translatorcomment>Label to indicate that [A] has added [B] items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and [B] with the number of added items.</translatorcomment>
-        <translation type="unfinished">[A] added [B] items</translation>
+        <translation type="unfinished">[A] menambahkan item [B]</translation>
     </message>
     <message>
         <source>[A] removed 1 item</source>
         <translatorcomment>Label to indicate that [A] has removed 1 item from a shared folder. Placeholder will be replaced by email of the user that made the deletion.</translatorcomment>
-        <translation type="unfinished">[A] removed 1 item</translation>
+        <translation type="unfinished">[A] menghapus 1 item</translation>
     </message>
     <message>
         <source>[A] removed [B] items</source>
         <translatorcomment>Label to indicate that [A] has removed [B] items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and [B] with the number of removed items.</translatorcomment>
-        <translation type="unfinished">[A] removed [B] items</translation>
+        <translation type="unfinished">[A] menghapus item [B]</translation>
     </message>
     <message>
         <source>Your payment for the [A] plan was received</source>
         <translatorcomment>Label to indicate that the user has paid for a [A] PRO plan. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation type="unfinished">Your payment for the [A] plan was received</translation>
+        <translation type="unfinished">Pembayaran Anda untuk paket [A] telah diterima</translation>
     </message>
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation type="unfinished">Your payment for the [A] plan was unsuccessful</translation>
+        <translation type="unfinished">Pembayaran Anda untuk paket [A] tidak berhasil</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in 1 day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan will expire in 1 day</translation>
+        <translation type="unfinished">Paket keanggotaan PRO Anda akan kedaluwarsa dalam 1 hari</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in [A] days</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan will expire in [A] days</translation>
+        <translation type="unfinished">Paket keanggotaan PRO Anda akan kedaluwarsa dalam [A] hari</translation>
     </message>
     <message>
         <source>PRO membership plan expiring soon</source>
@@ -416,17 +416,17 @@
     <message>
         <source>Your PRO membership plan expired 1 day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan expired 1 day ago</translation>
+        <translation type="unfinished">Paket keanggotaan PRO Anda kedaluwarsa 1 hari yang lalu</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired [A] days ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan expired [A] days ago</translation>
+        <translation type="unfinished">Paket keanggotaan PRO Anda kedaluwarsa [A] hari yang lalu</translation>
     </message>
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been taken down. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Your publicly shared [A] ([B]) has been taken down</translation>
+        <translation type="unfinished">Anda punya [A] ([B]) telah dicopot.</translation>
     </message>
     <message>
         <source>file</source>
@@ -441,22 +441,27 @@
     <message>
         <source>Your publicly shared has been taken down</source>
         <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
-        <translation type="unfinished">Your publicly shared has been taken down</translation>
+        <translation type="unfinished">Bagian publik Anda telah diturunkan.</translation>
     </message>
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been reinstated. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Your publicly shared [A] ([B]) has been reinstated</translation>
+        <translation type="unfinished">[A] ([B]) Anda yang dibagikan secara publik telah dipulihkan</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
         <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
-        <translation type="unfinished">Your taken down has been reinstated</translation>
+        <translation type="unfinished">Pangsa publik Anda telah dipulihkan.</translation>
     </message>
     <message>
         <source>Reminder</source>
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
-        <translation type="unfinished">Reminder</translation>
+        <translation type="unfinished">Peringatan</translation>
+    </message>
+    <message>
+        <source>Access to shared folder was removed by [A]</source>
+        <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
+        <translation type="unfinished">Access to a shared folder was removed by [A]</translation>
     </message>
 </context>
 <context>
@@ -530,6 +535,109 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translation type="obsolete">Anda mencoba menyinkronkan folder yang sangat besar. Untuk mencegah penyelarasan seluruh volume boot, yang tidak efisien dan berbahaya, kami meminta Anda untuk memulai dengan folder yang lebih kecil dan menambahkan lebih banyak data sementara MEGAsync sedang berjalan.</translation>
+    </message>
+</context>
+<context>
+    <name>BugReportDialog</name>
+    <message>
+        <source>Bug report</source>
+        <translatorcomment>Title of the dialog used to send bug reports to support team.</translatorcomment>
+        <translation type="unfinished">Report issue</translation>
+    </message>
+    <message>
+        <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
+        <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
+        <translation type="unfinished">Please clearly describe the issue you encountered. The more details you provide, the easier it will be for us to resolve. Your submission will be reviewed by our development team.</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translatorcomment>Label to indicate the title field of form bug report. The user will fill it with a suitable title describing his bug report.</translatorcomment>
+        <translation type="unfinished">Title</translation>
+    </message>
+    <message>
+        <source>Describe the problem</source>
+        <translatorcomment>Label to indicate the description input field of form bug report. The user will fill it with a description of the bug and any specific detail that wants to be included.</translatorcomment>
+        <translation type="unfinished">Describe the issue</translation>
+    </message>
+    <message>
+        <source>Attach diagnostic log files to assist with debugging</source>
+        <translatorcomment>Check box to confirm the attachment and upload of log files generated by MEGAsync to our support team.</translatorcomment>
+        <translation type="unfinished">Attach diagnostic log files to assist with debugging</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button label to cancel the dialog.</translatorcomment>
+        <translation type="unfinished">Batal</translation>
+    </message>
+    <message>
+        <source>Submit</source>
+        <translatorcomment>Button label to confirm and submit bug report and log files to support team.</translatorcomment>
+        <translation type="unfinished">Submit</translation>
+    </message>
+    <message>
+        <source>Optional</source>
+        <translatorcomment>Label to indicate that title field of bug report form is not mandatory.</translatorcomment>
+        <translation type="unfinished">Opsional</translation>
+    </message>
+    <message>
+        <source>Bug report is uploading, it may take a few minutes</source>
+        <translatorcomment>Label to indicate that the bug report is being uploaded to our support team.</translatorcomment>
+        <translation type="unfinished">Your reported issue is uploading, it may take a few minutes.</translation>
+    </message>
+    <message>
+        <source>Bug report success!</source>
+        <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
+        <translation type="unfinished">Your issue has been reported successfully.</translation>
+    </message>
+    <message>
+        <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
+        <translatorcomment>Label to inform the user that he will receive a confirmation email </translatorcomment>
+        <translation type="unfinished">Your issue has been submitted, a confirmation email will be sent to you.</translation>
+    </message>
+    <message>
+        <source>Error on submitting bug report</source>
+        <translatorcomment>Error message shown when some error occurs during uploading a bug report.</translatorcomment>
+        <translation type="unfinished">Error while uploading reported issue.</translation>
+    </message>
+    <message>
+        <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
+        <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
+        <translation type="unfinished">Your issue cannot be uploaded due to an error. Please try again or contact our support team via [A]support@mega.nz[/A] if the problem persists.</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translatorcomment>Button label to confirm and close a message box dialog.</translatorcomment>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to exit uploading?</source>
+        <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
+        <translation type="unfinished">Are you sure you want to cancel uploading your reported issue?</translation>
+    </message>
+    <message>
+        <source>The bug report will not be submitted if you exit uploading.</source>
+        <translatorcomment>Informative message shown to the user to inform that if he exits the dialog the bug report upload will not be submitted.</translatorcomment>
+        <translation type="unfinished">The issue will not be reported if you cancel uploading it.</translation>
+    </message>
+    <message>
+        <source>Continue</source>
+        <translatorcomment>Button label to continue the upload of bug report.</translatorcomment>
+        <translation type="unfinished">Lanjutkan</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translatorcomment>Button label to confirm a message box.</translatorcomment>
+        <translation type="unfinished">Ya</translation>
+    </message>
+    <message>
+        <source>There is an ongoing report being uploaded.</source>
+        <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
+        <translation type="unfinished">There is currently another reported issue being uploaded.</translation>
+    </message>
+    <message>
+        <source>Please wait until the current upload is completed.</source>
+        <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
+        <translation type="unfinished">Please wait until the current upload is completed.</translation>
     </message>
 </context>
 <context>
@@ -792,7 +900,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>All notifications</source>
         <translatorcomment>Label to indicate that all types of notifications will be shown.</translatorcomment>
-        <translation type="unfinished">All notifications</translation>
+        <translation type="unfinished">Semua notifikasi</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -807,7 +915,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Payment</source>
         <translatorcomment>Label to indicate that only Payment notifications will be shown.</translatorcomment>
-        <translation type="unfinished">Payment</translation>
+        <translation type="unfinished">Pembayaran</translation>
     </message>
 </context>
 <context>
@@ -1156,7 +1264,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation type="vanished">Syncs</translation>
+        <translation>Syncs</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -1481,12 +1589,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All notifications</source>
         <translatorcomment>Label to indicate that all notifications will be shown.</translatorcomment>
-        <translation type="obsolete">All notifications</translation>
+        <translation type="obsolete">Semua notifikasi</translation>
     </message>
     <message>
         <source>Open notification settings</source>
         <translatorcomment>Button label to redirect the user to notification settings for configuration</translatorcomment>
-        <translation type="unfinished">Open notification settings</translation>
+        <translation type="unfinished">Buka pengaturan notifikasi</translation>
     </message>
     <message>
         <source>No notifications</source>
@@ -1496,17 +1604,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation type="unfinished">Pause/Resume</translation>
+        <translation type="unfinished">Jeda / Lanjutkan</translation>
     </message>
     <message>
         <source>Open Downloads</source>
         <translatorcomment>Tooltip of button that let the user open downloads section of transfer manager.</translatorcomment>
-        <translation type="unfinished">Open Downloads</translation>
+        <translation type="unfinished">Buka unduhan</translation>
     </message>
     <message>
         <source>Open Uploads</source>
         <translatorcomment>Tooltip of button that let the user open uploads section of transfer manager.</translatorcomment>
-        <translation type="unfinished">Open Uploads</translation>
+        <translation type="unfinished">Buka unggahan</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -1516,22 +1624,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>No notifications for contacts</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
-        <translation type="unfinished">No notifications for contacts</translation>
+        <translation type="unfinished">Tidak ada pemberitahuan untuk kontak</translation>
     </message>
     <message>
         <source>No notifications for incoming shares</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications of incoming shares</translatorcomment>
-        <translation type="unfinished">No notifications for incoming shares</translation>
+        <translation type="unfinished">Tidak ada pemberitahuan untuk saham yang masuk</translation>
     </message>
     <message>
         <source>Payment</source>
         <translatorcomment>Label to filter notifications  by payment type</translatorcomment>
-        <translation type="obsolete">Payment</translation>
+        <translation type="obsolete">Pembayaran</translation>
     </message>
     <message>
         <source>No notifications for payments</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
-        <translation type="unfinished">No notifications for payments</translation>
+        <translation type="unfinished">Tidak ada pemberitahuan untuk pembayaran</translation>
     </message>
 </context>
 <context>
@@ -2245,7 +2353,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGA website</source>
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="unfinished">MEGA websie</translation>
+        <translation type="obsolete">MEGA websie</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
@@ -2410,57 +2518,57 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
         <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
-        <translation type="unfinished">MEGA tidak dapat terhubung dengan aman melalui SSL. Anda mungkin berada di WiFi publik dengan persyaratan tambahan.</translation>
+        <translation type="unfinished">MEGA tidak dapat terhubung dengan aman melalui SSL. Anda mungkin menggunakan Wi-Fi publik dengan persyaratan tambahan.</translation>
     </message>
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
-        <translation type="unfinished">Cloud drive</translation>
+        <translation type="unfinished">Cloud Drive</translation>
     </message>
     <message>
         <source>Error transferring folder: </source>
         <translatorcomment>Label to indicate that has been an error during a folder transfer.</translatorcomment>
-        <translation type="unfinished">Error transferring folder:</translation>
+        <translation type="unfinished">Kesalahan saat mentransfer folder:</translation>
     </message>
     <message>
         <source>Your syncs have been temporarily disabled</source>
         <translatorcomment>Notification text to inform the user that the active syncs have been disabled due to overquota or expiration state for business accounts</translatorcomment>
-        <translation type="unfinished">Your syncs have been temporarily disabled</translation>
+        <translation type="unfinished">Sinkronisasi Anda telah dinonaktifkan sementara</translation>
     </message>
     <message>
         <source>Something went wrong</source>
         <translatorcomment>Notification title shown to the user to inform that the current action has failed because the current business account is in grace period.</translatorcomment>
-        <translation type="unfinished">Ada yang salah</translation>
+        <translation type="obsolete">Ada yang salah</translation>
     </message>
     <message>
         <source>Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to the the user to inform that needs to access his account with webclient to check for pending payment issues.</translatorcomment>
-        <translation type="unfinished">Please access MEGA in a desktop browser for more information.</translation>
+        <translation type="obsolete">Silakan akses MEGA menggunakan browser desktop untuk informasi lebih lanjut.</translation>
     </message>
     <message>
         <source>Pay Now</source>
         <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account.</translatorcomment>
-        <translation type="unfinished">Pay Now</translation>
+        <translation type="unfinished">Bayar sekarang</translation>
     </message>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished">Your Business account is expired</translation>
+        <translation type="unfinished">Akun bisnis Anda kedaluwarsa</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation type="unfinished">Your account is suspended as read only until you proceed with the needed payments.</translation>
+        <translation type="unfinished">Akun Anda kedaluwarsa sebagai hanya baca sampai Anda melanjutkan pembayaran yang diperlukan.</translation>
     </message>
     <message>
         <source>Contact your business account administrator.</source>
         <translatorcomment>Notification message show to non-admin users for business accounts when there are issues that needs to be addressed by the business account admin.</translatorcomment>
-        <translation type="unfinished">Contact your business account administrator.</translation>
+        <translation type="obsolete">Hubungi administrator akun bisnis Anda.</translation>
     </message>
     <message>
         <source>There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to admin business account about a failure with the last payment and the explain the way to deal with.</translatorcomment>
-        <translation type="unfinished">There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.</translation>
+        <translation type="obsolete">Ada masalah dengan pembayaran terakhir Anda. Silakan akses MEGA menggunakan browser desktop untuk informasi lebih lanjut.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2470,17 +2578,57 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation type="unfinished">It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</translation>
+        <translation type="unfinished">Tampaknya pembayaran untuk akun bisnis Anda gagal. Akun Anda kedaluwarsa sebagai hanya baca sampai Anda melanjutkan pembayaran yang diperlukan.</translation>
     </message>
     <message>
         <source>Your account is on [A]suspended status[/A].</source>
         <translatorcomment>Message shown when the current business account is suspended. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation type="unfinished">Your account is on [A]suspended status[/A].</translation>
+        <translation type="obsolete">Status akun Anda [A]kedaluwarsa[/A].</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation type="unfinished">[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</translation>
+        <translation type="unfinished">[A]Penting:[/A] Hubungi administrator akun bisnis Anda untuk menyelesaikan masalah dan mengaktifkan akun Anda.</translation>
+    </message>
+    <message>
+        <source>Payment Failed</source>
+        <translatorcomment>Notification title shown when a payment has failed for a business account.</translatorcomment>
+        <translation type="unfinished">Pembayaran gagal</translation>
+    </message>
+    <message>
+        <source>Please resolve your payment issue to avoid suspension of your account.</source>
+        <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
+        <translation type="unfinished">Please resolve your payment issue to avoid suspension of your business account.</translation>
+    </message>
+    <message>
+        <source>Contact your business account administrator to resolve the issue and activate your account.</source>
+        <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
+        <translation type="unfinished">Hubungi administrator akun bisnis Anda untuk menyelesaikan masalah dan aktifkan akun Anda.</translation>
+    </message>
+    <message>
+        <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
+        <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
+        <translation type="unfinished">This month’s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</translation>
+    </message>
+    <message>
+        <source>Account Suspended</source>
+        <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
+        <translation type="unfinished">Account Suspended</translation>
+    </message>
+    <message>
+        <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
+        <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
+        <translation type="unfinished">Your account is currently [A]suspended[/A]. You can only browse your data.</translation>
+    </message>
+    <message>
+        <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
+        <translatorcomment>Informative message shown when a user is trying to upload data to a inshare that is in overquota state. %1 will be replaced with sharer account to inform the user.</translatorcomment>
+        <translation type="unfinished">Your upload(s) cannot proceed because %1’s account is full.</translation>
+    </message>
+    <message>
+        <source>contact</source>
+        <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
+        <translation type="unfinished">Kontak</translation>
     </message>
 </context>
 <context>
@@ -2640,7 +2788,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation type="unfinished">Upload produces recursivity</translation>
+        <translation type="unfinished">Transfer gagal karena struktur direktori rekursif</translation>
     </message>
 </context>
 <context>
@@ -2934,8 +3082,8 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Invalid folder name.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
-        <translation type="unfinished">Invalid folder name.
-Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in your folder names.</translation>
+        <translation type="unfinished">Nama folder tidak valid. 
+Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau ‘:’ dalam nama folder Anda.</translation>
     </message>
 </context>
 <context>
@@ -3075,12 +3223,27 @@ Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ i
     </message>
     <message>
         <source>Bandwidth</source>
-        <translation type="unfinished">Bandwidth</translation>
+        <translation type="obsolete">Bandwidth</translation>
     </message>
     <message>
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
-        <translation type="unfinished">popular!</translation>
+        <translation type="obsolete">popular!</translation>
+    </message>
+    <message>
+        <source>UNLIMITED</source>
+        <translatorcomment>Label to indicate that business pro plan has unlimited storage and transfers quota.</translatorcomment>
+        <translation type="unfinished">UNLIMITED</translation>
+    </message>
+    <message>
+        <source>Storage and transfers</source>
+        <translatorcomment>Label to describe storage and transfer quota for the business plan.</translatorcomment>
+        <translation type="unfinished">Storage and Transfer</translation>
+    </message>
+    <message>
+        <source>Transfer</source>
+        <translatorcomment>Label to indicate transfer quota.</translatorcomment>
+        <translation type="unfinished">Transfer</translation>
     </message>
 </context>
 <context>
@@ -3126,9 +3289,9 @@ Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ i
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="obsolete">- Tampilan dan nuansa yang ditingkatkan untuk tampilan resolusi tinggi pada Windows
-- Peningkatan kinerja GUI selama penambahan sejumlah besar unduha 
-- Pembenahan kembali wizard informasi awal, ikon baru dan peningkatan antarmuka
+        <translation type="obsolete">- Tampilan &amp; nuansa yang ditingkatkan untuk tampilan resolusi tinggi pada Windows dan Linux
+- Peningkatan kinerja GUI selama penambahan banyak unduhan
+- Pembaruan wizard informasi awal, ikon baru dan peningkatan antarmuka
 - Dukungan untuk akun bisnis
 - Perbaikan dan peningkatan bug minor lainnya</translation>
     </message>
@@ -3140,10 +3303,10 @@ Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ i
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="obsolete">- Tampilan dan nuansa yang ditingkatkan untuk tampilan resolusi tinggi di Linux 
-- Dukungan thumbnail yang diaktifkan untuk dokumen PDF
-- Peningkatan kinerja GUI selama penambahan sejumlah besar unduhan
-- Pembenahan kembali wizard informasi awal, ikon baru dan peningkatan antarmuka
+        <translation type="obsolete">- Tampilan &amp; nuansa yang ditingkatkan untuk tampilan resolusi tinggi pada Windows dan Linux
+- Aktifkan dukungan thumbnail untuk PDF
+- Peningkatan kinerja GUI selama penambahan banyak unduhan
+- Pembenahan ulang wizard informasi awal, ikon baru dan peningkatan antarmuka
 - Dukungan untuk akun bisnis
 - Perbaikan dan peningkatan bug minor lainnya</translation>
     </message>
@@ -3153,10 +3316,10 @@ Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ i
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
-        <translation type="obsolete">- Fix a crash during processing of some PDF files
-- Resume pending transfers after a crash on next startup
-- Include an option to add synchronizations from the main dialog
-- Other minor bug fixes and improvements</translation>
+        <translation type="obsolete">- Perbaiki kerusakan saat memproses beberapa file PDF
+- Lanjutkan transfer yang tertunda setelah crash pada startup berikutnya
+- Sertakan opsi untuk menambahkan sinkronisasi dari dialog utama
+- Perbaikan bug kecil lainnya dan peningkatan</translation>
     </message>
     <message>
         <source>- Fix sync issues on macOS 10.15
@@ -3166,12 +3329,12 @@ Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ i
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.5</translatorcomment>
-        <translation type="unfinished">- Fix sync issues on macOS 10.15
-- Fix transfer resumption issues for webclient and public links downloads
-- Fix a crash during processing of some PDF files
-- Resume pending transfers after a crash on next startup
-- Include option to add synchronizations from the main dialog
-- Other minor bug fixes and improvements</translation>
+        <translation type="unfinished">- Perbaiki masalah sinkronisasi pada macOS 10.15
+- Perbaiki masalah kembalinya transfer untuk webclient dan tautan publik unduhan
+- Perbaiki kerusakan saat memproses beberapa file PDF
+- Lanjutkan transfer yang tertunda setelah crash pada startup berikutnya
+- Sertakan opsi untuk menambahkan sinkronisasi dari dialog utama
+- Perbaikan dan peningkatan bug minor lainnya</translation>
     </message>
 </context>
 <context>
@@ -3967,6 +4130,16 @@ when the application starts again</source>
         <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
         <translation type="unfinished">MEGA-RECOVERYKEY</translation>
     </message>
+    <message>
+        <source>Please let us know if you find a bug</source>
+        <translatorcomment>Label to inform the user that can send a bug report for further analysis by support and dev teams.</translatorcomment>
+        <translation type="unfinished">Please let us know if you find an issue.</translation>
+    </message>
+    <message>
+        <source>Bug report</source>
+        <translatorcomment>Button label to show the bug report form.</translatorcomment>
+        <translation type="unfinished">Report issue</translation>
+    </message>
 </context>
 <context>
     <name>SetupWizard</name>
@@ -4567,7 +4740,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Scanning...</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
-        <translation type="unfinished">Scanning...</translation>
+        <translation type="obsolete">Scanning...</translation>
     </message>
     <message>
         <source>Account full</source>
@@ -4582,12 +4755,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Resume Transfers</source>
         <translatorcomment>Label in the main dialog that allows the user to resume paused transfers</translatorcomment>
-        <translation type="unfinished">Lanjutkan Transfer</translation>
+        <translation type="obsolete">Lanjutkan Transfer</translation>
     </message>
     <message>
         <source>Pause Transfers</source>
         <translatorcomment>Label in the main dialog that allows the user to pause active transfers</translatorcomment>
-        <translation type="unfinished">Hentikan Transfer</translation>
+        <translation type="obsolete">Hentikan Transfer</translation>
+    </message>
+    <message>
+        <source>Scanning</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
+        <translation type="unfinished">Memindai</translation>
+    </message>
+    <message>
+        <source>Syncing</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
+        <translation type="unfinished">Mensinkronisasikan</translation>
     </message>
 </context>
 <context>

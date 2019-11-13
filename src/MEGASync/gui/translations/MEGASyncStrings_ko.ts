@@ -198,7 +198,7 @@
     <message>
         <source>All notifications</source>
         <translatorcomment>Label to indicate that the application is showing all types of notifications</translatorcomment>
-        <translation type="unfinished">All notifications</translation>
+        <translation type="unfinished">모든 알림</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -208,7 +208,7 @@
     <message>
         <source>Payment</source>
         <translatorcomment>Label to indicate that the application is showing only payment notifications</translatorcomment>
-        <translation type="unfinished">Payment</translation>
+        <translation type="unfinished">결제</translation>
     </message>
     <message>
         <source>Incoming Shares</source>
@@ -236,7 +236,7 @@
     <message>
         <source>Payment</source>
         <translatorcomment>Label title for Payment category of a notification</translatorcomment>
-        <translation type="unfinished">Payment</translation>
+        <translation type="unfinished">결제</translation>
     </message>
     <message>
         <source>Takedown notice</source>
@@ -246,47 +246,47 @@
     <message>
         <source>New Contact Request</source>
         <translatorcomment>Notification label that indicates the user has a new contact request </translatorcomment>
-        <translation type="unfinished">New Contact Request</translation>
+        <translation type="unfinished">새 연락처 요청</translation>
     </message>
     <message>
         <source>Contact Deleted</source>
         <translatorcomment>Notification label that indicates the user has removed a contact</translatorcomment>
-        <translation type="unfinished">Contact Deleted</translation>
+        <translation type="unfinished">연락처 삭제됨</translation>
     </message>
     <message>
         <source>Contact Established</source>
         <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
-        <translation type="unfinished">Contact Established</translation>
+        <translation type="unfinished">연락처 등록됨</translation>
     </message>
     <message>
         <source>Contact Blocked</source>
         <translatorcomment>Notification label that indicates the user has blocked a contact</translatorcomment>
-        <translation type="unfinished">Contact Blocked</translation>
+        <translation type="unfinished">연락처 차단됨</translation>
     </message>
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation type="unfinished">Contact Updated</translation>
+        <translation type="unfinished">연락처 업데이트됨</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
         <translatorcomment>Notification label that indicates that the user has accepted a contact request</translatorcomment>
-        <translation type="unfinished">Contact Accepted</translation>
+        <translation type="unfinished">연락처 허용됨</translation>
     </message>
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation type="unfinished">Contact Denied</translation>
+        <translation type="unfinished">연락처 거절됨</translation>
     </message>
     <message>
         <source>Payment Info</source>
         <translatorcomment>Notification label related to a payment.</translatorcomment>
-        <translation type="unfinished">Payment Info</translation>
+        <translation type="unfinished">결제 정보</translation>
     </message>
     <message>
         <source>Takedown Notice</source>
         <translatorcomment>Notification label related to takedown notice</translatorcomment>
-        <translation type="unfinished">Takedown Notice</translation>
+        <translation type="unfinished">게시 중단 알림</translation>
     </message>
     <message>
         <source>Notification</source>
@@ -296,37 +296,37 @@
     <message>
         <source>[A] sent you a contact request</source>
         <translatorcomment>Label to indicate that [A] sent you a contact request. Placeholder will be replaced by email of user that sent the request.</translatorcomment>
-        <translation type="unfinished">[A] sent you a contact request</translation>
+        <translation type="unfinished">[A]님이 당신에게 연락처 요청을 보냈습니다</translation>
     </message>
     <message>
         <source>[A] cancelled their contact request</source>
         <translatorcomment>Label to indicate that [A] cancelled a contact request. Placeholder will be replaced by email of user that cancelled the request.</translatorcomment>
-        <translation type="unfinished">[A] cancelled their contact request</translation>
+        <translation type="unfinished">[A]님이 그들의 연락처 요청을 취소하였습니다</translation>
     </message>
     <message>
         <source>You have a contact request</source>
         <translatorcomment>Label to indicate that actual user has received a new contact request.</translatorcomment>
-        <translation type="unfinished">You have a contact request</translation>
+        <translation type="unfinished">연락처 요청이 있습니다</translation>
     </message>
     <message>
         <source>[A] deleted you as a contact</source>
         <translatorcomment>Label to indicate that [A] deleted you as a contact. Placeholder will be replaced by email of user that deleted the contact.</translatorcomment>
-        <translation type="unfinished">[A] deleted you as a contact</translation>
+        <translation type="unfinished">[A]님이 당신을 연락처에서 삭제하였습니다</translation>
     </message>
     <message>
         <source>[A] has been deleted/deactivated</source>
         <translatorcomment>Label to indicate that [A] has been deleted from your contacts. Placeholder will be replaced by email of user deleted</translatorcomment>
-        <translation type="unfinished">[A] has been deleted/deactivated</translation>
+        <translation type="unfinished">[A]님이 삭제/비활성화 되었습니다</translation>
     </message>
     <message>
         <source>[A] established you as a contact</source>
         <translatorcomment>Label to indicate that [A] has established you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation type="unfinished">[A] established you as a contact</translation>
+        <translation type="unfinished">[A]님이 당신을 연락처로 등록하였습니다</translation>
     </message>
     <message>
         <source>[A] blocked you as contact</source>
         <translatorcomment>Label to indicate that [A] has blocked you as a contact. Placeholder will be replaced by email of user.</translatorcomment>
-        <translation type="unfinished">[A] blocked you as contact</translation>
+        <translation type="unfinished">[A]님이 당신을 연락처에서 차단하였습니다</translation>
     </message>
     <message>
         <source>You ignored a contact request</source>
@@ -346,67 +346,67 @@
     <message>
         <source>[A] accepted your contact request</source>
         <translatorcomment>Label to indicate that [A] accepted you as a contact. Placeholder will be replaced by email of user that accepted the request.</translatorcomment>
-        <translation type="unfinished">[A] accepted your contact request</translation>
+        <translation type="unfinished">[A]님이 당신의 연락처 요청을 허용하였습니다</translation>
     </message>
     <message>
         <source>[A] denied your contact request</source>
         <translatorcomment>Label to indicate that [A] denied your contact request. Placeholder will be replaced by email of user that denied the request.</translatorcomment>
-        <translation type="unfinished">[A] denied your contact request</translation>
+        <translation type="unfinished">[A]님이 당신의 연락처 요청을 거절하였습니다</translation>
     </message>
     <message>
         <source>New Shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished">New Shared folder from [A]</translation>
+        <translation type="unfinished">[A]의 새 공유 폴더</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
         <translatorcomment>Label to indicate that [A] has left a shared folder. Placeholder will be replaced by email of the user that left the folder.</translatorcomment>
-        <translation type="unfinished">[A] has left the shared folder</translation>
+        <translation type="unfinished">[A]님이 공유된 폴더를 떠났습니다</translation>
     </message>
     <message>
         <source>Access to folders shared was removed</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed.</translatorcomment>
-        <translation type="unfinished">Access to folders shared was removed</translation>
+        <translation type="obsolete">공유된 폴더의 접근이 삭제되었습니다</translation>
     </message>
     <message>
         <source>[A] added 1 item</source>
         <translatorcomment>Label to indicate that [A] has added 1 item to a shared folder. Placeholder will be replaced by email of the user that made the addition.</translatorcomment>
-        <translation type="unfinished">[A] added 1 item</translation>
+        <translation type="unfinished">[A]님이 1개 항목을 추가하였습니다</translation>
     </message>
     <message>
         <source>[A] added [B] items</source>
         <translatorcomment>Label to indicate that [A] has added [B] items to a shared folder. Placeholder [A] will be replaced by email of the user that made the additions and [B] with the number of added items.</translatorcomment>
-        <translation type="unfinished">[A] added [B] items</translation>
+        <translation type="unfinished">[A]님이 [B]개 항목을 추가하였습니다</translation>
     </message>
     <message>
         <source>[A] removed 1 item</source>
         <translatorcomment>Label to indicate that [A] has removed 1 item from a shared folder. Placeholder will be replaced by email of the user that made the deletion.</translatorcomment>
-        <translation type="unfinished">[A] removed 1 item</translation>
+        <translation type="unfinished">[A]님이 1개 항목을 삭제하였습니다</translation>
     </message>
     <message>
         <source>[A] removed [B] items</source>
         <translatorcomment>Label to indicate that [A] has removed [B] items from a shared folder. Placeholder [A] will be replaced by email of the user that made the deletion and [B] with the number of removed items.</translatorcomment>
-        <translation type="unfinished">[A] removed [B] items</translation>
+        <translation type="unfinished">[A]님이 [B]개 항목을 삭제하였습니다</translation>
     </message>
     <message>
         <source>Your payment for the [A] plan was received</source>
         <translatorcomment>Label to indicate that the user has paid for a [A] PRO plan. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation type="unfinished">Your payment for the [A] plan was received</translation>
+        <translation type="unfinished">[A] 요금제에 대한 결제가 처리되었습니다</translation>
     </message>
     <message>
         <source>Your payment for the [A] plan was unsuccessful</source>
         <translatorcomment>Label to indicate that the the payment for a [A] PRO plan has failed. Placeholder will be replaced by the PRO plan name</translatorcomment>
-        <translation type="unfinished">Your payment for the [A] plan was unsuccessful</translation>
+        <translation type="unfinished">[A] 요금제에 대한 결제가 실패되었습니다</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in 1 day</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in 1 day.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan will expire in 1 day</translation>
+        <translation type="unfinished">당신의 PRO 회원권이 1일 이내에 만료됩니다</translation>
     </message>
     <message>
         <source>Your PRO membership plan will expire in [A] days</source>
         <translatorcomment>Label to indicate that the PRO membership will expire in [A] days. Placeholder will be replaced by the remaining days until plan will expire.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan will expire in [A] days</translation>
+        <translation type="unfinished">당신의 PRO 회원권이 [A]일 이내에 만료됩니다</translation>
     </message>
     <message>
         <source>PRO membership plan expiring soon</source>
@@ -416,17 +416,17 @@
     <message>
         <source>Your PRO membership plan expired 1 day ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired 1 day ago.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan expired 1 day ago</translation>
+        <translation type="unfinished">당신의 PRO 회원권이 1일 이전에 만료되었습니다</translation>
     </message>
     <message>
         <source>Your PRO membership plan expired [A] days ago</source>
         <translatorcomment>Label to indicate that the PRO membership expired [A] days ago. Placeholder will be replaced by the days from the expiration of the PRO membership.</translatorcomment>
-        <translation type="unfinished">Your PRO membership plan expired [A] days ago</translation>
+        <translation type="unfinished">당신의 PRO 회원권이 [A]일 이전에 만료되었습니다</translation>
     </message>
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been taken down. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Your publicly shared [A] ([B]) has been taken down</translation>
+        <translation type="unfinished">공개적으로 공유된 [A] ([B])가 게시 중단되었습니다.</translation>
     </message>
     <message>
         <source>file</source>
@@ -441,22 +441,27 @@
     <message>
         <source>Your publicly shared has been taken down</source>
         <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
-        <translation type="unfinished">Your publicly shared has been taken down</translation>
+        <translation type="unfinished">당신의 공개 공유가 게시 중단되었습니다.</translation>
     </message>
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been reinstated. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Your publicly shared [A] ([B]) has been reinstated</translation>
+        <translation type="unfinished">공개 공유한 [A] ([B])가 복구되었습니다</translation>
     </message>
     <message>
         <source>Your taken down has been reinstated</source>
         <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
-        <translation type="unfinished">Your taken down has been reinstated</translation>
+        <translation type="unfinished">당신의 공개 공유가 복구되었습니다.</translation>
     </message>
     <message>
         <source>Reminder</source>
         <translatorcomment>Label to indicate a reminder about a contact request.</translatorcomment>
-        <translation type="unfinished">Reminder</translation>
+        <translation type="unfinished">알림</translation>
+    </message>
+    <message>
+        <source>Access to shared folder was removed by [A]</source>
+        <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
+        <translation type="unfinished">공유된 폴더에 대한 접근이 [A]에 의해 삭제되었습니다</translation>
     </message>
 </context>
 <context>
@@ -530,6 +535,109 @@ Please, select another folder.</source>
 To prevent the syncing of entire boot volumes, which is inefficient and dangerous,
 we ask you to start with a smaller folder and add more data while MEGAsync is running.</source>
         <translation type="obsolete">동기화하려는 폴더가 너무 큽니다. 비효율적이고 위험한 전체 부트 볼륨의 동기화를 방지하려면, 작은 폴더로 시작하여 MEGAsync가 작동중일 때 데이터를 추가할 것을 요청합니다.</translation>
+    </message>
+</context>
+<context>
+    <name>BugReportDialog</name>
+    <message>
+        <source>Bug report</source>
+        <translatorcomment>Title of the dialog used to send bug reports to support team.</translatorcomment>
+        <translation type="unfinished">문제 보고</translation>
+    </message>
+    <message>
+        <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
+        <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
+        <translation type="unfinished">경험한 문제를 확실히 설명해주세요. 자세히 설명해주실 수록, 저희가 해결하기 쉬워집니다. 접수된 내용은 개발팀에서 확인할 것입니다.</translation>
+    </message>
+    <message>
+        <source>Title</source>
+        <translatorcomment>Label to indicate the title field of form bug report. The user will fill it with a suitable title describing his bug report.</translatorcomment>
+        <translation type="unfinished">제목</translation>
+    </message>
+    <message>
+        <source>Describe the problem</source>
+        <translatorcomment>Label to indicate the description input field of form bug report. The user will fill it with a description of the bug and any specific detail that wants to be included.</translatorcomment>
+        <translation type="unfinished">문제를 설명해주세요</translation>
+    </message>
+    <message>
+        <source>Attach diagnostic log files to assist with debugging</source>
+        <translatorcomment>Check box to confirm the attachment and upload of log files generated by MEGAsync to our support team.</translatorcomment>
+        <translation type="unfinished">디버그에 도움이 될 수 있는 진단 로그 파일을 첨부</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translatorcomment>Button label to cancel the dialog.</translatorcomment>
+        <translation type="unfinished">취소</translation>
+    </message>
+    <message>
+        <source>Submit</source>
+        <translatorcomment>Button label to confirm and submit bug report and log files to support team.</translatorcomment>
+        <translation type="unfinished">제출</translation>
+    </message>
+    <message>
+        <source>Optional</source>
+        <translatorcomment>Label to indicate that title field of bug report form is not mandatory.</translatorcomment>
+        <translation type="unfinished">선택적</translation>
+    </message>
+    <message>
+        <source>Bug report is uploading, it may take a few minutes</source>
+        <translatorcomment>Label to indicate that the bug report is being uploaded to our support team.</translatorcomment>
+        <translation type="unfinished">보고한 문제를 업로드중입니다, 몇 분 걸립니다.</translation>
+    </message>
+    <message>
+        <source>Bug report success!</source>
+        <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
+        <translation type="unfinished">문제가 성공적으로 보고되었습니다.</translation>
+    </message>
+    <message>
+        <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
+        <translatorcomment>Label to inform the user that he will receive a confirmation email </translatorcomment>
+        <translation type="unfinished">문제가 접수되었습니다, 확인 이메일이 전송될 것입니다.</translation>
+    </message>
+    <message>
+        <source>Error on submitting bug report</source>
+        <translatorcomment>Error message shown when some error occurs during uploading a bug report.</translatorcomment>
+        <translation type="unfinished">문제 보고를 업로드하던 중 오류 발생</translation>
+    </message>
+    <message>
+        <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
+        <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
+        <translation type="unfinished">오류로 인해 문제를 업로드할 수 없습니다. 문제가 지속될 경우 다시 시도하거나 [A]support@mega.nz[/A]를 통해 지원 팀에 연락하세요.</translation>
+    </message>
+    <message>
+        <source>Ok</source>
+        <translatorcomment>Button label to confirm and close a message box dialog.</translatorcomment>
+        <translation type="unfinished">Ok</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to exit uploading?</source>
+        <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
+        <translation type="unfinished">문제 보고 업로드를 중단하시겠습니까?</translation>
+    </message>
+    <message>
+        <source>The bug report will not be submitted if you exit uploading.</source>
+        <translatorcomment>Informative message shown to the user to inform that if he exits the dialog the bug report upload will not be submitted.</translatorcomment>
+        <translation type="unfinished">업로드를 중단하면 문제가 보고되지 않습니다.</translation>
+    </message>
+    <message>
+        <source>Continue</source>
+        <translatorcomment>Button label to continue the upload of bug report.</translatorcomment>
+        <translation type="unfinished">계속</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translatorcomment>Button label to confirm a message box.</translatorcomment>
+        <translation type="unfinished">예</translation>
+    </message>
+    <message>
+        <source>There is an ongoing report being uploaded.</source>
+        <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
+        <translation type="unfinished">현재 업로드중인 다른 문제 보고가 있습니다.</translation>
+    </message>
+    <message>
+        <source>Please wait until the current upload is completed.</source>
+        <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
+        <translation type="unfinished">현재 업로드가 완료될 때까지 기다려주세요.</translation>
     </message>
 </context>
 <context>
@@ -792,7 +900,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>All notifications</source>
         <translatorcomment>Label to indicate that all types of notifications will be shown.</translatorcomment>
-        <translation type="unfinished">All notifications</translation>
+        <translation type="unfinished">모든 알림</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -807,7 +915,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Payment</source>
         <translatorcomment>Label to indicate that only Payment notifications will be shown.</translatorcomment>
-        <translation type="unfinished">Payment</translation>
+        <translation type="unfinished">결제</translation>
     </message>
 </context>
 <context>
@@ -1157,7 +1265,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Syncs</source>
         <translatorcomment>Button label to show all synchronizations that the user has stablish (String as short as possible).</translatorcomment>
-        <translation type="vanished">동기화</translation>
+        <translation>동기화</translation>
     </message>
     <message>
         <source>MEGA website</source>
@@ -1482,12 +1590,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>All notifications</source>
         <translatorcomment>Label to indicate that all notifications will be shown.</translatorcomment>
-        <translation type="obsolete">All notifications</translation>
+        <translation type="obsolete">모든 알림</translation>
     </message>
     <message>
         <source>Open notification settings</source>
         <translatorcomment>Button label to redirect the user to notification settings for configuration</translatorcomment>
-        <translation type="unfinished">Open notification settings</translation>
+        <translation type="unfinished">알림 설정 열기</translation>
     </message>
     <message>
         <source>No notifications</source>
@@ -1497,17 +1605,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Pause/Resume</source>
         <translatorcomment>Tooltip of button that let the user Pause/Resume transfers.</translatorcomment>
-        <translation type="unfinished">Pause/Resume</translation>
+        <translation type="unfinished">일시중지/재개</translation>
     </message>
     <message>
         <source>Open Downloads</source>
         <translatorcomment>Tooltip of button that let the user open downloads section of transfer manager.</translatorcomment>
-        <translation type="unfinished">Open Downloads</translation>
+        <translation type="unfinished">다운로드 열기</translation>
     </message>
     <message>
         <source>Open Uploads</source>
         <translatorcomment>Tooltip of button that let the user open uploads section of transfer manager.</translatorcomment>
-        <translation type="unfinished">Open Uploads</translation>
+        <translation type="unfinished">업로드 열기</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -1517,22 +1625,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>No notifications for contacts</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications of contacts</translatorcomment>
-        <translation type="unfinished">No notifications for contacts</translation>
+        <translation type="unfinished">연락처 알림 없음</translation>
     </message>
     <message>
         <source>No notifications for incoming shares</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications of incoming shares</translatorcomment>
-        <translation type="unfinished">No notifications for incoming shares</translation>
+        <translation type="unfinished">들어오는 공유 알림 없음</translation>
     </message>
     <message>
         <source>Payment</source>
         <translatorcomment>Label to filter notifications  by payment type</translatorcomment>
-        <translation type="obsolete">Payment</translation>
+        <translation type="obsolete">결제</translation>
     </message>
     <message>
         <source>No notifications for payments</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications of payments</translatorcomment>
-        <translation type="unfinished">No notifications for payments</translation>
+        <translation type="unfinished">결제에 대한 알림 없음</translation>
     </message>
 </context>
 <context>
@@ -2246,7 +2354,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGA website</source>
         <translatorcomment>Label of main menu option to open MEGA website through web browser. MAX 20 characters. Keep capital letter.</translatorcomment>
-        <translation type="unfinished">MEGA 웹사이트</translation>
+        <translation type="obsolete">MEGA 웹사이트</translation>
     </message>
     <message>
         <source>MEGAsync will continue to work, however you might not receive new updates.</source>
@@ -2411,57 +2519,57 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.</source>
         <translatorcomment>Message shown when SSL (connection secure with MEGA) errors are detected.</translatorcomment>
-        <translation type="unfinished">MEGA가 SSL을 통하여 안전하게 연결할 수 없습니다. 추가 요구사항이 있는 공개 WiFi에 연결되어 있을 수 있습니다.</translation>
+        <translation type="unfinished">MEGA가 SSL을 통하여 안전하게 연결할 수 없습니다. 추가적인 요구사항이 있는 공개 와이파이에 접속했을 수 있습니다.</translation>
     </message>
     <message>
         <source>Cloud drive</source>
         <translatorcomment>Label of context menu to reach Cloud drive section at webclient. It will open your webbrowser and redirects to your cloud drive.</translatorcomment>
-        <translation type="unfinished">Cloud drive</translation>
+        <translation type="unfinished">클라우드 드라이브</translation>
     </message>
     <message>
         <source>Error transferring folder: </source>
         <translatorcomment>Label to indicate that has been an error during a folder transfer.</translatorcomment>
-        <translation type="unfinished">Error transferring folder:</translation>
+        <translation type="unfinished">폴더 전송 중 오류 발생:</translation>
     </message>
     <message>
         <source>Your syncs have been temporarily disabled</source>
         <translatorcomment>Notification text to inform the user that the active syncs have been disabled due to overquota or expiration state for business accounts</translatorcomment>
-        <translation type="unfinished">Your syncs have been temporarily disabled</translation>
+        <translation type="unfinished">당신의 동기화는 일시적으로 비활성화되었습니다</translation>
     </message>
     <message>
         <source>Something went wrong</source>
         <translatorcomment>Notification title shown to the user to inform that the current action has failed because the current business account is in grace period.</translatorcomment>
-        <translation type="unfinished">뭔가 잘못 됐습니다</translation>
+        <translation type="obsolete">뭔가 잘못 됐습니다</translation>
     </message>
     <message>
         <source>Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to the the user to inform that needs to access his account with webclient to check for pending payment issues.</translatorcomment>
-        <translation type="unfinished">Please access MEGA in a desktop browser for more information.</translation>
+        <translation type="obsolete">자세한 정보는 데스크톱 브라우저를 이용하여 MEGA에 접속하세요</translation>
     </message>
     <message>
         <source>Pay Now</source>
         <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account.</translatorcomment>
-        <translation type="unfinished">Pay Now</translation>
+        <translation type="unfinished">지금 결제</translation>
     </message>
     <message>
         <source>Your Business account is expired</source>
         <translatorcomment>Notification title to indicate that current business account is expired</translatorcomment>
-        <translation type="unfinished">Your Business account is expired</translation>
+        <translation type="unfinished">당신의 비즈니스 계정이 만료되었습니다</translation>
     </message>
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation type="unfinished">Your account is suspended as read only until you proceed with the needed payments.</translation>
+        <translation type="unfinished">당신의 계정은 필요한 결제가 이루어질 때까지 읽기 전용 상태가 유지됩니다.</translation>
     </message>
     <message>
         <source>Contact your business account administrator.</source>
         <translatorcomment>Notification message show to non-admin users for business accounts when there are issues that needs to be addressed by the business account admin.</translatorcomment>
-        <translation type="unfinished">Contact your business account administrator.</translation>
+        <translation type="obsolete">비즈니스 계정 관리자에게 연락하세요.</translation>
     </message>
     <message>
         <source>There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to admin business account about a failure with the last payment and the explain the way to deal with.</translatorcomment>
-        <translation type="unfinished">There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.</translation>
+        <translation type="obsolete">최근 결제에 문제가 있었습니다. 자세한 정보는 데스크톱 브라우저에서 MEGA에 접속하세요.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2471,17 +2579,57 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message shown to admin business account when a payment has failed. </translatorcomment>
-        <translation type="unfinished">It seems the payment for your business account has failed. Your account is suspended as read only until you proceed with the needed payments.</translation>
+        <translation type="unfinished">당신의 비즈니스 계정에 대한 결제가 실패한 것으로 보입니다. 당신의 계정은 필요한 결제가 이루어질 때까지 읽기 전용 상태가 유지됩니다.</translation>
     </message>
     <message>
         <source>Your account is on [A]suspended status[/A].</source>
         <translatorcomment>Message shown when the current business account is suspended. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation type="unfinished">Your account is on [A]suspended status[/A].</translation>
+        <translation type="obsolete">당신의 계정 상태는 [A]만료[/A]되었습니다.</translation>
     </message>
     <message>
         <source>[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</source>
         <translatorcomment>Message shown to business users when there is an issue with the account. Keep placeholders, will be replaced at runtime.</translatorcomment>
-        <translation type="unfinished">[A]Important:[/A] Contact your business account administrator to resolve the issue and activate your account.</translation>
+        <translation type="unfinished">[A]중요:[/A] 문제를 해결하고 계정을 활성화하려면 비즈니스 계정 관리자에게 연락하세요.</translation>
+    </message>
+    <message>
+        <source>Payment Failed</source>
+        <translatorcomment>Notification title shown when a payment has failed for a business account.</translatorcomment>
+        <translation type="unfinished">결제 실패</translation>
+    </message>
+    <message>
+        <source>Please resolve your payment issue to avoid suspension of your account.</source>
+        <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
+        <translation type="unfinished">비즈니스 계정의 보류를 막으려면 결제 문제를 해결하세요.</translation>
+    </message>
+    <message>
+        <source>Contact your business account administrator to resolve the issue and activate your account.</source>
+        <translatorcomment>Notification text to inform the user to contact his master business account to resolve the issue and reactivate the account.</translatorcomment>
+        <translation type="unfinished">문제를 해결하고 계정을 활성화하려면 비즈니스 계정 관리자에게 연락하세요.</translation>
+    </message>
+    <message>
+        <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
+        <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
+        <translation type="unfinished">이번 달 결제가 실패하였습니다. 비즈니스 계정의 보류를 막으려면 결제 문제를 최대한 빨리 해결하세요.</translation>
+    </message>
+    <message>
+        <source>Account Suspended</source>
+        <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
+        <translation type="unfinished">계정이 정지됨</translation>
+    </message>
+    <message>
+        <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
+        <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
+        <translation type="unfinished">당신의 계정은 현재 [A]정지[/A]되었습니다. 데이터 탐색만 할 수 있습니다.</translation>
+    </message>
+    <message>
+        <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
+        <translatorcomment>Informative message shown when a user is trying to upload data to a inshare that is in overquota state. %1 will be replaced with sharer account to inform the user.</translatorcomment>
+        <translation type="unfinished">%1의 계정이 가득 차서 업로드를 완료할 수 없습니다.</translation>
+    </message>
+    <message>
+        <source>contact</source>
+        <translatorcomment>Label to indicate a contact of a user.</translatorcomment>
+        <translation type="unfinished">연락처</translation>
     </message>
 </context>
 <context>
@@ -2641,7 +2789,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Upload produces recursivity</source>
         <translatorcomment>Error label to indicate a situation of recursivity during uploads</translatorcomment>
-        <translation type="unfinished">Upload produces recursivity</translation>
+        <translation type="unfinished">재귀적 경로 구조로 인하여 전송 실패</translation>
     </message>
 </context>
 <context>
@@ -2935,8 +3083,8 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <source>Invalid folder name.
 Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apos; or &apos;:&apos; in your folder names.</source>
         <translatorcomment>Warning message shown to the user whe he is trying to create a folder with invalid characters.</translatorcomment>
-        <translation type="unfinished">Invalid folder name.
-Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ in your folder names.</translation>
+        <translation type="unfinished">잘못된 폴더 이름.
+폴더 이름에 ‘\’ ‘/’ 또는 ‘:’ 같은 문자를 사용하지 않았는지 확인해주세요.</translation>
     </message>
 </context>
 <context>
@@ -3076,12 +3224,27 @@ Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ i
     </message>
     <message>
         <source>Bandwidth</source>
-        <translation type="unfinished">대역폭</translation>
+        <translation type="obsolete">대역폭</translation>
     </message>
     <message>
         <source>popular!</source>
         <translatorcomment>Label above the most popular PRO plan</translatorcomment>
-        <translation type="unfinished">인기!</translation>
+        <translation type="obsolete">인기!</translation>
+    </message>
+    <message>
+        <source>UNLIMITED</source>
+        <translatorcomment>Label to indicate that business pro plan has unlimited storage and transfers quota.</translatorcomment>
+        <translation type="unfinished">무제한</translation>
+    </message>
+    <message>
+        <source>Storage and transfers</source>
+        <translatorcomment>Label to describe storage and transfer quota for the business plan.</translatorcomment>
+        <translation type="unfinished">저장소와 전송</translation>
+    </message>
+    <message>
+        <source>Transfer</source>
+        <translatorcomment>Label to indicate transfer quota.</translatorcomment>
+        <translation type="unfinished">전송</translation>
     </message>
 </context>
 <context>
@@ -3127,11 +3290,11 @@ Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ i
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="obsolete">- Windows의 고해상도 디스플레이에서 사용자 경험 향상
-- 많은 수의 다운로드를 추가할 때 GUI 성능 향상
-- 초기 정보 마법사의 스타일 변경, 새 아이콘과 인터페이스 향상
+        <translation type="obsolete">- Windows와 Linux에서 고해상도 디스플레이를 위한 룩 앤 필 향상
+- 많은 다운로드를 추가하는 동안의 GUI 퍼포먼스 향상
+- 초기 설정 마법사 스타일 변경, 새 아이콘과 인터페이스 향상
 - 비즈니스 계정 지원
-- 기타 사소한 버그 수정과 향상</translation>
+- 사소한 버그 수정과 향상</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -3141,12 +3304,12 @@ Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ i
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="obsolete">- Linux의 고해상도 디스플레이에서 사용자 경험 향상
-- PDF 문서에 대한 미리 보기 지원 활성화
-- 많은 수의 다운로드를 추가할 때 GUI 성능 향상
-- 초기 정보 마법사의 스타일 변경, 새 아이콘과 인터페이스 향상
+        <translation type="obsolete">- Windows와 Linux에서 고해상도 디스플레이를 위한 룩 앤 필 향상
+- PDF의 미리 보기 지원
+- 많은 다운로드를 추가하는 동안의 GUI 퍼포먼스 향상
+- 초기 설정 마법사 스타일 변경, 새 아이콘과 인터페이스 향상
 - 비즈니스 계정 지원
-- 기타 사소한 버그 수정과 향상</translation>
+- 사소한 버그 수정과 향상</translation>
     </message>
     <message>
         <source>- Fix a crash during processing of some PDF files
@@ -3154,10 +3317,10 @@ Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ i
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.2</translatorcomment>
-        <translation type="obsolete">- 일부 PDF 파일 처리 중 튕김 수정
-- 튕긴 후 시작할 때 보류중인 전송 재개
-- 주 대화창에서 동기화 추가하는 옵션 포함
-- 기타 사소한 버그 수정과 향상</translation>
+        <translation type="obsolete">- 일부 PDF 파일 처리 중 발생하는 오류 수정
+- 오류 발생 후 다음 시작시 대기중인 전송 재개
+- 주 대화창에서 동기화를 추가할 수 있는 옵션 포함
+- 사소한 버그 수정과 향상</translation>
     </message>
     <message>
         <source>- Fix sync issues on macOS 10.15
@@ -3167,12 +3330,12 @@ Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ i
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.5</translatorcomment>
-        <translation type="unfinished">- Fix sync issues on macOS 10.15
-- Fix transfer resumption issues for webclient and public links downloads
-- Fix a crash during processing of some PDF files
-- Resume pending transfers after a crash on next startup
-- Include option to add synchronizations from the main dialog
-- Other minor bug fixes and improvements</translation>
+        <translation type="unfinished">-macOS 10.15에서의 동기화 문제 해결
+- 웹 클라이언트와 공개 링크 다운로드에서 발생하는 전송 재개 문제 해결
+- 일부 PDF 파일 처리 중 발생하는 충돌 해결
+- 충돌 후 재시작했을 때 보류중인 전송 재개
+- 주 대화창에서 동기화를 추가할 수 있는 옵션 포함
+- 다른 작은 버그 해결과 향상</translation>
     </message>
 </context>
 <context>
@@ -3966,7 +4129,17 @@ when the application starts again</source>
     <message>
         <source>MEGA-RECOVERYKEY</source>
         <translatorcomment>File name of file exported with the recovery key.</translatorcomment>
-        <translation type="unfinished">MEGA-RECOVERYKEY</translation>
+        <translation type="unfinished">MEGA-복구키</translation>
+    </message>
+    <message>
+        <source>Please let us know if you find a bug</source>
+        <translatorcomment>Label to inform the user that can send a bug report for further analysis by support and dev teams.</translatorcomment>
+        <translation type="unfinished">문제를 발견할 경우 우리에게 알려주세요.</translation>
+    </message>
+    <message>
+        <source>Bug report</source>
+        <translatorcomment>Button label to show the bug report form.</translatorcomment>
+        <translation type="unfinished">문제 보고</translation>
     </message>
 </context>
 <context>
@@ -4569,7 +4742,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Scanning...</source>
         <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
-        <translation type="unfinished">스캔중...</translation>
+        <translation type="obsolete">스캔중...</translation>
     </message>
     <message>
         <source>Account full</source>
@@ -4584,12 +4757,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Resume Transfers</source>
         <translatorcomment>Label in the main dialog that allows the user to resume paused transfers</translatorcomment>
-        <translation type="unfinished">전송 재개</translation>
+        <translation type="obsolete">전송 재개</translation>
     </message>
     <message>
         <source>Pause Transfers</source>
         <translatorcomment>Label in the main dialog that allows the user to pause active transfers</translatorcomment>
-        <translation type="unfinished">전송 일시정지</translation>
+        <translation type="obsolete">전송 일시정지</translation>
+    </message>
+    <message>
+        <source>Scanning</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is at scanning state</translatorcomment>
+        <translation type="unfinished">탐색중</translation>
+    </message>
+    <message>
+        <source>Syncing</source>
+        <translatorcomment>Information label in the main dialog to show that MEGAsync is in syncing state.</translatorcomment>
+        <translation type="unfinished">동기화중</translation>
     </message>
 </context>
 <context>
