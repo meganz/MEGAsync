@@ -189,6 +189,12 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
                 ui->sIconWidget->show();
                 MegaNode *node = megaApi->getNodeByHandle(alert->getNodeHandle());
                 notificationHeading = QString::fromUtf8(node ? node->getName() : alert->getName());
+
+                if (notificationHeading.isEmpty())
+                {
+                    notificationHeading = tr("(unknown shared folder)");
+                }
+
                 if (node)
                 {
                     delete node;
