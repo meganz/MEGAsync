@@ -262,7 +262,7 @@ font-size: 14px;
 border: 1px solid rgba(0, 0, 0, 5%);
 border-radius: 3px;
 color: #333333;
-padding: 6px 12px 6px 12px;
+padding: 3px 12px 3px 12px;
 background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
 stop: 0 #ffffff, stop: 1 #fafafa);
 }
