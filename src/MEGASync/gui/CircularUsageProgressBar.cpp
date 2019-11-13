@@ -14,7 +14,7 @@ CircularUsageProgressBar::CircularUsageProgressBar(QWidget *parent) :
     almostOqColor = QColor(QString::fromUtf8(DEFAULT_ALMOSTOQCOLOR));
 
     currentColor = fgColor;
-    textValue = QString::fromUtf8("-");
+    textValue = QString::fromUtf8("\xe2\x80\x94");
 
     mark_warning.addFile(QString::fromUtf8(":/images/strong_mark.png"));
 }
@@ -139,13 +139,13 @@ void CircularUsageProgressBar::setValue(int value, bool unknownTotal)
         value = CircularUsageProgressBar::MINVALUE;
     }
     if (pbValue != value || pbValue == -1
-            || (textValue == QString::fromUtf8("\u2014") && !unknownTotal)
-            || (textValue != QString::fromUtf8("\u2014") && unknownTotal)
+            || (textValue == QString::fromUtf8("\xe2\x80\x94") && !unknownTotal)
+            || (textValue != QString::fromUtf8("\xe2\x80\x94") && unknownTotal)
             )
     {
         if (unknownTotal)
         {
-            textValue = QString::fromUtf8("\u2014");
+            textValue = QString::fromUtf8("\xe2\x80\x94");
         }
         else
         {
