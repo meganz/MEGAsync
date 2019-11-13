@@ -2,25 +2,11 @@
 <ui version="4.0">
  <class>InfoDialog</class>
  <widget class="QDialog" name="InfoDialog">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>402</width>
-    <height>564</height>
-   </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>402</width>
-    <height>564</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>402</width>
-    <height>564</height>
-   </size>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string/>
@@ -96,16 +82,25 @@ QPushButton
    </property>
    <item>
     <widget class="QWidget" name="wInfoDialogIn" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>402</width>
        <height>564</height>
       </size>
      </property>
-     <property name="styleSheet">
-      <string notr="true"/>
+     <property name="maximumSize">
+      <size>
+       <width>402</width>
+       <height>564</height>
+      </size>
      </property>
-     <layout class="QVBoxLayout" name="verticalLayout_4">
+     <layout class="QVBoxLayout" name="verticalLayout_wInfoDialogIn">
       <property name="spacing">
        <number>0</number>
       </property>
@@ -124,21 +119,15 @@ QPushButton
       <item>
        <widget class="QWidget" name="wContainerHeader" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="MinimumExpanding">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="minimumSize">
          <size>
-          <width>400</width>
-          <height>464</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>400</width>
-          <height>494</height>
+          <width>0</width>
+          <height>0</height>
          </size>
         </property>
         <property name="styleSheet">
@@ -162,12 +151,16 @@ QPushButton
          </property>
          <item>
           <widget class="QFrame" name="wHeaderframe">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="styleSheet">
             <string notr="true">#wHeaderframe
 {
-border-top-left-radius: 16px;
-border-top-right-radius: 16px;
-background-color: #F4F6F8;
+border: none;
 }</string>
            </property>
            <property name="frameShape">
@@ -194,6 +187,12 @@ background-color: #F4F6F8;
             </property>
             <item>
              <widget class="QWidget" name="wHeader" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -300,8 +299,8 @@ stop: 0 #ffffff, stop: 1 #fafafa);
                  </property>
                  <property name="sizeHint" stdset="0">
                   <size>
-                   <width>40</width>
-                   <height>60</height>
+                   <width>0</width>
+                   <height>0</height>
                   </size>
                  </property>
                 </spacer>
@@ -504,23 +503,22 @@ border: none;
                <string notr="true">#wPSA
 {
 background-color: #F4F6F8;
-}
-</string>
+}</string>
               </property>
              </widget>
             </item>
             <item>
              <widget class="QWidget" name="wActiveTransfersContainer" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>0</width>
                 <height>0</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>436</height>
                </size>
               </property>
               <property name="styleSheet">
@@ -544,6 +542,12 @@ background-color: #F4F6F8;
                </property>
                <item>
                 <widget class="QWidget" name="wTabOptions" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -786,7 +790,7 @@ QToolButton
                              <property name="maximumSize">
                               <size>
                                <width>16777215</width>
-                               <height>15</height>
+                               <height>14</height>
                               </size>
                              </property>
                              <property name="styleSheet">
@@ -857,6 +861,12 @@ margin-right: 4px;
                </item>
                <item>
                 <widget class="QStackedWidget" name="sTabs">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="minimumSize">
                   <size>
                    <width>0</width>
@@ -867,6 +877,12 @@ margin-right: 4px;
                   <number>1</number>
                  </property>
                  <widget class="QWidget" name="pTransfersTab">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <layout class="QVBoxLayout" name="verticalLayout_10">
                    <property name="spacing">
                     <number>0</number>
@@ -885,6 +901,12 @@ margin-right: 4px;
                    </property>
                    <item>
                     <widget class="QWidget" name="wUsageContainer" native="true">
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
                      <property name="minimumSize">
                       <size>
                        <width>0</width>
@@ -918,6 +940,12 @@ margin-right: 4px;
                       </property>
                       <item>
                        <widget class="QWidget" name="wUsageStats" native="true">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
                         <property name="minimumSize">
                          <size>
                           <width>400</width>
@@ -927,7 +955,7 @@ margin-right: 4px;
                         <property name="maximumSize">
                          <size>
                           <width>400</width>
-                          <height>16777215</height>
+                          <height>68</height>
                          </size>
                         </property>
                         <property name="styleSheet">
@@ -1342,16 +1370,16 @@ font-family: &quot;Lato&quot;;
                       </item>
                       <item>
                        <widget class="QStackedWidget" name="sActiveTransfers">
+                        <property name="sizePolicy">
+                         <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                          <horstretch>0</horstretch>
+                          <verstretch>0</verstretch>
+                         </sizepolicy>
+                        </property>
                         <property name="minimumSize">
                          <size>
                           <width>0</width>
                           <height>0</height>
-                         </size>
-                        </property>
-                        <property name="maximumSize">
-                         <size>
-                          <width>16777215</width>
-                          <height>330</height>
                          </size>
                         </property>
                         <property name="styleSheet">
@@ -1364,17 +1392,11 @@ background-color: transparent;
                          <number>0</number>
                         </property>
                         <widget class="QWidget" name="pUpdated">
-                         <property name="minimumSize">
-                          <size>
-                           <width>400</width>
-                           <height>211</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>400</width>
-                           <height>330</height>
-                          </size>
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
                          </property>
                          <property name="styleSheet">
                           <string notr="true">background-color: #FFFFFF;</string>
@@ -1411,7 +1433,7 @@ background-color: transparent;
                               <property name="sizeHint" stdset="0">
                                <size>
                                 <width>0</width>
-                                <height>20</height>
+                                <height>0</height>
                                </size>
                               </property>
                              </spacer>
@@ -1462,7 +1484,7 @@ background-color: transparent;
                               <property name="sizeHint" stdset="0">
                                <size>
                                 <width>0</width>
-                                <height>20</height>
+                                <height>0</height>
                                </size>
                               </property>
                              </spacer>
@@ -1495,7 +1517,7 @@ background-color: transparent;
 margin-top: 10px;
 margin-left: 20px;
 margin-right: 20px;
-color: #3C434D;
+color: #666;
 font-family: &quot;Lato&quot;;
 font-size: 16px;
 }
@@ -1522,8 +1544,8 @@ font-size: 16px;
                             </property>
                             <property name="sizeHint" stdset="0">
                              <size>
-                              <width>20</width>
-                              <height>40</height>
+                              <width>0</width>
+                              <height>0</height>
                              </size>
                             </property>
                            </spacer>
@@ -1531,17 +1553,11 @@ font-size: 16px;
                          </layout>
                         </widget>
                         <widget class="QWidget" name="pOverquota">
-                         <property name="minimumSize">
-                          <size>
-                           <width>400</width>
-                           <height>211</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>400</width>
-                           <height>330</height>
-                          </size>
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
                          </property>
                          <property name="styleSheet">
                           <string notr="true">background-color: #FFFFFF;</string>
@@ -1757,7 +1773,7 @@ font-size: 16px;
                                <property name="sizeHint" stdset="0">
                                 <size>
                                  <width>1</width>
-                                 <height>20</height>
+                                 <height>0</height>
                                 </size>
                                </property>
                               </spacer>
@@ -1847,7 +1863,7 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                                <property name="sizeHint" stdset="0">
                                 <size>
                                  <width>1</width>
-                                 <height>20</height>
+                                 <height>0</height>
                                 </size>
                                </property>
                               </spacer>
@@ -1858,17 +1874,11 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                          </layout>
                         </widget>
                         <widget class="QWidget" name="pTransfers">
-                         <property name="minimumSize">
-                          <size>
-                           <width>400</width>
-                           <height>0</height>
-                          </size>
-                         </property>
-                         <property name="maximumSize">
-                          <size>
-                           <width>400</width>
-                           <height>330</height>
-                          </size>
+                         <property name="sizePolicy">
+                          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                           <horstretch>0</horstretch>
+                           <verstretch>0</verstretch>
+                          </sizepolicy>
                          </property>
                          <layout class="QVBoxLayout" name="verticalLayout_12">
                           <property name="leftMargin">
@@ -1885,16 +1895,16 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                           </property>
                           <item>
                            <widget class="InfoDialogTransfersWidget" name="wListTransfers" native="true">
+                            <property name="sizePolicy">
+                             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                              <horstretch>0</horstretch>
+                              <verstretch>0</verstretch>
+                             </sizepolicy>
+                            </property>
                             <property name="minimumSize">
                              <size>
                               <width>0</width>
                               <height>0</height>
-                             </size>
-                            </property>
-                            <property name="maximumSize">
-                             <size>
-                              <width>16777215</width>
-                              <height>331</height>
                              </size>
                             </property>
                            </widget>
@@ -1909,6 +1919,12 @@ background-color: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1,
                   </layout>
                  </widget>
                  <widget class="QWidget" name="pNotificationsTab">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <layout class="QVBoxLayout" name="verticalLayout_11">
                    <property name="spacing">
                     <number>0</number>
@@ -2142,8 +2158,8 @@ background-color: #FFFFFF;
                            </property>
                            <property name="sizeHint" stdset="0">
                             <size>
-                             <width>20</width>
-                             <height>40</height>
+                             <width>0</width>
+                             <height>0</height>
                             </size>
                            </property>
                           </spacer>
@@ -2157,8 +2173,8 @@ background-color: #FFFFFF;
                              </property>
                              <property name="sizeHint" stdset="0">
                               <size>
-                               <width>40</width>
-                               <height>20</height>
+                               <width>0</width>
+                               <height>0</height>
                               </size>
                              </property>
                             </spacer>
@@ -2175,8 +2191,8 @@ background-color: #FFFFFF;
                                   </property>
                                   <property name="sizeHint" stdset="0">
                                    <size>
-                                    <width>40</width>
-                                    <height>20</height>
+                                    <width>0</width>
+                                    <height>0</height>
                                    </size>
                                   </property>
                                  </spacer>
@@ -2224,8 +2240,8 @@ background-color: #FFFFFF;
                                   </property>
                                   <property name="sizeHint" stdset="0">
                                    <size>
-                                    <width>40</width>
-                                    <height>20</height>
+                                    <width>0</width>
+                                    <height>0</height>
                                    </size>
                                   </property>
                                  </spacer>
@@ -2260,8 +2276,8 @@ background-color: #FFFFFF;
                              </property>
                              <property name="sizeHint" stdset="0">
                               <size>
-                               <width>40</width>
-                               <height>20</height>
+                               <width>0</width>
+                               <height>0</height>
                               </size>
                              </property>
                             </spacer>
@@ -2275,8 +2291,8 @@ background-color: #FFFFFF;
                            </property>
                            <property name="sizeHint" stdset="0">
                             <size>
-                             <width>20</width>
-                             <height>40</height>
+                             <width>0</width>
+                             <height>0</height>
                             </size>
                            </property>
                           </spacer>
@@ -2322,22 +2338,10 @@ background-color: #FFFFFF;
       <item>
        <widget class="QWidget" name="wContainerBottom" native="true">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
-        </property>
-        <property name="minimumSize">
-         <size>
-          <width>400</width>
-          <height>58</height>
-         </size>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>400</width>
-          <height>88</height>
-         </size>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
          <property name="spacing">
@@ -2358,29 +2362,15 @@ background-color: #FFFFFF;
          <item>
           <widget class="QFrame" name="wBottomFrame">
            <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
              <horstretch>0</horstretch>
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
-           <property name="minimumSize">
-            <size>
-             <width>400</width>
-             <height>58</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>400</width>
-             <height>88</height>
-            </size>
-           </property>
            <property name="styleSheet">
             <string notr="true">#wBottomFrame
 {
-border-bottom-left-radius: 16px;
-border-bottom-right-radius: 16px;
-background-color: #F4F6F8;
+border: none;
 }</string>
            </property>
            <property name="frameShape">
@@ -2407,10 +2397,16 @@ background-color: #F4F6F8;
             </property>
             <item>
              <widget class="QWidget" name="wBlocked" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>0</width>
-                <height>0</height>
+                <height>30</height>
                </size>
               </property>
               <property name="maximumSize">
@@ -2427,13 +2423,13 @@ background-color: #F4F6F8;
                 <number>0</number>
                </property>
                <property name="leftMargin">
-                <number>16</number>
+                <number>3</number>
                </property>
                <property name="topMargin">
                 <number>6</number>
                </property>
                <property name="rightMargin">
-                <number>16</number>
+                <number>3</number>
                </property>
                <property name="bottomMargin">
                 <number>6</number>
@@ -2464,6 +2460,12 @@ background-color: #F4F6F8;
             </item>
             <item>
              <widget class="QWidget" name="wBottom" native="true">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
               <property name="minimumSize">
                <size>
                 <width>0</width>

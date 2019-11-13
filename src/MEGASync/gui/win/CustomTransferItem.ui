@@ -67,7 +67,7 @@
 {
   font-family: &quot;Lato&quot;;
   font-size: 12px;
-  color: #999999;
+  color: #999;
 }
 
 #lRemainingTime
@@ -254,13 +254,13 @@
                 <widget class="QPushButton" name="lTransferTypeCompleted">
                  <property name="minimumSize">
                   <size>
-                   <width>12</width>
+                   <width>10</width>
                    <height>12</height>
                   </size>
                  </property>
                  <property name="maximumSize">
                   <size>
-                   <width>12</width>
+                   <width>10</width>
                    <height>12</height>
                   </size>
                  </property>
@@ -269,7 +269,7 @@
                  </property>
                  <property name="iconSize">
                   <size>
-                   <width>12</width>
+                   <width>10</width>
                    <height>12</height>
                   </size>
                  </property>
@@ -665,13 +665,13 @@ background-color: rgba(0, 0, 0, 8%);
                         </property>
                         <property name="minimumSize">
                          <size>
-                          <width>12</width>
+                          <width>10</width>
                           <height>12</height>
                          </size>
                         </property>
                         <property name="maximumSize">
                          <size>
-                          <width>12</width>
+                          <width>10</width>
                           <height>12</height>
                          </size>
                         </property>
@@ -686,7 +686,7 @@ background-color: rgba(0, 0, 0, 8%);
                         </property>
                         <property name="iconSize">
                          <size>
-                          <width>12</width>
+                          <width>10</width>
                           <height>12</height>
                          </size>
                         </property>
@@ -774,9 +774,15 @@ background-color: rgba(0, 0, 0, 8%);
                 </item>
                 <item>
                  <widget class="QLabel" name="lRemainingTime">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="minimumSize">
                    <size>
-                    <width>64</width>
+                    <width>0</width>
                     <height>0</height>
                    </size>
                   </property>

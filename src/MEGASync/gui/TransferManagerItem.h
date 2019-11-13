@@ -28,7 +28,7 @@ public:
     void updateTransfer();
     void updateAnimation();
     void updateFinishedTime();
-    void mouseHoverTransfer(bool isHover);
+    void mouseHoverTransfer(bool isHover, const QPoint &pos);
     void loadDefaultTransferIcon();
 
     QSize minimumSizeHint() const;

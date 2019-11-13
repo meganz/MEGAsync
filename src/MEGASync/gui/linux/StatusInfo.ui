@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="mouseTracking">
-   <bool>true</bool>
+   <bool>false</bool>
   </property>
   <property name="windowTitle">
    <string notr="true"/>
@@ -78,6 +78,11 @@ border: none;
      </property>
      <property name="mouseTracking">
       <bool>true</bool>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#bIconState {
+margin-top: 4px;
+}</string>
      </property>
      <property name="text">
       <string/>

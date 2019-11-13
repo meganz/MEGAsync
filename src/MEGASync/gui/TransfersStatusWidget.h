@@ -50,6 +50,9 @@ private:
     int inpoint;
     int outpoint;
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event);
+
 };
 
 #endif // TransfersStatusWidget_H

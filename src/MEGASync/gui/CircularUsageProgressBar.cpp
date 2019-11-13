@@ -14,7 +14,7 @@ CircularUsageProgressBar::CircularUsageProgressBar(QWidget *parent) :
     almostOqColor = QColor(QString::fromUtf8(DEFAULT_ALMOSTOQCOLOR));
 
     currentColor = fgColor;
-    textValue = QString::fromUtf8("-");
+    textValue = QString::fromUtf8("\xe2\x80\x94");
 
     mark_warning.addFile(QString::fromUtf8(":/images/strong_mark.png"));
 }
@@ -132,15 +132,25 @@ int CircularUsageProgressBar::getValue() const
     return pbValue;
 }
 
-void CircularUsageProgressBar::setValue(int value)
+void CircularUsageProgressBar::setValue(int value, bool unknownTotal)
 {
     if (value < CircularUsageProgressBar::MINVALUE)
     {
         value = CircularUsageProgressBar::MINVALUE;
     }
-    if (pbValue != value || pbValue == -1)
+    if (pbValue != value || pbValue == -1
+            || (textValue == QString::fromUtf8("\xe2\x80\x94") && !unknownTotal)
+            || (textValue != QString::fromUtf8("\xe2\x80\x94") && unknownTotal)
+            )
     {
-        textValue = QString::number(value).append(QString::fromUtf8("%"));
+        if (unknownTotal)
+        {
+            textValue = QString::fromUtf8("\xe2\x80\x94");
+        }
+        else
+        {
+            textValue = QString::number(value).append(QString::fromUtf8("%"));
+        }
         pbValue = value;
         if (value >= CircularUsageProgressBar::MAXVALUE)
         {

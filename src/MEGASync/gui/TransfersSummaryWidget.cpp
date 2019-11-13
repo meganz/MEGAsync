@@ -12,7 +12,7 @@ TransfersSummaryWidget::TransfersSummaryWidget(QWidget *parent) :
     ui(new Ui::TransfersSummaryWidget)
 {
     ui->setupUi(this);
-    ui->bTransfersStatus->setAttribute(Qt::WA_TransparentForMouseEvents);
+//    ui->bTransfersStatus->setAttribute(Qt::WA_TransparentForMouseEvents);
 
     status = Status::EXPANDED;
     minwidth = 28;
@@ -156,6 +156,7 @@ void TransfersSummaryWidget::paintEvent(QPaintEvent *event)
     painter.setPen(pengrey);
     painter.drawArc( this->width() - diamoutside - marginoutside, marginoutside,  diamoutside,  diamoutside, 360*12, 360*8);
 
+    neverPainted = false;
 }
 
 void TransfersSummaryWidget::setPercentUploads(const qreal &value)
@@ -180,6 +181,7 @@ void TransfersSummaryWidget::initialize()
     originalheight = this->height();
     originalwidth = this->width();
     minwidth = originalheight;
+    neverPainted = true;
 
     calculateSpeed();
 
@@ -541,7 +543,10 @@ void TransfersSummaryWidget::updateDownloadsText(bool force)
         dlEllipseWidth = 0;
         if (prevDlEllipseWidth != dlEllipseWidth)
         {
-            expand();
+            if (isVisible())
+            {
+                expand();
+            }
         }
         return;
     }
@@ -556,7 +561,10 @@ void TransfersSummaryWidget::updateDownloadsText(bool force)
             dlMaxWidthText = dlEllipseWidth - (fontMarginXLeft + fontMarginXRight);
             if (prevDlEllipseWidth != dlEllipseWidth)
             {
-                expand();
+                if (isVisible())
+                {
+                    expand();
+                }
             }
         }
     }
@@ -634,6 +642,11 @@ void TransfersSummaryWidget::expand(bool noAnimate)
     }
 
     return doResize(goalwidth, noAnimate);
+}
+
+void TransfersSummaryWidget::showEvent(QShowEvent *event)
+{
+    expand(); //This will trigger an animation if size has changed
 }
 
 void TransfersSummaryWidget::updateSizes()

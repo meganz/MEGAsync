@@ -27,13 +27,15 @@ UpgradeDialog::UpgradeDialog(MegaApi *megaApi, MegaPricing *pricing, QWidget *pa
 
     finishTime = 0;
 
-    ui->lDescRecommendation->setTextFormat(Qt::RichText);
+    ui->lDescInfo->setTextFormat(Qt::RichText);
+    ui->lDescInfo->setText(QString::fromUtf8("<p style=\"line-height: 20px;\">") + ui->lDescInfo->text() + QString::fromUtf8("</p>"));
+    ui->lDescRecommendation->setTextFormat(Qt::RichText);   
     ui->lDescRecommendation->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
     ui->lDescRecommendation->setOpenExternalLinks(true);
     refreshAccountDetails();
 
     plansLayout = new QHBoxLayout();
-    plansLayout->setContentsMargins(0,0,0,0);
+    plansLayout->setContentsMargins(18,0,18,0);
     plansLayout->setSpacing(0);
 
     delete ui->wPlans->layout();
@@ -92,11 +94,14 @@ void UpgradeDialog::refreshAccountDetails()
             }
         }
 
-        ui->lDescRecommendation->setText(tr("The IP address you are using has utilised %1 of data transfer in the last 6 hours, which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A], which will give you your own transfer quota package and also ample extra storage space. ")
+        ui->lDescRecommendation->setText(QString::fromUtf8("<p style=\"line-height: 20px;\">") + tr("The IP address you are using has utilised %1 of data transfer in the last 6 hours,"
+                                                                                                    " which took you over our current limit. To remove this limit, you can [A]upgrade to PRO[/A],"
+                                                                                                    " which will give you your own transfer quota package and also ample extra storage space. ")
                                         .arg(Utilities::getSizeString(preferences->temporalBandwidth()))
                                         .replace(QString::fromUtf8("[A]"), QString::fromUtf8("<a href=\"mega://#%1\"><span style=\"color:#d90007; text-decoration:none;\">").arg(url))
                                         .replace(QString::fromUtf8("[/A]"), QString::fromUtf8("</span></a>"))
-                                        .replace(QString::fromUtf8("6"), QString::number(preferences->temporalBandwidthInterval())));
+                                        .replace(QString::fromUtf8(" 6 "), QString::fromUtf8(" ").append(QString::number(preferences->temporalBandwidthInterval())).append(QString::fromUtf8(" ")))
+                                         + QString::fromUtf8("</p>"));
     }
     else
     {
@@ -179,6 +184,11 @@ void UpgradeDialog::changeEvent(QEvent *event)
     if (event->type() == QEvent::LanguageChange)
     {
         ui->retranslateUi(this);
+        if (!ui->lDescInfo->text().contains(QString::fromUtf8("line-height")))
+        {
+            ui->lDescInfo->setText(QString::fromUtf8("<p style=\"line-height: 20px;\">") + ui->lDescInfo->text() + QString::fromUtf8("</p>"));
+        }
+        refreshAccountDetails();
     }
     QDialog::changeEvent(event);
 }

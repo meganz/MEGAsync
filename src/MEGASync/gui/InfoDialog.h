@@ -34,7 +34,8 @@ class InfoDialog : public QDialog, public mega::MegaTransferListener
         STATE_PAUSED,
         STATE_WAITING,
         STATE_INDEXING,
-        STATE_UPDATED
+        STATE_UPDATED,
+        STATE_SYNCING,
     };
 
 public:
@@ -49,6 +50,7 @@ public:
     void transferFinished(int error);
     void setIndexing(bool indexing);
     void setWaiting(bool waiting);
+    void setSyncing(bool value);
     void setOverQuotaMode(bool state);
     void setAccountType(int accType);
     void addSync(mega::MegaHandle h);
@@ -70,6 +72,7 @@ public:
     void moveArrow(QPoint p);
 #endif
 
+    void on_bStorageDetails_clicked();
     void regenerateLayout(InfoDialog* olddialog = nullptr);
     HighDpiResize highDpiResize;
 #ifdef _WIN32
@@ -80,6 +83,8 @@ public:
     void setUnseenTypeNotifications(int all, int contacts, int shares, int payment);
 
     long long getUnseenNotifications() const;
+
+    void closeSyncsMenu();
 
 private:
     void drawAvatar(QString email);
@@ -129,7 +134,11 @@ private slots:
     void on_bBuyQuota_clicked();
 
     void onAnimationFinished();
+    void onAnimationFinishedBlockedError();
+
     void sTabsChanged(int tab);
+
+    void highLightMenuEntry(QAction* action);
 
 signals:
     void openTransferManager(int tab);
@@ -143,8 +152,6 @@ private:
     QPushButton *arrow;
     QWidget *dummy; // Patch to let text input on line edits of GuestWidget
 #endif
-
-    QMenu *transferMenu;
 
     FilterAlertWidget *filterMenu;
 
@@ -165,8 +172,9 @@ private:
     int uploadActiveTransferTag, downloadActiveTransferTag;
     int uploadActiveTransferState, downloadActiveTransferState;
 
-    bool indexing;
+    bool indexing; //scanning
     bool waiting;
+    bool syncing; //if any sync is in syncing state
     GuestWidget *gWidget;
     int state;
     bool overQuotaState;
@@ -177,6 +185,8 @@ private:
     bool isShown = false;
     long long unseenNotifications = 0;
 
+    AccountDetailsDialog* accountDetailsDialog;
+
 #ifdef Q_OS_LINUX
     bool doNotActAsPopup;
 #endif
@@ -184,7 +194,19 @@ private:
     QPropertyAnimation *animation;
     QGraphicsOpacityEffect *opacityEffect;
 
+    bool shownBlockedError = false;
+    QPropertyAnimation *minHeightAnimationBlockedError;
+    QPropertyAnimation *maxHeightAnimationBlockedError;
+    QParallelAnimationGroup animationGroupBlockedError;
+    void hideBlockedError(bool animated = false);
+    void showBlockedError();
+
+    std::unique_ptr<QMenu> syncsMenu;
+    MenuItemAction *addSyncAction;
+    MenuItemAction *lastHovered;
+
 protected:
+    void setBlockedStateLabel(QString state);
     void updateBlockedState();
     void updateState();
     void changeEvent(QEvent * event);

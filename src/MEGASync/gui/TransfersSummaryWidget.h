@@ -59,6 +59,9 @@ public:
 
     void setPercentUploads(const qreal &value);
     void setPercentDownloads(const qreal &value);
+
+    bool alwaysAnimateOnShow = false;
+    bool neverPainted = true;
 signals:
     void pauseResumeClicked();
     void generalAreaClicked();
@@ -171,6 +174,7 @@ private:
 
     bool isWithinPseudoEllipse(QPoint pos, int x, int margin, int w, int diam);
 
+    void showEvent(QShowEvent *event);
 protected:
     virtual void mouseMoveEvent(QMouseEvent *event);
     virtual void mouseReleaseEvent(QMouseEvent *event);

@@ -71,39 +71,22 @@ void PasteMegaLinksDialog::changeEvent(QEvent *event)
 QStringList PasteMegaLinksDialog::extractLinks(QString text)
 {
     QStringList finalLinks;
-    QStringList linkHeaders;
-    linkHeaders << QString::fromUtf8("#!") << QString::fromUtf8("#F!");
+    QString separator;
+    separator.append(QString::fromAscii("mega://").append(QString::fromUtf8("|")));
+    separator.append(QString::fromAscii("https://mega.co.nz/").append(QString::fromUtf8("|")));
+    separator.append(QString::fromAscii("https://mega.nz/").append(QString::fromUtf8("|")));
+    separator.append(QString::fromAscii("http://mega.co.nz/").append(QString::fromUtf8("|")));
+    separator.append(QString::fromAscii("http//mega.nz/"));
 
-    for (int i = 0; i < linkHeaders.size(); i++)
+    QStringList tempLinks = text.split(QRegExp(separator));
+    tempLinks.removeAt(0);
+
+    for (int i = 0; i < tempLinks.size(); i++)
     {
-        QString linkHeader = linkHeaders[i];
-
-        QStringList tempLinks = text.split(QString::fromAscii("https://mega.co.nz/").append(linkHeader), QString::KeepEmptyParts, Qt::CaseInsensitive);
-        tempLinks.removeAt(0);
-
-        QStringList tempLinks2 = text.split(QString::fromAscii("mega://").append(linkHeader), QString::KeepEmptyParts, Qt::CaseInsensitive);
-        tempLinks2.removeAt(0);
-        tempLinks.append(tempLinks2);
-
-        QStringList tempLinksNewSite = text.split(QString::fromAscii("https://mega.nz/").append(linkHeader), QString::KeepEmptyParts, Qt::CaseInsensitive);
-        tempLinksNewSite.removeAt(0);
-        tempLinks.append(tempLinksNewSite);
-
-        QStringList tempLinksHttp = text.split(QString::fromAscii("http://mega.co.nz/").append(linkHeader), QString::KeepEmptyParts, Qt::CaseInsensitive);
-        tempLinksHttp.removeAt(0);
-        tempLinks.append(tempLinksHttp);
-
-        QStringList tempLinksNewSiteHttp = text.split(QString::fromAscii("http://mega.nz/").append(linkHeader), QString::KeepEmptyParts, Qt::CaseInsensitive);
-        tempLinksNewSiteHttp.removeAt(0);
-        tempLinks.append(tempLinksNewSiteHttp);
-
-        for (int i = 0; i < tempLinks.size(); i++)
+        QString link = checkLink(tempLinks[i]);
+        if (!link.isNull())
         {
-            QString link = checkLink(tempLinks[i].insert(0, QString::fromAscii("https://mega.nz/").append(linkHeader)));
-            if (!link.isNull())
-            {
-                finalLinks.append(link);
-            }
+            finalLinks.append(link);
         }
     }
 
@@ -115,37 +98,49 @@ QString PasteMegaLinksDialog::checkLink(QString link)
     link = QUrl::fromPercentEncoding(link.toUtf8());
     link.replace(QChar::fromAscii(' '), QChar::fromAscii('+'));
 
-    // File link
-    if (link.at(26) == QChar::fromAscii('!'))
-    {
-        if (link.length() < FILE_LINK_SIZE)
-        {
-            return QString();
-        }
+    QString urlLink = QString::fromUtf8("https://mega.nz/");
 
+    if (rxHeaderFolderSubfolder.indexIn(link) != -1)
+    {
+        link.truncate(FOLDER_LINK_WITH_SUBFOLDER_SIZE);
+        return urlLink.append(link);
+    }
+    else if (rxHeaderFolderSubfolderNew.indexIn(link) != -1)
+    {
+        link.truncate(NEW_FOLDER_LINK_WITH_SUBFOLDER_SIZE);
+        return urlLink.append(link);
+    }
+    else if (rxHeaderFolderFile.indexIn(link) != -1)
+    {
+        link.truncate(FOLDER_LINK_WITH_FILE_SIZE);
+        return urlLink.append(link);
+    }
+    else if (rxHeaderFolderFileNew.indexIn(link) != -1)
+    {
+        link.truncate(NEW_FOLDER_LINK_WITH_FILE_SIZE);
+        return urlLink.append(link);
+    }
+    else if (rxHeaderFile.indexIn(link) != -1)
+    {
         link.truncate(FILE_LINK_SIZE);
-        return link;
+        return urlLink.append(link);
     }
-
-    // Folder link
-    if (link.at(27) == QChar::fromAscii('!'))
+    else if (rxHeaderFileNew.indexIn(link) != -1)
     {
-        if (link.length() >= FOLDER_LINK_WITH_SUBFOLDER_SIZE && link.count(QChar::fromAscii('!')) == 3)
-        {
-            link.truncate(FOLDER_LINK_WITH_SUBFOLDER_SIZE);
-        }
-        else
-        {
-            if (link.length() < FOLDER_LINK_SIZE)
-            {
-                return QString();
-            }
-
-            link.truncate(FOLDER_LINK_SIZE);
-        }
-
-        return link;
+        link.truncate(NEW_FILE_LINK_SIZE);
+        return urlLink.append(link);
     }
+    else if (rxHeaderFolder.indexIn(link) != -1)
+    {
+        link.truncate(FOLDER_LINK_SIZE);
+        return urlLink.append(link);
+    }
+    else if (rxHeaderFolderNew.indexIn(link) != -1)
+    {
+        link.truncate(NEW_FOLDER_LINK_SIZE);
+        return urlLink.append(link);
+    }
+
 
     return QString();
 }

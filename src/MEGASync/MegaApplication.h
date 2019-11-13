@@ -49,6 +49,8 @@
 
 Q_DECLARE_METATYPE(QQueue<QString>)
 
+extern std::unique_ptr<MegaSyncLogger> gLogger;
+
 class TransferMetaData
 {
 public:
@@ -89,7 +91,7 @@ enum GetUserStatsReason {
     USERSTATS_SHOWMAINDIALOG,
 };
 
-class MegaApplication : public QApplication, public mega::MegaListener
+class MegaApplication : public QApplication, public mega::MegaListener, public StorageDetailsObserved
 {
     Q_OBJECT
 
@@ -214,7 +216,7 @@ public slots:
     void onUpdateNotFound(bool requested);
     void onUpdateError();
     void rebootApplication(bool update = true);
-    void exitApplication();
+    void exitApplication(bool force = false);
     void highLightMenuEntry(QAction* action);
     void pauseTransfers(bool pause);
     void checkNetworkInterfaces();
@@ -320,7 +322,6 @@ protected:
     MenuItemAction *uploadAction;
     MenuItemAction *downloadAction;
     MenuItemAction *streamAction;
-    MenuItemAction *webAction;
     MenuItemAction *myCloudAction;
     MenuItemAction *addSyncAction;
 
@@ -377,6 +378,7 @@ protected:
     long long cleaningSchedulerExecution;
     long long lastUserActivityExecution;
     long long lastTsBusinessWarning;
+    long long lastTsErrorMessageShown;
     bool almostOQ;
     int storageState;
     int appliedStorageState;
@@ -410,6 +412,7 @@ protected:
     static QString appPath;
     static QString appDirPath;
     static QString dataPath;
+    static QString lastNotificationError;
 
     QThread *updateThread;
     UpdateTask *updateTask;
@@ -418,7 +421,6 @@ protected:
     QNetworkConfigurationManager networkConfigurationManager;
     QList<QNetworkInterface> activeNetworkInterfaces;
     QMap<QString, QString> pendingLinks;
-    MegaSyncLogger *logger;
     QPointer<TransferManager> transferManager;
     QMap<int, mega::MegaTransfer*> finishedTransfers;
     QList<mega::MegaTransfer*> finishedTransferOrder;
@@ -430,6 +432,7 @@ protected:
     bool paused;
     bool indexing;
     bool waiting;
+    bool syncing; //if any sync is in syncing state
     bool updated;
     bool checkupdate;
     bool updateBlocked;
