@@ -3,16 +3,6 @@ set(MEGA_PROJECT_NAME "MEGAsync-desktop-" CACHE STRING "Project name, SDK will d
 
 PROJECT(${MEGA_PROJECT_NAME})
 
-if (WIN32)
-    if("${CMAKE_GENERATOR}" MATCHES "(Win64|IA64)")
-        SET(build_64_bit 1)
-    elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
-        SET(build_64_bit 0)
-    endif()
-else()
-    set (build_64_bit 1 CACHE STRING "")
-endif()
-
 set (UNCHECKED_ITERATORS 0 CACHE STRING "")
 
 set (USE_LIBUV 1 CACHE STRING "")
@@ -24,10 +14,11 @@ set (USE_FFMPEG 1 CACHE STRING "")
 set (HAVE_PDFIUM 1 CACHE STRING "")
 set (USE_FREEIMAGE 0 CACHE STRING "") # thumbnail generation etc done with QT, so no need for freeimage
 set (USE_QT 1)
-set (QT_DIR "C:/Qt/Qt5.6.3/5.6.3/msvc2015" CACHE STRING "")
 
 
 set (USE_PREBUILT_3RDPARTY 1 CACHE STRING "")
+
+set (MEGA_LINK_DYNAMIC_CRT 1)  # since we are linking with QT official DLLs
 
 set(RepoDir "${CMAKE_CURRENT_LIST_DIR}/../.."  CACHE STRING "")
 set(MEGAsyncDir "${RepoDir}/src/MEGASync")
@@ -42,6 +33,14 @@ message("CONFIG: ${CONFIG}")
 
 # this line points to the MEGA SDK repo that you want to build MEGAsync against
 include(${MEGAsyncDir}/mega/contrib/cmake/CMakeLists.txt)
+
+
+if (build_64_bit)
+    SET (QT_DIR "C:/Qt/Qt5.6.3_64/5.6.3/msvc2015_64" CACHE STRING "")
+else()
+    SET (QT_DIR "C:/Qt/Qt5.6.3/5.6.3/msvc2015" CACHE STRING "")
+ENDIF()
+
 
 set(AUTOMOC ON)
 
@@ -345,7 +344,7 @@ target_link_libraries(MEGAsync Mega
             optimized "${QT_DIR}/lib/Qt5WinExtras.lib" 
             ole32 Shell32 crypt32 taskschd Kernel32.lib Iphlpapi.lib Userenv.lib Psapi.lib )
 
-#set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS "/ENTRY:\"wWinMainCRTStartup\" /SUBSYSTEM:WINDOWS" )
+set_target_properties(MEGAsync  PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup /LARGEADDRESSAWARE /SAFESEH:NO /DEBUG" )
 
 
 # Amend manifest to tell Windows that the application is DPI aware (needed for Windows 8.1 and up)

@@ -2915,8 +2915,26 @@ void Preferences::clearAll()
 
 void Preferences::sync()
 {
+    mutex.lock();
     settings->sync();
+    mutex.unlock();
 }
+
+void Preferences::deferSyncs(bool b)
+{
+    mutex.lock();
+    settings->deferSyncs(b);
+    mutex.unlock();
+}
+
+bool Preferences::needsDeferredSync()
+{
+    mutex.lock();
+    bool b = settings->needsDeferredSync();
+    mutex.unlock();
+    return b;
+}
+
 
 void Preferences::login(QString account)
 {
