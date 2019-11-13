@@ -6703,6 +6703,8 @@ void MegaApplication::refreshStorageUIs()
 
 void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
 {
+    DeferPreferencesSyncForScope deferrer(this);
+
     if (event->getType() == MegaEvent::EVENT_CHANGE_TO_HTTPS)
     {
         preferences->setUseHttpsOnly(true);
@@ -6845,6 +6847,8 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
     {
         return;
     }
+
+    DeferPreferencesSyncForScope deferrer(this);
 
     if (sslKeyPinningError && request->getType() != MegaRequest::TYPE_LOGOUT)
     {
@@ -7689,6 +7693,8 @@ void MegaApplication::onTransferStart(MegaApi *api, MegaTransfer *transfer)
         return;
     }
 
+    DeferPreferencesSyncForScope deferrer(this);
+
     if (transfer->getType() == MegaTransfer::TYPE_DOWNLOAD)
     {
         HTTPServer::onTransferDataUpdate(transfer->getNodeHandle(),
@@ -7730,6 +7736,8 @@ void MegaApplication::onTransferFinish(MegaApi* , MegaTransfer *transfer, MegaEr
     {
         return;
     }
+
+    DeferPreferencesSyncForScope deferrer(this);
 
     // check if it's a top level transfer
     int folderTransferTag = transfer->getFolderTransferTag();
@@ -7929,6 +7937,8 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
         return;
     }
 
+    DeferPreferencesSyncForScope deferrer(this);
+
     if (transferManager)
     {
         transferManager->onTransferUpdate(megaApi, transfer);
@@ -7980,6 +7990,41 @@ void MegaApplication::onTransferUpdate(MegaApi *, MegaTransfer *transfer)
     }
 }
 
+void MegaApplication::onCheckDeferredPreferencesSyncTimeout()
+{
+    onCheckDeferredPreferencesSync(true);
+}
+
+void MegaApplication::onCheckDeferredPreferencesSync(bool timeout)
+{
+    if (appfinished)
+    {
+        return;
+    }
+
+    // don't execute too often or the dialog locks up, eg. queueing a folder with 1k items for upload/download
+    if (timeout)
+    {
+        onDeferredPreferencesSyncTimer.reset();
+        if (preferences->needsDeferredSync())
+        {
+            preferences->sync();
+        }
+    }
+    else
+    {
+        if (!onDeferredPreferencesSyncTimer)
+        {
+            onDeferredPreferencesSyncTimer.reset(new QTimer(this));
+            connect(onDeferredPreferencesSyncTimer.get(), SIGNAL(timeout()), this, SLOT(onCheckDeferredPreferencesSyncTimeout()));
+
+            onDeferredPreferencesSyncTimer->setSingleShot(true);
+            onDeferredPreferencesSyncTimer->setInterval(100);
+            onDeferredPreferencesSyncTimer->start();
+        }
+    }
+}
+
 //Called when there is a temporal problem in a transfer
 void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError* e)
 {
@@ -7987,6 +8032,8 @@ void MegaApplication::onTransferTemporaryError(MegaApi *api, MegaTransfer *trans
     {
         return;
     }
+
+    DeferPreferencesSyncForScope deferrer(this);
 
     if (transferManager)
     {
@@ -8117,6 +8164,8 @@ void MegaApplication::onUsersUpdate(MegaApi *, MegaUserList *userList)
         return;
     }
 
+    DeferPreferencesSyncForScope deferrer(this);
+
     MegaHandle myHandle = megaApi->getMyUserHandleBinary();
     for (int i = 0; i < userList->size(); i++)
     {
@@ -8159,6 +8208,8 @@ void MegaApplication::onNodesUpdate(MegaApi* , MegaNodeList *nodes)
     {
         return;
     }
+
+    DeferPreferencesSyncForScope deferrer(this);
 
     MegaApi::log(MegaApi::LOG_LEVEL_INFO, QString::fromUtf8("%1 updated files/folders").arg(nodes->size()).toUtf8().constData());
 
@@ -8333,6 +8384,8 @@ void MegaApplication::onSyncFileStateChanged(MegaApi *, MegaSync *, string *loca
         return;
     }
 
+    DeferPreferencesSyncForScope deferrer(this);
+
     Platform::notifyItemChange(localPath, newState);
 }
 
@@ -8351,6 +8404,8 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
     {
         return;
     }
+
+    DeferPreferencesSyncForScope deferrer(app);
 
     megaApi->enableTransferResumption();
     Preferences *preferences = Preferences::instance();

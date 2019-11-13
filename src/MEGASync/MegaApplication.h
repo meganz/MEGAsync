@@ -128,7 +128,7 @@ public:
     virtual void onGlobalSyncStateChanged(mega::MegaApi *api, bool timeout = false);
     virtual void onSyncStateChanged(mega::MegaApi *api,  mega::MegaSync *sync);
     virtual void onSyncFileStateChanged(mega::MegaApi *api, mega::MegaSync *sync, std::string *localPath, int newState);
-
+    virtual void onCheckDeferredPreferencesSync(bool timeout);
 
     mega::MegaApi *getMegaApi() { return megaApi; }
 
@@ -256,6 +256,7 @@ public slots:
     void showNotificationFinishedTransfers(unsigned long long appDataId);
     void renewLocalSSLcert();
     void onGlobalSyncStateChangedTimeout();
+    void onCheckDeferredPreferencesSyncTimeout();
 #ifdef __APPLE__
     void enableFinderExt();
 #endif
@@ -339,6 +340,7 @@ protected:
 
     QTimer *connectivityTimer;
     std::unique_ptr<QTimer> onGlobalSyncStateChangedTimer;
+    std::unique_ptr<QTimer> onDeferredPreferencesSyncTimer;
     QTimer proExpirityTimer;
     int scanningAnimationIndex;
     SetupWizard *setupWizard;
@@ -452,6 +454,28 @@ protected:
     long long lastSSLcertUpdate;
     bool nodescurrent;
     int businessStatus = -2;
+    friend class DeferPreferencesSyncForScope;
+};
+
+class DeferPreferencesSyncForScope
+{
+    // This class is provided as an easy way to avoid updating the preferences file so often that it becomes a performance issue
+    // eg. when 1000 transfers all have a temporary error callback at once.
+    // It causes sync() to set a flag instead of actually rewriting the file, and the app will start a timer
+    // to do the actual sync() in 100ms instead.   Any other sync() calls (that are also protected by this class) in the meantime are effectively skipped.
+    MegaApplication* app;
+
+public:
+    DeferPreferencesSyncForScope(MegaApplication* a) : app(a)
+    {
+        app->preferences->deferSyncs(true);
+    }
+
+    ~DeferPreferencesSyncForScope()
+    {
+        app->preferences->deferSyncs(false);
+        app->onCheckDeferredPreferencesSync(false);
+    }
 };
 
 class MEGASyncDelegateListener: public mega::QTMegaListener
