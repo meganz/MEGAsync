@@ -224,10 +224,27 @@ void BugReportDialog::onReadyForReporting()
                                                                          .arg(QString::fromUtf8(std::unique_ptr<MegaUser>(megaApi->getMyUser())->getEmail()))};
 
             QFileInfo joinLogsFile(logDir.absolutePath().append(fileFormat).append(QString::fromUtf8(".gz")));
+#ifdef _WIN32
+            FILE * pFile = nullptr;
+            fopen(joinLogsFile.absoluteFilePath().toStdString().c_str(), "a+b");
+
+            errno_t er = _wfopen_s(&pFile, joinLogsFile.absoluteFilePath().toStdWString().c_str(), L"a+b");
+            if (er)
+            {
+                megaApi->log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error opening file for joining log zip files (%1) : %2")
+                             .arg(er).arg(joinLogsFile.filePath()).toUtf8().constData());
+                pFile = nullptr; //just in case
+            }
+
+#else
             FILE * pFile = fopen(joinLogsFile.absoluteFilePath().toStdString().c_str(), "a+b");
-            if (pFile == NULL)
+#endif
+            if (!pFile)
             {
                 std::cerr << "Error opening file for joining log zip files " << std::endl;
+                megaApi->log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error opening file for joining log zip files: %1").arg(joinLogsFile.filePath()).toUtf8().constData());
+
+
                 gLogger->resumeAfterReporting();
                 preparing = false;
                 return;
@@ -246,11 +263,18 @@ void BugReportDialog::onReadyForReporting()
             {
                 try
                 {
+#ifdef _WIN32
+                    gzcopy(i.absoluteFilePath().toStdWString().c_str(), --nLogFiles, &crc, &tot, pFile);
+#else
                     gzcopy(i.absoluteFilePath().toStdString().c_str(), --nLogFiles, &crc, &tot, pFile);
+#endif
                 }
                 catch (const std::exception& e)
                 {
                     std::cerr << "Error joining zip files for bug report " << e.what() << std::endl;
+                    megaApi->log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error joining zip files for bug report : %1")
+                                 .arg(QString::fromUtf8(e.what())).toUtf8().constData());
+
                     fclose(pFile);
                     QFile::remove(joinLogsFile.absoluteFilePath());
                     showErrorMessage();

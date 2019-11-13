@@ -59,8 +59,11 @@
 #include <fcntl.h>      /* open() */
 #ifndef _WIN32
 #include <unistd.h>     /* close(), read(), lseek() */
+#define GZJOIN_PATH_CHAR_T const char
 #else
 #include <io.h>         /* close(), read(), lseek() */
+#include <sstream>
+#define GZJOIN_PATH_CHAR_T const wchar_t
 #endif
 #include "zlib.h"
     /* crc32(), crc32_combine(), inflateInit2(), inflate(), inflateEnd() */
@@ -89,13 +92,34 @@ local int bail(const char *why1, const char *why2)
     return 0;
 }
 
+#ifdef _WIN32
+#include <locale>
+#include <codecvt>
+local int bail(const char *why1, GZJOIN_PATH_CHAR_T *why2)
+{
+    throw gzjoinex(std::string("gzjoin error: ") + why1 + " "
+                   + std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t>().to_bytes(why2)
+                   + " output incomplete\n");
+    return 0;
+}
+
+local int bail(GZJOIN_PATH_CHAR_T *why1, const char *why2)
+{
+    throw gzjoinex(std::string("gzjoin error: ")
+                   + std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t>().to_bytes(why1) + " "
+                   + why2
+                   + " output incomplete\n");
+    return 0;
+}
+#endif
+
 /* -- simple buffered file input with access to the buffer -- */
 
 #define CHUNK 32768         /* must be a power of two and fit in unsigned */
 
 /* bin buffered input file type */
 typedef struct {
-    const char *name;             /* name of file for error messages */
+    GZJOIN_PATH_CHAR_T *name;             /* name of file for error messages */
     int fd;                 /* file descriptor */
 #ifdef _WIN32
     FILE *file;                 /* file descriptor */
@@ -128,7 +152,7 @@ local void bclose(bin_gz *in)
 
 /* open a buffered file for input, return a pointer to type bin, or NULL on
    failure */
-local bin_gz *bopen(const char *name)
+local bin_gz *bopen(GZJOIN_PATH_CHAR_T *name)
 {
     bin_gz *in;
 
@@ -137,7 +161,13 @@ local bin_gz *bopen(const char *name)
         return NULL;
     in->buf = (unsigned char *)malloc(CHUNK);
 #ifdef _WIN32
-    in->file = fopen(name, "rb");
+    errno_t er = _wfopen_s(&in->file, name, L"rb");
+    if (er)
+    {
+        std::ostringstream oss;
+        oss << "unexpected errno opening file(" << er << ")";
+        bail(oss.str().c_str(), name);
+    }
     in->fd = fileno(in->file);
 #else
     in->fd = open(name, O_RDONLY, 0);
