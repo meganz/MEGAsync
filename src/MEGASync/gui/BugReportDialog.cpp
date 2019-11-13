@@ -55,8 +55,10 @@ void BugReportDialog::onTransferStart(MegaApi *api, MegaTransfer *transfer)
     sendProgress->setLabelText(tr("Bug report is uploading, it may take a few minutes"));
     sendProgress->setMinimumDuration(0);
     sendProgress->setMinimum(0);
-    sendProgress->setMaximum(1000);
+    sendProgress->setMaximum(1010);
     sendProgress->setValue(0);
+    sendProgress->setAutoClose(false);
+    sendProgress->setAutoReset(false);
     lastpermil = 0;
     sendProgress->show();
 }
@@ -88,6 +90,8 @@ void BugReportDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
 
     if (error->getErrorCode() == MegaError::API_OK)
     {
+        sendProgress->setValue(sendProgress->maximum());
+
         createSupportTicket();
     }
     else if (error->getErrorCode() == MegaError::API_EEXIST)
