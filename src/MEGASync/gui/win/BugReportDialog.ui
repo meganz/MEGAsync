@@ -115,22 +115,72 @@
        <widget class="QTextEdit" name="teDescribeBug"/>
       </item>
       <item>
-       <widget class="QCheckBox" name="cbAttachLogs">
-        <property name="styleSheet">
-         <string notr="true">#cbAttachLogs
- {
+       <widget class="QWidget" name="wCheckBox" native="true">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>10</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <item>
+          <widget class="QCheckBox" name="cbAttachLogs">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="lAttachLogs">
+           <property name="minimumSize">
+            <size>
+             <width>350</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">#lAttachLogs
+{
 	color: rgba(0,0,0,0.85);
 	font-family: &quot;SF Pro Text&quot;;
 	font-size: 12px;
 
 }</string>
-        </property>
-        <property name="text">
-         <string>Attach diagnostic log files to assist with debugging</string>
-        </property>
-        <property name="checked">
-         <bool>true</bool>
-        </property>
+           </property>
+           <property name="text">
+            <string>Attach diagnostic log files to assist with debugging</string>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer_2">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>1</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </widget>
       </item>
      </layout>
