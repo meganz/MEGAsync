@@ -8069,6 +8069,8 @@ void MEGASyncDelegateListener::onRequestFinish(MegaApi *api, MegaRequest *reques
         return;
     }
 
+    DeferPreferencesSyncForScope deferrer(app);
+
     megaApi->enableTransferResumption();
     Preferences *preferences = Preferences::instance();
     if (preferences->logged() && !api->getNumActiveSyncs())
