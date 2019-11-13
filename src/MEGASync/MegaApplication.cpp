@@ -8148,10 +8148,10 @@ void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)
                                            notificationsModel->getUnseenNotifications(QAlertsModel::ALERT_PAYMENT));
     }
 
-    if (!copyRequired) //list requires deletion
+    if (!copyRequired)
     {
-        //list->clear(); //TODO: implement this in SDK
-        //delete list; //TODO: call this once implemented clear();
+        list->clear(); //empty the list otherwise they will be deleted
+        delete list;
     }
 }
 
