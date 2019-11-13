@@ -226,8 +226,6 @@ void BugReportDialog::onReadyForReporting()
             QFileInfo joinLogsFile(logDir.absolutePath().append(fileFormat).append(QString::fromUtf8(".gz")));
 #ifdef _WIN32
             FILE * pFile = nullptr;
-            fopen(joinLogsFile.absoluteFilePath().toStdString().c_str(), "a+b");
-
             errno_t er = _wfopen_s(&pFile, joinLogsFile.absoluteFilePath().toStdWString().c_str(), L"a+b");
             if (er)
             {
