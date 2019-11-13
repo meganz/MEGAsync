@@ -1792,19 +1792,10 @@ border: none;</string>
        </item>
        <item>
         <widget class="QWidget" name="widget_20" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>57</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>57</height>
-          </size>
-         </property>
          <layout class="QHBoxLayout" name="horizontalLayout_29">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <property name="leftMargin">
            <number>21</number>
           </property>
@@ -1813,10 +1804,22 @@ border: none;</string>
           </property>
           <item>
            <widget class="QLabel" name="label">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
-              <width>330</width>
+              <width>290</width>
               <height>0</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>290</width>
+              <height>16777215</height>
              </size>
             </property>
             <property name="text">
@@ -1842,6 +1845,20 @@ border: none;</string>
           </item>
           <item>
            <widget class="QPushButton" name="bSendBug">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">
+#bSendBug
+{
+padding-right: 6px;
+padding-left: 10px;
+}</string>
+            </property>
             <property name="text">
              <string>Bug report</string>
             </property>
@@ -1974,14 +1991,14 @@ border: none;</string>
                <attribute name="horizontalHeaderCascadingSectionResizes">
                 <bool>true</bool>
                </attribute>
+               <attribute name="horizontalHeaderMinimumSectionSize">
+                <number>200</number>
+               </attribute>
                <attribute name="horizontalHeaderDefaultSectionSize">
                 <number>200</number>
                </attribute>
                <attribute name="horizontalHeaderHighlightSections">
                 <bool>true</bool>
-               </attribute>
-               <attribute name="horizontalHeaderMinimumSectionSize">
-                <number>200</number>
                </attribute>
                <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
                 <bool>false</bool>

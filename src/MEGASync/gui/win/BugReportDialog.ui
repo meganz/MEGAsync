@@ -118,7 +118,7 @@
        <widget class="QWidget" name="wCheckBox" native="true">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <property name="spacing">
-          <number>10</number>
+          <number>5</number>
          </property>
          <property name="leftMargin">
           <number>0</number>

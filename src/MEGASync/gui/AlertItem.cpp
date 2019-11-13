@@ -117,105 +117,105 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
     QString notificationHeading;
     switch (alert->getType())
     {
-            // Contact notifications
-            case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
-            case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
-            case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
-            {
-                setAvatar(alert);
-                notificationHeading = tr("New Contact Request");
-                ui->sIconWidget->setCurrentWidget(ui->pContact);
-                ui->sIconWidget->show();
-                break;
-            }
-            case MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU:
-            case MegaUserAlert::TYPE_CONTACTCHANGE_ACCOUNTDELETED:
-            {
-                setAvatar(alert);
-                notificationHeading = tr("Contact Deleted");
-                ui->sIconWidget->setCurrentWidget(ui->pContact);
-                ui->sIconWidget->show();
-                break;
-            }
-            case MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
-            {
-                setAvatar(alert);
-                notificationHeading = tr("Contact Established");
-                ui->sIconWidget->setCurrentWidget(ui->pContact);
-                ui->sIconWidget->show();
-                break;
-            }
-            case MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU:
-            {
-                setAvatar(alert);
-                notificationHeading = tr("Contact Blocked");
-                ui->sIconWidget->setCurrentWidget(ui->pContact);
-                ui->sIconWidget->show();
-                break;
-            }
-            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED:
-            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED:
-            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED:
-            {
-                setAvatar(alert);
-                notificationHeading = tr("Contact Updated");
-                ui->sIconWidget->setCurrentWidget(ui->pContact);
-                ui->sIconWidget->show();
-                break;
-            }
-            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
-            {
-                setAvatar(alert);
-                notificationHeading = tr("Contact Accepted");
-                ui->sIconWidget->setCurrentWidget(ui->pContact);
-                ui->sIconWidget->show();
-                break;
-            }
-            case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
-            {
-                setAvatar(alert);
-                notificationHeading = tr("Contact Denied");
-                ui->sIconWidget->setCurrentWidget(ui->pContact);
-                ui->sIconWidget->show();
-                break;
-            }
-            // Share notifications
-            case MegaUserAlert::TYPE_NEWSHARE:
-            case MegaUserAlert::TYPE_DELETEDSHARE:
-            case MegaUserAlert::TYPE_NEWSHAREDNODES:
-            case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
-            {
-                ui->sIconWidget->setCurrentWidget(ui->pSharedFolder);
-                ui->sIconWidget->show();
-                MegaNode *node = megaApi->getNodeByHandle(alert->getNodeHandle());
-                notificationHeading = QString::fromUtf8(node ? node->getName() : alert->getName());
+        // Contact notifications
+        case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REQUEST:
+        case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_CANCELLED:
+        case MegaUserAlert::TYPE_INCOMINGPENDINGCONTACT_REMINDER:
+        {
+            setAvatar(alert);
+            notificationHeading = tr("New Contact Request");
+            ui->sIconWidget->setCurrentWidget(ui->pContact);
+            ui->sIconWidget->show();
+            break;
+        }
+        case MegaUserAlert::TYPE_CONTACTCHANGE_DELETEDYOU:
+        case MegaUserAlert::TYPE_CONTACTCHANGE_ACCOUNTDELETED:
+        {
+            setAvatar(alert);
+            notificationHeading = tr("Contact Deleted");
+            ui->sIconWidget->setCurrentWidget(ui->pContact);
+            ui->sIconWidget->show();
+            break;
+        }
+        case MegaUserAlert::TYPE_CONTACTCHANGE_CONTACTESTABLISHED:
+        {
+            setAvatar(alert);
+            notificationHeading = tr("Contact Established");
+            ui->sIconWidget->setCurrentWidget(ui->pContact);
+            ui->sIconWidget->show();
+            break;
+        }
+        case MegaUserAlert::TYPE_CONTACTCHANGE_BLOCKEDYOU:
+        {
+            setAvatar(alert);
+            notificationHeading = tr("Contact Blocked");
+            ui->sIconWidget->setCurrentWidget(ui->pContact);
+            ui->sIconWidget->show();
+            break;
+        }
+        case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_IGNORED:
+        case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_ACCEPTED:
+        case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTINCOMING_DENIED:
+        {
+            setAvatar(alert);
+            notificationHeading = tr("Contact Updated");
+            ui->sIconWidget->setCurrentWidget(ui->pContact);
+            ui->sIconWidget->show();
+            break;
+        }
+        case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_ACCEPTED:
+        {
+            setAvatar(alert);
+            notificationHeading = tr("Contact Accepted");
+            ui->sIconWidget->setCurrentWidget(ui->pContact);
+            ui->sIconWidget->show();
+            break;
+        }
+        case MegaUserAlert::TYPE_UPDATEDPENDINGCONTACTOUTGOING_DENIED:
+        {
+            setAvatar(alert);
+            notificationHeading = tr("Contact Denied");
+            ui->sIconWidget->setCurrentWidget(ui->pContact);
+            ui->sIconWidget->show();
+            break;
+        }
+        // Share notifications
+        case MegaUserAlert::TYPE_NEWSHARE:
+        case MegaUserAlert::TYPE_DELETEDSHARE:
+        case MegaUserAlert::TYPE_NEWSHAREDNODES:
+        case MegaUserAlert::TYPE_REMOVEDSHAREDNODES:
+        {
+            ui->sIconWidget->setCurrentWidget(ui->pSharedFolder);
+            ui->sIconWidget->show();
+            MegaNode *node = megaApi->getNodeByHandle(alert->getNodeHandle());
+            notificationHeading = QString::fromUtf8(node ? node->getName() : alert->getName());
 
-                if (notificationHeading.isEmpty())
-                {
-                    notificationHeading = tr("(unknown shared folder)");
-                }
-
-                if (node)
-                {
-                    delete node;
-                }
-                break;
+            if (notificationHeading.isEmpty())
+            {
+                notificationHeading = tr("(unknown shared folder)");
             }
-            // Payment notifications
-            case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
-            case MegaUserAlert::TYPE_PAYMENT_FAILED:
-            case MegaUserAlert::TYPE_PAYMENTREMINDER:
-                notificationHeading = tr("Payment Info");
-                break;
-            // Takedown notifications
-            case MegaUserAlert::TYPE_TAKEDOWN:
-            case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
-                notificationHeading = tr("Takedown Notice");
-                break;
 
-            default:
-                notificationHeading = tr("Notification");
-                break;
+            if (node)
+            {
+                delete node;
+            }
+            break;
+        }
+        // Payment notifications
+        case MegaUserAlert::TYPE_PAYMENT_SUCCEEDED:
+        case MegaUserAlert::TYPE_PAYMENT_FAILED:
+        case MegaUserAlert::TYPE_PAYMENTREMINDER:
+            notificationHeading = tr("Payment Info");
+            break;
+        // Takedown notifications
+        case MegaUserAlert::TYPE_TAKEDOWN:
+        case MegaUserAlert::TYPE_TAKEDOWN_REINSTATED:
+            notificationHeading = tr("Takedown Notice");
+            break;
+
+        default:
+            notificationHeading = tr("Notification");
+            break;
     }
 
     ui->lHeading->setText(notificationHeading);
