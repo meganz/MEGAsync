@@ -342,7 +342,7 @@ local void gzinit(unsigned long *crc, unsigned long *tot, FILE *out)
    crc and length (modulo 2^32) of the output for the trailer.  The resulting
    gzip file is written to out.  gzinit() must be called before the first call
    of gzcopy() to write the gzip header and to initialize crc and tot. */
-local void gzcopy(const char *name, int clr, unsigned long *crc, unsigned long *tot,
+local void gzcopy(GZJOIN_PATH_CHAR_T *name, int clr, unsigned long *crc, unsigned long *tot,
                   FILE *out)
 {
     int ret;                /* return value from zlib functions */
