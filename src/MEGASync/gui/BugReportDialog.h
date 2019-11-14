@@ -16,7 +16,7 @@ class BugReportDialog : public QDialog, public mega::MegaTransferListener, publi
     Q_OBJECT
 
 public:
-    explicit BugReportDialog(QWidget *parent = 0);
+    explicit BugReportDialog(QWidget *parent, MegaSyncLogger& logger);
     ~BugReportDialog();
 
     virtual void onTransferStart(mega::MegaApi *api, mega::MegaTransfer *transfer);
@@ -27,6 +27,7 @@ public:
     virtual void onRequestFinish(mega::MegaApi* api, mega::MegaRequest *request, mega::MegaError* e);
 
 private:
+    MegaSyncLogger& logger;
     Ui::BugReportDialog *ui;
     int currentTransfer;
     std::unique_ptr<QProgressDialog> sendProgress;

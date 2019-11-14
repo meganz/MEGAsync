@@ -44,8 +44,6 @@
 #include <QScreen>
 #endif
 
-std::unique_ptr<MegaSyncLogger> gLogger;
-
 using namespace mega;
 using namespace std;
 
@@ -899,9 +897,9 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
     }
 #endif
 
-    gLogger.reset(new MegaSyncLogger(this, dataPath, desktopPath, logToStdout));
+    logger.reset(new MegaSyncLogger(this, dataPath, desktopPath, logToStdout));
 #if defined(LOG_TO_FILE)
-    gLogger->setDebug(true);
+    logger->setDebug(true);
 #endif
 
     updateAvailable = false;
@@ -1049,7 +1047,7 @@ MegaApplication::MegaApplication(int &argc, char **argv) :
 
 MegaApplication::~MegaApplication()
 {
-    gLogger.reset();
+    logger.reset();
 
     if (!translator.isEmpty())
     {
@@ -2953,7 +2951,7 @@ void MegaApplication::cleanAll()
     trayIcon->deleteLater();
     trayIcon = NULL;
 
-    gLogger.reset();
+    logger.reset();
 
     if (reboot)
     {
@@ -4603,16 +4601,16 @@ void MegaApplication::toggleLogging()
         return;
     }
 
-    if (gLogger->isDebug())
+    if (logger->isDebug())
     {
         Preferences::HTTPS_ORIGIN_CHECK_ENABLED = true;
-        gLogger->setDebug(false);
+        logger->setDebug(false);
         showInfoMessage(tr("DEBUG mode disabled"));
     }
     else
     {
         Preferences::HTTPS_ORIGIN_CHECK_ENABLED = false;
-        gLogger->setDebug(true);
+        logger->setDebug(true);
         showInfoMessage(tr("DEBUG mode enabled. A log is being created in your desktop (MEGAsync.log)"));
         if (megaApi)
         {
@@ -8100,6 +8098,11 @@ bool MegaApplication::hasNotifications()
 bool MegaApplication::hasNotificationsOfType(int type)
 {
     return notificationsModel && notificationsModel->existsNotifications(type);
+}
+
+MegaSyncLogger& MegaApplication::getLogger() const
+{
+    return *logger;
 }
 
 void MegaApplication::onUserAlertsUpdate(MegaApi *api, MegaUserAlertList *list)

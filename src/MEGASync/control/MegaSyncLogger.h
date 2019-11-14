@@ -2,19 +2,22 @@
 
 #include <atomic>
 #include <memory>
+#include <mutex>
 
 #include <QLocalSocket>
 #include <QLocalServer>
 #include <QXmlStreamWriter>
 
 #include "megaapi.h"
-#include <spdlog/spdlog.h>
-#include <spdlog/sinks/rotating_file_sink.h>
 
 namespace spdlog {
 class logger;
 namespace details {
 class thread_pool;
+}
+namespace sinks {
+template<typename T>
+class rotating_file_sink;
 }
 }
 
@@ -57,6 +60,5 @@ private:
     std::shared_ptr<spdlog::details::thread_pool> mThreadPool;
     std::shared_ptr<spdlog::logger> mLogger; // Always-on logger with rotated file + stdout logging
     std::shared_ptr<spdlog::logger> mDebugLogger; // Logger used in debug mode (when toggling to debug)
-
-    std::shared_ptr<spdlog::sinks::rotating_file_sink<std::mutex>> rotatingFileSink;
+    std::shared_ptr<spdlog::sinks::rotating_file_sink<std::mutex>> mRotatingFileSink;
 };

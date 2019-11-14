@@ -49,8 +49,6 @@
 
 Q_DECLARE_METATYPE(QQueue<QString>)
 
-extern std::unique_ptr<MegaSyncLogger> gLogger;
-
 class TransferMetaData
 {
 public:
@@ -165,6 +163,8 @@ public:
     bool notificationsAreFiltered();
     bool hasNotifications();
     bool hasNotificationsOfType(int type);
+
+    MegaSyncLogger& getLogger() const;
 
 signals:
     void startUpdaterThread();
@@ -423,6 +423,7 @@ protected:
     QNetworkConfigurationManager networkConfigurationManager;
     QList<QNetworkInterface> activeNetworkInterfaces;
     QMap<QString, QString> pendingLinks;
+    std::unique_ptr<MegaSyncLogger> logger;
     QPointer<TransferManager> transferManager;
     QMap<int, mega::MegaTransfer*> finishedTransfers;
     QList<mega::MegaTransfer*> finishedTransferOrder;

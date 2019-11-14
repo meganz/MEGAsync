@@ -2639,7 +2639,7 @@ void SettingsDialog::on_bChangePassword_clicked()
 
 void SettingsDialog::on_bSendBug_clicked()
 {
-    QPointer<BugReportDialog> dialog = new BugReportDialog(this);
+    QPointer<BugReportDialog> dialog = new BugReportDialog(this, app->getLogger());
     int result = dialog->exec();
     if (!dialog || result != QDialog::Accepted)
     {
