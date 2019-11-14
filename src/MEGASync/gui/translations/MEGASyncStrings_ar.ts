@@ -256,7 +256,7 @@
     <message>
         <source>Contact Established</source>
         <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
-        <translation type="unfinished">Contact established</translation>
+        <translation type="unfinished">انتم الان متصلين</translation>
     </message>
     <message>
         <source>Contact Blocked</source>
@@ -266,17 +266,17 @@
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation type="unfinished">Contact updated</translation>
+        <translation type="unfinished">Contact request updated</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
         <translatorcomment>Notification label that indicates that the user has accepted a contact request</translatorcomment>
-        <translation type="unfinished">Contact accepted</translation>
+        <translation type="unfinished">Contact request accepted</translation>
     </message>
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation type="unfinished">Contact denied</translation>
+        <translation type="unfinished">Contact request denied</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -462,6 +462,11 @@
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
         <translation type="unfinished">Access to a shared folder was removed by [A]</translation>
+    </message>
+    <message>
+        <source>(unknown shared folder)</source>
+        <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
+        <translation type="unfinished">(unknown shared folder)</translation>
     </message>
 </context>
 <context>
@@ -2549,7 +2554,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Pay Now</source>
         <translatorcomment>Button text to redirect the user to fix issues with pending payments for the current business account.</translatorcomment>
-        <translation type="unfinished">Pay now</translation>
+        <translation type="unfinished">Pay Now</translation>
     </message>
     <message>
         <source>Your Business account is expired</source>

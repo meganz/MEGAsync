@@ -256,7 +256,7 @@
     <message>
         <source>Contact Established</source>
         <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
-        <translation type="unfinished">연락처 등록됨</translation>
+        <translation type="unfinished">양방향 연락처로 등록되었습니다</translation>
     </message>
     <message>
         <source>Contact Blocked</source>
@@ -462,6 +462,11 @@
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
         <translation type="unfinished">공유된 폴더에 대한 접근이 [A]에 의해 삭제되었습니다</translation>
+    </message>
+    <message>
+        <source>(unknown shared folder)</source>
+        <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
+        <translation type="unfinished">(unknown shared folder)</translation>
     </message>
 </context>
 <context>

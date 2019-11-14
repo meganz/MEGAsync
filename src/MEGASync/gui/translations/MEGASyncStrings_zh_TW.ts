@@ -256,7 +256,7 @@
     <message>
         <source>Contact Established</source>
         <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
-        <translation type="unfinished">己建立聯絡人</translation>
+        <translation type="unfinished">聯絡人關係已建立</translation>
     </message>
     <message>
         <source>Contact Blocked</source>
@@ -266,17 +266,17 @@
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation type="unfinished">聯絡人已更新</translation>
+        <translation type="unfinished">已更新聯絡人邀請</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
         <translatorcomment>Notification label that indicates that the user has accepted a contact request</translatorcomment>
-        <translation type="unfinished">已接受邀請</translation>
+        <translation type="unfinished">已接收聯絡人邀請</translation>
     </message>
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation type="unfinished">已拒絕邀請</translation>
+        <translation type="unfinished">已拒絕聯絡人邀請</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -441,7 +441,7 @@
     <message>
         <source>Your publicly shared has been taken down</source>
         <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
-        <translation type="unfinished">您的公開分享已被刪除</translation>
+        <translation type="unfinished">您的公開分享已被移除。</translation>
     </message>
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
@@ -451,7 +451,7 @@
     <message>
         <source>Your taken down has been reinstated</source>
         <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
-        <translation type="unfinished">您的公開分享已恢復。</translation>
+        <translation type="unfinished">您的公開分享已復原。</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -462,6 +462,11 @@
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
         <translation type="unfinished">共享資料夾的存取權限已被[A]移除</translation>
+    </message>
+    <message>
+        <source>(unknown shared folder)</source>
+        <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
+        <translation type="unfinished">（未知的共享資料夾）</translation>
     </message>
 </context>
 <context>
@@ -1609,12 +1614,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open Downloads</source>
         <translatorcomment>Tooltip of button that let the user open downloads section of transfer manager.</translatorcomment>
-        <translation type="unfinished">開啟下載</translation>
+        <translation type="unfinished">開啟下載管理頁面</translation>
     </message>
     <message>
         <source>Open Uploads</source>
         <translatorcomment>Tooltip of button that let the user open uploads section of transfer manager.</translatorcomment>
-        <translation type="unfinished">開啟上傳</translation>
+        <translation type="unfinished">開啟上傳管理頁面</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -2543,7 +2548,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to the the user to inform that needs to access his account with webclient to check for pending payment issues.</translatorcomment>
-        <translation type="obsolete">請使用電腦版瀏覽器登入MEGA以獲取更多訊息。</translation>
+        <translation type="obsolete">請使用電腦版瀏覽器登入MEGA以取得更多訊息。</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2558,7 +2563,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation type="unfinished">在處理所需要的付款之前，您的帳戶為過期並處於唯讀狀態。</translation>
+        <translation type="unfinished">直到您處理所需的付款為止，在這之前您的帳戶為過期狀態並只有讀取權限。</translation>
     </message>
     <message>
         <source>Contact your business account administrator.</source>
@@ -2568,7 +2573,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to admin business account about a failure with the last payment and the explain the way to deal with.</translatorcomment>
-        <translation type="obsolete">您最近一次的付款有問題。 請使用電腦版瀏覽器登入MEGA，以獲取更多訊息。</translation>
+        <translation type="obsolete">您最近一次付款有問題。請使用電腦版瀏覽器登入MEGA以取得更多訊息。</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -4007,7 +4012,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">您現在要刪除您的本機備份嗎？</translation>
+        <translation type="unfinished">您現在要刪除本機備份嗎？</translation>
     </message>
     <message>
         <source>Clear remote backup</source>

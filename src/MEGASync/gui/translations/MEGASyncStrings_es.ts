@@ -463,6 +463,11 @@
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
         <translation type="unfinished">El acceso a la carpeta compartida fue eliminado por [A]</translation>
     </message>
+    <message>
+        <source>(unknown shared folder)</source>
+        <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
+        <translation type="unfinished">(carpeta compartida desconocida)</translation>
+    </message>
 </context>
 <context>
     <name>BindFolderDialog</name>

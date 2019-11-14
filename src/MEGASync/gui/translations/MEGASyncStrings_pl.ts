@@ -256,7 +256,7 @@
     <message>
         <source>Contact Established</source>
         <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
-        <translation type="unfinished">Kontakt ustanowiony</translation>
+        <translation type="unfinished">Jesteście teraz znajomymi</translation>
     </message>
     <message>
         <source>Contact Blocked</source>
@@ -266,17 +266,17 @@
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation type="unfinished">Kontakt zaktualizowany</translation>
+        <translation type="unfinished">Zaktualizowano zapytanie o kontakt</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
         <translatorcomment>Notification label that indicates that the user has accepted a contact request</translatorcomment>
-        <translation type="unfinished">Kontakt zaakceptowany</translation>
+        <translation type="unfinished">Prośba o kontakt została zaakceptowana</translation>
     </message>
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation type="unfinished">Kontakt odrzucony</translation>
+        <translation type="unfinished">Prośba o kontakt została odrzucona</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -441,7 +441,7 @@
     <message>
         <source>Your publicly shared has been taken down</source>
         <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
-        <translation type="unfinished">Twój udostępnienie zostało usunięte.</translation>
+        <translation type="unfinished">Twój udział publiczny został usunięty.</translation>
     </message>
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
@@ -451,7 +451,7 @@
     <message>
         <source>Your taken down has been reinstated</source>
         <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
-        <translation type="unfinished">Twój udział publiczny został przywrócony.</translation>
+        <translation type="unfinished">Twój usunięty link został przywrócony</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -462,6 +462,11 @@
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
         <translation type="unfinished">Dostęp do udostępnionego folderu został usunięty przez [A]</translation>
+    </message>
+    <message>
+        <source>(unknown shared folder)</source>
+        <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
+        <translation type="unfinished">(unknown shared folder)</translation>
     </message>
 </context>
 <context>
@@ -2558,7 +2563,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation type="unfinished">Twoje konto wygasło jako tylko do odczytu, dopóki nie dokonasz niezbędnych płatności.</translation>
+        <translation type="unfinished">Twoje konto jest zawieszone i tylko do odczytu, dopóki nie dokonasz niezbędnych płatności.</translation>
     </message>
     <message>
         <source>Contact your business account administrator.</source>
@@ -2568,7 +2573,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to admin business account about a failure with the last payment and the explain the way to deal with.</translatorcomment>
-        <translation type="obsolete">Wystąpił problem z ostatnią płatnością. Proszę uzyskać dostęp do MEGA za pomocą przeglądarki na pulpicie, aby uzyskać więcej informacji.</translation>
+        <translation type="obsolete">Wystąpił problem z ostatnią płatnością. Proszę uzyskać dostęp do MEGA w przeglądarce na komputerze, aby uzyskać więcej informacji.</translation>
     </message>
     <message>
         <source>Dismiss</source>

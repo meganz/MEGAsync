@@ -256,7 +256,7 @@
     <message>
         <source>Contact Established</source>
         <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
-        <translation type="unfinished">Установлен контакт</translation>
+        <translation type="unfinished">Отношения с контактом установлены</translation>
     </message>
     <message>
         <source>Contact Blocked</source>
@@ -266,17 +266,17 @@
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation type="unfinished">Обновлён статус контакта</translation>
+        <translation type="unfinished">Обновлён запрос контакта</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
         <translatorcomment>Notification label that indicates that the user has accepted a contact request</translatorcomment>
-        <translation type="unfinished">Принят запрос добавления в контакты</translation>
+        <translation type="unfinished">Принят запрос контакта</translation>
     </message>
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation type="unfinished">Отклонён запрос добавления в контакты</translation>
+        <translation type="unfinished">Отклонён запрос контакта</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -441,7 +441,7 @@
     <message>
         <source>Your publicly shared has been taken down</source>
         <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
-        <translation type="unfinished">Ваши публичные элементы были изъяты.</translation>
+        <translation type="unfinished">Ваш публичный элемент был изъят.</translation>
     </message>
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
@@ -451,7 +451,7 @@
     <message>
         <source>Your taken down has been reinstated</source>
         <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
-        <translation type="unfinished">Ваши публичные элементы были восстановлены.</translation>
+        <translation type="unfinished">Ваш публичный элемент был восстановлен.</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -462,6 +462,11 @@
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
         <translation type="unfinished">Доступ к общей папке был закрыт пользователем [A]</translation>
+    </message>
+    <message>
+        <source>(unknown shared folder)</source>
+        <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
+        <translation type="unfinished">(неизвестная общая папка)</translation>
     </message>
 </context>
 <context>
@@ -2543,7 +2548,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to the the user to inform that needs to access his account with webclient to check for pending payment issues.</translatorcomment>
-        <translation type="obsolete">Для дополнительной информации войдите в MEGA с помощью браузера настольного компьютера.</translation>
+        <translation type="obsolete">Больше информации вы можете получить, войдя в настольное приложение MEGA.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2558,7 +2563,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation type="unfinished">Срок действия вашего аккаунта истёк. Аккаунт переведён в режим только для чтения, пока вы не выполните необходимые платежи.</translation>
+        <translation type="unfinished">Срок действия вашего аккаунта истёк. Он переведён в режим только для чтения, пока вы не выполните необходимые платежи.</translation>
     </message>
     <message>
         <source>Contact your business account administrator.</source>
@@ -2568,7 +2573,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to admin business account about a failure with the last payment and the explain the way to deal with.</translatorcomment>
-        <translation type="obsolete">Возникла проблема с вашим последним платежом. Для дополнительной информации зайдите в MEGA с помощью браузера на настольном компьютере.</translation>
+        <translation type="obsolete">Возникла проблема с вашим последним платежом. Пожалуйста, войдите в MEGA с помощью браузера на настольном компьютере для получения дополнительной информации.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -4007,7 +4012,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">Действительно удалить локальные данные?</translation>
+        <translation type="unfinished">Удалить локальные резервные копии?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>

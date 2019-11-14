@@ -256,7 +256,7 @@
     <message>
         <source>Contact Established</source>
         <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
-        <translation type="unfinished">Contatto stabilito</translation>
+        <translation type="unfinished">Relazione di contatto stabilita</translation>
     </message>
     <message>
         <source>Contact Blocked</source>
@@ -266,17 +266,17 @@
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation type="unfinished">Contatto aggiornato</translation>
+        <translation type="unfinished">Richiesta di contatto aggiornata</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
         <translatorcomment>Notification label that indicates that the user has accepted a contact request</translatorcomment>
-        <translation type="unfinished">Contatto accettato</translation>
+        <translation type="unfinished">Richiesta di contatto accettata</translation>
     </message>
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation type="unfinished">Contatto negato</translation>
+        <translation type="unfinished">Richiesta di contatto negata</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -462,6 +462,11 @@
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
         <translation type="unfinished">L&apos;accesso alla cartella condivisa è stato rimosso da [A]</translation>
+    </message>
+    <message>
+        <source>(unknown shared folder)</source>
+        <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
+        <translation type="unfinished">(cartella condivisa sconosciuta)</translation>
     </message>
 </context>
 <context>
@@ -2543,7 +2548,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to the the user to inform that needs to access his account with webclient to check for pending payment issues.</translatorcomment>
-        <translation type="obsolete">Per favore, accedi a MEGA utilizzando un browser da desktop per maggiori informazioni.</translation>
+        <translation type="obsolete">Per favore, accedi a MEGA utilizzando un browser desktop per maggiori informazioni.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2558,7 +2563,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation type="unfinished">Il tuo account diventa solo-lettura sinché non procederai ai pagamenti necessari.</translation>
+        <translation type="unfinished">Il tuo account è scaduto ed è accessibile come account di sola lettura finché non procederai con i pagamenti necessari.</translation>
     </message>
     <message>
         <source>Contact your business account administrator.</source>
@@ -2568,7 +2573,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to admin business account about a failure with the last payment and the explain the way to deal with.</translatorcomment>
-        <translation type="obsolete">C&apos;è stato un problema con il tuo ultimo pagamento. Per favore, accedi a MEGA utilizzando un browser da desktop per maggiori informazioni.</translation>
+        <translation type="obsolete">C&apos;è stato un problema con il tuo ultimo pagamento. Per favore, accedi a MEGA utilizzando un browser desktop per maggiori informazioni.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -4007,7 +4012,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">Vuoi eliminare i tuoi backup locali ora?</translation>
+        <translation type="unfinished">Vuoi eliminare i tuoi backup locali adesso?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
