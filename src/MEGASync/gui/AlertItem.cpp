@@ -113,8 +113,8 @@ void AlertItem::setAlertType(int type)
 void AlertItem::setAlertHeading(MegaUserAlert *alert)
 {
     ui->sIconWidget->hide();
+    notificationHeading.clear();
 
-    QString notificationHeading;
     switch (alert->getType())
     {
         // Contact notifications
@@ -218,7 +218,8 @@ void AlertItem::setAlertHeading(MegaUserAlert *alert)
             break;
     }
 
-    ui->lHeading->setText(notificationHeading);
+    ui->lHeading->ensurePolished();
+    ui->lHeading->setText(ui->lHeading->fontMetrics().elidedText(notificationHeading, Qt::ElideMiddle,ui->lHeading->minimumWidth()));
 }
 
 void AlertItem::setAlertContent(MegaUserAlert *alert)
@@ -421,6 +422,11 @@ void AlertItem::setAlertTimeStamp(int64_t ts)
         ui->lTimeStamp->setText(QString::fromUtf8(""));
     }
 
+}
+
+QString AlertItem::getHeadingString()
+{
+    return notificationHeading;
 }
 
 QSize AlertItem::minimumSizeHint() const

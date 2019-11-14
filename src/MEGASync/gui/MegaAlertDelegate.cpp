@@ -9,6 +9,8 @@
 #include "MegaApplication.h"
 #include <QtConcurrent/QtConcurrent>
 #include "assert.h"
+#include <QHelpEvent>
+#include <QToolTip>
 
 using namespace mega;
 
@@ -200,4 +202,44 @@ bool MegaAlertDelegate::editorEvent(QEvent *event, QAbstractItemModel *model, co
 
         }
     }
+}
+
+bool MegaAlertDelegate::helpEvent(QHelpEvent *event, QAbstractItemView *view, const QStyleOptionViewItem &option, const QModelIndex &index)
+{
+    if (event->type() == QEvent::ToolTip)
+    {
+        MegaUserAlert *alert = NULL;
+        if (useProxy)
+        {
+            QModelIndex actualId = ((QSortFilterProxyModel*)index.model())->mapToSource(index);
+            if (!(actualId.isValid()))
+            {
+                return true;
+            }
+
+            alert = (MegaUserAlert *)actualId.internalPointer();
+        }
+        else
+        {
+            alert = (MegaUserAlert *)index.internalPointer();
+        }
+
+        if (!alert)
+        {
+            return QStyledItemDelegate::helpEvent(event, view, option, index);
+        }
+
+        AlertItem *ti = model->alertItems[alert->getId()];
+        if (!ti)
+        {
+            return QStyledItemDelegate::helpEvent(event, view, option, index);
+        }
+        else
+        {
+            QToolTip::showText(event->globalPos(), ti->getHeadingString());
+            return true;
+        }
+    }
+
+    return QStyledItemDelegate::helpEvent(event, view, option, index);
 }

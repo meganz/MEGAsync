@@ -22,6 +22,8 @@ public:
     void setAlertContent(mega::MegaUserAlert *alert);
     void setAlertTimeStamp(int64_t ts);
 
+    QString getHeadingString();
+
     QSize minimumSizeHint() const;
     QSize sizeHint() const;
 
@@ -32,6 +34,7 @@ private:
 private:
     Ui::AlertItem *ui;
     mega::MegaApi *megaApi;
+    QString notificationHeading;
 };
 
 #endif // ALERTITEM_H
