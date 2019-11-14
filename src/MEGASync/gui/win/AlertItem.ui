@@ -345,6 +345,12 @@ border: none;
          </item>
          <item>
           <widget class="QLabel" name="lHeading">
+           <property name="minimumSize">
+            <size>
+             <width>325</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="styleSheet">
             <string notr="true">#lHeading 
 { 
@@ -365,7 +371,7 @@ color: #333333;
            </property>
            <property name="sizeHint" stdset="0">
             <size>
-             <width>40</width>
+             <width>1</width>
              <height>20</height>
             </size>
            </property>
