@@ -52,11 +52,14 @@ public slots:
     void disconnected();
 
 private:
+    void onAllRotated();
+
     QString mDesktopPath;
     QLocalSocket* mClient = nullptr;
     QLocalServer* mMegaServer = nullptr;
     QXmlStreamWriter* mXmlWriter = nullptr;
     std::atomic<bool> mConnected{true};
+    std::atomic<bool> mAwaitingRotation{false};
     std::shared_ptr<spdlog::details::thread_pool> mThreadPool;
     std::shared_ptr<spdlog::logger> mLogger; // Always-on logger with rotated file + stdout logging
     std::shared_ptr<spdlog::logger> mDebugLogger; // Logger used in debug mode (when toggling to debug)
