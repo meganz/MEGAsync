@@ -193,6 +193,7 @@ MegaSyncLogger::~MegaSyncLogger()
     {
         mDebugLogger.reset();
     }
+    mRotatingFileSink.reset();
 
     mThreadPool.reset(); // after this no more queued log messages are processed
 
