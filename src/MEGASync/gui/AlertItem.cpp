@@ -274,8 +274,8 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                 break;
             // Share notifications
             case MegaUserAlert::TYPE_NEWSHARE:
-                notificationContent = tr("New Shared folder from [A]")
-                        .replace(QString::fromUtf8("[A]"), formatRichString(QString::fromUtf8(alert->getEmail())));
+                notificationContent = tr("New Shared folder from [X]")
+                        .replace(QString::fromUtf8("[X]"), formatRichString(QString::fromUtf8(alert->getEmail())));
                 break;
             case MegaUserAlert::TYPE_DELETEDSHARE:
             {
@@ -369,11 +369,11 @@ void AlertItem::setAlertContent(MegaUserAlert *alert)
                 MegaNode *node = megaApi->getNodeByHandle(alert->getNodeHandle());
                 if (node)
                 {
-                    notificationContent = tr("Your publicly shared [A] ([B]) has been taken down")
-                            .replace(QString::fromUtf8("[A]"), node->getType() == MegaNode::TYPE_FILE ? tr("file")
+                    notificationContent = tr("Your publicly shared [%1] ([%2]) has been taken down")
+                            .arg(node->getType() == MegaNode::TYPE_FILE ? tr("file")
                                        : node->getType() == MegaNode::TYPE_FOLDER ? tr("folder")
                                        : QString::fromUtf8(""))
-                            .replace(QString::fromUtf8("[B]"), formatRichString(QString::fromUtf8(node->getName())));
+                            .arg(formatRichString(QString::fromUtf8(node->getName())));
                     delete node;
                 }
                 else
