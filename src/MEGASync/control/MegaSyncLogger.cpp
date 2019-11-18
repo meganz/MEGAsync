@@ -140,7 +140,7 @@ MegaSyncLogger::MegaSyncLogger(QObject *parent, const QString& dataPath, const Q
     try
     {
 #ifdef _WIN32
-        rotatingFileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
+        mRotatingFileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
                     logPath.toStdWString(), 1024 * 1024 * maxFileSizeMB, maxFileCount, false, gzipCompressOnRotate, [this]{ onAllRotated(); });
 #else
         mRotatingFileSink = std::make_shared<spdlog::sinks::rotating_file_sink_mt>(
