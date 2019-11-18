@@ -194,7 +194,7 @@ void BugReportDialog::createSupportTicket()
     report.append(QString::fromUtf8("Title: %1").arg(ui->leTitleBug->text().append(QString::fromUtf8("\n"))));
     report.append(QString::fromUtf8("Description: %1").arg(ui->teDescribeBug->toPlainText().append(QString::fromUtf8("\n"))));
 
-    megaApi->createSupportTicket(report.toUtf8().constData(), 1, delegateRequestListener);
+    megaApi->createSupportTicket(report.toUtf8().constData(), 6, delegateRequestListener);
 }
 
 void BugReportDialog::on_bSubmit_clicked()
