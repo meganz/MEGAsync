@@ -52,7 +52,7 @@ BuildRequires: ffmpeg-mega
 
 %endif
 
-%if 0%{?is_opensuse} && %if (0%{?sle_version} <= 120300)
+%if 0%{?is_opensuse} && (0%{?sle_version} && 0%{?sle_version} <= 120300)
     BuildRequires: gcc5, gcc5-c++
 %endif
 
@@ -175,7 +175,7 @@ sed -i -E "s/BUILD_ID = ([0-9]*)/BUILD_ID = ${mega_build_id}/g" MEGASync/control
 
 %build
 
-%if 0%{?is_opensuse} && 0%{?sle_version} <= 120300
+%if 0%{?is_opensuse} && (0%{?sle_version} && 0%{?sle_version} <= 120300)
     # ln to gcc/g++ v5, instead of default 4.8
     mkdir userPath
     ln -sf /usr/bin/gcc-5 userPath/gcc
