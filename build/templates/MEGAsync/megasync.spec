@@ -1,6 +1,5 @@
 Name:		megasync
 Version:	MEGASYNC_VERSION
-#Release:	1%{?dist}
 Release:	%(cat MEGA_BUILD_ID || echo "1").1
 Summary:	Easy automated syncing between your computers and your MEGA cloud drive
 License:	Freeware
@@ -51,6 +50,10 @@ BuildRequires: ffmpeg-mega
         BuildRequires: LibRaw-devel
     %endif
 
+%endif
+
+%if 0%{?is_opensuse} && %if (0%{?sle_version} <= 120300)
+    BuildRequires: gcc5, gcc5-c++
 %endif
 
 #Fedora specific
@@ -171,6 +174,14 @@ sed -i -E "s/USER_AGENT([^\/]*)\/(([0-9][0-9]*\.){3})(.*)\";/USER_AGENT\1\/\2${m
 sed -i -E "s/BUILD_ID = ([0-9]*)/BUILD_ID = ${mega_build_id}/g" MEGASync/control/Preferences.cpp;
 
 %build
+
+%if 0%{?is_opensuse} && 0%{?sle_version} <= 120300
+    # ln to gcc/g++ v5, instead of default 4.8
+    mkdir userPath
+    ln -sf /usr/bin/gcc-5 userPath/gcc
+    ln -sf /usr/bin/g++-5 userPath/g++
+    export PATH=`pwd`/userPath:$PATH
+%endif
 
 export DESKTOP_DESTDIR=$RPM_BUILD_ROOT/usr
 
