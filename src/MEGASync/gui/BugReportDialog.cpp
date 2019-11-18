@@ -6,8 +6,9 @@
 
 using namespace mega;
 
-BugReportDialog::BugReportDialog(QWidget *parent) :
+BugReportDialog::BugReportDialog(QWidget *parent, MegaSyncLogger& logger) :
     QDialog(parent),
+    logger(logger),
     ui(new Ui::BugReportDialog)
 {
     ui->setupUi(this);
@@ -17,7 +18,7 @@ BugReportDialog::BugReportDialog(QWidget *parent) :
     ui->bSubmit->setEnabled(false);
 
     connect(ui->teDescribeBug, SIGNAL(textChanged()), this, SLOT(onDescriptionChanged()));
-    connect(gLogger.get(), SIGNAL(logReadyForReporting()), this, SLOT(onReadyForReporting()));
+    connect(&logger, SIGNAL(logReadyForReporting()), this, SLOT(onReadyForReporting()));
 
     currentTransfer = 0;
     warningShown = false;
@@ -115,8 +116,7 @@ void BugReportDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
         sendProgress->hide();
     }
 
-    gLogger->resumeAfterReporting();
-
+    logger.resumeAfterReporting();
 }
 
 void BugReportDialog::onTransferTemporaryError(MegaApi *api, MegaTransfer *transfer, MegaError *e)
@@ -204,7 +204,7 @@ void BugReportDialog::on_bSubmit_clicked()
         return;
     }
 
-    if (gLogger->prepareForReporting())
+    if (logger.prepareForReporting())
     {
         preparing = true;
     }
@@ -243,7 +243,7 @@ void BugReportDialog::onReadyForReporting()
                 megaApi->log(MegaApi::LOG_LEVEL_ERROR, QString::fromUtf8("Error opening file for joining log zip files: %1").arg(joinLogsFile.filePath()).toUtf8().constData());
 
 
-                gLogger->resumeAfterReporting();
+                logger.resumeAfterReporting();
                 preparing = false;
                 return;
             }
@@ -276,7 +276,7 @@ void BugReportDialog::onReadyForReporting()
                     fclose(pFile);
                     QFile::remove(joinLogsFile.absoluteFilePath());
                     showErrorMessage();
-                    gLogger->resumeAfterReporting();
+                    logger.resumeAfterReporting();
                     preparing = false;
                     return;
                 }
