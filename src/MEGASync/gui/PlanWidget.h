@@ -41,6 +41,9 @@ private:
     void updatePlanInfo();
     QString formatRichString(QString str, int type);
 
+protected:
+    void changeEvent(QEvent* event);
+
 private slots:
     void onOverlayClicked();
 };
