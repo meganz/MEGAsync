@@ -203,6 +203,7 @@ void MegaTransferDelegate::processCancel(int tag)
     else
     {
         QMessageBox warning;
+        HighDpiResize hDpiResizer(&warning);
         warning.setWindowTitle(QString::fromUtf8("MEGAsync"));
         warning.setText(tr("Are you sure you want to cancel this transfer?"));
         warning.setIcon(QMessageBox::Warning);

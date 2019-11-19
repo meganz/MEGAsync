@@ -87,6 +87,7 @@ void BugReportDialog::onTransferFinish(MegaApi *api, MegaTransfer *transfer, Meg
     lastpermil = -3;
 
     QMessageBox msgBox;
+    HighDpiResize hDpiResizer(&msgBox);
     msgBox.setWindowTitle(tr("Bug report"));
 
     if (error->getErrorCode() == MegaError::API_OK)
@@ -134,6 +135,7 @@ void BugReportDialog::onRequestFinish(MegaApi *api, MegaRequest *request, MegaEr
             if (e->getErrorCode() == MegaError::API_OK)
             {
                 QMessageBox msgBox;
+                HighDpiResize hDpiResizer(&msgBox);
                 msgBox.setWindowTitle(tr("Bug report"));
                 msgBox.setIcon(QMessageBox::Information);
                 msgBox.setText(tr("Bug report success!"));
@@ -167,6 +169,7 @@ void BugReportDialog::showErrorMessage()
     }
 
     QMessageBox msgBox;
+    HighDpiResize hDpiResizer(&msgBox);
     msgBox.setWindowTitle(tr("Bug report"));
     msgBox.setIcon(QMessageBox::Warning);
     msgBox.setText(tr("Error on submitting bug report"));
@@ -308,6 +311,7 @@ void BugReportDialog::cancelSendReport()
     }
 
     QMessageBox msgBox;
+    HighDpiResize hDpiResizer(&msgBox);
     msgBox.setIcon(QMessageBox::Warning);
     msgBox.setWindowTitle(tr("Bug report"));
     msgBox.setText(tr("Are you sure you want to exit uploading?"));

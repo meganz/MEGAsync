@@ -9,6 +9,8 @@ class HighDpiResize : public QObject
     Q_OBJECT
 
 public:
+    HighDpiResize() = default;
+    HighDpiResize(QDialog* d);
     void init(QDialog* d);
     void queueRedraw();
 

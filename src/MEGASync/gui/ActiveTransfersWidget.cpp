@@ -1,6 +1,7 @@
 #include "ActiveTransfersWidget.h"
 #include "ui_ActiveTransfersWidget.h"
 #include "control/Utilities.h"
+#include "HighDpiResize.h"
 #include "Preferences.h"
 #include <QMessageBox>
 
@@ -316,6 +317,7 @@ void ActiveTransfersWidget::on_bDownCancel_clicked()
     }
 
     QMessageBox warning;
+    HighDpiResize hDpiResizer(&warning);
     warning.setWindowTitle(QString::fromUtf8("MEGAsync"));
     warning.setText(tr("Are you sure you want to cancel this transfer?"));
     warning.setIcon(QMessageBox::Warning);
@@ -341,6 +343,7 @@ void ActiveTransfersWidget::on_bUpCancel_clicked()
     }
 
     QMessageBox warning;
+    HighDpiResize hDpiResizer(&warning);
     warning.setWindowTitle(QString::fromUtf8("MEGAsync"));
     warning.setText(tr("Are you sure you want to cancel this transfer?"));
     warning.setIcon(QMessageBox::Warning);
