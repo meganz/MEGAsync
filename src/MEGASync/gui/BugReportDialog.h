@@ -31,6 +31,7 @@ private:
     Ui::BugReportDialog *ui;
     int currentTransfer;
     std::unique_ptr<QProgressDialog> sendProgress;
+    HighDpiResize highDpiResize;
 
     long long totalBytes;
     long long transferredBytes;

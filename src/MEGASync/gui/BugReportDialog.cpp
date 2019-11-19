@@ -31,6 +31,7 @@ BugReportDialog::BugReportDialog(QWidget *parent, MegaSyncLogger& logger) :
     megaApi = ((MegaApplication *)qApp)->getMegaApi();
     delegateTransferListener = new QTMegaTransferListener(megaApi, this);
     delegateRequestListener = new QTMegaRequestListener(megaApi, this);
+    highDpiResize.init(this);
 }
 
 BugReportDialog::~BugReportDialog()
