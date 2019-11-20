@@ -3,6 +3,11 @@
 #include <QTimer>
 #include <assert.h>
 
+HighDpiResize::HighDpiResize(QDialog *d)
+{
+    init(d);
+}
+
 void HighDpiResize::init(QDialog* d)
 {
 #if defined(WIN32) || defined(Q_OS_LINUX)

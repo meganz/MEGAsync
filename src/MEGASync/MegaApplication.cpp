@@ -2400,6 +2400,7 @@ void MegaApplication::exitApplication(bool force)
     {
         exitDialog = new QMessageBox(QMessageBox::Question, tr("MEGAsync"),
                                      tr("Are you sure you want to exit?"), QMessageBox::Yes|QMessageBox::No);
+        HighDpiResize hDpiResizer(exitDialog);
         int button = exitDialog->exec();
         if (!exitDialog)
         {
@@ -6749,6 +6750,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                 if (megaApi->isMasterBusinessAccount())
                 {
                     QMessageBox msgBox;
+                    HighDpiResize hDpiResizer(&msgBox);
                     msgBox.setIcon(QMessageBox::Warning);
                     msgBox.setText(tr("Payment Failed"));
                     msgBox.setInformativeText(tr("This month's payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account."));
@@ -6772,6 +6774,7 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
             case MegaApi::BUSINESS_STATUS_EXPIRED:
             {
                 QMessageBox msgBox;
+                HighDpiResize hDpiResizer(&msgBox);
                 msgBox.setIcon(QMessageBox::Warning);
 
                 if (megaApi->isMasterBusinessAccount())
@@ -7037,6 +7040,7 @@ void MegaApplication::onRequestFinish(MegaApi*, MegaRequest *request, MegaError*
                                                 tr("MEGA is unable to connect securely through SSL. You might be on public WiFi with additional requirements.")
                                                 + QString::fromUtf8(" (Issuer: %1)").arg(QString::fromUtf8(request->getText() ? request->getText() : "Unknown")),
                                                          QMessageBox::Retry | QMessageBox::Yes | QMessageBox::Cancel);
+                    HighDpiResize hDpiResizer(sslKeyPinningError);
 
             //        TO-DO: Uncomment when asset is included to the project
             //        sslKeyPinningError->setIconPixmap(QPixmap(Utilities::getDevicePixelRatio() < 2 ? QString::fromUtf8(":/images/mbox-critical.png")
