@@ -6,6 +6,7 @@
 #include <QUrl>
 #include <QStyle>
 #include <math.h>
+#include "gui/PlanWidget.h"
 
 using namespace mega;
 
@@ -37,6 +38,8 @@ UpgradeOverStorage::UpgradeOverStorage(MegaApi *megaApi, MegaPricing *pricing, Q
     ui->wPlans->setLayout(plansLayout);
 
     updatePlans();
+
+    highDpiResize.init(this);
 }
 
 void UpgradeOverStorage::setPricing(MegaPricing *pricing)
@@ -132,7 +135,7 @@ void UpgradeOverStorage::updatePlans()
                 pricing->getGBTransfer(it),
                 pricing->getProLevel(it)
             };
-            plansLayout->addWidget(new UpgradeWidget(data, userAgent));
+            plansLayout->addWidget(new PlanWidget(data, userAgent));
         }
     }
 }

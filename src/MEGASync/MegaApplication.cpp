@@ -4568,6 +4568,8 @@ void MegaApplication::showTrayMenu(QPoint *point)
     createTrayMenu();
     createGuestMenu();
 #endif
+    QMenu *displayedMenu = nullptr;
+    int menuWidthInitialPopup = -1;
     if (trayGuestMenu && !preferences->logged())
     {
         if (trayGuestMenu->isVisible())
@@ -4575,11 +4577,14 @@ void MegaApplication::showTrayMenu(QPoint *point)
             trayGuestMenu->close();
         }
 
+        menuWidthInitialPopup = trayGuestMenu->sizeHint().width();
         QPoint p = point ? (*point) - QPoint(trayGuestMenu->sizeHint().width(), 0)
                          : QCursor::pos();
 
         trayGuestMenu->update();
         trayGuestMenu->popup(p);
+        displayedMenu = trayGuestMenu.get();
+
     }
     else if (trayMenu)
     {
@@ -4588,10 +4593,29 @@ void MegaApplication::showTrayMenu(QPoint *point)
             trayMenu->close();
         }
 
+
+        menuWidthInitialPopup = trayMenu->sizeHint().width();
         QPoint p = point ? (*point) - QPoint(trayMenu->sizeHint().width(), 0)
                                  : QCursor::pos();
         trayMenu->update();
         trayMenu->popup(p);
+        displayedMenu = trayMenu.get();
+    }
+
+    // Menu width might be incorrect the first time it's shown. This works around that and repositions the menu at the expected position afterwards
+    if (point)
+    {
+        QPoint pointValue= *point;
+        QTimer::singleShot(1, displayedMenu, [displayedMenu, pointValue, menuWidthInitialPopup] () {
+            displayedMenu->update();
+            displayedMenu->ensurePolished();
+            if (menuWidthInitialPopup != displayedMenu->sizeHint().width())
+            {
+                QPoint p = pointValue  - QPoint(displayedMenu->sizeHint().width(), 0);
+                displayedMenu->update();
+                displayedMenu->popup(p);
+            }
+        });
     }
 }
 
@@ -6765,7 +6789,9 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     }
                 }
 
-                if (businessStatus != -2 && businessStatus == MegaApi::BUSINESS_STATUS_EXPIRED)
+                if (preferences->logged()
+                        && businessStatus != -2
+                        && businessStatus == MegaApi::BUSINESS_STATUS_EXPIRED)
                 {
                     restoreSyncs();
                 }
@@ -6813,7 +6839,9 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
             }
             case MegaApi::BUSINESS_STATUS_ACTIVE:
             {
-                if (businessStatus != -2 && businessStatus != event->getNumber())
+                if (preferences->logged()
+                        && businessStatus != -2
+                        && businessStatus != event->getNumber())
                 {
                     restoreSyncs();
                 }

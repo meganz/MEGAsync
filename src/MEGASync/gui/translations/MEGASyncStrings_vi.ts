@@ -356,7 +356,7 @@
     <message>
         <source>New Shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished">Thư mục chia sẻ mới từ [A]</translation>
+        <translation type="obsolete">Thư mục chia sẻ mới từ [X]</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -426,7 +426,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been taken down. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Một [A] của bạn (tên [B]) đã bị tháo bỏ do vi phạm bản quyền.</translation>
+        <translation type="obsolete">Một %1 của bạn (tên %2) đã bị tháo bỏ do vi phạm bản quyền.</translation>
     </message>
     <message>
         <source>file</source>
@@ -467,6 +467,16 @@
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
         <translation type="unfinished">(unknown shared folder)</translation>
+    </message>
+    <message>
+        <source>New Shared folder from [X]</source>
+        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished">Thư mục chia sẻ mới từ [X]</translation>
+    </message>
+    <message>
+        <source>Your publicly shared [%1] ([%2]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
+        <translation type="unfinished">Your publicly shared [%1] ([%2]) has been taken down</translation>
     </message>
 </context>
 <context>
@@ -3250,6 +3260,11 @@ Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ i
         <translatorcomment>Label to indicate transfer quota.</translatorcomment>
         <translation type="unfinished">Truyền Tải</translation>
     </message>
+    <message>
+        <source>per user %1</source>
+        <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
+        <translation type="unfinished">per user %1</translation>
+    </message>
 </context>
 <context>
     <name>Preferences</name>
@@ -3294,11 +3309,11 @@ Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ i
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="obsolete">- Improved look&amp;feel for high resolution displays on Windows and Linux
-- Improved GUI performance during addition of many downloads
-- Restyling of initial information wizard, new icons and interface improvements
-- Support for business accounts
-- Other minor bug fixes and improvements</translation>
+        <translation type="obsolete">- Cải thiện giao diện và cảm giác sử dụng trên các màn hình có độ phân giải cao sử dụng Windows
+- Cải thiện hiệu suất GUI trong quá trình thực hiện thêm nhiều các phiên truyền tải
+- Thay đổi kiểu cách yêu cầu thông tin khi thiết lập việc sử dụng lần đầu, thêm icons mới và giao diện tốt hơn
+- Hỗ trợ tài khoản doanh nghiệp
+- Sửa lại các lỗi nhỏ và hoàn thiện thêm</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -3308,12 +3323,12 @@ Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ i
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="obsolete">- Improved look&amp;feel for high resolution displays on Windows and Linux
-- Enable thumbnail support for PDF
-- Improved GUI performance during addition of many downloads
-- Restyling of initial information wizard, new icons and interface improvements
-- Support for business accounts
-- Other minor bug fixes and improvements</translation>
+        <translation type="obsolete">- Cải thiện giao diện và cảm giác sử dụng trên các màn hình có độ phân giải cao sử dụng Linux
+- Hiển thị ảnh nhỏ nội dung xem trước cho các tài liệu PDF
+- Cải thiện hiệu suất GUI trong quá trình thực hiện thêm nhiều các phiên truyền tải
+- Thay đổi kiểu cách yêu cầu thông tin khi thiết lập việc sử dụng lần đầu, thêm icons mới và giao diện tốt hơn
+- Hỗ trợ tài khoản doanh nghiệp
+- Sửa lại các lỗi nhỏ và hoàn thiện thêmts</translation>
     </message>
     <message>
         <source>- Fix a crash during processing of some PDF files
@@ -3334,12 +3349,33 @@ Please, ensure that you don’t use characters like ‘\’ ‘/’ or ‘:’ i
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.5</translatorcomment>
-        <translation type="unfinished">- Fix sync issues on macOS 10.15
+        <translation type="obsolete">- Fix sync issues on macOS 10.15
 - Fix transfer resumption issues for webclient and public links downloads
 - Fix a crash during processing of some PDF files
 - Resume pending transfers after a crash on next startup
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</translation>
+    </message>
+    <message>
+        <source>- Support for user notifications.
+- Support to send bug reports from settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
+        <translation type="unfinished">- Support for user notifications.
+- Support to send bug reports from the settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with a huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</translation>
     </message>
 </context>
 <context>
@@ -4012,7 +4048,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">Bạn có muốn dọn sao lưu nội bộ ngay bay giờ không?</translation>
+        <translation type="unfinished">Do you want to delete your local backups now?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
@@ -5167,17 +5203,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>month</source>
         <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
-        <translation type="unfinished">tháng</translation>
+        <translation type="obsolete">tháng</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="unfinished">Lưu trữ</translation>
+        <translation type="obsolete">Lưu trữ</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the amount of transfer quota of a PRO plan</translatorcomment>
-        <translation type="unfinished">Truyền Tải</translation>
+        <translation type="obsolete">Truyền Tải</translation>
     </message>
 </context>
 <context>

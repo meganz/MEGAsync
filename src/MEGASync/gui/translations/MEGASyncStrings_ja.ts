@@ -356,7 +356,7 @@
     <message>
         <source>New Shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished">[A]からの新しい共有フォルダ</translation>
+        <translation type="obsolete">[X]からの新しい共有フォルダ</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -426,7 +426,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been taken down. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">あなたの公開共有された[A]（[B]）は削除されました。</translation>
+        <translation type="obsolete">あなたの公開共有された%1（%2）は削除されました。</translation>
     </message>
     <message>
         <source>file</source>
@@ -467,6 +467,16 @@
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
         <translation type="unfinished">（不明な共有フォルダ）</translation>
+    </message>
+    <message>
+        <source>New Shared folder from [X]</source>
+        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished">[X]からの新しい共有フォルダ</translation>
+    </message>
+    <message>
+        <source>Your publicly shared [%1] ([%2]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
+        <translation type="unfinished">あなたの公開共有された[%1]（[%2]）は削除されました</translation>
     </message>
 </context>
 <context>
@@ -3250,6 +3260,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Label to indicate transfer quota.</translatorcomment>
         <translation type="unfinished">転送</translation>
     </message>
+    <message>
+        <source>per user %1</source>
+        <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
+        <translation type="unfinished">per user %1</translation>
+    </message>
 </context>
 <context>
     <name>Preferences</name>
@@ -3294,11 +3309,10 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="obsolete">－WindowsおよびLinux上の高解像度ディスプレイ用のルック＆フィールを改善
-－多くのダウンロードを追加中のGUIパフォーマンスの改善
-－初期情報ウィザードのモデルチェンジ、新しいアイコンとインターフェースの改善
-－ビジネスアカウントのサポート
-－その他のマイナーなバグ修正と改善</translation>
+        <translation type="obsolete">－WindowsとLinuxでの高解像度ディスプレイのルックアンドフィールの改善
+ －多くのダウンロードを追加中のGUIパフォーマンスの改善[BR] －初期情報ウィザードの再設計、新しいアイコンとインターフェイスの改善
+ －ビジネスアカウントのサポート
+ －その他のマイナーなバグ修正と改善</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -3308,11 +3322,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="obsolete">－WindowsおよびLinux上の高解像度ディスプレイ用のルック＆フィールが改善
-－PDFのサムネイルサポートの有効化
-－多くのダウンロードを追加中のGUIパフォーマンスの改善[BR]－初期情報ウィザードのモデルチェンジ、新しいアイコンとインターフェースの改善
-－ビジネスアカウントのサポート
-－その他のマイナーなバグ修正と改善</translation>
+        <translation type="obsolete">－WindowsとLinuxでの高解像度ディスプレイのルックアンドフィールの改善
+ －PDFファイルのサムネイルサポートの有効化
+ －多くのダウンロードを追加中のGUIパフォーマンスの改善[BR] －初期情報ウィザードの再設計、新しいアイコンとインターフェイスの改善
+ －ビジネスアカウントのサポート
+ －その他のマイナーなバグ修正と改善</translation>
     </message>
     <message>
         <source>- Fix a crash during processing of some PDF files
@@ -3331,12 +3345,33 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.5</translatorcomment>
-        <translation type="unfinished">－macOS 10.15の同期の問題を修正
+        <translation type="obsolete">－macOS 10.15の同期の問題を修正
 －ウェブクライアントとパブリックリンクのダウンロードの転送再開の問題を修正
 －一部のPDFファイルの処理中のクラッシュを修正
 －保留中の転送を次の起動時のクラッシュ後に再開
 －メインダイアログから同期を追加するオプションを含める
 －その他のマイナーなバグ修正と改善</translation>
+    </message>
+    <message>
+        <source>- Support for user notifications.
+- Support to send bug reports from settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
+        <translation type="unfinished">- Support for user notifications.
+- Support to send bug reports from the settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with a huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</translation>
     </message>
 </context>
 <context>
@@ -5164,17 +5199,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>month</source>
         <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
-        <translation type="unfinished">月</translation>
+        <translation type="obsolete">月</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="unfinished">ストレージ</translation>
+        <translation type="obsolete">ストレージ</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the amount of transfer quota of a PRO plan</translatorcomment>
-        <translation type="unfinished">転送</translation>
+        <translation type="obsolete">転送</translation>
     </message>
 </context>
 <context>

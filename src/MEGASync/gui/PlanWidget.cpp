@@ -33,7 +33,6 @@ PlanWidget::PlanWidget(PlanInfo data, QString userAgent, QWidget *parent) :
 
     overlay->setCursor(Qt::PointingHandCursor);
     overlay->resize(this->size());
-    ui->lPeriod->setText(QString::fromUtf8("/%1").arg(ui->lPeriod->text()));
     connect(overlay, SIGNAL(clicked()), this, SLOT(onOverlayClicked()));
 
     updatePlanInfo();
@@ -88,6 +87,7 @@ PlanWidget::~PlanWidget()
 void PlanWidget::updatePlanInfo()
 {
     QString colorPrice;
+    ui->lPeriod->setText(QString::fromUtf8("/%1").arg(tr("month")));
 
     switch (details.level)
     {
@@ -110,7 +110,7 @@ void PlanWidget::updatePlanInfo()
         case BUSINESS:
             ui->lProPlan->setText(QString::fromUtf8("BUSINESS"));
             colorPrice = QString::fromUtf8("color: #2BA6DE;");
-            ui->lPeriod->setText(QString::fromUtf8("per user %1").arg(ui->lPeriod->text()));
+            ui->lPeriod->setText(tr("per user %1").arg(ui->lPeriod->text()));
             break;
         default:
             ui->lProPlan->setText(QString::fromUtf8("PRO"));
@@ -149,4 +149,14 @@ QString PlanWidget::formatRichString(QString str, int type)
                              "<span style='color:#666666; font-family: Lato; font-size: 13px; text-decoration:none;'>%2</span>")
             .arg(str)
             .arg(type == STORAGE ? tr("Storage") : tr("Transfer"));
+}
+
+void PlanWidget::changeEvent(QEvent *event)
+{
+    if (event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+        updatePlanInfo();
+    }
+    QWidget::changeEvent(event);
 }

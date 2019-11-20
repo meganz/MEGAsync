@@ -356,7 +356,7 @@
     <message>
         <source>New Shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished">Nuova cartella condivisa da [A]</translation>
+        <translation type="obsolete">Nuova cartella condivisa da [X]</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -426,7 +426,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been taken down. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Il/la tuo/a [A] condiviso/a pubblicamente ([B]) è stato/a chiuso/a.</translation>
+        <translation type="obsolete">Il/la tuo/a %1 condiviso/a pubblicamente (%2) è stato/a chiuso/a.</translation>
     </message>
     <message>
         <source>file</source>
@@ -467,6 +467,16 @@
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
         <translation type="unfinished">(cartella condivisa sconosciuta)</translation>
+    </message>
+    <message>
+        <source>New Shared folder from [X]</source>
+        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished">Nuova cartella condivisa da [X]</translation>
+    </message>
+    <message>
+        <source>Your publicly shared [%1] ([%2]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
+        <translation type="unfinished">Your publicly shared [%1] ([%2]) has been taken down</translation>
     </message>
 </context>
 <context>
@@ -1887,7 +1897,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Grazie per testare MEGAsync.&lt;br&gt;Questa versione beta non è più in uso ed è diventata obsoleta, scadendo.&lt;br&gt;Per favore segui &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; su Twitter per gli aggiornamenti.</translation>
+        <translation type="obsolete">Grazie per testare MEGAsync.&lt;br&gt;Questa versione beta non è più in uso ed è diventata obsoleta, scadendo.&lt;br&gt;Per favore segui &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; su Twitter per aggiornamenti.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -3250,6 +3260,11 @@ Per favore, assicurati di non utilizzare caratteri come ‘\’, ‘/’ o ‘:�
         <translatorcomment>Label to indicate transfer quota.</translatorcomment>
         <translation type="unfinished">Trasferisci</translation>
     </message>
+    <message>
+        <source>per user %1</source>
+        <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
+        <translation type="unfinished">per utente %1</translation>
+    </message>
 </context>
 <context>
     <name>Preferences</name>
@@ -3334,12 +3349,33 @@ Per favore, assicurati di non utilizzare caratteri come ‘\’, ‘/’ o ‘:�
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.5</translatorcomment>
-        <translation type="unfinished">- Aggiustati problemi della sincronizzazione su macOS 10.15
+        <translation type="obsolete">- Aggiustati problemi della sincronizzazione su macOS 10.15
 - Aggiustata la ripresa dei trasferimenti per i client web e i download da link pubblici
 - Aggiustato il crash durante il processo di alcuni file PDF
 - Riavvio dei trasferimenti in attesa all&apos;avvio successivo dopo un crash
 - Aggiunta l&apos;opzione per aggiungere sincronizzazioni dalla finestra principale
 - Altri minori bug fix e miglioramenti</translation>
+    </message>
+    <message>
+        <source>- Support for user notifications.
+- Support to send bug reports from settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
+        <translation type="unfinished">- Supporto per le notifiche dell&apos;utente.
+- Supporto per inviare segnalazioni di bug dalla finestra delle Impostazioni.
+- Restyling della schermata principale.
+- Miglioramenti della performance quando si ha a che fare con molte sincronizzazioni e molti trasferimenti.
+- Migliorato il supporto per gli account Business.
+- Supporto a link di file e cartelle all&apos;interno di una cartella condivisa.
+- Miglioramenti nella sincronizzazione con il filesystem FAT32.
+- Altri miglioramenti nell&apos;interfaccia utente.
+- Altri miglioramenti nella performance.</translation>
     </message>
 </context>
 <context>
@@ -5167,17 +5203,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>month</source>
         <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
-        <translation type="unfinished">mese</translation>
+        <translation type="obsolete">mese</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="unfinished">Archivio</translation>
+        <translation type="obsolete">Archivio</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the amount of transfer quota of a PRO plan</translatorcomment>
-        <translation type="unfinished">Trasferisci</translation>
+        <translation type="obsolete">Trasferisci</translation>
     </message>
 </context>
 <context>

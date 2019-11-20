@@ -53,7 +53,6 @@ SOURCES += $$PWD/SettingsDialog.cpp \
     $$PWD/PSAwidget.cpp \
     $$PWD/ElidedLabel.cpp \
     $$PWD/UpgradeOverStorage.cpp \
-    $$PWD/UpgradeWidget.cpp \
     $$PWD/Login2FA.cpp \
     $$PWD/TransfersStatusWidget.cpp \
     $$PWD/TransfersSummaryWidget.cpp \
@@ -119,7 +118,6 @@ HEADERS  += $$PWD/SettingsDialog.h \
     $$PWD/PSAwidget.h \
     $$PWD/ElidedLabel.h \
     $$PWD/UpgradeOverStorage.h \
-    $$PWD/UpgradeWidget.h \
     $$PWD/ChangePassword.h \
     $$PWD/Login2FA.h \
     $$PWD/TransfersStatusWidget.h \
@@ -179,7 +177,6 @@ win32 {
                 $$PWD/win/StatusInfo.ui \
                 $$PWD/win/PSAwidget.ui \
                 $$PWD/win/UpgradeOverStorage.ui \
-                $$PWD/win/UpgradeWidget.ui \
                 $$PWD/win/ChangePassword.ui \
                 $$PWD/win/Login2FA.ui \
                 $$PWD/win/TransfersStatusWidget.ui \
@@ -231,7 +228,6 @@ macx {
                 $$PWD/macx/CustomTransferItem.ui \
                 $$PWD/macx/PSAwidget.ui \
                 $$PWD/macx/UpgradeOverStorage.ui \
-                $$PWD/macx/UpgradeWidget.ui \
                 $$PWD/macx/ChangePassword.ui \
                 $$PWD/macx/Login2FA.ui \
                 $$PWD/macx/TransfersStatusWidget.ui \
@@ -292,7 +288,6 @@ unix:!macx {
                 $$PWD/linux/StatusInfo.ui \
                 $$PWD/linux/PSAwidget.ui \
                 $$PWD/linux/UpgradeOverStorage.ui \
-                $$PWD/linux/UpgradeWidget.ui \
                 $$PWD/linux/ChangePassword.ui \
                 $$PWD/linux/Login2FA.ui \
                 $$PWD/linux/TransfersStatusWidget.ui \

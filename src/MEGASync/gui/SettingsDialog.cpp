@@ -274,9 +274,20 @@ SettingsDialog::SettingsDialog(MegaApplication *app, bool proxyOnly, QWidget *pa
 
     if (!proxyOnly)
     {
+        if (preferences->accountType() == Preferences::ACCOUNT_TYPE_BUSINESS)
+        {
+            setMinimumHeight(522);
+            setMaximumHeight(522);
+            ui->gStorageSpace->setMinimumHeight(83);
+        }
+        else
+        {
+            setMinimumHeight(542);
+            setMaximumHeight(542);
+            ui->gStorageSpace->setMinimumHeight(103);
+        }
+
         ui->pProxies->hide();
-        setMinimumHeight(485);
-        setMaximumHeight(485);
         ui->bApply->hide();
     }
 #endif
