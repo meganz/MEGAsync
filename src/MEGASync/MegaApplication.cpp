@@ -6763,7 +6763,9 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
                     }
                 }
 
-                if (businessStatus != -2 && businessStatus == MegaApi::BUSINESS_STATUS_EXPIRED)
+                if (preferences->logged()
+                        && businessStatus != -2
+                        && businessStatus == MegaApi::BUSINESS_STATUS_EXPIRED)
                 {
                     restoreSyncs();
                 }
@@ -6810,7 +6812,9 @@ void MegaApplication::onEvent(MegaApi *api, MegaEvent *event)
             }
             case MegaApi::BUSINESS_STATUS_ACTIVE:
             {
-                if (businessStatus != -2 && businessStatus != event->getNumber())
+                if (preferences->logged()
+                        && businessStatus != -2
+                        && businessStatus != event->getNumber())
                 {
                     restoreSyncs();
                 }
