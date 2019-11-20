@@ -266,17 +266,17 @@
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation type="unfinished">Kontak diperbarui</translation>
+        <translation type="unfinished">Permintaan kontak diperbarui</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
         <translatorcomment>Notification label that indicates that the user has accepted a contact request</translatorcomment>
-        <translation type="unfinished">Kontak diterima</translation>
+        <translation type="unfinished">Permintaan kontak diterima</translation>
     </message>
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation type="unfinished">Kontak ditolak</translation>
+        <translation type="unfinished">Permintaan kontak ditolak</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -356,7 +356,7 @@
     <message>
         <source>New Shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished">Folder Berbagi baru dari [A]</translation>
+        <translation type="obsolete">Folder Berbagi baru dari [X]</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -426,7 +426,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been taken down. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Anda punya [A] ([B]) telah dicopot.</translation>
+        <translation type="obsolete">Anda punya %1 (%2) telah dicopot.</translation>
     </message>
     <message>
         <source>file</source>
@@ -467,6 +467,16 @@
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
         <translation type="unfinished">(unknown shared folder)</translation>
+    </message>
+    <message>
+        <source>New Shared folder from [X]</source>
+        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished">Folder Berbagi baru dari [X]</translation>
+    </message>
+    <message>
+        <source>Your publicly shared [%1] ([%2]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
+        <translation type="unfinished">Your publicly shared [%1] ([%2]) has been taken down</translation>
     </message>
 </context>
 <context>
@@ -3250,6 +3260,11 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
         <translatorcomment>Label to indicate transfer quota.</translatorcomment>
         <translation type="unfinished">Transfer</translation>
     </message>
+    <message>
+        <source>per user %1</source>
+        <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
+        <translation type="unfinished">per user %1</translation>
+    </message>
 </context>
 <context>
     <name>Preferences</name>
@@ -3294,11 +3309,11 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="obsolete">- Tampilan &amp; nuansa yang ditingkatkan untuk tampilan resolusi tinggi pada Windows dan Linux
-- Peningkatan kinerja GUI selama penambahan banyak unduhan
-- Pembaruan wizard informasi awal, ikon baru dan peningkatan antarmuka
-- Dukungan untuk akun bisnis
-- Perbaikan dan peningkatan bug minor lainnya</translation>
+        <translation type="obsolete">- Tampilan dan nuansa yang ditingkatkan untuk tampilan resolusi tinggi pada Windows dan Linux
+ - Peningkatan kinerja GUI selama penambahan banyak unduhan
+ - Wizard informasi awal yang dibenahi, dengan ikon baru dan peningkatan antarmuka
+ - Dukungan untuk akun bisnis
+ - Perbaikan dan peningkatan bug minor lainnya</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -3308,12 +3323,12 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="obsolete">- Tampilan &amp; nuansa yang ditingkatkan untuk tampilan resolusi tinggi pada Windows dan Linux
-- Aktifkan dukungan thumbnail untuk PDF
-- Peningkatan kinerja GUI selama penambahan banyak unduhan
-- Pembenahan ulang wizard informasi awal, ikon baru dan peningkatan antarmuka
-- Dukungan untuk akun bisnis
-- Perbaikan dan peningkatan bug minor lainnya</translation>
+        <translation type="obsolete">- Tampilan dan nuansa yang ditingkatkan untuk tampilan resolusi tinggi pada Windows dan Linux
+ - Dukungan thumbnail yang diaktifkan untuk file PDF
+ - Peningkatan kinerja GUI selama penambahan banyak unduhan
+ - Wizard informasi awal yang dibenahi, dengan ikon baru dan peningkatan antarmuka
+ - Dukungan untuk akun bisnis
+ - Perbaikan dan peningkatan bug minor lainnya</translation>
     </message>
     <message>
         <source>- Fix a crash during processing of some PDF files
@@ -3334,12 +3349,33 @@ Harap pastikan Anda tidak menggunakan karakter seperti ‘\’ &apos;/’ atau �
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.5</translatorcomment>
-        <translation type="unfinished">- Perbaiki masalah sinkronisasi pada macOS 10.15
+        <translation type="obsolete">- Perbaiki masalah sinkronisasi pada macOS 10.15
 - Perbaiki masalah kembalinya transfer untuk webclient dan tautan publik unduhan
 - Perbaiki kerusakan saat memproses beberapa file PDF
 - Lanjutkan transfer yang tertunda setelah crash pada startup berikutnya
 - Sertakan opsi untuk menambahkan sinkronisasi dari dialog utama
 - Perbaikan dan peningkatan bug minor lainnya</translation>
+    </message>
+    <message>
+        <source>- Support for user notifications.
+- Support to send bug reports from settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
+        <translation type="unfinished">- Support for user notifications.
+- Support to send bug reports from the settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with a huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</translation>
     </message>
 </context>
 <context>
@@ -4012,7 +4048,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">Apakah anda ingin menghapus backup lokal anda sekarang?</translation>
+        <translation type="unfinished">Apakah Anda ingin menghapus cadangan lokal Anda sekarang?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
@@ -5167,17 +5203,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>month</source>
         <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
-        <translation type="unfinished">Bulan</translation>
+        <translation type="obsolete">Bulan</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="unfinished">Gudang</translation>
+        <translation type="obsolete">Gudang</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the amount of transfer quota of a PRO plan</translatorcomment>
-        <translation type="unfinished">Transfer</translation>
+        <translation type="obsolete">Transfer</translation>
     </message>
 </context>
 <context>

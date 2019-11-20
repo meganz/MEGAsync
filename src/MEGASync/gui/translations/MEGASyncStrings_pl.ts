@@ -356,7 +356,7 @@
     <message>
         <source>New Shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished">Nowy udostępniony katalog od [A]</translation>
+        <translation type="obsolete">Nowy udostępniony katalog od [X]</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -426,7 +426,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been taken down. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Twój udostępniony publicznie katalog  [A] ([B]) został zablokowany.</translation>
+        <translation type="obsolete">Twój udostępniony publicznie katalog  %1 (%2) został zablokowany.</translation>
     </message>
     <message>
         <source>file</source>
@@ -466,7 +466,17 @@
     <message>
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
-        <translation type="unfinished">(unknown shared folder)</translation>
+        <translation type="unfinished">(nieznany folder współdzielony)</translation>
+    </message>
+    <message>
+        <source>New Shared folder from [X]</source>
+        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished">Nowy udostępniony katalog od [X]</translation>
+    </message>
+    <message>
+        <source>Your publicly shared [%1] ([%2]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
+        <translation type="unfinished">Twój publicznie udostępniony [%1] ([%2]) został usunięty</translation>
     </message>
 </context>
 <context>
@@ -3250,6 +3260,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Label to indicate transfer quota.</translatorcomment>
         <translation type="unfinished">Przesyłanie</translation>
     </message>
+    <message>
+        <source>per user %1</source>
+        <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
+        <translation type="unfinished">per user %1</translation>
+    </message>
 </context>
 <context>
     <name>Preferences</name>
@@ -3295,10 +3310,10 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
         <translation type="obsolete">- Poprawiony wygląd wyświetlaczy o wysokiej rozdzielczości w systemach Windows i Linux
-- Poprawiona wydajność GUI podczas dodawania wielu plików do pobrania
-- Zmiana stylów początkowego kreatora informacji, nowe ikony i ulepszenia interfejsu
-- Obsługa kont biznesowych
-- Inne drobne poprawki i ulepszenia</translation>
+ - Poprawiona wydajność GUI podczas dodawania wielu plików do pobrania
+ - Przeprojektowany kreator informacji początkowych, z nowymi ikonami i ulepszeniami interfejsu
+ - Wsparcie dla kont firmowych
+ - Inne drobne poprawki i ulepszenia</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -3309,11 +3324,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
         <translation type="obsolete">- Poprawiony wygląd wyświetlaczy o wysokiej rozdzielczości w systemach Windows i Linux
-- Włącz obsługę miniaturek plików PDF
-- Poprawiona wydajność GUI podczas dodawania wielu plików do pobrania
-- Zmiana stylu kreatora informacji początkowych, nowe ikony i ulepszenia interfejsu
-- Wsparcie dla kont firmowych
-- Inne drobne poprawki i ulepszenia</translation>
+ - Włączona obsługa miniatur plików PDF
+ - Poprawiona wydajność GUI podczas dodawania wielu plików do pobrania
+ - Przeprojektowany kreator informacji początkowych, z nowymi ikonami i ulepszeniami interfejsu
+ - Wsparcie dla kont firmowych
+ - Inne drobne poprawki i ulepszenia</translation>
     </message>
     <message>
         <source>- Fix a crash during processing of some PDF files
@@ -3334,12 +3349,33 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.5</translatorcomment>
-        <translation type="unfinished">- Napraw problemy z synchronizacją w systemie macOS 10.15
+        <translation type="obsolete">- Napraw problemy z synchronizacją w systemie macOS 10.15
  - Napraw problemy z wznowieniem transferu plików do pobrania przez klienta WWW i łącza publiczne
  - Napraw awarię podczas przetwarzania niektórych plików PDF
  - Wznów oczekujące transfery po awarii przy następnym uruchomieniu
  - Dołącz opcję dodawania synchronizacji z głównego okna dialogowego
  - Inne drobne poprawki i ulepszenia</translation>
+    </message>
+    <message>
+        <source>- Support for user notifications.
+- Support to send bug reports from settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
+        <translation type="unfinished">- Support for user notifications.
+- Support to send bug reports from the settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with a huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</translation>
     </message>
 </context>
 <context>
@@ -5167,17 +5203,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>month</source>
         <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
-        <translation type="unfinished">miesiąc</translation>
+        <translation type="obsolete">miesiąc</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="unfinished">Pojemności</translation>
+        <translation type="obsolete">Pojemności</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the amount of transfer quota of a PRO plan</translatorcomment>
-        <translation type="unfinished">Przesyłanie</translation>
+        <translation type="obsolete">Przesyłanie</translation>
     </message>
 </context>
 <context>

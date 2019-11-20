@@ -256,7 +256,7 @@
     <message>
         <source>Contact Established</source>
         <translatorcomment>Notification label that indicates the user has established a new contact relationship</translatorcomment>
-        <translation type="unfinished">Contacto aceptado</translation>
+        <translation type="unfinished">Ahora ambos sois contactos</translation>
     </message>
     <message>
         <source>Contact Blocked</source>
@@ -356,7 +356,7 @@
     <message>
         <source>New Shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished">Nueva carpeta compartida de [A]</translation>
+        <translation type="obsolete">Nueva carpeta compartida de [X]</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -426,7 +426,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been taken down. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Tu [A] ([B]) que has compartido públicamente ha sido retirado/a.</translation>
+        <translation type="obsolete">Tu  %1 (%2) que has compartido públicamente ha sido retirado/a.</translation>
     </message>
     <message>
         <source>file</source>
@@ -467,6 +467,16 @@
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
         <translation type="unfinished">(carpeta compartida desconocida)</translation>
+    </message>
+    <message>
+        <source>New Shared folder from [X]</source>
+        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished">Nueva carpeta compartida de [X]</translation>
+    </message>
+    <message>
+        <source>Your publicly shared [%1] ([%2]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
+        <translation type="unfinished">Tu [%1] ([%2]) que has compartido públicamente ha sido retirado/a.</translation>
     </message>
 </context>
 <context>
@@ -2574,7 +2584,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to admin business account about a failure with the last payment and the explain the way to deal with.</translatorcomment>
-        <translation type="obsolete">Ha habido un problema con su pago. Por favor, acceda a su cuenta MEGA desde el navegador para obtener más información.</translation>
+        <translation type="obsolete">Ha habido un problem con su pago. Por favor, acceda a su cuenta MEGA desde el navegador para obtener más información.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -3251,6 +3261,11 @@ Por favor, compruebe que no está utilizando caracteres como ‘\’ ‘/’ o �
         <translatorcomment>Label to indicate transfer quota.</translatorcomment>
         <translation type="unfinished">Transferencia</translation>
     </message>
+    <message>
+        <source>per user %1</source>
+        <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
+        <translation type="unfinished">por usuario %1</translation>
+    </message>
 </context>
 <context>
     <name>Preferences</name>
@@ -3295,11 +3310,11 @@ Por favor, compruebe que no está utilizando caracteres como ‘\’ ‘/’ o �
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="obsolete">- Improved look&amp;feel for high resolution displays on Windows and Linux
-- Improved GUI performance during addition of many downloads
-- Restyling of initial information wizard, new icons and interface improvements
-- Support for business accounts
-- Other minor bug fixes and improvements</translation>
+        <translation type="obsolete">- Mejorado el soporte para pantallas de alta resolución en sistemas Windows y Linux
+- Mejorado el rendimiento de la interfaz de usuario al añadir un gran número de descargas
+- Nuevo diseño para el asistente informativo inicial, nuevos iconos y mejoras en la interfaz de usuario
+- Soporte para cuentas business
+- Otras mejoras y correcciones de errores</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -3309,12 +3324,12 @@ Por favor, compruebe que no está utilizando caracteres como ‘\’ ‘/’ o �
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="obsolete">- Improved look&amp;feel for high resolution displays on Windows and Linux
-- Enable thumbnail support for PDF
-- Improved GUI performance during addition of many downloads
-- Restyling of initial information wizard, new icons and interface improvements
-- Support for business accounts
-- Other minor bug fixes and improvements</translation>
+        <translation type="obsolete">- Mejorado el soporte para pantallas de alta resolución en sistemas Windows y Linux
+- Soporte para la creación de vistas en miniatura en documentos PDF
+- Mejorado el rendimiento de la interfaz de usuario al añadir un gran número de descargas
+- Nuevo diseño para el asistente informativo inicial, nuevos iconos y mejoras en la interfaz de usuario
+- Soporte para cuentas business
+- Otras mejoras y correcciones de errores</translation>
     </message>
     <message>
         <source>- Fix a crash during processing of some PDF files
@@ -3335,12 +3350,33 @@ Por favor, compruebe que no está utilizando caracteres como ‘\’ ‘/’ o �
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.5</translatorcomment>
-        <translation type="unfinished">- Arreglados problemas de sincronización en macOS 10.15
+        <translation type="obsolete">- Arreglados problemas de sincronización en macOS 10.15
 - Arreglados problemas con la reanudación de transferencias durante las descargas de enlaces públicos utilizando el client web
 - Arreglado error durante el procesamiento de algunos Archivos PDF
 - Reanudar las transferencias pendientes después de un fallo del programa en el siguiente inicio de la aplicación
 - Incluida la opción de añadir sincronizaciones desde el diálogo principal de la aplicación
 - Otros errores menores y mejoras</translation>
+    </message>
+    <message>
+        <source>- Support for user notifications.
+- Support to send bug reports from settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
+        <translation type="unfinished">- Soporte para notificaciones de usuario.
+- Soporte para enviar informes de error desde el diálogo de preferencias.
+- Nuevo diseño del diálogo principal de la aplicación.
+- Mejoras de rendimiento para un número elevado de sicronizaciones y transferencias.
+- Mejorado el soporte para cuentas Business.
+- Soporte para enlaces de archivos y carpetas dentro de un enlace público de carpeta.
+- Mejoras en la sincronización utilizando sistemas de archivo FAT32.
+- Otros arreglos de interfaz de usuario y ajustes.
+- Mejoras de rendimiento.</translation>
     </message>
 </context>
 <context>
@@ -4013,7 +4049,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">¿Quieres eliminar tu copia de seguridad local?</translation>
+        <translation type="unfinished">¿Quieres eliminar tu copia de seguridad ahora?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
@@ -5169,17 +5205,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>month</source>
         <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
-        <translation type="unfinished">mes</translation>
+        <translation type="obsolete">mes</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="unfinished">Almacenamiento</translation>
+        <translation type="obsolete">Almacenamiento</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the amount of transfer quota of a PRO plan</translatorcomment>
-        <translation type="unfinished">Transferencia</translation>
+        <translation type="obsolete">Transferencia</translation>
     </message>
 </context>
 <context>

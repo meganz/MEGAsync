@@ -266,17 +266,17 @@
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation type="unfinished">联系请求已更新</translation>
+        <translation type="unfinished">Contact request updated</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
         <translatorcomment>Notification label that indicates that the user has accepted a contact request</translatorcomment>
-        <translation type="unfinished">联系请求已接受</translation>
+        <translation type="unfinished">Contact request accepted</translation>
     </message>
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation type="unfinished">联系请求已拒绝</translation>
+        <translation type="unfinished">Contact request denied</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -356,7 +356,7 @@
     <message>
         <source>New Shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished">新的分享文件夹从[A]</translation>
+        <translation type="obsolete">新的分享文件夹从[X]</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -426,7 +426,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been taken down. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">您公开分享的[A] ([B]) 已被移除。</translation>
+        <translation type="obsolete">您公开分享的%1 (%2) 已被移除。</translation>
     </message>
     <message>
         <source>file</source>
@@ -441,7 +441,7 @@
     <message>
         <source>Your publicly shared has been taken down</source>
         <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
-        <translation type="unfinished">您的公共分享已被删除。</translation>
+        <translation type="unfinished">Your public share has been taken down.</translation>
     </message>
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
@@ -451,7 +451,7 @@
     <message>
         <source>Your taken down has been reinstated</source>
         <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
-        <translation type="unfinished">您的公共分享已恢复。</translation>
+        <translation type="unfinished">Your public share has been reinstated.</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -461,12 +461,22 @@
     <message>
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
-        <translation type="unfinished">Access to a shared folder was removed by [A]</translation>
+        <translation type="unfinished">[A]已删除对共享文件夹的访问</translation>
     </message>
     <message>
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
-        <translation type="unfinished">(unknown shared folder)</translation>
+        <translation type="unfinished">（未知的共享文件夹）</translation>
+    </message>
+    <message>
+        <source>New Shared folder from [X]</source>
+        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished">新的分享文件夹从[X]</translation>
+    </message>
+    <message>
+        <source>Your publicly shared [%1] ([%2]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
+        <translation type="unfinished">您公开分享的[%1] ([%2])已被删除</translation>
     </message>
 </context>
 <context>
@@ -547,27 +557,27 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Bug report</source>
         <translatorcomment>Title of the dialog used to send bug reports to support team.</translatorcomment>
-        <translation type="unfinished">Report issue</translation>
+        <translation type="unfinished">通报问题</translation>
     </message>
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
         <translatorcomment>Label to indicate the user that needs to describe the issue through the text edit field of bug report form.</translatorcomment>
-        <translation type="unfinished">Please clearly describe the issue you encountered. The more details you provide, the easier it will be for us to resolve. Your submission will be reviewed by our development team.</translation>
+        <translation type="unfinished">请清楚描述您遇到的问题。您提供的详细信息越多，我们将越容易帮您解决。您提交的内容将由我们的开发团队进行审核。</translation>
     </message>
     <message>
         <source>Title</source>
         <translatorcomment>Label to indicate the title field of form bug report. The user will fill it with a suitable title describing his bug report.</translatorcomment>
-        <translation type="unfinished">Title</translation>
+        <translation type="unfinished">标题</translation>
     </message>
     <message>
         <source>Describe the problem</source>
         <translatorcomment>Label to indicate the description input field of form bug report. The user will fill it with a description of the bug and any specific detail that wants to be included.</translatorcomment>
-        <translation type="unfinished">Describe the issue</translation>
+        <translation type="unfinished">请描述您的问题</translation>
     </message>
     <message>
         <source>Attach diagnostic log files to assist with debugging</source>
         <translatorcomment>Check box to confirm the attachment and upload of log files generated by MEGAsync to our support team.</translatorcomment>
-        <translation type="unfinished">Attach diagnostic log files to assist with debugging</translation>
+        <translation type="unfinished">附加诊断日志文件以帮助调试</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -587,27 +597,27 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Bug report is uploading, it may take a few minutes</source>
         <translatorcomment>Label to indicate that the bug report is being uploaded to our support team.</translatorcomment>
-        <translation type="unfinished">Your reported issue is uploading, it may take a few minutes.</translation>
+        <translation type="unfinished">您的通报问题正在上传中，这可能需要几分钟时间。</translation>
     </message>
     <message>
         <source>Bug report success!</source>
         <translatorcomment>Confirmation message shown when a bug report is successfully uploaded.</translatorcomment>
-        <translation type="unfinished">Your issue has been reported successfully.</translation>
+        <translation type="unfinished">您的问题已被成功通报。</translation>
     </message>
     <message>
         <source>Your bug report has been submitted, a confirmation email will sent to you accordingly.</source>
         <translatorcomment>Label to inform the user that he will receive a confirmation email </translatorcomment>
-        <translation type="unfinished">Your issue has been submitted, a confirmation email will be sent to you.</translation>
+        <translation type="unfinished">您的问题已上传，确认邮件将发送至您的邮箱。</translation>
     </message>
     <message>
         <source>Error on submitting bug report</source>
         <translatorcomment>Error message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished">Error while uploading reported issue.</translation>
+        <translation type="unfinished">上传通报问题时发生错误</translation>
     </message>
     <message>
         <source>Bug report can&apos;t be submitted due to some error. Please try again or contact our support team via [A]support@mega.co.nz[/A]</source>
         <translatorcomment>Warning message shown when some error occurs during uploading a bug report.</translatorcomment>
-        <translation type="unfinished">Your issue cannot be uploaded due to an error. Please try again or contact our support team via [A]support@mega.nz[/A] if the problem persists.</translation>
+        <translation type="unfinished">您的问题由于错误无法被上传。请再试一次。如果问题仍然存在，请联系我们的支持团队[A]support@mega.nz[/A]获取帮助。</translation>
     </message>
     <message>
         <source>Ok</source>
@@ -617,12 +627,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Are you sure you want to exit uploading?</source>
         <translatorcomment>Confirmation message shown when the user is trying to cancel the ongoing upload report.</translatorcomment>
-        <translation type="unfinished">Are you sure you want to cancel uploading your reported issue?</translation>
+        <translation type="unfinished">您确定要取消上传您的通报问题？</translation>
     </message>
     <message>
         <source>The bug report will not be submitted if you exit uploading.</source>
         <translatorcomment>Informative message shown to the user to inform that if he exits the dialog the bug report upload will not be submitted.</translatorcomment>
-        <translation type="unfinished">The issue will not be reported if you cancel uploading it.</translation>
+        <translation type="unfinished">如果您取消上传，此问题不会被通报。</translation>
     </message>
     <message>
         <source>Continue</source>
@@ -637,12 +647,12 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>There is an ongoing report being uploaded.</source>
         <translatorcomment>Informative message shown when user is trying to upload a bug report while there is an ongoing upload.</translatorcomment>
-        <translation type="unfinished">There is currently another reported issue being uploaded.</translation>
+        <translation type="unfinished">当前有另一个通报问题正在上传。</translation>
     </message>
     <message>
         <source>Please wait until the current upload is completed.</source>
         <translatorcomment>Informative message shown to the user to inform that needs to wait until the current bug report upload is completed to start a new one bug report.</translatorcomment>
-        <translation type="unfinished">Please wait until the current upload is completed.</translation>
+        <translation type="unfinished">请等待完成当前上传。</translation>
     </message>
 </context>
 <context>
@@ -1614,12 +1624,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open Downloads</source>
         <translatorcomment>Tooltip of button that let the user open downloads section of transfer manager.</translatorcomment>
-        <translation type="unfinished">打开下载</translation>
+        <translation type="unfinished">Open downloads</translation>
     </message>
     <message>
         <source>Open Uploads</source>
         <translatorcomment>Tooltip of button that let the user open uploads section of transfer manager.</translatorcomment>
-        <translation type="unfinished">打开上传</translation>
+        <translation type="unfinished">Open uploads</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -1887,7 +1897,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">谢谢您测试MEGAsync同步功能。 &lt;br&gt;此测试版本不再存在且失效过期。 &lt;br&gt;请参照Twitter上的更新&lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt;</translation>
+        <translation type="obsolete">感谢您对MEGAsync的支持。&lt;br&gt;此测试版本现已失效并过期。&lt;br&gt;请关注我们在Twitter上的更新&lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -2548,7 +2558,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to the the user to inform that needs to access his account with webclient to check for pending payment issues.</translatorcomment>
-        <translation type="obsolete">请使用网页浏览器访问MEGA获取详情。</translation>
+        <translation type="obsolete">Please access MEGA using a desktop browser for more information.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2563,7 +2573,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation type="unfinished">在您进行所需的付款之前，您的帐户已过期并处于只读状态。</translation>
+        <translation type="unfinished">Your account is expired as read only until you proceed with the needed payments.</translation>
     </message>
     <message>
         <source>Contact your business account administrator.</source>
@@ -2573,7 +2583,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to admin business account about a failure with the last payment and the explain the way to deal with.</translatorcomment>
-        <translation type="obsolete">您的上一笔付款出现问题。请使用网页浏览器访问MEGA获取详情。</translation>
+        <translation type="obsolete">There was a problem with your last payment. Please access MEGA using a desktop browser for more information.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2603,7 +2613,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please resolve your payment issue to avoid suspension of your account.</source>
         <translatorcomment>Notification text to inform the user that there is a payment issue with the business accounts that needs to be solved to continue and avoid suspension.</translatorcomment>
-        <translation type="unfinished">Please resolve your payment issue to avoid suspension of your business account.</translation>
+        <translation type="unfinished">为避免暂停您的企业帐户，请尝试解决您的付款问题。</translation>
     </message>
     <message>
         <source>Contact your business account administrator to resolve the issue and activate your account.</source>
@@ -2613,22 +2623,22 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>This month&apos;s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</source>
         <translatorcomment>Informative message shown to the user when a payment has failed for a business account.</translatorcomment>
-        <translation type="unfinished">This month’s payment has failed. Please resolve your payment issue as soon as possible to avoid any suspension of your business account.</translation>
+        <translation type="unfinished">您在本月的付款未成功。为避免暂停您的企业帐户，请尽快解决您的付款问题。</translation>
     </message>
     <message>
         <source>Account Suspended</source>
         <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
-        <translation type="unfinished">Account Suspended</translation>
+        <translation type="unfinished">帐户已禁用</translation>
     </message>
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
         <translatorcomment>Informative message shown when a business account is expired and the user can only browse data and none operation (upload, download, creation..) is allowed.</translatorcomment>
-        <translation type="unfinished">Your account is currently [A]suspended[/A]. You can only browse your data.</translation>
+        <translation type="unfinished">当前您的帐户已被[A]禁用[/A]，您只能浏览其内容。</translation>
     </message>
     <message>
         <source>Your upload(s) cannot proceed because %1&apos;s account is full</source>
         <translatorcomment>Informative message shown when a user is trying to upload data to a inshare that is in overquota state. %1 will be replaced with sharer account to inform the user.</translatorcomment>
-        <translation type="unfinished">Your upload(s) cannot proceed because %1’s account is full.</translation>
+        <translation type="unfinished">由于%1的帐户空间已满，您的上传无法继续。</translation>
     </message>
     <message>
         <source>contact</source>
@@ -3243,12 +3253,17 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Storage and transfers</source>
         <translatorcomment>Label to describe storage and transfer quota for the business plan.</translatorcomment>
-        <translation type="unfinished">Storage and Transfer</translation>
+        <translation type="unfinished">存储空间与传输流量</translation>
     </message>
     <message>
         <source>Transfer</source>
         <translatorcomment>Label to indicate transfer quota.</translatorcomment>
         <translation type="unfinished">传输</translation>
+    </message>
+    <message>
+        <source>per user %1</source>
+        <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
+        <translation type="unfinished">每位用户%1</translation>
     </message>
 </context>
 <context>
@@ -3334,12 +3349,33 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.5</translatorcomment>
-        <translation type="unfinished">- 修复了在macOS 10.15系统中的同步问题
+        <translation type="obsolete">- 修复了在macOS 10.15系统中的同步问题
 - 修复了网络客户端和通过公共链接下载时的传输恢复问题
 - 修复了某些PDF文件处理过程中的崩溃问题
 - 恢复了重启崩溃后的待传输
 - 增加了可从主对话框添加同步的选项
 - 其他小问题的修复和改进</translation>
+    </message>
+    <message>
+        <source>- Support for user notifications.
+- Support to send bug reports from settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
+        <translation type="unfinished">- Support for user notifications.
+- Support to send bug reports from the settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with a huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</translation>
     </message>
 </context>
 <context>
@@ -4012,7 +4048,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">您要立即删除本地备份吗？</translation>
+        <translation type="unfinished">您确定要立即删除本地备份吗？</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
@@ -4049,7 +4085,7 @@ when the application starts again</source>
     <message>
         <source>Transfer quota</source>
         <translatorcomment>Label to indicate the transfer quota usage of current logged account</translatorcomment>
-        <translation type="unfinished">Transfer quota</translation>
+        <translation type="unfinished">传输流量</translation>
     </message>
     <message>
         <source>Don&apos;t show icons on the left pane of Windows Explorer</source>
@@ -4138,12 +4174,12 @@ when the application starts again</source>
     <message>
         <source>Please let us know if you find a bug</source>
         <translatorcomment>Label to inform the user that can send a bug report for further analysis by support and dev teams.</translatorcomment>
-        <translation type="unfinished">Please let us know if you find an issue.</translation>
+        <translation type="unfinished">如果您发现问题，请告诉我们。</translation>
     </message>
     <message>
         <source>Bug report</source>
         <translatorcomment>Button label to show the bug report form.</translatorcomment>
-        <translation type="unfinished">Report issue</translation>
+        <translation type="unfinished">通报问题</translation>
     </message>
 </context>
 <context>
@@ -5167,17 +5203,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>month</source>
         <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
-        <translation type="unfinished">月</translation>
+        <translation type="obsolete">月</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="unfinished">储存空间</translation>
+        <translation type="obsolete">储存空间</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the amount of transfer quota of a PRO plan</translatorcomment>
-        <translation type="unfinished">传输</translation>
+        <translation type="obsolete">传输</translation>
     </message>
 </context>
 <context>

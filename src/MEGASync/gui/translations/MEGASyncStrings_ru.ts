@@ -356,7 +356,7 @@
     <message>
         <source>New Shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished">Новая папка с общим доступом от [A]</translation>
+        <translation type="obsolete">Новая папка с общим доступом от [X]</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -426,7 +426,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been taken down. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Ваш элемент с общим доступом ([A] ([B])) убран.</translation>
+        <translation type="obsolete">Ваш элемент с общим доступом (%1 (%2)) убран.</translation>
     </message>
     <message>
         <source>file</source>
@@ -467,6 +467,16 @@
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
         <translation type="unfinished">(неизвестная общая папка)</translation>
+    </message>
+    <message>
+        <source>New Shared folder from [X]</source>
+        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished">Новая папка с общим доступом от [X]</translation>
+    </message>
+    <message>
+        <source>Your publicly shared [%1] ([%2]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
+        <translation type="unfinished">Ваш элемент с общим доступом [%1] ([%2]) убран.</translation>
     </message>
 </context>
 <context>
@@ -1887,7 +1897,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Спасибо за тестирование MEGAsync.&lt;br&gt;Эта бета-версия больше не актуальной.&lt;br&gt;Пожалуйста, следите за обновлениями &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; в Твиттере.</translation>
+        <translation type="obsolete">Спасибо за тестирование MEGAsync.&lt;br&gt;Эта бета-версия больше не актуальна.&lt;br&gt;Пожалуйста, следите за обновлениями &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; в Твиттере.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -3250,6 +3260,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Label to indicate transfer quota.</translatorcomment>
         <translation type="unfinished">Передача</translation>
     </message>
+    <message>
+        <source>per user %1</source>
+        <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
+        <translation type="unfinished">%1 на пользователя</translation>
+    </message>
 </context>
 <context>
     <name>Preferences</name>
@@ -3294,11 +3309,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="obsolete">- Улучшен внешний вид на дисплеях с высоким разрешением в Windows и Linux
-- Улучшена производительность графического интерфейса при добавлении множества загрузок
-- Перерисовано меню мастера при первом запуске, новые значки и улучшения интерфейса
-- Поддержка бизнес-аккаунтов
-- Другие мелкие исправления и улучшения</translation>
+        <translation type="obsolete">- Улучшен внешний вид и ощущение на дисплеях с высоким разрешением в Windows и Linux
+ - Улучшена производительность графического интерфейса при добавлении множества загрузок
+ - Изменён мастер ввода первоначальной информации с новыми иконками и улучшениями интерфейса
+ - Поддержка бизнес-аккаунтов
+ - Другие мелкие исправления и улучшения</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -3308,12 +3323,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="obsolete">- Улучшен внешний вид на дисплеях с высоким разрешением в Windows и Linux
-- Добавлена поддержка эскизов для PDF
-- Улучшена производительность графического интерфейса при добавлении множества загрузок
-- Перерисовано меню мастера при первом запуске, новые значки и улучшения интерфейса
-- Поддержка бизнес-аккаунтов
-- Другие мелкие исправления и улучшения</translation>
+        <translation type="obsolete">- Улучшен внешний вид и ощущение на дисплеях с высоким разрешением в Windows и Linux
+ - Добавлена поддержка эскизов для PDF-файлов
+ - Улучшена производительность графического интерфейса при добавлении множества загрузок
+ - Изменён мастер ввода первоначальной информации с новыми иконками и улучшениями интерфейса
+ - Поддержка бизнес-аккаунтов
+ - Другие мелкие исправления и улучшения</translation>
     </message>
     <message>
         <source>- Fix a crash during processing of some PDF files
@@ -3334,12 +3349,33 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.5</translatorcomment>
-        <translation type="unfinished">- Исправлены ошибки синхронизации на macOS 10.15
+        <translation type="obsolete">- Исправлены ошибки синхронизации на macOS 10.15
 - Исправлены ошибки возобновления передач в веб-клиенте и скачивание публичных ссылок
 - Исправлен сбой при обработке некоторых PDF-файлов
 - Теперь загрузки в очереди возобновляются после вылета при следующем запуске
 - Добавлена опция включить синхронизацию из главного меню
 - Другие мелкие исправления и улучшения</translation>
+    </message>
+    <message>
+        <source>- Support for user notifications.
+- Support to send bug reports from settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
+        <translation type="unfinished">- Поддержка пользовательских уведомлений.
+-  Поддержка отправки отчетов об ошибках из диалога настроек.
+- Новый стиль основного диалога.
+- Повышение производительности при работе с множеством синхронизаций и передач.
+- Улучшена поддержка бизнес-аккаунтов.
+- Поддержка ссылок на файлы и папки внутри ссылки на общую папку.
+-Улучшения для синхронизации с файловыми системами FAT32.
+- Другие исправления и корректировки пользовательского интерфейса.
+-  Другие улучшения производительности, исправления и корректировки пользовательского интерфейса.</translation>
     </message>
 </context>
 <context>
@@ -5167,17 +5203,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>month</source>
         <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
-        <translation type="unfinished">месяц</translation>
+        <translation type="obsolete">месяц</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="unfinished">свободного места</translation>
+        <translation type="obsolete">свободного места</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the amount of transfer quota of a PRO plan</translatorcomment>
-        <translation type="unfinished">Передача</translation>
+        <translation type="obsolete">Передача</translation>
     </message>
 </context>
 <context>

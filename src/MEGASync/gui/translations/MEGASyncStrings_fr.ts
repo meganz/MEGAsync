@@ -356,7 +356,7 @@
     <message>
         <source>New Shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished">Nouveau dossier partagé de [A]</translation>
+        <translation type="obsolete">Nouveau dossier partagé de [X]</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -426,7 +426,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been taken down. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Votre [A] ([B]) partagé publiquement a été retiré.</translation>
+        <translation type="obsolete">Votre %1 (%2) partagé publiquement a été retiré.</translation>
     </message>
     <message>
         <source>file</source>
@@ -467,6 +467,16 @@
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
         <translation type="unfinished">(dossier partagé inconnu)</translation>
+    </message>
+    <message>
+        <source>New Shared folder from [X]</source>
+        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished">Nouveau dossier partagé de [X]</translation>
+    </message>
+    <message>
+        <source>Your publicly shared [%1] ([%2]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
+        <translation type="unfinished">Votre [%1] ([%2]) partagé publiquement a été retiré</translation>
     </message>
 </context>
 <context>
@@ -771,7 +781,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Error report</source>
         <translatorcomment>Title of the dialog displayed when an crash report occurred.</translatorcomment>
-        <translation>Rapport d’erreur</translation>
+        <translation>Relevé d’erreur</translation>
     </message>
     <message>
         <source>MEGAsync has detected a problem. These are the details:</source>
@@ -791,7 +801,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Send report</source>
         <translatorcomment>Label for Send report button.</translatorcomment>
-        <translation>Envoyer le rapport</translation>
+        <translation>Envoyer le relevé</translation>
     </message>
 </context>
 <context>
@@ -857,7 +867,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Please select the download folder for your files:</source>
         <translatorcomment>Label to inform the user of the destination local folder for the files to be downloaded (MAX 50 characters)</translatorcomment>
-        <translation>Veuillez sélectionner le dossier de téléchargement pour vos fichiers :</translation>
+        <translation>Veuillez sélectionner le dossier de téléchargement pour vos fichiers :</translation>
     </message>
     <message>
         <source>Local folder:</source>
@@ -1227,7 +1237,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Not found</source>
         <translatorcomment>Label to indicate that an imported link can&apos;t be found.</translatorcomment>
-        <translation>Non trouvé</translation>
+        <translation>Introuvable</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -1871,7 +1881,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Invalid code</source>
         <translatorcomment>An error message when the 2FA code entered was incorrect.</translatorcomment>
-        <translation type="unfinished">Code invalide</translation>
+        <translation type="unfinished">Le code est invalide</translation>
     </message>
     <message>
         <source>[A]Lost your authenticator device?[/A]</source>
@@ -1887,7 +1897,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Nous vous remercions de de tester MEGAsync. &lt;br&gt;Cette version bêta n’est plus à jour et est expirée. &lt;br&gt;Veuillez suivre &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; sur Twitter pour des renseignements à jour.</translation>
+        <translation type="obsolete">Nous vous remercions de tester MEGAsync.&lt;br&gt;Cette version bêta n’est plus à jour et expirée.&lt;br&gt;Veuillez suivre &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; sur Twitter pour des mises à jour.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -2221,7 +2231,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your sync &quot;%1&quot; has been disabled because the synchronization of VirtualBox shared folders is not supported due to deficiencies in that filesystem.</source>
         <translatorcomment>Notification message launched when an user is trying to sync a non valid VirtualBox shared folder . Keep &quot;%1&quot; code because it will be filled with the folder name.</translatorcomment>
-        <translation type="unfinished">Votre synchro « %1 » a été désactivée, car la synchronisation de dossiers partagés VirtualBox n&apos;est pas prise en charge, en raison de lacunes de ce système de fichiers.</translation>
+        <translation type="unfinished">Votre synchro « %1 » a été désactivée, car la synchronisation de dossiers partagés VirtualBox n’est pas prise en charge, en raison de lacunes de ce système de fichiers.</translation>
     </message>
     <message>
         <source>Logout</source>
@@ -2533,7 +2543,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Error transferring folder: </source>
         <translatorcomment>Label to indicate that has been an error during a folder transfer.</translatorcomment>
-        <translation type="unfinished">Erreur de transfert de dossier :</translation>
+        <translation type="unfinished">Erreur de transfert du dossier :</translation>
     </message>
     <message>
         <source>Your syncs have been temporarily disabled</source>
@@ -2651,7 +2661,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Invalid argument</source>
         <translatorcomment>Label to show that an error of Invalid argument occurs during a SDK operation.</translatorcomment>
-        <translation>Argument invalide</translation>
+        <translation>L’argument est invalide</translation>
     </message>
     <message>
         <source>Request failed, retrying</source>
@@ -2661,7 +2671,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Rate limit exceeded</source>
         <translatorcomment>Label to show that the rate limit has been reached during a SDK operation.</translatorcomment>
-        <translation>Limite dépassée</translation>
+        <translation>La limite est dépassée</translation>
     </message>
     <message>
         <source>Failed permanently</source>
@@ -2686,7 +2696,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Not found</source>
         <translatorcomment>Label to show that an error related with a resource Not found occurs during a SDK operation.</translatorcomment>
-        <translation>Non trouvé</translation>
+        <translation>Introuvable</translation>
     </message>
     <message>
         <source>Circular linkage detected</source>
@@ -2696,7 +2706,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Access denied</source>
         <translatorcomment>Label to show that an error related with an denied access occurs during a SDK operation.</translatorcomment>
-        <translation>Accès refusé</translation>
+        <translation>L’accès a été refusé</translation>
     </message>
     <message>
         <source>Already exists</source>
@@ -2706,7 +2716,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Incomplete</source>
         <translatorcomment>Label to show that an error related with an Incomplete SDK operation.</translatorcomment>
-        <translation>Non terminée</translation>
+        <translation>Non terminé</translation>
     </message>
     <message>
         <source>Invalid key/Decryption error</source>
@@ -2716,7 +2726,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Bad session ID</source>
         <translatorcomment>Label to show that an error related with a bad session ID occurs during a SDK operation.</translatorcomment>
-        <translation>ID de session erroné</translation>
+        <translation>L’ID de session est erroné</translation>
     </message>
     <message>
         <source>Blocked</source>
@@ -2736,7 +2746,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Connection overflow</source>
         <translatorcomment>Label to show that an error related with too many connections occurs during a SDK operation.</translatorcomment>
-        <translation>Surcharge de la connexion</translation>
+        <translation>Dépassement du nombre de connexions</translation>
     </message>
     <message>
         <source>Write error</source>
@@ -3077,7 +3087,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     </message>
     <message>
         <source>Select just one file.</source>
-        <translation type="unfinished">Sélectionner un seul fichier.</translation>
+        <translation type="unfinished">Ne sélectionner qu’un seul fichier.</translation>
     </message>
     <message>
         <source>Get MEGA link</source>
@@ -3250,6 +3260,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Label to indicate transfer quota.</translatorcomment>
         <translation type="unfinished">Transfert</translation>
     </message>
+    <message>
+        <source>per user %1</source>
+        <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
+        <translation type="unfinished">par utilisateur %1</translation>
+    </message>
 </context>
 <context>
     <name>Preferences</name>
@@ -3296,7 +3311,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
         <translation type="obsolete">– Aspect et convivialité améliorés pour les écrans à haute résolution sur Windows et Linux
 – Amélioration des performances de l’IUG lors de l’ajout de nombreux téléchargements
-– Nouvelle conception de l’assistant informationnel initial, nouvelles icônes et améliorations de l’interface
+– Nouvelle apparence de l’assistant initial, avec de nouvelles icônes et des améliorations de l’interface 
 – Prise en charge des comptes d’entreprise
 – Autres correctifs de bogues mineurs et améliorations</translation>
     </message>
@@ -3309,9 +3324,9 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
         <translation type="obsolete">– Aspect et convivialité améliorés pour les écrans à haute résolution sur Windows et Linux
-– Prise en charge des vignettes pour les PDF
+– Prise en charge des imagettes pour les fichiers PDF
 – Amélioration des performances de l’IUG lors de l’ajout de nombreux téléchargements
-– Nouvelle conception de l’assistant informationnel initial, nouvelles icônes et améliorations de l’interface
+– Nouvelle apparence de l’assistant initial, avec de nouvelles icônes et des améliorations de l’interface 
 – Prise en charge des comptes d’entreprise
 – Autres correctifs de bogues mineurs et améliorations</translation>
     </message>
@@ -3334,12 +3349,33 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.5</translatorcomment>
-        <translation type="unfinished">– Corriger des problèmes de synchronisation sur macOS 10.15
+        <translation type="obsolete">– Corriger des problèmes de synchronisation sur macOS 10.15
 – Corriger des problèmes de reprise des transferts pour le client Web et les téléchargement de liens publics
 – Corriger un plantage pendant le traitement de certains fichiers PDF
 – Reprendre lors du prochain démarrage les transferts en attente après un plantage
 – Inclure une nouvelle option pour ajouter des synchronisations à partir de la boîte principale de dialogue.
 – Autres correctifs de bogues mineurs et améliorations</translation>
+    </message>
+    <message>
+        <source>- Support for user notifications.
+- Support to send bug reports from settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
+        <translation type="unfinished">– Prise en charge des notifications aux utilisateurs.
+–  Des relevés de bogue peuvent maintenant être envoyés à partir de la fenêtre des paramètres.
+– Nouvelle apparence de la fenêtre de dialogue principale.
+– Amélioration des performances lors du traitement d’un très grand nombre de synchronisations et de transferts.
+– Prise en charge améliorée des comptes d’entreprise.
+– Possibilité de création de liens vers des fichiers et dossiers dans un lien de dossier public.
+– Amélioration de la synchronisation pour les systèmes de fichiers FAT32.
+– Autres correctifs et peaufinages de l’IU.
+– Autres améliorations des performances.</translation>
     </message>
 </context>
 <context>
@@ -3786,7 +3822,7 @@ when the application starts again.</source>
     <message>
         <source>Check for updates</source>
         <translatorcomment>Button label to let the user check for new application updates.</translatorcomment>
-        <translation>Rechercher des mises à jour</translation>
+        <translation>Vérifier la présence de mises à jour</translation>
     </message>
     <message>
         <source>Selective sync active</source>
@@ -3906,7 +3942,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Enable / disable</source>
         <translatorcomment>Tooltip to let the user enable/disable a specific synchronization.</translatorcomment>
-        <translation>Activer / désactiver</translation>
+        <translation>Activer/désactiver</translation>
     </message>
     <message>
         <source>Select local folder</source>
@@ -3946,7 +3982,7 @@ Do you want to restart MEGAsync now?</source>
     <message>
         <source>Exclude by size</source>
         <translatorcomment>Button label to let the user exclude files from being synced by its size. String as short as possible.</translatorcomment>
-        <translation type="unfinished">Exclure par taille</translation>
+        <translation type="unfinished">Exclure d’après la taille</translation>
     </message>
     <message>
         <source>The new excluded file names will be taken into account
@@ -4156,12 +4192,12 @@ when the application starts again</source>
     <message>
         <source>I have a MEGA account</source>
         <translatorcomment>Label to indicate the user has already a MEGA account with a checkbox.</translatorcomment>
-        <translation type="vanished">J&apos;ai un compte MEGA</translation>
+        <translation type="vanished">J’ai un compte MEGA</translation>
     </message>
     <message>
         <source>I don&apos;t have a MEGA account</source>
         <translatorcomment>Label to indicate if the user hasn&apos;t already a MEGA account with a checkbox.</translatorcomment>
-        <translation type="vanished">Je n&apos;ai pas de compte MEGA</translation>
+        <translation type="vanished">Je n’ai pas de compte MEGA</translation>
     </message>
     <message>
         <source>Create a new MEGA account</source>
@@ -4250,7 +4286,7 @@ when the application starts again</source>
     <message>
         <source>Change</source>
         <translatorcomment>Button label to change the local or remote folder during the process of createn a new synchronization. String as short as possible.</translatorcomment>
-        <translation>Modifier</translation>
+        <translation>Changer</translation>
     </message>
     <message>
         <source>Welcome to MEGA</source>
@@ -4312,7 +4348,7 @@ when the application starts again</source>
     <message>
         <source>MEGA folder doesn&apos;t exist</source>
         <translatorcomment>Label displayed when an error occurs with a remote folder.</translatorcomment>
-        <translation>Le dossier MEGA n&apos;existe pas</translation>
+        <translation>Le dossier MEGA n’existe pas</translation>
     </message>
     <message>
         <source>Finish</source>
@@ -4672,7 +4708,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Exclude by size</source>
         <translatorcomment>Title of the dialog to set exclusion based on file size.</translatorcomment>
-        <translation type="unfinished">Exclure par taille</translation>
+        <translation type="unfinished">Exclure d’après la taille</translation>
     </message>
     <message>
         <source>Exclude files bigger than</source>
@@ -4702,7 +4738,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Size limits cannot be zero</source>
         <translatorcomment>Message displayed when a user is trying to set zero limits.</translatorcomment>
-        <translation type="unfinished">Les limites de taille ne peuvent pas être zéro</translation>
+        <translation type="unfinished">La limite de taille ne peut pas être égale à zéro</translation>
     </message>
     <message>
         <source>Bytes</source>
@@ -5167,17 +5203,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>month</source>
         <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
-        <translation type="unfinished">mois</translation>
+        <translation type="obsolete">mois</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="unfinished">Espace de stockage</translation>
+        <translation type="obsolete">Espace de stockage</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the amount of transfer quota of a PRO plan</translatorcomment>
-        <translation type="unfinished">Transfert</translation>
+        <translation type="obsolete">Transfert</translation>
     </message>
 </context>
 <context>

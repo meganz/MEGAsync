@@ -356,7 +356,7 @@
     <message>
         <source>New Shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished">[A]送來新的分享檔案夾</translation>
+        <translation type="obsolete">來自[X]新的資料夾分享</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -426,7 +426,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been taken down. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">您公開分享的 [A] ([B]) 已被移除。</translation>
+        <translation type="obsolete">您公開分享的 %1 (%2) 已被移除。</translation>
     </message>
     <message>
         <source>file</source>
@@ -467,6 +467,16 @@
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
         <translation type="unfinished">（未知的共享資料夾）</translation>
+    </message>
+    <message>
+        <source>New Shared folder from [X]</source>
+        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished">來自[X]新的資料夾分享</translation>
+    </message>
+    <message>
+        <source>Your publicly shared [%1] ([%2]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
+        <translation type="unfinished">您公開分享的[%1] ([%2])已被移除</translation>
     </message>
 </context>
 <context>
@@ -3250,6 +3260,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
         <translatorcomment>Label to indicate transfer quota.</translatorcomment>
         <translation type="unfinished">傳輸</translation>
     </message>
+    <message>
+        <source>per user %1</source>
+        <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
+        <translation type="unfinished">per user %1</translation>
+    </message>
 </context>
 <context>
     <name>Preferences</name>
@@ -3294,11 +3309,11 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (Windows)</translatorcomment>
-        <translation type="obsolete">– 改進在Windows和Linux高解析度螢幕上的外觀
- – 改善在增量下載期間的GUI性能
- – 初始化資訊小幫手樣式重新設計，新圖示以及界面改良
- – 商業帳戶支援
- –其他小錯誤修復和改進</translation>
+        <translation type="obsolete">- 改善在Windows與Linux高解析度螢幕顯示的外觀
+ - 改善增加多個下載時的GUI性能
+ - 重新設計的初始化資訊精靈，包括新的圖示與介面改善
+ - 支援商業帳戶
+ - 其它小錯誤修正與改進</translation>
     </message>
     <message>
         <source>- Improved look&amp;feel for high resolution displays on Windows and Linux
@@ -3308,12 +3323,12 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Support for business accounts
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.1.1.0 (macOS and Linux)</translatorcomment>
-        <translation type="obsolete">– 改進在Windows和Linux高解析度螢幕上的外觀
- – 支援PDF縮圖預覽
- – 改善在增量下載期間的GUI性能
- – 初始化資訊小幫手樣式重新設計，新圖示以及界面改良
- – 商業帳戶支援
- –其他小錯誤修復和改進</translation>
+        <translation type="obsolete">- 改善在Windows與Linux高解析度螢幕顯示的外觀
+ - 支援PDF檔案縮圖預覽
+ - 改善增加多個下載時的GUI性能
+ - 重新設計的初始化資訊精靈，包括新的圖示與介面改善
+ - 支援商業帳戶
+ - 其它小錯誤修正與改進</translation>
     </message>
     <message>
         <source>- Fix a crash during processing of some PDF files
@@ -3334,12 +3349,33 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.5</translatorcomment>
-        <translation type="unfinished">– 修復在macOS 10.15的同步問題
+        <translation type="obsolete">– 修復在macOS 10.15的同步問題
  – 修復Web client和公開連結下載時傳輸恢復的問題
  – 修復某些PDF檔案處理過程中的崩潰
  – 程式崩潰後下一次啟動時，恢復待傳的傳輸
  – 包含從主對話框加入同步的選項
  – 其他小錯誤修復和改進</translation>
+    </message>
+    <message>
+        <source>- Support for user notifications.
+- Support to send bug reports from settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
+        <translation type="unfinished">- Support for user notifications.
+- Support to send bug reports from the settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with a huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</translation>
     </message>
 </context>
 <context>
@@ -5167,17 +5203,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>month</source>
         <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
-        <translation type="unfinished">每月</translation>
+        <translation type="obsolete">每月</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="unfinished">儲存空間</translation>
+        <translation type="obsolete">儲存空間</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the amount of transfer quota of a PRO plan</translatorcomment>
-        <translation type="unfinished">傳輸</translation>
+        <translation type="obsolete">傳輸</translation>
     </message>
 </context>
 <context>

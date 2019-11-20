@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt" sourcelanguage="en">
+<TS version="2.1" language="pt_BR" sourcelanguage="en">
 <context>
     <name>AccountDetailsDialog</name>
     <message>
@@ -266,17 +266,17 @@
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation type="unfinished">Solicitação de contato atualizada</translation>
+        <translation type="unfinished">Contact request updated</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
         <translatorcomment>Notification label that indicates that the user has accepted a contact request</translatorcomment>
-        <translation type="unfinished">Solicitação de contato aceita</translation>
+        <translation type="unfinished">Contact request accepted</translation>
     </message>
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation type="unfinished">Solicitação de contato recusada</translation>
+        <translation type="unfinished">Contact request denied</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -356,7 +356,7 @@
     <message>
         <source>New Shared folder from [A]</source>
         <translatorcomment>Label to indicate that [A] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
-        <translation type="unfinished">Nova pasta compartilhada por [A]</translation>
+        <translation type="obsolete">Nova pasta compartilhada por [X]</translation>
     </message>
     <message>
         <source>[A] has left the shared folder</source>
@@ -426,7 +426,7 @@
     <message>
         <source>Your publicly shared [A] ([B]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [A] has been taken down. Placeholder [A] will be replaced by type of item (file or folder) and [B] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">O(a) [A] ([B]) compartilhado publicamente foi removido(a).</translation>
+        <translation type="obsolete">O(a) %1 (%2) compartilhado publicamente foi removido(a).</translation>
     </message>
     <message>
         <source>file</source>
@@ -466,7 +466,17 @@
     <message>
         <source>(unknown shared folder)</source>
         <translatorcomment>Default label to indicate that folder name associated with the user alert is unknown.</translatorcomment>
-        <translation type="unfinished">(unknown shared folder)</translation>
+        <translation type="unfinished">(pasta compartilhada desconhecida)</translation>
+    </message>
+    <message>
+        <source>New Shared folder from [X]</source>
+        <translatorcomment>Label to indicate that [X] shared a folder with current user. Placeholder will be replaced by email of sharer user.</translatorcomment>
+        <translation type="unfinished">Nova pasta compartilhada por [X]</translation>
+    </message>
+    <message>
+        <source>Your publicly shared [%1] ([%2]) has been taken down</source>
+        <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
+        <translation type="unfinished">Your publicly shared [%1] ([%2]) has been taken down</translation>
     </message>
 </context>
 <context>
@@ -1614,12 +1624,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open Downloads</source>
         <translatorcomment>Tooltip of button that let the user open downloads section of transfer manager.</translatorcomment>
-        <translation type="unfinished">Acessar os downloads</translation>
+        <translation type="unfinished">Open downloads</translation>
     </message>
     <message>
         <source>Open Uploads</source>
         <translatorcomment>Tooltip of button that let the user open uploads section of transfer manager.</translatorcomment>
-        <translation type="unfinished">Acessar os uploads</translation>
+        <translation type="unfinished">Open uploads</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -2548,7 +2558,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to the the user to inform that needs to access his account with webclient to check for pending payment issues.</translatorcomment>
-        <translation type="obsolete">Acesse o MEGA usando um navegador em um computador para obter mais informações.</translation>
+        <translation type="obsolete">Please access MEGA using a desktop browser for more information.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2563,7 +2573,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation type="unfinished">A sua conta expirou. O seu acesso será somente leitura até que os pagamentos necessários sejam feitos.</translation>
+        <translation type="unfinished">Your account is expired as read only until you proceed with the needed payments.</translation>
     </message>
     <message>
         <source>Contact your business account administrator.</source>
@@ -2573,7 +2583,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to admin business account about a failure with the last payment and the explain the way to deal with.</translatorcomment>
-        <translation type="obsolete">Houve um problema com o seu último pagamento. Acesse o MEGA usando um navegador em um computador para obter mais informações.</translation>
+        <translation type="obsolete">There was a problem with your last payment. Please access MEGA using a desktop browser for more information.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -2618,7 +2628,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Account Suspended</source>
         <translatorcomment>Title to inform that a business account is actually suspended.</translatorcomment>
-        <translation type="unfinished">Account Suspended</translation>
+        <translation type="unfinished">Conta suspensa</translation>
     </message>
     <message>
         <source>Your account is currently [A]suspended[/A]. You can only browse your data.</source>
@@ -3250,6 +3260,11 @@ Certifique-se de não usar caracteres como &apos;\&apos; &apos;/&apos; ou &apos;
         <translatorcomment>Label to indicate transfer quota.</translatorcomment>
         <translation type="unfinished">Transferência</translation>
     </message>
+    <message>
+        <source>per user %1</source>
+        <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
+        <translation type="unfinished">por usuário %1</translation>
+    </message>
 </context>
 <context>
     <name>Preferences</name>
@@ -3334,12 +3349,33 @@ Certifique-se de não usar caracteres como &apos;\&apos; &apos;/&apos; ou &apos;
 - Include option to add synchronizations from the main dialog
 - Other minor bug fixes and improvements</source>
         <translatorcomment>Changelog for MEGAsync 4.2.5</translatorcomment>
-        <translation type="unfinished">- Correção de problemas de sincronização no macOS 10.15
+        <translation type="obsolete">- Correção de problemas de sincronização no macOS 10.15
 - Correção de problemas de retomada de transferências para downloads a partir da web e de links públicos
 - Correção de falha durante o processamento de alguns arquivos PDF
 - Retomada de transferências pendentes após uma falha na inicialização seguinte
 - Opção para adicionar sincronizações da caixa de diálogo principal
 - Outras pequenas correções e melhorias</translation>
+    </message>
+    <message>
+        <source>- Support for user notifications.
+- Support to send bug reports from settings dialog.
+- New restyling of main dialog.
+- Performance improvements when dealing with huge amount of syncs and transfers.
+- Improved support for business accounts.
+- Support links to files and folders inside a public folder link.
+- Improvements for synchronization with FAT32 filesystems.
+- Other UI fixes and adjustments.
+- Other performance improvements, UI fixes and adjustments.</source>
+        <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
+        <translation type="unfinished">- Suporte a notificações de usuários.
+- Suporte ao envio de relatórios de erros a partir da caixa de diálogo de configurações.
+- Novo estilo da caixa de diálogo principal.
+- Melhorias no desempenho de um grande número de sincronizações e transferências. 
+-Melhoria no suporte a contas Business.
+ - Suporte a links de arquivos e pastas localizados dentro de um link público.
+- Melhorias na sincronização com sistemas de arquivos FAT32.
+- Outras correções e ajustes da interface do usuário.
+- Outras melhorias no desempenho, correções e ajustes da interface do usuário.</translation>
     </message>
 </context>
 <context>
@@ -4012,7 +4048,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">Você quer deletar os seus backups locais?</translation>
+        <translation type="unfinished">Do you want to delete your local backups now?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>
@@ -5167,17 +5203,17 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>month</source>
         <translatorcomment>Label to show that the price of a PRO plan is per month </translatorcomment>
-        <translation type="unfinished">mês</translation>
+        <translation type="obsolete">mês</translation>
     </message>
     <message>
         <source>storage</source>
         <translatorcomment>Label to show the amount of storage of a PRO plan</translatorcomment>
-        <translation type="unfinished">Armazenamento</translation>
+        <translation type="obsolete">Armazenamento</translation>
     </message>
     <message>
         <source>transfer</source>
         <translatorcomment>Label to indicate the amount of transfer quota of a PRO plan</translatorcomment>
-        <translation type="unfinished">Transferência</translation>
+        <translation type="obsolete">Transferência</translation>
     </message>
 </context>
 <context>
