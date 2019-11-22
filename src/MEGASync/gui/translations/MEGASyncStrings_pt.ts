@@ -266,17 +266,17 @@
     <message>
         <source>Contact Updated</source>
         <translatorcomment>Notification label that indicates that the user has ignored, accept or denied a contact request.</translatorcomment>
-        <translation type="unfinished">Contact request updated</translation>
+        <translation type="unfinished">Solicitação de contato atualizada</translation>
     </message>
     <message>
         <source>Contact Accepted</source>
         <translatorcomment>Notification label that indicates that the user has accepted a contact request</translatorcomment>
-        <translation type="unfinished">Contact request accepted</translation>
+        <translation type="unfinished">Solicitação de contato aceita</translation>
     </message>
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation type="unfinished">Contact request denied</translation>
+        <translation type="unfinished">Solicitação de contato recusada</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -441,7 +441,7 @@
     <message>
         <source>Your publicly shared has been taken down</source>
         <translatorcomment>Label to indicate that your public shared has been taken down.</translatorcomment>
-        <translation type="unfinished">Your public share has been taken down.</translation>
+        <translation type="unfinished">O seu compartilhamento público foi removido.</translation>
     </message>
     <message>
         <source>Your publicly shared [A] ([B]) has been reinstated</source>
@@ -451,7 +451,7 @@
     <message>
         <source>Your taken down has been reinstated</source>
         <translatorcomment>Label to indicate that your public shared has been reinstated.</translatorcomment>
-        <translation type="unfinished">Your public share has been reinstated.</translation>
+        <translation type="unfinished">O seu compartilhamento público foi restabelecido.</translation>
     </message>
     <message>
         <source>Reminder</source>
@@ -1624,12 +1624,12 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Open Downloads</source>
         <translatorcomment>Tooltip of button that let the user open downloads section of transfer manager.</translatorcomment>
-        <translation type="unfinished">Open downloads</translation>
+        <translation type="unfinished">Acessar os downloads</translation>
     </message>
     <message>
         <source>Open Uploads</source>
         <translatorcomment>Tooltip of button that let the user open uploads section of transfer manager.</translatorcomment>
-        <translation type="unfinished">Open uploads</translation>
+        <translation type="unfinished">Acessar os uploads</translation>
     </message>
     <message>
         <source>Contacts</source>
@@ -1897,7 +1897,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Obrigado por testar o MEGAsync.&lt;br&gt;Esta versão beta não está mais disponível.&lt;br&gt;Por favor, siga &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; no Twitter para mais atualizações.</translation>
+        <translation type="obsolete">Obrigado por testar o MEGAsync.&lt;br&gt;Esta versão beta  expirou e está desatualizada.&lt;br&gt;Siga a &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; no Twitter para receber atualizações.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -2558,7 +2558,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to the the user to inform that needs to access his account with webclient to check for pending payment issues.</translatorcomment>
-        <translation type="obsolete">Please access MEGA using a desktop browser for more information.</translation>
+        <translation type="obsolete">Por favor, acesse o MEGA usando um navegador em um computador para obter mais informações.</translation>
     </message>
     <message>
         <source>Pay Now</source>
@@ -2573,7 +2573,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Your account is suspended as read only until you proceed with the needed payments.</source>
         <translatorcomment>Notification message to indicate that current business account is suspended until needed payments are made</translatorcomment>
-        <translation type="unfinished">Your account is expired as read only until you proceed with the needed payments.</translation>
+        <translation type="unfinished">O acesso à sua conta será somente leitura até que os pagamentos necessários sejam feitos.</translation>
     </message>
     <message>
         <source>Contact your business account administrator.</source>
@@ -2583,7 +2583,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>There has been a problem with your last payment. Please access MEGA in a desktop browser for more information.</source>
         <translatorcomment>Notification message shown to admin business account about a failure with the last payment and the explain the way to deal with.</translatorcomment>
-        <translation type="obsolete">There was a problem with your last payment. Please access MEGA using a desktop browser for more information.</translation>
+        <translation type="obsolete">Não foi possível processar o seu último pagamento. Por favor, acesse o MEGA usando um navegador em um computador para obter mais informações.</translation>
     </message>
     <message>
         <source>Dismiss</source>
@@ -4048,7 +4048,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">Do you want to delete your local backups now?</translation>
+        <translation type="unfinished">Você quer excluir os seus backups locais agora?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>

@@ -622,7 +622,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Ok</source>
         <translatorcomment>Button label to confirm and close a message box dialog.</translatorcomment>
-        <translation type="unfinished">Ok</translation>
+        <translation type="unfinished">Valider</translation>
     </message>
     <message>
         <source>Are you sure you want to exit uploading?</source>
@@ -3162,7 +3162,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>Invalid MEGA Link</source>
         <translatorcomment>Label to indicate that MEGA link processed is invalid/incorrect </translatorcomment>
-        <translation type="unfinished">Lien MEGA invalide</translation>
+        <translation type="unfinished">Le lien MEGA est invalide</translation>
     </message>
 </context>
 <context>
