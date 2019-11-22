@@ -3134,6 +3134,8 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
         return;
     }
 
+    int xSign = 1;
+    int ySign = 1;
     QPoint position, positionTrayIcon;
     QRect screenGeometry;
 
@@ -3157,6 +3159,18 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
             screenGeometry = dialog->rect();
             screenGeometry.setBottom(screenGeometry.bottom() + 4);
             screenGeometry.setRight(screenGeometry.right() + 4);
+        }
+    }
+    else
+    {
+        if (screenGeometry.y() < 0)
+        {
+            ySign = -1;
+        }
+
+        if (screenGeometry.x() < 0)
+        {
+            xSign = -1;
         }
     }
 
@@ -3235,7 +3249,7 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
             }
         #endif
 
-        if (position.x() > (screenGeometry.right() / 2))
+        if (position.x() * xSign > (screenGeometry.right() / 2))
         {
             *posx = screenGeometry.right() - dialog->width() - 2;
         }
@@ -3244,7 +3258,7 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
             *posx = screenGeometry.left() + 2;
         }
 
-        if (position.y() > (screenGeometry.bottom() / 2))
+        if (position.y() * ySign > (screenGeometry.bottom() / 2))
         {
             *posy = screenGeometry.bottom() - dialog->height() - 2;
         }
