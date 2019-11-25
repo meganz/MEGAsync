@@ -3083,6 +3083,25 @@ void MegaApplication::showInfoDialog()
             int posx, posy;
             calculateInfoDialogCoordinates(infoDialog, &posx, &posy);
 
+            // An issue occurred with certain multiscreen setup that caused Qt to missplace the info dialog.
+            // This works around that by ensuring infoDialog does not get incorrectly resized. in which case,
+            // it is reverted to the correct size.
+            infoDialog->ensurePolished();
+            auto initialDialogWidth  = infoDialog->width();
+            auto initialDialogHeight = infoDialog->height();
+            QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight](){
+                if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
+                {
+                    MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                                 QString::fromUtf8("Miss scaled info dialog. New size = %1,%2. should be %3,%4 ")
+                                 .arg(infoDialog->width()).arg(infoDialog->height()).arg(initialDialogWidth).arg(initialDialogHeight)
+                                 .toUtf8().constData());
+
+                    infoDialog->resize(initialDialogWidth,initialDialogHeight);
+                    return;
+                }
+            });
+
             if (isLinux)
             {
                 unityFix();
@@ -3203,6 +3222,8 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
             APPBARDATA pabd;
             pabd.cbSize = sizeof(APPBARDATA);
             pabd.hWnd = FindWindow(L"Shell_TrayWnd", NULL);
+            //TODO: the following only takes into account the position of the tray for the main screen.
+            //Alternatively we might want to do that according to where the taskbar is for the targetted screen.
             if (pabd.hWnd && SHAppBarMessage(ABM_GETTASKBARPOS, &pabd)
                     && pabd.rc.right != pabd.rc.left && pabd.rc.bottom != pabd.rc.top)
             {
@@ -3249,7 +3270,7 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
             }
         #endif
 
-        if (position.x() * xSign > (screenGeometry.right() / 2))
+        if (position.x() * xSign > (screenGeometry.right() / 2) * xSign)
         {
             *posx = screenGeometry.right() - dialog->width() - 2;
         }
@@ -3258,7 +3279,7 @@ void MegaApplication::calculateInfoDialogCoordinates(QDialog *dialog, int *posx,
             *posx = screenGeometry.left() + 2;
         }
 
-        if (position.y() * ySign > (screenGeometry.bottom() / 2))
+        if (position.y() * ySign > (screenGeometry.bottom() / 2) * ySign)
         {
             *posy = screenGeometry.bottom() - dialog->height() - 2;
         }
