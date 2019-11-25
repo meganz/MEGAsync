@@ -6332,6 +6332,13 @@ void MegaApplication::createTrayMenu()
         initialMenu->insertAction(changeProxyAction, showStatusAction);
     }
 
+#ifdef _WIN32
+    //The following should not be required, but
+    //prevents it from being truncated on the first display
+    initialMenu->show();
+    initialMenu->hide();
+#endif
+
 
 #ifdef _WIN32
     if (!windowsMenu)
@@ -6436,6 +6443,11 @@ void MegaApplication::createTrayMenu()
     windowsMenu->addAction(windowsSettingsAction);
     windowsMenu->addSeparator();
     windowsMenu->addAction(windowsExitAction);
+
+    //The following should not be required, but
+    //prevents it from being truncated on the first display
+    windowsMenu->show();
+    windowsMenu->hide();
 #endif
 
     if (trayMenu)
@@ -6657,6 +6669,13 @@ void MegaApplication::createTrayMenu()
     trayMenu->addAction(settingsAction);
     trayMenu->addSeparator();
     trayMenu->addAction(exitAction);
+#ifdef _WIN32
+    //The following should not be required, but
+    //prevents it from being truncated on the first display
+    trayMenu->show();
+    trayMenu->hide();
+#endif
+
 }
 
 void MegaApplication::createGuestMenu()
@@ -6734,6 +6753,13 @@ void MegaApplication::createGuestMenu()
     trayGuestMenu->addAction(settingsActionGuest);
     trayGuestMenu->addSeparator();
     trayGuestMenu->addAction(exitActionGuest);
+
+#ifdef _WIN32
+    //The following should not be required, but
+    //prevents it from being truncated on the first display
+    trayGuestMenu->show();
+    trayGuestMenu->hide();
+#endif
 }
 
 void MegaApplication::refreshStorageUIs()
