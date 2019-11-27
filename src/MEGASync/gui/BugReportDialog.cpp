@@ -12,6 +12,7 @@ BugReportDialog::BugReportDialog(QWidget *parent, MegaSyncLogger& logger) :
     ui(new Ui::BugReportDialog)
 {
     ui->setupUi(this);
+    setWindowFlags(windowFlags() & ~Qt::WindowContextHelpButtonHint);
 
     ui->lDescribeBug->setText(ui->lDescribeBug->text() + QString::fromUtf8("<span style=\"color:red; text-decoration:none;\">*</span>"));
     ui->bSubmit->setDefault(true);
@@ -51,6 +52,8 @@ void BugReportDialog::onTransferStart(MegaApi *api, MegaTransfer *transfer)
     totalBytes = transfer->getTotalBytes();
 
     sendProgress.reset(new QProgressDialog(this));
+    sendProgress->setWindowFlags(sendProgress->windowFlags() & ~Qt::WindowContextHelpButtonHint);
+
     connect(sendProgress.get(), SIGNAL(canceled()), this, SLOT(cancelSendReport()));
 
     sendProgress->setWindowModality(Qt::WindowModal);
