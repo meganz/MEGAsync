@@ -758,7 +758,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Remember my decision and don&apos;t ask me again</source>
         <translatorcomment>Text next to a checkbox that allows to remember the decision of the user. The translation should be as short as possible.</translatorcomment>
-        <translation type="unfinished">Se souvenir de mon choix et ne plus me demander</translation>
+        <translation type="unfinished">Se souvenir de ma décision et ne plus me demander</translation>
     </message>
     <message>
         <source>No</source>
@@ -1614,7 +1614,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>No notifications</source>
         <translatorcomment>Label to indicate that there aren&apos;t notifications available at this moment.</translatorcomment>
-        <translation type="unfinished">Aucune notification</translation>
+        <translation type="unfinished">Il n’y a aucune notification</translation>
     </message>
     <message>
         <source>Pause/Resume</source>
@@ -1715,7 +1715,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Faster transfer speeds</source>
-        <translation type="obsolete">Vitesses de transfert plus rapide</translation>
+        <translation type="obsolete">Vitesses de transfert plus rapides</translation>
     </message>
     <message>
         <source>MEGAsync takes full advantage of MEGA&apos;s high-powered infrastructure and multi-connection transfers.</source>
@@ -4844,7 +4844,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     <message>
         <source>Nothing selected</source>
         <translatorcomment>Text shown when no files have been selected for streaming yet</translatorcomment>
-        <translation type="unfinished">Rien de sélectionné</translation>
+        <translation type="unfinished">Rien n’a été sélectionné</translation>
     </message>
     <message>
         <source>Open with:</source>

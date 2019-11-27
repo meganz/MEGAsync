@@ -461,7 +461,7 @@
     <message>
         <source>Access to shared folder was removed by [A]</source>
         <translatorcomment>Label to indicate that the access for a shared folder has been removed by [A]. Keep placeholder. It will be replaced at runtime with specific email.</translatorcomment>
-        <translation type="unfinished">Access to a shared folder was removed by [A]</translation>
+        <translation type="unfinished">Akses ke folder bersama telah dihapus oleh [A]</translation>
     </message>
     <message>
         <source>(unknown shared folder)</source>
@@ -557,7 +557,7 @@ we ask you to start with a smaller folder and add more data while MEGAsync is ru
     <message>
         <source>Bug report</source>
         <translatorcomment>Title of the dialog used to send bug reports to support team.</translatorcomment>
-        <translation type="unfinished">Report issue</translation>
+        <translation type="unfinished">Laporkan masalah</translation>
     </message>
     <message>
         <source>Please clearly describe the issue you encountered. The more details, the easier for us to resolve. Your submission will be reviewed by our development team.</source>
@@ -1897,7 +1897,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">Terima kasih telah mencoba MEGAsync. &lt;br&gt; Versi beta ini tidak lagi terkini dan telah expired. &lt;br&gt;Harap follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; di Twitter untuk update.</translation>
+        <translation type="obsolete">Terima kasih telah menguji MEGAsync. &lt;br&gt;Versi beta ini tidak lagi terkini dan telah kedaluwarsa.&lt;br&gt;Harap ikuti &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; di Twitter untuk pembaruan.</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -4085,7 +4085,7 @@ when the application starts again</source>
     <message>
         <source>Transfer quota</source>
         <translatorcomment>Label to indicate the transfer quota usage of current logged account</translatorcomment>
-        <translation type="unfinished">Transfer quota</translation>
+        <translation type="unfinished">Kuota transfer</translation>
     </message>
     <message>
         <source>Don&apos;t show icons on the left pane of Windows Explorer</source>
@@ -4179,7 +4179,7 @@ when the application starts again</source>
     <message>
         <source>Bug report</source>
         <translatorcomment>Button label to show the bug report form.</translatorcomment>
-        <translation type="unfinished">Report issue</translation>
+        <translation type="unfinished">Laporkan masalah</translation>
     </message>
 </context>
 <context>

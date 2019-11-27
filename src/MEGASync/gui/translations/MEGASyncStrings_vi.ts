@@ -276,7 +276,7 @@
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation type="unfinished">Contact request denied</translation>
+        <translation type="unfinished">Contact request declined</translation>
     </message>
     <message>
         <source>Payment Info</source>

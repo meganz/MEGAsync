@@ -1897,7 +1897,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">謝謝您測試MEGAsync同步功能。&lt;br&gt;此測試版本不再存在且失效過期。&lt;br&gt;請參照Twitter上的更新&lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt;</translation>
+        <translation type="obsolete">感謝您測試MEGAsync。&lt;br&gt;此測試版不是最新版本而且已經過期。&lt;br&gt;請參考Twitter上的更新&lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -3367,15 +3367,14 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other UI fixes and adjustments.
 - Other performance improvements, UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
-        <translation type="unfinished">- Support for user notifications.
-- Support to send bug reports from the settings dialog.
-- New restyling of main dialog.
-- Performance improvements when dealing with a huge amount of syncs and transfers.
-- Improved support for business accounts.
-- Support links to files and folders inside a public folder link.
-- Improvements for synchronization with FAT32 filesystems.
-- Other UI fixes and adjustments.
-- Other performance improvements, UI fixes and adjustments.</translation>
+        <translation type="unfinished">-支援用戶訊息通知。
+-支援從設定對話框傳送錯誤報告。
+- 新的主對話框樣式。
+- 處理大量同步與傳輸時的性能改進。
+- 改善對商業帳戶的支援。
+- 可連結至公開連結裡的檔案與資料夾。
+- 改善FAT32檔案系統的同步表現。
+- 其它性能改善，介面修正與調整。</translation>
     </message>
 </context>
 <context>

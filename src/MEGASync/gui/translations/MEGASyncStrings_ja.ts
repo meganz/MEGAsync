@@ -276,7 +276,7 @@
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation type="unfinished">コンタクト要求が拒否されました</translation>
+        <translation type="unfinished">コンタクト要求は断られました</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -1897,7 +1897,7 @@ Please, try again. If the problem persists please contact bug@mega.co.nz</source
     </message>
     <message>
         <source>Thank you for testing MEGAsync.&lt;br&gt;This beta version is no longer current and has expired.&lt;br&gt;Please follow &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; on Twitter for updates.</source>
-        <translation type="obsolete">MEGAsyncを試して下さってありがとう。&lt;br&gt;このβ版は失効しました。Twitterの &lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt; でアップデートをご覧下さい。</translation>
+        <translation type="obsolete">MEGAsyncをテストしていただきありがとうございます。&lt;br&gt;このベータ版は最新のものではなくなり、有効期限が切れています。&lt;br&gt;アップデートについては、&lt;a href=&quot;https://twitter.com/MEGAprivacy&quot;&gt;@MEGAprivacy&lt;/a&gt;をTwitterでフォローしてください。</translation>
     </message>
     <message>
         <source>Logging in</source>
@@ -3263,7 +3263,7 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
     <message>
         <source>per user %1</source>
         <translatorcomment>Label to indicate that a business plan price is per user, when the upgrade dialog is presented to the user during an overquota situation.</translatorcomment>
-        <translation type="unfinished">per user %1</translation>
+        <translation type="unfinished">1ユーザー %1あたり</translation>
     </message>
 </context>
 <context>
@@ -3363,15 +3363,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other UI fixes and adjustments.
 - Other performance improvements, UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
-        <translation type="unfinished">- Support for user notifications.
-- Support to send bug reports from the settings dialog.
-- New restyling of main dialog.
-- Performance improvements when dealing with a huge amount of syncs and transfers.
-- Improved support for business accounts.
-- Support links to files and folders inside a public folder link.
-- Improvements for synchronization with FAT32 filesystems.
-- Other UI fixes and adjustments.
-- Other performance improvements, UI fixes and adjustments.</translation>
+        <translation type="unfinished">－ユーザー通知サポート。
+－設定ダイアログからバグレポートを送信するサポート。
+－メインダイアログの新モデルチェンジ。
+－膨大な量の同期と転送を処理するパフォーマンスの改善。
+－ビジネスアカウントサポートの向上。
+－公開フォルダリンク内のファイルやフォルダへのリンクをサポート。
+－FAT32ファイルシステムとの同期が改善。
+－その他のUIの修正や調整。
+－その他のパフォーマンスの向上、UIの修正や調整。</translation>
     </message>
 </context>
 <context>

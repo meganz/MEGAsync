@@ -476,7 +476,7 @@
     <message>
         <source>Your publicly shared [%1] ([%2]) has been taken down</source>
         <translatorcomment>Label to indicate that public shared folder/file [%1] has been taken down. Placeholder [%1] will be replaced by type of item (file or folder) and [%2] with the name of the file/folder.</translatorcomment>
-        <translation type="unfinished">Your publicly shared [%1] ([%2]) has been taken down</translation>
+        <translation type="unfinished">O seu compartilhamento público [%1] ([%2]) foi removido</translation>
     </message>
 </context>
 <context>

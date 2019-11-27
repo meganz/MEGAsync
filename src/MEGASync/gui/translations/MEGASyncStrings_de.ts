@@ -276,7 +276,7 @@
     <message>
         <source>Contact Denied</source>
         <translatorcomment>Notification label that indicates that the user has denied a contact request</translatorcomment>
-        <translation type="unfinished">Contact request denied</translation>
+        <translation type="unfinished">Contact request declined</translation>
     </message>
     <message>
         <source>Payment Info</source>
@@ -4048,7 +4048,7 @@ when the application starts again</source>
     </message>
     <message>
         <source>Do you want to delete your local backup now?</source>
-        <translation type="unfinished">Do you want to delete your local backups now?</translation>
+        <translation type="unfinished">Lokale Sicherheitskopien löschen?</translation>
     </message>
     <message>
         <source>Clear remote backup</source>

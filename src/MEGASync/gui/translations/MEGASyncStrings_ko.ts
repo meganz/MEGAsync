@@ -3368,15 +3368,15 @@ Please, ensure that you don&apos;t use characters like &apos;\&apos; &apos;/&apo
 - Other UI fixes and adjustments.
 - Other performance improvements, UI fixes and adjustments.</source>
         <translatorcomment>Changelog for MEGAsync 4.3.0</translatorcomment>
-        <translation type="unfinished">- Support for user notifications.
-- Support to send bug reports from the settings dialog.
-- New restyling of main dialog.
-- Performance improvements when dealing with a huge amount of syncs and transfers.
-- Improved support for business accounts.
-- Support links to files and folders inside a public folder link.
-- Improvements for synchronization with FAT32 filesystems.
-- Other UI fixes and adjustments.
-- Other performance improvements, UI fixes and adjustments.</translation>
+        <translation type="unfinished">- 이용자 알림 지원.
+- 설정 대화창에서 버그 리포트 전송 지원.
+- 주 대화창 스타일 변경
+- 대량의 동기화와 전송을 다룰 때 성능 향상.
+- 비즈니스 계정 지원 향상.
+- 공개 폴더 링크 내부의 파일과 폴더 링크 지원.
+- FAT32 파일시스템과의 동기화 향상.
+- 기타 UI 수정 및 조정
+- 기타 성능 향상, UI 수정 그리고 조정.</translation>
     </message>
 </context>
 <context>
