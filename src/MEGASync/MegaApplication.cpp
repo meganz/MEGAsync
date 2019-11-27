@@ -3089,16 +3089,37 @@ void MegaApplication::showInfoDialog()
             infoDialog->ensurePolished();
             auto initialDialogWidth  = infoDialog->width();
             auto initialDialogHeight = infoDialog->height();
-            QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight](){
+            QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight, posx, posy](){
                 if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
                 {
                     MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
-                                 QString::fromUtf8("Miss scaled info dialog. New size = %1,%2. should be %3,%4 ")
+                                 QString::fromUtf8("A dialog. New size = %1,%2. should be %3,%4 ")
                                  .arg(infoDialog->width()).arg(infoDialog->height()).arg(initialDialogWidth).arg(initialDialogHeight)
                                  .toUtf8().constData());
 
                     infoDialog->resize(initialDialogWidth,initialDialogHeight);
-                    return;
+
+                    auto iDPos = infoDialog->pos();
+                    if (iDPos.x() != posx || iDPos.y() != posy )
+                    {
+                        MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                                     QString::fromUtf8("Missplaced info dialog. New pos = %1,%2. should be %3,%4 ")
+                                     .arg(iDPos.x()).arg(iDPos.y()).arg(posx).arg(posy)
+                                     .toUtf8().constData());
+                        infoDialog->move(posx, posy);
+
+                        QTimer::singleShot(1, this, [this, initialDialogWidth, initialDialogHeight, posx, posy](){
+                            if (infoDialog->width() > initialDialogWidth || infoDialog->height() > initialDialogHeight) //miss scaling detected
+                            {
+                                MegaApi::log(MegaApi::LOG_LEVEL_ERROR,
+                                             QString::fromUtf8("Missscaled info dialog after second move. New size = %1,%2. should be %3,%4 ")
+                                             .arg(infoDialog->width()).arg(infoDialog->height()).arg(initialDialogWidth).arg(initialDialogHeight)
+                                             .toUtf8().constData());
+
+                                infoDialog->resize(initialDialogWidth,initialDialogHeight);
+                            }
+                        });
+                    }
                 }
             });
 
