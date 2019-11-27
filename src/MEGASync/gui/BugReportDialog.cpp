@@ -152,7 +152,11 @@ void BugReportDialog::onRequestFinish(MegaApi *api, MegaRequest *request, MegaEr
                 showErrorMessage();
             }
 
-            sendProgress->hide();
+            if (sendProgress)
+            {
+                sendProgress->hide();
+            }
+
             break;
         }
         default:
@@ -337,7 +341,7 @@ void BugReportDialog::cancelSendReport()
     }
     else if (ret == QMessageBox::AcceptRole)
     {
-        if (currentTransfer)
+        if (currentTransfer && sendProgress)
         {
             sendProgress->setValue(lastpermil);
         }
