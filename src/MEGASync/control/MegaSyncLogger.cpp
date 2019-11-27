@@ -18,6 +18,11 @@
 
 #include <zlib.h>
 
+#if !defined(__clang__) && defined(__GNUC__) && __GNUC__ < 5
+// There's no std::atomic_load/share on GCC below version 5
+#define MEGA_NO_ATOMIC_LOAD_SHARE
+#endif
+
 #define MEGA_LOGGER QString::fromUtf8("MEGA_LOGGER")
 #define ENABLE_MEGASYNC_LOGS QString::fromUtf8("MEGA_ENABLE_LOGS")
 #define MAX_MESSAGE_SIZE 4096
@@ -25,6 +30,30 @@
 namespace {
 
 const char* MEGA_LOG_PATTERN = "%m-%dT%H:%M:%S.%f %t %l %v";
+
+#ifdef MEGA_NO_ATOMIC_LOAD_SHARE
+std::mutex gLoggerMutex;
+#endif
+
+std::shared_ptr<spdlog::logger> atomicLoadLogger(const std::shared_ptr<spdlog::logger>* logger)
+{
+#ifndef MEGA_NO_ATOMIC_LOAD_SHARE
+    return std::atomic_load(logger);
+#else
+    std::lock_guard<std::mutex> lock(gLoggerMutex);
+    return *logger;
+#endif
+}
+
+void atomicStoreLogger(std::shared_ptr<spdlog::logger>* logger, std::shared_ptr<spdlog::logger> new_logger)
+{
+#ifndef MEGA_NO_ATOMIC_LOAD_SHARE
+    std::atomic_store(logger, std::move(new_logger));
+#else
+    std::lock_guard<std::mutex> lock(gLoggerMutex);
+    *logger = std::move(new_logger);
+#endif
+}
 
 bool isGzipCompressed(const spdlog::filename_t& filename)
 {
@@ -236,7 +265,7 @@ void MegaSyncLogger::log(const char*, int loglevel, const char*, const char *mes
         case mega::MegaApi::LOG_LEVEL_MAX: mLogger->trace(message); break;
     }
 
-    if (auto logger = std::atomic_load(&mDebugLogger))
+    if (auto logger = atomicLoadLogger(&mDebugLogger))
     {
         switch (loglevel)
         {
@@ -254,7 +283,7 @@ void MegaSyncLogger::setDebug(const bool enable)
 {
     if (enable)
     {
-        if (!std::atomic_load(&mDebugLogger))
+        if (!atomicLoadLogger(&mDebugLogger))
         {
             const QDir desktopDir{mDesktopPath};
             const auto logPath = desktopDir.filePath(QString::fromUtf8("MEGAsync.log"));
@@ -274,24 +303,24 @@ void MegaSyncLogger::setDebug(const bool enable)
             logger->flush_on(spdlog::level::err);
 
             spdlog::register_logger(logger);
-            std::atomic_store(&mDebugLogger, logger);
+            atomicStoreLogger(&mDebugLogger, logger);
         }
     }
     else
     {
-        if (auto logger = std::atomic_load(&mDebugLogger))
+        if (auto logger = atomicLoadLogger(&mDebugLogger))
         {
             logger->flush();
 
             spdlog::drop(logger->name());
-            std::atomic_store(&mDebugLogger, std::shared_ptr<spdlog::logger>{});
+            atomicStoreLogger(&mDebugLogger, std::shared_ptr<spdlog::logger>{});
         }
     }
 }
 
 bool MegaSyncLogger::isDebug() const
 {
-    return std::atomic_load(&mDebugLogger) != nullptr;
+    return atomicLoadLogger(&mDebugLogger) != nullptr;
 }
 
 bool MegaSyncLogger::prepareForReporting()
