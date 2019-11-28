@@ -1,6 +1,6 @@
 Name:       thunar-megasync
 Version:    EXT_VERSION
-Release:	1%{?dist}
+Release:	%(cat MEGA_BUILD_ID || echo "1").1
 Summary:	Extension for Thunar to interact with Megasync
 License:	Freeware
 Group:		Applications/Others
