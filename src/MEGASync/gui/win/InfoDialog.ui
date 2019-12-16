@@ -452,7 +452,7 @@ border: none;
                   </size>
                  </property>
                  <property name="cursor">
-                  <cursorShape>ArrowCursor</cursorShape>
+                  <cursorShape>PointingHandCursor</cursorShape>
                  </property>
                  <property name="toolTip">
                   <string>Show MEGAsync options</string>
