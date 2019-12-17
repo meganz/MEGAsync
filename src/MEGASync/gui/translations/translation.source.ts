@@ -480,7 +480,7 @@
     </message>
     <message>
         <source>Shared Folder Activity</source>
-        <translatorcomment>Generic label to indicate that there is a shared folder activity but the name of the shared folder is not available.</translatorcomment>
+        <translatorcomment>Generic label to indicate that there is activity in a shared folder but the name of the shared folder is not available.</translatorcomment>
         <translation type="unfinished">Shared Folder Activity</translation>
     </message>
 </context>
